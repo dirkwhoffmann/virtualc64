@@ -2,20 +2,963 @@
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
   <compounddef id="namespacevc64" kind="namespace" language="C++">
     <compoundname>vc64</compoundname>
+    <innerclass refid="classvc64_1_1_action_replay" prot="public">vc64::ActionReplay</innerclass>
+    <innerclass refid="classvc64_1_1_action_replay3" prot="public">vc64::ActionReplay3</innerclass>
+    <innerclass refid="classvc64_1_1_any_collection" prot="public">vc64::AnyCollection</innerclass>
+    <innerclass refid="classvc64_1_1_any_file" prot="public">vc64::AnyFile</innerclass>
+    <innerclass refid="classvc64_1_1_a_p_i" prot="public">vc64::API</innerclass>
+    <innerclass refid="classvc64_1_1_atomic_power" prot="public">vc64::AtomicPower</innerclass>
+    <innerclass refid="structvc64_1_1_audio_volume" prot="public">vc64::AudioVolume</innerclass>
+    <innerclass refid="structvc64_1_1_auto_resume" prot="public">vc64::AutoResume</innerclass>
     <innerclass refid="classvc64_1_1_bool_parser" prot="public">vc64::BoolParser</innerclass>
+    <innerclass refid="classvc64_1_1_c64" prot="public">vc64::C64</innerclass>
+    <innerclass refid="structvc64_1_1_c64_key" prot="public">vc64::C64Key</innerclass>
+    <innerclass refid="classvc64_1_1_c64_memory" prot="public">vc64::C64Memory</innerclass>
+    <innerclass refid="classvc64_1_1_cartridge" prot="public">vc64::Cartridge</innerclass>
+    <innerclass refid="classvc64_1_1_cartridge_rom" prot="public">vc64::CartridgeRom</innerclass>
+    <innerclass refid="classvc64_1_1_c_i_a" prot="public">vc64::CIA</innerclass>
+    <innerclass refid="classvc64_1_1_c_i_a1" prot="public">vc64::CIA1</innerclass>
+    <innerclass refid="classvc64_1_1_c_i_a2" prot="public">vc64::CIA2</innerclass>
     <innerclass refid="classvc64_1_1_cmd_queue" prot="public">vc64::CmdQueue</innerclass>
+    <innerclass refid="classvc64_1_1_comal80" prot="public">vc64::Comal80</innerclass>
+    <innerclass refid="structvc64_1_1_command" prot="public">vc64::Command</innerclass>
+    <innerclass refid="classvc64_1_1_configurable" prot="public">vc64::Configurable</innerclass>
+    <innerclass refid="classvc64_1_1_control_port" prot="public">vc64::ControlPort</innerclass>
+    <innerclass refid="classvc64_1_1_core_component" prot="public">vc64::CoreComponent</innerclass>
+    <innerclass refid="classvc64_1_1_core_object" prot="public">vc64::CoreObject</innerclass>
+    <innerclass refid="classvc64_1_1_c_p_u" prot="public">vc64::CPU</innerclass>
+    <innerclass refid="classvc64_1_1_c_p_u_inspector" prot="public">vc64::CPUInspector</innerclass>
+    <innerclass refid="classvc64_1_1_c_r_t_file" prot="public">vc64::CRTFile</innerclass>
+    <innerclass refid="classvc64_1_1_d64_file" prot="public">vc64::D64File</innerclass>
+    <innerclass refid="classvc64_1_1_datasette" prot="public">vc64::Datasette</innerclass>
+    <innerclass refid="classvc64_1_1_defaults" prot="public">vc64::Defaults</innerclass>
+    <innerclass refid="classvc64_1_1_dinamic" prot="public">vc64::Dinamic</innerclass>
+    <innerclass refid="classvc64_1_1_disk" prot="public">vc64::Disk</innerclass>
+    <innerclass refid="classvc64_1_1_disk_analyzer" prot="public">vc64::DiskAnalyzer</innerclass>
+    <innerclass refid="classvc64_1_1_dma_debugger" prot="public">vc64::DmaDebugger</innerclass>
+    <innerclass refid="classvc64_1_1_drive" prot="public">vc64::Drive</innerclass>
+    <innerclass refid="classvc64_1_1_drive_memory" prot="public">vc64::DriveMemory</innerclass>
+    <innerclass refid="classvc64_1_1_dumpable" prot="public">vc64::Dumpable</innerclass>
+    <innerclass refid="classvc64_1_1_easy_flash" prot="public">vc64::EasyFlash</innerclass>
+    <innerclass refid="classvc64_1_1_emulator" prot="public">vc64::Emulator</innerclass>
     <innerclass refid="classvc64_1_1_enum_parser" prot="public">vc64::EnumParser</innerclass>
+    <innerclass refid="classvc64_1_1_epyx" prot="public">vc64::Epyx</innerclass>
+    <innerclass refid="classvc64_1_1_expansion_port" prot="public">vc64::ExpansionPort</innerclass>
+    <innerclass refid="classvc64_1_1_expert" prot="public">vc64::Expert</innerclass>
+    <innerclass refid="classvc64_1_1_f_fmpeg" prot="public">vc64::FFmpeg</innerclass>
+    <innerclass refid="classvc64_1_1_file_system" prot="public">vc64::FileSystem</innerclass>
+    <innerclass refid="classvc64_1_1_final_i_i_i" prot="public">vc64::FinalIII</innerclass>
+    <innerclass refid="classvc64_1_1_flash_rom" prot="public">vc64::FlashRom</innerclass>
+    <innerclass refid="classvc64_1_1_folder" prot="public">vc64::Folder</innerclass>
+    <innerclass refid="classvc64_1_1_freeze_frame" prot="public">vc64::FreezeFrame</innerclass>
+    <innerclass refid="classvc64_1_1_f_s_block" prot="public">vc64::FSBlock</innerclass>
+    <innerclass refid="structvc64_1_1_f_s_device_descriptor" prot="public">vc64::FSDeviceDescriptor</innerclass>
+    <innerclass refid="structvc64_1_1_f_s_dir_entry" prot="public">vc64::FSDirEntry</innerclass>
+    <innerclass refid="classvc64_1_1_funplay" prot="public">vc64::Funplay</innerclass>
+    <innerclass refid="classvc64_1_1_g64_file" prot="public">vc64::G64File</innerclass>
+    <innerclass refid="classvc64_1_1_game_killer" prot="public">vc64::GameKiller</innerclass>
+    <innerclass refid="classvc64_1_1_geo_r_a_m" prot="public">vc64::GeoRAM</innerclass>
+    <innerclass refid="structvc64_1_1_gpu_color" prot="public">vc64::GpuColor</innerclass>
+    <innerclass refid="classvc64_1_1_headless" prot="public">vc64::Headless</innerclass>
+    <innerclass refid="classvc64_1_1_host" prot="public">vc64::Host</innerclass>
+    <innerclass refid="classvc64_1_1_i_e_c" prot="public">vc64::IEC</innerclass>
+    <innerclass refid="classvc64_1_1_inspectable" prot="public">vc64::Inspectable</innerclass>
+    <innerclass refid="classvc64_1_1_interpreter" prot="public">vc64::Interpreter</innerclass>
+    <innerclass refid="classvc64_1_1_isepic" prot="public">vc64::Isepic</innerclass>
+    <innerclass refid="classvc64_1_1_joystick" prot="public">vc64::Joystick</innerclass>
+    <innerclass refid="classvc64_1_1_kcs_power" prot="public">vc64::KcsPower</innerclass>
+    <innerclass refid="classvc64_1_1_keyboard" prot="public">vc64::Keyboard</innerclass>
+    <innerclass refid="classvc64_1_1_kingsoft" prot="public">vc64::Kingsoft</innerclass>
+    <innerclass refid="classvc64_1_1_mach5" prot="public">vc64::Mach5</innerclass>
+    <innerclass refid="classvc64_1_1_magic_desk" prot="public">vc64::MagicDesk</innerclass>
+    <innerclass refid="classvc64_1_1_mikro_ass" prot="public">vc64::MikroAss</innerclass>
+    <innerclass refid="classvc64_1_1_mouse" prot="public">vc64::Mouse</innerclass>
+    <innerclass refid="classvc64_1_1_mouse1350" prot="public">vc64::Mouse1350</innerclass>
+    <innerclass refid="classvc64_1_1_mouse1351" prot="public">vc64::Mouse1351</innerclass>
+    <innerclass refid="classvc64_1_1_msg_queue" prot="public">vc64::MsgQueue</innerclass>
+    <innerclass refid="classvc64_1_1_muxer" prot="public">vc64::Muxer</innerclass>
+    <innerclass refid="classvc64_1_1_named_pipe" prot="public">vc64::NamedPipe</innerclass>
+    <innerclass refid="classvc64_1_1_neos_mouse" prot="public">vc64::NeosMouse</innerclass>
     <innerclass refid="classvc64_1_1_num_parser" prot="public">vc64::NumParser</innerclass>
+    <innerclass refid="classvc64_1_1_ocean" prot="public">vc64::Ocean</innerclass>
     <innerclass refid="classvc64_1_1_option_parser" prot="public">vc64::OptionParser</innerclass>
+    <innerclass refid="classvc64_1_1_p00_file" prot="public">vc64::P00File</innerclass>
+    <innerclass refid="classvc64_1_1_page_fox" prot="public">vc64::PageFox</innerclass>
+    <innerclass refid="classvc64_1_1_par_cable" prot="public">vc64::ParCable</innerclass>
+    <innerclass refid="classvc64_1_1_p_e_t_name" prot="public">vc64::PETName</innerclass>
+    <innerclass refid="classvc64_1_1_p_i_a6821" prot="public">vc64::PIA6821</innerclass>
+    <innerclass refid="classvc64_1_1_pia_dolphin" prot="public">vc64::PiaDolphin</innerclass>
+    <innerclass refid="classvc64_1_1_power_supply" prot="public">vc64::PowerSupply</innerclass>
+    <innerclass refid="classvc64_1_1_p_r_g_file" prot="public">vc64::PRGFile</innerclass>
+    <innerclass refid="classvc64_1_1_pulse" prot="public">vc64::Pulse</innerclass>
+    <innerclass refid="classvc64_1_1_recorder" prot="public">vc64::Recorder</innerclass>
+    <innerclass refid="classvc64_1_1_references" prot="public">vc64::References</innerclass>
+    <innerclass refid="classvc64_1_1_regression_tester" prot="public">vc64::RegressionTester</innerclass>
+    <innerclass refid="classvc64_1_1_re_s_i_d" prot="public">vc64::ReSID</innerclass>
+    <innerclass refid="classvc64_1_1_retro_shell" prot="public">vc64::RetroShell</innerclass>
+    <innerclass refid="classvc64_1_1_reu" prot="public">vc64::Reu</innerclass>
+    <innerclass refid="classvc64_1_1_rex" prot="public">vc64::Rex</innerclass>
+    <innerclass refid="structvc64_1_1_rgb_color" prot="public">vc64::RgbColor</innerclass>
+    <innerclass refid="classvc64_1_1_rom_file" prot="public">vc64::RomFile</innerclass>
+    <innerclass refid="structvc64_1_1_rom_signature" prot="public">vc64::RomSignature</innerclass>
+    <innerclass refid="structvc64_1_1_sample_pair" prot="public">vc64::SamplePair</innerclass>
+    <innerclass refid="classvc64_1_1_script" prot="public">vc64::Script</innerclass>
+    <innerclass refid="structvc64_1_1_script_interruption" prot="public">vc64::ScriptInterruption</innerclass>
+    <innerclass refid="classvc64_1_1_shake_detector" prot="public">vc64::ShakeDetector</innerclass>
+    <innerclass refid="classvc64_1_1_s_i_d" prot="public">vc64::SID</innerclass>
+    <innerclass refid="classvc64_1_1_simons_basic" prot="public">vc64::SimonsBasic</innerclass>
+    <innerclass refid="classvc64_1_1_snapshot" prot="public">vc64::Snapshot</innerclass>
+    <innerclass refid="structvc64_1_1_snapshot_header" prot="public">vc64::SnapshotHeader</innerclass>
+    <innerclass refid="classvc64_1_1_star_dos" prot="public">vc64::StarDos</innerclass>
+    <innerclass refid="classvc64_1_1_stereo_stream" prot="public">vc64::StereoStream</innerclass>
+    <innerclass refid="classvc64_1_1_structured_basic" prot="public">vc64::StructuredBasic</innerclass>
+    <innerclass refid="classvc64_1_1_sub_component" prot="public">vc64::SubComponent</innerclass>
+    <innerclass refid="classvc64_1_1_super_games" prot="public">vc64::SuperGames</innerclass>
+    <innerclass refid="classvc64_1_1_suspendable" prot="public">vc64::Suspendable</innerclass>
+    <innerclass refid="classvc64_1_1_synchronizable" prot="public">vc64::Synchronizable</innerclass>
+    <innerclass refid="structvc64_1_1_syntax_error" prot="public">vc64::SyntaxError</innerclass>
+    <innerclass refid="classvc64_1_1_t64_file" prot="public">vc64::T64File</innerclass>
+    <innerclass refid="classvc64_1_1_t_a_p_file" prot="public">vc64::TAPFile</innerclass>
+    <innerclass refid="classvc64_1_1_text_storage" prot="public">vc64::TextStorage</innerclass>
     <innerclass refid="classvc64_1_1_thread" prot="public">vc64::Thread</innerclass>
+    <innerclass refid="structvc64_1_1_thumbnail" prot="public">vc64::Thumbnail</innerclass>
+    <innerclass refid="classvc64_1_1_time_delayed" prot="public">vc64::TimeDelayed</innerclass>
+    <innerclass refid="classvc64_1_1_t_o_d" prot="public">vc64::TOD</innerclass>
+    <innerclass refid="structvc64_1_1_too_few_arguments_error" prot="public">vc64::TooFewArgumentsError</innerclass>
+    <innerclass refid="structvc64_1_1_too_many_arguments_error" prot="public">vc64::TooManyArgumentsError</innerclass>
     <innerclass refid="structvc64_1_1_v_c64_error" prot="public">vc64::VC64Error</innerclass>
+    <innerclass refid="classvc64_1_1_v_i_a1" prot="public">vc64::VIA1</innerclass>
+    <innerclass refid="classvc64_1_1_v_i_a2" prot="public">vc64::VIA2</innerclass>
+    <innerclass refid="classvc64_1_1_v_i_a6522" prot="public">vc64::VIA6522</innerclass>
+    <innerclass refid="classvc64_1_1_v_i_c_i_i" prot="public">vc64::VICII</innerclass>
+    <innerclass refid="structvc64_1_1_void" prot="public">vc64::Void</innerclass>
+    <innerclass refid="classvc64_1_1_wakeable" prot="public">vc64::Wakeable</innerclass>
+    <innerclass refid="classvc64_1_1_warp_speed" prot="public">vc64::WarpSpeed</innerclass>
+    <innerclass refid="classvc64_1_1_westermann" prot="public">vc64::Westermann</innerclass>
+    <innerclass refid="structvc64_1_1_yuv_color" prot="public">vc64::YuvColor</innerclass>
+    <innerclass refid="classvc64_1_1_zaxxon" prot="public">vc64::Zaxxon</innerclass>
+    <innernamespace refid="namespacevc64_1_1_arg">vc64::Arg</innernamespace>
+    <innernamespace refid="namespacevc64_1_1peddle">vc64::peddle</innernamespace>
+    <innernamespace refid="namespacevc64_1_1vc64">vc64::vc64</innernamespace>
+    <sectiondef kind="enum">
+      <memberdef kind="enum" id="_inspectable_8h_1a8a7d02f304ed782343225189a1ab833b" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>Category</name>
+        <qualifiedname>vc64::Category</qualifiedname>
+        <enumvalue id="_inspectable_8h_1a8a7d02f304ed782343225189a1ab833bacdca8b7e34bed63da9916b5f2ad1ddec" prot="public">
+          <name>BankMap</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_inspectable_8h_1a8a7d02f304ed782343225189a1ab833ba4ab72a69aa303ab33d610a6f6e594e68" prot="public">
+          <name>Checksums</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_inspectable_8h_1a8a7d02f304ed782343225189a1ab833bafa535ffb25e1fd20341652f9be21e06e" prot="public">
+          <name>Config</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_inspectable_8h_1a8a7d02f304ed782343225189a1ab833ba222a267cc5778206b253be35ee3ddab5" prot="public">
+          <name>Current</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_inspectable_8h_1a8a7d02f304ed782343225189a1ab833baa603905470e2a5b8c13e96b579ef0dba" prot="public">
+          <name>Debug</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_inspectable_8h_1a8a7d02f304ed782343225189a1ab833ba0aabf727ab0a83c5f5d078e8b18445e0" prot="public">
+          <name>Defaults</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_inspectable_8h_1a8a7d02f304ed782343225189a1ab833ba380dbc8d9d2c8a17f6ebb0b2c62d3e85" prot="public">
+          <name>Disk</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_inspectable_8h_1a8a7d02f304ed782343225189a1ab833ba206202eaf7fe52b08be45313fe66d1e5" prot="public">
+          <name>Dma</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_inspectable_8h_1a8a7d02f304ed782343225189a1ab833baebd9bec4d70abc789d439c1f136b0538" prot="public">
+          <name>Layout</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_inspectable_8h_1a8a7d02f304ed782343225189a1ab833ba9fc2d28c05ed9eb1d75ba4465abf15a9" prot="public">
+          <name>Properties</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_inspectable_8h_1a8a7d02f304ed782343225189a1ab833baa9682ea50df45368189078864618a7cd" prot="public">
+          <name>Registers</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_inspectable_8h_1a8a7d02f304ed782343225189a1ab833ba404112cfc67ac12d5bf9df0d2978c736" prot="public">
+          <name>RunAhead</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_inspectable_8h_1a8a7d02f304ed782343225189a1ab833baf17772c1e704771dec6f66ff47edebaa" prot="public">
+          <name>Sizeof</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_inspectable_8h_1a8a7d02f304ed782343225189a1ab833baf573ad6f99732daf89b2f9dd79ba77e0" prot="public">
+          <name>Slots</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_inspectable_8h_1a8a7d02f304ed782343225189a1ab833ba46a2a41cc6e552044816a2d04634545d" prot="public">
+          <name>State</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_inspectable_8h_1a8a7d02f304ed782343225189a1ab833ba452a7601dbc6f2c38aa89e68bda8b603" prot="public">
+          <name>Stats</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_inspectable_8h_1a8a7d02f304ed782343225189a1ab833ba290612199861c31d1036b185b4e69b75" prot="public">
+          <name>Summary</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_inspectable_8h_1a8a7d02f304ed782343225189a1ab833bad5cf0db546ff63f90be78fbbd35b1a59" prot="public">
+          <name>Tod</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Inspectable.h" line="19" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Inspectable.h" bodystart="20" bodyend="39"/>
+      </memberdef>
+    </sectiondef>
     <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="_configurable_8h_1a95845e645f57089c2cad9fbd741855c9" prot="public" static="no">
+        <type>std::vector&lt; <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref> &gt;</type>
+        <definition>typedef std::vector&lt;Option&gt; vc64::ConfigOptions</definition>
+        <argsstring></argsstring>
+        <name>ConfigOptions</name>
+        <qualifiedname>vc64::ConfigOptions</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Configurable.h" line="22" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Configurable.h" bodystart="22" bodyend="-1"/>
+      </memberdef>
       <member refid="group__topic__state__model_1ga2d45fe1f5a2e80dbc85acca426f26970" kind="typedef"><name>StateChangeException</name></member>
+      <memberdef kind="typedef" id="_s_i_d_streams_8h_1a5c8a7526111084ad0cd8630f244bc8a7" prot="public" static="no">
+        <type>util::RingBuffer&lt; short, 2048 &gt;</type>
+        <definition>typedef util::RingBuffer&lt;short, 2048&gt; vc64::SampleStream</definition>
+        <argsstring></argsstring>
+        <name>SampleStream</name>
+        <qualifiedname>vc64::SampleStream</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" line="21" column="26" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="_volume_8h_1a2ce828fd5fc3b873a9020079abc9d7c2" prot="public" static="no">
+        <type>AudioVolume&lt; float &gt;</type>
+        <definition>typedef AudioVolume&lt;float&gt; vc64::Volume</definition>
+        <argsstring></argsstring>
+        <name>Volume</name>
+        <qualifiedname>vc64::Volume</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" line="106" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" bodystart="106" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="_f_s_block_8h_1a1209f4c71ae3b3dbc836b9178a4939b1" prot="public" static="no">
+        <type>FSBlock *</type>
+        <definition>typedef FSBlock * vc64::BlockPtr</definition>
+        <argsstring></argsstring>
+        <name>BlockPtr</name>
+        <qualifiedname>vc64::BlockPtr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSBlock.h" line="117" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSBlock.h" bodystart="117" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="_command_8h_1ae1ac118e5160d24e3283d3599a94b611" prot="public" static="no">
+        <type>std::vector&lt; string &gt;</type>
+        <definition>typedef std::vector&lt;string&gt; vc64::Arguments</definition>
+        <argsstring></argsstring>
+        <name>Arguments</name>
+        <qualifiedname>vc64::Arguments</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Command.h" line="24" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Command.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="_constants_8h_1a2d397e8e94dfe4e6d1a8fae4bef726e7" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::PAL_CLOCK_FREQUENCY</definition>
+        <argsstring></argsstring>
+        <name>PAL_CLOCK_FREQUENCY</name>
+        <qualifiedname>vc64::PAL_CLOCK_FREQUENCY</qualifiedname>
+        <initializer>= 985249</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="24" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1a633b7bc4386bba2f25fe43af31ac123b" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::NTSC_CLOCK_FREQUENCY</definition>
+        <argsstring></argsstring>
+        <name>NTSC_CLOCK_FREQUENCY</name>
+        <qualifiedname>vc64::NTSC_CLOCK_FREQUENCY</qualifiedname>
+        <initializer>= 1022727</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="25" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1abd80577cb658a5f1cd61dc5b268526ea" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::PAL_CYCLES_PER_SECOND</definition>
+        <argsstring></argsstring>
+        <name>PAL_CYCLES_PER_SECOND</name>
+        <qualifiedname>vc64::PAL_CYCLES_PER_SECOND</qualifiedname>
+        <initializer>= PAL_CLOCK_FREQUENCY</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="26" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1a9018d80329920c45b7e39ab2ef85d067" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::NTSC_CYCLES_PER_SECOND</definition>
+        <argsstring></argsstring>
+        <name>NTSC_CYCLES_PER_SECOND</name>
+        <qualifiedname>vc64::NTSC_CYCLES_PER_SECOND</qualifiedname>
+        <initializer>= NTSC_CLOCK_FREQUENCY</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="27" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1a6fa13c4a00ac6d4a89b7fb96c085810f" prot="public" static="yes" mutable="no">
+        <type>const double</type>
+        <definition>const double vc64::PAL_ASPECT_RATIO</definition>
+        <argsstring></argsstring>
+        <name>PAL_ASPECT_RATIO</name>
+        <qualifiedname>vc64::PAL_ASPECT_RATIO</qualifiedname>
+        <initializer>= 0.9365</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="35" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1a1e82714106c48796d45e74127a267f41" prot="public" static="yes" mutable="no">
+        <type>const double</type>
+        <definition>const double vc64::NTSC_ASPECT_RATIO</definition>
+        <argsstring></argsstring>
+        <name>NTSC_ASPECT_RATIO</name>
+        <qualifiedname>vc64::NTSC_ASPECT_RATIO</qualifiedname>
+        <initializer>= 0.7500</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="36" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1af48b6cfb1670d636bed7893c7e365615" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::HBLANK_CYCLES_LEFT</definition>
+        <argsstring></argsstring>
+        <name>HBLANK_CYCLES_LEFT</name>
+        <qualifiedname>vc64::HBLANK_CYCLES_LEFT</qualifiedname>
+        <initializer>= 13</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="39" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1a429e368997ad2d8eedc1c62e64b2369e" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::BORDER_CYCLES_LEFT</definition>
+        <argsstring></argsstring>
+        <name>BORDER_CYCLES_LEFT</name>
+        <qualifiedname>vc64::BORDER_CYCLES_LEFT</qualifiedname>
+        <initializer>= 4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="40" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1aab302ee9ef9f9f8f132f2f64f4a7dd69" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::CANVAS_CYCLES</definition>
+        <argsstring></argsstring>
+        <name>CANVAS_CYCLES</name>
+        <qualifiedname>vc64::CANVAS_CYCLES</qualifiedname>
+        <initializer>= 40</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="41" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1a6ff9190e0a9992f3acba7897f29dd063" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::BORDER_CYCLES_RIGHT</definition>
+        <argsstring></argsstring>
+        <name>BORDER_CYCLES_RIGHT</name>
+        <qualifiedname>vc64::BORDER_CYCLES_RIGHT</qualifiedname>
+        <initializer>= 4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="42" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1a0ff9e87424819195c8c840de7c1ebea7" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::HBLANK_CYCLES_RIGHT_PAL</definition>
+        <argsstring></argsstring>
+        <name>HBLANK_CYCLES_RIGHT_PAL</name>
+        <qualifiedname>vc64::HBLANK_CYCLES_RIGHT_PAL</qualifiedname>
+        <initializer>= 2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="43" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1a7bce8eda39a400a37bc9fe4de2f39a4f" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::HBLANK_CYCLES_RIGHT_NTSC</definition>
+        <argsstring></argsstring>
+        <name>HBLANK_CYCLES_RIGHT_NTSC</name>
+        <qualifiedname>vc64::HBLANK_CYCLES_RIGHT_NTSC</qualifiedname>
+        <initializer>= 4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="44" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1a04ae411a0d6483c03be65098ee9058f4" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::PAL_CYCLES</definition>
+        <argsstring></argsstring>
+        <name>PAL_CYCLES</name>
+        <qualifiedname>vc64::PAL_CYCLES</qualifiedname>
+        <initializer>= 63</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="47" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1a04843740ef6a9ab0c8542a3c5422dfb3" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::NTSC_CYCLES</definition>
+        <argsstring></argsstring>
+        <name>NTSC_CYCLES</name>
+        <qualifiedname>vc64::NTSC_CYCLES</qualifiedname>
+        <initializer>= 65</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="48" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1a4aab0cd739c74a72f994ff6670870786" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::HBLANK_PIXELS_LEFT</definition>
+        <argsstring></argsstring>
+        <name>HBLANK_PIXELS_LEFT</name>
+        <qualifiedname>vc64::HBLANK_PIXELS_LEFT</qualifiedname>
+        <initializer>= 104</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="51" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1a1c12cfd503cbabda5c33d732416039c2" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::BORDER_PIXELS_LEFT</definition>
+        <argsstring></argsstring>
+        <name>BORDER_PIXELS_LEFT</name>
+        <qualifiedname>vc64::BORDER_PIXELS_LEFT</qualifiedname>
+        <initializer>= 32</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="52" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1a3c374d1de8411a8f30da520c29bbad14" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::CANVAS_PIXELS</definition>
+        <argsstring></argsstring>
+        <name>CANVAS_PIXELS</name>
+        <qualifiedname>vc64::CANVAS_PIXELS</qualifiedname>
+        <initializer>= 320</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="53" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1a90007a809b0ef98b0e816a08a6291104" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::BORDER_PIXELS_RIGHT</definition>
+        <argsstring></argsstring>
+        <name>BORDER_PIXELS_RIGHT</name>
+        <qualifiedname>vc64::BORDER_PIXELS_RIGHT</qualifiedname>
+        <initializer>= 32</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="54" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1ad7173063057ec1bdd45a821ae45d506f" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::HBLANK_PIXELS_RIGHT_PAL</definition>
+        <argsstring></argsstring>
+        <name>HBLANK_PIXELS_RIGHT_PAL</name>
+        <qualifiedname>vc64::HBLANK_PIXELS_RIGHT_PAL</qualifiedname>
+        <initializer>= 16</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="55" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1a2230a743b1ec2030991628a116c25c31" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::HBLANK_PIXELS_RIGHT_NTSC</definition>
+        <argsstring></argsstring>
+        <name>HBLANK_PIXELS_RIGHT_NTSC</name>
+        <qualifiedname>vc64::HBLANK_PIXELS_RIGHT_NTSC</qualifiedname>
+        <initializer>= 32</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="56" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1ab7827d674a3fe1f894e3020d776a6df4" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::FIRST_VISIBLE_PIXEL</definition>
+        <argsstring></argsstring>
+        <name>FIRST_VISIBLE_PIXEL</name>
+        <qualifiedname>vc64::FIRST_VISIBLE_PIXEL</qualifiedname>
+        <initializer>= 104</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="59" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1a87923fd79a11d431e662cc3d22903f3e" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::VISIBLE_PIXELS</definition>
+        <argsstring></argsstring>
+        <name>VISIBLE_PIXELS</name>
+        <qualifiedname>vc64::VISIBLE_PIXELS</qualifiedname>
+        <initializer>= 384</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="60" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1a6c68fbbf82d1566bec961f369f5f04a0" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::LAST_VISIBLE_PIXEL</definition>
+        <argsstring></argsstring>
+        <name>LAST_VISIBLE_PIXEL</name>
+        <qualifiedname>vc64::LAST_VISIBLE_PIXEL</qualifiedname>
+        <initializer>= 487</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="61" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1ade98ebaad28af7012dce081b734e3fbe" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::PAL_PIXELS</definition>
+        <argsstring></argsstring>
+        <name>PAL_PIXELS</name>
+        <qualifiedname>vc64::PAL_PIXELS</qualifiedname>
+        <initializer>= 504</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="62" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1a089464a7b84815c02b957549da6c1778" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::NTSC_PIXELS</definition>
+        <argsstring></argsstring>
+        <name>NTSC_PIXELS</name>
+        <qualifiedname>vc64::NTSC_PIXELS</qualifiedname>
+        <initializer>= 520</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="63" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1a488edbe1b56b588bfb4f270a115c90b4" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::FIRST_VISIBLE_LINE</definition>
+        <argsstring></argsstring>
+        <name>FIRST_VISIBLE_LINE</name>
+        <qualifiedname>vc64::FIRST_VISIBLE_LINE</qualifiedname>
+        <initializer>= 16</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="66" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1aa06c20edeaf2afa30e61800f86d60222" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::TEX_HEIGHT</definition>
+        <argsstring></argsstring>
+        <name>TEX_HEIGHT</name>
+        <qualifiedname>vc64::TEX_HEIGHT</qualifiedname>
+        <initializer>= 312</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="69" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_constants_8h_1a163d30f809bb92c11d144e42265216da" prot="public" static="yes" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::TEX_WIDTH</definition>
+        <argsstring></argsstring>
+        <name>TEX_WIDTH</name>
+        <qualifiedname>vc64::TEX_WIDTH</qualifiedname>
+        <initializer>= 520</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" line="70" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_c64_8h_1a6f1bbeb78c30259fe717f0fe32e1f0c5" prot="public" static="yes" constexpr="yes" mutable="no">
+        <type>constexpr Cycle</type>
+        <definition>constexpr Cycle vc64::NEVER</definition>
+        <argsstring></argsstring>
+        <name>NEVER</name>
+        <qualifiedname>vc64::NEVER</qualifiedname>
+        <initializer>= INT64_MAX</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64.h" line="72" column="24" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_c64_8h_1aa343894dfd93707e737fbd3370c6bcf9" prot="public" static="yes" constexpr="yes" mutable="no">
+        <type>constexpr double</type>
+        <definition>constexpr double vc64::inspectionInterval</definition>
+        <argsstring></argsstring>
+        <name>inspectionInterval</name>
+        <qualifiedname>vc64::inspectionInterval</qualifiedname>
+        <initializer>= 0.1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64.h" line="75" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_headless_8h_1ae6842eaf6f2d143beef9fcb44a84debf" prot="public" static="yes" mutable="no">
+        <type>const char *</type>
+        <definition>const char* vc64::testScript[]</definition>
+        <argsstring>[]</argsstring>
+        <name>testScript</name>
+        <qualifiedname>vc64::testScript</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Headless.h" line="79" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Headless.h" bodystart="79" bodyend="287"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="_c64_8h_1a3d4c00b7cb403b4245b182d13c4ad880" prot="public" static="yes" constexpr="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>constexpr bool</type>
+        <definition>static constexpr bool vc64::isPrimarySlot</definition>
+        <argsstring>(isize s)</argsstring>
+        <name>isPrimarySlot</name>
+        <qualifiedname>vc64::isPrimarySlot</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64.h" line="67" column="23" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64.h" bodystart="67" bodyend="67"/>
+      </memberdef>
+      <memberdef kind="function" id="_c64_8h_1a2d34bae942cde21c1b624a77fc4848fa" prot="public" static="yes" constexpr="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>constexpr bool</type>
+        <definition>static constexpr bool vc64::isSecondarySlot</definition>
+        <argsstring>(isize s)</argsstring>
+        <name>isSecondarySlot</name>
+        <qualifiedname>vc64::isSecondarySlot</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64.h" line="68" column="23" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64.h" bodystart="68" bodyend="68"/>
+      </memberdef>
+      <memberdef kind="function" id="_c64_8h_1adb160aadf871288ff67da65794787dee" prot="public" static="yes" constexpr="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>constexpr bool</type>
+        <definition>static constexpr bool vc64::isTertiarySlot</definition>
+        <argsstring>(isize s)</argsstring>
+        <name>isTertiarySlot</name>
+        <qualifiedname>vc64::isTertiarySlot</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64.h" line="69" column="23" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64.h" bodystart="69" bodyend="69"/>
+      </memberdef>
+      <memberdef kind="function" id="_t_o_d_8h_1ae8dd98f69a272a8244929f5113791d25" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::incBCD</definition>
+        <argsstring>(u8 x)</argsstring>
+        <name>incBCD</name>
+        <qualifiedname>vc64::incBCD</qualifiedname>
+        <param>
+          <type>u8</type>
+          <declname>x</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/TOD.h" line="20" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/TOD.h" bodystart="20" bodyend="23"/>
+      </memberdef>
+      <memberdef kind="function" id="_v_i_c_i_i__colors_8cpp_1a53b38556e96a53fdc5f4c7997529d802" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>static double vc64::gammaCorrect</definition>
+        <argsstring>(double value, double source, double target)</argsstring>
+        <name>gammaCorrect</name>
+        <qualifiedname>vc64::gammaCorrect</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>source</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>target</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICII_colors.cpp" line="27" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICII_colors.cpp" bodystart="27" bodyend="38"/>
+      </memberdef>
+      <memberdef kind="function" id="_headless_8cpp_1a2bc47081c2aac94087eda9df1a2ccdaf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::process</definition>
+        <argsstring>(const void *listener, Message msg)</argsstring>
+        <name>process</name>
+        <qualifiedname>vc64::process</qualifiedname>
+        <param>
+          <type>const void *</type>
+          <declname>listener</declname>
+        </param>
+        <param>
+          <type>Message</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Headless.cpp" line="210" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Headless.cpp" bodystart="210" bodyend="213" declfile="/Users/hoff/Retro/virtualc64/Emulator/Headless.h" declline="27" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_mouse_8cpp_1a6ce158276681c5b3a3c5b4c6e43e5585" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::updatePotY</definition>
+        <argsstring>()</argsstring>
+        <name>updatePotY</name>
+        <qualifiedname>vc64::updatePotY</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.cpp" line="230" column="6" declfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.cpp" declline="230" declcolumn="6"/>
+      </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" line="21" column="1"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.cpp" line="16" column="1"/>
   </compounddef>
 </doxygen>

@@ -1,0 +1,117 @@
+\doxysection{Mem\+Utils.\+h}
+\hypertarget{_mem_utils_8h_source}{}\label{_mem_utils_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h@{/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Types.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Checksum.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <bit>}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{namespace\ }util\ \{}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ Reverses\ the\ byte\ ordering\ in\ an\ integer\ value}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#ifdef\ \_MSC\_VER}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ SWAP16\ \_byteswap\_ushort}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ SWAP32\ \_byteswap\_ulong}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#define\ SWAP64\ \_byteswap\_uint64}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ SWAP16\ \ \_\_builtin\_bswap16}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ SWAP32\ \ \_\_builtin\_bswap32}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ SWAP64\ \ \_\_builtin\_bswap64}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{comment}{//}}
+\DoxyCodeLine{00033\ \textcolor{comment}{//\ Byte\ order}}
+\DoxyCodeLine{00034\ \textcolor{comment}{//}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{comment}{//\ Returns\ the\ big\ endian\ representation\ of\ an\ integer\ value}}
+\DoxyCodeLine{00037\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ T\ bigEndian(T\ x);}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00040\ \textcolor{keyword}{inline}\ u16\ bigEndian(u16\ x)}
+\DoxyCodeLine{00041\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::endian::native\ ==\ std::endian::big)\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ x;}
+\DoxyCodeLine{00044\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ SWAP16(x);}
+\DoxyCodeLine{00046\ \ \ \ \ \}}
+\DoxyCodeLine{00047\ \}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00050\ \textcolor{keyword}{inline}\ u32\ bigEndian(u32\ x)}
+\DoxyCodeLine{00051\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::endian::native\ ==\ std::endian::big)\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ x;}
+\DoxyCodeLine{00054\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ SWAP32(x);}
+\DoxyCodeLine{00056\ \ \ \ \ \}}
+\DoxyCodeLine{00057\ \}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00060\ \textcolor{keyword}{inline}\ u64\ bigEndian(u64\ x)}
+\DoxyCodeLine{00061\ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::endian::native\ ==\ std::endian::big)\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ x;}
+\DoxyCodeLine{00064\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ SWAP64(x);}
+\DoxyCodeLine{00066\ \ \ \ \ \}}
+\DoxyCodeLine{00067\ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{comment}{//}}
+\DoxyCodeLine{00070\ \textcolor{comment}{//\ Memory\ content}}
+\DoxyCodeLine{00071\ \textcolor{comment}{//}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{comment}{//\ Reads\ a\ value\ in\ big-\/endian\ format}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#define\ R8BE(a)\ \ (*(u8\ *)(a))}}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\#define\ R16BE(a)\ HI\_LO(*(u8\ *)(a),\ *(u8\ *)((a)+1))}}
+\DoxyCodeLine{00076\ \textcolor{preprocessor}{\#define\ R32BE(a)\ HI\_HI\_LO\_LO(*(u8\ *)(a),\ *(u8\ *)((a)+1),\ *(u8\ *)((a)+2),\ *(u8\ *)((a)+3))}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00079\ \textcolor{comment}{\#define\ R8BE\_ALIGNED(a)\ \ \ \ \ (*(u8\ *)(a))}}
+\DoxyCodeLine{00080\ \textcolor{comment}{\#define\ R16BE\_ALIGNED(a)\ \ \ \ (util::bigEndian(*(u16\ *)(a)))}}
+\DoxyCodeLine{00081\ \textcolor{comment}{\#define\ R32BE\_ALIGNED(a)\ \ \ \ (util::bigEndian(*(u32\ *)(a)))}}
+\DoxyCodeLine{00082\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \textcolor{comment}{//\ Writes\ a\ value\ in\ big-\/endian\ format}}
+\DoxyCodeLine{00085\ \textcolor{preprocessor}{\#define\ W8BE(a,v)\ \ \{\ *(u8\ *)(a)\ =\ (v);\ \}}}
+\DoxyCodeLine{00086\ \textcolor{preprocessor}{\#define\ W16BE(a,v)\ \{\ *(u8\ *)(a)\ =\ HI\_BYTE(v);\ *(u8\ *)((a)+1)\ =\ LO\_BYTE(v);\ \}}}
+\DoxyCodeLine{00087\ \textcolor{preprocessor}{\#define\ W32BE(a,v)\ \{\ W16BE(a,HI\_WORD(v));\ W16BE((a)+2,LO\_WORD(v));\ \}}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00090\ \textcolor{comment}{\#define\ W8BE\_ALIGNED(a,v)\ \ \ \{\ *(u8\ *)(a)\ =\ (u8)(v);\ \}}}
+\DoxyCodeLine{00091\ \textcolor{comment}{\#define\ W16BE\_ALIGNED(a,v)\ \ \{\ *(u16\ *)(a)\ =\ util::bigEndian((u16)v);\ \}}}
+\DoxyCodeLine{00092\ \textcolor{comment}{\#define\ W32BE\_ALIGNED(a,v)\ \ \{\ *(u32\ *)(a)\ =\ util::bigEndian((u32)v);\ \}}}
+\DoxyCodeLine{00093\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \textcolor{comment}{//\ Checks\ if\ a\ certain\ memory\ area\ is\ all\ zero}}
+\DoxyCodeLine{00096\ \textcolor{keywordtype}{bool}\ isZero(\textcolor{keyword}{const}\ u8\ *ptr,\ isize\ size);}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \textcolor{comment}{//\ Replaces\ the\ first\ occurence\ of\ a\ byte\ or\ character\ sequence\ by\ another\ one}}
+\DoxyCodeLine{00099\ \textcolor{keywordtype}{void}\ replace(u8\ *p,\ isize\ size,\ \textcolor{keyword}{const}\ u8\ *sequence,\ \textcolor{keyword}{const}\ u8\ *substitute);}
+\DoxyCodeLine{00100\ \textcolor{keywordtype}{void}\ replace(\textcolor{keywordtype}{char}\ *p,\ isize\ size,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *sequence,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *substitute);}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{comment}{//\ Extracts\ all\ readable\ ASCII\ characters\ from\ a\ buffer}}
+\DoxyCodeLine{00103\ \textcolor{keywordtype}{void}\ readAscii(\textcolor{keyword}{const}\ u8\ *buf,\ isize\ len,\ \textcolor{keywordtype}{char}\ *result,\ \textcolor{keywordtype}{char}\ fill\ =\ \textcolor{charliteral}{'.'});}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \textcolor{comment}{//\ Prints\ a\ hex\ dump\ of\ a\ buffer\ to\ the\ console}}
+\DoxyCodeLine{00106\ \textcolor{keywordtype}{void}\ hexdump(u8\ *p,\ isize\ size,\ isize\ cols,\ isize\ pad);}
+\DoxyCodeLine{00107\ \textcolor{keywordtype}{void}\ hexdump(u8\ *p,\ isize\ size,\ isize\ cols\ =\ 32);}
+\DoxyCodeLine{00108\ \textcolor{keywordtype}{void}\ hexdumpWords(u8\ *p,\ isize\ size,\ isize\ cols\ =\ 32);}
+\DoxyCodeLine{00109\ \textcolor{keywordtype}{void}\ hexdumpLongwords(u8\ *p,\ isize\ size,\ isize\ cols\ =\ 32);}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \}}
+
+\end{DoxyCode}

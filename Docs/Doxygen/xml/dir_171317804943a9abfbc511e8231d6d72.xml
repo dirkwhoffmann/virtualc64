@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="dir_171317804943a9abfbc511e8231d6d72" kind="dir">
+    <compoundname>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette</compoundname>
+    <innerfile refid="_datasette_8cpp">Datasette.cpp</innerfile>
+    <innerfile refid="_datasette_8h">Datasette.h</innerfile>
+    <innerfile refid="_datasette_types_8h">DatasetteTypes.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/"/>
+  </compounddef>
+</doxygen>

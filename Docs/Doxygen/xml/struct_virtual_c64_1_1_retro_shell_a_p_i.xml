@@ -2,7 +2,7 @@
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
   <compounddef id="struct_virtual_c64_1_1_retro_shell_a_p_i" kind="struct" language="C++" prot="public">
     <compoundname>VirtualC64::RetroShellAPI</compoundname>
-    <basecompoundref prot="public" virt="non-virtual">API</basecompoundref>
+    <basecompoundref prot="public" virt="non-virtual">vc64::API</basecompoundref>
     <sectiondef kind="public-func">
       <memberdef kind="function" id="struct_virtual_c64_1_1_retro_shell_a_p_i_1a29925f4db82640da252a518c625ba833" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>const char *</type>
@@ -16,7 +16,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="551" column="20"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="553" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="865" bodyend="868"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_retro_shell_a_p_i_1a58b58a90b1b534ca931aba22903754ae" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>isize</type>
@@ -30,7 +30,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="552" column="15"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="554" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="871" bodyend="874"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_retro_shell_a_p_i_1a97f02a53cdd2ef397d5c25d12917ed8c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -53,7 +53,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="554" column="14"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="556" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="877" bodyend="880"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_retro_shell_a_p_i_1a2306d0efcb4893e699f5ed2212acc99e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -71,7 +71,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="555" column="14"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="557" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="883" bodyend="886"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_retro_shell_a_p_i_1a7e293152916898d646e344edc2237327" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -89,7 +89,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="556" column="14"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="558" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="889" bodyend="892"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_retro_shell_a_p_i_1adcdb0ff9faf420a7d851d2e83cdfa0c1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -107,7 +107,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="558" column="14"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="560" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="895" bodyend="898"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_retro_shell_a_p_i_1ad4d7a73a488ceb3461277d489776b000" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -125,7 +125,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="559" column="14"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="561" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="901" bodyend="904"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_retro_shell_a_p_i_1ae6b8a1e91171f5200b48dff8592ffa47" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -143,7 +143,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="560" column="14"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="562" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="907" bodyend="910"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_retro_shell_a_p_i_1a4df4697d5f30dea710b776c5610f1153" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -161,46 +161,55 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="562" column="14"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="564" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="913" bodyend="916"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <inheritancegraph>
-      <node id="2">
-        <label>API</label>
-      </node>
-      <node id="1">
-        <label>VirtualC64::RetroShellAPI</label>
-        <link refid="struct_virtual_c64_1_1_retro_shell_a_p_i"/>
-        <childnode refid="2" relation="public-inheritance">
-        </childnode>
-      </node>
-    </inheritancegraph>
-    <collaborationgraph>
-      <node id="2">
-        <label>API</label>
-      </node>
-      <node id="1">
-        <label>VirtualC64::RetroShellAPI</label>
-        <link refid="struct_virtual_c64_1_1_retro_shell_a_p_i"/>
-        <childnode refid="2" relation="public-inheritance">
-        </childnode>
-      </node>
-    </collaborationgraph>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="547" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="547" bodyend="564"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="549" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="549" bodyend="566"/>
     <listofallmembers>
+      <member refid="classvc64_1_1_a_p_i_1ac69be018cb6509eaa5a618c276c30fe1" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>API</name></member>
+      <member refid="classvc64_1_1_references_1a3fbc169a9900f006d1ad6170b0bd0639" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>c64</name></member>
+      <member refid="classvc64_1_1_references_1afa87c57a43c5b7feb3b8780a4ac1008b" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>cia1</name></member>
+      <member refid="classvc64_1_1_references_1a6c3a729faae4d28880a897789e3ba081" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>cia2</name></member>
+      <member refid="classvc64_1_1_references_1a6d4dd5f97953b9c588bd29396dc7e879" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>cpu</name></member>
       <member refid="struct_virtual_c64_1_1_retro_shell_a_p_i_1a58b58a90b1b534ca931aba22903754ae" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>cursorRel</name></member>
+      <member refid="classvc64_1_1_references_1a7fd1bd6cae9304cdbaa7e388c80149da" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>datasette</name></member>
+      <member refid="classvc64_1_1_references_1aa10ebdbd843f4d01d5f3d30592414abb" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>drive</name></member>
+      <member refid="classvc64_1_1_references_1a9fb58675ffdd6371f702e67e933c440c" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>drive8</name></member>
+      <member refid="classvc64_1_1_references_1ad4f53254b1db026d281f98e14a1065ef" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>drive9</name></member>
+      <member refid="classvc64_1_1_a_p_i_1a82d6586bef7dac77b2ea35fe6728595f" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>emulator</name></member>
       <member refid="struct_virtual_c64_1_1_retro_shell_a_p_i_1adcdb0ff9faf420a7d851d2e83cdfa0c1" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>execScript</name></member>
       <member refid="struct_virtual_c64_1_1_retro_shell_a_p_i_1ad4d7a73a488ceb3461277d489776b000" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>execScript</name></member>
       <member refid="struct_virtual_c64_1_1_retro_shell_a_p_i_1ae6b8a1e91171f5200b48dff8592ffa47" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>execScript</name></member>
+      <member refid="classvc64_1_1_references_1a96a558a1ee0efe17d9087b03edd68d9c" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>expansionport</name></member>
+      <member refid="classvc64_1_1_references_1ae039cd601c96e99965c9e51a7a5d37a2" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>host</name></member>
+      <member refid="classvc64_1_1_references_1a56adc0ba90182bde337fb3510a262136" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>iec</name></member>
+      <member refid="classvc64_1_1_a_p_i_1a815d94d61d7a5ecf7f1dccf21de51ca3" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>isUserThread</name></member>
+      <member refid="classvc64_1_1_references_1a2d7c7bdb02194750f58b4b464f9a4e27" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>keyboard</name></member>
+      <member refid="classvc64_1_1_references_1abcfca0e0c6484b0b5ef1c235113f4a57" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>mem</name></member>
+      <member refid="classvc64_1_1_references_1a107318ccbff5b11cb77026cd274974f3" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>msgQueue</name></member>
+      <member refid="classvc64_1_1_references_1ad7af8e9288a5ccdd69e1ebe3a017e3f6" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>muxer</name></member>
+      <member refid="classvc64_1_1_references_1a1c3c3487396e208b6495fcdc73936de2" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>oscillator</name></member>
+      <member refid="classvc64_1_1_references_1adfdca8ba1967e6d1de209ce8f6a40816" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>parCable</name></member>
+      <member refid="classvc64_1_1_references_1aab0477bdbf0257957007dc495e49ee0e" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>port1</name></member>
+      <member refid="classvc64_1_1_references_1a054a39fcb2357fc321e56ea4103860ee" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>port2</name></member>
       <member refid="struct_virtual_c64_1_1_retro_shell_a_p_i_1a97f02a53cdd2ef397d5c25d12917ed8c" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>press</name></member>
       <member refid="struct_virtual_c64_1_1_retro_shell_a_p_i_1a2306d0efcb4893e699f5ed2212acc99e" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>press</name></member>
       <member refid="struct_virtual_c64_1_1_retro_shell_a_p_i_1a7e293152916898d646e344edc2237327" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>press</name></member>
+      <member refid="classvc64_1_1_references_1a3fa1751dc3d018d0813409f0495cdcab" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>recorder</name></member>
+      <member refid="classvc64_1_1_references_1a466a1bc4bfe90a7f29afb596df1c530d" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>References</name></member>
+      <member refid="classvc64_1_1_references_1a0951b2824424d9fda808b88efd9b50e4" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>regressionTester</name></member>
+      <member refid="classvc64_1_1_a_p_i_1abf5b5cc4514382edc5e80528d956ab96" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>resume</name></member>
+      <member refid="classvc64_1_1_references_1a1d81ee2f6b3a1daed8df1142c0e299e3" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>retroShell</name></member>
       <member refid="struct_virtual_c64_1_1_retro_shell_a_p_i_1a4df4697d5f30dea710b776c5610f1153" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>setStream</name></member>
+      <member refid="classvc64_1_1_a_p_i_1aaf072770fe8db16f4eb6187afd5e56c1" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>suspend</name></member>
+      <member refid="classvc64_1_1_suspendable_1a7f9f608d5b2b9b6e944176cde77b8f85" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>Suspendable</name></member>
       <member refid="struct_virtual_c64_1_1_retro_shell_a_p_i_1a29925f4db82640da252a518c625ba833" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>text</name></member>
+      <member refid="classvc64_1_1_references_1a1f1e51f8cba9a1a920b7113f5105febd" prot="protected" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>vic</name></member>
+      <member refid="classvc64_1_1_suspendable_1a35809d3a4c20db1f096e8dc5c78c49b9" prot="public" virt="virtual"><scope>VirtualC64::RetroShellAPI</scope><name>~Suspendable</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

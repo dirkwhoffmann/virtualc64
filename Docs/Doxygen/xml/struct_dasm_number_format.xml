@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_dasm_number_format" kind="struct" language="C++" prot="public">
+    <compoundname>DasmNumberFormat</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_dasm_number_format_1a1f8eb8faa9c509a5f3a5e9dec72a4621" prot="public" static="no" mutable="no">
+        <type>const char *</type>
+        <definition>const char* DasmNumberFormat::prefix</definition>
+        <argsstring></argsstring>
+        <name>prefix</name>
+        <qualifiedname>DasmNumberFormat::prefix</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="453" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="453" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_dasm_number_format_1aeed693444a7d64526296aeb126564a05" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 DasmNumberFormat::radix</definition>
+        <argsstring></argsstring>
+        <name>radix</name>
+        <qualifiedname>DasmNumberFormat::radix</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="454" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="454" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_dasm_number_format_1a976a9017319ca36850ad415fa38c3919" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool DasmNumberFormat::upperCase</definition>
+        <argsstring></argsstring>
+        <name>upperCase</name>
+        <qualifiedname>DasmNumberFormat::upperCase</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="455" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="455" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_dasm_number_format_1a3f09b640aeef5212b95b4a3659127719" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char DasmNumberFormat::fill</definition>
+        <argsstring></argsstring>
+        <name>fill</name>
+        <qualifiedname>DasmNumberFormat::fill</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="456" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="456" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_dasm_number_format_1aff960a676975f920963ead9597fe180d" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool DasmNumberFormat::plainZero</definition>
+        <argsstring></argsstring>
+        <name>plainZero</name>
+        <qualifiedname>DasmNumberFormat::plainZero</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="457" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="457" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="451" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="452" bodyend="458"/>
+    <listofallmembers>
+      <member refid="struct_dasm_number_format_1a3f09b640aeef5212b95b4a3659127719" prot="public" virt="non-virtual"><scope>DasmNumberFormat</scope><name>fill</name></member>
+      <member refid="struct_dasm_number_format_1aff960a676975f920963ead9597fe180d" prot="public" virt="non-virtual"><scope>DasmNumberFormat</scope><name>plainZero</name></member>
+      <member refid="struct_dasm_number_format_1a1f8eb8faa9c509a5f3a5e9dec72a4621" prot="public" virt="non-virtual"><scope>DasmNumberFormat</scope><name>prefix</name></member>
+      <member refid="struct_dasm_number_format_1aeed693444a7d64526296aeb126564a05" prot="public" virt="non-virtual"><scope>DasmNumberFormat</scope><name>radix</name></member>
+      <member refid="struct_dasm_number_format_1a976a9017319ca36850ad415fa38c3919" prot="public" virt="non-virtual"><scope>DasmNumberFormat</scope><name>upperCase</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

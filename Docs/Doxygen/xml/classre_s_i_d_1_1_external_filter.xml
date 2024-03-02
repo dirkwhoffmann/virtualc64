@@ -1,0 +1,218 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classre_s_i_d_1_1_external_filter" kind="class" language="C++" prot="public">
+    <compoundname>reSID::ExternalFilter</compoundname>
+    <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classre_s_i_d_1_1_external_filter_1a30c03d498602787d95342d0eca22b5cb" prot="protected" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool reSID::ExternalFilter::enabled</definition>
+        <argsstring></argsstring>
+        <name>enabled</name>
+        <qualifiedname>reSID::ExternalFilter::enabled</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h" line="71" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classre_s_i_d_1_1_external_filter_1a12d9ae52e421b5cf74a1b135047231af" prot="protected" static="no" mutable="no">
+        <type>int</type>
+        <definition>int reSID::ExternalFilter::Vlp</definition>
+        <argsstring></argsstring>
+        <name>Vlp</name>
+        <qualifiedname>reSID::ExternalFilter::Vlp</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h" line="74" column="7" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classre_s_i_d_1_1_external_filter_1a8912582990740503558d69ddab4e06da" prot="protected" static="no" mutable="no">
+        <type>int</type>
+        <definition>int reSID::ExternalFilter::Vhp</definition>
+        <argsstring></argsstring>
+        <name>Vhp</name>
+        <qualifiedname>reSID::ExternalFilter::Vhp</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h" line="75" column="7" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classre_s_i_d_1_1_external_filter_1a40942470eff3e015a0b03b31db15bc77" prot="protected" static="no" mutable="no">
+        <type>int</type>
+        <definition>int reSID::ExternalFilter::w0lp_1_s7</definition>
+        <argsstring></argsstring>
+        <name>w0lp_1_s7</name>
+        <qualifiedname>reSID::ExternalFilter::w0lp_1_s7</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h" line="78" column="7" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classre_s_i_d_1_1_external_filter_1a5979039c14c1354a8af5a3856846d253" prot="protected" static="no" mutable="no">
+        <type>int</type>
+        <definition>int reSID::ExternalFilter::w0hp_1_s17</definition>
+        <argsstring></argsstring>
+        <name>w0hp_1_s17</name>
+        <qualifiedname>reSID::ExternalFilter::w0hp_1_s17</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h" line="79" column="7" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="friend">
+      <memberdef kind="friend" id="classre_s_i_d_1_1_external_filter_1ae302711fe9d1d70934653f2ba5903a33" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class SID</definition>
+        <argsstring></argsstring>
+        <name>SID</name>
+        <qualifiedname>reSID::ExternalFilter::SID</qualifiedname>
+        <param>
+          <type>SID</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h" line="81" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classre_s_i_d_1_1_external_filter_1a1c686e7b0ee4ce9044d81fea132db87c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>reSID::ExternalFilter::ExternalFilter</definition>
+        <argsstring>()</argsstring>
+        <name>ExternalFilter</name>
+        <qualifiedname>reSID::ExternalFilter::ExternalFilter</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h" line="58" column="3" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.cc" bodystart="30" bodyend="43"/>
+      </memberdef>
+      <memberdef kind="function" id="classre_s_i_d_1_1_external_filter_1a8278c87865eadcd8d0ed225ef1e17884" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void reSID::ExternalFilter::enable_filter</definition>
+        <argsstring>(bool enable)</argsstring>
+        <name>enable_filter</name>
+        <qualifiedname>reSID::ExternalFilter::enable_filter</qualifiedname>
+        <param>
+          <type>bool</type>
+          <declname>enable</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h" line="60" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.cc" bodystart="49" bodyend="52"/>
+      </memberdef>
+      <memberdef kind="function" id="classre_s_i_d_1_1_external_filter_1a82d413cf4286a052b4f8e23015b36c69" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void reSID::ExternalFilter::clock</definition>
+        <argsstring>(short Vi)</argsstring>
+        <name>clock</name>
+        <qualifiedname>reSID::ExternalFilter::clock</qualifiedname>
+        <param>
+          <type>short</type>
+          <declname>Vi</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h" line="62" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classre_s_i_d_1_1_external_filter_1a9926dbb71851a34cea03a0ed27c58ad8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void reSID::ExternalFilter::clock</definition>
+        <argsstring>(cycle_count delta_t, short Vi)</argsstring>
+        <name>clock</name>
+        <qualifiedname>reSID::ExternalFilter::clock</qualifiedname>
+        <param>
+          <type>cycle_count</type>
+          <declname>delta_t</declname>
+        </param>
+        <param>
+          <type>short</type>
+          <declname>Vi</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h" line="63" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classre_s_i_d_1_1_external_filter_1af49718c299fcd4bccf65bf2f3813a952" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void reSID::ExternalFilter::reset</definition>
+        <argsstring>()</argsstring>
+        <name>reset</name>
+        <qualifiedname>reSID::ExternalFilter::reset</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h" line="64" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.cc" bodystart="58" bodyend="63"/>
+      </memberdef>
+      <memberdef kind="function" id="classre_s_i_d_1_1_external_filter_1a14a9e8c625a6bd4718d87964a7921eca" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int reSID::ExternalFilter::output</definition>
+        <argsstring>()</argsstring>
+        <name>output</name>
+        <qualifiedname>reSID::ExternalFilter::output</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h" line="67" column="7"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h" line="55" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h" bodystart="56" bodyend="82"/>
+    <listofallmembers>
+      <member refid="classre_s_i_d_1_1_external_filter_1a82d413cf4286a052b4f8e23015b36c69" prot="public" virt="non-virtual"><scope>reSID::ExternalFilter</scope><name>clock</name></member>
+      <member refid="classre_s_i_d_1_1_external_filter_1a9926dbb71851a34cea03a0ed27c58ad8" prot="public" virt="non-virtual"><scope>reSID::ExternalFilter</scope><name>clock</name></member>
+      <member refid="classre_s_i_d_1_1_external_filter_1a8278c87865eadcd8d0ed225ef1e17884" prot="public" virt="non-virtual"><scope>reSID::ExternalFilter</scope><name>enable_filter</name></member>
+      <member refid="classre_s_i_d_1_1_external_filter_1a30c03d498602787d95342d0eca22b5cb" prot="protected" virt="non-virtual"><scope>reSID::ExternalFilter</scope><name>enabled</name></member>
+      <member refid="classre_s_i_d_1_1_external_filter_1a1c686e7b0ee4ce9044d81fea132db87c" prot="public" virt="non-virtual"><scope>reSID::ExternalFilter</scope><name>ExternalFilter</name></member>
+      <member refid="classre_s_i_d_1_1_external_filter_1a14a9e8c625a6bd4718d87964a7921eca" prot="public" virt="non-virtual"><scope>reSID::ExternalFilter</scope><name>output</name></member>
+      <member refid="classre_s_i_d_1_1_external_filter_1af49718c299fcd4bccf65bf2f3813a952" prot="public" virt="non-virtual"><scope>reSID::ExternalFilter</scope><name>reset</name></member>
+      <member refid="classre_s_i_d_1_1_external_filter_1ae302711fe9d1d70934653f2ba5903a33" prot="protected" virt="non-virtual"><scope>reSID::ExternalFilter</scope><name>SID</name></member>
+      <member refid="classre_s_i_d_1_1_external_filter_1a8912582990740503558d69ddab4e06da" prot="protected" virt="non-virtual"><scope>reSID::ExternalFilter</scope><name>Vhp</name></member>
+      <member refid="classre_s_i_d_1_1_external_filter_1a12d9ae52e421b5cf74a1b135047231af" prot="protected" virt="non-virtual"><scope>reSID::ExternalFilter</scope><name>Vlp</name></member>
+      <member refid="classre_s_i_d_1_1_external_filter_1a5979039c14c1354a8af5a3856846d253" prot="protected" virt="non-virtual"><scope>reSID::ExternalFilter</scope><name>w0hp_1_s17</name></member>
+      <member refid="classre_s_i_d_1_1_external_filter_1a40942470eff3e015a0b03b31db15bc77" prot="protected" virt="non-virtual"><scope>reSID::ExternalFilter</scope><name>w0lp_1_s7</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

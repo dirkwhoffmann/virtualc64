@@ -1,0 +1,103 @@
+\doxysection{Host.\+h}
+\hypertarget{_host_8h_source}{}\label{_host_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Base/Host.h@{/Users/hoff/Retro/virtualc64/Emulator/Base/Host.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}CoreComponent.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}IOUtils.h"{}}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00019\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{comment}{//\ Refresh\ rate\ of\ the\ host\ display}}
+\DoxyCodeLine{00021\ \ \ \ \ isize\ refreshRate;}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{comment}{//\ Audio\ sample\ rate\ of\ the\ host\ computer}}
+\DoxyCodeLine{00024\ \ \ \ \ isize\ sampleRate;}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{comment}{//\ Framebuffer\ dimensions}}
+\DoxyCodeLine{00027\ \ \ \ \ isize\ frameBufferWidth;}
+\DoxyCodeLine{00028\ \ \ \ \ isize\ frameBufferHeight;}
+\DoxyCodeLine{00029\ \}}
+\DoxyCodeLine{00030\ HostConfig;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{comment}{/*\ This\ class\ stores\ some\ information\ about\ the\ host\ system.\ The\ values\ have}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\ *\ are\ set\ by\ the\ GUI\ on\ start\ and\ updated\ on-\/the-\/fly\ when\ a\ value\ changes.}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00037\ \textcolor{keyword}{class\ }Host\ final\ :\ \textcolor{keyword}{public}\ CoreComponent,\ \textcolor{keyword}{public}\ Dumpable\ \{}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ ConfigOptions\ options\ =\ \{}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8a0338cafc72cca70ef76a4ed5afe0287b}{OPT\_HOST\_REFRESH\_RATE}},}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8a1c0c5c8eea9cd78c79bd0a810e49278a}{OPT\_HOST\_SAMPLE\_RATE}},}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8af593ab2cfea285aefc41c0cfe5c82a80}{OPT\_HOST\_FRAMEBUF\_WIDTH}},}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8a7fbdceb547a0fa13384fff4e6291d140}{OPT\_HOST\_FRAMEBUF\_HEIGHT}}}
+\DoxyCodeLine{00045\ \ \ \ \ \};}
+\DoxyCodeLine{00046\ \ \ \ \ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{comment}{//\ Current\ configuration}}
+\DoxyCodeLine{00048\ \ \ \ \ HostConfig\ config\ =\ \{\ \};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{comment}{//\ Methods}}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keyword}{using\ }CoreComponent::CoreComponent;}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Host"{}};\ \}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ \_dump(Category\ category,\ std::ostream\&\ os)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ Host\&\ operator=\ (\textcolor{keyword}{const}\ Host\&\ other)\ \{}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ CLONE(config)}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00066\ \ \ \ \ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keywordtype}{void}\ serialize(T\&\ worker)\ \{\ \}\ SERIALIZERS(serialize);}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{comment}{//\ Configuring}}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{const}\ HostConfig\ \&getConfig()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ config;\ \}}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{const}\ ConfigOptions\ \&getOptions()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ options;\ \}}
+\DoxyCodeLine{00079\ \ \ \ \ i64\ getOption(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ opt)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{void}\ setOption(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ opt,\ i64\ value)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{comment}{//\ Working\ with\ temporary\ files\ and\ folders}}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00088\ \ \ \ \ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{comment}{//\ Returns\ a\ path\ to\ a\ temporary\ folder}}
+\DoxyCodeLine{00090\ \ \ \ \ fs::path\ tmp()\ const\ throws;}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{comment}{//\ Assembles\ a\ path\ to\ a\ temporary\ file}}
+\DoxyCodeLine{00093\ \ \ \ \ fs::path\ tmp(const\ \textcolor{keywordtype}{string}\ \&name,\ \textcolor{keywordtype}{bool}\ unique\ =\ false)\ const\ throws;}
+\DoxyCodeLine{00094\ \};}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \}}
+\DoxyCodeLine{00097\ }
+
+\end{DoxyCode}

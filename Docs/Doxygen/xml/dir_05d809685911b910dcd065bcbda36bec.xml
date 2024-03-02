@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="dir_05d809685911b910dcd065bcbda36bec" kind="dir">
+    <compoundname>/Users/hoff/Retro/virtualc64/Emulator/Media</compoundname>
+    <innerfile refid="_any_collection_8cpp">AnyCollection.cpp</innerfile>
+    <innerfile refid="_any_collection_8h">AnyCollection.h</innerfile>
+    <innerfile refid="_any_file_8cpp">AnyFile.cpp</innerfile>
+    <innerfile refid="_any_file_8h">AnyFile.h</innerfile>
+    <innerfile refid="_c_r_t_file_8cpp">CRTFile.cpp</innerfile>
+    <innerfile refid="_c_r_t_file_8h">CRTFile.h</innerfile>
+    <innerfile refid="_d64_file_8cpp">D64File.cpp</innerfile>
+    <innerfile refid="_d64_file_8h">D64File.h</innerfile>
+    <innerfile refid="_file_types_8h">FileTypes.h</innerfile>
+    <innerfile refid="_folder_8cpp">Folder.cpp</innerfile>
+    <innerfile refid="_folder_8h">Folder.h</innerfile>
+    <innerfile refid="_g64_file_8cpp">G64File.cpp</innerfile>
+    <innerfile refid="_g64_file_8h">G64File.h</innerfile>
+    <innerfile refid="_p00_file_8cpp">P00File.cpp</innerfile>
+    <innerfile refid="_p00_file_8h">P00File.h</innerfile>
+    <innerfile refid="_p_e_t_name_8h">PETName.h</innerfile>
+    <innerfile refid="_p_r_g_file_8cpp">PRGFile.cpp</innerfile>
+    <innerfile refid="_p_r_g_file_8h">PRGFile.h</innerfile>
+    <innerfile refid="_rom_file_8cpp">RomFile.cpp</innerfile>
+    <innerfile refid="_rom_file_8h">RomFile.h</innerfile>
+    <innerfile refid="_script_8cpp">Script.cpp</innerfile>
+    <innerfile refid="_script_8h">Script.h</innerfile>
+    <innerfile refid="_snapshot_8cpp">Snapshot.cpp</innerfile>
+    <innerfile refid="_snapshot_8h">Snapshot.h</innerfile>
+    <innerfile refid="_t64_file_8cpp">T64File.cpp</innerfile>
+    <innerfile refid="_t64_file_8h">T64File.h</innerfile>
+    <innerfile refid="_t_a_p_file_8cpp">TAPFile.cpp</innerfile>
+    <innerfile refid="_t_a_p_file_8h">TAPFile.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/"/>
+  </compounddef>
+</doxygen>

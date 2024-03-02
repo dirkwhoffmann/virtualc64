@@ -1,0 +1,114 @@
+\doxysection{Geo\+Ram.\+h}
+\hypertarget{_geo_ram_8h_source}{}\label{_geo_ram_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/GeoRam.h@{/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/GeoRam.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Cartridge.h"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }GeoRAM\ final\ :\ \textcolor{keyword}{public}\ Cartridge\ \{}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ CartridgeTraits\ traits\ =\ \{}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ .type\ \ \ \ \ \ \ =\ CRT\_GEO\_RAM,}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ .title\ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}GeoRam"{}},}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ .memory\ \ \ \ \ =\ 0,\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ in\ constructor}}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ .battery\ \ \ \ =\ \textcolor{keyword}{true}}
+\DoxyCodeLine{00027\ \ \ \ \ \};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ CartridgeTraits\ \&getTraits()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ traits;\ \}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//\ Selected\ RAM\ bank}}
+\DoxyCodeLine{00034\ \ \ \ \ u8\ bank\ =\ 0;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{comment}{//\ Selected\ page\ inside\ the\ selected\ RAM\ bank}}
+\DoxyCodeLine{00037\ \ \ \ \ u8\ page\ =\ 0;}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ Initializing}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ GeoRAM(C64\ \&ref)\ :\ Cartridge(ref)\ \{\ \};}
+\DoxyCodeLine{00047\ \ \ \ \ GeoRAM(C64\ \&ref,\ isize\ kb);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreObject}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ \_dump(Category\ category,\ std::ostream\&\ os)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreComponent}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ GeoRAM\&\ operator=\ (\textcolor{keyword}{const}\ GeoRAM\&\ other)\ \{}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ Cartridge::operator=(other);}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ CLONE(bank)}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ CLONE(page)}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00073\ \ \ \ \ \}}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ clone(\textcolor{keyword}{const}\ Cartridge\ \&other)\textcolor{keyword}{\ override\ }\{\ *\textcolor{keyword}{this}\ =\ (\textcolor{keyword}{const}\ GeoRAM\ \&)other;\ \}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{void}\ serialize(T\&\ worker)}
+\DoxyCodeLine{00078\ \ \ \ \ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (isResetter(worker))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ <<\ bank}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ <<\ page;}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \}\ CARTRIDGE\_SERIALIZERS(serialize);}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{comment}{//\ Accessing\ cartridge\ memory}}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ u8\ peekIO1(u16\ addr)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00096\ \ \ \ \ u8\ spypeekIO1(u16\ addr)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00097\ \ \ \ \ u8\ peekIO2(u16\ addr)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00098\ \ \ \ \ u8\ spypeekIO2(u16\ addr)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{void}\ pokeIO1(u16\ addr,\ u8\ value)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{void}\ pokeIO2(u16\ addr,\ u8\ value)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{comment}{//\ Maps\ an\ address\ to\ the\ proper\ position\ in\ cartridge\ RAM}}
+\DoxyCodeLine{00105\ \ \ \ \ isize\ offset(u8\ addr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00106\ \};}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \}}
+
+\end{DoxyCode}

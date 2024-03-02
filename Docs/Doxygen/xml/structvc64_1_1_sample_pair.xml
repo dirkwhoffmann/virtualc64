@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="structvc64_1_1_sample_pair" kind="struct" language="C++" prot="public">
+    <compoundname>vc64::SamplePair</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structvc64_1_1_sample_pair_1a86a53ec9bebfa2bd3687a06f1e09ec13" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float vc64::SamplePair::left</definition>
+        <argsstring></argsstring>
+        <name>left</name>
+        <qualifiedname>vc64::SamplePair::left</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" line="23" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_sample_pair_1a2bab8091727c20a145c8e0fff379ae12" prot="public" static="no" mutable="no">
+        <type>float</type>
+        <definition>float vc64::SamplePair::right</definition>
+        <argsstring></argsstring>
+        <name>right</name>
+        <qualifiedname>vc64::SamplePair::right</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" line="23" column="32" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" bodystart="23" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" line="23" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" bodystart="23" bodyend="23"/>
+    <listofallmembers>
+      <member refid="structvc64_1_1_sample_pair_1a86a53ec9bebfa2bd3687a06f1e09ec13" prot="public" virt="non-virtual"><scope>vc64::SamplePair</scope><name>left</name></member>
+      <member refid="structvc64_1_1_sample_pair_1a2bab8091727c20a145c8e0fff379ae12" prot="public" virt="non-virtual"><scope>vc64::SamplePair</scope><name>right</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

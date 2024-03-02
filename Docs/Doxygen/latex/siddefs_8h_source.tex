@@ -1,0 +1,97 @@
+\doxysection{siddefs.\+h}
+\hypertarget{siddefs_8h_source}{}\label{siddefs_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/siddefs.h@{/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/siddefs.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ \ This\ file\ is\ part\ of\ reSID,\ a\ MOS6581\ SID\ emulator\ engine.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ \ Copyright\ (C)\ 2010\ \ Dag\ Lem\ <resid@nimrod.no>}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ \ This\ program\ is\ free\ software;\ you\ can\ redistribute\ it\ and/or\ modify}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ \ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ the\ Free\ Software\ Foundation;\ either\ version\ 2\ of\ the\ License,\ or}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ \ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ \ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{//}}
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ \ along\ with\ this\ program;\ if\ not,\ write\ to\ the\ Free\ Software}}
+\DoxyCodeLine{00017\ \textcolor{comment}{//\ \ Foundation,\ Inc.,\ 59\ Temple\ Place,\ Suite\ 330,\ Boston,\ MA\ \ 02111-\/1307\ \ USA}}
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#ifndef\ RESID\_SIDDEFS\_H}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ RESID\_SIDDEFS\_H}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{comment}{//\ Compilation\ configuration.}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ RESID\_INLINING\ 1}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#define\ RESID\_INLINE\ inline}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ RESID\_BRANCH\_HINTS\ 1}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{comment}{//\ Compiler\ specifics.}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ HAVE\_BOOL\ 1}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ HAVE\_BUILTIN\_EXPECT\ 1}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ HAVE\_LOG1P\ 1}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{comment}{//\ Define\ bool,\ true,\ and\ false\ for\ C++\ compilers\ that\ lack\ these\ keywords.}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#if\ !HAVE\_BOOL}}
+\DoxyCodeLine{00035\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{int}\ bool;}
+\DoxyCodeLine{00036\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{true}\ =\ 1;}
+\DoxyCodeLine{00037\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ \textcolor{keyword}{false}\ =\ 0;}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#if\ HAVE\_LOG1P}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ HAS\_LOG1P}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{comment}{//\ Branch\ prediction\ macros,\ lifted\ off\ the\ Linux\ kernel.}}
+\DoxyCodeLine{00045\ \textcolor{comment}{//\ \#define\ likely(x)\ \ \ \ \ \ \_\_builtin\_expect(!!(x),\ 1)}}
+\DoxyCodeLine{00046\ \textcolor{comment}{//\ \#define\ unlikely(x)\ \ \ \ \_\_builtin\_expect(!!(x),\ 0)}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#ifndef\ likely}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#define\ likely(x)\ \ \ (x)}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#define\ unlikely(x)\ (x)}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{keyword}{namespace\ }reSID\ \{}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{comment}{//\ We\ could\ have\ used\ the\ smallest\ possible\ data\ type\ for\ each\ SID\ register,}}
+\DoxyCodeLine{00055\ \textcolor{comment}{//\ however\ this\ would\ give\ a\ slower\ engine\ because\ of\ data\ type\ conversions.}}
+\DoxyCodeLine{00056\ \textcolor{comment}{//\ An\ int\ is\ assumed\ to\ be\ at\ least\ 32\ bits\ (necessary\ in\ the\ types\ reg24}}
+\DoxyCodeLine{00057\ \textcolor{comment}{//\ and\ cycle\_count).\ GNU\ does\ not\ support\ 16-\/bit\ machines}}
+\DoxyCodeLine{00058\ \textcolor{comment}{//\ (GNU\ Coding\ Standards:\ Portability\ between\ CPUs),\ so\ this\ should\ be}}
+\DoxyCodeLine{00059\ \textcolor{comment}{//\ a\ valid\ assumption.}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ reg4;}
+\DoxyCodeLine{00062\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ reg8;}
+\DoxyCodeLine{00063\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ reg12;}
+\DoxyCodeLine{00064\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ reg16;}
+\DoxyCodeLine{00065\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ reg24;}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{int}\ cycle\_count;}
+\DoxyCodeLine{00068\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{short}\ short\_point[2];}
+\DoxyCodeLine{00069\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{double}\ double\_point[2];}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \textcolor{keyword}{enum}\ chip\_model\ \{\ MOS6581,\ MOS8580\ \};}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{keyword}{enum}\ sampling\_method\ \{}
+\DoxyCodeLine{00074\ \ \ \ \ SAMPLE\_FAST,\ }
+\DoxyCodeLine{00075\ \ \ \ \ SAMPLE\_INTERPOLATE,}
+\DoxyCodeLine{00076\ \ \ \ \ SAMPLE\_RESAMPLE,\ }
+\DoxyCodeLine{00077\ \ \ \ \ SAMPLE\_RESAMPLE\_FASTMEM\ }
+\DoxyCodeLine{00078\ \};}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \}\ \textcolor{comment}{//\ namespace\ reSID}}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}}
+\DoxyCodeLine{00083\ \{}
+\DoxyCodeLine{00084\ \textcolor{preprocessor}{\#ifndef\ RESID\_VERSION\_CC}}
+\DoxyCodeLine{00085\ \textcolor{keyword}{extern}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ resid\_version\_string;}
+\DoxyCodeLine{00086\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00087\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ resid\_version\_string\ =\ \textcolor{stringliteral}{"{}VICE\ 3.2"{}};}
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00089\ \}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ not\ RESID\_SIDDEFS\_H}}
+
+\end{DoxyCode}

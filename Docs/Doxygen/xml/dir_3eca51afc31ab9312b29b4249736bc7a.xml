@@ -3,7 +3,20 @@
   <compounddef id="dir_3eca51afc31ab9312b29b4249736bc7a" kind="dir">
     <compoundname>/Users/hoff/Retro/virtualc64/Emulator</compoundname>
     <innerdir refid="dir_9110424d8d329f8b6a25ed0145171490">/Users/hoff/Retro/virtualc64/Emulator/Base</innerdir>
+    <innerdir refid="dir_c2beb47eaebe98e9380045ecd1929e73">/Users/hoff/Retro/virtualc64/Emulator/Cartridges</innerdir>
+    <innerdir refid="dir_f1dd3ab951341472f6f0525fe7f46f05">/Users/hoff/Retro/virtualc64/Emulator/Components</innerdir>
+    <innerdir refid="dir_899058ae01f0eb85e2d1a53e03af8bff">/Users/hoff/Retro/virtualc64/Emulator/FileSystems</innerdir>
+    <innerdir refid="dir_05d809685911b910dcd065bcbda36bec">/Users/hoff/Retro/virtualc64/Emulator/Media</innerdir>
+    <innerdir refid="dir_58a291701bf16a57ae56b95613394650">/Users/hoff/Retro/virtualc64/Emulator/Misc</innerdir>
+    <innerdir refid="dir_caa8e5cf067d1e3bd80d413bc762db78">/Users/hoff/Retro/virtualc64/Emulator/Peripherals</innerdir>
+    <innerdir refid="dir_e7bcbed7319f2a350050e6b463e2c1e2">/Users/hoff/Retro/virtualc64/Emulator/Utilities</innerdir>
+    <innerfile refid="config_8cpp">config.cpp</innerfile>
+    <innerfile refid="config_8h">config.h</innerfile>
+    <innerfile refid="_headless_8cpp">Headless.cpp</innerfile>
+    <innerfile refid="_headless_8h">Headless.h</innerfile>
+    <innerfile refid="_virtual_c64_8cpp">VirtualC64.cpp</innerfile>
     <innerfile refid="_virtual_c64_8h">VirtualC64.h</innerfile>
+    <innerfile refid="_virtual_c64_types_8h">VirtualC64Types.h</innerfile>
     <briefdescription>
     </briefdescription>
     <detaileddescription>

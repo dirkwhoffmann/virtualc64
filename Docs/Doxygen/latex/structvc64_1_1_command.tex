@@ -1,0 +1,113 @@
+\doxysection{vc64\+::Command Struct Reference}
+\hypertarget{structvc64_1_1_command}{}\label{structvc64_1_1_command}\index{vc64::Command@{vc64::Command}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structvc64_1_1_command_a4994472a77c4eed0cb8103369bda1b2a}\label{structvc64_1_1_command_a4994472a77c4eed0cb8103369bda1b2a} 
+void {\bfseries push\+Group} (const string \&description, const string \&postfix="{}\+:"{})
+\item 
+\Hypertarget{structvc64_1_1_command_aa868bd965f265257abd9bac09261ff67}\label{structvc64_1_1_command_aa868bd965f265257abd9bac09261ff67} 
+void {\bfseries pop\+Group} ()
+\item 
+\Hypertarget{structvc64_1_1_command_a1e538661530d8e266d06d3ae595b6658}\label{structvc64_1_1_command_a1e538661530d8e266d06d3ae595b6658} 
+void {\bfseries add} (const std\+::vector$<$ string $>$ \&tokens, const string \&help, std\+::function$<$ void(Arguments \&, long)$>$ func=nullptr, long param=0)
+\item 
+\Hypertarget{structvc64_1_1_command_af594fc5279f3d9260d959052bd18fe79}\label{structvc64_1_1_command_af594fc5279f3d9260d959052bd18fe79} 
+void {\bfseries add} (const std\+::vector$<$ string $>$ \&tokens, std\+::pair$<$ const string \&, const string \& $>$ help, std\+::function$<$ void(Arguments \&, long)$>$ func=nullptr, long param=0)
+\item 
+\Hypertarget{structvc64_1_1_command_afc67ed1e0c32b8ea3fb18c112c9df253}\label{structvc64_1_1_command_afc67ed1e0c32b8ea3fb18c112c9df253} 
+void {\bfseries add} (const std\+::vector$<$ string $>$ \&tokens, const std\+::vector$<$ string $>$ \&args, const string \&help, std\+::function$<$ void(Arguments \&, long)$>$ func=nullptr, long param=0)
+\item 
+\Hypertarget{structvc64_1_1_command_a60b7e987e4c1b02168c93b88578b848e}\label{structvc64_1_1_command_a60b7e987e4c1b02168c93b88578b848e} 
+void {\bfseries add} (const std\+::vector$<$ string $>$ \&tokens, const std\+::vector$<$ string $>$ \&args, std\+::pair$<$ const string \&, const string \& $>$ help, std\+::function$<$ void(Arguments \&, long)$>$ func=nullptr, long param=0)
+\item 
+\Hypertarget{structvc64_1_1_command_a47f6dad0edc01d7e13fc8985cee53b55}\label{structvc64_1_1_command_a47f6dad0edc01d7e13fc8985cee53b55} 
+void {\bfseries add} (const std\+::vector$<$ string $>$ \&tokens, const std\+::vector$<$ string $>$ \&required\+Args, const std\+::vector$<$ string $>$ \&optional\+Args, const string \&help, std\+::function$<$ void(Arguments \&, long)$>$ func=nullptr, long param=0)
+\item 
+\Hypertarget{structvc64_1_1_command_add49561841052dec74abe9f5b7e4e074}\label{structvc64_1_1_command_add49561841052dec74abe9f5b7e4e074} 
+void {\bfseries add} (const std\+::vector$<$ string $>$ \&tokens, const std\+::vector$<$ string $>$ \&required\+Args, const std\+::vector$<$ string $>$ \&optional\+Args, std\+::pair$<$ const string \&, const string \& $>$ help, std\+::function$<$ void(Arguments \&, long)$>$ func=nullptr, long param=0)
+\item 
+\Hypertarget{structvc64_1_1_command_a66806b1a99aea8c6f01256b47a9e0041}\label{structvc64_1_1_command_a66806b1a99aea8c6f01256b47a9e0041} 
+void {\bfseries clone} (const string \&alias, const std\+::vector$<$ string $>$ \&tokens, long param=0)
+\item 
+\Hypertarget{structvc64_1_1_command_aa2a0afcff07842a9a2c6fabd5d9d8d8a}\label{structvc64_1_1_command_aa2a0afcff07842a9a2c6fabd5d9d8d8a} 
+void {\bfseries clone} (const string \&alias, const std\+::vector$<$ string $>$ \&tokens, const string \&help, long param=0)
+\item 
+\Hypertarget{structvc64_1_1_command_a2b67d192ec2570e88692dd53f564eced}\label{structvc64_1_1_command_a2b67d192ec2570e88692dd53f564eced} 
+isize {\bfseries min\+Args} () const
+\item 
+\Hypertarget{structvc64_1_1_command_a5a8a1bf89b541ca325b68ffabd1fe75e}\label{structvc64_1_1_command_a5a8a1bf89b541ca325b68ffabd1fe75e} 
+isize {\bfseries opt\+Args} () const
+\item 
+\Hypertarget{structvc64_1_1_command_a7b5b3b2d6da183f7386e2aa0e0639566}\label{structvc64_1_1_command_a7b5b3b2d6da183f7386e2aa0e0639566} 
+isize {\bfseries max\+Args} () const
+\item 
+\Hypertarget{structvc64_1_1_command_a0c5baceb4bd44bf0049e8eb91f6bde45}\label{structvc64_1_1_command_a0c5baceb4bd44bf0049e8eb91f6bde45} 
+const \mbox{\hyperlink{structvc64_1_1_command}{Command}} \texorpdfstring{$\ast$}{*} {\bfseries seek} (const string \&token) const
+\item 
+\Hypertarget{structvc64_1_1_command_a0790f7b7e1e60fabc4c10158e46dc4a6}\label{structvc64_1_1_command_a0790f7b7e1e60fabc4c10158e46dc4a6} 
+\mbox{\hyperlink{structvc64_1_1_command}{Command}} \texorpdfstring{$\ast$}{*} {\bfseries seek} (const string \&token)
+\item 
+\Hypertarget{structvc64_1_1_command_aa88016ea941fff04326b13e01cb63431}\label{structvc64_1_1_command_aa88016ea941fff04326b13e01cb63431} 
+const \mbox{\hyperlink{structvc64_1_1_command}{Command}} \texorpdfstring{$\ast$}{*} {\bfseries seek} (const std\+::vector$<$ string $>$ \&tokens) const
+\item 
+\Hypertarget{structvc64_1_1_command_a99e90761074eb7517146448f39809fa3}\label{structvc64_1_1_command_a99e90761074eb7517146448f39809fa3} 
+\mbox{\hyperlink{structvc64_1_1_command}{Command}} \texorpdfstring{$\ast$}{*} {\bfseries seek} (const std\+::vector$<$ string $>$ \&tokens)
+\item 
+\Hypertarget{structvc64_1_1_command_a84b0149410fdf5dbf9b4b4af551c9a08}\label{structvc64_1_1_command_a84b0149410fdf5dbf9b4b4af551c9a08} 
+std\+::vector$<$ const \mbox{\hyperlink{structvc64_1_1_command}{Command}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries filter\+Prefix} (const string \&prefix) const
+\item 
+\Hypertarget{structvc64_1_1_command_acc489f7e6a78e3f5796d1cc612c6fff4}\label{structvc64_1_1_command_acc489f7e6a78e3f5796d1cc612c6fff4} 
+string {\bfseries auto\+Complete} (const string \&token)
+\item 
+\Hypertarget{structvc64_1_1_command_a91bbd9802bcd0bf13631affdccb6878d}\label{structvc64_1_1_command_a91bbd9802bcd0bf13631affdccb6878d} 
+string {\bfseries usage} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structvc64_1_1_command_a9b369fed7a1e93dad4cb2e19272e9457}\label{structvc64_1_1_command_a9b369fed7a1e93dad4cb2e19272e9457} 
+isize {\bfseries group}
+\item 
+\Hypertarget{structvc64_1_1_command_aa8c52fff2e2de80d9bf1604b2b11af47}\label{structvc64_1_1_command_aa8c52fff2e2de80d9bf1604b2b11af47} 
+string {\bfseries name}
+\item 
+\Hypertarget{structvc64_1_1_command_ad82012a9abbdc5caa9fb80a5935b73bb}\label{structvc64_1_1_command_ad82012a9abbdc5caa9fb80a5935b73bb} 
+string {\bfseries full\+Name}
+\item 
+\Hypertarget{structvc64_1_1_command_a83be8c969e5cba315624fefd0b81bb44}\label{structvc64_1_1_command_a83be8c969e5cba315624fefd0b81bb44} 
+std\+::pair$<$ string, string $>$ {\bfseries help}
+\item 
+\Hypertarget{structvc64_1_1_command_a1d5ac196d2125f99d042318c56764a54}\label{structvc64_1_1_command_a1d5ac196d2125f99d042318c56764a54} 
+std\+::vector$<$ string $>$ {\bfseries required\+Args}
+\item 
+\Hypertarget{structvc64_1_1_command_ab1ab1c4c2c0ca4cd580bc523860c39a6}\label{structvc64_1_1_command_ab1ab1c4c2c0ca4cd580bc523860c39a6} 
+std\+::vector$<$ string $>$ {\bfseries optional\+Args}
+\item 
+\Hypertarget{structvc64_1_1_command_aa967aff7315a5266fa9ff62bc0c0a1e5}\label{structvc64_1_1_command_aa967aff7315a5266fa9ff62bc0c0a1e5} 
+std\+::vector$<$ \mbox{\hyperlink{structvc64_1_1_command}{Command}} $>$ {\bfseries sub\+Commands}
+\item 
+\Hypertarget{structvc64_1_1_command_aa918f5ca7c93378c57792413e6fb89d9}\label{structvc64_1_1_command_aa918f5ca7c93378c57792413e6fb89d9} 
+std\+::function$<$ void(Arguments \&, long) {\bfseries callback} ) = nullptr
+\item 
+\Hypertarget{structvc64_1_1_command_ad96893cced262213ab4217d63abebf78}\label{structvc64_1_1_command_ad96893cced262213ab4217d63abebf78} 
+long {\bfseries param} = 0
+\item 
+\Hypertarget{structvc64_1_1_command_af8e66dfafa277808e872386ec68e7b01}\label{structvc64_1_1_command_af8e66dfafa277808e872386ec68e7b01} 
+bool {\bfseries hidden} = false
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structvc64_1_1_command_aa63477a8f5ae00eef27e63b94e2ebde3}\label{structvc64_1_1_command_aa63477a8f5ae00eef27e63b94e2ebde3} 
+static std\+::vector$<$ string $>$ {\bfseries groups}
+\item 
+\Hypertarget{structvc64_1_1_command_ab0efb7809537cde36bf747b64bc31126}\label{structvc64_1_1_command_ab0efb7809537cde36bf747b64bc31126} 
+static std\+::stack$<$ isize $>$ {\bfseries group\+Stack}
+\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Misc/\+Retro\+Shell/Command.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Misc/\+Retro\+Shell/Command.\+cpp\end{DoxyCompactItemize}

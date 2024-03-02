@@ -1,0 +1,110 @@
+\doxysection{Defaults.\+h}
+\hypertarget{_defaults_8h_source}{}\label{_defaults_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h@{/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}CoreObject.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_option_types_8h}{OptionTypes.h}}"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}Concurrency.h"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}IOUtils.h"{}}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }Defaults\ final\ :\ \textcolor{keyword}{public}\ CoreObject,\ \textcolor{keyword}{public}\ Dumpable\ \{}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{mutable}\ util::ReentrantMutex\ mutex;}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{comment}{//\ Key-\/value\ storage}}
+\DoxyCodeLine{00027\ \ \ \ \ std::map\ <string,\ string>\ values;}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{comment}{//\ Fallback\ values\ (used\ if\ no\ value\ is\ set)}}
+\DoxyCodeLine{00030\ \ \ \ \ std::map\ <string,\ string>\ fallbacks;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{comment}{//\ Initializing}}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ Defaults();}
+\DoxyCodeLine{00040\ \ \ \ \ Defaults(Defaults\ \textcolor{keyword}{const}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ operator=(Defaults\ \textcolor{keyword}{const}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreObject}}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Properties"{}};\ \}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ \_dump(Category\ category,\ std::ostream\&\ os)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{comment}{//\ Loading\ and\ saving}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ Loads\ a\ properties\ file\ from\ disk}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ load(\textcolor{keyword}{const}\ fs::path\ \&path)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ load(std::ifstream\ \&stream)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ load(std::stringstream\ \&stream)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//\ Saves\ a\ properties\ file\ to\ disk}}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ save(\textcolor{keyword}{const}\ fs::path\ \&path)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{void}\ save(std::ofstream\ \&stream)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{void}\ save(std::stringstream\ \&stream)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{comment}{//\ Working\ with\ key-\/value\ pairs}}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{string}\ getString(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&key)\ \textcolor{keyword}{const}\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00078\ \ \ \ \ i64\ getInt(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&key)\ \textcolor{keyword}{const}\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00079\ \ \ \ \ i64\ get(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option)\ \textcolor{keyword}{const}\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00080\ \ \ \ \ i64\ get(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option,\ isize\ nr)\ \textcolor{keyword}{const}\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{string}\ getFallback(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&key)\ \textcolor{keyword}{const}\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{void}\ setString(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&key,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&value);}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{void}\ set(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option,\ i64\ value);}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{void}\ set(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option,\ isize\ nr,\ i64\ value);}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{void}\ set(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option,\ std::vector\ <isize>\ nrs,\ i64\ value);}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{void}\ setFallback(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&key,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&value);}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{void}\ setFallback(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&value);}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{void}\ setFallback(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option,\ i64\ value);}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ setFallback(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option,\ isize\ nr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&value);}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{void}\ setFallback(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option,\ isize\ nr,\ i64\ value);}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{void}\ setFallback(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option,\ std::vector\ <isize>\ nrs,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&value);}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{void}\ setFallback(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option,\ std::vector\ <isize>\ nrs,\ i64\ value);}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{void}\ remove();}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{void}\ remove(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&key)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{void}\ remove(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{void}\ remove(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option,\ isize\ nr)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{void}\ remove(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option,\ std::vector\ <isize>\ nrs)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00102\ \};}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \}}
+
+\end{DoxyCode}

@@ -2,8 +2,8 @@
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
   <compounddef id="classvc64_1_1_cmd_queue" kind="class" language="C++" prot="public" final="yes">
     <compoundname>vc64::CmdQueue</compoundname>
-    <basecompoundref prot="private" virt="non-virtual">CoreObject</basecompoundref>
-    <basecompoundref prot="private" virt="non-virtual">Synchronizable</basecompoundref>
+    <basecompoundref prot="private" virt="non-virtual">vc64::CoreObject</basecompoundref>
+    <basecompoundref prot="private" virt="non-virtual">vc64::Synchronizable</basecompoundref>
     <sectiondef kind="private-attrib">
       <memberdef kind="variable" id="classvc64_1_1_cmd_queue_1ad2293c5cfa902e8e0b2a79fadc7f6f01" prot="private" static="no" mutable="no">
         <type>util::RingBuffer&lt; Cmd, 128 &gt;</type>
@@ -17,7 +17,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" line="26" column="23" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" bodystart="26" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" line="27" column="23" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" bodystart="27" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="classvc64_1_1_cmd_queue_1a7f92d2826b6df9237c415f5418b97577" prot="private" static="no" mutable="no">
         <type>std::atomic&lt; bool &gt;</type>
@@ -32,7 +32,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" line="29" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" bodystart="29" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" line="30" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" bodystart="30" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <sectiondef kind="private-func">
@@ -48,7 +48,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" line="43" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" bodystart="43" bodyend="43"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" line="44" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" bodystart="44" bodyend="44"/>
       </memberdef>
     </sectiondef>
     <sectiondef kind="public-func">
@@ -68,7 +68,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" line="53" column="10"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" line="54" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.cpp" bodystart="19" bodyend="33"/>
       </memberdef>
       <memberdef kind="function" id="classvc64_1_1_cmd_queue_1a738fe1bf15f42321314a5f0384a5631a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>bool</type>
@@ -86,46 +86,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" line="57" column="10"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" line="58" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.cpp" bodystart="45" bodyend="56"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <inheritancegraph>
-      <node id="2">
-        <label>CoreObject</label>
-      </node>
-      <node id="3">
-        <label>Synchronizable</label>
-      </node>
-      <node id="1">
-        <label>vc64::CmdQueue</label>
-        <link refid="classvc64_1_1_cmd_queue"/>
-        <childnode refid="2" relation="private-inheritance">
-        </childnode>
-        <childnode refid="3" relation="private-inheritance">
-        </childnode>
-      </node>
-    </inheritancegraph>
-    <collaborationgraph>
-      <node id="2">
-        <label>CoreObject</label>
-      </node>
-      <node id="3">
-        <label>Synchronizable</label>
-      </node>
-      <node id="1">
-        <label>vc64::CmdQueue</label>
-        <link refid="classvc64_1_1_cmd_queue"/>
-        <childnode refid="2" relation="private-inheritance">
-        </childnode>
-        <childnode refid="3" relation="private-inheritance">
-        </childnode>
-      </node>
-    </collaborationgraph>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" line="23" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" bodystart="23" bodyend="58"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" line="24" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" bodystart="24" bodyend="59"/>
     <listofallmembers>
       <member refid="classvc64_1_1_cmd_queue_1a7f92d2826b6df9237c415f5418b97577" prot="private" virt="non-virtual"><scope>vc64::CmdQueue</scope><name>empty</name></member>
       <member refid="classvc64_1_1_cmd_queue_1a4df295acf05e7089d1f60fc2f392954a" prot="private" virt="non-virtual"><scope>vc64::CmdQueue</scope><name>getDescription</name></member>

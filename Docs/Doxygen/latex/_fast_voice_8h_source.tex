@@ -1,0 +1,371 @@
+\doxysection{Fast\+Voice.\+h}
+\hypertarget{_fast_voice_8h_source}{}\label{_fast_voice_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h@{/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ This\ file\ belongs\ to\ the\ FastSID\ implementation\ of\ VirtualC64,}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ an\ adaption\ of\ the\ code\ used\ in\ VICE\ 3.1,\ the\ Versatile\ Commodore\ Emulator.}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ Original\ code\ written\ by}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ \ Teemu\ Rantanen\ <tvr@cs.hut.fi>}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ Adapted\ for\ VirtualC64\ by}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ \ Dirk\ Hoffmann}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00011\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ \ This\ program\ is\ free\ software;\ you\ can\ redistribute\ it\ and/or\ modify}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ \ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ \ the\ Free\ Software\ Foundation;\ either\ version\ 2\ of\ the\ License,\ or}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ \ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ \ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ *\ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ *\ \ along\ with\ this\ program;\ if\ not,\ write\ to\ the\ Free\ Software}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ *\ \ Foundation,\ Inc.,\ 59\ Temple\ Place,\ Suite\ 330,\ Boston,\ MA}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ *\ \ 02111-\/1307\ \ USA.}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#include\ "{}SIDTypes.h"{}}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#include\ "{}SubComponent.h"{}}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{using\ namespace\ }vc64;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{comment}{//\ Waveform\ types}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#define\ FASTSID\_TRIANGLE\ 0x10}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ FASTSID\_SAW\ \ \ \ \ \ 0x20}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#define\ FASTSID\_PULSE\ \ \ \ 0x40}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#define\ FASTSID\_NOISE\ \ \ \ 0x80}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{comment}{//\ Filter\ types}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#define\ FASTSID\_HIGH\_PASS\ 0x40}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#define\ FASTSID\_BAND\_PASS\ 0x20}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#define\ FASTSID\_LOW\_PASS\ \ 0x10}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{comment}{//\ ADSR\ state\ (Attack,\ Decay,\ Sustain,\ Release)}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#define\ FASTSID\_ATTACK\ \ \ 0}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#define\ FASTSID\_DECAY\ \ \ \ 1}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#define\ FASTSID\_SUSTAIN\ \ 2}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#define\ FASTSID\_RELEASE\ \ 3}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#define\ FASTSID\_IDLE\ \ \ \ \ 4}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{comment}{//\ Noise\ magic}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{comment}{//\ The\ noise\ waveform\ of\ the\ SID\ is\ generated\ by\ a\ simple\ 23\ bit\ LFSR.}}
+\DoxyCodeLine{00057\ \textcolor{comment}{//\ On\ shifting,\ bit\ 0\ is\ filled\ with\ bit\ 22\ EXOR\ bit\ 17.}}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#define\ NSHIFT(v,\ n)\ \(\backslash\)}}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{(((v)\ <<\ (n))\ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{|\ ((((v)\ >>\ (23\ -\/\ (n)))\ \string^\ (v\ >>\ (18\ -\/\ (n))))\ \&\ ((1\ <<\ (n))\ -\/\ 1)))}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ NVALUE(v)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{(noiseLSB[v\ \&\ 0xff]\ |\ noiseMID[(v\ >>\ 8)\ \&\ 0xff]\ \(\backslash\)}}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{|\ noiseMSB[(v\ >>\ 16)\ \&\ 0xff])}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ NSEED\ 0x7ffff8}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{keyword}{class\ }FastVoice\ final\ :\ \textcolor{keyword}{public}\ SubComponent\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }FastSID;}
+\DoxyCodeLine{00072\ \ \ \ \ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{comment}{//\ Result\ of\ the\ latest\ inspection}}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{mutable}\ SIDInfo\ info\ =\ \{\ \};}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{mutable}\ VoiceInfo\ voiceInfo[3]\ =\ \{\ \};}
+\DoxyCodeLine{00076\ \ \ \ \ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{comment}{//\ Wave\ tables}}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{comment}{//\ The\ first\ index\ determines\ the\ chip\ model\ (0\ =\ old,\ 1\ =\ new).}}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{static}\ u16\ wavetable10[2][4096];}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{static}\ u16\ wavetable20[2][4096];}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{static}\ u16\ wavetable30[2][4096];}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{static}\ u16\ wavetable40[2][8192];}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{static}\ u16\ wavetable50[2][8192];}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{static}\ u16\ wavetable60[2][8192];}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{static}\ u16\ wavetable70[2][8192];}
+\DoxyCodeLine{00086\ \ \ \ \ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{comment}{//\ Noise\ tables}}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{static}\ u8\ noiseMSB[256];}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{static}\ u8\ noiseMID[256];}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{static}\ u8\ noiseLSB[256];}
+\DoxyCodeLine{00091\ \ \ \ \ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{comment}{//\ The\ SID\ voice\ which\ is\ represented\ by\ this\ object\ (1,2,\ or\ 3)}}
+\DoxyCodeLine{00093\ \ \ \ \ isize\ nr;}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{comment}{//\ Pointer\ to\ parent\ SID\ object}}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keyword}{class\ }FastSID\ *fastsid;}
+\DoxyCodeLine{00097\ \ \ \ \ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//\ Pointer\ to\ previous\ voice}}
+\DoxyCodeLine{00099\ \ \ \ \ FastVoice\ *prev;}
+\DoxyCodeLine{00100\ \ \ \ \ }
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{comment}{//\ Pointer\ to\ SID\ registers\ controlling\ this\ voice}}
+\DoxyCodeLine{00102\ \ \ \ \ u8\ *sidreg;}
+\DoxyCodeLine{00103\ \ \ \ \ }
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{comment}{//\ Wave\ tables}}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00108\ \ \ \ \ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{comment}{//\ Pointer\ to\ the\ active\ wavetable}}
+\DoxyCodeLine{00110\ \ \ \ \ u16\ *wavetable;}
+\DoxyCodeLine{00111\ \ \ \ \ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{comment}{//\ Wavetable\ offset}}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{comment}{/*\ This\ 32-\/bit\ offset\ is\ added\ to\ the\ counter\ before\ referencing\ the}}
+\DoxyCodeLine{00114\ \textcolor{comment}{\ \ \ \ \ *\ wavetable.\ It\ is\ used\ when\ other\ waveforms\ are\ combined\ with\ pulse}}
+\DoxyCodeLine{00115\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00116\ \ \ \ \ u32\ waveTableOffset;}
+\DoxyCodeLine{00117\ \ \ \ \ }
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{comment}{//\ Counter\ value}}
+\DoxyCodeLine{00119\ \ \ \ \ u32\ waveTableCounter;}
+\DoxyCodeLine{00120\ \ \ \ \ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{comment}{//\ Counter\ steps}}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{comment}{/*\ After\ each\ sample,\ the\ counter\ is\ incremented\ by\ this\ amount.}}
+\DoxyCodeLine{00123\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00124\ \ \ \ \ u32\ step;}
+\DoxyCodeLine{00125\ \ \ \ \ }
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{comment}{//\ Set\ to\ true\ if\ the\ oscillator\ should\ ring\ modulate}}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{bool}\ ringmod;}
+\DoxyCodeLine{00128\ \ \ \ \ }
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{comment}{//\ Waveform\ generator}}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00132\ \ \ \ \ }
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{comment}{//\ Current\ envelope\ phase\ (ATTACK,\ DECAY,\ SUSTAIN,\ RELEASE,\ or\ IDLE)}}
+\DoxyCodeLine{00134\ \ \ \ \ u8\ adsrm;}
+\DoxyCodeLine{00135\ \ \ \ \ }
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{comment}{//\ 31-\/bit\ adsr\ counter}}
+\DoxyCodeLine{00137\ \ \ \ \ u32\ adsr;}
+\DoxyCodeLine{00138\ \ \ \ \ }
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{comment}{//\ adsr\ counter\ step\ per\ sample}}
+\DoxyCodeLine{00140\ \ \ \ \ i32\ adsrInc;}
+\DoxyCodeLine{00141\ \ \ \ \ }
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{comment}{//\ adsr\ sustain\ level\ comparision\ value}}
+\DoxyCodeLine{00143\ \ \ \ \ u32\ adsrCmp;}
+\DoxyCodeLine{00144\ \ \ \ \ }
+\DoxyCodeLine{00145\ \ \ \ \ }
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{comment}{//\ Noise\ generator}}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00149\ \ \ \ \ }
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{comment}{/*\ Noise\ shift\ register}}
+\DoxyCodeLine{00151\ \textcolor{comment}{\ \ \ \ \ *\ The\ Noise\ waveform\ is\ created\ using\ a\ 23-\/bit\ pseudo-\/random\ sequence}}
+\DoxyCodeLine{00152\ \textcolor{comment}{\ \ \ \ \ *\ generator\ (Linear\ Feedback\ Shift\ Register,\ LSFR).}}
+\DoxyCodeLine{00153\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00154\ \ \ \ \ u32\ lsfr;}
+\DoxyCodeLine{00155\ \ \ \ \ }
+\DoxyCodeLine{00156\ \ \ \ \ }
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{comment}{//\ Filter}}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00160\ \ \ \ \ }
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{comment}{//\ Filter\ related\ variables}}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keywordtype}{signed}\ \textcolor{keywordtype}{char}\ filterIO;}
+\DoxyCodeLine{00163\ \ \ \ \ u8\ filterType;}
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keywordtype}{double}\ filterLow;}
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keywordtype}{double}\ filterRef;}
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keywordtype}{double}\ filterDy;}
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keywordtype}{double}\ filterResDy;}
+\DoxyCodeLine{00168\ \ \ \ \ }
+\DoxyCodeLine{00169\ \ \ \ \ }
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{comment}{//\ Initializing}}
+\DoxyCodeLine{00172\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00173\ \ \ \ \ }
+\DoxyCodeLine{00174\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00175\ \ }
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keyword}{using\ }SubComponent::SubComponent;}
+\DoxyCodeLine{00177\ \ \ \ \ }
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ initWaveTables();}
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordtype}{void}\ init(FastSID\ *owner,\ isize\ voiceNr,\ FastVoice\ *prevVoice);}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ \ \ \ \ }
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreObject}}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00186\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00187\ \ \ \ \ }
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}FastVoice"{}};\ \}}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00190\ \ \ \ \ }
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreComponent}}
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00194\ \ \ \ \ }
+\DoxyCodeLine{00195\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00197\ \ \ \ \ FastVoice\&\ operator=\ (\textcolor{keyword}{const}\ FastVoice\&\ other)\ \{}
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ CLONE(waveTableOffset)}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ CLONE(waveTableCounter)}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ CLONE(step)}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ CLONE(ringmod)}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ CLONE(adsrm)}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ CLONE(adsr)}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ CLONE(adsrInc)}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ CLONE(adsrCmp)}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ CLONE(lsfr)}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ CLONE(filterIO)}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ CLONE(filterType)}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ CLONE(filterLow)}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ CLONE(filterRef)}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ CLONE(filterDy)}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ CLONE(filterResDy)}
+\DoxyCodeLine{00214\ }
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00216\ \ \ \ \ \}}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keywordtype}{void}\ serialize(T\&\ worker)}
+\DoxyCodeLine{00220\ \ \ \ \ \{}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ <<\ waveTableOffset}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ <<\ waveTableCounter}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ <<\ step}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ <<\ ringmod}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ <<\ adsrm}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ <<\ adsr}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ <<\ adsrInc}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ <<\ adsrCmp}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ <<\ lsfr}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ <<\ filterIO}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ <<\ filterType}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ <<\ filterLow}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ <<\ filterRef}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ <<\ filterDy}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ <<\ filterResDy;}
+\DoxyCodeLine{00238\ \ \ \ \ \}}
+\DoxyCodeLine{00239\ \ \ \ \ }
+\DoxyCodeLine{00240\ \ \ \ \ \textcolor{keywordtype}{void}\ operator\ <<\ (SerResetter\ \&worker)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{keywordtype}{void}\ operator\ <<\ (SerChecker\ \&worker)\textcolor{keyword}{\ override\ }\{\ serialize(worker);\ \}}
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{keywordtype}{void}\ operator\ <<\ (SerCounter\ \&worker)\textcolor{keyword}{\ override\ }\{\ serialize(worker);\ \}}
+\DoxyCodeLine{00243\ \ \ \ \ \textcolor{keywordtype}{void}\ operator\ <<\ (SerReader\ \&worker)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00244\ \ \ \ \ \textcolor{keywordtype}{void}\ operator\ <<\ (SerWriter\ \&worker)\textcolor{keyword}{\ override\ }\{\ serialize(worker);\ \}}
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00247\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00248\ \ \ \ \ \textcolor{comment}{//\ Analyzing}}
+\DoxyCodeLine{00249\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00250\ \ \ \ \ }
+\DoxyCodeLine{00251\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00252\ \ \ \ \ }
+\DoxyCodeLine{00253\ \ \ \ \ \textcolor{comment}{//\ SIDInfo\ getInfo()\ const\ \{\ return\ CoreComponent::getInfo(info);\ \}}}
+\DoxyCodeLine{00254\ \ \ \ \ VoiceInfo\ getVoiceInfo(isize\ nr)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ voiceInfo[nr];\ \}}
+\DoxyCodeLine{00255\ \ \ \ }
+\DoxyCodeLine{00256\ \ \ \ \ }
+\DoxyCodeLine{00257\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00258\ \ \ \ \ \textcolor{comment}{//\ Accessing}}
+\DoxyCodeLine{00259\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00260\ \ \ \ \ }
+\DoxyCodeLine{00261\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00263\ \ \ \ \ \textcolor{comment}{//\ Updates\ the\ wavetable\ pointer}}
+\DoxyCodeLine{00264\ \ \ \ \ \textcolor{keywordtype}{void}\ updateWaveTablePtr();}
+\DoxyCodeLine{00265\ }
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{comment}{//\ Updates\ internal\ data\ structures}}
+\DoxyCodeLine{00267\ \ \ \ \ \textcolor{comment}{//\ This\ method\ is\ called\ on\ each\ voice\ related\ register\ change}}
+\DoxyCodeLine{00268\ \ \ \ \ \textcolor{keywordtype}{void}\ updateInternals(\textcolor{keywordtype}{bool}\ gateBitFlipped);}
+\DoxyCodeLine{00269\ }
+\DoxyCodeLine{00270\ \ \ \ \ \textcolor{comment}{//\ Sets\ the\ current\ filter\ type}}
+\DoxyCodeLine{00271\ \ \ \ \ \textcolor{keywordtype}{void}\ setFilterType(u8\ type);}
+\DoxyCodeLine{00272\ }
+\DoxyCodeLine{00273\ \ \ \ \ \textcolor{comment}{//\ Change\ ADSR\ state\ and\ all\ related\ variables}}
+\DoxyCodeLine{00274\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_adsr(u8\ fm);}
+\DoxyCodeLine{00275\ \ \ \ \ }
+\DoxyCodeLine{00276\ \ \ \ \ \textcolor{comment}{//\ ADSR\ counter\ triggered\ state\ change}}
+\DoxyCodeLine{00277\ \ \ \ \ \textcolor{keywordtype}{void}\ trigger\_adsr();}
+\DoxyCodeLine{00278\ \ \ \ \ }
+\DoxyCodeLine{00279\ \ \ \ \ \textcolor{comment}{//\ 15-\/bit\ oscillator\ value}}
+\DoxyCodeLine{00280\ \ \ \ \ u32\ doosc();}
+\DoxyCodeLine{00281\ \ \ \ \ }
+\DoxyCodeLine{00282\ \ \ \ \ \textcolor{comment}{//\ Apply\ filter\ effect}}
+\DoxyCodeLine{00283\ \ \ \ \ \textcolor{keywordtype}{void}\ applyFilter();}
+\DoxyCodeLine{00284\ \ \ \ \ }
+\DoxyCodeLine{00285\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00286\ \ \ \ \ \textcolor{comment}{//\ Querying\ configuration\ items}}
+\DoxyCodeLine{00287\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00289\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ currently\ set\ oscillator\ frequency}}
+\DoxyCodeLine{00290\ \ \ \ \ u16\ frequency()\ \{\ \textcolor{keywordflow}{return}\ HI\_LO(sidreg[0x01],\ sidreg[0x00]);\ \}}
+\DoxyCodeLine{00291\ }
+\DoxyCodeLine{00292\ \ \ \ \ \textcolor{comment}{/*\ Returns\ the\ pulse\ width\ of\ the\ pulse\ waveform}}
+\DoxyCodeLine{00293\ \textcolor{comment}{\ \ \ \ \ *\ The\ pulse\ width\ is\ a\ 12-\/bit\ number\ which\ linearly\ controls\ the\ pulse}}
+\DoxyCodeLine{00294\ \textcolor{comment}{\ \ \ \ \ *\ width\ (duty\ cycle)\ of\ the\ pulse\ waveform.}}
+\DoxyCodeLine{00295\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00296\ \ \ \ \ u16\ pulseWidth()\ \{\ \textcolor{keywordflow}{return}\ (u16)((sidreg[3]\ \&\ 0x0F)\ <<\ 8\ |\ sidreg[0x02]);\ \}}
+\DoxyCodeLine{00297\ }
+\DoxyCodeLine{00298\ \ \ \ \ \textcolor{comment}{/*\ Returns\ the\ GATE\ bit\ for\ this\ voice}}
+\DoxyCodeLine{00299\ \textcolor{comment}{\ \ \ \ \ *\ The\ gate\ bit\ controls\ the\ Envelope\ Generator.\ When\ this\ bit\ is\ set\ to\ a}}
+\DoxyCodeLine{00300\ \textcolor{comment}{\ \ \ \ \ *\ one,\ the\ Envelope\ Generator\ is\ Gated\ (triggered)\ and\ the}}
+\DoxyCodeLine{00301\ \textcolor{comment}{\ \ \ \ \ *\ attack/decay/sustain\ cycle\ is\ initiated.\ \ When\ the\ bit\ is\ reset\ to\ a}}
+\DoxyCodeLine{00302\ \textcolor{comment}{\ \ \ \ \ *\ zero,\ the\ release\ cycle\ begins.}}
+\DoxyCodeLine{00303\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00304\ \ \ \ \ \textcolor{keywordtype}{bool}\ gateBit()\ \{\ \textcolor{keywordflow}{return}\ sidreg[0x04]\ \&\ 0x01;\ \}}
+\DoxyCodeLine{00305\ \ \ \ \ }
+\DoxyCodeLine{00306\ \ \ \ \ \textcolor{comment}{/*\ Returns\ the\ SYNC\ bit\ for\ this\ voice}}
+\DoxyCodeLine{00307\ \textcolor{comment}{\ \ \ \ \ *\ If\ this\ bit\ is\ set,\ hard\ sync\ effects\ are\ produced.\ Hard\ sync\ is\ where}}
+\DoxyCodeLine{00308\ \textcolor{comment}{\ \ \ \ \ *\ one\ waveform\ plays\ at\ its\ own\ frequency,\ but\ gets\ reset\ back\ to\ its}}
+\DoxyCodeLine{00309\ \textcolor{comment}{\ \ \ \ \ *\ start\ every\ time\ the\ second\ waveform\ loops.\ It\ is\ responsible\ for\ the}}
+\DoxyCodeLine{00310\ \textcolor{comment}{\ \ \ \ \ *\ rising\ modulating\ sound\ in\ Ben\ Daglish's\ Wilderness\ music\ from\ The\ Last}}
+\DoxyCodeLine{00311\ \textcolor{comment}{\ \ \ \ \ *\ Ninja\ and\ the\ ludicrous\ intro\ noise\ in\ Martin\ Galway's\ Roland's\ Rat\ Race}}
+\DoxyCodeLine{00312\ \textcolor{comment}{\ \ \ \ \ *\ music.}}
+\DoxyCodeLine{00313\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00314\ \ \ \ \ \textcolor{keywordtype}{bool}\ syncBit()\ \{\ \textcolor{keywordflow}{return}\ (sidreg[0x04]\ \&\ 0x02)\ !=\ 0;\ \}}
+\DoxyCodeLine{00315\ \ \ \ \ }
+\DoxyCodeLine{00316\ \ \ \ \ \textcolor{comment}{/*\ Returns\ the\ RING\ MOD\ bit\ of\ the\ control\ register}}
+\DoxyCodeLine{00317\ \textcolor{comment}{\ \ \ \ \ *\ The\ RING\ MOD\ bit,\ when\ set\ to\ a\ one,\ replaces\ the\ Triangle\ waveform}}
+\DoxyCodeLine{00318\ \textcolor{comment}{\ \ \ \ \ *\ output\ of\ Oscillator\ 1\ with\ a\ “Ring\ Modulated”\ combination\ of}}
+\DoxyCodeLine{00319\ \textcolor{comment}{\ \ \ \ \ *\ Oscillators\ 1\ and\ 3.}}
+\DoxyCodeLine{00320\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00321\ \ \ \ \ \textcolor{keywordtype}{bool}\ ringModBit()\ \{\ \textcolor{keywordflow}{return}\ (sidreg[0x04]\ \&\ 0x04)\ !=\ 0;\ \}}
+\DoxyCodeLine{00322\ \ \ \ \ }
+\DoxyCodeLine{00323\ \ \ \ \ \textcolor{comment}{/*\ Returns\ the\ TEST\ bit\ of\ the\ control\ register}}
+\DoxyCodeLine{00324\ \textcolor{comment}{\ \ \ \ \ *\ The\ TEST\ bit,\ when\ set\ to\ a\ one,\ resets\ and\ locks\ Oscillator\ 1\ at\ zero}}
+\DoxyCodeLine{00325\ \textcolor{comment}{\ \ \ \ \ *\ until\ the\ TEST\ bit\ is\ cleared.\ The\ Noise\ waveform\ output\ of\ Oscillator\ 1}}
+\DoxyCodeLine{00326\ \textcolor{comment}{\ \ \ \ \ *\ is\ also\ reset\ and\ the\ Pulse\ waveform\ output\ is\ held\ at\ a\ DC\ level.}}
+\DoxyCodeLine{00327\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00328\ \ \ \ \ \textcolor{keywordtype}{bool}\ testBit()\ \{\ \textcolor{keywordflow}{return}\ (sidreg[0x04]\ \&\ 0x08)\ !=\ 0;\ \}}
+\DoxyCodeLine{00329\ }
+\DoxyCodeLine{00330\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ waveform\ bits\ of\ the\ control\ register}}
+\DoxyCodeLine{00331\ \ \ \ \ u8\ waveform()\ \{\ \textcolor{keywordflow}{return}\ sidreg[0x04]\ \&\ 0xF0;\ \}}
+\DoxyCodeLine{00332\ \ \ \ \ }
+\DoxyCodeLine{00333\ \ \ \ \ \textcolor{comment}{/*\ Returns\ the\ attack\ rate\ for\ the\ envelope\ generator}}
+\DoxyCodeLine{00334\ \textcolor{comment}{\ \ \ \ \ *\ The\ attack\ rate\ is\ a\ 4\ bit\ value\ which\ determines\ how\ rapidly\ the\ output}}
+\DoxyCodeLine{00335\ \textcolor{comment}{\ \ \ \ \ *\ of\ the\ voice\ rises\ from\ zero\ to\ peak\ amplitude\ when\ the\ envelope}}
+\DoxyCodeLine{00336\ \textcolor{comment}{\ \ \ \ \ *\ generator\ is\ gated.}}
+\DoxyCodeLine{00337\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00338\ \ \ \ \ u8\ attackRate()\ \{\ \textcolor{keywordflow}{return}\ sidreg[0x05]\ >>\ 4;\ \}}
+\DoxyCodeLine{00339\ }
+\DoxyCodeLine{00340\ \ \ \ \ \textcolor{comment}{/*\ Returns\ the\ decay\ rate\ for\ the\ envelope\ generator}}
+\DoxyCodeLine{00341\ \textcolor{comment}{\ \ \ \ \ *\ The\ decay\ cycle\ follows\ the\ attack\ cycle\ and\ the\ decay\ rate\ determines}}
+\DoxyCodeLine{00342\ \textcolor{comment}{\ \ \ \ \ *\ how\ rapidly\ the\ output\ falls\ from\ the\ peak\ amplitude\ to\ the\ selected}}
+\DoxyCodeLine{00343\ \textcolor{comment}{\ \ \ \ \ *\ sustain\ level.}}
+\DoxyCodeLine{00344\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00345\ \ \ \ \ u8\ decayRate()\ \{\ \textcolor{keywordflow}{return}\ sidreg[0x05]\ \&\ 0x0F;\ \}}
+\DoxyCodeLine{00346\ }
+\DoxyCodeLine{00347\ \ \ \ \ \textcolor{comment}{/*\ Returns\ the\ decay\ rate\ for\ the\ envelope\ generator}}
+\DoxyCodeLine{00348\ \textcolor{comment}{\ \ \ \ \ *\ The\ sustain\ cycle\ follows\ the\ decay\ cycle\ and\ the\ output\ of\ the\ voice}}
+\DoxyCodeLine{00349\ \textcolor{comment}{\ \ \ \ \ *\ will\ remain\ at\ the\ selected\ sustain\ amplitude\ as\ long\ as\ the\ gate\ bit}}
+\DoxyCodeLine{00350\ \textcolor{comment}{\ \ \ \ \ *\ remains\ set.\ The\ sustain\ levels\ range\ from\ zero\ to\ peak\ amplitude\ in\ 16}}
+\DoxyCodeLine{00351\ \textcolor{comment}{\ \ \ \ \ *\ linear\ steps,\ with\ a\ sustain\ value\ of\ 0\ selecting\ zero\ amplitude\ and\ a}}
+\DoxyCodeLine{00352\ \textcolor{comment}{\ \ \ \ \ *\ sustain\ value\ of\ 15\ selecting\ the\ peak\ amplitude.\ A\ sustain\ value\ of\ 8}}
+\DoxyCodeLine{00353\ \textcolor{comment}{\ \ \ \ \ *\ would\ cause\ the\ voice\ to\ sustain\ at\ an\ amplitude\ one-\/half\ the\ peak}}
+\DoxyCodeLine{00354\ \textcolor{comment}{\ \ \ \ \ *\ amplitude\ reached\ by\ the\ attack\ cycle.}}
+\DoxyCodeLine{00355\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00356\ \ \ \ \ u8\ sustainRate()\ \{\ \textcolor{keywordflow}{return}\ sidreg[0x06]\ >>\ 4;\ \}}
+\DoxyCodeLine{00357\ }
+\DoxyCodeLine{00358\ \ \ \ \ \textcolor{comment}{/*\ Returns\ the\ release\ rate\ for\ the\ envelope\ generator}}
+\DoxyCodeLine{00359\ \textcolor{comment}{\ \ \ \ \ *\ The\ release\ cycle\ follows\ the\ sustain\ cycle\ when\ the\ Gate\ bit\ is\ reset}}
+\DoxyCodeLine{00360\ \textcolor{comment}{\ \ \ \ \ *\ to\ zero.\ At\ this\ time,\ the\ output\ of\ Voice\ 1\ will\ fall\ from\ the\ sustain}}
+\DoxyCodeLine{00361\ \textcolor{comment}{\ \ \ \ \ *\ amplitude\ to\ zero\ amplitude\ at\ the\ selected\ release\ rate.\ The\ 16\ release}}
+\DoxyCodeLine{00362\ \textcolor{comment}{\ \ \ \ \ *\ rates\ are\ identical\ to\ the\ decay\ rates.}}
+\DoxyCodeLine{00363\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00364\ \ \ \ \ u8\ releaseRate()\ \{\ \textcolor{keywordflow}{return}\ sidreg[0x06]\ \&\ 0x0F;\ \}}
+\DoxyCodeLine{00365\ \};}
+
+\end{DoxyCode}

@@ -1,0 +1,877 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="_disk_types_8h" kind="file" language="C++">
+    <compoundname>DiskTypes.h</compoundname>
+    <includes refid="_aliases_8h" local="yes">Aliases.h</includes>
+    <includes refid="_reflection_8h" local="yes">Reflection.h</includes>
+    <includedby refid="_f_s_descriptors_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDescriptors.h</includedby>
+    <includedby refid="_disk_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Disk.h</includedby>
+    <includedby refid="_disk_analyzer_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h</includedby>
+    <includedby refid="_disk_analyzer_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzerTypes.h</includedby>
+    <includedby refid="_virtual_c64_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/VirtualC64Types.h</includedby>
+    <incdepgraph>
+      <node id="2">
+        <label>Aliases.h</label>
+        <link refid="_aliases_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h</label>
+        <link refid="_disk_types_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>Macros.h</label>
+        <link refid="_macros_8h_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>Reflection.h</label>
+        <link refid="_reflection_8h_source"/>
+      </node>
+      <node id="4">
+        <label>Types.h</label>
+        <link refid="_types_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>stdbool.h</label>
+      </node>
+      <node id="6">
+        <label>stdint.h</label>
+      </node>
+      <node id="5">
+        <label>sys/types.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="4">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/C64.h</label>
+        <link refid="_c64_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h</label>
+        <link refid="_emulator_8h_source"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDescriptors.h</label>
+        <link refid="_f_s_descriptors_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h</label>
+        <link refid="_file_system_8h_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Headless.h</label>
+        <link refid="_headless_8h_source"/>
+      </node>
+      <node id="8">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Disk.h</label>
+        <link refid="_disk_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h</label>
+        <link refid="_disk_analyzer_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzerTypes.h</label>
+        <link refid="_disk_analyzer_types_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h</label>
+        <link refid="_disk_types_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h</label>
+        <link refid="_drive_8h_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h</label>
+        <link refid="_virtual_c64_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/VirtualC64Types.h</label>
+        <link refid="_virtual_c64_types_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="struct_track_defaults" prot="public">TrackDefaults</innerclass>
+    <sectiondef kind="enum">
+      <memberdef kind="enum" id="_disk_types_8h_1a1dce450e5ff62600ec59d6ebdedccf81" prot="public" static="no" strong="no">
+        <type>long</type>
+        <name>DISK_TYPE</name>
+        <enumvalue id="_disk_types_8h_1a1dce450e5ff62600ec59d6ebdedccf81a4d5c91322f63ea87d8b085bb01594844" prot="public">
+          <name>DISK_TYPE_SS_SD</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_disk_types_8h_1a1dce450e5ff62600ec59d6ebdedccf81ac96a49b8acae832bfe6785a2f7eb1a8c" prot="public">
+          <name>DISK_TYPE_DS_SD</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" line="112" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" bodystart="113" bodyend="116"/>
+      </memberdef>
+      <memberdef kind="enum" id="_disk_types_8h_1a913905552232acf79968b544348ca9b5" prot="public" static="no" strong="no">
+        <type>long</type>
+        <name>CBM_FILE_TYPE</name>
+        <enumvalue id="_disk_types_8h_1a913905552232acf79968b544348ca9b5a014c1d0d7bad94a46c954248425100d3" prot="public">
+          <name>CBM_FILE_PRG</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_disk_types_8h_1a913905552232acf79968b544348ca9b5ab50a2797f7f9c2808e4d80980ccfebb8" prot="public">
+          <name>CBM_FILE_SEQ</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_disk_types_8h_1a913905552232acf79968b544348ca9b5a78aa015c00eaa78b63fced69a32e07a4" prot="public">
+          <name>CBM_FILE_USR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_disk_types_8h_1a913905552232acf79968b544348ca9b5a5b2901cb0fe0638876c12f74d8cd4a2a" prot="public">
+          <name>CBM_FILE_REL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" line="139" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" bodystart="140" bodyend="145"/>
+      </memberdef>
+      <memberdef kind="enum" id="_disk_types_8h_1a94ad3f2423613aa5ca46919b7edb6580" prot="public" static="no" strong="no">
+        <type>long</type>
+        <name>DISK_ERROR_CODE</name>
+        <enumvalue id="_disk_types_8h_1a94ad3f2423613aa5ca46919b7edb6580a40ec8147c998274283d42a32309d1acd" prot="public">
+          <name>DISK_OK</name>
+          <initializer>= 0x1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_disk_types_8h_1a94ad3f2423613aa5ca46919b7edb6580a1dc6abb2c763cae713f9d19238501a2a" prot="public">
+          <name>HEADER_BLOCK_NOT_FOUND_ERROR</name>
+          <initializer>= 0x2</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_disk_types_8h_1a94ad3f2423613aa5ca46919b7edb6580a80193244c5c36b08027dc68d67dffaef" prot="public">
+          <name>NO_SYNC_SEQUENCE_ERROR</name>
+          <initializer>= 0x3</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_disk_types_8h_1a94ad3f2423613aa5ca46919b7edb6580aa44439fecb7be0b2a777efb25bc73c69" prot="public">
+          <name>DATA_BLOCK_NOT_FOUND_ERROR</name>
+          <initializer>= 0x4</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_disk_types_8h_1a94ad3f2423613aa5ca46919b7edb6580a618ce724efaaaa9dd51a7f6969f5dfc1" prot="public">
+          <name>DATA_BLOCK_CHECKSUM_ERROR</name>
+          <initializer>= 0x5</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_disk_types_8h_1a94ad3f2423613aa5ca46919b7edb6580a3dfde394dc6d24759cdc7a675f08ecdd" prot="public">
+          <name>WRITE_VERIFY_ERROR_ON_FORMAT_ERROR</name>
+          <initializer>= 0x6</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_disk_types_8h_1a94ad3f2423613aa5ca46919b7edb6580afb74b1a47e77edad8f6184c28cf5b9ab" prot="public">
+          <name>WRITE_VERIFY_ERROR</name>
+          <initializer>= 0x7</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_disk_types_8h_1a94ad3f2423613aa5ca46919b7edb6580a391f6998aa67b70a505ff6820a12e439" prot="public">
+          <name>WRITE_PROTECT_ON_ERROR</name>
+          <initializer>= 0x8</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_disk_types_8h_1a94ad3f2423613aa5ca46919b7edb6580a6675164f4aae51f5562242558a92315b" prot="public">
+          <name>HEADER_BLOCK_CHECKSUM_ERROR</name>
+          <initializer>= 0x9</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_disk_types_8h_1a94ad3f2423613aa5ca46919b7edb6580aa8f1c48fe061ea1c5c35a074f39259d8" prot="public">
+          <name>WRITE_ERROR</name>
+          <initializer>= 0xA</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_disk_types_8h_1a94ad3f2423613aa5ca46919b7edb6580a9f01faa124207a6406c013b65e27fa6c" prot="public">
+          <name>DISK_ID_MISMATCH_ERROR</name>
+          <initializer>= 0xB</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_disk_types_8h_1a94ad3f2423613aa5ca46919b7edb6580a292575028ed10ea783a078de94129e07" prot="public">
+          <name>DRIVE_NOT_READY_ERRROR</name>
+          <initializer>= 0xF</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" line="170" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" bodystart="171" bodyend="184"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="_disk_types_8h_1a85692aa35fe8e2047fd80d728f24039b" prot="public" static="no">
+        <type>DISK_TYPE</type>
+        <definition>typedef DISK_TYPE DiskType</definition>
+        <argsstring></argsstring>
+        <name>DiskType</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" line="117" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" bodystart="117" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="_disk_types_8h_1a0b870b3694b298392e99cf61c04d3764" prot="public" static="no">
+        <type>CBM_FILE_TYPE</type>
+        <definition>typedef CBM_FILE_TYPE CBMFileType</definition>
+        <argsstring></argsstring>
+        <name>CBMFileType</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" line="146" column="23" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" bodystart="146" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="_disk_types_8h_1a01e1e3668b3dfbc6a27622c9b4ecf880" prot="public" static="no">
+        <type>DISK_ERROR_CODE</type>
+        <definition>typedef DISK_ERROR_CODE DiskErrorCode</definition>
+        <argsstring></argsstring>
+        <name>DiskErrorCode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" line="185" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" bodystart="185" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="_disk_types_8h_1af7b231d37229f34a1bfb3fc6ccab6d2a" prot="public" static="yes" mutable="no">
+        <type>const isize</type>
+        <definition>const isize highestTrack</definition>
+        <argsstring></argsstring>
+        <name>highestTrack</name>
+        <initializer>= 42</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" line="47" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_disk_types_8h_1a2c01c1943800ff38b5bfe8fdc498cbde" prot="public" static="yes" mutable="no">
+        <type>const isize</type>
+        <definition>const isize highestHalftrack</definition>
+        <argsstring></argsstring>
+        <name>highestHalftrack</name>
+        <initializer>= 84</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" line="48" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_disk_types_8h_1a027825cba24dc584b2c524109f5a284c" prot="public" static="yes" mutable="no">
+        <type>const isize</type>
+        <definition>const isize highestSector</definition>
+        <argsstring></argsstring>
+        <name>highestSector</name>
+        <initializer>= 20</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" line="51" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_disk_types_8h_1a1a7ebdfdfcd731496a93bce6f6e8bcd5" prot="public" static="yes" mutable="no">
+        <type>const isize</type>
+        <definition>const isize maxBytesOnTrack</definition>
+        <argsstring></argsstring>
+        <name>maxBytesOnTrack</name>
+        <initializer>= 7928</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" line="62" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_disk_types_8h_1a23925a09a3a1e8b70bfbbb54cfdcf371" prot="public" static="yes" mutable="no">
+        <type>const isize</type>
+        <definition>const isize maxBitsOnTrack</definition>
+        <argsstring></argsstring>
+        <name>maxBitsOnTrack</name>
+        <initializer>= maxBytesOnTrack * 8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" line="63" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_disk_types_8h_1aa92035728196ad6fca53f31931731a5e" prot="public" static="yes" mutable="no">
+        <type>const i64</type>
+        <definition>const i64 averageBitTimeSpan[]</definition>
+        <argsstring>[]</argsstring>
+        <name>averageBitTimeSpan</name>
+        <initializer>=
+{
+     4 * 10000,        
+     4 * 9375,         
+     4 * 8750,         
+     4 * 8125          
+ }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" line="70" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" bodystart="70" bodyend="76"/>
+      </memberdef>
+      <memberdef kind="variable" id="_disk_types_8h_1aa596d31da38a4a73828baefb4a162863" prot="public" static="yes" mutable="no">
+        <type>const isize</type>
+        <definition>const isize averageBitsOnTrack[4]</definition>
+        <argsstring>[4]</argsstring>
+        <name>averageBitsOnTrack</name>
+        <initializer>=
+{
+    50000,             
+    53333,             
+    57142,             
+    61528              
+}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" line="82" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" bodystart="82" bodyend="88"/>
+      </memberdef>
+      <memberdef kind="variable" id="_disk_types_8h_1a4cf1f5aed062c3d61a970dd2fe5b6f3c" prot="public" static="yes" mutable="no">
+        <type>const isize</type>
+        <definition>const isize averageBytesOnTrack[4]</definition>
+        <argsstring>[4]</argsstring>
+        <name>averageBytesOnTrack</name>
+        <initializer>=
+{
+    6250,              
+    6666,              
+    7142,              
+    7692               
+}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" line="93" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" bodystart="93" bodyend="99"/>
+      </memberdef>
+      <memberdef kind="variable" id="_disk_types_8h_1a7adf6fa00ba24d5155c20f03a10c4adc" prot="public" static="yes" mutable="no">
+        <type>const isize</type>
+        <definition>const isize headerBlockSize</definition>
+        <argsstring></argsstring>
+        <name>headerBlockSize</name>
+        <initializer>= 10 * 8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" line="104" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" bodystart="104" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="_disk_types_8h_1a21b4d58db0aa42d86d69ddca7d84ce47" prot="public" static="yes" mutable="no">
+        <type>const isize</type>
+        <definition>const isize dataBlockSize</definition>
+        <argsstring></argsstring>
+        <name>dataBlockSize</name>
+        <initializer>= 325 * 8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" line="105" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" bodystart="105" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="_disk_types_8h_1a93ee997f3d36fd66d39d4fdd1487bc44" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>static bool isTrackNumber</definition>
+        <argsstring>(isize nr)</argsstring>
+        <name>isTrackNumber</name>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" line="53" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" bodystart="53" bodyend="53"/>
+      </memberdef>
+      <memberdef kind="function" id="_disk_types_8h_1aaa39f5f3b03d97aefc92349d3129ee94" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>static bool isHalftrackNumber</definition>
+        <argsstring>(isize nr)</argsstring>
+        <name>isHalftrackNumber</name>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" line="54" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" bodystart="54" bodyend="54"/>
+      </memberdef>
+      <memberdef kind="function" id="_disk_types_8h_1a7b7d9a0b176212de64c7b7d375fb9603" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>static bool isSectorNumber</definition>
+        <argsstring>(isize nr)</argsstring>
+        <name>isSectorNumber</name>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" line="55" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h" bodystart="55" bodyend="55"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="comment">//<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>VirtualC64</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Copyright<sp/>(C)<sp/>Dirk<sp/>W.<sp/>Hoffmann.<sp/>www.dirkwhoffmann.de</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="comment">//<sp/>This<sp/>FILE<sp/>is<sp/>dual-licensed.<sp/>You<sp/>are<sp/>free<sp/>to<sp/>choose<sp/>between:</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>-<sp/>The<sp/>GNU<sp/>General<sp/>Public<sp/>License<sp/>v3<sp/>(or<sp/>any<sp/>later<sp/>version)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>-<sp/>The<sp/>Mozilla<sp/>Public<sp/>License<sp/>v2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="comment">//<sp/>SPDX-License-Identifier:<sp/>GPL-3.0-or-later<sp/>OR<sp/>MPL-2.0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Aliases.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Reflection.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Serializable.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Constants</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>The<sp/>VC1541<sp/>can<sp/>move<sp/>the<sp/>drive<sp/>head<sp/>to<sp/>84<sp/>distinct<sp/>positions<sp/>(1<sp/>..<sp/>84).<sp/>Odd</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>numbers<sp/>correspond<sp/>to<sp/>&quot;full<sp/>tracks&quot;<sp/>and<sp/>even<sp/>numbers<sp/>to<sp/>&quot;half<sp/>tracks&quot;.<sp/>The</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>full<sp/>tracks<sp/>between<sp/>1<sp/>and<sp/>70<sp/>correspond<sp/>to<sp/>the<sp/>35<sp/>tracks<sp/>that<sp/>are<sp/>used<sp/>by</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>VC1541<sp/>DOS.<sp/>The<sp/>Rom<sp/>code<sp/>always<sp/>moves<sp/>the<sp/>drive<sp/>head<sp/>by<sp/>two<sp/>positions.<sp/>When</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>programmed<sp/>manually,<sp/>the<sp/>head<sp/>can<sp/>also<sp/>be<sp/>moved<sp/>to<sp/>even<sp/>positions<sp/>or</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>positions<sp/>beyond<sp/>70<sp/>which<sp/>correspoonds<sp/>to<sp/>the<sp/>innermost<sp/>full<sp/>track<sp/>used<sp/>by</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>DOS.</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>VirtualC64<sp/>provides<sp/>two<sp/>data<sp/>types<sp/>for<sp/>specifying<sp/>head<sp/>positions:<sp/>Track</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*<sp/>and<sp/>Halftrack.<sp/>They<sp/>are<sp/>related<sp/>as<sp/>follows:</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>-----------------------------------------------------------------</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"><sp/>*<sp/>Layout:<sp/><sp/><sp/><sp/>|<sp/><sp/>1<sp/><sp/>|<sp/>1.5<sp/>|<sp/><sp/>2<sp/><sp/>|<sp/>2.5<sp/>|<sp/>...<sp/>|<sp/><sp/>35<sp/><sp/>|<sp/>35.5<sp/>|<sp/>...<sp/>|<sp/><sp/>42<sp/><sp/>|<sp/>42.5<sp/>|</highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>-----------------------------------------------------------------</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>-----------------------------------------------------------------</highlight></codeline>
+<codeline lineno="41"><highlight class="comment"><sp/>*<sp/>Halftrack:<sp/>|<sp/><sp/>1<sp/><sp/>|<sp/><sp/>2<sp/><sp/>|<sp/><sp/>3<sp/><sp/>|<sp/><sp/>4<sp/><sp/>|<sp/><sp/><sp/><sp/><sp/>|<sp/><sp/>69<sp/><sp/>|<sp/><sp/>70<sp/><sp/>|<sp/><sp/><sp/><sp/><sp/>|<sp/><sp/>83<sp/><sp/>|<sp/><sp/>84<sp/><sp/>|</highlight></codeline>
+<codeline lineno="42"><highlight class="comment"><sp/>*<sp/>Track:<sp/><sp/><sp/><sp/><sp/>|<sp/><sp/>1<sp/><sp/>|<sp/><sp/><sp/><sp/><sp/>|<sp/><sp/>2<sp/><sp/>|<sp/><sp/><sp/><sp/><sp/>|<sp/><sp/><sp/><sp/><sp/>|<sp/><sp/>35<sp/><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>|<sp/><sp/><sp/><sp/><sp/>|<sp/><sp/>42<sp/><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="43"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>-----------------------------------------------------------------</highlight></codeline>
+<codeline lineno="44"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Highest<sp/>track<sp/>and<sp/>halftrack<sp/>number<sp/>(numbering<sp/>starts<sp/>with<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>isize<sp/>highestTrack<sp/>=<sp/>42;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>isize<sp/>highestHalftrack<sp/>=<sp/>84;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Highest<sp/>sector<sp/>number<sp/>(numbering<sp/>starts<sp/>with<sp/>0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>isize<sp/>highestSector<sp/>=<sp/>20;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>isTrackNumber(isize<sp/>nr)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1<sp/>&lt;=<sp/>nr<sp/>&amp;&amp;<sp/>nr<sp/>&lt;=<sp/>highestTrack;<sp/>}</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>isHalftrackNumber(isize<sp/>nr)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1<sp/>&lt;=<sp/>nr<sp/>&amp;&amp;<sp/>nr<sp/>&lt;=<sp/>highestHalftrack;<sp/>}</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>isSectorNumber(isize<sp/>nr)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>nr<sp/>&gt;=<sp/>0<sp/>&amp;&amp;<sp/>nr<sp/>&lt;=<sp/>highestSector;<sp/>}</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Maximum<sp/>number<sp/>of<sp/>bits<sp/>and<sp/>bytes<sp/>stored<sp/>on<sp/>a<sp/>single<sp/>track.<sp/>Each<sp/>track<sp/>can</highlight></codeline>
+<codeline lineno="58"><highlight class="comment"><sp/>*<sp/>store<sp/>a<sp/>maximum<sp/>of<sp/>7928<sp/>bytes<sp/>(63424<sp/>bits).<sp/>The<sp/>exact<sp/>number<sp/>depends<sp/>on<sp/>the</highlight></codeline>
+<codeline lineno="59"><highlight class="comment"><sp/>*<sp/>track<sp/>number<sp/>(inner<sp/>tracks<sp/>contain<sp/>fewer<sp/>bytes)<sp/>and<sp/>the<sp/>actual<sp/>write<sp/>speed</highlight></codeline>
+<codeline lineno="60"><highlight class="comment"><sp/>*<sp/>of<sp/>a<sp/>drive.</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>isize<sp/>maxBytesOnTrack<sp/>=<sp/>7928;</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>isize<sp/>maxBitsOnTrack<sp/>=<sp/>maxBytesOnTrack<sp/>*<sp/>8;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Returns<sp/>the<sp/>average<sp/>duration<sp/>of<sp/>a<sp/>single<sp/>bit<sp/>in<sp/>1/10<sp/>nano<sp/>seconds.<sp/>The</highlight></codeline>
+<codeline lineno="66"><highlight class="comment"><sp/>*<sp/>returned<sp/>value<sp/>is<sp/>the<sp/>time<sp/>span<sp/>the<sp/>drive<sp/>head<sp/>resists<sp/>over<sp/>a<sp/>single<sp/>bit.</highlight></codeline>
+<codeline lineno="67"><highlight class="comment"><sp/>*<sp/>The<sp/>exact<sp/>value<sp/>depends<sp/>on<sp/>the<sp/>speed<sp/>zone<sp/>and<sp/>the<sp/>disk<sp/>rotation<sp/>speed.<sp/>We</highlight></codeline>
+<codeline lineno="68"><highlight class="comment"><sp/>*<sp/>assume<sp/>a<sp/>rotation<sp/>speed<sp/>of<sp/>300<sp/>rpm.</highlight></codeline>
+<codeline lineno="69"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>i64<sp/>averageBitTimeSpan[]<sp/>=</highlight></codeline>
+<codeline lineno="71"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>4<sp/>*<sp/>10000,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>4<sp/>*<sp/>16/16<sp/>*<sp/>10^4<sp/>1/10<sp/>nsec</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>4<sp/>*<sp/>9375,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>4<sp/>*<sp/>15/16<sp/>*<sp/>10^4<sp/>1/10<sp/>nsec</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>4<sp/>*<sp/>8750,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>4<sp/>*<sp/>14/16<sp/>*<sp/>10^4<sp/>1/10<sp/>nsec</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>4<sp/>*<sp/>8125<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>4<sp/>*<sp/>13/16<sp/>*<sp/>10^4<sp/>1/10<sp/>nsec</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/>};</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Average<sp/>number<sp/>of<sp/>bits<sp/>stored<sp/>on<sp/>a<sp/>single<sp/>track.<sp/>The<sp/>values<sp/>are<sp/>based<sp/>on<sp/>a</highlight></codeline>
+<codeline lineno="79"><highlight class="comment"><sp/>*<sp/>drive<sp/>with<sp/>300<sp/>rotations<sp/>per<sp/>minute<sp/>which<sp/>means<sp/>that<sp/>a<sp/>full<sp/>rotation<sp/>lasts</highlight></codeline>
+<codeline lineno="80"><highlight class="comment"><sp/>*<sp/>2.000.000.000<sp/>1/10<sp/>nsec.</highlight></codeline>
+<codeline lineno="81"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>isize<sp/>averageBitsOnTrack[4]<sp/>=</highlight></codeline>
+<codeline lineno="83"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/>50000,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>200.000.000.000<sp/>/<sp/>averageBitTimeSpan[0]</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/>53333,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>200.000.000.000<sp/>/<sp/>averageBitTimeSpan[1]</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/>57142,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>200.000.000.000<sp/>/<sp/>averageBitTimeSpan[2]</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/>61528<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>200.000.000.000<sp/>/<sp/>averageBitTimeSpan[3]</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Average<sp/>number<sp/>of<sp/>bytes<sp/>stored<sp/>on<sp/>a<sp/>single<sp/>track.<sp/>The<sp/>values<sp/>are<sp/>based<sp/>on<sp/>a</highlight></codeline>
+<codeline lineno="91"><highlight class="comment"><sp/>*<sp/>drive<sp/>with<sp/>300<sp/>rotations<sp/>per<sp/>minute.</highlight></codeline>
+<codeline lineno="92"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>isize<sp/>averageBytesOnTrack[4]<sp/>=</highlight></codeline>
+<codeline lineno="94"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/>6250,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>averageBitsOnTrack[0]<sp/>/<sp/>8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/>6666,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>averageBitsOnTrack[1]<sp/>/<sp/>8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/>7142,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>averageBitsOnTrack[2]<sp/>/<sp/>8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/>7692<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>averageBitsOnTrack[3]<sp/>/<sp/>8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Size<sp/>of<sp/>a<sp/>sector<sp/>header<sp/>or<sp/>data<sp/>block<sp/>in<sp/>bits.<sp/>Each<sp/>data<sp/>block<sp/>consists<sp/>of</highlight></codeline>
+<codeline lineno="102"><highlight class="comment"><sp/>*<sp/>325<sp/>GCR<sp/>bytes<sp/>(coding<sp/>260<sp/>real<sp/>bytes).</highlight></codeline>
+<codeline lineno="103"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>isize<sp/>headerBlockSize<sp/>=<sp/>10<sp/>*<sp/>8;</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>isize<sp/>dataBlockSize<sp/>=<sp/>325<sp/>*<sp/>8;</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Enumerations</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal">enum_long(DISK_TYPE)</highlight></codeline>
+<codeline lineno="113"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/>DISK_TYPE_SS_SD,<sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Single-sided,<sp/>single<sp/>density<sp/>(VC1541)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/>DISK_TYPE_DS_SD<sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Double-sided,<sp/>single<sp/>density<sp/>(VC1571)<sp/>(not<sp/>supported)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>DISK_TYPE<sp/>DiskType;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">DiskTypeEnum<sp/>:<sp/>util::Reflection&lt;DiskTypeEnum,<sp/>DiskType&gt;<sp/>{</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>minVal<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>maxVal<sp/>=<sp/>DISK_TYPE_DS_SD;</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>isValid(</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>value)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>value<sp/>&gt;=<sp/>minVal<sp/>&amp;&amp;<sp/>value<sp/>&lt;=<sp/>maxVal;<sp/>}</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*prefix()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DISK_TYPE&quot;</highlight><highlight class="normal">;<sp/>}</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*key(DiskType<sp/>value)</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(value)<sp/>{</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>DISK_TYPE_SS_SD:<sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SS_SD&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>DISK_TYPE_DS_SD:<sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DS_SD&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;???&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="136"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal">enum_long(CBM_FILE_TYPE)</highlight></codeline>
+<codeline lineno="140"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/>CBM_FILE_PRG,</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/>CBM_FILE_SEQ,</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/>CBM_FILE_USR,</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/>CBM_FILE_REL</highlight></codeline>
+<codeline lineno="145"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>CBM_FILE_TYPE<sp/>CBMFileType;</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="148"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">CBMFileTypeEnum<sp/>:<sp/>util::Reflection&lt;CBMFileTypeEnum,<sp/>CBMFileType&gt;<sp/>{</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>minVal<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>maxVal<sp/>=<sp/>CBM_FILE_REL;</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>isValid(</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>value)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>value<sp/>&gt;=<sp/>minVal<sp/>&amp;&amp;<sp/>value<sp/>&lt;=<sp/>maxVal;<sp/>}</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*prefix()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CBM&quot;</highlight><highlight class="normal">;<sp/>}</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*key(CBMFileType<sp/>value)</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(value)<sp/>{</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>CBM_FILE_PRG:<sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PRG&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>CBM_FILE_SEQ:<sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SEQ&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>CBM_FILE_USR:<sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;USR&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>CBM_FILE_REL:<sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;REL&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;???&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="167"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"></highlight></codeline>
+<codeline lineno="170"><highlight class="normal">enum_long(DISK_ERROR_CODE)</highlight></codeline>
+<codeline lineno="171"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/>DISK_OK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x1,</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/>HEADER_BLOCK_NOT_FOUND_ERROR<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x2,</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/>NO_SYNC_SEQUENCE_ERROR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x3,</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/>DATA_BLOCK_NOT_FOUND_ERROR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x4,</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/>DATA_BLOCK_CHECKSUM_ERROR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x5,</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/>WRITE_VERIFY_ERROR_ON_FORMAT_ERROR<sp/>=<sp/>0x6,</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/>WRITE_VERIFY_ERROR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x7,</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/>WRITE_PROTECT_ON_ERROR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x8,</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/>HEADER_BLOCK_CHECKSUM_ERROR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x9,</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/>WRITE_ERROR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0xA,</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/>DISK_ID_MISMATCH_ERROR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0xB,</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/>DRIVE_NOT_READY_ERRROR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0xF</highlight></codeline>
+<codeline lineno="184"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>DISK_ERROR_CODE<sp/>DiskErrorCode;</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">DiskErrorCodeEnum<sp/>:<sp/>util::Reflection&lt;DiskErrorCodeEnum,<sp/>DiskErrorCode&gt;<sp/>{</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>minVal<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>maxVal<sp/>=<sp/>DRIVE_NOT_READY_ERRROR;</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>isValid(</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>value)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>value<sp/>&gt;=<sp/>minVal<sp/>&amp;&amp;<sp/>value<sp/>&lt;=<sp/>maxVal;<sp/>}</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*prefix()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;&quot;</highlight><highlight class="normal">;<sp/>}</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*key(DiskErrorCode<sp/>value)</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(value)<sp/>{</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>DISK_OK:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DISK_OK&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>HEADER_BLOCK_NOT_FOUND_ERROR:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;HEADER_BLOCK_NOT_FOUND_ERROR&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>NO_SYNC_SEQUENCE_ERROR:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;NO_SYNC_SEQUENCE_ERROR&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>DATA_BLOCK_NOT_FOUND_ERROR:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DATA_BLOCK_NOT_FOUND_ERROR&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>DATA_BLOCK_CHECKSUM_ERROR:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DATA_BLOCK_CHECKSUM_ERROR&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>WRITE_VERIFY_ERROR_ON_FORMAT_ERROR:<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;WRITE_VERIFY_ERROR_ON_FORMAT_ERROR&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>WRITE_VERIFY_ERROR:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;WRITE_VERIFY_ERROR&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>WRITE_PROTECT_ON_ERROR:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;WRITE_PROTECT_ON_ERROR&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="207"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>HEADER_BLOCK_CHECKSUM_ERROR:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;HEADER_BLOCK_CHECKSUM_ERROR&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>WRITE_ERROR:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;WRITE_ERROR&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>DISK_ID_MISMATCH_ERROR:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DISK_ID_MISMATCH_ERROR&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>DRIVE_NOT_READY_ERRROR:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_NOT_READY_ERRROR&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;???&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="214"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="216"><highlight class="normal"></highlight></codeline>
+<codeline lineno="217"><highlight class="normal"></highlight></codeline>
+<codeline lineno="218"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="219"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Structures</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="220"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="221"><highlight class="normal"></highlight></codeline>
+<codeline lineno="222"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Disk<sp/>data</highlight></codeline>
+<codeline lineno="223"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="224"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>-<sp/>The<sp/>first<sp/>valid<sp/>track<sp/>and<sp/>halftrack<sp/>number<sp/>is<sp/>1</highlight></codeline>
+<codeline lineno="225"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>-<sp/>data.halftack[i]<sp/>points<sp/>to<sp/>the<sp/>first<sp/>byte<sp/>of<sp/>halftrack<sp/>i</highlight></codeline>
+<codeline lineno="226"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>-<sp/>data.track[i]<sp/>points<sp/>to<sp/>the<sp/>first<sp/>byte<sp/>of<sp/>track<sp/>i</highlight></codeline>
+<codeline lineno="227"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight></codeline>
+<codeline lineno="229"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="230"><highlight class="normal"></highlight></codeline>
+<codeline lineno="231"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">vc64<sp/>{</highlight></codeline>
+<codeline lineno="232"><highlight class="normal"></highlight></codeline>
+<codeline lineno="233"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">DiskData<sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/>Serializable</highlight></codeline>
+<codeline lineno="234"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="236"><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>u8<sp/>_pad[maxBytesOnTrack];</highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>u8<sp/>halftrack[85][maxBytesOnTrack];</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="242"><highlight class="normal"></highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>u8<sp/>track[43][2<sp/>*<sp/>maxBytesOnTrack];</highlight></codeline>
+<codeline lineno="244"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"></highlight></codeline>
+<codeline lineno="246"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">template</highlight><highlight class="normal"><sp/>&lt;</highlight><highlight class="keyword">class</highlight><highlight class="normal"><sp/>W&gt;</highlight></codeline>
+<codeline lineno="247"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>serialize(W&amp;<sp/>worker)</highlight></codeline>
+<codeline lineno="248"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="249"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>worker</highlight></codeline>
+<codeline lineno="250"><highlight class="normal"></highlight></codeline>
+<codeline lineno="251"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&lt;&lt;<sp/>track;</highlight></codeline>
+<codeline lineno="252"><highlight class="normal"></highlight></codeline>
+<codeline lineno="253"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>SERIALIZERS(serialize);</highlight></codeline>
+<codeline lineno="254"><highlight class="normal"></highlight></codeline>
+<codeline lineno="255"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="256"><highlight class="normal"></highlight></codeline>
+<codeline lineno="257"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Length<sp/>of<sp/>each<sp/>halftrack<sp/>in<sp/>bits</highlight></codeline>
+<codeline lineno="258"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="259"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/>-<sp/>length.halftack[i]<sp/>is<sp/>the<sp/>length<sp/>of<sp/>halftrack<sp/>i</highlight></codeline>
+<codeline lineno="260"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/>-<sp/>length.track[i][0]<sp/>is<sp/>the<sp/>length<sp/>of<sp/>track<sp/>i</highlight></codeline>
+<codeline lineno="261"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/>-<sp/>length.track[i][1]<sp/>is<sp/>the<sp/>length<sp/>of<sp/>halftrack<sp/>above<sp/>track<sp/>i</highlight></codeline>
+<codeline lineno="262"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="263"><highlight class="normal"></highlight></codeline>
+<codeline lineno="264"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">DiskLength<sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/>Serializable</highlight></codeline>
+<codeline lineno="265"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="266"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="267"><highlight class="normal"></highlight></codeline>
+<codeline lineno="268"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="269"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="270"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>isize<sp/>_pad;</highlight></codeline>
+<codeline lineno="271"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>isize<sp/>halftrack[85];</highlight></codeline>
+<codeline lineno="272"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="273"><highlight class="normal"></highlight></codeline>
+<codeline lineno="274"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>isize<sp/>track[43][2];</highlight></codeline>
+<codeline lineno="275"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="276"><highlight class="normal"></highlight></codeline>
+<codeline lineno="277"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">template</highlight><highlight class="normal"><sp/>&lt;</highlight><highlight class="keyword">class</highlight><highlight class="normal"><sp/>W&gt;</highlight></codeline>
+<codeline lineno="278"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>serialize(W&amp;<sp/>worker)</highlight></codeline>
+<codeline lineno="279"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="280"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>worker</highlight></codeline>
+<codeline lineno="281"><highlight class="normal"></highlight></codeline>
+<codeline lineno="282"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&lt;&lt;<sp/>track;</highlight></codeline>
+<codeline lineno="283"><highlight class="normal"></highlight></codeline>
+<codeline lineno="284"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/>SERIALIZERS(serialize);</highlight></codeline>
+<codeline lineno="285"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="286"><highlight class="normal"></highlight></codeline>
+<codeline lineno="287"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="288"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="289"><highlight class="normal"></highlight></codeline>
+<codeline lineno="290"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Disk<sp/>parameters<sp/>of<sp/>a<sp/>standard<sp/>floppy<sp/>disk</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="291"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="292"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="293"><highlight class="normal"><sp/><sp/><sp/><sp/>u8<sp/><sp/>sectors;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Typical<sp/>number<sp/>of<sp/>sectors<sp/>in<sp/>this<sp/>track</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="294"><highlight class="normal"><sp/><sp/><sp/><sp/>u8<sp/><sp/>speedZone;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Default<sp/>speed<sp/>zone<sp/>for<sp/>this<sp/>track</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="295"><highlight class="normal"><sp/><sp/><sp/><sp/>u16<sp/>lengthInBytes;<sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Typical<sp/>track<sp/>size<sp/>in<sp/>bits</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="296"><highlight class="normal"><sp/><sp/><sp/><sp/>u16<sp/>lengthInBits;<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Typical<sp/>track<sp/>size<sp/>in<sp/>bits</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="297"><highlight class="normal"><sp/><sp/><sp/><sp/>Sector<sp/>firstSectorNr;<sp/></highlight><highlight class="comment">//<sp/>Logical<sp/>number<sp/>of<sp/>first<sp/>sector<sp/>in<sp/>track</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="298"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>stagger;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Relative<sp/>position<sp/>of<sp/>first<sp/>bit<sp/>(from<sp/>Hoxs64)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="299"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="300"><highlight class="normal">TrackDefaults;</highlight></codeline>
+    </programlisting>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h"/>
+  </compounddef>
+</doxygen>

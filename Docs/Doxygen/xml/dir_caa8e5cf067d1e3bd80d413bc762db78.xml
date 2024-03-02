@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="dir_caa8e5cf067d1e3bd80d413bc762db78" kind="dir">
+    <compoundname>/Users/hoff/Retro/virtualc64/Emulator/Peripherals</compoundname>
+    <innerdir refid="dir_171317804943a9abfbc511e8231d6d72">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette</innerdir>
+    <innerdir refid="dir_785735119cac6aaae703f4b201f10d8d">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive</innerdir>
+    <innerdir refid="dir_8b75e2c966dbd6e9d814cce494bf41c3">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick</innerdir>
+    <innerdir refid="dir_ad57646ff3c58b38e572ff2f8562525c">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard</innerdir>
+    <innerdir refid="dir_71c828aa706dc687262082dc30a81d57">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/"/>
+  </compounddef>
+</doxygen>

@@ -2,14 +2,49 @@
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
   <compounddef id="dir_9110424d8d329f8b6a25ed0145171490" kind="dir">
     <compoundname>/Users/hoff/Retro/virtualc64/Emulator/Base</compoundname>
+    <innerfile refid="_aliases_8h">Aliases.h</innerfile>
+    <innerfile refid="_cmd_queue_8cpp">CmdQueue.cpp</innerfile>
     <innerfile refid="_cmd_queue_8h">CmdQueue.h</innerfile>
     <innerfile refid="_cmd_queue_types_8h">CmdQueueTypes.h</innerfile>
+    <innerfile refid="_colors_8cpp">Colors.cpp</innerfile>
+    <innerfile refid="_colors_8h">Colors.h</innerfile>
+    <innerfile refid="_configurable_8cpp">Configurable.cpp</innerfile>
+    <innerfile refid="_configurable_8h">Configurable.h</innerfile>
+    <innerfile refid="_constants_8h">Constants.h</innerfile>
+    <innerfile refid="_core_component_8cpp">CoreComponent.cpp</innerfile>
+    <innerfile refid="_core_component_8h">CoreComponent.h</innerfile>
+    <innerfile refid="_core_component_types_8h">CoreComponentTypes.h</innerfile>
+    <innerfile refid="_core_object_8cpp">CoreObject.cpp</innerfile>
+    <innerfile refid="_core_object_8h">CoreObject.h</innerfile>
+    <innerfile refid="_defaults_8cpp">Defaults.cpp</innerfile>
+    <innerfile refid="_defaults_8h">Defaults.h</innerfile>
+    <innerfile refid="_error_8cpp">Error.cpp</innerfile>
     <innerfile refid="_error_8h">Error.h</innerfile>
     <innerfile refid="_error_types_8h">ErrorTypes.h</innerfile>
+    <innerfile refid="_host_8cpp">Host.cpp</innerfile>
+    <innerfile refid="_host_8h">Host.h</innerfile>
+    <innerfile refid="_inspectable_8cpp">Inspectable.cpp</innerfile>
+    <innerfile refid="_inspectable_8h">Inspectable.h</innerfile>
+    <innerfile refid="_msg_queue_8cpp">MsgQueue.cpp</innerfile>
+    <innerfile refid="_msg_queue_8h">MsgQueue.h</innerfile>
+    <innerfile refid="_msg_queue_types_8h">MsgQueueTypes.h</innerfile>
+    <innerfile refid="_option_8cpp">Option.cpp</innerfile>
     <innerfile refid="_option_8h">Option.h</innerfile>
     <innerfile refid="_option_types_8h">OptionTypes.h</innerfile>
+    <innerfile refid="_serializable_8cpp">Serializable.cpp</innerfile>
+    <innerfile refid="_serializable_8h">Serializable.h</innerfile>
+    <innerfile refid="_sub_component_8cpp">SubComponent.cpp</innerfile>
+    <innerfile refid="_sub_component_8h">SubComponent.h</innerfile>
+    <innerfile refid="_suspendable_8cpp">Suspendable.cpp</innerfile>
+    <innerfile refid="_suspendable_8h">Suspendable.h</innerfile>
+    <innerfile refid="_synchronizable_8cpp">Synchronizable.cpp</innerfile>
+    <innerfile refid="_synchronizable_8h">Synchronizable.h</innerfile>
+    <innerfile refid="_thread_8cpp">Thread.cpp</innerfile>
     <innerfile refid="_thread_8h">Thread.h</innerfile>
     <innerfile refid="_thread_types_8h">ThreadTypes.h</innerfile>
+    <innerfile refid="_time_delayed_8h">TimeDelayed.h</innerfile>
+    <innerfile refid="_wakeable_8cpp">Wakeable.cpp</innerfile>
+    <innerfile refid="_wakeable_8h">Wakeable.h</innerfile>
     <briefdescription>
     </briefdescription>
     <detaileddescription>

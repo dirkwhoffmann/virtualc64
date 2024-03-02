@@ -1,0 +1,750 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_defaults" kind="class" language="C++" prot="public" final="yes">
+    <compoundname>vc64::Defaults</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">vc64::CoreObject</basecompoundref>
+    <basecompoundref prot="public" virt="non-virtual">vc64::Dumpable</basecompoundref>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_defaults_1aea9485bec597e50b7d4a03efe02c51f1" prot="private" static="no" mutable="yes">
+        <type>util::ReentrantMutex</type>
+        <definition>util::ReentrantMutex vc64::Defaults::mutex</definition>
+        <argsstring></argsstring>
+        <name>mutex</name>
+        <qualifiedname>vc64::Defaults::mutex</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="24" column="34" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_defaults_1ad2e08ba007190cbae022deb2d0557db7" prot="private" static="no" mutable="no">
+        <type>std::map&lt; string, string &gt;</type>
+        <definition>std::map&lt;string, string&gt; vc64::Defaults::values</definition>
+        <argsstring></argsstring>
+        <name>values</name>
+        <qualifiedname>vc64::Defaults::values</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="27" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_defaults_1ac9708a9af4da7fce45eb38d8b50536c2" prot="private" static="no" mutable="no">
+        <type>std::map&lt; string, string &gt;</type>
+        <definition>std::map&lt;string, string&gt; vc64::Defaults::fallbacks</definition>
+        <argsstring></argsstring>
+        <name>fallbacks</name>
+        <qualifiedname>vc64::Defaults::fallbacks</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="30" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" bodystart="30" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_defaults_1a560d6026a74a5410fc3e724b7a8bc3cb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::Defaults::Defaults</definition>
+        <argsstring>()</argsstring>
+        <name>Defaults</name>
+        <qualifiedname>vc64::Defaults::Defaults</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="39" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="20" bodyend="123"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1a73df5d017910e2be80552e06c6cd480b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::Defaults::Defaults</definition>
+        <argsstring>(Defaults const &amp;)=delete</argsstring>
+        <name>Defaults</name>
+        <qualifiedname>vc64::Defaults::Defaults</qualifiedname>
+        <param>
+          <type>Defaults const &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="40" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1a905fda7ed976087c791826cb28e2bc8e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::operator=</definition>
+        <argsstring>(Defaults const &amp;)=delete</argsstring>
+        <name>operator=</name>
+        <qualifiedname>vc64::Defaults::operator=</qualifiedname>
+        <param>
+          <type>Defaults const &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="41" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1a374f06dfa4f733f7adb393af29efe827" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::load</definition>
+        <argsstring>(const fs::path &amp;path) throws</argsstring>
+        <name>load</name>
+        <qualifiedname>vc64::Defaults::load</qualifiedname>
+        <param>
+          <type>const fs::path &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="61" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="146" bodyend="156"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1a3192775f5c7aa95e87c4a106ef7a6a6e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::load</definition>
+        <argsstring>(std::ifstream &amp;stream) throws</argsstring>
+        <name>load</name>
+        <qualifiedname>vc64::Defaults::load</qualifiedname>
+        <param>
+          <type>std::ifstream &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="62" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="159" bodyend="165"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1aed7452fd3930954040de8c2a69cbd860" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::load</definition>
+        <argsstring>(std::stringstream &amp;stream) throws</argsstring>
+        <name>load</name>
+        <qualifiedname>vc64::Defaults::load</qualifiedname>
+        <param>
+          <type>std::stringstream &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="63" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="168" bodyend="236"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1a7d667d437bcf21c0acf8789a5bd9c76b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::save</definition>
+        <argsstring>(const fs::path &amp;path) throws</argsstring>
+        <name>save</name>
+        <qualifiedname>vc64::Defaults::save</qualifiedname>
+        <param>
+          <type>const fs::path &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="66" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="239" bodyend="248"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1af183c4c7e33877a5cc8a1230a8fc5e3e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::save</definition>
+        <argsstring>(std::ofstream &amp;stream) throws</argsstring>
+        <name>save</name>
+        <qualifiedname>vc64::Defaults::save</qualifiedname>
+        <param>
+          <type>std::ofstream &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="67" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="251" bodyend="257"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1a23fc07c9c7119a84431dc1cefa2aea6a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::save</definition>
+        <argsstring>(std::stringstream &amp;stream) throws</argsstring>
+        <name>save</name>
+        <qualifiedname>vc64::Defaults::save</qualifiedname>
+        <param>
+          <type>std::stringstream &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="68" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="260" bodyend="305"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1a5151d52c327e87efd9c4aceac475e42f" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string vc64::Defaults::getString</definition>
+        <argsstring>(const string &amp;key) const throws</argsstring>
+        <name>getString</name>
+        <qualifiedname>vc64::Defaults::getString</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="77" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="308" bodyend="316"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1abd2a859d67e908bba94c52fde326acc0" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>i64</type>
+        <definition>i64 vc64::Defaults::getInt</definition>
+        <argsstring>(const string &amp;key) const throws</argsstring>
+        <name>getInt</name>
+        <qualifiedname>vc64::Defaults::getInt</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="78" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="319" bodyend="335"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1ac5ccafcf15669bb64ed8f87b7a745022" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>i64</type>
+        <definition>i64 vc64::Defaults::get</definition>
+        <argsstring>(Option option) const throws</argsstring>
+        <name>get</name>
+        <qualifiedname>vc64::Defaults::get</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="79" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="338" bodyend="341"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1a302b505497ff3eefe8a2df44e3d9f0eb" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>i64</type>
+        <definition>i64 vc64::Defaults::get</definition>
+        <argsstring>(Option option, isize nr) const throws</argsstring>
+        <name>get</name>
+        <qualifiedname>vc64::Defaults::get</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="80" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="344" bodyend="347"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1a7d35880d95fad9dda570e2a131612661" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string vc64::Defaults::getFallback</definition>
+        <argsstring>(const string &amp;key) const throws</argsstring>
+        <name>getFallback</name>
+        <qualifiedname>vc64::Defaults::getFallback</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="82" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="350" bodyend="360"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1ab201dbdb55a19cb15346e8d02f2e54e0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::setString</definition>
+        <argsstring>(const string &amp;key, const string &amp;value)</argsstring>
+        <name>setString</name>
+        <qualifiedname>vc64::Defaults::setString</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="84" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="363" bodyend="378"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1ab687768a2c7e567071b3823d2ce27a3c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::set</definition>
+        <argsstring>(Option option, i64 value)</argsstring>
+        <name>set</name>
+        <qualifiedname>vc64::Defaults::set</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="85" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="381" bodyend="387"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1a359f554b64a9a3882f65bc81b08d9244" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::set</definition>
+        <argsstring>(Option option, isize nr, i64 value)</argsstring>
+        <name>set</name>
+        <qualifiedname>vc64::Defaults::set</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="86" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="390" bodyend="396"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1aa47c713416403cfe9416c54e99c3c07a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::set</definition>
+        <argsstring>(Option option, std::vector&lt; isize &gt; nrs, i64 value)</argsstring>
+        <name>set</name>
+        <qualifiedname>vc64::Defaults::set</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>std::vector&lt; isize &gt;</type>
+          <declname>nrs</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="87" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="399" bodyend="402"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1af80f4cf25cb2b547b95a4e763d2f64b9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::setFallback</definition>
+        <argsstring>(const string &amp;key, const string &amp;value)</argsstring>
+        <name>setFallback</name>
+        <qualifiedname>vc64::Defaults::setFallback</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="89" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="405" bodyend="413"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1a2ea0056843749793926827ae7b9dbc22" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::setFallback</definition>
+        <argsstring>(Option option, const string &amp;value)</argsstring>
+        <name>setFallback</name>
+        <qualifiedname>vc64::Defaults::setFallback</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="90" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="416" bodyend="419"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1aa18b7f36b5fd4376af66640db0f42c36" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::setFallback</definition>
+        <argsstring>(Option option, i64 value)</argsstring>
+        <name>setFallback</name>
+        <qualifiedname>vc64::Defaults::setFallback</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="91" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="422" bodyend="425"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1af3b18bcfba8eb858b9f125cd12921cf8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::setFallback</definition>
+        <argsstring>(Option option, isize nr, const string &amp;value)</argsstring>
+        <name>setFallback</name>
+        <qualifiedname>vc64::Defaults::setFallback</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="92" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="428" bodyend="431"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1aef93391585162a5b164054eeac5033cd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::setFallback</definition>
+        <argsstring>(Option option, isize nr, i64 value)</argsstring>
+        <name>setFallback</name>
+        <qualifiedname>vc64::Defaults::setFallback</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="93" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="434" bodyend="437"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1a764e4713e327a31e21851f75ba00f6c4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::setFallback</definition>
+        <argsstring>(Option option, std::vector&lt; isize &gt; nrs, const string &amp;value)</argsstring>
+        <name>setFallback</name>
+        <qualifiedname>vc64::Defaults::setFallback</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>std::vector&lt; isize &gt;</type>
+          <declname>nrs</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="94" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="440" bodyend="443"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1a9466ae215377642b5124cf1d937b191a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::setFallback</definition>
+        <argsstring>(Option option, std::vector&lt; isize &gt; nrs, i64 value)</argsstring>
+        <name>setFallback</name>
+        <qualifiedname>vc64::Defaults::setFallback</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>std::vector&lt; isize &gt;</type>
+          <declname>nrs</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="95" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="446" bodyend="449"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1a33c146ecd2dbfac8e3f4e846de652535" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::remove</definition>
+        <argsstring>()</argsstring>
+        <name>remove</name>
+        <qualifiedname>vc64::Defaults::remove</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="97" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="452" bodyend="455"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1a5f5f6472c5b2bcbe8e11642db30da9fa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::remove</definition>
+        <argsstring>(const string &amp;key) throws</argsstring>
+        <name>remove</name>
+        <qualifiedname>vc64::Defaults::remove</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="98" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="458" bodyend="472"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1a87319f0a1a6c4d07995b53d98bd7d9ba" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::remove</definition>
+        <argsstring>(Option option) throws</argsstring>
+        <name>remove</name>
+        <qualifiedname>vc64::Defaults::remove</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="99" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="475" bodyend="478"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1aa846d8d0eae20442c03e617521341ae8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::remove</definition>
+        <argsstring>(Option option, isize nr) throws</argsstring>
+        <name>remove</name>
+        <qualifiedname>vc64::Defaults::remove</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="100" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="481" bodyend="484"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1a29cbd230ee41ba5ce6a66238ea46fd61" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::remove</definition>
+        <argsstring>(Option option, std::vector&lt; isize &gt; nrs) throws</argsstring>
+        <name>remove</name>
+        <qualifiedname>vc64::Defaults::remove</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>std::vector&lt; isize &gt;</type>
+          <declname>nrs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="101" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="487" bodyend="490"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvc64_1_1_defaults_1a7a2edb8763257af80eeec630af0964b4" prot="private" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::Defaults::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::Defaults::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="50" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" bodystart="50" bodyend="50"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_defaults_1adb32d72e61f6483cd55ccd19b08b708d" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Defaults::_dump</definition>
+        <argsstring>(Category category, std::ostream &amp;os) const override</argsstring>
+        <name>_dump</name>
+        <qualifiedname>vc64::Defaults::_dump</qualifiedname>
+        <param>
+          <type>Category</type>
+          <declname>category</declname>
+        </param>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="51" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp" bodystart="126" bodyend="143"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" line="22" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h" bodystart="22" bodyend="102"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_defaults_1adb32d72e61f6483cd55ccd19b08b708d" prot="private" virt="non-virtual"><scope>vc64::Defaults</scope><name>_dump</name></member>
+      <member refid="classvc64_1_1_defaults_1a560d6026a74a5410fc3e724b7a8bc3cb" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>Defaults</name></member>
+      <member refid="classvc64_1_1_defaults_1a73df5d017910e2be80552e06c6cd480b" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>Defaults</name></member>
+      <member refid="classvc64_1_1_dumpable_1a28d8b76288598fc0309bd6247e5479db" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_dumpable_1afc31b73f9b651bba5cf37dc88158755a" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_defaults_1ac9708a9af4da7fce45eb38d8b50536c2" prot="private" virt="non-virtual"><scope>vc64::Defaults</scope><name>fallbacks</name></member>
+      <member refid="classvc64_1_1_defaults_1ac5ccafcf15669bb64ed8f87b7a745022" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>get</name></member>
+      <member refid="classvc64_1_1_defaults_1a302b505497ff3eefe8a2df44e3d9f0eb" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>get</name></member>
+      <member refid="classvc64_1_1_defaults_1a7a2edb8763257af80eeec630af0964b4" prot="private" virt="non-virtual"><scope>vc64::Defaults</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_defaults_1a7d35880d95fad9dda570e2a131612661" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>getFallback</name></member>
+      <member refid="classvc64_1_1_defaults_1abd2a859d67e908bba94c52fde326acc0" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>getInt</name></member>
+      <member refid="classvc64_1_1_defaults_1a5151d52c327e87efd9c4aceac475e42f" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>getString</name></member>
+      <member refid="classvc64_1_1_defaults_1a374f06dfa4f733f7adb393af29efe827" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>load</name></member>
+      <member refid="classvc64_1_1_defaults_1a3192775f5c7aa95e87c4a106ef7a6a6e" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>load</name></member>
+      <member refid="classvc64_1_1_defaults_1aed7452fd3930954040de8c2a69cbd860" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>load</name></member>
+      <member refid="classvc64_1_1_defaults_1aea9485bec597e50b7d4a03efe02c51f1" prot="private" virt="non-virtual"><scope>vc64::Defaults</scope><name>mutex</name></member>
+      <member refid="classvc64_1_1_defaults_1a905fda7ed976087c791826cb28e2bc8e" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>operator=</name></member>
+      <member refid="classvc64_1_1_core_object_1ab05f272c10fd455a9cafbb667293d044" prot="public" virt="virtual"><scope>vc64::Defaults</scope><name>prefix</name></member>
+      <member refid="classvc64_1_1_defaults_1a33c146ecd2dbfac8e3f4e846de652535" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>remove</name></member>
+      <member refid="classvc64_1_1_defaults_1a5f5f6472c5b2bcbe8e11642db30da9fa" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>remove</name></member>
+      <member refid="classvc64_1_1_defaults_1a87319f0a1a6c4d07995b53d98bd7d9ba" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>remove</name></member>
+      <member refid="classvc64_1_1_defaults_1aa846d8d0eae20442c03e617521341ae8" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>remove</name></member>
+      <member refid="classvc64_1_1_defaults_1a29cbd230ee41ba5ce6a66238ea46fd61" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>remove</name></member>
+      <member refid="classvc64_1_1_defaults_1a7d667d437bcf21c0acf8789a5bd9c76b" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>save</name></member>
+      <member refid="classvc64_1_1_defaults_1af183c4c7e33877a5cc8a1230a8fc5e3e" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>save</name></member>
+      <member refid="classvc64_1_1_defaults_1a23fc07c9c7119a84431dc1cefa2aea6a" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>save</name></member>
+      <member refid="classvc64_1_1_defaults_1ab687768a2c7e567071b3823d2ce27a3c" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>set</name></member>
+      <member refid="classvc64_1_1_defaults_1a359f554b64a9a3882f65bc81b08d9244" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>set</name></member>
+      <member refid="classvc64_1_1_defaults_1aa47c713416403cfe9416c54e99c3c07a" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>set</name></member>
+      <member refid="classvc64_1_1_defaults_1af80f4cf25cb2b547b95a4e763d2f64b9" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>setFallback</name></member>
+      <member refid="classvc64_1_1_defaults_1a2ea0056843749793926827ae7b9dbc22" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>setFallback</name></member>
+      <member refid="classvc64_1_1_defaults_1aa18b7f36b5fd4376af66640db0f42c36" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>setFallback</name></member>
+      <member refid="classvc64_1_1_defaults_1af3b18bcfba8eb858b9f125cd12921cf8" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>setFallback</name></member>
+      <member refid="classvc64_1_1_defaults_1aef93391585162a5b164054eeac5033cd" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>setFallback</name></member>
+      <member refid="classvc64_1_1_defaults_1a764e4713e327a31e21851f75ba00f6c4" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>setFallback</name></member>
+      <member refid="classvc64_1_1_defaults_1a9466ae215377642b5124cf1d937b191a" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>setFallback</name></member>
+      <member refid="classvc64_1_1_defaults_1ab201dbdb55a19cb15346e8d02f2e54e0" prot="public" virt="non-virtual"><scope>vc64::Defaults</scope><name>setString</name></member>
+      <member refid="classvc64_1_1_defaults_1ad2e08ba007190cbae022deb2d0557db7" prot="private" virt="non-virtual"><scope>vc64::Defaults</scope><name>values</name></member>
+      <member refid="classvc64_1_1_core_object_1aa17ada334edf800da9ea768925ffa885" prot="protected" virt="non-virtual"><scope>vc64::Defaults</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>vc64::Defaults</scope><name>~CoreObject</name></member>
+      <member refid="classvc64_1_1_dumpable_1a843e874f633f7dcd8e2f1dcf1d8f0c25" prot="public" virt="virtual"><scope>vc64::Defaults</scope><name>~Dumpable</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

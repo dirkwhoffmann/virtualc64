@@ -1,0 +1,542 @@
+\doxysection{vc64\+::C64 Class Reference}
+\hypertarget{classvc64_1_1_c64}{}\label{classvc64_1_1_c64}\index{vc64::C64@{vc64::C64}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_c64_aa8714cd758fc22d8a3ebf750309fbcf1}\label{classvc64_1_1_c64_aa8714cd758fc22d8a3ebf750309fbcf1} 
+{\bfseries C64} (class \mbox{\hyperlink{classvc64_1_1_emulator}{Emulator}} \&ref)
+\item 
+void \mbox{\hyperlink{classvc64_1_1_c64_ad96cea38b246dfb46e2bd7829d506dbe}{prefix}} () const override
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classvc64_1_1_c64_a5e9f9d9f4dc2b09464829ba0d3b3171f}{get\+Description}} () const override
+\item 
+void \mbox{\hyperlink{classvc64_1_1_c64_aad958102d970365c6efee96551b6faf9}{\+\_\+dump}} (Category category, std\+::ostream \&os) const override
+\item 
+\Hypertarget{classvc64_1_1_c64_acf673bea7f7f3569a2d2bef20e93d93c}\label{classvc64_1_1_c64_acf673bea7f7f3569a2d2bef20e93d93c} 
+void {\bfseries hard\+Reset} ()
+\item 
+\Hypertarget{classvc64_1_1_c64_a53ca4743f3963fc11344aec502a6d589}\label{classvc64_1_1_c64_a53ca4743f3963fc11344aec502a6d589} 
+void {\bfseries soft\+Reset} ()
+\item 
+\Hypertarget{classvc64_1_1_c64_a9b674131d8fae9973416d2fd92b9bccc}\label{classvc64_1_1_c64_a9b674131d8fae9973416d2fd92b9bccc} 
+const \mbox{\hyperlink{struct_c64_config}{C64\+Config}} \& {\bfseries get\+Config} () const
+\item 
+\Hypertarget{classvc64_1_1_c64_a0ef94e3f85a1fe97d7874806b9631da1}\label{classvc64_1_1_c64_a0ef94e3f85a1fe97d7874806b9631da1} 
+void {\bfseries update\+Clock\+Frequency} ()
+\item 
+\Hypertarget{classvc64_1_1_c64_a2b534a525386194ddadff5dc2d4dea75}\label{classvc64_1_1_c64_a2b534a525386194ddadff5dc2d4dea75} 
+void {\bfseries mark\+As\+Dirty} ()
+\item 
+\Hypertarget{classvc64_1_1_c64_a31f087c8d7f9b463f757525e607d4e7e}\label{classvc64_1_1_c64_a31f087c8d7f9b463f757525e607d4e7e} 
+bool {\bfseries get\+Headless} () const
+\item 
+\Hypertarget{classvc64_1_1_c64_a44d4c9ac020951de03012fa6e72fbba7}\label{classvc64_1_1_c64_a44d4c9ac020951de03012fa6e72fbba7} 
+void {\bfseries set\+Headless} (bool value)
+\item 
+\Hypertarget{classvc64_1_1_c64_ae83593e0fbfdca16188dae4ef5a120bd}\label{classvc64_1_1_c64_ae83593e0fbfdca16188dae4ef5a120bd} 
+Inspection\+Target {\bfseries get\+Inspection\+Target} () const
+\item 
+\Hypertarget{classvc64_1_1_c64_af5359248cdfe04b7a77151c12db94478}\label{classvc64_1_1_c64_af5359248cdfe04b7a77151c12db94478} 
+void {\bfseries set\+Inspection\+Target} (Inspection\+Target target, Cycle trigger=0)
+\item 
+\Hypertarget{classvc64_1_1_c64_a36a69e5815af0a5cd5c53148ec9ef71a}\label{classvc64_1_1_c64_a36a69e5815af0a5cd5c53148ec9ef71a} 
+void {\bfseries remove\+Inspection\+Target} ()
+\item 
+\Hypertarget{classvc64_1_1_c64_ad3b8387cf5bd0f05688b11961ec2209b}\label{classvc64_1_1_c64_ad3b8387cf5bd0f05688b11961ec2209b} 
+\mbox{\hyperlink{classvc64_1_1_c64}{C64}} \& {\bfseries operator=} (const \mbox{\hyperlink{classvc64_1_1_c64}{C64}} \&other)
+\item 
+\Hypertarget{classvc64_1_1_c64_a5c18230b56e7e4f14eb36918d911db40}\label{classvc64_1_1_c64_a5c18230b56e7e4f14eb36918d911db40} 
+{\footnotesize template$<$class T $>$ }\\void {\bfseries serialize} (T \&worker)
+\item 
+\Hypertarget{classvc64_1_1_c64_afa01679415aa9d3b25d51b2fe775b19d}\label{classvc64_1_1_c64_afa01679415aa9d3b25d51b2fe775b19d} 
+void {\bfseries operator$<$$<$} (Ser\+Resetter \&worker) override
+\item 
+\Hypertarget{classvc64_1_1_c64_a4fe362c7b1b7ef8eb9365a304fbedbf6}\label{classvc64_1_1_c64_a4fe362c7b1b7ef8eb9365a304fbedbf6} 
+void {\bfseries operator$<$$<$} (Ser\+Checker \&worker) override
+\item 
+\Hypertarget{classvc64_1_1_c64_ae0e96fba09954257fc9e8f4c00832d77}\label{classvc64_1_1_c64_ae0e96fba09954257fc9e8f4c00832d77} 
+void {\bfseries operator$<$$<$} (Ser\+Counter \&worker) override
+\item 
+\Hypertarget{classvc64_1_1_c64_a09fb30698095a5d6aa81450d278826eb}\label{classvc64_1_1_c64_a09fb30698095a5d6aa81450d278826eb} 
+void {\bfseries operator$<$$<$} (Ser\+Reader \&worker) override
+\item 
+\Hypertarget{classvc64_1_1_c64_a4efbd723bb3649a745cd54eecc056ce4}\label{classvc64_1_1_c64_a4efbd723bb3649a745cd54eecc056ce4} 
+void {\bfseries operator$<$$<$} (Ser\+Writer \&worker) override
+\item 
+\Hypertarget{classvc64_1_1_c64_ad28dc7a42704e681bf576adea9e8a068}\label{classvc64_1_1_c64_ad28dc7a42704e681bf576adea9e8a068} 
+isize {\bfseries size} ()
+\item 
+\Hypertarget{classvc64_1_1_c64_aa42dedee5be5d9c177b273725ad104e4}\label{classvc64_1_1_c64_aa42dedee5be5d9c177b273725ad104e4} 
+isize {\bfseries load} (const u8 \texorpdfstring{$\ast$}{*}buffer)
+\item 
+\Hypertarget{classvc64_1_1_c64_a2f5a2ee6818624378b44b8864203d5b7}\label{classvc64_1_1_c64_a2f5a2ee6818624378b44b8864203d5b7} 
+isize {\bfseries save} (u8 \texorpdfstring{$\ast$}{*}buffer)
+\item 
+virtual void \mbox{\hyperlink{classvc64_1_1_c64_a55c5aedcc32dc28133c11ce8f528de5e}{record}} () const override
+\item 
+bool \mbox{\hyperlink{classvc64_1_1_c64_af561d57e56fe0dc94ac4a175a3cac636}{auto\+Inspect}} () const override
+\item 
+void \mbox{\hyperlink{classvc64_1_1_c64_a3b5a29f4c342e45bb88d3c000d494241}{record\+State}} (\mbox{\hyperlink{struct_c64_info}{C64\+Info}} \&result) const override
+\item 
+\Hypertarget{classvc64_1_1_c64_ac191609db8a676d55ab6088ac493c22f}\label{classvc64_1_1_c64_ac191609db8a676d55ab6088ac493c22f} 
+\mbox{\hyperlink{struct_event_slot_info}{Event\+Slot\+Info}} {\bfseries get\+Slot\+Info} (isize nr) const
+\item 
+\Hypertarget{classvc64_1_1_c64_a46fb922a877303e14c5a494f22bfcc67}\label{classvc64_1_1_c64_a46fb922a877303e14c5a494f22bfcc67} 
+bool {\bfseries get\+Ultimax} () const
+\item 
+\Hypertarget{classvc64_1_1_c64_ac4ff534acc91cc67b49f32f293f9a304}\label{classvc64_1_1_c64_ac4ff534acc91cc67b49f32f293f9a304} 
+void {\bfseries set\+Ultimax} (bool b)
+\item 
+\Hypertarget{classvc64_1_1_c64_a00b157bc0b700d2817a9c3fff245bf69}\label{classvc64_1_1_c64_a00b157bc0b700d2817a9c3fff245bf69} 
+void {\bfseries set\+Flag} (u32 flags)
+\item 
+\Hypertarget{classvc64_1_1_c64_aee05f63184f946baa64e3bd38ac414ef}\label{classvc64_1_1_c64_aee05f63184f946baa64e3bd38ac414ef} 
+void {\bfseries clear\+Flag} (u32 flags)
+\item 
+\Hypertarget{classvc64_1_1_c64_a68b0c4a5acd63db0985dd6115e9c7359}\label{classvc64_1_1_c64_a68b0c4a5acd63db0985dd6115e9c7359} 
+void {\bfseries signal\+Breakpoint} ()
+\item 
+\Hypertarget{classvc64_1_1_c64_a29a5cda786eae9167aa49f9dddd0e55f}\label{classvc64_1_1_c64_a29a5cda786eae9167aa49f9dddd0e55f} 
+void {\bfseries signal\+Watchpoint} ()
+\item 
+\Hypertarget{classvc64_1_1_c64_ad4f239357e9773da42bb430ad4a6d4eb}\label{classvc64_1_1_c64_ad4f239357e9773da42bb430ad4a6d4eb} 
+void {\bfseries signal\+Jammed} ()
+\item 
+\Hypertarget{classvc64_1_1_c64_aab444a5b85fbaf2b7cefc3b6dea9b4d9}\label{classvc64_1_1_c64_aab444a5b85fbaf2b7cefc3b6dea9b4d9} 
+void {\bfseries signal\+Stop} ()
+\item 
+\Hypertarget{classvc64_1_1_c64_af9115cbf866125c96c38d87856b83a42}\label{classvc64_1_1_c64_af9115cbf866125c96c38d87856b83a42} 
+void {\bfseries execute\+One\+Cycle} ()
+\item 
+\Hypertarget{classvc64_1_1_c64_abd55f73241d7559e9eff695de7c203ef}\label{classvc64_1_1_c64_abd55f73241d7559e9eff695de7c203ef} 
+void {\bfseries process} (const Cmd \&cmd)
+\item 
+\Hypertarget{classvc64_1_1_c64_ad82dbc1055bf5e6a0b2503c76900d703}\label{classvc64_1_1_c64_ad82dbc1055bf5e6a0b2503c76900d703} 
+void {\bfseries process\+Events} (Cycle cycle)
+\item 
+\Hypertarget{classvc64_1_1_c64_addcf5bc03c93c0b716b5740bd22ecb40}\label{classvc64_1_1_c64_addcf5bc03c93c0b716b5740bd22ecb40} 
+{\footnotesize template$<$Event\+Slot s$>$ }\\bool {\bfseries has\+Event} () const
+\item 
+\Hypertarget{classvc64_1_1_c64_a3c11c7cfa951ab45227cf448f1798219}\label{classvc64_1_1_c64_a3c11c7cfa951ab45227cf448f1798219} 
+{\footnotesize template$<$Event\+Slot s$>$ }\\bool {\bfseries has\+Event} (Event\+ID id) const
+\item 
+\Hypertarget{classvc64_1_1_c64_adc5cec7af113d1fee82d3244aa5fe887}\label{classvc64_1_1_c64_adc5cec7af113d1fee82d3244aa5fe887} 
+{\footnotesize template$<$Event\+Slot s$>$ }\\bool {\bfseries is\+Pending} () const
+\item 
+\Hypertarget{classvc64_1_1_c64_a4a5d29ff64b6e3c068c52d4ef304037d}\label{classvc64_1_1_c64_a4a5d29ff64b6e3c068c52d4ef304037d} 
+{\footnotesize template$<$Event\+Slot s$>$ }\\bool {\bfseries is\+Due} (Cycle cycle) const
+\item 
+\Hypertarget{classvc64_1_1_c64_a53455788cc1621083015f92dd305423f}\label{classvc64_1_1_c64_a53455788cc1621083015f92dd305423f} 
+{\footnotesize template$<$Event\+Slot s$>$ }\\void {\bfseries schedule\+Abs} (Cycle cycle, Event\+ID id)
+\item 
+\Hypertarget{classvc64_1_1_c64_a7de3aa80b87eb7a9374263a6ddc3e866}\label{classvc64_1_1_c64_a7de3aa80b87eb7a9374263a6ddc3e866} 
+{\footnotesize template$<$Event\+Slot s$>$ }\\void {\bfseries schedule\+Abs} (Cycle cycle, Event\+ID id, i64 data)
+\item 
+\Hypertarget{classvc64_1_1_c64_a73f8cd50c0be52e9bb2582b199c81de9}\label{classvc64_1_1_c64_a73f8cd50c0be52e9bb2582b199c81de9} 
+{\footnotesize template$<$Event\+Slot s$>$ }\\void {\bfseries reschedule\+Abs} (Cycle cycle)
+\item 
+\Hypertarget{classvc64_1_1_c64_a696e1887707dc5631fc7e2c3aea8c8b4}\label{classvc64_1_1_c64_a696e1887707dc5631fc7e2c3aea8c8b4} 
+{\footnotesize template$<$Event\+Slot s$>$ }\\void {\bfseries schedule\+Imm} (Event\+ID id)
+\item 
+\Hypertarget{classvc64_1_1_c64_a70435ed775614e08f5342d001b7f4e9f}\label{classvc64_1_1_c64_a70435ed775614e08f5342d001b7f4e9f} 
+{\footnotesize template$<$Event\+Slot s$>$ }\\void {\bfseries schedule\+Imm} (Event\+ID id, i64 data)
+\item 
+\Hypertarget{classvc64_1_1_c64_a97f6025e4246e0f20b431f6ab3bb7da4}\label{classvc64_1_1_c64_a97f6025e4246e0f20b431f6ab3bb7da4} 
+{\footnotesize template$<$Event\+Slot s$>$ }\\void {\bfseries schedule\+Rel} (Cycle cycle, Event\+ID id)
+\item 
+\Hypertarget{classvc64_1_1_c64_a6b45cd52f4fbe9ccd50134169912cad5}\label{classvc64_1_1_c64_a6b45cd52f4fbe9ccd50134169912cad5} 
+{\footnotesize template$<$Event\+Slot s$>$ }\\void {\bfseries schedule\+Rel} (Cycle cycle, Event\+ID id, i64 data)
+\item 
+\Hypertarget{classvc64_1_1_c64_a468fca6a3df19e3310fdaa910ef4152d}\label{classvc64_1_1_c64_a468fca6a3df19e3310fdaa910ef4152d} 
+{\footnotesize template$<$Event\+Slot s$>$ }\\void {\bfseries reschedule\+Rel} (Cycle cycle)
+\item 
+\Hypertarget{classvc64_1_1_c64_abaaf9deb553ff724f36ccedb6f1e9a24}\label{classvc64_1_1_c64_abaaf9deb553ff724f36ccedb6f1e9a24} 
+{\footnotesize template$<$Event\+Slot s$>$ }\\void {\bfseries schedule\+Inc} (Cycle cycle, Event\+ID id)
+\item 
+\Hypertarget{classvc64_1_1_c64_a54622af53dc3c7b6dc1d23cfd36503a3}\label{classvc64_1_1_c64_a54622af53dc3c7b6dc1d23cfd36503a3} 
+{\footnotesize template$<$Event\+Slot s$>$ }\\void {\bfseries schedule\+Inc} (Cycle cycle, Event\+ID id, i64 data)
+\item 
+\Hypertarget{classvc64_1_1_c64_a8b091b02da5647ec7ba753585526fcfa}\label{classvc64_1_1_c64_a8b091b02da5647ec7ba753585526fcfa} 
+{\footnotesize template$<$Event\+Slot s$>$ }\\void {\bfseries reschedule\+Inc} (Cycle cycle)
+\item 
+\Hypertarget{classvc64_1_1_c64_aec98fec236ce197be9177c1efab6c759}\label{classvc64_1_1_c64_aec98fec236ce197be9177c1efab6c759} 
+{\footnotesize template$<$Event\+Slot s$>$ }\\void {\bfseries cancel} ()
+\item 
+\Hypertarget{classvc64_1_1_c64_a55bf295ce70312c8c2c1af57bdd41042}\label{classvc64_1_1_c64_a55bf295ce70312c8c2c1af57bdd41042} 
+\mbox{\hyperlink{classvc64_1_1_snapshot}{Snapshot}} \texorpdfstring{$\ast$}{*} {\bfseries latest\+Auto\+Snapshot} ()
+\item 
+\Hypertarget{classvc64_1_1_c64_a5220073735f3261210924a894444d9f8}\label{classvc64_1_1_c64_a5220073735f3261210924a894444d9f8} 
+\mbox{\hyperlink{classvc64_1_1_snapshot}{Snapshot}} \texorpdfstring{$\ast$}{*} {\bfseries latest\+User\+Snapshot} ()
+\item 
+\Hypertarget{classvc64_1_1_c64_ad5c1dec9398ffd2a2cfa8ecd7a83424d}\label{classvc64_1_1_c64_ad5c1dec9398ffd2a2cfa8ecd7a83424d} 
+void {\bfseries load\+Snapshot} (const \mbox{\hyperlink{classvc64_1_1_snapshot}{Snapshot}} \&snapshot) throws
+\item 
+\Hypertarget{classvc64_1_1_c64_a160e116c7242449841b395ed65c042d9}\label{classvc64_1_1_c64_a160e116c7242449841b395ed65c042d9} 
+\mbox{\hyperlink{struct_rom_info}{Rom\+Info}} {\bfseries get\+Rom\+Info} (Rom\+Type type) const
+\item 
+\Hypertarget{classvc64_1_1_c64_af6d2bf820042d9b25fb9d343a084bbf9}\label{classvc64_1_1_c64_af6d2bf820042d9b25fb9d343a084bbf9} 
+u32 {\bfseries rom\+CRC32} (Rom\+Type type) const
+\item 
+\Hypertarget{classvc64_1_1_c64_ace0dc53ce7a962d3403c067d050081bd}\label{classvc64_1_1_c64_ace0dc53ce7a962d3403c067d050081bd} 
+u64 {\bfseries rom\+FNV64} (Rom\+Type type) const
+\item 
+\Hypertarget{classvc64_1_1_c64_a47218c5f6c558c2668604dedad10e9a4}\label{classvc64_1_1_c64_a47218c5f6c558c2668604dedad10e9a4} 
+Rom\+Identifier {\bfseries rom\+Identifier} (Rom\+Type type) const
+\item 
+\Hypertarget{classvc64_1_1_c64_a0ba2ac54fda419db78d78e64ccaca4c1}\label{classvc64_1_1_c64_a0ba2ac54fda419db78d78e64ccaca4c1} 
+const char \texorpdfstring{$\ast$}{*} {\bfseries rom\+Title} (Rom\+Type type) const
+\item 
+\Hypertarget{classvc64_1_1_c64_a65f7006684ca4b1aab203bf90c25764e}\label{classvc64_1_1_c64_a65f7006684ca4b1aab203bf90c25764e} 
+const char \texorpdfstring{$\ast$}{*} {\bfseries rom\+Sub\+Title} (u64 fnv) const
+\item 
+\Hypertarget{classvc64_1_1_c64_aed4b242594b5503b8603deaaef527ac6}\label{classvc64_1_1_c64_aed4b242594b5503b8603deaaef527ac6} 
+const char \texorpdfstring{$\ast$}{*} {\bfseries rom\+Sub\+Title} (Rom\+Type type) const
+\item 
+\Hypertarget{classvc64_1_1_c64_a502789b6d8620c939d14733bfef947ed}\label{classvc64_1_1_c64_a502789b6d8620c939d14733bfef947ed} 
+const char \texorpdfstring{$\ast$}{*} {\bfseries rom\+Revision} (Rom\+Type type) const
+\item 
+\Hypertarget{classvc64_1_1_c64_af539317231fd3679428a5d6ea8a905a6}\label{classvc64_1_1_c64_af539317231fd3679428a5d6ea8a905a6} 
+bool {\bfseries has\+Rom} (Rom\+Type type) const
+\item 
+\Hypertarget{classvc64_1_1_c64_ac3c825591b5256ca4708c9b9aedd5f6d}\label{classvc64_1_1_c64_ac3c825591b5256ca4708c9b9aedd5f6d} 
+bool {\bfseries has\+Mega65\+Rom} (Rom\+Type type) const
+\item 
+\Hypertarget{classvc64_1_1_c64_acd4a5cf536e111b3296830e152998b28}\label{classvc64_1_1_c64_acd4a5cf536e111b3296830e152998b28} 
+void {\bfseries load\+Rom} (const string \&path) throws
+\item 
+\Hypertarget{classvc64_1_1_c64_a03fe4953b0d47873b624a5c86c5cd4ec}\label{classvc64_1_1_c64_a03fe4953b0d47873b624a5c86c5cd4ec} 
+void {\bfseries load\+Rom} (const \mbox{\hyperlink{classvc64_1_1_rom_file}{Rom\+File}} \&file)
+\item 
+\Hypertarget{classvc64_1_1_c64_a8e4d3425739aef2aadade87c99c7dca6}\label{classvc64_1_1_c64_a8e4d3425739aef2aadade87c99c7dca6} 
+void {\bfseries delete\+Rom} (Rom\+Type type)
+\item 
+\Hypertarget{classvc64_1_1_c64_aa38f51aff287fd5fd1a4df84073756c3}\label{classvc64_1_1_c64_aa38f51aff287fd5fd1a4df84073756c3} 
+void {\bfseries save\+Rom} (Rom\+Type rom, const string \&path) throws
+\item 
+\Hypertarget{classvc64_1_1_c64_a38ce307fcd25b9122b87860e1d1763fd}\label{classvc64_1_1_c64_a38ce307fcd25b9122b87860e1d1763fd} 
+void {\bfseries flash} (const \mbox{\hyperlink{classvc64_1_1_any_file}{Any\+File}} \&file) throws
+\item 
+\Hypertarget{classvc64_1_1_c64_a0c444b38a7304c82505c099f094300f9}\label{classvc64_1_1_c64_a0c444b38a7304c82505c099f094300f9} 
+void {\bfseries flash} (const \mbox{\hyperlink{classvc64_1_1_any_collection}{Any\+Collection}} \&file, isize item) throws
+\item 
+\Hypertarget{classvc64_1_1_c64_a19ec603c54fd2a31839f200a696ef6a6}\label{classvc64_1_1_c64_a19ec603c54fd2a31839f200a696ef6a6} 
+void {\bfseries flash} (const \mbox{\hyperlink{classvc64_1_1_file_system}{File\+System}} \&fs, isize item) throws
+\item 
+\Hypertarget{classvc64_1_1_c64_af4ba31cf562648d3e391cf2500014ab8}\label{classvc64_1_1_c64_af4ba31cf562648d3e391cf2500014ab8} 
+void {\bfseries set\+Alarm\+Abs} (Cycle trigger, i64 payload)
+\item 
+\Hypertarget{classvc64_1_1_c64_a2e5c7d1d4b7b0ef9b14eb56706f94aca}\label{classvc64_1_1_c64_a2e5c7d1d4b7b0ef9b14eb56706f94aca} 
+void {\bfseries set\+Alarm\+Rel} (Cycle trigger, i64 payload)
+\item 
+\Hypertarget{classvc64_1_1_c64_a97b106a29d3c090ac07bc7771734ccf4}\label{classvc64_1_1_c64_a97b106a29d3c090ac07bc7771734ccf4} 
+void {\bfseries process\+Alarm\+Event} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_core_component}{vc64\+::\+Core\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Core\+Component} (\mbox{\hyperlink{classvc64_1_1_emulator}{Emulator}} \&ref)
+\item 
+bool {\bfseries operator==} (\mbox{\hyperlink{classvc64_1_1_core_component}{Core\+Component}} \&other)
+\item 
+bool {\bfseries operator!=} (\mbox{\hyperlink{classvc64_1_1_core_component}{Core\+Component}} \&other)
+\item 
+void {\bfseries initialize} ()
+\item 
+virtual void {\bfseries \+\_\+initialize} ()
+\item 
+void {\bfseries reset} (bool hard)
+\item 
+virtual void {\bfseries \+\_\+reset} (bool hard)
+\item 
+virtual void {\bfseries reset\+Config} ()
+\item 
+virtual bool {\bfseries is\+Powered\+Off} () const
+\item 
+virtual bool {\bfseries is\+Powered\+On} () const
+\item 
+virtual bool {\bfseries is\+Paused} () const
+\item 
+virtual bool {\bfseries is\+Running} () const
+\item 
+virtual bool {\bfseries is\+Suspended} () const
+\item 
+virtual bool {\bfseries is\+Halted} () const
+\item 
+void \mbox{\hyperlink{classvc64_1_1_core_component_afd3f09724b119d73a122c3fc02ac1736}{suspend}} ()
+\item 
+void \mbox{\hyperlink{classvc64_1_1_core_component_aab9305af3e38cc19bd1067ca87fe3e0d}{resume}} ()
+\item 
+virtual void {\bfseries is\+Ready} () const throws
+\item 
+bool {\bfseries is\+Emulator\+Thread} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_configurable}{vc64\+::\+Configurable}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual const Config\+Options \& {\bfseries get\+Options} () const
+\item 
+bool {\bfseries is\+Valid\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt) const
+\item 
+virtual i64 {\bfseries get\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt) const
+\item 
+virtual void {\bfseries set\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt, i64 value)
+\item 
+void {\bfseries set\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt, const string \&value)
+\item 
+void {\bfseries set\+Option} (const string \&opt, const string \&value)
+\item 
+void {\bfseries reset\+Config} (const \mbox{\hyperlink{classvc64_1_1_defaults}{Defaults}} \&defaults)
+\item 
+void {\bfseries reset\+Config} (const \mbox{\hyperlink{classvc64_1_1_defaults}{Defaults}} \&defaults, isize i)
+\item 
+void {\bfseries dump\+Config} (std\+::ostream \&os) const
+\item 
+string {\bfseries key\+List} ()
+\item 
+string {\bfseries arg\+List} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_inspectable}{vc64\+::\+Inspectable$<$ C64\+Info, Void $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_c64_info}{C64\+Info}} \& {\bfseries get\+State} () const
+\item 
+\mbox{\hyperlink{structvc64_1_1_void}{Void}} \& {\bfseries get\+Stats} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_dumpable}{vc64\+::\+Dumpable}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries dump} (Category category, std\+::ostream \&ss) const
+\item 
+void {\bfseries dump} (Category category) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_c64_ac073925361b4873d18bedf44eb97efd2}\label{classvc64_1_1_c64_ac073925361b4873d18bedf44eb97efd2} 
+static string {\bfseries version} ()
+\item 
+\Hypertarget{classvc64_1_1_c64_aa2db13e9ef2b996656514b139ccdc436}\label{classvc64_1_1_c64_aa2db13e9ef2b996656514b139ccdc436} 
+static string {\bfseries build} ()
+\item 
+\Hypertarget{classvc64_1_1_c64_a11a81963cb27d4ccdee8f6232b947f90}\label{classvc64_1_1_c64_a11a81963cb27d4ccdee8f6232b947f90} 
+static const char \texorpdfstring{$\ast$}{*} {\bfseries event\+Name} (Event\+Slot slot, Event\+ID id)
+\item 
+\Hypertarget{classvc64_1_1_c64_ab4dcbc9872ec407d4fb7c286e94bf38c}\label{classvc64_1_1_c64_ab4dcbc9872ec407d4fb7c286e94bf38c} 
+static bool {\bfseries get\+Debug\+Variable} (Debug\+Flag flag)
+\item 
+\Hypertarget{classvc64_1_1_c64_a0567924d30039ea9929b5e80b6786c44}\label{classvc64_1_1_c64_a0567924d30039ea9929b5e80b6786c44} 
+static void {\bfseries set\+Debug\+Variable} (Debug\+Flag flag, bool val)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_c64_a258785c53dd4142741868a50adbf6a50}\label{classvc64_1_1_c64_a258785c53dd4142741868a50adbf6a50} 
+\mbox{\hyperlink{classvc64_1_1_c64_memory}{C64\+Memory}} {\bfseries mem} = \mbox{\hyperlink{classvc64_1_1_c64_memory}{C64\+Memory}}(\texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_c64_a4c70a422bcc38a71d5bcd99857e4b8ef}\label{classvc64_1_1_c64_a4c70a422bcc38a71d5bcd99857e4b8ef} 
+\mbox{\hyperlink{classvc64_1_1_c_p_u}{CPU}} {\bfseries cpu} = \mbox{\hyperlink{classvc64_1_1_c_p_u}{CPU}}(MOS\+\_\+6510, \texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_c64_a3576f7b284e7cf478ecb257e9b47b62c}\label{classvc64_1_1_c64_a3576f7b284e7cf478ecb257e9b47b62c} 
+\mbox{\hyperlink{classvc64_1_1_c_i_a1}{CIA1}} {\bfseries cia1} = \mbox{\hyperlink{classvc64_1_1_c_i_a1}{CIA1}}(\texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_c64_ac2952f179a1f2056a5c331cd0c1f84c0}\label{classvc64_1_1_c64_ac2952f179a1f2056a5c331cd0c1f84c0} 
+\mbox{\hyperlink{classvc64_1_1_c_i_a2}{CIA2}} {\bfseries cia2} = \mbox{\hyperlink{classvc64_1_1_c_i_a2}{CIA2}}(\texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_c64_a60ecfd74d871347a85ca18a231bd8e22}\label{classvc64_1_1_c64_a60ecfd74d871347a85ca18a231bd8e22} 
+\mbox{\hyperlink{classvc64_1_1_v_i_c_i_i}{VICII}} {\bfseries vic} = \mbox{\hyperlink{classvc64_1_1_v_i_c_i_i}{VICII}}(\texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_c64_a562c71ecfb71372f39365232b9628046}\label{classvc64_1_1_c64_a562c71ecfb71372f39365232b9628046} 
+\mbox{\hyperlink{classvc64_1_1_muxer}{Muxer}} {\bfseries muxer} = \mbox{\hyperlink{classvc64_1_1_muxer}{Muxer}}(\texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_c64_aa50ef576918a4f91baff7fbf76d34431}\label{classvc64_1_1_c64_aa50ef576918a4f91baff7fbf76d34431} 
+\mbox{\hyperlink{classvc64_1_1_power_supply}{Power\+Supply}} {\bfseries supply} = \mbox{\hyperlink{classvc64_1_1_power_supply}{Power\+Supply}}(\texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_c64_a70f5023826b59c8d57b37ff42a2f0230}\label{classvc64_1_1_c64_a70f5023826b59c8d57b37ff42a2f0230} 
+\mbox{\hyperlink{classvc64_1_1_control_port}{Control\+Port}} {\bfseries port1} = \mbox{\hyperlink{classvc64_1_1_control_port}{Control\+Port}}(\texorpdfstring{$\ast$}{*}this, PORT\+\_\+1)
+\item 
+\Hypertarget{classvc64_1_1_c64_a3fedf6a4463f940df49c7e4018b4419e}\label{classvc64_1_1_c64_a3fedf6a4463f940df49c7e4018b4419e} 
+\mbox{\hyperlink{classvc64_1_1_control_port}{Control\+Port}} {\bfseries port2} = \mbox{\hyperlink{classvc64_1_1_control_port}{Control\+Port}}(\texorpdfstring{$\ast$}{*}this, PORT\+\_\+2)
+\item 
+\Hypertarget{classvc64_1_1_c64_a33940c08a7ece84e87c56213429cc9e9}\label{classvc64_1_1_c64_a33940c08a7ece84e87c56213429cc9e9} 
+\mbox{\hyperlink{classvc64_1_1_expansion_port}{Expansion\+Port}} {\bfseries expansionport} = \mbox{\hyperlink{classvc64_1_1_expansion_port}{Expansion\+Port}}(\texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_c64_a5935e75961cdbfcb79785aeed312c06e}\label{classvc64_1_1_c64_a5935e75961cdbfcb79785aeed312c06e} 
+\mbox{\hyperlink{classvc64_1_1_i_e_c}{IEC}} {\bfseries iec} = \mbox{\hyperlink{classvc64_1_1_i_e_c}{IEC}}(\texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_c64_a2ef182917aa2f86228cf165d3f05fede}\label{classvc64_1_1_c64_a2ef182917aa2f86228cf165d3f05fede} 
+\mbox{\hyperlink{classvc64_1_1_keyboard}{Keyboard}} {\bfseries keyboard} = \mbox{\hyperlink{classvc64_1_1_keyboard}{Keyboard}}(\texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_c64_a91bded238a06b17c88095695a14e56e9}\label{classvc64_1_1_c64_a91bded238a06b17c88095695a14e56e9} 
+\mbox{\hyperlink{classvc64_1_1_drive}{Drive}} {\bfseries drive8} = \mbox{\hyperlink{classvc64_1_1_drive}{Drive}}(DRIVE8, \texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_c64_a75d73a98c9cde5a279b185e841c7ac24}\label{classvc64_1_1_c64_a75d73a98c9cde5a279b185e841c7ac24} 
+\mbox{\hyperlink{classvc64_1_1_drive}{Drive}} {\bfseries drive9} = \mbox{\hyperlink{classvc64_1_1_drive}{Drive}}(DRIVE9, \texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_c64_a4d1f3b5b10ac23d67c4aaa5b7ef230a0}\label{classvc64_1_1_c64_a4d1f3b5b10ac23d67c4aaa5b7ef230a0} 
+\mbox{\hyperlink{classvc64_1_1_par_cable}{Par\+Cable}} {\bfseries par\+Cable} = \mbox{\hyperlink{classvc64_1_1_par_cable}{Par\+Cable}}(\texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_c64_a0101218aaf33bfd09e050a1221d15c22}\label{classvc64_1_1_c64_a0101218aaf33bfd09e050a1221d15c22} 
+\mbox{\hyperlink{classvc64_1_1_datasette}{Datasette}} {\bfseries datasette} = \mbox{\hyperlink{classvc64_1_1_datasette}{Datasette}}(\texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_c64_a3656b4f957ebf26bd8f7e9376277b687}\label{classvc64_1_1_c64_a3656b4f957ebf26bd8f7e9376277b687} 
+\mbox{\hyperlink{classvc64_1_1_retro_shell}{Retro\+Shell}} {\bfseries retro\+Shell} = \mbox{\hyperlink{classvc64_1_1_retro_shell}{Retro\+Shell}}(\texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_c64_a7c3463d0447ad7cb8a10fb0d947b1bc9}\label{classvc64_1_1_c64_a7c3463d0447ad7cb8a10fb0d947b1bc9} 
+\mbox{\hyperlink{classvc64_1_1_regression_tester}{Regression\+Tester}} {\bfseries regression\+Tester} = \mbox{\hyperlink{classvc64_1_1_regression_tester}{Regression\+Tester}}(\texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_c64_a71b876bfe9695af61309ab271d065473}\label{classvc64_1_1_c64_a71b876bfe9695af61309ab271d065473} 
+\mbox{\hyperlink{classvc64_1_1_recorder}{Recorder}} {\bfseries recorder} = \mbox{\hyperlink{classvc64_1_1_recorder}{Recorder}}(\texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_c64_a44e612d7c5e1aae311ea4a13244f70a8}\label{classvc64_1_1_c64_a44e612d7c5e1aae311ea4a13244f70a8} 
+\mbox{\hyperlink{classvc64_1_1_msg_queue}{Msg\+Queue}} {\bfseries msg\+Queue} = \mbox{\hyperlink{classvc64_1_1_msg_queue}{Msg\+Queue}}()
+\item 
+\Hypertarget{classvc64_1_1_c64_a8030c1c6d93cdcacb8f81e8acd10b499}\label{classvc64_1_1_c64_a8030c1c6d93cdcacb8f81e8acd10b499} 
+Cycle {\bfseries trigger} \mbox{[}SLOT\+\_\+\+COUNT\mbox{]} = \{ \}
+\item 
+\Hypertarget{classvc64_1_1_c64_a893d1a3a232e4b0cc19e7a5d7024bcd1}\label{classvc64_1_1_c64_a893d1a3a232e4b0cc19e7a5d7024bcd1} 
+Event\+ID {\bfseries id} \mbox{[}SLOT\+\_\+\+COUNT\mbox{]} = \{ \}
+\item 
+\Hypertarget{classvc64_1_1_c64_ae518c070e1fc4ec9597244eff317c695}\label{classvc64_1_1_c64_ae518c070e1fc4ec9597244eff317c695} 
+i64 {\bfseries data} \mbox{[}SLOT\+\_\+\+COUNT\mbox{]} = \{ \}
+\item 
+\Hypertarget{classvc64_1_1_c64_a8316915ab54b73f45edaac553750fc46}\label{classvc64_1_1_c64_a8316915ab54b73f45edaac553750fc46} 
+Cycle {\bfseries next\+Trigger} = NEVER
+\item 
+\Hypertarget{classvc64_1_1_c64_a75c835e4a1cce8a951eb5cb98b64d311}\label{classvc64_1_1_c64_a75c835e4a1cce8a951eb5cb98b64d311} 
+u64 {\bfseries frame} = 0
+\item 
+\Hypertarget{classvc64_1_1_c64_a8215477eba47eeca1278c0b8b13fd8b3}\label{classvc64_1_1_c64_a8215477eba47eeca1278c0b8b13fd8b3} 
+u16 {\bfseries scanline} = 0
+\item 
+\Hypertarget{classvc64_1_1_c64_add96b6c7c6f9d82e79ae65b20a4640ff}\label{classvc64_1_1_c64_add96b6c7c6f9d82e79ae65b20a4640ff} 
+u8 {\bfseries raster\+Cycle} = 1
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classvc64_1_1_core_component}{vc64\+::\+Core\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classvc64_1_1_emulator}{Emulator}} \& {\bfseries emulator}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classvc64_1_1_core_component}{Core\+Component}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries sub\+Components}
+\item 
+bool {\bfseries verbose} = true
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classvc64_1_1_synchronizable}{vc64\+::\+Synchronizable}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classutil_1_1_reentrant_mutex}{util\+::\+Reentrant\+Mutex}} {\bfseries mutex}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_c64_acee3705b9aafb44b33eae16d6aba437a}\label{classvc64_1_1_c64_acee3705b9aafb44b33eae16d6aba437a} 
+class {\bfseries Emulator}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_core_component}{vc64\+::\+Core\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries power\+On} ()
+\item 
+void {\bfseries power\+Off} ()
+\item 
+void {\bfseries run} ()
+\item 
+void {\bfseries pause} ()
+\item 
+void {\bfseries halt} ()
+\item 
+void {\bfseries warp\+On} ()
+\item 
+void {\bfseries warp\+Off} ()
+\item 
+void {\bfseries track\+On} ()
+\item 
+void {\bfseries track\+Off} ()
+\item 
+void {\bfseries power\+On\+Off} (bool value)
+\item 
+void {\bfseries warp\+On\+Off} (bool value)
+\item 
+void {\bfseries track\+On\+Off} (bool value)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_inspectable}{vc64\+::\+Inspectable$<$ C64\+Info, Void $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_c64_info}{C64\+Info}} {\bfseries info}
+\item 
+\mbox{\hyperlink{structvc64_1_1_void}{Void}} {\bfseries stats}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+static bool {\bfseries verbose} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvc64_1_1_c64_aad958102d970365c6efee96551b6faf9}\label{classvc64_1_1_c64_aad958102d970365c6efee96551b6faf9} 
+\index{vc64::C64@{vc64::C64}!\_dump@{\_dump}}
+\index{\_dump@{\_dump}!vc64::C64@{vc64::C64}}
+\doxysubsubsection{\texorpdfstring{\_dump()}{\_dump()}}
+{\footnotesize\ttfamily void vc64\+::\+C64\+::\+\_\+dump (\begin{DoxyParamCaption}\item[{Category}]{category,  }\item[{std\+::ostream \&}]{os }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_dumpable}{vc64\+::\+Dumpable}}.
+
+\Hypertarget{classvc64_1_1_c64_af561d57e56fe0dc94ac4a175a3cac636}\label{classvc64_1_1_c64_af561d57e56fe0dc94ac4a175a3cac636} 
+\index{vc64::C64@{vc64::C64}!autoInspect@{autoInspect}}
+\index{autoInspect@{autoInspect}!vc64::C64@{vc64::C64}}
+\doxysubsubsection{\texorpdfstring{autoInspect()}{autoInspect()}}
+{\footnotesize\ttfamily bool vc64\+::\+C64\+::auto\+Inspect (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_inspectable}{vc64\+::\+Inspectable$<$ C64\+Info, Void $>$}}.
+
+\Hypertarget{classvc64_1_1_c64_a5e9f9d9f4dc2b09464829ba0d3b3171f}\label{classvc64_1_1_c64_a5e9f9d9f4dc2b09464829ba0d3b3171f} 
+\index{vc64::C64@{vc64::C64}!getDescription@{getDescription}}
+\index{getDescription@{getDescription}!vc64::C64@{vc64::C64}}
+\doxysubsubsection{\texorpdfstring{getDescription()}{getDescription()}}
+{\footnotesize\ttfamily const char \texorpdfstring{$\ast$}{*} vc64\+::\+C64\+::get\+Description (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}.
+
+\Hypertarget{classvc64_1_1_c64_ad96cea38b246dfb46e2bd7829d506dbe}\label{classvc64_1_1_c64_ad96cea38b246dfb46e2bd7829d506dbe} 
+\index{vc64::C64@{vc64::C64}!prefix@{prefix}}
+\index{prefix@{prefix}!vc64::C64@{vc64::C64}}
+\doxysubsubsection{\texorpdfstring{prefix()}{prefix()}}
+{\footnotesize\ttfamily void vc64\+::\+C64\+::prefix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}.
+
+\Hypertarget{classvc64_1_1_c64_a55c5aedcc32dc28133c11ce8f528de5e}\label{classvc64_1_1_c64_a55c5aedcc32dc28133c11ce8f528de5e} 
+\index{vc64::C64@{vc64::C64}!record@{record}}
+\index{record@{record}!vc64::C64@{vc64::C64}}
+\doxysubsubsection{\texorpdfstring{record()}{record()}}
+{\footnotesize\ttfamily void vc64\+::\+C64\+::record (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_inspectable}{vc64\+::\+Inspectable$<$ C64\+Info, Void $>$}}.
+
+\Hypertarget{classvc64_1_1_c64_a3b5a29f4c342e45bb88d3c000d494241}\label{classvc64_1_1_c64_a3b5a29f4c342e45bb88d3c000d494241} 
+\index{vc64::C64@{vc64::C64}!recordState@{recordState}}
+\index{recordState@{recordState}!vc64::C64@{vc64::C64}}
+\doxysubsubsection{\texorpdfstring{recordState()}{recordState()}}
+{\footnotesize\ttfamily void vc64\+::\+C64\+::record\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_c64_info}{C64\+Info}} \&}]{result }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_inspectable}{vc64\+::\+Inspectable$<$ C64\+Info, Void $>$}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Components/C64.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Components/C64.\+cpp\end{DoxyCompactItemize}

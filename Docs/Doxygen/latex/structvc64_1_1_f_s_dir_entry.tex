@@ -1,0 +1,77 @@
+\doxysection{vc64\+::FSDir\+Entry Struct Reference}
+\hypertarget{structvc64_1_1_f_s_dir_entry}{}\label{structvc64_1_1_f_s_dir_entry}\index{vc64::FSDirEntry@{vc64::FSDirEntry}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_a8fb301a7c778f0b2cc22a74fe6e3d7c9}\label{structvc64_1_1_f_s_dir_entry_a8fb301a7c778f0b2cc22a74fe6e3d7c9} 
+void {\bfseries init} (\mbox{\hyperlink{classvc64_1_1_p_e_t_name}{PETName}}$<$ 16 $>$ name, \mbox{\hyperlink{struct_t_s_link}{TSLink}} ref, isize num\+Blocks)
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_a26ffb98aa6b5a1710c6b478caf861e67}\label{structvc64_1_1_f_s_dir_entry_a26ffb98aa6b5a1710c6b478caf861e67} 
+void {\bfseries init} (const string \&name, \mbox{\hyperlink{struct_t_s_link}{TSLink}} ref, isize num\+Blocks)
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_adff1533ad999ffe4d56c59f3dda6f589}\label{structvc64_1_1_f_s_dir_entry_adff1533ad999ffe4d56c59f3dda6f589} 
+bool {\bfseries is\+Empty} () const
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_a90c2373be88ee81c620a2045d23aaa3e}\label{structvc64_1_1_f_s_dir_entry_a90c2373be88ee81c620a2045d23aaa3e} 
+\mbox{\hyperlink{classvc64_1_1_p_e_t_name}{PETName}}$<$ 16 $>$ {\bfseries get\+Name} () const
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_a6160ca3a8d91f0369b6c925b04ece0ae}\label{structvc64_1_1_f_s_dir_entry_a6160ca3a8d91f0369b6c925b04ece0ae} 
+string {\bfseries get\+File\+System\+Representation} () const
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_ae9120ea0a4d6e00b486a07239c75ee7c}\label{structvc64_1_1_f_s_dir_entry_ae9120ea0a4d6e00b486a07239c75ee7c} 
+FSFile\+Type {\bfseries get\+File\+Type} () const
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_a26b533acd5ab2423b86e9edb1d06869a}\label{structvc64_1_1_f_s_dir_entry_a26b533acd5ab2423b86e9edb1d06869a} 
+const string {\bfseries type\+String} () const
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_a3aae5ea64887be09b672796fa4b08b2f}\label{structvc64_1_1_f_s_dir_entry_a3aae5ea64887be09b672796fa4b08b2f} 
+bool {\bfseries is\+Hidden} () const
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_ad01ba53a9a436316dcfa23893d303b01}\label{structvc64_1_1_f_s_dir_entry_ad01ba53a9a436316dcfa23893d303b01} 
+\mbox{\hyperlink{struct_t_s_link}{TSLink}} {\bfseries first\+Block} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_a723e41f1107f8f1d1b4dd887b25ea61a}\label{structvc64_1_1_f_s_dir_entry_a723e41f1107f8f1d1b4dd887b25ea61a} 
+u8 {\bfseries next\+Dir\+Track}
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_a4764467cf3ead247e4bb6759cdc33799}\label{structvc64_1_1_f_s_dir_entry_a4764467cf3ead247e4bb6759cdc33799} 
+u8 {\bfseries next\+Dir\+Sector}
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_a924f748b60ebdfae5da658d80b48f0a7}\label{structvc64_1_1_f_s_dir_entry_a924f748b60ebdfae5da658d80b48f0a7} 
+u8 {\bfseries file\+Type}
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_a2bd5aa6aec037dcbbe5efd0174890212}\label{structvc64_1_1_f_s_dir_entry_a2bd5aa6aec037dcbbe5efd0174890212} 
+u8 {\bfseries first\+Data\+Track}
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_a8e0a1e3b8f026e1da12b05b8bc62b475}\label{structvc64_1_1_f_s_dir_entry_a8e0a1e3b8f026e1da12b05b8bc62b475} 
+u8 {\bfseries first\+Data\+Sector}
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_a440017fe9d0a2db9f7a11514bbc08420}\label{structvc64_1_1_f_s_dir_entry_a440017fe9d0a2db9f7a11514bbc08420} 
+u8 {\bfseries file\+Name} \mbox{[}16\mbox{]}
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_a3d14a5ed01418463b4e5865e75184436}\label{structvc64_1_1_f_s_dir_entry_a3d14a5ed01418463b4e5865e75184436} 
+u8 {\bfseries side\+Sec\+Blk\+Track}
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_a5297b39bec51c77ababdebcbc4fcbdc9}\label{structvc64_1_1_f_s_dir_entry_a5297b39bec51c77ababdebcbc4fcbdc9} 
+u8 {\bfseries side\+Src\+Blk\+Sector}
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_a69526b99ccb05b4c796d60208a0e58e8}\label{structvc64_1_1_f_s_dir_entry_a69526b99ccb05b4c796d60208a0e58e8} 
+u8 {\bfseries rec\+Length}
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_aacaf3e40382541a5b925b31912441b3d}\label{structvc64_1_1_f_s_dir_entry_aacaf3e40382541a5b925b31912441b3d} 
+u8 {\bfseries unused} \mbox{[}6\mbox{]}
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_a8433546b1be0ac0c2fe9a031500fda6c}\label{structvc64_1_1_f_s_dir_entry_a8433546b1be0ac0c2fe9a031500fda6c} 
+u8 {\bfseries file\+Size\+Lo}
+\item 
+\Hypertarget{structvc64_1_1_f_s_dir_entry_a96c5ee4023b57af38818ce0e63ce7d2e}\label{structvc64_1_1_f_s_dir_entry_a96c5ee4023b57af38818ce0e63ce7d2e} 
+u8 {\bfseries file\+Size\+Hi}
+\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+File\+Systems/FSDir\+Entry.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+File\+Systems/FSDir\+Entry.\+cpp\end{DoxyCompactItemize}

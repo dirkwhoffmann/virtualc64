@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="dir_58a291701bf16a57ae56b95613394650" kind="dir">
+    <compoundname>/Users/hoff/Retro/virtualc64/Emulator/Misc</compoundname>
+    <innerdir refid="dir_6b79b23ee49a90c4b025118d2044bedb">/Users/hoff/Retro/virtualc64/Emulator/Misc/RegressionTester</innerdir>
+    <innerdir refid="dir_0dd59c5f49641b314d973c931e79776b">/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/"/>
+  </compounddef>
+</doxygen>

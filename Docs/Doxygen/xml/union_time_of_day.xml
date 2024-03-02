@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="union_time_of_day" kind="union" language="C++" prot="public">
+    <compoundname>TimeOfDay</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="union_time_of_day_1a89b2f0e7e26326e68d08b7b85428a534" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 TimeOfDay::tenth</definition>
+        <argsstring></argsstring>
+        <name>tenth</name>
+        <qualifiedname>TimeOfDay::tenth</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/TODTypes.h" line="24" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/TODTypes.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="union_time_of_day_1a677e43b5afe22feb370fdb12b013013d" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 TimeOfDay::sec</definition>
+        <argsstring></argsstring>
+        <name>sec</name>
+        <qualifiedname>TimeOfDay::sec</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/TODTypes.h" line="25" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/TODTypes.h" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="union_time_of_day_1a0179d94eb0b65e27b5e2e47fc1bd7471" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 TimeOfDay::min</definition>
+        <argsstring></argsstring>
+        <name>min</name>
+        <qualifiedname>TimeOfDay::min</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/TODTypes.h" line="26" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/TODTypes.h" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="union_time_of_day_1ab85068852a5177c7748570355f76f745" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 TimeOfDay::hour</definition>
+        <argsstring></argsstring>
+        <name>hour</name>
+        <qualifiedname>TimeOfDay::hour</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/TODTypes.h" line="27" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/TODTypes.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="union_time_of_day_1a376ef8fd0d97b59d01c8e6deee219526" prot="public" static="no" mutable="no">
+        <type>struct TimeOfDay</type>
+        <definition>struct TimeOfDay TimeOfDay</definition>
+        <argsstring></argsstring>
+        <name></name>
+        <qualifiedname>TimeOfDay</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/TODTypes.h" line="28" column="5"/>
+      </memberdef>
+      <memberdef kind="variable" id="union_time_of_day_1a0508031467131c77c7d88285389188ac" prot="public" static="no" mutable="no">
+        <type>u32</type>
+        <definition>u32 TimeOfDay::value</definition>
+        <argsstring></argsstring>
+        <name>value</name>
+        <qualifiedname>TimeOfDay::value</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/TODTypes.h" line="29" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/TODTypes.h" bodystart="29" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/TODTypes.h" line="21" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/TODTypes.h" bodystart="22" bodyend="30"/>
+    <listofallmembers>
+      <member refid="union_time_of_day_1ab85068852a5177c7748570355f76f745" prot="public" virt="non-virtual"><scope>TimeOfDay</scope><name>hour</name></member>
+      <member refid="union_time_of_day_1a0179d94eb0b65e27b5e2e47fc1bd7471" prot="public" virt="non-virtual"><scope>TimeOfDay</scope><name>min</name></member>
+      <member refid="union_time_of_day_1a677e43b5afe22feb370fdb12b013013d" prot="public" virt="non-virtual"><scope>TimeOfDay</scope><name>sec</name></member>
+      <member refid="union_time_of_day_1a89b2f0e7e26326e68d08b7b85428a534" prot="public" virt="non-virtual"><scope>TimeOfDay</scope><name>tenth</name></member>
+      <member refid="union_time_of_day_1a0508031467131c77c7d88285389188ac" prot="public" virt="non-virtual"><scope>TimeOfDay</scope><name>value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

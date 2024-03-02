@@ -1,0 +1,306 @@
+\doxysection{vc64\+::Emulator Class Reference}
+\hypertarget{classvc64_1_1_emulator}{}\label{classvc64_1_1_emulator}\index{vc64::Emulator@{vc64::Emulator}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_emulator_a8a4426dc2623edf59bb3771ba40254f0}\label{classvc64_1_1_emulator_a8a4426dc2623edf59bb3771ba40254f0} 
+void {\bfseries launch} (const void \texorpdfstring{$\ast$}{*}listener, Callback \texorpdfstring{$\ast$}{*}func)
+\item 
+\Hypertarget{classvc64_1_1_emulator_a0f6760c760d2745cd7cce4163637c560}\label{classvc64_1_1_emulator_a0f6760c760d2745cd7cce4163637c560} 
+void {\bfseries initialize} ()
+\item 
+\Hypertarget{classvc64_1_1_emulator_a344fbb292b8e34683e1f292dc1cffb5f}\label{classvc64_1_1_emulator_a344fbb292b8e34683e1f292dc1cffb5f} 
+bool {\bfseries is\+Initialized} () const
+\item 
+\Hypertarget{classvc64_1_1_emulator_a777f70fe4de853132a33283857e6fdf0}\label{classvc64_1_1_emulator_a777f70fe4de853132a33283857e6fdf0} 
+void {\bfseries step\+Into} ()
+\item 
+\Hypertarget{classvc64_1_1_emulator_a6c05152568ba39a4f9ac054bea091fb3}\label{classvc64_1_1_emulator_a6c05152568ba39a4f9ac054bea091fb3} 
+void {\bfseries step\+Over} ()
+\item 
+const Config\+Options \& \mbox{\hyperlink{classvc64_1_1_emulator_ad92f181a08255ce8b8561fa4f40eeac1}{get\+Options}} () const override
+\item 
+i64 \mbox{\hyperlink{classvc64_1_1_emulator_a4a358831629dd371b714785298cc687a}{get\+Option}} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt) const override
+\item 
+void \mbox{\hyperlink{classvc64_1_1_emulator_a6540e8671af4095a3eab092b7a1894d3}{set\+Option}} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt, i64 value) override
+\item 
+void \mbox{\hyperlink{classvc64_1_1_emulator_a6d3660f1312a791c068a6acedcd743b1}{record\+State}} (\mbox{\hyperlink{struct_emulator_info}{Emulator\+Info}} \&result) const override
+\item 
+void \mbox{\hyperlink{classvc64_1_1_emulator_a1bd3df31f3a9528599e0b8e86d9da36d}{record\+Stats}} (\mbox{\hyperlink{struct_emulator_stats}{Emulator\+Stats}} \&result) const override
+\item 
+\Hypertarget{classvc64_1_1_emulator_a1e4fcb0036e5a4acae7c6531469eb420}\label{classvc64_1_1_emulator_a1e4fcb0036e5a4acae7c6531469eb420} 
+i64 {\bfseries get} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} option) const
+\item 
+\Hypertarget{classvc64_1_1_emulator_a08eb8670fb836d6d5777efc47be3478a}\label{classvc64_1_1_emulator_a08eb8670fb836d6d5777efc47be3478a} 
+i64 {\bfseries get} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} option, isize id) const
+\item 
+\Hypertarget{classvc64_1_1_emulator_af37a3f46250997fa215fa78cb74b34f3}\label{classvc64_1_1_emulator_af37a3f46250997fa215fa78cb74b34f3} 
+void {\bfseries set} (C64\+Model model)
+\item 
+\Hypertarget{classvc64_1_1_emulator_a1436ea7a306b650802bff35f3dda529f}\label{classvc64_1_1_emulator_a1436ea7a306b650802bff35f3dda529f} 
+void {\bfseries set} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} option, i64 value) throws
+\item 
+\Hypertarget{classvc64_1_1_emulator_a7a911bd4926ccd1fe0db657fc701cede}\label{classvc64_1_1_emulator_a7a911bd4926ccd1fe0db657fc701cede} 
+void {\bfseries set} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} option, isize id, i64 value) throws
+\item 
+\Hypertarget{classvc64_1_1_emulator_a7a3617abbe166543bec62f9598d6fad5}\label{classvc64_1_1_emulator_a7a3617abbe166543bec62f9598d6fad5} 
+void {\bfseries set} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt, const string \&value) throws
+\item 
+\Hypertarget{classvc64_1_1_emulator_a466a4de17d57e9e1105e1213ffcaa6bd}\label{classvc64_1_1_emulator_a466a4de17d57e9e1105e1213ffcaa6bd} 
+void {\bfseries set} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt, isize id, const string \&value) throws
+\item 
+\Hypertarget{classvc64_1_1_emulator_a5ec61fa01250f8b90207b60feb87e6e5}\label{classvc64_1_1_emulator_a5ec61fa01250f8b90207b60feb87e6e5} 
+void {\bfseries set} (const string \&opt, const string \&value) throws
+\item 
+\Hypertarget{classvc64_1_1_emulator_a5a5022a778b498670aa81fc981f2192a}\label{classvc64_1_1_emulator_a5a5022a778b498670aa81fc981f2192a} 
+void {\bfseries set} (const string \&opt, isize id, const string \&value) throws
+\item 
+double \mbox{\hyperlink{classvc64_1_1_emulator_a5b6927136767f0919be2282089e0d3b7}{refresh\+Rate}} () const override
+\item 
+\Hypertarget{classvc64_1_1_emulator_a4b67acd7f4153a6ade6c038175453eef}\label{classvc64_1_1_emulator_a4b67acd7f4153a6ade6c038175453eef} 
+void {\bfseries put} (const Cmd \&cmd)
+\item 
+\Hypertarget{classvc64_1_1_emulator_ace99e59ecce688b4cd3241586715d6ab}\label{classvc64_1_1_emulator_ace99e59ecce688b4cd3241586715d6ab} 
+void {\bfseries put} (\mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3}{Cmd\+Type}} type, i64 payload)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_thread}{vc64\+::\+Thread}}}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classvc64_1_1_thread_a7c36c691bb9e6b0f1efeff0095900d36}{get\+Description}} () const override
+\item 
+bool {\bfseries is\+Launched} () const
+\item 
+bool {\bfseries is\+Emulator\+Thread} () const
+\item 
+void {\bfseries switch\+State} (\mbox{\hyperlink{_thread_types_8h_a44fb3bfc9b3abc142d662a5ffb4e9cbc}{Emulator\+State}} new\+State)
+\item 
+void \mbox{\hyperlink{classvc64_1_1_thread_a6545b249dacdb26eac8b104c07f3bbc2}{suspend}} () override
+\begin{DoxyCompactList}\small\item\em Suspends the thread. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classvc64_1_1_thread_a294d7de030baf69ae6f96f9f6bfc8ba6}{resume}} () override
+\begin{DoxyCompactList}\small\item\em Resumes the thread. \end{DoxyCompactList}\item 
+bool {\bfseries is\+Powered\+On} () const
+\item 
+bool {\bfseries is\+Powered\+Off} () const
+\item 
+bool {\bfseries is\+Paused} () const
+\item 
+bool {\bfseries is\+Running} () const
+\item 
+bool {\bfseries is\+Suspended} () const
+\item 
+bool {\bfseries is\+Halted} () const
+\item 
+bool {\bfseries is\+Warping} () const
+\item 
+bool {\bfseries is\+Tracking} () const
+\item 
+void {\bfseries power\+On} ()
+\item 
+void {\bfseries power\+Off} ()
+\item 
+void {\bfseries run} () throws
+\item 
+void {\bfseries pause} ()
+\item 
+void {\bfseries stop\+And\+Go} ()
+\item 
+void {\bfseries halt} ()
+\item 
+void {\bfseries warp\+On} (isize source=0)
+\item 
+void {\bfseries warp\+Off} (isize source=0)
+\item 
+void {\bfseries track\+On} (isize source=0)
+\item 
+void {\bfseries track\+Off} (isize source=0)
+\item 
+void \mbox{\hyperlink{classvc64_1_1_thread_a4bf669b15db347f665f0459d18a90680}{wake\+Up}} ()
+\begin{DoxyCompactList}\small\item\em Awakes the thread. \end{DoxyCompactList}\item 
+void {\bfseries join} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual void {\bfseries prefix} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_inspectable}{vc64\+::\+Inspectable$<$ Emulator\+Info, Emulator\+Stats $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_emulator_info}{Emulator\+Info}} \& {\bfseries get\+State} () const
+\item 
+\mbox{\hyperlink{struct_emulator_stats}{Emulator\+Stats}} \& {\bfseries get\+Stats} () const
+\item 
+virtual void {\bfseries record} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_dumpable}{vc64\+::\+Dumpable}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries dump} (Category category, std\+::ostream \&ss) const
+\item 
+void {\bfseries dump} (Category category) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_configurable}{vc64\+::\+Configurable}}}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries is\+Valid\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt) const
+\item 
+void {\bfseries set\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt, const string \&value)
+\item 
+void {\bfseries set\+Option} (const string \&opt, const string \&value)
+\item 
+void {\bfseries reset\+Config} (const \mbox{\hyperlink{classvc64_1_1_defaults}{Defaults}} \&defaults)
+\item 
+void {\bfseries reset\+Config} (const \mbox{\hyperlink{classvc64_1_1_defaults}{Defaults}} \&defaults, isize i)
+\item 
+void {\bfseries dump\+Config} (std\+::ostream \&os) const
+\item 
+string {\bfseries key\+List} ()
+\item 
+string {\bfseries arg\+List} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_emulator_a2e52330573f3d248d2bf8b2fe4e89140}\label{classvc64_1_1_emulator_a2e52330573f3d248d2bf8b2fe4e89140} 
+\mbox{\hyperlink{classvc64_1_1_cmd_queue}{Cmd\+Queue}} {\bfseries cmd\+Queue}
+\item 
+\Hypertarget{classvc64_1_1_emulator_ab50862c05305c6f56174d3539ceea6e8}\label{classvc64_1_1_emulator_ab50862c05305c6f56174d3539ceea6e8} 
+\mbox{\hyperlink{classvc64_1_1_host}{Host}} {\bfseries host} = \mbox{\hyperlink{classvc64_1_1_host}{Host}}(\texorpdfstring{$\ast$}{*}this)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_emulator_ada74aa73cbf25162cbc788bd28292463}\label{classvc64_1_1_emulator_ada74aa73cbf25162cbc788bd28292463} 
+static \mbox{\hyperlink{classvc64_1_1_defaults}{Defaults}} {\bfseries defaults}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_emulator_a30a923407125cc7be7d2cbdcf88450e0}\label{classvc64_1_1_emulator_a30a923407125cc7be7d2cbdcf88450e0} 
+class {\bfseries API}
+\item 
+\Hypertarget{classvc64_1_1_emulator_a2f7a2f4bbcde0fd3ce37e39d43ac8831}\label{classvc64_1_1_emulator_a2f7a2f4bbcde0fd3ce37e39d43ac8831} 
+class {\bfseries \+::\+Virtual\+C64}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_thread}{vc64\+::\+Thread}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries launch} ()
+\item 
+void {\bfseries assert\+Launched} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_thread}{vc64\+::\+Thread}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::thread {\bfseries thread}
+\item 
+\mbox{\hyperlink{_thread_types_8h_a44fb3bfc9b3abc142d662a5ffb4e9cbc}{Emulator\+State}} {\bfseries state} = \mbox{\hyperlink{_thread_types_8h_a44fb3bfc9b3abc142d662a5ffb4e9cbca4038ca872e1ed104c16122c365bd3ca0}{STATE\+\_\+\+OFF}}
+\item 
+\mbox{\hyperlink{_thread_types_8h_a44fb3bfc9b3abc142d662a5ffb4e9cbc}{Emulator\+State}} {\bfseries new\+State} = \mbox{\hyperlink{_thread_types_8h_a44fb3bfc9b3abc142d662a5ffb4e9cbca4038ca872e1ed104c16122c365bd3ca0}{STATE\+\_\+\+OFF}}
+\item 
+std\+::atomic\+\_\+flag {\bfseries state\+Change\+Request} \{\}
+\item 
+u8 {\bfseries warp} = 0
+\item 
+u8 {\bfseries track} = 0
+\item 
+isize {\bfseries suspend\+Counter} = 0
+\item 
+isize {\bfseries frame\+Counter} = 0
+\item 
+isize {\bfseries stats\+Counter} = 0
+\item 
+\mbox{\hyperlink{classutil_1_1_time}{util\+::\+Time}} {\bfseries base\+Time}
+\item 
+\mbox{\hyperlink{classutil_1_1_clock}{util\+::\+Clock}} {\bfseries nonstop\+Clock}
+\item 
+\mbox{\hyperlink{classutil_1_1_clock}{util\+::\+Clock}} {\bfseries load\+Clock}
+\item 
+double {\bfseries cpu\+Load} = 0.\+0
+\item 
+double {\bfseries fps} = 0.\+0
+\item 
+\mbox{\hyperlink{classutil_1_1_clock}{util\+::\+Clock}} {\bfseries wakeup\+Clock}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_inspectable}{vc64\+::\+Inspectable$<$ Emulator\+Info, Emulator\+Stats $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_emulator_info}{Emulator\+Info}} {\bfseries info}
+\item 
+\mbox{\hyperlink{struct_emulator_stats}{Emulator\+Stats}} {\bfseries stats}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+static bool {\bfseries verbose} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvc64_1_1_emulator_a4a358831629dd371b714785298cc687a}\label{classvc64_1_1_emulator_a4a358831629dd371b714785298cc687a} 
+\index{vc64::Emulator@{vc64::Emulator}!getOption@{getOption}}
+\index{getOption@{getOption}!vc64::Emulator@{vc64::Emulator}}
+\doxysubsubsection{\texorpdfstring{getOption()}{getOption()}}
+{\footnotesize\ttfamily i64 vc64\+::\+Emulator\+::get\+Option (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}}]{opt }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_configurable}{vc64\+::\+Configurable}}.
+
+\Hypertarget{classvc64_1_1_emulator_ad92f181a08255ce8b8561fa4f40eeac1}\label{classvc64_1_1_emulator_ad92f181a08255ce8b8561fa4f40eeac1} 
+\index{vc64::Emulator@{vc64::Emulator}!getOptions@{getOptions}}
+\index{getOptions@{getOptions}!vc64::Emulator@{vc64::Emulator}}
+\doxysubsubsection{\texorpdfstring{getOptions()}{getOptions()}}
+{\footnotesize\ttfamily const Config\+Options \& vc64\+::\+Emulator\+::get\+Options (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_configurable}{vc64\+::\+Configurable}}.
+
+\Hypertarget{classvc64_1_1_emulator_a6d3660f1312a791c068a6acedcd743b1}\label{classvc64_1_1_emulator_a6d3660f1312a791c068a6acedcd743b1} 
+\index{vc64::Emulator@{vc64::Emulator}!recordState@{recordState}}
+\index{recordState@{recordState}!vc64::Emulator@{vc64::Emulator}}
+\doxysubsubsection{\texorpdfstring{recordState()}{recordState()}}
+{\footnotesize\ttfamily void vc64\+::\+Emulator\+::record\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_emulator_info}{Emulator\+Info}} \&}]{result }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_inspectable}{vc64\+::\+Inspectable$<$ Emulator\+Info, Emulator\+Stats $>$}}.
+
+\Hypertarget{classvc64_1_1_emulator_a1bd3df31f3a9528599e0b8e86d9da36d}\label{classvc64_1_1_emulator_a1bd3df31f3a9528599e0b8e86d9da36d} 
+\index{vc64::Emulator@{vc64::Emulator}!recordStats@{recordStats}}
+\index{recordStats@{recordStats}!vc64::Emulator@{vc64::Emulator}}
+\doxysubsubsection{\texorpdfstring{recordStats()}{recordStats()}}
+{\footnotesize\ttfamily void vc64\+::\+Emulator\+::record\+Stats (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_emulator_stats}{Emulator\+Stats}} \&}]{result }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_inspectable}{vc64\+::\+Inspectable$<$ Emulator\+Info, Emulator\+Stats $>$}}.
+
+\Hypertarget{classvc64_1_1_emulator_a5b6927136767f0919be2282089e0d3b7}\label{classvc64_1_1_emulator_a5b6927136767f0919be2282089e0d3b7} 
+\index{vc64::Emulator@{vc64::Emulator}!refreshRate@{refreshRate}}
+\index{refreshRate@{refreshRate}!vc64::Emulator@{vc64::Emulator}}
+\doxysubsubsection{\texorpdfstring{refreshRate()}{refreshRate()}}
+{\footnotesize\ttfamily double vc64\+::\+Emulator\+::refresh\+Rate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvc64_1_1_thread}{vc64\+::\+Thread}}.
+
+\Hypertarget{classvc64_1_1_emulator_a6540e8671af4095a3eab092b7a1894d3}\label{classvc64_1_1_emulator_a6540e8671af4095a3eab092b7a1894d3} 
+\index{vc64::Emulator@{vc64::Emulator}!setOption@{setOption}}
+\index{setOption@{setOption}!vc64::Emulator@{vc64::Emulator}}
+\doxysubsubsection{\texorpdfstring{setOption()}{setOption()}}
+{\footnotesize\ttfamily void vc64\+::\+Emulator\+::set\+Option (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}}]{opt,  }\item[{i64}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_configurable}{vc64\+::\+Configurable}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Components/Emulator.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Components/Emulator.\+cpp\end{DoxyCompactItemize}

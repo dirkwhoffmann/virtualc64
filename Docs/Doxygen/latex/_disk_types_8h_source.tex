@@ -1,0 +1,306 @@
+\doxysection{Disk\+Types.\+h}
+\hypertarget{_disk_types_8h_source}{}\label{_disk_types_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h@{/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Aliases.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Reflection.h"{}}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}Serializable.h"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{comment}{//}}
+\DoxyCodeLine{00023\ \textcolor{comment}{//\ Constants}}
+\DoxyCodeLine{00024\ \textcolor{comment}{//}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{comment}{/*\ The\ VC1541\ can\ move\ the\ drive\ head\ to\ 84\ distinct\ positions\ (1\ ..\ 84).\ Odd}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ *\ numbers\ correspond\ to\ "{}full\ tracks"{}\ and\ even\ numbers\ to\ "{}half\ tracks"{}.\ The}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ *\ full\ tracks\ between\ 1\ and\ 70\ correspond\ to\ the\ 35\ tracks\ that\ are\ used\ by}}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ *\ VC1541\ DOS.\ The\ Rom\ code\ always\ moves\ the\ drive\ head\ by\ two\ positions.\ When}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ *\ programmed\ manually,\ the\ head\ can\ also\ be\ moved\ to\ even\ positions\ or}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ *\ positions\ beyond\ 70\ which\ correspoonds\ to\ the\ innermost\ full\ track\ used\ by}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ *\ DOS.}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ *\ VirtualC64\ provides\ two\ data\ types\ for\ specifying\ head\ positions:\ Track}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\ *\ and\ Halftrack.\ They\ are\ related\ as\ follows:}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00037\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00038\ \textcolor{comment}{\ *\ Layout:\ \ \ \ |\ \ 1\ \ |\ 1.5\ |\ \ 2\ \ |\ 2.5\ |\ ...\ |\ \ 35\ \ |\ 35.5\ |\ ...\ |\ \ 42\ \ |\ 42.5\ |}}
+\DoxyCodeLine{00039\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00040\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00041\ \textcolor{comment}{\ *\ Halftrack:\ |\ \ 1\ \ |\ \ 2\ \ |\ \ 3\ \ |\ \ 4\ \ |\ \ \ \ \ |\ \ 69\ \ |\ \ 70\ \ |\ \ \ \ \ |\ \ 83\ \ |\ \ 84\ \ |}}
+\DoxyCodeLine{00042\ \textcolor{comment}{\ *\ Track:\ \ \ \ \ |\ \ 1\ \ |\ \ \ \ \ |\ \ 2\ \ |\ \ \ \ \ |\ \ \ \ \ |\ \ 35\ \ |\ \ \ \ \ \ |\ \ \ \ \ |\ \ 42\ \ |\ \ \ \ \ \ |}}
+\DoxyCodeLine{00043\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00044\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{comment}{//\ Highest\ track\ and\ halftrack\ number\ (numbering\ starts\ with\ 1)}}
+\DoxyCodeLine{00047\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ isize\ highestTrack\ =\ 42;}
+\DoxyCodeLine{00048\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ isize\ highestHalftrack\ =\ 84;}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{comment}{//\ Highest\ sector\ number\ (numbering\ starts\ with\ 0)}}
+\DoxyCodeLine{00051\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ isize\ highestSector\ =\ 20;}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ isTrackNumber(isize\ nr)\ \{\ \textcolor{keywordflow}{return}\ 1\ <=\ nr\ \&\&\ nr\ <=\ highestTrack;\ \}}
+\DoxyCodeLine{00054\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ isHalftrackNumber(isize\ nr)\ \{\ \textcolor{keywordflow}{return}\ 1\ <=\ nr\ \&\&\ nr\ <=\ highestHalftrack;\ \}}
+\DoxyCodeLine{00055\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ isSectorNumber(isize\ nr)\ \{\ \textcolor{keywordflow}{return}\ nr\ >=\ 0\ \&\&\ nr\ <=\ highestSector;\ \}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{comment}{/*\ Maximum\ number\ of\ bits\ and\ bytes\ stored\ on\ a\ single\ track.\ Each\ track\ can}}
+\DoxyCodeLine{00058\ \textcolor{comment}{\ *\ store\ a\ maximum\ of\ 7928\ bytes\ (63424\ bits).\ The\ exact\ number\ depends\ on\ the}}
+\DoxyCodeLine{00059\ \textcolor{comment}{\ *\ track\ number\ (inner\ tracks\ contain\ fewer\ bytes)\ and\ the\ actual\ write\ speed}}
+\DoxyCodeLine{00060\ \textcolor{comment}{\ *\ of\ a\ drive.}}
+\DoxyCodeLine{00061\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00062\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ isize\ maxBytesOnTrack\ =\ 7928;}
+\DoxyCodeLine{00063\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ isize\ maxBitsOnTrack\ =\ maxBytesOnTrack\ *\ 8;}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{comment}{/*\ Returns\ the\ average\ duration\ of\ a\ single\ bit\ in\ 1/10\ nano\ seconds.\ The}}
+\DoxyCodeLine{00066\ \textcolor{comment}{\ *\ returned\ value\ is\ the\ time\ span\ the\ drive\ head\ resists\ over\ a\ single\ bit.}}
+\DoxyCodeLine{00067\ \textcolor{comment}{\ *\ The\ exact\ value\ depends\ on\ the\ speed\ zone\ and\ the\ disk\ rotation\ speed.\ We}}
+\DoxyCodeLine{00068\ \textcolor{comment}{\ *\ assume\ a\ rotation\ speed\ of\ 300\ rpm.}}
+\DoxyCodeLine{00069\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00070\ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ i64\ averageBitTimeSpan[]\ =}
+\DoxyCodeLine{00071\ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \ 4\ *\ 10000,\ \ \ \ \ \ \ \ \textcolor{comment}{//\ 4\ *\ 16/16\ *\ 10\string^4\ 1/10\ nsec}}
+\DoxyCodeLine{00073\ \ \ \ \ \ 4\ *\ 9375,\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 4\ *\ 15/16\ *\ 10\string^4\ 1/10\ nsec}}
+\DoxyCodeLine{00074\ \ \ \ \ \ 4\ *\ 8750,\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 4\ *\ 14/16\ *\ 10\string^4\ 1/10\ nsec}}
+\DoxyCodeLine{00075\ \ \ \ \ \ 4\ *\ 8125\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 4\ *\ 13/16\ *\ 10\string^4\ 1/10\ nsec}}
+\DoxyCodeLine{00076\ \ \};}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \textcolor{comment}{/*\ Average\ number\ of\ bits\ stored\ on\ a\ single\ track.\ The\ values\ are\ based\ on\ a}}
+\DoxyCodeLine{00079\ \textcolor{comment}{\ *\ drive\ with\ 300\ rotations\ per\ minute\ which\ means\ that\ a\ full\ rotation\ lasts}}
+\DoxyCodeLine{00080\ \textcolor{comment}{\ *\ 2.000.000.000\ 1/10\ nsec.}}
+\DoxyCodeLine{00081\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00082\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ isize\ averageBitsOnTrack[4]\ =}
+\DoxyCodeLine{00083\ \{}
+\DoxyCodeLine{00084\ \ \ \ \ 50000,\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 200.000.000.000\ /\ averageBitTimeSpan[0]}}
+\DoxyCodeLine{00085\ \ \ \ \ 53333,\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 200.000.000.000\ /\ averageBitTimeSpan[1]}}
+\DoxyCodeLine{00086\ \ \ \ \ 57142,\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 200.000.000.000\ /\ averageBitTimeSpan[2]}}
+\DoxyCodeLine{00087\ \ \ \ \ 61528\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 200.000.000.000\ /\ averageBitTimeSpan[3]}}
+\DoxyCodeLine{00088\ \};}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \textcolor{comment}{/*\ Average\ number\ of\ bytes\ stored\ on\ a\ single\ track.\ The\ values\ are\ based\ on\ a}}
+\DoxyCodeLine{00091\ \textcolor{comment}{\ *\ drive\ with\ 300\ rotations\ per\ minute.}}
+\DoxyCodeLine{00092\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00093\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ isize\ averageBytesOnTrack[4]\ =}
+\DoxyCodeLine{00094\ \{}
+\DoxyCodeLine{00095\ \ \ \ \ 6250,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ averageBitsOnTrack[0]\ /\ 8}}
+\DoxyCodeLine{00096\ \ \ \ \ 6666,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ averageBitsOnTrack[1]\ /\ 8}}
+\DoxyCodeLine{00097\ \ \ \ \ 7142,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ averageBitsOnTrack[2]\ /\ 8}}
+\DoxyCodeLine{00098\ \ \ \ \ 7692\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ averageBitsOnTrack[3]\ /\ 8}}
+\DoxyCodeLine{00099\ \};}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \textcolor{comment}{/*\ Size\ of\ a\ sector\ header\ or\ data\ block\ in\ bits.\ Each\ data\ block\ consists\ of}}
+\DoxyCodeLine{00102\ \textcolor{comment}{\ *\ 325\ GCR\ bytes\ (coding\ 260\ real\ bytes).}}
+\DoxyCodeLine{00103\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00104\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ isize\ headerBlockSize\ =\ 10\ *\ 8;}
+\DoxyCodeLine{00105\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ isize\ dataBlockSize\ =\ 325\ *\ 8;}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \textcolor{comment}{//}}
+\DoxyCodeLine{00109\ \textcolor{comment}{//\ Enumerations}}
+\DoxyCodeLine{00110\ \textcolor{comment}{//}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ enum\_long(DISK\_TYPE)}
+\DoxyCodeLine{00113\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ DISK\_TYPE\_SS\_SD,\ \ \ \textcolor{comment}{//\ Single-\/sided,\ single\ density\ (VC1541)}}
+\DoxyCodeLine{00115\ \ \ \ \ DISK\_TYPE\_DS\_SD\ \ \ \ \textcolor{comment}{//\ Double-\/sided,\ single\ density\ (VC1571)\ (not\ supported)}}
+\DoxyCodeLine{00116\ \};}
+\DoxyCodeLine{00117\ \textcolor{keyword}{typedef}\ DISK\_TYPE\ DiskType;}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00120\ \textcolor{keyword}{struct\ }DiskTypeEnum\ :\ util::Reflection<DiskTypeEnum,\ DiskType>\ \{}
+\DoxyCodeLine{00121\ \ \ \ \ }
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ DISK\_TYPE\_DS\_SD;}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DISK\_TYPE"{}};\ \}}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(DiskType\ value)}
+\DoxyCodeLine{00128\ \ \ \ \ \{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ DISK\_TYPE\_SS\_SD:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SS\_SD"{}};}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ DISK\_TYPE\_DS\_SD:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DS\_SD"{}};}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00135\ \ \ \ \ \}}
+\DoxyCodeLine{00136\ \};}
+\DoxyCodeLine{00137\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ enum\_long(CBM\_FILE\_TYPE)}
+\DoxyCodeLine{00140\ \{}
+\DoxyCodeLine{00141\ \ \ \ \ CBM\_FILE\_PRG,}
+\DoxyCodeLine{00142\ \ \ \ \ CBM\_FILE\_SEQ,}
+\DoxyCodeLine{00143\ \ \ \ \ CBM\_FILE\_USR,}
+\DoxyCodeLine{00144\ \ \ \ \ CBM\_FILE\_REL}
+\DoxyCodeLine{00145\ \};}
+\DoxyCodeLine{00146\ \textcolor{keyword}{typedef}\ CBM\_FILE\_TYPE\ CBMFileType;}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00149\ \textcolor{keyword}{struct\ }CBMFileTypeEnum\ :\ util::Reflection<CBMFileTypeEnum,\ CBMFileType>\ \{}
+\DoxyCodeLine{00150\ \ \ \ \ }
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ CBM\_FILE\_REL;}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00154\ \ \ \ \ }
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CBM"{}};\ \}}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(CBMFileType\ value)}
+\DoxyCodeLine{00157\ \ \ \ \ \{}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CBM\_FILE\_PRG:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PRG"{}};}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CBM\_FILE\_SEQ:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SEQ"{}};}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CBM\_FILE\_USR:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}USR"{}};}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CBM\_FILE\_REL:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}REL"{}};}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00166\ \ \ \ \ \}}
+\DoxyCodeLine{00167\ \};}
+\DoxyCodeLine{00168\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00170\ enum\_long(DISK\_ERROR\_CODE)}
+\DoxyCodeLine{00171\ \{}
+\DoxyCodeLine{00172\ \ \ \ \ DISK\_OK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x1,}
+\DoxyCodeLine{00173\ \ \ \ \ HEADER\_BLOCK\_NOT\_FOUND\_ERROR\ \ \ \ \ \ \ =\ 0x2,}
+\DoxyCodeLine{00174\ \ \ \ \ NO\_SYNC\_SEQUENCE\_ERROR\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x3,}
+\DoxyCodeLine{00175\ \ \ \ \ DATA\_BLOCK\_NOT\_FOUND\_ERROR\ \ \ \ \ \ \ \ \ =\ 0x4,}
+\DoxyCodeLine{00176\ \ \ \ \ DATA\_BLOCK\_CHECKSUM\_ERROR\ \ \ \ \ \ \ \ \ \ =\ 0x5,}
+\DoxyCodeLine{00177\ \ \ \ \ WRITE\_VERIFY\_ERROR\_ON\_FORMAT\_ERROR\ =\ 0x6,}
+\DoxyCodeLine{00178\ \ \ \ \ WRITE\_VERIFY\_ERROR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x7,}
+\DoxyCodeLine{00179\ \ \ \ \ WRITE\_PROTECT\_ON\_ERROR\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x8,}
+\DoxyCodeLine{00180\ \ \ \ \ HEADER\_BLOCK\_CHECKSUM\_ERROR\ \ \ \ \ \ \ \ =\ 0x9,}
+\DoxyCodeLine{00181\ \ \ \ \ WRITE\_ERROR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0xA,}
+\DoxyCodeLine{00182\ \ \ \ \ DISK\_ID\_MISMATCH\_ERROR\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0xB,}
+\DoxyCodeLine{00183\ \ \ \ \ DRIVE\_NOT\_READY\_ERRROR\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0xF}
+\DoxyCodeLine{00184\ \};}
+\DoxyCodeLine{00185\ \textcolor{keyword}{typedef}\ DISK\_ERROR\_CODE\ DiskErrorCode;}
+\DoxyCodeLine{00186\ }
+\DoxyCodeLine{00187\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00188\ \textcolor{keyword}{struct\ }DiskErrorCodeEnum\ :\ util::Reflection<DiskErrorCodeEnum,\ DiskErrorCode>\ \{}
+\DoxyCodeLine{00189\ \ \ \ \ }
+\DoxyCodeLine{00190\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ DRIVE\_NOT\_READY\_ERRROR;}
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00193\ \ \ \ \ }
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}"{}};\ \}}
+\DoxyCodeLine{00195\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(DiskErrorCode\ value)}
+\DoxyCodeLine{00196\ \ \ \ \ \{}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ DISK\_OK:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DISK\_OK"{}};}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ HEADER\_BLOCK\_NOT\_FOUND\_ERROR:\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}HEADER\_BLOCK\_NOT\_FOUND\_ERROR"{}};}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ NO\_SYNC\_SEQUENCE\_ERROR:\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}NO\_SYNC\_SEQUENCE\_ERROR"{}};}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ DATA\_BLOCK\_NOT\_FOUND\_ERROR:\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DATA\_BLOCK\_NOT\_FOUND\_ERROR"{}};}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ DATA\_BLOCK\_CHECKSUM\_ERROR:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DATA\_BLOCK\_CHECKSUM\_ERROR"{}};}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ WRITE\_VERIFY\_ERROR\_ON\_FORMAT\_ERROR:\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}WRITE\_VERIFY\_ERROR\_ON\_FORMAT\_ERROR"{}};}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ WRITE\_VERIFY\_ERROR:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}WRITE\_VERIFY\_ERROR"{}};}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ WRITE\_PROTECT\_ON\_ERROR:\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}WRITE\_PROTECT\_ON\_ERROR"{}};}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ HEADER\_BLOCK\_CHECKSUM\_ERROR:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}HEADER\_BLOCK\_CHECKSUM\_ERROR"{}};}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ WRITE\_ERROR:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}WRITE\_ERROR"{}};}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ DISK\_ID\_MISMATCH\_ERROR:\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DISK\_ID\_MISMATCH\_ERROR"{}};}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ DRIVE\_NOT\_READY\_ERRROR:\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_NOT\_READY\_ERRROR"{}};}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00213\ \ \ \ \ \}}
+\DoxyCodeLine{00214\ \};}
+\DoxyCodeLine{00215\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00218\ \textcolor{comment}{//}}
+\DoxyCodeLine{00219\ \textcolor{comment}{//\ Structures}}
+\DoxyCodeLine{00220\ \textcolor{comment}{//}}
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00222\ \textcolor{comment}{/*\ Disk\ data}}
+\DoxyCodeLine{00223\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00224\ \textcolor{comment}{\ *\ \ \ \ -\/\ The\ first\ valid\ track\ and\ halftrack\ number\ is\ 1}}
+\DoxyCodeLine{00225\ \textcolor{comment}{\ *\ \ \ \ -\/\ data.halftack[i]\ points\ to\ the\ first\ byte\ of\ halftrack\ i}}
+\DoxyCodeLine{00226\ \textcolor{comment}{\ *\ \ \ \ -\/\ data.track[i]\ points\ to\ the\ first\ byte\ of\ track\ i}}
+\DoxyCodeLine{00227\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00228\ }
+\DoxyCodeLine{00229\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00231\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00233\ \textcolor{keyword}{struct\ }DiskData\ :\ \textcolor{keyword}{public}\ Serializable}
+\DoxyCodeLine{00234\ \{}
+\DoxyCodeLine{00235\ \ \ \ \ \textcolor{keyword}{union\ }\{}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ u8\ \_pad[maxBytesOnTrack];}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ u8\ halftrack[85][maxBytesOnTrack];}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00242\ }
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ u8\ track[43][2\ *\ maxBytesOnTrack];}
+\DoxyCodeLine{00244\ \ \ \ \ \};}
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00246\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ W>}
+\DoxyCodeLine{00247\ \ \ \ \ \textcolor{keywordtype}{void}\ serialize(W\&\ worker)}
+\DoxyCodeLine{00248\ \ \ \ \ \{}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00250\ }
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ <<\ track;}
+\DoxyCodeLine{00252\ }
+\DoxyCodeLine{00253\ \ \ \ \ \}\ SERIALIZERS(serialize);}
+\DoxyCodeLine{00254\ }
+\DoxyCodeLine{00255\ \};}
+\DoxyCodeLine{00256\ }
+\DoxyCodeLine{00257\ \textcolor{comment}{/*\ Length\ of\ each\ halftrack\ in\ bits}}
+\DoxyCodeLine{00258\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00259\ \textcolor{comment}{\ *\ \ \ \ \ -\/\ length.halftack[i]\ is\ the\ length\ of\ halftrack\ i}}
+\DoxyCodeLine{00260\ \textcolor{comment}{\ *\ \ \ \ \ -\/\ length.track[i][0]\ is\ the\ length\ of\ track\ i}}
+\DoxyCodeLine{00261\ \textcolor{comment}{\ *\ \ \ \ \ -\/\ length.track[i][1]\ is\ the\ length\ of\ halftrack\ above\ track\ i}}
+\DoxyCodeLine{00262\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00263\ }
+\DoxyCodeLine{00264\ \textcolor{keyword}{struct\ }DiskLength\ :\ \textcolor{keyword}{public}\ Serializable}
+\DoxyCodeLine{00265\ \{}
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{keyword}{union\ }\{}
+\DoxyCodeLine{00267\ }
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ isize\ \_pad;}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ isize\ halftrack[85];}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00273\ }
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ isize\ track[43][2];}
+\DoxyCodeLine{00275\ \ \ \ \ \};}
+\DoxyCodeLine{00276\ }
+\DoxyCodeLine{00277\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ W>}
+\DoxyCodeLine{00278\ \ \ \ \ \textcolor{keywordtype}{void}\ serialize(W\&\ worker)}
+\DoxyCodeLine{00279\ \ \ \ \ \{}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00281\ }
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ <<\ track;}
+\DoxyCodeLine{00283\ }
+\DoxyCodeLine{00284\ \ \ \ \ \}\ SERIALIZERS(serialize);}
+\DoxyCodeLine{00285\ \};}
+\DoxyCodeLine{00286\ }
+\DoxyCodeLine{00287\ \}}
+\DoxyCodeLine{00288\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00289\ }
+\DoxyCodeLine{00290\ \textcolor{comment}{//\ Disk\ parameters\ of\ a\ standard\ floppy\ disk}}
+\DoxyCodeLine{00291\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00292\ \{}
+\DoxyCodeLine{00293\ \ \ \ \ u8\ \ sectors;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Typical\ number\ of\ sectors\ in\ this\ track}}
+\DoxyCodeLine{00294\ \ \ \ \ u8\ \ speedZone;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Default\ speed\ zone\ for\ this\ track}}
+\DoxyCodeLine{00295\ \ \ \ \ u16\ lengthInBytes;\ \ \ \ \textcolor{comment}{//\ Typical\ track\ size\ in\ bits}}
+\DoxyCodeLine{00296\ \ \ \ \ u16\ lengthInBits;\ \ \ \ \ \textcolor{comment}{//\ Typical\ track\ size\ in\ bits}}
+\DoxyCodeLine{00297\ \ \ \ \ Sector\ firstSectorNr;\ \textcolor{comment}{//\ Logical\ number\ of\ first\ sector\ in\ track}}
+\DoxyCodeLine{00298\ \ \ \ \ \textcolor{keywordtype}{double}\ stagger;\ \ \ \ \ \ \ \textcolor{comment}{//\ Relative\ position\ of\ first\ bit\ (from\ Hoxs64)}}
+\DoxyCodeLine{00299\ \}}
+\DoxyCodeLine{00300\ TrackDefaults;}
+
+\end{DoxyCode}

@@ -1,0 +1,140 @@
+\doxysection{CRTFile.\+h}
+\hypertarget{_c_r_t_file_8h_source}{}\label{_c_r_t_file_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Media/CRTFile.h@{/Users/hoff/Retro/virtualc64/Emulator/Media/CRTFile.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}CartridgeTypes.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}AnyFile.h"{}}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{comment}{/*\ For\ details\ about\ the\ .CRT\ format,}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ see:\ http://vice-\/emu.sourceforge.net/vice\_16.html}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ *\ \ \ \ \ \ http://ist.uwaterloo.ca/\string~schepers/formats/CRT.TXT}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ *\ As\ well\ read\ the\ Commodore\ 64\ Programmers\ Reference\ Guide\ pages\ 260-\/267.}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{class\ }CRTFile\ :\ \textcolor{keyword}{public}\ AnyFile\ \{}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{comment}{//\ Maximum\ number\ of\ chip\ packets\ in\ a\ CRT\ file}}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ isize\ MAX\_PACKETS\ =\ 128;}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//\ Number\ of\ chips\ contained\ in\ cartridge\ file}}
+\DoxyCodeLine{00034\ \ \ \ \ isize\ numberOfChips\ =\ 0;}
+\DoxyCodeLine{00035\ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{comment}{//\ Indicates\ where\ each\ chip\ section\ starts}}
+\DoxyCodeLine{00037\ \ \ \ \ u8\ *chips[MAX\_PACKETS]\ =\ \{\};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00040\ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{comment}{//\ Class\ methods}}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00044\ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{string}\ cartridgeTypeName(CartridgeType\ type);}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isCompatible(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&name);}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isCompatible(std::istream\ \&stream);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{comment}{//\ Initializing}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00053\ \ \ \ \ }
+\DoxyCodeLine{00054\ \ \ \ \ CRTFile(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path)\ \textcolor{keywordflow}{throws}\ \{\ init(path);\ \}}
+\DoxyCodeLine{00055\ \ \ \ \ CRTFile(\textcolor{keyword}{const}\ u8\ *buf,\ isize\ len)\ \textcolor{keywordflow}{throws}\ \{\ init(buf,\ len);\ \}}
+\DoxyCodeLine{00056\ \ \ \ \ }
+\DoxyCodeLine{00057\ \ \ \ \ }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreObject}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00061\ \ \ \ \ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CRTFile"{}};\ \}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ AnyFile}}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00068\ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{bool}\ isCompatiblePath(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path)\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ isCompatible(path);\ \}}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{bool}\ isCompatibleStream(std::istream\ \&stream)\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ isCompatible(stream);\ \}}
+\DoxyCodeLine{00071\ \ \ \ \ FileType\ type()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ FILETYPE\_CRT;\ \}}
+\DoxyCodeLine{00072\ \ \ \ \ PETName<16>\ getName()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{void}\ finalizeRead()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{comment}{//\ Analyzing\ the\ cartridge}}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00079\ \ \ \ \ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ version\ number\ of\ the\ cartridge}}
+\DoxyCodeLine{00081\ \ \ \ \ u16\ cartridgeVersion()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ LO\_HI(data[0x15],\ data[0x14]);\ \}}
+\DoxyCodeLine{00082\ \ \ \ \ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ size\ of\ the\ cartridge\ header}}
+\DoxyCodeLine{00084\ \ \ \ \ u32\ headerSize()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ HI\_HI\_LO\_LO(data[0x10],\ data[0x11],\ data[0x12],\ data[0x13]);\ \}}
+\DoxyCodeLine{00085\ \ \ \ \ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ cartridge\ type\ (e.g.,\ SimonsBasic,\ FinalIII)}}
+\DoxyCodeLine{00087\ \ \ \ \ CartridgeType\ cartridgeType()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{comment}{//\ Returns\ a\ textual\ description\ for\ the\ cartridge\ type}}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{string}\ cartridgeTypeName()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ cartridgeTypeName(cartridgeType());\ \}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{comment}{//\ Checks\ whether\ the\ cartridge\ type\ is\ supported\ by\ the\ emulator,\ yet}}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{bool}\ isSupported()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00094\ \ \ \ \ }
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ initial\ value\ of\ the\ Exrom\ line\ and\ the\ Game\ line}}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{bool}\ initialExromLine()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ data[0x18]\ !=\ 0;\ \}}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{bool}\ initialGameLine()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ data[0x19]\ !=\ 0;\ \}}
+\DoxyCodeLine{00098\ \ \ \ \ }
+\DoxyCodeLine{00099\ \ \ \ \ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{comment}{//\ Analyzing\ chip\ packages}}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00103\ \ \ \ \ }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{comment}{//\ Returns\ how\ many\ chips\ are\ contained\ in\ this\ cartridge}}
+\DoxyCodeLine{00105\ \ \ \ \ isize\ chipCount()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ numberOfChips;\ \}}
+\DoxyCodeLine{00106\ \ \ \ \ }
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{comment}{//\ Returns\ where\ the\ data\ of\ a\ certain\ chip\ can\ be\ found}}
+\DoxyCodeLine{00108\ \ \ \ \ u8\ *chipData(isize\ nr)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ chips[nr]+0x10;\ \}}
+\DoxyCodeLine{00109\ \ \ \ \ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ size\ of\ the\ chip\ (8\ KB\ or\ 16\ KB)}}
+\DoxyCodeLine{00111\ \ \ \ \ u16\ chipSize(isize\ nr)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ LO\_HI(chips[nr][0xF],\ chips[nr][0xE]);\ \}}
+\DoxyCodeLine{00112\ \ \ \ \ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ type\ of\ the\ chip\ (0\ =\ ROM,\ 1\ =\ RAM,\ 2\ =\ Flash\ ROM)}}
+\DoxyCodeLine{00114\ \ \ \ \ u16\ chipType(isize\ nr)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ LO\_HI(chips[nr][0x9],\ chips[nr][0x8]);\ \}}
+\DoxyCodeLine{00115\ \ \ \ \ }
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ bank\ number\ for\ this\ chip}}
+\DoxyCodeLine{00117\ \ \ \ \ u16\ chipBank(isize\ nr)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ LO\_HI(chips[nr][0xB],\ chips[nr][0xA]);\ \}}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ start\ of\ the\ chip\ rom\ in\ address\ space}}
+\DoxyCodeLine{00120\ \ \ \ \ u16\ chipAddr(isize\ nr)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ LO\_HI(chips[nr][0xD],\ chips[nr][0xC]);\ \}}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{comment}{//\ Debugging\ and\ repairing}}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{comment}{//\ Prints\ some\ information\ about\ this\ cartridge}}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordtype}{void}\ dump()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00129\ \ \ \ \ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{comment}{//\ Fixes\ known\ inconsistencies\ of\ common\ CRT\ files}}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordtype}{void}\ repair();}
+\DoxyCodeLine{00132\ \};}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \}}
+
+\end{DoxyCode}

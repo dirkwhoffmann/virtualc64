@@ -1,0 +1,42 @@
+\doxysection{Checksum.\+h}
+\hypertarget{_checksum_8h_source}{}\label{_checksum_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.h@{/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Types.h"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{namespace\ }util\ \{}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ Returns\ the\ FNV-\/1a\ seed\ value}}
+\DoxyCodeLine{00020\ \textcolor{keyword}{inline}\ u32\ fnvInit32()\ \{\ \textcolor{keywordflow}{return}\ 0x811c9dc5;\ \}}
+\DoxyCodeLine{00021\ \textcolor{keyword}{inline}\ u64\ fnvInit64()\ \{\ \textcolor{keywordflow}{return}\ 0xcbf29ce484222325;\ \}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{comment}{//\ Performs\ a\ single\ iteration\ of\ the\ FNV-\/1a\ hash\ algorithm}}
+\DoxyCodeLine{00024\ u32\ fnvIt32(u32\ prv,\ u32\ val);}
+\DoxyCodeLine{00025\ u64\ fnvIt64(u64\ prv,\ u64\ val);}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{comment}{//\ Computes\ a\ FNV-\/1a\ checksum\ for\ a\ given\ buffer}}
+\DoxyCodeLine{00028\ u32\ fnv32(\textcolor{keyword}{const}\ u8\ *addr,\ isize\ size);}
+\DoxyCodeLine{00029\ u64\ fnv64(\textcolor{keyword}{const}\ u8\ *addr,\ isize\ size);}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{comment}{//\ Computes\ a\ CRC\ checksum\ for\ a\ given\ buffer}}
+\DoxyCodeLine{00032\ u16\ crc16(\textcolor{keyword}{const}\ u8\ *addr,\ isize\ size);}
+\DoxyCodeLine{00033\ u32\ crc32(\textcolor{keyword}{const}\ u8\ *addr,\ isize\ size);}
+\DoxyCodeLine{00034\ u32\ crc32forByte(u32\ r);}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \}}
+
+\end{DoxyCode}

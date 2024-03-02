@@ -16,7 +16,7 @@
 \DoxyCodeLine{00012\ }
 \DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}VirtualC64.h"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_virtual_c64_8h}{VirtualC64.h}}"{}}}
 \DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <map>}}
 \DoxyCodeLine{00017\ }
 \DoxyCodeLine{00018\ \textcolor{keyword}{using\ }std::map;}
@@ -24,13 +24,13 @@
 \DoxyCodeLine{00020\ }
 \DoxyCodeLine{00021\ \textcolor{keyword}{namespace\ }vc64\ \{}
 \DoxyCodeLine{00022\ }
-\DoxyCodeLine{00023\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvc64_1_1_syntax_error}{SyntaxError}}\ :\ \textcolor{keyword}{public}\ std::runtime\_error\ \{}
+\DoxyCodeLine{00023\ \textcolor{keyword}{struct\ }SyntaxError\ :\ \textcolor{keyword}{public}\ std::runtime\_error\ \{}
 \DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{using\ }runtime\_error::runtime\_error;}
 \DoxyCodeLine{00025\ \};}
 \DoxyCodeLine{00026\ }
 \DoxyCodeLine{00027\ \textcolor{keywordtype}{void}\ process(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *listener,\ Message\ msg);}
 \DoxyCodeLine{00028\ }
-\DoxyCodeLine{00029\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvc64_1_1_headless}{Headless}}\ \{}
+\DoxyCodeLine{00029\ \textcolor{keyword}{class\ }Headless\ \{}
 \DoxyCodeLine{00030\ }
 \DoxyCodeLine{00031\ \ \ \ \ \textcolor{comment}{//\ Parsed\ command\ line\ arguments}}
 \DoxyCodeLine{00032\ \ \ \ \ map<string,string>\ keys;}
@@ -60,7 +60,7 @@
 \DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ parseArguments(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[]);}
 \DoxyCodeLine{00057\ }
 \DoxyCodeLine{00058\ \ \ \ \ \textcolor{comment}{//\ Checks\ all\ command\ line\ arguments\ for\ conistency}}
-\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ checkArguments()\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ checkArguments()\ throws;}
 \DoxyCodeLine{00060\ }
 \DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ path\ to\ the\ self-\/test\ script}}
 \DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{string}\ selfTestScript();}
@@ -70,7 +70,7 @@
 \DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//\ Running}}
 \DoxyCodeLine{00067\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00068\ }
-\DoxyCodeLine{00069\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00069\ public:}
 \DoxyCodeLine{00070\ \ \ \ \ }
 \DoxyCodeLine{00071\ \ \ \ \ \textcolor{comment}{//\ Processes\ an\ incoming\ message}}
 \DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{void}\ process(Message\ msg);}
@@ -80,7 +80,7 @@
 \DoxyCodeLine{00076\ \textcolor{comment}{//\ Self-\/test\ script}}
 \DoxyCodeLine{00077\ \textcolor{comment}{//}}
 \DoxyCodeLine{00078\ }
-\DoxyCodeLine{00079\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *testScript[]\ =\ \{}
+\DoxyCodeLine{00079\ static\ const\ \textcolor{keywordtype}{char}\ *testScript[]\ =\ \{}
 \DoxyCodeLine{00080\ }
 \DoxyCodeLine{00081\ \ \ \ \ \textcolor{stringliteral}{"{}\#\ Self-\/test\ script\ for\ VirtualC64"{}},}
 \DoxyCodeLine{00082\ \ \ \ \ \textcolor{stringliteral}{"{}\#\ "{}},}

@@ -1,0 +1,112 @@
+\doxysection{FSDescriptors.\+h}
+\hypertarget{_f_s_descriptors_8h_source}{}\label{_f_s_descriptors_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDescriptors.h@{/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDescriptors.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}CoreObject.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}DiskTypes.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}FSTypes.h"{}}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{comment}{/*\ To\ create\ a\ FSDevice,\ the\ layout\ parameters\ of\ the\ represendet\ device\ have}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ *\ to\ be\ provided.\ This\ is\ done\ by\ passing\ a\ structure\ of\ type\ FSDeviceLayout}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ *\ which\ contains\ physical\ properties\ such\ as\ the\ number\ of\ cylinders\ and\ heads}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ *\ and\ logical\ parameters\ such\ as\ the\ number\ of\ sectors\ per\ track.}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ *\ FSDeviceDescriptors\ can\ be\ obtained\ in\ several\ ways.\ If\ a\ descriptor\ for}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ *\ diskette\ is\ needed,\ it\ can\ be\ created\ by\ specifiying\ the\ disk\ type.\ If\ a}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ *\ D64\ file\ is\ given,\ a\ suitable\ device\ contructor\ can\ be\ created\ from\ this}}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ *\ file.}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{struct\ }FSDeviceDescriptor\ :\ CoreObject\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{comment}{//\ DOS\ type}}
+\DoxyCodeLine{00035\ \ \ \ \ DOSType\ dos\ =\ DOS\_TYPE\_NODOS;}
+\DoxyCodeLine{00036\ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//\ Number\ of\ cylinders}}
+\DoxyCodeLine{00038\ \ \ \ \ isize\ numCyls\ =\ 0;}
+\DoxyCodeLine{00039\ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{comment}{//\ Number\ of\ heads}}
+\DoxyCodeLine{00041\ \ \ \ \ isize\ numHeads\ =\ 0;}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{comment}{//\ Initializing}}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00047\ \ \ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ FSDeviceDescriptor()\ \{\ \}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Creates\ a\ device\ descriptor\ for\ a\ standard\ disk}}
+\DoxyCodeLine{00051\ \ \ \ \ FSDeviceDescriptor(DiskType\ type,\ DOSType\ dos\ =\ DOS\_TYPE\_CBM);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{comment}{//\ Creates\ a\ device\ descriptor\ from\ a\ D64\ file}}
+\DoxyCodeLine{00054\ \ \ \ \ FSDeviceDescriptor(\textcolor{keyword}{const}\ \textcolor{keyword}{class}\ D64File\ \&d64);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}FSLayout"{}};\ \}}
+\DoxyCodeLine{00057\ \ \ \ \ }
+\DoxyCodeLine{00058\ \ \ \ \ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ Performing\ integrity\ checks}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00062\ \ \ \ \ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{bool}\ isCylinderNr(Cylinder\ c)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ 1\ <=\ c\ \&\&\ c\ <=\ numCyls;\ \}}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{bool}\ isHeadNr(Head\ h)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ h\ ==\ 0\ ||\ h\ ==\ 1;\ \}}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{bool}\ isTrackNr(Track\ t)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ 1\ <=\ t\ \&\&\ t\ <=\ numCyls\ *\ numHeads;\ \}}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{bool}\ isValidLink(TSLink\ ref)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{comment}{//\ Querying\ device\ properties}}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00072\ \ \ \ \ }
+\DoxyCodeLine{00073\ \ \ \ \ isize\ numTracks()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ numCyls\ *\ numHeads;\ \}}
+\DoxyCodeLine{00074\ \ \ \ \ isize\ speedZone(Cylinder\ track)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00075\ \ \ \ \ isize\ numSectors(Cylinder\ track)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00076\ \ \ \ \ isize\ numBlocks()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//\ Translating\ blocks,\ tracks,\ sectors,\ and\ heads}}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ Cylinder\ cylNr(Track\ t)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ t\ <=\ numCyls\ ?\ t\ :\ t\ -\/\ numCyls;\ \}}
+\DoxyCodeLine{00084\ \ \ \ \ Head\ headNr(Track\ t)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ t\ <=\ numCyls\ ?\ 0\ :\ 1;\ \}}
+\DoxyCodeLine{00085\ \ \ \ \ Track\ trackNr(Cylinder\ c,\ Head\ h)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ c\ +\ h\ *\ numCyls;\ \}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ TSLink\ tsLink(Block\ b)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00088\ \ \ \ \ Track\ trackNr(Block\ b)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ tsLink(b).t;\ \}}
+\DoxyCodeLine{00089\ \ \ \ \ Sector\ sectorNr(Block\ b)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ tsLink(b).s;\ \}}
+\DoxyCodeLine{00090\ \ \ \ \ }
+\DoxyCodeLine{00091\ \ \ \ \ Block\ blockNr(TSLink\ ts)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00092\ \ \ \ \ Block\ blockNr(Track\ t,\ Sector\ s)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ blockNr(TSLink\{t,s\});\ \}}
+\DoxyCodeLine{00093\ \ \ \ \ Block\ blockNr(Cylinder\ c,\ Head\ h,\ Sector\ s)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ blockNr(trackNr(c,h),\ s);\ \}}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{comment}{//\ Ordering\ blocks}}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00099\ \ \ \ \ }
+\DoxyCodeLine{00100\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00101\ \ \ \ \ }
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{bool}\ nextBlock(Block\ b,\ Block\ *nb)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00103\ \ \ \ \ TSLink\ nextBlockRef(TSLink\ b)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00104\ \};}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \}}
+
+\end{DoxyCode}

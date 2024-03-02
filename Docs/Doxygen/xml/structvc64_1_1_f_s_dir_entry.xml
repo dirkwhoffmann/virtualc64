@@ -1,0 +1,356 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="structvc64_1_1_f_s_dir_entry" kind="struct" language="C++" prot="public">
+    <compoundname>vc64::FSDirEntry</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structvc64_1_1_f_s_dir_entry_1a723e41f1107f8f1d1b4dd887b25ea61a" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::FSDirEntry::nextDirTrack</definition>
+        <argsstring></argsstring>
+        <name>nextDirTrack</name>
+        <qualifiedname>vc64::FSDirEntry::nextDirTrack</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="23" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_f_s_dir_entry_1a4764467cf3ead247e4bb6759cdc33799" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::FSDirEntry::nextDirSector</definition>
+        <argsstring></argsstring>
+        <name>nextDirSector</name>
+        <qualifiedname>vc64::FSDirEntry::nextDirSector</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="24" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_f_s_dir_entry_1a924f748b60ebdfae5da658d80b48f0a7" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::FSDirEntry::fileType</definition>
+        <argsstring></argsstring>
+        <name>fileType</name>
+        <qualifiedname>vc64::FSDirEntry::fileType</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="25" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_f_s_dir_entry_1a2bd5aa6aec037dcbbe5efd0174890212" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::FSDirEntry::firstDataTrack</definition>
+        <argsstring></argsstring>
+        <name>firstDataTrack</name>
+        <qualifiedname>vc64::FSDirEntry::firstDataTrack</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="26" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_f_s_dir_entry_1a8e0a1e3b8f026e1da12b05b8bc62b475" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::FSDirEntry::firstDataSector</definition>
+        <argsstring></argsstring>
+        <name>firstDataSector</name>
+        <qualifiedname>vc64::FSDirEntry::firstDataSector</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="27" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_f_s_dir_entry_1a440017fe9d0a2db9f7a11514bbc08420" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::FSDirEntry::fileName[16]</definition>
+        <argsstring>[16]</argsstring>
+        <name>fileName</name>
+        <qualifiedname>vc64::FSDirEntry::fileName</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="28" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_f_s_dir_entry_1a3d14a5ed01418463b4e5865e75184436" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::FSDirEntry::sideSecBlkTrack</definition>
+        <argsstring></argsstring>
+        <name>sideSecBlkTrack</name>
+        <qualifiedname>vc64::FSDirEntry::sideSecBlkTrack</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="29" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_f_s_dir_entry_1a5297b39bec51c77ababdebcbc4fcbdc9" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::FSDirEntry::sideSrcBlkSector</definition>
+        <argsstring></argsstring>
+        <name>sideSrcBlkSector</name>
+        <qualifiedname>vc64::FSDirEntry::sideSrcBlkSector</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="30" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_f_s_dir_entry_1a69526b99ccb05b4c796d60208a0e58e8" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::FSDirEntry::recLength</definition>
+        <argsstring></argsstring>
+        <name>recLength</name>
+        <qualifiedname>vc64::FSDirEntry::recLength</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="31" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" bodystart="31" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_f_s_dir_entry_1aacaf3e40382541a5b925b31912441b3d" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::FSDirEntry::unused[6]</definition>
+        <argsstring>[6]</argsstring>
+        <name>unused</name>
+        <qualifiedname>vc64::FSDirEntry::unused</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="32" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" bodystart="32" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_f_s_dir_entry_1a8433546b1be0ac0c2fe9a031500fda6c" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::FSDirEntry::fileSizeLo</definition>
+        <argsstring></argsstring>
+        <name>fileSizeLo</name>
+        <qualifiedname>vc64::FSDirEntry::fileSizeLo</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="33" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_f_s_dir_entry_1a96c5ee4023b57af38818ce0e63ce7d2e" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::FSDirEntry::fileSizeHi</definition>
+        <argsstring></argsstring>
+        <name>fileSizeHi</name>
+        <qualifiedname>vc64::FSDirEntry::fileSizeHi</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="34" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" bodystart="34" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="structvc64_1_1_f_s_dir_entry_1a8fb301a7c778f0b2cc22a74fe6e3d7c9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FSDirEntry::init</definition>
+        <argsstring>(PETName&lt; 16 &gt; name, TSLink ref, isize numBlocks)</argsstring>
+        <name>init</name>
+        <qualifiedname>vc64::FSDirEntry::init</qualifiedname>
+        <param>
+          <type>PETName&lt; 16 &gt;</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>TSLink</type>
+          <declname>ref</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>numBlocks</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="37" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.cpp" bodystart="21" bodyend="30"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_f_s_dir_entry_1a26ffb98aa6b5a1710c6b478caf861e67" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FSDirEntry::init</definition>
+        <argsstring>(const string &amp;name, TSLink ref, isize numBlocks)</argsstring>
+        <name>init</name>
+        <qualifiedname>vc64::FSDirEntry::init</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>TSLink</type>
+          <declname>ref</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>numBlocks</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="38" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.cpp" bodystart="33" bodyend="37"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_f_s_dir_entry_1adff1533ad999ffe4d56c59f3dda6f589" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::FSDirEntry::isEmpty</definition>
+        <argsstring>() const</argsstring>
+        <name>isEmpty</name>
+        <qualifiedname>vc64::FSDirEntry::isEmpty</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="41" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.cpp" bodystart="40" bodyend="43"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_f_s_dir_entry_1a90c2373be88ee81c620a2045d23aaa3e" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>PETName&lt; 16 &gt;</type>
+        <definition>PETName&lt; 16 &gt; vc64::FSDirEntry::getName</definition>
+        <argsstring>() const</argsstring>
+        <name>getName</name>
+        <qualifiedname>vc64::FSDirEntry::getName</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="44" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" bodystart="44" bodyend="44"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_f_s_dir_entry_1a6160ca3a8d91f0369b6c925b04ece0ae" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string vc64::FSDirEntry::getFileSystemRepresentation</definition>
+        <argsstring>() const</argsstring>
+        <name>getFileSystemRepresentation</name>
+        <qualifiedname>vc64::FSDirEntry::getFileSystemRepresentation</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="47" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.cpp" bodystart="82" bodyend="97"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_f_s_dir_entry_1ae9120ea0a4d6e00b486a07239c75ee7c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>FSFileType</type>
+        <definition>FSFileType vc64::FSDirEntry::getFileType</definition>
+        <argsstring>() const</argsstring>
+        <name>getFileType</name>
+        <qualifiedname>vc64::FSDirEntry::getFileType</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="50" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.cpp" bodystart="100" bodyend="103"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_f_s_dir_entry_1a26b533acd5ab2423b86e9edb1d06869a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const string</type>
+        <definition>const string vc64::FSDirEntry::typeString</definition>
+        <argsstring>() const</argsstring>
+        <name>typeString</name>
+        <qualifiedname>vc64::FSDirEntry::typeString</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="53" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.cpp" bodystart="46" bodyend="73"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_f_s_dir_entry_1a3aae5ea64887be09b672796fa4b08b2f" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::FSDirEntry::isHidden</definition>
+        <argsstring>() const</argsstring>
+        <name>isHidden</name>
+        <qualifiedname>vc64::FSDirEntry::isHidden</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="56" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.cpp" bodystart="76" bodyend="79"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_f_s_dir_entry_1ad01ba53a9a436316dcfa23893d303b01" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>TSLink</type>
+        <definition>TSLink vc64::FSDirEntry::firstBlock</definition>
+        <argsstring>() const</argsstring>
+        <name>firstBlock</name>
+        <qualifiedname>vc64::FSDirEntry::firstBlock</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="59" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" bodystart="59" bodyend="59"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" line="21" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h" bodystart="22" bodyend="60"/>
+    <listofallmembers>
+      <member refid="structvc64_1_1_f_s_dir_entry_1a440017fe9d0a2db9f7a11514bbc08420" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>fileName</name></member>
+      <member refid="structvc64_1_1_f_s_dir_entry_1a96c5ee4023b57af38818ce0e63ce7d2e" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>fileSizeHi</name></member>
+      <member refid="structvc64_1_1_f_s_dir_entry_1a8433546b1be0ac0c2fe9a031500fda6c" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>fileSizeLo</name></member>
+      <member refid="structvc64_1_1_f_s_dir_entry_1a924f748b60ebdfae5da658d80b48f0a7" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>fileType</name></member>
+      <member refid="structvc64_1_1_f_s_dir_entry_1ad01ba53a9a436316dcfa23893d303b01" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>firstBlock</name></member>
+      <member refid="structvc64_1_1_f_s_dir_entry_1a8e0a1e3b8f026e1da12b05b8bc62b475" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>firstDataSector</name></member>
+      <member refid="structvc64_1_1_f_s_dir_entry_1a2bd5aa6aec037dcbbe5efd0174890212" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>firstDataTrack</name></member>
+      <member refid="structvc64_1_1_f_s_dir_entry_1a6160ca3a8d91f0369b6c925b04ece0ae" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>getFileSystemRepresentation</name></member>
+      <member refid="structvc64_1_1_f_s_dir_entry_1ae9120ea0a4d6e00b486a07239c75ee7c" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>getFileType</name></member>
+      <member refid="structvc64_1_1_f_s_dir_entry_1a90c2373be88ee81c620a2045d23aaa3e" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>getName</name></member>
+      <member refid="structvc64_1_1_f_s_dir_entry_1a8fb301a7c778f0b2cc22a74fe6e3d7c9" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>init</name></member>
+      <member refid="structvc64_1_1_f_s_dir_entry_1a26ffb98aa6b5a1710c6b478caf861e67" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>init</name></member>
+      <member refid="structvc64_1_1_f_s_dir_entry_1adff1533ad999ffe4d56c59f3dda6f589" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>isEmpty</name></member>
+      <member refid="structvc64_1_1_f_s_dir_entry_1a3aae5ea64887be09b672796fa4b08b2f" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>isHidden</name></member>
+      <member refid="structvc64_1_1_f_s_dir_entry_1a4764467cf3ead247e4bb6759cdc33799" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>nextDirSector</name></member>
+      <member refid="structvc64_1_1_f_s_dir_entry_1a723e41f1107f8f1d1b4dd887b25ea61a" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>nextDirTrack</name></member>
+      <member refid="structvc64_1_1_f_s_dir_entry_1a69526b99ccb05b4c796d60208a0e58e8" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>recLength</name></member>
+      <member refid="structvc64_1_1_f_s_dir_entry_1a3d14a5ed01418463b4e5865e75184436" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>sideSecBlkTrack</name></member>
+      <member refid="structvc64_1_1_f_s_dir_entry_1a5297b39bec51c77ababdebcbc4fcbdc9" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>sideSrcBlkSector</name></member>
+      <member refid="structvc64_1_1_f_s_dir_entry_1a26b533acd5ab2423b86e9edb1d06869a" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>typeString</name></member>
+      <member refid="structvc64_1_1_f_s_dir_entry_1aacaf3e40382541a5b925b31912441b3d" prot="public" virt="non-virtual"><scope>vc64::FSDirEntry</scope><name>unused</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

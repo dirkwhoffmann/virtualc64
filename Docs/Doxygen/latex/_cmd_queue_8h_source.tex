@@ -1,6 +1,6 @@
 \doxysection{Cmd\+Queue.\+h}
 \hypertarget{_cmd_queue_8h_source}{}\label{_cmd_queue_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h@{/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h}}
-
+\mbox{\hyperlink{_cmd_queue_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
 \DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
@@ -13,54 +13,54 @@
 \DoxyCodeLine{00009\ \textcolor{comment}{//}}
 \DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
 \DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
-\DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}CmdQueueTypes.h"{}}}
-\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}CoreObject.h"{}}}
-\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}Synchronizable.h"{}}}
-\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}RingBuffer.h"{}}}
-\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <atomic>}}
-\DoxyCodeLine{00020\ }
-\DoxyCodeLine{00021\ \textcolor{keyword}{namespace\ }vc64\ \{}
-\DoxyCodeLine{00022\ }
-\DoxyCodeLine{00023\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvc64_1_1_cmd_queue}{CmdQueue}}\ final\ :\ CoreObject,\ Synchronizable\ \{}
-\DoxyCodeLine{00024\ }
-\DoxyCodeLine{00025\ \ \ \ \ \textcolor{comment}{//\ Ring\ buffer\ storing\ all\ pending\ commands}}
-\DoxyCodeLine{00026\ \ \ \ \ util::RingBuffer\ <Cmd,\ 128>\ queue;}
-\DoxyCodeLine{00027\ }
-\DoxyCodeLine{00028\ \ \ \ \ \textcolor{comment}{//\ Indicates\ if\ the\ queue\ is\ empty}}
-\DoxyCodeLine{00029\ \ \ \ \ std::atomic<bool>\ empty\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00030\ }
-\DoxyCodeLine{00031\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//\ Constructing}}
-\DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_cmd_queue_types_8h}{CmdQueueTypes.h}}"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}CoreObject.h"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}Synchronizable.h"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}RingBuffer.h"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <atomic>}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }CmdQueue\ final\ :\ CoreObject,\ Synchronizable\ \{}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{comment}{//\ Ring\ buffer\ storing\ all\ pending\ commands}}
+\DoxyCodeLine{00027\ \ \ \ \ util::RingBuffer\ <Cmd,\ 128>\ queue;}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{comment}{//\ Indicates\ if\ the\ queue\ is\ empty}}
+\DoxyCodeLine{00030\ \ \ \ \ std::atomic<bool>\ empty\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//\ Constructing}}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00035\ }
 \DoxyCodeLine{00036\ }
-\DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00038\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreObject}}
-\DoxyCodeLine{00039\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00040\ }
-\DoxyCodeLine{00041\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00042\ }
-\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CmdQueue"{}};\ \}}
-\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreObject}}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CmdQueue"{}};\ \}}
 \DoxyCodeLine{00045\ }
-\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00047\ \ \ \ \ \textcolor{comment}{//\ Managing\ the\ queue}}
-\DoxyCodeLine{00048\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00049\ }
-\DoxyCodeLine{00050\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00051\ }
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{comment}{//\ Sends\ a\ command}}
-\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ put(\textcolor{keyword}{const}\ Cmd\ \&cmd);}
-\DoxyCodeLine{00054\ \ \ \ \ \textcolor{comment}{//\ void\ put(CmdType\ type,\ KeyCmd\ payload);}}
-\DoxyCodeLine{00055\ }
-\DoxyCodeLine{00056\ \ \ \ \ \textcolor{comment}{//\ Polls\ a\ command}}
-\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{bool}\ poll(Cmd\ \&cmd);}
-\DoxyCodeLine{00058\ \};}
-\DoxyCodeLine{00059\ }
-\DoxyCodeLine{00060\ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{comment}{//\ Managing\ the\ queue}}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{comment}{//\ Sends\ a\ command}}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ put(\textcolor{keyword}{const}\ Cmd\ \&cmd);}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{comment}{//\ void\ put(CmdType\ type,\ KeyCmd\ payload);}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{comment}{//\ Polls\ a\ command}}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{bool}\ poll(Cmd\ \&cmd);}
+\DoxyCodeLine{00059\ \};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \}}
 
 \end{DoxyCode}

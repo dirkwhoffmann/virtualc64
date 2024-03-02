@@ -1,0 +1,1357 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="_file_types_8h" kind="file" language="C++">
+    <compoundname>FileTypes.h</compoundname>
+    <includes refid="_aliases_8h" local="yes">Aliases.h</includes>
+    <includes refid="_reflection_8h" local="yes">Reflection.h</includes>
+    <includedby refid="_any_file_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h</includedby>
+    <includedby refid="_virtual_c64_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/VirtualC64Types.h</includedby>
+    <incdepgraph>
+      <node id="2">
+        <label>Aliases.h</label>
+        <link refid="_aliases_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h</label>
+        <link refid="_file_types_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>Macros.h</label>
+        <link refid="_macros_8h_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>Reflection.h</label>
+        <link refid="_reflection_8h_source"/>
+      </node>
+      <node id="4">
+        <label>Types.h</label>
+        <link refid="_types_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>stdbool.h</label>
+      </node>
+      <node id="6">
+        <label>stdint.h</label>
+      </node>
+      <node id="5">
+        <label>sys/types.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="14">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/Cartridge.h</label>
+        <link refid="_cartridge_8h_source"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/ActionReplay.h</label>
+        <link refid="_action_replay_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Comal80.h</label>
+        <link refid="_comal80_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/CustomCartridges.h</label>
+        <link refid="_custom_cartridges_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Dinamic.h</label>
+        <link refid="_dinamic_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/EasyFlash.h</label>
+        <link refid="_easy_flash_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Epyx.h</label>
+        <link refid="_epyx_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Expert.h</label>
+        <link refid="_expert_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/FinalIII.h</label>
+        <link refid="_final_i_i_i_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/FreezeFrame.h</label>
+        <link refid="_freeze_frame_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Funplay.h</label>
+        <link refid="_funplay_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/GameKiller.h</label>
+        <link refid="_game_killer_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/GeoRam.h</label>
+        <link refid="_geo_ram_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Isepic.h</label>
+        <link refid="_isepic_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Kcs.h</label>
+        <link refid="_kcs_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Kingsoft.h</label>
+        <link refid="_kingsoft_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Mach5.h</label>
+        <link refid="_mach5_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/MagicDesk.h</label>
+        <link refid="_magic_desk_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/MikroAss.h</label>
+        <link refid="_mikro_ass_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Ocean.h</label>
+        <link refid="_ocean_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/PageFox.h</label>
+        <link refid="_page_fox_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Reu.h</label>
+        <link refid="_reu_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Rex.h</label>
+        <link refid="_rex_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/SimonsBasic.h</label>
+        <link refid="_simons_basic_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="38">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/StarDos.h</label>
+        <link refid="_star_dos_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="39">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/StructuredBasic.h</label>
+        <link refid="_structured_basic_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="40">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/SuperGames.h</label>
+        <link refid="_super_games_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/WarpSpeed.h</label>
+        <link refid="_warp_speed_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="42">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Westermann.h</label>
+        <link refid="_westermann_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="43">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Zaxxon.h</label>
+        <link refid="_zaxxon_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/C64.h</label>
+        <link refid="_c64_8h_source"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h</label>
+        <link refid="_emulator_8h_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="44">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ExpansionPort.h</label>
+        <link refid="_expansion_port_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h</label>
+        <link refid="_file_system_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Headless.h</label>
+        <link refid="_headless_8h_source"/>
+      </node>
+      <node id="3">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h</label>
+        <link refid="_any_collection_8h_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h</label>
+        <link refid="_any_file_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/CRTFile.h</label>
+        <link refid="_c_r_t_file_8h_source"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/D64File.h</label>
+        <link refid="_d64_file_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h</label>
+        <link refid="_file_types_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/Folder.h</label>
+        <link refid="_folder_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="46">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h</label>
+        <link refid="_g64_file_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/P00File.h</label>
+        <link refid="_p00_file_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h</label>
+        <link refid="_p_r_g_file_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/RomFile.h</label>
+        <link refid="_rom_file_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="48">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h</label>
+        <link refid="_script_8h_source"/>
+      </node>
+      <node id="49">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h</label>
+        <link refid="_snapshot_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/T64File.h</label>
+        <link refid="_t64_file_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="50">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/TAPFile.h</label>
+        <link refid="_t_a_p_file_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h</label>
+        <link refid="_virtual_c64_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/VirtualC64Types.h</label>
+        <link refid="_virtual_c64_types_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="enum">
+      <memberdef kind="enum" id="_file_types_8h_1a0156266d1282084f93a8715dd282b89e" prot="public" static="no" strong="no">
+        <type>long</type>
+        <name>FILETYPE</name>
+        <enumvalue id="_file_types_8h_1a0156266d1282084f93a8715dd282b89ea25b450a8862abafb2429214363eab949" prot="public">
+          <name>FILETYPE_UNKNOWN</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0156266d1282084f93a8715dd282b89ea1064317c46e5faf98d08f3cd4c0049ee" prot="public">
+          <name>FILETYPE_SNAPSHOT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0156266d1282084f93a8715dd282b89ea59eae62629663ac73955f533c666c2a1" prot="public">
+          <name>FILETYPE_SCRIPT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0156266d1282084f93a8715dd282b89ea3ecf01ca9532a505995c8cd9bde787c5" prot="public">
+          <name>FILETYPE_CRT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0156266d1282084f93a8715dd282b89eade1d1524f72218fdb874fd3dd58bf6fc" prot="public">
+          <name>FILETYPE_T64</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0156266d1282084f93a8715dd282b89eaf26cdcb37be0061bab287493efb02a65" prot="public">
+          <name>FILETYPE_P00</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0156266d1282084f93a8715dd282b89eaf3ea39a81e88dcf1147f05a084fde042" prot="public">
+          <name>FILETYPE_PRG</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0156266d1282084f93a8715dd282b89eac19ca3e2cfb6c85b7dc126a142e2cab1" prot="public">
+          <name>FILETYPE_FOLDER</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0156266d1282084f93a8715dd282b89ea363407238102a0e1b391d0a33d444a13" prot="public">
+          <name>FILETYPE_D64</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0156266d1282084f93a8715dd282b89eaa8d3fa862459b77f120a4b4ef6639d30" prot="public">
+          <name>FILETYPE_G64</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0156266d1282084f93a8715dd282b89ea065adc7ab17b497f0d6ea83bd9a55ada" prot="public">
+          <name>FILETYPE_TAP</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0156266d1282084f93a8715dd282b89eafa85bca08c41b3df528d8f832776423f" prot="public">
+          <name>FILETYPE_BASIC_ROM</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0156266d1282084f93a8715dd282b89ea767a6be9cbcdcaa7a2c7397f52dd9794" prot="public">
+          <name>FILETYPE_CHAR_ROM</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0156266d1282084f93a8715dd282b89eadb5cf73eb352768a75bcdd204a9fea7c" prot="public">
+          <name>FILETYPE_KERNAL_ROM</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0156266d1282084f93a8715dd282b89eae8d6583cc7b6711076f7a4e0cd217c21" prot="public">
+          <name>FILETYPE_VC1541_ROM</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h" line="22" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h" bodystart="23" bodyend="39"/>
+      </memberdef>
+      <memberdef kind="enum" id="_file_types_8h_1a7b6baed197e863989055d80e1f4f0160" prot="public" static="no" strong="no">
+        <type>long</type>
+        <name>TAP_VERSION</name>
+        <enumvalue id="_file_types_8h_1a7b6baed197e863989055d80e1f4f0160ad113c208e08b6580ea3c0f170a2427c0" prot="public">
+          <name>TAP_VERSION_ORIGINAL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a7b6baed197e863989055d80e1f4f0160abc0d01b6edc7f48446a7f66392f9ebb6" prot="public">
+          <name>TAP_VERSION_ADVANCED</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h" line="75" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h" bodystart="76" bodyend="79"/>
+      </memberdef>
+      <memberdef kind="enum" id="_file_types_8h_1a0e81b0538b6a27cd592a8c3168b73ec3" prot="public" static="no" strong="no">
+        <type>long</type>
+        <name>FILE_ERROR</name>
+        <enumvalue id="_file_types_8h_1a0e81b0538b6a27cd592a8c3168b73ec3aa03e9c972fbd863c5d40dbfffd60196d" prot="public">
+          <name>ERR_FILE_OK</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0e81b0538b6a27cd592a8c3168b73ec3a3202ff96dcd656bc62c42234e5a4a6f7" prot="public">
+          <name>ERR_FILE_NOT_FOUND</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0e81b0538b6a27cd592a8c3168b73ec3ae00baeb1e4ac53698e23b4ca9db24ca1" prot="public">
+          <name>ERR_INVALID_TYPE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0e81b0538b6a27cd592a8c3168b73ec3a19c4ada97191961ac757f8fb4a2cc90b" prot="public">
+          <name>ERR_CANT_READ</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0e81b0538b6a27cd592a8c3168b73ec3ae8a0bf2c56946cbebf5f6d6c256579c5" prot="public">
+          <name>ERR_CANT_WRITE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0e81b0538b6a27cd592a8c3168b73ec3a077f6961ef44934823d048c00b535cad" prot="public">
+          <name>ERR_OUT_OF_MEMORY</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0e81b0538b6a27cd592a8c3168b73ec3a5c708decdcbd7d8c9fddd8d9e75828a1" prot="public">
+          <name>ERR_UNKNOWN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a0e81b0538b6a27cd592a8c3168b73ec3a26a08abb8279760cf23e95327e6ef0a1" prot="public">
+          <name>ERR_UNSUPPORTED_SNAPSHOT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h" line="102" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h" bodystart="103" bodyend="116"/>
+      </memberdef>
+      <memberdef kind="enum" id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56" prot="public" static="no" strong="no">
+        <type>long</type>
+        <name>ROM_IDENTIFIER</name>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56aafeeda6b6346f73958522786cf79ce9b" prot="public">
+          <name>ROM_MISSING</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56aaee7abccaa0678a127d5b6d8c5f73763" prot="public">
+          <name>ROM_UNKNOWN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a0faba61ac4a86f80b40080fe7cbeb914" prot="public">
+          <name>BASIC_COMMODORE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a77774dc08ee8cee22ccc4abe18890291" prot="public">
+          <name>CHAR_COMMODORE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a61c378a5c923b0ed8d060d5bcee92ef8" prot="public">
+          <name>CHAR_SWEDISH_C2D007</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56af59b462f3965abcb8f1782c8f37128ec" prot="public">
+          <name>CHAR_SWEDISH</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a7d51182e36b1abb2f9ee6f4252b7a6d4" prot="public">
+          <name>CHAR_SPANISH_C64C</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a943d9294286515a3c5b55f9357446dbf" prot="public">
+          <name>CHAR_DANISH</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a20631fa5810f49f02fa229f4b8dc686d" prot="public">
+          <name>CHAR_ATARI800</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a9ddaf8494b60256730159a0cfd27e9aa" prot="public">
+          <name>CHAR_MSX</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a6bcde233d5ec1c54e7106e17a032df02" prot="public">
+          <name>CHAR_ZX_SPECTRUM</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a261d031d9d55bdd97b10e25a1db69359" prot="public">
+          <name>CHAR_AMSTRAD_CPC</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56aca4f15f9b5382e51218e7bd8093b75e9" prot="public">
+          <name>CHAR_A500_TOPAZ_BROKEN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56aefb75a850353f4c49567bb01fe27ba8a" prot="public">
+          <name>CHAR_A500_TOPAZ_V2</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a4873ad909b8c34de15f2403c6fac8d29" prot="public">
+          <name>CHAR_A1200_TOPAZ_BROKEN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a27cd53ec616ae9a7e693b322533c4c49" prot="public">
+          <name>CHAR_A1200_TOPAZ_V2</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a159025e8f08004ee28dc3f2e19549d9d" prot="public">
+          <name>CHAR_TELETEXT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a1a529ec4aef5e6850b40d3dbb874c2d6" prot="public">
+          <name>CHAR_MEGA65</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a8b2d92de855b14384ddf8c7f2e42f49e" prot="public">
+          <name>CHAR_PXLFONT_V23</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a8e8b08aa5c44782a75a01ab50954ebd9" prot="public">
+          <name>KERNAL_1ST</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56ac53893e7ff5866abe91c710dcae95dc1" prot="public">
+          <name>KERNAL_2ST</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56aaff0af193c6a9af1548107ec871e4716" prot="public">
+          <name>KERNAL_3ST</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a415faed2690773e5cd5991574cc3fa61" prot="public">
+          <name>KERNAL_DANISH_3RD</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a766d37172db4de3aca4da3a64b364d97" prot="public">
+          <name>KERNAL_SX64</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a6ab62e7ce26ab722c2a53aa882251ddf" prot="public">
+          <name>KERNAL_SX64_SCAND</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56ad6cc515d2cd47ef55cb46e0f8bdcdac3" prot="public">
+          <name>KERNAL_4064</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a8a7b03927f6346a01d8d6952019c7852" prot="public">
+          <name>KERNAL_64_JIFFY</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56aa7400cd9422dffaef3a2d05c810fd2df" prot="public">
+          <name>KERNAL_SX64_JIFFY</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56aa9a566bbf3a128330a9032f242249deb" prot="public">
+          <name>KERNAL_TURBO_ROM</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56aaabb6c739d66e8f5775a34ef51961fb3" prot="public">
+          <name>KERNAL_DATEL_V32</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a2726fd12b4feae53ae450eaa3122820e" prot="public">
+          <name>KERNAL_EXOS_V3</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a182a40cb70530157e905ef5fc3edb24a" prot="public">
+          <name>KERNAL_TURBO_TAPE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56abf8797953a7b7f0559bf078d65f67d89" prot="public">
+          <name>KERNEL_TURBO_250</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a91b1387f324ed0c406f0bf6cd7819067" prot="public">
+          <name>KERNAL_64ER_V3</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56ab87e7a1826c6efcedd37c89dc0002c52" prot="public">
+          <name>KERNAL_SPEEDDOS_PLUS</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a54017a27a5046e2db090caf074820ed9" prot="public">
+          <name>KERNAL_SPEEDDOS_27</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a8f85c9c5e9c5e0cdf93d01a3dc90706d" prot="public">
+          <name>KERNAL_DOLPHIN_10</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a364182e099858ca1007999939877549b" prot="public">
+          <name>KERNAL_DOLPHIN_20_1</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a26b869d254ccb695d79ac4de603c0993" prot="public">
+          <name>KERNAL_DOLPHIN_20_1_MA</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a3d4a652a8376a14c971a2fc64e41e5de" prot="public">
+          <name>KERNAL_DOLPHIN_20_2</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a2cbaec2666ed3cb69ef65417be96b5b8" prot="public">
+          <name>KERNAL_DOLPHIN_20_3</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a0bcd4abf9f28b1feb8d21bce7b87d7e8" prot="public">
+          <name>KERNAL_DOLPHIN_20_SLVDR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a0470da618e02ea51c1c2a97f9135db0d" prot="public">
+          <name>KERNAL_DOLPHIN_30</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a9d277628aec7950ad75fadcbba77253d" prot="public">
+          <name>KERNAL_DOLPHIN_JIFFY</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56acfea4bf75f89038975de0965fffa2156" prot="public">
+          <name>KERNEL_NORLAND_30</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a572b53b03594000a5bc7d911d8972268" prot="public">
+          <name>KERNEL_SD2IEC</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a3cece0874218c8cabbfc45ab8b509a88" prot="public">
+          <name>KERNAL_JAFFY</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a196d92dc98ec4bbde61989807bb54ead" prot="public">
+          <name>VC1541C_01</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a7b8de25e0dade7952a6f5e7ab60c9276" prot="public">
+          <name>VC1541C_02</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a7053df71efcf0fefe7a86cdab7b43680" prot="public">
+          <name>VC1541_II_1987</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a3ad7a15ed194072cbf5944b383a90e5a" prot="public">
+          <name>VC1541_II_NEWTRONIC</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56afd3697b3c5ab765f16483c91f3946ff4" prot="public">
+          <name>VC1541_II_RELOC_PATCH</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a51d33a832d560723add209d9ba6c6255" prot="public">
+          <name>VC1541_II_JIFFY</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56af47674fe49750e291fbaa893d1f40930" prot="public">
+          <name>VC1541_II_JIFFY_V600</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56aee33b5776d52302b5cb1a00e93668fbe" prot="public">
+          <name>VC1541_64ER_V3</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a478b473a745dda63f3d1c0f56776049f" prot="public">
+          <name>VC1541_SPEEDDOS_PLUS</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a91757fabf92de90b2fbd48d475429d11" prot="public">
+          <name>VC1541_SPEEDDOS_27</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a14abc1dc931bf63905926adb4d3dbe18" prot="public">
+          <name>VC1541_DOLPHIN_20</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56aebe0e887e9ab11cacede9a1fa2915d5e" prot="public">
+          <name>VC1541_DOLPHIN_20_SLVDR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a9686cd60d1e5a753c750bdda7b569709" prot="public">
+          <name>VC1541_DOLPHIN_30</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56a6dfa26db568019418a995330657ed3d5" prot="public">
+          <name>VC1541_DOLPHIN_30_SLVDR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_file_types_8h_1a341068e6dec377ca71ebfa1e9e0e8b56ac81f1c79beed9cb1a0bda81c1bf62e3e" prot="public">
+          <name>ROM_IDENTIFIER_COUNT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h" line="119" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h" bodystart="120" bodyend="192"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="_file_types_8h_1a3c4ab389663925245aac5c6e93c30ef5" prot="public" static="no">
+        <type>FILETYPE</type>
+        <definition>typedef FILETYPE FileType</definition>
+        <argsstring></argsstring>
+        <name>FileType</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h" line="40" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="_file_types_8h_1a31fcfca8b60c85f214c9f8a66f8eef17" prot="public" static="no">
+        <type>TAP_VERSION</type>
+        <definition>typedef TAP_VERSION TAPVersion</definition>
+        <argsstring></argsstring>
+        <name>TAPVersion</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h" line="80" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="_file_types_8h_1ac127ec44a174e473fb0c3b611c5526b6" prot="public" static="no">
+        <type>FILE_ERROR</type>
+        <definition>typedef FILE_ERROR FileError</definition>
+        <argsstring></argsstring>
+        <name>FileError</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h" line="117" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h" bodystart="117" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="_file_types_8h_1aa88492039123a49b11c3938e6521b4bd" prot="public" static="no">
+        <type>ROM_IDENTIFIER</type>
+        <definition>typedef ROM_IDENTIFIER RomIdentifier</definition>
+        <argsstring></argsstring>
+        <name>RomIdentifier</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h" line="193" column="24" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h" bodystart="193" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="comment">//<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>VirtualC64</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Copyright<sp/>(C)<sp/>Dirk<sp/>W.<sp/>Hoffmann.<sp/>www.dirkwhoffmann.de</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="comment">//<sp/>This<sp/>FILE<sp/>is<sp/>dual-licensed.<sp/>You<sp/>are<sp/>free<sp/>to<sp/>choose<sp/>between:</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>-<sp/>The<sp/>GNU<sp/>General<sp/>Public<sp/>License<sp/>v3<sp/>(or<sp/>any<sp/>later<sp/>version)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>-<sp/>The<sp/>Mozilla<sp/>Public<sp/>License<sp/>v2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="comment">//<sp/>SPDX-License-Identifier:<sp/>GPL-3.0-or-later<sp/>OR<sp/>MPL-2.0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Aliases.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Reflection.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Enumerations</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal">enum_long(FILETYPE)</highlight></codeline>
+<codeline lineno="23"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/>FILETYPE_UNKNOWN<sp/>=<sp/>0,</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/>FILETYPE_SNAPSHOT,</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/>FILETYPE_SCRIPT,</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/>FILETYPE_CRT,</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/>FILETYPE_T64,</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/>FILETYPE_P00,</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/>FILETYPE_PRG,</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/>FILETYPE_FOLDER,</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/>FILETYPE_D64,</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/>FILETYPE_G64,</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/>FILETYPE_TAP,</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/>FILETYPE_BASIC_ROM,</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/>FILETYPE_CHAR_ROM,</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/>FILETYPE_KERNAL_ROM,</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/>FILETYPE_VC1541_ROM</highlight></codeline>
+<codeline lineno="39"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>FILETYPE<sp/>FileType;</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">FileTypeEnum<sp/>:<sp/>util::Reflection&lt;FileTypeEnum,<sp/>FileType&gt;<sp/>{</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>minVal<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>maxVal<sp/>=<sp/>FILETYPE_VC1541_ROM;</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>isValid(</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>value)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>value<sp/>&gt;=<sp/>minVal<sp/>&amp;&amp;<sp/>value<sp/>&lt;=<sp/>maxVal;<sp/>}</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*prefix()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILETYPE&quot;</highlight><highlight class="normal">;<sp/>}</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*key(FileType<sp/>value)</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(value)<sp/>{</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>FILETYPE_UNKNOWN:<sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;UNKNOWN&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>FILETYPE_SNAPSHOT:<sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SNAPSHOT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>FILETYPE_SCRIPT:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SCRIPT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>FILETYPE_CRT:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CRT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>FILETYPE_T64:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;T64&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>FILETYPE_PRG:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PRG&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>FILETYPE_FOLDER:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FOLDER&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>FILETYPE_P00:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;P00&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>FILETYPE_D64:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;D64&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>FILETYPE_G64:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;G64&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>FILETYPE_TAP:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;TAP&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>FILETYPE_BASIC_ROM:<sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;BASIC_ROM&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>FILETYPE_CHAR_ROM:<sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CHAR_ROM&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>FILETYPE_KERNAL_ROM:<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;KERNAL_ROM&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>FILETYPE_VC1541_ROM:<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;VC1541_ROM&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;???&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="72"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal">enum_long(TAP_VERSION)</highlight></codeline>
+<codeline lineno="76"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/>TAP_VERSION_ORIGINAL,</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/>TAP_VERSION_ADVANCED</highlight></codeline>
+<codeline lineno="79"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>TAP_VERSION<sp/>TAPVersion;</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">TAPVersionEnum<sp/>:<sp/>util::Reflection&lt;TAPVersionEnum,<sp/>TAPVersion&gt;<sp/>{</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>minVal<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>maxVal<sp/>=<sp/>TAP_VERSION_ADVANCED;</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>isValid(</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>value)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>value<sp/>&gt;=<sp/>minVal<sp/>&amp;&amp;<sp/>value<sp/>&lt;=<sp/>maxVal;<sp/>}</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*prefix()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;TAP_VERSION&quot;</highlight><highlight class="normal">;<sp/>}</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*key(TAPVersion<sp/>value)</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(value)<sp/>{</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>TAP_VERSION_ORIGINAL:<sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ORIGINAL&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>TAP_VERSION_ADVANCED:<sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ADVANCED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;???&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="99"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal">enum_long(FILE_ERROR)</highlight></codeline>
+<codeline lineno="103"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/>ERR_FILE_OK,</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>General</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/>ERR_FILE_NOT_FOUND,</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/>ERR_INVALID_TYPE,</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/>ERR_CANT_READ,</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/>ERR_CANT_WRITE,</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/>ERR_OUT_OF_MEMORY,</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/>ERR_UNKNOWN,</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Snapshots</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/>ERR_UNSUPPORTED_SNAPSHOT</highlight></codeline>
+<codeline lineno="116"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>FILE_ERROR<sp/>FileError;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal">enum_long(ROM_IDENTIFIER)</highlight></codeline>
+<codeline lineno="120"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/>ROM_MISSING,</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/>ROM_UNKNOWN,</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Basic<sp/>Roms</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/>BASIC_COMMODORE,</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Character<sp/>Roms</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/>CHAR_COMMODORE,</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/>CHAR_SWEDISH_C2D007,</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/>CHAR_SWEDISH,</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/>CHAR_SPANISH_C64C,</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/>CHAR_DANISH,</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/>CHAR_ATARI800,</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/>CHAR_MSX,</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/>CHAR_ZX_SPECTRUM,</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/>CHAR_AMSTRAD_CPC,</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/>CHAR_A500_TOPAZ_BROKEN,</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/>CHAR_A500_TOPAZ_V2,</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/>CHAR_A1200_TOPAZ_BROKEN,</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/>CHAR_A1200_TOPAZ_V2,</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/>CHAR_TELETEXT,</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/>CHAR_MEGA65,</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/>CHAR_PXLFONT_V23,</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Kernal<sp/>Roms</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_1ST,</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_2ST,</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_3ST,</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_DANISH_3RD,</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_SX64,</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_SX64_SCAND,</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_4064,</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_64_JIFFY,</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_SX64_JIFFY,</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_TURBO_ROM,</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_DATEL_V32,</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_EXOS_V3,</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_TURBO_TAPE,</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNEL_TURBO_250,</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_64ER_V3,</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_SPEEDDOS_PLUS,</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_SPEEDDOS_27,</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_DOLPHIN_10,</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_DOLPHIN_20_1,</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_DOLPHIN_20_1_MA,</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_DOLPHIN_20_2,</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_DOLPHIN_20_3,</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_DOLPHIN_20_SLVDR,</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_DOLPHIN_30,</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_DOLPHIN_JIFFY,</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNEL_NORLAND_30,</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNEL_SD2IEC,</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/>KERNAL_JAFFY,</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"></highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>VC1541<sp/>Roms</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/>VC1541C_01,</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/>VC1541C_02,</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/>VC1541_II_1987,</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/>VC1541_II_NEWTRONIC,</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/>VC1541_II_RELOC_PATCH,</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/>VC1541_II_JIFFY,</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/>VC1541_II_JIFFY_V600,</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/>VC1541_64ER_V3,</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/>VC1541_SPEEDDOS_PLUS,</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/>VC1541_SPEEDDOS_27,</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/>VC1541_DOLPHIN_20,</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/>VC1541_DOLPHIN_20_SLVDR,</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/>VC1541_DOLPHIN_30,</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/>VC1541_DOLPHIN_30_SLVDR,</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/>ROM_IDENTIFIER_COUNT</highlight></codeline>
+<codeline lineno="192"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>ROM_IDENTIFIER<sp/>RomIdentifier;</highlight></codeline>
+    </programlisting>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h"/>
+  </compounddef>
+</doxygen>

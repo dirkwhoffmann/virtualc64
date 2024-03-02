@@ -1,0 +1,151 @@
+\doxysection{FSBlock.\+h}
+\hypertarget{_f_s_block_8h_source}{}\label{_f_s_block_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSBlock.h@{/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSBlock.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}FSTypes.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Buffer.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}CoreObject.h"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}PETName.h"{}}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{using\ }util::Buffer;}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }FSBlock\ :\ CoreObject\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{comment}{//\ The\ device\ this\ block\ belongs\ to}}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{class\ }FileSystem\ \&device;}
+\DoxyCodeLine{00028\ \ \ \ \ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00030\ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{comment}{//\ The\ number\ of\ this\ block}}
+\DoxyCodeLine{00032\ \ \ \ \ Block\ nr;}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{comment}{//\ Outcome\ of\ the\ last\ integrity\ check\ (0\ =\ OK,\ n\ =\ n-\/th\ corrupted\ block)}}
+\DoxyCodeLine{00035\ \ \ \ \ u32\ corrupted\ =\ 0;}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//\ The\ actual\ block\ data}}
+\DoxyCodeLine{00038\ \ \ \ \ u8\ data[256];}
+\DoxyCodeLine{00039\ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{comment}{//\ Error\ code\ (imported\ from\ D64\ files,\ 1\ =\ No\ error)}}
+\DoxyCodeLine{00041\ \ \ \ \ u8\ errorCode\ =\ 1;}
+\DoxyCodeLine{00042\ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{comment}{//\ Constructing}}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00049\ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ FSBlock(FileSystem\&\ \_device,\ u32\ \_nr);}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~FSBlock()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}FSBlock"{}};\ \}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{comment}{//\ Querying\ block\ properties}}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00060\ \ \ \ \ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ type\ of\ this\ block}}
+\DoxyCodeLine{00062\ \ \ \ \ FSBlockType\ type()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00063\ \ \ \ \ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ track\ /\ sector\ link\ stored\ in\ the\ fist\ two\ bytes}}
+\DoxyCodeLine{00065\ \ \ \ \ TSLink\ tsLink()\ \{\ \textcolor{keywordflow}{return}\ TSLink\ \{\ data[0],\ data[1]\ \};\ \}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{comment}{//\ Formatting}}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00071\ \ \ \ \ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{comment}{//\ Writes\ the\ Block\ Availability\ Map\ (BAM)}}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{void}\ writeBAM(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&name\ =\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{void}\ writeBAM(PETName<16>\ \&name);}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{comment}{//\ Debugging}}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00080\ \ \ \ \ }
+\DoxyCodeLine{00081\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00082\ \ \ \ \ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{comment}{//\ Prints\ some\ debug\ information\ for\ this\ block}}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{void}\ dump()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00085\ \ \ \ \ }
+\DoxyCodeLine{00086\ \ \ \ \ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{comment}{//\ Integrity\ checking}}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00092\ \ \ \ \ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ role\ of\ a\ certain\ byte\ in\ this\ block}}
+\DoxyCodeLine{00094\ \ \ \ \ FSUsage\ itemType(u32\ \textcolor{keywordtype}{byte})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{comment}{//\ Checks\ the\ integrity\ of\ a\ certain\ byte\ in\ this\ block}}
+\DoxyCodeLine{00097\ \ \ \ \ \mbox{\hyperlink{_error_types_8h_a52f90e25735e172d279183e61d90d3e3}{ErrorCode}}\ check(u32\ \textcolor{keywordtype}{byte},\ u8\ *expected,\ \textcolor{keywordtype}{bool}\ strict)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{comment}{//\ Scans\ the\ block\ data\ and\ returns\ the\ number\ of\ errors}}
+\DoxyCodeLine{00100\ \ \ \ \ isize\ check(\textcolor{keywordtype}{bool}\ strict)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{comment}{//\ Importing\ and\ exporting}}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00106\ \ \ \ \ }
+\DoxyCodeLine{00107\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00108\ \ \ \ \ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{comment}{//\ Imports\ this\ block\ from\ a\ buffer\ (bsize\ must\ match\ the\ volume\ block\ size)}}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{void}\ importBlock(\textcolor{keyword}{const}\ u8\ *src);}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{comment}{//\ Exports\ this\ block\ to\ a\ buffer\ (bsize\ must\ match\ the\ volume\ block\ size)}}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{void}\ exportBlock(u8\ *dst);}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \};}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \textcolor{keyword}{typedef}\ FSBlock*\ BlockPtr;}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \textcolor{comment}{//}}
+\DoxyCodeLine{00121\ \textcolor{comment}{//\ Convenience\ macros\ used\ inside\ the\ check()\ methods}}
+\DoxyCodeLine{00122\ \textcolor{comment}{//}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \textcolor{keyword}{typedef}\ FSBlock*\ BlockPtr;}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \textcolor{preprocessor}{\#define\ EXPECT\_BYTE(exp)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00127\ \textcolor{preprocessor}{if\ (value\ !=\ (exp))\ \{\ *expected\ =\ (u8)(exp);\ return\ ERROR\_FS\_EXPECTED\_VAL;\ \}\ \}}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \textcolor{preprocessor}{\#define\ EXPECT\_MIN(min)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00130\ \textcolor{preprocessor}{if\ (value\ <\ (min))\ \{\ *expected\ =\ (u8)(min);\ return\ ERROR\_FS\_EXPECTED\_MIN;\ \}\ \}}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \textcolor{preprocessor}{\#define\ EXPECT\_MAX(max)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00133\ \textcolor{preprocessor}{if\ (value\ >\ (max))\ \{\ *expected\ =\ (u8)(max);\ return\ ERROR\_FS\_EXPECTED\_MAX;\ \}\ \}}}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \textcolor{preprocessor}{\#define\ EXPECT\_RANGE(min,max)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00136\ \textcolor{preprocessor}{EXPECT\_MIN(min);\ EXPECT\_MAX(max)\ \}}}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \textcolor{preprocessor}{\#define\ EXPECT\_TRACK\_REF(s)\ \(\backslash\)}}
+\DoxyCodeLine{00139\ \textcolor{preprocessor}{EXPECT\_RANGE(0,\ device.layout.numTracks()\ +\ 1)}}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \textcolor{preprocessor}{\#define\ EXPECT\_SECTOR\_REF(t)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00142\ \textcolor{preprocessor}{if\ (isize\ num\ =\ device.layout.numSectors(t))\ \(\backslash\)}}
+\DoxyCodeLine{00143\ \textcolor{preprocessor}{EXPECT\_RANGE(0,num)\ else\ if\ (strict)\ EXPECT\_MAX(254)\ \}}}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \}}
+
+\end{DoxyCode}

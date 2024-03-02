@@ -1,0 +1,289 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="structutil_1_1_array" kind="struct" language="C++" prot="public">
+    <compoundname>util::Array</compoundname>
+    <derivedcompoundref refid="structutil_1_1_sorted_array" prot="public" virt="non-virtual">util::SortedArray&lt; T, capacity &gt;</derivedcompoundref>
+    <templateparamlist>
+      <param>
+        <type>class T</type>
+      </param>
+      <param>
+        <type>isize</type>
+        <declname>capacity</declname>
+        <defname>capacity</defname>
+      </param>
+    </templateparamlist>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structutil_1_1_array_1a14725a6ae4b1667ca115a172618b02b7" prot="public" static="no" mutable="no">
+        <type>T *</type>
+        <definition>T* util::Array&lt; T, capacity &gt;::elements</definition>
+        <argsstring></argsstring>
+        <name>elements</name>
+        <qualifiedname>util::Array::elements</qualifiedname>
+        <initializer>= new T[capacity]</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" line="36" column="7" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structutil_1_1_array_1a36fd4276f046abb568dec2edb13e399b" prot="public" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize util::Array&lt; T, capacity &gt;::w</definition>
+        <argsstring></argsstring>
+        <name>w</name>
+        <qualifiedname>util::Array::w</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" line="39" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="structutil_1_1_array_1ac797618433b54c32f2969572bf31ebb3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>util::Array&lt; T, capacity &gt;::Array</definition>
+        <argsstring>()</argsstring>
+        <name>Array</name>
+        <qualifiedname>util::Array::Array</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" line="46" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" bodystart="46" bodyend="46"/>
+      </memberdef>
+      <memberdef kind="function" id="structutil_1_1_array_1a8a10f0789785b9fe7369c6ef2dea5ab5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>util::Array&lt; T, capacity &gt;::~Array</definition>
+        <argsstring>()</argsstring>
+        <name>~Array</name>
+        <qualifiedname>util::Array::~Array</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" line="47" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" bodystart="47" bodyend="47"/>
+      </memberdef>
+      <memberdef kind="function" id="structutil_1_1_array_1a568ffbc7e372c45aaaac6eb2812141a8" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::Array&lt; T, capacity &gt;::clear</definition>
+        <argsstring>()</argsstring>
+        <name>clear</name>
+        <qualifiedname>util::Array::clear</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" line="49" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" bodystart="49" bodyend="49"/>
+      </memberdef>
+      <memberdef kind="function" id="structutil_1_1_array_1a82ade02025f5642919e86538e619069d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::Array&lt; T, capacity &gt;::clear</definition>
+        <argsstring>(T t)</argsstring>
+        <name>clear</name>
+        <qualifiedname>util::Array::clear</qualifiedname>
+        <param>
+          <type>T</type>
+          <declname>t</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" line="50" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" bodystart="50" bodyend="50"/>
+      </memberdef>
+      <memberdef kind="function" id="structutil_1_1_array_1ac735dd3ee3bdae28f01a9c157cdca923" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::Array&lt; T, capacity &gt;::align</definition>
+        <argsstring>(isize offset)</argsstring>
+        <name>align</name>
+        <qualifiedname>util::Array::align</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>offset</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" line="51" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" bodystart="51" bodyend="51"/>
+      </memberdef>
+      <memberdef kind="function" id="structutil_1_1_array_1af98ad0e9b7e36c82e17b9117dee7e05c" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize util::Array&lt; T, capacity &gt;::cap</definition>
+        <argsstring>() const</argsstring>
+        <name>cap</name>
+        <qualifiedname>util::Array::cap</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" line="58" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" bodystart="58" bodyend="58"/>
+      </memberdef>
+      <memberdef kind="function" id="structutil_1_1_array_1a9871a0566aabdb5243b05f895ec1cafc" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize util::Array&lt; T, capacity &gt;::count</definition>
+        <argsstring>() const</argsstring>
+        <name>count</name>
+        <qualifiedname>util::Array::count</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" line="59" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" bodystart="59" bodyend="59"/>
+      </memberdef>
+      <memberdef kind="function" id="structutil_1_1_array_1a35468151c13830e4c4bd46f57b346a31" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize util::Array&lt; T, capacity &gt;::free</definition>
+        <argsstring>() const</argsstring>
+        <name>free</name>
+        <qualifiedname>util::Array::free</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" line="60" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" bodystart="60" bodyend="60"/>
+      </memberdef>
+      <memberdef kind="function" id="structutil_1_1_array_1acceac1478465c56af0d3faee5e3c295d" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>double</type>
+        <definition>double util::Array&lt; T, capacity &gt;::fillLevel</definition>
+        <argsstring>() const</argsstring>
+        <name>fillLevel</name>
+        <qualifiedname>util::Array::fillLevel</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" line="61" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" bodystart="61" bodyend="61"/>
+      </memberdef>
+      <memberdef kind="function" id="structutil_1_1_array_1ad2182d975ce4f2e09d6d7441c56b9ae6" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::Array&lt; T, capacity &gt;::isEmpty</definition>
+        <argsstring>() const</argsstring>
+        <name>isEmpty</name>
+        <qualifiedname>util::Array::isEmpty</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" line="62" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" bodystart="62" bodyend="62"/>
+      </memberdef>
+      <memberdef kind="function" id="structutil_1_1_array_1a08ff9de0f3fb96af18f3ea915c2be4fe" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::Array&lt; T, capacity &gt;::isFull</definition>
+        <argsstring>() const</argsstring>
+        <name>isFull</name>
+        <qualifiedname>util::Array::isFull</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" line="63" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" bodystart="63" bodyend="63"/>
+      </memberdef>
+      <memberdef kind="function" id="structutil_1_1_array_1a1f03e346f2010a2b483f59eedac7a2df" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>T</type>
+        <definition>T util::Array&lt; T, capacity &gt;::operator[]</definition>
+        <argsstring>(isize i) const</argsstring>
+        <name>operator[]</name>
+        <qualifiedname>util::Array::operator[]</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>i</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" line="70" column="7" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" bodystart="70" bodyend="74"/>
+      </memberdef>
+      <memberdef kind="function" id="structutil_1_1_array_1a7b4ddcff236c1c87e910bb691a477bc4" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>T &amp;</type>
+        <definition>T &amp; util::Array&lt; T, capacity &gt;::operator[]</definition>
+        <argsstring>(isize i)</argsstring>
+        <name>operator[]</name>
+        <qualifiedname>util::Array::operator[]</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>i</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" line="76" column="7" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" bodystart="76" bodyend="80"/>
+      </memberdef>
+      <memberdef kind="function" id="structutil_1_1_array_1a847e2a29ef4d0eae51c80d0c63a96983" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::Array&lt; T, capacity &gt;::write</definition>
+        <argsstring>(T element)</argsstring>
+        <name>write</name>
+        <qualifiedname>util::Array::write</qualifiedname>
+        <param>
+          <type>T</type>
+          <declname>element</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" line="82" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" bodystart="82" bodyend="86"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" line="33" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/RingBuffer.h" bodystart="34" bodyend="87"/>
+    <listofallmembers>
+      <member refid="structutil_1_1_array_1ac735dd3ee3bdae28f01a9c157cdca923" prot="public" virt="non-virtual"><scope>util::Array</scope><name>align</name></member>
+      <member refid="structutil_1_1_array_1ac797618433b54c32f2969572bf31ebb3" prot="public" virt="non-virtual"><scope>util::Array</scope><name>Array</name></member>
+      <member refid="structutil_1_1_array_1af98ad0e9b7e36c82e17b9117dee7e05c" prot="public" virt="non-virtual"><scope>util::Array</scope><name>cap</name></member>
+      <member refid="structutil_1_1_array_1a568ffbc7e372c45aaaac6eb2812141a8" prot="public" virt="non-virtual"><scope>util::Array</scope><name>clear</name></member>
+      <member refid="structutil_1_1_array_1a82ade02025f5642919e86538e619069d" prot="public" virt="non-virtual"><scope>util::Array</scope><name>clear</name></member>
+      <member refid="structutil_1_1_array_1a9871a0566aabdb5243b05f895ec1cafc" prot="public" virt="non-virtual"><scope>util::Array</scope><name>count</name></member>
+      <member refid="structutil_1_1_array_1a14725a6ae4b1667ca115a172618b02b7" prot="public" virt="non-virtual"><scope>util::Array</scope><name>elements</name></member>
+      <member refid="structutil_1_1_array_1acceac1478465c56af0d3faee5e3c295d" prot="public" virt="non-virtual"><scope>util::Array</scope><name>fillLevel</name></member>
+      <member refid="structutil_1_1_array_1a35468151c13830e4c4bd46f57b346a31" prot="public" virt="non-virtual"><scope>util::Array</scope><name>free</name></member>
+      <member refid="structutil_1_1_array_1ad2182d975ce4f2e09d6d7441c56b9ae6" prot="public" virt="non-virtual"><scope>util::Array</scope><name>isEmpty</name></member>
+      <member refid="structutil_1_1_array_1a08ff9de0f3fb96af18f3ea915c2be4fe" prot="public" virt="non-virtual"><scope>util::Array</scope><name>isFull</name></member>
+      <member refid="structutil_1_1_array_1a1f03e346f2010a2b483f59eedac7a2df" prot="public" virt="non-virtual"><scope>util::Array</scope><name>operator[]</name></member>
+      <member refid="structutil_1_1_array_1a7b4ddcff236c1c87e910bb691a477bc4" prot="public" virt="non-virtual"><scope>util::Array</scope><name>operator[]</name></member>
+      <member refid="structutil_1_1_array_1a36fd4276f046abb568dec2edb13e399b" prot="public" virt="non-virtual"><scope>util::Array</scope><name>w</name></member>
+      <member refid="structutil_1_1_array_1a847e2a29ef4d0eae51c80d0c63a96983" prot="public" virt="non-virtual"><scope>util::Array</scope><name>write</name></member>
+      <member refid="structutil_1_1_array_1a8a10f0789785b9fe7369c6ef2dea5ab5" prot="public" virt="non-virtual"><scope>util::Array</scope><name>~Array</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

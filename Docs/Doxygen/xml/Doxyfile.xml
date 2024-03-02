@@ -77,8 +77,8 @@
   <option  id='EXTRACT_LOCAL_METHODS' default='yes' type='bool'><value>NO</value></option>
   <option  id='EXTRACT_ANON_NSPACES' default='yes' type='bool'><value>NO</value></option>
   <option  id='RESOLVE_UNNAMED_PARAMS' default='yes' type='bool'><value>YES</value></option>
-  <option  id='HIDE_UNDOC_MEMBERS' default='yes' type='bool'><value>NO</value></option>
-  <option  id='HIDE_UNDOC_CLASSES' default='yes' type='bool'><value>NO</value></option>
+  <option  id='HIDE_UNDOC_MEMBERS' default='no' type='bool'><value>YES</value></option>
+  <option  id='HIDE_UNDOC_CLASSES' default='no' type='bool'><value>YES</value></option>
   <option  id='HIDE_FRIEND_COMPOUNDS' default='yes' type='bool'><value>NO</value></option>
   <option  id='HIDE_IN_BODY_DOCS' default='yes' type='bool'><value>NO</value></option>
   <option  id='INTERNAL_DOCS' default='yes' type='bool'><value>NO</value></option>
@@ -123,15 +123,7 @@
   <option  id='WARN_LOGFILE' default='yes' type='string'><value><![CDATA[]]></value></option>
   <option  id='INPUT' default='no' type='stringlist'>
     <value><![CDATA[readme.md]]></value>
-    <value><![CDATA[../../Emulator/VirtualC64.h]]></value>
-    <value><![CDATA[../../Emulator/Base/CmdQueueTypes.h]]></value>
-    <value><![CDATA[../../Emulator/Base/CmdQueue.h]]></value>
-    <value><![CDATA[../../Emulator/Base/ErrorTypes.h]]></value>
-    <value><![CDATA[../../Emulator/Base/Error.h]]></value>
-    <value><![CDATA[../../Emulator/Base/OptionTypes.h]]></value>
-    <value><![CDATA[../../Emulator/Base/Option.h]]></value>
-    <value><![CDATA[../../Emulator/Base/ThreadTypes.h]]></value>
-    <value><![CDATA[../../Emulator/Base/Thread.h]]></value>
+    <value><![CDATA[../../Emulator]]></value>
   </option>
   <option  id='INPUT_ENCODING' default='yes' type='string'><value><![CDATA[UTF-8]]></value></option>
   <option  id='INPUT_FILE_ENCODING' default='yes' type='stringlist'>
@@ -189,7 +181,7 @@
     <value><![CDATA[*.qsf]]></value>
     <value><![CDATA[*.ice]]></value>
   </option>
-  <option  id='RECURSIVE' default='yes' type='bool'><value>NO</value></option>
+  <option  id='RECURSIVE' default='no' type='bool'><value>YES</value></option>
   <option  id='EXCLUDE' default='yes' type='stringlist'>
   </option>
   <option  id='EXCLUDE_SYMLINKS' default='yes' type='bool'><value>NO</value></option>

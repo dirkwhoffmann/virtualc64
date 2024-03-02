@@ -134,9 +134,6 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ga76f5773e557fe72d1b4afa723e530566" id="r_ga76f5773e557fe72d1b4afa723e530566"><td class="memItemLeft" align="right" valign="top"><a id="ga76f5773e557fe72d1b4afa723e530566" name="ga76f5773e557fe72d1b4afa723e530566"></a>
 typedef <a class="el" href="#ga63ebdc688313e444b486514798e48df3">CMD_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>CmdType</b></td></tr>
 <tr class="separator:ga76f5773e557fe72d1b4afa723e530566"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga750bfc12acff352beabb828ba5629a4e" id="r_ga750bfc12acff352beabb828ba5629a4e"><td class="memItemLeft" align="right" valign="top"><a id="ga750bfc12acff352beabb828ba5629a4e" name="ga750bfc12acff352beabb828ba5629a4e"></a>
-typedef <a class="el" href="#ga52f90e25735e172d279183e61d90d3e3">ERROR_CODE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ErrorCode</b></td></tr>
-<tr class="separator:ga750bfc12acff352beabb828ba5629a4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafe5175eacf919925ad9051691f67fefc" id="r_gafe5175eacf919925ad9051691f67fefc"><td class="memItemLeft" align="right" valign="top"><a id="gafe5175eacf919925ad9051691f67fefc" name="gafe5175eacf919925ad9051691f67fefc"></a>
 typedef <a class="el" href="#ga273e435dabd576e6dcff3f18024d1fa8">OPT</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Option</b></td></tr>
 <tr class="separator:gafe5175eacf919925ad9051691f67fefc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -184,72 +181,6 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga63ebdc688313e444b486514798e48df3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emulator command.  <a href="#ga63ebdc688313e444b486514798e48df3">More...</a><br /></td></tr>
 <tr class="separator:ga63ebdc688313e444b486514798e48df3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga52f90e25735e172d279183e61d90d3e3" id="r_ga52f90e25735e172d279183e61d90d3e3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga52f90e25735e172d279183e61d90d3e3">ERROR_CODE</a> : long { <br />
-&#160;&#160;<a class="el" href="#gga52f90e25735e172d279183e61d90d3e3aadeb5032c03491611646c1c64f7c0e0c">ERROR_OK</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a2c8108ceb9a85cecbbe3af50dbc1cf8c">ERROR_UNKNOWN</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3ad15dfe854b0141a245bd0983c5421305">ERROR_POWERED_OFF</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a237d77aa10791ffeba791b0cc3c44019">ERROR_POWERED_ON</a>
-, <br />
-&#160;&#160;<a class="el" href="#gga52f90e25735e172d279183e61d90d3e3adc7fcc7400d3490d5bd58a225c210434">ERROR_RUNNING</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a29fe5781cb813c4fc13f9ed91b9b2378">ERROR_OPT_UNSUPPORTED</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3ac8d7329a9083105d05aa8f5e0877a0cc">ERROR_OPT_INVARG</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a9c3336d11c3f11b5b0c049c969481e73">ERROR_OPT_LOCKED</a>
-, <br />
-&#160;&#160;<a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a31846fcd73423f08cca08d9acf9b3f8e">ERROR_INVALID_KEY</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a9294dc250d7e5f76ff3ec77e33431665">ERROR_SYNTAX</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3ac0a554045048d2fb61387cf735676f69">ERROR_OUT_OF_MEMORY</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a4eeae91e8fc0b68d8003bf6f02eef060">ERROR_DIR_NOT_FOUND</a>
-, <br />
-&#160;&#160;<a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a6292b68f782fe0bdaac9afeed2fa1954">ERROR_DIR_ACCESS_DENIED</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a006dc4629b952fadd2ac75b912f30314">ERROR_DIR_CANT_CREATE</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3ad3d4451b8a1e1c3c6f67ea8666e57bbd">ERROR_DIR_NOT_EMPTY</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a25792ced3439733c593173a3b7420ba6">ERROR_FILE_NOT_FOUND</a>
-, <br />
-&#160;&#160;<a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a9c174c9b266e3a70ec4895d4c61ac047">ERROR_FILE_EXISTS</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a84d2f270ae4b33d6046a7583ef1d2886">ERROR_FILE_IS_DIRECTORY</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a7eaa57d4fd426bde506577d445b92725">ERROR_FILE_ACCESS_DENIED</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a81d31f6c275ccf8cffb2cf8b4bea2195">ERROR_FILE_TYPE_MISMATCH</a>
-, <br />
-&#160;&#160;<a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a033ddbe542fecd694d4fe952255c795a">ERROR_FILE_TYPE_UNSUPPORTED</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a5221d42f76a3c65da8ee547f29948fe6">ERROR_FILE_CANT_READ</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a918dc458ec15026ac44cb7bc11056471">ERROR_FILE_CANT_WRITE</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a4827796d2732c98f7a26deb6e5532b81">ERROR_FILE_CANT_CREATE</a>
-, <br />
-&#160;&#160;<a class="el" href="#gga52f90e25735e172d279183e61d90d3e3ad1d9f35c32fbca3b2619b93a478792eb">ERROR_ROM_BASIC_MISSING</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3ae26fbb8e09bab208de6df1a37ea570ed">ERROR_ROM_CHAR_MISSING</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a0bcbf029b5c317a2ebedbea62441659b">ERROR_ROM_KERNAL_MISSING</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a89efe101fe5cb267167a2626a9946576">ERROR_ROM_DRIVE_MISSING</a>
-, <br />
-&#160;&#160;<a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a8bc4ac22f5e6ca12d31275a5c6ed3915">ERROR_ROM_MEGA65_MISMATCH</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a237f74aa6764f4231056109509846136">ERROR_REC_LAUNCH</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a6c137682ff8f4fc55c4b6b834fac6940">ERROR_SNAP_TOO_OLD</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3ada6d363a1ac0c77e500413064fe0cbf1">ERROR_SNAP_TOO_NEW</a>
-, <br />
-&#160;&#160;<a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a793af0086efdb0e923a8e6f85e12914e">ERROR_SNAP_IS_BETA</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a9aa1be001e158b5bad6afb7ed6125f65">ERROR_SNAP_CORRUPTED</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a1ab5f70bbe545161fc991beaffd764d4">ERROR_DRV_UNCONNECTED</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a57d9322f178b3ed152d45bcaec09da13">ERROR_CRT_UNKNOWN</a>
-, <br />
-&#160;&#160;<a class="el" href="#gga52f90e25735e172d279183e61d90d3e3acc1ee80c155471d2bbc5e4e716dfc0b4">ERROR_CRT_UNSUPPORTED</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a053564238e0140f0986c00f3d6a8291a">ERROR_CRT_TOO_MANY_PACKETS</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a58e818ec9b611fa386aa95f44784c258">ERROR_CRT_CORRUPTED_PACKET</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a66b5acdcfa247b85d366227990f385cd">ERROR_FS_UNSUPPORTED</a>
-, <br />
-&#160;&#160;<a class="el" href="#gga52f90e25735e172d279183e61d90d3e3ad06fe3246c0338eefc4376d41ab74158">ERROR_FS_WRONG_CAPACITY</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a34bfbca57d8a9b1a49e21b4b952e170a">ERROR_FS_CORRUPTED</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3ad6503a83766b1e4719e961ccd89107a6">ERROR_FS_HAS_NO_FILES</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a9a6252e84bf6d86addba81d11b11866a">ERROR_FS_HAS_CYCLES</a>
-, <br />
-&#160;&#160;<a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a0359654c53b1d2cefc266c98a8decf2b">ERROR_FS_CANT_IMPORT</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a47498d5f4e2573f44e2297475fecac94">ERROR_FS_EXPECTED_VAL</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a689846c3d646a45a1438a51d8abcc564">ERROR_FS_EXPECTED_MIN</a>
-, <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a85910c60d08d20a7c047d3bed7b9f79d">ERROR_FS_EXPECTED_MAX</a>
-, <br />
-&#160;&#160;<b>ERROR_COUNT</b>
-<br />
- }</td></tr>
-<tr class="memdesc:ga52f90e25735e172d279183e61d90d3e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error condition.  <a href="#ga52f90e25735e172d279183e61d90d3e3">More...</a><br /></td></tr>
-<tr class="separator:ga52f90e25735e172d279183e61d90d3e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga273e435dabd576e6dcff3f18024d1fa8" id="r_ga273e435dabd576e6dcff3f18024d1fa8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga273e435dabd576e6dcff3f18024d1fa8">OPT</a> : long { <br />
 &#160;&#160;<a class="el" href="#gga273e435dabd576e6dcff3f18024d1fa8a0338cafc72cca70ef76a4ed5afe0287b">OPT_HOST_REFRESH_RATE</a>
 , <a class="el" href="#gga273e435dabd576e6dcff3f18024d1fa8a1c0c5c8eea9cd78c79bd0a810e49278a">OPT_HOST_SAMPLE_RATE</a>
@@ -461,120 +392,6 @@ Enumerations</h2></td></tr>
 <tr><td class="fieldname"><a id="gga44fb3bfc9b3abc142d662a5ffb4e9cbca9acde879501201b19fcb37cdd08eff6d" name="gga44fb3bfc9b3abc142d662a5ffb4e9cbca9acde879501201b19fcb37cdd08eff6d"></a>STATE_SUSPENDED&#160;</td><td class="fielddoc"><p>The emulator is shortly paused to perform an internal state change. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga44fb3bfc9b3abc142d662a5ffb4e9cbca99bff5383ce10ea512c8443243adf5b3" name="gga44fb3bfc9b3abc142d662a5ffb4e9cbca99bff5383ce10ea512c8443243adf5b3"></a>STATE_HALTED&#160;</td><td class="fielddoc"><p>The emulator has been shut down. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="ga52f90e25735e172d279183e61d90d3e3" name="ga52f90e25735e172d279183e61d90d3e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga52f90e25735e172d279183e61d90d3e3">&#9670;&#160;</a></span>ERROR_CODE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="#ga52f90e25735e172d279183e61d90d3e3">ERROR_CODE</a> : long</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Error condition. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3aadeb5032c03491611646c1c64f7c0e0c" name="gga52f90e25735e172d279183e61d90d3e3aadeb5032c03491611646c1c64f7c0e0c"></a>ERROR_OK&#160;</td><td class="fielddoc"><p>No error. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a2c8108ceb9a85cecbbe3af50dbc1cf8c" name="gga52f90e25735e172d279183e61d90d3e3a2c8108ceb9a85cecbbe3af50dbc1cf8c"></a>ERROR_UNKNOWN&#160;</td><td class="fielddoc"><p>Unclassified error condition. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3ad15dfe854b0141a245bd0983c5421305" name="gga52f90e25735e172d279183e61d90d3e3ad15dfe854b0141a245bd0983c5421305"></a>ERROR_POWERED_OFF&#160;</td><td class="fielddoc"><p>The emulator is powered off. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a237d77aa10791ffeba791b0cc3c44019" name="gga52f90e25735e172d279183e61d90d3e3a237d77aa10791ffeba791b0cc3c44019"></a>ERROR_POWERED_ON&#160;</td><td class="fielddoc"><p>The emulator is powered on. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3adc7fcc7400d3490d5bd58a225c210434" name="gga52f90e25735e172d279183e61d90d3e3adc7fcc7400d3490d5bd58a225c210434"></a>ERROR_RUNNING&#160;</td><td class="fielddoc"><p>The emulator is running. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a29fe5781cb813c4fc13f9ed91b9b2378" name="gga52f90e25735e172d279183e61d90d3e3a29fe5781cb813c4fc13f9ed91b9b2378"></a>ERROR_OPT_UNSUPPORTED&#160;</td><td class="fielddoc"><p>Unsupported configuration option. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3ac8d7329a9083105d05aa8f5e0877a0cc" name="gga52f90e25735e172d279183e61d90d3e3ac8d7329a9083105d05aa8f5e0877a0cc"></a>ERROR_OPT_INVARG&#160;</td><td class="fielddoc"><p>Invalid argument. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a9c3336d11c3f11b5b0c049c969481e73" name="gga52f90e25735e172d279183e61d90d3e3a9c3336d11c3f11b5b0c049c969481e73"></a>ERROR_OPT_LOCKED&#160;</td><td class="fielddoc"><p>The option is temporarily locked. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a31846fcd73423f08cca08d9acf9b3f8e" name="gga52f90e25735e172d279183e61d90d3e3a31846fcd73423f08cca08d9acf9b3f8e"></a>ERROR_INVALID_KEY&#160;</td><td class="fielddoc"><p>Invalid property key. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a9294dc250d7e5f76ff3ec77e33431665" name="gga52f90e25735e172d279183e61d90d3e3a9294dc250d7e5f76ff3ec77e33431665"></a>ERROR_SYNTAX&#160;</td><td class="fielddoc"><p>Syntax error. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3ac0a554045048d2fb61387cf735676f69" name="gga52f90e25735e172d279183e61d90d3e3ac0a554045048d2fb61387cf735676f69"></a>ERROR_OUT_OF_MEMORY&#160;</td><td class="fielddoc"><p>Out of memory. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a4eeae91e8fc0b68d8003bf6f02eef060" name="gga52f90e25735e172d279183e61d90d3e3a4eeae91e8fc0b68d8003bf6f02eef060"></a>ERROR_DIR_NOT_FOUND&#160;</td><td class="fielddoc"><p>Directory does not exist. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a6292b68f782fe0bdaac9afeed2fa1954" name="gga52f90e25735e172d279183e61d90d3e3a6292b68f782fe0bdaac9afeed2fa1954"></a>ERROR_DIR_ACCESS_DENIED&#160;</td><td class="fielddoc"><p>File access denied. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a006dc4629b952fadd2ac75b912f30314" name="gga52f90e25735e172d279183e61d90d3e3a006dc4629b952fadd2ac75b912f30314"></a>ERROR_DIR_CANT_CREATE&#160;</td><td class="fielddoc"><p>Unable to create a directory. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3ad3d4451b8a1e1c3c6f67ea8666e57bbd" name="gga52f90e25735e172d279183e61d90d3e3ad3d4451b8a1e1c3c6f67ea8666e57bbd"></a>ERROR_DIR_NOT_EMPTY&#160;</td><td class="fielddoc"><p>Directory is not empty. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a25792ced3439733c593173a3b7420ba6" name="gga52f90e25735e172d279183e61d90d3e3a25792ced3439733c593173a3b7420ba6"></a>ERROR_FILE_NOT_FOUND&#160;</td><td class="fielddoc"><p>File not found error. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a9c174c9b266e3a70ec4895d4c61ac047" name="gga52f90e25735e172d279183e61d90d3e3a9c174c9b266e3a70ec4895d4c61ac047"></a>ERROR_FILE_EXISTS&#160;</td><td class="fielddoc"><p>File already exists. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a84d2f270ae4b33d6046a7583ef1d2886" name="gga52f90e25735e172d279183e61d90d3e3a84d2f270ae4b33d6046a7583ef1d2886"></a>ERROR_FILE_IS_DIRECTORY&#160;</td><td class="fielddoc"><p>The file is a directory. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a7eaa57d4fd426bde506577d445b92725" name="gga52f90e25735e172d279183e61d90d3e3a7eaa57d4fd426bde506577d445b92725"></a>ERROR_FILE_ACCESS_DENIED&#160;</td><td class="fielddoc"><p>File access denied. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a81d31f6c275ccf8cffb2cf8b4bea2195" name="gga52f90e25735e172d279183e61d90d3e3a81d31f6c275ccf8cffb2cf8b4bea2195"></a>ERROR_FILE_TYPE_MISMATCH&#160;</td><td class="fielddoc"><p>File type mismatch. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a033ddbe542fecd694d4fe952255c795a" name="gga52f90e25735e172d279183e61d90d3e3a033ddbe542fecd694d4fe952255c795a"></a>ERROR_FILE_TYPE_UNSUPPORTED&#160;</td><td class="fielddoc"><p>Unsupported file type. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a5221d42f76a3c65da8ee547f29948fe6" name="gga52f90e25735e172d279183e61d90d3e3a5221d42f76a3c65da8ee547f29948fe6"></a>ERROR_FILE_CANT_READ&#160;</td><td class="fielddoc"><p>Can't read from file. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a918dc458ec15026ac44cb7bc11056471" name="gga52f90e25735e172d279183e61d90d3e3a918dc458ec15026ac44cb7bc11056471"></a>ERROR_FILE_CANT_WRITE&#160;</td><td class="fielddoc"><p>Can't write to file. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a4827796d2732c98f7a26deb6e5532b81" name="gga52f90e25735e172d279183e61d90d3e3a4827796d2732c98f7a26deb6e5532b81"></a>ERROR_FILE_CANT_CREATE&#160;</td><td class="fielddoc"><p>Can't create file. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3ad1d9f35c32fbca3b2619b93a478792eb" name="gga52f90e25735e172d279183e61d90d3e3ad1d9f35c32fbca3b2619b93a478792eb"></a>ERROR_ROM_BASIC_MISSING&#160;</td><td class="fielddoc"><p>No Basic Rom installed. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3ae26fbb8e09bab208de6df1a37ea570ed" name="gga52f90e25735e172d279183e61d90d3e3ae26fbb8e09bab208de6df1a37ea570ed"></a>ERROR_ROM_CHAR_MISSING&#160;</td><td class="fielddoc"><p>No Character Rom installed. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a0bcbf029b5c317a2ebedbea62441659b" name="gga52f90e25735e172d279183e61d90d3e3a0bcbf029b5c317a2ebedbea62441659b"></a>ERROR_ROM_KERNAL_MISSING&#160;</td><td class="fielddoc"><p>No Kernel Rom installed. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a89efe101fe5cb267167a2626a9946576" name="gga52f90e25735e172d279183e61d90d3e3a89efe101fe5cb267167a2626a9946576"></a>ERROR_ROM_DRIVE_MISSING&#160;</td><td class="fielddoc"><p>No Floppy Drive Rom installed. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a8bc4ac22f5e6ca12d31275a5c6ed3915" name="gga52f90e25735e172d279183e61d90d3e3a8bc4ac22f5e6ca12d31275a5c6ed3915"></a>ERROR_ROM_MEGA65_MISMATCH&#160;</td><td class="fielddoc"><p>MEGA65 Roms have different version numbers. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a237f74aa6764f4231056109509846136" name="gga52f90e25735e172d279183e61d90d3e3a237f74aa6764f4231056109509846136"></a>ERROR_REC_LAUNCH&#160;</td><td class="fielddoc"><p>Can't launch the screen recorder. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a6c137682ff8f4fc55c4b6b834fac6940" name="gga52f90e25735e172d279183e61d90d3e3a6c137682ff8f4fc55c4b6b834fac6940"></a>ERROR_SNAP_TOO_OLD&#160;</td><td class="fielddoc"><p>Snapshot was created with an older version. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3ada6d363a1ac0c77e500413064fe0cbf1" name="gga52f90e25735e172d279183e61d90d3e3ada6d363a1ac0c77e500413064fe0cbf1"></a>ERROR_SNAP_TOO_NEW&#160;</td><td class="fielddoc"><p>Snapshot was created with a later version. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a793af0086efdb0e923a8e6f85e12914e" name="gga52f90e25735e172d279183e61d90d3e3a793af0086efdb0e923a8e6f85e12914e"></a>ERROR_SNAP_IS_BETA&#160;</td><td class="fielddoc"><p>Snapshot was created with a beta release. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a9aa1be001e158b5bad6afb7ed6125f65" name="gga52f90e25735e172d279183e61d90d3e3a9aa1be001e158b5bad6afb7ed6125f65"></a>ERROR_SNAP_CORRUPTED&#160;</td><td class="fielddoc"><p>Snapshot data is corrupted. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a1ab5f70bbe545161fc991beaffd764d4" name="gga52f90e25735e172d279183e61d90d3e3a1ab5f70bbe545161fc991beaffd764d4"></a>ERROR_DRV_UNCONNECTED&#160;</td><td class="fielddoc"><p>Floppy drive is not connected. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a57d9322f178b3ed152d45bcaec09da13" name="gga52f90e25735e172d279183e61d90d3e3a57d9322f178b3ed152d45bcaec09da13"></a>ERROR_CRT_UNKNOWN&#160;</td><td class="fielddoc"><p>Unknown cartridge type. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3acc1ee80c155471d2bbc5e4e716dfc0b4" name="gga52f90e25735e172d279183e61d90d3e3acc1ee80c155471d2bbc5e4e716dfc0b4"></a>ERROR_CRT_UNSUPPORTED&#160;</td><td class="fielddoc"><p>Unsupported cartridge type. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a053564238e0140f0986c00f3d6a8291a" name="gga52f90e25735e172d279183e61d90d3e3a053564238e0140f0986c00f3d6a8291a"></a>ERROR_CRT_TOO_MANY_PACKETS&#160;</td><td class="fielddoc"><p>CRT file contains too many Rom packets. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a58e818ec9b611fa386aa95f44784c258" name="gga52f90e25735e172d279183e61d90d3e3a58e818ec9b611fa386aa95f44784c258"></a>ERROR_CRT_CORRUPTED_PACKET&#160;</td><td class="fielddoc"><p>CRT file contains a corrupted Rom package. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a66b5acdcfa247b85d366227990f385cd" name="gga52f90e25735e172d279183e61d90d3e3a66b5acdcfa247b85d366227990f385cd"></a>ERROR_FS_UNSUPPORTED&#160;</td><td class="fielddoc"><p>Unsupported file system. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3ad06fe3246c0338eefc4376d41ab74158" name="gga52f90e25735e172d279183e61d90d3e3ad06fe3246c0338eefc4376d41ab74158"></a>ERROR_FS_WRONG_CAPACITY&#160;</td><td class="fielddoc"><p>Wrong file system capacity. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a34bfbca57d8a9b1a49e21b4b952e170a" name="gga52f90e25735e172d279183e61d90d3e3a34bfbca57d8a9b1a49e21b4b952e170a"></a>ERROR_FS_CORRUPTED&#160;</td><td class="fielddoc"><p>File system is corrupted. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3ad6503a83766b1e4719e961ccd89107a6" name="gga52f90e25735e172d279183e61d90d3e3ad6503a83766b1e4719e961ccd89107a6"></a>ERROR_FS_HAS_NO_FILES&#160;</td><td class="fielddoc"><p>File system is empty. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a9a6252e84bf6d86addba81d11b11866a" name="gga52f90e25735e172d279183e61d90d3e3a9a6252e84bf6d86addba81d11b11866a"></a>ERROR_FS_HAS_CYCLES&#160;</td><td class="fielddoc"><p>File system has cyclic links. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a0359654c53b1d2cefc266c98a8decf2b" name="gga52f90e25735e172d279183e61d90d3e3a0359654c53b1d2cefc266c98a8decf2b"></a>ERROR_FS_CANT_IMPORT&#160;</td><td class="fielddoc"><p>Failed to import a file system. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a47498d5f4e2573f44e2297475fecac94" name="gga52f90e25735e172d279183e61d90d3e3a47498d5f4e2573f44e2297475fecac94"></a>ERROR_FS_EXPECTED_VAL&#160;</td><td class="fielddoc"><p>Unexpected value found. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a689846c3d646a45a1438a51d8abcc564" name="gga52f90e25735e172d279183e61d90d3e3a689846c3d646a45a1438a51d8abcc564"></a>ERROR_FS_EXPECTED_MIN&#160;</td><td class="fielddoc"><p>Value is too small. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga52f90e25735e172d279183e61d90d3e3a85910c60d08d20a7c047d3bed7b9f79d" name="gga52f90e25735e172d279183e61d90d3e3a85910c60d08d20a7c047d3bed7b9f79d"></a>ERROR_FS_EXPECTED_MAX&#160;</td><td class="fielddoc"><p>Value is too big. </p>
 </td></tr>
 </table>
 

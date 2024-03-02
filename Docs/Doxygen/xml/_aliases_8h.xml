@@ -1,0 +1,1596 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="_aliases_8h" kind="file" language="C++">
+    <compoundname>Aliases.h</compoundname>
+    <includes refid="_macros_8h" local="yes">Macros.h</includes>
+    <includedby refid="_cmd_queue_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h</includedby>
+    <includedby refid="_colors_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h</includedby>
+    <includedby refid="_constants_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h</includedby>
+    <includedby refid="_core_component_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/CoreComponentTypes.h</includedby>
+    <includedby refid="_error_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/ErrorTypes.h</includedby>
+    <includedby refid="_msg_queue_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h</includedby>
+    <includedby refid="_option_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/OptionTypes.h</includedby>
+    <includedby refid="_thread_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/ThreadTypes.h</includedby>
+    <includedby refid="_cartridge_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h</includedby>
+    <includedby refid="_c64_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h</includedby>
+    <includedby refid="_c_i_a_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h</includedby>
+    <includedby refid="_t_o_d_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/TODTypes.h</includedby>
+    <includedby refid="_c_p_u_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/CPUTypes.h</includedby>
+    <includedby refid="_emulator_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h</includedby>
+    <includedby refid="_control_port_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ControlPortTypes.h</includedby>
+    <includedby refid="_expansion_port_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ExpansionPortTypes.h</includedby>
+    <includedby refid="_power_supply_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/PowerSupplyTypes.h</includedby>
+    <includedby refid="_memory_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h</includedby>
+    <includedby refid="_s_i_d_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h</includedby>
+    <includedby refid="_volume_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h</includedby>
+    <includedby refid="_bus_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/BusTypes.h</includedby>
+    <includedby refid="_dma_debugger_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h</includedby>
+    <includedby refid="_v_i_c_i_i_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h</includedby>
+    <includedby refid="_f_s_dir_entry_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h</includedby>
+    <includedby refid="_f_s_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSTypes.h</includedby>
+    <includedby refid="_file_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h</includedby>
+    <includedby refid="_command_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Command.h</includedby>
+    <includedby refid="_retro_shell_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShellTypes.h</includedby>
+    <includedby refid="_datasette_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h</includedby>
+    <includedby refid="_disk_analyzer_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzerTypes.h</includedby>
+    <includedby refid="_disk_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h</includedby>
+    <includedby refid="_drive_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h</includedby>
+    <includedby refid="_par_cable_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/ParCableTypes.h</includedby>
+    <includedby refid="_joystick_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/JoystickTypes.h</includedby>
+    <includedby refid="_c64_key_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h</includedby>
+    <includedby refid="_mouse_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/MouseTypes.h</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h</label>
+        <link refid="_aliases_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>Macros.h</label>
+        <link refid="_macros_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>Types.h</label>
+        <link refid="_types_8h_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>stdbool.h</label>
+      </node>
+      <node id="5">
+        <label>stdint.h</label>
+      </node>
+      <node id="4">
+        <label>sys/types.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="1">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h</label>
+        <link refid="_aliases_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="110" relation="include">
+        </childnode>
+        <childnode refid="111" relation="include">
+        </childnode>
+        <childnode refid="113" relation="include">
+        </childnode>
+        <childnode refid="115" relation="include">
+        </childnode>
+        <childnode refid="116" relation="include">
+        </childnode>
+        <childnode refid="117" relation="include">
+        </childnode>
+        <childnode refid="118" relation="include">
+        </childnode>
+        <childnode refid="119" relation="include">
+        </childnode>
+        <childnode refid="114" relation="include">
+        </childnode>
+        <childnode refid="120" relation="include">
+        </childnode>
+        <childnode refid="121" relation="include">
+        </childnode>
+        <childnode refid="122" relation="include">
+        </childnode>
+        <childnode refid="123" relation="include">
+        </childnode>
+        <childnode refid="124" relation="include">
+        </childnode>
+        <childnode refid="125" relation="include">
+        </childnode>
+        <childnode refid="127" relation="include">
+        </childnode>
+        <childnode refid="128" relation="include">
+        </childnode>
+        <childnode refid="129" relation="include">
+        </childnode>
+        <childnode refid="108" relation="include">
+        </childnode>
+        <childnode refid="130" relation="include">
+        </childnode>
+        <childnode refid="131" relation="include">
+        </childnode>
+        <childnode refid="132" relation="include">
+        </childnode>
+        <childnode refid="133" relation="include">
+        </childnode>
+        <childnode refid="134" relation="include">
+        </childnode>
+        <childnode refid="135" relation="include">
+        </childnode>
+        <childnode refid="136" relation="include">
+        </childnode>
+        <childnode refid="137" relation="include">
+        </childnode>
+        <childnode refid="138" relation="include">
+        </childnode>
+        <childnode refid="139" relation="include">
+        </childnode>
+        <childnode refid="140" relation="include">
+        </childnode>
+        <childnode refid="141" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h</label>
+        <link refid="_cmd_queue_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h</label>
+        <link refid="_cmd_queue_types_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h</label>
+        <link refid="_colors_8h_source"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="89">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/Configurable.h</label>
+        <link refid="_configurable_8h_source"/>
+        <childnode refid="26" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/Constants.h</label>
+        <link refid="_constants_8h_source"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/CoreComponent.h</label>
+        <link refid="_core_component_8h_source"/>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="87" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/CoreComponentTypes.h</label>
+        <link refid="_core_component_types_8h_source"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/CoreObject.h</label>
+        <link refid="_core_object_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="88" relation="include">
+        </childnode>
+        <childnode refid="90" relation="include">
+        </childnode>
+        <childnode refid="91" relation="include">
+        </childnode>
+        <childnode refid="92" relation="include">
+        </childnode>
+        <childnode refid="94" relation="include">
+        </childnode>
+        <childnode refid="95" relation="include">
+        </childnode>
+        <childnode refid="107" relation="include">
+        </childnode>
+        <childnode refid="109" relation="include">
+        </childnode>
+      </node>
+      <node id="88">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h</label>
+        <link refid="_defaults_8h_source"/>
+        <childnode refid="89" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h</label>
+        <link refid="_error_8h"/>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="75" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/ErrorTypes.h</label>
+        <link refid="_error_types_8h"/>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/Host.h</label>
+        <link refid="_host_8h_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="90">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueue.h</label>
+        <link refid="_msg_queue_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="110">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h</label>
+        <link refid="_msg_queue_types_8h_source"/>
+        <childnode refid="90" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="112">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h</label>
+        <link refid="_option_8h"/>
+      </node>
+      <node id="111">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/OptionTypes.h</label>
+        <link refid="_option_types_8h"/>
+        <childnode refid="89" relation="include">
+        </childnode>
+        <childnode refid="88" relation="include">
+        </childnode>
+        <childnode refid="112" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/SubComponent.h</label>
+        <link refid="_sub_component_8h_source"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="59" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+        <childnode refid="62" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+        <childnode refid="64" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="68" relation="include">
+        </childnode>
+        <childnode refid="69" relation="include">
+        </childnode>
+        <childnode refid="70" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="71" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="73" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="74" relation="include">
+        </childnode>
+        <childnode refid="75" relation="include">
+        </childnode>
+        <childnode refid="76" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="77" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="78" relation="include">
+        </childnode>
+        <childnode refid="79" relation="include">
+        </childnode>
+        <childnode refid="80" relation="include">
+        </childnode>
+        <childnode refid="81" relation="include">
+        </childnode>
+        <childnode refid="82" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="83" relation="include">
+        </childnode>
+        <childnode refid="84" relation="include">
+        </childnode>
+        <childnode refid="85" relation="include">
+        </childnode>
+        <childnode refid="86" relation="include">
+        </childnode>
+      </node>
+      <node id="87">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/Thread.h</label>
+        <link refid="_thread_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="113">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/ThreadTypes.h</label>
+        <link refid="_thread_types_8h"/>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="87" relation="include">
+        </childnode>
+        <childnode refid="114" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/Cartridge.h</label>
+        <link refid="_cartridge_8h_source"/>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="58" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="59">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeRom.h</label>
+        <link refid="_cartridge_rom_8h_source"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="115">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h</label>
+        <link refid="_cartridge_types_8h_source"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+        <childnode refid="101" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/ActionReplay.h</label>
+        <link refid="_action_replay_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Comal80.h</label>
+        <link refid="_comal80_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/CustomCartridges.h</label>
+        <link refid="_custom_cartridges_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Dinamic.h</label>
+        <link refid="_dinamic_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/EasyFlash.h</label>
+        <link refid="_easy_flash_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Epyx.h</label>
+        <link refid="_epyx_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Expert.h</label>
+        <link refid="_expert_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/FinalIII.h</label>
+        <link refid="_final_i_i_i_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="38">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/FreezeFrame.h</label>
+        <link refid="_freeze_frame_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="39">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Funplay.h</label>
+        <link refid="_funplay_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="40">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/GameKiller.h</label>
+        <link refid="_game_killer_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/GeoRam.h</label>
+        <link refid="_geo_ram_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="42">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Isepic.h</label>
+        <link refid="_isepic_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="43">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Kcs.h</label>
+        <link refid="_kcs_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="44">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Kingsoft.h</label>
+        <link refid="_kingsoft_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Mach5.h</label>
+        <link refid="_mach5_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="46">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/MagicDesk.h</label>
+        <link refid="_magic_desk_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/MikroAss.h</label>
+        <link refid="_mikro_ass_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="48">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Ocean.h</label>
+        <link refid="_ocean_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="49">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/PageFox.h</label>
+        <link refid="_page_fox_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="50">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Reu.h</label>
+        <link refid="_reu_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Rex.h</label>
+        <link refid="_rex_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="52">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/SimonsBasic.h</label>
+        <link refid="_simons_basic_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="53">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/StarDos.h</label>
+        <link refid="_star_dos_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="54">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/StructuredBasic.h</label>
+        <link refid="_structured_basic_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="55">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/SuperGames.h</label>
+        <link refid="_super_games_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="56">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/WarpSpeed.h</label>
+        <link refid="_warp_speed_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="57">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Westermann.h</label>
+        <link refid="_westermann_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="58">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Zaxxon.h</label>
+        <link refid="_zaxxon_8h_source"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+      </node>
+      <node id="60">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h</label>
+        <link refid="_flash_rom_8h_source"/>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/C64.h</label>
+        <link refid="_c64_8h_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="116">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h</label>
+        <link refid="_c64_types_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+        <childnode refid="104" relation="include">
+        </childnode>
+        <childnode refid="74" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="61">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIA.h</label>
+        <link refid="_c_i_a_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="117">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h</label>
+        <link refid="_c_i_a_types_8h_source"/>
+        <childnode refid="61" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="62">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/TOD.h</label>
+        <link refid="_t_o_d_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+      </node>
+      <node id="118">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/TODTypes.h</label>
+        <link refid="_t_o_d_types_8h_source"/>
+        <childnode refid="117" relation="include">
+        </childnode>
+        <childnode refid="62" relation="include">
+        </childnode>
+      </node>
+      <node id="63">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/CPU.h</label>
+        <link refid="_c_p_u_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="91">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/CPUInspector.h</label>
+        <link refid="_c_p_u_inspector_8h_source"/>
+        <childnode refid="63" relation="include">
+        </childnode>
+        <childnode refid="91" relation="include">
+        </childnode>
+      </node>
+      <node id="119">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/CPUTypes.h</label>
+        <link refid="_c_p_u_types_8h_source"/>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="64">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/Peddle.h</label>
+        <link refid="_peddle_8h_source"/>
+        <childnode refid="63" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+        <childnode refid="66" relation="include">
+        </childnode>
+      </node>
+      <node id="65">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h</label>
+        <link refid="_peddle_debugger_8h_source"/>
+        <childnode refid="64" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+      </node>
+      <node id="67">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDisassembler.h</label>
+        <link refid="_peddle_disassembler_8h_source"/>
+        <childnode refid="64" relation="include">
+        </childnode>
+      </node>
+      <node id="66">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/StrWriter.h</label>
+        <link refid="_str_writer_8h_source"/>
+        <childnode refid="67" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h</label>
+        <link refid="_emulator_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="114">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h</label>
+        <link refid="_emulator_types_8h_source"/>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ControlPort.h</label>
+        <link refid="_control_port_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="120">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ControlPortTypes.h</label>
+        <link refid="_control_port_types_8h_source"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ExpansionPort.h</label>
+        <link refid="_expansion_port_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="121">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ExpansionPortTypes.h</label>
+        <link refid="_expansion_port_types_8h_source"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="68">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h</label>
+        <link refid="_i_e_c_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="69">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/PowerSupply.h</label>
+        <link refid="_power_supply_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="122">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/PowerSupplyTypes.h</label>
+        <link refid="_power_supply_types_8h_source"/>
+        <childnode refid="69" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="70">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/C64Memory.h</label>
+        <link refid="_c64_memory_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="123">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h</label>
+        <link refid="_memory_types_8h_source"/>
+        <childnode refid="70" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Muxer.h</label>
+        <link refid="_muxer_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="71">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h</label>
+        <link refid="_re_s_i_d_8h_source"/>
+        <childnode refid="20" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SID.h</label>
+        <link refid="sid_8h_source"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="126">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h</label>
+        <link refid="_s_i_d_streams_8h_source"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="71" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="124">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h</label>
+        <link refid="_s_i_d_types_8h_source"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="71" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="125">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h</label>
+        <link refid="_volume_8h_source"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="126" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastSID.h</label>
+        <link refid="_fast_s_i_d_8h_source"/>
+        <childnode refid="20" relation="include">
+        </childnode>
+      </node>
+      <node id="72">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h</label>
+        <link refid="_fast_voice_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="127">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/BusTypes.h</label>
+        <link refid="_bus_types_8h_source"/>
+        <childnode refid="128" relation="include">
+        </childnode>
+        <childnode refid="129" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h</label>
+        <link refid="_dma_debugger_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="128">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h</label>
+        <link refid="_dma_debugger_types_8h_source"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="129" relation="include">
+        </childnode>
+      </node>
+      <node id="73">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/Recorder/Recorder.h</label>
+        <link refid="_recorder_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICII.h</label>
+        <link refid="_v_i_c_i_i_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="129">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h</label>
+        <link refid="_v_i_c_i_i_types_8h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="92">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSBlock.h</label>
+        <link refid="_f_s_block_8h_source"/>
+        <childnode refid="93" relation="include">
+        </childnode>
+      </node>
+      <node id="94">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDescriptors.h</label>
+        <link refid="_f_s_descriptors_8h_source"/>
+        <childnode refid="93" relation="include">
+        </childnode>
+      </node>
+      <node id="108">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h</label>
+        <link refid="_f_s_dir_entry_8h_source"/>
+        <childnode refid="93" relation="include">
+        </childnode>
+      </node>
+      <node id="130">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSTypes.h</label>
+        <link refid="_f_s_types_8h_source"/>
+        <childnode refid="92" relation="include">
+        </childnode>
+        <childnode refid="94" relation="include">
+        </childnode>
+        <childnode refid="108" relation="include">
+        </childnode>
+        <childnode refid="77" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="93">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h</label>
+        <link refid="_file_system_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Headless.h</label>
+        <link refid="_headless_8h_source"/>
+      </node>
+      <node id="96">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h</label>
+        <link refid="_any_collection_8h_source"/>
+        <childnode refid="93" relation="include">
+        </childnode>
+        <childnode refid="97" relation="include">
+        </childnode>
+        <childnode refid="98" relation="include">
+        </childnode>
+        <childnode refid="99" relation="include">
+        </childnode>
+        <childnode refid="100" relation="include">
+        </childnode>
+      </node>
+      <node id="95">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h</label>
+        <link refid="_any_file_8h_source"/>
+        <childnode refid="96" relation="include">
+        </childnode>
+        <childnode refid="101" relation="include">
+        </childnode>
+        <childnode refid="102" relation="include">
+        </childnode>
+        <childnode refid="103" relation="include">
+        </childnode>
+        <childnode refid="104" relation="include">
+        </childnode>
+        <childnode refid="105" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="106" relation="include">
+        </childnode>
+      </node>
+      <node id="101">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/CRTFile.h</label>
+        <link refid="_c_r_t_file_8h_source"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="102">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/D64File.h</label>
+        <link refid="_d64_file_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="93" relation="include">
+        </childnode>
+      </node>
+      <node id="131">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h</label>
+        <link refid="_file_types_8h_source"/>
+        <childnode refid="95" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="97">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/Folder.h</label>
+        <link refid="_folder_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="103">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h</label>
+        <link refid="_g64_file_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="98">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/P00File.h</label>
+        <link refid="_p00_file_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="107">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h</label>
+        <link refid="_p_e_t_name_8h_source"/>
+        <childnode refid="92" relation="include">
+        </childnode>
+        <childnode refid="108" relation="include">
+        </childnode>
+        <childnode refid="95" relation="include">
+        </childnode>
+        <childnode refid="77" relation="include">
+        </childnode>
+      </node>
+      <node id="99">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h</label>
+        <link refid="_p_r_g_file_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="104">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/RomFile.h</label>
+        <link refid="_rom_file_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="105">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h</label>
+        <link refid="_script_8h_source"/>
+      </node>
+      <node id="21">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h</label>
+        <link refid="_snapshot_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="100">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/T64File.h</label>
+        <link refid="_t64_file_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="106">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/TAPFile.h</label>
+        <link refid="_t_a_p_file_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="74">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Misc/RegressionTester/RegressionTester.h</label>
+        <link refid="_regression_tester_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="132">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Command.h</label>
+        <link refid="_command_8h_source"/>
+        <childnode refid="75" relation="include">
+        </childnode>
+      </node>
+      <node id="75">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h</label>
+        <link refid="_interpreter_8h_source"/>
+        <childnode refid="76" relation="include">
+        </childnode>
+      </node>
+      <node id="76">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h</label>
+        <link refid="_retro_shell_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="133">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShellTypes.h</label>
+        <link refid="_retro_shell_types_8h_source"/>
+        <childnode refid="76" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h</label>
+        <link refid="_datasette_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="134">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h</label>
+        <link refid="_datasette_types_8h_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="77">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Disk.h</label>
+        <link refid="_disk_8h_source"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="109">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h</label>
+        <link refid="_disk_analyzer_8h_source"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="135">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzerTypes.h</label>
+        <link refid="_disk_analyzer_types_8h_source"/>
+        <childnode refid="77" relation="include">
+        </childnode>
+        <childnode refid="109" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="136">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskTypes.h</label>
+        <link refid="_disk_types_8h_source"/>
+        <childnode refid="94" relation="include">
+        </childnode>
+        <childnode refid="77" relation="include">
+        </childnode>
+        <childnode refid="109" relation="include">
+        </childnode>
+        <childnode refid="135" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h</label>
+        <link refid="_drive_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="78">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h</label>
+        <link refid="_drive_memory_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="137">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h</label>
+        <link refid="_drive_types_8h_source"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="78" relation="include">
+        </childnode>
+        <childnode refid="80" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="79">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/PIA.h</label>
+        <link refid="_p_i_a_8h_source"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="80">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/ParCable.h</label>
+        <link refid="_par_cable_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="138">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/ParCableTypes.h</label>
+        <link refid="_par_cable_types_8h_source"/>
+        <childnode refid="137" relation="include">
+        </childnode>
+        <childnode refid="80" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="81">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.h</label>
+        <link refid="_v_i_a_8h_source"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="82">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h</label>
+        <link refid="_joystick_8h_source"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="139">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/JoystickTypes.h</label>
+        <link refid="_joystick_types_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="82" relation="include">
+        </childnode>
+        <childnode refid="83" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="140">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h</label>
+        <link refid="_c64_key_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/Keyboard.h</label>
+        <link refid="_keyboard_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="83">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.h</label>
+        <link refid="_mouse_8h_source"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="84">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h</label>
+        <link refid="_mouse1350_8h_source"/>
+        <childnode refid="83" relation="include">
+        </childnode>
+      </node>
+      <node id="85">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1351.h</label>
+        <link refid="_mouse1351_8h_source"/>
+        <childnode refid="83" relation="include">
+        </childnode>
+      </node>
+      <node id="141">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/MouseTypes.h</label>
+        <link refid="_mouse_types_8h_source"/>
+        <childnode refid="83" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="86">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h</label>
+        <link refid="_neos_mouse_8h_source"/>
+        <childnode refid="83" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h</label>
+        <link refid="_virtual_c64_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/VirtualC64Types.h</label>
+        <link refid="_virtual_c64_types_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="_aliases_8h_1ac432155e344a6d5cc6cba6088bb4fedc" prot="public" static="no">
+        <name>USEC</name>
+        <param><defname>delay</defname></param>
+        <initializer>(Cycle)((delay) * 1)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" line="38" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_aliases_8h_1a99049836225fc065a09198f3ed46ee16" prot="public" static="no">
+        <name>MSEC</name>
+        <param><defname>delay</defname></param>
+        <initializer>(Cycle)((delay) * 1000)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" line="39" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_aliases_8h_1a173cb7f8be6ae04a4cc506a7b3b753e0" prot="public" static="no">
+        <name>SEC</name>
+        <param><defname>delay</defname></param>
+        <initializer>(Cycle)((delay) * 1000000)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" line="40" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_aliases_8h_1a5c723c0cc71b83224ead557db3ab74dd" prot="public" static="no">
+        <name>KB</name>
+        <param><defname>x</defname></param>
+        <initializer>((x) &lt;&lt; 10)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" line="43" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_aliases_8h_1a44d2b171cc92225ec0a76ef70fc9b531" prot="public" static="no">
+        <name>MB</name>
+        <param><defname>x</defname></param>
+        <initializer>((x) &lt;&lt; 20)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" line="44" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_aliases_8h_1af207e8203eedc05adcf341a24bfa6cbb" prot="public" static="no">
+        <name>GB</name>
+        <param><defname>x</defname></param>
+        <initializer>((x) &lt;&lt; 30)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" line="45" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_aliases_8h_1af500ef226135b1396541e285070d3e71" prot="public" static="no">
+        <name>KHz</name>
+        <param><defname>x</defname></param>
+        <initializer>((x) * 1000)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" line="48" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_aliases_8h_1a773b77867001931ae8ebdbf9bbc9efbd" prot="public" static="no">
+        <name>MHz</name>
+        <param><defname>x</defname></param>
+        <initializer>((x) * 1000000)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" line="49" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="_aliases_8h_1af7fc6ee27dba31af50c9e541daf698ce" prot="public" static="no">
+        <type>i64</type>
+        <definition>typedef i64 Cycle</definition>
+        <argsstring></argsstring>
+        <name>Cycle</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" line="21" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="_aliases_8h_1a96c2d6aa364427b5a7fe5f3ab31c31e3" prot="public" static="no">
+        <type>isize</type>
+        <definition>typedef isize Cylinder</definition>
+        <argsstring></argsstring>
+        <name>Cylinder</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" line="23" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="_aliases_8h_1acfc330ee4677e1e9d805dba34ff088f9" prot="public" static="no">
+        <type>isize</type>
+        <definition>typedef isize Head</definition>
+        <argsstring></argsstring>
+        <name>Head</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" line="24" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="_aliases_8h_1a10713d111c55efcdcfdd24a93d7dd462" prot="public" static="no">
+        <type>isize</type>
+        <definition>typedef isize Track</definition>
+        <argsstring></argsstring>
+        <name>Track</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" line="25" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="_aliases_8h_1a835f9bb84807c080f1f765112d7dd732" prot="public" static="no">
+        <type>isize</type>
+        <definition>typedef isize Halftrack</definition>
+        <argsstring></argsstring>
+        <name>Halftrack</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" line="26" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="_aliases_8h_1a605c534b1a2a7577913cd1ba86616e5e" prot="public" static="no">
+        <type>isize</type>
+        <definition>typedef isize Sector</definition>
+        <argsstring></argsstring>
+        <name>Sector</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" line="27" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="_aliases_8h_1a9c81c39b7b38a956643e3b7e1f5153c5" prot="public" static="no">
+        <type>isize</type>
+        <definition>typedef isize Block</definition>
+        <argsstring></argsstring>
+        <name>Block</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" line="28" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="_aliases_8h_1a2af047f787a268fee3050be1704f7aed" prot="public" static="no">
+        <type>isize</type>
+        <definition>typedef isize HeadPos</definition>
+        <argsstring></argsstring>
+        <name>HeadPos</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" line="30" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" bodystart="30" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="comment">//<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>VirtualC64</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Copyright<sp/>(C)<sp/>Dirk<sp/>W.<sp/>Hoffmann.<sp/>www.dirkwhoffmann.de</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="comment">//<sp/>This<sp/>FILE<sp/>is<sp/>dual-licensed.<sp/>You<sp/>are<sp/>free<sp/>to<sp/>choose<sp/>between:</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>-<sp/>The<sp/>GNU<sp/>General<sp/>Public<sp/>License<sp/>v3<sp/>(or<sp/>any<sp/>later<sp/>version)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>-<sp/>The<sp/>Mozilla<sp/>Public<sp/>License<sp/>v2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="comment">//<sp/>SPDX-License-Identifier:<sp/>GPL-3.0-or-later<sp/>OR<sp/>MPL-2.0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Macros.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Type<sp/>aliases</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>i64<sp/>Cycle;</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>isize<sp/>Cylinder;</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>isize<sp/>Head;</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>isize<sp/>Track;</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>isize<sp/>Halftrack;</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>isize<sp/>Sector;</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>isize<sp/>Block;</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>isize<sp/>HeadPos;</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Conversion<sp/>macros</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Converts<sp/>a<sp/>time<sp/>span<sp/>to<sp/>an<sp/>(approximate)<sp/>cycle<sp/>count</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>USEC(delay)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(Cycle)((delay)<sp/>*<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MSEC(delay)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(Cycle)((delay)<sp/>*<sp/>1000)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SEC(delay)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(Cycle)((delay)<sp/>*<sp/>1000000)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Converts<sp/>kilo<sp/>and<sp/>mega<sp/>bytes<sp/>to<sp/>bytes</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>KB(x)<sp/>((x)<sp/>&lt;&lt;<sp/>10)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MB(x)<sp/>((x)<sp/>&lt;&lt;<sp/>20)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GB(x)<sp/>((x)<sp/>&lt;&lt;<sp/>30)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Converts<sp/>kilo<sp/>and<sp/>mega<sp/>Hertz<sp/>to<sp/>Hertz</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>KHz(x)<sp/>((x)<sp/>*<sp/>1000)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MHz(x)<sp/>((x)<sp/>*<sp/>1000000)</highlight></codeline>
+    </programlisting>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h"/>
+  </compounddef>
+</doxygen>

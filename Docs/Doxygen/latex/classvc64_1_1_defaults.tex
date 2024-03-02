@@ -1,0 +1,116 @@
+\doxysection{vc64\+::Defaults Class Reference}
+\hypertarget{classvc64_1_1_defaults}{}\label{classvc64_1_1_defaults}\index{vc64::Defaults@{vc64::Defaults}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_defaults_a73df5d017910e2be80552e06c6cd480b}\label{classvc64_1_1_defaults_a73df5d017910e2be80552e06c6cd480b} 
+{\bfseries Defaults} (\mbox{\hyperlink{classvc64_1_1_defaults}{Defaults}} const \&)=delete
+\item 
+\Hypertarget{classvc64_1_1_defaults_a905fda7ed976087c791826cb28e2bc8e}\label{classvc64_1_1_defaults_a905fda7ed976087c791826cb28e2bc8e} 
+void {\bfseries operator=} (\mbox{\hyperlink{classvc64_1_1_defaults}{Defaults}} const \&)=delete
+\item 
+\Hypertarget{classvc64_1_1_defaults_a374f06dfa4f733f7adb393af29efe827}\label{classvc64_1_1_defaults_a374f06dfa4f733f7adb393af29efe827} 
+void {\bfseries load} (const fs\+::path \&path) throws
+\item 
+\Hypertarget{classvc64_1_1_defaults_a3192775f5c7aa95e87c4a106ef7a6a6e}\label{classvc64_1_1_defaults_a3192775f5c7aa95e87c4a106ef7a6a6e} 
+void {\bfseries load} (std\+::ifstream \&stream) throws
+\item 
+\Hypertarget{classvc64_1_1_defaults_aed7452fd3930954040de8c2a69cbd860}\label{classvc64_1_1_defaults_aed7452fd3930954040de8c2a69cbd860} 
+void {\bfseries load} (std\+::stringstream \&stream) throws
+\item 
+\Hypertarget{classvc64_1_1_defaults_a7d667d437bcf21c0acf8789a5bd9c76b}\label{classvc64_1_1_defaults_a7d667d437bcf21c0acf8789a5bd9c76b} 
+void {\bfseries save} (const fs\+::path \&path) throws
+\item 
+\Hypertarget{classvc64_1_1_defaults_af183c4c7e33877a5cc8a1230a8fc5e3e}\label{classvc64_1_1_defaults_af183c4c7e33877a5cc8a1230a8fc5e3e} 
+void {\bfseries save} (std\+::ofstream \&stream) throws
+\item 
+\Hypertarget{classvc64_1_1_defaults_a23fc07c9c7119a84431dc1cefa2aea6a}\label{classvc64_1_1_defaults_a23fc07c9c7119a84431dc1cefa2aea6a} 
+void {\bfseries save} (std\+::stringstream \&stream) throws
+\item 
+\Hypertarget{classvc64_1_1_defaults_a5151d52c327e87efd9c4aceac475e42f}\label{classvc64_1_1_defaults_a5151d52c327e87efd9c4aceac475e42f} 
+string {\bfseries get\+String} (const string \&key) const throws
+\item 
+\Hypertarget{classvc64_1_1_defaults_abd2a859d67e908bba94c52fde326acc0}\label{classvc64_1_1_defaults_abd2a859d67e908bba94c52fde326acc0} 
+i64 {\bfseries get\+Int} (const string \&key) const throws
+\item 
+\Hypertarget{classvc64_1_1_defaults_ac5ccafcf15669bb64ed8f87b7a745022}\label{classvc64_1_1_defaults_ac5ccafcf15669bb64ed8f87b7a745022} 
+i64 {\bfseries get} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} option) const throws
+\item 
+\Hypertarget{classvc64_1_1_defaults_a302b505497ff3eefe8a2df44e3d9f0eb}\label{classvc64_1_1_defaults_a302b505497ff3eefe8a2df44e3d9f0eb} 
+i64 {\bfseries get} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} option, isize nr) const throws
+\item 
+\Hypertarget{classvc64_1_1_defaults_a7d35880d95fad9dda570e2a131612661}\label{classvc64_1_1_defaults_a7d35880d95fad9dda570e2a131612661} 
+string {\bfseries get\+Fallback} (const string \&key) const throws
+\item 
+\Hypertarget{classvc64_1_1_defaults_ab201dbdb55a19cb15346e8d02f2e54e0}\label{classvc64_1_1_defaults_ab201dbdb55a19cb15346e8d02f2e54e0} 
+void {\bfseries set\+String} (const string \&key, const string \&value)
+\item 
+\Hypertarget{classvc64_1_1_defaults_ab687768a2c7e567071b3823d2ce27a3c}\label{classvc64_1_1_defaults_ab687768a2c7e567071b3823d2ce27a3c} 
+void {\bfseries set} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} option, i64 value)
+\item 
+\Hypertarget{classvc64_1_1_defaults_a359f554b64a9a3882f65bc81b08d9244}\label{classvc64_1_1_defaults_a359f554b64a9a3882f65bc81b08d9244} 
+void {\bfseries set} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} option, isize nr, i64 value)
+\item 
+\Hypertarget{classvc64_1_1_defaults_aa47c713416403cfe9416c54e99c3c07a}\label{classvc64_1_1_defaults_aa47c713416403cfe9416c54e99c3c07a} 
+void {\bfseries set} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} option, std\+::vector$<$ isize $>$ nrs, i64 value)
+\item 
+\Hypertarget{classvc64_1_1_defaults_af80f4cf25cb2b547b95a4e763d2f64b9}\label{classvc64_1_1_defaults_af80f4cf25cb2b547b95a4e763d2f64b9} 
+void {\bfseries set\+Fallback} (const string \&key, const string \&value)
+\item 
+\Hypertarget{classvc64_1_1_defaults_a2ea0056843749793926827ae7b9dbc22}\label{classvc64_1_1_defaults_a2ea0056843749793926827ae7b9dbc22} 
+void {\bfseries set\+Fallback} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} option, const string \&value)
+\item 
+\Hypertarget{classvc64_1_1_defaults_aa18b7f36b5fd4376af66640db0f42c36}\label{classvc64_1_1_defaults_aa18b7f36b5fd4376af66640db0f42c36} 
+void {\bfseries set\+Fallback} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} option, i64 value)
+\item 
+\Hypertarget{classvc64_1_1_defaults_af3b18bcfba8eb858b9f125cd12921cf8}\label{classvc64_1_1_defaults_af3b18bcfba8eb858b9f125cd12921cf8} 
+void {\bfseries set\+Fallback} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} option, isize nr, const string \&value)
+\item 
+\Hypertarget{classvc64_1_1_defaults_aef93391585162a5b164054eeac5033cd}\label{classvc64_1_1_defaults_aef93391585162a5b164054eeac5033cd} 
+void {\bfseries set\+Fallback} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} option, isize nr, i64 value)
+\item 
+\Hypertarget{classvc64_1_1_defaults_a764e4713e327a31e21851f75ba00f6c4}\label{classvc64_1_1_defaults_a764e4713e327a31e21851f75ba00f6c4} 
+void {\bfseries set\+Fallback} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} option, std\+::vector$<$ isize $>$ nrs, const string \&value)
+\item 
+\Hypertarget{classvc64_1_1_defaults_a9466ae215377642b5124cf1d937b191a}\label{classvc64_1_1_defaults_a9466ae215377642b5124cf1d937b191a} 
+void {\bfseries set\+Fallback} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} option, std\+::vector$<$ isize $>$ nrs, i64 value)
+\item 
+\Hypertarget{classvc64_1_1_defaults_a33c146ecd2dbfac8e3f4e846de652535}\label{classvc64_1_1_defaults_a33c146ecd2dbfac8e3f4e846de652535} 
+void {\bfseries remove} ()
+\item 
+\Hypertarget{classvc64_1_1_defaults_a5f5f6472c5b2bcbe8e11642db30da9fa}\label{classvc64_1_1_defaults_a5f5f6472c5b2bcbe8e11642db30da9fa} 
+void {\bfseries remove} (const string \&key) throws
+\item 
+\Hypertarget{classvc64_1_1_defaults_a87319f0a1a6c4d07995b53d98bd7d9ba}\label{classvc64_1_1_defaults_a87319f0a1a6c4d07995b53d98bd7d9ba} 
+void {\bfseries remove} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} option) throws
+\item 
+\Hypertarget{classvc64_1_1_defaults_aa846d8d0eae20442c03e617521341ae8}\label{classvc64_1_1_defaults_aa846d8d0eae20442c03e617521341ae8} 
+void {\bfseries remove} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} option, isize nr) throws
+\item 
+\Hypertarget{classvc64_1_1_defaults_a29cbd230ee41ba5ce6a66238ea46fd61}\label{classvc64_1_1_defaults_a29cbd230ee41ba5ce6a66238ea46fd61} 
+void {\bfseries remove} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} option, std\+::vector$<$ isize $>$ nrs) throws
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual void {\bfseries prefix} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_dumpable}{vc64\+::\+Dumpable}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries dump} (Category category, std\+::ostream \&ss) const
+\item 
+void {\bfseries dump} (Category category) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+static bool {\bfseries verbose} = true
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Base/Defaults.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Base/Defaults.\+cpp\end{DoxyCompactItemize}

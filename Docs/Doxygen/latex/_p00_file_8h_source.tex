@@ -1,0 +1,77 @@
+\doxysection{P00\+File.\+h}
+\hypertarget{_p00_file_8h_source}{}\label{_p00_file_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Media/P00File.h@{/Users/hoff/Retro/virtualc64/Emulator/Media/P00File.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}AnyCollection.h"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }P00File\ :\ \textcolor{keyword}{public}\ AnyCollection\ \{}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isCompatible(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&name);}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isCompatible(std::istream\ \&stream);}
+\DoxyCodeLine{00025\ \ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{comment}{//\ Initializing}}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00030\ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ P00File()\ :\ AnyCollection()\ \{\ \}}
+\DoxyCodeLine{00032\ \ \ \ \ P00File(isize\ capacity)\ :\ AnyCollection(capacity)\ \{\ \}}
+\DoxyCodeLine{00033\ \ \ \ \ P00File(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path)\ \textcolor{keywordflow}{throws}\ \{\ init(path);\ \}}
+\DoxyCodeLine{00034\ \ \ \ \ P00File(\textcolor{keyword}{const}\ u8\ *buf,\ isize\ len)\ \textcolor{keywordflow}{throws}\ \{\ init(buf,\ len);\ \}}
+\DoxyCodeLine{00035\ \ \ \ \ P00File(\textcolor{keyword}{class}\ FileSystem\ \&fs)\ \textcolor{keywordflow}{throws}\ \{\ init(fs);\ \}}
+\DoxyCodeLine{00036\ \ \ \ \ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00038\ \ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{using\ }AnyFile::init;}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ init(FileSystem\ \&fs)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00041\ \ \ \ \ }
+\DoxyCodeLine{00042\ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreObject}}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}P00File"{}};\ \}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ AnyFile}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00053\ \ \ \ \ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{bool}\ isCompatiblePath(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path)\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ isCompatible(path);\ \}}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{bool}\ isCompatibleStream(std::istream\ \&stream)\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ isCompatible(stream);\ \}}
+\DoxyCodeLine{00056\ \ \ \ \ FileType\ type()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ FILETYPE\_P00;\ \}}
+\DoxyCodeLine{00057\ \ \ \ \ PETName<16>\ getName()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ AnyCollection}}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ PETName<16>\ collectionName()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00065\ \ \ \ \ isize\ collectionCount()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00066\ \ \ \ \ PETName<16>\ itemName(isize\ nr)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00067\ \ \ \ \ isize\ itemSize(isize\ nr)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00068\ \ \ \ \ u8\ readByte(isize\ nr,\ isize\ pos)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00069\ \};}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \}}
+
+\end{DoxyCode}

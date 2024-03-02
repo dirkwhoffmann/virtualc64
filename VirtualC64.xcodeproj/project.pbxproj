@@ -547,6 +547,7 @@
 		503E198F20C42C6D007E91F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		504268AC24F0F76F006BB841 /* C64Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Types.h; sourceTree = "<group>"; };
 		504268AD24F12705006BB841 /* DiskTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskTypes.h; sourceTree = "<group>"; };
+		50441A872B93CE2600102A4D /* VirtualC64Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtualC64Types.h; sourceTree = "<group>"; };
 		5044A0392657A7A800C551C6 /* Recorder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Recorder.cpp; sourceTree = "<group>"; };
 		5044A03A2657A7A800C551C6 /* Recorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Recorder.h; sourceTree = "<group>"; };
 		5044C5D02931F94800F4A413 /* PeddleInit_cpp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleInit_cpp.h; sourceTree = "<group>"; };
@@ -1311,6 +1312,7 @@
 				5078BEAA264D70AC00EDA161 /* CMakeLists.txt */,
 				504C42F824AF29AB00E69CAE /* config.h */,
 				5077AC672B5ACC5100EFAC85 /* config.cpp */,
+				50441A872B93CE2600102A4D /* VirtualC64Types.h */,
 				506F30452B768DE30083EAEA /* VirtualC64.h */,
 				506F30462B7692180083EAEA /* VirtualC64.cpp */,
 				50726FBC2961CA5A0031F2F5 /* Headless.h */,

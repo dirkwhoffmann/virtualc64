@@ -9,6 +9,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -85,14 +86,15 @@ VICClrSprBgCollReg);
 // Enumerations
 //
 
+/// VICII chip revision
 enum_long(VICII_REV)
 {
-    VICII_PAL_6569_R1,
-    VICII_PAL_6569_R3,
-    VICII_PAL_8565,
-    VICII_NTSC_6567_R56A,
-    VICII_NTSC_6567,
-    VICII_NTSC_8562
+    VICII_PAL_6569_R1,                  ///< Early C64 PAL models
+    VICII_PAL_6569_R3,                  ///< Later C64 PAL models
+    VICII_PAL_8565,                     ///< C64 II PAL models
+    VICII_NTSC_6567_R56A,               ///< Early C64 NTSC models
+    VICII_NTSC_6567,                    ///< Later C64 NTSC models
+    VICII_NTSC_8562                     ///< C64 II NTSC models
 };
 typedef VICII_REV VICIIRevision;
 
@@ -120,10 +122,11 @@ struct VICIIRevisionEnum : util::Reflection<VICIIRevisionEnum, VICIIRevision> {
 };
 #endif
 
+/// Glue logic implementation
 enum_long(GLUE_LOGIC)
 {
-    GLUE_LOGIC_DISCRETE,
-    GLUE_LOGIC_IC
+    GLUE_LOGIC_DISCRETE,                ///< Discrete logic
+    GLUE_LOGIC_IC                       ///< Integrated Circuit (PLA)
 };
 typedef GLUE_LOGIC GlueLogic;
 
@@ -147,14 +150,15 @@ struct GlueLogicEnum : util::Reflection<GlueLogicEnum, GlueLogic> {
 };
 #endif
 
+/// Color palette
 enum_long(PALETTE)
 {
-    PALETTE_COLOR,
-    PALETTE_BLACK_WHITE,
-    PALETTE_PAPER_WHITE,
-    PALETTE_GREEN,
-    PALETTE_AMBER,
-    PALETTE_SEPIA
+    PALETTE_COLOR,                      ///< Standard C64 color palette
+    PALETTE_BLACK_WHITE,                ///< Black and white monochrome palette
+    PALETTE_PAPER_WHITE,                ///< Paper white monochrome palette
+    PALETTE_GREEN,                      ///< Green monochrome palette
+    PALETTE_AMBER,                      ///< Amber monochrome palette
+    PALETTE_SEPIA                       ///< Sepia monochrome palette
 };
 typedef PALETTE Palette;
 
@@ -182,12 +186,13 @@ struct PaletteEnum : util::Reflection<PaletteEnum, Palette> {
 };
 #endif
 
+///! C64 canvas size
 enum_long(SCREEN_GEOMETRY)
 {
-    SCREEN_GEOMETRY_25_40 = 1,
-    SCREEN_GEOMETRY_25_38,
-    SCREEN_GEOMETRY_24_40,
-    SCREEN_GEOMETRY_24_38
+    SCREEN_GEOMETRY_25_40 = 1,          ///< 25 rows x 40 columns
+    SCREEN_GEOMETRY_25_38,              ///< 25 rows x 38 columns
+    SCREEN_GEOMETRY_24_40,              ///< 24 rows x 40 columns
+    SCREEN_GEOMETRY_24_38               ///< 24 rows x 38 columns
 };
 typedef SCREEN_GEOMETRY ScreenGeometry;
 
@@ -213,16 +218,17 @@ struct ScreenGeometryEnum : util::Reflection<ScreenGeometryEnum, ScreenGeometry>
 };
 #endif
 
+///! C64 display mode
 enum_long(DISPLAY_MODE)
 {
-    DISPLAY_MODE_STANDARD_TEXT,
-    DISPLAY_MODE_MULTICOLOR_TEXT,
-    DISPLAY_MODE_STANDARD_BITMAP,
-    DISPLAY_MODE_MULTICOLOR_BITMAP,
-    DISPLAY_MODE_EXTENDED_BG_COLOR,
-    DISPLAY_MODE_INVALID_TEXT,
-    DISPLAY_MODE_INV_STANDARD_BITMAP,
-    DISPLAY_MODE_INV_MULTICOL_BITMAP
+    DISPLAY_MODE_STANDARD_TEXT,         ///< Standard Character Mode
+    DISPLAY_MODE_MULTICOLOR_TEXT,       ///< Multicolor Character Mode
+    DISPLAY_MODE_STANDARD_BITMAP,       ///< Standard Bitmap Mode
+    DISPLAY_MODE_MULTICOLOR_BITMAP,     ///< Multicolor Bitmap Mode
+    DISPLAY_MODE_EXTENDED_BG_COLOR,     ///< Extended Background Color Mode
+    DISPLAY_MODE_INVALID_TEXT,          ///< Extended Background Color Multicolor Character Mode
+    DISPLAY_MODE_INV_STANDARD_BITMAP,   ///< Extended Background Color Standard Bitmap Mode
+    DISPLAY_MODE_INV_MULTICOL_BITMAP    ///< Extended Background Color Multicolor Bitmap Mode
 };
 typedef DISPLAY_MODE DisplayMode;
 

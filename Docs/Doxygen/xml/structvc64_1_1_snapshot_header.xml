@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="structvc64_1_1_snapshot_header" kind="struct" language="C++" prot="public">
+    <compoundname>vc64::SnapshotHeader</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structvc64_1_1_snapshot_header_1a378c57114658fcd99a2926e0370af8e2" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char vc64::SnapshotHeader::magic[4]</definition>
+        <argsstring>[4]</argsstring>
+        <name>magic</name>
+        <qualifiedname>vc64::SnapshotHeader::magic</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" line="43" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_snapshot_header_1a4002782893f9fe01091d67351c5dc1ca" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::SnapshotHeader::major</definition>
+        <argsstring></argsstring>
+        <name>major</name>
+        <qualifiedname>vc64::SnapshotHeader::major</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" line="46" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_snapshot_header_1a7bcc5a1ff06b352d91311f5edd555e18" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::SnapshotHeader::minor</definition>
+        <argsstring></argsstring>
+        <name>minor</name>
+        <qualifiedname>vc64::SnapshotHeader::minor</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" line="47" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_snapshot_header_1aff2224fe70d79a5849f2b1b4d24dc62f" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::SnapshotHeader::subminor</definition>
+        <argsstring></argsstring>
+        <name>subminor</name>
+        <qualifiedname>vc64::SnapshotHeader::subminor</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" line="48" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_snapshot_header_1a78d8211ea633504eff127a0f66ed2742" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::SnapshotHeader::beta</definition>
+        <argsstring></argsstring>
+        <name>beta</name>
+        <qualifiedname>vc64::SnapshotHeader::beta</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" line="49" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_snapshot_header_1a7c402cd20025da6da347f76ac137c4f7" prot="public" static="no" mutable="no">
+        <type>Thumbnail</type>
+        <definition>Thumbnail vc64::SnapshotHeader::screenshot</definition>
+        <argsstring></argsstring>
+        <name>screenshot</name>
+        <qualifiedname>vc64::SnapshotHeader::screenshot</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" line="52" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" line="40" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" bodystart="40" bodyend="53"/>
+    <listofallmembers>
+      <member refid="structvc64_1_1_snapshot_header_1a78d8211ea633504eff127a0f66ed2742" prot="public" virt="non-virtual"><scope>vc64::SnapshotHeader</scope><name>beta</name></member>
+      <member refid="structvc64_1_1_snapshot_header_1a378c57114658fcd99a2926e0370af8e2" prot="public" virt="non-virtual"><scope>vc64::SnapshotHeader</scope><name>magic</name></member>
+      <member refid="structvc64_1_1_snapshot_header_1a4002782893f9fe01091d67351c5dc1ca" prot="public" virt="non-virtual"><scope>vc64::SnapshotHeader</scope><name>major</name></member>
+      <member refid="structvc64_1_1_snapshot_header_1a7bcc5a1ff06b352d91311f5edd555e18" prot="public" virt="non-virtual"><scope>vc64::SnapshotHeader</scope><name>minor</name></member>
+      <member refid="structvc64_1_1_snapshot_header_1a7c402cd20025da6da347f76ac137c4f7" prot="public" virt="non-virtual"><scope>vc64::SnapshotHeader</scope><name>screenshot</name></member>
+      <member refid="structvc64_1_1_snapshot_header_1aff2224fe70d79a5849f2b1b4d24dc62f" prot="public" virt="non-virtual"><scope>vc64::SnapshotHeader</scope><name>subminor</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

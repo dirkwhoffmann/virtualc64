@@ -1,0 +1,77 @@
+\doxysection{vc64\+::peddle\+::Disassembler Class Reference}
+\hypertarget{classvc64_1_1peddle_1_1_disassembler}{}\label{classvc64_1_1peddle_1_1_disassembler}\index{vc64::peddle::Disassembler@{vc64::peddle::Disassembler}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_disassembler_acd457eb1f214a482ed3de9ab51cea6ce}\label{classvc64_1_1peddle_1_1_disassembler_acd457eb1f214a482ed3de9ab51cea6ce} 
+{\bfseries Disassembler} (\mbox{\hyperlink{classvc64_1_1peddle_1_1_peddle}{Peddle}} \&ref)
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_disassembler_aa39e983bd22c0e1decb7647f14ff0f98}\label{classvc64_1_1peddle_1_1_disassembler_aa39e983bd22c0e1decb7647f14ff0f98} 
+void {\bfseries set\+Number\+Format} (\mbox{\hyperlink{struct_dasm_number_format}{Dasm\+Number\+Format}} instr\+Format, \mbox{\hyperlink{struct_dasm_number_format}{Dasm\+Number\+Format}} data\+Format)
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_disassembler_a654dfc0986d51f23ae8f868ffbca2b7d}\label{classvc64_1_1peddle_1_1_disassembler_a654dfc0986d51f23ae8f868ffbca2b7d} 
+void {\bfseries set\+Number\+Format} (\mbox{\hyperlink{struct_dasm_number_format}{Dasm\+Number\+Format}} format)
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_disassembler_ac5f03f8b67d345a548dc242b192815a4}\label{classvc64_1_1peddle_1_1_disassembler_ac5f03f8b67d345a548dc242b192815a4} 
+void {\bfseries set\+Indentation} (int value)
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_disassembler_ad232da6e7a5b5ac2c32508b9795cc082}\label{classvc64_1_1peddle_1_1_disassembler_ad232da6e7a5b5ac2c32508b9795cc082} 
+isize {\bfseries disassemble} (char \texorpdfstring{$\ast$}{*}str, u16 addr) const
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_disassembler_a6012ec3941e17779950b00c6db681621}\label{classvc64_1_1peddle_1_1_disassembler_a6012ec3941e17779950b00c6db681621} 
+isize {\bfseries disassemble} (char \texorpdfstring{$\ast$}{*}str, u16 pc, u8 byte1, u8 byte2, u8 byte3) const
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_disassembler_ae41bc6e955361f133bf0344798dc9f7e}\label{classvc64_1_1peddle_1_1_disassembler_ae41bc6e955361f133bf0344798dc9f7e} 
+void {\bfseries disassemble\+Flags} (char \texorpdfstring{$\ast$}{*}str, u8 sr) const
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_disassembler_aac9a70e1963a4e2ca1340c3a89ef04e6}\label{classvc64_1_1peddle_1_1_disassembler_aac9a70e1963a4e2ca1340c3a89ef04e6} 
+void {\bfseries disassemble\+Flags} (char \texorpdfstring{$\ast$}{*}str) const
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_disassembler_a7d93a6fd3abc2593c8b30321d06d4f7f}\label{classvc64_1_1peddle_1_1_disassembler_a7d93a6fd3abc2593c8b30321d06d4f7f} 
+void {\bfseries dump\+Byte} (char \texorpdfstring{$\ast$}{*}str, u8 value) const
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_disassembler_a929be78c1b78b961555c15a0ee5c2647}\label{classvc64_1_1peddle_1_1_disassembler_a929be78c1b78b961555c15a0ee5c2647} 
+void {\bfseries dump\+Word} (char \texorpdfstring{$\ast$}{*}str, u16 value) const
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_disassembler_a874686d29ef30d2325f119df0191e3a7}\label{classvc64_1_1peddle_1_1_disassembler_a874686d29ef30d2325f119df0191e3a7} 
+void {\bfseries dump\+Bytes} (char \texorpdfstring{$\ast$}{*}str, u32 addr, isize cnt) const
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_disassembler_af3dc4ed67bdc4fdb86d5293a3295710b}\label{classvc64_1_1peddle_1_1_disassembler_af3dc4ed67bdc4fdb86d5293a3295710b} 
+void {\bfseries dump\+Bytes} (char \texorpdfstring{$\ast$}{*}str, u8 values\mbox{[}$\,$\mbox{]}, isize cnt) const
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_disassembler_a5279c57ec4ce8091a1d0c6602a518728}\label{classvc64_1_1peddle_1_1_disassembler_a5279c57ec4ce8091a1d0c6602a518728} 
+void {\bfseries dump\+Words} (char \texorpdfstring{$\ast$}{*}str, u32 addr, isize cnt) const
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_disassembler_ab04bae3615943a8ae3d16cb57716bcd2}\label{classvc64_1_1peddle_1_1_disassembler_ab04bae3615943a8ae3d16cb57716bcd2} 
+void {\bfseries dump\+Words} (char \texorpdfstring{$\ast$}{*}str, u16 values\mbox{[}$\,$\mbox{]}, isize cnt) const
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_disassembler_a7080a02403fa8c591146f0f241e7349d}\label{classvc64_1_1peddle_1_1_disassembler_a7080a02403fa8c591146f0f241e7349d} 
+void {\bfseries disassemble\+Range} (std\+::ostream \&os, u16 addr, isize count)
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_disassembler_a4b22f693698726b1612886d2f8c0803b}\label{classvc64_1_1peddle_1_1_disassembler_a4b22f693698726b1612886d2f8c0803b} 
+void {\bfseries disassemble\+Range} (std\+::ostream \&os, std\+::pair$<$ u16, u16 $>$ range, isize max=255)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_disassembler_a55053e73d5fba35304d30faff57c51b8}\label{classvc64_1_1peddle_1_1_disassembler_a55053e73d5fba35304d30faff57c51b8} 
+\mbox{\hyperlink{struct_dasm_style}{Dasm\+Style}} {\bfseries instr\+Style}
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_disassembler_af5b5c38ef355b93c916c708f7ab1c6f1}\label{classvc64_1_1peddle_1_1_disassembler_af5b5c38ef355b93c916c708f7ab1c6f1} 
+\mbox{\hyperlink{struct_dasm_style}{Dasm\+Style}} {\bfseries data\+Style}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_disassembler_a97356906d9346dbfce445a950dd34188}\label{classvc64_1_1peddle_1_1_disassembler_a97356906d9346dbfce445a950dd34188} 
+class {\bfseries Peddle}
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_disassembler_af637948d2b98b924152a6f3bf5acdb6e}\label{classvc64_1_1peddle_1_1_disassembler_af637948d2b98b924152a6f3bf5acdb6e} 
+class {\bfseries Debugger}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Components/\+CPU/\+Peddle/Peddle\+Disassembler.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Components/\+CPU/\+Peddle/Peddle\+Disassembler.\+cpp\end{DoxyCompactItemize}

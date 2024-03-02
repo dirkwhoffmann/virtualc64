@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['memoryapi_0',['MemoryAPI',['../struct_virtual_c64_1_1_memory_a_p_i.html',1,'VirtualC64']]],
-  ['mouseapi_1',['MouseAPI',['../struct_virtual_c64_1_1_mouse_a_p_i.html',1,'VirtualC64']]]
+  ['joystick_0',['Joystick',['../classvc64_1_1_joystick.html',1,'vc64']]],
+  ['joystickapi_1',['JoystickAPI',['../struct_virtual_c64_1_1_joystick_a_p_i.html',1,'VirtualC64']]],
+  ['joystickconfig_2',['JoystickConfig',['../struct_joystick_config.html',1,'']]]
 ];

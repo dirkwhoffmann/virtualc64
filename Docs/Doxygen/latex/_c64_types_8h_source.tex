@@ -1,0 +1,346 @@
+\doxysection{C64\+Types.\+h}
+\hypertarget{_c64_types_8h_source}{}\label{_c64_types_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h@{/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Aliases.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Reflection.h"{}}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{comment}{//}}
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ Enumerations}}
+\DoxyCodeLine{00021\ \textcolor{comment}{//}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ enum\_long(C64\_MODEL)}
+\DoxyCodeLine{00024\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ C64\_MODEL\_PAL,}
+\DoxyCodeLine{00026\ \ \ \ \ C64\_MODEL\_PAL\_II,}
+\DoxyCodeLine{00027\ \ \ \ \ C64\_MODEL\_PAL\_OLD,}
+\DoxyCodeLine{00028\ \ \ \ \ C64\_MODEL\_NTSC,}
+\DoxyCodeLine{00029\ \ \ \ \ C64\_MODEL\_NTSC\_II,}
+\DoxyCodeLine{00030\ \ \ \ \ C64\_MODEL\_NTSC\_OLD}
+\DoxyCodeLine{00031\ \};}
+\DoxyCodeLine{00032\ \textcolor{keyword}{typedef}\ C64\_MODEL\ C64Model;}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00035\ \textcolor{keyword}{struct\ }C64ModelEnum\ :\ util::Reflection<C64ModelEnum,\ C64Model>\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ C64\_MODEL\_NTSC\_OLD;}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00040\ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}C64\_MODEL"{}};\ \}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(C64Model\ value)}
+\DoxyCodeLine{00043\ \ \ \ \ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ C64\_MODEL\_PAL:\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PAL"{}};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ C64\_MODEL\_PAL\_II:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PAL\_II"{}};}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ C64\_MODEL\_PAL\_OLD:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PAL\_OLD"{}};}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ C64\_MODEL\_NTSC:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}NTSC"{}};}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ C64\_MODEL\_NTSC\_II:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}NTSC\_II"{}};}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ C64\_MODEL\_NTSC\_OLD:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}NTSC\_OLD"{}};}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00054\ \ \ \ \ \}}
+\DoxyCodeLine{00055\ \};}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ enum\_long(SLOT)}
+\DoxyCodeLine{00059\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ Primary\ slots}}
+\DoxyCodeLine{00061\ \ \ \ \ SLOT\_CIA1,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ CIA\ 1\ execution}}
+\DoxyCodeLine{00062\ \ \ \ \ SLOT\_CIA2,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ CIA\ 2\ execution}}
+\DoxyCodeLine{00063\ \ \ \ \ SLOT\_SEC,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Enables\ secondary\ slots}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//\ Secondary\ slots}}
+\DoxyCodeLine{00066\ \ \ \ \ SLOT\_IEC,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ IEC\ bus}}
+\DoxyCodeLine{00067\ \ \ \ \ SLOT\_DAT,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Datasette\ execution}}
+\DoxyCodeLine{00068\ \ \ \ \ SLOT\_TER,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Enables\ tertiary\ slots}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{comment}{//\ Tertiary\ slots}}
+\DoxyCodeLine{00071\ \ \ \ \ SLOT\_AFI1,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Auto-\/fire\ (joystick\ port\ 1)}}
+\DoxyCodeLine{00072\ \ \ \ \ SLOT\_AFI2,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Auto-\/fire\ (joystick\ port\ 2)}}
+\DoxyCodeLine{00073\ \ \ \ \ SLOT\_MOT,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Datasette\ motor}}
+\DoxyCodeLine{00074\ \ \ \ \ SLOT\_DC8,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Disk\ change\ (Drive\ 8)}}
+\DoxyCodeLine{00075\ \ \ \ \ SLOT\_DC9,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Disk\ change\ (Drive\ 9)}}
+\DoxyCodeLine{00076\ \ \ \ \ SLOT\_RSH,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Retro\ Shell}}
+\DoxyCodeLine{00077\ \ \ \ \ SLOT\_KEY,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Auto-\/typing}}
+\DoxyCodeLine{00078\ \ \ \ \ SLOT\_ALA,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Alarms\ (set\ by\ the\ GUI)}}
+\DoxyCodeLine{00079\ \ \ \ \ SLOT\_INS,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Handles\ periodic\ calls\ to\ inspect()}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ SLOT\_COUNT}
+\DoxyCodeLine{00082\ \};}
+\DoxyCodeLine{00083\ \textcolor{keyword}{typedef}\ SLOT\ EventSlot;}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00086\ \textcolor{keyword}{struct\ }EventSlotEnum\ :\ util::Reflection<EventSlotEnum,\ EventSlot>}
+\DoxyCodeLine{00087\ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ SLOT\_COUNT\ -\/\ 1;}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ val)\ \{\ \textcolor{keywordflow}{return}\ val\ >=\ minVal\ \&\&\ val\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SLOT"{}};\ \}}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(EventSlot\ value)}
+\DoxyCodeLine{00094\ \ \ \ \ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SLOT\_CIA1:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CIA1"{}};}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SLOT\_CIA2:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CIA2"{}};}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SLOT\_SEC:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SEC"{}};}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SLOT\_IEC:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}IEC"{}};}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SLOT\_DAT:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DAT"{}};}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SLOT\_TER:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TER"{}};}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SLOT\_DC8:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DC8"{}};}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SLOT\_DC9:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DC9"{}};}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SLOT\_RSH:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RSH"{}};}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SLOT\_KEY:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}KEY"{}};}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SLOT\_ALA:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}ALA"{}};}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SLOT\_INS:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}INS"{}};}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SLOT\_COUNT:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00115\ \ \ \ \ \}}
+\DoxyCodeLine{00116\ \};}
+\DoxyCodeLine{00117\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ enum\_i8(EventID)}
+\DoxyCodeLine{00120\ \{}
+\DoxyCodeLine{00121\ \ \ \ \ EVENT\_NONE\ \ \ \ \ \ \ \ \ \ =\ 0,}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{comment}{//\ Events\ in\ the\ primary\ event\ table}}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{comment}{//\ CIA\ slots}}
+\DoxyCodeLine{00128\ \ \ \ \ CIA\_EXECUTE\ \ \ \ \ \ \ \ \ =\ 1,}
+\DoxyCodeLine{00129\ \ \ \ \ CIA\_WAKEUP,}
+\DoxyCodeLine{00130\ \ \ \ \ CIA\_EVENT\_COUNT,}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{comment}{//\ SEC\ slot}}
+\DoxyCodeLine{00133\ \ \ \ \ SEC\_TRIGGER\ \ \ \ \ \ \ \ \ =\ 1,}
+\DoxyCodeLine{00134\ \ \ \ \ SEC\_EVENT\_COUNT,}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{comment}{//\ Events\ in\ secondary\ event\ table}}
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{comment}{//\ IEC\ slot}}
+\DoxyCodeLine{00141\ \ \ \ \ IEC\_UPDATE\ \ \ \ \ \ \ \ \ \ =\ 1,}
+\DoxyCodeLine{00142\ \ \ \ \ IEC\_EVENT\_COUNT,}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{comment}{//\ DAT\ slot}}
+\DoxyCodeLine{00145\ \ \ \ \ DAT\_EXECUTE\ \ \ \ \ \ \ \ \ =\ 1,}
+\DoxyCodeLine{00146\ \ \ \ \ DAT\_EVENT\_COUNT,}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{comment}{//\ SEC\ slot}}
+\DoxyCodeLine{00149\ \ \ \ \ TER\_TRIGGER\ \ \ \ \ \ \ \ \ =\ 1,}
+\DoxyCodeLine{00150\ \ \ \ \ TER\_EVENT\_COUNT,}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{comment}{//\ Events\ in\ tertiary\ event\ table}}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{comment}{//\ Auto-\/fire}}
+\DoxyCodeLine{00157\ \ \ \ \ AFI\_FIRE\ \ \ \ \ \ \ \ \ \ \ \ =\ 1,}
+\DoxyCodeLine{00158\ \ \ \ \ AFI\_EVENT\_COUNT,}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{comment}{//\ Datasette\ motor}}
+\DoxyCodeLine{00161\ \ \ \ \ MOT\_START\ \ \ \ \ \ \ \ \ \ \ =\ 1,}
+\DoxyCodeLine{00162\ \ \ \ \ MOT\_STOP,}
+\DoxyCodeLine{00163\ \ \ \ \ MOT\_EVENT\_COUNT,}
+\DoxyCodeLine{00164\ \ \ \ \ }
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{comment}{//\ Disk\ change}}
+\DoxyCodeLine{00166\ \ \ \ \ DCH\_INSERT\ \ \ \ \ \ \ \ \ \ =\ 1,}
+\DoxyCodeLine{00167\ \ \ \ \ DCH\_EJECT,}
+\DoxyCodeLine{00168\ \ \ \ \ DCH\_EVENT\_COUNT,}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{comment}{//\ Retro\ shell}}
+\DoxyCodeLine{00171\ \ \ \ \ RSH\_WAKEUP\ \ \ \ \ \ \ \ \ \ =\ 1,}
+\DoxyCodeLine{00172\ \ \ \ \ RSH\_EVENT\_COUNT,}
+\DoxyCodeLine{00173\ \ \ \ \ }
+\DoxyCodeLine{00174\ \ \ \ \ \textcolor{comment}{//\ Auto\ typing}}
+\DoxyCodeLine{00175\ \ \ \ \ KEY\_AUTO\_TYPE\ \ \ \ \ \ \ =\ 1,}
+\DoxyCodeLine{00176\ \ \ \ \ KEY\_EVENT\_COUNT,}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{comment}{//\ Alarm\ event\ slot}}
+\DoxyCodeLine{00179\ \ \ \ \ ALA\_TRIGGER\ \ \ \ \ \ \ \ \ =\ 1,}
+\DoxyCodeLine{00180\ \ \ \ \ ALA\_EVENT\_COUNT,}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{comment}{//\ Inspector\ slot}}
+\DoxyCodeLine{00183\ \ \ \ \ INS\_C64\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 1,}
+\DoxyCodeLine{00184\ \ \ \ \ INS\_CPU,}
+\DoxyCodeLine{00185\ \ \ \ \ INS\_MEM,}
+\DoxyCodeLine{00186\ \ \ \ \ INS\_CIA,}
+\DoxyCodeLine{00187\ \ \ \ \ INS\_VICII,}
+\DoxyCodeLine{00188\ \ \ \ \ INS\_SID,}
+\DoxyCodeLine{00189\ \ \ \ \ INS\_EVENTS,}
+\DoxyCodeLine{00190\ \ \ \ \ INS\_EVENT\_COUNT}
+\DoxyCodeLine{00191\ \};}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ enum\_long(ROM\_TYPE)}
+\DoxyCodeLine{00194\ \{}
+\DoxyCodeLine{00195\ \ \ \ \ ROM\_TYPE\_BASIC,}
+\DoxyCodeLine{00196\ \ \ \ \ ROM\_TYPE\_CHAR,}
+\DoxyCodeLine{00197\ \ \ \ \ ROM\_TYPE\_KERNAL,}
+\DoxyCodeLine{00198\ \ \ \ \ ROM\_TYPE\_VC1541}
+\DoxyCodeLine{00199\ \};}
+\DoxyCodeLine{00200\ \textcolor{keyword}{typedef}\ ROM\_TYPE\ RomType;}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00203\ \textcolor{keyword}{struct\ }RomTypeEnum\ :\ util::Reflection<RomTypeEnum,\ RomType>\ \{}
+\DoxyCodeLine{00204\ \ \ \ \ }
+\DoxyCodeLine{00205\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ ROM\_TYPE\_VC1541;}
+\DoxyCodeLine{00207\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}ROM\_TYPE"{}};\ \}}
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(RomType\ value)}
+\DoxyCodeLine{00211\ \ \ \ \ \{}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ ROM\_TYPE\_BASIC:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}BASIC"{}};}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ ROM\_TYPE\_CHAR:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CHAR"{}};}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ ROM\_TYPE\_KERNAL:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}KERNAL"{}};}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ ROM\_TYPE\_VC1541:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VC1541"{}};}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00220\ \ \ \ \ \}}
+\DoxyCodeLine{00221\ \};}
+\DoxyCodeLine{00222\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ enum\_long(INSPECTION\_TARGET)}
+\DoxyCodeLine{00225\ \{}
+\DoxyCodeLine{00226\ \ \ \ \ INSPECTION\_NONE,}
+\DoxyCodeLine{00227\ \ \ \ \ INSPECTION\_C64,}
+\DoxyCodeLine{00228\ \ \ \ \ INSPECTION\_CPU,}
+\DoxyCodeLine{00229\ \ \ \ \ INSPECTION\_CIA,}
+\DoxyCodeLine{00230\ \ \ \ \ INSPECTION\_MEM,}
+\DoxyCodeLine{00231\ \ \ \ \ INSPECTION\_VICII,}
+\DoxyCodeLine{00232\ \ \ \ \ INSPECTION\_SID,}
+\DoxyCodeLine{00233\ \ \ \ \ INSPECTION\_EVENTS}
+\DoxyCodeLine{00234\ }
+\DoxyCodeLine{00235\ \};}
+\DoxyCodeLine{00236\ \textcolor{keyword}{typedef}\ INSPECTION\_TARGET\ InspectionTarget;}
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00238\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00239\ \textcolor{keyword}{struct\ }InspectionTargetEnum\ :\ util::Reflection<InspectionTargetEnum,\ InspectionTarget>\ \{}
+\DoxyCodeLine{00240\ \ \ \ \ }
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ INSPECTION\_EVENTS;}
+\DoxyCodeLine{00243\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00244\ \ \ \ \ }
+\DoxyCodeLine{00245\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}INSPECTION"{}};\ \}}
+\DoxyCodeLine{00246\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(InspectionTarget\ value)}
+\DoxyCodeLine{00247\ \ \ \ \ \{}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ INSPECTION\_NONE:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}NONE"{}};}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ INSPECTION\_C64:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}C64"{}};}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ INSPECTION\_CPU:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CPU"{}};}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ INSPECTION\_CIA:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CIA"{}};}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ INSPECTION\_MEM:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}MEM"{}};}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ INSPECTION\_VICII:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VICII"{}};}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ INSPECTION\_SID:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SID"{}};}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ INSPECTION\_EVENTS:\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}EVENTS"{}};}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00260\ \ \ \ \ \}}
+\DoxyCodeLine{00261\ \};}
+\DoxyCodeLine{00262\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00263\ }
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00265\ \textcolor{comment}{//}}
+\DoxyCodeLine{00266\ \textcolor{comment}{//\ Structures}}
+\DoxyCodeLine{00267\ \textcolor{comment}{//}}
+\DoxyCodeLine{00268\ }
+\DoxyCodeLine{00269\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00270\ \{}
+\DoxyCodeLine{00271\ }
+\DoxyCodeLine{00272\ \}}
+\DoxyCodeLine{00273\ C64Config;}
+\DoxyCodeLine{00274\ }
+\DoxyCodeLine{00275\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00276\ \{}
+\DoxyCodeLine{00277\ \ \ \ \ u32\ crc32;}
+\DoxyCodeLine{00278\ }
+\DoxyCodeLine{00279\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *title;}
+\DoxyCodeLine{00280\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *subtitle;}
+\DoxyCodeLine{00281\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *revision;}
+\DoxyCodeLine{00282\ }
+\DoxyCodeLine{00283\ \ \ \ \ \textcolor{keywordtype}{bool}\ isCommodoreRom;}
+\DoxyCodeLine{00284\ \ \ \ \ \textcolor{keywordtype}{bool}\ isPatchedRom;}
+\DoxyCodeLine{00285\ \ \ \ \ \textcolor{keywordtype}{bool}\ isMega65Rom;}
+\DoxyCodeLine{00286\ \}}
+\DoxyCodeLine{00287\ RomInfo;}
+\DoxyCodeLine{00288\ }
+\DoxyCodeLine{00289\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00290\ \{}
+\DoxyCodeLine{00291\ \ \ \ \ Cycle\ cpuProgress;}
+\DoxyCodeLine{00292\ \ \ \ \ Cycle\ cia1Progress;}
+\DoxyCodeLine{00293\ \ \ \ \ Cycle\ cia2Progress;}
+\DoxyCodeLine{00294\ \ \ \ \ i64\ frame;}
+\DoxyCodeLine{00295\ \ \ \ \ \textcolor{keywordtype}{long}\ vpos;}
+\DoxyCodeLine{00296\ \ \ \ \ \textcolor{keywordtype}{long}\ hpos;}
+\DoxyCodeLine{00297\ \}}
+\DoxyCodeLine{00298\ C64Info;}
+\DoxyCodeLine{00299\ }
+\DoxyCodeLine{00300\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00301\ \{}
+\DoxyCodeLine{00302\ \ \ \ \ EventSlot\ slot;}
+\DoxyCodeLine{00303\ \ \ \ \ EventID\ eventId;}
+\DoxyCodeLine{00304\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *eventName;}
+\DoxyCodeLine{00305\ }
+\DoxyCodeLine{00306\ \ \ \ \ \textcolor{comment}{//\ Trigger\ cycle\ of\ the\ event}}
+\DoxyCodeLine{00307\ \ \ \ \ Cycle\ trigger;}
+\DoxyCodeLine{00308\ \ \ \ \ Cycle\ triggerRel;}
+\DoxyCodeLine{00309\ }
+\DoxyCodeLine{00310\ \ \ \ \ \textcolor{comment}{//\ Trigger\ frame\ relative\ to\ the\ current\ frame}}
+\DoxyCodeLine{00311\ \ \ \ \ \textcolor{keywordtype}{long}\ frameRel;}
+\DoxyCodeLine{00312\ }
+\DoxyCodeLine{00313\ \ \ \ \ \textcolor{comment}{//\ The\ trigger\ cycle\ translated\ to\ a\ beam\ position.}}
+\DoxyCodeLine{00314\ \ \ \ \ \textcolor{keywordtype}{long}\ vpos;}
+\DoxyCodeLine{00315\ \ \ \ \ \textcolor{keywordtype}{long}\ hpos;}
+\DoxyCodeLine{00316\ \}}
+\DoxyCodeLine{00317\ EventSlotInfo;}
+\DoxyCodeLine{00318\ }
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00320\ \textcolor{comment}{//}}
+\DoxyCodeLine{00321\ \textcolor{comment}{//\ Private\ data\ types}}
+\DoxyCodeLine{00322\ \textcolor{comment}{//}}
+\DoxyCodeLine{00323\ }
+\DoxyCodeLine{00324\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00325\ }
+\DoxyCodeLine{00326\ \textcolor{keyword}{typedef}\ u32\ RunLoopFlags;}
+\DoxyCodeLine{00327\ }
+\DoxyCodeLine{00328\ \textcolor{keyword}{namespace\ }RL}
+\DoxyCodeLine{00329\ \{}
+\DoxyCodeLine{00330\ \textcolor{keyword}{constexpr}\ u32\ STOP\ \ \ \ \ \ \ \ \ \ =\ (1\ <<\ 0);}
+\DoxyCodeLine{00331\ \textcolor{keyword}{constexpr}\ u32\ WARP\_ON\ \ \ \ \ \ \ =\ (1\ <<\ 1);}
+\DoxyCodeLine{00332\ \textcolor{keyword}{constexpr}\ u32\ WARP\_OFF\ \ \ \ \ \ =\ (1\ <<\ 2);}
+\DoxyCodeLine{00333\ \textcolor{keyword}{constexpr}\ u32\ BREAKPOINT\ \ \ \ =\ (1\ <<\ 3);}
+\DoxyCodeLine{00334\ \textcolor{keyword}{constexpr}\ u32\ WATCHPOINT\ \ \ \ =\ (1\ <<\ 4);}
+\DoxyCodeLine{00335\ \textcolor{keyword}{constexpr}\ u32\ CPU\_JAM\ \ \ \ \ \ \ =\ (1\ <<\ 5);}
+\DoxyCodeLine{00336\ \textcolor{keyword}{constexpr}\ u32\ SINGLE\_STEP\ \ \ =\ (1\ <<\ 6);}
+\DoxyCodeLine{00337\ }
+\DoxyCodeLine{00338\ \};}
+\DoxyCodeLine{00339\ }
+\DoxyCodeLine{00340\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

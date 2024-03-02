@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_c_i_a_port_info" kind="struct" language="C++" prot="public">
+    <compoundname>CIAPortInfo</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_c_i_a_port_info_1a67f06aa6705bc928ed2b52c5d74fd2ea" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 CIAPortInfo::port</definition>
+        <argsstring></argsstring>
+        <name>port</name>
+        <qualifiedname>CIAPortInfo::port</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="115" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="115" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_c_i_a_port_info_1a061a910854c162cd33e176bf68482233" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 CIAPortInfo::reg</definition>
+        <argsstring></argsstring>
+        <name>reg</name>
+        <qualifiedname>CIAPortInfo::reg</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="116" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="116" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_c_i_a_port_info_1afea7497c98c1315375294b89910116f5" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 CIAPortInfo::dir</definition>
+        <argsstring></argsstring>
+        <name>dir</name>
+        <qualifiedname>CIAPortInfo::dir</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="117" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="117" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="113" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="114" bodyend="118"/>
+    <listofallmembers>
+      <member refid="struct_c_i_a_port_info_1afea7497c98c1315375294b89910116f5" prot="public" virt="non-virtual"><scope>CIAPortInfo</scope><name>dir</name></member>
+      <member refid="struct_c_i_a_port_info_1a67f06aa6705bc928ed2b52c5d74fd2ea" prot="public" virt="non-virtual"><scope>CIAPortInfo</scope><name>port</name></member>
+      <member refid="struct_c_i_a_port_info_1a061a910854c162cd33e176bf68482233" prot="public" virt="non-virtual"><scope>CIAPortInfo</scope><name>reg</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

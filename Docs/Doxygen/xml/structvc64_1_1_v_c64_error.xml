@@ -11,7 +11,7 @@
         <name>VC64Error</name>
         <qualifiedname>vc64::VC64Error::VC64Error</qualifiedname>
         <param>
-          <type><ref refid="group__doxy__types_1ga52f90e25735e172d279183e61d90d3e3" kindref="member">ErrorCode</ref></type>
+          <type><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3" kindref="member">ErrorCode</ref></type>
           <declname>code</declname>
         </param>
         <param>
@@ -24,7 +24,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" line="26" column="5"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" line="27" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.cpp" bodystart="18" bodyend="247"/>
       </memberdef>
       <memberdef kind="function" id="structvc64_1_1_v_c64_error_1a6d669678a700a6a7941c2fca433b49f5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type></type>
@@ -33,7 +33,7 @@
         <name>VC64Error</name>
         <qualifiedname>vc64::VC64Error::VC64Error</qualifiedname>
         <param>
-          <type><ref refid="group__doxy__types_1ga52f90e25735e172d279183e61d90d3e3" kindref="member">ErrorCode</ref></type>
+          <type><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3" kindref="member">ErrorCode</ref></type>
           <declname>code</declname>
         </param>
         <param>
@@ -46,7 +46,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" line="27" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" bodystart="27" bodyend="27"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" line="28" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" bodystart="28" bodyend="28"/>
       </memberdef>
       <memberdef kind="function" id="structvc64_1_1_v_c64_error_1aeb9df48bedc6eec26b46bebb91da6847" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type></type>
@@ -55,7 +55,7 @@
         <name>VC64Error</name>
         <qualifiedname>vc64::VC64Error::VC64Error</qualifiedname>
         <param>
-          <type><ref refid="group__doxy__types_1ga52f90e25735e172d279183e61d90d3e3" kindref="member">ErrorCode</ref></type>
+          <type><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3" kindref="member">ErrorCode</ref></type>
           <declname>code</declname>
         </param>
         <briefdescription>
@@ -64,7 +64,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" line="28" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" bodystart="28" bodyend="28"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" line="29" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" bodystart="29" bodyend="29"/>
       </memberdef>
       <memberdef kind="function" id="structvc64_1_1_v_c64_error_1a8cd6bd53c28d0704ae016f7a535ea3a5" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>const char *</type>
@@ -79,37 +79,21 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" line="30" column="16"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" line="31" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.cpp" bodystart="250" bodyend="253"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <inheritancegraph>
-      <node id="2">
-        <label>util::Exception</label>
-      </node>
-      <node id="1">
-        <label>vc64::VC64Error</label>
-        <link refid="structvc64_1_1_v_c64_error"/>
-        <childnode refid="2" relation="public-inheritance">
-        </childnode>
-      </node>
-    </inheritancegraph>
-    <collaborationgraph>
-      <node id="2">
-        <label>util::Exception</label>
-      </node>
-      <node id="1">
-        <label>vc64::VC64Error</label>
-        <link refid="structvc64_1_1_v_c64_error"/>
-        <childnode refid="2" relation="public-inheritance">
-        </childnode>
-      </node>
-    </collaborationgraph>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" line="24" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" bodystart="25" bodyend="31"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" line="25" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" bodystart="26" bodyend="32"/>
     <listofallmembers>
+      <member refid="structutil_1_1_exception_1aff4a623d8cc9326d3773285bce425f64" prot="public" virt="non-virtual"><scope>vc64::VC64Error</scope><name>data</name></member>
+      <member refid="structutil_1_1_exception_1a38025a6fc6f4c9086b15a0bb7276ae45" prot="public" virt="non-virtual"><scope>vc64::VC64Error</scope><name>description</name></member>
+      <member refid="structutil_1_1_exception_1a0039902d5d04f45d5d383fde3adc03d7" prot="public" virt="non-virtual"><scope>vc64::VC64Error</scope><name>Exception</name></member>
+      <member refid="structutil_1_1_exception_1afbba46ae2ed07241d3fe7fe972ff1128" prot="public" virt="non-virtual"><scope>vc64::VC64Error</scope><name>Exception</name></member>
+      <member refid="structutil_1_1_exception_1abb8a1505d43b240c3c784a3406b8a90b" prot="public" virt="non-virtual"><scope>vc64::VC64Error</scope><name>Exception</name></member>
+      <member refid="structutil_1_1_exception_1a5d076174114ca013ac3689bdb68a48e9" prot="public" virt="non-virtual"><scope>vc64::VC64Error</scope><name>Exception</name></member>
       <member refid="structvc64_1_1_v_c64_error_1a59b73380582de7235b879b3ec7e1cf99" prot="public" virt="non-virtual"><scope>vc64::VC64Error</scope><name>VC64Error</name></member>
       <member refid="structvc64_1_1_v_c64_error_1a6d669678a700a6a7941c2fca433b49f5" prot="public" virt="non-virtual"><scope>vc64::VC64Error</scope><name>VC64Error</name></member>
       <member refid="structvc64_1_1_v_c64_error_1aeb9df48bedc6eec26b46bebb91da6847" prot="public" virt="non-virtual"><scope>vc64::VC64Error</scope><name>VC64Error</name></member>

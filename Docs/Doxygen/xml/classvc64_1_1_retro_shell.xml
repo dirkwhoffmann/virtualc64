@@ -1,0 +1,1129 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_retro_shell" kind="class" language="C++" prot="public">
+    <compoundname>vc64::RetroShell</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">vc64::SubComponent</basecompoundref>
+    <basecompoundref prot="public" virt="non-virtual">vc64::Dumpable</basecompoundref>
+    <sectiondef kind="friend">
+      <memberdef kind="friend" id="classvc64_1_1_retro_shell_1a999679eb3939e780d0b9925a8b654abb" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class Interpreter</definition>
+        <argsstring></argsstring>
+        <name>Interpreter</name>
+        <qualifiedname>vc64::RetroShell::Interpreter</qualifiedname>
+        <param>
+          <type>Interpreter</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="26" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" bodystart="26" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_retro_shell_1acc816f80be24c620a39632fed350b124" prot="private" static="no" mutable="no">
+        <type>Interpreter</type>
+        <definition>Interpreter vc64::RetroShell::interpreter</definition>
+        <argsstring></argsstring>
+        <name>interpreter</name>
+        <qualifiedname>vc64::RetroShell::interpreter</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="29" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_retro_shell_1ab62df6fe2fa1b45ef419a6baf2aa7c32" prot="private" static="no" mutable="no">
+        <type>TextStorage</type>
+        <definition>TextStorage vc64::RetroShell::storage</definition>
+        <argsstring></argsstring>
+        <name>storage</name>
+        <qualifiedname>vc64::RetroShell::storage</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="37" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_retro_shell_1aeb276e2a7f4d062006a38b7d24a06150" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; std::pair&lt; string, isize &gt; &gt;</type>
+        <definition>std::vector&lt;std::pair&lt;string,isize&gt; &gt; vc64::RetroShell::history</definition>
+        <argsstring></argsstring>
+        <name>history</name>
+        <qualifiedname>vc64::RetroShell::history</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="40" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_retro_shell_1ad6b8cdd41ed6c147eac4e8e1cdbdddf6" prot="private" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize vc64::RetroShell::ipos</definition>
+        <argsstring></argsstring>
+        <name>ipos</name>
+        <qualifiedname>vc64::RetroShell::ipos</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="43" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_retro_shell_1a9280fde6000342e030aa0e543aea735d" prot="private" static="no" mutable="no">
+        <type>string</type>
+        <definition>string vc64::RetroShell::input</definition>
+        <argsstring></argsstring>
+        <name>input</name>
+        <qualifiedname>vc64::RetroShell::input</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="51" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_retro_shell_1abc90027669c16d618eb5e5e0e62e1a3d" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; std::pair&lt; isize, string &gt; &gt;</type>
+        <definition>std::vector&lt;std::pair&lt;isize,string&gt; &gt; vc64::RetroShell::commands</definition>
+        <argsstring></argsstring>
+        <name>commands</name>
+        <qualifiedname>vc64::RetroShell::commands</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="54" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_retro_shell_1aed3962db4c1496db4d5215c3874b3365" prot="private" static="no" mutable="no">
+        <type>string</type>
+        <definition>string vc64::RetroShell::prompt</definition>
+        <argsstring></argsstring>
+        <name>prompt</name>
+        <qualifiedname>vc64::RetroShell::prompt</qualifiedname>
+        <initializer>= &quot;vc64% &quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="57" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_retro_shell_1a88bbbcc6be2fdf5714f890455830a4b8" prot="private" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize vc64::RetroShell::cursor</definition>
+        <argsstring></argsstring>
+        <name>cursor</name>
+        <qualifiedname>vc64::RetroShell::cursor</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="60" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_retro_shell_1a0abab302f0159e4fa7c0fcd0e35cea18" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::RetroShell::tabPressed</definition>
+        <argsstring></argsstring>
+        <name>tabPressed</name>
+        <qualifiedname>vc64::RetroShell::tabPressed</qualifiedname>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="63" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_retro_shell_1ad3c6039b1d79ba52877e54111542d408" prot="private" static="no" mutable="no">
+        <type>std::stringstream</type>
+        <definition>std::stringstream vc64::RetroShell::script</definition>
+        <argsstring></argsstring>
+        <name>script</name>
+        <qualifiedname>vc64::RetroShell::script</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="71" column="23" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_retro_shell_1a4cd1eafedcc08b92a4ea8c38c6028451" prot="private" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize vc64::RetroShell::scriptLine</definition>
+        <argsstring></argsstring>
+        <name>scriptLine</name>
+        <qualifiedname>vc64::RetroShell::scriptLine</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="74" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a744d4049b7aa30cf193704709dc7e726" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::RetroShell::RetroShell</definition>
+        <argsstring>(C64 &amp;ref)</argsstring>
+        <name>RetroShell</name>
+        <qualifiedname>vc64::RetroShell::RetroShell</qualifiedname>
+        <param>
+          <type>C64 &amp;</type>
+          <declname>ref</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="83" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="21" bodyend="24"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1ae3aa566f512b9235465f13a4b31e968e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::_initialize</definition>
+        <argsstring>() override</argsstring>
+        <name>_initialize</name>
+        <qualifiedname>vc64::RetroShell::_initialize</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="102" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="27" bodyend="39"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a75e674f680adecbf93c2c66853de3a88" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::_pause</definition>
+        <argsstring>() override</argsstring>
+        <name>_pause</name>
+        <qualifiedname>vc64::RetroShell::_pause</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="103" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="42" bodyend="45"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a6be417c286a660411af1482a67973599" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>RetroShell &amp;</type>
+        <definition>RetroShell &amp; vc64::RetroShell::operator=</definition>
+        <argsstring>(const RetroShell &amp;other)</argsstring>
+        <name>operator=</name>
+        <qualifiedname>vc64::RetroShell::operator=</qualifiedname>
+        <param>
+          <type>const RetroShell &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="105" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" bodystart="105" bodyend="105"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a0211f9e5772d9ec443d3ca64d66396aa" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>class T</type>
+          </param>
+        </templateparamlist>
+        <type>void</type>
+        <definition>void vc64::RetroShell::serialize</definition>
+        <argsstring>(T &amp;worker)</argsstring>
+        <name>serialize</name>
+        <qualifiedname>vc64::RetroShell::serialize</qualifiedname>
+        <param>
+          <type>T &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="106" column="22" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" bodystart="106" bodyend="106"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a26fb7452be87070f92ab77b0d5f9b807" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::RetroShell::SERIALIZERS</definition>
+        <argsstring>(serialize)</argsstring>
+        <name>SERIALIZERS</name>
+        <qualifiedname>vc64::RetroShell::SERIALIZERS</qualifiedname>
+        <param>
+          <type>serialize</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="106" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a5cd18d90213080e68ab77b932a5dff87" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>RetroShell &amp;</type>
+        <definition>RetroShell &amp; vc64::RetroShell::operator&lt;&lt;</definition>
+        <argsstring>(char value)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::RetroShell::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>char</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="116" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="48" bodyend="53"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a5eac98f46c0aa1019646aa36c07ac269" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>RetroShell &amp;</type>
+        <definition>RetroShell &amp; vc64::RetroShell::operator&lt;&lt;</definition>
+        <argsstring>(const string &amp;value)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::RetroShell::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="117" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="56" bodyend="61"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a12c9adfe7d94283dae1f5cd8a7f48d11" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>RetroShell &amp;</type>
+        <definition>RetroShell &amp; vc64::RetroShell::operator&lt;&lt;</definition>
+        <argsstring>(int value)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::RetroShell::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="118" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="64" bodyend="68"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a9dfb6525ae7306f3560b18007bd18a79" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>RetroShell &amp;</type>
+        <definition>RetroShell &amp; vc64::RetroShell::operator&lt;&lt;</definition>
+        <argsstring>(unsigned int value)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::RetroShell::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>unsigned int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="119" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="71" bodyend="75"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1adb3eb9a88eda5bee497607eaf021535b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>RetroShell &amp;</type>
+        <definition>RetroShell &amp; vc64::RetroShell::operator&lt;&lt;</definition>
+        <argsstring>(long value)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::RetroShell::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>long</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="120" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="78" bodyend="82"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a50dc5e74ea97b522cabbc1b14ad63f22" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>RetroShell &amp;</type>
+        <definition>RetroShell &amp; vc64::RetroShell::operator&lt;&lt;</definition>
+        <argsstring>(unsigned long value)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::RetroShell::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>unsigned long</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="121" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="85" bodyend="89"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1ad16ed961bbeee9eba8efa0de7758272c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>RetroShell &amp;</type>
+        <definition>RetroShell &amp; vc64::RetroShell::operator&lt;&lt;</definition>
+        <argsstring>(long long value)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::RetroShell::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>long long</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="122" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="92" bodyend="96"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a1661f182ebcf06bcdaf5bb07dfb32728" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>RetroShell &amp;</type>
+        <definition>RetroShell &amp; vc64::RetroShell::operator&lt;&lt;</definition>
+        <argsstring>(unsigned long long value)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::RetroShell::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>unsigned long long</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="123" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="99" bodyend="103"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a2e412738320f1ce846dcc175c59d9c01" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>RetroShell &amp;</type>
+        <definition>RetroShell &amp; vc64::RetroShell::operator&lt;&lt;</definition>
+        <argsstring>(std::stringstream &amp;stream)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::RetroShell::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>std::stringstream &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="124" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="106" bodyend="113"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1acdea0dbf045892fa9e719b9429e4e9d3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const string &amp;</type>
+        <definition>const string &amp; vc64::RetroShell::getPrompt</definition>
+        <argsstring>()</argsstring>
+        <name>getPrompt</name>
+        <qualifiedname>vc64::RetroShell::getPrompt</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="127" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="116" bodyend="119"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a4d270ccfb7955b766761412bb1173b92" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::updatePrompt</definition>
+        <argsstring>()</argsstring>
+        <name>updatePrompt</name>
+        <qualifiedname>vc64::RetroShell::updatePrompt</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="130" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="122" bodyend="144"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a8d1673380cdf57c2bf32d6966a614a9b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::RetroShell::text</definition>
+        <argsstring>()</argsstring>
+        <name>text</name>
+        <qualifiedname>vc64::RetroShell::text</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="133" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="147" bodyend="158"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1ab92d0139b29c324f2dddb7af81d46ad6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::tab</definition>
+        <argsstring>(isize pos)</argsstring>
+        <name>tab</name>
+        <qualifiedname>vc64::RetroShell::tab</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>pos</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="136" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="161" bodyend="171"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1aaf4fdcd0e2de41d0b43c3f6d3f82376e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::setStream</definition>
+        <argsstring>(std::ostream &amp;os)</argsstring>
+        <name>setStream</name>
+        <qualifiedname>vc64::RetroShell::setStream</qualifiedname>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="139" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="174" bodyend="177"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a4dc4a0250a155c9f10083cdbe3b8142a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::RetroShell::inputLength</definition>
+        <argsstring>()</argsstring>
+        <name>inputLength</name>
+        <qualifiedname>vc64::RetroShell::inputLength</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="166" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" bodystart="166" bodyend="166"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1ae6eb54e0ae547c7a2492359116394217" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::press</definition>
+        <argsstring>(RetroShellKey key, bool shift=false)</argsstring>
+        <name>press</name>
+        <qualifiedname>vc64::RetroShell::press</qualifiedname>
+        <param>
+          <type>RetroShellKey</type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>shift</declname>
+          <defval>false</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="169" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="247" bodyend="361"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1ab69af21c88fe15975b79304db01311e8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::press</definition>
+        <argsstring>(char c)</argsstring>
+        <name>press</name>
+        <qualifiedname>vc64::RetroShell::press</qualifiedname>
+        <param>
+          <type>char</type>
+          <declname>c</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="170" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="364" bodyend="400"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a570afb599c1a153dc784409eb1836837" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::press</definition>
+        <argsstring>(const string &amp;s)</argsstring>
+        <name>press</name>
+        <qualifiedname>vc64::RetroShell::press</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="171" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="403" bodyend="406"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a6052d4b8dde450f2605b02a6a19b115e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::RetroShell::cursorRel</definition>
+        <argsstring>()</argsstring>
+        <name>cursorRel</name>
+        <qualifiedname>vc64::RetroShell::cursorRel</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="174" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="409" bodyend="413"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a20115058a9fc5fa4f355453ad7a8423a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::RetroShell::historyLength</definition>
+        <argsstring>()</argsstring>
+        <name>historyLength</name>
+        <qualifiedname>vc64::RetroShell::historyLength</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="183" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" bodystart="183" bodyend="183"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a4493a093ed147627d21e1bbef0883e01" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::execUserCommand</definition>
+        <argsstring>(const string &amp;command)</argsstring>
+        <name>execUserCommand</name>
+        <qualifiedname>vc64::RetroShell::execUserCommand</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>command</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="193" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="416" bodyend="447"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a144b768a3d4913bd84fad480697427f4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::exec</definition>
+        <argsstring>() throws</argsstring>
+        <name>exec</name>
+        <qualifiedname>vc64::RetroShell::exec</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="196" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="450" bodyend="467"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a7ba0e59cc1b31752352df139ba0d133b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::exec</definition>
+        <argsstring>(const string &amp;command, isize line=0) throws</argsstring>
+        <name>exec</name>
+        <qualifiedname>vc64::RetroShell::exec</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>command</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>line</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="199" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="470" bodyend="493"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a85056bdb7a20160e47f3f34b8a360981" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::execScript</definition>
+        <argsstring>(std::stringstream &amp;ss) throws</argsstring>
+        <name>execScript</name>
+        <qualifiedname>vc64::RetroShell::execScript</qualifiedname>
+        <param>
+          <type>std::stringstream &amp;</type>
+          <declname>ss</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="202" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="496" bodyend="507"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a4414800ad537ed03b46e41c612c754c6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::execScript</definition>
+        <argsstring>(const std::ifstream &amp;fs) throws</argsstring>
+        <name>execScript</name>
+        <qualifiedname>vc64::RetroShell::execScript</qualifiedname>
+        <param>
+          <type>const std::ifstream &amp;</type>
+          <declname>fs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="203" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="510" bodyend="515"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a349175eabdd2b679265c90b3ee29e9b1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::execScript</definition>
+        <argsstring>(const string &amp;contents) throws</argsstring>
+        <name>execScript</name>
+        <qualifiedname>vc64::RetroShell::execScript</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>contents</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="204" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="518" bodyend="523"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a411d0e174be9f6b1e58c6f5295acd2d3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::abortScript</definition>
+        <argsstring>()</argsstring>
+        <name>abortScript</name>
+        <qualifiedname>vc64::RetroShell::abortScript</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="205" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="526" bodyend="536"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a9f619dad4d421701b64a0ba338af9e4b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::dump</definition>
+        <argsstring>(Dumpable &amp;component, std::vector&lt; Category &gt; categories)</argsstring>
+        <name>dump</name>
+        <qualifiedname>vc64::RetroShell::dump</qualifiedname>
+        <param>
+          <type>Dumpable &amp;</type>
+          <declname>component</declname>
+        </param>
+        <param>
+          <type>std::vector&lt; Category &gt;</type>
+          <declname>categories</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="222" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="614" bodyend="618"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1ab4240767b9908bdf7291e8a79e261bd9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::dump</definition>
+        <argsstring>(Dumpable &amp;component, Category category)</argsstring>
+        <name>dump</name>
+        <qualifiedname>vc64::RetroShell::dump</qualifiedname>
+        <param>
+          <type>Dumpable &amp;</type>
+          <declname>component</declname>
+        </param>
+        <param>
+          <type>Category</type>
+          <declname>category</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="223" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="607" bodyend="611"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a8df315c5da8f5364f63d2c375515c959" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::serviceEvent</definition>
+        <argsstring>()</argsstring>
+        <name>serviceEvent</name>
+        <qualifiedname>vc64::RetroShell::serviceEvent</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="236" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="647" bodyend="651"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a5686b60e8f51399ecd008401264c297e" prot="private" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::RetroShell::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::RetroShell::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="92" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" bodystart="92" bodyend="92"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a992b9a92e0492fb73dd0e756e6ac16f9" prot="private" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::_dump</definition>
+        <argsstring>(Category category, std::ostream &amp;os) const override</argsstring>
+        <name>_dump</name>
+        <qualifiedname>vc64::RetroShell::_dump</qualifiedname>
+        <param>
+          <type>Category</type>
+          <declname>category</declname>
+        </param>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="93" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" bodystart="93" bodyend="93"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1ab601a11fc35401908250e9ec596f7989" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::needsDisplay</definition>
+        <argsstring>()</argsstring>
+        <name>needsDisplay</name>
+        <qualifiedname>vc64::RetroShell::needsDisplay</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="144" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="180" bodyend="183"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a54432a04dab4048de8d29a4582120ff7" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::clear</definition>
+        <argsstring>()</argsstring>
+        <name>clear</name>
+        <qualifiedname>vc64::RetroShell::clear</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="147" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="186" bodyend="190"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a4a8169990b6e5c1ea952a63b460e7c1a" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::welcome</definition>
+        <argsstring>()</argsstring>
+        <name>welcome</name>
+        <qualifiedname>vc64::RetroShell::welcome</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="150" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="193" bodyend="209"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a51148ed7f6891c28b6d8eff23657dbf9" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::printHelp</definition>
+        <argsstring>()</argsstring>
+        <name>printHelp</name>
+        <qualifiedname>vc64::RetroShell::printHelp</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="153" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="212" bodyend="219"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1ac7392ae1f777ae8e322ea34e35321d4d" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::printState</definition>
+        <argsstring>()</argsstring>
+        <name>printState</name>
+        <qualifiedname>vc64::RetroShell::printState</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="156" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="222" bodyend="244"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a83182c02af41d6b989b43aa531f7a53b" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::describe</definition>
+        <argsstring>(const std::exception &amp;exception, isize line=0)</argsstring>
+        <name>describe</name>
+        <qualifiedname>vc64::RetroShell::describe</qualifiedname>
+        <param>
+          <type>const std::exception &amp;</type>
+          <declname>exception</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>line</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="210" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="539" bodyend="598"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1a302bf1a32b71a9ccbb129e9401fddd62" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::help</definition>
+        <argsstring>(const string &amp;command)</argsstring>
+        <name>help</name>
+        <qualifiedname>vc64::RetroShell::help</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>command</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="213" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="601" bodyend="604"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_retro_shell_1add76f81dc2d0bf6176571b248770d65d" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::RetroShell::_dump</definition>
+        <argsstring>(Dumpable &amp;component, Category category)</argsstring>
+        <name>_dump</name>
+        <qualifiedname>vc64::RetroShell::_dump</qualifiedname>
+        <param>
+          <type>Dumpable &amp;</type>
+          <declname>component</declname>
+        </param>
+        <param>
+          <type>Category</type>
+          <declname>category</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="227" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp" bodystart="621" bodyend="644"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" line="24" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h" bodystart="24" bodyend="237"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_retro_shell_1a992b9a92e0492fb73dd0e756e6ac16f9" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>_dump</name></member>
+      <member refid="classvc64_1_1_retro_shell_1add76f81dc2d0bf6176571b248770d65d" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>_dump</name></member>
+      <member refid="classvc64_1_1_retro_shell_1ae3aa566f512b9235465f13a4b31e968e" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>_initialize</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a75e674f680adecbf93c2c66853de3a88" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>_pause</name></member>
+      <member refid="classvc64_1_1_core_component_1ab4d7e4961fa32234f400d835c3b5f038" prot="public" virt="virtual"><scope>vc64::RetroShell</scope><name>_reset</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a411d0e174be9f6b1e58c6f5295acd2d3" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>abortScript</name></member>
+      <member refid="classvc64_1_1_configurable_1a947ce65dab57ea328e9959014b7f9dfb" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>argList</name></member>
+      <member refid="classvc64_1_1_sub_component_1a7691c720c74fd0e19a63978efe4cd851" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>c64</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae066edf64de901ee3f3b65eb0c02b202" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>cia1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9fe5ed30db982340524f7dcbf6fbf34c" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>cia2</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a54432a04dab4048de8d29a4582120ff7" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>clear</name></member>
+      <member refid="classvc64_1_1_retro_shell_1abc90027669c16d618eb5e5e0e62e1a3d" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>commands</name></member>
+      <member refid="classvc64_1_1_core_component_1a18f454d0d572fa1b2e5023c4eaba6d07" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>CoreComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1acaece01018438ab083bd38a220d34f10" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>cpu</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a88bbbcc6be2fdf5714f890455830a4b8" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>cursor</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a6052d4b8dde450f2605b02a6a19b115e" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>cursorRel</name></member>
+      <member refid="classvc64_1_1_sub_component_1a157963272dd927ec5c77b4090be57e89" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>datasette</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a83182c02af41d6b989b43aa531f7a53b" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>describe</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae85ede3d9ed8315d992eed300932eaf7" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>drive</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae44705f9377cf06d91323d8dca13a8a8" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>drive8</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5d876614a31fb29b8317350ed6a3158b" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>drive9</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a9f619dad4d421701b64a0ba338af9e4b" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_retro_shell_1ab4240767b9908bdf7291e8a79e261bd9" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_dumpable_1a28d8b76288598fc0309bd6247e5479db" prot="public" virt="non-virtual" ambiguityscope="vc64::Dumpable::"><scope>vc64::RetroShell</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_dumpable_1afc31b73f9b651bba5cf37dc88158755a" prot="public" virt="non-virtual" ambiguityscope="vc64::Dumpable::"><scope>vc64::RetroShell</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_configurable_1a459505cd1eed2c174bf78b29808ad07b" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>dumpConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1a606e5261773126791e44ee8238f5876e" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>emulator</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a144b768a3d4913bd84fad480697427f4" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>exec</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a7ba0e59cc1b31752352df139ba0d133b" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>exec</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a85056bdb7a20160e47f3f34b8a360981" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>execScript</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a4414800ad537ed03b46e41c612c754c6" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>execScript</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a349175eabdd2b679265c90b3ee29e9b1" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>execScript</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a4493a093ed147627d21e1bbef0883e01" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>execUserCommand</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5dc793ff2aa4ff3b36fdd061fd3f816b" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>expansionport</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a5686b60e8f51399ecd008401264c297e" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_configurable_1ae5d8ab4ec08470113b7123cd2ffdf4af" prot="public" virt="virtual"><scope>vc64::RetroShell</scope><name>getOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a80a7c09f7f0d153cb87000c9d82f" prot="public" virt="virtual"><scope>vc64::RetroShell</scope><name>getOptions</name></member>
+      <member refid="classvc64_1_1_retro_shell_1acdea0dbf045892fa9e719b9429e4e9d3" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>getPrompt</name></member>
+      <member refid="classvc64_1_1_core_component_1a936940e4e5cf0c617935ea3070bcbd4d" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>halt</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a302bf1a32b71a9ccbb129e9401fddd62" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>help</name></member>
+      <member refid="classvc64_1_1_retro_shell_1aeb276e2a7f4d062006a38b7d24a06150" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>history</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a20115058a9fc5fa4f355453ad7a8423a" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>historyLength</name></member>
+      <member refid="classvc64_1_1_sub_component_1add6521bbcffbe5ca85afd6105d54e5ad" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>host</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5c8620301453e0b91374683d0c7b28ab" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>iec</name></member>
+      <member refid="classvc64_1_1_core_component_1a250f9ac5bbc00892bf195ec2ef523a2b" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>initialize</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a9280fde6000342e030aa0e543aea735d" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>input</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a4dc4a0250a155c9f10083cdbe3b8142a" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>inputLength</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a999679eb3939e780d0b9925a8b654abb" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>Interpreter</name></member>
+      <member refid="classvc64_1_1_retro_shell_1acc816f80be24c620a39632fed350b124" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>interpreter</name></member>
+      <member refid="classvc64_1_1_retro_shell_1ad6b8cdd41ed6c147eac4e8e1cdbdddf6" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>ipos</name></member>
+      <member refid="classvc64_1_1_core_component_1a7b95994acc6e7ba59d4b2f50f2dc8df5" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>isEmulatorThread</name></member>
+      <member refid="classvc64_1_1_core_component_1a0e8c3dd97f64e2487fba4c22ba66d487" prot="public" virt="virtual"><scope>vc64::RetroShell</scope><name>isHalted</name></member>
+      <member refid="classvc64_1_1_core_component_1a4f0f63ef65776aceecb329d03c3b5f17" prot="public" virt="virtual"><scope>vc64::RetroShell</scope><name>isPaused</name></member>
+      <member refid="classvc64_1_1_core_component_1ac4dadc5fecfac3cd2dfb7e8b70767b42" prot="public" virt="virtual"><scope>vc64::RetroShell</scope><name>isPoweredOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a0f9912b36ec181a0410d4f564baef127" prot="public" virt="virtual"><scope>vc64::RetroShell</scope><name>isPoweredOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a77bf78d982163a6797f24d23106c5098" prot="public" virt="virtual"><scope>vc64::RetroShell</scope><name>isReady</name></member>
+      <member refid="classvc64_1_1_core_component_1a121143d811f91157272bb67a0ca48d8f" prot="public" virt="virtual"><scope>vc64::RetroShell</scope><name>isRunning</name></member>
+      <member refid="classvc64_1_1_core_component_1a490512fe63211f42eb57e7ed59f9b6a1" prot="public" virt="virtual"><scope>vc64::RetroShell</scope><name>isSuspended</name></member>
+      <member refid="classvc64_1_1_configurable_1af6260d08823e90bdb51d1bf7bb596c35" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>isValidOption</name></member>
+      <member refid="classvc64_1_1_sub_component_1aa9a0c663f877801b651969f86dbf2aae" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>keyboard</name></member>
+      <member refid="classvc64_1_1_configurable_1a0d6caf30eeaae95d1898d08cf3ca8e28" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>keyList</name></member>
+      <member refid="classvc64_1_1_sub_component_1ad160280522e5c27cd731289b9396c44f" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>mem</name></member>
+      <member refid="classvc64_1_1_sub_component_1a478be9b50f9e5c4c07dd2830e9964711" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>msgQueue</name></member>
+      <member refid="classvc64_1_1_synchronizable_1a595f618a9c91e91148882a79760f0f0f" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>mutex</name></member>
+      <member refid="classvc64_1_1_sub_component_1a712af82456373bd6e688a174ac756bcb" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>muxer</name></member>
+      <member refid="classvc64_1_1_retro_shell_1ab601a11fc35401908250e9ec596f7989" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>needsDisplay</name></member>
+      <member refid="classvc64_1_1_core_component_1af47e1017ec1d938b1b613b36bdc8be57" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>operator!=</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a5cd18d90213080e68ab77b932a5dff87" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a5eac98f46c0aa1019646aa36c07ac269" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a12c9adfe7d94283dae1f5cd8a7f48d11" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a9dfb6525ae7306f3560b18007bd18a79" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_retro_shell_1adb3eb9a88eda5bee497607eaf021535b" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a50dc5e74ea97b522cabbc1b14ad63f22" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_retro_shell_1ad16ed961bbeee9eba8efa0de7758272c" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a1661f182ebcf06bcdaf5bb07dfb32728" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a2e412738320f1ce846dcc175c59d9c01" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a6be417c286a660411af1482a67973599" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>operator=</name></member>
+      <member refid="classvc64_1_1_core_component_1aae8879dd8b62291254ec498fa9b2e2cf" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>operator==</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9dfb837b941848b6b87e6a57da28348d" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>parCable</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a9c059588a19eeba521b79ff28e3dd8" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>pause</name></member>
+      <member refid="classvc64_1_1_sub_component_1a8c0718eb9d42f335961eaed51ba7cb8d" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>port1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a217a6ea39994b6ecae4e1ebd9cc220e7" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>port2</name></member>
+      <member refid="classvc64_1_1_core_component_1a05e1ba6d62516f796256f1cc394bf2f5" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>powerOff</name></member>
+      <member refid="classvc64_1_1_core_component_1ad606699d83a017fbee805e8d40245475" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>powerOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a74ab4149c152b98c6d5cc15bbac63887" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>powerOnOff</name></member>
+      <member refid="classvc64_1_1_sub_component_1a4fa2405b078fe61c302ff1c8047d9c4f" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>powerSupply</name></member>
+      <member refid="classvc64_1_1_sub_component_1aba0c66cd1ce8a6d1c3529825afdb4a02" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>prefix</name></member>
+      <member refid="classvc64_1_1_retro_shell_1ae6eb54e0ae547c7a2492359116394217" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>press</name></member>
+      <member refid="classvc64_1_1_retro_shell_1ab69af21c88fe15975b79304db01311e8" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>press</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a570afb599c1a153dc784409eb1836837" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>press</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a51148ed7f6891c28b6d8eff23657dbf9" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>printHelp</name></member>
+      <member refid="classvc64_1_1_retro_shell_1ac7392ae1f777ae8e322ea34e35321d4d" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>printState</name></member>
+      <member refid="classvc64_1_1_retro_shell_1aed3962db4c1496db4d5215c3874b3365" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>prompt</name></member>
+      <member refid="classvc64_1_1_sub_component_1a2e1d97a260e9d4d637b0f8fb95fbf1d8" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>recorder</name></member>
+      <member refid="classvc64_1_1_sub_component_1afe6a4ca2f661ec44fd67637b14647436" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>regressionTester</name></member>
+      <member refid="classvc64_1_1_core_component_1a3910be506f5067fe6cf31a69dcd76b0c" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>reset</name></member>
+      <member refid="classvc64_1_1_core_component_1a082147809d967c961a7ac7c15c5f072a" prot="public" virt="virtual"><scope>vc64::RetroShell</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1aec76d436c865101509bceb2daf47890b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::RetroShell</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1af9ec0fb5e73fd1f0433a4f3bfcd39d9b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::RetroShell</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1aab9305af3e38cc19bd1067ca87fe3e0d" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>resume</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a744d4049b7aa30cf193704709dc7e726" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>RetroShell</name></member>
+      <member refid="classvc64_1_1_sub_component_1ada641e2232ca8bdd3ef8fbecc883658d" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>retroShell</name></member>
+      <member refid="classvc64_1_1_core_component_1ae7093017e8a84768103c67b24de5c578" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>run</name></member>
+      <member refid="classvc64_1_1_retro_shell_1ad3c6039b1d79ba52877e54111542d408" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>script</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a4cd1eafedcc08b92a4ea8c38c6028451" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>scriptLine</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a0211f9e5772d9ec443d3ca64d66396aa" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>serialize</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a26fb7452be87070f92ab77b0d5f9b807" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>SERIALIZERS</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a8df315c5da8f5364f63d2c375515c959" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>serviceEvent</name></member>
+      <member refid="classvc64_1_1_configurable_1ae56ba20ac3ec36bd84dbeb04aba3e8b0" prot="public" virt="virtual"><scope>vc64::RetroShell</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a51756d7f1f0ed1caa0e247ab6e789a3b" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a689b1a17fac237ca960b062df637" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_retro_shell_1aaf4fdcd0e2de41d0b43c3f6d3f82376e" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>setStream</name></member>
+      <member refid="classvc64_1_1_retro_shell_1ab62df6fe2fa1b45ef419a6baf2aa7c32" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>storage</name></member>
+      <member refid="classvc64_1_1_sub_component_1adce334c26f07e67bc936fbf7c935a759" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1a61d8a843718ff2f39e1575338a527676" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_core_component_1aa8b45810bedbdf78b88710ae8db3f495" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>subComponents</name></member>
+      <member refid="classvc64_1_1_core_component_1afd3f09724b119d73a122c3fc02ac1736" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>suspend</name></member>
+      <member refid="classvc64_1_1_suspendable_1a7f9f608d5b2b9b6e944176cde77b8f85" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>Suspendable</name></member>
+      <member refid="classvc64_1_1_retro_shell_1ab92d0139b29c324f2dddb7af81d46ad6" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>tab</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a0abab302f0159e4fa7c0fcd0e35cea18" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>tabPressed</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a8d1673380cdf57c2bf32d6966a614a9b" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>text</name></member>
+      <member refid="classvc64_1_1_core_component_1a0a4c841e543ecfc6cf988592a933a564" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>trackOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a4832ab0ebef49b591fe6e2785e969c89" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>trackOn</name></member>
+      <member refid="classvc64_1_1_core_component_1aae437c6ccf5f91155464dd4953c3baab" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>trackOnOff</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a4d270ccfb7955b766761412bb1173b92" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>updatePrompt</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a24c5efde497d14b519ad15c9053949" prot="public" virt="non-virtual"><scope>vc64::RetroShell</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9c1a4b73d1514ddc64567d4521abdecd" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>vic</name></member>
+      <member refid="classvc64_1_1_core_component_1a45399f75688ba5ba157a479c3ce76633" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>warpOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a5df664aeda300338d0568d59673ff536" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>warpOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a6760d32857901c415f4d75031d1e2654" prot="protected" virt="non-virtual"><scope>vc64::RetroShell</scope><name>warpOnOff</name></member>
+      <member refid="classvc64_1_1_retro_shell_1a4a8169990b6e5c1ea952a63b460e7c1a" prot="private" virt="non-virtual"><scope>vc64::RetroShell</scope><name>welcome</name></member>
+      <member refid="classvc64_1_1_configurable_1a5aa5d945e768c40297f1bf71e200bde3" prot="public" virt="virtual"><scope>vc64::RetroShell</scope><name>~Configurable</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>vc64::RetroShell</scope><name>~CoreObject</name></member>
+      <member refid="classvc64_1_1_dumpable_1a843e874f633f7dcd8e2f1dcf1d8f0c25" prot="public" virt="virtual"><scope>vc64::RetroShell</scope><name>~Dumpable</name></member>
+      <member refid="classvc64_1_1_suspendable_1a35809d3a4c20db1f096e8dc5c78c49b9" prot="public" virt="virtual"><scope>vc64::RetroShell</scope><name>~Suspendable</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

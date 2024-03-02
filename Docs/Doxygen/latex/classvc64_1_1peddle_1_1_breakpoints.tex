@@ -1,0 +1,88 @@
+\doxysection{vc64\+::peddle\+::Breakpoints Class Reference}
+\hypertarget{classvc64_1_1peddle_1_1_breakpoints}{}\label{classvc64_1_1peddle_1_1_breakpoints}\index{vc64::peddle::Breakpoints@{vc64::peddle::Breakpoints}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1peddle_1_1_breakpoints_a38110eb30b28dc19d21f4a4aa71711fa}\label{classvc64_1_1peddle_1_1_breakpoints_a38110eb30b28dc19d21f4a4aa71711fa} 
+{\bfseries Breakpoints} (\mbox{\hyperlink{classvc64_1_1peddle_1_1_peddle}{Peddle}} \&ref)
+\item 
+void \mbox{\hyperlink{classvc64_1_1peddle_1_1_breakpoints_af52d5ce75fc67f43bafaf35502bb3857}{set\+Needs\+Check}} (bool value) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1peddle_1_1_guards}{vc64\+::peddle\+::\+Guards}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Guards} (\mbox{\hyperlink{classvc64_1_1peddle_1_1_peddle}{Peddle}} \&ref)
+\item 
+long {\bfseries elements} () const
+\item 
+\mbox{\hyperlink{structvc64_1_1peddle_1_1_guard}{Guard}} \texorpdfstring{$\ast$}{*} {\bfseries guard\+With\+Nr} (long nr) const
+\item 
+\mbox{\hyperlink{structvc64_1_1peddle_1_1_guard}{Guard}} \texorpdfstring{$\ast$}{*} {\bfseries guard\+At\+Addr} (u32 addr) const
+\item 
+u32 {\bfseries guard\+Addr} (long nr) const
+\item 
+bool {\bfseries is\+Set\+At} (u32 addr) const
+\item 
+bool {\bfseries is\+Set\+And\+Enabled\+At} (u32 addr) const
+\item 
+bool {\bfseries is\+Set\+And\+Disabled\+At} (u32 addr) const
+\item 
+bool {\bfseries is\+Set\+And\+Conditional\+At} (u32 addr) const
+\item 
+void {\bfseries add\+At} (u32 addr, long skip=0)
+\item 
+void {\bfseries remove\+At} (u32 addr)
+\item 
+void {\bfseries remove} (long nr)
+\item 
+void {\bfseries remove\+All} ()
+\item 
+void {\bfseries replace} (long nr, u32 addr)
+\item 
+bool {\bfseries is\+Enabled} (long nr) const
+\item 
+bool {\bfseries is\+Disabled} (long nr) const
+\item 
+void {\bfseries set\+Enable} (long nr, bool val)
+\item 
+void {\bfseries enable} (long nr)
+\item 
+void {\bfseries disable} (long nr)
+\item 
+void {\bfseries set\+Enable\+At} (u32 addr, bool val)
+\item 
+void {\bfseries enable\+At} (u32 addr)
+\item 
+void {\bfseries disable\+At} (u32 addr)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1peddle_1_1_guards}{vc64\+::peddle\+::\+Guards}}}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classvc64_1_1peddle_1_1_peddle}{Peddle}} \& {\bfseries cpu}
+\item 
+long {\bfseries capacity} = 1
+\item 
+\mbox{\hyperlink{structvc64_1_1peddle_1_1_guard}{Guard}} \texorpdfstring{$\ast$}{*} {\bfseries guards} = new \mbox{\hyperlink{structvc64_1_1peddle_1_1_guard}{Guard}}\mbox{[}1\mbox{]}
+\item 
+long {\bfseries count} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvc64_1_1peddle_1_1_breakpoints_af52d5ce75fc67f43bafaf35502bb3857}\label{classvc64_1_1peddle_1_1_breakpoints_af52d5ce75fc67f43bafaf35502bb3857} 
+\index{vc64::peddle::Breakpoints@{vc64::peddle::Breakpoints}!setNeedsCheck@{setNeedsCheck}}
+\index{setNeedsCheck@{setNeedsCheck}!vc64::peddle::Breakpoints@{vc64::peddle::Breakpoints}}
+\doxysubsubsection{\texorpdfstring{setNeedsCheck()}{setNeedsCheck()}}
+{\footnotesize\ttfamily void vc64\+::peddle\+::\+Breakpoints\+::set\+Needs\+Check (\begin{DoxyParamCaption}\item[{bool}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvc64_1_1peddle_1_1_guards}{vc64\+::peddle\+::\+Guards}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Components/\+CPU/\+Peddle/Peddle\+Debugger.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Components/\+CPU/\+Peddle/Peddle\+Debugger.\+cpp\end{DoxyCompactItemize}

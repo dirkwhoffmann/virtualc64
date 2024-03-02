@@ -1,0 +1,89 @@
+\doxysection{Joystick\+Types.\+h}
+\hypertarget{_joystick_types_8h_source}{}\label{_joystick_types_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/JoystickTypes.h@{/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/JoystickTypes.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Aliases.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Reflection.h"{}}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{comment}{//}}
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ Enumerations}}
+\DoxyCodeLine{00020\ \textcolor{comment}{//}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ enum\_long(GAME\_PAD\_ACTION)}
+\DoxyCodeLine{00023\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ PULL\_UP,\ \ \ \ \ \ \ \textcolor{comment}{//\ Pull\ the\ joystick\ up}}
+\DoxyCodeLine{00025\ \ \ \ \ PULL\_DOWN,\ \ \ \ \ \textcolor{comment}{//\ Pull\ the\ joystick\ down}}
+\DoxyCodeLine{00026\ \ \ \ \ PULL\_LEFT,\ \ \ \ \ \textcolor{comment}{//\ Pull\ the\ joystick\ left}}
+\DoxyCodeLine{00027\ \ \ \ \ PULL\_RIGHT,\ \ \ \ \textcolor{comment}{//\ Pull\ the\ joystick\ right}}
+\DoxyCodeLine{00028\ \ \ \ \ PRESS\_FIRE,\ \ \ \ \textcolor{comment}{//\ Press\ the\ joystick\ button}}
+\DoxyCodeLine{00029\ \ \ \ \ PRESS\_LEFT,\ \ \ \ \textcolor{comment}{//\ Press\ the\ left\ mouse\ button}}
+\DoxyCodeLine{00030\ \ \ \ \ PRESS\_RIGHT,\ \ \ \textcolor{comment}{//\ Press\ the\ right\ mouse\ button}}
+\DoxyCodeLine{00031\ \ \ \ \ RELEASE\_X,\ \ \ \ \ \textcolor{comment}{//\ Move\ back\ to\ neutral\ horizontally}}
+\DoxyCodeLine{00032\ \ \ \ \ RELEASE\_Y,\ \ \ \ \ \textcolor{comment}{//\ Move\ back\ to\ neutral\ vertically}}
+\DoxyCodeLine{00033\ \ \ \ \ RELEASE\_XY,\ \ \ \ \textcolor{comment}{//\ Move\ back\ to\ neutral}}
+\DoxyCodeLine{00034\ \ \ \ \ RELEASE\_FIRE,\ \ \textcolor{comment}{//\ Release\ the\ joystick\ button}}
+\DoxyCodeLine{00035\ \ \ \ \ RELEASE\_LEFT,\ \ \textcolor{comment}{//\ Release\ the\ left\ mouse\ button}}
+\DoxyCodeLine{00036\ \ \ \ \ RELEASE\_RIGHT\ \ \textcolor{comment}{//\ Release\ the\ right\ mouse\ button}}
+\DoxyCodeLine{00037\ \};}
+\DoxyCodeLine{00038\ \textcolor{keyword}{typedef}\ GAME\_PAD\_ACTION\ GamePadAction;}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00041\ \textcolor{keyword}{struct\ }GamePadActionEnum\ :\ util::Reflection<GamePadActionEnum,\ GamePadAction>\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{long}\ min()\ \{\ \textcolor{keywordflow}{return}\ 0;\ \}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{long}\ max()\ \{\ \textcolor{keywordflow}{return}\ RELEASE\_RIGHT;\ \}}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ min()\ \&\&\ value\ <=\ max();\ \}}
+\DoxyCodeLine{00046\ \ \ \ \ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};\ \}}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(GamePadAction\ value)}
+\DoxyCodeLine{00049\ \ \ \ \ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ PULL\_UP:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PULL\_UP"{}};}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ PULL\_DOWN:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PULL\_DOWN"{}};}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ PULL\_LEFT:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PULL\_LEFT"{}};}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ PULL\_RIGHT:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PULL\_RIGHT"{}};}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ PRESS\_FIRE:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PRESS\_FIRE"{}};}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ PRESS\_LEFT:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PRESS\_LEFT"{}};}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ PRESS\_RIGHT:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PRESS\_RIGHT"{}};}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ RELEASE\_X:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RELEASE\_X"{}};}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ RELEASE\_Y:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RELEASE\_Y"{}};}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ RELEASE\_XY:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RELEASE\_XY"{}};}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ RELEASE\_FIRE:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RELEASE\_FIRE"{}};}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ RELEASE\_LEFT:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RELEASE\_LEFT"{}};}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ RELEASE\_RIGHT:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RELEASE\_RIGHT"{}};}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00067\ \ \ \ \ \}}
+\DoxyCodeLine{00068\ \};}
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{comment}{//}}
+\DoxyCodeLine{00073\ \textcolor{comment}{//\ Structures}}
+\DoxyCodeLine{00074\ \textcolor{comment}{//}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00077\ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{bool}\ autofire;}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{bool}\ autofireBursts;}
+\DoxyCodeLine{00080\ \ \ \ \ isize\ autofireBullets;}
+\DoxyCodeLine{00081\ \ \ \ \ isize\ autofireDelay;}
+\DoxyCodeLine{00082\ \}}
+\DoxyCodeLine{00083\ JoystickConfig;}
+
+\end{DoxyCode}

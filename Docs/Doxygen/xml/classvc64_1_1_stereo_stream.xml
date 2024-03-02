@@ -1,0 +1,239 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_stereo_stream" kind="class" language="C++" prot="public" final="yes">
+    <compoundname>vc64::StereoStream</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">util::RingBuffer&lt; SamplePair, 12288 &gt;</basecompoundref>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_stereo_stream_1ad9f4cf1a837557341cda34aeb8a7f061" prot="private" static="no" mutable="no">
+        <type>util::ReentrantMutex</type>
+        <definition>util::ReentrantMutex vc64::StereoStream::mutex</definition>
+        <argsstring></argsstring>
+        <name>mutex</name>
+        <qualifiedname>vc64::StereoStream::mutex</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" line="28" column="26" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" bodystart="28" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_stereo_stream_1a737d24b4fd330c00b7a13b184fac13bb" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::StereoStream::lock</definition>
+        <argsstring>()</argsstring>
+        <name>lock</name>
+        <qualifiedname>vc64::StereoStream::lock</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" line="38" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" bodystart="38" bodyend="38"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_stereo_stream_1a2cf5beddce98c238155b23fc3acf44ea" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::StereoStream::unlock</definition>
+        <argsstring>()</argsstring>
+        <name>unlock</name>
+        <qualifiedname>vc64::StereoStream::unlock</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" line="39" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" bodystart="39" bodyend="39"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_stereo_stream_1a632712721e45aa534a1c98c6d5c73196" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::StereoStream::wipeOut</definition>
+        <argsstring>()</argsstring>
+        <name>wipeOut</name>
+        <qualifiedname>vc64::StereoStream::wipeOut</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" line="42" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" bodystart="42" bodyend="42"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_stereo_stream_1abd9819d9273fe4c4d7645cc1e36a9f90" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::StereoStream::add</definition>
+        <argsstring>(float l, float r)</argsstring>
+        <name>add</name>
+        <qualifiedname>vc64::StereoStream::add</qualifiedname>
+        <param>
+          <type>float</type>
+          <declname>l</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>r</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" line="45" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" bodystart="45" bodyend="45"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_stereo_stream_1a8cf39758da26b0946e56aa3f009acbf7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::StereoStream::alignWritePtr</definition>
+        <argsstring>()</argsstring>
+        <name>alignWritePtr</name>
+        <qualifiedname>vc64::StereoStream::alignWritePtr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" line="48" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.cpp" bodystart="19" bodyend="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_stereo_stream_1ab1a0d044d992c8f167d971079dc83336" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::StereoStream::copyMono</definition>
+        <argsstring>(float *buffer, isize n, Volume &amp;volL, Volume &amp;volR)</argsstring>
+        <name>copyMono</name>
+        <qualifiedname>vc64::StereoStream::copyMono</qualifiedname>
+        <param>
+          <type>float *</type>
+          <declname>buffer</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>n</declname>
+        </param>
+        <param>
+          <type>Volume &amp;</type>
+          <declname>volL</declname>
+        </param>
+        <param>
+          <type>Volume &amp;</type>
+          <declname>volR</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" line="59" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.cpp" bodystart="25" bodyend="46"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_stereo_stream_1a561e1489021da09be071df3fa628f659" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::StereoStream::copyStereo</definition>
+        <argsstring>(float *left, float *right, isize n, Volume &amp;volL, Volume &amp;volR)</argsstring>
+        <name>copyStereo</name>
+        <qualifiedname>vc64::StereoStream::copyStereo</qualifiedname>
+        <param>
+          <type>float *</type>
+          <declname>left</declname>
+        </param>
+        <param>
+          <type>float *</type>
+          <declname>right</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>n</declname>
+        </param>
+        <param>
+          <type>Volume &amp;</type>
+          <declname>volL</declname>
+        </param>
+        <param>
+          <type>Volume &amp;</type>
+          <declname>volR</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" line="60" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.cpp" bodystart="49" bodyend="75"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_stereo_stream_1ab911b5c114e82ad1a4f7a6297b1b039b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::StereoStream::copyInterleaved</definition>
+        <argsstring>(float *buffer, isize n, Volume &amp;volL, Volume &amp;volR)</argsstring>
+        <name>copyInterleaved</name>
+        <qualifiedname>vc64::StereoStream::copyInterleaved</qualifiedname>
+        <param>
+          <type>float *</type>
+          <declname>buffer</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>n</declname>
+        </param>
+        <param>
+          <type>Volume &amp;</type>
+          <declname>volL</declname>
+        </param>
+        <param>
+          <type>Volume &amp;</type>
+          <declname>volR</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" line="61" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.cpp" bodystart="78" bodyend="101"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" line="25" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.h" bodystart="25" bodyend="62"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_stereo_stream_1abd9819d9273fe4c4d7645cc1e36a9f90" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>add</name></member>
+      <member refid="structutil_1_1_ring_buffer_1a6588a2ee6f1557522ba88cddfdb4f117" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>align</name></member>
+      <member refid="classvc64_1_1_stereo_stream_1a8cf39758da26b0946e56aa3f009acbf7" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>alignWritePtr</name></member>
+      <member refid="structutil_1_1_ring_buffer_1ae4218ce9d24a7a0b65334c1fc4a5d30f" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>begin</name></member>
+      <member refid="structutil_1_1_ring_buffer_1a28cfa84b405f5b9e6e84f27d822ac9db" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>cap</name></member>
+      <member refid="structutil_1_1_ring_buffer_1a384d501cfa58cf3a8f8d8eaefa9816c1" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>clear</name></member>
+      <member refid="structutil_1_1_ring_buffer_1a50f1798e6647745d67d9e347e381a391" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>clear</name></member>
+      <member refid="classvc64_1_1_stereo_stream_1ab911b5c114e82ad1a4f7a6297b1b039b" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>copyInterleaved</name></member>
+      <member refid="classvc64_1_1_stereo_stream_1ab1a0d044d992c8f167d971079dc83336" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>copyMono</name></member>
+      <member refid="classvc64_1_1_stereo_stream_1a561e1489021da09be071df3fa628f659" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>copyStereo</name></member>
+      <member refid="structutil_1_1_ring_buffer_1a1899da9078d1b3053857a2f65865a7b9" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>count</name></member>
+      <member refid="structutil_1_1_ring_buffer_1a5e35a7c165ea6517101efa230e555644" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>current</name></member>
+      <member refid="structutil_1_1_ring_buffer_1aa7542fad796aef4ba96d0158976ef351" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>current</name></member>
+      <member refid="structutil_1_1_ring_buffer_1a1abe41594ccc1e7cd6da4c95ffe9ed62" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>currentAddr</name></member>
+      <member refid="structutil_1_1_ring_buffer_1a16baa00ab3229898d9e336b365c857c0" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>elements</name></member>
+      <member refid="structutil_1_1_ring_buffer_1aeba30c8188c9a04eed4373acd72f4f0e" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>end</name></member>
+      <member refid="structutil_1_1_ring_buffer_1a6dca7131ca271cc912c43a79476c8a14" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>fillLevel</name></member>
+      <member refid="structutil_1_1_ring_buffer_1a66a78ac4fda05b582acabc0961a49b0b" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>free</name></member>
+      <member refid="structutil_1_1_ring_buffer_1a6980de6f8b3779982e6a10e10e7ade72" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>isEmpty</name></member>
+      <member refid="structutil_1_1_ring_buffer_1a238c1755b9142deb131b0c3226e98782" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>isFull</name></member>
+      <member refid="classvc64_1_1_stereo_stream_1a737d24b4fd330c00b7a13b184fac13bb" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>lock</name></member>
+      <member refid="classvc64_1_1_stereo_stream_1ad9f4cf1a837557341cda34aeb8a7f061" prot="private" virt="non-virtual"><scope>vc64::StereoStream</scope><name>mutex</name></member>
+      <member refid="structutil_1_1_ring_buffer_1a9d957449acb53b37d21ab67e605b9b7f" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>next</name></member>
+      <member refid="structutil_1_1_ring_buffer_1a8533323cc5ac527404d944c805cdd720" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>prev</name></member>
+      <member refid="structutil_1_1_ring_buffer_1af0a4ac815fd6103714fa9705a8ae9310" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>r</name></member>
+      <member refid="structutil_1_1_ring_buffer_1aa727689dd6fed78656421be1ad3b0ebc" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>read</name></member>
+      <member refid="structutil_1_1_ring_buffer_1a04c1fafb7e5b1a1685ef1216f8657aba" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>read</name></member>
+      <member refid="structutil_1_1_ring_buffer_1a14a3b31e64fa0931a551917c930b17b6" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>RingBuffer</name></member>
+      <member refid="structutil_1_1_ring_buffer_1a6f0ab86ac4a0f15d4d431189d7b6ee1b" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>skip</name></member>
+      <member refid="structutil_1_1_ring_buffer_1a17cbf324d19b4d3f272800934309ea25" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>skip</name></member>
+      <member refid="classvc64_1_1_stereo_stream_1a2cf5beddce98c238155b23fc3acf44ea" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>unlock</name></member>
+      <member refid="structutil_1_1_ring_buffer_1af5fa899dc4a119f5b0f60084c4b2112c" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>w</name></member>
+      <member refid="classvc64_1_1_stereo_stream_1a632712721e45aa534a1c98c6d5c73196" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>wipeOut</name></member>
+      <member refid="structutil_1_1_ring_buffer_1a8bd34f4e8c37d24d8b11753ffa055265" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>write</name></member>
+      <member refid="structutil_1_1_ring_buffer_1ab7dcd2d8d88887dc8ceceb0044aff0dd" prot="public" virt="non-virtual"><scope>vc64::StereoStream</scope><name>~RingBuffer</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

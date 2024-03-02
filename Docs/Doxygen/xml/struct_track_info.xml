@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_track_info" kind="struct" language="C++" prot="public">
+    <compoundname>TrackInfo</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_track_info_1a95316e53297a02da85d3860878fbedc5" prot="public" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize TrackInfo::length</definition>
+        <argsstring></argsstring>
+        <name>length</name>
+        <qualifiedname>TrackInfo::length</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzerTypes.h" line="29" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzerTypes.h" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_track_info_1a50000b420dfb8f676cb649ab29f6cd86" prot="public" static="no" mutable="no">
+        <type>SectorInfo</type>
+        <definition>SectorInfo TrackInfo::sectorInfo[22]</definition>
+        <argsstring>[22]</argsstring>
+        <name>sectorInfo</name>
+        <qualifiedname>TrackInfo::sectorInfo</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzerTypes.h" line="30" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzerTypes.h" bodystart="30" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzerTypes.h" line="27" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzerTypes.h" bodystart="28" bodyend="31"/>
+    <listofallmembers>
+      <member refid="struct_track_info_1a95316e53297a02da85d3860878fbedc5" prot="public" virt="non-virtual"><scope>TrackInfo</scope><name>length</name></member>
+      <member refid="struct_track_info_1a50000b420dfb8f676cb649ab29f6cd86" prot="public" virt="non-virtual"><scope>TrackInfo</scope><name>sectorInfo</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

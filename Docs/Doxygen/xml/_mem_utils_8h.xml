@@ -1,0 +1,704 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="_mem_utils_8h" kind="file" language="C++">
+    <compoundname>MemUtils.h</compoundname>
+    <includes refid="_types_8h" local="yes">Types.h</includes>
+    <includes refid="_checksum_8h" local="yes">Checksum.h</includes>
+    <includes local="no">bit</includes>
+    <includedby refid="_f_s_block_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSBlock.cpp</includedby>
+    <includedby refid="_f_s_dir_entry_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.cpp</includedby>
+    <includedby refid="_d64_file_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Media/D64File.cpp</includedby>
+    <includedby refid="_p_e_t_name_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h</includedby>
+    <includedby refid="_buffer_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Utilities/Buffer.cpp</includedby>
+    <includedby refid="_mem_utils_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.cpp</includedby>
+    <incdepgraph>
+      <node id="6">
+        <label>Checksum.h</label>
+        <link refid="_checksum_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h</label>
+        <link refid="_mem_utils_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>Types.h</label>
+        <link refid="_types_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>bit</label>
+      </node>
+      <node id="5">
+        <label>stdbool.h</label>
+      </node>
+      <node id="4">
+        <label>stdint.h</label>
+      </node>
+      <node id="3">
+        <label>sys/types.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="17">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/Cartridge.h</label>
+        <link refid="_cartridge_8h_source"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/ActionReplay.h</label>
+        <link refid="_action_replay_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Comal80.h</label>
+        <link refid="_comal80_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/CustomCartridges.h</label>
+        <link refid="_custom_cartridges_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Dinamic.h</label>
+        <link refid="_dinamic_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/EasyFlash.h</label>
+        <link refid="_easy_flash_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Epyx.h</label>
+        <link refid="_epyx_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Expert.h</label>
+        <link refid="_expert_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/FinalIII.h</label>
+        <link refid="_final_i_i_i_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/FreezeFrame.h</label>
+        <link refid="_freeze_frame_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Funplay.h</label>
+        <link refid="_funplay_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/GameKiller.h</label>
+        <link refid="_game_killer_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/GeoRam.h</label>
+        <link refid="_geo_ram_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Isepic.h</label>
+        <link refid="_isepic_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Kcs.h</label>
+        <link refid="_kcs_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Kingsoft.h</label>
+        <link refid="_kingsoft_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Mach5.h</label>
+        <link refid="_mach5_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/MagicDesk.h</label>
+        <link refid="_magic_desk_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/MikroAss.h</label>
+        <link refid="_mikro_ass_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Ocean.h</label>
+        <link refid="_ocean_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/PageFox.h</label>
+        <link refid="_page_fox_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="38">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Reu.h</label>
+        <link refid="_reu_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="39">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Rex.h</label>
+        <link refid="_rex_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="40">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/SimonsBasic.h</label>
+        <link refid="_simons_basic_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/StarDos.h</label>
+        <link refid="_star_dos_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="42">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/StructuredBasic.h</label>
+        <link refid="_structured_basic_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="43">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/SuperGames.h</label>
+        <link refid="_super_games_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="44">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/WarpSpeed.h</label>
+        <link refid="_warp_speed_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Westermann.h</label>
+        <link refid="_westermann_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="46">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Zaxxon.h</label>
+        <link refid="_zaxxon_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/C64.h</label>
+        <link refid="_c64_8h_source"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h</label>
+        <link refid="_emulator_8h_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ExpansionPort.h</label>
+        <link refid="_expansion_port_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSBlock.h</label>
+        <link refid="_f_s_block_8h_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h</label>
+        <link refid="_f_s_dir_entry_8h_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h</label>
+        <link refid="_file_system_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Headless.h</label>
+        <link refid="_headless_8h_source"/>
+      </node>
+      <node id="11">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h</label>
+        <link refid="_any_collection_8h_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h</label>
+        <link refid="_any_file_8h_source"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/CRTFile.h</label>
+        <link refid="_c_r_t_file_8h_source"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="48">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/D64File.h</label>
+        <link refid="_d64_file_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/Folder.h</label>
+        <link refid="_folder_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="49">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h</label>
+        <link refid="_g64_file_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/P00File.h</label>
+        <link refid="_p00_file_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h</label>
+        <link refid="_p_e_t_name_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h</label>
+        <link refid="_p_r_g_file_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="50">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/RomFile.h</label>
+        <link refid="_rom_file_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h</label>
+        <link refid="_script_8h_source"/>
+      </node>
+      <node id="52">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h</label>
+        <link refid="_snapshot_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/T64File.h</label>
+        <link refid="_t64_file_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="53">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/TAPFile.h</label>
+        <link refid="_t_a_p_file_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="54">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Disk.h</label>
+        <link refid="_disk_8h_source"/>
+        <childnode refid="55" relation="include">
+        </childnode>
+      </node>
+      <node id="55">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h</label>
+        <link refid="_drive_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h</label>
+        <link refid="_mem_utils_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h</label>
+        <link refid="_virtual_c64_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innernamespace refid="namespaceutil">util</innernamespace>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="_mem_utils_8h_1a5f4a4c0716fc1dcab52a6c236c4bac59" prot="public" static="no">
+        <name>SWAP16</name>
+        <initializer>__builtin_bswap16</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" line="27" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_mem_utils_8h_1abfa5a4adfcdd6d20624d929439d023d0" prot="public" static="no">
+        <name>SWAP32</name>
+        <initializer>__builtin_bswap32</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" line="28" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_mem_utils_8h_1aefc7a477e37469296a0b2a729aab0dfc" prot="public" static="no">
+        <name>SWAP64</name>
+        <initializer>__builtin_bswap64</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" line="29" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_mem_utils_8h_1a3bb095a5bdaa49a8b43355593d668034" prot="public" static="no">
+        <name>R8BE</name>
+        <param><defname>a</defname></param>
+        <initializer>(*(u8 *)(a))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" line="74" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_mem_utils_8h_1a2bd730e8a32e53dc9eaf4053099d2683" prot="public" static="no">
+        <name>R16BE</name>
+        <param><defname>a</defname></param>
+        <initializer>HI_LO(*(u8 *)(a), *(u8 *)((a)+1))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" line="75" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_mem_utils_8h_1a14f833bcbe32d3e4874615814379d227" prot="public" static="no">
+        <name>R32BE</name>
+        <param><defname>a</defname></param>
+        <initializer>HI_HI_LO_LO(*(u8 *)(a), *(u8 *)((a)+1), *(u8 *)((a)+2), *(u8 *)((a)+3))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" line="76" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_mem_utils_8h_1a9851c8f3e8069afc3235c7b0a62d1426" prot="public" static="no">
+        <name>W8BE</name>
+        <param><defname>a</defname></param>
+        <param><defname>v</defname></param>
+        <initializer>{ *(u8 *)(a) = (v); }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" line="85" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_mem_utils_8h_1a7d0ea44d0777a74f97538a19c3ef02e6" prot="public" static="no">
+        <name>W16BE</name>
+        <param><defname>a</defname></param>
+        <param><defname>v</defname></param>
+        <initializer>{ *(u8 *)(a) = HI_BYTE(v); *(u8 *)((a)+1) = LO_BYTE(v); }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" line="86" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_mem_utils_8h_1ada4df3f952df98dc50c4a645950230c4" prot="public" static="no">
+        <name>W32BE</name>
+        <param><defname>a</defname></param>
+        <param><defname>v</defname></param>
+        <initializer>{ W16BE(a,HI_WORD(v)); W16BE((a)+2,LO_WORD(v)); }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" line="87" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="comment">//<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>VirtualC64</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Copyright<sp/>(C)<sp/>Dirk<sp/>W.<sp/>Hoffmann.<sp/>www.dirkwhoffmann.de</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="comment">//<sp/>This<sp/>FILE<sp/>is<sp/>dual-licensed.<sp/>You<sp/>are<sp/>free<sp/>to<sp/>choose<sp/>between:</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>-<sp/>The<sp/>GNU<sp/>General<sp/>Public<sp/>License<sp/>v3<sp/>(or<sp/>any<sp/>later<sp/>version)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>-<sp/>The<sp/>Mozilla<sp/>Public<sp/>License<sp/>v2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="comment">//<sp/>SPDX-License-Identifier:<sp/>GPL-3.0-or-later<sp/>OR<sp/>MPL-2.0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Types.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Checksum.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;bit&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">util<sp/>{</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Reverses<sp/>the<sp/>byte<sp/>ordering<sp/>in<sp/>an<sp/>integer<sp/>value</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>_MSC_VER</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SWAP16<sp/>_byteswap_ushort</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SWAP32<sp/>_byteswap_ulong</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SWAP64<sp/>_byteswap_uint64</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SWAP16<sp/><sp/>__builtin_bswap16</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SWAP32<sp/><sp/>__builtin_bswap32</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SWAP64<sp/><sp/>__builtin_bswap64</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Byte<sp/>order</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Returns<sp/>the<sp/>big<sp/>endian<sp/>representation<sp/>of<sp/>an<sp/>integer<sp/>value</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="keyword">template</highlight><highlight class="normal">&lt;</highlight><highlight class="keyword">typename</highlight><highlight class="normal"><sp/>T&gt;<sp/>T<sp/>bigEndian(T<sp/>x);</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="keyword">template</highlight><highlight class="normal">&lt;&gt;</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/>u16<sp/>bigEndian(u16<sp/>x)</highlight></codeline>
+<codeline lineno="41"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/>(std::endian::native<sp/>==<sp/>std::endian::big)<sp/>{</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>x;</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>SWAP16(x);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="47"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="keyword">template</highlight><highlight class="normal">&lt;&gt;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/>u32<sp/>bigEndian(u32<sp/>x)</highlight></codeline>
+<codeline lineno="51"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/>(std::endian::native<sp/>==<sp/>std::endian::big)<sp/>{</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>x;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>SWAP32(x);</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="57"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="keyword">template</highlight><highlight class="normal">&lt;&gt;</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/>u64<sp/>bigEndian(u64<sp/>x)</highlight></codeline>
+<codeline lineno="61"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/>(std::endian::native<sp/>==<sp/>std::endian::big)<sp/>{</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>x;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>SWAP64(x);</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="67"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Memory<sp/>content</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Reads<sp/>a<sp/>value<sp/>in<sp/>big-endian<sp/>format</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>R8BE(a)<sp/><sp/>(*(u8<sp/>*)(a))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>R16BE(a)<sp/>HI_LO(*(u8<sp/>*)(a),<sp/>*(u8<sp/>*)((a)+1))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>R32BE(a)<sp/>HI_HI_LO_LO(*(u8<sp/>*)(a),<sp/>*(u8<sp/>*)((a)+1),<sp/>*(u8<sp/>*)((a)+2),<sp/>*(u8<sp/>*)((a)+3))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="79"><highlight class="comment">#define<sp/>R8BE_ALIGNED(a)<sp/><sp/><sp/><sp/><sp/>(*(u8<sp/>*)(a))</highlight></codeline>
+<codeline lineno="80"><highlight class="comment">#define<sp/>R16BE_ALIGNED(a)<sp/><sp/><sp/><sp/>(util::bigEndian(*(u16<sp/>*)(a)))</highlight></codeline>
+<codeline lineno="81"><highlight class="comment">#define<sp/>R32BE_ALIGNED(a)<sp/><sp/><sp/><sp/>(util::bigEndian(*(u32<sp/>*)(a)))</highlight></codeline>
+<codeline lineno="82"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Writes<sp/>a<sp/>value<sp/>in<sp/>big-endian<sp/>format</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>W8BE(a,v)<sp/><sp/>{<sp/>*(u8<sp/>*)(a)<sp/>=<sp/>(v);<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>W16BE(a,v)<sp/>{<sp/>*(u8<sp/>*)(a)<sp/>=<sp/>HI_BYTE(v);<sp/>*(u8<sp/>*)((a)+1)<sp/>=<sp/>LO_BYTE(v);<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>W32BE(a,v)<sp/>{<sp/>W16BE(a,HI_WORD(v));<sp/>W16BE((a)+2,LO_WORD(v));<sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="90"><highlight class="comment">#define<sp/>W8BE_ALIGNED(a,v)<sp/><sp/><sp/>{<sp/>*(u8<sp/>*)(a)<sp/>=<sp/>(u8)(v);<sp/>}</highlight></codeline>
+<codeline lineno="91"><highlight class="comment">#define<sp/>W16BE_ALIGNED(a,v)<sp/><sp/>{<sp/>*(u16<sp/>*)(a)<sp/>=<sp/>util::bigEndian((u16)v);<sp/>}</highlight></codeline>
+<codeline lineno="92"><highlight class="comment">#define<sp/>W32BE_ALIGNED(a,v)<sp/><sp/>{<sp/>*(u32<sp/>*)(a)<sp/>=<sp/>util::bigEndian((u32)v);<sp/>}</highlight></codeline>
+<codeline lineno="93"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Checks<sp/>if<sp/>a<sp/>certain<sp/>memory<sp/>area<sp/>is<sp/>all<sp/>zero</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>isZero(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>u8<sp/>*ptr,<sp/>isize<sp/>size);</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Replaces<sp/>the<sp/>first<sp/>occurence<sp/>of<sp/>a<sp/>byte<sp/>or<sp/>character<sp/>sequence<sp/>by<sp/>another<sp/>one</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>replace(u8<sp/>*p,<sp/>isize<sp/>size,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>u8<sp/>*sequence,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>u8<sp/>*substitute);</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>replace(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*p,<sp/>isize<sp/>size,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*sequence,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*substitute);</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Extracts<sp/>all<sp/>readable<sp/>ASCII<sp/>characters<sp/>from<sp/>a<sp/>buffer</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>readAscii(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>u8<sp/>*buf,<sp/>isize<sp/>len,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*result,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>fill<sp/>=<sp/></highlight><highlight class="charliteral">&apos;.&apos;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Prints<sp/>a<sp/>hex<sp/>dump<sp/>of<sp/>a<sp/>buffer<sp/>to<sp/>the<sp/>console</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>hexdump(u8<sp/>*p,<sp/>isize<sp/>size,<sp/>isize<sp/>cols,<sp/>isize<sp/>pad);</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>hexdump(u8<sp/>*p,<sp/>isize<sp/>size,<sp/>isize<sp/>cols<sp/>=<sp/>32);</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>hexdumpWords(u8<sp/>*p,<sp/>isize<sp/>size,<sp/>isize<sp/>cols<sp/>=<sp/>32);</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>hexdumpLongwords(u8<sp/>*p,<sp/>isize<sp/>size,<sp/>isize<sp/>cols<sp/>=<sp/>32);</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h"/>
+  </compounddef>
+</doxygen>

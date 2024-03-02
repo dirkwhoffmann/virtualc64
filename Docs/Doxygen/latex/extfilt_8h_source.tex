@@ -1,0 +1,175 @@
+\doxysection{extfilt.\+h}
+\hypertarget{extfilt_8h_source}{}\label{extfilt_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h@{/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/extfilt.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ \ This\ file\ is\ part\ of\ reSID,\ a\ MOS6581\ SID\ emulator\ engine.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ \ Copyright\ (C)\ 2010\ \ Dag\ Lem\ <resid@nimrod.no>}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ \ This\ program\ is\ free\ software;\ you\ can\ redistribute\ it\ and/or\ modify}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ \ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ the\ Free\ Software\ Foundation;\ either\ version\ 2\ of\ the\ License,\ or}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ \ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ \ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{//}}
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ \ along\ with\ this\ program;\ if\ not,\ write\ to\ the\ Free\ Software}}
+\DoxyCodeLine{00017\ \textcolor{comment}{//\ \ Foundation,\ Inc.,\ 59\ Temple\ Place,\ Suite\ 330,\ Boston,\ MA\ \ 02111-\/1307\ \ USA}}
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#ifndef\ RESID\_EXTFILT\_H}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ RESID\_EXTFILT\_H}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ "{}resid-\/config.h"{}}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{namespace\ }reSID}
+\DoxyCodeLine{00026\ \{}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00029\ \textcolor{comment}{//\ The\ audio\ output\ stage\ in\ a\ Commodore\ 64\ consists\ of\ two\ STC\ networks,}}
+\DoxyCodeLine{00030\ \textcolor{comment}{//\ a\ low-\/pass\ filter\ with\ 3-\/dB\ frequency\ 16kHz\ followed\ by\ a\ high-\/pass}}
+\DoxyCodeLine{00031\ \textcolor{comment}{//\ filter\ with\ 3-\/dB\ frequency\ 16Hz\ (the\ latter\ provided\ an\ audio\ equipment}}
+\DoxyCodeLine{00032\ \textcolor{comment}{//\ input\ impedance\ of\ 1kOhm).}}
+\DoxyCodeLine{00033\ \textcolor{comment}{//\ The\ STC\ networks\ are\ connected\ with\ a\ BJT\ supposedly\ meant\ to\ act\ as}}
+\DoxyCodeLine{00034\ \textcolor{comment}{//\ a\ unity\ gain\ buffer,\ which\ is\ not\ really\ how\ it\ works.\ A\ more\ elaborate}}
+\DoxyCodeLine{00035\ \textcolor{comment}{//\ model\ would\ include\ the\ BJT,\ however\ DC\ circuit\ analysis\ yields\ BJT}}
+\DoxyCodeLine{00036\ \textcolor{comment}{//\ base-\/emitter\ and\ emitter-\/base\ impedances\ sufficiently\ low\ to\ produce}}
+\DoxyCodeLine{00037\ \textcolor{comment}{//\ additional\ low-\/pass\ and\ high-\/pass\ 3dB-\/frequencies\ in\ the\ order\ of\ hundreds}}
+\DoxyCodeLine{00038\ \textcolor{comment}{//\ of\ kHz.\ This\ calls\ for\ a\ sampling\ frequency\ of\ several\ MHz,\ which\ is\ far}}
+\DoxyCodeLine{00039\ \textcolor{comment}{//\ too\ high\ for\ practical\ use.}}
+\DoxyCodeLine{00040\ \textcolor{comment}{//}}
+\DoxyCodeLine{00041\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 9/12V}}
+\DoxyCodeLine{00042\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/+}}
+\DoxyCodeLine{00043\ \textcolor{comment}{//\ audio|\ \ \ \ \ \ \ 10k\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00044\ \textcolor{comment}{//\ \ \ \ \ \ +-\/-\/-\/-\/+-\/-\/-\/R-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/(K)\ \ \ \ \ \ \ \ \ \ +-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00045\ \textcolor{comment}{//\ \ out\ |\ \ \ \ |\ \ \ \ \ \ \ |\ \ \ \ \ \ \ \ |\ \ \ \ \ \ |\ \ \ \ \ \ \ \ \ \ \ |audio}}
+\DoxyCodeLine{00046\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/+\ \ \ \ R\ 1k\ \ \ \ C\ 1000\ \ \ |\ \ \ \ \ \ |\ \ \ \ 10\ uF\ \ |}}
+\DoxyCodeLine{00047\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ |\ \ \ \ \ \ \ |\ \ pF\ \ \ \ +-\/C-\/-\/-\/-\/+-\/-\/-\/-\/-\/C-\/-\/-\/-\/-\/+\ 1K}}
+\DoxyCodeLine{00048\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 470\ \ \ |\ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00049\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ GND\ \ \ \ \ GND\ \ \ \ \ \ \ \ \ pF\ \ \ R\ 1K\ \ \ \ \ \ \ \ |\ amp}}
+\DoxyCodeLine{00050\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ \ \ \ \ \ \ \ \ \ \ +-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00051\ \textcolor{comment}{//}}
+\DoxyCodeLine{00052\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ GND}}
+\DoxyCodeLine{00053\ \textcolor{comment}{//}}
+\DoxyCodeLine{00054\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00055\ \textcolor{keyword}{class\ }ExternalFilter}
+\DoxyCodeLine{00056\ \{}
+\DoxyCodeLine{00057\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00058\ \ \ ExternalFilter();}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \textcolor{keywordtype}{void}\ enable\_filter(\textcolor{keywordtype}{bool}\ enable);}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \textcolor{keywordtype}{void}\ clock(\textcolor{keywordtype}{short}\ Vi);}
+\DoxyCodeLine{00063\ \ \ \textcolor{keywordtype}{void}\ clock(cycle\_count\ delta\_t,\ \textcolor{keywordtype}{short}\ Vi);}
+\DoxyCodeLine{00064\ \ \ \textcolor{keywordtype}{void}\ reset();}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \textcolor{comment}{//\ Audio\ output\ (16\ bits).}}
+\DoxyCodeLine{00067\ \ \ \textcolor{keywordtype}{int}\ output();}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00070\ \ \ \textcolor{comment}{//\ Filter\ enabled.}}
+\DoxyCodeLine{00071\ \ \ \textcolor{keywordtype}{bool}\ enabled;}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \textcolor{comment}{//\ State\ of\ filters\ (27\ bits).}}
+\DoxyCodeLine{00074\ \ \ \textcolor{keywordtype}{int}\ Vlp;\ \textcolor{comment}{//\ lowpass}}
+\DoxyCodeLine{00075\ \ \ \textcolor{keywordtype}{int}\ Vhp;\ \textcolor{comment}{//\ highpass}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \textcolor{comment}{//\ Cutoff\ frequencies.}}
+\DoxyCodeLine{00078\ \ \ \textcolor{keywordtype}{int}\ w0lp\_1\_s7;}
+\DoxyCodeLine{00079\ \ \ \textcolor{keywordtype}{int}\ w0hp\_1\_s17;}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }SID;}
+\DoxyCodeLine{00082\ \};}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00086\ \textcolor{comment}{//\ Inline\ functions.}}
+\DoxyCodeLine{00087\ \textcolor{comment}{//\ The\ following\ functions\ are\ defined\ inline\ because\ they\ are\ called\ every}}
+\DoxyCodeLine{00088\ \textcolor{comment}{//\ time\ a\ sample\ is\ calculated.}}
+\DoxyCodeLine{00089\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{preprocessor}{\#if\ RESID\_INLINING\ ||\ defined(RESID\_EXTFILT\_CC)}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00094\ \textcolor{comment}{//\ SID\ clocking\ -\/\ 1\ cycle.}}
+\DoxyCodeLine{00095\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00096\ RESID\_INLINE}
+\DoxyCodeLine{00097\ \textcolor{keywordtype}{void}\ ExternalFilter::clock(\textcolor{keywordtype}{short}\ Vi)}
+\DoxyCodeLine{00098\ \{}
+\DoxyCodeLine{00099\ \ \ \textcolor{comment}{//\ This\ is\ handy\ for\ testing.}}
+\DoxyCodeLine{00100\ \ \ \textcolor{keywordflow}{if}\ (unlikely(!enabled))\ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{comment}{//\ Vo\ \ =\ Vlp\ -\/\ Vhp;}}
+\DoxyCodeLine{00102\ \ \ \ \ Vlp\ =\ Vi\ <<\ 11;}
+\DoxyCodeLine{00103\ \ \ \ \ Vhp\ =\ 0;}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00105\ \ \ \}}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \textcolor{comment}{//\ Calculate\ filter\ outputs.}}
+\DoxyCodeLine{00108\ \ \ \textcolor{comment}{//\ Vlp\ =\ Vlp\ +\ w0lp*(Vi\ -\/\ Vlp)*delta\_t;}}
+\DoxyCodeLine{00109\ \ \ \textcolor{comment}{//\ Vhp\ =\ Vhp\ +\ w0hp*(Vlp\ -\/\ Vhp)*delta\_t;}}
+\DoxyCodeLine{00110\ \ \ \textcolor{comment}{//\ Vo\ \ =\ Vlp\ -\/\ Vhp;}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \textcolor{keywordtype}{int}\ dVlp\ =\ w0lp\_1\_s7*int((\textcolor{keywordtype}{unsigned}(Vi)\ <<\ 11)\ -\/\ \textcolor{keywordtype}{unsigned}(Vlp))\ >>\ 7;}
+\DoxyCodeLine{00113\ \ \ \textcolor{keywordtype}{int}\ dVhp\ =\ w0hp\_1\_s17*(Vlp\ -\/\ Vhp)\ >>\ 17;}
+\DoxyCodeLine{00114\ \ \ Vlp\ +=\ dVlp;}
+\DoxyCodeLine{00115\ \ \ Vhp\ +=\ dVhp;}
+\DoxyCodeLine{00116\ \}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00119\ \textcolor{comment}{//\ SID\ clocking\ -\/\ delta\_t\ cycles.}}
+\DoxyCodeLine{00120\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00121\ RESID\_INLINE}
+\DoxyCodeLine{00122\ \textcolor{keywordtype}{void}\ ExternalFilter::clock(cycle\_count\ delta\_t,\ \textcolor{keywordtype}{short}\ Vi)}
+\DoxyCodeLine{00123\ \{}
+\DoxyCodeLine{00124\ \ \ \textcolor{comment}{//\ This\ is\ handy\ for\ testing.}}
+\DoxyCodeLine{00125\ \ \ \textcolor{keywordflow}{if}\ (unlikely(!enabled))\ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{comment}{//\ Vo\ \ =\ Vlp\ -\/\ Vhp;}}
+\DoxyCodeLine{00127\ \ \ \ \ Vlp\ =\ Vi\ <<\ 11;}
+\DoxyCodeLine{00128\ \ \ \ \ Vhp\ =\ 0;}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00130\ \ \ \}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \textcolor{comment}{//\ Maximum\ delta\ cycles\ for\ the\ external\ filter\ to\ work\ satisfactorily}}
+\DoxyCodeLine{00133\ \ \ \textcolor{comment}{//\ is\ approximately\ 8.}}
+\DoxyCodeLine{00134\ \ \ cycle\_count\ delta\_t\_flt\ =\ 8;}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \ \ \textcolor{keywordflow}{while}\ (delta\_t)\ \{}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keywordflow}{if}\ (unlikely(delta\_t\ <\ delta\_t\_flt))\ \{}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ delta\_t\_flt\ =\ delta\_t;}
+\DoxyCodeLine{00139\ \ \ \ \ \}}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{comment}{//\ Calculate\ filter\ outputs.}}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{comment}{//\ Vlp\ =\ Vlp\ +\ w0lp*(Vi\ -\/\ Vlp)*delta\_t;}}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{comment}{//\ Vhp\ =\ Vhp\ +\ w0hp*(Vlp\ -\/\ Vhp)*delta\_t;}}
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{comment}{//\ Vo\ \ =\ Vlp\ -\/\ Vhp;}}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordtype}{int}\ dVlp\ =\ (w0lp\_1\_s7*delta\_t\_flt\ >>\ 3)*((Vi\ <<\ 11)\ -\/\ Vlp)\ >>\ 4;}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordtype}{int}\ dVhp\ =\ (w0hp\_1\_s17*delta\_t\_flt\ >>\ 3)*(Vlp\ -\/\ Vhp)\ >>\ 14;}
+\DoxyCodeLine{00148\ \ \ \ \ Vlp\ +=\ dVlp;}
+\DoxyCodeLine{00149\ \ \ \ \ Vhp\ +=\ dVhp;}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ delta\_t\ -\/=\ delta\_t\_flt;}
+\DoxyCodeLine{00152\ \ \ \}}
+\DoxyCodeLine{00153\ \}}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00157\ \textcolor{comment}{//\ Audio\ output\ (16\ bits).}}
+\DoxyCodeLine{00158\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00159\ RESID\_INLINE}
+\DoxyCodeLine{00160\ \textcolor{keywordtype}{int}\ ExternalFilter::output()}
+\DoxyCodeLine{00161\ \{}
+\DoxyCodeLine{00162\ \ \ \textcolor{keywordflow}{return}\ (Vlp\ -\/\ Vhp)\ >>\ 11;}
+\DoxyCodeLine{00163\ \}}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ RESID\_INLINING\ ||\ defined(RESID\_EXTFILT\_CC)}}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \}\ \textcolor{comment}{//\ namespace\ reSID}}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ not\ RESID\_EXTFILT\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,597 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_neos_mouse" kind="class" language="C++" prot="public" final="yes">
+    <compoundname>vc64::NeosMouse</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">vc64::SubComponent</basecompoundref>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_neos_mouse_1aad528a6fda682d324570bfc09938bf33" prot="private" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 vc64::NeosMouse::mouseX</definition>
+        <argsstring></argsstring>
+        <name>mouseX</name>
+        <qualifiedname>vc64::NeosMouse::mouseX</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="22" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_neos_mouse_1a3249ade06920338874c430df70ba0d58" prot="private" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 vc64::NeosMouse::mouseY</definition>
+        <argsstring></argsstring>
+        <name>mouseY</name>
+        <qualifiedname>vc64::NeosMouse::mouseY</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="23" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_neos_mouse_1aa6ad7593f6f4cebcf885b35d73784c43" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::NeosMouse::leftButton</definition>
+        <argsstring></argsstring>
+        <name>leftButton</name>
+        <qualifiedname>vc64::NeosMouse::leftButton</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="26" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_neos_mouse_1a73071e0040b74a0a8f3a27447757e5ba" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::NeosMouse::rightButton</definition>
+        <argsstring></argsstring>
+        <name>rightButton</name>
+        <qualifiedname>vc64::NeosMouse::rightButton</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="27" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_neos_mouse_1a0dd4832e3734174617aa87385e0eb28c" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int vc64::NeosMouse::dividerX</definition>
+        <argsstring></argsstring>
+        <name>dividerX</name>
+        <qualifiedname>vc64::NeosMouse::dividerX</qualifiedname>
+        <initializer>= 512</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="30" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_neos_mouse_1a0ddb7000c37513a94b5ee97b1b18c2e4" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int vc64::NeosMouse::dividerY</definition>
+        <argsstring></argsstring>
+        <name>dividerY</name>
+        <qualifiedname>vc64::NeosMouse::dividerY</qualifiedname>
+        <initializer>= 256</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="31" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="31" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_neos_mouse_1aafb060eb2094db0b166129421ff835e3" prot="private" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 vc64::NeosMouse::shiftX</definition>
+        <argsstring></argsstring>
+        <name>shiftX</name>
+        <qualifiedname>vc64::NeosMouse::shiftX</qualifiedname>
+        <initializer>= 127</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="34" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_neos_mouse_1a81e66222321d7d4f71b29584b5ba0da6" prot="private" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 vc64::NeosMouse::shiftY</definition>
+        <argsstring></argsstring>
+        <name>shiftY</name>
+        <qualifiedname>vc64::NeosMouse::shiftY</qualifiedname>
+        <initializer>= 127</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="35" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_neos_mouse_1a4fb22f8956246f70d3f701be33b3fa63" prot="private" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::NeosMouse::state</definition>
+        <argsstring></argsstring>
+        <name>state</name>
+        <qualifiedname>vc64::NeosMouse::state</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="41" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_neos_mouse_1a83212e2b17d3a6a83419413b6e6948df" prot="private" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 vc64::NeosMouse::triggerCycle</definition>
+        <argsstring></argsstring>
+        <name>triggerCycle</name>
+        <qualifiedname>vc64::NeosMouse::triggerCycle</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="44" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_neos_mouse_1a897aad595822e15d05151415ee5aa0aa" prot="private" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 vc64::NeosMouse::latchedX</definition>
+        <argsstring></argsstring>
+        <name>latchedX</name>
+        <qualifiedname>vc64::NeosMouse::latchedX</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="47" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_neos_mouse_1a48aa886d2d1a08e62ce359c8ace368b5" prot="private" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 vc64::NeosMouse::latchedY</definition>
+        <argsstring></argsstring>
+        <name>latchedY</name>
+        <qualifiedname>vc64::NeosMouse::latchedY</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="48" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_neos_mouse_1a989a5ecdaa42768e035beb9140e38d80" prot="private" static="no" mutable="no">
+        <type>i8</type>
+        <definition>i8 vc64::NeosMouse::deltaX</definition>
+        <argsstring></argsstring>
+        <name>deltaX</name>
+        <qualifiedname>vc64::NeosMouse::deltaX</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="51" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_neos_mouse_1a84f8089ca0dd743c15de582331e3ada0" prot="private" static="no" mutable="no">
+        <type>i8</type>
+        <definition>i8 vc64::NeosMouse::deltaY</definition>
+        <argsstring></argsstring>
+        <name>deltaY</name>
+        <qualifiedname>vc64::NeosMouse::deltaY</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="52" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_neos_mouse_1a0ddabfc071486eb12c5cee49401294a1" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::NeosMouse::NeosMouse</definition>
+        <argsstring>(C64 &amp;ref)</argsstring>
+        <name>NeosMouse</name>
+        <qualifiedname>vc64::NeosMouse::NeosMouse</qualifiedname>
+        <param>
+          <type>C64 &amp;</type>
+          <declname>ref</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="61" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="61" bodyend="61"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_neos_mouse_1a7aaa68ae8dffaee67196a7f872e35ced" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>NeosMouse &amp;</type>
+        <definition>NeosMouse &amp; vc64::NeosMouse::operator=</definition>
+        <argsstring>(const NeosMouse &amp;other)</argsstring>
+        <name>operator=</name>
+        <qualifiedname>vc64::NeosMouse::operator=</qualifiedname>
+        <param>
+          <type>const NeosMouse &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="79" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="79" bodyend="79"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_neos_mouse_1a95702194ee64bcde3c7e4d0bf1378b6d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>class T</type>
+          </param>
+        </templateparamlist>
+        <type>void</type>
+        <definition>void vc64::NeosMouse::serialize</definition>
+        <argsstring>(T &amp;worker)</argsstring>
+        <name>serialize</name>
+        <qualifiedname>vc64::NeosMouse::serialize</qualifiedname>
+        <param>
+          <type>T &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="80" column="22" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="80" bodyend="80"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_neos_mouse_1ac43b6cfc9dd937748e5e43542e2ccc65" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::NeosMouse::SERIALIZERS</definition>
+        <argsstring>(serialize)</argsstring>
+        <name>SERIALIZERS</name>
+        <qualifiedname>vc64::NeosMouse::SERIALIZERS</qualifiedname>
+        <param>
+          <type>serialize</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="80" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_neos_mouse_1ab33d7767194b9eb0f2284f570bf80c3f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::NeosMouse::_reset</definition>
+        <argsstring>(bool hard) override</argsstring>
+        <name>_reset</name>
+        <qualifiedname>vc64::NeosMouse::_reset</qualifiedname>
+        <param>
+          <type>bool</type>
+          <declname>hard</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="81" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.cpp" bodystart="22" bodyend="34"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_neos_mouse_1a0ebfb74323ec32716e543eaa2de2f062" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::NeosMouse::setLeftMouseButton</definition>
+        <argsstring>(bool value)</argsstring>
+        <name>setLeftMouseButton</name>
+        <qualifiedname>vc64::NeosMouse::setLeftMouseButton</qualifiedname>
+        <param>
+          <type>bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="91" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="91" bodyend="91"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_neos_mouse_1a071b0f6c781435bea2822fc54c9a5755" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::NeosMouse::setRightMouseButton</definition>
+        <argsstring>(bool value)</argsstring>
+        <name>setRightMouseButton</name>
+        <qualifiedname>vc64::NeosMouse::setRightMouseButton</qualifiedname>
+        <param>
+          <type>bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="92" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="92" bodyend="92"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_neos_mouse_1af5117e0dbde6258a76fc5c0c0573e481" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::NeosMouse::readPotX</definition>
+        <argsstring>() const</argsstring>
+        <name>readPotX</name>
+        <qualifiedname>vc64::NeosMouse::readPotX</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="95" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.cpp" bodystart="37" bodyend="40"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_neos_mouse_1a38eab8335fa438a16b8c97120ddb3952" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::NeosMouse::readPotY</definition>
+        <argsstring>() const</argsstring>
+        <name>readPotY</name>
+        <qualifiedname>vc64::NeosMouse::readPotY</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="96" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.cpp" bodystart="43" bodyend="46"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_neos_mouse_1a628969c008a84f9f46be85a5aba5a13d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::NeosMouse::updateControlPort</definition>
+        <argsstring>(i64 targetX, i64 targetY)</argsstring>
+        <name>updateControlPort</name>
+        <qualifiedname>vc64::NeosMouse::updateControlPort</qualifiedname>
+        <param>
+          <type>i64</type>
+          <declname>targetX</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>targetY</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="99" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.cpp" bodystart="49" bodyend="56"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_neos_mouse_1ae696a25ffd3a2e44c25856f536573c57" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::NeosMouse::readControlPort</definition>
+        <argsstring>() const</argsstring>
+        <name>readControlPort</name>
+        <qualifiedname>vc64::NeosMouse::readControlPort</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="102" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.cpp" bodystart="59" bodyend="94"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_neos_mouse_1a01f1752c3b69a3cf5daabf791af1befb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::NeosMouse::risingStrobe</definition>
+        <argsstring>(i64 targetX, i64 targetY)</argsstring>
+        <name>risingStrobe</name>
+        <qualifiedname>vc64::NeosMouse::risingStrobe</qualifiedname>
+        <param>
+          <type>i64</type>
+          <declname>targetX</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>targetY</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="105" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.cpp" bodystart="97" bodyend="117"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_neos_mouse_1a5389a6d5aedb07e90ea7f2d88111069a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::NeosMouse::fallingStrobe</definition>
+        <argsstring>(i64 targetX, i64 targetY)</argsstring>
+        <name>fallingStrobe</name>
+        <qualifiedname>vc64::NeosMouse::fallingStrobe</qualifiedname>
+        <param>
+          <type>i64</type>
+          <declname>targetX</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>targetY</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="106" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.cpp" bodystart="120" bodyend="141"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvc64_1_1_neos_mouse_1ad5a56c1c002cad72afc525e0eb146bfc" prot="private" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::NeosMouse::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::NeosMouse::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="70" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="70" bodyend="70"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_neos_mouse_1a4e5a8770e51419af4612edf9b118906f" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::NeosMouse::latchPosition</definition>
+        <argsstring>(i64 targetX, i64 targetY)</argsstring>
+        <name>latchPosition</name>
+        <qualifiedname>vc64::NeosMouse::latchPosition</qualifiedname>
+        <param>
+          <type>i64</type>
+          <declname>targetX</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>targetY</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="111" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.cpp" bodystart="144" bodyend="175"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" line="19" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h" bodystart="19" bodyend="112"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_core_component_1aa7dd5e7a2020ad2348fea3edd724f538" prot="public" virt="virtual"><scope>vc64::NeosMouse</scope><name>_initialize</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1ab33d7767194b9eb0f2284f570bf80c3f" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>_reset</name></member>
+      <member refid="classvc64_1_1_configurable_1a947ce65dab57ea328e9959014b7f9dfb" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>argList</name></member>
+      <member refid="classvc64_1_1_sub_component_1a7691c720c74fd0e19a63978efe4cd851" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>c64</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae066edf64de901ee3f3b65eb0c02b202" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>cia1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9fe5ed30db982340524f7dcbf6fbf34c" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>cia2</name></member>
+      <member refid="classvc64_1_1_core_component_1a18f454d0d572fa1b2e5023c4eaba6d07" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>CoreComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1acaece01018438ab083bd38a220d34f10" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>cpu</name></member>
+      <member refid="classvc64_1_1_sub_component_1a157963272dd927ec5c77b4090be57e89" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>datasette</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a989a5ecdaa42768e035beb9140e38d80" prot="private" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>deltaX</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a84f8089ca0dd743c15de582331e3ada0" prot="private" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>deltaY</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a0dd4832e3734174617aa87385e0eb28c" prot="private" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>dividerX</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a0ddb7000c37513a94b5ee97b1b18c2e4" prot="private" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>dividerY</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae85ede3d9ed8315d992eed300932eaf7" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>drive</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae44705f9377cf06d91323d8dca13a8a8" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>drive8</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5d876614a31fb29b8317350ed6a3158b" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>drive9</name></member>
+      <member refid="classvc64_1_1_configurable_1a459505cd1eed2c174bf78b29808ad07b" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>dumpConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1a606e5261773126791e44ee8238f5876e" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>emulator</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5dc793ff2aa4ff3b36fdd061fd3f816b" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>expansionport</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a5389a6d5aedb07e90ea7f2d88111069a" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>fallingStrobe</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1ad5a56c1c002cad72afc525e0eb146bfc" prot="private" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_configurable_1ae5d8ab4ec08470113b7123cd2ffdf4af" prot="public" virt="virtual"><scope>vc64::NeosMouse</scope><name>getOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a80a7c09f7f0d153cb87000c9d82f" prot="public" virt="virtual"><scope>vc64::NeosMouse</scope><name>getOptions</name></member>
+      <member refid="classvc64_1_1_core_component_1a936940e4e5cf0c617935ea3070bcbd4d" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>halt</name></member>
+      <member refid="classvc64_1_1_sub_component_1add6521bbcffbe5ca85afd6105d54e5ad" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>host</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5c8620301453e0b91374683d0c7b28ab" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>iec</name></member>
+      <member refid="classvc64_1_1_core_component_1a250f9ac5bbc00892bf195ec2ef523a2b" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>initialize</name></member>
+      <member refid="classvc64_1_1_core_component_1a7b95994acc6e7ba59d4b2f50f2dc8df5" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>isEmulatorThread</name></member>
+      <member refid="classvc64_1_1_core_component_1a0e8c3dd97f64e2487fba4c22ba66d487" prot="public" virt="virtual"><scope>vc64::NeosMouse</scope><name>isHalted</name></member>
+      <member refid="classvc64_1_1_core_component_1a4f0f63ef65776aceecb329d03c3b5f17" prot="public" virt="virtual"><scope>vc64::NeosMouse</scope><name>isPaused</name></member>
+      <member refid="classvc64_1_1_core_component_1ac4dadc5fecfac3cd2dfb7e8b70767b42" prot="public" virt="virtual"><scope>vc64::NeosMouse</scope><name>isPoweredOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a0f9912b36ec181a0410d4f564baef127" prot="public" virt="virtual"><scope>vc64::NeosMouse</scope><name>isPoweredOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a77bf78d982163a6797f24d23106c5098" prot="public" virt="virtual"><scope>vc64::NeosMouse</scope><name>isReady</name></member>
+      <member refid="classvc64_1_1_core_component_1a121143d811f91157272bb67a0ca48d8f" prot="public" virt="virtual"><scope>vc64::NeosMouse</scope><name>isRunning</name></member>
+      <member refid="classvc64_1_1_core_component_1a490512fe63211f42eb57e7ed59f9b6a1" prot="public" virt="virtual"><scope>vc64::NeosMouse</scope><name>isSuspended</name></member>
+      <member refid="classvc64_1_1_configurable_1af6260d08823e90bdb51d1bf7bb596c35" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>isValidOption</name></member>
+      <member refid="classvc64_1_1_sub_component_1aa9a0c663f877801b651969f86dbf2aae" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>keyboard</name></member>
+      <member refid="classvc64_1_1_configurable_1a0d6caf30eeaae95d1898d08cf3ca8e28" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>keyList</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a897aad595822e15d05151415ee5aa0aa" prot="private" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>latchedX</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a48aa886d2d1a08e62ce359c8ace368b5" prot="private" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>latchedY</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a4e5a8770e51419af4612edf9b118906f" prot="private" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>latchPosition</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1aa6ad7593f6f4cebcf885b35d73784c43" prot="private" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>leftButton</name></member>
+      <member refid="classvc64_1_1_sub_component_1ad160280522e5c27cd731289b9396c44f" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>mem</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1aad528a6fda682d324570bfc09938bf33" prot="private" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>mouseX</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a3249ade06920338874c430df70ba0d58" prot="private" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>mouseY</name></member>
+      <member refid="classvc64_1_1_sub_component_1a478be9b50f9e5c4c07dd2830e9964711" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>msgQueue</name></member>
+      <member refid="classvc64_1_1_synchronizable_1a595f618a9c91e91148882a79760f0f0f" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>mutex</name></member>
+      <member refid="classvc64_1_1_sub_component_1a712af82456373bd6e688a174ac756bcb" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>muxer</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a0ddabfc071486eb12c5cee49401294a1" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>NeosMouse</name></member>
+      <member refid="classvc64_1_1_core_component_1af47e1017ec1d938b1b613b36bdc8be57" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>operator!=</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a7aaa68ae8dffaee67196a7f872e35ced" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>operator=</name></member>
+      <member refid="classvc64_1_1_core_component_1aae8879dd8b62291254ec498fa9b2e2cf" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>operator==</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9dfb837b941848b6b87e6a57da28348d" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>parCable</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a9c059588a19eeba521b79ff28e3dd8" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>pause</name></member>
+      <member refid="classvc64_1_1_sub_component_1a8c0718eb9d42f335961eaed51ba7cb8d" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>port1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a217a6ea39994b6ecae4e1ebd9cc220e7" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>port2</name></member>
+      <member refid="classvc64_1_1_core_component_1a05e1ba6d62516f796256f1cc394bf2f5" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>powerOff</name></member>
+      <member refid="classvc64_1_1_core_component_1ad606699d83a017fbee805e8d40245475" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>powerOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a74ab4149c152b98c6d5cc15bbac63887" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>powerOnOff</name></member>
+      <member refid="classvc64_1_1_sub_component_1a4fa2405b078fe61c302ff1c8047d9c4f" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>powerSupply</name></member>
+      <member refid="classvc64_1_1_sub_component_1aba0c66cd1ce8a6d1c3529825afdb4a02" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>prefix</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1ae696a25ffd3a2e44c25856f536573c57" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>readControlPort</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1af5117e0dbde6258a76fc5c0c0573e481" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>readPotX</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a38eab8335fa438a16b8c97120ddb3952" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>readPotY</name></member>
+      <member refid="classvc64_1_1_sub_component_1a2e1d97a260e9d4d637b0f8fb95fbf1d8" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>recorder</name></member>
+      <member refid="classvc64_1_1_sub_component_1afe6a4ca2f661ec44fd67637b14647436" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>regressionTester</name></member>
+      <member refid="classvc64_1_1_core_component_1a3910be506f5067fe6cf31a69dcd76b0c" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>reset</name></member>
+      <member refid="classvc64_1_1_core_component_1a082147809d967c961a7ac7c15c5f072a" prot="public" virt="virtual"><scope>vc64::NeosMouse</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1aec76d436c865101509bceb2daf47890b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::NeosMouse</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1af9ec0fb5e73fd1f0433a4f3bfcd39d9b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::NeosMouse</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1aab9305af3e38cc19bd1067ca87fe3e0d" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>resume</name></member>
+      <member refid="classvc64_1_1_sub_component_1ada641e2232ca8bdd3ef8fbecc883658d" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>retroShell</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a73071e0040b74a0a8f3a27447757e5ba" prot="private" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>rightButton</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a01f1752c3b69a3cf5daabf791af1befb" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>risingStrobe</name></member>
+      <member refid="classvc64_1_1_core_component_1ae7093017e8a84768103c67b24de5c578" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>run</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a95702194ee64bcde3c7e4d0bf1378b6d" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>serialize</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1ac43b6cfc9dd937748e5e43542e2ccc65" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>SERIALIZERS</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a0ebfb74323ec32716e543eaa2de2f062" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>setLeftMouseButton</name></member>
+      <member refid="classvc64_1_1_configurable_1ae56ba20ac3ec36bd84dbeb04aba3e8b0" prot="public" virt="virtual"><scope>vc64::NeosMouse</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a51756d7f1f0ed1caa0e247ab6e789a3b" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a689b1a17fac237ca960b062df637" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a071b0f6c781435bea2822fc54c9a5755" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>setRightMouseButton</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1aafb060eb2094db0b166129421ff835e3" prot="private" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>shiftX</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a81e66222321d7d4f71b29584b5ba0da6" prot="private" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>shiftY</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a4fb22f8956246f70d3f701be33b3fa63" prot="private" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>state</name></member>
+      <member refid="classvc64_1_1_sub_component_1adce334c26f07e67bc936fbf7c935a759" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1a61d8a843718ff2f39e1575338a527676" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_core_component_1aa8b45810bedbdf78b88710ae8db3f495" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>subComponents</name></member>
+      <member refid="classvc64_1_1_core_component_1afd3f09724b119d73a122c3fc02ac1736" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>suspend</name></member>
+      <member refid="classvc64_1_1_suspendable_1a7f9f608d5b2b9b6e944176cde77b8f85" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>Suspendable</name></member>
+      <member refid="classvc64_1_1_core_component_1a0a4c841e543ecfc6cf988592a933a564" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>trackOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a4832ab0ebef49b591fe6e2785e969c89" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>trackOn</name></member>
+      <member refid="classvc64_1_1_core_component_1aae437c6ccf5f91155464dd4953c3baab" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>trackOnOff</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a83212e2b17d3a6a83419413b6e6948df" prot="private" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>triggerCycle</name></member>
+      <member refid="classvc64_1_1_neos_mouse_1a628969c008a84f9f46be85a5aba5a13d" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>updateControlPort</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a24c5efde497d14b519ad15c9053949" prot="public" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9c1a4b73d1514ddc64567d4521abdecd" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>vic</name></member>
+      <member refid="classvc64_1_1_core_component_1a45399f75688ba5ba157a479c3ce76633" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>warpOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a5df664aeda300338d0568d59673ff536" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>warpOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a6760d32857901c415f4d75031d1e2654" prot="protected" virt="non-virtual"><scope>vc64::NeosMouse</scope><name>warpOnOff</name></member>
+      <member refid="classvc64_1_1_configurable_1a5aa5d945e768c40297f1bf71e200bde3" prot="public" virt="virtual"><scope>vc64::NeosMouse</scope><name>~Configurable</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>vc64::NeosMouse</scope><name>~CoreObject</name></member>
+      <member refid="classvc64_1_1_suspendable_1a35809d3a4c20db1f096e8dc5c78c49b9" prot="public" virt="virtual"><scope>vc64::NeosMouse</scope><name>~Suspendable</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

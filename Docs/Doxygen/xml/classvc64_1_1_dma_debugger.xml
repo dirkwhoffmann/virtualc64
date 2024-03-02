@@ -1,0 +1,508 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_dma_debugger" kind="class" language="C++" prot="public" final="yes">
+    <compoundname>vc64::DmaDebugger</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">vc64::SubComponent</basecompoundref>
+    <basecompoundref prot="public" virt="non-virtual">vc64::Dumpable</basecompoundref>
+    <sectiondef kind="friend">
+      <memberdef kind="friend" id="classvc64_1_1_dma_debugger_1a3a872b5369d812a984ad89ecbe8d9b11" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class VICII</definition>
+        <argsstring></argsstring>
+        <name>VICII</name>
+        <qualifiedname>vc64::DmaDebugger::VICII</qualifiedname>
+        <param>
+          <type>VICII</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="23" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" bodystart="23" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_dma_debugger_1a670e71199dd4f0c51ab6012587e8792c" prot="private" static="no" mutable="no">
+        <type>ConfigOptions</type>
+        <definition>ConfigOptions vc64::DmaDebugger::options</definition>
+        <argsstring></argsstring>
+        <name>options</name>
+        <qualifiedname>vc64::DmaDebugger::options</qualifiedname>
+        <initializer>= {
+
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a9467ac523f93c435f9749a9052b8a83d" kindref="member">OPT_DMA_DEBUG_ENABLE</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a3b1f2c9a9aac5b162262a90e6a6f7c7b" kindref="member">OPT_DMA_DEBUG_MODE</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a5ade0d3c0ad955f9946d93c2ca92a727" kindref="member">OPT_DMA_DEBUG_OPACITY</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a436f6c5872fd35ddd00154c94fe575a5" kindref="member">OPT_VICII_CUT_LAYERS</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a26d30040d7e2972e6863fb5b97863b18" kindref="member">OPT_VICII_CUT_OPACITY</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a68f1d78d426242ba34c275097a5dd67e" kindref="member">OPT_DMA_DEBUG_CHANNEL0</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a43f016cc183cb0c0b4cdd475b9b04a83" kindref="member">OPT_DMA_DEBUG_CHANNEL1</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a3a1c1df57f1c62581012fabf37879c30" kindref="member">OPT_DMA_DEBUG_CHANNEL2</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a2dc9850368a281eb92727cafdd6e036b" kindref="member">OPT_DMA_DEBUG_CHANNEL3</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8ad704bd35166e440288d3aedc078f2f19" kindref="member">OPT_DMA_DEBUG_CHANNEL4</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a0f865cf64ec430d26e8633057be59d43" kindref="member">OPT_DMA_DEBUG_CHANNEL5</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a9c68c936e5f7b678118632c81e00b0e6" kindref="member">OPT_DMA_DEBUG_COLOR0</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a37a2a64fe5192853a27593f22798d167" kindref="member">OPT_DMA_DEBUG_COLOR1</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a6cb2a935b4cf8db08edd46d86637fe22" kindref="member">OPT_DMA_DEBUG_COLOR2</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a2ea8712533d085768a25f21a9223a877" kindref="member">OPT_DMA_DEBUG_COLOR3</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a2e13757ec3b01f93c60e7ad7d7f5f83d" kindref="member">OPT_DMA_DEBUG_COLOR4</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a34bd03d962a0108048fbe495cce534c2" kindref="member">OPT_DMA_DEBUG_COLOR5</ref>
+    }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="25" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" bodystart="25" bodyend="44"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_dma_debugger_1a6c634ce1d4e4e54a074d3b93c5e87d1f" prot="private" static="no" mutable="no">
+        <type>DmaDebuggerConfig</type>
+        <definition>DmaDebuggerConfig vc64::DmaDebugger::config</definition>
+        <argsstring></argsstring>
+        <name>config</name>
+        <qualifiedname>vc64::DmaDebugger::config</qualifiedname>
+        <initializer>= { }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="47" column="23" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" bodystart="47" bodyend="47"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_dma_debugger_1ae2a1f2e90c52d33c0de48f43d8568991" prot="private" static="no" mutable="no">
+        <type>u32</type>
+        <definition>u32 vc64::DmaDebugger::debugColor[6][4]</definition>
+        <argsstring>[6][4]</argsstring>
+        <name>debugColor</name>
+        <qualifiedname>vc64::DmaDebugger::debugColor</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="51" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_dma_debugger_1aa9434f2dc97dfd683c247b268c729fbb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::DmaDebugger::DmaDebugger</definition>
+        <argsstring>(C64 &amp;ref)</argsstring>
+        <name>DmaDebugger</name>
+        <qualifiedname>vc64::DmaDebugger::DmaDebugger</qualifiedname>
+        <param>
+          <type>C64 &amp;</type>
+          <declname>ref</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="60" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.cpp" bodystart="19" bodyend="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_dma_debugger_1a81f9428a75ef3f3fbfcff97a66f26c30" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::DmaDebugger::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::DmaDebugger::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="67" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" bodystart="67" bodyend="67"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_dma_debugger_1a1bf9b76ec4d6d734363128eb290be2c5" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DmaDebugger::_dump</definition>
+        <argsstring>(Category category, std::ostream &amp;os) const override</argsstring>
+        <name>_dump</name>
+        <qualifiedname>vc64::DmaDebugger::_dump</qualifiedname>
+        <param>
+          <type>Category</type>
+          <declname>category</declname>
+        </param>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="68" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.cpp" bodystart="103" bodyend="127"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_dma_debugger_1a8bf0deff84c260640fbb2827cbef361b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>DmaDebugger &amp;</type>
+        <definition>DmaDebugger &amp; vc64::DmaDebugger::operator=</definition>
+        <argsstring>(const DmaDebugger &amp;other)</argsstring>
+        <name>operator=</name>
+        <qualifiedname>vc64::DmaDebugger::operator=</qualifiedname>
+        <param>
+          <type>const DmaDebugger &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="77" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" bodystart="77" bodyend="83"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_dma_debugger_1ac01fb4570e106a592c98586f038cf11a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>class T</type>
+          </param>
+        </templateparamlist>
+        <type>void</type>
+        <definition>void vc64::DmaDebugger::serialize</definition>
+        <argsstring>(T &amp;worker)</argsstring>
+        <name>serialize</name>
+        <qualifiedname>vc64::DmaDebugger::serialize</qualifiedname>
+        <param>
+          <type>T &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="86" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" bodystart="86" bodyend="100"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_dma_debugger_1a53efaa48248c89c16c0d97569a86c7bb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::DmaDebugger::SERIALIZERS</definition>
+        <argsstring>(serialize)</argsstring>
+        <name>SERIALIZERS</name>
+        <qualifiedname>vc64::DmaDebugger::SERIALIZERS</qualifiedname>
+        <param>
+          <type>serialize</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="100" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_dma_debugger_1ab159e94f2c8a0a2cbd8d9de7b40bd505" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const DmaDebuggerConfig &amp;</type>
+        <definition>const DmaDebuggerConfig &amp; vc64::DmaDebugger::getConfig</definition>
+        <argsstring>() const</argsstring>
+        <name>getConfig</name>
+        <qualifiedname>vc64::DmaDebugger::getConfig</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="109" column="29" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" bodystart="109" bodyend="109"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_dma_debugger_1a3a29746242880594c21f85047e3ae748" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const ConfigOptions &amp;</type>
+        <definition>const ConfigOptions &amp; vc64::DmaDebugger::getOptions</definition>
+        <argsstring>() const override</argsstring>
+        <name>getOptions</name>
+        <qualifiedname>vc64::DmaDebugger::getOptions</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="110" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" bodystart="110" bodyend="110"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_dma_debugger_1a2045636adcf9b00d57b0b053d884b6ac" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>i64</type>
+        <definition>i64 vc64::DmaDebugger::getOption</definition>
+        <argsstring>(Option opt) const override</argsstring>
+        <name>getOption</name>
+        <qualifiedname>vc64::DmaDebugger::getOption</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>opt</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="111" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.cpp" bodystart="25" bodyend="52"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_dma_debugger_1a2af9c53f9adf5039a50116c9706b7f4f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DmaDebugger::setOption</definition>
+        <argsstring>(Option opt, i64 value) override</argsstring>
+        <name>setOption</name>
+        <qualifiedname>vc64::DmaDebugger::setOption</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>opt</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="112" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.cpp" bodystart="55" bodyend="100"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_dma_debugger_1accce0367b4e7c5bc122eb1c17424e592" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DmaDebugger::setDmaDebugColor</definition>
+        <argsstring>(MemAccess type, GpuColor color)</argsstring>
+        <name>setDmaDebugColor</name>
+        <qualifiedname>vc64::DmaDebugger::setDmaDebugColor</qualifiedname>
+        <param>
+          <type>MemAccess</type>
+          <declname>type</declname>
+        </param>
+        <param>
+          <type>GpuColor</type>
+          <declname>color</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="119" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.cpp" bodystart="130" bodyend="140"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_dma_debugger_1af14b3ec925bd7928e2ac572c865a126f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DmaDebugger::setDmaDebugColor</definition>
+        <argsstring>(MemAccess type, RgbColor color)</argsstring>
+        <name>setDmaDebugColor</name>
+        <qualifiedname>vc64::DmaDebugger::setDmaDebugColor</qualifiedname>
+        <param>
+          <type>MemAccess</type>
+          <declname>type</declname>
+        </param>
+        <param>
+          <type>RgbColor</type>
+          <declname>color</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="120" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.cpp" bodystart="143" bodyend="146"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_dma_debugger_1a509839d418e5fc4aa42c432205e95bf4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DmaDebugger::visualizeDma</definition>
+        <argsstring>(isize offset, u8 data, MemAccess type)</argsstring>
+        <name>visualizeDma</name>
+        <qualifiedname>vc64::DmaDebugger::visualizeDma</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>offset</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>MemAccess</type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="130" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.cpp" bodystart="149" bodyend="152"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_dma_debugger_1a6cef9ee2a8a922b9a47b6a78120d0502" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DmaDebugger::visualizeDma</definition>
+        <argsstring>(u32 *ptr, u8 data, MemAccess type)</argsstring>
+        <name>visualizeDma</name>
+        <qualifiedname>vc64::DmaDebugger::visualizeDma</qualifiedname>
+        <param>
+          <type>u32 *</type>
+          <declname>ptr</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>MemAccess</type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="131" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.cpp" bodystart="155" bodyend="164"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_dma_debugger_1a42dec83e8caa84a89cb76e3fb6056705" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DmaDebugger::computeOverlay</definition>
+        <argsstring>(u32 *emuTexture, u32 *dmaTexture)</argsstring>
+        <name>computeOverlay</name>
+        <qualifiedname>vc64::DmaDebugger::computeOverlay</qualifiedname>
+        <param>
+          <type>u32 *</type>
+          <declname>emuTexture</declname>
+        </param>
+        <param>
+          <type>u32 *</type>
+          <declname>dmaTexture</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="134" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.cpp" bodystart="167" bodyend="232"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_dma_debugger_1a05f4142489e8723ef23adfe595c0f9f8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DmaDebugger::cutLayers</definition>
+        <argsstring>()</argsstring>
+        <name>cutLayers</name>
+        <qualifiedname>vc64::DmaDebugger::cutLayers</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="144" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.cpp" bodystart="235" bodyend="289"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" line="21" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h" bodystart="21" bodyend="145"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_dma_debugger_1a1bf9b76ec4d6d734363128eb290be2c5" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>_dump</name></member>
+      <member refid="classvc64_1_1_core_component_1aa7dd5e7a2020ad2348fea3edd724f538" prot="public" virt="virtual"><scope>vc64::DmaDebugger</scope><name>_initialize</name></member>
+      <member refid="classvc64_1_1_core_component_1ab4d7e4961fa32234f400d835c3b5f038" prot="public" virt="virtual"><scope>vc64::DmaDebugger</scope><name>_reset</name></member>
+      <member refid="classvc64_1_1_configurable_1a947ce65dab57ea328e9959014b7f9dfb" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>argList</name></member>
+      <member refid="classvc64_1_1_sub_component_1a7691c720c74fd0e19a63978efe4cd851" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>c64</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae066edf64de901ee3f3b65eb0c02b202" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>cia1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9fe5ed30db982340524f7dcbf6fbf34c" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>cia2</name></member>
+      <member refid="classvc64_1_1_dma_debugger_1a42dec83e8caa84a89cb76e3fb6056705" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>computeOverlay</name></member>
+      <member refid="classvc64_1_1_dma_debugger_1a6c634ce1d4e4e54a074d3b93c5e87d1f" prot="private" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>config</name></member>
+      <member refid="classvc64_1_1_core_component_1a18f454d0d572fa1b2e5023c4eaba6d07" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>CoreComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1acaece01018438ab083bd38a220d34f10" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>cpu</name></member>
+      <member refid="classvc64_1_1_dma_debugger_1a05f4142489e8723ef23adfe595c0f9f8" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>cutLayers</name></member>
+      <member refid="classvc64_1_1_sub_component_1a157963272dd927ec5c77b4090be57e89" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>datasette</name></member>
+      <member refid="classvc64_1_1_dma_debugger_1ae2a1f2e90c52d33c0de48f43d8568991" prot="private" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>debugColor</name></member>
+      <member refid="classvc64_1_1_dma_debugger_1aa9434f2dc97dfd683c247b268c729fbb" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>DmaDebugger</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae85ede3d9ed8315d992eed300932eaf7" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>drive</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae44705f9377cf06d91323d8dca13a8a8" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>drive8</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5d876614a31fb29b8317350ed6a3158b" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>drive9</name></member>
+      <member refid="classvc64_1_1_dumpable_1a28d8b76288598fc0309bd6247e5479db" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_dumpable_1afc31b73f9b651bba5cf37dc88158755a" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_configurable_1a459505cd1eed2c174bf78b29808ad07b" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>dumpConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1a606e5261773126791e44ee8238f5876e" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>emulator</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5dc793ff2aa4ff3b36fdd061fd3f816b" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>expansionport</name></member>
+      <member refid="classvc64_1_1_dma_debugger_1ab159e94f2c8a0a2cbd8d9de7b40bd505" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>getConfig</name></member>
+      <member refid="classvc64_1_1_dma_debugger_1a81f9428a75ef3f3fbfcff97a66f26c30" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_dma_debugger_1a2045636adcf9b00d57b0b053d884b6ac" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>getOption</name></member>
+      <member refid="classvc64_1_1_dma_debugger_1a3a29746242880594c21f85047e3ae748" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>getOptions</name></member>
+      <member refid="classvc64_1_1_core_component_1a936940e4e5cf0c617935ea3070bcbd4d" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>halt</name></member>
+      <member refid="classvc64_1_1_sub_component_1add6521bbcffbe5ca85afd6105d54e5ad" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>host</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5c8620301453e0b91374683d0c7b28ab" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>iec</name></member>
+      <member refid="classvc64_1_1_core_component_1a250f9ac5bbc00892bf195ec2ef523a2b" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>initialize</name></member>
+      <member refid="classvc64_1_1_core_component_1a7b95994acc6e7ba59d4b2f50f2dc8df5" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>isEmulatorThread</name></member>
+      <member refid="classvc64_1_1_core_component_1a0e8c3dd97f64e2487fba4c22ba66d487" prot="public" virt="virtual"><scope>vc64::DmaDebugger</scope><name>isHalted</name></member>
+      <member refid="classvc64_1_1_core_component_1a4f0f63ef65776aceecb329d03c3b5f17" prot="public" virt="virtual"><scope>vc64::DmaDebugger</scope><name>isPaused</name></member>
+      <member refid="classvc64_1_1_core_component_1ac4dadc5fecfac3cd2dfb7e8b70767b42" prot="public" virt="virtual"><scope>vc64::DmaDebugger</scope><name>isPoweredOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a0f9912b36ec181a0410d4f564baef127" prot="public" virt="virtual"><scope>vc64::DmaDebugger</scope><name>isPoweredOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a77bf78d982163a6797f24d23106c5098" prot="public" virt="virtual"><scope>vc64::DmaDebugger</scope><name>isReady</name></member>
+      <member refid="classvc64_1_1_core_component_1a121143d811f91157272bb67a0ca48d8f" prot="public" virt="virtual"><scope>vc64::DmaDebugger</scope><name>isRunning</name></member>
+      <member refid="classvc64_1_1_core_component_1a490512fe63211f42eb57e7ed59f9b6a1" prot="public" virt="virtual"><scope>vc64::DmaDebugger</scope><name>isSuspended</name></member>
+      <member refid="classvc64_1_1_configurable_1af6260d08823e90bdb51d1bf7bb596c35" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>isValidOption</name></member>
+      <member refid="classvc64_1_1_sub_component_1aa9a0c663f877801b651969f86dbf2aae" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>keyboard</name></member>
+      <member refid="classvc64_1_1_configurable_1a0d6caf30eeaae95d1898d08cf3ca8e28" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>keyList</name></member>
+      <member refid="classvc64_1_1_sub_component_1ad160280522e5c27cd731289b9396c44f" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>mem</name></member>
+      <member refid="classvc64_1_1_sub_component_1a478be9b50f9e5c4c07dd2830e9964711" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>msgQueue</name></member>
+      <member refid="classvc64_1_1_synchronizable_1a595f618a9c91e91148882a79760f0f0f" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>mutex</name></member>
+      <member refid="classvc64_1_1_sub_component_1a712af82456373bd6e688a174ac756bcb" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>muxer</name></member>
+      <member refid="classvc64_1_1_core_component_1af47e1017ec1d938b1b613b36bdc8be57" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>operator!=</name></member>
+      <member refid="classvc64_1_1_dma_debugger_1a8bf0deff84c260640fbb2827cbef361b" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>operator=</name></member>
+      <member refid="classvc64_1_1_core_component_1aae8879dd8b62291254ec498fa9b2e2cf" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>operator==</name></member>
+      <member refid="classvc64_1_1_dma_debugger_1a670e71199dd4f0c51ab6012587e8792c" prot="private" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>options</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9dfb837b941848b6b87e6a57da28348d" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>parCable</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a9c059588a19eeba521b79ff28e3dd8" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>pause</name></member>
+      <member refid="classvc64_1_1_sub_component_1a8c0718eb9d42f335961eaed51ba7cb8d" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>port1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a217a6ea39994b6ecae4e1ebd9cc220e7" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>port2</name></member>
+      <member refid="classvc64_1_1_core_component_1a05e1ba6d62516f796256f1cc394bf2f5" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>powerOff</name></member>
+      <member refid="classvc64_1_1_core_component_1ad606699d83a017fbee805e8d40245475" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>powerOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a74ab4149c152b98c6d5cc15bbac63887" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>powerOnOff</name></member>
+      <member refid="classvc64_1_1_sub_component_1a4fa2405b078fe61c302ff1c8047d9c4f" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>powerSupply</name></member>
+      <member refid="classvc64_1_1_sub_component_1aba0c66cd1ce8a6d1c3529825afdb4a02" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>prefix</name></member>
+      <member refid="classvc64_1_1_sub_component_1a2e1d97a260e9d4d637b0f8fb95fbf1d8" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>recorder</name></member>
+      <member refid="classvc64_1_1_sub_component_1afe6a4ca2f661ec44fd67637b14647436" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>regressionTester</name></member>
+      <member refid="classvc64_1_1_core_component_1a3910be506f5067fe6cf31a69dcd76b0c" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>reset</name></member>
+      <member refid="classvc64_1_1_core_component_1a082147809d967c961a7ac7c15c5f072a" prot="public" virt="virtual"><scope>vc64::DmaDebugger</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1aec76d436c865101509bceb2daf47890b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::DmaDebugger</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1af9ec0fb5e73fd1f0433a4f3bfcd39d9b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::DmaDebugger</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1aab9305af3e38cc19bd1067ca87fe3e0d" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>resume</name></member>
+      <member refid="classvc64_1_1_sub_component_1ada641e2232ca8bdd3ef8fbecc883658d" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>retroShell</name></member>
+      <member refid="classvc64_1_1_core_component_1ae7093017e8a84768103c67b24de5c578" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>run</name></member>
+      <member refid="classvc64_1_1_dma_debugger_1ac01fb4570e106a592c98586f038cf11a" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>serialize</name></member>
+      <member refid="classvc64_1_1_dma_debugger_1a53efaa48248c89c16c0d97569a86c7bb" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>SERIALIZERS</name></member>
+      <member refid="classvc64_1_1_dma_debugger_1accce0367b4e7c5bc122eb1c17424e592" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>setDmaDebugColor</name></member>
+      <member refid="classvc64_1_1_dma_debugger_1af14b3ec925bd7928e2ac572c865a126f" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>setDmaDebugColor</name></member>
+      <member refid="classvc64_1_1_dma_debugger_1a2af9c53f9adf5039a50116c9706b7f4f" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a51756d7f1f0ed1caa0e247ab6e789a3b" prot="public" virt="non-virtual" ambiguityscope="vc64::SubComponent::"><scope>vc64::DmaDebugger</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a689b1a17fac237ca960b062df637" prot="public" virt="non-virtual" ambiguityscope="vc64::SubComponent::"><scope>vc64::DmaDebugger</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_sub_component_1adce334c26f07e67bc936fbf7c935a759" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1a61d8a843718ff2f39e1575338a527676" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_core_component_1aa8b45810bedbdf78b88710ae8db3f495" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>subComponents</name></member>
+      <member refid="classvc64_1_1_core_component_1afd3f09724b119d73a122c3fc02ac1736" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>suspend</name></member>
+      <member refid="classvc64_1_1_suspendable_1a7f9f608d5b2b9b6e944176cde77b8f85" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>Suspendable</name></member>
+      <member refid="classvc64_1_1_core_component_1a0a4c841e543ecfc6cf988592a933a564" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>trackOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a4832ab0ebef49b591fe6e2785e969c89" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>trackOn</name></member>
+      <member refid="classvc64_1_1_core_component_1aae437c6ccf5f91155464dd4953c3baab" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>trackOnOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a24c5efde497d14b519ad15c9053949" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9c1a4b73d1514ddc64567d4521abdecd" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>vic</name></member>
+      <member refid="classvc64_1_1_dma_debugger_1a3a872b5369d812a984ad89ecbe8d9b11" prot="private" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>VICII</name></member>
+      <member refid="classvc64_1_1_dma_debugger_1a509839d418e5fc4aa42c432205e95bf4" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>visualizeDma</name></member>
+      <member refid="classvc64_1_1_dma_debugger_1a6cef9ee2a8a922b9a47b6a78120d0502" prot="public" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>visualizeDma</name></member>
+      <member refid="classvc64_1_1_core_component_1a45399f75688ba5ba157a479c3ce76633" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>warpOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a5df664aeda300338d0568d59673ff536" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>warpOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a6760d32857901c415f4d75031d1e2654" prot="protected" virt="non-virtual"><scope>vc64::DmaDebugger</scope><name>warpOnOff</name></member>
+      <member refid="classvc64_1_1_configurable_1a5aa5d945e768c40297f1bf71e200bde3" prot="public" virt="virtual"><scope>vc64::DmaDebugger</scope><name>~Configurable</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>vc64::DmaDebugger</scope><name>~CoreObject</name></member>
+      <member refid="classvc64_1_1_dumpable_1a843e874f633f7dcd8e2f1dcf1d8f0c25" prot="public" virt="virtual"><scope>vc64::DmaDebugger</scope><name>~Dumpable</name></member>
+      <member refid="classvc64_1_1_suspendable_1a35809d3a4c20db1f096e8dc5c78c49b9" prot="public" virt="virtual"><scope>vc64::DmaDebugger</scope><name>~Suspendable</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

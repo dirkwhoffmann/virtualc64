@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="structutil_1_1flt" kind="struct" language="C++" prot="public">
+    <compoundname>util::flt</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structutil_1_1flt_1a07459d69bd22ed3308e2e9b948a2df4d" prot="public" static="no" mutable="no">
+        <type>double</type>
+        <definition>double util::flt::value</definition>
+        <argsstring></argsstring>
+        <name>value</name>
+        <qualifiedname>util::flt::value</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" line="130" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" bodystart="130" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="structutil_1_1flt_1a284694aad8fc54e001d8dc5d97991ae5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>util::flt::flt</definition>
+        <argsstring>(double v)</argsstring>
+        <name>flt</name>
+        <qualifiedname>util::flt::flt</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" line="132" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" bodystart="132" bodyend="132"/>
+      </memberdef>
+      <memberdef kind="function" id="structutil_1_1flt_1a4efd463c27e6c3b2376914a899cfd829" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>util::flt::flt</definition>
+        <argsstring>(float v)</argsstring>
+        <name>flt</name>
+        <qualifiedname>util::flt::flt</qualifiedname>
+        <param>
+          <type>float</type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" line="133" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" bodystart="133" bodyend="133"/>
+      </memberdef>
+      <memberdef kind="function" id="structutil_1_1flt_1afbe69c36f5a67065638d71ea398bcfc8" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>std::ostream &amp;</type>
+        <definition>std::ostream &amp; util::flt::operator()</definition>
+        <argsstring>(std::ostream &amp;os) const</argsstring>
+        <name>operator()</name>
+        <qualifiedname>util::flt::operator()</qualifiedname>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" line="134" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="347" bodyend="351"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" line="128" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" bodystart="128" bodyend="135"/>
+    <listofallmembers>
+      <member refid="structutil_1_1flt_1a284694aad8fc54e001d8dc5d97991ae5" prot="public" virt="non-virtual"><scope>util::flt</scope><name>flt</name></member>
+      <member refid="structutil_1_1flt_1a4efd463c27e6c3b2376914a899cfd829" prot="public" virt="non-virtual"><scope>util::flt</scope><name>flt</name></member>
+      <member refid="structutil_1_1flt_1afbe69c36f5a67065638d71ea398bcfc8" prot="public" virt="non-virtual"><scope>util::flt</scope><name>operator()</name></member>
+      <member refid="structutil_1_1flt_1a07459d69bd22ed3308e2e9b948a2df4d" prot="public" virt="non-virtual"><scope>util::flt</scope><name>value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

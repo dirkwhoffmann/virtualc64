@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_emulator_info" kind="struct" language="C++" prot="public">
+    <compoundname>EmulatorInfo</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_emulator_info_1ac993f4d98a60f8f6b795fbd9b787160d" prot="public" static="no" mutable="no">
+        <type><ref refid="_thread_types_8h_1a44fb3bfc9b3abc142d662a5ffb4e9cbc" kindref="member">EmulatorState</ref></type>
+        <definition>EmulatorState EmulatorInfo::state</definition>
+        <argsstring></argsstring>
+        <name>state</name>
+        <qualifiedname>EmulatorInfo::state</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="339" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="339" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_emulator_info_1a56ec7ac40fb2dec5ec1b00e6feb4f10d" prot="public" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize EmulatorInfo::refreshRate</definition>
+        <argsstring></argsstring>
+        <name>refreshRate</name>
+        <qualifiedname>EmulatorInfo::refreshRate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="340" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="340" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_emulator_info_1a68b225d8028d39209b8cd3378915ec1b" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool EmulatorInfo::powered</definition>
+        <argsstring></argsstring>
+        <name>powered</name>
+        <qualifiedname>EmulatorInfo::powered</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="341" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="341" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_emulator_info_1a9159973007d8c8791c1a87b369c05f95" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool EmulatorInfo::paused</definition>
+        <argsstring></argsstring>
+        <name>paused</name>
+        <qualifiedname>EmulatorInfo::paused</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="342" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="342" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_emulator_info_1a2a201fdd764bbe8b33a6e81cfd150865" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool EmulatorInfo::running</definition>
+        <argsstring></argsstring>
+        <name>running</name>
+        <qualifiedname>EmulatorInfo::running</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="343" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="343" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_emulator_info_1ada8515907e489790779d082781bd59f3" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool EmulatorInfo::suspended</definition>
+        <argsstring></argsstring>
+        <name>suspended</name>
+        <qualifiedname>EmulatorInfo::suspended</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="344" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="344" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_emulator_info_1a646356258c047f3e786c8d9d90add636" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool EmulatorInfo::warping</definition>
+        <argsstring></argsstring>
+        <name>warping</name>
+        <qualifiedname>EmulatorInfo::warping</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="345" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="345" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_emulator_info_1abc5ae52bc731102a6c94ce6bb94bd6e8" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool EmulatorInfo::tracking</definition>
+        <argsstring></argsstring>
+        <name>tracking</name>
+        <qualifiedname>EmulatorInfo::tracking</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="346" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="346" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="337" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="338" bodyend="347"/>
+    <listofallmembers>
+      <member refid="struct_emulator_info_1a9159973007d8c8791c1a87b369c05f95" prot="public" virt="non-virtual"><scope>EmulatorInfo</scope><name>paused</name></member>
+      <member refid="struct_emulator_info_1a68b225d8028d39209b8cd3378915ec1b" prot="public" virt="non-virtual"><scope>EmulatorInfo</scope><name>powered</name></member>
+      <member refid="struct_emulator_info_1a56ec7ac40fb2dec5ec1b00e6feb4f10d" prot="public" virt="non-virtual"><scope>EmulatorInfo</scope><name>refreshRate</name></member>
+      <member refid="struct_emulator_info_1a2a201fdd764bbe8b33a6e81cfd150865" prot="public" virt="non-virtual"><scope>EmulatorInfo</scope><name>running</name></member>
+      <member refid="struct_emulator_info_1ac993f4d98a60f8f6b795fbd9b787160d" prot="public" virt="non-virtual"><scope>EmulatorInfo</scope><name>state</name></member>
+      <member refid="struct_emulator_info_1ada8515907e489790779d082781bd59f3" prot="public" virt="non-virtual"><scope>EmulatorInfo</scope><name>suspended</name></member>
+      <member refid="struct_emulator_info_1abc5ae52bc731102a6c94ce6bb94bd6e8" prot="public" virt="non-virtual"><scope>EmulatorInfo</scope><name>tracking</name></member>
+      <member refid="struct_emulator_info_1a646356258c047f3e786c8d9d90add636" prot="public" virt="non-virtual"><scope>EmulatorInfo</scope><name>warping</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

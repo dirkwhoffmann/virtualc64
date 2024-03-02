@@ -1,0 +1,214 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_script" kind="class" language="C++" prot="public">
+    <compoundname>vc64::Script</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">vc64::AnyFile</basecompoundref>
+    <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classvc64_1_1_script_1a232fcad1dde23ba6e8db4a068cda9c31" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Script::isCompatible</definition>
+        <argsstring>(const string &amp;path)</argsstring>
+        <name>isCompatible</name>
+        <qualifiedname>vc64::Script::isCompatible</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h" line="29" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Script.cpp" bodystart="23" bodyend="27"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_script_1afceeb2267245a531cb970879445a3e8f" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Script::isCompatible</definition>
+        <argsstring>(std::istream &amp;stream)</argsstring>
+        <name>isCompatible</name>
+        <qualifiedname>vc64::Script::isCompatible</qualifiedname>
+        <param>
+          <type>std::istream &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h" line="30" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Script.cpp" bodystart="30" bodyend="33"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_script_1a74dd4a8c5f6e86adcdcdbfd513a5ca45" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::Script::Script</definition>
+        <argsstring>(const string &amp;path)</argsstring>
+        <name>Script</name>
+        <qualifiedname>vc64::Script::Script</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <exceptions> throws </exceptions>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h" line="40" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h" bodystart="40" bodyend="40"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_script_1a5d7d52282d96771dd0b1d2847e721522" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::Script::Script</definition>
+        <argsstring>(const u8 *buf, isize len)</argsstring>
+        <name>Script</name>
+        <qualifiedname>vc64::Script::Script</qualifiedname>
+        <param>
+          <type>const u8 *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>len</declname>
+        </param>
+        <exceptions> throws </exceptions>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h" line="41" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h" bodystart="41" bodyend="41"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_script_1a809c5d88c286465001111aacf88d36d1" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::Script::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::Script::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h" line="48" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h" bodystart="48" bodyend="48"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_script_1acd885b40d3d4bfdc1966857a44102c30" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Script::isCompatiblePath</definition>
+        <argsstring>(const string &amp;path) override</argsstring>
+        <name>isCompatiblePath</name>
+        <qualifiedname>vc64::Script::isCompatiblePath</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h" line="57" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h" bodystart="57" bodyend="57"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_script_1aab779214588c86561a367e86c2edc709" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Script::isCompatibleStream</definition>
+        <argsstring>(std::istream &amp;stream) override</argsstring>
+        <name>isCompatibleStream</name>
+        <qualifiedname>vc64::Script::isCompatibleStream</qualifiedname>
+        <param>
+          <type>std::istream &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h" line="58" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h" bodystart="58" bodyend="58"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_script_1ae17548bdfc61549f7269189878df047e" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>FileType</type>
+        <definition>FileType vc64::Script::type</definition>
+        <argsstring>() const override</argsstring>
+        <name>type</name>
+        <qualifiedname>vc64::Script::type</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h" line="59" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h" bodystart="59" bodyend="59"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_script_1a97723d8282d3e65747aee3bde2c8dffb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Script::execute</definition>
+        <argsstring>(VirtualC64 &amp;c64)</argsstring>
+        <name>execute</name>
+        <qualifiedname>vc64::Script::execute</qualifiedname>
+        <param>
+          <type><ref refid="class_virtual_c64" kindref="compound">VirtualC64</ref> &amp;</type>
+          <declname>c64</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h" line="67" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Script.cpp" bodystart="36" bodyend="40"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h" line="21" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h" bodystart="21" bodyend="68"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_any_file_1a2402e3e1f185e9768c61131bafe44407" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>AnyFile</name></member>
+      <member refid="classvc64_1_1_any_file_1a5a036fda46ad75cda310157aace55f73" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>AnyFile</name></member>
+      <member refid="classvc64_1_1_any_file_1a26e482da8776c614eb0ba61fead71c22" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>data</name></member>
+      <member refid="classvc64_1_1_script_1a97723d8282d3e65747aee3bde2c8dffb" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>execute</name></member>
+      <member refid="classvc64_1_1_any_file_1ae9e72360ebb682344186a0227c77f041" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>flash</name></member>
+      <member refid="classvc64_1_1_any_file_1a979934fcfdfeb8c68fcc470352d0edcf" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>fnv</name></member>
+      <member refid="classvc64_1_1_any_file_1a34a65043ea6edd72503e9d32d48fe673" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>getData</name></member>
+      <member refid="classvc64_1_1_script_1a809c5d88c286465001111aacf88d36d1" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_any_file_1abf770dc34618d1bfc67a23c55c44e85c" prot="public" virt="virtual"><scope>vc64::Script</scope><name>getName</name></member>
+      <member refid="classvc64_1_1_any_file_1ac734a20b4c309a84c275a773ca3df60d" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1a0c85ade04b494932cfd05be8969a5170" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1a68011b5dfea05008375629cc233e5100" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1ab650113d803492cd225753a3f58dd877" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1a3c8d04bbb9fdfd05ea7f1dc8efc54016" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1ab84764d78d6f620f80d942796b1aa1f0" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>init</name></member>
+      <member refid="classvc64_1_1_script_1a232fcad1dde23ba6e8db4a068cda9c31" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>isCompatible</name></member>
+      <member refid="classvc64_1_1_script_1afceeb2267245a531cb970879445a3e8f" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>isCompatible</name></member>
+      <member refid="classvc64_1_1_script_1acd885b40d3d4bfdc1966857a44102c30" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>isCompatiblePath</name></member>
+      <member refid="classvc64_1_1_script_1aab779214588c86561a367e86c2edc709" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>isCompatibleStream</name></member>
+      <member refid="classvc64_1_1_any_file_1a89548c3c156d0d989b19698860eda1ac" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>path</name></member>
+      <member refid="classvc64_1_1_core_object_1ab05f272c10fd455a9cafbb667293d044" prot="public" virt="virtual"><scope>vc64::Script</scope><name>prefix</name></member>
+      <member refid="classvc64_1_1_any_file_1a8efe89e48777753f29e4a81ad2cee2a1" prot="protected" virt="non-virtual"><scope>vc64::Script</scope><name>readFromBuffer</name></member>
+      <member refid="classvc64_1_1_any_file_1a3668025b9000a087977407b64c9473fd" prot="protected" virt="non-virtual"><scope>vc64::Script</scope><name>readFromFile</name></member>
+      <member refid="classvc64_1_1_any_file_1ae0e3aa0d0a8c07187c688f5d98f13947" prot="protected" virt="non-virtual"><scope>vc64::Script</scope><name>readFromStream</name></member>
+      <member refid="classvc64_1_1_script_1a74dd4a8c5f6e86adcdcdbfd513a5ca45" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>Script</name></member>
+      <member refid="classvc64_1_1_script_1a5d7d52282d96771dd0b1d2847e721522" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>Script</name></member>
+      <member refid="classvc64_1_1_any_file_1a7ed08cce3080c43c7292063bf048f06f" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>size</name></member>
+      <member refid="classvc64_1_1_any_file_1ad74ebc6d4c511bf9013aede268cc483f" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>strip</name></member>
+      <member refid="classvc64_1_1_script_1ae17548bdfc61549f7269189878df047e" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>type</name></member>
+      <member refid="classvc64_1_1_any_file_1ad47c49694822b542c3afbb8c57cc8533" prot="public" virt="non-virtual" ambiguityscope="vc64::AnyFile::"><scope>vc64::Script</scope><name>type</name></member>
+      <member refid="classvc64_1_1_core_object_1aa17ada334edf800da9ea768925ffa885" prot="protected" virt="non-virtual"><scope>vc64::Script</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_any_file_1adad618b6c94fcd35846b1edd740d7448" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>writeToBuffer</name></member>
+      <member refid="classvc64_1_1_any_file_1ab2dd3dbc31ee164578fbf199ba2c49ba" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>writeToFile</name></member>
+      <member refid="classvc64_1_1_any_file_1a1219474084e9d60e4cbea9c0a6d7dcd4" prot="public" virt="non-virtual"><scope>vc64::Script</scope><name>writeToStream</name></member>
+      <member refid="classvc64_1_1_any_file_1ab8de483b0e9c975ab6c2b35afd9f5f8c" prot="public" virt="virtual"><scope>vc64::Script</scope><name>~AnyFile</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>vc64::Script</scope><name>~CoreObject</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

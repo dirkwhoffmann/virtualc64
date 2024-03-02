@@ -1,0 +1,51 @@
+\doxysection{Exception.\+h}
+\hypertarget{_exception_8h_source}{}\label{_exception_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Utilities/Exception.h@{/Users/hoff/Retro/virtualc64/Emulator/Utilities/Exception.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Types.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <exception>}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }util\ \{}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{struct\ }Exception\ :\ \textcolor{keyword}{public}\ std::exception\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ }
+\DoxyCodeLine{00022\ \ \ \ \ i64\ data;}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{string}\ description;}
+\DoxyCodeLine{00024\ \ \ \ \ }
+\DoxyCodeLine{00025\ \ \ \ \ Exception(i64\ d,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&s)\ :\ data(d),\ description(s)\ \{\ \}}
+\DoxyCodeLine{00026\ \ \ \ \ Exception(i64\ d)\ :\ data(d),\ description(\textcolor{stringliteral}{"{}"{}})\ \{\ \}}
+\DoxyCodeLine{00027\ \ \ \ \ Exception(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&s)\ :\ data(0),\ description(s)\ \{\ \}}
+\DoxyCodeLine{00028\ \ \ \ \ Exception()\ :\ data(0)\ \{\ \}}
+\DoxyCodeLine{00029\ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *what()\ \textcolor{keyword}{const}\ throw()\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ description.c\_str();\ \}}
+\DoxyCodeLine{00031\ \};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{comment}{//}}
+\DoxyCodeLine{00034\ \textcolor{comment}{//\ Syntactic\ sugar}}
+\DoxyCodeLine{00035\ \textcolor{comment}{//}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{comment}{/*\ The\ following\ keyword\ is\ used\ for\ documentary\ purposes\ only.\ It\ is\ used\ to}}
+\DoxyCodeLine{00038\ \textcolor{comment}{\ *\ mark\ all\ methods\ that\ use\ the\ exception\ mechanism\ to\ signal\ error\ conditions}}
+\DoxyCodeLine{00039\ \textcolor{comment}{\ *\ instead\ of\ returning\ error\ codes.\ It\ is\ used\ in\ favor\ of\ classic\ throw}}
+\DoxyCodeLine{00040\ \textcolor{comment}{\ *\ lists,\ since\ the\ latter\ cause\ the\ compiler\ to\ embed\ unwanted\ runtime\ checks}}
+\DoxyCodeLine{00041\ \textcolor{comment}{\ *\ in\ the\ code.}}
+\DoxyCodeLine{00042\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#define\ throws}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \}}
+
+\end{DoxyCode}

@@ -2,10 +2,1795 @@
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
   <compounddef id="namespaceutil" kind="namespace" language="C++">
     <compoundname>util</compoundname>
+    <innerclass refid="structutil_1_1_allocator" prot="public">util::Allocator</innerclass>
+    <innerclass refid="structutil_1_1_array" prot="public">util::Array</innerclass>
+    <innerclass refid="classutil_1_1_auto_mutex" prot="public">util::AutoMutex</innerclass>
+    <innerclass refid="structutil_1_1bol" prot="public">util::bol</innerclass>
+    <innerclass refid="structutil_1_1_buffer" prot="public">util::Buffer</innerclass>
+    <innerclass refid="classutil_1_1_clock" prot="public">util::Clock</innerclass>
+    <innerclass refid="structutil_1_1dec" prot="public">util::dec</innerclass>
+    <innerclass refid="structutil_1_1_enum_parse_error" prot="public">util::EnumParseError</innerclass>
+    <innerclass refid="structutil_1_1_exception" prot="public">util::Exception</innerclass>
+    <innerclass refid="structutil_1_1flt" prot="public">util::flt</innerclass>
+    <innerclass refid="structutil_1_1hex" prot="public">util::hex</innerclass>
+    <innerclass refid="classutil_1_1_mutex" prot="public">util::Mutex</innerclass>
+    <innerclass refid="structutil_1_1_parse_bool_error" prot="public">util::ParseBoolError</innerclass>
+    <innerclass refid="structutil_1_1_parse_error" prot="public">util::ParseError</innerclass>
+    <innerclass refid="structutil_1_1_parse_num_error" prot="public">util::ParseNumError</innerclass>
+    <innerclass refid="structutil_1_1_parse_on_off_error" prot="public">util::ParseOnOffError</innerclass>
+    <innerclass refid="classutil_1_1_reentrant_mutex" prot="public">util::ReentrantMutex</innerclass>
+    <innerclass refid="structutil_1_1_ring_buffer" prot="public">util::RingBuffer</innerclass>
+    <innerclass refid="structutil_1_1_sorted_array" prot="public">util::SortedArray</innerclass>
+    <innerclass refid="structutil_1_1_sorted_ring_buffer" prot="public">util::SortedRingBuffer</innerclass>
+    <innerclass refid="classutil_1_1_stop_watch" prot="public">util::StopWatch</innerclass>
+    <innerclass refid="structutil_1_1tab" prot="public">util::tab</innerclass>
+    <innerclass refid="classutil_1_1_time" prot="public">util::Time</innerclass>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="_checksum_8cpp_1af31fe2766cc792119771d8354fb9c9c5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u32</type>
+        <definition>u32 util::fnvIt32</definition>
+        <argsstring>(u32 prv, u32 val)</argsstring>
+        <name>fnvIt32</name>
+        <qualifiedname>util::fnvIt32</qualifiedname>
+        <param>
+          <type>u32</type>
+          <declname>prv</declname>
+        </param>
+        <param>
+          <type>u32</type>
+          <declname>val</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.cpp" line="21" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.cpp" bodystart="21" bodyend="24" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.h" declline="24" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="_checksum_8cpp_1aa838e17903793059d6e8ba8722a0562e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u64</type>
+        <definition>u64 util::fnvIt64</definition>
+        <argsstring>(u64 prv, u64 val)</argsstring>
+        <name>fnvIt64</name>
+        <qualifiedname>util::fnvIt64</qualifiedname>
+        <param>
+          <type>u64</type>
+          <declname>prv</declname>
+        </param>
+        <param>
+          <type>u64</type>
+          <declname>val</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.cpp" line="28" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.cpp" bodystart="28" bodyend="31" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.h" declline="25" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="_checksum_8cpp_1abcd4b012fc26e5672dfedabc062c6e6a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u32</type>
+        <definition>u32 util::fnv32</definition>
+        <argsstring>(const u8 *addr, isize size)</argsstring>
+        <name>fnv32</name>
+        <qualifiedname>util::fnv32</qualifiedname>
+        <param>
+          <type>const u8 *</type>
+          <declname>addr</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.cpp" line="34" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.cpp" bodystart="34" bodyend="45" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.h" declline="28" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="_checksum_8cpp_1a0b1752b298f8045f5948d48634534914" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u64</type>
+        <definition>u64 util::fnv64</definition>
+        <argsstring>(const u8 *addr, isize size)</argsstring>
+        <name>fnv64</name>
+        <qualifiedname>util::fnv64</qualifiedname>
+        <param>
+          <type>const u8 *</type>
+          <declname>addr</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.cpp" line="48" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.cpp" bodystart="48" bodyend="59" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.h" declline="29" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="_checksum_8cpp_1a7c9048085a5c39b2b369956797c6136c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u16</type>
+        <definition>u16 util::crc16</definition>
+        <argsstring>(const u8 *addr, isize size)</argsstring>
+        <name>crc16</name>
+        <qualifiedname>util::crc16</qualifiedname>
+        <param>
+          <type>const u8 *</type>
+          <declname>addr</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.cpp" line="61" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.cpp" bodystart="61" bodyend="72" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.h" declline="32" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="_checksum_8cpp_1a61fc920f18b75fab700db359316d641c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u32</type>
+        <definition>u32 util::crc32</definition>
+        <argsstring>(const u8 *addr, isize size)</argsstring>
+        <name>crc32</name>
+        <qualifiedname>util::crc32</qualifiedname>
+        <param>
+          <type>const u8 *</type>
+          <declname>addr</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.cpp" line="75" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.cpp" bodystart="75" bodyend="90" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.h" declline="33" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="_checksum_8cpp_1ad1393d626125e559ad93a014e754d407" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u32</type>
+        <definition>u32 util::crc32forByte</definition>
+        <argsstring>(u32 r)</argsstring>
+        <name>crc32forByte</name>
+        <qualifiedname>util::crc32forByte</qualifiedname>
+        <param>
+          <type>u32</type>
+          <declname>r</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.cpp" line="93" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.cpp" bodystart="93" bodyend="98" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.h" declline="34" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="_checksum_8h_1a7ae5dc250d9574ab614f79fdf0171235" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>u32</type>
+        <definition>u32 util::fnvInit32</definition>
+        <argsstring>()</argsstring>
+        <name>fnvInit32</name>
+        <qualifiedname>util::fnvInit32</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.h" line="20" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.h" bodystart="20" bodyend="20"/>
+      </memberdef>
+      <memberdef kind="function" id="_checksum_8h_1a97a76a61285bee462ae7e9818dc56778" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>u64</type>
+        <definition>u64 util::fnvInit64</definition>
+        <argsstring>()</argsstring>
+        <name>fnvInit64</name>
+        <qualifiedname>util::fnvInit64</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.h" line="21" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.h" bodystart="21" bodyend="21"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1a8c3d1fcf1694f713a80f6bcf42b080d2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::extractPath</definition>
+        <argsstring>(const string &amp;s)</argsstring>
+        <name>extractPath</name>
+        <qualifiedname>util::extractPath</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="24" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="24" bodyend="30" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="36" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1a1c8ef569c81b8580051e24e3e6436496" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::extractName</definition>
+        <argsstring>(const string &amp;s)</argsstring>
+        <name>extractName</name>
+        <qualifiedname>util::extractName</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="33" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="33" bodyend="39" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="37" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1a4d450650f0e428febbc595254b6eda7f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::extractSuffix</definition>
+        <argsstring>(const string &amp;s)</argsstring>
+        <name>extractSuffix</name>
+        <qualifiedname>util::extractSuffix</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="42" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="42" bodyend="48" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="38" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1a09f0386f42bb4a424f02eaaaac1572e3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::stripPath</definition>
+        <argsstring>(const string &amp;s)</argsstring>
+        <name>stripPath</name>
+        <qualifiedname>util::stripPath</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="51" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="51" bodyend="57" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="41" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1abff85ebb887077565c870938a28f95fc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::stripName</definition>
+        <argsstring>(const string &amp;s)</argsstring>
+        <name>stripName</name>
+        <qualifiedname>util::stripName</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="60" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="60" bodyend="66" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="42" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1a4c29abcc967bcf23b39386c3e673be5f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::stripSuffix</definition>
+        <argsstring>(const string &amp;s)</argsstring>
+        <name>stripSuffix</name>
+        <qualifiedname>util::stripSuffix</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="69" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="69" bodyend="75" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="43" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1ab3d0b26ffc020e07bfed1c6e4d9d1887" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::appendPath</definition>
+        <argsstring>(const string &amp;path, const string &amp;path2)</argsstring>
+        <name>appendPath</name>
+        <qualifiedname>util::appendPath</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path2</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="78" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="78" bodyend="87" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="46" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1ae24f5cd7657e8c4ee1ca4c435c810295" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::isAbsolutePath</definition>
+        <argsstring>(const string &amp;path)</argsstring>
+        <name>isAbsolutePath</name>
+        <qualifiedname>util::isAbsolutePath</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="90" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="90" bodyend="93" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="49" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1a0825f866dbf37b7a5a60ec4382d8c5b0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::makeAbsolutePath</definition>
+        <argsstring>(const string &amp;path)</argsstring>
+        <name>makeAbsolutePath</name>
+        <qualifiedname>util::makeAbsolutePath</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="95" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="95" bodyend="102" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="50" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1abae1440928abbe2bad7be17c03fd10a7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::makeUniquePath</definition>
+        <argsstring>(const string &amp;path)</argsstring>
+        <name>makeUniquePath</name>
+        <qualifiedname>util::makeUniquePath</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="105" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="105" bodyend="116" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="53" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1a83107296292f9b9ecbe20c645a6f212f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::fileExists</definition>
+        <argsstring>(const string &amp;path)</argsstring>
+        <name>fileExists</name>
+        <qualifiedname>util::fileExists</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="119" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="119" bodyend="122" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="64" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1a1479c5ecffe6a25f1def240fc607b8b7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::isDirectory</definition>
+        <argsstring>(const string &amp;path)</argsstring>
+        <name>isDirectory</name>
+        <qualifiedname>util::isDirectory</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="125" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="125" bodyend="136" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="67" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1ae4435360995c7c93c46008e31e83e0e2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::createDirectory</definition>
+        <argsstring>(const string &amp;path)</argsstring>
+        <name>createDirectory</name>
+        <qualifiedname>util::createDirectory</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="139" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="139" bodyend="149" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="70" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1a9dc504a8b2b43eafe0346edb4617d7cd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize util::numDirectoryItems</definition>
+        <argsstring>(const string &amp;path)</argsstring>
+        <name>numDirectoryItems</name>
+        <qualifiedname>util::numDirectoryItems</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="152" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="152" bodyend="167" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="73" declcolumn="7"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1afe58292a9b6860a16da78925c141b456" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::vector&lt; string &gt;</type>
+        <definition>std::vector&lt; string &gt; util::files</definition>
+        <argsstring>(const string &amp;path, const string &amp;suffix)</argsstring>
+        <name>files</name>
+        <qualifiedname>util::files</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>suffix</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="170" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="170" bodyend="176" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="76" declcolumn="13"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1a9f9e39e681fef8275a548a5e101945d3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::vector&lt; string &gt;</type>
+        <definition>std::vector&lt; string &gt; util::files</definition>
+        <argsstring>(const string &amp;path, std::vector&lt; string &gt; &amp;suffixes)</argsstring>
+        <name>files</name>
+        <qualifiedname>util::files</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <param>
+          <type>std::vector&lt; string &gt; &amp;</type>
+          <declname>suffixes</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="179" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="179" bodyend="198" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="77" declcolumn="13"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1abb50072b51a95b4b7a139322d714b2a2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize util::getSizeOfFile</definition>
+        <argsstring>(const string &amp;path)</argsstring>
+        <name>getSizeOfFile</name>
+        <qualifiedname>util::getSizeOfFile</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="201" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="201" bodyend="209" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="61" declcolumn="7"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1ae75034d4e2aba512e253c3c26c7fc2cc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::matchingStreamHeader</definition>
+        <argsstring>(std::istream &amp;is, const u8 *header, isize len, isize offset)</argsstring>
+        <name>matchingStreamHeader</name>
+        <qualifiedname>util::matchingStreamHeader</qualifiedname>
+        <param>
+          <type>std::istream &amp;</type>
+          <declname>is</declname>
+        </param>
+        <param>
+          <type>const u8 *</type>
+          <declname>header</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>len</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>offset</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="212" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="212" bodyend="227" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="80" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1abb329075d28b0eb646491e1173220a45" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::matchingStreamHeader</definition>
+        <argsstring>(std::istream &amp;is, const string &amp;header, isize offset)</argsstring>
+        <name>matchingStreamHeader</name>
+        <qualifiedname>util::matchingStreamHeader</qualifiedname>
+        <param>
+          <type>std::istream &amp;</type>
+          <declname>is</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>header</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>offset</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="230" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="230" bodyend="233" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="81" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1a8fd0ebd340fadb37f3beee82990b95b5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::matchingBufferHeader</definition>
+        <argsstring>(const u8 *buffer, const u8 *header, isize len, isize offset)</argsstring>
+        <name>matchingBufferHeader</name>
+        <qualifiedname>util::matchingBufferHeader</qualifiedname>
+        <param>
+          <type>const u8 *</type>
+          <declname>buffer</declname>
+        </param>
+        <param>
+          <type>const u8 *</type>
+          <declname>header</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>len</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>offset</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="236" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="236" bodyend="247" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="82" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1a6cc67cfdafe0689a6c532adf0b27570b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize util::streamLength</definition>
+        <argsstring>(std::istream &amp;stream)</argsstring>
+        <name>streamLength</name>
+        <qualifiedname>util::streamLength</qualifiedname>
+        <param>
+          <type>std::istream &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="250" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="250" bodyend="260" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="105" declcolumn="7"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1a61893237a35052f0c7a55044ee8822a5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::sprint8d</definition>
+        <argsstring>(char *s, u8 value)</argsstring>
+        <name>sprint8d</name>
+        <qualifiedname>util::sprint8d</qualifiedname>
+        <param>
+          <type>char *</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="263" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="263" bodyend="272" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="89" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1abc92fb164cc078088cc541abecba46b8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::sprint8x</definition>
+        <argsstring>(char *s, u8 value)</argsstring>
+        <name>sprint8x</name>
+        <qualifiedname>util::sprint8x</qualifiedname>
+        <param>
+          <type>char *</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="275" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="275" bodyend="284" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="93" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1a07befe4d056e29c779ee13dba77780a4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::sprint8b</definition>
+        <argsstring>(char *s, u8 value)</argsstring>
+        <name>sprint8b</name>
+        <qualifiedname>util::sprint8b</qualifiedname>
+        <param>
+          <type>char *</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="287" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="287" bodyend="295" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="97" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1a3fa6b1300c4ffaa2c37a0366ed61ebc0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::sprint16d</definition>
+        <argsstring>(char *s, u16 value)</argsstring>
+        <name>sprint16d</name>
+        <qualifiedname>util::sprint16d</qualifiedname>
+        <param>
+          <type>char *</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>u16</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="298" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="298" bodyend="307" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="90" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1acdf6d1ed4793fd4f85ff6b19b45362b0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::sprint16x</definition>
+        <argsstring>(char *s, u16 value)</argsstring>
+        <name>sprint16x</name>
+        <qualifiedname>util::sprint16x</qualifiedname>
+        <param>
+          <type>char *</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>u16</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="310" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="310" bodyend="319" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="94" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8cpp_1aa52a5d04321b70fc3edcb1090d4709f2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::sprint16b</definition>
+        <argsstring>(char *s, u16 value)</argsstring>
+        <name>sprint16b</name>
+        <qualifiedname>util::sprint16b</qualifiedname>
+        <param>
+          <type>char *</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>u16</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" line="322" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp" bodystart="322" bodyend="330" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" declline="98" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8h_1a463b6eb871a3fe03d9e3108f926a193f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>std::ostream &amp;</type>
+        <definition>std::ostream &amp; util::operator&lt;&lt;</definition>
+        <argsstring>(std::ostream &amp;os, dec v)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>util::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <param>
+          <type>dec</type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" line="160" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" bodystart="160" bodyend="160"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8h_1a944d68a53e8ad1cb573d993ac3927682" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>std::ostream &amp;</type>
+        <definition>std::ostream &amp; util::operator&lt;&lt;</definition>
+        <argsstring>(std::ostream &amp;os, hex v)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>util::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <param>
+          <type>hex</type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" line="161" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" bodystart="161" bodyend="161"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8h_1a11cf3a81a5acb92a8d69dde54735a30d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>std::ostream &amp;</type>
+        <definition>std::ostream &amp; util::operator&lt;&lt;</definition>
+        <argsstring>(std::ostream &amp;os, flt v)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>util::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <param>
+          <type>flt</type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" line="162" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" bodystart="162" bodyend="162"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8h_1a5065321c712933fa76482091c5e1fb48" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>std::ostream &amp;</type>
+        <definition>std::ostream &amp; util::operator&lt;&lt;</definition>
+        <argsstring>(std::ostream &amp;os, tab v)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>util::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <param>
+          <type>tab</type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" line="163" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" bodystart="163" bodyend="163"/>
+      </memberdef>
+      <memberdef kind="function" id="_i_o_utils_8h_1a026ffe620b12cdca33e301c77e9ef2f7" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>std::ostream &amp;</type>
+        <definition>std::ostream &amp; util::operator&lt;&lt;</definition>
+        <argsstring>(std::ostream &amp;os, bol v)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>util::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <param>
+          <type>bol</type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" line="164" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h" bodystart="164" bodyend="164"/>
+      </memberdef>
+      <memberdef kind="function" id="_mem_utils_8cpp_1abf13763f017ee5df507ec23dfe4fe1f0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::isZero</definition>
+        <argsstring>(const u8 *ptr, isize size)</argsstring>
+        <name>isZero</name>
+        <qualifiedname>util::isZero</qualifiedname>
+        <param>
+          <type>const u8 *</type>
+          <declname>ptr</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.cpp" line="20" column="6" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.cpp" bodystart="20" bodyend="26" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" declline="96" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_mem_utils_8cpp_1a803ce5006d22e1b045a1e31a4e269fd3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::replace</definition>
+        <argsstring>(u8 *p, isize size, const u8 *sequence, const u8 *substitute)</argsstring>
+        <name>replace</name>
+        <qualifiedname>util::replace</qualifiedname>
+        <param>
+          <type>u8 *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>size</declname>
+        </param>
+        <param>
+          <type>const u8 *</type>
+          <declname>sequence</declname>
+        </param>
+        <param>
+          <type>const u8 *</type>
+          <declname>substitute</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.cpp" line="28" column="6" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.cpp" bodystart="28" bodyend="31" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" declline="99" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_mem_utils_8cpp_1a351af2c851229c5a93633966a697f504" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::replace</definition>
+        <argsstring>(char *p, isize size, const char *sequence, const char *substitute)</argsstring>
+        <name>replace</name>
+        <qualifiedname>util::replace</qualifiedname>
+        <param>
+          <type>char *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>size</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>sequence</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>substitute</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.cpp" line="33" column="6" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.cpp" bodystart="33" bodyend="51" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" declline="100" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_mem_utils_8cpp_1aa26c448d2c0a856712dcbad54739da80" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::readAscii</definition>
+        <argsstring>(const u8 *buf, isize len, char *result, char pad)</argsstring>
+        <name>readAscii</name>
+        <qualifiedname>util::readAscii</qualifiedname>
+        <param>
+          <type>const u8 *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>len</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>result</declname>
+        </param>
+        <param>
+          <type>char</type>
+          <declname>pad</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.cpp" line="53" column="6" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.cpp" bodystart="53" bodyend="63" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" declline="103" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_mem_utils_8cpp_1a7c366748c174d33bb92c7058074dc8fb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::hexdump</definition>
+        <argsstring>(u8 *p, isize size, isize cols, isize pad)</argsstring>
+        <name>hexdump</name>
+        <qualifiedname>util::hexdump</qualifiedname>
+        <param>
+          <type>u8 *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>size</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>cols</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>pad</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.cpp" line="66" column="6" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.cpp" bodystart="66" bodyend="81" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" declline="106" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_mem_utils_8cpp_1ae0072a547e4db44441ea69b55636c58b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::hexdump</definition>
+        <argsstring>(u8 *p, isize size, isize cols)</argsstring>
+        <name>hexdump</name>
+        <qualifiedname>util::hexdump</qualifiedname>
+        <param>
+          <type>u8 *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>size</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>cols</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.cpp" line="83" column="6" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.cpp" bodystart="83" bodyend="86" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" declline="107" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_mem_utils_8cpp_1a5ec1a1acc91001b89cbd6bff3ac045f4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::hexdumpWords</definition>
+        <argsstring>(u8 *p, isize size, isize cols)</argsstring>
+        <name>hexdumpWords</name>
+        <qualifiedname>util::hexdumpWords</qualifiedname>
+        <param>
+          <type>u8 *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>size</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>cols</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.cpp" line="88" column="6" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.cpp" bodystart="88" bodyend="91" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" declline="108" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_mem_utils_8cpp_1a166a836fff50b3c00883f296c42a24d8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::hexdumpLongwords</definition>
+        <argsstring>(u8 *p, isize size, isize cols)</argsstring>
+        <name>hexdumpLongwords</name>
+        <qualifiedname>util::hexdumpLongwords</qualifiedname>
+        <param>
+          <type>u8 *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>size</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>cols</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.cpp" line="93" column="6" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.cpp" bodystart="93" bodyend="96" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" declline="109" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_mem_utils_8h_1aa664d463f5c4978be69078a9e4fc4d18" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>T</type>
+        <definition>T util::bigEndian</definition>
+        <argsstring>(T x)</argsstring>
+        <name>bigEndian</name>
+        <qualifiedname>util::bigEndian</qualifiedname>
+        <param>
+          <type>T</type>
+          <declname>x</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" line="37" column="14" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" declline="37" declcolumn="14"/>
+      </memberdef>
+      <memberdef kind="function" id="_mem_utils_8h_1ae8376e87d00796ebee69ae32730d4aa7" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+        </templateparamlist>
+        <type>u16</type>
+        <definition>u16 util::bigEndian</definition>
+        <argsstring>(u16 x)</argsstring>
+        <name>bigEndian</name>
+        <qualifiedname>util::bigEndian</qualifiedname>
+        <param>
+          <type>u16</type>
+          <declname>x</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" line="40" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" bodystart="40" bodyend="47"/>
+      </memberdef>
+      <memberdef kind="function" id="_mem_utils_8h_1aa02d7837501b142d3f2e6aad281b50e0" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+        </templateparamlist>
+        <type>u32</type>
+        <definition>u32 util::bigEndian</definition>
+        <argsstring>(u32 x)</argsstring>
+        <name>bigEndian</name>
+        <qualifiedname>util::bigEndian</qualifiedname>
+        <param>
+          <type>u32</type>
+          <declname>x</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" line="50" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" bodystart="50" bodyend="57"/>
+      </memberdef>
+      <memberdef kind="function" id="_mem_utils_8h_1a563c7ce3f4e10afefdca6bc71bcbbc10" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+        </templateparamlist>
+        <type>u64</type>
+        <definition>u64 util::bigEndian</definition>
+        <argsstring>(u64 x)</argsstring>
+        <name>bigEndian</name>
+        <qualifiedname>util::bigEndian</qualifiedname>
+        <param>
+          <type>u64</type>
+          <declname>x</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" line="60" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.h" bodystart="60" bodyend="67"/>
+      </memberdef>
+      <memberdef kind="function" id="_parser_8cpp_1a184c7bc0549dab242cda313d1fbba221" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::isBool</definition>
+        <argsstring>(const string &amp;token)</argsstring>
+        <name>isBool</name>
+        <qualifiedname>util::isBool</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>token</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.cpp" line="18" column="6" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.cpp" bodystart="18" bodyend="23" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.h" declline="47" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_parser_8cpp_1abf499fec887c0638a254c9f6eb3a7efc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::isOnOff</definition>
+        <argsstring>(const string &amp;token)</argsstring>
+        <name>isOnOff</name>
+        <qualifiedname>util::isOnOff</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>token</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.cpp" line="25" column="6" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.cpp" bodystart="25" bodyend="28" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.h" declline="48" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_parser_8cpp_1a4509f863ed9c72713da4a1fd514ef281" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::isNum</definition>
+        <argsstring>(const string &amp;token)</argsstring>
+        <name>isNum</name>
+        <qualifiedname>util::isNum</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>token</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.cpp" line="30" column="6" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.cpp" bodystart="30" bodyend="41" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.h" declline="49" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_parser_8cpp_1ad588414640eeca453ec7d049c2de3c6b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::parseBool</definition>
+        <argsstring>(const string &amp;token)</argsstring>
+        <name>parseBool</name>
+        <qualifiedname>util::parseBool</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>token</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.cpp" line="44" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.cpp" bodystart="44" bodyend="50" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.h" declline="51" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_parser_8cpp_1add50b9b7fbbad0c71ebb3c57c26e3e30" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::parseOnOff</definition>
+        <argsstring>(const string &amp;token)</argsstring>
+        <name>parseOnOff</name>
+        <qualifiedname>util::parseOnOff</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>token</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.cpp" line="53" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.cpp" bodystart="53" bodyend="59" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.h" declline="52" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_parser_8cpp_1a6d8763b5b9d09c20073326757ee38d37" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long</type>
+        <definition>long util::parseNum</definition>
+        <argsstring>(const string &amp;token)</argsstring>
+        <name>parseNum</name>
+        <qualifiedname>util::parseNum</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>token</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.cpp" line="62" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.cpp" bodystart="62" bodyend="74" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.h" declline="53" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_parser_8cpp_1ac5b7992d1f1c3d1f529a01b0e301d059" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::parseSeq</definition>
+        <argsstring>(const string &amp;token)</argsstring>
+        <name>parseSeq</name>
+        <qualifiedname>util::parseSeq</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>token</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.cpp" line="77" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.cpp" bodystart="77" bodyend="101" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.h" declline="54" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="_parser_8h_1aadd56a11af7cbbb6a83e0a94d5ce3c85" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename Enum</type>
+          </param>
+        </templateparamlist>
+        <type>long</type>
+        <definition>long util::parseEnum</definition>
+        <argsstring>(const string &amp;key)</argsstring>
+        <name>parseEnum</name>
+        <qualifiedname>util::parseEnum</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.h" line="56" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.h" bodystart="56" bodyend="67"/>
+      </memberdef>
+      <memberdef kind="function" id="_parser_8h_1a73b0cc19c8a05354da929936f1d65954" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename Enum</type>
+          </param>
+        </templateparamlist>
+        <type>long</type>
+        <definition>long util::parsePartialEnum</definition>
+        <argsstring>(const string &amp;key, std::function&lt; bool(long)&gt; accept)</argsstring>
+        <name>parsePartialEnum</name>
+        <qualifiedname>util::parsePartialEnum</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>std::function&lt; bool(long)&gt;</type>
+          <declname>accept</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.h" line="69" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.h" bodystart="69" bodyend="80"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1ae6e9b1d035bf01ada3f2e1efa8197f37" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::createStr</definition>
+        <argsstring>(const u8 *buf, isize maxLen)</argsstring>
+        <name>createStr</name>
+        <qualifiedname>util::createStr</qualifiedname>
+        <param>
+          <type>const u8 *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>maxLen</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="19" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" bodystart="19" bodyend="27" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.h" declline="25" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1a48e1f128ba7b38958dbfb2c297ed415d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::createAscii</definition>
+        <argsstring>(const u8 *buf, isize len, char fill)</argsstring>
+        <name>createAscii</name>
+        <qualifiedname>util::createAscii</qualifiedname>
+        <param>
+          <type>const u8 *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>len</declname>
+        </param>
+        <param>
+          <type>char</type>
+          <declname>fill</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="29" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" bodystart="29" bodyend="37" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.h" declline="26" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1a7d6758a07051010aa670fdb7f387778a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::parseHex</definition>
+        <argsstring>(const string &amp;s, isize *result)</argsstring>
+        <name>parseHex</name>
+        <qualifiedname>util::parseHex</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>isize *</type>
+          <declname>result</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="40" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" bodystart="40" bodyend="55" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.h" declline="34" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1a083435450e40aeefc2094c68f17bdde7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::lowercased</definition>
+        <argsstring>(const string &amp;s)</argsstring>
+        <name>lowercased</name>
+        <qualifiedname>util::lowercased</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="58" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" bodystart="58" bodyend="63" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.h" declline="45" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1a5c12b6ef5397d729d91cba1574e5c498" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::uppercased</definition>
+        <argsstring>(const string &amp;s)</argsstring>
+        <name>uppercased</name>
+        <qualifiedname>util::uppercased</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="66" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" bodystart="66" bodyend="71" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.h" declline="46" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1a237f650df012355232d8330ce36aa603" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::makePrintable</definition>
+        <argsstring>(const string &amp;s)</argsstring>
+        <name>makePrintable</name>
+        <qualifiedname>util::makePrintable</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="74" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" bodystart="74" bodyend="85" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.h" declline="49" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1a0f25440faaaa02cbf02dddc61db1153e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::ltrim</definition>
+        <argsstring>(const string &amp;s, const string &amp;characters)</argsstring>
+        <name>ltrim</name>
+        <qualifiedname>util::ltrim</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>characters</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="88" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" bodystart="88" bodyend="92" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.h" declline="56" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1a1e0e901d52aeb6519ed34cce57313dd7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::rtrim</definition>
+        <argsstring>(const string &amp;s, const string &amp;characters)</argsstring>
+        <name>rtrim</name>
+        <qualifiedname>util::rtrim</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>characters</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="95" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" bodystart="95" bodyend="99" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.h" declline="57" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1ad8d66accc0277d5a2eb733d6fd575c5c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::trim</definition>
+        <argsstring>(const string &amp;s, const string &amp;characters)</argsstring>
+        <name>trim</name>
+        <qualifiedname>util::trim</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>characters</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="102" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" bodystart="102" bodyend="105" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.h" declline="58" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1a457658bfca9c804bf75261f46812f3c6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::vector&lt; string &gt;</type>
+        <definition>std::vector&lt; string &gt; util::split</definition>
+        <argsstring>(const string &amp;s, char delimiter)</argsstring>
+        <name>split</name>
+        <qualifiedname>util::split</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>char</type>
+          <declname>delimiter</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="108" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" bodystart="108" bodyend="119" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.h" declline="65" declcolumn="13"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1a5f207b6e217a23a0476d42663f2450fe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::concat</definition>
+        <argsstring>(std::vector&lt; string &gt; &amp;s, string delimiter)</argsstring>
+        <name>concat</name>
+        <qualifiedname>util::concat</qualifiedname>
+        <param>
+          <type>std::vector&lt; string &gt; &amp;</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>string</type>
+          <declname>delimiter</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="122" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" bodystart="122" bodyend="134" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.h" declline="66" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1af8938ad704b4b9b8ad5b656726567342" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>isize</type>
+            <declname>digits</declname>
+            <defname>digits</defname>
+          </param>
+        </templateparamlist>
+        <type>string</type>
+        <definition>string util::hexstr</definition>
+        <argsstring>(isize number)</argsstring>
+        <name>hexstr</name>
+        <qualifiedname>util::hexstr</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>number</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="136" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" bodystart="136" bodyend="148" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.h" declline="37" declcolumn="20"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1a466197b5845b35bdc0dcb6def843fdf8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>template string</type>
+        <definition>template string util::hexstr&lt; 1 &gt;</definition>
+        <argsstring>(isize number)</argsstring>
+        <name>hexstr&lt; 1 &gt;</name>
+        <qualifiedname>util::hexstr&lt; 1 &gt;</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>number</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="150" column="10" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" declline="150" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1aff0f0c401263db01e5897b212cbeab70" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>template string</type>
+        <definition>template string util::hexstr&lt; 2 &gt;</definition>
+        <argsstring>(isize number)</argsstring>
+        <name>hexstr&lt; 2 &gt;</name>
+        <qualifiedname>util::hexstr&lt; 2 &gt;</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>number</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="151" column="10" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" declline="151" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1a32cc79eca36ca26db83ce261d1ec2c33" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>template string</type>
+        <definition>template string util::hexstr&lt; 4 &gt;</definition>
+        <argsstring>(isize number)</argsstring>
+        <name>hexstr&lt; 4 &gt;</name>
+        <qualifiedname>util::hexstr&lt; 4 &gt;</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>number</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="152" column="10" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" declline="152" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1acfae188b71bc353786df0c586e453d0a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>template string</type>
+        <definition>template string util::hexstr&lt; 6 &gt;</definition>
+        <argsstring>(isize number)</argsstring>
+        <name>hexstr&lt; 6 &gt;</name>
+        <qualifiedname>util::hexstr&lt; 6 &gt;</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>number</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="153" column="10" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" declline="153" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1a4f211eda673a15c42fbeac5a862897df" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>template string</type>
+        <definition>template string util::hexstr&lt; 8 &gt;</definition>
+        <argsstring>(isize number)</argsstring>
+        <name>hexstr&lt; 8 &gt;</name>
+        <qualifiedname>util::hexstr&lt; 8 &gt;</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>number</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="154" column="10" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" declline="154" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1ad2c28926f7bfd11a96769673a7654235" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>template string</type>
+        <definition>template string util::hexstr&lt; 16 &gt;</definition>
+        <argsstring>(isize number)</argsstring>
+        <name>hexstr&lt; 16 &gt;</name>
+        <qualifiedname>util::hexstr&lt; 16 &gt;</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>number</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="155" column="10" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" declline="155" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1a15898f3d071bee6fcb3e8698aa351864" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>template string</type>
+        <definition>template string util::hexstr&lt; 32 &gt;</definition>
+        <argsstring>(isize number)</argsstring>
+        <name>hexstr&lt; 32 &gt;</name>
+        <qualifiedname>util::hexstr&lt; 32 &gt;</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>number</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="156" column="10" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" declline="156" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1a50d15657873de84b8bb9fdd3ef1082d5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>template string</type>
+        <definition>template string util::hexstr&lt; 64 &gt;</definition>
+        <argsstring>(isize number)</argsstring>
+        <name>hexstr&lt; 64 &gt;</name>
+        <qualifiedname>util::hexstr&lt; 64 &gt;</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>number</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="157" column="10" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" declline="157" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1a36710cfd0faab2d6bb343b0a811856c8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::byteCountAsString</definition>
+        <argsstring>(isize size)</argsstring>
+        <name>byteCountAsString</name>
+        <qualifiedname>util::byteCountAsString</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="159" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" bodystart="159" bodyend="185" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.h" declline="74" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="_string_utils_8cpp_1a3e4228a42e577e9f8bf8b523d572cb31" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string util::fillLevelAsString</definition>
+        <argsstring>(double percentage)</argsstring>
+        <name>fillLevelAsString</name>
+        <qualifiedname>util::fillLevelAsString</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>percentage</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" line="187" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp" bodystart="187" bodyend="194" declfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.h" declline="77" declcolumn="8"/>
+      </memberdef>
+    </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="[generated]" line="1" column="1"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Buffer.cpp" line="19" column="1"/>
   </compounddef>
 </doxygen>

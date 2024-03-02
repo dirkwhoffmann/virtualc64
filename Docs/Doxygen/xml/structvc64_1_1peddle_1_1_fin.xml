@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="structvc64_1_1peddle_1_1_fin" kind="struct" language="C++" prot="public">
+    <compoundname>vc64::peddle::Fin</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/StrWriter.h" line="41" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/StrWriter.h" bodystart="41" bodyend="41"/>
+    <listofallmembers>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

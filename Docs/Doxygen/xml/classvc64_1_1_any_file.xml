@@ -1,0 +1,569 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_any_file" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>vc64::AnyFile</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">vc64::CoreObject</basecompoundref>
+    <derivedcompoundref refid="classvc64_1_1_any_collection" prot="public" virt="non-virtual">vc64::AnyCollection</derivedcompoundref>
+    <derivedcompoundref refid="classvc64_1_1_c_r_t_file" prot="public" virt="non-virtual">vc64::CRTFile</derivedcompoundref>
+    <derivedcompoundref refid="classvc64_1_1_d64_file" prot="public" virt="non-virtual">vc64::D64File</derivedcompoundref>
+    <derivedcompoundref refid="classvc64_1_1_g64_file" prot="public" virt="non-virtual">vc64::G64File</derivedcompoundref>
+    <derivedcompoundref refid="classvc64_1_1_rom_file" prot="public" virt="non-virtual">vc64::RomFile</derivedcompoundref>
+    <derivedcompoundref refid="classvc64_1_1_script" prot="public" virt="non-virtual">vc64::Script</derivedcompoundref>
+    <derivedcompoundref refid="classvc64_1_1_snapshot" prot="public" virt="non-virtual">vc64::Snapshot</derivedcompoundref>
+    <derivedcompoundref refid="classvc64_1_1_t_a_p_file" prot="public" virt="non-virtual">vc64::TAPFile</derivedcompoundref>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_any_file_1a89548c3c156d0d989b19698860eda1ac" prot="public" static="no" mutable="no">
+        <type>string</type>
+        <definition>string vc64::AnyFile::path</definition>
+        <argsstring></argsstring>
+        <name>path</name>
+        <qualifiedname>vc64::AnyFile::path</qualifiedname>
+        <initializer>= &quot;&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="61" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_any_file_1a26e482da8776c614eb0ba61fead71c22" prot="public" static="no" mutable="no">
+        <type>u8 *</type>
+        <definition>u8* vc64::AnyFile::data</definition>
+        <argsstring></argsstring>
+        <name>data</name>
+        <qualifiedname>vc64::AnyFile::data</qualifiedname>
+        <initializer>= nullptr</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="64" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_any_file_1a7ed08cce3080c43c7292063bf048f06f" prot="public" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize vc64::AnyFile::size</definition>
+        <argsstring></argsstring>
+        <name>size</name>
+        <qualifiedname>vc64::AnyFile::size</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="67" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_any_file_1a2402e3e1f185e9768c61131bafe44407" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::AnyFile::AnyFile</definition>
+        <argsstring>()</argsstring>
+        <name>AnyFile</name>
+        <qualifiedname>vc64::AnyFile::AnyFile</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="76" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" bodystart="76" bodyend="76"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1a5a036fda46ad75cda310157aace55f73" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::AnyFile::AnyFile</definition>
+        <argsstring>(isize capacity)</argsstring>
+        <name>AnyFile</name>
+        <qualifiedname>vc64::AnyFile::AnyFile</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>capacity</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="77" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.cpp" bodystart="30" bodyend="34"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1ab8de483b0e9c975ab6c2b35afd9f5f8c" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type></type>
+        <definition>vc64::AnyFile::~AnyFile</definition>
+        <argsstring>()</argsstring>
+        <name>~AnyFile</name>
+        <qualifiedname>vc64::AnyFile::~AnyFile</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="78" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.cpp" bodystart="36" bodyend="39"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1ac734a20b4c309a84c275a773ca3df60d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::AnyFile::init</definition>
+        <argsstring>(isize capacity)</argsstring>
+        <name>init</name>
+        <qualifiedname>vc64::AnyFile::init</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>capacity</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="80" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.cpp" bodystart="42" bodyend="46"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1a0c85ade04b494932cfd05be8969a5170" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::AnyFile::init</definition>
+        <argsstring>(const string &amp;path) throws</argsstring>
+        <name>init</name>
+        <qualifiedname>vc64::AnyFile::init</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="81" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.cpp" bodystart="49" bodyend="54"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1a68011b5dfea05008375629cc233e5100" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::AnyFile::init</definition>
+        <argsstring>(const string &amp;path, std::istream &amp;stream) throws</argsstring>
+        <name>init</name>
+        <qualifiedname>vc64::AnyFile::init</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <param>
+          <type>std::istream &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="82" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.cpp" bodystart="57" bodyend="62"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1ab650113d803492cd225753a3f58dd877" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::AnyFile::init</definition>
+        <argsstring>(std::istream &amp;stream) throws</argsstring>
+        <name>init</name>
+        <qualifiedname>vc64::AnyFile::init</qualifiedname>
+        <param>
+          <type>std::istream &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="83" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.cpp" bodystart="65" bodyend="69"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1a3c8d04bbb9fdfd05ea7f1dc8efc54016" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::AnyFile::init</definition>
+        <argsstring>(const u8 *buf, isize len) throws</argsstring>
+        <name>init</name>
+        <qualifiedname>vc64::AnyFile::init</qualifiedname>
+        <param>
+          <type>const u8 *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>len</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="84" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.cpp" bodystart="72" bodyend="78"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1ab84764d78d6f620f80d942796b1aa1f0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::AnyFile::init</definition>
+        <argsstring>(FILE *file) throws</argsstring>
+        <name>init</name>
+        <qualifiedname>vc64::AnyFile::init</qualifiedname>
+        <param>
+          <type>FILE *</type>
+          <declname>file</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="85" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.cpp" bodystart="81" bodyend="87"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1abf770dc34618d1bfc67a23c55c44e85c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>PETName&lt; 16 &gt;</type>
+        <definition>PETName&lt; 16 &gt; vc64::AnyFile::getName</definition>
+        <argsstring>() const</argsstring>
+        <name>getName</name>
+        <qualifiedname>vc64::AnyFile::getName</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="95" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.cpp" bodystart="90" bodyend="99"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1a2dd03067b59cb4a6c02646c2e5a8a1c4" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="virtual">
+        <type>FileType</type>
+        <definition>virtual FileType vc64::AnyFile::type</definition>
+        <argsstring>() const</argsstring>
+        <name>type</name>
+        <qualifiedname>vc64::AnyFile::type</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="101" column="22" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" bodystart="101" bodyend="101"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1a34a65043ea6edd72503e9d32d48fe673" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::AnyFile::getData</definition>
+        <argsstring>(isize nr)</argsstring>
+        <name>getData</name>
+        <qualifiedname>vc64::AnyFile::getData</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="104" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" bodystart="104" bodyend="104"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1a979934fcfdfeb8c68fcc470352d0edcf" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u64</type>
+        <definition>u64 vc64::AnyFile::fnv</definition>
+        <argsstring>() const</argsstring>
+        <name>fnv</name>
+        <qualifiedname>vc64::AnyFile::fnv</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="107" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.cpp" bodystart="147" bodyend="150"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1ad74ebc6d4c511bf9013aede268cc483f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::AnyFile::strip</definition>
+        <argsstring>(isize count)</argsstring>
+        <name>strip</name>
+        <qualifiedname>vc64::AnyFile::strip</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>count</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="110" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.cpp" bodystart="153" bodyend="166"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1ae9e72360ebb682344186a0227c77f041" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::AnyFile::flash</definition>
+        <argsstring>(u8 *buf, isize offset=0) const</argsstring>
+        <name>flash</name>
+        <qualifiedname>vc64::AnyFile::flash</qualifiedname>
+        <param>
+          <type>u8 *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>offset</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="119" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.cpp" bodystart="169" bodyend="173"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1a1219474084e9d60e4cbea9c0a6d7dcd4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::AnyFile::writeToStream</definition>
+        <argsstring>(std::ostream &amp;stream) throws</argsstring>
+        <name>writeToStream</name>
+        <qualifiedname>vc64::AnyFile::writeToStream</qualifiedname>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="137" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.cpp" bodystart="223" bodyend="226"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1ab2dd3dbc31ee164578fbf199ba2c49ba" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::AnyFile::writeToFile</definition>
+        <argsstring>(const string &amp;path) throws</argsstring>
+        <name>writeToFile</name>
+        <qualifiedname>vc64::AnyFile::writeToFile</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="138" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.cpp" bodystart="229" bodyend="238"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1adad618b6c94fcd35846b1edd740d7448" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::AnyFile::writeToBuffer</definition>
+        <argsstring>(u8 *buf) throws</argsstring>
+        <name>writeToBuffer</name>
+        <qualifiedname>vc64::AnyFile::writeToBuffer</qualifiedname>
+        <param>
+          <type>u8 *</type>
+          <declname>buf</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="139" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.cpp" bodystart="241" bodyend="245"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classvc64_1_1_any_file_1ad47c49694822b542c3afbb8c57cc8533" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>FileType</type>
+        <definition>FileType vc64::AnyFile::type</definition>
+        <argsstring>(const string &amp;path)</argsstring>
+        <name>type</name>
+        <qualifiedname>vc64::AnyFile::type</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="98" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.cpp" bodystart="102" bodyend="144"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classvc64_1_1_any_file_1a9fd0650226ab857e2da617fc9909cd90" prot="protected" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>bool</type>
+        <definition>virtual bool vc64::AnyFile::isCompatiblePath</definition>
+        <argsstring>(const string &amp;path)=0</argsstring>
+        <name>isCompatiblePath</name>
+        <qualifiedname>vc64::AnyFile::isCompatiblePath</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="128" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1a78aefb71fdb4902838d9361f1658a031" prot="protected" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>bool</type>
+        <definition>virtual bool vc64::AnyFile::isCompatibleStream</definition>
+        <argsstring>(std::istream &amp;stream)=0</argsstring>
+        <name>isCompatibleStream</name>
+        <qualifiedname>vc64::AnyFile::isCompatibleStream</qualifiedname>
+        <param>
+          <type>std::istream &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="129" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1ae0e3aa0d0a8c07187c688f5d98f13947" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::AnyFile::readFromStream</definition>
+        <argsstring>(std::istream &amp;stream) throws</argsstring>
+        <name>readFromStream</name>
+        <qualifiedname>vc64::AnyFile::readFromStream</qualifiedname>
+        <param>
+          <type>std::istream &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="131" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.cpp" bodystart="176" bodyend="191"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1a3668025b9000a087977407b64c9473fd" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::AnyFile::readFromFile</definition>
+        <argsstring>(const string &amp;path) throws</argsstring>
+        <name>readFromFile</name>
+        <qualifiedname>vc64::AnyFile::readFromFile</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="132" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.cpp" bodystart="194" bodyend="205"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1a8efe89e48777753f29e4a81ad2cee2a1" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::AnyFile::readFromBuffer</definition>
+        <argsstring>(const u8 *buf, isize len) throws</argsstring>
+        <name>readFromBuffer</name>
+        <qualifiedname>vc64::AnyFile::readFromBuffer</qualifiedname>
+        <param>
+          <type>const u8 *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>len</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="133" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.cpp" bodystart="208" bodyend="220"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvc64_1_1_any_file_1ac5d3faa6f3935a7696e10811452cb71d" prot="private" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>virtual void vc64::AnyFile::finalizeRead</definition>
+        <argsstring>()</argsstring>
+        <name>finalizeRead</name>
+        <qualifiedname>vc64::AnyFile::finalizeRead</qualifiedname>
+        <exceptions> throws </exceptions>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="145" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" bodystart="145" bodyend="145"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_file_1a1b9d89f2e30ac3eae2f9e23aaba27ec1" prot="private" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>virtual void vc64::AnyFile::finalizeWrite</definition>
+        <argsstring>()</argsstring>
+        <name>finalizeWrite</name>
+        <qualifiedname>vc64::AnyFile::finalizeWrite</qualifiedname>
+        <exceptions> throws </exceptions>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="146" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" bodystart="146" bodyend="146"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" line="56" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h" bodystart="56" bodyend="147"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_any_file_1a2402e3e1f185e9768c61131bafe44407" prot="public" virt="non-virtual"><scope>vc64::AnyFile</scope><name>AnyFile</name></member>
+      <member refid="classvc64_1_1_any_file_1a5a036fda46ad75cda310157aace55f73" prot="public" virt="non-virtual"><scope>vc64::AnyFile</scope><name>AnyFile</name></member>
+      <member refid="classvc64_1_1_any_file_1a26e482da8776c614eb0ba61fead71c22" prot="public" virt="non-virtual"><scope>vc64::AnyFile</scope><name>data</name></member>
+      <member refid="classvc64_1_1_any_file_1ac5d3faa6f3935a7696e10811452cb71d" prot="private" virt="virtual"><scope>vc64::AnyFile</scope><name>finalizeRead</name></member>
+      <member refid="classvc64_1_1_any_file_1a1b9d89f2e30ac3eae2f9e23aaba27ec1" prot="private" virt="virtual"><scope>vc64::AnyFile</scope><name>finalizeWrite</name></member>
+      <member refid="classvc64_1_1_any_file_1ae9e72360ebb682344186a0227c77f041" prot="public" virt="non-virtual"><scope>vc64::AnyFile</scope><name>flash</name></member>
+      <member refid="classvc64_1_1_any_file_1a979934fcfdfeb8c68fcc470352d0edcf" prot="public" virt="non-virtual"><scope>vc64::AnyFile</scope><name>fnv</name></member>
+      <member refid="classvc64_1_1_any_file_1a34a65043ea6edd72503e9d32d48fe673" prot="public" virt="non-virtual"><scope>vc64::AnyFile</scope><name>getData</name></member>
+      <member refid="classvc64_1_1_core_object_1ae78e394ac636b5d056f8a199fcfcd42d" prot="public" virt="pure-virtual"><scope>vc64::AnyFile</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_any_file_1abf770dc34618d1bfc67a23c55c44e85c" prot="public" virt="virtual"><scope>vc64::AnyFile</scope><name>getName</name></member>
+      <member refid="classvc64_1_1_any_file_1ac734a20b4c309a84c275a773ca3df60d" prot="public" virt="non-virtual"><scope>vc64::AnyFile</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1a0c85ade04b494932cfd05be8969a5170" prot="public" virt="non-virtual"><scope>vc64::AnyFile</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1a68011b5dfea05008375629cc233e5100" prot="public" virt="non-virtual"><scope>vc64::AnyFile</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1ab650113d803492cd225753a3f58dd877" prot="public" virt="non-virtual"><scope>vc64::AnyFile</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1a3c8d04bbb9fdfd05ea7f1dc8efc54016" prot="public" virt="non-virtual"><scope>vc64::AnyFile</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1ab84764d78d6f620f80d942796b1aa1f0" prot="public" virt="non-virtual"><scope>vc64::AnyFile</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1a9fd0650226ab857e2da617fc9909cd90" prot="protected" virt="pure-virtual"><scope>vc64::AnyFile</scope><name>isCompatiblePath</name></member>
+      <member refid="classvc64_1_1_any_file_1a78aefb71fdb4902838d9361f1658a031" prot="protected" virt="pure-virtual"><scope>vc64::AnyFile</scope><name>isCompatibleStream</name></member>
+      <member refid="classvc64_1_1_any_file_1a89548c3c156d0d989b19698860eda1ac" prot="public" virt="non-virtual"><scope>vc64::AnyFile</scope><name>path</name></member>
+      <member refid="classvc64_1_1_core_object_1ab05f272c10fd455a9cafbb667293d044" prot="public" virt="virtual"><scope>vc64::AnyFile</scope><name>prefix</name></member>
+      <member refid="classvc64_1_1_any_file_1a8efe89e48777753f29e4a81ad2cee2a1" prot="protected" virt="non-virtual"><scope>vc64::AnyFile</scope><name>readFromBuffer</name></member>
+      <member refid="classvc64_1_1_any_file_1a3668025b9000a087977407b64c9473fd" prot="protected" virt="non-virtual"><scope>vc64::AnyFile</scope><name>readFromFile</name></member>
+      <member refid="classvc64_1_1_any_file_1ae0e3aa0d0a8c07187c688f5d98f13947" prot="protected" virt="non-virtual"><scope>vc64::AnyFile</scope><name>readFromStream</name></member>
+      <member refid="classvc64_1_1_any_file_1a7ed08cce3080c43c7292063bf048f06f" prot="public" virt="non-virtual"><scope>vc64::AnyFile</scope><name>size</name></member>
+      <member refid="classvc64_1_1_any_file_1ad74ebc6d4c511bf9013aede268cc483f" prot="public" virt="non-virtual"><scope>vc64::AnyFile</scope><name>strip</name></member>
+      <member refid="classvc64_1_1_any_file_1ad47c49694822b542c3afbb8c57cc8533" prot="public" virt="non-virtual"><scope>vc64::AnyFile</scope><name>type</name></member>
+      <member refid="classvc64_1_1_any_file_1a2dd03067b59cb4a6c02646c2e5a8a1c4" prot="public" virt="virtual"><scope>vc64::AnyFile</scope><name>type</name></member>
+      <member refid="classvc64_1_1_core_object_1aa17ada334edf800da9ea768925ffa885" prot="protected" virt="non-virtual"><scope>vc64::AnyFile</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_any_file_1adad618b6c94fcd35846b1edd740d7448" prot="public" virt="non-virtual"><scope>vc64::AnyFile</scope><name>writeToBuffer</name></member>
+      <member refid="classvc64_1_1_any_file_1ab2dd3dbc31ee164578fbf199ba2c49ba" prot="public" virt="non-virtual"><scope>vc64::AnyFile</scope><name>writeToFile</name></member>
+      <member refid="classvc64_1_1_any_file_1a1219474084e9d60e4cbea9c0a6d7dcd4" prot="public" virt="non-virtual"><scope>vc64::AnyFile</scope><name>writeToStream</name></member>
+      <member refid="classvc64_1_1_any_file_1ab8de483b0e9c975ab6c2b35afd9f5f8c" prot="public" virt="virtual"><scope>vc64::AnyFile</scope><name>~AnyFile</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>vc64::AnyFile</scope><name>~CoreObject</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

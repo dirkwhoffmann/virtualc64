@@ -1,0 +1,211 @@
+\doxysection{re\+SID\+::Envelope\+Generator Class Reference}
+\hypertarget{classre_s_i_d_1_1_envelope_generator}{}\label{classre_s_i_d_1_1_envelope_generator}\index{reSID::EnvelopeGenerator@{reSID::EnvelopeGenerator}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_adec5a8906b02ddd6352e721d4301fc67}\label{classre_s_i_d_1_1_envelope_generator_adec5a8906b02ddd6352e721d4301fc67} 
+enum \+: int \{ {\bfseries ATTACK}
+, {\bfseries DECAY\+\_\+\+SUSTAIN}
+, {\bfseries RELEASE}
+, {\bfseries FREEZED}
+ \}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_ace917f03524391cd22d5599005bda595}\label{classre_s_i_d_1_1_envelope_generator_ace917f03524391cd22d5599005bda595} 
+typedef int {\bfseries State}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_a3b12c35ec1d9f830a68633341527a866}\label{classre_s_i_d_1_1_envelope_generator_a3b12c35ec1d9f830a68633341527a866} 
+void {\bfseries set\+\_\+chip\+\_\+model} (chip\+\_\+model model)
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_abed4d6697a4396444f08e8d030469c57}\label{classre_s_i_d_1_1_envelope_generator_abed4d6697a4396444f08e8d030469c57} 
+void {\bfseries clock} ()
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_acd4c75ee8c55628165589b73f90c4fd5}\label{classre_s_i_d_1_1_envelope_generator_acd4c75ee8c55628165589b73f90c4fd5} 
+void {\bfseries clock} (cycle\+\_\+count delta\+\_\+t)
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_aa30a09c91d303d53a2c0fb883489810b}\label{classre_s_i_d_1_1_envelope_generator_aa30a09c91d303d53a2c0fb883489810b} 
+void {\bfseries reset} ()
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_a178b01fb4e9368eb3d0be69b8bfc04b9}\label{classre_s_i_d_1_1_envelope_generator_a178b01fb4e9368eb3d0be69b8bfc04b9} 
+void {\bfseries write\+CONTROL\+\_\+\+REG} (reg8)
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_a337bb4907ca6fa2d1e0e8ee0708848e6}\label{classre_s_i_d_1_1_envelope_generator_a337bb4907ca6fa2d1e0e8ee0708848e6} 
+void {\bfseries write\+ATTACK\+\_\+\+DECAY} (reg8)
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_abaaf939deaa91b6cacd77b3f6ae3f6dd}\label{classre_s_i_d_1_1_envelope_generator_abaaf939deaa91b6cacd77b3f6ae3f6dd} 
+void {\bfseries write\+SUSTAIN\+\_\+\+RELEASE} (reg8)
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_aca56ecb1ee9c04af15311d48df16ef47}\label{classre_s_i_d_1_1_envelope_generator_aca56ecb1ee9c04af15311d48df16ef47} 
+reg8 {\bfseries read\+ENV} ()
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_ab5e135b549027a30b70834901976454c}\label{classre_s_i_d_1_1_envelope_generator_ab5e135b549027a30b70834901976454c} 
+short {\bfseries output} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_adf0977c91abda12fbaee4468febc94b0}\label{classre_s_i_d_1_1_envelope_generator_adf0977c91abda12fbaee4468febc94b0} 
+void {\bfseries set\+\_\+exponential\+\_\+counter} ()
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_aabd3bbdc210d3304aaf654228e41928f}\label{classre_s_i_d_1_1_envelope_generator_aabd3bbdc210d3304aaf654228e41928f} 
+void {\bfseries state\+\_\+change} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_a09cc922acc2878e0eecc74fa08a59534}\label{classre_s_i_d_1_1_envelope_generator_a09cc922acc2878e0eecc74fa08a59534} 
+reg16 {\bfseries rate\+\_\+counter}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_a7633551d7f627a6aeb78a056c1be40cc}\label{classre_s_i_d_1_1_envelope_generator_a7633551d7f627a6aeb78a056c1be40cc} 
+reg16 {\bfseries rate\+\_\+period}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_ab38232fb283229491ac727efec93b093}\label{classre_s_i_d_1_1_envelope_generator_ab38232fb283229491ac727efec93b093} 
+reg8 {\bfseries exponential\+\_\+counter}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_ac8bec815b436030a97377371c14f5d91}\label{classre_s_i_d_1_1_envelope_generator_ac8bec815b436030a97377371c14f5d91} 
+reg8 {\bfseries exponential\+\_\+counter\+\_\+period}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_a00266fee05de6daaae7145e874c6a7dd}\label{classre_s_i_d_1_1_envelope_generator_a00266fee05de6daaae7145e874c6a7dd} 
+reg8 {\bfseries new\+\_\+exponential\+\_\+counter\+\_\+period}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_ac408bfd6768591a7a0d5d634bf545538}\label{classre_s_i_d_1_1_envelope_generator_ac408bfd6768591a7a0d5d634bf545538} 
+reg8 {\bfseries envelope\+\_\+counter}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_af06f41db378f756687b93b209033cb7e}\label{classre_s_i_d_1_1_envelope_generator_af06f41db378f756687b93b209033cb7e} 
+reg8 {\bfseries env3}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_a1f78b80a6129033db5b274e88393b727}\label{classre_s_i_d_1_1_envelope_generator_a1f78b80a6129033db5b274e88393b727} 
+cycle\+\_\+count {\bfseries envelope\+\_\+pipeline}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_a9da9d0c8da61b8904e63a95533aa5e0e}\label{classre_s_i_d_1_1_envelope_generator_a9da9d0c8da61b8904e63a95533aa5e0e} 
+cycle\+\_\+count {\bfseries exponential\+\_\+pipeline}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_a96dc2d0a0839338f3eb862f3808abc8b}\label{classre_s_i_d_1_1_envelope_generator_a96dc2d0a0839338f3eb862f3808abc8b} 
+cycle\+\_\+count {\bfseries state\+\_\+pipeline}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_a5352fe2ad962407334fdf442be4212e6}\label{classre_s_i_d_1_1_envelope_generator_a5352fe2ad962407334fdf442be4212e6} 
+bool {\bfseries hold\+\_\+zero}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_a75c615e287d402b1d5f380695095cc02}\label{classre_s_i_d_1_1_envelope_generator_a75c615e287d402b1d5f380695095cc02} 
+bool {\bfseries reset\+\_\+rate\+\_\+counter}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_afad9915914b8829d59b2aa9958550398}\label{classre_s_i_d_1_1_envelope_generator_afad9915914b8829d59b2aa9958550398} 
+reg4 {\bfseries attack}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_a9f70df6747c16accef910a7f8cd5385f}\label{classre_s_i_d_1_1_envelope_generator_a9f70df6747c16accef910a7f8cd5385f} 
+reg4 {\bfseries decay}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_a62329d3589fa7a7207050c381d5b2803}\label{classre_s_i_d_1_1_envelope_generator_a62329d3589fa7a7207050c381d5b2803} 
+reg4 {\bfseries sustain}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_a6dc78c88c7a90c546c301af6b8525b3b}\label{classre_s_i_d_1_1_envelope_generator_a6dc78c88c7a90c546c301af6b8525b3b} 
+reg4 {\bfseries release}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_ad7c8b00913c68e7127acf1eb1be82763}\label{classre_s_i_d_1_1_envelope_generator_ad7c8b00913c68e7127acf1eb1be82763} 
+reg8 {\bfseries gate}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_aa1491adc660b66c105dd279feb7234d1}\label{classre_s_i_d_1_1_envelope_generator_aa1491adc660b66c105dd279feb7234d1} 
+State {\bfseries state}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_a94bb63288532614a6f73683a1af8dfad}\label{classre_s_i_d_1_1_envelope_generator_a94bb63288532614a6f73683a1af8dfad} 
+State {\bfseries next\+\_\+state}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_ae397d3ccdae8070aec2800b066a92894}\label{classre_s_i_d_1_1_envelope_generator_ae397d3ccdae8070aec2800b066a92894} 
+chip\+\_\+model {\bfseries sid\+\_\+model}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static reg16 \mbox{\hyperlink{classre_s_i_d_1_1_envelope_generator_a199e5fd0171489abb7a223eecb7e9dab}{rate\+\_\+counter\+\_\+period}} \mbox{[}$\,$\mbox{]}
+\item 
+static reg8 \mbox{\hyperlink{classre_s_i_d_1_1_envelope_generator_a077188057225276e0fc3a4df7d9a0185}{sustain\+\_\+level}} \mbox{[}$\,$\mbox{]}
+\item 
+static unsigned short \mbox{\hyperlink{classre_s_i_d_1_1_envelope_generator_af12ea4079b817892b5dd7abc8aa4776b}{model\+\_\+dac}} \mbox{[}2\mbox{]}\mbox{[}1$<$$<$ 8\mbox{]}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_ae302711fe9d1d70934653f2ba5903a33}\label{classre_s_i_d_1_1_envelope_generator_ae302711fe9d1d70934653f2ba5903a33} 
+class {\bfseries SID}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_af12ea4079b817892b5dd7abc8aa4776b}\label{classre_s_i_d_1_1_envelope_generator_af12ea4079b817892b5dd7abc8aa4776b} 
+\index{reSID::EnvelopeGenerator@{reSID::EnvelopeGenerator}!model\_dac@{model\_dac}}
+\index{model\_dac@{model\_dac}!reSID::EnvelopeGenerator@{reSID::EnvelopeGenerator}}
+\doxysubsubsection{\texorpdfstring{model\_dac}{model\_dac}}
+{\footnotesize\ttfamily unsigned short re\+SID\+::\+Envelope\+Generator\+::model\+\_\+dac\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \{0\},}
+\DoxyCodeLine{\ \ \{0\},}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_a199e5fd0171489abb7a223eecb7e9dab}\label{classre_s_i_d_1_1_envelope_generator_a199e5fd0171489abb7a223eecb7e9dab} 
+\index{reSID::EnvelopeGenerator@{reSID::EnvelopeGenerator}!rate\_counter\_period@{rate\_counter\_period}}
+\index{rate\_counter\_period@{rate\_counter\_period}!reSID::EnvelopeGenerator@{reSID::EnvelopeGenerator}}
+\doxysubsubsection{\texorpdfstring{rate\_counter\_period}{rate\_counter\_period}}
+{\footnotesize\ttfamily reg16 re\+SID\+::\+Envelope\+Generator\+::rate\+\_\+counter\+\_\+period\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ 8,\ \ }
+\DoxyCodeLine{\ \ \ \ \ 31,\ \ }
+\DoxyCodeLine{\ \ \ \ \ 62,\ \ }
+\DoxyCodeLine{\ \ \ \ \ 94,\ \ }
+\DoxyCodeLine{\ \ \ \ 148,\ \ }
+\DoxyCodeLine{\ \ \ \ 219,\ \ }
+\DoxyCodeLine{\ \ \ \ 266,\ \ }
+\DoxyCodeLine{\ \ \ \ 312,\ \ }
+\DoxyCodeLine{\ \ \ \ 391,\ \ }
+\DoxyCodeLine{\ \ \ \ 976,\ \ }
+\DoxyCodeLine{\ \ \ 1953,\ \ }
+\DoxyCodeLine{\ \ \ 3125,\ \ }
+\DoxyCodeLine{\ \ \ 3906,\ \ }
+\DoxyCodeLine{\ \ 11719,\ \ }
+\DoxyCodeLine{\ \ 19531,\ \ }
+\DoxyCodeLine{\ \ 31250\ \ \ }
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\Hypertarget{classre_s_i_d_1_1_envelope_generator_a077188057225276e0fc3a4df7d9a0185}\label{classre_s_i_d_1_1_envelope_generator_a077188057225276e0fc3a4df7d9a0185} 
+\index{reSID::EnvelopeGenerator@{reSID::EnvelopeGenerator}!sustain\_level@{sustain\_level}}
+\index{sustain\_level@{sustain\_level}!reSID::EnvelopeGenerator@{reSID::EnvelopeGenerator}}
+\doxysubsubsection{\texorpdfstring{sustain\_level}{sustain\_level}}
+{\footnotesize\ttfamily reg8 re\+SID\+::\+Envelope\+Generator\+::sustain\+\_\+level\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ 0x00,}
+\DoxyCodeLine{\ \ 0x11,}
+\DoxyCodeLine{\ \ 0x22,}
+\DoxyCodeLine{\ \ 0x33,}
+\DoxyCodeLine{\ \ 0x44,}
+\DoxyCodeLine{\ \ 0x55,}
+\DoxyCodeLine{\ \ 0x66,}
+\DoxyCodeLine{\ \ 0x77,}
+\DoxyCodeLine{\ \ 0x88,}
+\DoxyCodeLine{\ \ 0x99,}
+\DoxyCodeLine{\ \ 0xaa,}
+\DoxyCodeLine{\ \ 0xbb,}
+\DoxyCodeLine{\ \ 0xcc,}
+\DoxyCodeLine{\ \ 0xdd,}
+\DoxyCodeLine{\ \ 0xee,}
+\DoxyCodeLine{\ \ 0xff,}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Components/\+SID/resid/envelope.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Components/\+SID/resid/envelope.\+cc\end{DoxyCompactItemize}

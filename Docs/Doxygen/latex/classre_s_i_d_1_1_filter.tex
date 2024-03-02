@@ -1,0 +1,174 @@
+\doxysection{re\+SID\+::Filter Class Reference}
+\hypertarget{classre_s_i_d_1_1_filter}{}\label{classre_s_i_d_1_1_filter}\index{reSID::Filter@{reSID::Filter}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structre_s_i_d_1_1_filter_1_1model__filter__t}{model\+\_\+filter\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structre_s_i_d_1_1_filter_1_1opamp__t}{opamp\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a7a5c65b94d250991976a7e0c2d62613b}\label{classre_s_i_d_1_1_filter_a7a5c65b94d250991976a7e0c2d62613b} 
+void {\bfseries enable\+\_\+filter} (bool enable)
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_ad97656f1b43522b79b65d4f19cf81e94}\label{classre_s_i_d_1_1_filter_ad97656f1b43522b79b65d4f19cf81e94} 
+void {\bfseries adjust\+\_\+filter\+\_\+bias} (double dac\+\_\+bias)
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a738fdfe92164d988f8b19847667f1a5c}\label{classre_s_i_d_1_1_filter_a738fdfe92164d988f8b19847667f1a5c} 
+void {\bfseries set\+\_\+chip\+\_\+model} (chip\+\_\+model model)
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_af20be2adafd1c8f54825c3bdbf264567}\label{classre_s_i_d_1_1_filter_af20be2adafd1c8f54825c3bdbf264567} 
+void {\bfseries set\+\_\+voice\+\_\+mask} (reg4 mask)
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_aeeee2fc81e100af42e08ec34861befbd}\label{classre_s_i_d_1_1_filter_aeeee2fc81e100af42e08ec34861befbd} 
+void {\bfseries clock} (int voice1, int voice2, int voice3)
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a992ff611d1621a267529b6d8b1692452}\label{classre_s_i_d_1_1_filter_a992ff611d1621a267529b6d8b1692452} 
+void {\bfseries clock} (cycle\+\_\+count delta\+\_\+t, int voice1, int voice2, int voice3)
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a6d9b26e0d812cb4c385e3d7ac9614e2e}\label{classre_s_i_d_1_1_filter_a6d9b26e0d812cb4c385e3d7ac9614e2e} 
+void {\bfseries reset} ()
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a8836164cd89ca2215efa070ab8cae16a}\label{classre_s_i_d_1_1_filter_a8836164cd89ca2215efa070ab8cae16a} 
+void {\bfseries write\+FC\+\_\+\+LO} (reg8)
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_afa8a3b460353e399bfa892fabcb686b5}\label{classre_s_i_d_1_1_filter_afa8a3b460353e399bfa892fabcb686b5} 
+void {\bfseries write\+FC\+\_\+\+HI} (reg8)
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a01423debf0e90c81c3db06b9a00eb63b}\label{classre_s_i_d_1_1_filter_a01423debf0e90c81c3db06b9a00eb63b} 
+void {\bfseries write\+RES\+\_\+\+FILT} (reg8)
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a92c2b5cb9f92f05591cef10ca9f5d481}\label{classre_s_i_d_1_1_filter_a92c2b5cb9f92f05591cef10ca9f5d481} 
+void {\bfseries write\+MODE\+\_\+\+VOL} (reg8)
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a853ab33f5fb3844298e2f2aa3f305fd1}\label{classre_s_i_d_1_1_filter_a853ab33f5fb3844298e2f2aa3f305fd1} 
+void {\bfseries input} (short sample)
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a92434bff9988af9ddce6c21481986918}\label{classre_s_i_d_1_1_filter_a92434bff9988af9ddce6c21481986918} 
+short {\bfseries output} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a5995063f9711b536b3cf30bccd3e6d54}\label{classre_s_i_d_1_1_filter_a5995063f9711b536b3cf30bccd3e6d54} 
+void {\bfseries set\+\_\+sum\+\_\+mix} ()
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a3fe1cf4f0f27268fc17136475426e0a4}\label{classre_s_i_d_1_1_filter_a3fe1cf4f0f27268fc17136475426e0a4} 
+void {\bfseries set\+\_\+w0} ()
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a449b57e08a84c1f7b5e80f6c9c46057e}\label{classre_s_i_d_1_1_filter_a449b57e08a84c1f7b5e80f6c9c46057e} 
+void {\bfseries set\+\_\+Q} ()
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a8306dfe7b69b448dd865d45809ae10d9}\label{classre_s_i_d_1_1_filter_a8306dfe7b69b448dd865d45809ae10d9} 
+int {\bfseries solve\+\_\+gain} (\mbox{\hyperlink{structre_s_i_d_1_1_filter_1_1opamp__t}{opamp\+\_\+t}} \texorpdfstring{$\ast$}{*}opamp, int n, int vi\+\_\+t, int \&x, \mbox{\hyperlink{structre_s_i_d_1_1_filter_1_1model__filter__t}{model\+\_\+filter\+\_\+t}} \&mf)
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a51fbd34604277bdfcbfa64d36ac297ab}\label{classre_s_i_d_1_1_filter_a51fbd34604277bdfcbfa64d36ac297ab} 
+int {\bfseries solve\+\_\+integrate\+\_\+6581} (int dt, int vi\+\_\+t, int \&x, int \&vc, \mbox{\hyperlink{structre_s_i_d_1_1_filter_1_1model__filter__t}{model\+\_\+filter\+\_\+t}} \&mf)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a5a097126aea3739a40ac910fb47a38f7}\label{classre_s_i_d_1_1_filter_a5a097126aea3739a40ac910fb47a38f7} 
+bool {\bfseries enabled}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_aaa3ca56ccdca0aaa4f5147daee3f6e99}\label{classre_s_i_d_1_1_filter_aaa3ca56ccdca0aaa4f5147daee3f6e99} 
+reg12 {\bfseries fc}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a586ee35e29131f962cbed446a9e3c330}\label{classre_s_i_d_1_1_filter_a586ee35e29131f962cbed446a9e3c330} 
+reg8 {\bfseries res}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_af989f82e7727498274ffe37d33f3e572}\label{classre_s_i_d_1_1_filter_af989f82e7727498274ffe37d33f3e572} 
+reg8 {\bfseries filt}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_ab4ef0c9e77124276adeac126c105617e}\label{classre_s_i_d_1_1_filter_ab4ef0c9e77124276adeac126c105617e} 
+reg4 {\bfseries mode}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a09e5c640872878889a3faa0a96374618}\label{classre_s_i_d_1_1_filter_a09e5c640872878889a3faa0a96374618} 
+reg4 {\bfseries vol}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a15ab13c1d1cfe6b48dea8311a2a85575}\label{classre_s_i_d_1_1_filter_a15ab13c1d1cfe6b48dea8311a2a85575} 
+reg8 {\bfseries voice\+\_\+mask}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a969614f71045bee1a512713624839ab5}\label{classre_s_i_d_1_1_filter_a969614f71045bee1a512713624839ab5} 
+reg8 {\bfseries sum}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a9ad64bf24c1ce00ae240b03bc6f1ed79}\label{classre_s_i_d_1_1_filter_a9ad64bf24c1ce00ae240b03bc6f1ed79} 
+reg8 {\bfseries mix}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a61a213625efb50e293b7bf6ff6e4908a}\label{classre_s_i_d_1_1_filter_a61a213625efb50e293b7bf6ff6e4908a} 
+int {\bfseries Vhp}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_af4ad3b2390fb128282a93d5c4b7b68c6}\label{classre_s_i_d_1_1_filter_af4ad3b2390fb128282a93d5c4b7b68c6} 
+int {\bfseries Vbp}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a9eee7b8918695cd4f26d88aa84f7f933}\label{classre_s_i_d_1_1_filter_a9eee7b8918695cd4f26d88aa84f7f933} 
+int {\bfseries Vbp\+\_\+x}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_abf92802773624b4fa59f7eedfd6dc044}\label{classre_s_i_d_1_1_filter_abf92802773624b4fa59f7eedfd6dc044} 
+int {\bfseries Vbp\+\_\+vc}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a1ec65746e2c0291d5321d7460ec198f1}\label{classre_s_i_d_1_1_filter_a1ec65746e2c0291d5321d7460ec198f1} 
+int {\bfseries Vlp}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a2849c134f928415b2c0cd58d9e6f4b39}\label{classre_s_i_d_1_1_filter_a2849c134f928415b2c0cd58d9e6f4b39} 
+int {\bfseries Vlp\+\_\+x}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_aaa77f912ebf136fa7decad10f31bb850}\label{classre_s_i_d_1_1_filter_aaa77f912ebf136fa7decad10f31bb850} 
+int {\bfseries Vlp\+\_\+vc}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_aa792c806a1949afdbd67554706acb1cc}\label{classre_s_i_d_1_1_filter_aa792c806a1949afdbd67554706acb1cc} 
+int {\bfseries ve}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a4326a2301fef5e45c116030a69fcd288}\label{classre_s_i_d_1_1_filter_a4326a2301fef5e45c116030a69fcd288} 
+int {\bfseries v3}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a416b82833b1543c229a6ce3f4367ea12}\label{classre_s_i_d_1_1_filter_a416b82833b1543c229a6ce3f4367ea12} 
+int {\bfseries v2}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_ae6d964a96e2f0f354f721b282e25132b}\label{classre_s_i_d_1_1_filter_ae6d964a96e2f0f354f721b282e25132b} 
+int {\bfseries v1}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a4a24bf2a2da95c676b4083351fe5e347}\label{classre_s_i_d_1_1_filter_a4a24bf2a2da95c676b4083351fe5e347} 
+int {\bfseries Vddt\+\_\+\+Vw\+\_\+2}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_ab2673d473f201782271aab222e6658d0}\label{classre_s_i_d_1_1_filter_ab2673d473f201782271aab222e6658d0} 
+int {\bfseries Vw\+\_\+bias}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a3bcd28edc9e319b7090cb409b54ee8a3}\label{classre_s_i_d_1_1_filter_a3bcd28edc9e319b7090cb409b54ee8a3} 
+int {\bfseries \+\_\+8\+\_\+div\+\_\+Q}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_ad2fa2ce627ce8d6c46a53bc136f4493d}\label{classre_s_i_d_1_1_filter_ad2fa2ce627ce8d6c46a53bc136f4493d} 
+int {\bfseries w0}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a23c900cc24208532c92b5b2835c5860c}\label{classre_s_i_d_1_1_filter_a23c900cc24208532c92b5b2835c5860c} 
+int {\bfseries \+\_\+1024\+\_\+div\+\_\+Q}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a796149c7ce5e99f89cc0704b843a9e2a}\label{classre_s_i_d_1_1_filter_a796149c7ce5e99f89cc0704b843a9e2a} 
+chip\+\_\+model {\bfseries sid\+\_\+model}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a60683d1203945748738076194a332453}\label{classre_s_i_d_1_1_filter_a60683d1203945748738076194a332453} 
+static unsigned short {\bfseries vcr\+\_\+k\+Vg} \mbox{[}1$<$$<$ 16\mbox{]}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_a39e23e24342944f3432e9cb8881ad836}\label{classre_s_i_d_1_1_filter_a39e23e24342944f3432e9cb8881ad836} 
+static unsigned short {\bfseries vcr\+\_\+n\+\_\+\+Ids\+\_\+term} \mbox{[}1$<$$<$ 16\mbox{]}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_ae1daa1765f850102c15c1ebd6ced2fa2}\label{classre_s_i_d_1_1_filter_ae1daa1765f850102c15c1ebd6ced2fa2} 
+static \mbox{\hyperlink{structre_s_i_d_1_1_filter_1_1model__filter__t}{model\+\_\+filter\+\_\+t}} {\bfseries model\+\_\+filter} \mbox{[}2\mbox{]}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classre_s_i_d_1_1_filter_ae302711fe9d1d70934653f2ba5903a33}\label{classre_s_i_d_1_1_filter_ae302711fe9d1d70934653f2ba5903a33} 
+class {\bfseries SID}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Components/\+SID/resid/filter.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Components/\+SID/resid/filter.\+cc\end{DoxyCompactItemize}

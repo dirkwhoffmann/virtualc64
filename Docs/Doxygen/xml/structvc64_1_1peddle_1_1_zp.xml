@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="structvc64_1_1peddle_1_1_zp" kind="struct" language="C++" prot="public">
+    <compoundname>vc64::peddle::Zp</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structvc64_1_1peddle_1_1_zp_1abb80daba304a94df71bc42202f49d63e" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::peddle::Zp::raw</definition>
+        <argsstring></argsstring>
+        <name>raw</name>
+        <qualifiedname>vc64::peddle::Zp::raw</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/StrWriter.h" line="24" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/StrWriter.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/StrWriter.h" line="24" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/StrWriter.h" bodystart="24" bodyend="24"/>
+    <listofallmembers>
+      <member refid="structvc64_1_1peddle_1_1_zp_1abb80daba304a94df71bc42202f49d63e" prot="public" virt="non-virtual"><scope>vc64::peddle::Zp</scope><name>raw</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_c_i_a_timer_info" kind="struct" language="C++" prot="public">
+    <compoundname>CIATimerInfo</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_c_i_a_timer_info_1ab3893bf974d5b2024e2309adbdd3a625" prot="public" static="no" mutable="no">
+        <type>u16</type>
+        <definition>u16 CIATimerInfo::count</definition>
+        <argsstring></argsstring>
+        <name>count</name>
+        <qualifiedname>CIATimerInfo::count</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="123" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_c_i_a_timer_info_1afd96ca5cb57fc9c2840ede1781043641" prot="public" static="no" mutable="no">
+        <type>u16</type>
+        <definition>u16 CIATimerInfo::latch</definition>
+        <argsstring></argsstring>
+        <name>latch</name>
+        <qualifiedname>CIATimerInfo::latch</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="124" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="124" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_c_i_a_timer_info_1a57c9b3fd736ac432197adec02435c87f" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool CIATimerInfo::running</definition>
+        <argsstring></argsstring>
+        <name>running</name>
+        <qualifiedname>CIATimerInfo::running</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="125" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="125" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_c_i_a_timer_info_1a13af0ab97b2c16d9a082707f3a25459a" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool CIATimerInfo::toggle</definition>
+        <argsstring></argsstring>
+        <name>toggle</name>
+        <qualifiedname>CIATimerInfo::toggle</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="126" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="126" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_c_i_a_timer_info_1a45c93ab7d161d9f7aaa91b018bee460d" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool CIATimerInfo::pbout</definition>
+        <argsstring></argsstring>
+        <name>pbout</name>
+        <qualifiedname>CIATimerInfo::pbout</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="127" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="127" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_c_i_a_timer_info_1a1e6009fdd8dd32ef5b73634b067e6e93" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool CIATimerInfo::oneShot</definition>
+        <argsstring></argsstring>
+        <name>oneShot</name>
+        <qualifiedname>CIATimerInfo::oneShot</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="128" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="128" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="121" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="122" bodyend="129"/>
+    <listofallmembers>
+      <member refid="struct_c_i_a_timer_info_1ab3893bf974d5b2024e2309adbdd3a625" prot="public" virt="non-virtual"><scope>CIATimerInfo</scope><name>count</name></member>
+      <member refid="struct_c_i_a_timer_info_1afd96ca5cb57fc9c2840ede1781043641" prot="public" virt="non-virtual"><scope>CIATimerInfo</scope><name>latch</name></member>
+      <member refid="struct_c_i_a_timer_info_1a1e6009fdd8dd32ef5b73634b067e6e93" prot="public" virt="non-virtual"><scope>CIATimerInfo</scope><name>oneShot</name></member>
+      <member refid="struct_c_i_a_timer_info_1a45c93ab7d161d9f7aaa91b018bee460d" prot="public" virt="non-virtual"><scope>CIATimerInfo</scope><name>pbout</name></member>
+      <member refid="struct_c_i_a_timer_info_1a57c9b3fd736ac432197adec02435c87f" prot="public" virt="non-virtual"><scope>CIATimerInfo</scope><name>running</name></member>
+      <member refid="struct_c_i_a_timer_info_1a13af0ab97b2c16d9a082707f3a25459a" prot="public" virt="non-virtual"><scope>CIATimerInfo</scope><name>toggle</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

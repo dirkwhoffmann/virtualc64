@@ -1,0 +1,591 @@
+\doxysection{VIA.\+h}
+\hypertarget{_v_i_a_8h_source}{}\label{_v_i_a_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.h@{/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}SubComponent.h"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ This\ implementation\ is\ mainly\ based\ on\ the\ document}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ "{}R6522\ VERSATILE\ INTERFACE\ ADAPTER"{}\ by\ Frank\ Kontros\ [F.\ K.]}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ *\ and\ the\ Hoxs64\ implementation\ by\ David\ Horrocks.}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ VIACountA0\ \ \ \ \ \ \ (1ULL\ <<\ 0)\ \ }\textcolor{comment}{//\ Forces\ timer\ 1\ to\ decrement\ every\ cycle}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ VIACountA1\ \ \ \ \ \ \ (1ULL\ <<\ 1)}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ VIACountB0\ \ \ \ \ \ \ (1ULL\ <<\ 2)\ \ }\textcolor{comment}{//\ Forces\ timer\ 2\ to\ decrement\ every\ cycle}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ VIACountB1\ \ \ \ \ \ \ (1ULL\ <<\ 3)}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ VIAReloadA0\ \ \ \ \ \ (1ULL\ <<\ 4)\ \ }\textcolor{comment}{//\ Forces\ timer\ 1\ to\ reload}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ VIAReloadA1\ \ \ \ \ \ (1ULL\ <<\ 5)}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ VIAReloadA2\ \ \ \ \ \ (1ULL\ <<\ 6)}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ VIAReloadB0\ \ \ \ \ \ (1ULL\ <<\ 7)\ \ }\textcolor{comment}{//\ Forces\ timer\ 2\ to\ reload}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ VIAReloadB1\ \ \ \ \ \ (1ULL\ <<\ 8)}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ VIAReloadB2\ \ \ \ \ \ (1ULL\ <<\ 9)}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#define\ VIAPostOneShotA0\ (1ULL\ <<\ 10)\ }\textcolor{comment}{//\ Timer\ 1\ fired\ in\ one\ shot\ mode}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ VIAPostOneShotB0\ (1ULL\ <<\ 11)\ }\textcolor{comment}{//\ Ttimer\ 2\ fired\ in\ one\ shot\ mode}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#define\ VIAInterrupt0\ \ \ \ (1ULL\ <<\ 12)\ }\textcolor{comment}{//\ Holds\ down\ the\ interrupt\ line}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#define\ VIAInterrupt1\ \ \ \ (1ULL\ <<\ 13)}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ VIASetCA1out0\ \ \ \ (1ULL\ <<\ 14)\ }\textcolor{comment}{//\ Sets\ CA2\ pin\ high}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#define\ VIASetCA1out1\ \ \ \ (1ULL\ <<\ 15)}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#define\ VIAClearCA1out0\ \ (1ULL\ <<\ 16)\ }\textcolor{comment}{//\ Sets\ CA2\ pin\ low}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#define\ VIAClearCA1out1\ \ (1ULL\ <<\ 17)}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#define\ VIASetCA2out0\ \ \ \ (1ULL\ <<\ 18)\ }\textcolor{comment}{//\ Sets\ CA2\ pin\ high}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ VIASetCA2out1\ \ \ \ (1ULL\ <<\ 19)}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#define\ VIAClearCA2out0\ \ (1ULL\ <<\ 20)\ }\textcolor{comment}{//\ Sets\ CA2\ pin\ low}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#define\ VIAClearCA2out1\ \ (1ULL\ <<\ 21)}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#define\ VIASetCB2out0\ \ \ \ (1ULL\ <<\ 22)\ }\textcolor{comment}{//\ Sets\ CB2\ pin\ high}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#define\ VIASetCB2out1\ \ \ \ (1ULL\ <<\ 23)}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#define\ VIAClearCB2out0\ \ (1ULL\ <<\ 24)\ }\textcolor{comment}{//\ Sets\ CB2\ pin\ low}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#define\ VIAClearCB2out1\ \ (1ULL\ <<\ 25)}}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#define\ VIAPB7out0\ \ \ \ \ \ \ (1ULL\ <<\ 26)\ }\textcolor{comment}{//\ Value\ of\ PB7\ pin\ (if\ output\ is\ enabled)}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ VIAClrInterrupt0\ (1ULL\ <<\ 27)\ }\textcolor{comment}{//\ Releases\ the\ interrupt\ line}}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#define\ VIAClrInterrupt1\ (1ULL\ <<\ 28)}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#define\ VIAClearBits\ \string~((1ULL\ <<\ 29)\ |\ VIACountA0\ |\ VIACountB0\ |\ VIAReloadA0\ |\ VIAReloadB0\ |\ VIAPostOneShotA0\ |\ VIAPostOneShotB0\ |\ VIAInterrupt0\ |\ VIASetCA1out0\ |\ VIAClearCA1out0\ |\ VIASetCA2out0\ |\ VIAClearCA2out0\ |\ VIASetCB2out0\ |\ VIAClearCB2out0\ |\ VIAPB7out0\ |\ VIAClrInterrupt0)}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{keyword}{class\ }VIA6522\ :\ \textcolor{keyword}{public}\ SubComponent,\ \textcolor{keyword}{public}\ Dumpable\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }Drive;}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }ParCable;}
+\DoxyCodeLine{00063\ \ \ \ \ }
+\DoxyCodeLine{00064\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00065\ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//\ Owner\ of\ this\ VIA}}
+\DoxyCodeLine{00067\ \ \ \ \ Drive\ \&drive;}
+\DoxyCodeLine{00068\ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{comment}{//\ Peripheral\ interface}}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00073\ \ \ \ \ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{comment}{/*\ Peripheral\ port\ A:\ "{}The\ Peripheral\ A\ port\ consists\ of\ 8\ lines\ which\ can}}
+\DoxyCodeLine{00075\ \textcolor{comment}{\ \ \ \ \ *\ be\ individually\ programmed\ to\ act\ as\ an\ input\ or\ an\ output\ under\ control}}
+\DoxyCodeLine{00076\ \textcolor{comment}{\ \ \ \ \ *\ of\ a\ Data\ Direction\ Register.\ The\ polarity\ of\ output\ pins\ is\ controlled}}
+\DoxyCodeLine{00077\ \textcolor{comment}{\ \ \ \ \ *\ by\ an\ Output\ Register\ and\ input\ data\ can\ be\ latched\ into\ an\ internal}}
+\DoxyCodeLine{00078\ \textcolor{comment}{\ \ \ \ \ *\ register\ under\ control\ of\ the\ CA1\ line."{}}}
+\DoxyCodeLine{00079\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00080\ \ \ \ \ u8\ pa;}
+\DoxyCodeLine{00081\ \ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{comment}{/*\ Peripheral\ A\ control\ lines:\ "{}The\ two\ peripheral\ A\ control\ lines\ act\ as}}
+\DoxyCodeLine{00083\ \textcolor{comment}{\ \ \ \ \ *\ interrupt\ inputs\ or\ as\ handshake\ outputs.\ Each\ line\ controls\ an\ internal}}
+\DoxyCodeLine{00084\ \textcolor{comment}{\ \ \ \ \ *\ interrupt\ flag\ with\ a\ corresponding\ interrupt\ enable\ bit.\ In\ addition,}}
+\DoxyCodeLine{00085\ \textcolor{comment}{\ \ \ \ \ *\ CA1controls\ the\ latching\ of\ data\ on\ Peripheral\ A\ Port\ input\ lines.\ The}}
+\DoxyCodeLine{00086\ \textcolor{comment}{\ \ \ \ \ *\ various\ modes\ of\ operation\ are\ controlled\ by\ the\ system\ processor}}
+\DoxyCodeLine{00087\ \textcolor{comment}{\ \ \ \ \ *\ through\ the\ internal\ control\ registers."{}}}
+\DoxyCodeLine{00088\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{bool}\ ca1;}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{bool}\ ca2;}
+\DoxyCodeLine{00091\ \ \ \ \ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{comment}{/*\ Peripheral\ port\ B:\ "{}The\ Peripheral\ B\ port\ consists\ of\ 8\ lines\ which\ can}}
+\DoxyCodeLine{00093\ \textcolor{comment}{\ \ \ \ \ *\ be\ individually\ programmed\ to\ act\ as\ an\ input\ or\ an\ output\ under\ control}}
+\DoxyCodeLine{00094\ \textcolor{comment}{\ \ \ \ \ *\ of\ a\ Data\ Direction\ Register.\ The\ polarity\ of\ output\ pins\ is\ controlled}}
+\DoxyCodeLine{00095\ \textcolor{comment}{\ \ \ \ \ *\ by\ an\ Output\ Register\ and\ input\ data\ can\ be\ latched\ into\ an\ internal}}
+\DoxyCodeLine{00096\ \textcolor{comment}{\ \ \ \ \ *\ register\ under\ control\ of\ the\ CA1\ line."{}}}
+\DoxyCodeLine{00097\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00098\ \ \ \ \ u8\ pb;}
+\DoxyCodeLine{00099\ \ \ \ \ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{comment}{/*\ Peripheral\ B\ control\ lines:\ "{}The\ Peripheral\ B\ control\ lines\ act\ as}}
+\DoxyCodeLine{00101\ \textcolor{comment}{\ \ \ \ \ *\ interrupt\ inputs\ or\ as\ handshake\ outputs.\ As\ with\ CA1\ and\ CA2,\ each\ line}}
+\DoxyCodeLine{00102\ \textcolor{comment}{\ \ \ \ \ *\ controls\ an\ interrupt\ flag\ with\ a\ corresponding\ interrupt\ enable\ bit.\ In}}
+\DoxyCodeLine{00103\ \textcolor{comment}{\ \ \ \ \ *\ addition,\ these\ lines\ act\ as\ a\ serial\ port\ under\ control\ of\ the\ Shift}}
+\DoxyCodeLine{00104\ \textcolor{comment}{\ \ \ \ \ *\ Register."{}}}
+\DoxyCodeLine{00105\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{bool}\ cb1;}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{bool}\ cb2;}
+\DoxyCodeLine{00108\ \ \ \ \ }
+\DoxyCodeLine{00109\ \ \ \ \ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{comment}{//\ Port\ registers}}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00113\ \ \ \ \ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{comment}{/*\ Data\ direction\ registers:\ "{}Each\ port\ has\ a\ Data\ Direction\ Register}}
+\DoxyCodeLine{00115\ \textcolor{comment}{\ \ \ \ \ *\ (DDRA,\ DDRB)\ for\ specifying\ whether\ the\ peripheral\ pins\ are\ to\ act\ as}}
+\DoxyCodeLine{00116\ \textcolor{comment}{\ \ \ \ \ *\ inputs\ or\ outputs.\ A\ 0\ in\ a\ bit\ of\ the\ Data\ Direction\ Register\ causes}}
+\DoxyCodeLine{00117\ \textcolor{comment}{\ \ \ \ \ *\ the\ corresponding\ peripheral\ pin\ to\ act\ as\ an\ input.\ A\ 1\ causes\ the\ pin}}
+\DoxyCodeLine{00118\ \textcolor{comment}{\ \ \ \ \ *\ to\ act\ as\ an\ output."{}}}
+\DoxyCodeLine{00119\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00120\ \ \ \ \ u8\ ddra;}
+\DoxyCodeLine{00121\ \ \ \ \ u8\ ddrb;}
+\DoxyCodeLine{00122\ \ \ \ \ }
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{comment}{/*\ Output\ registers:\ "{}Each\ peripheral\ pin\ is\ also\ controlled\ by\ a\ bit\ in}}
+\DoxyCodeLine{00124\ \textcolor{comment}{\ \ \ \ \ *\ the\ Output\ Register\ (ORA,\ ORB)\ and\ an\ Input\ Register\ (IRA,\ IRB).\ When}}
+\DoxyCodeLine{00125\ \textcolor{comment}{\ \ \ \ \ *\ the\ pin\ is\ programmed\ to\ act\ as\ an\ output,\ the\ voltage\ on\ the\ pin\ is}}
+\DoxyCodeLine{00126\ \textcolor{comment}{\ \ \ \ \ *\ controlled\ by\ the\ corre­sponding\ bit\ of\ the\ Output\ Register.\ A\ 1\ in\ the}}
+\DoxyCodeLine{00127\ \textcolor{comment}{\ \ \ \ \ *\ Output\ Register\ causes\ the\ pin\ to\ go\ high,\ and\ a\ 0\ causes\ the\ pin\ to\ go}}
+\DoxyCodeLine{00128\ \textcolor{comment}{\ \ \ \ \ *\ low.\ Data\ can\ be\ written\ into\ Output\ Register\ bits\ corresponding\ to\ pins}}
+\DoxyCodeLine{00129\ \textcolor{comment}{\ \ \ \ \ *\ which\ are\ programmed\ to\ act\ as\ inputs;\ however,\ the\ pin\ will\ be}}
+\DoxyCodeLine{00130\ \textcolor{comment}{\ \ \ \ \ *\ unaffected.}}
+\DoxyCodeLine{00131\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00132\ \ \ \ \ u8\ ora;}
+\DoxyCodeLine{00133\ \ \ \ \ u8\ orb;}
+\DoxyCodeLine{00134\ \ \ \ \ }
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{comment}{/*\ Input\ registers:\ "{}Reading\ a\ peripheral\ port\ causes\ the\ contents\ of\ the}}
+\DoxyCodeLine{00136\ \textcolor{comment}{\ \ \ \ \ *\ Input\ Register\ (IRA,\ IRB)\ to\ be\ transferred\ onto\ the\ Data\ Bus.\ With}}
+\DoxyCodeLine{00137\ \textcolor{comment}{\ \ \ \ \ *\ input\ latching\ disabled,\ IRA\ will\ always\ reflect\ the\ data\ on\ the\ PA\ pins.}}
+\DoxyCodeLine{00138\ \textcolor{comment}{\ \ \ \ \ *\ With\ input\ latching\ enabled,\ IRA\ will\ reflect\ the\ contents\ of\ the\ Port\ A}}
+\DoxyCodeLine{00139\ \textcolor{comment}{\ \ \ \ \ *\ prior\ to\ setting\ the\ CA1\ Interrupt\ Flag\ (IFRl)\ by\ an\ active\ transition}}
+\DoxyCodeLine{00140\ \textcolor{comment}{\ \ \ \ \ *\ on\ CA1.}}
+\DoxyCodeLine{00141\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00142\ \ \ \ \ u8\ ira;}
+\DoxyCodeLine{00143\ \ \ \ \ u8\ irb;}
+\DoxyCodeLine{00144\ \ \ \ \ }
+\DoxyCodeLine{00145\ \ \ \ \ }
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{comment}{//\ Timers}}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00149\ \ \ \ \ }
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{comment}{/*\ VIA\ timer\ 1:\ "{}Interval\ Timer\ T1\ consists\ of\ two\ 8-\/bit\ latches\ and\ a}}
+\DoxyCodeLine{00151\ \textcolor{comment}{\ \ \ \ \ *\ 16-\/bit\ counter.\ The\ latches\ store\ data\ which\ is\ to\ be\ loaded\ into\ the}}
+\DoxyCodeLine{00152\ \textcolor{comment}{\ \ \ \ \ *\ counter.\ After\ loading,\ the\ counter\ decrements\ at\ 02\ clock\ rate.\ Upon}}
+\DoxyCodeLine{00153\ \textcolor{comment}{\ \ \ \ \ *\ reaching\ zero,\ an\ interrupt\ flag\ is\ set,\ and\ IRQ\ goes\ low\ if\ the\ T1}}
+\DoxyCodeLine{00154\ \textcolor{comment}{\ \ \ \ \ *\ interrupt\ is\ enabled.\ Timer\ 1\ then\ disables\ any\ further\ interrupts\ or}}
+\DoxyCodeLine{00155\ \textcolor{comment}{\ \ \ \ \ *\ automatically\ transfers\ the\ contents\ of\ the\ latches\ into\ the\ counter\ and}}
+\DoxyCodeLine{00156\ \textcolor{comment}{\ \ \ \ \ *\ continues\ to\ decrement.\ In\ addition,\ the\ timer\ may\ be\ programmed\ to}}
+\DoxyCodeLine{00157\ \textcolor{comment}{\ \ \ \ \ *\ invert\ the\ output\ signal\ on\ a\ peripheral\ pin\ (PB7)\ each\ time\ it}}
+\DoxyCodeLine{00158\ \textcolor{comment}{\ \ \ \ \ *\ times-\/out."{}}}
+\DoxyCodeLine{00159\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00160\ \ \ \ \ u16\ t1;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ T1C}}
+\DoxyCodeLine{00161\ \ \ \ \ u8\ t1\_latch\_lo;\ \ \textcolor{comment}{//\ T1L\_L}}
+\DoxyCodeLine{00162\ \ \ \ \ u8\ t1\_latch\_hi;\ \ \textcolor{comment}{//\ T1L\_H}}
+\DoxyCodeLine{00163\ \ \ \ \ }
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{comment}{/*\ VIA\ timer\ 2:\ "{}Timer\ 2\ operates\ as\ an\ interval\ timer\ (in\ the\ 'one-\/shot'}}
+\DoxyCodeLine{00165\ \textcolor{comment}{\ \ \ \ \ *\ mode\ only),\ or\ as\ a\ counter\ for\ counting\ negative\ pulses\ on\ the\ PB6}}
+\DoxyCodeLine{00166\ \textcolor{comment}{\ \ \ \ \ *\ peripheral\ pin.\ A\ single\ control\ bit\ in\ the\ Auxiliary\ Control\ Register}}
+\DoxyCodeLine{00167\ \textcolor{comment}{\ \ \ \ \ *\ selects\ between\ these\ two\ modes.\ This\ timer\ is\ comprised\ of\ a}}
+\DoxyCodeLine{00168\ \textcolor{comment}{\ \ \ \ \ *\ 'write-\/only'\ low-\/order\ latch\ (T2L-\/L),\ a\ 'read-\/only'\ low-\/order\ counter}}
+\DoxyCodeLine{00169\ \textcolor{comment}{\ \ \ \ \ *\ (T2C-\/L)\ and\ a\ read/write\ high\ order\ counter\ (T2C-\/H).\ The\ counter}}
+\DoxyCodeLine{00170\ \textcolor{comment}{\ \ \ \ \ *\ registers\ act\ as\ a\ 16-\/bit\ counter\ which\ decrements\ at\ 02\ rate."{}}}
+\DoxyCodeLine{00171\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00172\ \ \ \ \ u16\ t2;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ T1C}}
+\DoxyCodeLine{00173\ \ \ \ \ u8\ t2\_latch\_lo;\ \ \textcolor{comment}{//\ T2L\_L}}
+\DoxyCodeLine{00174\ \ \ \ \ }
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{comment}{//\ Peripheral\ control\ register}}
+\DoxyCodeLine{00176\ \ \ \ \ u8\ pcr;}
+\DoxyCodeLine{00177\ \ \ \ \ }
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{comment}{//\ Auxiliary\ register}}
+\DoxyCodeLine{00179\ \ \ \ \ u8\ acr;}
+\DoxyCodeLine{00180\ \ \ \ \ }
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{comment}{//\ Interrupt\ enable\ register}}
+\DoxyCodeLine{00182\ \ \ \ \ u8\ ier;}
+\DoxyCodeLine{00183\ \ \ \ \ }
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{comment}{//\ Interrupt\ flag\ register}}
+\DoxyCodeLine{00185\ \ \ \ \ u8\ ifr;}
+\DoxyCodeLine{00186\ \ \ \ \ }
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{comment}{//\ Shift\ register}}
+\DoxyCodeLine{00188\ \ \ \ \ u8\ sr;}
+\DoxyCodeLine{00189\ \ \ \ \ }
+\DoxyCodeLine{00190\ \ \ \ \ \textcolor{comment}{//\ Event\ triggering\ queue}}
+\DoxyCodeLine{00191\ \ \ \ \ u64\ delay;}
+\DoxyCodeLine{00192\ \ \ \ \ }
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{comment}{/*\ New\ bits\ to\ feed\ in.\ Bits\ set\ in\ this\ variable\ makes\ a\ trigger\ event}}
+\DoxyCodeLine{00194\ \textcolor{comment}{\ \ \ \ \ *\ persistent.}}
+\DoxyCodeLine{00195\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00196\ \ \ \ \ u64\ feed;}
+\DoxyCodeLine{00197\ \ \ \ \ }
+\DoxyCodeLine{00198\ \ \ \ \ }
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{comment}{//\ Speeding\ up\ emulation\ (sleep\ logic)}}
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00202\ \ \ \ \ }
+\DoxyCodeLine{00203\ \ \ \ \ \textcolor{comment}{/*\ Idle\ counter.\ When\ the\ VIA\ state\ does\ not\ change\ during\ execution,\ this}}
+\DoxyCodeLine{00204\ \textcolor{comment}{\ \ \ \ \ *\ variable\ is\ increased\ by\ one.\ If\ it\ exceeds\ a\ certain\ threshhold,\ the}}
+\DoxyCodeLine{00205\ \textcolor{comment}{\ \ \ \ \ *\ chip\ is\ put\ into\ idle\ state\ via\ sleep().}}
+\DoxyCodeLine{00206\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00207\ \ \ \ \ u8\ tiredness;}
+\DoxyCodeLine{00208\ \ \ \ \ }
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{comment}{//\ Wakeup\ cycle}}
+\DoxyCodeLine{00210\ \ \ \ \ i64\ wakeUpCycle;}
+\DoxyCodeLine{00211\ \ \ \ \ }
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{comment}{//\ Number\ of\ skipped\ executions}}
+\DoxyCodeLine{00213\ \ \ \ \ i64\ idleCounter;}
+\DoxyCodeLine{00214\ \ \ \ \ }
+\DoxyCodeLine{00215\ \ \ \ \ }
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{comment}{//\ Initializing}}
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00219\ \ \ \ \ }
+\DoxyCodeLine{00220\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00221\ \ \ \ \ }
+\DoxyCodeLine{00222\ \ \ \ \ VIA6522(C64\ \&ref,\ Drive\ \&drvref);}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ isVia1()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00226\ \ \ \ \ }
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreObject}}
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00231\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00232\ \ \ \ \ }
+\DoxyCodeLine{00233\ \ \ \ \ \textcolor{keywordtype}{void}\ prefix()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00234\ \ \ \ \ }
+\DoxyCodeLine{00235\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00236\ \ \ \ \ }
+\DoxyCodeLine{00237\ \ \ \ \ \textcolor{keywordtype}{void}\ \_dump(Category\ category,\ std::ostream\&\ os)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00238\ }
+\DoxyCodeLine{00239\ \ \ \ \ }
+\DoxyCodeLine{00240\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreComponent}}
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00244\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00246\ \ \ \ \ VIA6522\&\ operator=\ (\textcolor{keyword}{const}\ VIA6522\&\ other)\ \{}
+\DoxyCodeLine{00247\ }
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ CLONE(pa)}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ CLONE(ca1)}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ CLONE(ca2)}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ CLONE(pb)}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ CLONE(cb1)}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ CLONE(cb2)}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ CLONE(ddra)}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ CLONE(ddrb)}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ CLONE(ora)}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ CLONE(orb)}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ CLONE(ira)}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ CLONE(irb)}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ CLONE(t1)}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ CLONE(t1\_latch\_lo)}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ CLONE(t1\_latch\_hi)}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ CLONE(t2)}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ CLONE(t2\_latch\_lo)}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ CLONE(pcr)}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ CLONE(acr)}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ CLONE(ier)}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ CLONE(ifr)}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ CLONE(sr)}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ CLONE(delay)}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ CLONE(feed)}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ CLONE(tiredness)}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ CLONE(wakeUpCycle)}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ CLONE(idleCounter)}
+\DoxyCodeLine{00275\ }
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00277\ \ \ \ \ \}}
+\DoxyCodeLine{00278\ }
+\DoxyCodeLine{00279\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00280\ \ \ \ \ \textcolor{keywordtype}{void}\ serialize(T\&\ worker)}
+\DoxyCodeLine{00281\ \ \ \ \ \{}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00283\ }
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ <<\ pa}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ <<\ ca1}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ <<\ ca2}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ <<\ pb}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ <<\ cb1}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ <<\ cb2}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ <<\ ddra}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ <<\ ddrb}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ <<\ ora}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ <<\ orb}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ <<\ ira}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ <<\ irb}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ <<\ t1}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ <<\ t1\_latch\_lo}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ <<\ t1\_latch\_hi}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ <<\ t2}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ <<\ t2\_latch\_lo}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ <<\ pcr}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ <<\ acr}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ <<\ ier}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ <<\ ifr}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ <<\ sr}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ <<\ delay}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ <<\ feed}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ <<\ tiredness}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ <<\ wakeUpCycle}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ <<\ idleCounter;}
+\DoxyCodeLine{00311\ }
+\DoxyCodeLine{00312\ \ \ \ \ \}\ SERIALIZERS(serialize);}
+\DoxyCodeLine{00313\ }
+\DoxyCodeLine{00314\ \ \ \ \ \textcolor{keywordtype}{void}\ \_reset(\textcolor{keywordtype}{bool}\ hard)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00315\ }
+\DoxyCodeLine{00316\ }
+\DoxyCodeLine{00317\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00318\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00319\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00320\ \ \ \ \ }
+\DoxyCodeLine{00321\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00322\ \ \ \ \ }
+\DoxyCodeLine{00323\ \ \ \ \ \textcolor{comment}{//\ Returns\ true\ if\ this\ object\ emulates\ is\ VIA2}}
+\DoxyCodeLine{00324\ \ \ \ \ \textcolor{keywordtype}{bool}\ isVia2()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00325\ \ \ \ \ }
+\DoxyCodeLine{00326\ \ \ \ \ \textcolor{comment}{//\ Getters\ for\ the\ data\ directon\ registers}}
+\DoxyCodeLine{00327\ \ \ \ \ u8\ getDDRA()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ ddra;\ \}}
+\DoxyCodeLine{00328\ \ \ \ \ u8\ getDDRB()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ ddrb;\ \}}
+\DoxyCodeLine{00329\ \ \ \ \ }
+\DoxyCodeLine{00330\ \ \ \ \ \textcolor{comment}{//\ Getters\ for\ peripheral\ ports}}
+\DoxyCodeLine{00331\ \ \ \ \ u8\ getPA()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ pa;\ \}}
+\DoxyCodeLine{00332\ \ \ \ \ u8\ getPB()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ pb;\ \}}
+\DoxyCodeLine{00333\ \ \ \ \ }
+\DoxyCodeLine{00334\ \ \ \ \ \textcolor{comment}{//\ Getter\ for\ the\ peripheral\ control\ pins}}
+\DoxyCodeLine{00335\ \ \ \ \ \textcolor{keywordtype}{bool}\ getCA2()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ ca2;\ \}}
+\DoxyCodeLine{00336\ \ \ \ \ \textcolor{keywordtype}{bool}\ getCB2()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ cb2;\ \}}
+\DoxyCodeLine{00337\ \ \ \ \ }
+\DoxyCodeLine{00338\ \ \ \ \ \textcolor{comment}{//\ Emulates\ the\ virtual\ VIA\ for\ one\ cycle}}
+\DoxyCodeLine{00339\ \ \ \ \ \textcolor{keywordtype}{void}\ execute();}
+\DoxyCodeLine{00340\ \ \ \ \ }
+\DoxyCodeLine{00341\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00342\ \ \ \ \ }
+\DoxyCodeLine{00343\ \ \ \ \ \textcolor{comment}{//\ Emulates\ a\ timer\ for\ one\ cycle}}
+\DoxyCodeLine{00344\ \ \ \ \ \textcolor{keywordtype}{void}\ executeTimer1();}
+\DoxyCodeLine{00345\ \ \ \ \ \textcolor{keywordtype}{void}\ executeTimer2();}
+\DoxyCodeLine{00346\ \ \ \ \ }
+\DoxyCodeLine{00347\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00348\ \ \ \ \ }
+\DoxyCodeLine{00349\ \ \ \ \ \textcolor{comment}{/*\ Special\ peek\ function\ for\ the\ I/O\ memory\ range.\ The\ peek\ function\ only}}
+\DoxyCodeLine{00350\ \textcolor{comment}{\ \ \ \ \ *\ handles\ those\ registers\ that\ are\ treated\ similarly\ by\ both\ VIA\ chips.}}
+\DoxyCodeLine{00351\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00352\ \ \ \ \ \textcolor{keyword}{virtual}\ u8\ peek(u16\ addr);}
+\DoxyCodeLine{00353\ \ \ \ \ }
+\DoxyCodeLine{00354\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00355\ \ \ \ \ }
+\DoxyCodeLine{00356\ \ \ \ \ \textcolor{comment}{/*\ Special\ peek\ function\ for\ output\ register\ A.\ Variable\ handshake\ is}}
+\DoxyCodeLine{00357\ \textcolor{comment}{\ \ \ \ \ *\ needed\ to\ distiguish\ if\ ORA\ is\ read\ via\ address\ 0x1\ (handshake\ enabled)}}
+\DoxyCodeLine{00358\ \textcolor{comment}{\ \ \ \ \ *\ or\ address\ 0xF\ (no\ handshake).}}
+\DoxyCodeLine{00359\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00360\ \ \ \ \ \textcolor{keyword}{virtual}\ u8\ peekORA(\textcolor{keywordtype}{bool}\ handshake);}
+\DoxyCodeLine{00361\ \ \ \ \ }
+\DoxyCodeLine{00362\ \ \ \ \ \textcolor{comment}{//\ Special\ peek\ function\ for\ output\ register\ B}}
+\DoxyCodeLine{00363\ \ \ \ \ u8\ peekORB();}
+\DoxyCodeLine{00364\ \ \ \ \ }
+\DoxyCodeLine{00365\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00366\ \ \ \ \ }
+\DoxyCodeLine{00367\ \ \ \ \ \textcolor{comment}{//\ Same\ as\ peek,\ but\ without\ side\ effects}}
+\DoxyCodeLine{00368\ \ \ \ \ u8\ spypeek(u16\ addr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00369\ \ \ \ \ }
+\DoxyCodeLine{00370\ \ \ \ \ \textcolor{comment}{/*\ Special\ poke\ function\ for\ the\ I/O\ memory\ range.\ The\ poke\ function\ only}}
+\DoxyCodeLine{00371\ \textcolor{comment}{\ \ \ \ \ *\ handles\ those\ registers\ that\ are\ treated\ similarly\ by\ both\ VIA\ chips.}}
+\DoxyCodeLine{00372\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00373\ \ \ \ \ \textcolor{keywordtype}{void}\ poke(u16\ addr,\ u8\ value);}
+\DoxyCodeLine{00374\ \ \ \ \ }
+\DoxyCodeLine{00375\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00376\ \ \ \ \ }
+\DoxyCodeLine{00377\ \ \ \ \ \textcolor{comment}{/*\ Special\ poke\ function\ for\ output\ register\ A.\ Variable\ handshake\ is}}
+\DoxyCodeLine{00378\ \textcolor{comment}{\ \ \ \ \ *\ needed\ to\ distiguish\ if\ ORA\ is\ written\ via\ address\ 0x1\ (handshake}}
+\DoxyCodeLine{00379\ \textcolor{comment}{\ \ \ \ \ *\ enabled)\ or\ address\ 0xF\ (no\ handshake).}}
+\DoxyCodeLine{00380\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00381\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ pokeORA(u8\ value,\ \textcolor{keywordtype}{bool}\ handshake);}
+\DoxyCodeLine{00382\ \ \ \ \ }
+\DoxyCodeLine{00383\ \ \ \ \ \textcolor{comment}{//\ Special\ poke\ function\ for\ output\ register\ B}}
+\DoxyCodeLine{00384\ \ \ \ \ \textcolor{keywordtype}{void}\ pokeORB(u8\ value);}
+\DoxyCodeLine{00385\ \ \ \ \ }
+\DoxyCodeLine{00386\ \ \ \ \ \textcolor{comment}{//\ Special\ poke\ function\ for\ the\ PCR\ register}}
+\DoxyCodeLine{00387\ \ \ \ \ \textcolor{keywordtype}{void}\ pokePCR(u8\ value);}
+\DoxyCodeLine{00388\ \ \ \ \ }
+\DoxyCodeLine{00389\ \ \ \ \ }
+\DoxyCodeLine{00390\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00391\ \ \ \ \ \textcolor{comment}{//\ Internal\ Configuration}}
+\DoxyCodeLine{00392\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00393\ \ \ \ \ }
+\DoxyCodeLine{00394\ \ \ \ \ \textcolor{comment}{//\ Returns\ true\ iff\ timer\ 1\ is\ in\ free-\/run\ mode\ (continous\ interrupts)}}
+\DoxyCodeLine{00395\ \ \ \ \ \textcolor{keywordtype}{bool}\ freeRun()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (acr\ \&\ 0x40)\ !=\ 0;\ \}}
+\DoxyCodeLine{00396\ \ \ \ \ }
+\DoxyCodeLine{00397\ \ \ \ \ \textcolor{comment}{//\ Returns\ true\ iff\ timer\ 2\ counts\ pulses\ on\ pin\ PB6}}
+\DoxyCodeLine{00398\ \ \ \ \ \textcolor{keywordtype}{bool}\ countPulses()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (acr\ \&\ 0x20)\ !=\ 0;\ \}}
+\DoxyCodeLine{00399\ \ \ \ \ }
+\DoxyCodeLine{00400\ \ \ \ \ \textcolor{comment}{//\ Returns\ true\ iff\ an\ output\ pulse\ is\ generated\ on\ each\ T1\ load\ operation}}
+\DoxyCodeLine{00401\ \ \ \ \ \textcolor{keywordtype}{bool}\ PB7OutputEnabled()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (acr\ \&\ 0x80)\ !=\ 0;\ \}}
+\DoxyCodeLine{00402\ \ \ \ \ }
+\DoxyCodeLine{00403\ \ \ \ \ \textcolor{comment}{//\ Checks\ if\ input\ latching\ is\ enabled}}
+\DoxyCodeLine{00404\ \ \ \ \ \textcolor{keywordtype}{bool}\ inputLatchingEnabledA()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (GET\_BIT(acr,0));\ \}}
+\DoxyCodeLine{00405\ \ \ \ \ \textcolor{keywordtype}{bool}\ inputLatchingEnabledB()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (GET\_BIT(acr,1));\ \}}
+\DoxyCodeLine{00406\ \ \ \ \ }
+\DoxyCodeLine{00407\ \ \ \ \ }
+\DoxyCodeLine{00408\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00409\ \ \ \ \ \textcolor{comment}{//\ Peripheral\ Control\ Register\ (PCR)}}
+\DoxyCodeLine{00410\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00411\ \ \ \ \ }
+\DoxyCodeLine{00412\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00413\ \ \ \ \ }
+\DoxyCodeLine{00414\ \ \ \ \ \textcolor{comment}{//\ Reads\ the\ control\ bits\ from\ the\ peripheral\ control\ register}}
+\DoxyCodeLine{00415\ \ \ \ \ u8\ ca1Control()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ pcr\ \&\ 0x01;\ \}}
+\DoxyCodeLine{00416\ \ \ \ \ u8\ ca2Control()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (pcr\ >>\ 1)\ \&\ 0x07;\ \}}
+\DoxyCodeLine{00417\ \ \ \ \ u8\ cb1Control()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (pcr\ >>\ 4)\ \&\ 0x01;\ \}}
+\DoxyCodeLine{00418\ \ \ \ \ u8\ cb2Control()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (pcr\ >>\ 5)\ \&\ 0x07;\ \}}
+\DoxyCodeLine{00419\ \ \ \ \ }
+\DoxyCodeLine{00420\ \ \ \ \ }
+\DoxyCodeLine{00421\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00422\ \ \ \ \ \textcolor{comment}{//\ Ports}}
+\DoxyCodeLine{00423\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00424\ \ \ \ \ }
+\DoxyCodeLine{00425\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00426\ \ \ \ \ }
+\DoxyCodeLine{00427\ \ \ \ \ \textcolor{comment}{//\ Bit\ values\ driving\ port\ A\ from\ inside\ the\ chip}}
+\DoxyCodeLine{00428\ \ \ \ \ u8\ portAinternal()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00429\ \ \ \ \ }
+\DoxyCodeLine{00430\ \ \ \ \ \textcolor{comment}{//\ Bit\ values\ driving\ port\ A\ from\ outside\ the\ chip}}
+\DoxyCodeLine{00431\ \ \ \ \ \textcolor{keyword}{virtual}\ u8\ portAexternal()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00432\ \ \ \ \ }
+\DoxyCodeLine{00433\ \ \ \ \ \textcolor{comment}{//\ Updates\ variable\ pa\ with\ bit\ values\ visible\ at\ port\ A}}
+\DoxyCodeLine{00434\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ updatePA();}
+\DoxyCodeLine{00435\ \ \ \ \ }
+\DoxyCodeLine{00436\ \ \ \ \ \textcolor{comment}{//\ Bit\ values\ driving\ port\ B\ from\ inside\ the\ chip}}
+\DoxyCodeLine{00437\ \ \ \ \ u8\ portBinternal()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00438\ \ \ \ \ }
+\DoxyCodeLine{00439\ \ \ \ \ \textcolor{comment}{//\ Bit\ values\ driving\ port\ B\ from\ outside\ the\ chip}}
+\DoxyCodeLine{00440\ \ \ \ \ \textcolor{keyword}{virtual}\ u8\ portBexternal()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00441\ \ \ \ \ }
+\DoxyCodeLine{00442\ \ \ \ \ \textcolor{comment}{//\ Updates\ variable\ pa\ with\ bit\ values\ visible\ at\ port\ B}}
+\DoxyCodeLine{00443\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ updatePB();}
+\DoxyCodeLine{00444\ \ \ \ \ }
+\DoxyCodeLine{00445\ \ \ \ \ }
+\DoxyCodeLine{00446\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00447\ \ \ \ \ \textcolor{comment}{//\ Peripheral\ control\ lines}}
+\DoxyCodeLine{00448\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00449\ \ \ \ \ }
+\DoxyCodeLine{00450\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00451\ \ \ \ \ }
+\DoxyCodeLine{00452\ \ \ \ \ \textcolor{comment}{//\ Schedules\ a\ transition\ on\ the\ CA1\ pin\ for\ the\ next\ cycle}}
+\DoxyCodeLine{00453\ \ \ \ \ \textcolor{keywordtype}{void}\ CA1action(\textcolor{keywordtype}{bool}\ value);}
+\DoxyCodeLine{00454\ \ \ \ \ }
+\DoxyCodeLine{00455\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00456\ \ \ \ \ }
+\DoxyCodeLine{00457\ \ \ \ \ \textcolor{comment}{//\ Performs\ a\ transition\ on\ the\ CA1\ pin}}
+\DoxyCodeLine{00458\ \ \ \ \ \textcolor{keywordtype}{void}\ setCA1(\textcolor{keywordtype}{bool}\ value);}
+\DoxyCodeLine{00459\ \ \ \ \ }
+\DoxyCodeLine{00460\ \ \ \ \ }
+\DoxyCodeLine{00461\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00462\ \ \ \ \ \textcolor{comment}{//\ Interrupt\ handling}}
+\DoxyCodeLine{00463\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00464\ \ \ \ \ }
+\DoxyCodeLine{00465\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00466\ \ \ \ \ }
+\DoxyCodeLine{00467\ \ \ \ \ \textcolor{comment}{//\ Pulls\ down\ or\ releases\ the\ IRQ\ line}}
+\DoxyCodeLine{00468\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ pullDownIrqLine()\ =\ 0;}
+\DoxyCodeLine{00469\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ releaseIrqLine()\ =\ 0;}
+\DoxyCodeLine{00470\ \ \ \ \ }
+\DoxyCodeLine{00471\ \ \ \ \ \textcolor{comment}{/*\ Releases\ the\ IRQ\ line\ if\ IFR\ and\ IER\ have\ no\ matching\ bits.\ This\ method}}
+\DoxyCodeLine{00472\ \textcolor{comment}{\ \ \ \ \ *\ is\ invoked\ whenever\ a\ bit\ in\ the\ IFR\ or\ IER\ is\ is\ cleared.}}
+\DoxyCodeLine{00473\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00474\ \ \ \ \ \textcolor{keywordtype}{void}\ releaseIrqLineIfNeeded()\ \{\ \textcolor{keywordflow}{if}\ ((ifr\ \&\ ier)\ ==\ 0)\ delay\ |=\ VIAClrInterrupt0;\ \}}
+\DoxyCodeLine{00475\ \ \ \ \ }
+\DoxyCodeLine{00476\ \ \ \ \ \textcolor{comment}{/*\ |\ \ \ \ 7\ \ \ \ |\ \ \ \ 6\ \ \ \ |\ \ \ \ 5\ \ \ \ |\ \ \ \ 4\ \ \ \ |\ \ \ \ 3\ \ \ \ |\ \ \ \ 2\ \ \ \ |\ \ \ \ 1\ \ \ \ |\ \ \ \ 0\ \ \ \ |}}
+\DoxyCodeLine{00477\ \textcolor{comment}{\ \ \ \ \ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00478\ \textcolor{comment}{\ \ \ \ \ *\ |\ \ \ IRQ\ \ \ |\ Timer\ 1\ |\ Timer\ 2\ |\ \ \ CB1\ \ \ |\ \ \ CB2\ \ \ |Shift\ Reg|\ \ \ CA1\ \ \ |\ \ \ CA2\ \ \ |}}
+\DoxyCodeLine{00479\ \textcolor{comment}{\ \ \ \ \ *}}
+\DoxyCodeLine{00480\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ Timer\ 1\ -\/\ Set\ by:\ \ \ \ \ Time-\/out\ of\ T1}}
+\DoxyCodeLine{00481\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ \ \ \ \ \ \ \ \ \ \ Cleared\ by:\ Read\ t1\ low\ or\ write\ t1\ high}}
+\DoxyCodeLine{00482\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ Timer\ 2\ -\/\ Set\ by:\ \ \ \ \ Time-\/out\ of\ T2}}
+\DoxyCodeLine{00483\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ \ \ \ \ \ \ \ \ \ \ Cleared\ by:\ Read\ t2\ low\ or\ write\ t2\ high}}
+\DoxyCodeLine{00484\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ \ \ \ \ CB1\ -\/\ Set\ by:\ \ \ \ \ Active\ edge\ on\ CB1}}
+\DoxyCodeLine{00485\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ \ \ \ \ \ \ \ \ \ \ Cleared\ by:\ Read\ or\ write\ to\ register\ 0\ (ORB)}}
+\DoxyCodeLine{00486\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ \ \ \ \ CB2\ -\/\ Set\ by:\ \ \ \ \ Active\ edge\ on\ CB2}}
+\DoxyCodeLine{00487\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ \ \ \ \ \ \ \ \ \ \ Cleared\ by:\ Read\ or\ write\ to\ register\ 0\ (ORB),}}
+\DoxyCodeLine{00488\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ CB2\ is\ not\ selected\ as\ "{}INDEPENDENT"{}.}}
+\DoxyCodeLine{00489\ \textcolor{comment}{\ \ \ \ \ *\ \ Shift\ Reg\ -\/\ Set\ by:\ \ \ \ \ 8\ shifts\ completed}}
+\DoxyCodeLine{00490\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ \ \ \ \ \ \ \ \ \ \ Cleared\ by:\ Read\ or\ write\ to\ register\ 10\ (0xA)}}
+\DoxyCodeLine{00491\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ \ \ \ \ CA1\ -\/\ Set\ by:\ \ \ \ \ Active\ edge\ on\ CA1}}
+\DoxyCodeLine{00492\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ \ \ \ \ \ \ \ \ \ \ Cleared\ by:\ Read\ or\ write\ to\ register\ 1\ (ORA)}}
+\DoxyCodeLine{00493\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ \ \ \ \ CA2\ -\/\ Set\ by:\ \ \ \ \ Active\ edge\ on\ CA2}}
+\DoxyCodeLine{00494\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ \ \ \ \ \ \ \ \ \ \ Cleared\ by:\ Read\ or\ write\ to\ register\ 1\ (ORA),}}
+\DoxyCodeLine{00495\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ CA2\ is\ not\ selected\ as\ "{}INDEPENDENT"{}.}}
+\DoxyCodeLine{00496\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00497\ \ \ \ \ }
+\DoxyCodeLine{00498\ \ \ \ \ \textcolor{comment}{//\ Sets\ or\ clears\ the\ Timer\ 1\ interrupt\ flag}}
+\DoxyCodeLine{00499\ \ \ \ \ \textcolor{keywordtype}{void}\ setInterruptFlag\_T1()\ \{}
+\DoxyCodeLine{00500\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!GET\_BIT(ifr,\ 6)\ \&\&\ GET\_BIT(ier,\ 6))\ delay\ |=\ VIAInterrupt0;}
+\DoxyCodeLine{00501\ \ \ \ \ \ \ \ \ SET\_BIT(ifr,\ 6);}
+\DoxyCodeLine{00502\ \ \ \ \ \}}
+\DoxyCodeLine{00503\ \ \ \ \ \textcolor{keywordtype}{void}\ clearInterruptFlag\_T1()\ \{\ CLR\_BIT(ifr,\ 6);\ releaseIrqLineIfNeeded();\ \}}
+\DoxyCodeLine{00504\ \ \ \ \ }
+\DoxyCodeLine{00505\ \ \ \ \ \textcolor{comment}{//\ Sets\ or\ clears\ the\ Timer\ 2\ interrupt\ flag}}
+\DoxyCodeLine{00506\ \ \ \ \ \textcolor{keywordtype}{void}\ setInterruptFlag\_T2()\ \{}
+\DoxyCodeLine{00507\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!GET\_BIT(ifr,\ 5)\ \&\&\ GET\_BIT(ier,\ 5))\ delay\ |=\ VIAInterrupt0;}
+\DoxyCodeLine{00508\ \ \ \ \ \ \ \ \ SET\_BIT(ifr,\ 5);}
+\DoxyCodeLine{00509\ \ \ \ \ \}}
+\DoxyCodeLine{00510\ \ \ \ \ \textcolor{keywordtype}{void}\ clearInterruptFlag\_T2()\ \{\ CLR\_BIT(ifr,\ 5);\ releaseIrqLineIfNeeded();\ \}}
+\DoxyCodeLine{00511\ \ \ \ \ }
+\DoxyCodeLine{00512\ \ \ \ \ \textcolor{comment}{//\ Sets\ or\ clears\ the\ CB1\ interrupt\ flag}}
+\DoxyCodeLine{00513\ \ \ \ \ \textcolor{keywordtype}{void}\ setInterruptFlag\_CB1()\ \{}
+\DoxyCodeLine{00514\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!GET\_BIT(ifr,\ 4)\ \&\&\ GET\_BIT(ier,\ 4))\ delay\ |=\ VIAInterrupt0;}
+\DoxyCodeLine{00515\ \ \ \ \ \ \ \ \ SET\_BIT(ifr,\ 4);}
+\DoxyCodeLine{00516\ \ \ \ \ \}}
+\DoxyCodeLine{00517\ \ \ \ \ \textcolor{keywordtype}{void}\ clearInterruptFlag\_CB1()\ \{\ CLR\_BIT(ifr,\ 4);\ releaseIrqLineIfNeeded();\ \}}
+\DoxyCodeLine{00518\ \ \ \ \ }
+\DoxyCodeLine{00519\ \ \ \ \ \textcolor{comment}{//\ Clears\ the\ CB2\ interrupt\ flag}}
+\DoxyCodeLine{00520\ \ \ \ \ \textcolor{keywordtype}{void}\ clearInterruptFlag\_CB2()\ \{\ CLR\_BIT(ifr,\ 3);\ releaseIrqLineIfNeeded();\ \}}
+\DoxyCodeLine{00521\ \ \ \ \ }
+\DoxyCodeLine{00522\ \ \ \ \ \textcolor{comment}{//\ Clears\ the\ Shift\ Register\ interrupt\ flag}}
+\DoxyCodeLine{00523\ \ \ \ \ \textcolor{keywordtype}{void}\ clearInterruptFlag\_SR()\ \{\ CLR\_BIT(ifr,\ 2);\ releaseIrqLineIfNeeded();\ \}}
+\DoxyCodeLine{00524\ \ \ \ \ }
+\DoxyCodeLine{00525\ \ \ \ \ \textcolor{comment}{//\ Clears\ the\ CB1\ interrupt\ flag}}
+\DoxyCodeLine{00526\ \ \ \ \ \textcolor{keywordtype}{void}\ clearInterruptFlag\_CA1()\ \{\ CLR\_BIT(ifr,\ 1);\ releaseIrqLineIfNeeded();\ \}}
+\DoxyCodeLine{00527\ \ \ \ \ }
+\DoxyCodeLine{00528\ \ \ \ \ \textcolor{comment}{//\ Clears\ the\ CA2\ interrupt\ flag}}
+\DoxyCodeLine{00529\ \ \ \ \ \textcolor{keywordtype}{void}\ clearInterruptFlag\_CA2()\ \{\ CLR\_BIT(ifr,\ 0);\ releaseIrqLineIfNeeded();\ \}}
+\DoxyCodeLine{00530\ \ \ \ \ }
+\DoxyCodeLine{00531\ \ \ \ \ }
+\DoxyCodeLine{00532\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00533\ \ \ \ \ \textcolor{comment}{//\ Speeding\ up\ emulation}}
+\DoxyCodeLine{00534\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00535\ \ \ \ \ }
+\DoxyCodeLine{00536\ \ \ \ \ \textcolor{comment}{//\ Puts\ the\ VIA\ into\ idle\ state}}
+\DoxyCodeLine{00537\ \ \ \ \ \textcolor{keywordtype}{void}\ sleep();}
+\DoxyCodeLine{00538\ \ \ \ \ }
+\DoxyCodeLine{00539\ \ \ \ \ \textcolor{comment}{//\ Emulates\ all\ previously\ skipped\ cycles}}
+\DoxyCodeLine{00540\ \ \ \ \ \textcolor{keywordtype}{void}\ wakeUp();}
+\DoxyCodeLine{00541\ \};}
+\DoxyCodeLine{00542\ }
+\DoxyCodeLine{00543\ }
+\DoxyCodeLine{00544\ \textcolor{comment}{/*\ First\ virtual\ VIA6522\ controller.\ VIA1\ serves\ as\ hardware\ interface\ between}}
+\DoxyCodeLine{00545\ \textcolor{comment}{\ *\ the\ VC1541\ CPU\ and\ the\ IEC\ bus.}}
+\DoxyCodeLine{00546\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00547\ \textcolor{keyword}{class\ }VIA1\ final\ :\ \textcolor{keyword}{public}\ VIA6522\ \{}
+\DoxyCodeLine{00548\ }
+\DoxyCodeLine{00549\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00550\ \ \ \ \ }
+\DoxyCodeLine{00551\ \ \ \ \ VIA1(C64\ \&ref,\ Drive\ \&drvref)\ :\ VIA6522(ref,\ drvref)\ \{\ \}}
+\DoxyCodeLine{00552\ \ \ \ \ \string~VIA1()\ \{\ \}}
+\DoxyCodeLine{00553\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VIA1"{}};\ \}}
+\DoxyCodeLine{00554\ \ \ \ \ \textcolor{keywordtype}{bool}\ isVia1()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00555\ \ \ \ \ }
+\DoxyCodeLine{00556\ \ \ \ \ u8\ peekORA(\textcolor{keywordtype}{bool}\ handshake)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00557\ \ \ \ \ \textcolor{keywordtype}{void}\ pokeORA(u8\ value,\ \textcolor{keywordtype}{bool}\ handshake)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00558\ \ \ \ \ u8\ portAexternal()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00559\ \ \ \ \ u8\ portBexternal()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00560\ \ \ \ \ \textcolor{keywordtype}{void}\ updatePA()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00561\ \ \ \ \ \textcolor{keywordtype}{void}\ updatePB()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00562\ \ \ \ \ \textcolor{keywordtype}{void}\ pullDownIrqLine()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00563\ \ \ \ \ \textcolor{keywordtype}{void}\ releaseIrqLine()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00564\ \};}
+\DoxyCodeLine{00565\ }
+\DoxyCodeLine{00566\ \textcolor{comment}{/*\ Second\ virtual\ VIA6522\ controller.\ VIA2\ serves\ as\ hardware\ interface\ between}}
+\DoxyCodeLine{00567\ \textcolor{comment}{\ *\ the\ VC1541\ CPU\ and\ the\ drive\ logic.}}
+\DoxyCodeLine{00568\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00569\ \textcolor{keyword}{class\ }VIA2\ final\ :\ \textcolor{keyword}{public}\ VIA6522\ \{}
+\DoxyCodeLine{00570\ }
+\DoxyCodeLine{00571\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00572\ \ \ \ \ }
+\DoxyCodeLine{00573\ \ \ \ \ VIA2(C64\ \&ref,\ Drive\ \&drvref)\ :\ VIA6522(ref,\ drvref)\ \{\ \}}
+\DoxyCodeLine{00574\ \ \ \ \ \string~VIA2()\ \{\ \}}
+\DoxyCodeLine{00575\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VIA2"{}};\ \}}
+\DoxyCodeLine{00576\ \ \ \ \ \textcolor{keywordtype}{bool}\ isVia1()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{00577\ }
+\DoxyCodeLine{00578\ \ \ \ \ u8\ portAexternal()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00579\ \ \ \ \ u8\ portBexternal()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00580\ \ \ \ \ \textcolor{keywordtype}{void}\ updatePB()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00581\ \ \ \ \ \textcolor{keywordtype}{void}\ pullDownIrqLine()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00582\ \ \ \ \ \textcolor{keywordtype}{void}\ releaseIrqLine()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00583\ \};}
+\DoxyCodeLine{00584\ }
+\DoxyCodeLine{00585\ \}}
+
+\end{DoxyCode}

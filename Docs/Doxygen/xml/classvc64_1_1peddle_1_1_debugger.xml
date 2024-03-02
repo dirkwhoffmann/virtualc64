@@ -1,0 +1,575 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1peddle_1_1_debugger" kind="class" language="C++" prot="public">
+    <compoundname>vc64::peddle::Debugger</compoundname>
+    <sectiondef kind="friend">
+      <memberdef kind="friend" id="classvc64_1_1peddle_1_1_debugger_1a97356906d9346dbfce445a950dd34188" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class Peddle</definition>
+        <argsstring></argsstring>
+        <name>Peddle</name>
+        <qualifiedname>vc64::peddle::Debugger::Peddle</qualifiedname>
+        <param>
+          <type>Peddle</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="138" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" bodystart="138" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1peddle_1_1_debugger_1a051402e36e1ea66a889c51234c684653" prot="private" static="no" mutable="no">
+        <type>class Peddle &amp;</type>
+        <definition>class Peddle&amp; vc64::peddle::Debugger::cpu</definition>
+        <argsstring></argsstring>
+        <name>cpu</name>
+        <qualifiedname>vc64::peddle::Debugger::cpu</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="141" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" bodystart="141" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1peddle_1_1_debugger_1aa51dd83c200d61088e1fe36c065628ec" prot="private" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize vc64::peddle::Debugger::logCnt</definition>
+        <argsstring></argsstring>
+        <name>logCnt</name>
+        <qualifiedname>vc64::peddle::Debugger::logCnt</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="165" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" bodystart="165" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1peddle_1_1_debugger_1a47ac221d52ae56dfe042c941c73fa38c" prot="private" static="no" mutable="no">
+        <type>u64</type>
+        <definition>u64 vc64::peddle::Debugger::softStop</definition>
+        <argsstring></argsstring>
+        <name>softStop</name>
+        <qualifiedname>vc64::peddle::Debugger::softStop</qualifiedname>
+        <initializer>= UINT64_MAX - 1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="175" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" bodystart="175" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="classvc64_1_1peddle_1_1_debugger_1a5c21d7585b534e59dc99234d3cc586c6" prot="public" static="no" mutable="no">
+        <type>RecordedInstruction</type>
+        <definition>RecordedInstruction vc64::peddle::Debugger::logBuffer[LOG_BUFFER_CAPACITY]</definition>
+        <argsstring>[LOG_BUFFER_CAPACITY]</argsstring>
+        <name>logBuffer</name>
+        <qualifiedname>vc64::peddle::Debugger::logBuffer</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="146" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" bodystart="146" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1peddle_1_1_debugger_1a5dc8e6c52c3bc52bf83c26c0edb75784" prot="public" static="no" mutable="no">
+        <type>Breakpoints</type>
+        <definition>Breakpoints vc64::peddle::Debugger::breakpoints</definition>
+        <argsstring></argsstring>
+        <name>breakpoints</name>
+        <qualifiedname>vc64::peddle::Debugger::breakpoints</qualifiedname>
+        <initializer>= Breakpoints(cpu)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="149" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" bodystart="149" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1peddle_1_1_debugger_1a42cb1dae15878962a0784e352eb9cd2d" prot="public" static="no" mutable="no">
+        <type>Watchpoints</type>
+        <definition>Watchpoints vc64::peddle::Debugger::watchpoints</definition>
+        <argsstring></argsstring>
+        <name>watchpoints</name>
+        <qualifiedname>vc64::peddle::Debugger::watchpoints</qualifiedname>
+        <initializer>= Watchpoints(cpu)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="152" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" bodystart="152" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1peddle_1_1_debugger_1a2401a29b69d207eb009a2dbb2c3a33e8" prot="public" static="no" mutable="no">
+        <type>i32</type>
+        <definition>i32 vc64::peddle::Debugger::breakpointPC</definition>
+        <argsstring></argsstring>
+        <name>breakpointPC</name>
+        <qualifiedname>vc64::peddle::Debugger::breakpointPC</qualifiedname>
+        <initializer>= -1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="155" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" bodystart="155" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1peddle_1_1_debugger_1a5bf03645eb1405b3a581487c6a3ea55b" prot="public" static="no" mutable="no">
+        <type>i32</type>
+        <definition>i32 vc64::peddle::Debugger::watchpointPC</definition>
+        <argsstring></argsstring>
+        <name>watchpointPC</name>
+        <qualifiedname>vc64::peddle::Debugger::watchpointPC</qualifiedname>
+        <initializer>= -1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="156" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" bodystart="156" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1ab38c2b94948618bcbc62e47723ef199e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::peddle::Debugger::Debugger</definition>
+        <argsstring>(Peddle &amp;ref)</argsstring>
+        <name>Debugger</name>
+        <qualifiedname>vc64::peddle::Debugger::Debugger</qualifiedname>
+        <param>
+          <type>Peddle &amp;</type>
+          <declname>ref</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="184" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" bodystart="184" bodyend="184"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1a1bd2219336bcd4da91f18c25a951e1ff" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::peddle::Debugger::reset</definition>
+        <argsstring>()</argsstring>
+        <name>reset</name>
+        <qualifiedname>vc64::peddle::Debugger::reset</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="185" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="195" bodyend="200"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1aaa161781712997f0d89f75b27d446459" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::peddle::Debugger::setSoftStop</definition>
+        <argsstring>(u64 addr)</argsstring>
+        <name>setSoftStop</name>
+        <qualifiedname>vc64::peddle::Debugger::setSoftStop</qualifiedname>
+        <param>
+          <type>u64</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="195" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="203" bodyend="207"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1a0092ec21f090d1966894d44090c16d38" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::peddle::Debugger::setSoftStopAtNextInstr</definition>
+        <argsstring>()</argsstring>
+        <name>setSoftStopAtNextInstr</name>
+        <qualifiedname>vc64::peddle::Debugger::setSoftStopAtNextInstr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="196" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="210" bodyend="213"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1aee01e5b83a243c3af03f089d39825607" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::peddle::Debugger::breakpointMatches</definition>
+        <argsstring>(u32 addr)</argsstring>
+        <name>breakpointMatches</name>
+        <qualifiedname>vc64::peddle::Debugger::breakpointMatches</qualifiedname>
+        <param>
+          <type>u32</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="199" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="216" bodyend="232"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1a8f0d06095dda63ce9aa773110d6135c9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::peddle::Debugger::watchpointMatches</definition>
+        <argsstring>(u32 addr)</argsstring>
+        <name>watchpointMatches</name>
+        <qualifiedname>vc64::peddle::Debugger::watchpointMatches</qualifiedname>
+        <param>
+          <type>u32</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="202" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="235" bodyend="241"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1a1286b5644e00cd0189688c6fdd528330" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::peddle::Debugger::dumpLogBuffer</definition>
+        <argsstring>(std::ostream &amp;os, isize count)</argsstring>
+        <name>dumpLogBuffer</name>
+        <qualifiedname>vc64::peddle::Debugger::dumpLogBuffer</qualifiedname>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>count</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="210" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="244" bodyend="270"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1ac89cc9b0ee5c299e6cab7a35f584e3ff" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::peddle::Debugger::dumpLogBuffer</definition>
+        <argsstring>(std::ostream &amp;os)</argsstring>
+        <name>dumpLogBuffer</name>
+        <qualifiedname>vc64::peddle::Debugger::dumpLogBuffer</qualifiedname>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="211" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="273" bodyend="276"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1a998e7216f75a4ea0a8378cb1edb19088" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::peddle::Debugger::enableLogging</definition>
+        <argsstring>()</argsstring>
+        <name>enableLogging</name>
+        <qualifiedname>vc64::peddle::Debugger::enableLogging</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="214" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="279" bodyend="282"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1aa1bc58661be77ce3ac7cfb69b43b8135" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::peddle::Debugger::disableLogging</definition>
+        <argsstring>()</argsstring>
+        <name>disableLogging</name>
+        <qualifiedname>vc64::peddle::Debugger::disableLogging</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="215" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="285" bodyend="288"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1a6fc2ba0b807844d7a20a96437580fa3c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::peddle::Debugger::loggedInstructions</definition>
+        <argsstring>() const</argsstring>
+        <name>loggedInstructions</name>
+        <qualifiedname>vc64::peddle::Debugger::loggedInstructions</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="218" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="291" bodyend="294"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1aef23e025be2b2de9a845f724545e31fe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::peddle::Debugger::logInstruction</definition>
+        <argsstring>()</argsstring>
+        <name>logInstruction</name>
+        <qualifiedname>vc64::peddle::Debugger::logInstruction</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="221" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="297" bodyend="315"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1ae4309bc310f2c8c76c52a4fa2846de3f" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const RecordedInstruction &amp;</type>
+        <definition>const RecordedInstruction &amp; vc64::peddle::Debugger::logEntryRel</definition>
+        <argsstring>(isize n) const</argsstring>
+        <name>logEntryRel</name>
+        <qualifiedname>vc64::peddle::Debugger::logEntryRel</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="228" column="31" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="318" bodyend="322"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1a589f525842c2c9eea8021451e50da6a5" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const RecordedInstruction &amp;</type>
+        <definition>const RecordedInstruction &amp; vc64::peddle::Debugger::logEntryAbs</definition>
+        <argsstring>(isize n) const</argsstring>
+        <name>logEntryAbs</name>
+        <qualifiedname>vc64::peddle::Debugger::logEntryAbs</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="229" column="31" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="325" bodyend="329"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1afca927742cfb91c7448f96bdc06568da" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u16</type>
+        <definition>u16 vc64::peddle::Debugger::loggedPC0Rel</definition>
+        <argsstring>(isize n) const</argsstring>
+        <name>loggedPC0Rel</name>
+        <qualifiedname>vc64::peddle::Debugger::loggedPC0Rel</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="230" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="332" bodyend="336"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1a61d60241bb4a3ab2d805a8d401c9695d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u16</type>
+        <definition>u16 vc64::peddle::Debugger::loggedPC0Abs</definition>
+        <argsstring>(isize n) const</argsstring>
+        <name>loggedPC0Abs</name>
+        <qualifiedname>vc64::peddle::Debugger::loggedPC0Abs</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="231" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="339" bodyend="343"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1aac2af53ed4cd0a2193c1f4d8bed15b0b" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::peddle::Debugger::disassembleRecordedInstr</definition>
+        <argsstring>(isize i, char *str) const</argsstring>
+        <name>disassembleRecordedInstr</name>
+        <qualifiedname>vc64::peddle::Debugger::disassembleRecordedInstr</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>i</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>str</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="234" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="346" bodyend="355"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1a11c0fe3ba170b3d8f6b7eb6b5fadfdb6" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::peddle::Debugger::disassembleRecordedBytes</definition>
+        <argsstring>(isize i, char *str) const</argsstring>
+        <name>disassembleRecordedBytes</name>
+        <qualifiedname>vc64::peddle::Debugger::disassembleRecordedBytes</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>i</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>str</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="235" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="358" bodyend="367"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1af27e3af00bb22dc9465d11f937f89baf" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::peddle::Debugger::disassembleRecordedFlags</definition>
+        <argsstring>(isize i, char *str) const</argsstring>
+        <name>disassembleRecordedFlags</name>
+        <qualifiedname>vc64::peddle::Debugger::disassembleRecordedFlags</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>i</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>str</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="236" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="370" bodyend="373"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1a7d62820f46e1c13b10575f17daee260a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::peddle::Debugger::disassembleRecordedPC</definition>
+        <argsstring>(isize i, char *str) const</argsstring>
+        <name>disassembleRecordedPC</name>
+        <qualifiedname>vc64::peddle::Debugger::disassembleRecordedPC</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>i</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>str</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="237" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="376" bodyend="379"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1af364ec10d9fc1e9e5183cd286c8966cf" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::peddle::Debugger::clearLog</definition>
+        <argsstring>()</argsstring>
+        <name>clearLog</name>
+        <qualifiedname>vc64::peddle::Debugger::clearLog</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="240" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" bodystart="240" bodyend="240"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1peddle_1_1_debugger_1a2d535547f8088fa7feeebe0efb8a1017" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::peddle::Debugger::jump</definition>
+        <argsstring>(u16 addr)</argsstring>
+        <name>jump</name>
+        <qualifiedname>vc64::peddle::Debugger::jump</qualifiedname>
+        <param>
+          <type>u16</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="248" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="382" bodyend="389"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="136" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" bodystart="136" bodyend="249"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1aee01e5b83a243c3af03f089d39825607" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>breakpointMatches</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1a2401a29b69d207eb009a2dbb2c3a33e8" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>breakpointPC</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1a5dc8e6c52c3bc52bf83c26c0edb75784" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>breakpoints</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1af364ec10d9fc1e9e5183cd286c8966cf" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>clearLog</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1a051402e36e1ea66a889c51234c684653" prot="private" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>cpu</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1ab38c2b94948618bcbc62e47723ef199e" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>Debugger</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1aa1bc58661be77ce3ac7cfb69b43b8135" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>disableLogging</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1a11c0fe3ba170b3d8f6b7eb6b5fadfdb6" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>disassembleRecordedBytes</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1af27e3af00bb22dc9465d11f937f89baf" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>disassembleRecordedFlags</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1aac2af53ed4cd0a2193c1f4d8bed15b0b" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>disassembleRecordedInstr</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1a7d62820f46e1c13b10575f17daee260a" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>disassembleRecordedPC</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1a1286b5644e00cd0189688c6fdd528330" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>dumpLogBuffer</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1ac89cc9b0ee5c299e6cab7a35f584e3ff" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>dumpLogBuffer</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1a998e7216f75a4ea0a8378cb1edb19088" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>enableLogging</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1a2d535547f8088fa7feeebe0efb8a1017" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>jump</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1a5c21d7585b534e59dc99234d3cc586c6" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>logBuffer</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1aa51dd83c200d61088e1fe36c065628ec" prot="private" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>logCnt</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1a589f525842c2c9eea8021451e50da6a5" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>logEntryAbs</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1ae4309bc310f2c8c76c52a4fa2846de3f" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>logEntryRel</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1a6fc2ba0b807844d7a20a96437580fa3c" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>loggedInstructions</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1a61d60241bb4a3ab2d805a8d401c9695d" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>loggedPC0Abs</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1afca927742cfb91c7448f96bdc06568da" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>loggedPC0Rel</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1aef23e025be2b2de9a845f724545e31fe" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>logInstruction</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1a97356906d9346dbfce445a950dd34188" prot="private" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>Peddle</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1a1bd2219336bcd4da91f18c25a951e1ff" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>reset</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1aaa161781712997f0d89f75b27d446459" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>setSoftStop</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1a0092ec21f090d1966894d44090c16d38" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>setSoftStopAtNextInstr</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1a47ac221d52ae56dfe042c941c73fa38c" prot="private" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>softStop</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1a8f0d06095dda63ce9aa773110d6135c9" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>watchpointMatches</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1a5bf03645eb1405b3a581487c6a3ea55b" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>watchpointPC</name></member>
+      <member refid="classvc64_1_1peddle_1_1_debugger_1a42cb1dae15878962a0784e352eb9cd2d" prot="public" virt="non-virtual"><scope>vc64::peddle::Debugger</scope><name>watchpoints</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

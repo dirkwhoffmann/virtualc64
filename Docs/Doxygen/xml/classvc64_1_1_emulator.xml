@@ -1,0 +1,1134 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_emulator" kind="class" language="C++" prot="public">
+    <compoundname>vc64::Emulator</compoundname>
+    <basecompoundref refid="classvc64_1_1_thread" prot="public" virt="non-virtual">vc64::Thread</basecompoundref>
+    <basecompoundref prot="public" virt="non-virtual">vc64::Inspectable&lt; EmulatorInfo, EmulatorStats &gt;</basecompoundref>
+    <basecompoundref prot="public" virt="non-virtual">vc64::Configurable</basecompoundref>
+    <derivedcompoundref refid="class_virtual_c64" prot="private" virt="non-virtual">VirtualC64</derivedcompoundref>
+    <sectiondef kind="friend">
+      <memberdef kind="friend" id="classvc64_1_1_emulator_1a30a923407125cc7be7d2cbdcf88450e0" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class API</definition>
+        <argsstring></argsstring>
+        <name>API</name>
+        <qualifiedname>vc64::Emulator::API</qualifiedname>
+        <param>
+          <type>API</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="28" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="friend" id="classvc64_1_1_emulator_1a2f7a2f4bbcde0fd3ce37e39d43ac8831" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class ::VirtualC64</definition>
+        <argsstring></argsstring>
+        <name>::VirtualC64</name>
+        <qualifiedname>vc64::Emulator::VirtualC64</qualifiedname>
+        <param>
+          <type><ref refid="class_virtual_c64" kindref="compound">::VirtualC64</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="29" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="29" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_emulator_1adc5d5a976d7aeb1072f415174facaf45" prot="private" static="no" mutable="no">
+        <type>ConfigOptions</type>
+        <definition>ConfigOptions vc64::Emulator::options</definition>
+        <argsstring></argsstring>
+        <name>options</name>
+        <qualifiedname>vc64::Emulator::options</qualifiedname>
+        <initializer>= {
+
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8ab5366f7ad7a78a64846fb1dbf61e9300" kindref="member">OPT_EMU_WARP_BOOT</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a90ddc8a2dde5619b4eda1c8ca09afc2b" kindref="member">OPT_EMU_WARP_MODE</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8ad2969d4def33bf9c1bd438705a154461" kindref="member">OPT_EMU_VSYNC</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8acca721f169ee49c5a2492f6a10fee198" kindref="member">OPT_EMU_TIME_LAPSE</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a94e87f1a82ff557d344df10952de2d56" kindref="member">OPT_EMU_RUN_AHEAD</ref>
+    }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="31" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="31" bodyend="38"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_emulator_1a613bdf054d7e820f40c49fe8bb353120" prot="private" static="no" mutable="no">
+        <type>EmulatorConfig</type>
+        <definition>EmulatorConfig vc64::Emulator::config</definition>
+        <argsstring></argsstring>
+        <name>config</name>
+        <qualifiedname>vc64::Emulator::config</qualifiedname>
+        <initializer>= { }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="40" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="40" bodyend="40"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_emulator_1a1393100273e4912e61ed265ffa521eb4" prot="private" static="no" mutable="no">
+        <type>C64</type>
+        <definition>C64 vc64::Emulator::main</definition>
+        <argsstring></argsstring>
+        <name>main</name>
+        <qualifiedname>vc64::Emulator::main</qualifiedname>
+        <initializer>= C64(*this)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="43" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_emulator_1a7ff657ec292df7bdf9027527a63d0319" prot="private" static="no" mutable="no">
+        <type>C64</type>
+        <definition>C64 vc64::Emulator::ahead</definition>
+        <argsstring></argsstring>
+        <name>ahead</name>
+        <qualifiedname>vc64::Emulator::ahead</qualifiedname>
+        <initializer>= C64(*this)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="46" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_emulator_1a2e52330573f3d248d2bf8b2fe4e89140" prot="public" static="no" mutable="no">
+        <type>CmdQueue</type>
+        <definition>CmdQueue vc64::Emulator::cmdQueue</definition>
+        <argsstring></argsstring>
+        <name>cmdQueue</name>
+        <qualifiedname>vc64::Emulator::cmdQueue</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="51" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_emulator_1ab50862c05305c6f56174d3539ceea6e8" prot="public" static="no" mutable="no">
+        <type>Host</type>
+        <definition>Host vc64::Emulator::host</definition>
+        <argsstring></argsstring>
+        <name>host</name>
+        <qualifiedname>vc64::Emulator::host</qualifiedname>
+        <initializer>= Host(*this)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="57" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-static-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_emulator_1ada74aa73cbf25162cbc788bd28292463" prot="public" static="yes" mutable="no">
+        <type>Defaults</type>
+        <definition>Defaults vc64::Emulator::defaults</definition>
+        <argsstring></argsstring>
+        <name>defaults</name>
+        <qualifiedname>vc64::Emulator::defaults</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="54" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_emulator_1ab59362bf5ede5b082c5a2a5cd9c6d326" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::Emulator::Emulator</definition>
+        <argsstring>()</argsstring>
+        <name>Emulator</name>
+        <qualifiedname>vc64::Emulator::Emulator</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="66" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="32" bodyend="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1afa723a681e6ec349a16f2a7bd44e58e1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::Emulator::~Emulator</definition>
+        <argsstring>()</argsstring>
+        <name>~Emulator</name>
+        <qualifiedname>vc64::Emulator::~Emulator</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="67" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="37" bodyend="40"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a8a4426dc2623edf59bb3771ba40254f0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::launch</definition>
+        <argsstring>(const void *listener, Callback *func)</argsstring>
+        <name>launch</name>
+        <qualifiedname>vc64::Emulator::launch</qualifiedname>
+        <param>
+          <type>const void *</type>
+          <declname>listener</declname>
+        </param>
+        <param>
+          <type>Callback *</type>
+          <declname>func</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="70" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="43" bodyend="53"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a0f6760c760d2745cd7cce4163637c560" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::initialize</definition>
+        <argsstring>()</argsstring>
+        <name>initialize</name>
+        <qualifiedname>vc64::Emulator::initialize</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="73" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="56" bodyend="69"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a344fbb292b8e34683e1f292dc1cffb5f" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Emulator::isInitialized</definition>
+        <argsstring>() const</argsstring>
+        <name>isInitialized</name>
+        <qualifiedname>vc64::Emulator::isInitialized</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="76" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="72" bodyend="75"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a777f70fe4de853132a33283857e6fdf0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::stepInto</definition>
+        <argsstring>()</argsstring>
+        <name>stepInto</name>
+        <qualifiedname>vc64::Emulator::stepInto</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="83" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="78" bodyend="85"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a6c05152568ba39a4f9ac054bea091fb3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::stepOver</definition>
+        <argsstring>()</argsstring>
+        <name>stepOver</name>
+        <qualifiedname>vc64::Emulator::stepOver</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="84" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="88" bodyend="95"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1ad92f181a08255ce8b8561fa4f40eeac1" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const ConfigOptions &amp;</type>
+        <definition>const ConfigOptions &amp; vc64::Emulator::getOptions</definition>
+        <argsstring>() const override</argsstring>
+        <name>getOptions</name>
+        <qualifiedname>vc64::Emulator::getOptions</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="93" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="93" bodyend="93"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a4a358831629dd371b714785298cc687a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>i64</type>
+        <definition>i64 vc64::Emulator::getOption</definition>
+        <argsstring>(Option opt) const override</argsstring>
+        <name>getOption</name>
+        <qualifiedname>vc64::Emulator::getOption</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>opt</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="94" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="134" bodyend="147"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a6540e8671af4095a3eab092b7a1894d3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::setOption</definition>
+        <argsstring>(Option opt, i64 value) override</argsstring>
+        <name>setOption</name>
+        <qualifiedname>vc64::Emulator::setOption</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>opt</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="95" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="150" bodyend="194"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a6d3660f1312a791c068a6acedcd743b1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::recordState</definition>
+        <argsstring>(EmulatorInfo &amp;result) const override</argsstring>
+        <name>recordState</name>
+        <qualifiedname>vc64::Emulator::recordState</qualifiedname>
+        <param>
+          <type>EmulatorInfo &amp;</type>
+          <declname>result</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="104" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="98" bodyend="108"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a1bd3df31f3a9528599e0b8e86d9da36d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::recordStats</definition>
+        <argsstring>(EmulatorStats &amp;result) const override</argsstring>
+        <name>recordStats</name>
+        <qualifiedname>vc64::Emulator::recordStats</qualifiedname>
+        <param>
+          <type>EmulatorStats &amp;</type>
+          <declname>result</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="105" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="111" bodyend="115"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a1e4fcb0036e5a4acae7c6531469eb420" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>i64</type>
+        <definition>i64 vc64::Emulator::get</definition>
+        <argsstring>(Option option) const</argsstring>
+        <name>get</name>
+        <qualifiedname>vc64::Emulator::get</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="115" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="197" bodyend="272"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a08eb8670fb836d6d5777efc47be3478a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>i64</type>
+        <definition>i64 vc64::Emulator::get</definition>
+        <argsstring>(Option option, isize id) const</argsstring>
+        <name>get</name>
+        <qualifiedname>vc64::Emulator::get</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="116" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="275" bodyend="330"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1af37a3f46250997fa215fa78cb74b34f3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::set</definition>
+        <argsstring>(C64Model model)</argsstring>
+        <name>set</name>
+        <qualifiedname>vc64::Emulator::set</qualifiedname>
+        <param>
+          <type>C64Model</type>
+          <declname>model</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="119" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="333" bodyend="425"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a1436ea7a306b650802bff35f3dda529f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::set</definition>
+        <argsstring>(Option option, i64 value) throws</argsstring>
+        <name>set</name>
+        <qualifiedname>vc64::Emulator::set</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="122" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="428" bodyend="608"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a7a911bd4926ccd1fe0db657fc701cede" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::set</definition>
+        <argsstring>(Option option, isize id, i64 value) throws</argsstring>
+        <name>set</name>
+        <qualifiedname>vc64::Emulator::set</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>id</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="123" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="611" bodyend="721"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a7a3617abbe166543bec62f9598d6fad5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::set</definition>
+        <argsstring>(Option opt, const string &amp;value) throws</argsstring>
+        <name>set</name>
+        <qualifiedname>vc64::Emulator::set</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>opt</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="126" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="724" bodyend="727"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a466a4de17d57e9e1105e1213ffcaa6bd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::set</definition>
+        <argsstring>(Option opt, isize id, const string &amp;value) throws</argsstring>
+        <name>set</name>
+        <qualifiedname>vc64::Emulator::set</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>opt</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>id</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="127" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="730" bodyend="733"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a5ec61fa01250f8b90207b60feb87e6e5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::set</definition>
+        <argsstring>(const string &amp;opt, const string &amp;value) throws</argsstring>
+        <name>set</name>
+        <qualifiedname>vc64::Emulator::set</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>opt</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="128" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="736" bodyend="739"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a5a5022a778b498670aa81fc981f2192a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::set</definition>
+        <argsstring>(const string &amp;opt, isize id, const string &amp;value) throws</argsstring>
+        <name>set</name>
+        <qualifiedname>vc64::Emulator::set</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>opt</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>id</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="129" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="742" bodyend="745"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a5b6927136767f0919be2282089e0d3b7" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double vc64::Emulator::refreshRate</definition>
+        <argsstring>() const override</argsstring>
+        <name>refreshRate</name>
+        <qualifiedname>vc64::Emulator::refreshRate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="132" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="1039" bodyend="1049"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a4b67acd7f4153a6ade6c038175453eef" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::put</definition>
+        <argsstring>(const Cmd &amp;cmd)</argsstring>
+        <name>put</name>
+        <qualifiedname>vc64::Emulator::put</qualifiedname>
+        <param>
+          <type>const Cmd &amp;</type>
+          <declname>cmd</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="196" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="1027" bodyend="1030"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1ace99e59ecce688b4cd3241586715d6ab" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::put</definition>
+        <argsstring>(CmdType type, i64 payload)</argsstring>
+        <name>put</name>
+        <qualifiedname>vc64::Emulator::put</qualifiedname>
+        <param>
+          <type><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref></type>
+          <declname>type</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>payload</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="197" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="197" bodyend="197"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvc64_1_1_emulator_1aa7e9ffa3341cca65d2e3762257dd684d" prot="private" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const EmulatorConfig &amp;</type>
+        <definition>const EmulatorConfig &amp; vc64::Emulator::getConfig</definition>
+        <argsstring>() const</argsstring>
+        <name>getConfig</name>
+        <qualifiedname>vc64::Emulator::getConfig</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="136" column="26" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="136" bodyend="136"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1abba3064a3b1515c64413c970dd31de5e" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::resetConfig</definition>
+        <argsstring>()</argsstring>
+        <name>resetConfig</name>
+        <qualifiedname>vc64::Emulator::resetConfig</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="137" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="128" bodyend="131"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1af94f7a48585df613f71013192918c580" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>i64</type>
+        <definition>i64 vc64::Emulator::overrideOption</definition>
+        <argsstring>(Option option, i64 value)</argsstring>
+        <name>overrideOption</name>
+        <qualifiedname>vc64::Emulator::overrideOption</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="140" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="748" bodyend="759"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a7a8fd64ded3ef3f5483cdf2bba010ab8" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::revertToFactorySettings</definition>
+        <argsstring>()</argsstring>
+        <name>revertToFactorySettings</name>
+        <qualifiedname>vc64::Emulator::revertToFactorySettings</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="143" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="118" bodyend="125"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1acd9a544d8df55a16e184d889fe3db082" prot="private" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::Emulator::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::Emulator::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="152" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="152" bodyend="152"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a25e83422b8d0a63418c14f919cccb8d7" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::_dump</definition>
+        <argsstring>(Category category, std::ostream &amp;os) const override</argsstring>
+        <name>_dump</name>
+        <qualifiedname>vc64::Emulator::_dump</qualifiedname>
+        <param>
+          <type>Category</type>
+          <declname>category</declname>
+        </param>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="153" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="762" bodyend="824"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a7cd9001a9c855e16f39837e168681b65" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::isReady</definition>
+        <argsstring>() override</argsstring>
+        <name>isReady</name>
+        <qualifiedname>vc64::Emulator::isReady</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="162" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="827" bodyend="830"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a96f5271a75c094ba487d3d6b0a0d62ba" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::Emulator::missingFrames</definition>
+        <argsstring>() const override</argsstring>
+        <name>missingFrames</name>
+        <qualifiedname>vc64::Emulator::missingFrames</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="163" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="854" bodyend="867"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a66537a3d753a2e5af42fb2f9fe163b41" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::update</definition>
+        <argsstring>() override</argsstring>
+        <name>update</name>
+        <qualifiedname>vc64::Emulator::update</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="164" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="870" bodyend="958"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a5b6c142aed16558b91884eda756de31b" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Emulator::shouldWarp</definition>
+        <argsstring>()</argsstring>
+        <name>shouldWarp</name>
+        <qualifiedname>vc64::Emulator::shouldWarp</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="165" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="833" bodyend="851"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1aace964bc2abefa0f671f583622b195cc" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::computeFrame</definition>
+        <argsstring>() override</argsstring>
+        <name>computeFrame</name>
+        <qualifiedname>vc64::Emulator::computeFrame</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="167" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="961" bodyend="987"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a46c5df44d28de7bc65f247656915e638" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::recreateRunAheadInstance</definition>
+        <argsstring>()</argsstring>
+        <name>recreateRunAheadInstance</name>
+        <qualifiedname>vc64::Emulator::recreateRunAheadInstance</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="168" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="990" bodyend="1006"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1aa0b5c2a02c8354baf4347829407e13ad" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::_powerOn</definition>
+        <argsstring>() override</argsstring>
+        <name>_powerOn</name>
+        <qualifiedname>vc64::Emulator::_powerOn</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="170" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="170" bodyend="170"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1ad6f3790ef5d43b2181db0f7d7899b183" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::_powerOff</definition>
+        <argsstring>() override</argsstring>
+        <name>_powerOff</name>
+        <qualifiedname>vc64::Emulator::_powerOff</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="171" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="171" bodyend="171"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1ac88d5a434c6de47e6a1a64d99d5083ff" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::_pause</definition>
+        <argsstring>() override</argsstring>
+        <name>_pause</name>
+        <qualifiedname>vc64::Emulator::_pause</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="172" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="172" bodyend="172"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a07482841241bdc9851cb50963d4acaf1" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::_run</definition>
+        <argsstring>() override</argsstring>
+        <name>_run</name>
+        <qualifiedname>vc64::Emulator::_run</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="173" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="173" bodyend="173"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a4e6c56d38e917846459a8eae07afb35b" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::_halt</definition>
+        <argsstring>() override</argsstring>
+        <name>_halt</name>
+        <qualifiedname>vc64::Emulator::_halt</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="174" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="174" bodyend="174"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a151059fa6834976121de20a89fb88560" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::_warpOn</definition>
+        <argsstring>() override</argsstring>
+        <name>_warpOn</name>
+        <qualifiedname>vc64::Emulator::_warpOn</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="175" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="175" bodyend="175"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a78f0b8179b7b4a9950eaa19ad966636b" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::_warpOff</definition>
+        <argsstring>() override</argsstring>
+        <name>_warpOff</name>
+        <qualifiedname>vc64::Emulator::_warpOff</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="176" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="176" bodyend="176"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a26d75d98afb8563f2c4cf794c705285b" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::_trackOn</definition>
+        <argsstring>() override</argsstring>
+        <name>_trackOn</name>
+        <qualifiedname>vc64::Emulator::_trackOn</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="177" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="177" bodyend="177"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a77a77f1c28f0ee3755168c1afa2c25d9" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::_trackOff</definition>
+        <argsstring>() override</argsstring>
+        <name>_trackOff</name>
+        <qualifiedname>vc64::Emulator::_trackOff</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="178" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="178" bodyend="178"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a5718b68b496b6860622c18711b6e4381" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u32 *</type>
+        <definition>u32 * vc64::Emulator::getTexture</definition>
+        <argsstring>() const</argsstring>
+        <name>getTexture</name>
+        <qualifiedname>vc64::Emulator::getTexture</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="185" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="1009" bodyend="1018"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a8bcb55edc86c01818c766e104fe92557" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u32 *</type>
+        <definition>u32 * vc64::Emulator::getNoise</definition>
+        <argsstring>() const</argsstring>
+        <name>getNoise</name>
+        <qualifiedname>vc64::Emulator::getNoise</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="186" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="1021" bodyend="1024"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_emulator_1a936f604d075288a08e4411e7fba4b3bb" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Emulator::process</definition>
+        <argsstring>(const Cmd &amp;cmd)</argsstring>
+        <name>process</name>
+        <qualifiedname>vc64::Emulator::process</qualifiedname>
+        <param>
+          <type>const Cmd &amp;</type>
+          <declname>cmd</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="202" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp" bodystart="1033" bodyend="1036"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="3">
+        <label>VirtualC64</label>
+        <link refid="class_virtual_c64"/>
+        <childnode refid="1" relation="private-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>vc64::Emulator</label>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>vc64::Thread</label>
+        <link refid="classvc64_1_1_thread"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="1">
+        <label>vc64::Emulator</label>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>vc64::Thread</label>
+        <link refid="classvc64_1_1_thread"/>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" line="26" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h" bodystart="26" bodyend="203"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_emulator_1a2f7a2f4bbcde0fd3ce37e39d43ac8831" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>::VirtualC64</name></member>
+      <member refid="classvc64_1_1_emulator_1a25e83422b8d0a63418c14f919cccb8d7" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>_dump</name></member>
+      <member refid="classvc64_1_1_emulator_1a4e6c56d38e917846459a8eae07afb35b" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>_halt</name></member>
+      <member refid="classvc64_1_1_emulator_1ac88d5a434c6de47e6a1a64d99d5083ff" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>_pause</name></member>
+      <member refid="classvc64_1_1_emulator_1ad6f3790ef5d43b2181db0f7d7899b183" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>_powerOff</name></member>
+      <member refid="classvc64_1_1_emulator_1aa0b5c2a02c8354baf4347829407e13ad" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>_powerOn</name></member>
+      <member refid="classvc64_1_1_emulator_1a07482841241bdc9851cb50963d4acaf1" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>_run</name></member>
+      <member refid="classvc64_1_1_emulator_1a77a77f1c28f0ee3755168c1afa2c25d9" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>_trackOff</name></member>
+      <member refid="classvc64_1_1_emulator_1a26d75d98afb8563f2c4cf794c705285b" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>_trackOn</name></member>
+      <member refid="classvc64_1_1_emulator_1a78f0b8179b7b4a9950eaa19ad966636b" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>_warpOff</name></member>
+      <member refid="classvc64_1_1_emulator_1a151059fa6834976121de20a89fb88560" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>_warpOn</name></member>
+      <member refid="classvc64_1_1_emulator_1a7ff657ec292df7bdf9027527a63d0319" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>ahead</name></member>
+      <member refid="classvc64_1_1_emulator_1a30a923407125cc7be7d2cbdcf88450e0" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>API</name></member>
+      <member refid="classvc64_1_1_configurable_1a947ce65dab57ea328e9959014b7f9dfb" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>argList</name></member>
+      <member refid="classvc64_1_1_thread_1a711e719011ca9260df63f347474db7e1" prot="protected" virt="non-virtual"><scope>vc64::Emulator</scope><name>assertLaunched</name></member>
+      <member refid="classvc64_1_1_thread_1a530f52753a490f85f97467c33cb39f60" prot="protected" virt="non-virtual"><scope>vc64::Emulator</scope><name>baseTime</name></member>
+      <member refid="classvc64_1_1_emulator_1a2e52330573f3d248d2bf8b2fe4e89140" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>cmdQueue</name></member>
+      <member refid="classvc64_1_1_emulator_1aace964bc2abefa0f671f583622b195cc" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>computeFrame</name></member>
+      <member refid="classvc64_1_1_emulator_1a613bdf054d7e820f40c49fe8bb353120" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>config</name></member>
+      <member refid="classvc64_1_1_thread_1a6517bdebcc1fe3bb5268aac1dcda4e28" prot="protected" virt="non-virtual"><scope>vc64::Emulator</scope><name>cpuLoad</name></member>
+      <member refid="classvc64_1_1_emulator_1ada74aa73cbf25162cbc788bd28292463" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>defaults</name></member>
+      <member refid="classvc64_1_1_dumpable_1a28d8b76288598fc0309bd6247e5479db" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_dumpable_1afc31b73f9b651bba5cf37dc88158755a" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_configurable_1a459505cd1eed2c174bf78b29808ad07b" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>dumpConfig</name></member>
+      <member refid="classvc64_1_1_emulator_1ab59362bf5ede5b082c5a2a5cd9c6d326" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>Emulator</name></member>
+      <member refid="classvc64_1_1_thread_1aa03a9c8511f7c850ec94f4b739d9de4e" prot="protected" virt="non-virtual"><scope>vc64::Emulator</scope><name>fps</name></member>
+      <member refid="classvc64_1_1_thread_1aff97cfba423cda9d117806987571142f" prot="protected" virt="non-virtual"><scope>vc64::Emulator</scope><name>frameCounter</name></member>
+      <member refid="classvc64_1_1_emulator_1a1e4fcb0036e5a4acae7c6531469eb420" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>get</name></member>
+      <member refid="classvc64_1_1_emulator_1a08eb8670fb836d6d5777efc47be3478a" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>get</name></member>
+      <member refid="classvc64_1_1_emulator_1aa7e9ffa3341cca65d2e3762257dd684d" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>getConfig</name></member>
+      <member refid="classvc64_1_1_emulator_1acd9a544d8df55a16e184d889fe3db082" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_emulator_1a8bcb55edc86c01818c766e104fe92557" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>getNoise</name></member>
+      <member refid="classvc64_1_1_emulator_1a4a358831629dd371b714785298cc687a" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>getOption</name></member>
+      <member refid="classvc64_1_1_emulator_1ad92f181a08255ce8b8561fa4f40eeac1" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>getOptions</name></member>
+      <member refid="classvc64_1_1_inspectable_1a2b2b1b7b86eb95e7f1de5900121744d5" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>getState</name></member>
+      <member refid="classvc64_1_1_inspectable_1a792e6f2f3969af7ee496efcdf1f0f2cf" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>getStats</name></member>
+      <member refid="classvc64_1_1_emulator_1a5718b68b496b6860622c18711b6e4381" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>getTexture</name></member>
+      <member refid="classvc64_1_1_thread_1ac243c85ffa6c8e1c6739220b4c154f1e" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>halt</name></member>
+      <member refid="classvc64_1_1_emulator_1ab50862c05305c6f56174d3539ceea6e8" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>host</name></member>
+      <member refid="classvc64_1_1_inspectable_1ad8f0ee7c1f197bdb25e542eec4ea940f" prot="protected" virt="non-virtual"><scope>vc64::Emulator</scope><name>info</name></member>
+      <member refid="classvc64_1_1_emulator_1a0f6760c760d2745cd7cce4163637c560" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>initialize</name></member>
+      <member refid="classvc64_1_1_inspectable_1a9b905b27f0935083c5bda29fbd832a80" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>Inspectable</name></member>
+      <member refid="classvc64_1_1_thread_1a44599ad0b0a8e3424f71f66942827bbe" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>isEmulatorThread</name></member>
+      <member refid="classvc64_1_1_thread_1adb50659a0ba240a4f8f17dd3311dbf10" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>isHalted</name></member>
+      <member refid="classvc64_1_1_emulator_1a344fbb292b8e34683e1f292dc1cffb5f" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>isInitialized</name></member>
+      <member refid="classvc64_1_1_thread_1abb2e3097e4c771d351955db940f3ac3b" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>isLaunched</name></member>
+      <member refid="classvc64_1_1_thread_1a9305fbb4323ed01e5832b38ba102621e" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>isPaused</name></member>
+      <member refid="classvc64_1_1_thread_1a845ba18ef192bcc7c8164ac4d88ba7f9" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>isPoweredOff</name></member>
+      <member refid="classvc64_1_1_thread_1a969ebe9029e7d5d94029029604fa0579" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>isPoweredOn</name></member>
+      <member refid="classvc64_1_1_emulator_1a7cd9001a9c855e16f39837e168681b65" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>isReady</name></member>
+      <member refid="classvc64_1_1_thread_1adaf7b62cc51e5504d0bc8aa82305a971" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>isRunning</name></member>
+      <member refid="classvc64_1_1_thread_1adc8cf1a582370834f6336b18ab465b9c" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>isSuspended</name></member>
+      <member refid="classvc64_1_1_thread_1aa468375c1a36726c1bd2f5ef3f8aa5c8" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>isTracking</name></member>
+      <member refid="classvc64_1_1_configurable_1af6260d08823e90bdb51d1bf7bb596c35" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>isValidOption</name></member>
+      <member refid="classvc64_1_1_thread_1ad5e22aed6ad2f8c6dc093933ab3397e0" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>isWarping</name></member>
+      <member refid="classvc64_1_1_thread_1aaafd7d4b381fb2d712a29c026ec61d1a" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>join</name></member>
+      <member refid="classvc64_1_1_configurable_1a0d6caf30eeaae95d1898d08cf3ca8e28" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>keyList</name></member>
+      <member refid="classvc64_1_1_emulator_1a8a4426dc2623edf59bb3771ba40254f0" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>launch</name></member>
+      <member refid="classvc64_1_1_thread_1a1cda1152500929bc4151a4899fc4622b" prot="protected" virt="non-virtual" ambiguityscope="vc64::Thread::"><scope>vc64::Emulator</scope><name>launch</name></member>
+      <member refid="classvc64_1_1_thread_1afd3b266fe3bc6f0dbb59cd63ebb91738" prot="protected" virt="non-virtual"><scope>vc64::Emulator</scope><name>loadClock</name></member>
+      <member refid="classvc64_1_1_emulator_1a1393100273e4912e61ed265ffa521eb4" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>main</name></member>
+      <member refid="classvc64_1_1_emulator_1a96f5271a75c094ba487d3d6b0a0d62ba" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>missingFrames</name></member>
+      <member refid="classvc64_1_1_thread_1a586fd7f3cfab7564f531b4e672e2c325" prot="protected" virt="non-virtual"><scope>vc64::Emulator</scope><name>newState</name></member>
+      <member refid="classvc64_1_1_thread_1abb3d4857ba4b9f7fb3b9d4d7379fb868" prot="protected" virt="non-virtual"><scope>vc64::Emulator</scope><name>nonstopClock</name></member>
+      <member refid="classvc64_1_1_emulator_1adc5d5a976d7aeb1072f415174facaf45" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>options</name></member>
+      <member refid="classvc64_1_1_emulator_1af94f7a48585df613f71013192918c580" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>overrideOption</name></member>
+      <member refid="classvc64_1_1_thread_1a2ff1d669a56b3a8b60ea28377596b115" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>pause</name></member>
+      <member refid="classvc64_1_1_thread_1a3354882aca279889da131e17a27f2fb3" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>powerOff</name></member>
+      <member refid="classvc64_1_1_thread_1a402cc240e9ef0e23805f5e83fe6fcadc" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>powerOn</name></member>
+      <member refid="classvc64_1_1_core_object_1ab05f272c10fd455a9cafbb667293d044" prot="public" virt="virtual"><scope>vc64::Emulator</scope><name>prefix</name></member>
+      <member refid="classvc64_1_1_emulator_1a936f604d075288a08e4411e7fba4b3bb" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>process</name></member>
+      <member refid="classvc64_1_1_emulator_1a4b67acd7f4153a6ade6c038175453eef" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>put</name></member>
+      <member refid="classvc64_1_1_emulator_1ace99e59ecce688b4cd3241586715d6ab" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>put</name></member>
+      <member refid="classvc64_1_1_inspectable_1a49bce64b6ddf46247b1b041cfc482e70" prot="public" virt="virtual"><scope>vc64::Emulator</scope><name>record</name></member>
+      <member refid="classvc64_1_1_emulator_1a6d3660f1312a791c068a6acedcd743b1" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>recordState</name></member>
+      <member refid="classvc64_1_1_emulator_1a1bd3df31f3a9528599e0b8e86d9da36d" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>recordStats</name></member>
+      <member refid="classvc64_1_1_emulator_1a46c5df44d28de7bc65f247656915e638" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>recreateRunAheadInstance</name></member>
+      <member refid="classvc64_1_1_emulator_1a5b6927136767f0919be2282089e0d3b7" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>refreshRate</name></member>
+      <member refid="classvc64_1_1_emulator_1abba3064a3b1515c64413c970dd31de5e" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1aec76d436c865101509bceb2daf47890b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::Emulator</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1af9ec0fb5e73fd1f0433a4f3bfcd39d9b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::Emulator</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_thread_1a294d7de030baf69ae6f96f9f6bfc8ba6" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>resume</name></member>
+      <member refid="classvc64_1_1_emulator_1a7a8fd64ded3ef3f5483cdf2bba010ab8" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>revertToFactorySettings</name></member>
+      <member refid="classvc64_1_1_thread_1acedeec8fa8abf3fbca0787e7f74d5a77" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>run</name></member>
+      <member refid="classvc64_1_1_emulator_1af37a3f46250997fa215fa78cb74b34f3" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>set</name></member>
+      <member refid="classvc64_1_1_emulator_1a1436ea7a306b650802bff35f3dda529f" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>set</name></member>
+      <member refid="classvc64_1_1_emulator_1a7a911bd4926ccd1fe0db657fc701cede" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>set</name></member>
+      <member refid="classvc64_1_1_emulator_1a7a3617abbe166543bec62f9598d6fad5" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>set</name></member>
+      <member refid="classvc64_1_1_emulator_1a466a4de17d57e9e1105e1213ffcaa6bd" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>set</name></member>
+      <member refid="classvc64_1_1_emulator_1a5ec61fa01250f8b90207b60feb87e6e5" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>set</name></member>
+      <member refid="classvc64_1_1_emulator_1a5a5022a778b498670aa81fc981f2192a" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>set</name></member>
+      <member refid="classvc64_1_1_emulator_1a6540e8671af4095a3eab092b7a1894d3" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a51756d7f1f0ed1caa0e247ab6e789a3b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::Emulator</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a689b1a17fac237ca960b062df637" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::Emulator</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_emulator_1a5b6c142aed16558b91884eda756de31b" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>shouldWarp</name></member>
+      <member refid="classvc64_1_1_thread_1ac6dc66f77d11416a3a77eac236fab2d5" prot="protected" virt="non-virtual"><scope>vc64::Emulator</scope><name>state</name></member>
+      <member refid="classvc64_1_1_thread_1a6245cfd499441722fbfe92a6a6e9e2f9" prot="protected" virt="non-virtual"><scope>vc64::Emulator</scope><name>stateChangeRequest</name></member>
+      <member refid="classvc64_1_1_inspectable_1aecec7b2e020d4320ac56123bce570986" prot="protected" virt="non-virtual"><scope>vc64::Emulator</scope><name>stats</name></member>
+      <member refid="classvc64_1_1_thread_1a8cb827db76afc0c063a9c2e24445576a" prot="protected" virt="non-virtual"><scope>vc64::Emulator</scope><name>statsCounter</name></member>
+      <member refid="classvc64_1_1_emulator_1a777f70fe4de853132a33283857e6fdf0" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>stepInto</name></member>
+      <member refid="classvc64_1_1_emulator_1a6c05152568ba39a4f9ac054bea091fb3" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>stepOver</name></member>
+      <member refid="classvc64_1_1_thread_1ad33572df8f1abf18f26d873e94770ee2" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>stopAndGo</name></member>
+      <member refid="classvc64_1_1_thread_1a6545b249dacdb26eac8b104c07f3bbc2" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>suspend</name></member>
+      <member refid="classvc64_1_1_suspendable_1a7f9f608d5b2b9b6e944176cde77b8f85" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>Suspendable</name></member>
+      <member refid="classvc64_1_1_thread_1affa69740d865ef5a2387760aa314d732" prot="protected" virt="non-virtual"><scope>vc64::Emulator</scope><name>suspendCounter</name></member>
+      <member refid="classvc64_1_1_thread_1ab1b2eadc27596031e3484e65ede0e24e" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>switchState</name></member>
+      <member refid="classvc64_1_1_thread_1ae330ef49a6f9fc70037d8fc30314f481" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>Thread</name></member>
+      <member refid="classvc64_1_1_thread_1ac311e9df07e59900178dac5ada99293f" prot="protected" virt="non-virtual"><scope>vc64::Emulator</scope><name>thread</name></member>
+      <member refid="classvc64_1_1_thread_1adc7e644cdcf6961791e09007bf50a5dd" prot="protected" virt="non-virtual"><scope>vc64::Emulator</scope><name>track</name></member>
+      <member refid="classvc64_1_1_thread_1abb49fc4286a1ceb663c5ca659345f668" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>trackOff</name></member>
+      <member refid="classvc64_1_1_thread_1af416bd7a6b202f1c748fbbce58ab8212" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>trackOn</name></member>
+      <member refid="classvc64_1_1_emulator_1a66537a3d753a2e5af42fb2f9fe163b41" prot="private" virt="non-virtual"><scope>vc64::Emulator</scope><name>update</name></member>
+      <member refid="classvc64_1_1_core_object_1aa17ada334edf800da9ea768925ffa885" prot="protected" virt="non-virtual"><scope>vc64::Emulator</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_thread_1a4bf669b15db347f665f0459d18a90680" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>wakeUp</name></member>
+      <member refid="classvc64_1_1_thread_1a5b071e7409fd94cdbc05b321a053df0d" prot="protected" virt="non-virtual"><scope>vc64::Emulator</scope><name>wakeupClock</name></member>
+      <member refid="classvc64_1_1_thread_1add697c2e819232e16a174151a0e88f76" prot="protected" virt="non-virtual"><scope>vc64::Emulator</scope><name>warp</name></member>
+      <member refid="classvc64_1_1_thread_1a076c9090fe06a5d74517f2c24b0a9cf5" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>warpOff</name></member>
+      <member refid="classvc64_1_1_thread_1a1fe71fe34e101ab3d3eddf814431810f" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>warpOn</name></member>
+      <member refid="classvc64_1_1_configurable_1a5aa5d945e768c40297f1bf71e200bde3" prot="public" virt="virtual"><scope>vc64::Emulator</scope><name>~Configurable</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>vc64::Emulator</scope><name>~CoreObject</name></member>
+      <member refid="classvc64_1_1_dumpable_1a843e874f633f7dcd8e2f1dcf1d8f0c25" prot="public" virt="virtual"><scope>vc64::Emulator</scope><name>~Dumpable</name></member>
+      <member refid="classvc64_1_1_emulator_1afa723a681e6ec349a16f2a7bd44e58e1" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>~Emulator</name></member>
+      <member refid="classvc64_1_1_inspectable_1acf833bce62ebc43dac5b42fed0427d67" prot="public" virt="virtual"><scope>vc64::Emulator</scope><name>~Inspectable</name></member>
+      <member refid="classvc64_1_1_suspendable_1a35809d3a4c20db1f096e8dc5c78c49b9" prot="public" virt="virtual"><scope>vc64::Emulator</scope><name>~Suspendable</name></member>
+      <member refid="classvc64_1_1_thread_1a52cd759ea0061e49d83e430ac3cca34d" prot="public" virt="non-virtual"><scope>vc64::Emulator</scope><name>~Thread</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,167 @@
+\doxysection{Command.\+h}
+\hypertarget{_command_8h_source}{}\label{_command_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Command.h@{/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Command.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Aliases.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <stack>}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }RetroShell;}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{typedef}\ std::vector<string>\ Arguments;}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{namespace\ }Arg\ \{}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ address\ \ \ \ =\ \textcolor{stringliteral}{"{}<address>"{}};}
+\DoxyCodeLine{00029\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ \textcolor{keywordtype}{boolean}\ \ \ \ =\ \textcolor{stringliteral}{"{}\{\ true\ |\ false\ \}"{}};}
+\DoxyCodeLine{00030\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ command\ \ \ \ =\ \textcolor{stringliteral}{"{}<command>"{}};}
+\DoxyCodeLine{00031\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ dst\ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}<destination>"{}};}
+\DoxyCodeLine{00032\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ ignores\ \ \ \ =\ \textcolor{stringliteral}{"{}<ignores>"{}};}
+\DoxyCodeLine{00033\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ kb\ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}<kb>"{}};}
+\DoxyCodeLine{00034\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ nr\ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}<nr>"{}};}
+\DoxyCodeLine{00035\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ onoff\ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}\{\ on\ |\ off\ \}"{}};}
+\DoxyCodeLine{00036\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ path\ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}<path>"{}};}
+\DoxyCodeLine{00037\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ process\ \ \ \ =\ \textcolor{stringliteral}{"{}<process>"{}};}
+\DoxyCodeLine{00038\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ seconds\ \ \ \ =\ \textcolor{stringliteral}{"{}<seconds>"{}};}
+\DoxyCodeLine{00039\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ value\ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}<value>"{}};}
+\DoxyCodeLine{00040\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ count\ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}<count>"{}};}
+\DoxyCodeLine{00041\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ sequence\ \ \ =\ \textcolor{stringliteral}{"{}<byte\ sequence>"{}};}
+\DoxyCodeLine{00042\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ src\ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}<source>"{}};}
+\DoxyCodeLine{00043\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ volume\ \ \ \ \ =\ \textcolor{stringliteral}{"{}<volume>"{}};}
+\DoxyCodeLine{00044\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ \textcolor{keywordtype}{string}\ \ \ \ \ =\ \textcolor{stringliteral}{"{}<string>"{}};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{keyword}{struct\ }Command\ \{}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Textual\ descriptions\ of\ all\ command\ groups}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<string>\ groups;}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{comment}{//\ Group\ stack}}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{static}\ std::stack<isize>\ groupStack;}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{comment}{//\ Group\ of\ this\ command}}
+\DoxyCodeLine{00057\ \ \ \ \ isize\ group;}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//\ Name\ of\ this\ command\ (e.g.,\ "{}eject"{})}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{string}\ name;}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{comment}{//\ Full\ name\ of\ this\ command\ (e.g.,\ "{}df0\ eject"{})}}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{string}\ fullName;}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//\ Help\ description\ for\ this\ command}}
+\DoxyCodeLine{00066\ \ \ \ \ std::pair<string,\ string>\ help;}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{comment}{//\ List\ of\ required\ arguments}}
+\DoxyCodeLine{00069\ \ \ \ \ std::vector<string>\ requiredArgs;}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{comment}{//\ List\ of\ optional\ arguments}}
+\DoxyCodeLine{00072\ \ \ \ \ std::vector<string>\ optionalArgs;}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{comment}{//\ List\ of\ subcommands}}
+\DoxyCodeLine{00075\ \ \ \ \ std::vector<Command>\ subCommands;}
+\DoxyCodeLine{00076\ \ \ \ \ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{comment}{//\ Command\ handler}}
+\DoxyCodeLine{00078\ \ \ \ \ std::function<void\ (Arguments\&,\ \textcolor{keywordtype}{long})>\ callback\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//\ Additional\ argument\ passed\ to\ the\ command\ handler}}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{long}\ param\ =\ 0;}
+\DoxyCodeLine{00082\ \ \ \ \ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{comment}{//\ Indicates\ if\ this\ command\ appears\ in\ help\ descriptions}}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{bool}\ hidden\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{comment}{//\ Methods}}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{comment}{//\ Begins\ or\ ends\ a\ command\ group}}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ pushGroup(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&description,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&postfix\ =\ \textcolor{stringliteral}{"{}:"{}});}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{void}\ popGroup();}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{comment}{//\ Creates\ a\ new\ node\ in\ the\ command\ tree}}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{void}\ add(\textcolor{keyword}{const}\ std::vector<string>\ \&tokens,}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&help,}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{void}\ (Arguments\&,\ \textcolor{keywordtype}{long})>\ func\ =\ \textcolor{keyword}{nullptr},\ \textcolor{keywordtype}{long}\ param\ =\ 0);}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{void}\ add(\textcolor{keyword}{const}\ std::vector<string>\ \&tokens,}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::pair<const\ string\ \&,\ const\ string\ \&>\ help,}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{void}\ (Arguments\&,\ \textcolor{keywordtype}{long})>\ func\ =\ \textcolor{keyword}{nullptr},\ \textcolor{keywordtype}{long}\ param\ =\ 0);}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{void}\ add(\textcolor{keyword}{const}\ std::vector<string>\ \&tokens,}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<string>\ \&args,}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&help,}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{void}\ (Arguments\&,\ \textcolor{keywordtype}{long})>\ func\ =\ \textcolor{keyword}{nullptr},\ \textcolor{keywordtype}{long}\ param\ =\ 0);}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{void}\ add(\textcolor{keyword}{const}\ std::vector<string>\ \&tokens,}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<string>\ \&args,}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::pair<const\ string\ \&,\ const\ string\ \&>\ help,}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{void}\ (Arguments\&,\ \textcolor{keywordtype}{long})>\ func\ =\ \textcolor{keyword}{nullptr},\ \textcolor{keywordtype}{long}\ param\ =\ 0);}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordtype}{void}\ add(\textcolor{keyword}{const}\ std::vector<string>\ \&tokens,}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<string>\ \&requiredArgs,}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<string>\ \&optionalArgs,}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&help,}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{void}\ (Arguments\&,\ \textcolor{keywordtype}{long})>\ func\ =\ \textcolor{keyword}{nullptr},\ \textcolor{keywordtype}{long}\ param\ =\ 0);}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keywordtype}{void}\ add(\textcolor{keyword}{const}\ std::vector<string>\ \&tokens,}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<string>\ \&requiredArgs,}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<string>\ \&optionalArgs,}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::pair<const\ string\ \&,\ const\ string\ \&>\ help,}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{void}\ (Arguments\&,\ \textcolor{keywordtype}{long})>\ func\ =\ \textcolor{keyword}{nullptr},\ \textcolor{keywordtype}{long}\ param\ =\ 0);}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordtype}{void}\ clone(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&alias,}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<string>\ \&tokens,}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ param\ =\ 0);}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{void}\ clone(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&alias,}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<string>\ \&tokens,}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&help,}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ param\ =\ 0);}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00136\ \textcolor{comment}{\ \ \ \ void\ registerSetCommand(const\ string\ \&cmd,\ const\ ConfigOptions\ \&options,}}
+\DoxyCodeLine{00137\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<void\ (Arguments\&,\ long)>\ func\ =\ nullptr,\ long\ param\ =\ 0);}}
+\DoxyCodeLine{00138\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{comment}{//\ Returns\ arguments\ counts}}
+\DoxyCodeLine{00141\ \ \ \ \ isize\ minArgs()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ isize(requiredArgs.size());\ \}}
+\DoxyCodeLine{00142\ \ \ \ \ isize\ optArgs()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ isize(optionalArgs.size());\ \}}
+\DoxyCodeLine{00143\ \ \ \ \ isize\ maxArgs()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ minArgs()\ +\ optArgs();\ \}}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{comment}{//\ Seeks\ a\ command\ object\ inside\ the\ command\ object\ tree}}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keyword}{const}\ Command\ *seek(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ token)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00147\ \ \ \ \ Command\ *seek(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ token);}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keyword}{const}\ Command\ *seek(\textcolor{keyword}{const}\ std::vector<string>\ \&tokens)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00149\ \ \ \ \ Command\ *seek(\textcolor{keyword}{const}\ std::vector<string>\ \&tokens);}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{comment}{//\ Filters\ the\ argument\ list\ (used\ by\ auto-\/completion)}}
+\DoxyCodeLine{00152\ \ \ \ \ std::vector<const\ Command\ *>\ filterPrefix(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ prefix)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{comment}{//\ Automatically\ completes\ a\ partial\ token\ string}}
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordtype}{string}\ autoComplete(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ token);}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{comment}{//\ Returns\ a\ syntax\ string\ for\ this\ command}}
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordtype}{string}\ usage()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00159\ \};}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00161\ \}}
+
+\end{DoxyCode}

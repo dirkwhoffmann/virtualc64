@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_dasm_style" kind="struct" language="C++" prot="public">
+    <compoundname>DasmStyle</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_dasm_style_1a579ce16b77adf0bff30844eb50c505e7" prot="public" static="no" mutable="no">
+        <type>DasmNumberFormat</type>
+        <definition>DasmNumberFormat DasmStyle::numberFormat</definition>
+        <argsstring></argsstring>
+        <name>numberFormat</name>
+        <qualifiedname>DasmStyle::numberFormat</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="463" column="22" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="463" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_dasm_style_1ae0e8c85ca6f476395e6556f9b358a94b" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int DasmStyle::tab</definition>
+        <argsstring></argsstring>
+        <name>tab</name>
+        <qualifiedname>DasmStyle::tab</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="464" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="464" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="461" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="462" bodyend="465"/>
+    <listofallmembers>
+      <member refid="struct_dasm_style_1a579ce16b77adf0bff30844eb50c505e7" prot="public" virt="non-virtual"><scope>DasmStyle</scope><name>numberFormat</name></member>
+      <member refid="struct_dasm_style_1ae0e8c85ca6f476395e6556f9b358a94b" prot="public" virt="non-virtual"><scope>DasmStyle</scope><name>tab</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

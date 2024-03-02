@@ -1,0 +1,250 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="structvc64_1_1_audio_volume" kind="struct" language="C++" prot="public">
+    <compoundname>vc64::AudioVolume</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">Serializable</basecompoundref>
+    <templateparamlist>
+      <param>
+        <type>typename T</type>
+      </param>
+    </templateparamlist>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structvc64_1_1_audio_volume_1a165baba8e0a4d77269e01946749b79c5" prot="public" static="no" mutable="no">
+        <type>T</type>
+        <definition>T vc64::AudioVolume&lt; T &gt;::current</definition>
+        <argsstring></argsstring>
+        <name>current</name>
+        <qualifiedname>vc64::AudioVolume::current</qualifiedname>
+        <initializer>= 1.0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" line="27" column="7" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_audio_volume_1a043ae939d2d44fd1d30df2214f71a3b5" prot="public" static="no" mutable="no">
+        <type>T</type>
+        <definition>T vc64::AudioVolume&lt; T &gt;::normal</definition>
+        <argsstring></argsstring>
+        <name>normal</name>
+        <qualifiedname>vc64::AudioVolume::normal</qualifiedname>
+        <initializer>= 1.0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" line="30" column="7" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_audio_volume_1a6819ff41ec4f8d9686e1277f9cca4117" prot="public" static="no" mutable="no">
+        <type>T</type>
+        <definition>T vc64::AudioVolume&lt; T &gt;::target</definition>
+        <argsstring></argsstring>
+        <name>target</name>
+        <qualifiedname>vc64::AudioVolume::target</qualifiedname>
+        <initializer>= 1.0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" line="33" column="7" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_audio_volume_1ae76dafb114aa13e8790dc042eb9cea52" prot="public" static="no" mutable="no">
+        <type>T</type>
+        <definition>T vc64::AudioVolume&lt; T &gt;::delta</definition>
+        <argsstring></argsstring>
+        <name>delta</name>
+        <qualifiedname>vc64::AudioVolume::delta</qualifiedname>
+        <initializer>= 1.0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" line="34" column="7" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" bodystart="34" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="structvc64_1_1_audio_volume_1a3131b3492c12f4578a3bb5c41fb97ba6" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>AudioVolume&lt; T &gt; &amp;</type>
+        <definition>AudioVolume&lt; T &gt; &amp; vc64::AudioVolume&lt; T &gt;::operator=</definition>
+        <argsstring>(const AudioVolume&lt; T &gt; &amp;other)</argsstring>
+        <name>operator=</name>
+        <qualifiedname>vc64::AudioVolume::operator=</qualifiedname>
+        <param>
+          <type>const AudioVolume&lt; T &gt; &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" line="41" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" bodystart="41" bodyend="49"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_audio_volume_1a0135124fa683e733c0146e4beee5df64" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>class W</type>
+          </param>
+        </templateparamlist>
+        <type>void</type>
+        <definition>void vc64::AudioVolume&lt; T &gt;::serialize</definition>
+        <argsstring>(W &amp;worker)</argsstring>
+        <name>serialize</name>
+        <qualifiedname>vc64::AudioVolume::serialize</qualifiedname>
+        <param>
+          <type>W &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" line="52" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" bodystart="52" bodyend="66"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_audio_volume_1a4b87bda4e40e769a8794781c1fe8330f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::AudioVolume&lt; T &gt;::SERIALIZERS</definition>
+        <argsstring>(serialize)</argsstring>
+        <name>SERIALIZERS</name>
+        <qualifiedname>vc64::AudioVolume::SERIALIZERS</qualifiedname>
+        <param>
+          <type>serialize</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" line="66" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_audio_volume_1a2fb7051fa0f7ad12f1f4038e7261147b" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>T</type>
+        <definition>T vc64::AudioVolume&lt; T &gt;::get</definition>
+        <argsstring>() const</argsstring>
+        <name>get</name>
+        <qualifiedname>vc64::AudioVolume::get</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" line="69" column="7" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" bodystart="69" bodyend="69"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_audio_volume_1a87e52779de4e8767b3f903d0ad726898" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::AudioVolume&lt; T &gt;::set</definition>
+        <argsstring>(T value)</argsstring>
+        <name>set</name>
+        <qualifiedname>vc64::AudioVolume::set</qualifiedname>
+        <param>
+          <type>T</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" line="70" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" bodystart="70" bodyend="70"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_audio_volume_1a8a234c8c4a9c7ba31f74ebbf48537a53" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::AudioVolume&lt; T &gt;::isFading</definition>
+        <argsstring>() const</argsstring>
+        <name>isFading</name>
+        <qualifiedname>vc64::AudioVolume::isFading</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" line="73" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" bodystart="73" bodyend="73"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_audio_volume_1ae28d6eab48d608c4afd0ceec40f0c214" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::AudioVolume&lt; T &gt;::fadeIn</definition>
+        <argsstring>(isize steps)</argsstring>
+        <name>fadeIn</name>
+        <qualifiedname>vc64::AudioVolume::fadeIn</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>steps</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" line="76" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" bodystart="76" bodyend="82"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_audio_volume_1aaa55baed40c73b40819e620a4ba17fac" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::AudioVolume&lt; T &gt;::fadeOut</definition>
+        <argsstring>(isize steps)</argsstring>
+        <name>fadeOut</name>
+        <qualifiedname>vc64::AudioVolume::fadeOut</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>steps</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" line="83" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" bodystart="83" bodyend="89"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_audio_volume_1ac5962cb2d4f1955d576bccc753f262f6" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::AudioVolume&lt; T &gt;::shift</definition>
+        <argsstring>()</argsstring>
+        <name>shift</name>
+        <qualifiedname>vc64::AudioVolume::shift</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" line="92" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" bodystart="92" bodyend="103"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" line="24" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h" bodystart="24" bodyend="104"/>
+    <listofallmembers>
+      <member refid="structvc64_1_1_audio_volume_1a165baba8e0a4d77269e01946749b79c5" prot="public" virt="non-virtual"><scope>vc64::AudioVolume</scope><name>current</name></member>
+      <member refid="structvc64_1_1_audio_volume_1ae76dafb114aa13e8790dc042eb9cea52" prot="public" virt="non-virtual"><scope>vc64::AudioVolume</scope><name>delta</name></member>
+      <member refid="structvc64_1_1_audio_volume_1ae28d6eab48d608c4afd0ceec40f0c214" prot="public" virt="non-virtual"><scope>vc64::AudioVolume</scope><name>fadeIn</name></member>
+      <member refid="structvc64_1_1_audio_volume_1aaa55baed40c73b40819e620a4ba17fac" prot="public" virt="non-virtual"><scope>vc64::AudioVolume</scope><name>fadeOut</name></member>
+      <member refid="structvc64_1_1_audio_volume_1a2fb7051fa0f7ad12f1f4038e7261147b" prot="public" virt="non-virtual"><scope>vc64::AudioVolume</scope><name>get</name></member>
+      <member refid="structvc64_1_1_audio_volume_1a8a234c8c4a9c7ba31f74ebbf48537a53" prot="public" virt="non-virtual"><scope>vc64::AudioVolume</scope><name>isFading</name></member>
+      <member refid="structvc64_1_1_audio_volume_1a043ae939d2d44fd1d30df2214f71a3b5" prot="public" virt="non-virtual"><scope>vc64::AudioVolume</scope><name>normal</name></member>
+      <member refid="structvc64_1_1_audio_volume_1a3131b3492c12f4578a3bb5c41fb97ba6" prot="public" virt="non-virtual"><scope>vc64::AudioVolume</scope><name>operator=</name></member>
+      <member refid="structvc64_1_1_audio_volume_1a0135124fa683e733c0146e4beee5df64" prot="public" virt="non-virtual"><scope>vc64::AudioVolume</scope><name>serialize</name></member>
+      <member refid="structvc64_1_1_audio_volume_1a4b87bda4e40e769a8794781c1fe8330f" prot="public" virt="non-virtual"><scope>vc64::AudioVolume</scope><name>SERIALIZERS</name></member>
+      <member refid="structvc64_1_1_audio_volume_1a87e52779de4e8767b3f903d0ad726898" prot="public" virt="non-virtual"><scope>vc64::AudioVolume</scope><name>set</name></member>
+      <member refid="structvc64_1_1_audio_volume_1ac5962cb2d4f1955d576bccc753f262f6" prot="public" virt="non-virtual"><scope>vc64::AudioVolume</scope><name>shift</name></member>
+      <member refid="structvc64_1_1_audio_volume_1a6819ff41ec4f8d9686e1277f9cca4117" prot="public" virt="non-virtual"><scope>vc64::AudioVolume</scope><name>target</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

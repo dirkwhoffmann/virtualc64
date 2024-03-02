@@ -1,0 +1,114 @@
+\doxysection{Volume.\+h}
+\hypertarget{_volume_8h_source}{}\label{_volume_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h@{/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Volume.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}Aliases.h"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}Serializable.h"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{comment}{/*\ An\ object\ of\ this\ class\ stores\ a\ single\ volume\ value\ and\ provides\ the\ means}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ to\ emulate\ a\ fading\ effect.\ Fading\ is\ utilized\ to\ avoid\ cracking\ noises\ if,}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ *\ e.g.,\ the\ emulator\ is\ put\ in\ pause\ mode.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00024\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{struct\ }AudioVolume\ :\ Serializable\ \{}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{comment}{//\ Current\ volume}}
+\DoxyCodeLine{00027\ \ \ \ \ T\ current\ =\ 1.0;}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{comment}{//\ Value\ of\ 'current'\ if\ no\ fading\ takes\ place}}
+\DoxyCodeLine{00030\ \ \ \ \ T\ normal\ =\ 1.0;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//\ Target\ value\ and\ delta\ step}}
+\DoxyCodeLine{00033\ \ \ \ \ T\ target\ =\ 1.0;}
+\DoxyCodeLine{00034\ \ \ \ \ T\ delta\ =\ 1.0;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{comment}{//\ Methods}}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ AudioVolume<T>\&\ operator=\ (\textcolor{keyword}{const}\ AudioVolume<T>\&\ other)\ \{}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ CLONE(current)}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ CLONE(normal)}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ CLONE(target)}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ CLONE(delta)}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00049\ \ \ \ \ \}}
+\DoxyCodeLine{00050\ \ \ \ \ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ W>}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ serialize(W\&\ worker)}
+\DoxyCodeLine{00053\ \ \ \ \ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ <<\ normal}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ <<\ target}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ <<\ delta;}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (isChecker(worker))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ <<\ current;}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \}\ SERIALIZERS(serialize);}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{comment}{//\ Setter\ and\ getter}}
+\DoxyCodeLine{00069\ \ \ \ \ T\ get()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ current;\ \}}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{void}\ set(T\ value)\ \{\ current\ =\ normal\ =\ target\ =\ value;\ \}}
+\DoxyCodeLine{00071\ \ \ \ \ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{comment}{//\ Returns\ true\ if\ the\ volume\ is\ currently\ fading\ in\ or\ out}}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{bool}\ isFading()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ current\ !=\ target;\ \}}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{comment}{//\ Initiates\ a\ fading\ effect}}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{void}\ fadeIn(isize\ steps)\ \{}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ target\ =\ normal;}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ target\ =\ normal;}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ delta\ \ =\ normal\ /\ steps;}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ delta\ \ =\ normal\ /\ steps;}
+\DoxyCodeLine{00082\ \ \ \ \ \}}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{void}\ fadeOut(isize\ steps)\ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ target\ =\ 0;}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ target\ =\ 0;}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ delta\ \ =\ normal\ /\ steps;}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ delta\ \ =\ normal\ /\ steps;}
+\DoxyCodeLine{00089\ \ \ \ \ \}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{comment}{//\ Shifts\ the\ current\ volume\ towards\ the\ target\ volume}}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ shift()\ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (current\ ==\ target)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (current\ <\ target)\ \{}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((current\ +=\ delta)\ <\ target)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((current\ -\/=\ delta)\ >\ target)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ current\ =\ target;}
+\DoxyCodeLine{00103\ \ \ \ \ \}}
+\DoxyCodeLine{00104\ \};}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \textcolor{keyword}{typedef}\ AudioVolume<float>\ Volume;}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \}}
+
+\end{DoxyCode}

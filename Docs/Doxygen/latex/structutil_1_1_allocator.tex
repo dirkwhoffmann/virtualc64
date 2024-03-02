@@ -1,0 +1,98 @@
+\doxysection{util\+::Allocator\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structutil_1_1_allocator}{}\label{structutil_1_1_allocator}\index{util::Allocator$<$ T $>$@{util::Allocator$<$ T $>$}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structutil_1_1_allocator_a907215dfa17a84d3a0d650f977685c11}\label{structutil_1_1_allocator_a907215dfa17a84d3a0d650f977685c11} 
+{\bfseries Allocator} (T \texorpdfstring{$\ast$}{*}\&ptr)
+\item 
+\Hypertarget{structutil_1_1_allocator_ab44e39d06b9888856fc71315b097b2df}\label{structutil_1_1_allocator_ab44e39d06b9888856fc71315b097b2df} 
+{\bfseries Allocator} (const \mbox{\hyperlink{structutil_1_1_allocator}{Allocator}} \&)=delete
+\item 
+\Hypertarget{structutil_1_1_allocator_a7924ec5c89bf3705a19ef3e1d1894660}\label{structutil_1_1_allocator_a7924ec5c89bf3705a19ef3e1d1894660} 
+isize {\bfseries bytesize} () const
+\item 
+\Hypertarget{structutil_1_1_allocator_a35a7c6b32b213887b1fe26a9ceb71b55}\label{structutil_1_1_allocator_a35a7c6b32b213887b1fe26a9ceb71b55} 
+bool {\bfseries empty} () const
+\item 
+\Hypertarget{structutil_1_1_allocator_a0a9921267e1f356e6782cd8198cfd283}\label{structutil_1_1_allocator_a0a9921267e1f356e6782cd8198cfd283} 
+{\bfseries operator bool} () const
+\item 
+\Hypertarget{structutil_1_1_allocator_a88943b16a85d72d327236eae508b10ea}\label{structutil_1_1_allocator_a88943b16a85d72d327236eae508b10ea} 
+void {\bfseries alloc} (isize elements)
+\item 
+\Hypertarget{structutil_1_1_allocator_a10e8e158fd03d89ca657a5fd6e46e0b6}\label{structutil_1_1_allocator_a10e8e158fd03d89ca657a5fd6e46e0b6} 
+void {\bfseries dealloc} ()
+\item 
+\Hypertarget{structutil_1_1_allocator_a2f4294becfc44787f0dae1d6ade11ab8}\label{structutil_1_1_allocator_a2f4294becfc44787f0dae1d6ade11ab8} 
+void {\bfseries init} (isize elements, T value=0)
+\item 
+\Hypertarget{structutil_1_1_allocator_a9ab3028e5bd6b27e40610fa6474c400c}\label{structutil_1_1_allocator_a9ab3028e5bd6b27e40610fa6474c400c} 
+void {\bfseries init} (const T \texorpdfstring{$\ast$}{*}buf, isize elements)
+\item 
+\Hypertarget{structutil_1_1_allocator_a67eb3fd5a42d2c99786c8a9a3fde16ac}\label{structutil_1_1_allocator_a67eb3fd5a42d2c99786c8a9a3fde16ac} 
+void {\bfseries init} (const \mbox{\hyperlink{structutil_1_1_allocator}{Allocator}}$<$ T $>$ \&other)
+\item 
+\Hypertarget{structutil_1_1_allocator_a6e3f25433c42844852907f4258877e88}\label{structutil_1_1_allocator_a6e3f25433c42844852907f4258877e88} 
+void {\bfseries init} (const string \&path)
+\item 
+\Hypertarget{structutil_1_1_allocator_a791fdb4e217ee1f26138a586feead127}\label{structutil_1_1_allocator_a791fdb4e217ee1f26138a586feead127} 
+void {\bfseries init} (const string \&path, const string \&name)
+\item 
+\Hypertarget{structutil_1_1_allocator_a4ffcee5a93164edf03c5666e6154c2c0}\label{structutil_1_1_allocator_a4ffcee5a93164edf03c5666e6154c2c0} 
+void {\bfseries resize} (isize elements)
+\item 
+\Hypertarget{structutil_1_1_allocator_ab0f30cf816c836644b7db26f3ea4e0d8}\label{structutil_1_1_allocator_ab0f30cf816c836644b7db26f3ea4e0d8} 
+void {\bfseries resize} (isize elements, T pad)
+\item 
+\Hypertarget{structutil_1_1_allocator_a91742dbc438bda8863ecc712b47b7860}\label{structutil_1_1_allocator_a91742dbc438bda8863ecc712b47b7860} 
+void {\bfseries clear} (T value, isize offset, isize len)
+\item 
+\Hypertarget{structutil_1_1_allocator_a86cc80225345340246eb0d2bbf9fd8c0}\label{structutil_1_1_allocator_a86cc80225345340246eb0d2bbf9fd8c0} 
+void {\bfseries clear} (T value=0, isize offset=0)
+\item 
+\Hypertarget{structutil_1_1_allocator_aa13b96cc55ff40c9521388df4ed529e3}\label{structutil_1_1_allocator_aa13b96cc55ff40c9521388df4ed529e3} 
+void {\bfseries copy} (T \texorpdfstring{$\ast$}{*}buf, isize offset, isize len) const
+\item 
+\Hypertarget{structutil_1_1_allocator_ac8e9da1590990e63aedd5bdf4fbb054e}\label{structutil_1_1_allocator_ac8e9da1590990e63aedd5bdf4fbb054e} 
+void {\bfseries copy} (T \texorpdfstring{$\ast$}{*}buf) const
+\item 
+\Hypertarget{structutil_1_1_allocator_a1f1d83b8b79fe56d3278f5efa605869b}\label{structutil_1_1_allocator_a1f1d83b8b79fe56d3278f5efa605869b} 
+void {\bfseries patch} (const u8 \texorpdfstring{$\ast$}{*}seq, const u8 \texorpdfstring{$\ast$}{*}subst)
+\item 
+\Hypertarget{structutil_1_1_allocator_a850e2f648922fa756c6513a17bb2f155}\label{structutil_1_1_allocator_a850e2f648922fa756c6513a17bb2f155} 
+void {\bfseries patch} (const char \texorpdfstring{$\ast$}{*}seq, const char \texorpdfstring{$\ast$}{*}subst)
+\item 
+\Hypertarget{structutil_1_1_allocator_a92c46ef30d4178d20b580503cb3e84b4}\label{structutil_1_1_allocator_a92c46ef30d4178d20b580503cb3e84b4} 
+u32 {\bfseries fnv32} () const
+\item 
+\Hypertarget{structutil_1_1_allocator_a08b69b914254bc0f8bd1707f9bb0ee76}\label{structutil_1_1_allocator_a08b69b914254bc0f8bd1707f9bb0ee76} 
+u64 {\bfseries fnv64} () const
+\item 
+\Hypertarget{structutil_1_1_allocator_a983af0bc6b847cfa87d7c5d670588a70}\label{structutil_1_1_allocator_a983af0bc6b847cfa87d7c5d670588a70} 
+u16 {\bfseries crc16} () const
+\item 
+\Hypertarget{structutil_1_1_allocator_a3a7dd481494b4fc0329b6a3305435b30}\label{structutil_1_1_allocator_a3a7dd481494b4fc0329b6a3305435b30} 
+u32 {\bfseries crc32} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structutil_1_1_allocator_a4bbfe862d6f01927763a31e176d53b27}\label{structutil_1_1_allocator_a4bbfe862d6f01927763a31e176d53b27} 
+T \texorpdfstring{$\ast$}{*}\& {\bfseries ptr}
+\item 
+\Hypertarget{structutil_1_1_allocator_a3cf86c705c67083dae05358dd446b026}\label{structutil_1_1_allocator_a3cf86c705c67083dae05358dd446b026} 
+isize {\bfseries size}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structutil_1_1_allocator_a6d4363015971d3052c69a218eacea934}\label{structutil_1_1_allocator_a6d4363015971d3052c69a218eacea934} 
+static constexpr isize {\bfseries max\+Capacity} = 512 \texorpdfstring{$\ast$}{*} 1024 \texorpdfstring{$\ast$}{*} 1024
+\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Utilities/Buffer.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Utilities/Buffer.\+cpp\end{DoxyCompactItemize}

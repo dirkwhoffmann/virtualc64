@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="145" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="145" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="143" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="143" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_coord_cmd_1a964302b81a1193d64c85a3db8f893b55" prot="public" static="no" mutable="no">
         <type>double</type>
@@ -29,7 +29,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="146" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="146" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="144" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="144" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_coord_cmd_1adc459aac624f0e418e6b275c7d653c0c" prot="public" static="no" mutable="no">
         <type>double</type>
@@ -43,14 +43,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="147" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="147" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="145" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="145" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="143" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="144" bodyend="148"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="141" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="142" bodyend="146"/>
     <listofallmembers>
       <member refid="struct_coord_cmd_1a20346e6b96856087e404d306d9ac1c3d" prot="public" virt="non-virtual"><scope>CoordCmd</scope><name>port</name></member>
       <member refid="struct_coord_cmd_1a964302b81a1193d64c85a3db8f893b55" prot="public" virt="non-virtual"><scope>CoordCmd</scope><name>x</name></member>

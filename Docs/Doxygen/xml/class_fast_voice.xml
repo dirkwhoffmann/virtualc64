@@ -1,0 +1,1097 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="class_fast_voice" kind="class" language="C++" prot="public" final="yes">
+    <compoundname>FastVoice</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">vc64::SubComponent</basecompoundref>
+    <sectiondef kind="friend">
+      <memberdef kind="friend" id="class_fast_voice_1ae08d7614b6a36f7bfcb10f62bf087fcc" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class FastSID</definition>
+        <argsstring></argsstring>
+        <name>FastSID</name>
+        <qualifiedname>FastVoice::FastSID</qualifiedname>
+        <param>
+          <type>FastSID</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="71" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_fast_voice_1a0a38ed67020a232a8f84cb3401f24453" prot="private" static="no" mutable="yes">
+        <type>SIDInfo</type>
+        <definition>SIDInfo FastVoice::info</definition>
+        <argsstring></argsstring>
+        <name>info</name>
+        <qualifiedname>FastVoice::info</qualifiedname>
+        <initializer>= { }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="74" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="74" bodyend="74"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1a4d95e60c50fa45c2587e0d29e26a3eae" prot="private" static="no" mutable="yes">
+        <type>VoiceInfo</type>
+        <definition>VoiceInfo FastVoice::voiceInfo[3]</definition>
+        <argsstring>[3]</argsstring>
+        <name>voiceInfo</name>
+        <qualifiedname>FastVoice::voiceInfo</qualifiedname>
+        <initializer>= { }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="75" column="23" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="75" bodyend="75"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1a829ffd166b717d72c36eb4b47979a02a" prot="private" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize FastVoice::nr</definition>
+        <argsstring></argsstring>
+        <name>nr</name>
+        <qualifiedname>FastVoice::nr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="93" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1a294a3b923ec7b4d9b418d4b130d29129" prot="private" static="no" mutable="no">
+        <type>class FastSID *</type>
+        <definition>class FastSID* FastVoice::fastsid</definition>
+        <argsstring></argsstring>
+        <name>fastsid</name>
+        <qualifiedname>FastVoice::fastsid</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="96" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="96" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1a6284b7a0047e3e997683cbb468efff35" prot="private" static="no" mutable="no">
+        <type>FastVoice *</type>
+        <definition>FastVoice* FastVoice::prev</definition>
+        <argsstring></argsstring>
+        <name>prev</name>
+        <qualifiedname>FastVoice::prev</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="99" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1af2df0837d5b517e42a2b164ff43b397b" prot="private" static="no" mutable="no">
+        <type>u8 *</type>
+        <definition>u8* FastVoice::sidreg</definition>
+        <argsstring></argsstring>
+        <name>sidreg</name>
+        <qualifiedname>FastVoice::sidreg</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="102" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1aee6e0147bf895a6fce7b7432851f1f09" prot="private" static="no" mutable="no">
+        <type>u16 *</type>
+        <definition>u16* FastVoice::wavetable</definition>
+        <argsstring></argsstring>
+        <name>wavetable</name>
+        <qualifiedname>FastVoice::wavetable</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="110" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="110" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1a69bb6756c04a194f109c0eae494d331b" prot="private" static="no" mutable="no">
+        <type>u32</type>
+        <definition>u32 FastVoice::waveTableOffset</definition>
+        <argsstring></argsstring>
+        <name>waveTableOffset</name>
+        <qualifiedname>FastVoice::waveTableOffset</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="116" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="116" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1a58c0c3567af1530c3edd62af99f59aeb" prot="private" static="no" mutable="no">
+        <type>u32</type>
+        <definition>u32 FastVoice::waveTableCounter</definition>
+        <argsstring></argsstring>
+        <name>waveTableCounter</name>
+        <qualifiedname>FastVoice::waveTableCounter</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="119" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1abe08bbc6f6cd8e85f2b592c6a45fcc30" prot="private" static="no" mutable="no">
+        <type>u32</type>
+        <definition>u32 FastVoice::step</definition>
+        <argsstring></argsstring>
+        <name>step</name>
+        <qualifiedname>FastVoice::step</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="124" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="124" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1afb08c68bd4f42538aefbeec0ca0b5f05" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool FastVoice::ringmod</definition>
+        <argsstring></argsstring>
+        <name>ringmod</name>
+        <qualifiedname>FastVoice::ringmod</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="127" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="127" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1a6998e5236440fb9242222b8b8fab31ae" prot="private" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 FastVoice::adsrm</definition>
+        <argsstring></argsstring>
+        <name>adsrm</name>
+        <qualifiedname>FastVoice::adsrm</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="134" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="134" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1a2bc58f31a274fa6d274dcbbf21e1105a" prot="private" static="no" mutable="no">
+        <type>u32</type>
+        <definition>u32 FastVoice::adsr</definition>
+        <argsstring></argsstring>
+        <name>adsr</name>
+        <qualifiedname>FastVoice::adsr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="137" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="137" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1abf4783dd7db444669ad905a419f8845f" prot="private" static="no" mutable="no">
+        <type>i32</type>
+        <definition>i32 FastVoice::adsrInc</definition>
+        <argsstring></argsstring>
+        <name>adsrInc</name>
+        <qualifiedname>FastVoice::adsrInc</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="140" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="140" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1aabe49a9891d2683b6a02d37a3253e36c" prot="private" static="no" mutable="no">
+        <type>u32</type>
+        <definition>u32 FastVoice::adsrCmp</definition>
+        <argsstring></argsstring>
+        <name>adsrCmp</name>
+        <qualifiedname>FastVoice::adsrCmp</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="143" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="143" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1ac862ad10bde8a335650f8d70f64d7131" prot="private" static="no" mutable="no">
+        <type>u32</type>
+        <definition>u32 FastVoice::lsfr</definition>
+        <argsstring></argsstring>
+        <name>lsfr</name>
+        <qualifiedname>FastVoice::lsfr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="154" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="154" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1a2e46945088bafef8cfc7dadbc82d0309" prot="private" static="no" mutable="no">
+        <type>signed char</type>
+        <definition>signed char FastVoice::filterIO</definition>
+        <argsstring></argsstring>
+        <name>filterIO</name>
+        <qualifiedname>FastVoice::filterIO</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="162" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="162" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1a8b360c56f41e7eead6dcdd5d1af7dc83" prot="private" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 FastVoice::filterType</definition>
+        <argsstring></argsstring>
+        <name>filterType</name>
+        <qualifiedname>FastVoice::filterType</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="163" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="163" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1ac22b9eb08e06091caec1d2a0f9855890" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double FastVoice::filterLow</definition>
+        <argsstring></argsstring>
+        <name>filterLow</name>
+        <qualifiedname>FastVoice::filterLow</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="164" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="164" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1aaff97362177330d9b78e9436e89d44eb" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double FastVoice::filterRef</definition>
+        <argsstring></argsstring>
+        <name>filterRef</name>
+        <qualifiedname>FastVoice::filterRef</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="165" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="165" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1afa4452486b22eecea5ab0e06c43276e8" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double FastVoice::filterDy</definition>
+        <argsstring></argsstring>
+        <name>filterDy</name>
+        <qualifiedname>FastVoice::filterDy</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="166" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="166" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1a6046047921d82a578a10963ae72ecb6e" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double FastVoice::filterResDy</definition>
+        <argsstring></argsstring>
+        <name>filterResDy</name>
+        <qualifiedname>FastVoice::filterResDy</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="167" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="167" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-static-attrib">
+      <memberdef kind="variable" id="class_fast_voice_1adb933d4c4de4aee3d5b842d0a9b30736" prot="private" static="yes" mutable="no">
+        <type>u16</type>
+        <definition>u16 FastVoice::wavetable10</definition>
+        <argsstring>[2][4096]</argsstring>
+        <name>wavetable10</name>
+        <qualifiedname>FastVoice::wavetable10</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="79" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1a176cfb5288648bc6a898a4ff80c2e505" prot="private" static="yes" mutable="no">
+        <type>u16</type>
+        <definition>u16 FastVoice::wavetable20</definition>
+        <argsstring>[2][4096]</argsstring>
+        <name>wavetable20</name>
+        <qualifiedname>FastVoice::wavetable20</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="80" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1a89af17a2086f8138befbe80fc693dc7c" prot="private" static="yes" mutable="no">
+        <type>u16</type>
+        <definition>u16 FastVoice::wavetable30</definition>
+        <argsstring>[2][4096]</argsstring>
+        <name>wavetable30</name>
+        <qualifiedname>FastVoice::wavetable30</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="81" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1a079f1b5b1ea69109a043a02a18d3ff88" prot="private" static="yes" mutable="no">
+        <type>u16</type>
+        <definition>u16 FastVoice::wavetable40</definition>
+        <argsstring>[2][8192]</argsstring>
+        <name>wavetable40</name>
+        <qualifiedname>FastVoice::wavetable40</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="82" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1ac71f962fc5ef3e86601468e4d2e61ccd" prot="private" static="yes" mutable="no">
+        <type>u16</type>
+        <definition>u16 FastVoice::wavetable50</definition>
+        <argsstring>[2][8192]</argsstring>
+        <name>wavetable50</name>
+        <qualifiedname>FastVoice::wavetable50</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="83" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="83" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1a062b4a759099d41f0383c5f666005b6c" prot="private" static="yes" mutable="no">
+        <type>u16</type>
+        <definition>u16 FastVoice::wavetable60</definition>
+        <argsstring>[2][8192]</argsstring>
+        <name>wavetable60</name>
+        <qualifiedname>FastVoice::wavetable60</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="84" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1a3cfcbf423761047ffac78431c7a3b65a" prot="private" static="yes" mutable="no">
+        <type>u16</type>
+        <definition>u16 FastVoice::wavetable70</definition>
+        <argsstring>[2][8192]</argsstring>
+        <name>wavetable70</name>
+        <qualifiedname>FastVoice::wavetable70</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="85" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1a013df8e74693c359d04c9270ae4c5265" prot="private" static="yes" mutable="no">
+        <type>u8</type>
+        <definition>u8 FastVoice::noiseMSB</definition>
+        <argsstring>[256]</argsstring>
+        <name>noiseMSB</name>
+        <qualifiedname>FastVoice::noiseMSB</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="88" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="88" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1a860c49307803faded5434e0e68f9dbaf" prot="private" static="yes" mutable="no">
+        <type>u8</type>
+        <definition>u8 FastVoice::noiseMID</definition>
+        <argsstring>[256]</argsstring>
+        <name>noiseMID</name>
+        <qualifiedname>FastVoice::noiseMID</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="89" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_fast_voice_1a0c63de6de306dd996bb14d6dfcec6d11" prot="private" static="yes" mutable="no">
+        <type>u8</type>
+        <definition>u8 FastVoice::noiseLSB</definition>
+        <argsstring>[256]</argsstring>
+        <name>noiseLSB</name>
+        <qualifiedname>FastVoice::noiseLSB</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="90" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="90" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="class_fast_voice_1ae663cd96024cad149d85bdf7dc462373" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void FastVoice::initWaveTables</definition>
+        <argsstring>()</argsstring>
+        <name>initWaveTables</name>
+        <qualifiedname>FastVoice::initWaveTables</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="178" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.cpp" bodystart="65" bodyend="97"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_fast_voice_1a3e6d1f6fccf928b4955c5114d7317861" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void FastVoice::init</definition>
+        <argsstring>(FastSID *owner, isize voiceNr, FastVoice *prevVoice)</argsstring>
+        <name>init</name>
+        <qualifiedname>FastVoice::init</qualifiedname>
+        <param>
+          <type>FastSID *</type>
+          <declname>owner</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>voiceNr</declname>
+        </param>
+        <param>
+          <type>FastVoice *</type>
+          <declname>prevVoice</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="179" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.cpp" bodystart="100" bodyend="108"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1ab5f310a034adcdac3852a9a8c669027e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>FastVoice &amp;</type>
+        <definition>FastVoice &amp; FastVoice::operator=</definition>
+        <argsstring>(const FastVoice &amp;other)</argsstring>
+        <name>operator=</name>
+        <qualifiedname>FastVoice::operator=</qualifiedname>
+        <param>
+          <type>const FastVoice &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="197" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="197" bodyend="216"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1a678c082b42034e895c5cdba86f940434" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>class T</type>
+          </param>
+        </templateparamlist>
+        <type>void</type>
+        <definition>void FastVoice::serialize</definition>
+        <argsstring>(T &amp;worker)</argsstring>
+        <name>serialize</name>
+        <qualifiedname>FastVoice::serialize</qualifiedname>
+        <param>
+          <type>T &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="219" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="219" bodyend="238"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1a4f17e74e00ce4c5cb42f122f1a857b55" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void FastVoice::operator&lt;&lt;</definition>
+        <argsstring>(SerResetter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>FastVoice::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerResetter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="240" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.cpp" bodystart="56" bodyend="62"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1a4a18115032b36ca21d212949c0262625" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void FastVoice::operator&lt;&lt;</definition>
+        <argsstring>(SerChecker &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>FastVoice::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerChecker &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="241" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="241" bodyend="241"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1aa75c4c4047a2bacc60033b2d7b090182" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void FastVoice::operator&lt;&lt;</definition>
+        <argsstring>(SerCounter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>FastVoice::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerCounter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="242" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="242" bodyend="242"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1ac92adca40f659f5e0fe3074d3aa9554d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void FastVoice::operator&lt;&lt;</definition>
+        <argsstring>(SerReader &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>FastVoice::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerReader &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="243" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.cpp" bodystart="111" bodyend="115"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1a186221bba19128611100f2829353bc98" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void FastVoice::operator&lt;&lt;</definition>
+        <argsstring>(SerWriter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>FastVoice::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerWriter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="244" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="244" bodyend="244"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1a73ee342a2210df3a09855f3f74fbad0b" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>VoiceInfo</type>
+        <definition>VoiceInfo FastVoice::getVoiceInfo</definition>
+        <argsstring>(isize nr) const</argsstring>
+        <name>getVoiceInfo</name>
+        <qualifiedname>FastVoice::getVoiceInfo</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="254" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="254" bodyend="254"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1ae91bd4a9ceeb0d6201638b95d6e3b1a7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void FastVoice::updateWaveTablePtr</definition>
+        <argsstring>()</argsstring>
+        <name>updateWaveTablePtr</name>
+        <qualifiedname>FastVoice::updateWaveTablePtr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="264" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.cpp" bodystart="118" bodyend="161"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1ab1550309028a20510dff9d10b7b5de63" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void FastVoice::updateInternals</definition>
+        <argsstring>(bool gateBitFlipped)</argsstring>
+        <name>updateInternals</name>
+        <qualifiedname>FastVoice::updateInternals</qualifiedname>
+        <param>
+          <type>bool</type>
+          <declname>gateBitFlipped</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="268" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.cpp" bodystart="164" bodyend="258"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1aa8df24f557cb69996f28faa0dc268f7b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void FastVoice::setFilterType</definition>
+        <argsstring>(u8 type)</argsstring>
+        <name>setFilterType</name>
+        <qualifiedname>FastVoice::setFilterType</qualifiedname>
+        <param>
+          <type>u8</type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="271" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.cpp" bodystart="261" bodyend="269"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1aea5535e6824fdd912cc6850f4288a1f1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void FastVoice::set_adsr</definition>
+        <argsstring>(u8 fm)</argsstring>
+        <name>set_adsr</name>
+        <qualifiedname>FastVoice::set_adsr</qualifiedname>
+        <param>
+          <type>u8</type>
+          <declname>fm</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="274" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.cpp" bodystart="272" bodyend="323"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1a9347e8f5d04b1ddf5e9f13280e8c3edd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void FastVoice::trigger_adsr</definition>
+        <argsstring>()</argsstring>
+        <name>trigger_adsr</name>
+        <qualifiedname>FastVoice::trigger_adsr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="277" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.cpp" bodystart="326" bodyend="343"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1af2a9d96ef90da85297dd35c87f10a9ee" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u32</type>
+        <definition>u32 FastVoice::doosc</definition>
+        <argsstring>()</argsstring>
+        <name>doosc</name>
+        <qualifiedname>FastVoice::doosc</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="280" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.cpp" bodystart="346" bodyend="363"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1a0aa6bbd63511642f9334a6b7932311ab" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void FastVoice::applyFilter</definition>
+        <argsstring>()</argsstring>
+        <name>applyFilter</name>
+        <qualifiedname>FastVoice::applyFilter</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="283" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.cpp" bodystart="366" bodyend="424"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1a30103fdd34919feb91e5b3580426d33f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>u16</type>
+        <definition>u16 FastVoice::frequency</definition>
+        <argsstring>()</argsstring>
+        <name>frequency</name>
+        <qualifiedname>FastVoice::frequency</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="290" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="290" bodyend="290"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1a680a0432a98bafa44cfdfd3750698a47" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>u16</type>
+        <definition>u16 FastVoice::pulseWidth</definition>
+        <argsstring>()</argsstring>
+        <name>pulseWidth</name>
+        <qualifiedname>FastVoice::pulseWidth</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="296" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="296" bodyend="296"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1a9cb0581115431cabc0aee183fea76236" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool FastVoice::gateBit</definition>
+        <argsstring>()</argsstring>
+        <name>gateBit</name>
+        <qualifiedname>FastVoice::gateBit</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="304" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="304" bodyend="304"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1aa36f9f5983605035502941fe6881e989" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool FastVoice::syncBit</definition>
+        <argsstring>()</argsstring>
+        <name>syncBit</name>
+        <qualifiedname>FastVoice::syncBit</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="314" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="314" bodyend="314"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1abfa1b93a40ce714b69cc4255a1dc675c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool FastVoice::ringModBit</definition>
+        <argsstring>()</argsstring>
+        <name>ringModBit</name>
+        <qualifiedname>FastVoice::ringModBit</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="321" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="321" bodyend="321"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1a98b85af22f5ba9eb9504c8f4eff9a19d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool FastVoice::testBit</definition>
+        <argsstring>()</argsstring>
+        <name>testBit</name>
+        <qualifiedname>FastVoice::testBit</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="328" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="328" bodyend="328"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1a703d401ad0a73ebb93b4625ae64beae5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 FastVoice::waveform</definition>
+        <argsstring>()</argsstring>
+        <name>waveform</name>
+        <qualifiedname>FastVoice::waveform</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="331" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="331" bodyend="331"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1a0a84c4e1698885aa82dffe2458e704fe" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 FastVoice::attackRate</definition>
+        <argsstring>()</argsstring>
+        <name>attackRate</name>
+        <qualifiedname>FastVoice::attackRate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="338" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="338" bodyend="338"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1a213468f406e04e3d06747497c85af4ce" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 FastVoice::decayRate</definition>
+        <argsstring>()</argsstring>
+        <name>decayRate</name>
+        <qualifiedname>FastVoice::decayRate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="345" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="345" bodyend="345"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1af8d070d900db78a6408e6e99e172eb58" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 FastVoice::sustainRate</definition>
+        <argsstring>()</argsstring>
+        <name>sustainRate</name>
+        <qualifiedname>FastVoice::sustainRate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="356" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="356" bodyend="356"/>
+      </memberdef>
+      <memberdef kind="function" id="class_fast_voice_1a584682cf93c36040f717f37e4a49d644" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 FastVoice::releaseRate</definition>
+        <argsstring>()</argsstring>
+        <name>releaseRate</name>
+        <qualifiedname>FastVoice::releaseRate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="364" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="364" bodyend="364"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="class_fast_voice_1ae968ddbda6a8f488ba357a7931cbb940" prot="private" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * FastVoice::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>FastVoice::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="188" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="188" bodyend="188"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" line="69" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h" bodystart="69" bodyend="365"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_core_component_1aa7dd5e7a2020ad2348fea3edd724f538" prot="public" virt="virtual"><scope>FastVoice</scope><name>_initialize</name></member>
+      <member refid="classvc64_1_1_core_component_1ab4d7e4961fa32234f400d835c3b5f038" prot="public" virt="virtual"><scope>FastVoice</scope><name>_reset</name></member>
+      <member refid="class_fast_voice_1a2bc58f31a274fa6d274dcbbf21e1105a" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>adsr</name></member>
+      <member refid="class_fast_voice_1aabe49a9891d2683b6a02d37a3253e36c" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>adsrCmp</name></member>
+      <member refid="class_fast_voice_1abf4783dd7db444669ad905a419f8845f" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>adsrInc</name></member>
+      <member refid="class_fast_voice_1a6998e5236440fb9242222b8b8fab31ae" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>adsrm</name></member>
+      <member refid="class_fast_voice_1a0aa6bbd63511642f9334a6b7932311ab" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>applyFilter</name></member>
+      <member refid="classvc64_1_1_configurable_1a947ce65dab57ea328e9959014b7f9dfb" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>argList</name></member>
+      <member refid="class_fast_voice_1a0a84c4e1698885aa82dffe2458e704fe" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>attackRate</name></member>
+      <member refid="classvc64_1_1_sub_component_1a7691c720c74fd0e19a63978efe4cd851" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>c64</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae066edf64de901ee3f3b65eb0c02b202" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>cia1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9fe5ed30db982340524f7dcbf6fbf34c" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>cia2</name></member>
+      <member refid="classvc64_1_1_core_component_1a18f454d0d572fa1b2e5023c4eaba6d07" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>CoreComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1acaece01018438ab083bd38a220d34f10" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>cpu</name></member>
+      <member refid="classvc64_1_1_sub_component_1a157963272dd927ec5c77b4090be57e89" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>datasette</name></member>
+      <member refid="class_fast_voice_1a213468f406e04e3d06747497c85af4ce" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>decayRate</name></member>
+      <member refid="class_fast_voice_1af2a9d96ef90da85297dd35c87f10a9ee" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>doosc</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae85ede3d9ed8315d992eed300932eaf7" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>drive</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae44705f9377cf06d91323d8dca13a8a8" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>drive8</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5d876614a31fb29b8317350ed6a3158b" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>drive9</name></member>
+      <member refid="classvc64_1_1_configurable_1a459505cd1eed2c174bf78b29808ad07b" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>dumpConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1a606e5261773126791e44ee8238f5876e" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>emulator</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5dc793ff2aa4ff3b36fdd061fd3f816b" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>expansionport</name></member>
+      <member refid="class_fast_voice_1ae08d7614b6a36f7bfcb10f62bf087fcc" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>FastSID</name></member>
+      <member refid="class_fast_voice_1a294a3b923ec7b4d9b418d4b130d29129" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>fastsid</name></member>
+      <member refid="class_fast_voice_1afa4452486b22eecea5ab0e06c43276e8" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>filterDy</name></member>
+      <member refid="class_fast_voice_1a2e46945088bafef8cfc7dadbc82d0309" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>filterIO</name></member>
+      <member refid="class_fast_voice_1ac22b9eb08e06091caec1d2a0f9855890" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>filterLow</name></member>
+      <member refid="class_fast_voice_1aaff97362177330d9b78e9436e89d44eb" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>filterRef</name></member>
+      <member refid="class_fast_voice_1a6046047921d82a578a10963ae72ecb6e" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>filterResDy</name></member>
+      <member refid="class_fast_voice_1a8b360c56f41e7eead6dcdd5d1af7dc83" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>filterType</name></member>
+      <member refid="class_fast_voice_1a30103fdd34919feb91e5b3580426d33f" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>frequency</name></member>
+      <member refid="class_fast_voice_1a9cb0581115431cabc0aee183fea76236" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>gateBit</name></member>
+      <member refid="class_fast_voice_1ae968ddbda6a8f488ba357a7931cbb940" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_configurable_1ae5d8ab4ec08470113b7123cd2ffdf4af" prot="public" virt="virtual"><scope>FastVoice</scope><name>getOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a80a7c09f7f0d153cb87000c9d82f" prot="public" virt="virtual"><scope>FastVoice</scope><name>getOptions</name></member>
+      <member refid="class_fast_voice_1a73ee342a2210df3a09855f3f74fbad0b" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>getVoiceInfo</name></member>
+      <member refid="classvc64_1_1_core_component_1a936940e4e5cf0c617935ea3070bcbd4d" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>halt</name></member>
+      <member refid="classvc64_1_1_sub_component_1add6521bbcffbe5ca85afd6105d54e5ad" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>host</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5c8620301453e0b91374683d0c7b28ab" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>iec</name></member>
+      <member refid="class_fast_voice_1a0a38ed67020a232a8f84cb3401f24453" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>info</name></member>
+      <member refid="class_fast_voice_1a3e6d1f6fccf928b4955c5114d7317861" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>init</name></member>
+      <member refid="classvc64_1_1_core_component_1a250f9ac5bbc00892bf195ec2ef523a2b" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>initialize</name></member>
+      <member refid="class_fast_voice_1ae663cd96024cad149d85bdf7dc462373" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>initWaveTables</name></member>
+      <member refid="classvc64_1_1_core_component_1a7b95994acc6e7ba59d4b2f50f2dc8df5" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>isEmulatorThread</name></member>
+      <member refid="classvc64_1_1_core_component_1a0e8c3dd97f64e2487fba4c22ba66d487" prot="public" virt="virtual"><scope>FastVoice</scope><name>isHalted</name></member>
+      <member refid="classvc64_1_1_core_component_1a4f0f63ef65776aceecb329d03c3b5f17" prot="public" virt="virtual"><scope>FastVoice</scope><name>isPaused</name></member>
+      <member refid="classvc64_1_1_core_component_1ac4dadc5fecfac3cd2dfb7e8b70767b42" prot="public" virt="virtual"><scope>FastVoice</scope><name>isPoweredOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a0f9912b36ec181a0410d4f564baef127" prot="public" virt="virtual"><scope>FastVoice</scope><name>isPoweredOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a77bf78d982163a6797f24d23106c5098" prot="public" virt="virtual"><scope>FastVoice</scope><name>isReady</name></member>
+      <member refid="classvc64_1_1_core_component_1a121143d811f91157272bb67a0ca48d8f" prot="public" virt="virtual"><scope>FastVoice</scope><name>isRunning</name></member>
+      <member refid="classvc64_1_1_core_component_1a490512fe63211f42eb57e7ed59f9b6a1" prot="public" virt="virtual"><scope>FastVoice</scope><name>isSuspended</name></member>
+      <member refid="classvc64_1_1_configurable_1af6260d08823e90bdb51d1bf7bb596c35" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>isValidOption</name></member>
+      <member refid="classvc64_1_1_sub_component_1aa9a0c663f877801b651969f86dbf2aae" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>keyboard</name></member>
+      <member refid="classvc64_1_1_configurable_1a0d6caf30eeaae95d1898d08cf3ca8e28" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>keyList</name></member>
+      <member refid="class_fast_voice_1ac862ad10bde8a335650f8d70f64d7131" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>lsfr</name></member>
+      <member refid="classvc64_1_1_sub_component_1ad160280522e5c27cd731289b9396c44f" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>mem</name></member>
+      <member refid="classvc64_1_1_sub_component_1a478be9b50f9e5c4c07dd2830e9964711" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>msgQueue</name></member>
+      <member refid="classvc64_1_1_synchronizable_1a595f618a9c91e91148882a79760f0f0f" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>mutex</name></member>
+      <member refid="classvc64_1_1_sub_component_1a712af82456373bd6e688a174ac756bcb" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>muxer</name></member>
+      <member refid="class_fast_voice_1a0c63de6de306dd996bb14d6dfcec6d11" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>noiseLSB</name></member>
+      <member refid="class_fast_voice_1a860c49307803faded5434e0e68f9dbaf" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>noiseMID</name></member>
+      <member refid="class_fast_voice_1a013df8e74693c359d04c9270ae4c5265" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>noiseMSB</name></member>
+      <member refid="class_fast_voice_1a829ffd166b717d72c36eb4b47979a02a" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>nr</name></member>
+      <member refid="classvc64_1_1_core_component_1af47e1017ec1d938b1b613b36bdc8be57" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>operator!=</name></member>
+      <member refid="class_fast_voice_1a4f17e74e00ce4c5cb42f122f1a857b55" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>operator&lt;&lt;</name></member>
+      <member refid="class_fast_voice_1a4a18115032b36ca21d212949c0262625" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>operator&lt;&lt;</name></member>
+      <member refid="class_fast_voice_1aa75c4c4047a2bacc60033b2d7b090182" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>operator&lt;&lt;</name></member>
+      <member refid="class_fast_voice_1ac92adca40f659f5e0fe3074d3aa9554d" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>operator&lt;&lt;</name></member>
+      <member refid="class_fast_voice_1a186221bba19128611100f2829353bc98" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>operator&lt;&lt;</name></member>
+      <member refid="class_fast_voice_1ab5f310a034adcdac3852a9a8c669027e" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>operator=</name></member>
+      <member refid="classvc64_1_1_core_component_1aae8879dd8b62291254ec498fa9b2e2cf" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>operator==</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9dfb837b941848b6b87e6a57da28348d" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>parCable</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a9c059588a19eeba521b79ff28e3dd8" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>pause</name></member>
+      <member refid="classvc64_1_1_sub_component_1a8c0718eb9d42f335961eaed51ba7cb8d" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>port1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a217a6ea39994b6ecae4e1ebd9cc220e7" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>port2</name></member>
+      <member refid="classvc64_1_1_core_component_1a05e1ba6d62516f796256f1cc394bf2f5" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>powerOff</name></member>
+      <member refid="classvc64_1_1_core_component_1ad606699d83a017fbee805e8d40245475" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>powerOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a74ab4149c152b98c6d5cc15bbac63887" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>powerOnOff</name></member>
+      <member refid="classvc64_1_1_sub_component_1a4fa2405b078fe61c302ff1c8047d9c4f" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>powerSupply</name></member>
+      <member refid="classvc64_1_1_sub_component_1aba0c66cd1ce8a6d1c3529825afdb4a02" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>prefix</name></member>
+      <member refid="class_fast_voice_1a6284b7a0047e3e997683cbb468efff35" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>prev</name></member>
+      <member refid="class_fast_voice_1a680a0432a98bafa44cfdfd3750698a47" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>pulseWidth</name></member>
+      <member refid="classvc64_1_1_sub_component_1a2e1d97a260e9d4d637b0f8fb95fbf1d8" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>recorder</name></member>
+      <member refid="classvc64_1_1_sub_component_1afe6a4ca2f661ec44fd67637b14647436" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>regressionTester</name></member>
+      <member refid="class_fast_voice_1a584682cf93c36040f717f37e4a49d644" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>releaseRate</name></member>
+      <member refid="classvc64_1_1_core_component_1a3910be506f5067fe6cf31a69dcd76b0c" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>reset</name></member>
+      <member refid="classvc64_1_1_core_component_1a082147809d967c961a7ac7c15c5f072a" prot="public" virt="virtual"><scope>FastVoice</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1aec76d436c865101509bceb2daf47890b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>FastVoice</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1af9ec0fb5e73fd1f0433a4f3bfcd39d9b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>FastVoice</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1aab9305af3e38cc19bd1067ca87fe3e0d" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>resume</name></member>
+      <member refid="classvc64_1_1_sub_component_1ada641e2232ca8bdd3ef8fbecc883658d" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>retroShell</name></member>
+      <member refid="class_fast_voice_1afb08c68bd4f42538aefbeec0ca0b5f05" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>ringmod</name></member>
+      <member refid="class_fast_voice_1abfa1b93a40ce714b69cc4255a1dc675c" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>ringModBit</name></member>
+      <member refid="classvc64_1_1_core_component_1ae7093017e8a84768103c67b24de5c578" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>run</name></member>
+      <member refid="class_fast_voice_1a678c082b42034e895c5cdba86f940434" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>serialize</name></member>
+      <member refid="class_fast_voice_1aea5535e6824fdd912cc6850f4288a1f1" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>set_adsr</name></member>
+      <member refid="class_fast_voice_1aa8df24f557cb69996f28faa0dc268f7b" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>setFilterType</name></member>
+      <member refid="classvc64_1_1_configurable_1ae56ba20ac3ec36bd84dbeb04aba3e8b0" prot="public" virt="virtual"><scope>FastVoice</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a51756d7f1f0ed1caa0e247ab6e789a3b" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a689b1a17fac237ca960b062df637" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>setOption</name></member>
+      <member refid="class_fast_voice_1af2df0837d5b517e42a2b164ff43b397b" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>sidreg</name></member>
+      <member refid="class_fast_voice_1abe08bbc6f6cd8e85f2b592c6a45fcc30" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>step</name></member>
+      <member refid="classvc64_1_1_sub_component_1adce334c26f07e67bc936fbf7c935a759" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1a61d8a843718ff2f39e1575338a527676" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_core_component_1aa8b45810bedbdf78b88710ae8db3f495" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>subComponents</name></member>
+      <member refid="classvc64_1_1_core_component_1afd3f09724b119d73a122c3fc02ac1736" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>suspend</name></member>
+      <member refid="classvc64_1_1_suspendable_1a7f9f608d5b2b9b6e944176cde77b8f85" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>Suspendable</name></member>
+      <member refid="class_fast_voice_1af8d070d900db78a6408e6e99e172eb58" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>sustainRate</name></member>
+      <member refid="class_fast_voice_1aa36f9f5983605035502941fe6881e989" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>syncBit</name></member>
+      <member refid="class_fast_voice_1a98b85af22f5ba9eb9504c8f4eff9a19d" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>testBit</name></member>
+      <member refid="classvc64_1_1_core_component_1a0a4c841e543ecfc6cf988592a933a564" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>trackOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a4832ab0ebef49b591fe6e2785e969c89" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>trackOn</name></member>
+      <member refid="classvc64_1_1_core_component_1aae437c6ccf5f91155464dd4953c3baab" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>trackOnOff</name></member>
+      <member refid="class_fast_voice_1a9347e8f5d04b1ddf5e9f13280e8c3edd" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>trigger_adsr</name></member>
+      <member refid="class_fast_voice_1ab1550309028a20510dff9d10b7b5de63" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>updateInternals</name></member>
+      <member refid="class_fast_voice_1ae91bd4a9ceeb0d6201638b95d6e3b1a7" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>updateWaveTablePtr</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a24c5efde497d14b519ad15c9053949" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9c1a4b73d1514ddc64567d4521abdecd" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>vic</name></member>
+      <member refid="class_fast_voice_1a4d95e60c50fa45c2587e0d29e26a3eae" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>voiceInfo</name></member>
+      <member refid="classvc64_1_1_core_component_1a45399f75688ba5ba157a479c3ce76633" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>warpOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a5df664aeda300338d0568d59673ff536" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>warpOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a6760d32857901c415f4d75031d1e2654" prot="protected" virt="non-virtual"><scope>FastVoice</scope><name>warpOnOff</name></member>
+      <member refid="class_fast_voice_1a703d401ad0a73ebb93b4625ae64beae5" prot="public" virt="non-virtual"><scope>FastVoice</scope><name>waveform</name></member>
+      <member refid="class_fast_voice_1aee6e0147bf895a6fce7b7432851f1f09" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>wavetable</name></member>
+      <member refid="class_fast_voice_1adb933d4c4de4aee3d5b842d0a9b30736" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>wavetable10</name></member>
+      <member refid="class_fast_voice_1a176cfb5288648bc6a898a4ff80c2e505" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>wavetable20</name></member>
+      <member refid="class_fast_voice_1a89af17a2086f8138befbe80fc693dc7c" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>wavetable30</name></member>
+      <member refid="class_fast_voice_1a079f1b5b1ea69109a043a02a18d3ff88" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>wavetable40</name></member>
+      <member refid="class_fast_voice_1ac71f962fc5ef3e86601468e4d2e61ccd" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>wavetable50</name></member>
+      <member refid="class_fast_voice_1a062b4a759099d41f0383c5f666005b6c" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>wavetable60</name></member>
+      <member refid="class_fast_voice_1a3cfcbf423761047ffac78431c7a3b65a" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>wavetable70</name></member>
+      <member refid="class_fast_voice_1a58c0c3567af1530c3edd62af99f59aeb" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>waveTableCounter</name></member>
+      <member refid="class_fast_voice_1a69bb6756c04a194f109c0eae494d331b" prot="private" virt="non-virtual"><scope>FastVoice</scope><name>waveTableOffset</name></member>
+      <member refid="classvc64_1_1_configurable_1a5aa5d945e768c40297f1bf71e200bde3" prot="public" virt="virtual"><scope>FastVoice</scope><name>~Configurable</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>FastVoice</scope><name>~CoreObject</name></member>
+      <member refid="classvc64_1_1_suspendable_1a35809d3a4c20db1f096e8dc5c78c49b9" prot="public" virt="virtual"><scope>FastVoice</scope><name>~Suspendable</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

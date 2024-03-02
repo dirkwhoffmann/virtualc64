@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="dir_f1dd3ab951341472f6f0525fe7f46f05" kind="dir">
+    <compoundname>/Users/hoff/Retro/virtualc64/Emulator/Components</compoundname>
+    <innerdir refid="dir_2fb434ef6d991966eae34475cb5121ae">/Users/hoff/Retro/virtualc64/Emulator/Components/CIA</innerdir>
+    <innerdir refid="dir_423d471fbe5556c8881c630a8e61cb1c">/Users/hoff/Retro/virtualc64/Emulator/Components/CPU</innerdir>
+    <innerdir refid="dir_17019b74b250277bdf46f03e63c6018d">/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard</innerdir>
+    <innerdir refid="dir_3207aec741e2cd8cfc4463c210f840e6">/Users/hoff/Retro/virtualc64/Emulator/Components/Memory</innerdir>
+    <innerdir refid="dir_c6eb1b6be04fd607e5126bbfa479e02a">/Users/hoff/Retro/virtualc64/Emulator/Components/SID</innerdir>
+    <innerdir refid="dir_137a56c33be38fc40bbe4d7690612992">/Users/hoff/Retro/virtualc64/Emulator/Components/VICII</innerdir>
+    <innerfile refid="_c64_8cpp">C64.cpp</innerfile>
+    <innerfile refid="_c64_8h">C64.h</innerfile>
+    <innerfile refid="_c64_types_8h">C64Types.h</innerfile>
+    <innerfile refid="_emulator_8cpp">Emulator.cpp</innerfile>
+    <innerfile refid="_emulator_8h">Emulator.h</innerfile>
+    <innerfile refid="_emulator_types_8h">EmulatorTypes.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/"/>
+  </compounddef>
+</doxygen>

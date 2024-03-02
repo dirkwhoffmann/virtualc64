@@ -2,10 +2,10 @@
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
   <compounddef id="struct_virtual_c64_1_1_c_p_u_a_p_i" kind="struct" language="C++" prot="public">
     <compoundname>VirtualC64::CPUAPI</compoundname>
-    <basecompoundref prot="public" virt="non-virtual">API</basecompoundref>
+    <basecompoundref prot="public" virt="non-virtual">vc64::API</basecompoundref>
     <sectiondef kind="public-attrib">
       <memberdef kind="variable" id="struct_virtual_c64_1_1_c_p_u_a_p_i_1a2b17f0d093665715c0a616744f91afac" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_guard_a_p_i" kindref="compound">GuardAPI</ref></type>
+        <type>GuardAPI</type>
         <definition>GuardAPI VirtualC64::CPUAPI::breakpoints</definition>
         <argsstring></argsstring>
         <name>breakpoints</name>
@@ -16,10 +16,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="260" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="260" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="262" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="262" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_virtual_c64_1_1_c_p_u_a_p_i_1ac41bba79bbbb0ba0253d52aa40db281b" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_guard_a_p_i" kindref="compound">GuardAPI</ref></type>
+        <type>GuardAPI</type>
         <definition>GuardAPI VirtualC64::CPUAPI::watchpoints</definition>
         <argsstring></argsstring>
         <name>watchpoints</name>
@@ -30,7 +30,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="261" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="261" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="263" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="263" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <sectiondef kind="public-func">
@@ -50,7 +50,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="263" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="263" bodyend="266"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="265" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="265" bodyend="268"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_c_p_u_a_p_i_1a76ddbd030c094d481e7c938ac5d0b851" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>CPUInfo</type>
@@ -64,7 +64,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="268" column="17"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="270" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="260" bodyend="264"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_c_p_u_a_p_i_1adf601e07d055109e6246524b9eec486e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>i64</type>
@@ -78,7 +78,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="269" column="13"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="271" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="267" bodyend="271"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_c_p_u_a_p_i_1ad2a546b30e7eb1abdd468ca62a98b72e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>u16</type>
@@ -92,7 +92,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="270" column="13"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="272" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="274" bodyend="278"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_c_p_u_a_p_i_1a09bec275e2e8cf8d6069e38fb05453a3" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>isize</type>
@@ -106,7 +106,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="271" column="15"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="273" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="281" bodyend="285"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_c_p_u_a_p_i_1af1fa51c21342bb219ca75c7ee6f6a2d4" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>u16</type>
@@ -124,7 +124,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="272" column="13"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="274" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="288" bodyend="292"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_c_p_u_a_p_i_1a2e4088189167ad17049fd145a56423e4" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>u16</type>
@@ -142,7 +142,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="273" column="13"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="275" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="295" bodyend="299"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_c_p_u_a_p_i_1aab70354f579c8ffc903e15ee97cccfc5" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>RecordedInstruction</type>
@@ -160,7 +160,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="274" column="29"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="276" column="29" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="302" bodyend="306"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_c_p_u_a_p_i_1a46fe787497cd91c70554e9fbeb283116" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -174,7 +174,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="275" column="14"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="277" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="309" bodyend="313"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_c_p_u_a_p_i_1a191e1a9ba5606fabf15f5dd6844f961b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -196,7 +196,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="276" column="14"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="278" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="316" bodyend="320"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_c_p_u_a_p_i_1a43c1dbc3ba4c84bc67c33c509cb308a5" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>isize</type>
@@ -206,9 +206,11 @@
         <qualifiedname>VirtualC64::CPUAPI::disassembleRecordedInstr</qualifiedname>
         <param>
           <type>isize</type>
+          <defname>i</defname>
         </param>
         <param>
           <type>char *</type>
+          <defname>str</defname>
         </param>
         <briefdescription>
         </briefdescription>
@@ -216,7 +218,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="277" column="15"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="279" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="323" bodyend="327"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_c_p_u_a_p_i_1a2f7cd0938568b901a8ae9fadb5db98d6" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>isize</type>
@@ -226,9 +228,11 @@
         <qualifiedname>VirtualC64::CPUAPI::disassembleRecordedBytes</qualifiedname>
         <param>
           <type>isize</type>
+          <defname>i</defname>
         </param>
         <param>
           <type>char *</type>
+          <defname>str</defname>
         </param>
         <briefdescription>
         </briefdescription>
@@ -236,7 +240,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="278" column="15"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="280" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="330" bodyend="334"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_c_p_u_a_p_i_1a7ad58b2c760ada6a8d06094e0c8a3f81" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -246,9 +250,11 @@
         <qualifiedname>VirtualC64::CPUAPI::disassembleRecordedFlags</qualifiedname>
         <param>
           <type>isize</type>
+          <defname>i</defname>
         </param>
         <param>
           <type>char *</type>
+          <defname>str</defname>
         </param>
         <briefdescription>
         </briefdescription>
@@ -256,7 +262,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="279" column="14"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="281" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="337" bodyend="341"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_c_p_u_a_p_i_1ad148a4539d6ead0e5e6edf863bfe34c9" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -266,9 +272,11 @@
         <qualifiedname>VirtualC64::CPUAPI::disassembleRecordedPC</qualifiedname>
         <param>
           <type>isize</type>
+          <defname>i</defname>
         </param>
         <param>
           <type>char *</type>
+          <defname>str</defname>
         </param>
         <briefdescription>
         </briefdescription>
@@ -276,7 +284,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="280" column="14"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="282" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="344" bodyend="349"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_c_p_u_a_p_i_1a507c3a76cc362b7fffea0bc9cf5e090e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>isize</type>
@@ -286,6 +294,7 @@
         <qualifiedname>VirtualC64::CPUAPI::disassemble</qualifiedname>
         <param>
           <type>char *</type>
+          <defname>str</defname>
         </param>
         <param>
           <type>u16</type>
@@ -297,7 +306,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="281" column="15"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="283" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="352" bodyend="356"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_c_p_u_a_p_i_1aa87897f3ca2c6d2954f07fa90c91fde1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>isize</type>
@@ -315,7 +324,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="282" column="15"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="284" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="359" bodyend="363"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_c_p_u_a_p_i_1a339e01ae676ad25efe39df19e89b380e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -325,6 +334,7 @@
         <qualifiedname>VirtualC64::CPUAPI::dumpBytes</qualifiedname>
         <param>
           <type>char *</type>
+          <defname>str</defname>
         </param>
         <param>
           <type>u16</type>
@@ -340,7 +350,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="283" column="14"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="285" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="366" bodyend="370"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_c_p_u_a_p_i_1ab3dba6904590763f5d3ced138c3757ae" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -350,6 +360,7 @@
         <qualifiedname>VirtualC64::CPUAPI::dumpWord</qualifiedname>
         <param>
           <type>char *</type>
+          <defname>str</defname>
         </param>
         <param>
           <type>u16</type>
@@ -361,67 +372,66 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="284" column="14"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="286" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="373" bodyend="377"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <inheritancegraph>
-      <node id="2">
-        <label>API</label>
-      </node>
-      <node id="1">
-        <label>VirtualC64::CPUAPI</label>
-        <link refid="struct_virtual_c64_1_1_c_p_u_a_p_i"/>
-        <childnode refid="2" relation="public-inheritance">
-        </childnode>
-      </node>
-    </inheritancegraph>
-    <collaborationgraph>
-      <node id="2">
-        <label>API</label>
-      </node>
-      <node id="1">
-        <label>VirtualC64::CPUAPI</label>
-        <link refid="struct_virtual_c64_1_1_c_p_u_a_p_i"/>
-        <childnode refid="2" relation="public-inheritance">
-        </childnode>
-        <childnode refid="3" relation="usage">
-          <edgelabel>breakpoints</edgelabel>
-          <edgelabel>watchpoints</edgelabel>
-        </childnode>
-      </node>
-      <node id="3">
-        <label>VirtualC64::GuardAPI</label>
-        <link refid="struct_virtual_c64_1_1_guard_a_p_i"/>
-        <childnode refid="2" relation="public-inheritance">
-        </childnode>
-      </node>
-    </collaborationgraph>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="256" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="256" bodyend="286"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="258" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="258" bodyend="288"/>
     <listofallmembers>
+      <member refid="classvc64_1_1_a_p_i_1ac69be018cb6509eaa5a618c276c30fe1" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>API</name></member>
       <member refid="struct_virtual_c64_1_1_c_p_u_a_p_i_1a2b17f0d093665715c0a616744f91afac" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>breakpoints</name></member>
+      <member refid="classvc64_1_1_references_1a3fbc169a9900f006d1ad6170b0bd0639" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>c64</name></member>
+      <member refid="classvc64_1_1_references_1afa87c57a43c5b7feb3b8780a4ac1008b" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>cia1</name></member>
+      <member refid="classvc64_1_1_references_1a6c3a729faae4d28880a897789e3ba081" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>cia2</name></member>
       <member refid="struct_virtual_c64_1_1_c_p_u_a_p_i_1a46fe787497cd91c70554e9fbeb283116" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>clearLog</name></member>
       <member refid="struct_virtual_c64_1_1_c_p_u_a_p_i_1adf601e07d055109e6246524b9eec486e" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>clock</name></member>
+      <member refid="classvc64_1_1_references_1a6d4dd5f97953b9c588bd29396dc7e879" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>cpu</name></member>
       <member refid="struct_virtual_c64_1_1_c_p_u_a_p_i_1aad9c2976a24f8f526f4f932216540c6f" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>CPUAPI</name></member>
+      <member refid="classvc64_1_1_references_1a7fd1bd6cae9304cdbaa7e388c80149da" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>datasette</name></member>
       <member refid="struct_virtual_c64_1_1_c_p_u_a_p_i_1a507c3a76cc362b7fffea0bc9cf5e090e" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>disassemble</name></member>
       <member refid="struct_virtual_c64_1_1_c_p_u_a_p_i_1a2f7cd0938568b901a8ae9fadb5db98d6" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>disassembleRecordedBytes</name></member>
       <member refid="struct_virtual_c64_1_1_c_p_u_a_p_i_1a7ad58b2c760ada6a8d06094e0c8a3f81" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>disassembleRecordedFlags</name></member>
       <member refid="struct_virtual_c64_1_1_c_p_u_a_p_i_1a43c1dbc3ba4c84bc67c33c509cb308a5" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>disassembleRecordedInstr</name></member>
       <member refid="struct_virtual_c64_1_1_c_p_u_a_p_i_1ad148a4539d6ead0e5e6edf863bfe34c9" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>disassembleRecordedPC</name></member>
+      <member refid="classvc64_1_1_references_1aa10ebdbd843f4d01d5f3d30592414abb" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>drive</name></member>
+      <member refid="classvc64_1_1_references_1a9fb58675ffdd6371f702e67e933c440c" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>drive8</name></member>
+      <member refid="classvc64_1_1_references_1ad4f53254b1db026d281f98e14a1065ef" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>drive9</name></member>
       <member refid="struct_virtual_c64_1_1_c_p_u_a_p_i_1a339e01ae676ad25efe39df19e89b380e" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>dumpBytes</name></member>
       <member refid="struct_virtual_c64_1_1_c_p_u_a_p_i_1ab3dba6904590763f5d3ced138c3757ae" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>dumpWord</name></member>
+      <member refid="classvc64_1_1_a_p_i_1a82d6586bef7dac77b2ea35fe6728595f" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>emulator</name></member>
+      <member refid="classvc64_1_1_references_1a96a558a1ee0efe17d9087b03edd68d9c" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>expansionport</name></member>
       <member refid="struct_virtual_c64_1_1_c_p_u_a_p_i_1a76ddbd030c094d481e7c938ac5d0b851" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>getInfo</name></member>
       <member refid="struct_virtual_c64_1_1_c_p_u_a_p_i_1aa87897f3ca2c6d2954f07fa90c91fde1" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>getLengthOfInstructionAt</name></member>
       <member refid="struct_virtual_c64_1_1_c_p_u_a_p_i_1ad2a546b30e7eb1abdd468ca62a98b72e" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>getPC0</name></member>
+      <member refid="classvc64_1_1_references_1ae039cd601c96e99965c9e51a7a5d37a2" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>host</name></member>
+      <member refid="classvc64_1_1_references_1a56adc0ba90182bde337fb3510a262136" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>iec</name></member>
+      <member refid="classvc64_1_1_a_p_i_1a815d94d61d7a5ecf7f1dccf21de51ca3" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>isUserThread</name></member>
+      <member refid="classvc64_1_1_references_1a2d7c7bdb02194750f58b4b464f9a4e27" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>keyboard</name></member>
       <member refid="struct_virtual_c64_1_1_c_p_u_a_p_i_1aab70354f579c8ffc903e15ee97cccfc5" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>logEntryAbs</name></member>
       <member refid="struct_virtual_c64_1_1_c_p_u_a_p_i_1a09bec275e2e8cf8d6069e38fb05453a3" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>loggedInstructions</name></member>
       <member refid="struct_virtual_c64_1_1_c_p_u_a_p_i_1a2e4088189167ad17049fd145a56423e4" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>loggedPC0Abs</name></member>
       <member refid="struct_virtual_c64_1_1_c_p_u_a_p_i_1af1fa51c21342bb219ca75c7ee6f6a2d4" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>loggedPC0Rel</name></member>
+      <member refid="classvc64_1_1_references_1abcfca0e0c6484b0b5ef1c235113f4a57" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>mem</name></member>
+      <member refid="classvc64_1_1_references_1a107318ccbff5b11cb77026cd274974f3" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>msgQueue</name></member>
+      <member refid="classvc64_1_1_references_1ad7af8e9288a5ccdd69e1ebe3a017e3f6" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>muxer</name></member>
+      <member refid="classvc64_1_1_references_1a1c3c3487396e208b6495fcdc73936de2" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>oscillator</name></member>
+      <member refid="classvc64_1_1_references_1adfdca8ba1967e6d1de209ce8f6a40816" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>parCable</name></member>
+      <member refid="classvc64_1_1_references_1aab0477bdbf0257957007dc495e49ee0e" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>port1</name></member>
+      <member refid="classvc64_1_1_references_1a054a39fcb2357fc321e56ea4103860ee" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>port2</name></member>
+      <member refid="classvc64_1_1_references_1a3fa1751dc3d018d0813409f0495cdcab" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>recorder</name></member>
+      <member refid="classvc64_1_1_references_1a466a1bc4bfe90a7f29afb596df1c530d" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>References</name></member>
+      <member refid="classvc64_1_1_references_1a0951b2824424d9fda808b88efd9b50e4" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>regressionTester</name></member>
+      <member refid="classvc64_1_1_a_p_i_1abf5b5cc4514382edc5e80528d956ab96" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>resume</name></member>
+      <member refid="classvc64_1_1_references_1a1d81ee2f6b3a1daed8df1142c0e299e3" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>retroShell</name></member>
       <member refid="struct_virtual_c64_1_1_c_p_u_a_p_i_1a191e1a9ba5606fabf15f5dd6844f961b" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>setNumberFormat</name></member>
+      <member refid="classvc64_1_1_a_p_i_1aaf072770fe8db16f4eb6187afd5e56c1" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>suspend</name></member>
+      <member refid="classvc64_1_1_suspendable_1a7f9f608d5b2b9b6e944176cde77b8f85" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>Suspendable</name></member>
+      <member refid="classvc64_1_1_references_1a1f1e51f8cba9a1a920b7113f5105febd" prot="protected" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>vic</name></member>
       <member refid="struct_virtual_c64_1_1_c_p_u_a_p_i_1ac41bba79bbbb0ba0253d52aa40db281b" prot="public" virt="non-virtual"><scope>VirtualC64::CPUAPI</scope><name>watchpoints</name></member>
+      <member refid="classvc64_1_1_suspendable_1a35809d3a4c20db1f096e8dc5c78c49b9" prot="public" virt="virtual"><scope>VirtualC64::CPUAPI</scope><name>~Suspendable</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

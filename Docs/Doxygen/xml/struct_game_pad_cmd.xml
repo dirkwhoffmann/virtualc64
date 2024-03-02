@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="153" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="153" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="151" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="151" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_game_pad_cmd_1a8afba38945eb8e136ef4c30c4c3612f6" prot="public" static="no" mutable="no">
         <type>GamePadAction</type>
@@ -29,14 +29,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="154" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="154" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="152" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="152" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="151" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="152" bodyend="155"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="149" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="150" bodyend="153"/>
     <listofallmembers>
       <member refid="struct_game_pad_cmd_1a8afba38945eb8e136ef4c30c4c3612f6" prot="public" virt="non-virtual"><scope>GamePadCmd</scope><name>action</name></member>
       <member refid="struct_game_pad_cmd_1afc90072804f490345a7fc98ecd173252" prot="public" virt="non-virtual"><scope>GamePadCmd</scope><name>port</name></member>

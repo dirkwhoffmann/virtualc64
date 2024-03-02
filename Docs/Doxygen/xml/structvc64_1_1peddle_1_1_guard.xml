@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="structvc64_1_1peddle_1_1_guard" kind="struct" language="C++" prot="public">
+    <compoundname>vc64::peddle::Guard</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structvc64_1_1peddle_1_1_guard_1afa2253d83cacc238f4bfd9fafb164d5b" prot="public" static="no" mutable="no">
+        <type>u32</type>
+        <definition>u32 vc64::peddle::Guard::addr</definition>
+        <argsstring></argsstring>
+        <name>addr</name>
+        <qualifiedname>vc64::peddle::Guard::addr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="19" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1peddle_1_1_guard_1a3ed8f46c57b8af95b5349a96acefa95b" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::peddle::Guard::enabled</definition>
+        <argsstring></argsstring>
+        <name>enabled</name>
+        <qualifiedname>vc64::peddle::Guard::enabled</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="22" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1peddle_1_1_guard_1abe6cd109792243fe23443be82a3d7e0a" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long vc64::peddle::Guard::hits</definition>
+        <argsstring></argsstring>
+        <name>hits</name>
+        <qualifiedname>vc64::peddle::Guard::hits</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="25" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1peddle_1_1_guard_1a65a6feec76e20c8aac645842abf7afcb" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long vc64::peddle::Guard::skip</definition>
+        <argsstring></argsstring>
+        <name>skip</name>
+        <qualifiedname>vc64::peddle::Guard::skip</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="28" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" bodystart="28" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="structvc64_1_1peddle_1_1_guard_1a642528854330267acb5194c636c2b702" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::peddle::Guard::eval</definition>
+        <argsstring>(u32 addr)</argsstring>
+        <name>eval</name>
+        <qualifiedname>vc64::peddle::Guard::eval</qualifiedname>
+        <param>
+          <type>u32</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="33" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.cpp" bodystart="22" bodyend="30"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" line="16" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h" bodystart="16" bodyend="34"/>
+    <listofallmembers>
+      <member refid="structvc64_1_1peddle_1_1_guard_1afa2253d83cacc238f4bfd9fafb164d5b" prot="public" virt="non-virtual"><scope>vc64::peddle::Guard</scope><name>addr</name></member>
+      <member refid="structvc64_1_1peddle_1_1_guard_1a3ed8f46c57b8af95b5349a96acefa95b" prot="public" virt="non-virtual"><scope>vc64::peddle::Guard</scope><name>enabled</name></member>
+      <member refid="structvc64_1_1peddle_1_1_guard_1a642528854330267acb5194c636c2b702" prot="public" virt="non-virtual"><scope>vc64::peddle::Guard</scope><name>eval</name></member>
+      <member refid="structvc64_1_1peddle_1_1_guard_1abe6cd109792243fe23443be82a3d7e0a" prot="public" virt="non-virtual"><scope>vc64::peddle::Guard</scope><name>hits</name></member>
+      <member refid="structvc64_1_1peddle_1_1_guard_1a65a6feec76e20c8aac645842abf7afcb" prot="public" virt="non-virtual"><scope>vc64::peddle::Guard</scope><name>skip</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

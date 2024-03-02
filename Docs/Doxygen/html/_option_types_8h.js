@@ -77,7 +77,6 @@ var _option_types_8h =
       [ "OPT_AUTOFIRE", "_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8a9aa2995e2060ff2e4a8d851aef4118c8", null ],
       [ "OPT_AUTOFIRE_BURSTS", "_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8a28c9d9fd1dd7b828149fea622a5ee650", null ],
       [ "OPT_AUTOFIRE_BULLETS", "_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8a9b791917de5df9cc9d76ae58b0736271", null ],
-      [ "OPT_AUTOFIRE_DELAY", "_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8ae3fdac31c23133da2c70806b0669e49b", null ],
-      [ "OPT_COUNT", "_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8aa8875f46a327d35c330117e1e8362665", null ]
+      [ "OPT_AUTOFIRE_DELAY", "_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8ae3fdac31c23133da2c70806b0669e49b", null ]
     ] ]
 ];

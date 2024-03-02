@@ -1,0 +1,351 @@
+\doxysection{Muxer.\+h}
+\hypertarget{_muxer_8h_source}{}\label{_muxer_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Muxer.h@{/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Muxer.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}SubComponent.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}SIDTypes.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}Constants.h"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}Volume.h"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}SIDStreams.h"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ "{}SID.h"{}}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ "{}Chrono.h"{}}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{comment}{/*\ Architecture\ of\ the\ audio\ pipeline}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ \ Mux\ class}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ |\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/\ \ vol\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ *\ \ \ SID\ 0\ -\/-\/-\/>|\ Buffer\ |-\/-\/-\/-\/-\/>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ |\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/\ \ \ \ \ \ \ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ |\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/\ \ vol\ \ |\ \ \ \ \ \ \ \ \ \ \ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ \ |}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ *\ \ \ SID\ 1\ -\/-\/-\/>|\ Buffer\ |-\/-\/-\/-\/-\/>|\ \ \ \ \ \ \ \ \ \ -\/>|\ StereoStream\ |-\/-\/-\/-\/-\/>\ Speaker}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ |\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/\ \ \ \ \ \ \ |\ \ \ pan\ \ \ |\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ \ |}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |-\/-\/-\/-\/-\/-\/-\/-\/>|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00037\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ |\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/\ \ vol\ \ |\ \ l\ vol\ \ |\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00038\ \textcolor{comment}{\ *\ \ \ SID\ 2\ -\/-\/-\/>|\ Buffer\ |-\/-\/-\/-\/-\/>|\ \ r\ vol\ \ \ -\/>|\ StereoStream\ |-\/-\/-\/-\/-\/>\ Recorder}}
+\DoxyCodeLine{00039\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ |\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/\ \ \ \ \ \ \ |\ \ \ \ \ \ \ \ \ \ \ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ \ |}}
+\DoxyCodeLine{00040\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00041\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ |\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/\ \ vol\ \ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00042\ \textcolor{comment}{\ *\ \ \ SID\ 3\ -\/-\/-\/>|\ Buffer\ |-\/-\/-\/-\/-\/>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00043\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ |\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00044\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00045\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{keyword}{class\ }Muxer\ final\ :\ \textcolor{keyword}{public}\ SubComponent,\ \textcolor{keyword}{public}\ Inspectable<SIDInfo,\ Void>\ \{}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{friend}\ C64Memory;}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ ConfigOptions\ options\ =\ \{}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8aeb16a666eaeb264a12ff01b176da0df7}{OPT\_SID\_REVISION}},}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8aed65076d638057295f5d61265785c1dd}{OPT\_SID\_POWER\_SAVE}},}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8ab2aa30a09ccdf5853eab8370db849457}{OPT\_SID\_FILTER}},}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8aa38ab2b05fc95c33de88dacbbda10b17}{OPT\_SID\_ENGINE}},}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8a4b3176c1ec01b1f7edaf762c305a60e8}{OPT\_SID\_SAMPLING}},}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8a0d4a63cac4ea650aeb0dad6460eba200}{OPT\_AUD\_VOL\_L}},}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8ab89ab84d669064b5cefd5447442644a9}{OPT\_AUD\_VOL\_R}}}
+\DoxyCodeLine{00060\ \ \ \ \ \};}
+\DoxyCodeLine{00061\ \ \ \ \ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{comment}{//\ Current\ configuration}}
+\DoxyCodeLine{00063\ \ \ \ \ MuxerConfig\ config\ =\ \{\ \};}
+\DoxyCodeLine{00064\ \ \ \ \ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//\ Statistics}}
+\DoxyCodeLine{00066\ \ \ \ \ MuxerStats\ stats\ =\ \{\ \};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{comment}{//\ Sub\ components}}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00074\ \ \ \ \ }
+\DoxyCodeLine{00075\ \ \ \ \ SID\ sid[4]\ =\ \ \{}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ SID(c64,\ 0),}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ SID(c64,\ 1),}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ SID(c64,\ 2),}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ SID(c64,\ 3)}
+\DoxyCodeLine{00081\ \ \ \ \ \};}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00084\ \ \ \ \ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//\ CPU\ cycle\ at\ the\ last\ call\ to\ executeUntil()}}
+\DoxyCodeLine{00086\ \ \ \ \ Cycle\ cycles\ =\ 0;}
+\DoxyCodeLine{00087\ \ \ \ \ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{comment}{//\ Current\ CPU\ frequency}}
+\DoxyCodeLine{00089\ \ \ \ \ u32\ cpuFrequency\ =\ PAL\_CLOCK\_FREQUENCY;}
+\DoxyCodeLine{00090\ \ \ \ \ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{comment}{//\ Sample\ rate\ (44.1\ kHz\ per\ default)}}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{double}\ sampleRate\ =\ 0;}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{comment}{//\ Time\ stamp\ of\ the\ last\ write\ pointer\ alignment}}
+\DoxyCodeLine{00095\ \ \ \ \ util::Time\ lastAlignment;}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \textcolor{keyword}{public}:\ \textcolor{comment}{//\ REMOVE\ ASAP}}
+\DoxyCodeLine{00098\ \ \ \ \ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{comment}{//\ Master\ volumes\ (fadable)}}
+\DoxyCodeLine{00100\ \ \ \ \ Volume\ volL;}
+\DoxyCodeLine{00101\ \ \ \ \ Volume\ volR;}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{comment}{//\ Audio\ streams}}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00109\ \ \ \ \ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{comment}{/*\ The\ four\ SID\ streams.\ Each\ stream\ stores\ the\ sound\ samples\ produced\ by}}
+\DoxyCodeLine{00111\ \textcolor{comment}{\ \ \ \ \ *\ one\ of\ the\ four\ supported\ SIDs.}}
+\DoxyCodeLine{00112\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00113\ \ \ \ \ SampleStream\ sidStream[4];}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{comment}{/*\ The\ mixed\ stereo\ stream.\ This\ stream\ contains\ the\ final\ audio\ stream}}
+\DoxyCodeLine{00116\ \textcolor{comment}{\ \ \ \ \ *\ ready\ to\ be\ handed\ over\ to\ the\ audio\ device\ of\ the\ host\ OS.}}
+\DoxyCodeLine{00117\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00118\ \ \ \ \ StereoStream\ stream;}
+\DoxyCodeLine{00119\ \ \ \ \ }
+\DoxyCodeLine{00120\ \ \ \ \ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{comment}{//\ Methods}}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00124\ \ \ \ \ }
+\DoxyCodeLine{00125\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ Muxer(C64\ \&ref);}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordtype}{void}\ clear();}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Muxer"{}};\ \}}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordtype}{void}\ \_dump(Category\ category,\ std::ostream\&\ os)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{void}\ \_dump(Category\ category,\ std::ostream\&\ os,\ isize\ nr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordtype}{void}\ \_run()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordtype}{void}\ \_pause()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordtype}{void}\ \_warpOn()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keywordtype}{void}\ \_warpOff()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00138\ \ \ \ \ }
+\DoxyCodeLine{00139\ \ \ \ \ Muxer\&\ operator=\ (\textcolor{keyword}{const}\ Muxer\&\ other)\ \{}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ CLONE\_ARRAY(sid)}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ CLONE(cycles)}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ CLONE(cpuFrequency)}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ CLONE(volL)}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ CLONE(volR)}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ CLONE(config)}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00152\ \ \ \ \ \}}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordtype}{void}\ serialize(T\&\ worker)}
+\DoxyCodeLine{00156\ \ \ \ \ \{}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ <<\ sid;}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (isSoftResetter(worker))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ <<\ cycles;}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (isResetter(worker))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ <<\ cpuFrequency}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ <<\ volL}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ <<\ volR}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ <<\ config.revision}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ <<\ config.filter}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ <<\ config.engine}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ <<\ config.sampling}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ <<\ config.volL}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ <<\ config.volR;}
+\DoxyCodeLine{00181\ \ \ \ \ \}}
+\DoxyCodeLine{00182\ \ \ \ \ }
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keywordtype}{void}\ operator\ <<\ (SerResetter\ \&worker)\textcolor{keyword}{\ override\ }\{\ serialize(worker);\ \}}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordtype}{void}\ operator\ <<\ (SerChecker\ \&worker)\textcolor{keyword}{\ override\ }\{\ serialize(worker);\ \}}
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keywordtype}{void}\ operator\ <<\ (SerCounter\ \&worker)\textcolor{keyword}{\ override\ }\{\ serialize(worker);\ \}}
+\DoxyCodeLine{00186\ \ \ \ \ \textcolor{keywordtype}{void}\ operator\ <<\ (SerReader\ \&worker)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordtype}{void}\ operator\ <<\ (SerWriter\ \&worker)\textcolor{keyword}{\ override\ }\{\ serialize(worker);\ \}}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{void}\ \_reset(\textcolor{keywordtype}{bool}\ hard)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{comment}{//\ Configuring}}
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \ \ \ \ \textcolor{keyword}{const}\ MuxerConfig\ \&getConfig()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ config;\ \}}
+\DoxyCodeLine{00197\ \ \ \ \ \textcolor{keyword}{const}\ ConfigOptions\ \&getOptions()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ options;\ \}}
+\DoxyCodeLine{00198\ \ \ \ \ i64\ getOption(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ opt)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keywordtype}{void}\ setOption(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ opt,\ i64\ value)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00203\ \ \ \ \ \textcolor{comment}{//\ Inspecting}}
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00206\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00207\ \ \ \ \ }
+\DoxyCodeLine{00208\ \ \ \ \ SIDInfo\ getInfo(isize\ nr);}
+\DoxyCodeLine{00209\ \ \ \ \ VoiceInfo\ getVoiceInfo(isize\ nr,\ isize\ voice);}
+\DoxyCodeLine{00210\ \ \ \ \ CoreComponent\ \&getSID(isize\ nr);}
+\DoxyCodeLine{00211\ \ \ \ \ MuxerStats\ getStats();}
+\DoxyCodeLine{00212\ \ \ \ \ }
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keywordtype}{bool}\ isEnabled(isize\ nr)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ sid[nr].config.enabled;\ \}}
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keywordtype}{bool}\ isMuted()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00215\ \ \ \ \ u32\ getClockFrequency();}
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keywordtype}{void}\ setClockFrequency(u32\ frequency);}
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keywordtype}{double}\ getSampleRate()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keywordtype}{void}\ setSampleRate(\textcolor{keywordtype}{double}\ rate);}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00221\ \ \ \ \ }
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keywordtype}{void}\ clearStats();}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{comment}{//\ Controlling\ the\ volume}}
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00228\ \ \ \ \ }
+\DoxyCodeLine{00229\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00231\ \ \ \ \ \textcolor{comment}{/*\ Starts\ to\ ramp\ up\ the\ volume.\ This\ function\ configures\ variables\ volume}}
+\DoxyCodeLine{00232\ \textcolor{comment}{\ \ \ \ \ *\ and\ targetVolume\ to\ simulate\ a\ smooth\ audio\ fade\ in.}}
+\DoxyCodeLine{00233\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{keywordtype}{void}\ rampUp();}
+\DoxyCodeLine{00235\ \ \ \ \ \textcolor{keywordtype}{void}\ rampUp(\textcolor{keywordtype}{float}\ from);}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00237\ \ \ \ \ \textcolor{comment}{/*\ Starts\ to\ ramp\ down\ the\ volume.\ This\ function\ configures\ variables}}
+\DoxyCodeLine{00238\ \textcolor{comment}{\ \ \ \ \ *\ volume\ and\ targetVolume\ to\ simulate\ a\ quick\ audio\ fade\ out.}}
+\DoxyCodeLine{00239\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00240\ \ \ \ \ \textcolor{keywordtype}{void}\ rampDown();}
+\DoxyCodeLine{00241\ }
+\DoxyCodeLine{00242\ \ \ \ \ }
+\DoxyCodeLine{00243\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00244\ \ \ \ \ \textcolor{comment}{//\ Managing\ the\ four\ sample\ buffers}}
+\DoxyCodeLine{00245\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00246\ \ \ \ \ }
+\DoxyCodeLine{00247\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00249\ \ \ \ \ \textcolor{comment}{//\ Clears\ the\ SID\ sample\ buffers}}
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keywordtype}{void}\ clearSampleBuffers();}
+\DoxyCodeLine{00251\ \ \ \ \ \textcolor{keywordtype}{void}\ clearSampleBuffer(\textcolor{keywordtype}{long}\ nr);}
+\DoxyCodeLine{00252\ }
+\DoxyCodeLine{00253\ \ \ \ \ }
+\DoxyCodeLine{00254\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00255\ \ \ \ \ \textcolor{comment}{//\ Managing\ the\ ring\ buffer}}
+\DoxyCodeLine{00256\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00257\ \ \ \ \ }
+\DoxyCodeLine{00258\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00259\ }
+\DoxyCodeLine{00260\ \ \ \ \ \textcolor{comment}{//\ Reads\ a\ audio\ sample\ pair\ without\ moving\ the\ read\ pointer}}
+\DoxyCodeLine{00261\ \ \ \ \ \textcolor{keywordtype}{void}\ ringbufferData(isize\ offset,\ \textcolor{keywordtype}{float}\ *left,\ \textcolor{keywordtype}{float}\ *right);}
+\DoxyCodeLine{00262\ }
+\DoxyCodeLine{00263\ \ \ \ \ \textcolor{comment}{/*\ Handles\ a\ buffer\ underflow\ condition.\ A\ buffer\ underflow\ occurs\ when\ the}}
+\DoxyCodeLine{00264\ \textcolor{comment}{\ \ \ \ \ *\ audio\ device\ of\ the\ host\ machine\ needs\ sound\ samples\ than\ SID\ hasn't}}
+\DoxyCodeLine{00265\ \textcolor{comment}{\ \ \ \ \ *\ produced,\ yet.}}
+\DoxyCodeLine{00266\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00267\ \ \ \ \ \textcolor{keywordtype}{void}\ handleBufferUnderflow();}
+\DoxyCodeLine{00268\ \ \ \ \ }
+\DoxyCodeLine{00269\ \ \ \ \ \textcolor{comment}{/*\ Handles\ a\ buffer\ overflow\ condition.\ A\ buffer\ overflow\ occurs\ when\ SID}}
+\DoxyCodeLine{00270\ \textcolor{comment}{\ \ \ \ \ *\ is\ producing\ more\ samples\ than\ the\ audio\ device\ of\ the\ host\ machine\ is}}
+\DoxyCodeLine{00271\ \textcolor{comment}{\ \ \ \ \ *\ able\ to\ consume.}}
+\DoxyCodeLine{00272\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00273\ \ \ \ \ \textcolor{keywordtype}{void}\ handleBufferOverflow();}
+\DoxyCodeLine{00274\ \ \ \ \ }
+\DoxyCodeLine{00275\ \ \ \ \ \textcolor{comment}{//\ Signals\ to\ ignore\ the\ next\ underflow\ or\ overflow\ condition.}}
+\DoxyCodeLine{00276\ \ \ \ \ \textcolor{keywordtype}{void}\ ignoreNextUnderOrOverflow();}
+\DoxyCodeLine{00277\ }
+\DoxyCodeLine{00278\ \ \ \ \ \textcolor{comment}{//\ Prepares\ for\ a\ new\ frame}}
+\DoxyCodeLine{00279\ \ \ \ \ \textcolor{keywordtype}{void}\ beginFrame();}
+\DoxyCodeLine{00280\ }
+\DoxyCodeLine{00281\ \ \ \ \ \textcolor{comment}{/*\ Executes\ SID\ until\ a\ certain\ cycle\ is\ reached.\ The\ function\ returns\ the}}
+\DoxyCodeLine{00282\ \textcolor{comment}{\ \ \ \ \ *\ number\ of\ produced\ sound\ samples\ (not\ yet).}}
+\DoxyCodeLine{00283\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00284\ \ \ \ \ \textcolor{keywordtype}{void}\ executeUntil(Cycle\ targetCycle);}
+\DoxyCodeLine{00285\ }
+\DoxyCodeLine{00286\ \ \ \ \ \textcolor{comment}{//\ Executes\ SID\ for\ a\ certain\ number\ of\ CPU\ cycles}}
+\DoxyCodeLine{00287\ \ \ \ \ isize\ executeCycles(isize\ numCycles);}
+\DoxyCodeLine{00288\ }
+\DoxyCodeLine{00289\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00290\ \ \ \ \ }
+\DoxyCodeLine{00291\ \ \ \ \ \textcolor{comment}{//\ Called\ by\ executeCycles\ to\ produce\ the\ final\ stereo\ stream}}
+\DoxyCodeLine{00292\ \ \ \ \ \textcolor{keywordtype}{void}\ mixSingleSID(isize\ numSamples);}
+\DoxyCodeLine{00293\ \ \ \ \ \textcolor{keywordtype}{void}\ mixMultiSID(isize\ numSamples);}
+\DoxyCodeLine{00294\ }
+\DoxyCodeLine{00295\ \ \ \ \ }
+\DoxyCodeLine{00296\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00297\ \ \ \ \ \textcolor{comment}{//\ Copying\ data\ from\ the\ ring\ buffer}}
+\DoxyCodeLine{00298\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00299\ \ \ \ \ }
+\DoxyCodeLine{00300\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00301\ \ \ \ \ }
+\DoxyCodeLine{00302\ \ \ \ \ \textcolor{keywordtype}{void}\ copyMono(\textcolor{keywordtype}{float}\ *buffer,\ isize\ n);}
+\DoxyCodeLine{00303\ \ \ \ \ \textcolor{keywordtype}{void}\ copyStereo(\textcolor{keywordtype}{float}\ *left,\ \textcolor{keywordtype}{float}\ *right,\ isize\ n);}
+\DoxyCodeLine{00304\ \ \ \ \ \textcolor{keywordtype}{void}\ copyInterleaved(\textcolor{keywordtype}{float}\ *buffer,\ isize\ n);}
+\DoxyCodeLine{00305\ }
+\DoxyCodeLine{00306\ \ \ \ \ }
+\DoxyCodeLine{00307\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00308\ \ \ \ \ \textcolor{comment}{//\ Accessig\ memory}}
+\DoxyCodeLine{00309\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00310\ \ \ \ \ }
+\DoxyCodeLine{00311\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00312\ \ \ \ \ }
+\DoxyCodeLine{00313\ \ \ \ \ \textcolor{comment}{//\ Translates\ a\ memory\ address\ to\ the\ mapped\ SID}}
+\DoxyCodeLine{00314\ \ \ \ \ isize\ mappedSID(u16\ addr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00315\ \ \ \ \ }
+\DoxyCodeLine{00316\ \ \ \ \ \textcolor{comment}{//\ Special\ peek\ function\ for\ the\ I/O\ memory\ range}}
+\DoxyCodeLine{00317\ \ \ \ \ u8\ peek(u16\ addr);}
+\DoxyCodeLine{00318\ }
+\DoxyCodeLine{00319\ \ \ \ \ \textcolor{comment}{//\ Same\ as\ peek\ without\ side\ effects}}
+\DoxyCodeLine{00320\ \ \ \ \ u8\ spypeek(u16\ addr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00321\ \ \ \ \ }
+\DoxyCodeLine{00322\ \ \ \ \ \textcolor{comment}{//\ Reads\ the\ pot\ bits\ that\ show\ up\ in\ register\ 0x19\ and\ 0x1A}}
+\DoxyCodeLine{00323\ \ \ \ \ u8\ readPotX()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00324\ \ \ \ \ u8\ readPotY()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00325\ \ \ \ \ }
+\DoxyCodeLine{00326\ \ \ \ \ \textcolor{comment}{//\ Special\ poke\ function\ for\ the\ I/O\ memory\ range}}
+\DoxyCodeLine{00327\ \ \ \ \ \textcolor{keywordtype}{void}\ poke(u16\ addr,\ u8\ value);}
+\DoxyCodeLine{00328\ }
+\DoxyCodeLine{00329\ }
+\DoxyCodeLine{00330\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00331\ \ \ \ \ \textcolor{comment}{//\ Visualizing\ the\ waveform}}
+\DoxyCodeLine{00332\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00333\ }
+\DoxyCodeLine{00334\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00335\ }
+\DoxyCodeLine{00336\ \ \ \ \ \textcolor{comment}{/*\ Plots\ a\ graphical\ representation\ of\ the\ waveform.\ Returns\ the\ highest}}
+\DoxyCodeLine{00337\ \textcolor{comment}{\ \ \ \ \ *\ amplitute\ that\ was\ found\ in\ the\ ringbuffer.\ To\ implement\ auto-\/scaling,}}
+\DoxyCodeLine{00338\ \textcolor{comment}{\ \ \ \ \ *\ pass\ the\ returned\ value\ as\ parameter\ maxAmp\ in\ the\ next\ call\ to\ this}}
+\DoxyCodeLine{00339\ \textcolor{comment}{\ \ \ \ \ *\ function.}}
+\DoxyCodeLine{00340\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00341\ \ \ \ \ \textcolor{keywordtype}{float}\ draw(u32\ *buffer,\ isize\ width,\ isize\ height,}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ maxAmp,\ u32\ color,\ isize\ sid\ =\ -\/1)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00343\ \};}
+\DoxyCodeLine{00344\ }
+\DoxyCodeLine{00345\ \}}
+
+\end{DoxyCode}

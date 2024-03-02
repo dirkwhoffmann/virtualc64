@@ -1,0 +1,765 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_flash_rom" kind="class" language="C++" prot="public" final="yes">
+    <compoundname>vc64::FlashRom</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">vc64::SubComponent</basecompoundref>
+    <basecompoundref prot="public" virt="non-virtual">vc64::Dumpable</basecompoundref>
+    <sectiondef kind="private-static-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_flash_rom_1aa9e349f0fd5e2aba5d4895a16198f291" prot="private" static="yes" mutable="no">
+        <type>const isize</type>
+        <definition>const isize vc64::FlashRom::numSectors</definition>
+        <argsstring></argsstring>
+        <name>numSectors</name>
+        <qualifiedname>vc64::FlashRom::numSectors</qualifiedname>
+        <initializer>= 8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="30" column="24" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_flash_rom_1aa80b3e467c921ca7fcf9bb45919349eb" prot="private" static="yes" mutable="no">
+        <type>const isize</type>
+        <definition>const isize vc64::FlashRom::sectorSize</definition>
+        <argsstring></argsstring>
+        <name>sectorSize</name>
+        <qualifiedname>vc64::FlashRom::sectorSize</qualifiedname>
+        <initializer>= 0x10000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="33" column="24" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_flash_rom_1a5eb87611214c66c8aeeeceefd78194e6" prot="private" static="yes" mutable="no">
+        <type>const isize</type>
+        <definition>const isize vc64::FlashRom::romSize</definition>
+        <argsstring></argsstring>
+        <name>romSize</name>
+        <qualifiedname>vc64::FlashRom::romSize</qualifiedname>
+        <initializer>= 0x80000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="36" column="24" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_flash_rom_1ab0b18433418ed9f41bcf966715f855f7" prot="private" static="no" mutable="no">
+        <type>FlashState</type>
+        <definition>FlashState vc64::FlashRom::state</definition>
+        <argsstring></argsstring>
+        <name>state</name>
+        <qualifiedname>vc64::FlashRom::state</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="39" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_flash_rom_1a311a5f5d2a1755d5836228a90b1cc984" prot="private" static="no" mutable="no">
+        <type>FlashState</type>
+        <definition>FlashState vc64::FlashRom::baseState</definition>
+        <argsstring></argsstring>
+        <name>baseState</name>
+        <qualifiedname>vc64::FlashRom::baseState</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="42" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_flash_rom_1addf64a6d1b98ff118c558f0532c37fa0" prot="private" static="no" mutable="no">
+        <type>u8 *</type>
+        <definition>u8* vc64::FlashRom::rom</definition>
+        <argsstring></argsstring>
+        <name>rom</name>
+        <qualifiedname>vc64::FlashRom::rom</qualifiedname>
+        <initializer>= nullptr</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="45" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1a62cdc668079b9ae77827588856b4aa9a" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>static bool vc64::FlashRom::isBankNumber</definition>
+        <argsstring>(isize bank)</argsstring>
+        <name>isBankNumber</name>
+        <qualifiedname>vc64::FlashRom::isBankNumber</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>bank</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="55" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" bodystart="55" bodyend="55"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1a2b6651d718cf9ad44c0c44b1bb214efd" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::FlashRom::getStateAsString</definition>
+        <argsstring>(FlashState state)</argsstring>
+        <name>getStateAsString</name>
+        <qualifiedname>vc64::FlashRom::getStateAsString</qualifiedname>
+        <param>
+          <type>FlashState</type>
+          <declname>state</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="58" column="23" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.cpp" bodystart="20" bodyend="41"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1a7b974b205b08494677714b5b58b46006" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::FlashRom::FlashRom</definition>
+        <argsstring>(C64 &amp;ref)</argsstring>
+        <name>FlashRom</name>
+        <qualifiedname>vc64::FlashRom::FlashRom</qualifiedname>
+        <param>
+          <type>C64 &amp;</type>
+          <declname>ref</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="67" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.cpp" bodystart="43" bodyend="50"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1abea73980dfa0ffe723e7c9c74afe52e1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::FlashRom::~FlashRom</definition>
+        <argsstring>()</argsstring>
+        <name>~FlashRom</name>
+        <qualifiedname>vc64::FlashRom::~FlashRom</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="68" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.cpp" bodystart="52" bodyend="55"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1a9746e91e62eade2ba2382b554fa60efe" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>FlashRom &amp;</type>
+        <definition>FlashRom &amp; vc64::FlashRom::operator=</definition>
+        <argsstring>(const FlashRom &amp;other)</argsstring>
+        <name>operator=</name>
+        <qualifiedname>vc64::FlashRom::operator=</qualifiedname>
+        <param>
+          <type>const FlashRom &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="87" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" bodystart="87" bodyend="93"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1a0125e858dba29efa26c30b2ab838b7b3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>class T</type>
+          </param>
+        </templateparamlist>
+        <type>void</type>
+        <definition>void vc64::FlashRom::serialize</definition>
+        <argsstring>(T &amp;worker)</argsstring>
+        <name>serialize</name>
+        <qualifiedname>vc64::FlashRom::serialize</qualifiedname>
+        <param>
+          <type>T &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="96" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" bodystart="96" bodyend="104"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1a92e5018daf4eb9acdb2b983507e35af3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FlashRom::operator&lt;&lt;</definition>
+        <argsstring>(SerResetter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::FlashRom::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerResetter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="106" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" bodystart="106" bodyend="106"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1ae80f73ba58014488e985c5b97898d770" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FlashRom::operator&lt;&lt;</definition>
+        <argsstring>(SerChecker &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::FlashRom::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerChecker &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="107" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" bodystart="107" bodyend="107"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1a560faf68ababe70e61a1d0a4c9bbdb97" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FlashRom::operator&lt;&lt;</definition>
+        <argsstring>(SerCounter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::FlashRom::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerCounter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="108" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.cpp" bodystart="88" bodyend="92"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1aebd114647122406971cd786df91e7a8f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FlashRom::operator&lt;&lt;</definition>
+        <argsstring>(SerReader &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::FlashRom::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerReader &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="109" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.cpp" bodystart="95" bodyend="99"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1ab5a83934f72d67531dc2fe4208c712e1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FlashRom::operator&lt;&lt;</definition>
+        <argsstring>(SerWriter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::FlashRom::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerWriter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="110" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.cpp" bodystart="102" bodyend="106"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1a2676e1bab52c555c915118e3acaed9e6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FlashRom::_reset</definition>
+        <argsstring>(bool hard) override</argsstring>
+        <name>_reset</name>
+        <qualifiedname>vc64::FlashRom::_reset</qualifiedname>
+        <param>
+          <type>bool</type>
+          <declname>hard</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="112" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.cpp" bodystart="65" bodyend="69"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1ae77cc644a7289288fff76e9872f3f5bc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FlashRom::loadBank</definition>
+        <argsstring>(isize bank, u8 *data)</argsstring>
+        <name>loadBank</name>
+        <qualifiedname>vc64::FlashRom::loadBank</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>bank</declname>
+        </param>
+        <param>
+          <type>u8 *</type>
+          <declname>data</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="124" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.cpp" bodystart="58" bodyend="62"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1ac21c610a0fbf715aec0509a216ad1726" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::FlashRom::peek</definition>
+        <argsstring>(u32 addr)</argsstring>
+        <name>peek</name>
+        <qualifiedname>vc64::FlashRom::peek</qualifiedname>
+        <param>
+          <type>u32</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="133" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.cpp" bodystart="109" bodyend="112"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1a5ccfe2fa89635fc17bfc1334018586dd" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::FlashRom::peek</definition>
+        <argsstring>(isize bank, u16 addr)</argsstring>
+        <name>peek</name>
+        <qualifiedname>vc64::FlashRom::peek</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>bank</declname>
+        </param>
+        <param>
+          <type>u16</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="134" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" bodystart="134" bodyend="135"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1abef4516582f355f3665fa6d53d79ed79" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::FlashRom::spypeek</definition>
+        <argsstring>(u32 addr) const</argsstring>
+        <name>spypeek</name>
+        <qualifiedname>vc64::FlashRom::spypeek</qualifiedname>
+        <param>
+          <type>u32</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="137" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.cpp" bodystart="115" bodyend="176"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1aade19b754e940b684d0b03fcf059139d" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::FlashRom::spypeek</definition>
+        <argsstring>(isize bank, u16 addr) const</argsstring>
+        <name>spypeek</name>
+        <qualifiedname>vc64::FlashRom::spypeek</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>bank</declname>
+        </param>
+        <param>
+          <type>u16</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="138" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" bodystart="138" bodyend="139"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1a1902aee40bbb2350d1b4252781737164" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FlashRom::poke</definition>
+        <argsstring>(u32 addr, u8 value)</argsstring>
+        <name>poke</name>
+        <qualifiedname>vc64::FlashRom::poke</qualifiedname>
+        <param>
+          <type>u32</type>
+          <declname>addr</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="141" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.cpp" bodystart="179" bodyend="311"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1affaa4068e8d94effb0242dbf5ca2d058" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FlashRom::poke</definition>
+        <argsstring>(isize bank, u16 addr, u8 value)</argsstring>
+        <name>poke</name>
+        <qualifiedname>vc64::FlashRom::poke</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>bank</declname>
+        </param>
+        <param>
+          <type>u16</type>
+          <declname>addr</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="142" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" bodystart="142" bodyend="143"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1a33583d68e22086bce65e54785666dd90" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::FlashRom::firstCommandAddr</definition>
+        <argsstring>(u32 addr)</argsstring>
+        <name>firstCommandAddr</name>
+        <qualifiedname>vc64::FlashRom::firstCommandAddr</qualifiedname>
+        <param>
+          <type>u32</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="151" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" bodystart="151" bodyend="151"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1a7313076432d6aad56fda865c9291904e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::FlashRom::secondCommandAddr</definition>
+        <argsstring>(u32 addr)</argsstring>
+        <name>secondCommandAddr</name>
+        <qualifiedname>vc64::FlashRom::secondCommandAddr</qualifiedname>
+        <param>
+          <type>u32</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="154" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" bodystart="154" bodyend="154"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1a01bfe6170305a518b2c98b3c005fc576" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::FlashRom::doByteProgram</definition>
+        <argsstring>(u32 addr, u8 value)</argsstring>
+        <name>doByteProgram</name>
+        <qualifiedname>vc64::FlashRom::doByteProgram</qualifiedname>
+        <param>
+          <type>u32</type>
+          <declname>addr</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="157" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.cpp" bodystart="314" bodyend="320"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1a1c7df8325e76eac8c1bbfb6a4dc9d312" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::FlashRom::doByteProgram</definition>
+        <argsstring>(isize bank, u16 addr, u8 value)</argsstring>
+        <name>doByteProgram</name>
+        <qualifiedname>vc64::FlashRom::doByteProgram</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>bank</declname>
+        </param>
+        <param>
+          <type>u16</type>
+          <declname>addr</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="160" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" bodystart="160" bodyend="161"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1a7338d74a8615cb233dbf4f74821e012a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FlashRom::doSectorErase</definition>
+        <argsstring>(u32 addr)</argsstring>
+        <name>doSectorErase</name>
+        <qualifiedname>vc64::FlashRom::doSectorErase</qualifiedname>
+        <param>
+          <type>u32</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="164" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.cpp" bodystart="330" bodyend="336"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1a481312fd0278e394a6be979832393178" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FlashRom::doSectorErase</definition>
+        <argsstring>(isize bank, u16 addr)</argsstring>
+        <name>doSectorErase</name>
+        <qualifiedname>vc64::FlashRom::doSectorErase</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>bank</declname>
+        </param>
+        <param>
+          <type>u16</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="167" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" bodystart="167" bodyend="168"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1a0efd225169c193f8c0bbe0fabc102725" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FlashRom::doChipErase</definition>
+        <argsstring>()</argsstring>
+        <name>doChipErase</name>
+        <qualifiedname>vc64::FlashRom::doChipErase</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="171" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.cpp" bodystart="323" bodyend="327"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1a322b389ccdda8539369baf66a9ea2e1d" prot="private" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::FlashRom::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::FlashRom::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="77" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" bodystart="77" bodyend="77"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_flash_rom_1a720f0567a530a7de3b83d017864b9434" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FlashRom::_dump</definition>
+        <argsstring>(Category category, std::ostream &amp;os) const override</argsstring>
+        <name>_dump</name>
+        <qualifiedname>vc64::FlashRom::_dump</qualifiedname>
+        <param>
+          <type>Category</type>
+          <declname>category</declname>
+        </param>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="78" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.cpp" bodystart="72" bodyend="85"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" line="27" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h" bodystart="27" bodyend="172"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_flash_rom_1a720f0567a530a7de3b83d017864b9434" prot="private" virt="non-virtual"><scope>vc64::FlashRom</scope><name>_dump</name></member>
+      <member refid="classvc64_1_1_core_component_1aa7dd5e7a2020ad2348fea3edd724f538" prot="public" virt="virtual"><scope>vc64::FlashRom</scope><name>_initialize</name></member>
+      <member refid="classvc64_1_1_flash_rom_1a2676e1bab52c555c915118e3acaed9e6" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>_reset</name></member>
+      <member refid="classvc64_1_1_configurable_1a947ce65dab57ea328e9959014b7f9dfb" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>argList</name></member>
+      <member refid="classvc64_1_1_flash_rom_1a311a5f5d2a1755d5836228a90b1cc984" prot="private" virt="non-virtual"><scope>vc64::FlashRom</scope><name>baseState</name></member>
+      <member refid="classvc64_1_1_sub_component_1a7691c720c74fd0e19a63978efe4cd851" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>c64</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae066edf64de901ee3f3b65eb0c02b202" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>cia1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9fe5ed30db982340524f7dcbf6fbf34c" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>cia2</name></member>
+      <member refid="classvc64_1_1_core_component_1a18f454d0d572fa1b2e5023c4eaba6d07" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>CoreComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1acaece01018438ab083bd38a220d34f10" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>cpu</name></member>
+      <member refid="classvc64_1_1_sub_component_1a157963272dd927ec5c77b4090be57e89" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>datasette</name></member>
+      <member refid="classvc64_1_1_flash_rom_1a01bfe6170305a518b2c98b3c005fc576" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>doByteProgram</name></member>
+      <member refid="classvc64_1_1_flash_rom_1a1c7df8325e76eac8c1bbfb6a4dc9d312" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>doByteProgram</name></member>
+      <member refid="classvc64_1_1_flash_rom_1a0efd225169c193f8c0bbe0fabc102725" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>doChipErase</name></member>
+      <member refid="classvc64_1_1_flash_rom_1a7338d74a8615cb233dbf4f74821e012a" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>doSectorErase</name></member>
+      <member refid="classvc64_1_1_flash_rom_1a481312fd0278e394a6be979832393178" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>doSectorErase</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae85ede3d9ed8315d992eed300932eaf7" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>drive</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae44705f9377cf06d91323d8dca13a8a8" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>drive8</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5d876614a31fb29b8317350ed6a3158b" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>drive9</name></member>
+      <member refid="classvc64_1_1_dumpable_1a28d8b76288598fc0309bd6247e5479db" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_dumpable_1afc31b73f9b651bba5cf37dc88158755a" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_configurable_1a459505cd1eed2c174bf78b29808ad07b" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>dumpConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1a606e5261773126791e44ee8238f5876e" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>emulator</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5dc793ff2aa4ff3b36fdd061fd3f816b" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>expansionport</name></member>
+      <member refid="classvc64_1_1_flash_rom_1a33583d68e22086bce65e54785666dd90" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>firstCommandAddr</name></member>
+      <member refid="classvc64_1_1_flash_rom_1a7b974b205b08494677714b5b58b46006" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>FlashRom</name></member>
+      <member refid="classvc64_1_1_flash_rom_1a322b389ccdda8539369baf66a9ea2e1d" prot="private" virt="non-virtual"><scope>vc64::FlashRom</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_configurable_1ae5d8ab4ec08470113b7123cd2ffdf4af" prot="public" virt="virtual"><scope>vc64::FlashRom</scope><name>getOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a80a7c09f7f0d153cb87000c9d82f" prot="public" virt="virtual"><scope>vc64::FlashRom</scope><name>getOptions</name></member>
+      <member refid="classvc64_1_1_flash_rom_1a2b6651d718cf9ad44c0c44b1bb214efd" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>getStateAsString</name></member>
+      <member refid="classvc64_1_1_core_component_1a936940e4e5cf0c617935ea3070bcbd4d" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>halt</name></member>
+      <member refid="classvc64_1_1_sub_component_1add6521bbcffbe5ca85afd6105d54e5ad" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>host</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5c8620301453e0b91374683d0c7b28ab" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>iec</name></member>
+      <member refid="classvc64_1_1_core_component_1a250f9ac5bbc00892bf195ec2ef523a2b" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>initialize</name></member>
+      <member refid="classvc64_1_1_flash_rom_1a62cdc668079b9ae77827588856b4aa9a" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>isBankNumber</name></member>
+      <member refid="classvc64_1_1_core_component_1a7b95994acc6e7ba59d4b2f50f2dc8df5" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>isEmulatorThread</name></member>
+      <member refid="classvc64_1_1_core_component_1a0e8c3dd97f64e2487fba4c22ba66d487" prot="public" virt="virtual"><scope>vc64::FlashRom</scope><name>isHalted</name></member>
+      <member refid="classvc64_1_1_core_component_1a4f0f63ef65776aceecb329d03c3b5f17" prot="public" virt="virtual"><scope>vc64::FlashRom</scope><name>isPaused</name></member>
+      <member refid="classvc64_1_1_core_component_1ac4dadc5fecfac3cd2dfb7e8b70767b42" prot="public" virt="virtual"><scope>vc64::FlashRom</scope><name>isPoweredOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a0f9912b36ec181a0410d4f564baef127" prot="public" virt="virtual"><scope>vc64::FlashRom</scope><name>isPoweredOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a77bf78d982163a6797f24d23106c5098" prot="public" virt="virtual"><scope>vc64::FlashRom</scope><name>isReady</name></member>
+      <member refid="classvc64_1_1_core_component_1a121143d811f91157272bb67a0ca48d8f" prot="public" virt="virtual"><scope>vc64::FlashRom</scope><name>isRunning</name></member>
+      <member refid="classvc64_1_1_core_component_1a490512fe63211f42eb57e7ed59f9b6a1" prot="public" virt="virtual"><scope>vc64::FlashRom</scope><name>isSuspended</name></member>
+      <member refid="classvc64_1_1_configurable_1af6260d08823e90bdb51d1bf7bb596c35" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>isValidOption</name></member>
+      <member refid="classvc64_1_1_sub_component_1aa9a0c663f877801b651969f86dbf2aae" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>keyboard</name></member>
+      <member refid="classvc64_1_1_configurable_1a0d6caf30eeaae95d1898d08cf3ca8e28" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>keyList</name></member>
+      <member refid="classvc64_1_1_flash_rom_1ae77cc644a7289288fff76e9872f3f5bc" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>loadBank</name></member>
+      <member refid="classvc64_1_1_sub_component_1ad160280522e5c27cd731289b9396c44f" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>mem</name></member>
+      <member refid="classvc64_1_1_sub_component_1a478be9b50f9e5c4c07dd2830e9964711" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>msgQueue</name></member>
+      <member refid="classvc64_1_1_synchronizable_1a595f618a9c91e91148882a79760f0f0f" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>mutex</name></member>
+      <member refid="classvc64_1_1_sub_component_1a712af82456373bd6e688a174ac756bcb" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>muxer</name></member>
+      <member refid="classvc64_1_1_flash_rom_1aa9e349f0fd5e2aba5d4895a16198f291" prot="private" virt="non-virtual"><scope>vc64::FlashRom</scope><name>numSectors</name></member>
+      <member refid="classvc64_1_1_core_component_1af47e1017ec1d938b1b613b36bdc8be57" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>operator!=</name></member>
+      <member refid="classvc64_1_1_flash_rom_1a92e5018daf4eb9acdb2b983507e35af3" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_flash_rom_1ae80f73ba58014488e985c5b97898d770" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_flash_rom_1a560faf68ababe70e61a1d0a4c9bbdb97" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_flash_rom_1aebd114647122406971cd786df91e7a8f" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_flash_rom_1ab5a83934f72d67531dc2fe4208c712e1" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_flash_rom_1a9746e91e62eade2ba2382b554fa60efe" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>operator=</name></member>
+      <member refid="classvc64_1_1_core_component_1aae8879dd8b62291254ec498fa9b2e2cf" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>operator==</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9dfb837b941848b6b87e6a57da28348d" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>parCable</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a9c059588a19eeba521b79ff28e3dd8" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>pause</name></member>
+      <member refid="classvc64_1_1_flash_rom_1ac21c610a0fbf715aec0509a216ad1726" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>peek</name></member>
+      <member refid="classvc64_1_1_flash_rom_1a5ccfe2fa89635fc17bfc1334018586dd" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>peek</name></member>
+      <member refid="classvc64_1_1_flash_rom_1a1902aee40bbb2350d1b4252781737164" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>poke</name></member>
+      <member refid="classvc64_1_1_flash_rom_1affaa4068e8d94effb0242dbf5ca2d058" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>poke</name></member>
+      <member refid="classvc64_1_1_sub_component_1a8c0718eb9d42f335961eaed51ba7cb8d" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>port1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a217a6ea39994b6ecae4e1ebd9cc220e7" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>port2</name></member>
+      <member refid="classvc64_1_1_core_component_1a05e1ba6d62516f796256f1cc394bf2f5" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>powerOff</name></member>
+      <member refid="classvc64_1_1_core_component_1ad606699d83a017fbee805e8d40245475" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>powerOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a74ab4149c152b98c6d5cc15bbac63887" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>powerOnOff</name></member>
+      <member refid="classvc64_1_1_sub_component_1a4fa2405b078fe61c302ff1c8047d9c4f" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>powerSupply</name></member>
+      <member refid="classvc64_1_1_sub_component_1aba0c66cd1ce8a6d1c3529825afdb4a02" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>prefix</name></member>
+      <member refid="classvc64_1_1_sub_component_1a2e1d97a260e9d4d637b0f8fb95fbf1d8" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>recorder</name></member>
+      <member refid="classvc64_1_1_sub_component_1afe6a4ca2f661ec44fd67637b14647436" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>regressionTester</name></member>
+      <member refid="classvc64_1_1_core_component_1a3910be506f5067fe6cf31a69dcd76b0c" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>reset</name></member>
+      <member refid="classvc64_1_1_core_component_1a082147809d967c961a7ac7c15c5f072a" prot="public" virt="virtual"><scope>vc64::FlashRom</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1aec76d436c865101509bceb2daf47890b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::FlashRom</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1af9ec0fb5e73fd1f0433a4f3bfcd39d9b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::FlashRom</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1aab9305af3e38cc19bd1067ca87fe3e0d" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>resume</name></member>
+      <member refid="classvc64_1_1_sub_component_1ada641e2232ca8bdd3ef8fbecc883658d" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>retroShell</name></member>
+      <member refid="classvc64_1_1_flash_rom_1addf64a6d1b98ff118c558f0532c37fa0" prot="private" virt="non-virtual"><scope>vc64::FlashRom</scope><name>rom</name></member>
+      <member refid="classvc64_1_1_flash_rom_1a5eb87611214c66c8aeeeceefd78194e6" prot="private" virt="non-virtual"><scope>vc64::FlashRom</scope><name>romSize</name></member>
+      <member refid="classvc64_1_1_core_component_1ae7093017e8a84768103c67b24de5c578" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>run</name></member>
+      <member refid="classvc64_1_1_flash_rom_1a7313076432d6aad56fda865c9291904e" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>secondCommandAddr</name></member>
+      <member refid="classvc64_1_1_flash_rom_1aa80b3e467c921ca7fcf9bb45919349eb" prot="private" virt="non-virtual"><scope>vc64::FlashRom</scope><name>sectorSize</name></member>
+      <member refid="classvc64_1_1_flash_rom_1a0125e858dba29efa26c30b2ab838b7b3" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>serialize</name></member>
+      <member refid="classvc64_1_1_configurable_1ae56ba20ac3ec36bd84dbeb04aba3e8b0" prot="public" virt="virtual"><scope>vc64::FlashRom</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a51756d7f1f0ed1caa0e247ab6e789a3b" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a689b1a17fac237ca960b062df637" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_flash_rom_1abef4516582f355f3665fa6d53d79ed79" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>spypeek</name></member>
+      <member refid="classvc64_1_1_flash_rom_1aade19b754e940b684d0b03fcf059139d" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>spypeek</name></member>
+      <member refid="classvc64_1_1_flash_rom_1ab0b18433418ed9f41bcf966715f855f7" prot="private" virt="non-virtual"><scope>vc64::FlashRom</scope><name>state</name></member>
+      <member refid="classvc64_1_1_sub_component_1adce334c26f07e67bc936fbf7c935a759" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1a61d8a843718ff2f39e1575338a527676" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_core_component_1aa8b45810bedbdf78b88710ae8db3f495" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>subComponents</name></member>
+      <member refid="classvc64_1_1_core_component_1afd3f09724b119d73a122c3fc02ac1736" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>suspend</name></member>
+      <member refid="classvc64_1_1_suspendable_1a7f9f608d5b2b9b6e944176cde77b8f85" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>Suspendable</name></member>
+      <member refid="classvc64_1_1_core_component_1a0a4c841e543ecfc6cf988592a933a564" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>trackOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a4832ab0ebef49b591fe6e2785e969c89" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>trackOn</name></member>
+      <member refid="classvc64_1_1_core_component_1aae437c6ccf5f91155464dd4953c3baab" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>trackOnOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a24c5efde497d14b519ad15c9053949" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9c1a4b73d1514ddc64567d4521abdecd" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>vic</name></member>
+      <member refid="classvc64_1_1_core_component_1a45399f75688ba5ba157a479c3ce76633" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>warpOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a5df664aeda300338d0568d59673ff536" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>warpOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a6760d32857901c415f4d75031d1e2654" prot="protected" virt="non-virtual"><scope>vc64::FlashRom</scope><name>warpOnOff</name></member>
+      <member refid="classvc64_1_1_configurable_1a5aa5d945e768c40297f1bf71e200bde3" prot="public" virt="virtual"><scope>vc64::FlashRom</scope><name>~Configurable</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>vc64::FlashRom</scope><name>~CoreObject</name></member>
+      <member refid="classvc64_1_1_dumpable_1a843e874f633f7dcd8e2f1dcf1d8f0c25" prot="public" virt="virtual"><scope>vc64::FlashRom</scope><name>~Dumpable</name></member>
+      <member refid="classvc64_1_1_flash_rom_1abea73980dfa0ffe723e7c9c74afe52e1" prot="public" virt="non-virtual"><scope>vc64::FlashRom</scope><name>~FlashRom</name></member>
+      <member refid="classvc64_1_1_suspendable_1a35809d3a4c20db1f096e8dc5c78c49b9" prot="public" virt="virtual"><scope>vc64::FlashRom</scope><name>~Suspendable</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

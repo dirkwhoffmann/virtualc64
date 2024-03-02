@@ -1,0 +1,282 @@
+\doxysection{spline.\+h}
+\hypertarget{spline_8h_source}{}\label{spline_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/spline.h@{/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/spline.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ \ This\ file\ is\ part\ of\ reSID,\ a\ MOS6581\ SID\ emulator\ engine.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ \ Copyright\ (C)\ 2010\ \ Dag\ Lem\ <resid@nimrod.no>}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ \ This\ program\ is\ free\ software;\ you\ can\ redistribute\ it\ and/or\ modify}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ \ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ the\ Free\ Software\ Foundation;\ either\ version\ 2\ of\ the\ License,\ or}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ \ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ \ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{//}}
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ \ along\ with\ this\ program;\ if\ not,\ write\ to\ the\ Free\ Software}}
+\DoxyCodeLine{00017\ \textcolor{comment}{//\ \ Foundation,\ Inc.,\ 59\ Temple\ Place,\ Suite\ 330,\ Boston,\ MA\ \ 02111-\/1307\ \ USA}}
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#ifndef\ RESID\_SPLINE\_H}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ RESID\_SPLINE\_H}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{namespace\ }reSID}
+\DoxyCodeLine{00024\ \{}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{comment}{//\ Our\ objective\ is\ to\ construct\ a\ smooth\ interpolating\ single-\/valued\ function}}
+\DoxyCodeLine{00027\ \textcolor{comment}{//\ y\ =\ f(x).}}
+\DoxyCodeLine{00028\ \textcolor{comment}{//}}
+\DoxyCodeLine{00029\ \textcolor{comment}{//\ Catmull-\/Rom\ splines\ are\ widely\ used\ for\ interpolation,\ however\ these\ are}}
+\DoxyCodeLine{00030\ \textcolor{comment}{//\ parametric\ curves\ [x(t)\ y(t)\ ...]\ and\ can\ not\ be\ used\ to\ directly\ calculate}}
+\DoxyCodeLine{00031\ \textcolor{comment}{//\ y\ =\ f(x).}}
+\DoxyCodeLine{00032\ \textcolor{comment}{//\ For\ a\ discussion\ of\ Catmull-\/Rom\ splines\ see\ Catmull,\ E.,\ and\ R.\ Rom,}}
+\DoxyCodeLine{00033\ \textcolor{comment}{//\ "{}A\ Class\ of\ Local\ Interpolating\ Splines"{},\ Computer\ Aided\ Geometric\ Design.}}
+\DoxyCodeLine{00034\ \textcolor{comment}{//}}
+\DoxyCodeLine{00035\ \textcolor{comment}{//\ Natural\ cubic\ splines\ are\ single-\/valued\ functions,\ and\ have\ been\ used\ in}}
+\DoxyCodeLine{00036\ \textcolor{comment}{//\ several\ applications\ e.g.\ to\ specify\ gamma\ curves\ for\ image\ display.}}
+\DoxyCodeLine{00037\ \textcolor{comment}{//\ These\ splines\ do\ not\ afford\ local\ control,\ and\ a\ set\ of\ linear\ equations}}
+\DoxyCodeLine{00038\ \textcolor{comment}{//\ including\ all\ interpolation\ points\ must\ be\ solved\ before\ any\ point\ on\ the}}
+\DoxyCodeLine{00039\ \textcolor{comment}{//\ curve\ can\ be\ calculated.\ The\ lack\ of\ local\ control\ makes\ the\ splines}}
+\DoxyCodeLine{00040\ \textcolor{comment}{//\ more\ difficult\ to\ handle\ than\ e.g.\ Catmull-\/Rom\ splines,\ and\ real-\/time}}
+\DoxyCodeLine{00041\ \textcolor{comment}{//\ interpolation\ of\ a\ stream\ of\ data\ points\ is\ not\ possible.}}
+\DoxyCodeLine{00042\ \textcolor{comment}{//\ For\ a\ discussion\ of\ natural\ cubic\ splines,\ see\ e.g.\ Kreyszig,\ E.,\ "{}Advanced}}
+\DoxyCodeLine{00043\ \textcolor{comment}{//\ Engineering\ Mathematics"{}.}}
+\DoxyCodeLine{00044\ \textcolor{comment}{//}}
+\DoxyCodeLine{00045\ \textcolor{comment}{//\ Our\ approach\ is\ to\ approximate\ the\ properties\ of\ Catmull-\/Rom\ splines\ for}}
+\DoxyCodeLine{00046\ \textcolor{comment}{//\ piecewice\ cubic\ polynomials\ f(x)\ =\ ax\string^3\ +\ bx\string^2\ +\ cx\ +\ d\ as\ follows:}}
+\DoxyCodeLine{00047\ \textcolor{comment}{//\ Each\ curve\ segment\ is\ specified\ by\ four\ interpolation\ points,}}
+\DoxyCodeLine{00048\ \textcolor{comment}{//\ p0,\ p1,\ p2,\ p3.}}
+\DoxyCodeLine{00049\ \textcolor{comment}{//\ The\ curve\ between\ p1\ and\ p2\ must\ interpolate\ both\ p1\ and\ p2,\ and\ in\ addition}}
+\DoxyCodeLine{00050\ \textcolor{comment}{//\ \ \ f'(p1.x)\ =\ k1\ =\ (p2.y\ -\/\ p0.y)/(p2.x\ -\/\ p0.x)\ and}}
+\DoxyCodeLine{00051\ \textcolor{comment}{//\ \ \ f'(p2.x)\ =\ k2\ =\ (p3.y\ -\/\ p1.y)/(p3.x\ -\/\ p1.x).}}
+\DoxyCodeLine{00052\ \textcolor{comment}{//}}
+\DoxyCodeLine{00053\ \textcolor{comment}{//\ The\ constraints\ are\ expressed\ by\ the\ following\ system\ of\ linear\ equations}}
+\DoxyCodeLine{00054\ \textcolor{comment}{//}}
+\DoxyCodeLine{00055\ \textcolor{comment}{//\ \ \ [\ 1\ \ xi\ \ \ \ xi\string^2\ \ \ \ xi\string^3\ ]\ \ \ [\ d\ ]\ \ \ \ [\ yi\ ]}}
+\DoxyCodeLine{00056\ \textcolor{comment}{//\ \ \ [\ \ \ \ \ 1\ \ 2*xi\ \ \ \ 3*xi\string^2\ ]\ *\ [\ c\ ]\ =\ \ [\ ki\ ]}}
+\DoxyCodeLine{00057\ \textcolor{comment}{//\ \ \ [\ 1\ \ xj\ \ \ \ xj\string^2\ \ \ \ xj\string^3\ ]\ \ \ [\ b\ ]\ \ \ \ [\ yj\ ]}}
+\DoxyCodeLine{00058\ \textcolor{comment}{//\ \ \ [\ \ \ \ \ 1\ \ 2*xj\ \ \ \ 3*xj\string^2\ ]\ \ \ [\ a\ ]\ \ \ \ [\ kj\ ]}}
+\DoxyCodeLine{00059\ \textcolor{comment}{//}}
+\DoxyCodeLine{00060\ \textcolor{comment}{//\ Solving\ using\ Gaussian\ elimination\ and\ back\ substitution,\ setting}}
+\DoxyCodeLine{00061\ \textcolor{comment}{//\ dy\ =\ yj\ -\/\ yi,\ dx\ =\ xj\ -\/\ xi,\ we\ get}}
+\DoxyCodeLine{00062\ \textcolor{comment}{//}}
+\DoxyCodeLine{00063\ \textcolor{comment}{//\ \ \ a\ =\ ((ki\ +\ kj)\ -\/\ 2*dy/dx)/(dx*dx);}}
+\DoxyCodeLine{00064\ \textcolor{comment}{//\ \ \ b\ =\ ((kj\ -\/\ ki)/dx\ -\/\ 3*(xi\ +\ xj)*a)/2;}}
+\DoxyCodeLine{00065\ \textcolor{comment}{//\ \ \ c\ =\ ki\ -\/\ (3*xi*a\ +\ 2*b)*xi;}}
+\DoxyCodeLine{00066\ \textcolor{comment}{//\ \ \ d\ =\ yi\ -\/\ ((xi*a\ +\ b)*xi\ +\ c)*xi;}}
+\DoxyCodeLine{00067\ \textcolor{comment}{//}}
+\DoxyCodeLine{00068\ \textcolor{comment}{//\ Having\ calculated\ the\ coefficients\ of\ the\ cubic\ polynomial\ we\ have\ the}}
+\DoxyCodeLine{00069\ \textcolor{comment}{//\ choice\ of\ evaluation\ by\ brute\ force}}
+\DoxyCodeLine{00070\ \textcolor{comment}{//}}
+\DoxyCodeLine{00071\ \textcolor{comment}{//\ \ \ for\ (x\ =\ x1;\ x\ <=\ x2;\ x\ +=\ res)\ \{}}
+\DoxyCodeLine{00072\ \textcolor{comment}{//\ \ \ \ \ y\ =\ ((a*x\ +\ b)*x\ +\ c)*x\ +\ d;}}
+\DoxyCodeLine{00073\ \textcolor{comment}{//\ \ \ \ \ plot(x,\ y);}}
+\DoxyCodeLine{00074\ \textcolor{comment}{//\ \ \ \}}}
+\DoxyCodeLine{00075\ \textcolor{comment}{//}}
+\DoxyCodeLine{00076\ \textcolor{comment}{//\ or\ by\ forward\ differencing}}
+\DoxyCodeLine{00077\ \textcolor{comment}{//}}
+\DoxyCodeLine{00078\ \textcolor{comment}{//\ \ \ y\ =\ ((a*x1\ +\ b)*x1\ +\ c)*x1\ +\ d;}}
+\DoxyCodeLine{00079\ \textcolor{comment}{//\ \ \ dy\ =\ (3*a*(x1\ +\ res)\ +\ 2*b)*x1*res\ +\ ((a*res\ +\ b)*res\ +\ c)*res;}}
+\DoxyCodeLine{00080\ \textcolor{comment}{//\ \ \ d2y\ =\ (6*a*(x1\ +\ res)\ +\ 2*b)*res*res;}}
+\DoxyCodeLine{00081\ \textcolor{comment}{//\ \ \ d3y\ =\ 6*a*res*res*res;}}
+\DoxyCodeLine{00082\ \textcolor{comment}{//}}
+\DoxyCodeLine{00083\ \textcolor{comment}{//\ \ \ for\ (x\ =\ x1;\ x\ <=\ x2;\ x\ +=\ res)\ \{}}
+\DoxyCodeLine{00084\ \textcolor{comment}{//\ \ \ \ \ plot(x,\ y);}}
+\DoxyCodeLine{00085\ \textcolor{comment}{//\ \ \ \ \ y\ +=\ dy;\ dy\ +=\ d2y;\ d2y\ +=\ d3y;}}
+\DoxyCodeLine{00086\ \textcolor{comment}{//\ \ \ \}}}
+\DoxyCodeLine{00087\ \textcolor{comment}{//}}
+\DoxyCodeLine{00088\ \textcolor{comment}{//\ See\ Foley,\ Van\ Dam,\ Feiner,\ Hughes,\ "{}Computer\ Graphics,\ Principles\ and}}
+\DoxyCodeLine{00089\ \textcolor{comment}{//\ Practice"{}\ for\ a\ discussion\ of\ forward\ differencing.}}
+\DoxyCodeLine{00090\ \textcolor{comment}{//}}
+\DoxyCodeLine{00091\ \textcolor{comment}{//\ If\ we\ have\ a\ set\ of\ interpolation\ points\ p0,\ ...,\ pn,\ we\ may\ specify}}
+\DoxyCodeLine{00092\ \textcolor{comment}{//\ curve\ segments\ between\ p0\ and\ p1,\ and\ between\ pn-\/1\ and\ pn\ by\ using\ the}}
+\DoxyCodeLine{00093\ \textcolor{comment}{//\ following\ constraints:}}
+\DoxyCodeLine{00094\ \textcolor{comment}{//\ \ \ f''(p0.x)\ =\ 0\ and}}
+\DoxyCodeLine{00095\ \textcolor{comment}{//\ \ \ f''(pn.x)\ =\ 0.}}
+\DoxyCodeLine{00096\ \textcolor{comment}{//}}
+\DoxyCodeLine{00097\ \textcolor{comment}{//\ Substituting\ the\ results\ for\ a\ and\ b\ in}}
+\DoxyCodeLine{00098\ \textcolor{comment}{//}}
+\DoxyCodeLine{00099\ \textcolor{comment}{//\ \ \ 2*b\ +\ 6*a*xi\ =\ 0}}
+\DoxyCodeLine{00100\ \textcolor{comment}{//}}
+\DoxyCodeLine{00101\ \textcolor{comment}{//\ we\ get}}
+\DoxyCodeLine{00102\ \textcolor{comment}{//}}
+\DoxyCodeLine{00103\ \textcolor{comment}{//\ \ \ ki\ =\ (3*dy/dx\ -\/\ kj)/2;}}
+\DoxyCodeLine{00104\ \textcolor{comment}{//}}
+\DoxyCodeLine{00105\ \textcolor{comment}{//\ or\ by\ substituting\ the\ results\ for\ a\ and\ b\ in}}
+\DoxyCodeLine{00106\ \textcolor{comment}{//}}
+\DoxyCodeLine{00107\ \textcolor{comment}{//\ \ \ 2*b\ +\ 6*a*xj\ =\ 0}}
+\DoxyCodeLine{00108\ \textcolor{comment}{//}}
+\DoxyCodeLine{00109\ \textcolor{comment}{//\ we\ get}}
+\DoxyCodeLine{00110\ \textcolor{comment}{//}}
+\DoxyCodeLine{00111\ \textcolor{comment}{//\ \ \ kj\ =\ (3*dy/dx\ -\/\ ki)/2;}}
+\DoxyCodeLine{00112\ \textcolor{comment}{//}}
+\DoxyCodeLine{00113\ \textcolor{comment}{//\ Finally,\ if\ we\ have\ only\ two\ interpolation\ points,\ the\ cubic\ polynomial}}
+\DoxyCodeLine{00114\ \textcolor{comment}{//\ will\ degenerate\ to\ a\ straight\ line\ if\ we\ set}}
+\DoxyCodeLine{00115\ \textcolor{comment}{//}}
+\DoxyCodeLine{00116\ \textcolor{comment}{//\ \ \ ki\ =\ kj\ =\ dy/dx;}}
+\DoxyCodeLine{00117\ \textcolor{comment}{//}}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \textcolor{preprocessor}{\#if\ SPLINE\_BRUTE\_FORCE}}
+\DoxyCodeLine{00121\ \textcolor{preprocessor}{\#define\ interpolate\_segment\ interpolate\_brute\_force}}
+\DoxyCodeLine{00122\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00123\ \textcolor{preprocessor}{\#define\ interpolate\_segment\ interpolate\_forward\_difference}}
+\DoxyCodeLine{00124\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00128\ \textcolor{comment}{//\ Calculation\ of\ coefficients.}}
+\DoxyCodeLine{00129\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00130\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00131\ \textcolor{keywordtype}{void}\ cubic\_coefficients(\textcolor{keywordtype}{double}\ x1,\ \textcolor{keywordtype}{double}\ y1,\ \textcolor{keywordtype}{double}\ x2,\ \textcolor{keywordtype}{double}\ y2,}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ k1,\ \textcolor{keywordtype}{double}\ k2,}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\&\ a,\ \textcolor{keywordtype}{double}\&\ b,\ \textcolor{keywordtype}{double}\&\ c,\ \textcolor{keywordtype}{double}\&\ d)}
+\DoxyCodeLine{00134\ \{}
+\DoxyCodeLine{00135\ \ \ \textcolor{keywordtype}{double}\ dx\ =\ x2\ -\/\ x1,\ dy\ =\ y2\ -\/\ y1;}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \ \ a\ =\ ((k1\ +\ k2)\ -\/\ 2*dy/dx)/(dx*dx);}
+\DoxyCodeLine{00138\ \ \ b\ =\ ((k2\ -\/\ k1)/dx\ -\/\ 3*(x1\ +\ x2)*a)/2;}
+\DoxyCodeLine{00139\ \ \ c\ =\ k1\ -\/\ (3*x1*a\ +\ 2*b)*x1;}
+\DoxyCodeLine{00140\ \ \ d\ =\ y1\ -\/\ ((x1*a\ +\ b)*x1\ +\ c)*x1;}
+\DoxyCodeLine{00141\ \}}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00144\ \textcolor{comment}{//\ Evaluation\ of\ cubic\ polynomial\ by\ brute\ force.}}
+\DoxyCodeLine{00145\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00146\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Po\textcolor{keywordtype}{int}Plotter>}
+\DoxyCodeLine{00147\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00148\ \textcolor{keywordtype}{void}\ interpolate\_brute\_force(\textcolor{keywordtype}{double}\ x1,\ \textcolor{keywordtype}{double}\ y1,\ \textcolor{keywordtype}{double}\ x2,\ \textcolor{keywordtype}{double}\ y2,}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ k1,\ \textcolor{keywordtype}{double}\ k2,}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PointPlotter\ plot,\ \textcolor{keywordtype}{double}\ res)}
+\DoxyCodeLine{00151\ \{}
+\DoxyCodeLine{00152\ \ \ \textcolor{keywordtype}{double}\ a,\ b,\ c,\ d;}
+\DoxyCodeLine{00153\ \ \ cubic\_coefficients(x1,\ y1,\ x2,\ y2,\ k1,\ k2,\ a,\ b,\ c,\ d);}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ \ \ \textcolor{comment}{//\ Calculate\ each\ point.}}
+\DoxyCodeLine{00156\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{double}\ x\ =\ x1;\ x\ <=\ x2;\ x\ +=\ res)\ \{}
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordtype}{double}\ y\ =\ ((a*x\ +\ b)*x\ +\ c)*x\ +\ d;}
+\DoxyCodeLine{00158\ \ \ \ \ plot(x,\ y);}
+\DoxyCodeLine{00159\ \ \ \}}
+\DoxyCodeLine{00160\ \}}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00163\ \textcolor{comment}{//\ Evaluation\ of\ cubic\ polynomial\ by\ forward\ differencing.}}
+\DoxyCodeLine{00164\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00165\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Po\textcolor{keywordtype}{int}Plotter>}
+\DoxyCodeLine{00166\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00167\ \textcolor{keywordtype}{void}\ interpolate\_forward\_difference(\textcolor{keywordtype}{double}\ x1,\ \textcolor{keywordtype}{double}\ y1,\ \textcolor{keywordtype}{double}\ x2,\ \textcolor{keywordtype}{double}\ y2,}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ k1,\ \textcolor{keywordtype}{double}\ k2,}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PointPlotter\ plot,\ \textcolor{keywordtype}{double}\ res)}
+\DoxyCodeLine{00170\ \{}
+\DoxyCodeLine{00171\ \ \ \textcolor{keywordtype}{double}\ a,\ b,\ c,\ d;}
+\DoxyCodeLine{00172\ \ \ cubic\_coefficients(x1,\ y1,\ x2,\ y2,\ k1,\ k2,\ a,\ b,\ c,\ d);}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00174\ \ \ \textcolor{keywordtype}{double}\ y\ =\ ((a*x1\ +\ b)*x1\ +\ c)*x1\ +\ d;}
+\DoxyCodeLine{00175\ \ \ \textcolor{keywordtype}{double}\ dy\ =\ (3*a*(x1\ +\ res)\ +\ 2*b)*x1*res\ +\ ((a*res\ +\ b)*res\ +\ c)*res;}
+\DoxyCodeLine{00176\ \ \ \textcolor{keywordtype}{double}\ d2y\ =\ (6*a*(x1\ +\ res)\ +\ 2*b)*res*res;}
+\DoxyCodeLine{00177\ \ \ \textcolor{keywordtype}{double}\ d3y\ =\ 6*a*res*res*res;}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ \ \ \textcolor{comment}{//\ Calculate\ each\ point.}}
+\DoxyCodeLine{00180\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{double}\ x\ =\ x1;\ x\ <=\ x2;\ x\ +=\ res)\ \{}
+\DoxyCodeLine{00181\ \ \ \ \ plot(x,\ y);}
+\DoxyCodeLine{00182\ \ \ \ \ y\ +=\ dy;\ dy\ +=\ d2y;\ d2y\ +=\ d3y;}
+\DoxyCodeLine{00183\ \ \ \}}
+\DoxyCodeLine{00184\ \}}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00186\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Po\textcolor{keywordtype}{int}Iter>}
+\DoxyCodeLine{00187\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00188\ \textcolor{keywordtype}{double}\ x(PointIter\ p)}
+\DoxyCodeLine{00189\ \{}
+\DoxyCodeLine{00190\ \ \ \textcolor{keywordflow}{return}\ (*p)[0];}
+\DoxyCodeLine{00191\ \}}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Po\textcolor{keywordtype}{int}Iter>}
+\DoxyCodeLine{00194\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00195\ \textcolor{keywordtype}{double}\ y(PointIter\ p)}
+\DoxyCodeLine{00196\ \{}
+\DoxyCodeLine{00197\ \ \ \textcolor{keywordflow}{return}\ (*p)[1];}
+\DoxyCodeLine{00198\ \}}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00200\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00201\ \textcolor{comment}{//\ Evaluation\ of\ complete\ interpolating\ function.}}
+\DoxyCodeLine{00202\ \textcolor{comment}{//\ Note\ that\ since\ each\ curve\ segment\ is\ controlled\ by\ four\ points,\ the}}
+\DoxyCodeLine{00203\ \textcolor{comment}{//\ end\ points\ will\ not\ be\ interpolated.\ If\ extra\ control\ points\ are\ not}}
+\DoxyCodeLine{00204\ \textcolor{comment}{//\ desirable,\ the\ end\ points\ can\ simply\ be\ repeated\ to\ ensure\ interpolation.}}
+\DoxyCodeLine{00205\ \textcolor{comment}{//\ Note\ also\ that\ points\ of\ non-\/differentiability\ and\ discontinuity\ can\ be}}
+\DoxyCodeLine{00206\ \textcolor{comment}{//\ introduced\ by\ repeating\ points.}}
+\DoxyCodeLine{00207\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00208\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Po\textcolor{keywordtype}{int}Iter,\ \textcolor{keyword}{class}\ Po\textcolor{keywordtype}{int}Plotter>}
+\DoxyCodeLine{00209\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00210\ \textcolor{keywordtype}{void}\ interpolate(PointIter\ p0,\ PointIter\ pn,\ PointPlotter\ plot,\ \textcolor{keywordtype}{double}\ res)}
+\DoxyCodeLine{00211\ \{}
+\DoxyCodeLine{00212\ \ \ \textcolor{keywordtype}{double}\ k1,\ k2;}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00214\ \ \ \textcolor{comment}{//\ Set\ up\ points\ for\ first\ curve\ segment.}}
+\DoxyCodeLine{00215\ \ \ PointIter\ p1\ =\ p0;\ ++p1;}
+\DoxyCodeLine{00216\ \ \ PointIter\ p2\ =\ p1;\ ++p2;}
+\DoxyCodeLine{00217\ \ \ PointIter\ p3\ =\ p2;\ ++p3;}
+\DoxyCodeLine{00218\ }
+\DoxyCodeLine{00219\ \ \ \textcolor{comment}{//\ Draw\ each\ curve\ segment.}}
+\DoxyCodeLine{00220\ \ \ \textcolor{keywordflow}{for}\ (;\ p2\ !=\ pn;\ ++p0,\ ++p1,\ ++p2,\ ++p3)\ \{}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{comment}{//\ p1\ and\ p2\ equal;\ single\ point.}}
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keywordflow}{if}\ (x(p1)\ ==\ x(p2))\ \{}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00224\ \ \ \ \ \}}
+\DoxyCodeLine{00225\ \ \ \ \ \textcolor{comment}{//\ Both\ end\ points\ repeated;\ straight\ line.}}
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{keywordflow}{if}\ (x(p0)\ ==\ x(p1)\ \&\&\ x(p2)\ ==\ x(p3))\ \{}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ k1\ =\ k2\ =\ (y(p2)\ -\/\ y(p1))/(x(p2)\ -\/\ x(p1));}
+\DoxyCodeLine{00228\ \ \ \ \ \}}
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{comment}{//\ p0\ and\ p1\ equal;\ use\ f''(x1)\ =\ 0.}}
+\DoxyCodeLine{00230\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (x(p0)\ ==\ x(p1))\ \{}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ k2\ =\ (y(p3)\ -\/\ y(p1))/(x(p3)\ -\/\ x(p1));}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ k1\ =\ (3*(y(p2)\ -\/\ y(p1))/(x(p2)\ -\/\ x(p1))\ -\/\ k2)/2;}
+\DoxyCodeLine{00233\ \ \ \ \ \}}
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{comment}{//\ p2\ and\ p3\ equal;\ use\ f''(x2)\ =\ 0.}}
+\DoxyCodeLine{00235\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (x(p2)\ ==\ x(p3))\ \{}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ k1\ =\ (y(p2)\ -\/\ y(p0))/(x(p2)\ -\/\ x(p0));}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ k2\ =\ (3*(y(p2)\ -\/\ y(p1))/(x(p2)\ -\/\ x(p1))\ -\/\ k1)/2;}
+\DoxyCodeLine{00238\ \ \ \ \ \}}
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{comment}{//\ Normal\ curve.}}
+\DoxyCodeLine{00240\ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ k1\ =\ (y(p2)\ -\/\ y(p0))/(x(p2)\ -\/\ x(p0));}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ k2\ =\ (y(p3)\ -\/\ y(p1))/(x(p3)\ -\/\ x(p1));}
+\DoxyCodeLine{00243\ \ \ \ \ \}}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00245\ \ \ \ \ interpolate\_segment(x(p1),\ y(p1),\ x(p2),\ y(p2),\ k1,\ k2,\ plot,\ res);}
+\DoxyCodeLine{00246\ \ \ \}}
+\DoxyCodeLine{00247\ \}}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00249\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00250\ \textcolor{comment}{//\ Class\ for\ plotting\ integers\ into\ an\ array.}}
+\DoxyCodeLine{00251\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00252\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ F>}
+\DoxyCodeLine{00253\ \textcolor{keyword}{class\ }PointPlotter}
+\DoxyCodeLine{00254\ \{}
+\DoxyCodeLine{00255\ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00256\ \ \ F*\ f;}
+\DoxyCodeLine{00257\ }
+\DoxyCodeLine{00258\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00259\ \ \ PointPlotter(F*\ arr)\ :\ f(arr)}
+\DoxyCodeLine{00260\ \ \ \{}
+\DoxyCodeLine{00261\ \ \ \}}
+\DoxyCodeLine{00262\ }
+\DoxyCodeLine{00263\ \ \ \textcolor{keywordtype}{void}\ operator\ ()(\textcolor{keywordtype}{double}\ x,\ \textcolor{keywordtype}{double}\ y)}
+\DoxyCodeLine{00264\ \ \ \{}
+\DoxyCodeLine{00265\ \ \ \ \ \textcolor{comment}{//\ Clamp\ negative\ values\ to\ zero.}}
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{keywordflow}{if}\ (y\ <\ 0)\ \{}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ y\ =\ 0;}
+\DoxyCodeLine{00268\ \ \ \ \ \}}
+\DoxyCodeLine{00269\ }
+\DoxyCodeLine{00270\ \ \ \ \ f[int(x)]\ =\ F(y\ +\ 0.5);}
+\DoxyCodeLine{00271\ \ \ \}}
+\DoxyCodeLine{00272\ \};}
+\DoxyCodeLine{00273\ }
+\DoxyCodeLine{00274\ \}\ \textcolor{comment}{//\ namespace\ reSID}}
+\DoxyCodeLine{00275\ }
+\DoxyCodeLine{00276\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ not\ RESID\_SPLINE\_H}}
+
+\end{DoxyCode}

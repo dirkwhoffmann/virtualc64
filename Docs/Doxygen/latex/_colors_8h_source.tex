@@ -1,0 +1,98 @@
+\doxysection{Colors.\+h}
+\hypertarget{_colors_8h_source}{}\label{_colors_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h@{/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Aliases.h"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{struct\ }RgbColor\ \{}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{double}\ r;}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{double}\ g;}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{double}\ b;}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ RgbColor()\ :\ r(0),\ g(0),\ b(0)\ \{\}}
+\DoxyCodeLine{00026\ \ \ \ \ RgbColor(\textcolor{keywordtype}{double}\ rv,\ \textcolor{keywordtype}{double}\ gv,\ \textcolor{keywordtype}{double}\ bv)\ :\ r(rv),\ g(gv),\ b(bv)\ \{\}}
+\DoxyCodeLine{00027\ \ \ \ \ RgbColor(u8\ rv,\ u8\ gv,\ u8\ bv)\ :\ r(rv\ /\ 255.0),\ g(gv\ /\ 255.0),\ b(bv\ /\ 255.0)\ \{\}}
+\DoxyCodeLine{00028\ \ \ \ \ RgbColor(\textcolor{keyword}{const}\ \textcolor{keyword}{struct}\ YuvColor\ \&c);}
+\DoxyCodeLine{00029\ \ \ \ \ RgbColor(\textcolor{keyword}{const}\ \textcolor{keyword}{struct}\ GpuColor\ \&c);}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ RgbColor\ black;}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ RgbColor\ white;}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ RgbColor\ red;}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ RgbColor\ green;}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ RgbColor\ blue;}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ RgbColor\ yellow;}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ RgbColor\ magenta;}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ RgbColor\ cyan;}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ RgbColor\ mix(RgbColor\ additive,\ \textcolor{keywordtype}{double}\ weight);}
+\DoxyCodeLine{00041\ \ \ \ \ RgbColor\ mix(RgbColor\ additive,\ \textcolor{keywordtype}{double}\ weight1,\ \textcolor{keywordtype}{double}\ weight2);}
+\DoxyCodeLine{00042\ \ \ \ \ RgbColor\ tint(\textcolor{keywordtype}{double}\ weight)\ \{\ \textcolor{keywordflow}{return}\ mix(white,\ weight);\ \}}
+\DoxyCodeLine{00043\ \ \ \ \ RgbColor\ shade(\textcolor{keywordtype}{double}\ weight)\ \{\ \textcolor{keywordflow}{return}\ mix(black,\ weight);\ \}}
+\DoxyCodeLine{00044\ \};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{struct\ }YuvColor\ \{}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{double}\ y;}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{double}\ u;}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{double}\ v;}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ YuvColor()\ :\ y(0),\ u(0),\ v(0)\ \{\ \}}
+\DoxyCodeLine{00053\ \ \ \ \ YuvColor(\textcolor{keywordtype}{double}\ yv,\ \textcolor{keywordtype}{double}\ uv,\ \textcolor{keywordtype}{double}\ vv)\ :\ y(yv),\ u(uv),\ v(vv)\ \{\ \}}
+\DoxyCodeLine{00054\ \ \ \ \ YuvColor(u8\ yv,\ u8\ uv,\ u8\ vv)\ :\ y(yv\ /\ 255.0),\ u(uv\ /\ 255.0),\ v(vv\ /\ 255.0)\ \{\ \}}
+\DoxyCodeLine{00055\ \ \ \ \ YuvColor(\textcolor{keyword}{const}\ \textcolor{keyword}{struct}\ RgbColor\ \&c);}
+\DoxyCodeLine{00056\ \ \ \ \ YuvColor(\textcolor{keyword}{const}\ \textcolor{keyword}{struct}\ GpuColor\ \&c)\ :\ YuvColor(RgbColor(c))\ \{\ \}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ YuvColor\ black;}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ YuvColor\ white;}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ YuvColor\ red;}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ YuvColor\ green;}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ YuvColor\ blue;}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ YuvColor\ yellow;}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ YuvColor\ magenta;}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ YuvColor\ cyan;}
+\DoxyCodeLine{00066\ \};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{keyword}{struct\ }GpuColor\ \{}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ u32\ abgr;}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ GpuColor()\ :\ abgr(0)\ \{\}}
+\DoxyCodeLine{00073\ \ \ \ \ GpuColor(u32\ v)\ :\ abgr(v)\ \{\}}
+\DoxyCodeLine{00074\ \ \ \ \ GpuColor(\textcolor{keyword}{const}\ \textcolor{keyword}{struct}\ RgbColor\ \&c);}
+\DoxyCodeLine{00075\ \ \ \ \ GpuColor(u8\ r,\ u8\ g,\ u8\ b);}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ GpuColor\ black;}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ GpuColor\ white;}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ GpuColor\ red;}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ GpuColor\ green;}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ GpuColor\ blue;}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ GpuColor\ yellow;}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ GpuColor\ magenta;}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ GpuColor\ cyan;}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ GpuColor\ mix(\textcolor{keyword}{const}\ \textcolor{keyword}{struct}\ RgbColor\ \&color,\ \textcolor{keywordtype}{double}\ weight);}
+\DoxyCodeLine{00087\ \ \ \ \ GpuColor\ mix(\textcolor{keyword}{const}\ \textcolor{keyword}{struct}\ RgbColor\ \&color,\ \textcolor{keywordtype}{double}\ weight1,\ \textcolor{keywordtype}{double}\ weight2);}
+\DoxyCodeLine{00088\ \ \ \ \ GpuColor\ tint(\textcolor{keywordtype}{double}\ weight)\ \{\ \textcolor{keywordflow}{return}\ mix(RgbColor::white,\ weight);\ \}}
+\DoxyCodeLine{00089\ \ \ \ \ GpuColor\ shade(\textcolor{keywordtype}{double}\ weight)\ \{\ \textcolor{keywordflow}{return}\ mix(RgbColor::black,\ weight);\ \}}
+\DoxyCodeLine{00090\ \};}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \}}
+
+\end{DoxyCode}

@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['from_20here_0',['Where to go from here?',['../index.html#autotoc_md2',1,'']]]
+  ['glue_5flogic_0',['GLUE_LOGIC',['../_v_i_c_i_i_types_8h.html#a1b9e054b18647ae68a514badefcbdf1f',1,'VICIITypes.h']]],
+  ['glue_5flogic_5fdiscrete_1',['GLUE_LOGIC_DISCRETE',['../_v_i_c_i_i_types_8h.html#a1b9e054b18647ae68a514badefcbdf1fab0a367ca69f132394f596e30f9dedc80',1,'VICIITypes.h']]],
+  ['glue_5flogic_5fic_2',['GLUE_LOGIC_IC',['../_v_i_c_i_i_types_8h.html#a1b9e054b18647ae68a514badefcbdf1fa0fcdcf2c0a1c19b28f6a2b74f7d61643',1,'VICIITypes.h']]],
+  ['go_20from_20here_3',['Where to go from here?',['../index.html#autotoc_md2',1,'']]]
 ];

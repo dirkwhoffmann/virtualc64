@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['recorderapi_0',['RecorderAPI',['../struct_virtual_c64_1_1_recorder_a_p_i.html',1,'VirtualC64']]],
-  ['retroshellapi_1',['RetroShellAPI',['../struct_virtual_c64_1_1_retro_shell_a_p_i.html',1,'VirtualC64']]]
+  ['namedpipe_0',['NamedPipe',['../classvc64_1_1_named_pipe.html',1,'vc64']]],
+  ['neosmouse_1',['NeosMouse',['../classvc64_1_1_neos_mouse.html',1,'vc64']]],
+  ['numparser_2',['NumParser',['../classvc64_1_1_num_parser.html',1,'vc64']]]
 ];

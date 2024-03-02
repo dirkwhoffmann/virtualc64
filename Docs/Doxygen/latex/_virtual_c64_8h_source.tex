@@ -1,6 +1,6 @@
 \doxysection{Virtual\+C64.\+h}
 \hypertarget{_virtual_c64_8h_source}{}\label{_virtual_c64_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h@{/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h}}
-
+\mbox{\hyperlink{_virtual_c64_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
 \DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
@@ -13,525 +13,526 @@
 \DoxyCodeLine{00009\ \textcolor{comment}{//}}
 \DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
 \DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
-\DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Emulator.h"{}}}
-\DoxyCodeLine{00016\ }
-\DoxyCodeLine{00026\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_virtual_c64}{VirtualC64}}\ :\ vc64::Emulator\ \{}
-\DoxyCodeLine{00027\ }
-\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::Suspendable;}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_virtual_c64_types_8h}{VirtualC64Types.h}}"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}Emulator.h"{}}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_virtual_c64}{VirtualC64}}\ :\ vc64::Emulator\ \{}
 \DoxyCodeLine{00029\ }
-\DoxyCodeLine{00030\ }
-\DoxyCodeLine{00031\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//\ Static\ methods}}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::Suspendable;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ }
 \DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00034\ }
-\DoxyCodeLine{00035\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{comment}{//\ Static\ methods}}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00036\ }
-\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_virtual_c64_a17ff135464512a12d1610cabb9758d67}{version}}();}
-\DoxyCodeLine{00041\ }
-\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_virtual_c64_ad0c1b1fd2fb7da11c0975cabbc58ca5a}{build}}();}
-\DoxyCodeLine{00044\ }
-\DoxyCodeLine{00045\ }
-\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00047\ \ \ \ \ \textcolor{comment}{//\ Initializing}}
+\DoxyCodeLine{00037\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_virtual_c64_a43ebd54660892e4438319149a3f08561}{version}}();}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_virtual_c64_af225a63e1c37cf8e67f9203f70bf0efc}{build}}();}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ }
 \DoxyCodeLine{00048\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00049\ }
-\DoxyCodeLine{00050\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00051\ \ \ \ \ }
-\DoxyCodeLine{00052\ \ \ \ \ \mbox{\hyperlink{class_virtual_c64}{VirtualC64}}();}
-\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{class_virtual_c64}{\string~VirtualC64}}();}
-\DoxyCodeLine{00054\ }
-\DoxyCodeLine{00055\ \ \ \ \ \textcolor{comment}{//\ Expose\ portions\ of\ the\ Emulator\ API}}
-\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::defaults;}
-\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::getState;}
-\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::getStats;}
-\DoxyCodeLine{00059\ }
-\DoxyCodeLine{00062\ }
-\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_virtual_c64_a1ab04f504353c522229531fb22a732fe}{powerOn}}()\ \{\ Emulator::Thread::powerOn();\ \}}
-\DoxyCodeLine{00065\ }
-\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_virtual_c64_a3cfac56baa9484282f2d48d4dc60b7b3}{powerOff}}()\ \{\ Emulator::Thread::powerOff();\ \}}
-\DoxyCodeLine{00068\ }
-\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_virtual_c64_a468f440c88ff5f399e67364425a43556}{run}}()\ \{\ Emulator::Thread::run();\ \}}
-\DoxyCodeLine{00071\ }
-\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_virtual_c64_a7b197d691ef31ddf63681397eccd3851}{pause}}()\ \{\ Emulator::Thread::pause();\ \}}
-\DoxyCodeLine{00074\ }
-\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_virtual_c64_a9b9f7e4a1f9bc8337bae87dde9c0a62a}{halt}}()\ \{\ Emulator::Thread::halt();\ \}}
-\DoxyCodeLine{00080\ }
-\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::stopAndGo;}
-\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::suspend;}
-\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::resume;}
-\DoxyCodeLine{00084\ }
-\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::isPoweredOn;}
-\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::isPoweredOff;}
-\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::isPaused;}
-\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::isRunning;}
-\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::isSuspended;}
-\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::isHalted;}
-\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::isWarping;}
-\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::isTracking;}
-\DoxyCodeLine{00093\ }
-\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::warpOn;}
-\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::warpOff;}
-\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::trackOn;}
-\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::trackOff;}
-\DoxyCodeLine{00098\ }
-\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_virtual_c64_a161f20c6fa850cb631390fe28b58d79c}{stepInto}}();}
-\DoxyCodeLine{00101\ }
-\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_virtual_c64_a8ffd6fa8a6c4097d679106357bafb85b}{stepOver}}();}
-\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{comment}{//\ Initializing}}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00053\ \ \ \ \ }
+\DoxyCodeLine{00054\ \ \ \ \ \mbox{\hyperlink{class_virtual_c64}{VirtualC64}}();}
+\DoxyCodeLine{00055\ \ \ \ \ \mbox{\hyperlink{class_virtual_c64}{\string~VirtualC64}}();}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{comment}{//\ Expose\ portions\ of\ the\ Emulator\ API}}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::defaults;}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::getState;}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::getStats;}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_virtual_c64_a1ab04f504353c522229531fb22a732fe}{powerOn}}()\ \{\ Emulator::Thread::powerOn();\ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_virtual_c64_a3cfac56baa9484282f2d48d4dc60b7b3}{powerOff}}()\ \{\ Emulator::Thread::powerOff();\ \}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_virtual_c64_a468f440c88ff5f399e67364425a43556}{run}}()\ \{\ Emulator::Thread::run();\ \}}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_virtual_c64_a7b197d691ef31ddf63681397eccd3851}{pause}}()\ \{\ Emulator::Thread::pause();\ \}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_virtual_c64_a9b9f7e4a1f9bc8337bae87dde9c0a62a}{halt}}()\ \{\ Emulator::Thread::halt();\ \}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::stopAndGo;}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::suspend;}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::resume;}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::isPoweredOn;}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::isPoweredOff;}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::isPaused;}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::isRunning;}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::isSuspended;}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::isHalted;}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::isWarping;}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::isTracking;}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::warpOn;}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::warpOff;}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::trackOn;}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{using\ }vc64::Emulator::Thread::trackOff;}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_virtual_c64_a161f20c6fa850cb631390fe28b58d79c}{stepInto}}();}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_virtual_c64_a8ffd6fa8a6c4097d679106357bafb85b}{stepOver}}();}
 \DoxyCodeLine{00106\ }
-\DoxyCodeLine{00110\ }
-\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_virtual_c64_aca3821452aac3065cf92f63db8121674}{wakeUp}}()\ \{\ vc64::Emulator::Thread::wakeUp();\ \}}
-\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_virtual_c64_aca3821452aac3065cf92f63db8121674}{wakeUp}}()\ \{\ vc64::Emulator::Thread::wakeUp();\ \}}
 \DoxyCodeLine{00118\ }
-\DoxyCodeLine{00119\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00120\ \ \ \ \ \textcolor{comment}{//\ Audio\ and\ Video}}
+\DoxyCodeLine{00120\ }
 \DoxyCodeLine{00121\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00122\ }
-\DoxyCodeLine{00123\ \ \ \ \ u32\ *getTexture()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00124\ \ \ \ \ u32\ *getNoise()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00125\ }
-\DoxyCodeLine{00126\ }
-\DoxyCodeLine{00127\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00128\ \ \ \ \ \textcolor{comment}{//\ Configuring}}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{comment}{//\ Audio\ and\ Video}}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \ \ u32\ *getTexture()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00126\ \ \ \ \ u32\ *getNoise()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ }
 \DoxyCodeLine{00129\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00130\ }
-\DoxyCodeLine{00131\ \ \ \ \ \textcolor{comment}{//\ Launches\ the\ emulator\ thread}}
-\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{void}\ launch(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *listener,\ Callback\ *func);}
-\DoxyCodeLine{00133\ }
-\DoxyCodeLine{00134\ \ \ \ \ \textcolor{comment}{//\ Queries\ an\ option}}
-\DoxyCodeLine{00135\ \ \ \ \ i64\ get(\mbox{\hyperlink{group__doxy__types_ga273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00136\ \ \ \ \ i64\ get(\mbox{\hyperlink{group__doxy__types_ga273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00137\ }
-\DoxyCodeLine{00138\ \ \ \ \ \textcolor{comment}{//\ Configures\ the\ emulator\ to\ match\ a\ specific\ C64\ model}}
-\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keywordtype}{void}\ set(C64Model\ model);}
-\DoxyCodeLine{00140\ }
-\DoxyCodeLine{00141\ \ \ \ \ \textcolor{comment}{//\ Sets\ an\ option}}
-\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordtype}{void}\ set(\mbox{\hyperlink{group__doxy__types_ga273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option,\ i64\ value)\ \textcolor{keywordflow}{throws};}
-\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordtype}{void}\ set(\mbox{\hyperlink{group__doxy__types_ga273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{id},\ i64\ value)\ \textcolor{keywordflow}{throws};}
-\DoxyCodeLine{00144\ }
-\DoxyCodeLine{00145\ \ \ \ \ }
-\DoxyCodeLine{00146\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00147\ \ \ \ \ \textcolor{comment}{//\ Command\ queue}}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{comment}{//\ Configuring}}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{comment}{//\ Launches\ the\ emulator\ thread}}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordtype}{void}\ launch(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *listener,\ Callback\ *func);}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{comment}{//\ Queries\ an\ option}}
+\DoxyCodeLine{00137\ \ \ \ \ i64\ get(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00138\ \ \ \ \ i64\ get(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{comment}{//\ Configures\ the\ emulator\ to\ match\ a\ specific\ C64\ model}}
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordtype}{void}\ set(C64Model\ model);}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{comment}{//\ Sets\ an\ option}}
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keywordtype}{void}\ set(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option,\ i64\ value)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordtype}{void}\ set(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{id},\ i64\ value)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ \ \ }
 \DoxyCodeLine{00148\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00149\ }
-\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keywordtype}{void}\ put(\textcolor{keyword}{const}\ Cmd\ \&cmd);}
-\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordtype}{void}\ put(\mbox{\hyperlink{group__doxy__types_ga63ebdc688313e444b486514798e48df3}{CmdType}}\ type,\ i64\ payload\ =\ 0)\ \{\ put(Cmd(type,\ payload));\ \}}
-\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordtype}{void}\ put(\mbox{\hyperlink{group__doxy__types_ga63ebdc688313e444b486514798e48df3}{CmdType}}\ type,\ \mbox{\hyperlink{struct_key_cmd}{KeyCmd}}\ payload)\ \ \{\ put(Cmd(type,\ payload));\ \}}
-\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keywordtype}{void}\ put(\mbox{\hyperlink{group__doxy__types_ga63ebdc688313e444b486514798e48df3}{CmdType}}\ type,\ \mbox{\hyperlink{struct_coord_cmd}{CoordCmd}}\ payload)\ \ \{\ put(Cmd(type,\ payload));\ \}}
-\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordtype}{void}\ put(\mbox{\hyperlink{group__doxy__types_ga63ebdc688313e444b486514798e48df3}{CmdType}}\ type,\ \mbox{\hyperlink{struct_game_pad_cmd}{GamePadCmd}}\ payload)\ \ \{\ put(Cmd(type,\ payload));\ \}}
-\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordtype}{void}\ put(\mbox{\hyperlink{group__doxy__types_ga63ebdc688313e444b486514798e48df3}{CmdType}}\ type,\ \mbox{\hyperlink{struct_tape_cmd}{TapeCmd}}\ payload)\ \ \{\ put(Cmd(type,\ payload));\ \}}
-\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordtype}{void}\ put(\mbox{\hyperlink{group__doxy__types_ga63ebdc688313e444b486514798e48df3}{CmdType}}\ type,\ \mbox{\hyperlink{struct_alarm_cmd}{AlarmCmd}}\ payload)\ \ \{\ put(Cmd(type,\ payload));\ \}}
-\DoxyCodeLine{00157\ }
-\DoxyCodeLine{00158\ }
-\DoxyCodeLine{00159\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00160\ \ \ \ \ \textcolor{comment}{//\ C64}}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{comment}{//\ Command\ queue}}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordtype}{void}\ put(\textcolor{keyword}{const}\ Cmd\ \&cmd);}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keywordtype}{void}\ put(\mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3}{CmdType}}\ type,\ i64\ payload\ =\ 0)\ \{\ put(Cmd(type,\ payload));\ \}}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordtype}{void}\ put(\mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3}{CmdType}}\ type,\ KeyCmd\ payload)\ \ \{\ put(Cmd(type,\ payload));\ \}}
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordtype}{void}\ put(\mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3}{CmdType}}\ type,\ CoordCmd\ payload)\ \ \{\ put(Cmd(type,\ payload));\ \}}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordtype}{void}\ put(\mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3}{CmdType}}\ type,\ GamePadCmd\ payload)\ \ \{\ put(Cmd(type,\ payload));\ \}}
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordtype}{void}\ put(\mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3}{CmdType}}\ type,\ TapeCmd\ payload)\ \ \{\ put(Cmd(type,\ payload));\ \}}
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordtype}{void}\ put(\mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3}{CmdType}}\ type,\ AlarmCmd\ payload)\ \ \{\ put(Cmd(type,\ payload));\ \}}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00160\ }
 \DoxyCodeLine{00161\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00162\ }
-\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_virtual_c64_1_1_c64_a_p_i}{C64API}}\ :\ \textcolor{keyword}{public}\ API\ \{}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{comment}{//\ C64}}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00164\ }
-\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keyword}{struct\ }C64API\ :\ \textcolor{keyword}{public}\ API\ \{}
 \DoxyCodeLine{00166\ }
-\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Performs\ a\ hard\ or\ soft\ reset}}
-\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ hardReset();}
-\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ softReset();}
-\DoxyCodeLine{00170\ }
-\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ InspectionTarget\ getInspectionTarget()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setInspectionTarget(InspectionTarget\ target,\ Cycle\ trigger\ =\ 0);}
-\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ removeInspectionTarget();}
-\DoxyCodeLine{00174\ }
-\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ C64Info\ getInfo()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ EventSlotInfo\ getSlotInfo(isize\ nr)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00177\ }
-\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ isReady();}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Performs\ a\ hard\ or\ soft\ reset}}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ hardReset();}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ softReset();}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ InspectionTarget\ getInspectionTarget()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setInspectionTarget(InspectionTarget\ target,\ Cycle\ trigger\ =\ 0);}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ removeInspectionTarget();}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ C64Info\ getInfo()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ EventSlotInfo\ getSlotInfo(isize\ nr)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00179\ }
-\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ Snapshot\ *latestAutoSnapshot();}
-\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ Snapshot\ *latestUserSnapshot();}
-\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ loadSnapshot(\textcolor{keyword}{const}\ Snapshot\ \&snapshot);}
-\DoxyCodeLine{00183\ }
-\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ RomInfo\ getRomInfo(RomType\ type)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ loadRom(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
-\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ loadRom(\textcolor{keyword}{const}\ RomFile\ \&file);}
-\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ deleteRom(RomType\ type);}
-\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ saveRom(RomType\ rom,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
-\DoxyCodeLine{00189\ }
-\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ flash(\textcolor{keyword}{const}\ AnyFile\ \&file);}
-\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ flash(\textcolor{keyword}{const}\ AnyCollection\ \&file,\ isize\ item);}
-\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ flash(\textcolor{keyword}{const}\ FileSystem\ \&fs,\ isize\ item);}
-\DoxyCodeLine{00193\ }
-\DoxyCodeLine{00194\ \ \ \ \ \}\ c64;}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ isReady();}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ Snapshot\ *latestAutoSnapshot();}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ Snapshot\ *latestUserSnapshot();}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ loadSnapshot(\textcolor{keyword}{const}\ Snapshot\ \&snapshot);}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ RomInfo\ getRomInfo(RomType\ type)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ loadRom(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ loadRom(\textcolor{keyword}{const}\ RomFile\ \&file);}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ deleteRom(RomType\ type);}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ saveRom(RomType\ rom,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ flash(\textcolor{keyword}{const}\ AnyFile\ \&file);}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ flash(\textcolor{keyword}{const}\ AnyCollection\ \&file,\ isize\ item);}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ flash(\textcolor{keyword}{const}\ FileSystem\ \&fs,\ isize\ item);}
 \DoxyCodeLine{00195\ }
-\DoxyCodeLine{00196\ }
-\DoxyCodeLine{00197\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00198\ \ \ \ \ \textcolor{comment}{//\ Memory}}
+\DoxyCodeLine{00196\ \ \ \ \ \}\ c64;}
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00198\ }
 \DoxyCodeLine{00199\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00200\ }
-\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_virtual_c64_1_1_memory_a_p_i}{MemoryAPI}}\ :\ API\ \{}
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{comment}{//\ Memory}}
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00202\ }
-\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00203\ \ \ \ \ \textcolor{keyword}{struct\ }MemoryAPI\ :\ API\ \{}
 \DoxyCodeLine{00204\ }
-\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ current\ configuration\ and\ state}}
-\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ MemConfig\ getConfig()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ MemInfo\ getInfo()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00208\ }
-\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Returns\ a\ string\ representations\ for\ a\ portion\ of\ memory}}
-\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ memdump(u16\ addr,\ isize\ num,\ \textcolor{keywordtype}{bool}\ hex,\ isize\ pads,\ MemoryType\ src)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ txtdump(u16\ addr,\ isize\ num,\ MemoryType\ src)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00212\ }
-\DoxyCodeLine{00213\ \ \ \ \ \}\ mem;}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00206\ }
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ current\ configuration\ and\ state}}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ MemConfig\ getConfig()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ MemInfo\ getInfo()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Returns\ a\ string\ representations\ for\ a\ portion\ of\ memory}}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ memdump(u16\ addr,\ isize\ num,\ \textcolor{keywordtype}{bool}\ hex,\ isize\ pads,\ MemoryType\ src)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ txtdump(u16\ addr,\ isize\ num,\ MemoryType\ src)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00214\ }
-\DoxyCodeLine{00215\ }
-\DoxyCodeLine{00216\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00217\ \ \ \ \ \textcolor{comment}{//\ Guards}}
+\DoxyCodeLine{00215\ \ \ \ \ \}\ mem;}
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00217\ }
 \DoxyCodeLine{00218\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00219\ }
-\DoxyCodeLine{00220\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_virtual_c64_1_1_guard_a_p_i}{GuardAPI}}\ :\ API\ \{}
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{comment}{//\ Guards}}
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00221\ }
-\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ Guards\ \&guards;}
-\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_virtual_c64_1_1_guard_a_p_i}{GuardAPI}}(Emulator\ \&emu,\ Guards\&\ guards)\ :\ API(emu),\ guards(guards)\ \{\ \}}
-\DoxyCodeLine{00224\ }
-\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ elements()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ u32\ guardAddr(\textcolor{keywordtype}{long}\ nr)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isEnabled(\textcolor{keywordtype}{long}\ nr)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isDisabled(\textcolor{keywordtype}{long}\ nr)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isSetAt(u32\ addr)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isSetAndEnabledAt(u32\ addr)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isSetAndDisabledAt(u32\ addr)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isSetAndConditionalAt(u32\ addr)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00233\ }
-\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setEnable(\textcolor{keywordtype}{long}\ nr,\ \textcolor{keywordtype}{bool}\ val);}
-\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ enable(\textcolor{keywordtype}{long}\ nr);}
-\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ disable(\textcolor{keywordtype}{long}\ nr);}
-\DoxyCodeLine{00237\ }
-\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setEnableAt(u32\ addr,\ \textcolor{keywordtype}{bool}\ val);}
-\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ enableAt(u32\ addr);}
-\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ disableAt(u32\ addr);}
-\DoxyCodeLine{00241\ }
-\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ addAt(u32\ addr,\ \textcolor{keywordtype}{long}\ skip\ =\ 0);}
-\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ removeAt(u32\ addr);}
-\DoxyCodeLine{00244\ }
-\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ remove(\textcolor{keywordtype}{long}\ nr);}
-\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ removeAll();}
-\DoxyCodeLine{00247\ }
-\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ replace(\textcolor{keywordtype}{long}\ nr,\ u32\ addr);}
-\DoxyCodeLine{00249\ \ \ \ \ \};}
-\DoxyCodeLine{00250\ }
-\DoxyCodeLine{00251\ }
-\DoxyCodeLine{00252\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00253\ \ \ \ \ \textcolor{comment}{//\ CPU}}
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keyword}{struct\ }GuardAPI\ :\ API\ \{}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ Guards\ \&guards;}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ GuardAPI(Emulator\ \&emu,\ Guards\&\ guards)\ :\ API(emu),\ guards(guards)\ \{\ \}}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ elements()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ u32\ guardAddr(\textcolor{keywordtype}{long}\ nr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isEnabled(\textcolor{keywordtype}{long}\ nr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isDisabled(\textcolor{keywordtype}{long}\ nr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isSetAt(u32\ addr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isSetAndEnabledAt(u32\ addr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isSetAndDisabledAt(u32\ addr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isSetAndConditionalAt(u32\ addr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setEnable(\textcolor{keywordtype}{long}\ nr,\ \textcolor{keywordtype}{bool}\ val);}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ enable(\textcolor{keywordtype}{long}\ nr);}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ disable(\textcolor{keywordtype}{long}\ nr);}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setEnableAt(u32\ addr,\ \textcolor{keywordtype}{bool}\ val);}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ enableAt(u32\ addr);}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ disableAt(u32\ addr);}
+\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ addAt(u32\ addr,\ \textcolor{keywordtype}{long}\ skip\ =\ 0);}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ removeAt(u32\ addr);}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ remove(\textcolor{keywordtype}{long}\ nr);}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ removeAll();}
+\DoxyCodeLine{00249\ }
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ replace(\textcolor{keywordtype}{long}\ nr,\ u32\ addr);}
+\DoxyCodeLine{00251\ \ \ \ \ \};}
+\DoxyCodeLine{00252\ }
+\DoxyCodeLine{00253\ }
 \DoxyCodeLine{00254\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00255\ }
-\DoxyCodeLine{00256\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_virtual_c64_1_1_c_p_u_a_p_i}{CPUAPI}}\ :\ API\ \{}
+\DoxyCodeLine{00255\ \ \ \ \ \textcolor{comment}{//\ CPU}}
+\DoxyCodeLine{00256\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00257\ }
-\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00258\ \ \ \ \ \textcolor{keyword}{struct\ }CPUAPI\ :\ API\ \{}
 \DoxyCodeLine{00259\ }
-\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_virtual_c64_1_1_guard_a_p_i}{GuardAPI}}\ breakpoints;}
-\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_virtual_c64_1_1_guard_a_p_i}{GuardAPI}}\ watchpoints;}
-\DoxyCodeLine{00262\ }
-\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_virtual_c64_1_1_c_p_u_a_p_i}{CPUAPI}}(Emulator\ \&emu)\ :}
-\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ API(emu),}
-\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ breakpoints(emu,\ emu.main.cpu.debugger.breakpoints),}
-\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ watchpoints(emu,\ emu.main.cpu.debugger.watchpoints)\ \{\ \}}
-\DoxyCodeLine{00267\ }
-\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ CPUInfo\ getInfo()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ i64\ clock()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ u16\ getPC0()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ isize\ loggedInstructions()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ u16\ loggedPC0Rel(isize\ nr)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ u16\ loggedPC0Abs(isize\ nr)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ RecordedInstruction\ logEntryAbs(isize\ index)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ clearLog();}
-\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setNumberFormat(DasmNumberFormat\ instrFormat,\ DasmNumberFormat\ dataFormat);}
-\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ isize\ disassembleRecordedInstr(isize,\ \textcolor{keywordtype}{char}\ *)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ isize\ disassembleRecordedBytes(isize,\ \textcolor{keywordtype}{char}\ *)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ disassembleRecordedFlags(isize,\ \textcolor{keywordtype}{char}\ *)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ disassembleRecordedPC(isize,\ \textcolor{keywordtype}{char}\ *)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ isize\ disassemble(\textcolor{keywordtype}{char}\ *,\ u16\ addr)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ isize\ getLengthOfInstructionAt(u16\ addr)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ dumpBytes(\textcolor{keywordtype}{char}\ *,\ u16\ addr,\ isize\ length)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ dumpWord(\textcolor{keywordtype}{char}\ *,\ u16\ addr)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00285\ }
-\DoxyCodeLine{00286\ \ \ \ \ \}\ cpu;}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00261\ }
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ GuardAPI\ breakpoints;}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ GuardAPI\ watchpoints;}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ CPUAPI(Emulator\ \&emu)\ :}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ API(emu),}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ breakpoints(emu,\ emu.main.cpu.debugger.breakpoints),}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ watchpoints(emu,\ emu.main.cpu.debugger.watchpoints)\ \{\ \}}
+\DoxyCodeLine{00269\ }
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ CPUInfo\ getInfo()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ i64\ clock()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ u16\ getPC0()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ isize\ loggedInstructions()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ u16\ loggedPC0Rel(isize\ nr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ u16\ loggedPC0Abs(isize\ nr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ RecordedInstruction\ logEntryAbs(isize\ index)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ clearLog();}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setNumberFormat(DasmNumberFormat\ instrFormat,\ DasmNumberFormat\ dataFormat);}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ isize\ disassembleRecordedInstr(isize,\ \textcolor{keywordtype}{char}\ *)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ isize\ disassembleRecordedBytes(isize,\ \textcolor{keywordtype}{char}\ *)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ disassembleRecordedFlags(isize,\ \textcolor{keywordtype}{char}\ *)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ disassembleRecordedPC(isize,\ \textcolor{keywordtype}{char}\ *)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ isize\ disassemble(\textcolor{keywordtype}{char}\ *,\ u16\ addr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ isize\ getLengthOfInstructionAt(u16\ addr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ dumpBytes(\textcolor{keywordtype}{char}\ *,\ u16\ addr,\ isize\ length)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ dumpWord(\textcolor{keywordtype}{char}\ *,\ u16\ addr)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00287\ }
-\DoxyCodeLine{00288\ }
-\DoxyCodeLine{00289\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00290\ \ \ \ \ \textcolor{comment}{//\ CIAs}}
+\DoxyCodeLine{00288\ \ \ \ \ \}\ cpu;}
+\DoxyCodeLine{00289\ }
+\DoxyCodeLine{00290\ }
 \DoxyCodeLine{00291\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00292\ }
-\DoxyCodeLine{00293\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_virtual_c64_1_1_c_i_a_a_p_i}{CIAAPI}}\ :\ API\ \{}
+\DoxyCodeLine{00292\ \ \ \ \ \textcolor{comment}{//\ CIAs}}
+\DoxyCodeLine{00293\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00294\ }
-\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ CIA\ \&cia;}
-\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_virtual_c64_1_1_c_i_a_a_p_i}{CIAAPI}}(Emulator\ \&emu,\ CIA\&\ cia)\ :\ API(emu),\ cia(cia)\ \{\ \}}
-\DoxyCodeLine{00297\ }
-\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ CIAConfig\ getConfig()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ CIAInfo\ getInfo()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ CIAStats\ getStats()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00301\ }
-\DoxyCodeLine{00302\ \ \ \ \ \}\ cia1,\ cia2;}
+\DoxyCodeLine{00295\ \ \ \ \ \textcolor{keyword}{struct\ }CIAAPI\ :\ API\ \{}
+\DoxyCodeLine{00296\ }
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ CIA\ \&cia;}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ CIAAPI(Emulator\ \&emu,\ CIA\&\ cia)\ :\ API(emu),\ cia(cia)\ \{\ \}}
+\DoxyCodeLine{00299\ }
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ CIAConfig\ getConfig()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ CIAInfo\ getInfo()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ CIAStats\ getStats()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00303\ }
-\DoxyCodeLine{00304\ }
-\DoxyCodeLine{00305\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00306\ \ \ \ \ \textcolor{comment}{//\ VICII}}
+\DoxyCodeLine{00304\ \ \ \ \ \}\ cia1,\ cia2;}
+\DoxyCodeLine{00305\ }
+\DoxyCodeLine{00306\ }
 \DoxyCodeLine{00307\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00308\ }
-\DoxyCodeLine{00309\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_virtual_c64_1_1_v_i_c_i_i_a_p_i}{VICIIAPI}}\ :\ API\ \{}
+\DoxyCodeLine{00308\ \ \ \ \ \textcolor{comment}{//\ VICII}}
+\DoxyCodeLine{00309\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00310\ }
-\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00311\ \ \ \ \ \textcolor{keyword}{struct\ }VICIIAPI\ :\ API\ \{}
 \DoxyCodeLine{00312\ }
-\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ VICIIConfig\ getConfig()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ VICIIInfo\ getInfo()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ SpriteInfo\ getSpriteInfo(isize\ nr)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00316\ }
-\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ isize\ getCyclesPerLine()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ isize\ getLinesPerFrame()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ pal()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00320\ }
-\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ u32\ getColor(isize\ nr)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ u32\ getColor(isize\ nr,\ Palette\ palette)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00323\ }
-\DoxyCodeLine{00324\ \ \ \ \ \}\ vicii;}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00314\ }
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ VICIIConfig\ getConfig()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ VICIIInfo\ getInfo()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ SpriteInfo\ getSpriteInfo(isize\ nr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00318\ }
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ isize\ getCyclesPerLine()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ isize\ getLinesPerFrame()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ pal()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00322\ }
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ u32\ getColor(isize\ nr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ u32\ getColor(isize\ nr,\ \mbox{\hyperlink{_v_i_c_i_i_types_8h_af59eb4c57176022b657e35f92a7d01c9}{Palette}}\ palette)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00325\ }
-\DoxyCodeLine{00326\ }
-\DoxyCodeLine{00327\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00328\ \ \ \ \ \textcolor{comment}{//\ SID}}
+\DoxyCodeLine{00326\ \ \ \ \ \}\ vicii;}
+\DoxyCodeLine{00327\ }
+\DoxyCodeLine{00328\ }
 \DoxyCodeLine{00329\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00330\ }
-\DoxyCodeLine{00331\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_virtual_c64_1_1_s_i_d_a_p_i}{SIDAPI}}\ :\ API\ \{}
+\DoxyCodeLine{00330\ \ \ \ \ \textcolor{comment}{//\ SID}}
+\DoxyCodeLine{00331\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00332\ }
-\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00333\ \ \ \ \ \textcolor{keyword}{struct\ }SIDAPI\ :\ API\ \{}
 \DoxyCodeLine{00334\ }
-\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ MuxerConfig\ getConfig()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00336\ \ \ \ \ \ \ \ \ SIDInfo\ getInfo(isize\ nr)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ VoiceInfo\ getVoiceInfo(isize\ nr,\ isize\ voice)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ MuxerStats\ getStats()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00339\ }
-\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ rampUp();}
-\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ rampUp(\textcolor{keywordtype}{float}\ from);}
-\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ rampDown();}
-\DoxyCodeLine{00343\ }
-\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ copyMono(\textcolor{keywordtype}{float}\ *buffer,\ isize\ n);}
-\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ copyStereo(\textcolor{keywordtype}{float}\ *left,\ \textcolor{keywordtype}{float}\ *right,\ isize\ n);}
-\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ copyInterleaved(\textcolor{keywordtype}{float}\ *buffer,\ isize\ n);}
-\DoxyCodeLine{00347\ }
-\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ draw(u32\ *buffer,\ isize\ width,\ isize\ height,}
-\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ maxAmp,\ u32\ color,\ isize\ sid\ =\ -\/1)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00350\ \ \ \ \ \}\ muxer;}
-\DoxyCodeLine{00351\ }
-\DoxyCodeLine{00352\ }
-\DoxyCodeLine{00353\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00354\ \ \ \ \ \textcolor{comment}{//\ DMA\ Debugger}}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00336\ }
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ MuxerConfig\ getConfig()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ SIDInfo\ getInfo(isize\ nr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ VoiceInfo\ getVoiceInfo(isize\ nr,\ isize\ voice)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ MuxerStats\ getStats()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00341\ }
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ rampUp();}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ rampUp(\textcolor{keywordtype}{float}\ from);}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ rampDown();}
+\DoxyCodeLine{00345\ }
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ copyMono(\textcolor{keywordtype}{float}\ *buffer,\ isize\ n);}
+\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ copyStereo(\textcolor{keywordtype}{float}\ *left,\ \textcolor{keywordtype}{float}\ *right,\ isize\ n);}
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ copyInterleaved(\textcolor{keywordtype}{float}\ *buffer,\ isize\ n);}
+\DoxyCodeLine{00349\ }
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ draw(u32\ *buffer,\ isize\ width,\ isize\ height,}
+\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ maxAmp,\ u32\ color,\ isize\ sid\ =\ -\/1)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00352\ \ \ \ \ \}\ muxer;}
+\DoxyCodeLine{00353\ }
+\DoxyCodeLine{00354\ }
 \DoxyCodeLine{00355\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00356\ }
-\DoxyCodeLine{00357\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_virtual_c64_1_1_dma_debugger_a_p_i}{DmaDebuggerAPI}}\ :\ API\ \{}
+\DoxyCodeLine{00356\ \ \ \ \ \textcolor{comment}{//\ DMA\ Debugger}}
+\DoxyCodeLine{00357\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00358\ }
-\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00359\ \ \ \ \ \textcolor{keyword}{struct\ }DmaDebuggerAPI\ :\ API\ \{}
 \DoxyCodeLine{00360\ }
-\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ current\ configuration}}
-\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ DmaDebuggerConfig\ getConfig()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00363\ }
-\DoxyCodeLine{00364\ \ \ \ \ \}\ dmaDebugger;}
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00362\ }
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ current\ configuration}}
+\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ DmaDebuggerConfig\ getConfig()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00365\ }
-\DoxyCodeLine{00366\ }
-\DoxyCodeLine{00367\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00368\ \ \ \ \ \textcolor{comment}{//\ Keyboard}}
+\DoxyCodeLine{00366\ \ \ \ \ \}\ dmaDebugger;}
+\DoxyCodeLine{00367\ }
+\DoxyCodeLine{00368\ }
 \DoxyCodeLine{00369\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00370\ }
-\DoxyCodeLine{00371\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_virtual_c64_1_1_keyboard_a_p_i}{KeyboardAPI}}\ :\ API\ \{}
+\DoxyCodeLine{00370\ \ \ \ \ \textcolor{comment}{//\ Keyboard}}
+\DoxyCodeLine{00371\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00372\ }
-\DoxyCodeLine{00373\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00373\ \ \ \ \ \textcolor{keyword}{struct\ }KeyboardAPI\ :\ API\ \{}
 \DoxyCodeLine{00374\ }
-\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isPressed(C64Key\ key)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ autoType(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&text);}
-\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ abortAutoTyping();}
-\DoxyCodeLine{00378\ }
-\DoxyCodeLine{00379\ \ \ \ \ \}\ keyboard;}
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00376\ }
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isPressed(C64Key\ key)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ autoType(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&text);}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ abortAutoTyping();}
 \DoxyCodeLine{00380\ }
-\DoxyCodeLine{00381\ }
-\DoxyCodeLine{00382\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00383\ \ \ \ \ \textcolor{comment}{//\ Mouse}}
+\DoxyCodeLine{00381\ \ \ \ \ \}\ keyboard;}
+\DoxyCodeLine{00382\ }
+\DoxyCodeLine{00383\ }
 \DoxyCodeLine{00384\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00385\ }
-\DoxyCodeLine{00386\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_virtual_c64_1_1_mouse_a_p_i}{MouseAPI}}\ :\ API\ \{}
+\DoxyCodeLine{00385\ \ \ \ \ \textcolor{comment}{//\ Mouse}}
+\DoxyCodeLine{00386\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00387\ }
-\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ Mouse\ \&mouse;}
-\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_virtual_c64_1_1_mouse_a_p_i}{MouseAPI}}(Emulator\ \&emu,\ Mouse\&\ mouse)\ :\ API(emu),\ mouse(mouse)\ \{\ \}}
-\DoxyCodeLine{00390\ }
-\DoxyCodeLine{00391\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ detectShakeXY(\textcolor{keywordtype}{double}\ x,\ \textcolor{keywordtype}{double}\ y);}
-\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ detectShakeDxDy(\textcolor{keywordtype}{double}\ dx,\ \textcolor{keywordtype}{double}\ dy);}
-\DoxyCodeLine{00393\ }
-\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Emulates\ a\ mouse\ movement}}
-\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setXY(\textcolor{keywordtype}{double}\ x,\ \textcolor{keywordtype}{double}\ y);}
-\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setDxDy(\textcolor{keywordtype}{double}\ dx,\ \textcolor{keywordtype}{double}\ dy);}
-\DoxyCodeLine{00397\ }
-\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Triggers\ a\ gamepad\ event}}
-\DoxyCodeLine{00399\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ trigger(GamePadAction\ event);}
-\DoxyCodeLine{00400\ \ \ \ \ \};}
-\DoxyCodeLine{00401\ }
-\DoxyCodeLine{00402\ }
-\DoxyCodeLine{00403\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00404\ \ \ \ \ \textcolor{comment}{//\ Joystick}}
+\DoxyCodeLine{00388\ \ \ \ \ \textcolor{keyword}{struct\ }MouseAPI\ :\ API\ \{}
+\DoxyCodeLine{00389\ }
+\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ Mouse\ \&mouse;}
+\DoxyCodeLine{00391\ \ \ \ \ \ \ \ \ MouseAPI(Emulator\ \&emu,\ Mouse\&\ mouse)\ :\ API(emu),\ mouse(mouse)\ \{\ \}}
+\DoxyCodeLine{00392\ }
+\DoxyCodeLine{00393\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ detectShakeXY(\textcolor{keywordtype}{double}\ x,\ \textcolor{keywordtype}{double}\ y);}
+\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ detectShakeDxDy(\textcolor{keywordtype}{double}\ dx,\ \textcolor{keywordtype}{double}\ dy);}
+\DoxyCodeLine{00395\ }
+\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Emulates\ a\ mouse\ movement}}
+\DoxyCodeLine{00397\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setXY(\textcolor{keywordtype}{double}\ x,\ \textcolor{keywordtype}{double}\ y);}
+\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setDxDy(\textcolor{keywordtype}{double}\ dx,\ \textcolor{keywordtype}{double}\ dy);}
+\DoxyCodeLine{00399\ }
+\DoxyCodeLine{00400\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Triggers\ a\ gamepad\ event}}
+\DoxyCodeLine{00401\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ trigger(GamePadAction\ event);}
+\DoxyCodeLine{00402\ \ \ \ \ \};}
+\DoxyCodeLine{00403\ }
+\DoxyCodeLine{00404\ }
 \DoxyCodeLine{00405\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00406\ }
-\DoxyCodeLine{00407\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_virtual_c64_1_1_joystick_a_p_i}{JoystickAPI}}\ :\ API\ \{}
+\DoxyCodeLine{00406\ \ \ \ \ \textcolor{comment}{//\ Joystick}}
+\DoxyCodeLine{00407\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00408\ }
-\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ Joystick\ \&joystick;}
-\DoxyCodeLine{00410\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_virtual_c64_1_1_joystick_a_p_i}{JoystickAPI}}(Emulator\ \&emu,\ Joystick\&\ joystick)\ :\ API(emu),\ joystick(joystick)\ \{\ \}}
-\DoxyCodeLine{00411\ }
-\DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Triggers\ a\ gamepad\ event}}
-\DoxyCodeLine{00413\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ trigger(GamePadAction\ event);}
-\DoxyCodeLine{00414\ \ \ \ \ \};}
-\DoxyCodeLine{00415\ }
-\DoxyCodeLine{00416\ }
-\DoxyCodeLine{00417\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00418\ \ \ \ \ \textcolor{comment}{//\ Datasette}}
+\DoxyCodeLine{00409\ \ \ \ \ \textcolor{keyword}{struct\ }JoystickAPI\ :\ API\ \{}
+\DoxyCodeLine{00410\ }
+\DoxyCodeLine{00411\ \ \ \ \ \ \ \ \ Joystick\ \&joystick;}
+\DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ JoystickAPI(Emulator\ \&emu,\ Joystick\&\ joystick)\ :\ API(emu),\ joystick(joystick)\ \{\ \}}
+\DoxyCodeLine{00413\ }
+\DoxyCodeLine{00414\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Triggers\ a\ gamepad\ event}}
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ trigger(GamePadAction\ event);}
+\DoxyCodeLine{00416\ \ \ \ \ \};}
+\DoxyCodeLine{00417\ }
+\DoxyCodeLine{00418\ }
 \DoxyCodeLine{00419\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00420\ }
-\DoxyCodeLine{00421\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_virtual_c64_1_1_datasette_a_p_i}{DatasetteAPI}}\ :\ API\ \{}
+\DoxyCodeLine{00420\ \ \ \ \ \textcolor{comment}{//\ Datasette}}
+\DoxyCodeLine{00421\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00422\ }
-\DoxyCodeLine{00423\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00423\ \ \ \ \ \textcolor{keyword}{struct\ }DatasetteAPI\ :\ API\ \{}
 \DoxyCodeLine{00424\ }
-\DoxyCodeLine{00425\ \ \ \ \ \ \ \ \ DatasetteInfo\ getInfo()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00425\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
 \DoxyCodeLine{00426\ }
-\DoxyCodeLine{00427\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ insertTape(TAPFile\ \&file);}
-\DoxyCodeLine{00428\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ejectTape();}
-\DoxyCodeLine{00429\ }
-\DoxyCodeLine{00430\ \ \ \ \ \}\ datasette;}
+\DoxyCodeLine{00427\ \ \ \ \ \ \ \ \ DatasetteInfo\ getInfo()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00428\ }
+\DoxyCodeLine{00429\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ insertTape(TAPFile\ \&file);}
+\DoxyCodeLine{00430\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ejectTape();}
 \DoxyCodeLine{00431\ }
-\DoxyCodeLine{00432\ }
-\DoxyCodeLine{00433\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00434\ \ \ \ \ \textcolor{comment}{//\ Control\ port}}
+\DoxyCodeLine{00432\ \ \ \ \ \}\ datasette;}
+\DoxyCodeLine{00433\ }
+\DoxyCodeLine{00434\ }
 \DoxyCodeLine{00435\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00436\ }
-\DoxyCodeLine{00437\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_virtual_c64_1_1_control_port_a_p_i}{ControlPortAPI}}\ :\ API\ \{}
+\DoxyCodeLine{00436\ \ \ \ \ \textcolor{comment}{//\ Control\ port}}
+\DoxyCodeLine{00437\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00438\ }
-\DoxyCodeLine{00439\ \ \ \ \ \ \ \ \ ControlPort\ \&port;}
-\DoxyCodeLine{00440\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_virtual_c64_1_1_control_port_a_p_i}{ControlPortAPI}}(Emulator\ \&emu,\ ControlPort\&\ port)\ :}
-\DoxyCodeLine{00441\ \ \ \ \ \ \ \ \ API(emu),\ port(port),\ joystick(emu,\ port.joystick),\ mouse(emu,\ port.mouse)\ \{\ \}}
-\DoxyCodeLine{00442\ }
-\DoxyCodeLine{00443\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_virtual_c64_1_1_joystick_a_p_i}{JoystickAPI}}\ joystick;}
-\DoxyCodeLine{00444\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_virtual_c64_1_1_mouse_a_p_i}{MouseAPI}}\ mouse;}
-\DoxyCodeLine{00445\ }
-\DoxyCodeLine{00446\ \ \ \ \ \}\ port1,\ port2;}
+\DoxyCodeLine{00439\ \ \ \ \ \textcolor{keyword}{struct\ }ControlPortAPI\ :\ API\ \{}
+\DoxyCodeLine{00440\ }
+\DoxyCodeLine{00441\ \ \ \ \ \ \ \ \ ControlPort\ \&port;}
+\DoxyCodeLine{00442\ \ \ \ \ \ \ \ \ ControlPortAPI(Emulator\ \&emu,\ ControlPort\&\ port)\ :}
+\DoxyCodeLine{00443\ \ \ \ \ \ \ \ \ API(emu),\ port(port),\ joystick(emu,\ port.joystick),\ mouse(emu,\ port.mouse)\ \{\ \}}
+\DoxyCodeLine{00444\ }
+\DoxyCodeLine{00445\ \ \ \ \ \ \ \ \ JoystickAPI\ joystick;}
+\DoxyCodeLine{00446\ \ \ \ \ \ \ \ \ MouseAPI\ mouse;}
 \DoxyCodeLine{00447\ }
-\DoxyCodeLine{00448\ }
-\DoxyCodeLine{00449\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00450\ \ \ \ \ \textcolor{comment}{//\ Recorder}}
+\DoxyCodeLine{00448\ \ \ \ \ \}\ port1,\ port2;}
+\DoxyCodeLine{00449\ }
+\DoxyCodeLine{00450\ }
 \DoxyCodeLine{00451\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00452\ }
-\DoxyCodeLine{00453\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_virtual_c64_1_1_recorder_a_p_i}{RecorderAPI}}\ :\ API\ \{}
+\DoxyCodeLine{00452\ \ \ \ \ \textcolor{comment}{//\ Recorder}}
+\DoxyCodeLine{00453\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00454\ }
-\DoxyCodeLine{00455\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00455\ \ \ \ \ \textcolor{keyword}{struct\ }RecorderAPI\ :\ API\ \{}
 \DoxyCodeLine{00456\ }
-\DoxyCodeLine{00457\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ getExecPath()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00458\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setExecPath(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
-\DoxyCodeLine{00459\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ available()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00460\ \ \ \ \ \ \ \ \ util::Time\ getDuration()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00461\ \ \ \ \ \ \ \ \ isize\ getFrameRate()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00462\ \ \ \ \ \ \ \ \ isize\ getBitRate()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00463\ \ \ \ \ \ \ \ \ isize\ getSampleRate()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00464\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isRecording()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00465\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ startRecording(isize\ x1,\ isize\ y1,\ isize\ x2,\ isize\ y2,}
-\DoxyCodeLine{00466\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isize\ bitRate,}
-\DoxyCodeLine{00467\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isize\ aspectX,\ isize\ aspectY);}
-\DoxyCodeLine{00468\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ stopRecording();}
-\DoxyCodeLine{00469\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ exportAs(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
-\DoxyCodeLine{00470\ }
-\DoxyCodeLine{00471\ \ \ \ \ \}\ recorder;}
+\DoxyCodeLine{00457\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00458\ }
+\DoxyCodeLine{00459\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ getExecPath()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00460\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setExecPath(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
+\DoxyCodeLine{00461\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ available()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00462\ \ \ \ \ \ \ \ \ util::Time\ getDuration()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00463\ \ \ \ \ \ \ \ \ isize\ getFrameRate()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00464\ \ \ \ \ \ \ \ \ isize\ getBitRate()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00465\ \ \ \ \ \ \ \ \ isize\ getSampleRate()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00466\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isRecording()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00467\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ startRecording(isize\ x1,\ isize\ y1,\ isize\ x2,\ isize\ y2,}
+\DoxyCodeLine{00468\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isize\ bitRate,}
+\DoxyCodeLine{00469\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isize\ aspectX,\ isize\ aspectY);}
+\DoxyCodeLine{00470\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ stopRecording();}
+\DoxyCodeLine{00471\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ exportAs(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
 \DoxyCodeLine{00472\ }
-\DoxyCodeLine{00473\ }
-\DoxyCodeLine{00474\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00475\ \ \ \ \ \textcolor{comment}{//\ Expansion\ port}}
+\DoxyCodeLine{00473\ \ \ \ \ \}\ recorder;}
+\DoxyCodeLine{00474\ }
+\DoxyCodeLine{00475\ }
 \DoxyCodeLine{00476\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00477\ }
-\DoxyCodeLine{00478\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_virtual_c64_1_1_expansion_port_a_p_i}{ExpansionPortAPI}}\ :\ API\ \{}
+\DoxyCodeLine{00477\ \ \ \ \ \textcolor{comment}{//\ Expansion\ port}}
+\DoxyCodeLine{00478\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00479\ }
-\DoxyCodeLine{00480\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00480\ \ \ \ \ \textcolor{keyword}{struct\ }ExpansionPortAPI\ :\ API\ \{}
 \DoxyCodeLine{00481\ }
-\DoxyCodeLine{00482\ \ \ \ \ \ \ \ \ CartridgeTraits\ getTraits()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00483\ \ \ \ \ \ \ \ \ CartridgeInfo\ getInfo()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00484\ \ \ \ \ \ \ \ \ CartridgeRomInfo\ getRomInfo(isize\ nr)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00485\ }
-\DoxyCodeLine{00486\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ attachCartridge(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path,\ \textcolor{keywordtype}{bool}\ reset\ =\ \textcolor{keyword}{true});}
-\DoxyCodeLine{00487\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ attachCartridge(CRTFile\ *c,\ \textcolor{keywordtype}{bool}\ reset\ =\ \textcolor{keyword}{true});}
-\DoxyCodeLine{00488\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ attachCartridge(Cartridge\ *c);}
-\DoxyCodeLine{00489\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ attachReu(isize\ capacity);}
-\DoxyCodeLine{00490\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ attachGeoRam(isize\ capacity);}
-\DoxyCodeLine{00491\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ attachIsepicCartridge();}
-\DoxyCodeLine{00492\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ detachCartridge();}
-\DoxyCodeLine{00493\ }
-\DoxyCodeLine{00494\ \ \ \ \ \}\ expansionport;}
+\DoxyCodeLine{00482\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00483\ }
+\DoxyCodeLine{00484\ \ \ \ \ \ \ \ \ CartridgeTraits\ getTraits()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00485\ \ \ \ \ \ \ \ \ CartridgeInfo\ getInfo()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00486\ \ \ \ \ \ \ \ \ CartridgeRomInfo\ getRomInfo(isize\ nr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00487\ }
+\DoxyCodeLine{00488\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ attachCartridge(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path,\ \textcolor{keywordtype}{bool}\ reset\ =\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00489\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ attachCartridge(CRTFile\ *c,\ \textcolor{keywordtype}{bool}\ reset\ =\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00490\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ attachCartridge(Cartridge\ *c);}
+\DoxyCodeLine{00491\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ attachReu(isize\ capacity);}
+\DoxyCodeLine{00492\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ attachGeoRam(isize\ capacity);}
+\DoxyCodeLine{00493\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ attachIsepicCartridge();}
+\DoxyCodeLine{00494\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ detachCartridge();}
 \DoxyCodeLine{00495\ }
-\DoxyCodeLine{00496\ }
-\DoxyCodeLine{00497\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00498\ \ \ \ \ \textcolor{comment}{//\ IEC\ bus}}
+\DoxyCodeLine{00496\ \ \ \ \ \}\ expansionport;}
+\DoxyCodeLine{00497\ }
+\DoxyCodeLine{00498\ }
 \DoxyCodeLine{00499\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00500\ }
-\DoxyCodeLine{00501\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_virtual_c64_1_1_i_e_c_a_p_i}{IECAPI}}\ :\ API\ \{}
+\DoxyCodeLine{00500\ \ \ \ \ \textcolor{comment}{//\ IEC\ bus}}
+\DoxyCodeLine{00501\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00502\ }
-\DoxyCodeLine{00503\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00503\ \ \ \ \ \textcolor{keyword}{struct\ }IECAPI\ :\ API\ \{}
 \DoxyCodeLine{00504\ }
-\DoxyCodeLine{00505\ \ \ \ \ \}\ iec;}
+\DoxyCodeLine{00505\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
 \DoxyCodeLine{00506\ }
-\DoxyCodeLine{00507\ }
-\DoxyCodeLine{00508\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00509\ \ \ \ \ \textcolor{comment}{//\ Disk}}
+\DoxyCodeLine{00507\ \ \ \ \ \}\ iec;}
+\DoxyCodeLine{00508\ }
+\DoxyCodeLine{00509\ }
 \DoxyCodeLine{00510\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00511\ }
-\DoxyCodeLine{00512\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_virtual_c64_1_1_disk_a_p_i}{DiskAPI}}\ :\ API\ \{}
+\DoxyCodeLine{00511\ \ \ \ \ \textcolor{comment}{//\ Disk}}
+\DoxyCodeLine{00512\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00513\ }
-\DoxyCodeLine{00514\ \ \ \ \ \ \ \ \ Drive\ \&drive;}
-\DoxyCodeLine{00515\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_virtual_c64_1_1_disk_a_p_i}{DiskAPI}}(Emulator\ \&emu,\ Drive\&\ drive)\ :\ API(emu),\ drive(drive)\ \{\ \}}
-\DoxyCodeLine{00516\ \ \ \ \ \};}
-\DoxyCodeLine{00517\ }
-\DoxyCodeLine{00518\ }
-\DoxyCodeLine{00519\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00520\ \ \ \ \ \textcolor{comment}{//\ Drive}}
+\DoxyCodeLine{00514\ \ \ \ \ \textcolor{keyword}{struct\ }DiskAPI\ :\ API\ \{}
+\DoxyCodeLine{00515\ }
+\DoxyCodeLine{00516\ \ \ \ \ \ \ \ \ Drive\ \&drive;}
+\DoxyCodeLine{00517\ \ \ \ \ \ \ \ \ DiskAPI(Emulator\ \&emu,\ Drive\&\ drive)\ :\ API(emu),\ drive(drive)\ \{\ \}}
+\DoxyCodeLine{00518\ \ \ \ \ \};}
+\DoxyCodeLine{00519\ }
+\DoxyCodeLine{00520\ }
 \DoxyCodeLine{00521\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00522\ }
-\DoxyCodeLine{00523\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_virtual_c64_1_1_drive_a_p_i}{DriveAPI}}\ :\ API\ \{}
+\DoxyCodeLine{00522\ \ \ \ \ \textcolor{comment}{//\ Drive}}
+\DoxyCodeLine{00523\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00524\ }
-\DoxyCodeLine{00525\ \ \ \ \ \ \ \ \ Drive\ \&drive;}
-\DoxyCodeLine{00526\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_virtual_c64_1_1_drive_a_p_i}{DriveAPI}}(Emulator\ \&emu,\ Drive\&\ drive)\ :\ API(emu),\ drive(drive),\ disk(emu,\ drive)\ \{\ \}}
-\DoxyCodeLine{00527\ }
-\DoxyCodeLine{00528\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_virtual_c64_1_1_disk_a_p_i}{DiskAPI}}\ disk;}
+\DoxyCodeLine{00525\ \ \ \ \ \textcolor{keyword}{struct\ }DriveAPI\ :\ API\ \{}
+\DoxyCodeLine{00526\ }
+\DoxyCodeLine{00527\ \ \ \ \ \ \ \ \ Drive\ \&drive;}
+\DoxyCodeLine{00528\ \ \ \ \ \ \ \ \ DriveAPI(Emulator\ \&emu,\ Drive\&\ drive)\ :\ API(emu),\ drive(drive),\ disk(emu,\ drive)\ \{\ \}}
 \DoxyCodeLine{00529\ }
-\DoxyCodeLine{00530\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ DriveConfig\ \&getConfig()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00531\ \ \ \ \ \ \ \ \ DriveInfo\ getInfo()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00532\ }
-\DoxyCodeLine{00533\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ insertBlankDisk(DOSType\ fstype,\ PETName<16>\ name);}
-\DoxyCodeLine{00534\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ insertD64(\textcolor{keyword}{const}\ D64File\ \&d64,\ \textcolor{keywordtype}{bool}\ wp);}
-\DoxyCodeLine{00535\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ insertG64(\textcolor{keyword}{const}\ G64File\ \&g64,\ \textcolor{keywordtype}{bool}\ wp);}
-\DoxyCodeLine{00536\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ insertCollection(AnyCollection\ \&archive,\ \textcolor{keywordtype}{bool}\ wp)\ \textcolor{keywordflow}{throws};}
-\DoxyCodeLine{00537\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ insertFileSystem(\textcolor{keyword}{const}\ \textcolor{keyword}{class}\ FileSystem\ \&device,\ \textcolor{keywordtype}{bool}\ wp);}
-\DoxyCodeLine{00538\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ejectDisk();}
-\DoxyCodeLine{00539\ }
-\DoxyCodeLine{00540\ \ \ \ \ \}\ drive8,\ drive9;}
+\DoxyCodeLine{00530\ \ \ \ \ \ \ \ \ DiskAPI\ disk;}
+\DoxyCodeLine{00531\ }
+\DoxyCodeLine{00532\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ DriveConfig\ \&getConfig()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00533\ \ \ \ \ \ \ \ \ DriveInfo\ getInfo()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00534\ }
+\DoxyCodeLine{00535\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ insertBlankDisk(DOSType\ fstype,\ PETName<16>\ name);}
+\DoxyCodeLine{00536\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ insertD64(\textcolor{keyword}{const}\ D64File\ \&d64,\ \textcolor{keywordtype}{bool}\ wp);}
+\DoxyCodeLine{00537\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ insertG64(\textcolor{keyword}{const}\ G64File\ \&g64,\ \textcolor{keywordtype}{bool}\ wp);}
+\DoxyCodeLine{00538\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ insertCollection(AnyCollection\ \&archive,\ \textcolor{keywordtype}{bool}\ wp)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00539\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ insertFileSystem(\textcolor{keyword}{const}\ \textcolor{keyword}{class}\ FileSystem\ \&device,\ \textcolor{keywordtype}{bool}\ wp);}
+\DoxyCodeLine{00540\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ejectDisk();}
 \DoxyCodeLine{00541\ }
-\DoxyCodeLine{00542\ }
-\DoxyCodeLine{00543\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00544\ \ \ \ \ \textcolor{comment}{//\ RetroShell}}
+\DoxyCodeLine{00542\ \ \ \ \ \}\ drive8,\ drive9;}
+\DoxyCodeLine{00543\ }
+\DoxyCodeLine{00544\ }
 \DoxyCodeLine{00545\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00546\ }
-\DoxyCodeLine{00547\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_virtual_c64_1_1_retro_shell_a_p_i}{RetroShellAPI}}\ :\ API\ \{}
+\DoxyCodeLine{00546\ \ \ \ \ \textcolor{comment}{//\ RetroShell}}
+\DoxyCodeLine{00547\ \ \ \ \ \textcolor{comment}{//}}
 \DoxyCodeLine{00548\ }
-\DoxyCodeLine{00549\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00549\ \ \ \ \ \textcolor{keyword}{struct\ }RetroShellAPI\ :\ API\ \{}
 \DoxyCodeLine{00550\ }
-\DoxyCodeLine{00551\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *text();}
-\DoxyCodeLine{00552\ \ \ \ \ \ \ \ \ isize\ cursorRel();}
-\DoxyCodeLine{00553\ }
-\DoxyCodeLine{00554\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ press(RetroShellKey\ key,\ \textcolor{keywordtype}{bool}\ shift\ =\ \textcolor{keyword}{false});}
-\DoxyCodeLine{00555\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ press(\textcolor{keywordtype}{char}\ c);}
-\DoxyCodeLine{00556\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ press(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&s);}
-\DoxyCodeLine{00557\ }
-\DoxyCodeLine{00558\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ execScript(std::stringstream\ \&ss);}
-\DoxyCodeLine{00559\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ execScript(\textcolor{keyword}{const}\ std::ifstream\ \&fs);}
-\DoxyCodeLine{00560\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ execScript(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&contents);}
-\DoxyCodeLine{00561\ }
-\DoxyCodeLine{00562\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setStream(std::ostream\ \&os);}
+\DoxyCodeLine{00551\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }API::API;}
+\DoxyCodeLine{00552\ }
+\DoxyCodeLine{00553\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *text();}
+\DoxyCodeLine{00554\ \ \ \ \ \ \ \ \ isize\ cursorRel();}
+\DoxyCodeLine{00555\ }
+\DoxyCodeLine{00556\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ press(RetroShellKey\ key,\ \textcolor{keywordtype}{bool}\ shift\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00557\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ press(\textcolor{keywordtype}{char}\ c);}
+\DoxyCodeLine{00558\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ press(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&s);}
+\DoxyCodeLine{00559\ }
+\DoxyCodeLine{00560\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ execScript(std::stringstream\ \&ss);}
+\DoxyCodeLine{00561\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ execScript(\textcolor{keyword}{const}\ std::ifstream\ \&fs);}
+\DoxyCodeLine{00562\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ execScript(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&contents);}
 \DoxyCodeLine{00563\ }
-\DoxyCodeLine{00564\ \ \ \ \ \}\ retroShell;}
-\DoxyCodeLine{00565\ \};}
+\DoxyCodeLine{00564\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setStream(std::ostream\ \&os);}
+\DoxyCodeLine{00565\ }
+\DoxyCodeLine{00566\ \ \ \ \ \}\ retroShell;}
+\DoxyCodeLine{00567\ \};}
 
 \end{DoxyCode}

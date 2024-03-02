@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_cartridge_traits" kind="struct" language="C++" prot="public">
+    <compoundname>CartridgeTraits</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_cartridge_traits_1a5e51fa9f6c6410d81d2d145d2bc1f9ec" prot="public" static="no" mutable="no">
+        <type>CartridgeType</type>
+        <definition>CartridgeType CartridgeTraits::type</definition>
+        <argsstring></argsstring>
+        <name>type</name>
+        <qualifiedname>CartridgeTraits::type</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="262" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="262" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_cartridge_traits_1a4621e29c5b97681518921947e67c4540" prot="public" static="no" mutable="no">
+        <type>const char *</type>
+        <definition>const char* CartridgeTraits::title</definition>
+        <argsstring></argsstring>
+        <name>title</name>
+        <qualifiedname>CartridgeTraits::title</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="263" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="263" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_cartridge_traits_1adadc99999c91d4a8de9e1172bb60fbd8" prot="public" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize CartridgeTraits::memory</definition>
+        <argsstring></argsstring>
+        <name>memory</name>
+        <qualifiedname>CartridgeTraits::memory</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="265" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="265" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_cartridge_traits_1ad7bd14bd7ef092a48c0a3fe8012a718e" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool CartridgeTraits::battery</definition>
+        <argsstring></argsstring>
+        <name>battery</name>
+        <qualifiedname>CartridgeTraits::battery</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="266" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="266" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_cartridge_traits_1a07579e8f96d5d9c10f71369f802b867d" prot="public" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize CartridgeTraits::buttons</definition>
+        <argsstring></argsstring>
+        <name>buttons</name>
+        <qualifiedname>CartridgeTraits::buttons</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="268" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="268" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_cartridge_traits_1ab1e59d6a80aea4291aa757ec60a4141f" prot="public" static="no" mutable="no">
+        <type>const char *</type>
+        <definition>const char* CartridgeTraits::button1</definition>
+        <argsstring></argsstring>
+        <name>button1</name>
+        <qualifiedname>CartridgeTraits::button1</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="269" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="269" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_cartridge_traits_1a4c25d7d292900112ee7f1870e128f732" prot="public" static="no" mutable="no">
+        <type>const char *</type>
+        <definition>const char* CartridgeTraits::button2</definition>
+        <argsstring></argsstring>
+        <name>button2</name>
+        <qualifiedname>CartridgeTraits::button2</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="270" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="270" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_cartridge_traits_1a511cbac9dffb1512d6d1bc7bf111d6d4" prot="public" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize CartridgeTraits::switches</definition>
+        <argsstring></argsstring>
+        <name>switches</name>
+        <qualifiedname>CartridgeTraits::switches</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="272" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="272" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_cartridge_traits_1aa56dbd10ed5679c4a7cad0ab01b7a238" prot="public" static="no" mutable="no">
+        <type>const char *</type>
+        <definition>const char* CartridgeTraits::switchLeft</definition>
+        <argsstring></argsstring>
+        <name>switchLeft</name>
+        <qualifiedname>CartridgeTraits::switchLeft</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="273" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="273" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_cartridge_traits_1a2c36dc9fa5b0a5f5c6ef0e6f12f05286" prot="public" static="no" mutable="no">
+        <type>const char *</type>
+        <definition>const char* CartridgeTraits::switchNeutral</definition>
+        <argsstring></argsstring>
+        <name>switchNeutral</name>
+        <qualifiedname>CartridgeTraits::switchNeutral</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="274" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="274" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_cartridge_traits_1aaf1ff456f63ba937ffd279512dd23e0a" prot="public" static="no" mutable="no">
+        <type>const char *</type>
+        <definition>const char* CartridgeTraits::switchRight</definition>
+        <argsstring></argsstring>
+        <name>switchRight</name>
+        <qualifiedname>CartridgeTraits::switchRight</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="275" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="275" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_cartridge_traits_1a86cec76485cca76d6d3a649b7f58b97a" prot="public" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize CartridgeTraits::leds</definition>
+        <argsstring></argsstring>
+        <name>leds</name>
+        <qualifiedname>CartridgeTraits::leds</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="277" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="277" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="260" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="261" bodyend="278"/>
+    <listofallmembers>
+      <member refid="struct_cartridge_traits_1ad7bd14bd7ef092a48c0a3fe8012a718e" prot="public" virt="non-virtual"><scope>CartridgeTraits</scope><name>battery</name></member>
+      <member refid="struct_cartridge_traits_1ab1e59d6a80aea4291aa757ec60a4141f" prot="public" virt="non-virtual"><scope>CartridgeTraits</scope><name>button1</name></member>
+      <member refid="struct_cartridge_traits_1a4c25d7d292900112ee7f1870e128f732" prot="public" virt="non-virtual"><scope>CartridgeTraits</scope><name>button2</name></member>
+      <member refid="struct_cartridge_traits_1a07579e8f96d5d9c10f71369f802b867d" prot="public" virt="non-virtual"><scope>CartridgeTraits</scope><name>buttons</name></member>
+      <member refid="struct_cartridge_traits_1a86cec76485cca76d6d3a649b7f58b97a" prot="public" virt="non-virtual"><scope>CartridgeTraits</scope><name>leds</name></member>
+      <member refid="struct_cartridge_traits_1adadc99999c91d4a8de9e1172bb60fbd8" prot="public" virt="non-virtual"><scope>CartridgeTraits</scope><name>memory</name></member>
+      <member refid="struct_cartridge_traits_1a511cbac9dffb1512d6d1bc7bf111d6d4" prot="public" virt="non-virtual"><scope>CartridgeTraits</scope><name>switches</name></member>
+      <member refid="struct_cartridge_traits_1aa56dbd10ed5679c4a7cad0ab01b7a238" prot="public" virt="non-virtual"><scope>CartridgeTraits</scope><name>switchLeft</name></member>
+      <member refid="struct_cartridge_traits_1a2c36dc9fa5b0a5f5c6ef0e6f12f05286" prot="public" virt="non-virtual"><scope>CartridgeTraits</scope><name>switchNeutral</name></member>
+      <member refid="struct_cartridge_traits_1aaf1ff456f63ba937ffd279512dd23e0a" prot="public" virt="non-virtual"><scope>CartridgeTraits</scope><name>switchRight</name></member>
+      <member refid="struct_cartridge_traits_1a4621e29c5b97681518921947e67c4540" prot="public" virt="non-virtual"><scope>CartridgeTraits</scope><name>title</name></member>
+      <member refid="struct_cartridge_traits_1a5e51fa9f6c6410d81d2d145d2bc1f9ec" prot="public" virt="non-virtual"><scope>CartridgeTraits</scope><name>type</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

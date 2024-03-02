@@ -1,0 +1,61 @@
+\doxysection{Peddle\+Config.\+h}
+\hypertarget{_peddle_config_8h_source}{}\label{_peddle_config_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleConfig.h@{/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleConfig.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ Peddle\ -\/\ A\ MOS\ 65xx\ CPU\ emulator}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ Published\ under\ the\ terms\ of\ the\ MIT\ License}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}config.h"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{comment}{/*\ Idle\ memory\ accesses}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ The\ 65xx\ CPU\ is\ designed\ to\ perform\ a\ memory\ access\ in\ every\ clock\ cycle.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ The\ access\ also\ takes\ place\ when\ the\ CPU\ is\ busy\ with\ an\ internal\ operation.}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ In\ these\ cases,\ the\ access\ is\ not\ necessary\ for\ the\ CPU,\ and\ the\ result\ of}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ the\ operation\ is\ discarded.\ However,\ the\ result\ of\ an\ idle\ access\ can\ cause}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ side\ effects,\ e.g.,\ when\ a\ memory-\/mapped\ I/O\ register\ is\ read\ or\ written.}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ To\ capture\ such\ side\ effects,\ emulation\ of\ idle\ accesses\ must\ be\ enabled.}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ Enable\ to\ improve\ accuracy,\ disable\ to\ gain\ speed.}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ PEDDLE\_EMULATE\_IDLE\_ACCESSES\ true}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{comment}{/*\ Watchpoint\ support}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ *\ By\ setting\ a\ watchpoint,\ the\ emulator\ can\ be\ asked\ to\ monitor\ certain\ memory}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ *\ locations\ and\ signal\ the\ client\ when\ one\ of\ these\ locations\ is\ accessed.}}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ *\ However,\ checking\ for\ watchpoints\ requires\ a\ fair\ amount\ of\ processing\ time,}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ *\ since\ a\ check\ must\ be\ performed\ prior\ to\ each\ memory\ operation.\ If\ watchpoint}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ *\ support\ is\ not\ needed,\ these\ checks\ can\ be\ omitted\ by\ setting\ this\ option\ to}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ *\ false.}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ *\ Enable\ to\ perform\ watchpoint\ checks,\ disable\ to\ gain\ speed.}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ PEDDLE\_ENABLE\_WATCHPOINTS\ true}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{comment}{/*\ Memory\ API}}
+\DoxyCodeLine{00039\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00040\ \textcolor{comment}{\ *\ Peddle\ offers\ two\ interfaces\ to\ interact\ with\ the\ connected\ memory.\ The}}
+\DoxyCodeLine{00041\ \textcolor{comment}{\ *\ "{}simple"{}\ API\ requires\ only\ a\ very\ few\ functions\ to\ be\ implemented,\ namely:}}
+\DoxyCodeLine{00042\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00043\ \textcolor{comment}{\ *\ \ \ \ \ \ \ read\ :\ Reads\ a\ byte\ from\ memory}}
+\DoxyCodeLine{00044\ \textcolor{comment}{\ *\ \ \ \ \ \ write\ :\ Writes\ a\ byte\ to\ memory}}
+\DoxyCodeLine{00045\ \textcolor{comment}{\ *\ \ \ readDasm\ :\ Reads\ a\ byte\ without\ causing\ side-\/effects}}
+\DoxyCodeLine{00046\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00047\ \textcolor{comment}{\ *\ In\ this\ mode,\ the\ higher-\/level\ API,\ which\ is\ used\ inside\ the\ instruction}}
+\DoxyCodeLine{00048\ \textcolor{comment}{\ *\ handlers,\ is\ synthesized\ automatically.\ Alternatively,\ Peddle\ offers\ you}}
+\DoxyCodeLine{00049\ \textcolor{comment}{\ *\ to\ implement\ the\ high-\/level\ API\ by\ yourself.\ This\ is\ done,\ e.g.,\ by}}
+\DoxyCodeLine{00050\ \textcolor{comment}{\ *\ VirtualC64\ to\ speed\ up\ emulation.}}
+\DoxyCodeLine{00051\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00052\ \textcolor{comment}{\ *\ Enable\ to\ simplify\ usage,\ disable\ to\ gain\ speed.}}
+\DoxyCodeLine{00053\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#define\ PEDDLE\_SIMPLE\_MEMORY\_API\ true}}
+
+\end{DoxyCode}

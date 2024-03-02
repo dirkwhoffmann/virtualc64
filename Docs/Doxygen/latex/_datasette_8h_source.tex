@@ -1,0 +1,274 @@
+\doxysection{Datasette.\+h}
+\hypertarget{_datasette_8h_source}{}\label{_datasette_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h@{/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}DatasetteTypes.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}C64Types.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_cmd_queue_8h}{CmdQueue.h}}"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}SubComponent.h"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}Constants.h"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ "{}Chrono.h"{}}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }Pulse\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00027\ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ i32\ cycles;}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ Pulse()\ :\ cycles(0)\ \{\ \};}
+\DoxyCodeLine{00033\ \ \ \ \ Pulse(i32\ value)\ :\ cycles(value)\ \{\ \};}
+\DoxyCodeLine{00034\ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ util::Time\ delay()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00036\ \};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{keyword}{class\ }Datasette\ final\ :\ \textcolor{keyword}{public}\ SubComponent,\ \textcolor{keyword}{public}\ Inspectable<DatasetteInfo,\ Void>\ \{}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ ConfigOptions\ options\ =\ \{}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8adf48f07259725597ab9342f68e67ffeb}{OPT\_DAT\_MODEL}},}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8ab7392cd61342fb719ccd3a9857a20ece}{OPT\_DAT\_CONNECT}}}
+\DoxyCodeLine{00044\ \ \ \ \ \};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//\ Current\ configuration}}
+\DoxyCodeLine{00047\ \ \ \ \ DatasetteConfig\ config\ =\ \{\ \};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Tape}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{comment}{/*\ Data\ format\ (as\ specified\ in\ the\ TAP\ file)}}
+\DoxyCodeLine{00054\ \textcolor{comment}{\ \ \ \ \ *}}
+\DoxyCodeLine{00055\ \textcolor{comment}{\ \ \ \ \ *\ \ \ -\/\ In\ TAP\ format\ 0,\ data\ byte\ 0\ signals\ a\ long\ pulse\ without\ stating}}
+\DoxyCodeLine{00056\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ \ its\ length\ precisely.}}
+\DoxyCodeLine{00057\ \textcolor{comment}{\ \ \ \ \ *}}
+\DoxyCodeLine{00058\ \textcolor{comment}{\ \ \ \ \ *\ \ \ -\/\ In\ TAP\ format\ 1,\ each\ 0\ is\ followed\ by\ three\ bytes\ stating\ the}}
+\DoxyCodeLine{00059\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ \ precise\ length\ in\ LO\_LO\_HI\_00\ format.}}
+\DoxyCodeLine{00060\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00061\ \ \ \ \ u8\ type\ =\ 0;}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{comment}{//\ The\ pulse\ buffer}}
+\DoxyCodeLine{00064\ \ \ \ \ Pulse\ *pulses\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00065\ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//\ Number\ of\ pulses\ stored\ in\ the\ pulse\ buffer}}
+\DoxyCodeLine{00067\ \ \ \ \ isize\ size\ =\ 0;}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{comment}{//\ Tape\ drive}}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00073\ \ \ \ \ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{comment}{//\ The\ position\ of\ the\ read/write\ head\ inside\ the\ pulse\ buffer\ (0\ ...\ size)}}
+\DoxyCodeLine{00075\ \ \ \ \ isize\ head\ =\ 0;}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{comment}{//\ The\ tape\ counter\ (time\ between\ start\ and\ the\ current\ head\ position)}}
+\DoxyCodeLine{00078\ \ \ \ \ util::Time\ counter;}
+\DoxyCodeLine{00079\ \ \ \ \ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//\ State\ of\ the\ play\ key}}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{bool}\ playKey\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00082\ \ \ \ \ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{comment}{//\ State\ of\ the\ drive\ motor}}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{bool}\ motor\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{comment}{//\ Next\ scheduled\ rising\ edge\ on\ data\ line}}
+\DoxyCodeLine{00087\ \ \ \ \ i64\ nextRisingEdge\ =\ 0;}
+\DoxyCodeLine{00088\ \ \ \ \ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{comment}{//\ Next\ scheduled\ falling\ edge\ on\ data\ line}}
+\DoxyCodeLine{00090\ \ \ \ \ i64\ nextFallingEdge\ =\ 0;}
+\DoxyCodeLine{00091\ \ \ \ \ }
+\DoxyCodeLine{00092\ \ \ \ \ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{comment}{//\ Methods}}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00096\ \ \ \ \ }
+\DoxyCodeLine{00097\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ Datasette(C64\ \&ref)\ :\ SubComponent(ref)\ \{\ \};}
+\DoxyCodeLine{00100\ \ \ \ \ \string~Datasette();}
+\DoxyCodeLine{00101\ \ \ \ \ }
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{void}\ alloc(isize\ capacity);}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{void}\ dealloc();}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Datasette"{}};\ \}}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{void}\ \_dump(Category\ category,\ std::ostream\&\ os)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \ \ Datasette\&\ operator=\ (\textcolor{keyword}{const}\ Datasette\&\ other)\ \{}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ CLONE(head)}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ CLONE(counter.ticks)}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ CLONE(playKey)}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ CLONE(motor)}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ CLONE(nextRisingEdge)}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ CLONE(nextFallingEdge)}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ CLONE(type)}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ return\ *this;}
+\DoxyCodeLine{00120\ \ \ \ \ \}}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \ \ \ \ template\ <class\ T>}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordtype}{void}\ serialize(T\&\ worker)}
+\DoxyCodeLine{00124\ \ \ \ \ \{}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ <<\ head}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ <<\ counter.ticks}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ <<\ playKey}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ <<\ motor}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ <<\ nextRisingEdge}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ <<\ nextFallingEdge;}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (isResetter(worker))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ <<\ type;}
+\DoxyCodeLine{00139\ \ \ \ \ \}}
+\DoxyCodeLine{00140\ \ \ \ \ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordtype}{void}\ operator\ <<\ (SerChecker\ \&worker)\textcolor{keyword}{\ override\ }\{\ serialize(worker);\ \}}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordtype}{void}\ operator\ <<\ (SerCounter\ \&worker)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordtype}{void}\ operator\ <<\ (SerResetter\ \&worker)\textcolor{keyword}{\ override\ }\{\ serialize(worker);\ \}}
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keywordtype}{void}\ operator\ <<\ (SerReader\ \&worker)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordtype}{void}\ operator\ <<\ (SerWriter\ \&worker)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{comment}{//\ Configuring}}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keyword}{const}\ DatasetteConfig\ \&getConfig()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ config;\ \}}
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keyword}{const}\ ConfigOptions\ \&getOptions()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ options;\ \}}
+\DoxyCodeLine{00156\ \ \ \ \ i64\ getOption(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ opt)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordtype}{void}\ setOption(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ opt,\ i64\ value)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{comment}{//\ Inspecting}}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \ \ \ \ DatasetteInfo\ getInfo()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{comment}{//\ Handling\ tapes}}
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00172\ \ \ \ \ }
+\DoxyCodeLine{00173\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00174\ \ \ \ \ }
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{comment}{//\ Returns\ true\ if\ a\ tape\ is\ inserted}}
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasTape()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ size\ !=\ 0;\ \}}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ duration\ from\ the\ tape\ start\ and\ the\ specified\ position}}
+\DoxyCodeLine{00179\ \ \ \ \ util::Time\ tapeDuration(isize\ pos);}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ duration\ of\ the\ entire\ tape}}
+\DoxyCodeLine{00182\ \ \ \ \ util::Time\ tapeDuration()\ \{\ \textcolor{keywordflow}{return}\ tapeDuration(size);\ \}}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ current\ tape\ counter\ in\ (truncated)\ seconds}}
+\DoxyCodeLine{00185\ \ \ \ \ isize\ getCounter()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (isize)counter.asSeconds();\ \}}
+\DoxyCodeLine{00186\ }
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{comment}{//Inserts\ a\ TAP\ archive\ as\ a\ virtual\ tape}}
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordtype}{void}\ insertTape(TAPFile\ \&file);}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00190\ \ \ \ \ \textcolor{comment}{//\ Ejects\ the\ tape\ (if\ any)}}
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keywordtype}{void}\ ejectTape();}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ tape\ type\ (TAP\ format,\ 0\ or\ 1)}}
+\DoxyCodeLine{00194\ \ \ \ \ u8\ getType()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ type;\ \}}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \ \ \ \ }
+\DoxyCodeLine{00197\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{comment}{//\ Operating\ the\ device}}
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00200\ \ \ \ \ }
+\DoxyCodeLine{00201\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00202\ \ \ \ \ }
+\DoxyCodeLine{00203\ \ \ \ \ \textcolor{comment}{//\ Returns\ true\ if\ the\ play\ key\ is\ pressed}}
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordtype}{bool}\ getPlayKey()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ playKey;\ \}}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{comment}{//\ Presses\ the\ play\ key}}
+\DoxyCodeLine{00207\ \ \ \ \ \textcolor{keywordtype}{void}\ pressPlay();}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{comment}{//\ Presses\ the\ stop\ key}}
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keywordtype}{void}\ pressStop();}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00212\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{comment}{//\ Performs\ the\ pressPlay\ action}}
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keywordtype}{void}\ play();}
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{comment}{//\ Performs\ the\ pressStop\ action}}
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keywordtype}{void}\ stop();}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{comment}{//\ Emulating\ the\ device}}
+\DoxyCodeLine{00223\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{comment}{//\ Puts\ the\ read/write\ head\ at\ the\ beginning\ of\ the\ tape}}
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{keywordtype}{void}\ rewind(isize\ seconds\ =\ 0);}
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00230\ \ \ \ \ \textcolor{comment}{//\ Returns\ true\ if\ the\ datasette\ motor\ is\ switched\ on}}
+\DoxyCodeLine{00231\ \ \ \ \ \textcolor{keywordtype}{bool}\ getMotor()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ motor;\ \}}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00233\ \ \ \ \ \textcolor{comment}{//\ Switches\ the\ motor\ on\ or\ off}}
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{keywordtype}{void}\ setMotor(\textcolor{keywordtype}{bool}\ value);}
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00236\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00238\ \ \ \ \ \textcolor{comment}{//\ Advances\ the\ read/write\ head\ one\ pulse}}
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{keywordtype}{void}\ advanceHead();}
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00241\ }
+\DoxyCodeLine{00242\ }
+\DoxyCodeLine{00243\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00244\ \ \ \ \ \textcolor{comment}{//\ Processing\ commands\ and\ events}}
+\DoxyCodeLine{00245\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00247\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00249\ \ \ \ \ \textcolor{comment}{//\ Processes\ a\ datasette\ command}}
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keywordtype}{void}\ processCommand(\textcolor{keyword}{const}\ Cmd\ \&cmd);}
+\DoxyCodeLine{00251\ }
+\DoxyCodeLine{00252\ \ \ \ \ \textcolor{comment}{//\ Processes\ a\ datesette\ event}}
+\DoxyCodeLine{00253\ \ \ \ \ \textcolor{keywordtype}{void}\ processMotEvent(EventID\ event);}
+\DoxyCodeLine{00254\ \ \ \ \ \textcolor{keywordtype}{void}\ processDatEvent(EventID\ event,\ i64\ cycles);}
+\DoxyCodeLine{00255\ }
+\DoxyCodeLine{00256\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00257\ }
+\DoxyCodeLine{00258\ \ \ \ \ \textcolor{comment}{//\ Updates\ the\ event\ in\ the\ DAT\ slot}}
+\DoxyCodeLine{00259\ \ \ \ \ \textcolor{keywordtype}{void}\ updateDatEvent();}
+\DoxyCodeLine{00260\ }
+\DoxyCodeLine{00261\ \ \ \ \ \textcolor{comment}{//\ Schedules\ the\ next\ event\ in\ the\ DAT\ slot}}
+\DoxyCodeLine{00262\ \ \ \ \ \textcolor{keywordtype}{void}\ scheduleNextDatEvent();}
+\DoxyCodeLine{00263\ }
+\DoxyCodeLine{00264\ \ \ \ \ \textcolor{comment}{//\ Schedules\ the\ rising\ and\ falling\ edge\ of\ the\ next\ pulse}}
+\DoxyCodeLine{00265\ \ \ \ \ \textcolor{keywordtype}{void}\ schedulePulse(isize\ nr);}
+\DoxyCodeLine{00266\ \};}
+\DoxyCodeLine{00267\ }
+\DoxyCodeLine{00268\ \}}
+
+\end{DoxyCode}

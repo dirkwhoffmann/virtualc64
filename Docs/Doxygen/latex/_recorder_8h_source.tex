@@ -1,0 +1,173 @@
+\doxysection{Recorder.\+h}
+\hypertarget{_recorder_8h_source}{}\label{_recorder_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/Recorder/Recorder.h@{/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/Recorder/Recorder.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}SubComponent.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Chrono.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}FFmpeg.h"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}NamedPipe.h"{}}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }Recorder\ final\ :\ \textcolor{keyword}{public}\ SubComponent,\ \textcolor{keyword}{public}\ Dumpable\ \{}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{comment}{//\ Handles}}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{comment}{//\ FFmpeg\ instances}}
+\DoxyCodeLine{00029\ \ \ \ \ FFmpeg\ videoFFmpeg;}
+\DoxyCodeLine{00030\ \ \ \ \ FFmpeg\ audioFFmpeg;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//\ Video\ and\ audio\ pipes}}
+\DoxyCodeLine{00033\ \ \ \ \ NamedPipe\ videoPipe;}
+\DoxyCodeLine{00034\ \ \ \ \ NamedPipe\ audioPipe;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{comment}{//\ Recording\ status}}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00040\ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ All\ possible\ recorder\ states}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{enum\ class}\ State\ \{\ wait,\ prepare,\ record,\ finalize,\ abort\ \};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{comment}{//\ The\ current\ recorder\ state}}
+\DoxyCodeLine{00045\ \ \ \ \ State\ state\ =\ State::wait;}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{comment}{//\ Recording\ parameters}}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{comment}{//\ Frame\ rate,\ Bit\ rate,\ Sample\ rate}}
+\DoxyCodeLine{00053\ \ \ \ \ isize\ frameRate\ =\ 0;}
+\DoxyCodeLine{00054\ \ \ \ \ isize\ bitRate\ =\ 0;}
+\DoxyCodeLine{00055\ \ \ \ \ isize\ sampleRate\ =\ 0;}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{comment}{//\ Sound\ samples\ per\ frame\ (882\ for\ PAL,\ 735\ for\ NTSC)}}
+\DoxyCodeLine{00058\ \ \ \ \ isize\ samplesPerFrame\ =\ 0;}
+\DoxyCodeLine{00059\ \ \ \ \ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ The\ texture\ cutout\ that\ is\ going\ to\ be\ recorded}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{struct\ }\{\ isize\ x1;\ isize\ y1;\ isize\ x2;\ isize\ y2;\ \}\ cutout;}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{comment}{//\ Time\ stamps}}
+\DoxyCodeLine{00064\ \ \ \ \ util::Time\ recStart;}
+\DoxyCodeLine{00065\ \ \ \ \ util::Time\ recStop;}
+\DoxyCodeLine{00066\ \ \ \ \ }
+\DoxyCodeLine{00067\ \ \ \ \ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{comment}{//\ Initializing}}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00071\ \ \ \ \ }
+\DoxyCodeLine{00072\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00073\ \ \ \ \ }
+\DoxyCodeLine{00074\ \ \ \ \ Recorder(C64\&\ ref);}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreObject}}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00082\ \ \ \ \ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Recorder"{}};\ \}}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{void}\ \_dump(Category\ category,\ std::ostream\&\ os)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00085\ \ \ \ \ }
+\DoxyCodeLine{00086\ \ \ \ \ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreObject}}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{void}\ \_initialize()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ Recorder\&\ operator=\ (\textcolor{keyword}{const}\ Recorder\&\ other)\ \{\ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};\ \}}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keywordtype}{void}\ serialize(T\&\ worker)\ \{\ \}\ SERIALIZERS(serialize);}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \ \ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{comment}{//\ Querying\ locations\ and\ flags}}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ paths\ to\ the\ two\ named\ input\ pipes}}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{string}\ videoPipePath();}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{string}\ audioPipePath();}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{comment}{//\ Return\ the\ paths\ to\ the\ two\ temporary\ output\ files}}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{string}\ videoStreamPath();}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{string}\ audioStreamPath();}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{comment}{//Returns\ the\ log\ level\ passed\ to\ FFmpef}}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ loglevel()\ \{\ \textcolor{keywordflow}{return}\ REC\_DEBUG\ ?\ \textcolor{stringliteral}{"{}verbose"{}}\ :\ \textcolor{stringliteral}{"{}warning"{}};\ \}}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{comment}{//\ Querying\ recording\ parameters}}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ util::Time\ getDuration()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00122\ \ \ \ \ isize\ getFrameRate()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ frameRate;\ \}}
+\DoxyCodeLine{00123\ \ \ \ \ isize\ getBitRate()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ bitRate;\ \}}
+\DoxyCodeLine{00124\ \ \ \ \ isize\ getSampleRate()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ sampleRate;\ \}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{comment}{//\ Starting\ and\ stopping\ a\ video\ capture}}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{comment}{//\ Checks\ whether\ the\ screen\ is\ currently\ recorded}}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordtype}{bool}\ isRecording()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ !=\ State::wait;\ \}}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{comment}{//\ Starts\ the\ screen\ recorder}}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keywordtype}{void}\ startRecording(isize\ x1,\ isize\ y1,\ isize\ x2,\ isize\ y2,}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isize\ bitRate,}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isize\ aspectX,\ isize\ aspectY)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{comment}{//\ Stops\ the\ screen\ recorder}}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordtype}{void}\ stopRecording();}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{comment}{//\ Exports\ the\ recorded\ video}}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordtype}{bool}\ exportAs(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ \ \ }
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{comment}{//\ Recording\ a\ video\ stream}}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{comment}{//\ Records\ a\ single\ frame}}
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordtype}{void}\ vsyncHandler();}
+\DoxyCodeLine{00156\ \ \ \ \ }
+\DoxyCodeLine{00157\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00158\ \ \ \ \ }
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordtype}{void}\ prepare();}
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keywordtype}{void}\ record();}
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keywordtype}{void}\ recordVideo();}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keywordtype}{void}\ recordAudio();}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordtype}{void}\ finalize();}
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keywordtype}{void}\ abort();}
+\DoxyCodeLine{00165\ \};}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,330 @@
+\doxysection{File\+System.\+h}
+\hypertarget{_file_system_8h_source}{}\label{_file_system_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h@{/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}FSDescriptors.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}FSBlock.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}FSDirEntry.h"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}D64File.h"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}AnyCollection.h"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ "{}IOUtils.h"{}}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{class\ }FileSystem\ :\ CoreObject\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }FSBlock;}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{comment}{//\ The\ block\ storage}}
+\DoxyCodeLine{00030\ \ \ \ \ std::vector<BlockPtr>\ blocks;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00033\ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{comment}{//\ Layout\ descriptor\ for\ this\ device}}
+\DoxyCodeLine{00035\ \ \ \ \ FSDeviceDescriptor\ layout;}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//\ Result\ of\ the\ latest\ directory\ scan}}
+\DoxyCodeLine{00038\ \ \ \ \ std::vector<FSDirEntry\ *>\ dir;}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{comment}{//\ Initializing}}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00044\ \ \ \ \ }
+\DoxyCodeLine{00045\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ FileSystem(isize\ capacity)\ \{\ init(capacity);\ \}}
+\DoxyCodeLine{00048\ \ \ \ \ FileSystem(FSDeviceDescriptor\ \&layout)\ \{\ init(layout);\ \}}
+\DoxyCodeLine{00049\ \ \ \ \ FileSystem(DiskType\ type,\ DOSType\ vType)\ \{\ init(type,\ vType);\ \}}
+\DoxyCodeLine{00050\ \ \ \ \ FileSystem(\textcolor{keyword}{const}\ \textcolor{keyword}{class}\ D64File\ \&d64)\ \textcolor{keywordflow}{throws}\ \{\ init(d64);\ \}}
+\DoxyCodeLine{00051\ \ \ \ \ FileSystem(\textcolor{keyword}{class}\ Disk\ \&disk)\ \textcolor{keywordflow}{throws}\ \{\ init(disk);\ \}}
+\DoxyCodeLine{00052\ \ \ \ \ FileSystem(AnyCollection\ \&collection)\ \textcolor{keywordflow}{throws}\ \{\ init(collection);\ \}}
+\DoxyCodeLine{00053\ \ \ \ \ FileSystem(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path)\ \textcolor{keywordflow}{throws}\ \{\ init(path);\ \}}
+\DoxyCodeLine{00054\ \ \ \ \ \string~FileSystem();}
+\DoxyCodeLine{00055\ \ \ \ \ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00057\ \ \ \ \ }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ init(isize\ capacity);}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ init(FSDeviceDescriptor\ \&layout);}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ init(DiskType\ type,\ DOSType\ vType);}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ init(\textcolor{keyword}{const}\ \textcolor{keyword}{class}\ D64File\ \&d64)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ init(\textcolor{keyword}{class}\ Disk\ \&disk)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ init(AnyCollection\ \&collection)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{void}\ init(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ }
+\DoxyCodeLine{00067\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00068\ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}FSVolume"{}};\ \}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{comment}{//\ Prints\ information\ about\ this\ volume}}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{void}\ info();}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{comment}{//\ Debugging}}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00080\ \ \ \ \ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{comment}{//\ Prints\ debug\ information}}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{void}\ dump()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{comment}{//\ Prints\ a\ directory\ listing}}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{void}\ printDirectory();}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{comment}{//\ Querying\ file\ system\ properties}}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00093\ \ \ \ \ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ DOS\ version\ of\ this\ file\ system}}
+\DoxyCodeLine{00095\ \ \ \ \ DOSType\ dos()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ layout.dos;\ \}}
+\DoxyCodeLine{00096\ \ \ \ \ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{comment}{//\ Gets\ or\ sets\ the\ disk\ name}}
+\DoxyCodeLine{00098\ \ \ \ \ PETName<16>\ getName()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{void}\ setName(PETName<16>\ name);}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{comment}{//\ Gets\ or\ sets\ the\ disk\ ID}}
+\DoxyCodeLine{00102\ \ \ \ \ PETName<2>\ getID()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{void}\ setID(PETName<2>\ name);}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ first\ or\ second\ disk\ ID\ character}}
+\DoxyCodeLine{00106\ \ \ \ \ u8\ diskId1()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ bamPtr()-\/>data[0xA2];\ \}}
+\DoxyCodeLine{00107\ \ \ \ \ u8\ diskId2()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ bamPtr()-\/>data[0xA3];\ \}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{comment}{//\ Reports\ layout\ information}}
+\DoxyCodeLine{00110\ \ \ \ \ isize\ getNumCyls()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ layout.numCyls;\ \}}
+\DoxyCodeLine{00111\ \ \ \ \ isize\ getNumHeads()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ layout.numHeads;\ \}}
+\DoxyCodeLine{00112\ \ \ \ \ isize\ getNumTracks()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ layout.numTracks();\ \}}
+\DoxyCodeLine{00113\ \ \ \ \ isize\ getNumSectors(Track\ track)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ layout.numSectors(track);\ \}}
+\DoxyCodeLine{00114\ \ \ \ \ isize\ getNumBlocks()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ layout.numBlocks();\ \}}
+\DoxyCodeLine{00115\ \ \ \ \ isize\ getNumBytes()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ getNumBlocks()\ *\ 256;\ \}}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{comment}{//\ Reports\ usage\ information}}
+\DoxyCodeLine{00118\ \ \ \ \ isize\ freeBlocks()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00119\ \ \ \ \ isize\ usedBlocks()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00120\ \ \ \ \ isize\ freeBytes()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ freeBlocks()\ *\ 256;\ \}}
+\DoxyCodeLine{00121\ \ \ \ \ isize\ usedBytes()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ usedBlocks()\ *\ 256;\ \}}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordtype}{double}\ fillLevel()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ double(100)\ *\ usedBlocks()\ /\ getNumBlocks();\ \}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ number\ of\ stored\ files\ (run\ a\ directory\ scan\ first!)}}
+\DoxyCodeLine{00125\ \ \ \ \ isize\ numFiles()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ isize(dir.size());\ \}}
+\DoxyCodeLine{00126\ \ \ \ \ }
+\DoxyCodeLine{00127\ \ \ \ \ }
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{comment}{//\ Accessing\ blocks}}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00131\ \ \ \ \ }
+\DoxyCodeLine{00132\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00133\ \ \ \ \ }
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ type\ of\ a\ certain\ block}}
+\DoxyCodeLine{00135\ \ \ \ \ FSBlockType\ blockType(Block\ b)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00136\ \ \ \ \ FSBlockType\ blockType(TSLink\ ts)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ blockType(layout.blockNr(ts));\ \}}
+\DoxyCodeLine{00137\ \ \ \ \ }
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{comment}{//\ Informs\ about\ the\ usage\ of\ a\ certain\ byte\ in\ a\ certain\ block}}
+\DoxyCodeLine{00139\ \ \ \ \ FSUsage\ usage(Block\ b,\ u32\ pos)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00140\ \ \ \ \ FSUsage\ usage(TSLink\ ts,\ u32\ pos)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ usage(layout.blockNr(ts),\ pos);\ \}}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{comment}{//\ Gets\ or\ sets\ the\ error\ code\ for\ a\ certain\ block}}
+\DoxyCodeLine{00143\ \ \ \ \ u8\ getErrorCode(Block\ b)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00144\ \ \ \ \ u8\ getErrorCode(TSLink\ ts)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ getErrorCode(layout.blockNr(ts));\ \}}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordtype}{void}\ setErrorCode(Block\ b,\ u8\ code);}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordtype}{void}\ setErrorCode(TSLink\ ts,\ u8\ code)\ \{\ setErrorCode(layout.blockNr(ts),\ code);\ \}}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{comment}{//\ Queries\ a\ pointer\ from\ the\ block\ storage\ (may\ return\ nullptr)}}
+\DoxyCodeLine{00149\ \ \ \ \ FSBlock\ *blockPtr(Block\ b)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00150\ \ \ \ \ FSBlock\ *blockPtr(TSLink\ ts)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ blockPtr(layout.blockNr(ts));\ \}}
+\DoxyCodeLine{00151\ \ \ \ \ FSBlock\ *bamPtr()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ blocks[357];\ \}}
+\DoxyCodeLine{00152\ \ \ \ \ }
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{comment}{//\ Follows\ the\ block\ chain\ link\ of\ a\ specific\ block}}
+\DoxyCodeLine{00154\ \ \ \ \ FSBlock\ *nextBlockPtr(Block\ b)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00155\ \ \ \ \ FSBlock\ *nextBlockPtr(TSLink\ ts)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ nextBlockPtr(layout.blockNr(ts));\ \}}
+\DoxyCodeLine{00156\ \ \ \ \ FSBlock\ *nextBlockPtr(FSBlock\ *ptr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \ \ \ \ }
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{comment}{//\ Working\ with\ the\ BAM\ (Block\ Allocation\ Map)}}
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00162\ \ \ \ \ }
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{comment}{//\ Checks\ if\ a\ block\ is\ marked\ as\ free\ in\ the\ allocation\ bitmap}}
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keywordtype}{bool}\ isFree(Block\ b)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ isFree(layout.tsLink(b));\ \}}
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keywordtype}{bool}\ isFree(TSLink\ ts)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ first\ or\ the\ next\ free\ block\ in\ the\ interleaving\ chain}}
+\DoxyCodeLine{00168\ \ \ \ \ TSLink\ nextFreeBlock(TSLink\ start)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00169\ \ \ \ \ TSLink\ firstFreeBlock()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ nextFreeBlock(\{1,0\});\ \}}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{comment}{//\ Marks\ a\ block\ as\ allocated\ or\ free}}
+\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keywordtype}{void}\ markAsAllocated(Block\ b)\ \{\ setAllocBit(b,\ 0);\ \}}
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keywordtype}{void}\ markAsAllocated(TSLink\ ts)\ \{\ setAllocBit(ts,\ 0);\ \}}
+\DoxyCodeLine{00174\ \ \ \ \ }
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keywordtype}{void}\ markAsFree(Block\ b)\ \{\ setAllocBit(b,\ 1);\ \}}
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keywordtype}{void}\ markAsFree(TSLink\ ts)\ \{\ setAllocBit(ts,\ 1);\ \}}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordtype}{void}\ setAllocBit(Block\ b,\ \textcolor{keywordtype}{bool}\ value)\ \{\ setAllocBit(layout.tsLink(b),\ value);\ \}}
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordtype}{void}\ setAllocBit(TSLink\ ts,\ \textcolor{keywordtype}{bool}\ value);}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{comment}{//\ Allocates\ a\ certain\ amount\ of\ (interleaved)\ blocks}}
+\DoxyCodeLine{00182\ \ \ \ \ std::vector<TSLink>\ allocate(TSLink\ ref,\ u32\ n);}
+\DoxyCodeLine{00183\ \ \ \ \ std::vector<TSLink>\ allocate(u32\ n)\ \{\ \textcolor{keywordflow}{return}\ allocate(\ TSLink\{1,0\},\ n);\ \}}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00185\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00186\ \ \ \ \ }
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{comment}{//\ Locates\ the\ allocation\ bit\ for\ a\ certain\ block}}
+\DoxyCodeLine{00188\ \ \ \ \ FSBlock\ *locateAllocBit(Block\ b,\ isize\ *\textcolor{keywordtype}{byte},\ isize\ *bit)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00189\ \ \ \ \ FSBlock\ *locateAllocBit(TSLink\ ref,\ isize\ *\textcolor{keywordtype}{byte},\ isize\ *bit)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \ \ \ \ }
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{comment}{//\ Reading\ files}}
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00195\ \ \ \ \ }
+\DoxyCodeLine{00196\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00197\ \ \ \ \ }
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ name\ of\ a\ file}}
+\DoxyCodeLine{00199\ \ \ \ \ PETName<16>\ fileName(isize\ nr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00200\ \ \ \ \ PETName<16>\ fileName(FSDirEntry\ *entry)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ type\ of\ a\ file}}
+\DoxyCodeLine{00203\ \ \ \ \ FSFileType\ fileType(isize\ nr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00204\ \ \ \ \ FSFileType\ fileType(FSDirEntry\ *entry)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00205\ \ \ \ \ }
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ precise\ size\ of\ a\ file\ in\ bytes}}
+\DoxyCodeLine{00207\ \ \ \ \ isize\ fileSize(isize\ nr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00208\ \ \ \ \ isize\ fileSize(FSDirEntry\ *entry)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00209\ \ \ \ \ }
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ size\ of\ a\ file\ in\ blocks\ (read\ from\ the\ BAM)}}
+\DoxyCodeLine{00211\ \ \ \ \ isize\ fileBlocks(isize\ nr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00212\ \ \ \ \ isize\ fileBlocks(FSDirEntry\ *entry)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ load\ address\ of\ a\ file}}
+\DoxyCodeLine{00215\ \ \ \ \ u16\ loadAddr(isize\ nr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00216\ \ \ \ \ u16\ loadAddr(FSDirEntry\ *entry)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00217\ \ \ \ \ }
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{comment}{//\ Copies\ the\ file\ contents\ into\ a\ buffer}}
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keywordtype}{void}\ copyFile(isize\ nr,\ u8\ *buf,\ u64\ len,\ u64\ offset\ =\ 0)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{keywordtype}{void}\ copyFile(FSDirEntry\ *entry,\ u8\ *buf,\ u64\ len,\ u64\ offset\ =\ 0)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{comment}{//\ Scans\ the\ directory\ and\ stores\ the\ result\ in\ variable\ 'dir'}}
+\DoxyCodeLine{00223\ \ \ \ \ \textcolor{keywordtype}{void}\ scanDirectory(\textcolor{keywordtype}{bool}\ skipInvisible\ =\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ \ \ \ \ }
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{comment}{//\ Writing\ files}}
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00230\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ next\ free\ directory\ entry\ or\ creates\ one}}
+\DoxyCodeLine{00231\ \ \ \ \ FSDirEntry\ *getOrCreateNextFreeDirEntry();}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00233\ \ \ \ \ \textcolor{comment}{//\ Creates\ a\ new\ file}}
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{keywordtype}{bool}\ makeFile(PETName<16>\ name,\ \textcolor{keyword}{const}\ u8\ *buf,\ isize\ cnt);}
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00236\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00237\ \ \ \ \ }
+\DoxyCodeLine{00238\ \ \ \ \ \textcolor{keywordtype}{bool}\ makeFile(PETName<16>\ name,\ FSDirEntry\ *entry,\ \textcolor{keyword}{const}\ u8\ *buf,\ isize\ cnt);}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00240\ \ \ \ \ }
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{comment}{//\ Integrity\ checking}}
+\DoxyCodeLine{00243\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00245\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00246\ \ \ \ \ }
+\DoxyCodeLine{00247\ \ \ \ \ \textcolor{comment}{//\ Checks\ all\ blocks\ in\ this\ volume}}
+\DoxyCodeLine{00248\ \ \ \ \ FSErrorReport\ check(\textcolor{keywordtype}{bool}\ strict);}
+\DoxyCodeLine{00249\ }
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{comment}{//\ Checks\ a\ single\ byte\ in\ a\ certain\ block}}
+\DoxyCodeLine{00251\ \ \ \ \ \mbox{\hyperlink{_error_types_8h_a52f90e25735e172d279183e61d90d3e3}{ErrorCode}}\ check(isize\ blockNr,\ u32\ pos,\ u8\ *expected,\ \textcolor{keywordtype}{bool}\ strict);}
+\DoxyCodeLine{00252\ }
+\DoxyCodeLine{00253\ \ \ \ \ \textcolor{comment}{//\ Checks\ if\ the\ block\ with\ the\ given\ number\ is\ part\ of\ the\ volume}}
+\DoxyCodeLine{00254\ \ \ \ \ \textcolor{keywordtype}{bool}\ isBlockNumber(isize\ nr)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ nr\ >=\ 0\ \&\&\ nr\ <\ getNumBlocks();\ \}}
+\DoxyCodeLine{00255\ }
+\DoxyCodeLine{00256\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ position\ in\ the\ corrupted\ block\ list\ (0\ =\ OK)}}
+\DoxyCodeLine{00257\ \ \ \ \ isize\ getCorrupted(isize\ blockNr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00259\ \ \ \ \ \textcolor{comment}{//\ Checks\ if\ a\ certain\ block\ is\ corrupted}}
+\DoxyCodeLine{00260\ \ \ \ \ \textcolor{keywordtype}{bool}\ isCorrupted(isize\ blockNr)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ getCorrupted(blockNr)\ !=\ 0;\ \}}
+\DoxyCodeLine{00261\ }
+\DoxyCodeLine{00262\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ number\ of\ the\ next\ or\ previous\ corrupted\ block}}
+\DoxyCodeLine{00263\ \ \ \ \ isize\ nextCorrupted(isize\ blockNr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00264\ \ \ \ \ isize\ prevCorrupted(isize\ blockNr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00265\ }
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{comment}{//\ Checks\ if\ a\ certain\ block\ is\ the\ n-\/th\ corrupted\ block}}
+\DoxyCodeLine{00267\ \ \ \ \ \textcolor{keywordtype}{bool}\ isCorrupted(isize\ blockNr,\ isize\ n)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00268\ }
+\DoxyCodeLine{00269\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ number\ of\ the\ the\ n-\/th\ corrupted\ block}}
+\DoxyCodeLine{00270\ \ \ \ \ isize\ seekCorruptedBlock(isize\ n)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00271\ }
+\DoxyCodeLine{00272\ \ \ \ \ }
+\DoxyCodeLine{00273\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00274\ \ \ \ \ \textcolor{comment}{//\ Importing\ and\ exporting}}
+\DoxyCodeLine{00275\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00276\ \ \ \ \ }
+\DoxyCodeLine{00277\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00278\ }
+\DoxyCodeLine{00279\ \ \ \ \ \textcolor{comment}{//\ Reads\ a\ single\ byte\ from\ a\ block}}
+\DoxyCodeLine{00280\ \ \ \ \ u8\ readByte(Block\ block,\ isize\ offset)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00281\ \ \ \ \ u8\ readByte(TSLink\ ts,\ isize\ offset)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ readByte(layout.blockNr(ts),\ offset);\ \}}
+\DoxyCodeLine{00282\ }
+\DoxyCodeLine{00283\ \ \ \ \ \textcolor{comment}{//\ Returns\ a\ portion\ of\ the\ block\ as\ an\ ASCII\ dump}}
+\DoxyCodeLine{00284\ \ \ \ \ \textcolor{keywordtype}{string}\ ascii(Block\ nr,\ isize\ offset,\ isize\ len)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00285\ }
+\DoxyCodeLine{00286\ \ \ \ \ \textcolor{comment}{//\ Imports\ the\ volume\ from\ a\ buffer}}
+\DoxyCodeLine{00287\ \ \ \ \ \textcolor{keywordtype}{void}\ importVolume(\textcolor{keyword}{const}\ u8\ *src,\ isize\ size)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00288\ \ \ \ \ \textcolor{keywordtype}{bool}\ importVolume(\textcolor{keyword}{const}\ u8\ *src,\ isize\ size,\ \mbox{\hyperlink{_error_types_8h_a52f90e25735e172d279183e61d90d3e3}{ErrorCode}}\ *err);}
+\DoxyCodeLine{00289\ \ \ \ \ }
+\DoxyCodeLine{00290\ \ \ \ \ \textcolor{comment}{//\ Imports\ a\ folder\ from\ the\ host\ file\ system}}
+\DoxyCodeLine{00291\ \ \ \ \ \textcolor{keywordtype}{void}\ importDirectory(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00292\ \ \ \ \ \textcolor{keywordtype}{void}\ importDirectory(\textcolor{keyword}{const}\ fs::directory\_entry\ \&dir)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00293\ }
+\DoxyCodeLine{00294\ \ \ \ \ \textcolor{comment}{//\ Exports\ the\ volume\ to\ a\ buffer}}
+\DoxyCodeLine{00295\ \ \ \ \ \textcolor{keywordtype}{bool}\ exportVolume(u8\ *dst,\ isize\ size,\ \mbox{\hyperlink{_error_types_8h_a52f90e25735e172d279183e61d90d3e3}{ErrorCode}}\ *err\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00296\ }
+\DoxyCodeLine{00297\ \ \ \ \ \textcolor{comment}{//\ Exports\ a\ single\ block\ or\ a\ range\ of\ blocks}}
+\DoxyCodeLine{00298\ \ \ \ \ \textcolor{keywordtype}{bool}\ exportBlock(isize\ nr,\ u8\ *dst,\ isize\ size,\ \mbox{\hyperlink{_error_types_8h_a52f90e25735e172d279183e61d90d3e3}{ErrorCode}}\ *err\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00299\ \ \ \ \ \textcolor{keywordtype}{bool}\ exportBlocks(isize\ first,\ isize\ last,\ u8\ *dst,\ isize\ size,\ \mbox{\hyperlink{_error_types_8h_a52f90e25735e172d279183e61d90d3e3}{ErrorCode}}\ *err\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00300\ }
+\DoxyCodeLine{00301\ \ \ \ \ \textcolor{comment}{//\ Exports\ all\ files\ or\ a\ single\ file\ to\ a\ folder\ in\ the\ host\ file\ system}}
+\DoxyCodeLine{00302\ \ \ \ \ \textcolor{keywordtype}{void}\ exportDirectory(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path,\ \textcolor{keywordtype}{bool}\ createDir\ =\ \textcolor{keyword}{true})\ throws;}
+\DoxyCodeLine{00303\ \ \ \ \ \textcolor{keywordtype}{void}\ exportFile(FSDirEntry\ *item,\ const\ \textcolor{keywordtype}{string}\ \&path)\ throws;}
+\DoxyCodeLine{00304\ \ \ \ \ \textcolor{keywordtype}{void}\ exportFile(FSDirEntry\ *entry,\ std::ofstream\ \&stream)\ throws;}
+\DoxyCodeLine{00305\ }
+\DoxyCodeLine{00306\ }
+\DoxyCodeLine{00307\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00308\ \ \ \ \ \textcolor{comment}{//\ GUI\ helper\ functions}}
+\DoxyCodeLine{00309\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00310\ }
+\DoxyCodeLine{00311\ \ \ \ \ \textcolor{comment}{//\ Determines\ how\ the\ layout\ image\ should\ look\ like\ in\ a\ certain\ column}}
+\DoxyCodeLine{00312\ \ \ \ \ FSBlockType\ getDisplayType(isize\ column);}
+\DoxyCodeLine{00313\ }
+\DoxyCodeLine{00314\ \ \ \ \ \textcolor{comment}{//\ Determines\ how\ the\ diagnose\ image\ should\ look\ like\ in\ a\ certain\ column}}
+\DoxyCodeLine{00315\ \ \ \ \ isize\ diagnoseImageSlice(isize\ column);}
+\DoxyCodeLine{00316\ }
+\DoxyCodeLine{00317\ \ \ \ \ \textcolor{comment}{//\ Searches\ the\ block\ list\ for\ a\ block\ of\ a\ specific\ type}}
+\DoxyCodeLine{00318\ \ \ \ \ isize\ nextBlockOfType(FSBlockType\ type,\ isize\ after);}
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00320\ \ \ \ \ \textcolor{comment}{//\ Searches\ the\ block\ list\ for\ a\ corrupted\ block}}
+\DoxyCodeLine{00321\ \ \ \ \ isize\ nextCorruptedBlock(isize\ after);}
+\DoxyCodeLine{00322\ \};}
+\DoxyCodeLine{00323\ }
+\DoxyCodeLine{00324\ \}}
+
+\end{DoxyCode}

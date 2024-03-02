@@ -1,0 +1,88 @@
+\doxysection{Parser.\+h}
+\hypertarget{_parser_8h_source}{}\label{_parser_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.h@{/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Types.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Exception.h"{}}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }util\ \{}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{struct\ }ParseError\ :\ \textcolor{keyword}{public}\ std::exception\ \{}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{string}\ token;}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{string}\ expected;}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ ParseError(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&t)\ :\ token(t)\ \{\ \}}
+\DoxyCodeLine{00026\ \ \ \ \ ParseError(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&t,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&e)\ :\ token(t),\ expected(e)\ \{\ \}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *what()\ \textcolor{keyword}{const}\ throw()\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ token.c\_str();\ \}}
+\DoxyCodeLine{00029\ \};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{struct\ }ParseBoolError\ :\ \textcolor{keyword}{public}\ ParseError\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{using\ }ParseError::ParseError;}
+\DoxyCodeLine{00033\ \};}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{struct\ }ParseOnOffError\ :\ \textcolor{keyword}{public}\ ParseError\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{using\ }ParseError::ParseError;}
+\DoxyCodeLine{00037\ \};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{struct\ }ParseNumError\ :\ \textcolor{keyword}{public}\ ParseError\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{using\ }ParseError::ParseError;}
+\DoxyCodeLine{00041\ \};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{struct\ }EnumParseError\ :\ \textcolor{keyword}{public}\ ParseError\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{using\ }ParseError::ParseError;}
+\DoxyCodeLine{00045\ \};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{keywordtype}{bool}\ isBool(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ token);}
+\DoxyCodeLine{00048\ \textcolor{keywordtype}{bool}\ isOnOff(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ token);}
+\DoxyCodeLine{00049\ \textcolor{keywordtype}{bool}\ isNum(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ token);}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{keywordtype}{bool}\ parseBool(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ token)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00052\ \textcolor{keywordtype}{bool}\ parseOnOff(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ token)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00053\ \textcolor{keywordtype}{long}\ parseNum(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ token)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00054\ \textcolor{keywordtype}{string}\ parseSeq(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ token)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Enum>\ \textcolor{keywordtype}{long}\ parseEnum(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ key)}
+\DoxyCodeLine{00057\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{string}\ upperKey;}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ c\ :\ key)\ \{\ upperKey\ +=\ (char)std::toupper(c);\ \}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{auto}\ p\ =\ Enum::pairs();}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ p.find(upperKey);}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ ==\ p.end())\ \textcolor{keywordflow}{throw}\ EnumParseError(key,\ Enum::keyList());}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordflow}{return}\ it-\/>second;}
+\DoxyCodeLine{00067\ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Enum>\ \textcolor{keywordtype}{long}\ parsePartialEnum(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ key,\ std::function<\textcolor{keywordtype}{bool}(\textcolor{keywordtype}{long})>\ accept)}
+\DoxyCodeLine{00070\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{string}\ upperKey;}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ c\ :\ key)\ \{\ upperKey\ +=\ (char)std::toupper(c);\ \}}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordflow}{for}\ (isize\ i\ =\ Enum::minVal;\ i\ <=\ Enum::maxVal;\ i++)\ \{}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (Enum::key(i)\ ==\ upperKey\ \&\&\ accept(i))\ \textcolor{keywordflow}{return}\ i;}
+\DoxyCodeLine{00077\ \ \ \ \ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordflow}{throw}\ EnumParseError(key,\ Enum::keyList());}
+\DoxyCodeLine{00080\ \}}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \}}
+
+\end{DoxyCode}

@@ -15,14 +15,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="173" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="173" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="171" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="171" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="171" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="172" bodyend="174"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="169" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="170" bodyend="172"/>
     <listofallmembers>
       <member refid="struct_shell_cmd_1a2fb3b21142e4fd9d7fac89ad3a25f7e9" prot="public" virt="non-virtual"><scope>ShellCmd</scope><name>command</name></member>
     </listofallmembers>

@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_shake_detector" kind="class" language="C++" prot="public">
+    <compoundname>vc64::ShakeDetector</compoundname>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_shake_detector_1aed04aeafd7aff90b7b2d4847c7a85609" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double vc64::ShakeDetector::x</definition>
+        <argsstring></argsstring>
+        <name>x</name>
+        <qualifiedname>vc64::ShakeDetector::x</qualifiedname>
+        <initializer>= 0.0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.h" line="28" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.h" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_shake_detector_1a8433d881139de0680434aa4bb0b3f530" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double vc64::ShakeDetector::dxsum</definition>
+        <argsstring></argsstring>
+        <name>dxsum</name>
+        <qualifiedname>vc64::ShakeDetector::dxsum</qualifiedname>
+        <initializer>= 0.0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.h" line="31" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.h" bodystart="31" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_shake_detector_1a9298df997b1f968e534c9dec9dd69228" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double vc64::ShakeDetector::dxsign</definition>
+        <argsstring></argsstring>
+        <name>dxsign</name>
+        <qualifiedname>vc64::ShakeDetector::dxsign</qualifiedname>
+        <initializer>= 1.0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.h" line="34" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.h" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_shake_detector_1a7915b14777f44805c23a911cfc539b41" prot="private" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize vc64::ShakeDetector::dxturns</definition>
+        <argsstring></argsstring>
+        <name>dxturns</name>
+        <qualifiedname>vc64::ShakeDetector::dxturns</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.h" line="37" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.h" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_shake_detector_1a3f112f8c8d04f0fc349566fdaf6bf42b" prot="private" static="no" mutable="no">
+        <type>u64</type>
+        <definition>u64 vc64::ShakeDetector::lastTurn</definition>
+        <argsstring></argsstring>
+        <name>lastTurn</name>
+        <qualifiedname>vc64::ShakeDetector::lastTurn</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.h" line="40" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_shake_detector_1abd366fb8d593428292f2166e1109f9c6" prot="private" static="no" mutable="no">
+        <type>util::Time</type>
+        <definition>util::Time vc64::ShakeDetector::lastShake</definition>
+        <argsstring></argsstring>
+        <name>lastShake</name>
+        <qualifiedname>vc64::ShakeDetector::lastShake</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.h" line="41" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_shake_detector_1acca5c3ead6804a0887e978c63ac2afa5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::ShakeDetector::isShakingAbs</definition>
+        <argsstring>(double x)</argsstring>
+        <name>isShakingAbs</name>
+        <qualifiedname>vc64::ShakeDetector::isShakingAbs</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>x</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.h" line="46" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.cpp" bodystart="308" bodyend="311"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_shake_detector_1a9ca157564e3f34f89f12e15d695ccce9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::ShakeDetector::isShakingRel</definition>
+        <argsstring>(double dx)</argsstring>
+        <name>isShakingRel</name>
+        <qualifiedname>vc64::ShakeDetector::isShakingRel</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>dx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.h" line="47" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.cpp" bodystart="314" bodyend="359"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.h" line="25" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.h" bodystart="25" bodyend="48"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_shake_detector_1a9298df997b1f968e534c9dec9dd69228" prot="private" virt="non-virtual"><scope>vc64::ShakeDetector</scope><name>dxsign</name></member>
+      <member refid="classvc64_1_1_shake_detector_1a8433d881139de0680434aa4bb0b3f530" prot="private" virt="non-virtual"><scope>vc64::ShakeDetector</scope><name>dxsum</name></member>
+      <member refid="classvc64_1_1_shake_detector_1a7915b14777f44805c23a911cfc539b41" prot="private" virt="non-virtual"><scope>vc64::ShakeDetector</scope><name>dxturns</name></member>
+      <member refid="classvc64_1_1_shake_detector_1acca5c3ead6804a0887e978c63ac2afa5" prot="public" virt="non-virtual"><scope>vc64::ShakeDetector</scope><name>isShakingAbs</name></member>
+      <member refid="classvc64_1_1_shake_detector_1a9ca157564e3f34f89f12e15d695ccce9" prot="public" virt="non-virtual"><scope>vc64::ShakeDetector</scope><name>isShakingRel</name></member>
+      <member refid="classvc64_1_1_shake_detector_1abd366fb8d593428292f2166e1109f9c6" prot="private" virt="non-virtual"><scope>vc64::ShakeDetector</scope><name>lastShake</name></member>
+      <member refid="classvc64_1_1_shake_detector_1a3f112f8c8d04f0fc349566fdaf6bf42b" prot="private" virt="non-virtual"><scope>vc64::ShakeDetector</scope><name>lastTurn</name></member>
+      <member refid="classvc64_1_1_shake_detector_1aed04aeafd7aff90b7b2d4847c7a85609" prot="private" virt="non-virtual"><scope>vc64::ShakeDetector</scope><name>x</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

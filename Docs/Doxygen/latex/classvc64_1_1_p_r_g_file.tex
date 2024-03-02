@@ -1,0 +1,112 @@
+\doxysection{vc64\+::PRGFile Class Reference}
+\hypertarget{classvc64_1_1_p_r_g_file}{}\label{classvc64_1_1_p_r_g_file}\index{vc64::PRGFile@{vc64::PRGFile}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_p_r_g_file_a07718f14541bfda21b9bd6e5729d1174}\label{classvc64_1_1_p_r_g_file_a07718f14541bfda21b9bd6e5729d1174} 
+{\bfseries PRGFile} (isize capacity)
+\item 
+\Hypertarget{classvc64_1_1_p_r_g_file_ab62944d21db6d79f3d3bf6de60e2e414}\label{classvc64_1_1_p_r_g_file_ab62944d21db6d79f3d3bf6de60e2e414} 
+{\bfseries PRGFile} (const string \&path)  throws 
+\item 
+\Hypertarget{classvc64_1_1_p_r_g_file_af6f46cda95953b90bb21be69a8bb0ccd}\label{classvc64_1_1_p_r_g_file_af6f46cda95953b90bb21be69a8bb0ccd} 
+{\bfseries PRGFile} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len)  throws 
+\item 
+\Hypertarget{classvc64_1_1_p_r_g_file_aa4704d3ea65d55ad9b1b5a950dab63e2}\label{classvc64_1_1_p_r_g_file_aa4704d3ea65d55ad9b1b5a950dab63e2} 
+{\bfseries PRGFile} (class \mbox{\hyperlink{classvc64_1_1_file_system}{File\+System}} \&fs)  throws 
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_any_collection}{vc64\+::\+Any\+Collection}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Any\+Collection} (isize capacity)
+\item 
+u16 {\bfseries read\+Word\+BE} (isize nr, isize pos) const
+\item 
+u16 {\bfseries read\+Word\+LE} (isize nr, isize pos) const
+\item 
+u16 {\bfseries item\+Load\+Addr} (isize nr) const
+\item 
+virtual void {\bfseries copy\+Item} (isize nr, u8 \texorpdfstring{$\ast$}{*}buf, isize len, isize offset=0) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Any\+File} (isize capacity)
+\item 
+void {\bfseries init} (isize capacity)
+\item 
+void {\bfseries init} (const string \&path) throws
+\item 
+void {\bfseries init} (const string \&path, std\+::istream \&stream) throws
+\item 
+void {\bfseries init} (std\+::istream \&stream) throws
+\item 
+void {\bfseries init} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len) throws
+\item 
+void {\bfseries init} (FILE \texorpdfstring{$\ast$}{*}file) throws
+\item 
+virtual \mbox{\hyperlink{classvc64_1_1_p_e_t_name}{PETName}}$<$ 16 $>$ {\bfseries get\+Name} () const
+\item 
+u8 {\bfseries get\+Data} (isize nr)
+\item 
+u64 {\bfseries fnv} () const
+\item 
+void {\bfseries strip} (isize count)
+\item 
+void {\bfseries flash} (u8 \texorpdfstring{$\ast$}{*}buf, isize offset=0) const
+\item 
+void {\bfseries write\+To\+Stream} (std\+::ostream \&stream) throws
+\item 
+void {\bfseries write\+To\+File} (const string \&path) throws
+\item 
+void {\bfseries write\+To\+Buffer} (u8 \texorpdfstring{$\ast$}{*}buf) throws
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual void {\bfseries prefix} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_p_r_g_file_ae641337aa125a477938017c57ce52d18}\label{classvc64_1_1_p_r_g_file_ae641337aa125a477938017c57ce52d18} 
+static bool {\bfseries is\+Compatible} (const string \&name)
+\item 
+\Hypertarget{classvc64_1_1_p_r_g_file_a7711ffc25a1a5595ba7ec38792dfb7bf}\label{classvc64_1_1_p_r_g_file_a7711ffc25a1a5595ba7ec38792dfb7bf} 
+static bool {\bfseries is\+Compatible} (std\+::istream \&stream)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}}
+\begin{DoxyCompactItemize}
+\item 
+static File\+Type {\bfseries type} (const string \&path)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}}
+\begin{DoxyCompactItemize}
+\item 
+string {\bfseries path} = "{}"{}
+\item 
+u8 \texorpdfstring{$\ast$}{*} {\bfseries data} = nullptr
+\item 
+isize {\bfseries size} = 0
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries read\+From\+Stream} (std\+::istream \&stream) throws
+\item 
+void {\bfseries read\+From\+File} (const string \&path) throws
+\item 
+void {\bfseries read\+From\+Buffer} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len) throws
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+static bool {\bfseries verbose} = true
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Media/PRGFile.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Media/PRGFile.\+cpp\end{DoxyCompactItemize}

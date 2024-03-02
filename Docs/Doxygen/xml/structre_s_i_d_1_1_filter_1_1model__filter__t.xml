@@ -1,0 +1,225 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="structre_s_i_d_1_1_filter_1_1model__filter__t" kind="struct" language="C++" prot="protected">
+    <compoundname>reSID::Filter::model_filter_t</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structre_s_i_d_1_1_filter_1_1model__filter__t_1a6c5dc8b7b068c32d04822c1e5c7e8e0e" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int reSID::Filter::model_filter_t::vo_N16</definition>
+        <argsstring></argsstring>
+        <name>vo_N16</name>
+        <qualifiedname>reSID::Filter::model_filter_t::vo_N16</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" line="431" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" bodystart="431" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structre_s_i_d_1_1_filter_1_1model__filter__t_1aa33f5720bfc463229f68b1b7b49c445e" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int reSID::Filter::model_filter_t::kVddt</definition>
+        <argsstring></argsstring>
+        <name>kVddt</name>
+        <qualifiedname>reSID::Filter::model_filter_t::kVddt</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" line="432" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" bodystart="432" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structre_s_i_d_1_1_filter_1_1model__filter__t_1aee9e1c56258aec168757c420f2f3cc0d" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int reSID::Filter::model_filter_t::n_snake</definition>
+        <argsstring></argsstring>
+        <name>n_snake</name>
+        <qualifiedname>reSID::Filter::model_filter_t::n_snake</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" line="433" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" bodystart="433" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structre_s_i_d_1_1_filter_1_1model__filter__t_1ad558afab303515e02a4b218ecb0df7b8" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int reSID::Filter::model_filter_t::voice_scale_s14</definition>
+        <argsstring></argsstring>
+        <name>voice_scale_s14</name>
+        <qualifiedname>reSID::Filter::model_filter_t::voice_scale_s14</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" line="434" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" bodystart="434" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structre_s_i_d_1_1_filter_1_1model__filter__t_1a98070d3a408448f5a03e8019a6642243" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int reSID::Filter::model_filter_t::voice_DC</definition>
+        <argsstring></argsstring>
+        <name>voice_DC</name>
+        <qualifiedname>reSID::Filter::model_filter_t::voice_DC</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" line="435" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" bodystart="435" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structre_s_i_d_1_1_filter_1_1model__filter__t_1a9e52edcbc32f11ff0dc73f6210c7245d" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int reSID::Filter::model_filter_t::ak</definition>
+        <argsstring></argsstring>
+        <name>ak</name>
+        <qualifiedname>reSID::Filter::model_filter_t::ak</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" line="436" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" bodystart="436" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structre_s_i_d_1_1_filter_1_1model__filter__t_1a47386d74e948c13d1eff84bd80e371b2" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int reSID::Filter::model_filter_t::bk</definition>
+        <argsstring></argsstring>
+        <name>bk</name>
+        <qualifiedname>reSID::Filter::model_filter_t::bk</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" line="437" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" bodystart="437" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structre_s_i_d_1_1_filter_1_1model__filter__t_1a5029ee5649f702443b92988ea7449623" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int reSID::Filter::model_filter_t::vc_min</definition>
+        <argsstring></argsstring>
+        <name>vc_min</name>
+        <qualifiedname>reSID::Filter::model_filter_t::vc_min</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" line="438" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" bodystart="438" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structre_s_i_d_1_1_filter_1_1model__filter__t_1a13c5d7dee3967c2d635f6f7d748a20e1" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int reSID::Filter::model_filter_t::vc_max</definition>
+        <argsstring></argsstring>
+        <name>vc_max</name>
+        <qualifiedname>reSID::Filter::model_filter_t::vc_max</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" line="439" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" bodystart="439" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structre_s_i_d_1_1_filter_1_1model__filter__t_1abec56be5461729cd79521efbae7d957d" prot="public" static="no" mutable="no">
+        <type>unsigned short</type>
+        <definition>unsigned short reSID::Filter::model_filter_t::opamp_rev[1&lt;&lt; 16]</definition>
+        <argsstring>[1&lt;&lt; 16]</argsstring>
+        <name>opamp_rev</name>
+        <qualifiedname>reSID::Filter::model_filter_t::opamp_rev</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" line="442" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" bodystart="442" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structre_s_i_d_1_1_filter_1_1model__filter__t_1a8b48b561c0caa3239c35f6a23d4bc748" prot="public" static="no" mutable="no">
+        <type>unsigned short</type>
+        <definition>unsigned short reSID::Filter::model_filter_t::summer[summer_offset&lt; 5 &gt;::value]</definition>
+        <argsstring>[summer_offset&lt; 5 &gt;::value]</argsstring>
+        <name>summer</name>
+        <qualifiedname>reSID::Filter::model_filter_t::summer</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" line="444" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" bodystart="444" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structre_s_i_d_1_1_filter_1_1model__filter__t_1a3e7fab1ba59f41b8bf5c6bd14b28299d" prot="public" static="no" mutable="no">
+        <type>unsigned short</type>
+        <definition>unsigned short reSID::Filter::model_filter_t::gain[16][1&lt;&lt; 16]</definition>
+        <argsstring>[16][1&lt;&lt; 16]</argsstring>
+        <name>gain</name>
+        <qualifiedname>reSID::Filter::model_filter_t::gain</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" line="445" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" bodystart="445" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structre_s_i_d_1_1_filter_1_1model__filter__t_1a5799cb48d87b70d0f4cb249e4e84550c" prot="public" static="no" mutable="no">
+        <type>unsigned short</type>
+        <definition>unsigned short reSID::Filter::model_filter_t::mixer[mixer_offset&lt; 8 &gt;::value]</definition>
+        <argsstring>[mixer_offset&lt; 8 &gt;::value]</argsstring>
+        <name>mixer</name>
+        <qualifiedname>reSID::Filter::model_filter_t::mixer</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" line="446" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" bodystart="446" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structre_s_i_d_1_1_filter_1_1model__filter__t_1a2c7840d987339206244069f1024dd1c1" prot="public" static="no" mutable="no">
+        <type>unsigned short</type>
+        <definition>unsigned short reSID::Filter::model_filter_t::f0_dac[1&lt;&lt; 11]</definition>
+        <argsstring>[1&lt;&lt; 11]</argsstring>
+        <name>f0_dac</name>
+        <qualifiedname>reSID::Filter::model_filter_t::f0_dac</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" line="448" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" bodystart="448" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" line="430" column="3" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/filter.h" bodystart="430" bodyend="449"/>
+    <listofallmembers>
+      <member refid="structre_s_i_d_1_1_filter_1_1model__filter__t_1a9e52edcbc32f11ff0dc73f6210c7245d" prot="public" virt="non-virtual"><scope>reSID::Filter::model_filter_t</scope><name>ak</name></member>
+      <member refid="structre_s_i_d_1_1_filter_1_1model__filter__t_1a47386d74e948c13d1eff84bd80e371b2" prot="public" virt="non-virtual"><scope>reSID::Filter::model_filter_t</scope><name>bk</name></member>
+      <member refid="structre_s_i_d_1_1_filter_1_1model__filter__t_1a2c7840d987339206244069f1024dd1c1" prot="public" virt="non-virtual"><scope>reSID::Filter::model_filter_t</scope><name>f0_dac</name></member>
+      <member refid="structre_s_i_d_1_1_filter_1_1model__filter__t_1a3e7fab1ba59f41b8bf5c6bd14b28299d" prot="public" virt="non-virtual"><scope>reSID::Filter::model_filter_t</scope><name>gain</name></member>
+      <member refid="structre_s_i_d_1_1_filter_1_1model__filter__t_1aa33f5720bfc463229f68b1b7b49c445e" prot="public" virt="non-virtual"><scope>reSID::Filter::model_filter_t</scope><name>kVddt</name></member>
+      <member refid="structre_s_i_d_1_1_filter_1_1model__filter__t_1a5799cb48d87b70d0f4cb249e4e84550c" prot="public" virt="non-virtual"><scope>reSID::Filter::model_filter_t</scope><name>mixer</name></member>
+      <member refid="structre_s_i_d_1_1_filter_1_1model__filter__t_1aee9e1c56258aec168757c420f2f3cc0d" prot="public" virt="non-virtual"><scope>reSID::Filter::model_filter_t</scope><name>n_snake</name></member>
+      <member refid="structre_s_i_d_1_1_filter_1_1model__filter__t_1abec56be5461729cd79521efbae7d957d" prot="public" virt="non-virtual"><scope>reSID::Filter::model_filter_t</scope><name>opamp_rev</name></member>
+      <member refid="structre_s_i_d_1_1_filter_1_1model__filter__t_1a8b48b561c0caa3239c35f6a23d4bc748" prot="public" virt="non-virtual"><scope>reSID::Filter::model_filter_t</scope><name>summer</name></member>
+      <member refid="structre_s_i_d_1_1_filter_1_1model__filter__t_1a13c5d7dee3967c2d635f6f7d748a20e1" prot="public" virt="non-virtual"><scope>reSID::Filter::model_filter_t</scope><name>vc_max</name></member>
+      <member refid="structre_s_i_d_1_1_filter_1_1model__filter__t_1a5029ee5649f702443b92988ea7449623" prot="public" virt="non-virtual"><scope>reSID::Filter::model_filter_t</scope><name>vc_min</name></member>
+      <member refid="structre_s_i_d_1_1_filter_1_1model__filter__t_1a6c5dc8b7b068c32d04822c1e5c7e8e0e" prot="public" virt="non-virtual"><scope>reSID::Filter::model_filter_t</scope><name>vo_N16</name></member>
+      <member refid="structre_s_i_d_1_1_filter_1_1model__filter__t_1a98070d3a408448f5a03e8019a6642243" prot="public" virt="non-virtual"><scope>reSID::Filter::model_filter_t</scope><name>voice_DC</name></member>
+      <member refid="structre_s_i_d_1_1_filter_1_1model__filter__t_1ad558afab303515e02a4b218ecb0df7b8" prot="public" virt="non-virtual"><scope>reSID::Filter::model_filter_t</scope><name>voice_scale_s14</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

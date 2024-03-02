@@ -1,0 +1,110 @@
+\doxysection{D64\+File.\+h}
+\hypertarget{_d64_file_8h_source}{}\label{_d64_file_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Media/D64File.h@{/Users/hoff/Retro/virtualc64/Emulator/Media/D64File.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}AnyFile.h"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }D64File\ :\ \textcolor{keyword}{public}\ AnyFile\ \{}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00022\ \ \ \ \ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{comment}{//\ D64\ files\ come\ in\ six\ different\ sizes}}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ isize\ D64\_683\_SECTORS\ \ \ \ \ =\ 174848;}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ isize\ D64\_683\_SECTORS\_ECC\ =\ 175531;}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ isize\ D64\_768\_SECTORS\ \ \ \ \ =\ 196608;}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ isize\ D64\_768\_SECTORS\_ECC\ =\ 197376;}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ isize\ D64\_802\_SECTORS\ \ \ \ \ =\ 205312;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ isize\ D64\_802\_SECTORS\_ECC\ =\ 206114;}
+\DoxyCodeLine{00030\ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{comment}{//\ Error\ information\ stored\ in\ the\ D64\ archive}}
+\DoxyCodeLine{00032\ \ \ \ \ u8\ errors[802];}
+\DoxyCodeLine{00033\ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isCompatible(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&name);}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isCompatible(std::istream\ \&stream);}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{comment}{//\ Initializing}}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00041\ \ \ \ \ }
+\DoxyCodeLine{00042\ \ \ \ \ D64File();}
+\DoxyCodeLine{00043\ \ \ \ \ D64File(isize\ tracks,\ \textcolor{keywordtype}{bool}\ ecc);}
+\DoxyCodeLine{00044\ \ \ \ \ D64File(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path)\ :\ D64File()\ throws\ \{\ init(path);\ \}}
+\DoxyCodeLine{00045\ \ \ \ \ D64File(\textcolor{keyword}{const}\ u8\ *buf,\ isize\ len)\ :\ D64File()\ throws\ \{\ init(buf,\ len);\ \}}
+\DoxyCodeLine{00046\ \ \ \ \ D64File(\textcolor{keyword}{class}\ FileSystem\ \&fs)\ :\ D64File()\ throws\ \{\ init(fs);\ \}}
+\DoxyCodeLine{00047\ \ \ \ \ }
+\DoxyCodeLine{00048\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00049\ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{using\ }AnyFile::init;}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ init(isize\ tracks,\ \textcolor{keywordtype}{bool}\ ecc);}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ init(FileSystem\ \&fs)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00053\ \ \ \ \ }
+\DoxyCodeLine{00054\ \ \ \ \ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreObject}}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00058\ \ \ \ \ }
+\DoxyCodeLine{00059\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00060\ \ \ \ \ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}D64File"{}};\ \}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ AnyFile}}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00067\ \ \ \ \ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{bool}\ isCompatiblePath(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path)\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ isCompatible(path);\ \}}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{bool}\ isCompatibleStream(std::istream\ \&stream)\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ isCompatible(stream);\ \}}
+\DoxyCodeLine{00070\ \ \ \ \ FileType\ type()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ FILETYPE\_D64;\ \}}
+\DoxyCodeLine{00071\ \ \ \ \ PETName<16>\ getName()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{void}\ finalizeRead()\ throws\ override;}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{comment}{//\ Querying\ properties}}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00078\ \ \ \ \ }
+\DoxyCodeLine{00079\ public:}
+\DoxyCodeLine{00080\ \ \ \ \ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ number\ of\ halftracks\ or\ tracks\ stored\ in\ this\ file}}
+\DoxyCodeLine{00082\ \ \ \ \ Track\ numHalftracks()\ const;}
+\DoxyCodeLine{00083\ \ \ \ \ Track\ numTracks()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ numHalftracks()\ /\ 2;\ \}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ error\ code\ for\ the\ specified\ sector\ (01\ =\ no\ error)}}
+\DoxyCodeLine{00086\ \ \ \ \ u8\ getErrorCode(Block\ b)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00087\ \ \ \ \ }
+\DoxyCodeLine{00088\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00089\ \ \ \ \ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{comment}{//\ Translates\ a\ track\ and\ sector\ number\ into\ an\ offset\ (-\/1\ if\ invalid)}}
+\DoxyCodeLine{00091\ \ \ \ \ isize\ offset(Track\ track,\ Sector\ sector)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00092\ \ \ \ \ }
+\DoxyCodeLine{00093\ \ \ \ \ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{comment}{//\ Debugging}}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00097\ \ \ \ \ }
+\DoxyCodeLine{00098\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00099\ \ \ \ \ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{comment}{//\ Dumps\ the\ contents\ of\ a\ sector}}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{void}\ dump(Track\ track,\ Sector\ sector)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00102\ \};}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \}}
+
+\end{DoxyCode}

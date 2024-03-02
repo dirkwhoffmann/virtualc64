@@ -1,0 +1,114 @@
+\doxysection{Epyx.\+h}
+\hypertarget{_epyx_8h_source}{}\label{_epyx_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Epyx.h@{/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Epyx.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Cartridge.h"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }Epyx\ final\ :\ \textcolor{keyword}{public}\ Cartridge\ \{}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ CartridgeTraits\ traits\ =\ \{}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ .type\ \ \ \ \ \ \ =\ CRT\_EPYX\_FASTLOAD,}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ .title\ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}Epyx\ Fastload"{}}}
+\DoxyCodeLine{00025\ \ \ \ \ \};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ CartridgeTraits\ \&getTraits()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ traits;\ \}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{comment}{//\ Indicates\ when\ the\ capacitor\ discharges.\ The\ Epyx\ cartridge\ utilizes\ a}}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{comment}{//\ capacitor\ to\ switch\ the\ ROM\ on\ and\ off.\ During\ normal\ operation,\ the}}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{comment}{//\ capacitor\ charges\ slowly.\ When\ it\ is\ completely\ charged,\ the\ ROM\ gets}}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//\ disabled.\ When\ the\ cartridge\ is\ attached,\ the\ capacitor\ is\ discharged}}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//\ and\ the\ ROM\ visible.\ To\ avoid\ the\ ROM\ to\ be\ disabled,\ the\ cartridge\ can}}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{comment}{//\ either\ read\ from\ ROML\ or\ I/O\ space\ 1.\ Both\ operations\ discharge\ the}}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{comment}{//\ capacitor\ and\ keep\ the\ ROM\ alive.}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ Cycle\ cycle\ =\ 0;}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ Initializing}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{using\ }Cartridge::Cartridge;}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreObject}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ \_dump(Category\ category,\ std::ostream\&\ os)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreComponent}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ Epyx\&\ operator=\ (\textcolor{keyword}{const}\ Epyx\&\ other)\ \{}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ Cartridge::operator=(other);}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ CLONE(cycle)}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00071\ \ \ \ \ \}}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ clone(\textcolor{keyword}{const}\ Cartridge\ \&other)\textcolor{keyword}{\ override\ }\{\ *\textcolor{keyword}{this}\ =\ (\textcolor{keyword}{const}\ Epyx\ \&)other;\ \}}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{void}\ serialize(T\&\ worker)}
+\DoxyCodeLine{00076\ \ \ \ \ \{}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (isSoftResetter(worker))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ <<\ cycle;}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \}\ CARTRIDGE\_SERIALIZERS(serialize);}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{void}\ \_reset(\textcolor{keywordtype}{bool}\ hard)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ Cartridge}}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{void}\ resetCartConfig()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00094\ \ \ \ \ u8\ peekRomL(u16\ addr)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00095\ \ \ \ \ u8\ spypeekRomL(u16\ addr)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00096\ \ \ \ \ u8\ peekIO1(u16\ addr)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00097\ \ \ \ \ u8\ spypeekIO1(u16\ addr)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00098\ \ \ \ \ u8\ peekIO2(u16\ addr)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00099\ \ \ \ \ u8\ spypeekIO2(u16\ addr)\ \textcolor{keyword}{const\ override}\ ;}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{void}\ execute()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{comment}{//\ Discharges\ the\ cartridge's\ capacitor}}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{void}\ dischargeCapacitor();}
+\DoxyCodeLine{00106\ \};}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \}}
+
+\end{DoxyCode}

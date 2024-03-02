@@ -1,0 +1,222 @@
+\doxysection{vc64\+::Rom\+File Class Reference}
+\hypertarget{classvc64_1_1_rom_file}{}\label{classvc64_1_1_rom_file}\index{vc64::RomFile@{vc64::RomFile}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_rom_file_a92d1454b9ef2e7014f4033e1b8300770}\label{classvc64_1_1_rom_file_a92d1454b9ef2e7014f4033e1b8300770} 
+{\bfseries Rom\+File} (const string \&path)  throws 
+\item 
+\Hypertarget{classvc64_1_1_rom_file_a7062fd06063439456398255d04796b46}\label{classvc64_1_1_rom_file_a7062fd06063439456398255d04796b46} 
+{\bfseries Rom\+File} (const string \&path, std\+::istream \&stream)  throws 
+\item 
+\Hypertarget{classvc64_1_1_rom_file_ab86cc1e7624992c3cfadbce8e52a5e16}\label{classvc64_1_1_rom_file_ab86cc1e7624992c3cfadbce8e52a5e16} 
+{\bfseries Rom\+File} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len)  throws 
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classvc64_1_1_rom_file_a153e4db038a48732c55645aca245034d}{get\+Description}} () const override
+\item 
+bool \mbox{\hyperlink{classvc64_1_1_rom_file_a63bfcdfa269293d2cec314b197bb8c0d}{is\+Compatible\+Path}} (const string \&path) override
+\item 
+bool \mbox{\hyperlink{classvc64_1_1_rom_file_a9f1d2c86d3dd3821e9e6d34458e5a9a8}{is\+Compatible\+Stream}} (std\+::istream \&stream) override
+\item 
+File\+Type \mbox{\hyperlink{classvc64_1_1_rom_file_a5ebedb68bf092e1a3575e60a7e6feda9}{type}} () const override
+\item 
+void \mbox{\hyperlink{classvc64_1_1_rom_file_a7942b949af6240d67746a5ab0c233d9d}{finalize\+Read}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Any\+File} (isize capacity)
+\item 
+void {\bfseries init} (isize capacity)
+\item 
+void {\bfseries init} (const string \&path) throws
+\item 
+void {\bfseries init} (const string \&path, std\+::istream \&stream) throws
+\item 
+void {\bfseries init} (std\+::istream \&stream) throws
+\item 
+void {\bfseries init} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len) throws
+\item 
+void {\bfseries init} (FILE \texorpdfstring{$\ast$}{*}file) throws
+\item 
+virtual \mbox{\hyperlink{classvc64_1_1_p_e_t_name}{PETName}}$<$ 16 $>$ {\bfseries get\+Name} () const
+\item 
+u8 {\bfseries get\+Data} (isize nr)
+\item 
+u64 {\bfseries fnv} () const
+\item 
+void {\bfseries strip} (isize count)
+\item 
+void {\bfseries flash} (u8 \texorpdfstring{$\ast$}{*}buf, isize offset=0) const
+\item 
+void {\bfseries write\+To\+Stream} (std\+::ostream \&stream) throws
+\item 
+void {\bfseries write\+To\+File} (const string \&path) throws
+\item 
+void {\bfseries write\+To\+Buffer} (u8 \texorpdfstring{$\ast$}{*}buf) throws
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual void {\bfseries prefix} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_rom_file_aa64726289c3e9aac6a84f60ce6f6a764}\label{classvc64_1_1_rom_file_aa64726289c3e9aac6a84f60ce6f6a764} 
+static bool {\bfseries is\+Compatible} (const string \&name)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_a0d5b6b29ba3d459df83e0b375ccf6069}\label{classvc64_1_1_rom_file_a0d5b6b29ba3d459df83e0b375ccf6069} 
+static bool {\bfseries is\+Compatible} (std\+::istream \&stream)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_a44cda5a4f22cdced3683fda90890d341}\label{classvc64_1_1_rom_file_a44cda5a4f22cdced3683fda90890d341} 
+static bool {\bfseries is\+Rom\+Stream} (Rom\+Type type, std\+::istream \&stream)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_ac745c0a98eb2226fc6c684e9d687eece}\label{classvc64_1_1_rom_file_ac745c0a98eb2226fc6c684e9d687eece} 
+static bool {\bfseries is\+Basic\+Rom\+Stream} (std\+::istream \&stream)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_a064f6d897aa58a6a6e79131725125540}\label{classvc64_1_1_rom_file_a064f6d897aa58a6a6e79131725125540} 
+static bool {\bfseries is\+Char\+Rom\+Stream} (std\+::istream \&stream)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_ab40819bfb73409c0be0ef6da416c3047}\label{classvc64_1_1_rom_file_ab40819bfb73409c0be0ef6da416c3047} 
+static bool {\bfseries is\+Kernal\+Rom\+Stream} (std\+::istream \&stream)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_a473e127e06b9f4fa112a0c05a2fa8a6d}\label{classvc64_1_1_rom_file_a473e127e06b9f4fa112a0c05a2fa8a6d} 
+static bool {\bfseries is\+VC1541\+Rom\+Stream} (std\+::istream \&stream)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_a05074103c347696911dd8df718dfbaa9}\label{classvc64_1_1_rom_file_a05074103c347696911dd8df718dfbaa9} 
+static bool {\bfseries is\+Rom\+File} (Rom\+Type type, const string \&path)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_a270c928bee6a7ff685299b6b95a9ecdb}\label{classvc64_1_1_rom_file_a270c928bee6a7ff685299b6b95a9ecdb} 
+static bool {\bfseries is\+Basic\+Rom\+File} (const string \&path)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_ad8d483ddc1910dda5ca2e10e3301fbbe}\label{classvc64_1_1_rom_file_ad8d483ddc1910dda5ca2e10e3301fbbe} 
+static bool {\bfseries is\+Char\+Rom\+File} (const string \&path)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_a74db24ded2245a3f3a8a6b21e7ffbc97}\label{classvc64_1_1_rom_file_a74db24ded2245a3f3a8a6b21e7ffbc97} 
+static bool {\bfseries is\+Kernal\+Rom\+File} (const string \&path)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_aedf62d652335520760d8666c03066d4e}\label{classvc64_1_1_rom_file_aedf62d652335520760d8666c03066d4e} 
+static bool {\bfseries is\+VC1541\+Rom\+File} (const string \&path)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_ae69bf9fd1a4fe2386c377b3793d9fc85}\label{classvc64_1_1_rom_file_ae69bf9fd1a4fe2386c377b3793d9fc85} 
+static bool {\bfseries is\+Rom\+Buffer} (Rom\+Type type, const u8 \texorpdfstring{$\ast$}{*}buf, isize len)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_a8358630bfbe1bc0812dbfb273f0a17a0}\label{classvc64_1_1_rom_file_a8358630bfbe1bc0812dbfb273f0a17a0} 
+static bool {\bfseries is\+Basic\+Rom\+Buffer} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_a35d6fe391b38f231ef9d4e37c63c8dd9}\label{classvc64_1_1_rom_file_a35d6fe391b38f231ef9d4e37c63c8dd9} 
+static bool {\bfseries is\+Char\+Rom\+Buffer} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_a20fcb3f762d24c5705ab2a05cd6fd4a4}\label{classvc64_1_1_rom_file_a20fcb3f762d24c5705ab2a05cd6fd4a4} 
+static bool {\bfseries is\+Kernal\+Rom\+Buffer} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_a99c7b73463a93a5cb43195a610f67997}\label{classvc64_1_1_rom_file_a99c7b73463a93a5cb43195a610f67997} 
+static bool {\bfseries is\+VC1541\+Rom\+Buffer} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_a004c28359f15966ac6e276e9fb7b3d16}\label{classvc64_1_1_rom_file_a004c28359f15966ac6e276e9fb7b3d16} 
+static Rom\+Identifier {\bfseries identifier} (u64 fnv)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_ad5f4b9886fa12f90cb9e917c6b0fa2e1}\label{classvc64_1_1_rom_file_ad5f4b9886fa12f90cb9e917c6b0fa2e1} 
+static bool {\bfseries is\+Commodore\+Rom} (Rom\+Identifier rev)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_a0199a25da4c1f72350f0a7e0222ec4e3}\label{classvc64_1_1_rom_file_a0199a25da4c1f72350f0a7e0222ec4e3} 
+static bool {\bfseries is\+Patched\+Rom} (Rom\+Identifier rev)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_ad8688d5947631fffdff2c0f336b31214}\label{classvc64_1_1_rom_file_ad8688d5947631fffdff2c0f336b31214} 
+static const char \texorpdfstring{$\ast$}{*} {\bfseries title} (Rom\+Identifier rev)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_a70e2dbc2e3fac48cb38c36454d34b7bf}\label{classvc64_1_1_rom_file_a70e2dbc2e3fac48cb38c36454d34b7bf} 
+static const char \texorpdfstring{$\ast$}{*} {\bfseries sub\+Title} (Rom\+Identifier rev)
+\item 
+\Hypertarget{classvc64_1_1_rom_file_af8d2654e1f0d5309f1aa31844b1585f7}\label{classvc64_1_1_rom_file_af8d2654e1f0d5309f1aa31844b1585f7} 
+static const char \texorpdfstring{$\ast$}{*} {\bfseries revision} (Rom\+Identifier rev)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}}
+\begin{DoxyCompactItemize}
+\item 
+static File\+Type {\bfseries type} (const string \&path)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}}
+\begin{DoxyCompactItemize}
+\item 
+string {\bfseries path} = "{}"{}
+\item 
+u8 \texorpdfstring{$\ast$}{*} {\bfseries data} = nullptr
+\item 
+isize {\bfseries size} = 0
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries read\+From\+Stream} (std\+::istream \&stream) throws
+\item 
+void {\bfseries read\+From\+File} (const string \&path) throws
+\item 
+void {\bfseries read\+From\+Buffer} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len) throws
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+static bool {\bfseries verbose} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvc64_1_1_rom_file_a7942b949af6240d67746a5ab0c233d9d}\label{classvc64_1_1_rom_file_a7942b949af6240d67746a5ab0c233d9d} 
+\index{vc64::RomFile@{vc64::RomFile}!finalizeRead@{finalizeRead}}
+\index{finalizeRead@{finalizeRead}!vc64::RomFile@{vc64::RomFile}}
+\doxysubsubsection{\texorpdfstring{finalizeRead()}{finalizeRead()}}
+{\footnotesize\ttfamily void vc64\+::\+Rom\+File\+::finalize\+Read (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}.
+
+\Hypertarget{classvc64_1_1_rom_file_a153e4db038a48732c55645aca245034d}\label{classvc64_1_1_rom_file_a153e4db038a48732c55645aca245034d} 
+\index{vc64::RomFile@{vc64::RomFile}!getDescription@{getDescription}}
+\index{getDescription@{getDescription}!vc64::RomFile@{vc64::RomFile}}
+\doxysubsubsection{\texorpdfstring{getDescription()}{getDescription()}}
+{\footnotesize\ttfamily const char \texorpdfstring{$\ast$}{*} vc64\+::\+Rom\+File\+::get\+Description (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}.
+
+\Hypertarget{classvc64_1_1_rom_file_a63bfcdfa269293d2cec314b197bb8c0d}\label{classvc64_1_1_rom_file_a63bfcdfa269293d2cec314b197bb8c0d} 
+\index{vc64::RomFile@{vc64::RomFile}!isCompatiblePath@{isCompatiblePath}}
+\index{isCompatiblePath@{isCompatiblePath}!vc64::RomFile@{vc64::RomFile}}
+\doxysubsubsection{\texorpdfstring{isCompatiblePath()}{isCompatiblePath()}}
+{\footnotesize\ttfamily bool vc64\+::\+Rom\+File\+::is\+Compatible\+Path (\begin{DoxyParamCaption}\item[{const string \&}]{path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}.
+
+\Hypertarget{classvc64_1_1_rom_file_a9f1d2c86d3dd3821e9e6d34458e5a9a8}\label{classvc64_1_1_rom_file_a9f1d2c86d3dd3821e9e6d34458e5a9a8} 
+\index{vc64::RomFile@{vc64::RomFile}!isCompatibleStream@{isCompatibleStream}}
+\index{isCompatibleStream@{isCompatibleStream}!vc64::RomFile@{vc64::RomFile}}
+\doxysubsubsection{\texorpdfstring{isCompatibleStream()}{isCompatibleStream()}}
+{\footnotesize\ttfamily bool vc64\+::\+Rom\+File\+::is\+Compatible\+Stream (\begin{DoxyParamCaption}\item[{std\+::istream \&}]{stream }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}.
+
+\Hypertarget{classvc64_1_1_rom_file_a5ebedb68bf092e1a3575e60a7e6feda9}\label{classvc64_1_1_rom_file_a5ebedb68bf092e1a3575e60a7e6feda9} 
+\index{vc64::RomFile@{vc64::RomFile}!type@{type}}
+\index{type@{type}!vc64::RomFile@{vc64::RomFile}}
+\doxysubsubsection{\texorpdfstring{type()}{type()}}
+{\footnotesize\ttfamily File\+Type vc64\+::\+Rom\+File\+::type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Media/Rom\+File.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Media/Rom\+File.\+cpp\end{DoxyCompactItemize}

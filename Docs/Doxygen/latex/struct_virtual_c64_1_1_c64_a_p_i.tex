@@ -19,31 +19,31 @@ void {\bfseries set\+Inspection\+Target} (Inspection\+Target target, Cycle trigg
 void {\bfseries remove\+Inspection\+Target} ()
 \item 
 \Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_a511dc9a036139239dbd85e633e2df217}\label{struct_virtual_c64_1_1_c64_a_p_i_a511dc9a036139239dbd85e633e2df217} 
-C64\+Info {\bfseries get\+Info} () const
+\mbox{\hyperlink{struct_c64_info}{C64\+Info}} {\bfseries get\+Info} () const
 \item 
 \Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_a4b0a4ac228c21884853cafbcab57bd65}\label{struct_virtual_c64_1_1_c64_a_p_i_a4b0a4ac228c21884853cafbcab57bd65} 
-Event\+Slot\+Info {\bfseries get\+Slot\+Info} (isize nr) const
+\mbox{\hyperlink{struct_event_slot_info}{Event\+Slot\+Info}} {\bfseries get\+Slot\+Info} (isize nr) const
 \item 
 \Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_a9a69cef9f13981485c0a2ce282504370}\label{struct_virtual_c64_1_1_c64_a_p_i_a9a69cef9f13981485c0a2ce282504370} 
 void {\bfseries is\+Ready} ()
 \item 
 \Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_acf569a61608b4bb18837d6cd526b635c}\label{struct_virtual_c64_1_1_c64_a_p_i_acf569a61608b4bb18837d6cd526b635c} 
-Snapshot \texorpdfstring{$\ast$}{*} {\bfseries latest\+Auto\+Snapshot} ()
+\mbox{\hyperlink{classvc64_1_1_snapshot}{Snapshot}} \texorpdfstring{$\ast$}{*} {\bfseries latest\+Auto\+Snapshot} ()
 \item 
 \Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_ac99bbc3ab3c3e992bfe09d83e6d428ae}\label{struct_virtual_c64_1_1_c64_a_p_i_ac99bbc3ab3c3e992bfe09d83e6d428ae} 
-Snapshot \texorpdfstring{$\ast$}{*} {\bfseries latest\+User\+Snapshot} ()
+\mbox{\hyperlink{classvc64_1_1_snapshot}{Snapshot}} \texorpdfstring{$\ast$}{*} {\bfseries latest\+User\+Snapshot} ()
 \item 
 \Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_ae50b8a844367bd2b95223baf9f6d309b}\label{struct_virtual_c64_1_1_c64_a_p_i_ae50b8a844367bd2b95223baf9f6d309b} 
-void {\bfseries load\+Snapshot} (const Snapshot \&snapshot)
+void {\bfseries load\+Snapshot} (const \mbox{\hyperlink{classvc64_1_1_snapshot}{Snapshot}} \&snapshot)
 \item 
 \Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_a2537c5c0acbd27ee192c17c0463d63c4}\label{struct_virtual_c64_1_1_c64_a_p_i_a2537c5c0acbd27ee192c17c0463d63c4} 
-Rom\+Info {\bfseries get\+Rom\+Info} (Rom\+Type type) const
+\mbox{\hyperlink{struct_rom_info}{Rom\+Info}} {\bfseries get\+Rom\+Info} (Rom\+Type type) const
 \item 
 \Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_acb4a3117f2c3588d6623d566ae3d9b8e}\label{struct_virtual_c64_1_1_c64_a_p_i_acb4a3117f2c3588d6623d566ae3d9b8e} 
 void {\bfseries load\+Rom} (const string \&path)
 \item 
 \Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_aed32c6fa1c5265b26a031a3b1e37d634}\label{struct_virtual_c64_1_1_c64_a_p_i_aed32c6fa1c5265b26a031a3b1e37d634} 
-void {\bfseries load\+Rom} (const Rom\+File \&file)
+void {\bfseries load\+Rom} (const \mbox{\hyperlink{classvc64_1_1_rom_file}{Rom\+File}} \&file)
 \item 
 \Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_af6c082e2d054fbbb8743c4551a911aac}\label{struct_virtual_c64_1_1_c64_a_p_i_af6c082e2d054fbbb8743c4551a911aac} 
 void {\bfseries delete\+Rom} (Rom\+Type type)
@@ -52,16 +52,91 @@ void {\bfseries delete\+Rom} (Rom\+Type type)
 void {\bfseries save\+Rom} (Rom\+Type rom, const string \&path)
 \item 
 \Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_a3ddb4cec481e146ec202ec663b7a70d7}\label{struct_virtual_c64_1_1_c64_a_p_i_a3ddb4cec481e146ec202ec663b7a70d7} 
-void {\bfseries flash} (const Any\+File \&file)
+void {\bfseries flash} (const \mbox{\hyperlink{classvc64_1_1_any_file}{Any\+File}} \&file)
 \item 
 \Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_adf7827090a4cfea9cc7931a981964521}\label{struct_virtual_c64_1_1_c64_a_p_i_adf7827090a4cfea9cc7931a981964521} 
-void {\bfseries flash} (const Any\+Collection \&file, isize item)
+void {\bfseries flash} (const \mbox{\hyperlink{classvc64_1_1_any_collection}{Any\+Collection}} \&file, isize item)
 \item 
 \Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_abfb78db4b67e30199806c8b588394859}\label{struct_virtual_c64_1_1_c64_a_p_i_abfb78db4b67e30199806c8b588394859} 
-void {\bfseries flash} (const File\+System \&fs, isize item)
+void {\bfseries flash} (const \mbox{\hyperlink{classvc64_1_1_file_system}{File\+System}} \&fs, isize item)
+\item 
+\Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_ac69be018cb6509eaa5a618c276c30fe1}\label{struct_virtual_c64_1_1_c64_a_p_i_ac69be018cb6509eaa5a618c276c30fe1} 
+{\bfseries API} (\mbox{\hyperlink{classvc64_1_1_emulator}{Emulator}} \&ref)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_a_p_i}{vc64\+::\+API}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries API} (\mbox{\hyperlink{classvc64_1_1_emulator}{Emulator}} \&ref)
+\item 
+void \mbox{\hyperlink{classvc64_1_1_a_p_i_aaf072770fe8db16f4eb6187afd5e56c1}{suspend}} ()
+\item 
+void \mbox{\hyperlink{classvc64_1_1_a_p_i_abf5b5cc4514382edc5e80528d956ab96}{resume}} ()
+\item 
+bool {\bfseries is\+User\+Thread} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_references}{vc64\+::\+References}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries References} (\mbox{\hyperlink{classvc64_1_1_c64}{C64}} \&ref)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classvc64_1_1_a_p_i}{vc64\+::\+API}}}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classvc64_1_1_emulator}{Emulator}} \& {\bfseries emulator}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_references}{vc64\+::\+References}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c64}{C64}} \& {\bfseries c64}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c_i_a1}{CIA1}} \& {\bfseries cia1}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c_i_a2}{CIA2}} \& {\bfseries cia2}
+\item 
+\mbox{\hyperlink{classvc64_1_1_control_port}{Control\+Port}} \& {\bfseries port1}
+\item 
+\mbox{\hyperlink{classvc64_1_1_control_port}{Control\+Port}} \& {\bfseries port2}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c_p_u}{CPU}} \& {\bfseries cpu}
+\item 
+\mbox{\hyperlink{classvc64_1_1_datasette}{Datasette}} \& {\bfseries datasette}
+\item 
+\mbox{\hyperlink{classvc64_1_1_drive}{Drive}} \& {\bfseries drive8}
+\item 
+\mbox{\hyperlink{classvc64_1_1_drive}{Drive}} \& {\bfseries drive9}
+\item 
+\mbox{\hyperlink{classvc64_1_1_expansion_port}{Expansion\+Port}} \& {\bfseries expansionport}
+\item 
+\mbox{\hyperlink{classvc64_1_1_host}{Host}} \& {\bfseries host}
+\item 
+\mbox{\hyperlink{classvc64_1_1_i_e_c}{IEC}} \& {\bfseries iec}
+\item 
+\mbox{\hyperlink{classvc64_1_1_keyboard}{Keyboard}} \& {\bfseries keyboard}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c64_memory}{C64\+Memory}} \& {\bfseries mem}
+\item 
+\mbox{\hyperlink{classvc64_1_1_msg_queue}{Msg\+Queue}} \& {\bfseries msg\+Queue}
+\item 
+\mbox{\hyperlink{classvc64_1_1_power_supply}{Power\+Supply}} \& {\bfseries oscillator}
+\item 
+\mbox{\hyperlink{classvc64_1_1_par_cable}{Par\+Cable}} \& {\bfseries par\+Cable}
+\item 
+\mbox{\hyperlink{classvc64_1_1_recorder}{Recorder}} \& {\bfseries recorder}
+\item 
+\mbox{\hyperlink{classvc64_1_1_regression_tester}{Regression\+Tester}} \& {\bfseries regression\+Tester}
+\item 
+\mbox{\hyperlink{classvc64_1_1_retro_shell}{Retro\+Shell}} \& {\bfseries retro\+Shell}
+\item 
+\mbox{\hyperlink{classvc64_1_1_muxer}{Muxer}} \& {\bfseries muxer}
+\item 
+\mbox{\hyperlink{classvc64_1_1_v_i_c_i_i}{VICII}} \& {\bfseries vic}
+\item 
+\mbox{\hyperlink{classvc64_1_1_drive}{Drive}} \texorpdfstring{$\ast$}{*} {\bfseries drive} \mbox{[}2\mbox{]} = \{ \&drive8, \&drive9 \}
 \end{DoxyCompactItemize}
 
 
-The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-/\+Users/hoff/\+Retro/virtualc64/\+Emulator/Virtual\+C64.\+h\end{DoxyCompactItemize}
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\mbox{\hyperlink{_virtual_c64_8h}{Virtual\+C64.\+h}}\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/Virtual\+C64.\+cpp\end{DoxyCompactItemize}

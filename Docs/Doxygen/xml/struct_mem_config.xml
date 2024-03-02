@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_mem_config" kind="struct" language="C++" prot="public">
+    <compoundname>MemConfig</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_mem_config_1abb1b61608554496dfc165d0882af3af4" prot="public" static="no" mutable="no">
+        <type>RamPattern</type>
+        <definition>RamPattern MemConfig::ramPattern</definition>
+        <argsstring></argsstring>
+        <name>ramPattern</name>
+        <qualifiedname>MemConfig::ramPattern</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="105" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="105" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_mem_config_1ad2d769b6775a501ccf22be7c0728160c" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool MemConfig::saveRoms</definition>
+        <argsstring></argsstring>
+        <name>saveRoms</name>
+        <qualifiedname>MemConfig::saveRoms</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="106" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="106" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="103" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="104" bodyend="107"/>
+    <listofallmembers>
+      <member refid="struct_mem_config_1abb1b61608554496dfc165d0882af3af4" prot="public" virt="non-virtual"><scope>MemConfig</scope><name>ramPattern</name></member>
+      <member refid="struct_mem_config_1ad2d769b6775a501ccf22be7c0728160c" prot="public" virt="non-virtual"><scope>MemConfig</scope><name>saveRoms</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

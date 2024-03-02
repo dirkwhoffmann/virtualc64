@@ -1,0 +1,584 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classutil_1_1_time" kind="class" language="C++" prot="public">
+    <compoundname>util::Time</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="classutil_1_1_time_1a46acec5adf343802f12f35118b2b63b9" prot="public" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 util::Time::ticks</definition>
+        <argsstring></argsstring>
+        <name>ticks</name>
+        <qualifiedname>util::Time::ticks</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="24" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classutil_1_1_time_1a5a62aaeeb31100c147e9c8ea10a68144" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>Time</type>
+        <definition>Time util::Time::now</definition>
+        <argsstring>()</argsstring>
+        <name>now</name>
+        <qualifiedname>util::Time::now</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="28" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp" bodystart="118" bodyend="123"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a378ec26cb13f4feecb5d52f8e1d1e1a0" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Time</type>
+        <definition>static Time util::Time::nanoseconds</definition>
+        <argsstring>(i64 value)</argsstring>
+        <name>nanoseconds</name>
+        <qualifiedname>util::Time::nanoseconds</qualifiedname>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="29" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" bodystart="29" bodyend="29"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a9f700b7f318b14641aaa4008a527d300" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Time</type>
+        <definition>static Time util::Time::microseconds</definition>
+        <argsstring>(i64 value)</argsstring>
+        <name>microseconds</name>
+        <qualifiedname>util::Time::microseconds</qualifiedname>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="30" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" bodystart="30" bodyend="30"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a6c9425d19df10b0fc7069a9ee0e9af7b" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Time</type>
+        <definition>static Time util::Time::milliseconds</definition>
+        <argsstring>(i64 value)</argsstring>
+        <name>milliseconds</name>
+        <qualifiedname>util::Time::milliseconds</qualifiedname>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="31" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" bodystart="31" bodyend="31"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1ac648e9b28336d2202724bd20b768f516" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Time</type>
+        <definition>static Time util::Time::seconds</definition>
+        <argsstring>(i64 value)</argsstring>
+        <name>seconds</name>
+        <qualifiedname>util::Time::seconds</qualifiedname>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="32" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" bodystart="32" bodyend="32"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a8baa4f904e44aa5c18d173d07525292c" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Time</type>
+        <definition>static Time util::Time::seconds</definition>
+        <argsstring>(float value)</argsstring>
+        <name>seconds</name>
+        <qualifiedname>util::Time::seconds</qualifiedname>
+        <param>
+          <type>float</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="33" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" bodystart="33" bodyend="33"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a49770905198e4f3f46bbb0a7033269c8" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::tm</type>
+        <definition>std::tm util::Time::local</definition>
+        <argsstring>(const std::time_t &amp;time)</argsstring>
+        <name>local</name>
+        <qualifiedname>util::Time::local</qualifiedname>
+        <param>
+          <type>const std::time_t &amp;</type>
+          <declname>time</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="34" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp" bodystart="126" bodyend="132"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classutil_1_1_time_1a907ddab2c8989862f8affc2929cd186d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>util::Time::Time</definition>
+        <argsstring>()</argsstring>
+        <name>Time</name>
+        <qualifiedname>util::Time::Time</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="36" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" bodystart="36" bodyend="36"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1aad3ee4d6fd230c66cb88f3ee9cae7db5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>util::Time::Time</definition>
+        <argsstring>(i64 value)</argsstring>
+        <name>Time</name>
+        <qualifiedname>util::Time::Time</qualifiedname>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="37" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" bodystart="37" bodyend="37"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a29df16a9258c01f18f966c5a19396ff9" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>i64</type>
+        <definition>i64 util::Time::asNanoseconds</definition>
+        <argsstring>() const</argsstring>
+        <name>asNanoseconds</name>
+        <qualifiedname>util::Time::asNanoseconds</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="39" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" bodystart="39" bodyend="39"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a39f38d278aeb44473234fe11bbf2e313" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>i64</type>
+        <definition>i64 util::Time::asMicroseconds</definition>
+        <argsstring>() const</argsstring>
+        <name>asMicroseconds</name>
+        <qualifiedname>util::Time::asMicroseconds</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="40" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" bodystart="40" bodyend="40"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a7f5e67fb15530241ba42a7112516908e" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>i64</type>
+        <definition>i64 util::Time::asMilliseconds</definition>
+        <argsstring>() const</argsstring>
+        <name>asMilliseconds</name>
+        <qualifiedname>util::Time::asMilliseconds</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="41" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" bodystart="41" bodyend="41"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a489c3c74221535ff812481e8e41b56f7" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>float</type>
+        <definition>float util::Time::asSeconds</definition>
+        <argsstring>() const</argsstring>
+        <name>asSeconds</name>
+        <qualifiedname>util::Time::asSeconds</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="42" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" bodystart="42" bodyend="42"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1ab46d45aac4ebd142fcc118bb9dd826f3" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::Time::operator==</definition>
+        <argsstring>(const Time &amp;rhs) const</argsstring>
+        <name>operator==</name>
+        <qualifiedname>util::Time::operator==</qualifiedname>
+        <param>
+          <type>const Time &amp;</type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="44" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp" bodystart="155" bodyend="158"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a135c8ace17b1713e6a447e07da475bfe" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::Time::operator!=</definition>
+        <argsstring>(const Time &amp;rhs) const</argsstring>
+        <name>operator!=</name>
+        <qualifiedname>util::Time::operator!=</qualifiedname>
+        <param>
+          <type>const Time &amp;</type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="45" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp" bodystart="161" bodyend="164"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a673c4d74e768b03d8847b85edc7c5651" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::Time::operator&lt;=</definition>
+        <argsstring>(const Time &amp;rhs) const</argsstring>
+        <name>operator&lt;=</name>
+        <qualifiedname>util::Time::operator&lt;=</qualifiedname>
+        <param>
+          <type>const Time &amp;</type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="46" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp" bodystart="167" bodyend="170"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a84801fc0609db25fee6813b76e1649f4" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::Time::operator&gt;=</definition>
+        <argsstring>(const Time &amp;rhs) const</argsstring>
+        <name>operator&gt;=</name>
+        <qualifiedname>util::Time::operator&gt;=</qualifiedname>
+        <param>
+          <type>const Time &amp;</type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="47" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp" bodystart="173" bodyend="176"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1ade5efbba921130c1bdc2e97c357f619c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::Time::operator&lt;</definition>
+        <argsstring>(const Time &amp;rhs) const</argsstring>
+        <name>operator&lt;</name>
+        <qualifiedname>util::Time::operator&lt;</qualifiedname>
+        <param>
+          <type>const Time &amp;</type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="48" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp" bodystart="179" bodyend="182"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a35e6af77e35010f6c63d8a64e38b5e02" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool util::Time::operator&gt;</definition>
+        <argsstring>(const Time &amp;rhs) const</argsstring>
+        <name>operator&gt;</name>
+        <qualifiedname>util::Time::operator&gt;</qualifiedname>
+        <param>
+          <type>const Time &amp;</type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="49" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp" bodystart="185" bodyend="188"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a19b567ec7fb97858d507a5ba2b2c5244" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>Time</type>
+        <definition>Time util::Time::operator+</definition>
+        <argsstring>(const Time &amp;rhs) const</argsstring>
+        <name>operator+</name>
+        <qualifiedname>util::Time::operator+</qualifiedname>
+        <param>
+          <type>const Time &amp;</type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="50" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp" bodystart="191" bodyend="194"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a6a0a79616fea5ea2e575b0647c751beb" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>Time</type>
+        <definition>Time util::Time::operator-</definition>
+        <argsstring>(const Time &amp;rhs) const</argsstring>
+        <name>operator-</name>
+        <qualifiedname>util::Time::operator-</qualifiedname>
+        <param>
+          <type>const Time &amp;</type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="51" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp" bodystart="197" bodyend="200"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a487316b5af841f698df943a4400185ae" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>Time</type>
+        <definition>Time util::Time::operator*</definition>
+        <argsstring>(const long i) const</argsstring>
+        <name>operator*</name>
+        <qualifiedname>util::Time::operator*</qualifiedname>
+        <param>
+          <type>const long</type>
+          <declname>i</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="52" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp" bodystart="203" bodyend="206"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a7ef5d7cec1481c55b7c6459f01c54a96" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>Time</type>
+        <definition>Time util::Time::operator/</definition>
+        <argsstring>(const long i) const</argsstring>
+        <name>operator/</name>
+        <qualifiedname>util::Time::operator/</qualifiedname>
+        <param>
+          <type>const long</type>
+          <declname>i</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="53" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp" bodystart="209" bodyend="212"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a8293a4f5a50bc827b85f646a841f267d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>Time &amp;</type>
+        <definition>Time &amp; util::Time::operator+=</definition>
+        <argsstring>(const Time &amp;rhs)</argsstring>
+        <name>operator+=</name>
+        <qualifiedname>util::Time::operator+=</qualifiedname>
+        <param>
+          <type>const Time &amp;</type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="54" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp" bodystart="215" bodyend="218"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a8f1ae4790a6c3157f6bc70cf2d0a010b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>Time &amp;</type>
+        <definition>Time &amp; util::Time::operator-=</definition>
+        <argsstring>(const Time &amp;rhs)</argsstring>
+        <name>operator-=</name>
+        <qualifiedname>util::Time::operator-=</qualifiedname>
+        <param>
+          <type>const Time &amp;</type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="55" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp" bodystart="221" bodyend="224"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a95a0a3d648e6e639b25b315aa2183382" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>Time &amp;</type>
+        <definition>Time &amp; util::Time::operator*=</definition>
+        <argsstring>(const long i)</argsstring>
+        <name>operator*=</name>
+        <qualifiedname>util::Time::operator*=</qualifiedname>
+        <param>
+          <type>const long</type>
+          <declname>i</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="56" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp" bodystart="227" bodyend="230"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a907eb7c7a60e3e7e60b8c8134a90ced9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>Time &amp;</type>
+        <definition>Time &amp; util::Time::operator/=</definition>
+        <argsstring>(const long i)</argsstring>
+        <name>operator/=</name>
+        <qualifiedname>util::Time::operator/=</qualifiedname>
+        <param>
+          <type>const long</type>
+          <declname>i</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="57" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp" bodystart="233" bodyend="236"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a0961f12803a3ae96fb03934f7e519166" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>Time</type>
+        <definition>Time util::Time::abs</definition>
+        <argsstring>() const</argsstring>
+        <name>abs</name>
+        <qualifiedname>util::Time::abs</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="58" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp" bodystart="239" bodyend="242"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1ab403c6b2e06695ec070ec7ff8b321b92" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>Time</type>
+        <definition>Time util::Time::diff</definition>
+        <argsstring>() const</argsstring>
+        <name>diff</name>
+        <qualifiedname>util::Time::diff</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="59" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp" bodystart="245" bodyend="247"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a7121960d6f5c3aab3a22eff7a84f212f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::Time::sleep</definition>
+        <argsstring>()</argsstring>
+        <name>sleep</name>
+        <qualifiedname>util::Time::sleep</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="61" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp" bodystart="135" bodyend="139"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_time_1a5034ca3d8d71c1b723fefcb3f68b3361" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::Time::sleepUntil</definition>
+        <argsstring>()</argsstring>
+        <name>sleepUntil</name>
+        <qualifiedname>util::Time::sleepUntil</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="62" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp" bodystart="142" bodyend="145"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" line="20" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.h" bodystart="20" bodyend="63"/>
+    <listofallmembers>
+      <member refid="classutil_1_1_time_1a0961f12803a3ae96fb03934f7e519166" prot="public" virt="non-virtual"><scope>util::Time</scope><name>abs</name></member>
+      <member refid="classutil_1_1_time_1a39f38d278aeb44473234fe11bbf2e313" prot="public" virt="non-virtual"><scope>util::Time</scope><name>asMicroseconds</name></member>
+      <member refid="classutil_1_1_time_1a7f5e67fb15530241ba42a7112516908e" prot="public" virt="non-virtual"><scope>util::Time</scope><name>asMilliseconds</name></member>
+      <member refid="classutil_1_1_time_1a29df16a9258c01f18f966c5a19396ff9" prot="public" virt="non-virtual"><scope>util::Time</scope><name>asNanoseconds</name></member>
+      <member refid="classutil_1_1_time_1a489c3c74221535ff812481e8e41b56f7" prot="public" virt="non-virtual"><scope>util::Time</scope><name>asSeconds</name></member>
+      <member refid="classutil_1_1_time_1ab403c6b2e06695ec070ec7ff8b321b92" prot="public" virt="non-virtual"><scope>util::Time</scope><name>diff</name></member>
+      <member refid="classutil_1_1_time_1a49770905198e4f3f46bbb0a7033269c8" prot="public" virt="non-virtual"><scope>util::Time</scope><name>local</name></member>
+      <member refid="classutil_1_1_time_1a9f700b7f318b14641aaa4008a527d300" prot="public" virt="non-virtual"><scope>util::Time</scope><name>microseconds</name></member>
+      <member refid="classutil_1_1_time_1a6c9425d19df10b0fc7069a9ee0e9af7b" prot="public" virt="non-virtual"><scope>util::Time</scope><name>milliseconds</name></member>
+      <member refid="classutil_1_1_time_1a378ec26cb13f4feecb5d52f8e1d1e1a0" prot="public" virt="non-virtual"><scope>util::Time</scope><name>nanoseconds</name></member>
+      <member refid="classutil_1_1_time_1a5a62aaeeb31100c147e9c8ea10a68144" prot="public" virt="non-virtual"><scope>util::Time</scope><name>now</name></member>
+      <member refid="classutil_1_1_time_1a135c8ace17b1713e6a447e07da475bfe" prot="public" virt="non-virtual"><scope>util::Time</scope><name>operator!=</name></member>
+      <member refid="classutil_1_1_time_1a487316b5af841f698df943a4400185ae" prot="public" virt="non-virtual"><scope>util::Time</scope><name>operator*</name></member>
+      <member refid="classutil_1_1_time_1a95a0a3d648e6e639b25b315aa2183382" prot="public" virt="non-virtual"><scope>util::Time</scope><name>operator*=</name></member>
+      <member refid="classutil_1_1_time_1a19b567ec7fb97858d507a5ba2b2c5244" prot="public" virt="non-virtual"><scope>util::Time</scope><name>operator+</name></member>
+      <member refid="classutil_1_1_time_1a8293a4f5a50bc827b85f646a841f267d" prot="public" virt="non-virtual"><scope>util::Time</scope><name>operator+=</name></member>
+      <member refid="classutil_1_1_time_1a6a0a79616fea5ea2e575b0647c751beb" prot="public" virt="non-virtual"><scope>util::Time</scope><name>operator-</name></member>
+      <member refid="classutil_1_1_time_1a8f1ae4790a6c3157f6bc70cf2d0a010b" prot="public" virt="non-virtual"><scope>util::Time</scope><name>operator-=</name></member>
+      <member refid="classutil_1_1_time_1a7ef5d7cec1481c55b7c6459f01c54a96" prot="public" virt="non-virtual"><scope>util::Time</scope><name>operator/</name></member>
+      <member refid="classutil_1_1_time_1a907eb7c7a60e3e7e60b8c8134a90ced9" prot="public" virt="non-virtual"><scope>util::Time</scope><name>operator/=</name></member>
+      <member refid="classutil_1_1_time_1ade5efbba921130c1bdc2e97c357f619c" prot="public" virt="non-virtual"><scope>util::Time</scope><name>operator&lt;</name></member>
+      <member refid="classutil_1_1_time_1a673c4d74e768b03d8847b85edc7c5651" prot="public" virt="non-virtual"><scope>util::Time</scope><name>operator&lt;=</name></member>
+      <member refid="classutil_1_1_time_1ab46d45aac4ebd142fcc118bb9dd826f3" prot="public" virt="non-virtual"><scope>util::Time</scope><name>operator==</name></member>
+      <member refid="classutil_1_1_time_1a35e6af77e35010f6c63d8a64e38b5e02" prot="public" virt="non-virtual"><scope>util::Time</scope><name>operator&gt;</name></member>
+      <member refid="classutil_1_1_time_1a84801fc0609db25fee6813b76e1649f4" prot="public" virt="non-virtual"><scope>util::Time</scope><name>operator&gt;=</name></member>
+      <member refid="classutil_1_1_time_1ac648e9b28336d2202724bd20b768f516" prot="public" virt="non-virtual"><scope>util::Time</scope><name>seconds</name></member>
+      <member refid="classutil_1_1_time_1a8baa4f904e44aa5c18d173d07525292c" prot="public" virt="non-virtual"><scope>util::Time</scope><name>seconds</name></member>
+      <member refid="classutil_1_1_time_1a7121960d6f5c3aab3a22eff7a84f212f" prot="public" virt="non-virtual"><scope>util::Time</scope><name>sleep</name></member>
+      <member refid="classutil_1_1_time_1a5034ca3d8d71c1b723fefcb3f68b3361" prot="public" virt="non-virtual"><scope>util::Time</scope><name>sleepUntil</name></member>
+      <member refid="classutil_1_1_time_1a46acec5adf343802f12f35118b2b63b9" prot="public" virt="non-virtual"><scope>util::Time</scope><name>ticks</name></member>
+      <member refid="classutil_1_1_time_1a907ddab2c8989862f8affc2929cd186d" prot="public" virt="non-virtual"><scope>util::Time</scope><name>Time</name></member>
+      <member refid="classutil_1_1_time_1aad3ee4d6fd230c66cb88f3ee9cae7db5" prot="public" virt="non-virtual"><scope>util::Time</scope><name>Time</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

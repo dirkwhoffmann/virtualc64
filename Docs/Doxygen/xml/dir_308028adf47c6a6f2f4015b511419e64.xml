@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="dir_308028adf47c6a6f2f4015b511419e64" kind="dir">
+    <compoundname>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle</compoundname>
+    <innerfile refid="_peddle_8cpp">Peddle.cpp</innerfile>
+    <innerfile refid="_peddle_8h">Peddle.h</innerfile>
+    <innerfile refid="_peddle_config_8h">PeddleConfig.h</innerfile>
+    <innerfile refid="_peddle_debugger_8cpp">PeddleDebugger.cpp</innerfile>
+    <innerfile refid="_peddle_debugger_8h">PeddleDebugger.h</innerfile>
+    <innerfile refid="_peddle_disassembler_8cpp">PeddleDisassembler.cpp</innerfile>
+    <innerfile refid="_peddle_disassembler_8h">PeddleDisassembler.h</innerfile>
+    <innerfile refid="_peddle_exec__cpp_8h">PeddleExec_cpp.h</innerfile>
+    <innerfile refid="_peddle_init__cpp_8h">PeddleInit_cpp.h</innerfile>
+    <innerfile refid="_peddle_memory__cpp_8h">PeddleMemory_cpp.h</innerfile>
+    <innerfile refid="_peddle_types_8h">PeddleTypes.h</innerfile>
+    <innerfile refid="_peddle_utils_8cpp">PeddleUtils.cpp</innerfile>
+    <innerfile refid="_peddle_utils_8h">PeddleUtils.h</innerfile>
+    <innerfile refid="_str_writer_8cpp">StrWriter.cpp</innerfile>
+    <innerfile refid="_str_writer_8h">StrWriter.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/"/>
+  </compounddef>
+</doxygen>

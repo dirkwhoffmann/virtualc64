@@ -1,0 +1,254 @@
+\doxysection{vc64\+::Recorder Class Reference}
+\hypertarget{classvc64_1_1_recorder}{}\label{classvc64_1_1_recorder}\index{vc64::Recorder@{vc64::Recorder}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_recorder_a316511b55ed9813ed288b886147a8fad}\label{classvc64_1_1_recorder_a316511b55ed9813ed288b886147a8fad} 
+{\bfseries Recorder} (\mbox{\hyperlink{classvc64_1_1_c64}{C64}} \&ref)
+\item 
+void \mbox{\hyperlink{classvc64_1_1_recorder_a8beccc9aba07928598e829a54f905650}{\+\_\+initialize}} () override
+\item 
+\Hypertarget{classvc64_1_1_recorder_afe341777592035f692be6d1e6b6a6473}\label{classvc64_1_1_recorder_afe341777592035f692be6d1e6b6a6473} 
+\mbox{\hyperlink{classvc64_1_1_recorder}{Recorder}} \& {\bfseries operator=} (const \mbox{\hyperlink{classvc64_1_1_recorder}{Recorder}} \&other)
+\item 
+\Hypertarget{classvc64_1_1_recorder_a999702f9892c0b04d34305a995468d81}\label{classvc64_1_1_recorder_a999702f9892c0b04d34305a995468d81} 
+{\footnotesize template$<$class T $>$ }\\void {\bfseries serialize} (T \&worker)
+\item 
+\Hypertarget{classvc64_1_1_recorder_ac638d9f35d5617185f5b2b51c247831a}\label{classvc64_1_1_recorder_ac638d9f35d5617185f5b2b51c247831a} 
+{\bfseries SERIALIZERS} (serialize)
+\item 
+\Hypertarget{classvc64_1_1_recorder_a7b053b7355a55db39bd0c40c932bf016}\label{classvc64_1_1_recorder_a7b053b7355a55db39bd0c40c932bf016} 
+string {\bfseries video\+Pipe\+Path} ()
+\item 
+\Hypertarget{classvc64_1_1_recorder_a5ff1f606dd24322da9d7497c1a71b5c1}\label{classvc64_1_1_recorder_a5ff1f606dd24322da9d7497c1a71b5c1} 
+string {\bfseries audio\+Pipe\+Path} ()
+\item 
+\Hypertarget{classvc64_1_1_recorder_aa78dfe6a98e002b5bc4ebe9eacbaddba}\label{classvc64_1_1_recorder_aa78dfe6a98e002b5bc4ebe9eacbaddba} 
+string {\bfseries video\+Stream\+Path} ()
+\item 
+\Hypertarget{classvc64_1_1_recorder_a0b73d2e3bd2a3998f61e97dbb6e0ea76}\label{classvc64_1_1_recorder_a0b73d2e3bd2a3998f61e97dbb6e0ea76} 
+string {\bfseries audio\+Stream\+Path} ()
+\item 
+\Hypertarget{classvc64_1_1_recorder_ab198697402a1ccbc5aef3194d0075ae5}\label{classvc64_1_1_recorder_ab198697402a1ccbc5aef3194d0075ae5} 
+const string {\bfseries loglevel} ()
+\item 
+\Hypertarget{classvc64_1_1_recorder_a1a8d3797ee3845e595f8d3fa9c067bc4}\label{classvc64_1_1_recorder_a1a8d3797ee3845e595f8d3fa9c067bc4} 
+\mbox{\hyperlink{classutil_1_1_time}{util\+::\+Time}} {\bfseries get\+Duration} () const
+\item 
+\Hypertarget{classvc64_1_1_recorder_aa0b26f3b2798c3adde19c2f50a859edc}\label{classvc64_1_1_recorder_aa0b26f3b2798c3adde19c2f50a859edc} 
+isize {\bfseries get\+Frame\+Rate} () const
+\item 
+\Hypertarget{classvc64_1_1_recorder_a90652eeb608ed178ba975b8c63158b0e}\label{classvc64_1_1_recorder_a90652eeb608ed178ba975b8c63158b0e} 
+isize {\bfseries get\+Bit\+Rate} () const
+\item 
+\Hypertarget{classvc64_1_1_recorder_a4470f37af87cdee5ba2a235d6e2812b2}\label{classvc64_1_1_recorder_a4470f37af87cdee5ba2a235d6e2812b2} 
+isize {\bfseries get\+Sample\+Rate} () const
+\item 
+\Hypertarget{classvc64_1_1_recorder_aa5ded542d9f75c270bcedfa188bc92cb}\label{classvc64_1_1_recorder_aa5ded542d9f75c270bcedfa188bc92cb} 
+bool {\bfseries is\+Recording} () const
+\item 
+\Hypertarget{classvc64_1_1_recorder_af2516f9bd19324584dae44bef4be0ed7}\label{classvc64_1_1_recorder_af2516f9bd19324584dae44bef4be0ed7} 
+void {\bfseries start\+Recording} (isize x1, isize y1, isize x2, isize y2, isize bit\+Rate, isize aspectX, isize aspectY) throws
+\item 
+\Hypertarget{classvc64_1_1_recorder_a37bb2c0fef91a100d2d8b50ba726ad84}\label{classvc64_1_1_recorder_a37bb2c0fef91a100d2d8b50ba726ad84} 
+void {\bfseries stop\+Recording} ()
+\item 
+\Hypertarget{classvc64_1_1_recorder_a8102fab0c5961414c4995925a970b253}\label{classvc64_1_1_recorder_a8102fab0c5961414c4995925a970b253} 
+bool {\bfseries export\+As} (const string \&path)
+\item 
+\Hypertarget{classvc64_1_1_recorder_a6e21af1f5bc74adf4d607728a2a98180}\label{classvc64_1_1_recorder_a6e21af1f5bc74adf4d607728a2a98180} 
+void {\bfseries vsync\+Handler} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_sub_component}{vc64\+::\+Sub\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Sub\+Component} (\mbox{\hyperlink{classvc64_1_1_c64}{C64}} \&ref)
+\item 
+{\bfseries Sub\+Component} (const \mbox{\hyperlink{classvc64_1_1_sub_component}{Sub\+Component}} \&other)
+\item 
+void \mbox{\hyperlink{classvc64_1_1_sub_component_aba0c66cd1ce8a6d1c3529825afdb4a02}{prefix}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_core_component}{vc64\+::\+Core\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Core\+Component} (\mbox{\hyperlink{classvc64_1_1_emulator}{Emulator}} \&ref)
+\item 
+bool {\bfseries operator==} (\mbox{\hyperlink{classvc64_1_1_core_component}{Core\+Component}} \&other)
+\item 
+bool {\bfseries operator!=} (\mbox{\hyperlink{classvc64_1_1_core_component}{Core\+Component}} \&other)
+\item 
+void {\bfseries initialize} ()
+\item 
+void {\bfseries reset} (bool hard)
+\item 
+virtual void {\bfseries \+\_\+reset} (bool hard)
+\item 
+virtual void {\bfseries reset\+Config} ()
+\item 
+virtual bool {\bfseries is\+Powered\+Off} () const
+\item 
+virtual bool {\bfseries is\+Powered\+On} () const
+\item 
+virtual bool {\bfseries is\+Paused} () const
+\item 
+virtual bool {\bfseries is\+Running} () const
+\item 
+virtual bool {\bfseries is\+Suspended} () const
+\item 
+virtual bool {\bfseries is\+Halted} () const
+\item 
+void \mbox{\hyperlink{classvc64_1_1_core_component_afd3f09724b119d73a122c3fc02ac1736}{suspend}} ()
+\item 
+void \mbox{\hyperlink{classvc64_1_1_core_component_aab9305af3e38cc19bd1067ca87fe3e0d}{resume}} ()
+\item 
+virtual void {\bfseries is\+Ready} () const throws
+\item 
+bool {\bfseries is\+Emulator\+Thread} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_configurable}{vc64\+::\+Configurable}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual const Config\+Options \& {\bfseries get\+Options} () const
+\item 
+bool {\bfseries is\+Valid\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt) const
+\item 
+virtual i64 {\bfseries get\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt) const
+\item 
+virtual void {\bfseries set\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt, i64 value)
+\item 
+void {\bfseries set\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt, const string \&value)
+\item 
+void {\bfseries set\+Option} (const string \&opt, const string \&value)
+\item 
+void {\bfseries reset\+Config} (const \mbox{\hyperlink{classvc64_1_1_defaults}{Defaults}} \&defaults)
+\item 
+void {\bfseries reset\+Config} (const \mbox{\hyperlink{classvc64_1_1_defaults}{Defaults}} \&defaults, isize i)
+\item 
+void {\bfseries dump\+Config} (std\+::ostream \&os) const
+\item 
+string {\bfseries key\+List} ()
+\item 
+string {\bfseries arg\+List} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_dumpable}{vc64\+::\+Dumpable}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries dump} (Category category, std\+::ostream \&ss) const
+\item 
+void {\bfseries dump} (Category category) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classvc64_1_1_core_component}{vc64\+::\+Core\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classvc64_1_1_emulator}{Emulator}} \& {\bfseries emulator}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classvc64_1_1_core_component}{Core\+Component}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries sub\+Components}
+\item 
+bool {\bfseries verbose} = true
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classvc64_1_1_synchronizable}{vc64\+::\+Synchronizable}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classutil_1_1_reentrant_mutex}{util\+::\+Reentrant\+Mutex}} {\bfseries mutex}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_core_component}{vc64\+::\+Core\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries power\+On} ()
+\item 
+void {\bfseries power\+Off} ()
+\item 
+void {\bfseries run} ()
+\item 
+void {\bfseries pause} ()
+\item 
+void {\bfseries halt} ()
+\item 
+void {\bfseries warp\+On} ()
+\item 
+void {\bfseries warp\+Off} ()
+\item 
+void {\bfseries track\+On} ()
+\item 
+void {\bfseries track\+Off} ()
+\item 
+void {\bfseries power\+On\+Off} (bool value)
+\item 
+void {\bfseries warp\+On\+Off} (bool value)
+\item 
+void {\bfseries track\+On\+Off} (bool value)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_sub_component}{vc64\+::\+Sub\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c64}{C64}} \& {\bfseries c64}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c_i_a1}{CIA1}} \& {\bfseries cia1}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c_i_a2}{CIA2}} \& {\bfseries cia2}
+\item 
+\mbox{\hyperlink{classvc64_1_1_control_port}{Control\+Port}} \& {\bfseries port1}
+\item 
+\mbox{\hyperlink{classvc64_1_1_control_port}{Control\+Port}} \& {\bfseries port2}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c_p_u}{CPU}} \& {\bfseries cpu}
+\item 
+\mbox{\hyperlink{classvc64_1_1_datasette}{Datasette}} \& {\bfseries datasette}
+\item 
+\mbox{\hyperlink{classvc64_1_1_drive}{Drive}} \& {\bfseries drive8}
+\item 
+\mbox{\hyperlink{classvc64_1_1_drive}{Drive}} \& {\bfseries drive9}
+\item 
+\mbox{\hyperlink{classvc64_1_1_expansion_port}{Expansion\+Port}} \& {\bfseries expansionport}
+\item 
+\mbox{\hyperlink{classvc64_1_1_host}{Host}} \& {\bfseries host}
+\item 
+\mbox{\hyperlink{classvc64_1_1_i_e_c}{IEC}} \& {\bfseries iec}
+\item 
+\mbox{\hyperlink{classvc64_1_1_keyboard}{Keyboard}} \& {\bfseries keyboard}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c64_memory}{C64\+Memory}} \& {\bfseries mem}
+\item 
+\mbox{\hyperlink{classvc64_1_1_msg_queue}{Msg\+Queue}} \& {\bfseries msg\+Queue}
+\item 
+\mbox{\hyperlink{classvc64_1_1_power_supply}{Power\+Supply}} \& {\bfseries power\+Supply}
+\item 
+\mbox{\hyperlink{classvc64_1_1_par_cable}{Par\+Cable}} \& {\bfseries par\+Cable}
+\item 
+\mbox{\hyperlink{classvc64_1_1_recorder}{Recorder}} \& {\bfseries recorder}
+\item 
+\mbox{\hyperlink{classvc64_1_1_regression_tester}{Regression\+Tester}} \& {\bfseries regression\+Tester}
+\item 
+\mbox{\hyperlink{classvc64_1_1_retro_shell}{Retro\+Shell}} \& {\bfseries retro\+Shell}
+\item 
+\mbox{\hyperlink{classvc64_1_1_muxer}{Muxer}} \& {\bfseries muxer}
+\item 
+\mbox{\hyperlink{classvc64_1_1_v_i_c_i_i}{VICII}} \& {\bfseries vic}
+\item 
+\mbox{\hyperlink{classvc64_1_1_drive}{Drive}} \texorpdfstring{$\ast$}{*} {\bfseries drive} \mbox{[}2\mbox{]} = \{ \&drive8, \&drive9 \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+static bool {\bfseries verbose} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvc64_1_1_recorder_a8beccc9aba07928598e829a54f905650}\label{classvc64_1_1_recorder_a8beccc9aba07928598e829a54f905650} 
+\index{vc64::Recorder@{vc64::Recorder}!\_initialize@{\_initialize}}
+\index{\_initialize@{\_initialize}!vc64::Recorder@{vc64::Recorder}}
+\doxysubsubsection{\texorpdfstring{\_initialize()}{\_initialize()}}
+{\footnotesize\ttfamily void vc64\+::\+Recorder\+::\+\_\+initialize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_core_component}{vc64\+::\+Core\+Component}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Components/\+VICII/\+Recorder/Recorder.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Components/\+VICII/\+Recorder/Recorder.\+cpp\end{DoxyCompactItemize}

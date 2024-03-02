@@ -1,0 +1,234 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="_peddle_utils_8h" kind="file" language="C++">
+    <compoundname>PeddleUtils.h</compoundname>
+    <includes local="no">cassert</includes>
+    <includedby refid="_peddle_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/Peddle.cpp</includedby>
+    <includedby refid="_peddle_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/Peddle.h</includedby>
+    <includedby refid="_peddle_disassembler_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDisassembler.h</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleUtils.h</label>
+        <link refid="_peddle_utils_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>cassert</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="4">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/C64.h</label>
+        <link refid="_c64_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/CPU.h</label>
+        <link refid="_c_p_u_8h_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/Peddle.h</label>
+        <link refid="_peddle_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h</label>
+        <link refid="_peddle_debugger_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDisassembler.h</label>
+        <link refid="_peddle_disassembler_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleUtils.h</label>
+        <link refid="_peddle_utils_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/StrWriter.h</label>
+        <link refid="_str_writer_8h_source"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h</label>
+        <link refid="_emulator_8h_source"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Headless.h</label>
+        <link refid="_headless_8h_source"/>
+      </node>
+      <node id="8">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h</label>
+        <link refid="_drive_8h_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h</label>
+        <link refid="_virtual_c64_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="_peddle_utils_8h_1a960084e6916e491a74511cc9298ef86f" prot="public" static="no">
+        <name>LO_BYTE</name>
+        <param><defname>x</defname></param>
+        <initializer>(u8)((x) &amp; 0xFF)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleUtils.h" line="12" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleUtils.h" bodystart="12" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_peddle_utils_8h_1aa1b163a74a452aff52b1dd6f4bc0c5b8" prot="public" static="no">
+        <name>HI_BYTE</name>
+        <param><defname>x</defname></param>
+        <initializer>(u8)((x) &gt;&gt; 8)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleUtils.h" line="13" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleUtils.h" bodystart="13" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_peddle_utils_8h_1a86164e841a404632a070bdd8bb2c3968" prot="public" static="no">
+        <name>LO_HI</name>
+        <param><defname>x</defname></param>
+        <param><defname>y</defname></param>
+        <initializer>(u16)((y) &lt;&lt; 8 | (x))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleUtils.h" line="15" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleUtils.h" bodystart="15" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_peddle_utils_8h_1ac8f9752677188863f23dbeadfb3867ac" prot="public" static="no">
+        <name>HI_LO</name>
+        <param><defname>x</defname></param>
+        <param><defname>y</defname></param>
+        <initializer>(u16)((x) &lt;&lt; 8 | (y))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleUtils.h" line="16" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleUtils.h" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_peddle_utils_8h_1a042ecd5981175e4ee95731852a83e75e" prot="public" static="no">
+        <name>unreachable</name>
+        <initializer>__builtin_unreachable()</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleUtils.h" line="26" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleUtils.h" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_peddle_utils_8h_1a217a0bd562b98ae8c2ffce44935351e1" prot="public" static="no">
+        <name>likely</name>
+        <param><defname>x</defname></param>
+        <initializer>__builtin_expect(!!(x), 1)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleUtils.h" line="27" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleUtils.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_peddle_utils_8h_1ac6c45889010c1bd68631771b64f18101" prot="public" static="no">
+        <name>unlikely</name>
+        <param><defname>x</defname></param>
+        <initializer>__builtin_expect(!!(x), 0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleUtils.h" line="28" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleUtils.h" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="_peddle_utils_8h_1adfe9ae1313e6913aca3f96d3eb67906e" prot="public" static="no">
+        <name>fatalError</name>
+        <initializer>assert(false); unreachable</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleUtils.h" line="32" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleUtils.h" bodystart="32" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="comment">//<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>Peddle<sp/>-<sp/>A<sp/>MOS<sp/>65xx<sp/>CPU<sp/>emulator</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Copyright<sp/>(C)<sp/>Dirk<sp/>W.<sp/>Hoffmann.<sp/>www.dirkwhoffmann.de</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Published<sp/>under<sp/>the<sp/>terms<sp/>of<sp/>the<sp/>MIT<sp/>License</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;cassert&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LO_BYTE(x)<sp/>(u8)((x)<sp/>&amp;<sp/>0xFF)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HI_BYTE(x)<sp/>(u8)((x)<sp/>&gt;&gt;<sp/>8)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LO_HI(x,y)<sp/>(u16)((y)<sp/>&lt;&lt;<sp/>8<sp/>|<sp/>(x))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HI_LO(x,y)<sp/>(u16)((x)<sp/>&lt;&lt;<sp/>8<sp/>|<sp/>(y))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>_MSC_VER</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>unreachable<sp/><sp/><sp/><sp/>__assume(false)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>likely(x)<sp/><sp/><sp/><sp/><sp/><sp/>(x)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>unlikely(x)<sp/><sp/><sp/><sp/>(x)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>unreachable<sp/><sp/><sp/><sp/>__builtin_unreachable()</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>likely(x)<sp/><sp/><sp/><sp/><sp/><sp/>__builtin_expect(!!(x),<sp/>1)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>unlikely(x)<sp/><sp/><sp/><sp/>__builtin_expect(!!(x),<sp/>0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>fatalError<sp/><sp/><sp/><sp/><sp/>assert(false);<sp/>unreachable</highlight></codeline>
+    </programlisting>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleUtils.h"/>
+  </compounddef>
+</doxygen>

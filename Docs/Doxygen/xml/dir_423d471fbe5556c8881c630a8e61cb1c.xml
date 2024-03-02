@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="dir_423d471fbe5556c8881c630a8e61cb1c" kind="dir">
+    <compoundname>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU</compoundname>
+    <innerdir refid="dir_308028adf47c6a6f2f4015b511419e64">/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle</innerdir>
+    <innerfile refid="_c_p_u_8cpp">CPU.cpp</innerfile>
+    <innerfile refid="_c_p_u_8h">CPU.h</innerfile>
+    <innerfile refid="_c_p_u_inspector_8cpp">CPUInspector.cpp</innerfile>
+    <innerfile refid="_c_p_u_inspector_8h">CPUInspector.h</innerfile>
+    <innerfile refid="_c_p_u_types_8h">CPUTypes.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/"/>
+  </compounddef>
+</doxygen>

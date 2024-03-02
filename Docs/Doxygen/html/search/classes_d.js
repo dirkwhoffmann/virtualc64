@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['shellcmd_0',['ShellCmd',['../struct_shell_cmd.html',1,'']]],
-  ['sidapi_1',['SIDAPI',['../struct_virtual_c64_1_1_s_i_d_a_p_i.html',1,'VirtualC64']]]
+  ['ocean_0',['Ocean',['../classvc64_1_1_ocean.html',1,'vc64']]],
+  ['opamp_5ft_1',['opamp_t',['../structre_s_i_d_1_1_filter_1_1opamp__t.html',1,'reSID::Filter']]],
+  ['optionparser_2',['OptionParser',['../classvc64_1_1_option_parser.html',1,'vc64']]]
 ];

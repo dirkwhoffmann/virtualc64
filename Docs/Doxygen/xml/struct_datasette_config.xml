@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_datasette_config" kind="struct" language="C++" prot="public">
+    <compoundname>DatasetteConfig</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_datasette_config_1a51623840e5a54c84591bdba2a618a8c5" prot="public" static="no" mutable="no">
+        <type>DatasetteModel</type>
+        <definition>DatasetteModel DatasetteConfig::model</definition>
+        <argsstring></argsstring>
+        <name>model</name>
+        <qualifiedname>DatasetteConfig::model</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" line="54" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_datasette_config_1a2b2f008294e60ae87d07512031c15c24" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool DatasetteConfig::connected</definition>
+        <argsstring></argsstring>
+        <name>connected</name>
+        <qualifiedname>DatasetteConfig::connected</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" line="55" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" line="52" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" bodystart="53" bodyend="56"/>
+    <listofallmembers>
+      <member refid="struct_datasette_config_1a2b2f008294e60ae87d07512031c15c24" prot="public" virt="non-virtual"><scope>DatasetteConfig</scope><name>connected</name></member>
+      <member refid="struct_datasette_config_1a51623840e5a54c84591bdba2a618a8c5" prot="public" virt="non-virtual"><scope>DatasetteConfig</scope><name>model</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

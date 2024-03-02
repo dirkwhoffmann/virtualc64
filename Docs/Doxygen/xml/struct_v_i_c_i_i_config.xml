@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_v_i_c_i_i_config" kind="struct" language="C++" prot="public">
+    <compoundname>VICIIConfig</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_v_i_c_i_i_config_1a75634c8636b8192463a88d5ed52aa4f0" prot="public" static="no" mutable="no">
+        <type><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44" kindref="member">VICIIRevision</ref></type>
+        <definition>VICIIRevision VICIIConfig::revision</definition>
+        <argsstring></argsstring>
+        <name>revision</name>
+        <qualifiedname>VICIIConfig::revision</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="349" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="349" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_config_1ae559a89f2b29538a810bbd4f161944e2" prot="public" static="no" mutable="no">
+        <type><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44" kindref="member">VICIIRevision</ref></type>
+        <definition>VICIIRevision VICIIConfig::awaiting</definition>
+        <argsstring></argsstring>
+        <name>awaiting</name>
+        <qualifiedname>VICIIConfig::awaiting</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="350" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="350" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_config_1ac2ad3f8dc3f3019321a1320281acd7a6" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool VICIIConfig::powerSave</definition>
+        <argsstring></argsstring>
+        <name>powerSave</name>
+        <qualifiedname>VICIIConfig::powerSave</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="351" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="351" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_config_1ac6795a5b88179240d72b13d9cf175f5f" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool VICIIConfig::grayDotBug</definition>
+        <argsstring></argsstring>
+        <name>grayDotBug</name>
+        <qualifiedname>VICIIConfig::grayDotBug</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="352" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="352" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_config_1a54008423aa89cc225a83299eec8e165f" prot="public" static="no" mutable="no">
+        <type><ref refid="_v_i_c_i_i_types_8h_1a1b9e054b18647ae68a514badefcbdf1f" kindref="member">GlueLogic</ref></type>
+        <definition>GlueLogic VICIIConfig::glueLogic</definition>
+        <argsstring></argsstring>
+        <name>glueLogic</name>
+        <qualifiedname>VICIIConfig::glueLogic</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="353" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="353" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_config_1a021393d781f5eb429ad70c0ed97d1066" prot="public" static="no" mutable="no">
+        <type><ref refid="_v_i_c_i_i_types_8h_1af59eb4c57176022b657e35f92a7d01c9" kindref="member">Palette</ref></type>
+        <definition>Palette VICIIConfig::palette</definition>
+        <argsstring></argsstring>
+        <name>palette</name>
+        <qualifiedname>VICIIConfig::palette</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="356" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="356" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_config_1aa22720551d56697812318a78cf606316" prot="public" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize VICIIConfig::brightness</definition>
+        <argsstring></argsstring>
+        <name>brightness</name>
+        <qualifiedname>VICIIConfig::brightness</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="357" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="357" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_config_1a1e9036b05a58e1e9679a554cd3bce6b3" prot="public" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize VICIIConfig::contrast</definition>
+        <argsstring></argsstring>
+        <name>contrast</name>
+        <qualifiedname>VICIIConfig::contrast</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="358" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="358" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_config_1a80889ef717d509b891b87d7ebc11fd8a" prot="public" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize VICIIConfig::saturation</definition>
+        <argsstring></argsstring>
+        <name>saturation</name>
+        <qualifiedname>VICIIConfig::saturation</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="359" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="359" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_config_1a6681597c3b43450f357425a2ced767bf" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool VICIIConfig::hideSprites</definition>
+        <argsstring></argsstring>
+        <name>hideSprites</name>
+        <qualifiedname>VICIIConfig::hideSprites</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="362" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="362" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_config_1ad7fcae5d48d2f6a468a9e2d25ca82e64" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool VICIIConfig::checkSSCollisions</definition>
+        <argsstring></argsstring>
+        <name>checkSSCollisions</name>
+        <qualifiedname>VICIIConfig::checkSSCollisions</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="365" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="365" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_config_1a4c15dbd3f4e770ba715124473ca1dc14" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool VICIIConfig::checkSBCollisions</definition>
+        <argsstring></argsstring>
+        <name>checkSBCollisions</name>
+        <qualifiedname>VICIIConfig::checkSBCollisions</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="366" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="366" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="346" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="347" bodyend="367"/>
+    <listofallmembers>
+      <member refid="struct_v_i_c_i_i_config_1ae559a89f2b29538a810bbd4f161944e2" prot="public" virt="non-virtual"><scope>VICIIConfig</scope><name>awaiting</name></member>
+      <member refid="struct_v_i_c_i_i_config_1aa22720551d56697812318a78cf606316" prot="public" virt="non-virtual"><scope>VICIIConfig</scope><name>brightness</name></member>
+      <member refid="struct_v_i_c_i_i_config_1a4c15dbd3f4e770ba715124473ca1dc14" prot="public" virt="non-virtual"><scope>VICIIConfig</scope><name>checkSBCollisions</name></member>
+      <member refid="struct_v_i_c_i_i_config_1ad7fcae5d48d2f6a468a9e2d25ca82e64" prot="public" virt="non-virtual"><scope>VICIIConfig</scope><name>checkSSCollisions</name></member>
+      <member refid="struct_v_i_c_i_i_config_1a1e9036b05a58e1e9679a554cd3bce6b3" prot="public" virt="non-virtual"><scope>VICIIConfig</scope><name>contrast</name></member>
+      <member refid="struct_v_i_c_i_i_config_1a54008423aa89cc225a83299eec8e165f" prot="public" virt="non-virtual"><scope>VICIIConfig</scope><name>glueLogic</name></member>
+      <member refid="struct_v_i_c_i_i_config_1ac6795a5b88179240d72b13d9cf175f5f" prot="public" virt="non-virtual"><scope>VICIIConfig</scope><name>grayDotBug</name></member>
+      <member refid="struct_v_i_c_i_i_config_1a6681597c3b43450f357425a2ced767bf" prot="public" virt="non-virtual"><scope>VICIIConfig</scope><name>hideSprites</name></member>
+      <member refid="struct_v_i_c_i_i_config_1a021393d781f5eb429ad70c0ed97d1066" prot="public" virt="non-virtual"><scope>VICIIConfig</scope><name>palette</name></member>
+      <member refid="struct_v_i_c_i_i_config_1ac2ad3f8dc3f3019321a1320281acd7a6" prot="public" virt="non-virtual"><scope>VICIIConfig</scope><name>powerSave</name></member>
+      <member refid="struct_v_i_c_i_i_config_1a75634c8636b8192463a88d5ed52aa4f0" prot="public" virt="non-virtual"><scope>VICIIConfig</scope><name>revision</name></member>
+      <member refid="struct_v_i_c_i_i_config_1a80889ef717d509b891b87d7ebc11fd8a" prot="public" virt="non-virtual"><scope>VICIIConfig</scope><name>saturation</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

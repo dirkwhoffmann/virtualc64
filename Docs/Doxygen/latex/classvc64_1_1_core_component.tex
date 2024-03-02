@@ -1,0 +1,180 @@
+\doxysection{vc64\+::Core\+Component Class Reference}
+\hypertarget{classvc64_1_1_core_component}{}\label{classvc64_1_1_core_component}\index{vc64::CoreComponent@{vc64::CoreComponent}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_core_component_a18f454d0d572fa1b2e5023c4eaba6d07}\label{classvc64_1_1_core_component_a18f454d0d572fa1b2e5023c4eaba6d07} 
+{\bfseries Core\+Component} (\mbox{\hyperlink{classvc64_1_1_emulator}{Emulator}} \&ref)
+\item 
+\Hypertarget{classvc64_1_1_core_component_aae8879dd8b62291254ec498fa9b2e2cf}\label{classvc64_1_1_core_component_aae8879dd8b62291254ec498fa9b2e2cf} 
+bool {\bfseries operator==} (\mbox{\hyperlink{classvc64_1_1_core_component}{Core\+Component}} \&other)
+\item 
+\Hypertarget{classvc64_1_1_core_component_af47e1017ec1d938b1b613b36bdc8be57}\label{classvc64_1_1_core_component_af47e1017ec1d938b1b613b36bdc8be57} 
+bool {\bfseries operator!=} (\mbox{\hyperlink{classvc64_1_1_core_component}{Core\+Component}} \&other)
+\item 
+\Hypertarget{classvc64_1_1_core_component_a250f9ac5bbc00892bf195ec2ef523a2b}\label{classvc64_1_1_core_component_a250f9ac5bbc00892bf195ec2ef523a2b} 
+void {\bfseries initialize} ()
+\item 
+\Hypertarget{classvc64_1_1_core_component_aa7dd5e7a2020ad2348fea3edd724f538}\label{classvc64_1_1_core_component_aa7dd5e7a2020ad2348fea3edd724f538} 
+virtual void {\bfseries \+\_\+initialize} ()
+\item 
+\Hypertarget{classvc64_1_1_core_component_a3910be506f5067fe6cf31a69dcd76b0c}\label{classvc64_1_1_core_component_a3910be506f5067fe6cf31a69dcd76b0c} 
+void {\bfseries reset} (bool hard)
+\item 
+\Hypertarget{classvc64_1_1_core_component_ab4d7e4961fa32234f400d835c3b5f038}\label{classvc64_1_1_core_component_ab4d7e4961fa32234f400d835c3b5f038} 
+virtual void {\bfseries \+\_\+reset} (bool hard)
+\item 
+\Hypertarget{classvc64_1_1_core_component_a082147809d967c961a7ac7c15c5f072a}\label{classvc64_1_1_core_component_a082147809d967c961a7ac7c15c5f072a} 
+virtual void {\bfseries reset\+Config} ()
+\item 
+\Hypertarget{classvc64_1_1_core_component_ac4dadc5fecfac3cd2dfb7e8b70767b42}\label{classvc64_1_1_core_component_ac4dadc5fecfac3cd2dfb7e8b70767b42} 
+virtual bool {\bfseries is\+Powered\+Off} () const
+\item 
+\Hypertarget{classvc64_1_1_core_component_a0f9912b36ec181a0410d4f564baef127}\label{classvc64_1_1_core_component_a0f9912b36ec181a0410d4f564baef127} 
+virtual bool {\bfseries is\+Powered\+On} () const
+\item 
+\Hypertarget{classvc64_1_1_core_component_a4f0f63ef65776aceecb329d03c3b5f17}\label{classvc64_1_1_core_component_a4f0f63ef65776aceecb329d03c3b5f17} 
+virtual bool {\bfseries is\+Paused} () const
+\item 
+\Hypertarget{classvc64_1_1_core_component_a121143d811f91157272bb67a0ca48d8f}\label{classvc64_1_1_core_component_a121143d811f91157272bb67a0ca48d8f} 
+virtual bool {\bfseries is\+Running} () const
+\item 
+\Hypertarget{classvc64_1_1_core_component_a490512fe63211f42eb57e7ed59f9b6a1}\label{classvc64_1_1_core_component_a490512fe63211f42eb57e7ed59f9b6a1} 
+virtual bool {\bfseries is\+Suspended} () const
+\item 
+\Hypertarget{classvc64_1_1_core_component_a0e8c3dd97f64e2487fba4c22ba66d487}\label{classvc64_1_1_core_component_a0e8c3dd97f64e2487fba4c22ba66d487} 
+virtual bool {\bfseries is\+Halted} () const
+\item 
+void \mbox{\hyperlink{classvc64_1_1_core_component_afd3f09724b119d73a122c3fc02ac1736}{suspend}} ()
+\item 
+void \mbox{\hyperlink{classvc64_1_1_core_component_aab9305af3e38cc19bd1067ca87fe3e0d}{resume}} ()
+\item 
+\Hypertarget{classvc64_1_1_core_component_a77bf78d982163a6797f24d23106c5098}\label{classvc64_1_1_core_component_a77bf78d982163a6797f24d23106c5098} 
+virtual void {\bfseries is\+Ready} () const throws
+\item 
+\Hypertarget{classvc64_1_1_core_component_a7b95994acc6e7ba59d4b2f50f2dc8df5}\label{classvc64_1_1_core_component_a7b95994acc6e7ba59d4b2f50f2dc8df5} 
+bool {\bfseries is\+Emulator\+Thread} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual const char \texorpdfstring{$\ast$}{*} {\bfseries get\+Description} () const =0
+\item 
+virtual void {\bfseries prefix} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_configurable}{vc64\+::\+Configurable}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual const Config\+Options \& {\bfseries get\+Options} () const
+\item 
+bool {\bfseries is\+Valid\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt) const
+\item 
+virtual i64 {\bfseries get\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt) const
+\item 
+virtual void {\bfseries set\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt, i64 value)
+\item 
+void {\bfseries set\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt, const string \&value)
+\item 
+void {\bfseries set\+Option} (const string \&opt, const string \&value)
+\item 
+void {\bfseries reset\+Config} (const \mbox{\hyperlink{classvc64_1_1_defaults}{Defaults}} \&defaults)
+\item 
+void {\bfseries reset\+Config} (const \mbox{\hyperlink{classvc64_1_1_defaults}{Defaults}} \&defaults, isize i)
+\item 
+void {\bfseries dump\+Config} (std\+::ostream \&os) const
+\item 
+string {\bfseries key\+List} ()
+\item 
+string {\bfseries arg\+List} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_core_component_a606e5261773126791e44ee8238f5876e}\label{classvc64_1_1_core_component_a606e5261773126791e44ee8238f5876e} 
+class \mbox{\hyperlink{classvc64_1_1_emulator}{Emulator}} \& {\bfseries emulator}
+\item 
+\Hypertarget{classvc64_1_1_core_component_aa8b45810bedbdf78b88710ae8db3f495}\label{classvc64_1_1_core_component_aa8b45810bedbdf78b88710ae8db3f495} 
+std\+::vector$<$ \mbox{\hyperlink{classvc64_1_1_core_component}{Core\+Component}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries sub\+Components}
+\item 
+\Hypertarget{classvc64_1_1_core_component_a7a24c5efde497d14b519ad15c9053949}\label{classvc64_1_1_core_component_a7a24c5efde497d14b519ad15c9053949} 
+bool {\bfseries verbose} = true
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classvc64_1_1_synchronizable}{vc64\+::\+Synchronizable}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classutil_1_1_reentrant_mutex}{util\+::\+Reentrant\+Mutex}} {\bfseries mutex}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_core_component_ad606699d83a017fbee805e8d40245475}\label{classvc64_1_1_core_component_ad606699d83a017fbee805e8d40245475} 
+void {\bfseries power\+On} ()
+\item 
+\Hypertarget{classvc64_1_1_core_component_a05e1ba6d62516f796256f1cc394bf2f5}\label{classvc64_1_1_core_component_a05e1ba6d62516f796256f1cc394bf2f5} 
+void {\bfseries power\+Off} ()
+\item 
+\Hypertarget{classvc64_1_1_core_component_ae7093017e8a84768103c67b24de5c578}\label{classvc64_1_1_core_component_ae7093017e8a84768103c67b24de5c578} 
+void {\bfseries run} ()
+\item 
+\Hypertarget{classvc64_1_1_core_component_a7a9c059588a19eeba521b79ff28e3dd8}\label{classvc64_1_1_core_component_a7a9c059588a19eeba521b79ff28e3dd8} 
+void {\bfseries pause} ()
+\item 
+\Hypertarget{classvc64_1_1_core_component_a936940e4e5cf0c617935ea3070bcbd4d}\label{classvc64_1_1_core_component_a936940e4e5cf0c617935ea3070bcbd4d} 
+void {\bfseries halt} ()
+\item 
+\Hypertarget{classvc64_1_1_core_component_a5df664aeda300338d0568d59673ff536}\label{classvc64_1_1_core_component_a5df664aeda300338d0568d59673ff536} 
+void {\bfseries warp\+On} ()
+\item 
+\Hypertarget{classvc64_1_1_core_component_a45399f75688ba5ba157a479c3ce76633}\label{classvc64_1_1_core_component_a45399f75688ba5ba157a479c3ce76633} 
+void {\bfseries warp\+Off} ()
+\item 
+\Hypertarget{classvc64_1_1_core_component_a4832ab0ebef49b591fe6e2785e969c89}\label{classvc64_1_1_core_component_a4832ab0ebef49b591fe6e2785e969c89} 
+void {\bfseries track\+On} ()
+\item 
+\Hypertarget{classvc64_1_1_core_component_a0a4c841e543ecfc6cf988592a933a564}\label{classvc64_1_1_core_component_a0a4c841e543ecfc6cf988592a933a564} 
+void {\bfseries track\+Off} ()
+\item 
+\Hypertarget{classvc64_1_1_core_component_a74ab4149c152b98c6d5cc15bbac63887}\label{classvc64_1_1_core_component_a74ab4149c152b98c6d5cc15bbac63887} 
+void {\bfseries power\+On\+Off} (bool value)
+\item 
+\Hypertarget{classvc64_1_1_core_component_a6760d32857901c415f4d75031d1e2654}\label{classvc64_1_1_core_component_a6760d32857901c415f4d75031d1e2654} 
+void {\bfseries warp\+On\+Off} (bool value)
+\item 
+\Hypertarget{classvc64_1_1_core_component_aae437c6ccf5f91155464dd4953c3baab}\label{classvc64_1_1_core_component_aae437c6ccf5f91155464dd4953c3baab} 
+void {\bfseries track\+On\+Off} (bool value)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+static bool {\bfseries verbose} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvc64_1_1_core_component_aab9305af3e38cc19bd1067ca87fe3e0d}\label{classvc64_1_1_core_component_aab9305af3e38cc19bd1067ca87fe3e0d} 
+\index{vc64::CoreComponent@{vc64::CoreComponent}!resume@{resume}}
+\index{resume@{resume}!vc64::CoreComponent@{vc64::CoreComponent}}
+\doxysubsubsection{\texorpdfstring{resume()}{resume()}}
+{\footnotesize\ttfamily void vc64\+::\+Core\+Component\+::resume (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvc64_1_1_suspendable}{vc64\+::\+Suspendable}}.
+
+\Hypertarget{classvc64_1_1_core_component_afd3f09724b119d73a122c3fc02ac1736}\label{classvc64_1_1_core_component_afd3f09724b119d73a122c3fc02ac1736} 
+\index{vc64::CoreComponent@{vc64::CoreComponent}!suspend@{suspend}}
+\index{suspend@{suspend}!vc64::CoreComponent@{vc64::CoreComponent}}
+\doxysubsubsection{\texorpdfstring{suspend()}{suspend()}}
+{\footnotesize\ttfamily void vc64\+::\+Core\+Component\+::suspend (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvc64_1_1_suspendable}{vc64\+::\+Suspendable}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Base/Core\+Component.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Base/Core\+Component.\+cpp\end{DoxyCompactItemize}

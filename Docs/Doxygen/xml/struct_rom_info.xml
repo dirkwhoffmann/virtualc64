@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_rom_info" kind="struct" language="C++" prot="public">
+    <compoundname>RomInfo</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_rom_info_1ad726ea15f03fa50d6d426e9f02347dc4" prot="public" static="no" mutable="no">
+        <type>u32</type>
+        <definition>u32 RomInfo::crc32</definition>
+        <argsstring></argsstring>
+        <name>crc32</name>
+        <qualifiedname>RomInfo::crc32</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="277" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="277" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_rom_info_1a302c1a3412b5a54e098936a843ecd0d7" prot="public" static="no" mutable="no">
+        <type>const char *</type>
+        <definition>const char* RomInfo::title</definition>
+        <argsstring></argsstring>
+        <name>title</name>
+        <qualifiedname>RomInfo::title</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="279" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="279" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_rom_info_1a1ea9dfd2cc0acd3b1defa49d423fa4ba" prot="public" static="no" mutable="no">
+        <type>const char *</type>
+        <definition>const char* RomInfo::subtitle</definition>
+        <argsstring></argsstring>
+        <name>subtitle</name>
+        <qualifiedname>RomInfo::subtitle</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="280" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="280" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_rom_info_1a3238ac0b314db056105f14f363d7704c" prot="public" static="no" mutable="no">
+        <type>const char *</type>
+        <definition>const char* RomInfo::revision</definition>
+        <argsstring></argsstring>
+        <name>revision</name>
+        <qualifiedname>RomInfo::revision</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="281" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="281" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_rom_info_1a6acc400143428a41046b851860a49f5d" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool RomInfo::isCommodoreRom</definition>
+        <argsstring></argsstring>
+        <name>isCommodoreRom</name>
+        <qualifiedname>RomInfo::isCommodoreRom</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="283" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="283" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_rom_info_1ac37e4ef4937127bbb8f8ad672b1cf471" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool RomInfo::isPatchedRom</definition>
+        <argsstring></argsstring>
+        <name>isPatchedRom</name>
+        <qualifiedname>RomInfo::isPatchedRom</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="284" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="284" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_rom_info_1ac7f7ed0767eab37ba6604f93e9970f13" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool RomInfo::isMega65Rom</definition>
+        <argsstring></argsstring>
+        <name>isMega65Rom</name>
+        <qualifiedname>RomInfo::isMega65Rom</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="285" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="285" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="275" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="276" bodyend="286"/>
+    <listofallmembers>
+      <member refid="struct_rom_info_1ad726ea15f03fa50d6d426e9f02347dc4" prot="public" virt="non-virtual"><scope>RomInfo</scope><name>crc32</name></member>
+      <member refid="struct_rom_info_1a6acc400143428a41046b851860a49f5d" prot="public" virt="non-virtual"><scope>RomInfo</scope><name>isCommodoreRom</name></member>
+      <member refid="struct_rom_info_1ac7f7ed0767eab37ba6604f93e9970f13" prot="public" virt="non-virtual"><scope>RomInfo</scope><name>isMega65Rom</name></member>
+      <member refid="struct_rom_info_1ac37e4ef4937127bbb8f8ad672b1cf471" prot="public" virt="non-virtual"><scope>RomInfo</scope><name>isPatchedRom</name></member>
+      <member refid="struct_rom_info_1a3238ac0b314db056105f14f363d7704c" prot="public" virt="non-virtual"><scope>RomInfo</scope><name>revision</name></member>
+      <member refid="struct_rom_info_1a1ea9dfd2cc0acd3b1defa49d423fa4ba" prot="public" virt="non-virtual"><scope>RomInfo</scope><name>subtitle</name></member>
+      <member refid="struct_rom_info_1a302c1a3412b5a54e098936a843ecd0d7" prot="public" virt="non-virtual"><scope>RomInfo</scope><name>title</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

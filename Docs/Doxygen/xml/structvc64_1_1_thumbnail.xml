@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="structvc64_1_1_thumbnail" kind="struct" language="C++" prot="public">
+    <compoundname>vc64::Thumbnail</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structvc64_1_1_thumbnail_1ab4b20e4729fc98acd1595ff0b26c0d3e" prot="public" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize vc64::Thumbnail::width</definition>
+        <argsstring></argsstring>
+        <name>width</name>
+        <qualifiedname>vc64::Thumbnail::width</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" line="25" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_thumbnail_1a60f9b0ebe00bcbf4463cf19fbc4882b8" prot="public" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize vc64::Thumbnail::height</definition>
+        <argsstring></argsstring>
+        <name>height</name>
+        <qualifiedname>vc64::Thumbnail::height</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" line="25" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_thumbnail_1ab25aa94624252ee69423ef4f4e9c5a0b" prot="public" static="no" mutable="no">
+        <type>u32</type>
+        <definition>u32 vc64::Thumbnail::screen[TEX_HEIGHT *TEX_WIDTH]</definition>
+        <argsstring>[TEX_HEIGHT *TEX_WIDTH]</argsstring>
+        <name>screen</name>
+        <qualifiedname>vc64::Thumbnail::screen</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" line="28" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_thumbnail_1a9b706f3d11902068de50b50e6a1c2e14" prot="public" static="no" mutable="no">
+        <type>time_t</type>
+        <definition>time_t vc64::Thumbnail::timestamp</definition>
+        <argsstring></argsstring>
+        <name>timestamp</name>
+        <qualifiedname>vc64::Thumbnail::timestamp</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" line="31" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" bodystart="31" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="structvc64_1_1_thumbnail_1a68ca09df37dc796c9545e1efbf24774d" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>Thumbnail *</type>
+        <definition>Thumbnail * vc64::Thumbnail::makeWithC64</definition>
+        <argsstring>(const C64 &amp;c64, isize dx=1, isize dy=1)</argsstring>
+        <name>makeWithC64</name>
+        <qualifiedname>vc64::Thumbnail::makeWithC64</qualifiedname>
+        <param>
+          <type>const C64 &amp;</type>
+          <declname>c64</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>dx</declname>
+          <defval>1</defval>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>dy</declname>
+          <defval>1</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" line="34" column="22" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.cpp" bodystart="21" bodyend="27"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="structvc64_1_1_thumbnail_1aab4bddd2f3650819567756c7f48596fe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Thumbnail::take</definition>
+        <argsstring>(const C64 &amp;c64, isize dx=1, isize dy=1)</argsstring>
+        <name>take</name>
+        <qualifiedname>vc64::Thumbnail::take</qualifiedname>
+        <param>
+          <type>const C64 &amp;</type>
+          <declname>c64</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>dx</declname>
+          <defval>1</defval>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>dy</declname>
+          <defval>1</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" line="37" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.cpp" bodystart="30" bodyend="52"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" line="22" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h" bodystart="22" bodyend="38"/>
+    <listofallmembers>
+      <member refid="structvc64_1_1_thumbnail_1a60f9b0ebe00bcbf4463cf19fbc4882b8" prot="public" virt="non-virtual"><scope>vc64::Thumbnail</scope><name>height</name></member>
+      <member refid="structvc64_1_1_thumbnail_1a68ca09df37dc796c9545e1efbf24774d" prot="public" virt="non-virtual"><scope>vc64::Thumbnail</scope><name>makeWithC64</name></member>
+      <member refid="structvc64_1_1_thumbnail_1ab25aa94624252ee69423ef4f4e9c5a0b" prot="public" virt="non-virtual"><scope>vc64::Thumbnail</scope><name>screen</name></member>
+      <member refid="structvc64_1_1_thumbnail_1aab4bddd2f3650819567756c7f48596fe" prot="public" virt="non-virtual"><scope>vc64::Thumbnail</scope><name>take</name></member>
+      <member refid="structvc64_1_1_thumbnail_1a9b706f3d11902068de50b50e6a1c2e14" prot="public" virt="non-virtual"><scope>vc64::Thumbnail</scope><name>timestamp</name></member>
+      <member refid="structvc64_1_1_thumbnail_1ab4b20e4729fc98acd1595ff0b26c0d3e" prot="public" virt="non-virtual"><scope>vc64::Thumbnail</scope><name>width</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

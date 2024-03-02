@@ -2,7 +2,7 @@
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
   <compounddef id="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i" kind="struct" language="C++" prot="public">
     <compoundname>VirtualC64::VICIIAPI</compoundname>
-    <basecompoundref prot="public" virt="non-virtual">API</basecompoundref>
+    <basecompoundref prot="public" virt="non-virtual">vc64::API</basecompoundref>
     <sectiondef kind="public-func">
       <memberdef kind="function" id="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i_1a9ae73e098320db25aa876891832a43f6" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>VICIIConfig</type>
@@ -16,7 +16,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="313" column="21"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="315" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="560" bodyend="563"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i_1afb12dad58f60a328ccd3bdad144e9948" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>VICIIInfo</type>
@@ -30,7 +30,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="314" column="19"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="316" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="566" bodyend="569"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i_1a52f066e6408b2bcca4245884bf6c16d3" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>SpriteInfo</type>
@@ -48,7 +48,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="315" column="20"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="317" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="572" bodyend="575"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i_1a5b752d52a295961e6be5821e12e24b5f" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>isize</type>
@@ -62,7 +62,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="317" column="15"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="319" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="578" bodyend="581"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i_1abfeb36d6708bdbe7cf0929180a93445e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>isize</type>
@@ -76,7 +76,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="318" column="15"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="320" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="584" bodyend="587"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i_1ae11aa7727584968366eac14ef782df9f" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>bool</type>
@@ -90,7 +90,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="319" column="14"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="321" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="590" bodyend="593"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i_1a8f63a82b4e57e912ec9edb707ef5c2c7" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>u32</type>
@@ -108,7 +108,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="321" column="13"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="323" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="596" bodyend="599"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i_1a829005ca818e27cecc41439de56b9d47" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>u32</type>
@@ -121,7 +121,7 @@
           <declname>nr</declname>
         </param>
         <param>
-          <type>Palette</type>
+          <type><ref refid="_v_i_c_i_i_types_8h_1af59eb4c57176022b657e35f92a7d01c9" kindref="member">Palette</ref></type>
           <declname>palette</declname>
         </param>
         <briefdescription>
@@ -130,37 +130,26 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="322" column="13"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="324" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="602" bodyend="605"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <inheritancegraph>
-      <node id="2">
-        <label>API</label>
-      </node>
-      <node id="1">
-        <label>VirtualC64::VICIIAPI</label>
-        <link refid="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i"/>
-        <childnode refid="2" relation="public-inheritance">
-        </childnode>
-      </node>
-    </inheritancegraph>
-    <collaborationgraph>
-      <node id="2">
-        <label>API</label>
-      </node>
-      <node id="1">
-        <label>VirtualC64::VICIIAPI</label>
-        <link refid="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i"/>
-        <childnode refid="2" relation="public-inheritance">
-        </childnode>
-      </node>
-    </collaborationgraph>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="309" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="309" bodyend="324"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="311" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="311" bodyend="326"/>
     <listofallmembers>
+      <member refid="classvc64_1_1_a_p_i_1ac69be018cb6509eaa5a618c276c30fe1" prot="public" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>API</name></member>
+      <member refid="classvc64_1_1_references_1a3fbc169a9900f006d1ad6170b0bd0639" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>c64</name></member>
+      <member refid="classvc64_1_1_references_1afa87c57a43c5b7feb3b8780a4ac1008b" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>cia1</name></member>
+      <member refid="classvc64_1_1_references_1a6c3a729faae4d28880a897789e3ba081" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>cia2</name></member>
+      <member refid="classvc64_1_1_references_1a6d4dd5f97953b9c588bd29396dc7e879" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>cpu</name></member>
+      <member refid="classvc64_1_1_references_1a7fd1bd6cae9304cdbaa7e388c80149da" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>datasette</name></member>
+      <member refid="classvc64_1_1_references_1aa10ebdbd843f4d01d5f3d30592414abb" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>drive</name></member>
+      <member refid="classvc64_1_1_references_1a9fb58675ffdd6371f702e67e933c440c" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>drive8</name></member>
+      <member refid="classvc64_1_1_references_1ad4f53254b1db026d281f98e14a1065ef" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>drive9</name></member>
+      <member refid="classvc64_1_1_a_p_i_1a82d6586bef7dac77b2ea35fe6728595f" prot="public" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>emulator</name></member>
+      <member refid="classvc64_1_1_references_1a96a558a1ee0efe17d9087b03edd68d9c" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>expansionport</name></member>
       <member refid="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i_1a8f63a82b4e57e912ec9edb707ef5c2c7" prot="public" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>getColor</name></member>
       <member refid="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i_1a829005ca818e27cecc41439de56b9d47" prot="public" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>getColor</name></member>
       <member refid="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i_1a9ae73e098320db25aa876891832a43f6" prot="public" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>getConfig</name></member>
@@ -168,7 +157,27 @@
       <member refid="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i_1afb12dad58f60a328ccd3bdad144e9948" prot="public" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>getInfo</name></member>
       <member refid="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i_1abfeb36d6708bdbe7cf0929180a93445e" prot="public" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>getLinesPerFrame</name></member>
       <member refid="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i_1a52f066e6408b2bcca4245884bf6c16d3" prot="public" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>getSpriteInfo</name></member>
+      <member refid="classvc64_1_1_references_1ae039cd601c96e99965c9e51a7a5d37a2" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>host</name></member>
+      <member refid="classvc64_1_1_references_1a56adc0ba90182bde337fb3510a262136" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>iec</name></member>
+      <member refid="classvc64_1_1_a_p_i_1a815d94d61d7a5ecf7f1dccf21de51ca3" prot="public" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>isUserThread</name></member>
+      <member refid="classvc64_1_1_references_1a2d7c7bdb02194750f58b4b464f9a4e27" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>keyboard</name></member>
+      <member refid="classvc64_1_1_references_1abcfca0e0c6484b0b5ef1c235113f4a57" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>mem</name></member>
+      <member refid="classvc64_1_1_references_1a107318ccbff5b11cb77026cd274974f3" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>msgQueue</name></member>
+      <member refid="classvc64_1_1_references_1ad7af8e9288a5ccdd69e1ebe3a017e3f6" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>muxer</name></member>
+      <member refid="classvc64_1_1_references_1a1c3c3487396e208b6495fcdc73936de2" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>oscillator</name></member>
       <member refid="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i_1ae11aa7727584968366eac14ef782df9f" prot="public" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>pal</name></member>
+      <member refid="classvc64_1_1_references_1adfdca8ba1967e6d1de209ce8f6a40816" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>parCable</name></member>
+      <member refid="classvc64_1_1_references_1aab0477bdbf0257957007dc495e49ee0e" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>port1</name></member>
+      <member refid="classvc64_1_1_references_1a054a39fcb2357fc321e56ea4103860ee" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>port2</name></member>
+      <member refid="classvc64_1_1_references_1a3fa1751dc3d018d0813409f0495cdcab" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>recorder</name></member>
+      <member refid="classvc64_1_1_references_1a466a1bc4bfe90a7f29afb596df1c530d" prot="public" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>References</name></member>
+      <member refid="classvc64_1_1_references_1a0951b2824424d9fda808b88efd9b50e4" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>regressionTester</name></member>
+      <member refid="classvc64_1_1_a_p_i_1abf5b5cc4514382edc5e80528d956ab96" prot="public" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>resume</name></member>
+      <member refid="classvc64_1_1_references_1a1d81ee2f6b3a1daed8df1142c0e299e3" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>retroShell</name></member>
+      <member refid="classvc64_1_1_a_p_i_1aaf072770fe8db16f4eb6187afd5e56c1" prot="public" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>suspend</name></member>
+      <member refid="classvc64_1_1_suspendable_1a7f9f608d5b2b9b6e944176cde77b8f85" prot="public" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>Suspendable</name></member>
+      <member refid="classvc64_1_1_references_1a1f1e51f8cba9a1a920b7113f5105febd" prot="protected" virt="non-virtual"><scope>VirtualC64::VICIIAPI</scope><name>vic</name></member>
+      <member refid="classvc64_1_1_suspendable_1a35809d3a4c20db1f096e8dc5c78c49b9" prot="public" virt="virtual"><scope>VirtualC64::VICIIAPI</scope><name>~Suspendable</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

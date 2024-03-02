@@ -3,7 +3,133 @@
   <compounddef id="config_8h" kind="file" language="C++">
     <compoundname>config.h</compoundname>
     <includes local="no">assert.h</includes>
+    <includedby refid="_cmd_queue_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.cpp</includedby>
+    <includedby refid="_colors_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.cpp</includedby>
+    <includedby refid="_configurable_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/Configurable.cpp</includedby>
+    <includedby refid="_core_component_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/CoreComponent.cpp</includedby>
+    <includedby refid="_core_object_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/CoreObject.cpp</includedby>
+    <includedby refid="_defaults_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.cpp</includedby>
+    <includedby refid="_error_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/Error.cpp</includedby>
+    <includedby refid="_host_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/Host.cpp</includedby>
+    <includedby refid="_inspectable_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/Inspectable.cpp</includedby>
+    <includedby refid="_msg_queue_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueue.cpp</includedby>
+    <includedby refid="_option_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/Option.cpp</includedby>
+    <includedby refid="_serializable_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/Serializable.cpp</includedby>
+    <includedby refid="_sub_component_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/SubComponent.cpp</includedby>
+    <includedby refid="_suspendable_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/Suspendable.cpp</includedby>
+    <includedby refid="_synchronizable_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/Synchronizable.cpp</includedby>
+    <includedby refid="_thread_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/Thread.cpp</includedby>
+    <includedby refid="_wakeable_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/Wakeable.cpp</includedby>
+    <includedby refid="_cartridge_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/Cartridge.cpp</includedby>
+    <includedby refid="_cartridge_rom_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeRom.cpp</includedby>
+    <includedby refid="_action_replay_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/ActionReplay.cpp</includedby>
+    <includedby refid="_comal80_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Comal80.cpp</includedby>
+    <includedby refid="_dinamic_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Dinamic.cpp</includedby>
+    <includedby refid="_easy_flash_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/EasyFlash.cpp</includedby>
+    <includedby refid="_epyx_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Epyx.cpp</includedby>
+    <includedby refid="_expert_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Expert.cpp</includedby>
+    <includedby refid="_final_i_i_i_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/FinalIII.cpp</includedby>
+    <includedby refid="_freeze_frame_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/FreezeFrame.cpp</includedby>
+    <includedby refid="_funplay_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Funplay.cpp</includedby>
+    <includedby refid="_game_killer_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/GameKiller.cpp</includedby>
+    <includedby refid="_geo_ram_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/GeoRam.cpp</includedby>
+    <includedby refid="_isepic_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Isepic.cpp</includedby>
+    <includedby refid="_kcs_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Kcs.cpp</includedby>
+    <includedby refid="_kingsoft_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Kingsoft.cpp</includedby>
+    <includedby refid="_mach5_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Mach5.cpp</includedby>
+    <includedby refid="_magic_desk_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/MagicDesk.cpp</includedby>
+    <includedby refid="_mikro_ass_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/MikroAss.cpp</includedby>
+    <includedby refid="_ocean_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Ocean.cpp</includedby>
+    <includedby refid="_page_fox_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/PageFox.cpp</includedby>
+    <includedby refid="_reu_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Reu.cpp</includedby>
+    <includedby refid="_rex_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Rex.cpp</includedby>
+    <includedby refid="_simons_basic_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/SimonsBasic.cpp</includedby>
+    <includedby refid="_star_dos_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/StarDos.cpp</includedby>
+    <includedby refid="_structured_basic_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/StructuredBasic.cpp</includedby>
+    <includedby refid="_super_games_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/SuperGames.cpp</includedby>
+    <includedby refid="_warp_speed_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/WarpSpeed.cpp</includedby>
+    <includedby refid="_westermann_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Westermann.cpp</includedby>
+    <includedby refid="_zaxxon_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Zaxxon.cpp</includedby>
+    <includedby refid="_flash_rom_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.cpp</includedby>
+    <includedby refid="_c64_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/C64.cpp</includedby>
+    <includedby refid="_c_i_a_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIA.cpp</includedby>
+    <includedby refid="_c_i_a_regs_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIARegs.cpp</includedby>
+    <includedby refid="_t_o_d_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/TOD.cpp</includedby>
+    <includedby refid="_c_p_u_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/CPU.cpp</includedby>
+    <includedby refid="_c_p_u_inspector_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/CPUInspector.cpp</includedby>
+    <includedby refid="_peddle_config_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleConfig.h</includedby>
+    <includedby refid="_emulator_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.cpp</includedby>
+    <includedby refid="_control_port_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ControlPort.cpp</includedby>
+    <includedby refid="_expansion_port_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ExpansionPort.cpp</includedby>
+    <includedby refid="_i_e_c_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.cpp</includedby>
+    <includedby refid="_power_supply_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/PowerSupply.cpp</includedby>
+    <includedby refid="_c64_memory_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/C64Memory.cpp</includedby>
+    <includedby refid="_muxer_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Muxer.cpp</includedby>
+    <includedby refid="_re_s_i_d_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp</includedby>
+    <includedby refid="_s_i_d_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SID.cpp</includedby>
+    <includedby refid="_s_i_d_streams_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDStreams.cpp</includedby>
+    <includedby refid="_fast_s_i_d_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastSID.cpp</includedby>
+    <includedby refid="_fast_voice_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.cpp</includedby>
+    <includedby refid="_dma_debugger_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.cpp</includedby>
+    <includedby refid="_f_fmpeg_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/Recorder/FFmpeg.cpp</includedby>
+    <includedby refid="_named_pipe_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/Recorder/NamedPipe.cpp</includedby>
+    <includedby refid="_recorder_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/Recorder/Recorder.cpp</includedby>
+    <includedby refid="_v_i_c_i_i_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICII.cpp</includedby>
+    <includedby refid="_v_i_c_i_i__colors_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICII_colors.cpp</includedby>
+    <includedby refid="_v_i_c_i_i__cycles_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICII_cycles.cpp</includedby>
+    <includedby refid="_v_i_c_i_i__debug_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICII_debug.cpp</includedby>
+    <includedby refid="_v_i_c_i_i__draw_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICII_draw.cpp</includedby>
+    <includedby refid="_v_i_c_i_i__memory_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICII_memory.cpp</includedby>
+    <includedby refid="_v_i_c_i_i__sprites_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICII_sprites.cpp</includedby>
+    <includedby refid="_v_i_c_i_i__table_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICII_table.cpp</includedby>
+    <includedby refid="_f_s_block_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSBlock.cpp</includedby>
+    <includedby refid="_f_s_descriptors_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDescriptors.cpp</includedby>
+    <includedby refid="_f_s_dir_entry_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.cpp</includedby>
+    <includedby refid="_file_system_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp</includedby>
     <includedby refid="_headless_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Headless.cpp</includedby>
+    <includedby refid="_any_collection_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.cpp</includedby>
+    <includedby refid="_any_file_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.cpp</includedby>
+    <includedby refid="_c_r_t_file_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Media/CRTFile.cpp</includedby>
+    <includedby refid="_d64_file_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Media/D64File.cpp</includedby>
+    <includedby refid="_folder_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Media/Folder.cpp</includedby>
+    <includedby refid="_g64_file_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.cpp</includedby>
+    <includedby refid="_p00_file_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Media/P00File.cpp</includedby>
+    <includedby refid="_p_r_g_file_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.cpp</includedby>
+    <includedby refid="_rom_file_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Media/RomFile.cpp</includedby>
+    <includedby refid="_script_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Media/Script.cpp</includedby>
+    <includedby refid="_snapshot_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.cpp</includedby>
+    <includedby refid="_t64_file_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Media/T64File.cpp</includedby>
+    <includedby refid="_t_a_p_file_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Media/TAPFile.cpp</includedby>
+    <includedby refid="_regression_tester_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Misc/RegressionTester/RegressionTester.cpp</includedby>
+    <includedby refid="_command_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Command.cpp</includedby>
+    <includedby refid="_interpreter_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp</includedby>
+    <includedby refid="_interpreter_cmds_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/InterpreterCmds.cpp</includedby>
+    <includedby refid="_interpreter_debug_cmds_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/InterpreterDebugCmds.cpp</includedby>
+    <includedby refid="_retro_shell_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.cpp</includedby>
+    <includedby refid="_text_storage_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/TextStorage.cpp</includedby>
+    <includedby refid="_datasette_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp</includedby>
+    <includedby refid="_disk_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Disk.cpp</includedby>
+    <includedby refid="_disk_analyzer_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.cpp</includedby>
+    <includedby refid="_drive_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp</includedby>
+    <includedby refid="_drive_memory_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp</includedby>
+    <includedby refid="_p_i_a_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/PIA.cpp</includedby>
+    <includedby refid="_par_cable_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/ParCable.cpp</includedby>
+    <includedby refid="_v_i_a_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.cpp</includedby>
+    <includedby refid="_joystick_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.cpp</includedby>
+    <includedby refid="_c64_key_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.cpp</includedby>
+    <includedby refid="_keyboard_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/Keyboard.cpp</includedby>
+    <includedby refid="_mouse_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.cpp</includedby>
+    <includedby refid="_mouse1350_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.cpp</includedby>
+    <includedby refid="_mouse1351_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1351.cpp</includedby>
+    <includedby refid="_neos_mouse_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.cpp</includedby>
+    <includedby refid="_buffer_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Utilities/Buffer.cpp</includedby>
+    <includedby refid="_checksum_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Utilities/Checksum.cpp</includedby>
+    <includedby refid="_chrono_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Utilities/Chrono.cpp</includedby>
+    <includedby refid="_concurrency_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Utilities/Concurrency.cpp</includedby>
+    <includedby refid="_i_o_utils_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.cpp</includedby>
+    <includedby refid="_mem_utils_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Utilities/MemUtils.cpp</includedby>
+    <includedby refid="_parser_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.cpp</includedby>
+    <includedby refid="_string_utils_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.cpp</includedby>
     <includedby refid="_virtual_c64_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp</includedby>
     <includedby refid="config_8cpp" local="yes">/Users/hoff/Retro/virtualc64/Emulator/config.cpp</includedby>
     <incdepgraph>
@@ -17,6 +143,86 @@
         <label>assert.h</label>
       </node>
     </incdepgraph>
+    <invincdepgraph>
+      <node id="5">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/C64.h</label>
+        <link refid="_c64_8h_source"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/CPU.h</label>
+        <link refid="_c_p_u_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/Peddle.h</label>
+        <link refid="_peddle_8h_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleConfig.h</label>
+        <link refid="_peddle_config_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h</label>
+        <link refid="_peddle_debugger_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDisassembler.h</label>
+        <link refid="_peddle_disassembler_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/StrWriter.h</label>
+        <link refid="_str_writer_8h_source"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h</label>
+        <link refid="_emulator_8h_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Headless.h</label>
+        <link refid="_headless_8h_source"/>
+      </node>
+      <node id="9">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h</label>
+        <link refid="_drive_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h</label>
+        <link refid="_virtual_c64_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/config.h</label>
+        <link refid="config_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
     <sectiondef kind="define">
       <memberdef kind="define" id="config_8h_1ae9b0873c1004a01651f733d556db118c" prot="public" static="no">
         <name>VER_MAJOR</name>
@@ -167,14 +373,14 @@
         <definition>const bool betaRelease</definition>
         <argsstring></argsstring>
         <name>betaRelease</name>
-        <initializer>= 1</initializer>
+        <initializer>= 0</initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.h" line="84" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.h" bodystart="84" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.h" line="82" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.h" bodystart="82" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="config_8h_1a2e0db88db2ecb1c509a6e50071bb3d0d" prot="public" static="yes" mutable="no">
         <type>const bool</type>

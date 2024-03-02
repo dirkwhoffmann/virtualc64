@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="dir_899058ae01f0eb85e2d1a53e03af8bff" kind="dir">
+    <compoundname>/Users/hoff/Retro/virtualc64/Emulator/FileSystems</compoundname>
+    <innerfile refid="_file_system_8cpp">FileSystem.cpp</innerfile>
+    <innerfile refid="_file_system_8h">FileSystem.h</innerfile>
+    <innerfile refid="_f_s_block_8cpp">FSBlock.cpp</innerfile>
+    <innerfile refid="_f_s_block_8h">FSBlock.h</innerfile>
+    <innerfile refid="_f_s_descriptors_8cpp">FSDescriptors.cpp</innerfile>
+    <innerfile refid="_f_s_descriptors_8h">FSDescriptors.h</innerfile>
+    <innerfile refid="_f_s_dir_entry_8cpp">FSDirEntry.cpp</innerfile>
+    <innerfile refid="_f_s_dir_entry_8h">FSDirEntry.h</innerfile>
+    <innerfile refid="_f_s_types_8h">FSTypes.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/"/>
+  </compounddef>
+</doxygen>

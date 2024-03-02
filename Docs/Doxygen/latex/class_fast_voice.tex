@@ -1,0 +1,279 @@
+\doxysection{Fast\+Voice Class Reference}
+\hypertarget{class_fast_voice}{}\label{class_fast_voice}\index{FastVoice@{FastVoice}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_fast_voice_a3e6d1f6fccf928b4955c5114d7317861}\label{class_fast_voice_a3e6d1f6fccf928b4955c5114d7317861} 
+void {\bfseries init} (\mbox{\hyperlink{class_fast_s_i_d}{Fast\+SID}} \texorpdfstring{$\ast$}{*}owner, isize voice\+Nr, \mbox{\hyperlink{class_fast_voice}{Fast\+Voice}} \texorpdfstring{$\ast$}{*}prev\+Voice)
+\item 
+\Hypertarget{class_fast_voice_ab5f310a034adcdac3852a9a8c669027e}\label{class_fast_voice_ab5f310a034adcdac3852a9a8c669027e} 
+\mbox{\hyperlink{class_fast_voice}{Fast\+Voice}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_fast_voice}{Fast\+Voice}} \&other)
+\item 
+\Hypertarget{class_fast_voice_a678c082b42034e895c5cdba86f940434}\label{class_fast_voice_a678c082b42034e895c5cdba86f940434} 
+{\footnotesize template$<$class T $>$ }\\void {\bfseries serialize} (T \&worker)
+\item 
+\Hypertarget{class_fast_voice_a4f17e74e00ce4c5cb42f122f1a857b55}\label{class_fast_voice_a4f17e74e00ce4c5cb42f122f1a857b55} 
+void {\bfseries operator$<$$<$} (Ser\+Resetter \&worker) override
+\item 
+\Hypertarget{class_fast_voice_a4a18115032b36ca21d212949c0262625}\label{class_fast_voice_a4a18115032b36ca21d212949c0262625} 
+void {\bfseries operator$<$$<$} (Ser\+Checker \&worker) override
+\item 
+\Hypertarget{class_fast_voice_aa75c4c4047a2bacc60033b2d7b090182}\label{class_fast_voice_aa75c4c4047a2bacc60033b2d7b090182} 
+void {\bfseries operator$<$$<$} (Ser\+Counter \&worker) override
+\item 
+\Hypertarget{class_fast_voice_ac92adca40f659f5e0fe3074d3aa9554d}\label{class_fast_voice_ac92adca40f659f5e0fe3074d3aa9554d} 
+void {\bfseries operator$<$$<$} (Ser\+Reader \&worker) override
+\item 
+\Hypertarget{class_fast_voice_a186221bba19128611100f2829353bc98}\label{class_fast_voice_a186221bba19128611100f2829353bc98} 
+void {\bfseries operator$<$$<$} (Ser\+Writer \&worker) override
+\item 
+\Hypertarget{class_fast_voice_a73ee342a2210df3a09855f3f74fbad0b}\label{class_fast_voice_a73ee342a2210df3a09855f3f74fbad0b} 
+\mbox{\hyperlink{struct_voice_info}{Voice\+Info}} {\bfseries get\+Voice\+Info} (isize nr) const
+\item 
+\Hypertarget{class_fast_voice_ae91bd4a9ceeb0d6201638b95d6e3b1a7}\label{class_fast_voice_ae91bd4a9ceeb0d6201638b95d6e3b1a7} 
+void {\bfseries update\+Wave\+Table\+Ptr} ()
+\item 
+\Hypertarget{class_fast_voice_ab1550309028a20510dff9d10b7b5de63}\label{class_fast_voice_ab1550309028a20510dff9d10b7b5de63} 
+void {\bfseries update\+Internals} (bool gate\+Bit\+Flipped)
+\item 
+\Hypertarget{class_fast_voice_aa8df24f557cb69996f28faa0dc268f7b}\label{class_fast_voice_aa8df24f557cb69996f28faa0dc268f7b} 
+void {\bfseries set\+Filter\+Type} (u8 type)
+\item 
+\Hypertarget{class_fast_voice_aea5535e6824fdd912cc6850f4288a1f1}\label{class_fast_voice_aea5535e6824fdd912cc6850f4288a1f1} 
+void {\bfseries set\+\_\+adsr} (u8 fm)
+\item 
+\Hypertarget{class_fast_voice_a9347e8f5d04b1ddf5e9f13280e8c3edd}\label{class_fast_voice_a9347e8f5d04b1ddf5e9f13280e8c3edd} 
+void {\bfseries trigger\+\_\+adsr} ()
+\item 
+\Hypertarget{class_fast_voice_af2a9d96ef90da85297dd35c87f10a9ee}\label{class_fast_voice_af2a9d96ef90da85297dd35c87f10a9ee} 
+u32 {\bfseries doosc} ()
+\item 
+\Hypertarget{class_fast_voice_a0aa6bbd63511642f9334a6b7932311ab}\label{class_fast_voice_a0aa6bbd63511642f9334a6b7932311ab} 
+void {\bfseries apply\+Filter} ()
+\item 
+\Hypertarget{class_fast_voice_a30103fdd34919feb91e5b3580426d33f}\label{class_fast_voice_a30103fdd34919feb91e5b3580426d33f} 
+u16 {\bfseries frequency} ()
+\item 
+\Hypertarget{class_fast_voice_a680a0432a98bafa44cfdfd3750698a47}\label{class_fast_voice_a680a0432a98bafa44cfdfd3750698a47} 
+u16 {\bfseries pulse\+Width} ()
+\item 
+\Hypertarget{class_fast_voice_a9cb0581115431cabc0aee183fea76236}\label{class_fast_voice_a9cb0581115431cabc0aee183fea76236} 
+bool {\bfseries gate\+Bit} ()
+\item 
+\Hypertarget{class_fast_voice_aa36f9f5983605035502941fe6881e989}\label{class_fast_voice_aa36f9f5983605035502941fe6881e989} 
+bool {\bfseries sync\+Bit} ()
+\item 
+\Hypertarget{class_fast_voice_abfa1b93a40ce714b69cc4255a1dc675c}\label{class_fast_voice_abfa1b93a40ce714b69cc4255a1dc675c} 
+bool {\bfseries ring\+Mod\+Bit} ()
+\item 
+\Hypertarget{class_fast_voice_a98b85af22f5ba9eb9504c8f4eff9a19d}\label{class_fast_voice_a98b85af22f5ba9eb9504c8f4eff9a19d} 
+bool {\bfseries test\+Bit} ()
+\item 
+\Hypertarget{class_fast_voice_a703d401ad0a73ebb93b4625ae64beae5}\label{class_fast_voice_a703d401ad0a73ebb93b4625ae64beae5} 
+u8 {\bfseries waveform} ()
+\item 
+\Hypertarget{class_fast_voice_a0a84c4e1698885aa82dffe2458e704fe}\label{class_fast_voice_a0a84c4e1698885aa82dffe2458e704fe} 
+u8 {\bfseries attack\+Rate} ()
+\item 
+\Hypertarget{class_fast_voice_a213468f406e04e3d06747497c85af4ce}\label{class_fast_voice_a213468f406e04e3d06747497c85af4ce} 
+u8 {\bfseries decay\+Rate} ()
+\item 
+\Hypertarget{class_fast_voice_af8d070d900db78a6408e6e99e172eb58}\label{class_fast_voice_af8d070d900db78a6408e6e99e172eb58} 
+u8 {\bfseries sustain\+Rate} ()
+\item 
+\Hypertarget{class_fast_voice_a584682cf93c36040f717f37e4a49d644}\label{class_fast_voice_a584682cf93c36040f717f37e4a49d644} 
+u8 {\bfseries release\+Rate} ()
+\item 
+\Hypertarget{class_fast_voice_adce334c26f07e67bc936fbf7c935a759}\label{class_fast_voice_adce334c26f07e67bc936fbf7c935a759} 
+{\bfseries Sub\+Component} (\mbox{\hyperlink{classvc64_1_1_c64}{C64}} \&ref)
+\item 
+\Hypertarget{class_fast_voice_a61d8a843718ff2f39e1575338a527676}\label{class_fast_voice_a61d8a843718ff2f39e1575338a527676} 
+{\bfseries Sub\+Component} (const \mbox{\hyperlink{classvc64_1_1_sub_component}{Sub\+Component}} \&other)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_sub_component}{vc64\+::\+Sub\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Sub\+Component} (\mbox{\hyperlink{classvc64_1_1_c64}{C64}} \&ref)
+\item 
+{\bfseries Sub\+Component} (const \mbox{\hyperlink{classvc64_1_1_sub_component}{Sub\+Component}} \&other)
+\item 
+void \mbox{\hyperlink{classvc64_1_1_sub_component_aba0c66cd1ce8a6d1c3529825afdb4a02}{prefix}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_core_component}{vc64\+::\+Core\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Core\+Component} (\mbox{\hyperlink{classvc64_1_1_emulator}{Emulator}} \&ref)
+\item 
+bool {\bfseries operator==} (\mbox{\hyperlink{classvc64_1_1_core_component}{Core\+Component}} \&other)
+\item 
+bool {\bfseries operator!=} (\mbox{\hyperlink{classvc64_1_1_core_component}{Core\+Component}} \&other)
+\item 
+void {\bfseries initialize} ()
+\item 
+virtual void {\bfseries \+\_\+initialize} ()
+\item 
+void {\bfseries reset} (bool hard)
+\item 
+virtual void {\bfseries \+\_\+reset} (bool hard)
+\item 
+virtual void {\bfseries reset\+Config} ()
+\item 
+virtual bool {\bfseries is\+Powered\+Off} () const
+\item 
+virtual bool {\bfseries is\+Powered\+On} () const
+\item 
+virtual bool {\bfseries is\+Paused} () const
+\item 
+virtual bool {\bfseries is\+Running} () const
+\item 
+virtual bool {\bfseries is\+Suspended} () const
+\item 
+virtual bool {\bfseries is\+Halted} () const
+\item 
+void \mbox{\hyperlink{classvc64_1_1_core_component_afd3f09724b119d73a122c3fc02ac1736}{suspend}} ()
+\item 
+void \mbox{\hyperlink{classvc64_1_1_core_component_aab9305af3e38cc19bd1067ca87fe3e0d}{resume}} ()
+\item 
+virtual void {\bfseries is\+Ready} () const throws
+\item 
+bool {\bfseries is\+Emulator\+Thread} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_configurable}{vc64\+::\+Configurable}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual const Config\+Options \& {\bfseries get\+Options} () const
+\item 
+bool {\bfseries is\+Valid\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt) const
+\item 
+virtual i64 {\bfseries get\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt) const
+\item 
+virtual void {\bfseries set\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt, i64 value)
+\item 
+void {\bfseries set\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt, const string \&value)
+\item 
+void {\bfseries set\+Option} (const string \&opt, const string \&value)
+\item 
+void {\bfseries reset\+Config} (const \mbox{\hyperlink{classvc64_1_1_defaults}{Defaults}} \&defaults)
+\item 
+void {\bfseries reset\+Config} (const \mbox{\hyperlink{classvc64_1_1_defaults}{Defaults}} \&defaults, isize i)
+\item 
+void {\bfseries dump\+Config} (std\+::ostream \&os) const
+\item 
+string {\bfseries key\+List} ()
+\item 
+string {\bfseries arg\+List} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_fast_voice_ae663cd96024cad149d85bdf7dc462373}\label{class_fast_voice_ae663cd96024cad149d85bdf7dc462373} 
+static void {\bfseries init\+Wave\+Tables} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_fast_voice_ae08d7614b6a36f7bfcb10f62bf087fcc}\label{class_fast_voice_ae08d7614b6a36f7bfcb10f62bf087fcc} 
+class {\bfseries Fast\+SID}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classvc64_1_1_core_component}{vc64\+::\+Core\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classvc64_1_1_emulator}{Emulator}} \& {\bfseries emulator}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classvc64_1_1_core_component}{Core\+Component}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries sub\+Components}
+\item 
+bool {\bfseries verbose} = true
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classvc64_1_1_synchronizable}{vc64\+::\+Synchronizable}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classutil_1_1_reentrant_mutex}{util\+::\+Reentrant\+Mutex}} {\bfseries mutex}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_core_component}{vc64\+::\+Core\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries power\+On} ()
+\item 
+void {\bfseries power\+Off} ()
+\item 
+void {\bfseries run} ()
+\item 
+void {\bfseries pause} ()
+\item 
+void {\bfseries halt} ()
+\item 
+void {\bfseries warp\+On} ()
+\item 
+void {\bfseries warp\+Off} ()
+\item 
+void {\bfseries track\+On} ()
+\item 
+void {\bfseries track\+Off} ()
+\item 
+void {\bfseries power\+On\+Off} (bool value)
+\item 
+void {\bfseries warp\+On\+Off} (bool value)
+\item 
+void {\bfseries track\+On\+Off} (bool value)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_sub_component}{vc64\+::\+Sub\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c64}{C64}} \& {\bfseries c64}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c_i_a1}{CIA1}} \& {\bfseries cia1}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c_i_a2}{CIA2}} \& {\bfseries cia2}
+\item 
+\mbox{\hyperlink{classvc64_1_1_control_port}{Control\+Port}} \& {\bfseries port1}
+\item 
+\mbox{\hyperlink{classvc64_1_1_control_port}{Control\+Port}} \& {\bfseries port2}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c_p_u}{CPU}} \& {\bfseries cpu}
+\item 
+\mbox{\hyperlink{classvc64_1_1_datasette}{Datasette}} \& {\bfseries datasette}
+\item 
+\mbox{\hyperlink{classvc64_1_1_drive}{Drive}} \& {\bfseries drive8}
+\item 
+\mbox{\hyperlink{classvc64_1_1_drive}{Drive}} \& {\bfseries drive9}
+\item 
+\mbox{\hyperlink{classvc64_1_1_expansion_port}{Expansion\+Port}} \& {\bfseries expansionport}
+\item 
+\mbox{\hyperlink{classvc64_1_1_host}{Host}} \& {\bfseries host}
+\item 
+\mbox{\hyperlink{classvc64_1_1_i_e_c}{IEC}} \& {\bfseries iec}
+\item 
+\mbox{\hyperlink{classvc64_1_1_keyboard}{Keyboard}} \& {\bfseries keyboard}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c64_memory}{C64\+Memory}} \& {\bfseries mem}
+\item 
+\mbox{\hyperlink{classvc64_1_1_msg_queue}{Msg\+Queue}} \& {\bfseries msg\+Queue}
+\item 
+\mbox{\hyperlink{classvc64_1_1_power_supply}{Power\+Supply}} \& {\bfseries power\+Supply}
+\item 
+\mbox{\hyperlink{classvc64_1_1_par_cable}{Par\+Cable}} \& {\bfseries par\+Cable}
+\item 
+\mbox{\hyperlink{classvc64_1_1_recorder}{Recorder}} \& {\bfseries recorder}
+\item 
+\mbox{\hyperlink{classvc64_1_1_regression_tester}{Regression\+Tester}} \& {\bfseries regression\+Tester}
+\item 
+\mbox{\hyperlink{classvc64_1_1_retro_shell}{Retro\+Shell}} \& {\bfseries retro\+Shell}
+\item 
+\mbox{\hyperlink{classvc64_1_1_muxer}{Muxer}} \& {\bfseries muxer}
+\item 
+\mbox{\hyperlink{classvc64_1_1_v_i_c_i_i}{VICII}} \& {\bfseries vic}
+\item 
+\mbox{\hyperlink{classvc64_1_1_drive}{Drive}} \texorpdfstring{$\ast$}{*} {\bfseries drive} \mbox{[}2\mbox{]} = \{ \&drive8, \&drive9 \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+static bool {\bfseries verbose} = true
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Components/\+SID/fastsid/Fast\+Voice.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Components/\+SID/fastsid/Fast\+Voice.\+cpp\end{DoxyCompactItemize}

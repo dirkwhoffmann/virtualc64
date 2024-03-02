@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_status_register" kind="struct" language="C++" prot="public">
+    <compoundname>StatusRegister</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_status_register_1a415f48ac6ec998eef0b487266c32e810" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool StatusRegister::n</definition>
+        <argsstring></argsstring>
+        <name>n</name>
+        <qualifiedname>StatusRegister::n</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="394" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="394" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_status_register_1a0e88c79f5a512dfd9390f047b0c8a856" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool StatusRegister::v</definition>
+        <argsstring></argsstring>
+        <name>v</name>
+        <qualifiedname>StatusRegister::v</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="395" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="395" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_status_register_1a4f2b5c11cf05bd544be9e77c0a14e344" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool StatusRegister::b</definition>
+        <argsstring></argsstring>
+        <name>b</name>
+        <qualifiedname>StatusRegister::b</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="396" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="396" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_status_register_1ad43bdde3133c9b481e67688c6d9983ca" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool StatusRegister::d</definition>
+        <argsstring></argsstring>
+        <name>d</name>
+        <qualifiedname>StatusRegister::d</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="397" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="397" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_status_register_1a5757e65a2f25d56f00e2b9a8108908ea" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool StatusRegister::i</definition>
+        <argsstring></argsstring>
+        <name>i</name>
+        <qualifiedname>StatusRegister::i</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="398" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="398" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_status_register_1aab812a23a4d40276e32d06c0915b343f" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool StatusRegister::z</definition>
+        <argsstring></argsstring>
+        <name>z</name>
+        <qualifiedname>StatusRegister::z</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="399" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="399" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_status_register_1aff577a51111de5a10148e7d593e3cbdc" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool StatusRegister::c</definition>
+        <argsstring></argsstring>
+        <name>c</name>
+        <qualifiedname>StatusRegister::c</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="400" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="400" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="392" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="393" bodyend="401"/>
+    <listofallmembers>
+      <member refid="struct_status_register_1a4f2b5c11cf05bd544be9e77c0a14e344" prot="public" virt="non-virtual"><scope>StatusRegister</scope><name>b</name></member>
+      <member refid="struct_status_register_1aff577a51111de5a10148e7d593e3cbdc" prot="public" virt="non-virtual"><scope>StatusRegister</scope><name>c</name></member>
+      <member refid="struct_status_register_1ad43bdde3133c9b481e67688c6d9983ca" prot="public" virt="non-virtual"><scope>StatusRegister</scope><name>d</name></member>
+      <member refid="struct_status_register_1a5757e65a2f25d56f00e2b9a8108908ea" prot="public" virt="non-virtual"><scope>StatusRegister</scope><name>i</name></member>
+      <member refid="struct_status_register_1a415f48ac6ec998eef0b487266c32e810" prot="public" virt="non-virtual"><scope>StatusRegister</scope><name>n</name></member>
+      <member refid="struct_status_register_1a0e88c79f5a512dfd9390f047b0c8a856" prot="public" virt="non-virtual"><scope>StatusRegister</scope><name>v</name></member>
+      <member refid="struct_status_register_1aab812a23a4d40276e32d06c0915b343f" prot="public" virt="non-virtual"><scope>StatusRegister</scope><name>z</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

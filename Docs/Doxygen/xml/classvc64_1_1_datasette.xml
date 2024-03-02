@@ -1,0 +1,980 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_datasette" kind="class" language="C++" prot="public" final="yes">
+    <compoundname>vc64::Datasette</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">vc64::SubComponent</basecompoundref>
+    <basecompoundref prot="public" virt="non-virtual">vc64::Inspectable&lt; DatasetteInfo, Void &gt;</basecompoundref>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_datasette_1a929cbc10d7f835fa2344e3b8535f2cba" prot="private" static="no" mutable="no">
+        <type>ConfigOptions</type>
+        <definition>ConfigOptions vc64::Datasette::options</definition>
+        <argsstring></argsstring>
+        <name>options</name>
+        <qualifiedname>vc64::Datasette::options</qualifiedname>
+        <initializer>= {
+
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8adf48f07259725597ab9342f68e67ffeb" kindref="member">OPT_DAT_MODEL</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8ab7392cd61342fb719ccd3a9857a20ece" kindref="member">OPT_DAT_CONNECT</ref>
+    }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="40" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="40" bodyend="44"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_datasette_1aaf1e99ace25dca3620cfcaee72cfd865" prot="private" static="no" mutable="no">
+        <type>DatasetteConfig</type>
+        <definition>DatasetteConfig vc64::Datasette::config</definition>
+        <argsstring></argsstring>
+        <name>config</name>
+        <qualifiedname>vc64::Datasette::config</qualifiedname>
+        <initializer>= { }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="47" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="47" bodyend="47"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_datasette_1a2a75e9ebd72f56ae5ae543b2cd37bdd1" prot="private" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::Datasette::type</definition>
+        <argsstring></argsstring>
+        <name>type</name>
+        <qualifiedname>vc64::Datasette::type</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="61" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_datasette_1aa5837a95b86fd2ae9ee1905cd3228135" prot="private" static="no" mutable="no">
+        <type>Pulse *</type>
+        <definition>Pulse* vc64::Datasette::pulses</definition>
+        <argsstring></argsstring>
+        <name>pulses</name>
+        <qualifiedname>vc64::Datasette::pulses</qualifiedname>
+        <initializer>= nullptr</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="64" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_datasette_1a16de2a765d2ad111438470dc7e92197d" prot="private" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize vc64::Datasette::size</definition>
+        <argsstring></argsstring>
+        <name>size</name>
+        <qualifiedname>vc64::Datasette::size</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="67" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_datasette_1aa73101f185d9a2466a1ae5cdd40da39d" prot="private" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize vc64::Datasette::head</definition>
+        <argsstring></argsstring>
+        <name>head</name>
+        <qualifiedname>vc64::Datasette::head</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="75" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_datasette_1aad349c64b922c7a1812576d99a556933" prot="private" static="no" mutable="no">
+        <type>util::Time</type>
+        <definition>util::Time vc64::Datasette::counter</definition>
+        <argsstring></argsstring>
+        <name>counter</name>
+        <qualifiedname>vc64::Datasette::counter</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="78" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_datasette_1a85e5afa608471802b91b9fabaaae4c6e" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::Datasette::playKey</definition>
+        <argsstring></argsstring>
+        <name>playKey</name>
+        <qualifiedname>vc64::Datasette::playKey</qualifiedname>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="81" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_datasette_1ae2687e967dc456c5b1aa1550d4816c56" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::Datasette::motor</definition>
+        <argsstring></argsstring>
+        <name>motor</name>
+        <qualifiedname>vc64::Datasette::motor</qualifiedname>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="84" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_datasette_1a008081113aba727f1d43c692e27efe2a" prot="private" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 vc64::Datasette::nextRisingEdge</definition>
+        <argsstring></argsstring>
+        <name>nextRisingEdge</name>
+        <qualifiedname>vc64::Datasette::nextRisingEdge</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="87" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_datasette_1ae4f035c6fa199cd16ac6a992fa5dc012" prot="private" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 vc64::Datasette::nextFallingEdge</definition>
+        <argsstring></argsstring>
+        <name>nextFallingEdge</name>
+        <qualifiedname>vc64::Datasette::nextFallingEdge</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="90" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="90" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a3b4b1ecc6b0f900eb0cbf6d88bcc860d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::Datasette::Datasette</definition>
+        <argsstring>(C64 &amp;ref)</argsstring>
+        <name>Datasette</name>
+        <qualifiedname>vc64::Datasette::Datasette</qualifiedname>
+        <param>
+          <type>C64 &amp;</type>
+          <declname>ref</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="99" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="99" bodyend="99"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a1b9c8773476d2a278f6f6631915a6cc7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::Datasette::~Datasette</definition>
+        <argsstring>()</argsstring>
+        <name>~Datasette</name>
+        <qualifiedname>vc64::Datasette::~Datasette</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="100" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="25" bodyend="28"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a31e300ff250d7af4e42737dd156250d5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::alloc</definition>
+        <argsstring>(isize capacity)</argsstring>
+        <name>alloc</name>
+        <qualifiedname>vc64::Datasette::alloc</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>capacity</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="102" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="31" bodyend="39"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1af5b573caaccc934fa72cd84d23337234" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::dealloc</definition>
+        <argsstring>()</argsstring>
+        <name>dealloc</name>
+        <qualifiedname>vc64::Datasette::dealloc</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="103" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="42" bodyend="49"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a5556abc1e49cd93f3f1e78a5c4cc4fed" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::Datasette::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::Datasette::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="105" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="105" bodyend="105"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a9fc6f9c62f06c417c6ee1b2680ad92a7" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::_dump</definition>
+        <argsstring>(Category category, std::ostream &amp;os) const override</argsstring>
+        <name>_dump</name>
+        <qualifiedname>vc64::Datasette::_dump</qualifiedname>
+        <param>
+          <type>Category</type>
+          <declname>category</declname>
+        </param>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="106" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="52" bodyend="81"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a96257f4703f3efab05d4824faf0dedc6" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Datasette &amp;</type>
+        <definition>Datasette &amp; vc64::Datasette::operator=</definition>
+        <argsstring>(const Datasette &amp;other)</argsstring>
+        <name>operator=</name>
+        <qualifiedname>vc64::Datasette::operator=</qualifiedname>
+        <param>
+          <type>const Datasette &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="108" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="108" bodyend="120"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1ab5d2351f0f17dae69b6c9af3d9549707" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>class T</type>
+          </param>
+        </templateparamlist>
+        <type>void</type>
+        <definition>void vc64::Datasette::serialize</definition>
+        <argsstring>(T &amp;worker)</argsstring>
+        <name>serialize</name>
+        <qualifiedname>vc64::Datasette::serialize</qualifiedname>
+        <param>
+          <type>T &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="123" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="123" bodyend="139"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a882fee99264c66c5646c40a45f18f373" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::operator&lt;&lt;</definition>
+        <argsstring>(SerChecker &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::Datasette::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerChecker &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="141" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="141" bodyend="141"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a2f627799eb346b7f56a9cdab5da244b9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::operator&lt;&lt;</definition>
+        <argsstring>(SerCounter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::Datasette::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerCounter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="142" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="84" bodyend="90"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a2d75cda017501542d048d5b9c9101ce5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::operator&lt;&lt;</definition>
+        <argsstring>(SerResetter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::Datasette::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerResetter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="143" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="143" bodyend="143"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1ad9316e64dcbe9ab6b3faa9d649acb274" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::operator&lt;&lt;</definition>
+        <argsstring>(SerReader &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::Datasette::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerReader &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="144" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="93" bodyend="111"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1acd882cf1fec6ac725f08695e64a137cf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::operator&lt;&lt;</definition>
+        <argsstring>(SerWriter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::Datasette::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerWriter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="145" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="114" bodyend="123"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a9b770f2074e472dee4b07f7cbb650177" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const DatasetteConfig &amp;</type>
+        <definition>const DatasetteConfig &amp; vc64::Datasette::getConfig</definition>
+        <argsstring>() const</argsstring>
+        <name>getConfig</name>
+        <qualifiedname>vc64::Datasette::getConfig</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="154" column="27" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="154" bodyend="154"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a23b6cb91455a387f14fc95679d8eb964" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const ConfigOptions &amp;</type>
+        <definition>const ConfigOptions &amp; vc64::Datasette::getOptions</definition>
+        <argsstring>() const override</argsstring>
+        <name>getOptions</name>
+        <qualifiedname>vc64::Datasette::getOptions</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="155" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="155" bodyend="155"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1aaa34cf923d0d228d693d47e7c43a610b" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>i64</type>
+        <definition>i64 vc64::Datasette::getOption</definition>
+        <argsstring>(Option opt) const override</argsstring>
+        <name>getOption</name>
+        <qualifiedname>vc64::Datasette::getOption</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>opt</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="156" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="126" bodyend="136"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a28f00ec67322df3600f4c3464c4884e0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::setOption</definition>
+        <argsstring>(Option opt, i64 value) override</argsstring>
+        <name>setOption</name>
+        <qualifiedname>vc64::Datasette::setOption</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>opt</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="157" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="139" bodyend="163"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1ac9df289e47e40c37c5675543e415ee46" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>DatasetteInfo</type>
+        <definition>DatasetteInfo vc64::Datasette::getInfo</definition>
+        <argsstring>() const</argsstring>
+        <name>getInfo</name>
+        <qualifiedname>vc64::Datasette::getInfo</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="166" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="166" bodyend="177"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a9b33a3d597a11fa66284db0314b2871a" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Datasette::hasTape</definition>
+        <argsstring>() const</argsstring>
+        <name>hasTape</name>
+        <qualifiedname>vc64::Datasette::hasTape</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="176" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="176" bodyend="176"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1aef6aaa7ae38b567a362ce3daee75c228" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>util::Time</type>
+        <definition>util::Time vc64::Datasette::tapeDuration</definition>
+        <argsstring>(isize pos)</argsstring>
+        <name>tapeDuration</name>
+        <qualifiedname>vc64::Datasette::tapeDuration</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>pos</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="179" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="180" bodyend="189"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a4b3a0e86f98882f86a40a911fcbe3876" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>util::Time</type>
+        <definition>util::Time vc64::Datasette::tapeDuration</definition>
+        <argsstring>()</argsstring>
+        <name>tapeDuration</name>
+        <qualifiedname>vc64::Datasette::tapeDuration</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="182" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="182" bodyend="182"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a6c24256763ac398458e1016a7855e46e" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::Datasette::getCounter</definition>
+        <argsstring>() const</argsstring>
+        <name>getCounter</name>
+        <qualifiedname>vc64::Datasette::getCounter</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="185" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="185" bodyend="185"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a55f74ed447ab537bf83d041ad09204a4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::insertTape</definition>
+        <argsstring>(TAPFile &amp;file)</argsstring>
+        <name>insertTape</name>
+        <qualifiedname>vc64::Datasette::insertTape</qualifiedname>
+        <param>
+          <type>TAPFile &amp;</type>
+          <declname>file</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="188" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="192" bodyend="219"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a40a8b613d1f0731482ef84257c329f29" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::ejectTape</definition>
+        <argsstring>()</argsstring>
+        <name>ejectTape</name>
+        <qualifiedname>vc64::Datasette::ejectTape</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="191" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="222" bodyend="237"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1ab641a0028c58f3de8ea7580c270b6301" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::Datasette::getType</definition>
+        <argsstring>() const</argsstring>
+        <name>getType</name>
+        <qualifiedname>vc64::Datasette::getType</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="194" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="194" bodyend="194"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1af16956ef7f7d42d9629dcd46439227b2" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Datasette::getPlayKey</definition>
+        <argsstring>() const</argsstring>
+        <name>getPlayKey</name>
+        <qualifiedname>vc64::Datasette::getPlayKey</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="204" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="204" bodyend="204"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1af3fe2791393ba461f2355e87b878b737" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::pressPlay</definition>
+        <argsstring>()</argsstring>
+        <name>pressPlay</name>
+        <qualifiedname>vc64::Datasette::pressPlay</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="207" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="276" bodyend="288"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a7d742a9d592d26837df22adb71d5253c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::pressStop</definition>
+        <argsstring>()</argsstring>
+        <name>pressStop</name>
+        <qualifiedname>vc64::Datasette::pressStop</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="210" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="310" bodyend="319"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a264e929d7e1b49e2f0d0deebdc962751" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::rewind</definition>
+        <argsstring>(isize seconds=0)</argsstring>
+        <name>rewind</name>
+        <qualifiedname>vc64::Datasette::rewind</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>seconds</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="228" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="240" bodyend="257"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1ab57a6439db5f31745866051fd57ce6af" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Datasette::getMotor</definition>
+        <argsstring>() const</argsstring>
+        <name>getMotor</name>
+        <qualifiedname>vc64::Datasette::getMotor</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="231" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="231" bodyend="231"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a12033f5459653a5cfbe9b41507a56bec" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::setMotor</definition>
+        <argsstring>(bool value)</argsstring>
+        <name>setMotor</name>
+        <qualifiedname>vc64::Datasette::setMotor</qualifiedname>
+        <param>
+          <type>bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="234" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="337" bodyend="358"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a719699dab6d86aa549e96fb91d09eb04" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::processCommand</definition>
+        <argsstring>(const Cmd &amp;cmd)</argsstring>
+        <name>processCommand</name>
+        <qualifiedname>vc64::Datasette::processCommand</qualifiedname>
+        <param>
+          <type>const Cmd &amp;</type>
+          <declname>cmd</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="250" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="361" bodyend="372"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a7a7fb5fcd2f61039101b6b66ad1b3f1f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::processMotEvent</definition>
+        <argsstring>(EventID event)</argsstring>
+        <name>processMotEvent</name>
+        <qualifiedname>vc64::Datasette::processMotEvent</qualifiedname>
+        <param>
+          <type>EventID</type>
+          <declname>event</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="253" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="375" bodyend="387"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a5f32cb73b3c3cf1fb99278ac5f5f1327" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::processDatEvent</definition>
+        <argsstring>(EventID event, i64 cycles)</argsstring>
+        <name>processDatEvent</name>
+        <qualifiedname>vc64::Datasette::processDatEvent</qualifiedname>
+        <param>
+          <type>EventID</type>
+          <declname>event</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>cycles</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="254" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="390" bodyend="418"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a00768f323b92bc8378377bd8adbe82c2" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::play</definition>
+        <argsstring>()</argsstring>
+        <name>play</name>
+        <qualifiedname>vc64::Datasette::play</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="215" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="291" bodyend="307"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1ae5d40d0dc21267e5b65f1af24683b1f7" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::stop</definition>
+        <argsstring>()</argsstring>
+        <name>stop</name>
+        <qualifiedname>vc64::Datasette::stop</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="218" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="322" bodyend="334"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a1ef7ca358a4c0f0c3132bf76c9d16570" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::advanceHead</definition>
+        <argsstring>()</argsstring>
+        <name>advanceHead</name>
+        <qualifiedname>vc64::Datasette::advanceHead</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="239" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="260" bodyend="273"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1aa806fc7d271415eb2b579b818b37b343" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::updateDatEvent</definition>
+        <argsstring>()</argsstring>
+        <name>updateDatEvent</name>
+        <qualifiedname>vc64::Datasette::updateDatEvent</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="259" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="421" bodyend="431"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1afba2de424887d09b9ae4190fb4ca546d" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::scheduleNextDatEvent</definition>
+        <argsstring>()</argsstring>
+        <name>scheduleNextDatEvent</name>
+        <qualifiedname>vc64::Datasette::scheduleNextDatEvent</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="262" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="434" bodyend="447"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_datasette_1a4eba465e1de6c0e29e3e12f0fcb231e5" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Datasette::schedulePulse</definition>
+        <argsstring>(isize nr)</argsstring>
+        <name>schedulePulse</name>
+        <qualifiedname>vc64::Datasette::schedulePulse</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="265" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.cpp" bodystart="450" bodyend="457"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" line="38" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h" bodystart="38" bodyend="266"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_datasette_1a9fc6f9c62f06c417c6ee1b2680ad92a7" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>_dump</name></member>
+      <member refid="classvc64_1_1_core_component_1aa7dd5e7a2020ad2348fea3edd724f538" prot="public" virt="virtual"><scope>vc64::Datasette</scope><name>_initialize</name></member>
+      <member refid="classvc64_1_1_core_component_1ab4d7e4961fa32234f400d835c3b5f038" prot="public" virt="virtual"><scope>vc64::Datasette</scope><name>_reset</name></member>
+      <member refid="classvc64_1_1_datasette_1a1ef7ca358a4c0f0c3132bf76c9d16570" prot="private" virt="non-virtual"><scope>vc64::Datasette</scope><name>advanceHead</name></member>
+      <member refid="classvc64_1_1_datasette_1a31e300ff250d7af4e42737dd156250d5" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>alloc</name></member>
+      <member refid="classvc64_1_1_configurable_1a947ce65dab57ea328e9959014b7f9dfb" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>argList</name></member>
+      <member refid="classvc64_1_1_sub_component_1a7691c720c74fd0e19a63978efe4cd851" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>c64</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae066edf64de901ee3f3b65eb0c02b202" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>cia1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9fe5ed30db982340524f7dcbf6fbf34c" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>cia2</name></member>
+      <member refid="classvc64_1_1_datasette_1aaf1e99ace25dca3620cfcaee72cfd865" prot="private" virt="non-virtual"><scope>vc64::Datasette</scope><name>config</name></member>
+      <member refid="classvc64_1_1_core_component_1a18f454d0d572fa1b2e5023c4eaba6d07" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>CoreComponent</name></member>
+      <member refid="classvc64_1_1_datasette_1aad349c64b922c7a1812576d99a556933" prot="private" virt="non-virtual"><scope>vc64::Datasette</scope><name>counter</name></member>
+      <member refid="classvc64_1_1_sub_component_1acaece01018438ab083bd38a220d34f10" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>cpu</name></member>
+      <member refid="classvc64_1_1_datasette_1a3b4b1ecc6b0f900eb0cbf6d88bcc860d" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>Datasette</name></member>
+      <member refid="classvc64_1_1_sub_component_1a157963272dd927ec5c77b4090be57e89" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>datasette</name></member>
+      <member refid="classvc64_1_1_datasette_1af5b573caaccc934fa72cd84d23337234" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>dealloc</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae85ede3d9ed8315d992eed300932eaf7" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>drive</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae44705f9377cf06d91323d8dca13a8a8" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>drive8</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5d876614a31fb29b8317350ed6a3158b" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>drive9</name></member>
+      <member refid="classvc64_1_1_dumpable_1a28d8b76288598fc0309bd6247e5479db" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_dumpable_1afc31b73f9b651bba5cf37dc88158755a" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_configurable_1a459505cd1eed2c174bf78b29808ad07b" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>dumpConfig</name></member>
+      <member refid="classvc64_1_1_datasette_1a40a8b613d1f0731482ef84257c329f29" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>ejectTape</name></member>
+      <member refid="classvc64_1_1_core_component_1a606e5261773126791e44ee8238f5876e" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>emulator</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5dc793ff2aa4ff3b36fdd061fd3f816b" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>expansionport</name></member>
+      <member refid="classvc64_1_1_datasette_1a9b770f2074e472dee4b07f7cbb650177" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>getConfig</name></member>
+      <member refid="classvc64_1_1_datasette_1a6c24256763ac398458e1016a7855e46e" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>getCounter</name></member>
+      <member refid="classvc64_1_1_datasette_1a5556abc1e49cd93f3f1e78a5c4cc4fed" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_datasette_1ac9df289e47e40c37c5675543e415ee46" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>getInfo</name></member>
+      <member refid="classvc64_1_1_datasette_1ab57a6439db5f31745866051fd57ce6af" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>getMotor</name></member>
+      <member refid="classvc64_1_1_datasette_1aaa34cf923d0d228d693d47e7c43a610b" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>getOption</name></member>
+      <member refid="classvc64_1_1_datasette_1a23b6cb91455a387f14fc95679d8eb964" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>getOptions</name></member>
+      <member refid="classvc64_1_1_datasette_1af16956ef7f7d42d9629dcd46439227b2" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>getPlayKey</name></member>
+      <member refid="classvc64_1_1_inspectable_1a2b2b1b7b86eb95e7f1de5900121744d5" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>getState</name></member>
+      <member refid="classvc64_1_1_inspectable_1a792e6f2f3969af7ee496efcdf1f0f2cf" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>getStats</name></member>
+      <member refid="classvc64_1_1_datasette_1ab641a0028c58f3de8ea7580c270b6301" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>getType</name></member>
+      <member refid="classvc64_1_1_core_component_1a936940e4e5cf0c617935ea3070bcbd4d" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>halt</name></member>
+      <member refid="classvc64_1_1_datasette_1a9b33a3d597a11fa66284db0314b2871a" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>hasTape</name></member>
+      <member refid="classvc64_1_1_datasette_1aa73101f185d9a2466a1ae5cdd40da39d" prot="private" virt="non-virtual"><scope>vc64::Datasette</scope><name>head</name></member>
+      <member refid="classvc64_1_1_sub_component_1add6521bbcffbe5ca85afd6105d54e5ad" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>host</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5c8620301453e0b91374683d0c7b28ab" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>iec</name></member>
+      <member refid="classvc64_1_1_inspectable_1ad8f0ee7c1f197bdb25e542eec4ea940f" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>info</name></member>
+      <member refid="classvc64_1_1_core_component_1a250f9ac5bbc00892bf195ec2ef523a2b" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>initialize</name></member>
+      <member refid="classvc64_1_1_datasette_1a55f74ed447ab537bf83d041ad09204a4" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>insertTape</name></member>
+      <member refid="classvc64_1_1_inspectable_1a9b905b27f0935083c5bda29fbd832a80" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>Inspectable</name></member>
+      <member refid="classvc64_1_1_core_component_1a7b95994acc6e7ba59d4b2f50f2dc8df5" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>isEmulatorThread</name></member>
+      <member refid="classvc64_1_1_core_component_1a0e8c3dd97f64e2487fba4c22ba66d487" prot="public" virt="virtual"><scope>vc64::Datasette</scope><name>isHalted</name></member>
+      <member refid="classvc64_1_1_core_component_1a4f0f63ef65776aceecb329d03c3b5f17" prot="public" virt="virtual"><scope>vc64::Datasette</scope><name>isPaused</name></member>
+      <member refid="classvc64_1_1_core_component_1ac4dadc5fecfac3cd2dfb7e8b70767b42" prot="public" virt="virtual"><scope>vc64::Datasette</scope><name>isPoweredOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a0f9912b36ec181a0410d4f564baef127" prot="public" virt="virtual"><scope>vc64::Datasette</scope><name>isPoweredOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a77bf78d982163a6797f24d23106c5098" prot="public" virt="virtual"><scope>vc64::Datasette</scope><name>isReady</name></member>
+      <member refid="classvc64_1_1_core_component_1a121143d811f91157272bb67a0ca48d8f" prot="public" virt="virtual"><scope>vc64::Datasette</scope><name>isRunning</name></member>
+      <member refid="classvc64_1_1_core_component_1a490512fe63211f42eb57e7ed59f9b6a1" prot="public" virt="virtual"><scope>vc64::Datasette</scope><name>isSuspended</name></member>
+      <member refid="classvc64_1_1_configurable_1af6260d08823e90bdb51d1bf7bb596c35" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>isValidOption</name></member>
+      <member refid="classvc64_1_1_sub_component_1aa9a0c663f877801b651969f86dbf2aae" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>keyboard</name></member>
+      <member refid="classvc64_1_1_configurable_1a0d6caf30eeaae95d1898d08cf3ca8e28" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>keyList</name></member>
+      <member refid="classvc64_1_1_sub_component_1ad160280522e5c27cd731289b9396c44f" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>mem</name></member>
+      <member refid="classvc64_1_1_datasette_1ae2687e967dc456c5b1aa1550d4816c56" prot="private" virt="non-virtual"><scope>vc64::Datasette</scope><name>motor</name></member>
+      <member refid="classvc64_1_1_sub_component_1a478be9b50f9e5c4c07dd2830e9964711" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>msgQueue</name></member>
+      <member refid="classvc64_1_1_synchronizable_1a595f618a9c91e91148882a79760f0f0f" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>mutex</name></member>
+      <member refid="classvc64_1_1_sub_component_1a712af82456373bd6e688a174ac756bcb" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>muxer</name></member>
+      <member refid="classvc64_1_1_datasette_1ae4f035c6fa199cd16ac6a992fa5dc012" prot="private" virt="non-virtual"><scope>vc64::Datasette</scope><name>nextFallingEdge</name></member>
+      <member refid="classvc64_1_1_datasette_1a008081113aba727f1d43c692e27efe2a" prot="private" virt="non-virtual"><scope>vc64::Datasette</scope><name>nextRisingEdge</name></member>
+      <member refid="classvc64_1_1_core_component_1af47e1017ec1d938b1b613b36bdc8be57" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>operator!=</name></member>
+      <member refid="classvc64_1_1_datasette_1a882fee99264c66c5646c40a45f18f373" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_datasette_1a2f627799eb346b7f56a9cdab5da244b9" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_datasette_1a2d75cda017501542d048d5b9c9101ce5" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_datasette_1ad9316e64dcbe9ab6b3faa9d649acb274" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_datasette_1acd882cf1fec6ac725f08695e64a137cf" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_datasette_1a96257f4703f3efab05d4824faf0dedc6" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>operator=</name></member>
+      <member refid="classvc64_1_1_core_component_1aae8879dd8b62291254ec498fa9b2e2cf" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>operator==</name></member>
+      <member refid="classvc64_1_1_datasette_1a929cbc10d7f835fa2344e3b8535f2cba" prot="private" virt="non-virtual"><scope>vc64::Datasette</scope><name>options</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9dfb837b941848b6b87e6a57da28348d" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>parCable</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a9c059588a19eeba521b79ff28e3dd8" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>pause</name></member>
+      <member refid="classvc64_1_1_datasette_1a00768f323b92bc8378377bd8adbe82c2" prot="private" virt="non-virtual"><scope>vc64::Datasette</scope><name>play</name></member>
+      <member refid="classvc64_1_1_datasette_1a85e5afa608471802b91b9fabaaae4c6e" prot="private" virt="non-virtual"><scope>vc64::Datasette</scope><name>playKey</name></member>
+      <member refid="classvc64_1_1_sub_component_1a8c0718eb9d42f335961eaed51ba7cb8d" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>port1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a217a6ea39994b6ecae4e1ebd9cc220e7" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>port2</name></member>
+      <member refid="classvc64_1_1_core_component_1a05e1ba6d62516f796256f1cc394bf2f5" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>powerOff</name></member>
+      <member refid="classvc64_1_1_core_component_1ad606699d83a017fbee805e8d40245475" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>powerOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a74ab4149c152b98c6d5cc15bbac63887" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>powerOnOff</name></member>
+      <member refid="classvc64_1_1_sub_component_1a4fa2405b078fe61c302ff1c8047d9c4f" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>powerSupply</name></member>
+      <member refid="classvc64_1_1_sub_component_1aba0c66cd1ce8a6d1c3529825afdb4a02" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>prefix</name></member>
+      <member refid="classvc64_1_1_datasette_1af3fe2791393ba461f2355e87b878b737" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>pressPlay</name></member>
+      <member refid="classvc64_1_1_datasette_1a7d742a9d592d26837df22adb71d5253c" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>pressStop</name></member>
+      <member refid="classvc64_1_1_datasette_1a719699dab6d86aa549e96fb91d09eb04" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>processCommand</name></member>
+      <member refid="classvc64_1_1_datasette_1a5f32cb73b3c3cf1fb99278ac5f5f1327" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>processDatEvent</name></member>
+      <member refid="classvc64_1_1_datasette_1a7a7fb5fcd2f61039101b6b66ad1b3f1f" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>processMotEvent</name></member>
+      <member refid="classvc64_1_1_datasette_1aa5837a95b86fd2ae9ee1905cd3228135" prot="private" virt="non-virtual"><scope>vc64::Datasette</scope><name>pulses</name></member>
+      <member refid="classvc64_1_1_inspectable_1a49bce64b6ddf46247b1b041cfc482e70" prot="public" virt="virtual"><scope>vc64::Datasette</scope><name>record</name></member>
+      <member refid="classvc64_1_1_sub_component_1a2e1d97a260e9d4d637b0f8fb95fbf1d8" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>recorder</name></member>
+      <member refid="classvc64_1_1_sub_component_1afe6a4ca2f661ec44fd67637b14647436" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>regressionTester</name></member>
+      <member refid="classvc64_1_1_core_component_1a3910be506f5067fe6cf31a69dcd76b0c" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>reset</name></member>
+      <member refid="classvc64_1_1_core_component_1a082147809d967c961a7ac7c15c5f072a" prot="public" virt="virtual"><scope>vc64::Datasette</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1aec76d436c865101509bceb2daf47890b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::Datasette</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1af9ec0fb5e73fd1f0433a4f3bfcd39d9b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::Datasette</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1aab9305af3e38cc19bd1067ca87fe3e0d" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>resume</name></member>
+      <member refid="classvc64_1_1_sub_component_1ada641e2232ca8bdd3ef8fbecc883658d" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>retroShell</name></member>
+      <member refid="classvc64_1_1_datasette_1a264e929d7e1b49e2f0d0deebdc962751" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>rewind</name></member>
+      <member refid="classvc64_1_1_core_component_1ae7093017e8a84768103c67b24de5c578" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>run</name></member>
+      <member refid="classvc64_1_1_datasette_1afba2de424887d09b9ae4190fb4ca546d" prot="private" virt="non-virtual"><scope>vc64::Datasette</scope><name>scheduleNextDatEvent</name></member>
+      <member refid="classvc64_1_1_datasette_1a4eba465e1de6c0e29e3e12f0fcb231e5" prot="private" virt="non-virtual"><scope>vc64::Datasette</scope><name>schedulePulse</name></member>
+      <member refid="classvc64_1_1_datasette_1ab5d2351f0f17dae69b6c9af3d9549707" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>serialize</name></member>
+      <member refid="classvc64_1_1_datasette_1a12033f5459653a5cfbe9b41507a56bec" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>setMotor</name></member>
+      <member refid="classvc64_1_1_datasette_1a28f00ec67322df3600f4c3464c4884e0" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a51756d7f1f0ed1caa0e247ab6e789a3b" prot="public" virt="non-virtual" ambiguityscope="vc64::SubComponent::"><scope>vc64::Datasette</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a689b1a17fac237ca960b062df637" prot="public" virt="non-virtual" ambiguityscope="vc64::SubComponent::"><scope>vc64::Datasette</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_datasette_1a16de2a765d2ad111438470dc7e92197d" prot="private" virt="non-virtual"><scope>vc64::Datasette</scope><name>size</name></member>
+      <member refid="classvc64_1_1_inspectable_1aecec7b2e020d4320ac56123bce570986" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>stats</name></member>
+      <member refid="classvc64_1_1_datasette_1ae5d40d0dc21267e5b65f1af24683b1f7" prot="private" virt="non-virtual"><scope>vc64::Datasette</scope><name>stop</name></member>
+      <member refid="classvc64_1_1_sub_component_1adce334c26f07e67bc936fbf7c935a759" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1a61d8a843718ff2f39e1575338a527676" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_core_component_1aa8b45810bedbdf78b88710ae8db3f495" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>subComponents</name></member>
+      <member refid="classvc64_1_1_core_component_1afd3f09724b119d73a122c3fc02ac1736" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>suspend</name></member>
+      <member refid="classvc64_1_1_suspendable_1a7f9f608d5b2b9b6e944176cde77b8f85" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>Suspendable</name></member>
+      <member refid="classvc64_1_1_datasette_1aef6aaa7ae38b567a362ce3daee75c228" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>tapeDuration</name></member>
+      <member refid="classvc64_1_1_datasette_1a4b3a0e86f98882f86a40a911fcbe3876" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>tapeDuration</name></member>
+      <member refid="classvc64_1_1_core_component_1a0a4c841e543ecfc6cf988592a933a564" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>trackOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a4832ab0ebef49b591fe6e2785e969c89" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>trackOn</name></member>
+      <member refid="classvc64_1_1_core_component_1aae437c6ccf5f91155464dd4953c3baab" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>trackOnOff</name></member>
+      <member refid="classvc64_1_1_datasette_1a2a75e9ebd72f56ae5ae543b2cd37bdd1" prot="private" virt="non-virtual"><scope>vc64::Datasette</scope><name>type</name></member>
+      <member refid="classvc64_1_1_datasette_1aa806fc7d271415eb2b579b818b37b343" prot="private" virt="non-virtual"><scope>vc64::Datasette</scope><name>updateDatEvent</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a24c5efde497d14b519ad15c9053949" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9c1a4b73d1514ddc64567d4521abdecd" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>vic</name></member>
+      <member refid="classvc64_1_1_core_component_1a45399f75688ba5ba157a479c3ce76633" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>warpOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a5df664aeda300338d0568d59673ff536" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>warpOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a6760d32857901c415f4d75031d1e2654" prot="protected" virt="non-virtual"><scope>vc64::Datasette</scope><name>warpOnOff</name></member>
+      <member refid="classvc64_1_1_configurable_1a5aa5d945e768c40297f1bf71e200bde3" prot="public" virt="virtual"><scope>vc64::Datasette</scope><name>~Configurable</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>vc64::Datasette</scope><name>~CoreObject</name></member>
+      <member refid="classvc64_1_1_datasette_1a1b9c8773476d2a278f6f6631915a6cc7" prot="public" virt="non-virtual"><scope>vc64::Datasette</scope><name>~Datasette</name></member>
+      <member refid="classvc64_1_1_dumpable_1a843e874f633f7dcd8e2f1dcf1d8f0c25" prot="public" virt="virtual"><scope>vc64::Datasette</scope><name>~Dumpable</name></member>
+      <member refid="classvc64_1_1_inspectable_1acf833bce62ebc43dac5b42fed0427d67" prot="public" virt="virtual"><scope>vc64::Datasette</scope><name>~Inspectable</name></member>
+      <member refid="classvc64_1_1_suspendable_1a35809d3a4c20db1f096e8dc5c78c49b9" prot="public" virt="virtual"><scope>vc64::Datasette</scope><name>~Suspendable</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

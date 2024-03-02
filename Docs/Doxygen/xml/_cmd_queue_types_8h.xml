@@ -2,40 +2,150 @@
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
   <compounddef id="_cmd_queue_types_8h" kind="file" language="C++">
     <compoundname>CmdQueueTypes.h</compoundname>
-    <includes local="yes">Aliases.h</includes>
-    <includes local="yes">Reflection.h</includes>
-    <includes local="yes">JoystickTypes.h</includes>
+    <includes refid="_aliases_8h" local="yes">Aliases.h</includes>
+    <includes refid="_reflection_8h" local="yes">Reflection.h</includes>
+    <includes refid="_joystick_types_8h" local="yes">JoystickTypes.h</includes>
     <includedby refid="_cmd_queue_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h</includedby>
+    <includedby refid="_control_port_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ControlPort.h</includedby>
+    <includedby refid="_expansion_port_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ExpansionPort.h</includedby>
+    <includedby refid="_drive_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h</includedby>
+    <includedby refid="_virtual_c64_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/VirtualC64Types.h</includedby>
     <incdepgraph>
+      <node id="2">
+        <label>Aliases.h</label>
+        <link refid="_aliases_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
       <node id="1">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h</label>
         <link refid="_cmd_queue_types_8h"/>
         <childnode refid="2" relation="include">
         </childnode>
-        <childnode refid="3" relation="include">
+        <childnode refid="8" relation="include">
         </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>JoystickTypes.h</label>
+        <link refid="_joystick_types_8h_source"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>Macros.h</label>
+        <link refid="_macros_8h_source"/>
         <childnode refid="4" relation="include">
         </childnode>
       </node>
-      <node id="2">
-        <label>Aliases.h</label>
+      <node id="8">
+        <label>Reflection.h</label>
+        <link refid="_reflection_8h_source"/>
       </node>
       <node id="4">
-        <label>JoystickTypes.h</label>
+        <label>Types.h</label>
+        <link refid="_types_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
       </node>
-      <node id="3">
-        <label>Reflection.h</label>
+      <node id="7">
+        <label>stdbool.h</label>
+      </node>
+      <node id="6">
+        <label>stdint.h</label>
+      </node>
+      <node id="5">
+        <label>sys/types.h</label>
       </node>
     </incdepgraph>
     <invincdepgraph>
       <node id="2">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h</label>
-        <link refid="_cmd_queue_8h_source"/>
+        <link refid="_cmd_queue_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
       </node>
       <node id="1">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h</label>
         <link refid="_cmd_queue_types_8h"/>
         <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/C64.h</label>
+        <link refid="_c64_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h</label>
+        <link refid="_emulator_8h_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ControlPort.h</label>
+        <link refid="_control_port_8h_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ExpansionPort.h</label>
+        <link refid="_expansion_port_8h_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Headless.h</label>
+        <link refid="_headless_8h_source"/>
+      </node>
+      <node id="6">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h</label>
+        <link refid="_datasette_8h_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h</label>
+        <link refid="_drive_8h_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/Keyboard.h</label>
+        <link refid="_keyboard_8h_source"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h</label>
+        <link refid="_virtual_c64_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/VirtualC64Types.h</label>
+        <link refid="_virtual_c64_types_8h"/>
+        <childnode refid="4" relation="include">
         </childnode>
       </node>
     </invincdepgraph>
@@ -46,10 +156,250 @@
     <innerclass refid="struct_alarm_cmd" prot="public">AlarmCmd</innerclass>
     <innerclass refid="struct_shell_cmd" prot="public">ShellCmd</innerclass>
     <sectiondef kind="enum">
-      <member refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" kind="enum"><name>CMD_TYPE</name></member>
+      <memberdef kind="enum" id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3" prot="public" static="no" strong="no">
+        <type>long</type>
+        <name>CMD_TYPE</name>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a93c1ce1fac89139d9f4df4b6db21b1cc" prot="public">
+          <name>CMD_NONE</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+<para>None. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ac8e628de5d800200ea73ca97d6ef1e91" prot="public">
+          <name>CMD_SNAPSHOT_AUTO</name>
+          <briefdescription>
+<para>Take a snapshot (emulator triggered) </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a7aa07e1b63a8309e8356d855537043d0" prot="public">
+          <name>CMD_SNAPSHOT_USER</name>
+          <briefdescription>
+<para>Take a snapshot (user triggered) </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a998871469ccfa34ee7b9b304e5086e37" prot="public">
+          <name>CMD_ALARM_ABS</name>
+          <briefdescription>
+<para>Schedule an alarm (absolute cycle) </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ab25e2356709a51ea2257298a1f74eae9" prot="public">
+          <name>CMD_ALARM_REL</name>
+          <briefdescription>
+<para>Schedule an alarm (relative cycle) </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ab4c2c070b619b1f808238cc49c31a8f7" prot="public">
+          <name>CMD_CPU_BRK</name>
+          <briefdescription>
+<para>Let the CPU execute a BRK instruction. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a1ee50b12ac4517b6b8848792a903bd8e" prot="public">
+          <name>CMD_CPU_NMI</name>
+          <briefdescription>
+<para>Emulate an external expansion port NMI. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a0d00e2f0cba95a7ae85699036485fd7f" prot="public">
+          <name>CMD_KEY_PRESS</name>
+          <briefdescription>
+<para>Press a key on the C64 keyboard. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3af74c08e0d502f1233a3e12e8c5dff7f5" prot="public">
+          <name>CMD_KEY_RELEASE</name>
+          <briefdescription>
+<para>Release a key on the C64 keyboard. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3aba97321e55d4e9320993cfe49f1e68b9" prot="public">
+          <name>CMD_KEY_RELEASE_ALL</name>
+          <briefdescription>
+<para>Clear the keyboard matrix. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3aa9859a03cc385ec099f044fe68d819e9" prot="public">
+          <name>CMD_KEY_TOGGLE</name>
+          <briefdescription>
+<para>Press or release a key on the C64 keyboard. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a9700907d31668e74487df274bd415d0e" prot="public">
+          <name>CMD_MOUSE_MOVE_ABS</name>
+          <briefdescription>
+<para>Signal a mouse movement (absolut coordinates) </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a95a4824dcfff64873d6e718545e6ab04" prot="public">
+          <name>CMD_MOUSE_MOVE_REL</name>
+          <briefdescription>
+<para>Signal a mouse movement (relative coordinates) </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a0e4d2eac3e3a9bb323dd933d7d2bfdfc" prot="public">
+          <name>CMD_MOUSE_EVENT</name>
+          <briefdescription>
+<para>Signal a mouse button event. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a685bf3a2b9e507d383cdd8eef9527e25" prot="public">
+          <name>CMD_JOY_EVENT</name>
+          <briefdescription>
+<para>Signal a joystick button event. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a8533d86b1ac4bda87ba9db602acf98e3" prot="public">
+          <name>CMD_DSK_TOGGLE_WP</name>
+          <briefdescription>
+<para>Toggle write-protection. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a3debc19e1cad98e6b0f484445c306f30" prot="public">
+          <name>CMD_DSK_MODIFIED</name>
+          <briefdescription>
+<para>Signal that the disk has been saved. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a6ae7661f4ed38ef563c81680b681c64d" prot="public">
+          <name>CMD_DSK_UNMODIFIED</name>
+          <briefdescription>
+<para>Signan that the disk needs saving. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a2e51e8d28a5df7a2ad790e7d7a4cc5af" prot="public">
+          <name>CMD_DATASETTE_PLAY</name>
+          <briefdescription>
+<para>Press the datasette play key. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a257c1eff3f5a2ae97064df677b809936" prot="public">
+          <name>CMD_DATASETTE_STOP</name>
+          <briefdescription>
+<para>Press the datasette stop key. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a945c23a37311b1df5a129778a17f4cf9" prot="public">
+          <name>CMD_DATASETTE_REWIND</name>
+          <briefdescription>
+<para>Rewind the tape. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ad9116107b0be9868d4d2563f40e33fd4" prot="public">
+          <name>CMD_CRT_BUTTON_PRESS</name>
+          <briefdescription>
+<para>Press a cartridge button. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a61105b208370c0fad8cb6b925ac3ef3e" prot="public">
+          <name>CMD_CRT_BUTTON_RELEASE</name>
+          <briefdescription>
+<para>Release a cartridge button. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ad969b2766e60e084e39b47424e11e6ea" prot="public">
+          <name>CMD_CRT_SWITCH_LEFT</name>
+          <briefdescription>
+<para>Pull the cartridge switch left. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ad6b727e3d07c4845f09dc5eab83d3bcc" prot="public">
+          <name>CMD_CRT_SWITCH_NEUTRAL</name>
+          <briefdescription>
+<para>Put the cartridge switch in neutral position. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a092eb67ee6a7425139087d44561a030c" prot="public">
+          <name>CMD_CRT_SWITCH_RIGHT</name>
+          <briefdescription>
+<para>Pull the cartridge switch right. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3af91039778727323fb4b230805558c27a" prot="public">
+          <name>CMD_RSH_EXECUTE</name>
+          <briefdescription>
+<para>Execute a script command. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+<para>Emulator command. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="25" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="26" bodyend="72"/>
+      </memberdef>
     </sectiondef>
     <sectiondef kind="typedef">
-      <member refid="group__doxy__types_1ga76f5773e557fe72d1b4afa723e530566" kind="typedef"><name>CmdType</name></member>
+      <memberdef kind="typedef" id="_cmd_queue_types_8h_1a76f5773e557fe72d1b4afa723e530566" prot="public" static="no">
+        <type><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3" kindref="member">CMD_TYPE</ref></type>
+        <definition>typedef CMD_TYPE CmdType</definition>
+        <argsstring></argsstring>
+        <name>CmdType</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="73" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
@@ -66,199 +416,197 @@
 <codeline lineno="8"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>-<sp/>The<sp/>Mozilla<sp/>Public<sp/>License<sp/>v2</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="9"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="10"><highlight class="normal"></highlight><highlight class="comment">//<sp/>SPDX-License-Identifier:<sp/>GPL-3.0-or-later<sp/>OR<sp/>MPL-2.0</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="11"><highlight class="normal"></highlight><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="12"><highlight class="normal"></highlight></codeline>
-<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="14"><highlight class="normal"></highlight></codeline>
-<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Aliases.h&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Reflection.h&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;JoystickTypes.h&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="18"><highlight class="normal"></highlight></codeline>
-<codeline lineno="21"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Aliases.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Reflection.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;JoystickTypes.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Enumerations</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="22"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="23"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Enumerations</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="24"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="25"><highlight class="normal"></highlight></codeline>
-<codeline lineno="27" refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" refkind="member"><highlight class="normal">enum_long(<ref refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" kindref="member">CMD_TYPE</ref>)</highlight></codeline>
-<codeline lineno="28"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="29" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a93c1ce1fac89139d9f4df4b6db21b1cc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a93c1ce1fac89139d9f4df4b6db21b1cc" kindref="member">CMD_NONE</ref><sp/>=<sp/>0,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"></highlight></codeline>
-<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>C64</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="32" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ac8e628de5d800200ea73ca97d6ef1e91" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ac8e628de5d800200ea73ca97d6ef1e91" kindref="member">CMD_SNAPSHOT_AUTO</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="33" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a7aa07e1b63a8309e8356d855537043d0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a7aa07e1b63a8309e8356d855537043d0" kindref="member">CMD_SNAPSHOT_USER</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="34" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a998871469ccfa34ee7b9b304e5086e37" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a998871469ccfa34ee7b9b304e5086e37" kindref="member">CMD_ALARM_ABS</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="35" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ab25e2356709a51ea2257298a1f74eae9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ab25e2356709a51ea2257298a1f74eae9" kindref="member">CMD_ALARM_REL</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="36"><highlight class="normal"></highlight></codeline>
-<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>CPU</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="38" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ab4c2c070b619b1f808238cc49c31a8f7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ab4c2c070b619b1f808238cc49c31a8f7" kindref="member">CMD_CPU_BRK</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="39" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a1ee50b12ac4517b6b8848792a903bd8e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a1ee50b12ac4517b6b8848792a903bd8e" kindref="member">CMD_CPU_NMI</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="40"><highlight class="normal"></highlight></codeline>
-<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Keyboard</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="42" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a0d00e2f0cba95a7ae85699036485fd7f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a0d00e2f0cba95a7ae85699036485fd7f" kindref="member">CMD_KEY_PRESS</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="43" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3af74c08e0d502f1233a3e12e8c5dff7f5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3af74c08e0d502f1233a3e12e8c5dff7f5" kindref="member">CMD_KEY_RELEASE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="44" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3aba97321e55d4e9320993cfe49f1e68b9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3aba97321e55d4e9320993cfe49f1e68b9" kindref="member">CMD_KEY_RELEASE_ALL</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="45" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3aa9859a03cc385ec099f044fe68d819e9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3aa9859a03cc385ec099f044fe68d819e9" kindref="member">CMD_KEY_TOGGLE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="46"><highlight class="normal"></highlight></codeline>
-<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Mice</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="48" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a9700907d31668e74487df274bd415d0e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a9700907d31668e74487df274bd415d0e" kindref="member">CMD_MOUSE_MOVE_ABS</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="49" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a95a4824dcfff64873d6e718545e6ab04" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a95a4824dcfff64873d6e718545e6ab04" kindref="member">CMD_MOUSE_MOVE_REL</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="50" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a0e4d2eac3e3a9bb323dd933d7d2bfdfc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a0e4d2eac3e3a9bb323dd933d7d2bfdfc" kindref="member">CMD_MOUSE_EVENT</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="51"><highlight class="normal"></highlight></codeline>
-<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Joysticks</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="53" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a685bf3a2b9e507d383cdd8eef9527e25" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a685bf3a2b9e507d383cdd8eef9527e25" kindref="member">CMD_JOY_EVENT</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="54"><highlight class="normal"></highlight></codeline>
-<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Floppy<sp/>disks</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="56" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a8533d86b1ac4bda87ba9db602acf98e3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a8533d86b1ac4bda87ba9db602acf98e3" kindref="member">CMD_DSK_TOGGLE_WP</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="57" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a3debc19e1cad98e6b0f484445c306f30" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a3debc19e1cad98e6b0f484445c306f30" kindref="member">CMD_DSK_MODIFIED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="58" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a6ae7661f4ed38ef563c81680b681c64d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a6ae7661f4ed38ef563c81680b681c64d" kindref="member">CMD_DSK_UNMODIFIED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="59"><highlight class="normal"></highlight></codeline>
-<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Datasette</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="61" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a2e51e8d28a5df7a2ad790e7d7a4cc5af" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a2e51e8d28a5df7a2ad790e7d7a4cc5af" kindref="member">CMD_DATASETTE_PLAY</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="62" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a257c1eff3f5a2ae97064df677b809936" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a257c1eff3f5a2ae97064df677b809936" kindref="member">CMD_DATASETTE_STOP</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="63" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a945c23a37311b1df5a129778a17f4cf9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a945c23a37311b1df5a129778a17f4cf9" kindref="member">CMD_DATASETTE_REWIND</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="64"><highlight class="normal"></highlight></codeline>
-<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Cartridges</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="66" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ad9116107b0be9868d4d2563f40e33fd4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ad9116107b0be9868d4d2563f40e33fd4" kindref="member">CMD_CRT_BUTTON_PRESS</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="67" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a61105b208370c0fad8cb6b925ac3ef3e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a61105b208370c0fad8cb6b925ac3ef3e" kindref="member">CMD_CRT_BUTTON_RELEASE</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="68" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ad969b2766e60e084e39b47424e11e6ea" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ad969b2766e60e084e39b47424e11e6ea" kindref="member">CMD_CRT_SWITCH_LEFT</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="69" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ad6b727e3d07c4845f09dc5eab83d3bcc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ad6b727e3d07c4845f09dc5eab83d3bcc" kindref="member">CMD_CRT_SWITCH_NEUTRAL</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="70" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a092eb67ee6a7425139087d44561a030c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a092eb67ee6a7425139087d44561a030c" kindref="member">CMD_CRT_SWITCH_RIGHT</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="71"><highlight class="normal"></highlight></codeline>
-<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>RetroShell</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3af91039778727323fb4b230805558c27a" kindref="member">CMD_RSH_EXECUTE</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="74" refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3af91039778727323fb4b230805558c27a" refkind="member"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="75"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" kindref="member">CMD_TYPE</ref><sp/><ref refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref>;</highlight></codeline>
-<codeline lineno="76"><highlight class="normal"></highlight></codeline>
-<codeline lineno="77"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="78"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">CmdTypeEnum<sp/>:<sp/>util::Reflection&lt;CmdType,<sp/>CmdType&gt;<sp/>{</highlight></codeline>
-<codeline lineno="79"><highlight class="normal"></highlight></codeline>
-<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>minVal<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>maxVal<sp/>=<sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3af91039778727323fb4b230805558c27a" kindref="member">CMD_RSH_EXECUTE</ref>;</highlight></codeline>
-<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>isValid(</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>value)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>value<sp/>&gt;=<sp/>minVal<sp/>&amp;&amp;<sp/>value<sp/>&lt;=<sp/>maxVal;<sp/>}</highlight></codeline>
-<codeline lineno="83"><highlight class="normal"></highlight></codeline>
-<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*prefix()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CMD&quot;</highlight><highlight class="normal">;<sp/>}</highlight></codeline>
-<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*key(<ref refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref><sp/>value)</highlight></codeline>
-<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
-<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(value)<sp/>{</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="25" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3" refkind="member"><highlight class="normal">enum_long(<ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3" kindref="member">CMD_TYPE</ref>)</highlight></codeline>
+<codeline lineno="26"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="27" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a93c1ce1fac89139d9f4df4b6db21b1cc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a93c1ce1fac89139d9f4df4b6db21b1cc" kindref="member">CMD_NONE</ref><sp/>=<sp/>0,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>C64</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ac8e628de5d800200ea73ca97d6ef1e91" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ac8e628de5d800200ea73ca97d6ef1e91" kindref="member">CMD_SNAPSHOT_AUTO</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="31" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a7aa07e1b63a8309e8356d855537043d0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a7aa07e1b63a8309e8356d855537043d0" kindref="member">CMD_SNAPSHOT_USER</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="32" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a998871469ccfa34ee7b9b304e5086e37" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a998871469ccfa34ee7b9b304e5086e37" kindref="member">CMD_ALARM_ABS</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="33" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ab25e2356709a51ea2257298a1f74eae9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ab25e2356709a51ea2257298a1f74eae9" kindref="member">CMD_ALARM_REL</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>CPU</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ab4c2c070b619b1f808238cc49c31a8f7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ab4c2c070b619b1f808238cc49c31a8f7" kindref="member">CMD_CPU_BRK</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="37" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a1ee50b12ac4517b6b8848792a903bd8e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a1ee50b12ac4517b6b8848792a903bd8e" kindref="member">CMD_CPU_NMI</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Keyboard</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a0d00e2f0cba95a7ae85699036485fd7f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a0d00e2f0cba95a7ae85699036485fd7f" kindref="member">CMD_KEY_PRESS</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="41" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3af74c08e0d502f1233a3e12e8c5dff7f5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3af74c08e0d502f1233a3e12e8c5dff7f5" kindref="member">CMD_KEY_RELEASE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="42" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3aba97321e55d4e9320993cfe49f1e68b9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3aba97321e55d4e9320993cfe49f1e68b9" kindref="member">CMD_KEY_RELEASE_ALL</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="43" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3aa9859a03cc385ec099f044fe68d819e9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3aa9859a03cc385ec099f044fe68d819e9" kindref="member">CMD_KEY_TOGGLE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Mice</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a9700907d31668e74487df274bd415d0e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a9700907d31668e74487df274bd415d0e" kindref="member">CMD_MOUSE_MOVE_ABS</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="47" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a95a4824dcfff64873d6e718545e6ab04" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a95a4824dcfff64873d6e718545e6ab04" kindref="member">CMD_MOUSE_MOVE_REL</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="48" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a0e4d2eac3e3a9bb323dd933d7d2bfdfc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a0e4d2eac3e3a9bb323dd933d7d2bfdfc" kindref="member">CMD_MOUSE_EVENT</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Joysticks</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a685bf3a2b9e507d383cdd8eef9527e25" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a685bf3a2b9e507d383cdd8eef9527e25" kindref="member">CMD_JOY_EVENT</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Floppy<sp/>disks</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a8533d86b1ac4bda87ba9db602acf98e3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a8533d86b1ac4bda87ba9db602acf98e3" kindref="member">CMD_DSK_TOGGLE_WP</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="55" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a3debc19e1cad98e6b0f484445c306f30" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a3debc19e1cad98e6b0f484445c306f30" kindref="member">CMD_DSK_MODIFIED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="56" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a6ae7661f4ed38ef563c81680b681c64d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a6ae7661f4ed38ef563c81680b681c64d" kindref="member">CMD_DSK_UNMODIFIED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Datasette</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a2e51e8d28a5df7a2ad790e7d7a4cc5af" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a2e51e8d28a5df7a2ad790e7d7a4cc5af" kindref="member">CMD_DATASETTE_PLAY</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="60" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a257c1eff3f5a2ae97064df677b809936" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a257c1eff3f5a2ae97064df677b809936" kindref="member">CMD_DATASETTE_STOP</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="61" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a945c23a37311b1df5a129778a17f4cf9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a945c23a37311b1df5a129778a17f4cf9" kindref="member">CMD_DATASETTE_REWIND</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Cartridges</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ad9116107b0be9868d4d2563f40e33fd4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ad9116107b0be9868d4d2563f40e33fd4" kindref="member">CMD_CRT_BUTTON_PRESS</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="65" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a61105b208370c0fad8cb6b925ac3ef3e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a61105b208370c0fad8cb6b925ac3ef3e" kindref="member">CMD_CRT_BUTTON_RELEASE</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="66" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ad969b2766e60e084e39b47424e11e6ea" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ad969b2766e60e084e39b47424e11e6ea" kindref="member">CMD_CRT_SWITCH_LEFT</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="67" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ad6b727e3d07c4845f09dc5eab83d3bcc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ad6b727e3d07c4845f09dc5eab83d3bcc" kindref="member">CMD_CRT_SWITCH_NEUTRAL</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="68" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a092eb67ee6a7425139087d44561a030c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a092eb67ee6a7425139087d44561a030c" kindref="member">CMD_CRT_SWITCH_RIGHT</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>RetroShell</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3af91039778727323fb4b230805558c27a" kindref="member">CMD_RSH_EXECUTE</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="72" refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3af91039778727323fb4b230805558c27a" refkind="member"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3" kindref="member">CMD_TYPE</ref><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref>;</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">CmdTypeEnum<sp/>:<sp/>util::Reflection&lt;CmdType,<sp/>CmdType&gt;<sp/>{</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>minVal<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>maxVal<sp/>=<sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3af91039778727323fb4b230805558c27a" kindref="member">CMD_RSH_EXECUTE</ref>;</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>isValid(</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>value)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>value<sp/>&gt;=<sp/>minVal<sp/>&amp;&amp;<sp/>value<sp/>&lt;=<sp/>maxVal;<sp/>}</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*prefix()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CMD&quot;</highlight><highlight class="normal">;<sp/>}</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*key(<ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref><sp/>value)</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(value)<sp/>{</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a93c1ce1fac89139d9f4df4b6db21b1cc" kindref="member">CMD_NONE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;NONE&quot;</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="88"><highlight class="normal"></highlight></codeline>
-<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a93c1ce1fac89139d9f4df4b6db21b1cc" kindref="member">CMD_NONE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;NONE&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="90"><highlight class="normal"></highlight></codeline>
-<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ac8e628de5d800200ea73ca97d6ef1e91" kindref="member">CMD_SNAPSHOT_AUTO</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SNAPSHOT_AUTO&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a7aa07e1b63a8309e8356d855537043d0" kindref="member">CMD_SNAPSHOT_USER</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SNAPSHOT_USER&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a998871469ccfa34ee7b9b304e5086e37" kindref="member">CMD_ALARM_ABS</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ALARM_ABS&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ab25e2356709a51ea2257298a1f74eae9" kindref="member">CMD_ALARM_REL</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ALARM_REL&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="95"><highlight class="normal"></highlight></codeline>
-<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ab4c2c070b619b1f808238cc49c31a8f7" kindref="member">CMD_CPU_BRK</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CPU_BRK&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a1ee50b12ac4517b6b8848792a903bd8e" kindref="member">CMD_CPU_NMI</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CPU_NMI&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="98"><highlight class="normal"></highlight></codeline>
-<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a0d00e2f0cba95a7ae85699036485fd7f" kindref="member">CMD_KEY_PRESS</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;KEY_PRESS&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3af74c08e0d502f1233a3e12e8c5dff7f5" kindref="member">CMD_KEY_RELEASE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;KEY_RELEASE&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3aba97321e55d4e9320993cfe49f1e68b9" kindref="member">CMD_KEY_RELEASE_ALL</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;KEY_RELEASE_ALL&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3aa9859a03cc385ec099f044fe68d819e9" kindref="member">CMD_KEY_TOGGLE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;KEY_TOGGLE&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="103"><highlight class="normal"></highlight></codeline>
-<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a9700907d31668e74487df274bd415d0e" kindref="member">CMD_MOUSE_MOVE_ABS</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;MOUSE_MOVE_ABS&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a95a4824dcfff64873d6e718545e6ab04" kindref="member">CMD_MOUSE_MOVE_REL</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;MOUSE_MOVE_REL&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a0e4d2eac3e3a9bb323dd933d7d2bfdfc" kindref="member">CMD_MOUSE_EVENT</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;MOUSE_EVENT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ac8e628de5d800200ea73ca97d6ef1e91" kindref="member">CMD_SNAPSHOT_AUTO</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SNAPSHOT_AUTO&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a7aa07e1b63a8309e8356d855537043d0" kindref="member">CMD_SNAPSHOT_USER</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SNAPSHOT_USER&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a998871469ccfa34ee7b9b304e5086e37" kindref="member">CMD_ALARM_ABS</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ALARM_ABS&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ab25e2356709a51ea2257298a1f74eae9" kindref="member">CMD_ALARM_REL</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ALARM_REL&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ab4c2c070b619b1f808238cc49c31a8f7" kindref="member">CMD_CPU_BRK</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CPU_BRK&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a1ee50b12ac4517b6b8848792a903bd8e" kindref="member">CMD_CPU_NMI</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CPU_NMI&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a0d00e2f0cba95a7ae85699036485fd7f" kindref="member">CMD_KEY_PRESS</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;KEY_PRESS&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3af74c08e0d502f1233a3e12e8c5dff7f5" kindref="member">CMD_KEY_RELEASE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;KEY_RELEASE&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3aba97321e55d4e9320993cfe49f1e68b9" kindref="member">CMD_KEY_RELEASE_ALL</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;KEY_RELEASE_ALL&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3aa9859a03cc385ec099f044fe68d819e9" kindref="member">CMD_KEY_TOGGLE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;KEY_TOGGLE&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a9700907d31668e74487df274bd415d0e" kindref="member">CMD_MOUSE_MOVE_ABS</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;MOUSE_MOVE_ABS&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a95a4824dcfff64873d6e718545e6ab04" kindref="member">CMD_MOUSE_MOVE_REL</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;MOUSE_MOVE_REL&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a0e4d2eac3e3a9bb323dd933d7d2bfdfc" kindref="member">CMD_MOUSE_EVENT</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;MOUSE_EVENT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a685bf3a2b9e507d383cdd8eef9527e25" kindref="member">CMD_JOY_EVENT</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;JOY_EVENT&quot;</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="107"><highlight class="normal"></highlight></codeline>
-<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a685bf3a2b9e507d383cdd8eef9527e25" kindref="member">CMD_JOY_EVENT</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;JOY_EVENT&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="109"><highlight class="normal"></highlight></codeline>
-<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a8533d86b1ac4bda87ba9db602acf98e3" kindref="member">CMD_DSK_TOGGLE_WP</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DSK_TOGGLE_WP&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a3debc19e1cad98e6b0f484445c306f30" kindref="member">CMD_DSK_MODIFIED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DSK_MODIFIED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a6ae7661f4ed38ef563c81680b681c64d" kindref="member">CMD_DSK_UNMODIFIED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DSK_UNMODIFIED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="113"><highlight class="normal"></highlight></codeline>
-<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a2e51e8d28a5df7a2ad790e7d7a4cc5af" kindref="member">CMD_DATASETTE_PLAY</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DATASETTE_PLAY&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a257c1eff3f5a2ae97064df677b809936" kindref="member">CMD_DATASETTE_STOP</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DATASETTE_STOP&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a945c23a37311b1df5a129778a17f4cf9" kindref="member">CMD_DATASETTE_REWIND</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DATASETTE_REWIND&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="117"><highlight class="normal"></highlight></codeline>
-<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ad9116107b0be9868d4d2563f40e33fd4" kindref="member">CMD_CRT_BUTTON_PRESS</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CRT_BUTTON_PRESS&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a61105b208370c0fad8cb6b925ac3ef3e" kindref="member">CMD_CRT_BUTTON_RELEASE</ref>:<sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CRT_BUTTON_RELEASE&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ad969b2766e60e084e39b47424e11e6ea" kindref="member">CMD_CRT_SWITCH_LEFT</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CRT_SWITCH_LEFT&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ad6b727e3d07c4845f09dc5eab83d3bcc" kindref="member">CMD_CRT_SWITCH_NEUTRAL</ref>:<sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CRT_SWITCH_NEUTRAL&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a092eb67ee6a7425139087d44561a030c" kindref="member">CMD_CRT_SWITCH_RIGHT</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CRT_SWITCH_RIGHT&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="123"><highlight class="normal"></highlight></codeline>
-<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga63ebdc688313e444b486514798e48df3af91039778727323fb4b230805558c27a" kindref="member">CMD_RSH_EXECUTE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RSH_EXECUTE&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;???&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="128"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="129"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="130"><highlight class="normal"></highlight></codeline>
-<codeline lineno="131"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a8533d86b1ac4bda87ba9db602acf98e3" kindref="member">CMD_DSK_TOGGLE_WP</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DSK_TOGGLE_WP&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a3debc19e1cad98e6b0f484445c306f30" kindref="member">CMD_DSK_MODIFIED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DSK_MODIFIED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a6ae7661f4ed38ef563c81680b681c64d" kindref="member">CMD_DSK_UNMODIFIED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DSK_UNMODIFIED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a2e51e8d28a5df7a2ad790e7d7a4cc5af" kindref="member">CMD_DATASETTE_PLAY</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DATASETTE_PLAY&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a257c1eff3f5a2ae97064df677b809936" kindref="member">CMD_DATASETTE_STOP</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DATASETTE_STOP&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a945c23a37311b1df5a129778a17f4cf9" kindref="member">CMD_DATASETTE_REWIND</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DATASETTE_REWIND&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ad9116107b0be9868d4d2563f40e33fd4" kindref="member">CMD_CRT_BUTTON_PRESS</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CRT_BUTTON_PRESS&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a61105b208370c0fad8cb6b925ac3ef3e" kindref="member">CMD_CRT_BUTTON_RELEASE</ref>:<sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CRT_BUTTON_RELEASE&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ad969b2766e60e084e39b47424e11e6ea" kindref="member">CMD_CRT_SWITCH_LEFT</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CRT_SWITCH_LEFT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ad6b727e3d07c4845f09dc5eab83d3bcc" kindref="member">CMD_CRT_SWITCH_NEUTRAL</ref>:<sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CRT_SWITCH_NEUTRAL&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a092eb67ee6a7425139087d44561a030c" kindref="member">CMD_CRT_SWITCH_RIGHT</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CRT_SWITCH_RIGHT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3af91039778727323fb4b230805558c27a" kindref="member">CMD_RSH_EXECUTE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RSH_EXECUTE&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;???&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="126"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Structures</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="132"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="133"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Structures</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="134"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="135"><highlight class="normal"></highlight></codeline>
-<codeline lineno="136" refid="struct_key_cmd" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="137"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/>u8<sp/>keycode;</highlight></codeline>
-<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>delay;</highlight></codeline>
-<codeline lineno="140"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="141"><highlight class="normal"><ref refid="struct_key_cmd" kindref="compound">KeyCmd</ref>;</highlight></codeline>
-<codeline lineno="142"><highlight class="normal"></highlight></codeline>
-<codeline lineno="143" refid="struct_coord_cmd" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="144"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/>isize<sp/>port;</highlight></codeline>
-<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>x;</highlight></codeline>
-<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>y;</highlight></codeline>
-<codeline lineno="148"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="149"><highlight class="normal"><ref refid="struct_coord_cmd" kindref="compound">CoordCmd</ref>;</highlight></codeline>
-<codeline lineno="150"><highlight class="normal"></highlight></codeline>
-<codeline lineno="151" refid="struct_game_pad_cmd" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="152"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/>isize<sp/>port;</highlight></codeline>
-<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/>GamePadAction<sp/>action;</highlight></codeline>
-<codeline lineno="155"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="156"><highlight class="normal"><ref refid="struct_game_pad_cmd" kindref="compound">GamePadCmd</ref>;</highlight></codeline>
-<codeline lineno="157"><highlight class="normal"></highlight></codeline>
-<codeline lineno="158" refid="struct_tape_cmd" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="159"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*tape;</highlight></codeline>
-<codeline lineno="161"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="162"><highlight class="normal"><ref refid="struct_tape_cmd" kindref="compound">TapeCmd</ref>;</highlight></codeline>
-<codeline lineno="163"><highlight class="normal"></highlight></codeline>
-<codeline lineno="164" refid="struct_alarm_cmd" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="165"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/>i64<sp/>cycle;</highlight></codeline>
-<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/>i64<sp/>value;</highlight></codeline>
-<codeline lineno="168"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="169"><highlight class="normal"><ref refid="struct_alarm_cmd" kindref="compound">AlarmCmd</ref>;</highlight></codeline>
-<codeline lineno="170"><highlight class="normal"></highlight></codeline>
-<codeline lineno="171" refid="struct_shell_cmd" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="172"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*command;</highlight></codeline>
-<codeline lineno="174"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="175"><highlight class="normal"><ref refid="struct_shell_cmd" kindref="compound">ShellCmd</ref>;</highlight></codeline>
-<codeline lineno="176"><highlight class="normal"></highlight></codeline>
-<codeline lineno="177"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="178"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">Cmd</highlight></codeline>
-<codeline lineno="179"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Header</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref><sp/>type;</highlight></codeline>
-<codeline lineno="182"><highlight class="normal"></highlight></codeline>
-<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Payload</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal">{</highlight></codeline>
-<codeline lineno="185"><highlight class="normal"></highlight></codeline>
-<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>i64<sp/>value;</highlight></codeline>
-<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="struct_key_cmd" kindref="compound">KeyCmd</ref><sp/>key;</highlight></codeline>
-<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="struct_coord_cmd" kindref="compound">CoordCmd</ref><sp/>coord;</highlight></codeline>
-<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="struct_game_pad_cmd" kindref="compound">GamePadCmd</ref><sp/>action;</highlight></codeline>
-<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="struct_tape_cmd" kindref="compound">TapeCmd</ref><sp/>tape;</highlight></codeline>
-<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="struct_alarm_cmd" kindref="compound">AlarmCmd</ref><sp/>alarm;</highlight></codeline>
-<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="struct_shell_cmd" kindref="compound">ShellCmd</ref><sp/>shell;</highlight></codeline>
-<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
-<codeline lineno="194"><highlight class="normal"></highlight></codeline>
-<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/>Cmd()<sp/>{<sp/>}</highlight></codeline>
-<codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/>Cmd(<ref refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref><sp/>type,<sp/>i64<sp/>value<sp/>=<sp/>0)<sp/>:<sp/>type(type),<sp/>value(value)<sp/>{<sp/>}</highlight></codeline>
-<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/>Cmd(<ref refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref><sp/>type,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="struct_key_cmd" kindref="compound">KeyCmd</ref><sp/>&amp;cmd)<sp/>:<sp/>type(type),<sp/>key(cmd)<sp/>{<sp/>}</highlight></codeline>
-<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/>Cmd(<ref refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref><sp/>type,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="struct_coord_cmd" kindref="compound">CoordCmd</ref><sp/>&amp;cmd)<sp/>:<sp/>type(type),<sp/>coord(cmd)<sp/>{<sp/>}</highlight></codeline>
-<codeline lineno="199"><highlight class="normal"><sp/><sp/><sp/><sp/>Cmd(<ref refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref><sp/>type,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="struct_game_pad_cmd" kindref="compound">GamePadCmd</ref><sp/>&amp;cmd)<sp/>:<sp/>type(type),<sp/>action(cmd)<sp/>{<sp/>}</highlight></codeline>
-<codeline lineno="200"><highlight class="normal"><sp/><sp/><sp/><sp/>Cmd(<ref refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref><sp/>type,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="struct_tape_cmd" kindref="compound">TapeCmd</ref><sp/>&amp;cmd)<sp/>:<sp/>type(type),<sp/>tape(cmd)<sp/>{<sp/>}</highlight></codeline>
-<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/>Cmd(<ref refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref><sp/>type,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="struct_alarm_cmd" kindref="compound">AlarmCmd</ref><sp/>&amp;cmd)<sp/>:<sp/>type(type),<sp/>alarm(cmd)<sp/>{<sp/>}</highlight></codeline>
-<codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/>Cmd(<ref refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref><sp/>type,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="struct_shell_cmd" kindref="compound">ShellCmd</ref><sp/>&amp;cmd)<sp/>:<sp/>type(type),<sp/>shell(cmd)<sp/>{<sp/>}</highlight></codeline>
-<codeline lineno="203"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="204"><highlight class="normal"></highlight></codeline>
-<codeline lineno="205"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="206"><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/>u8<sp/>keycode;</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>delay;</highlight></codeline>
+<codeline lineno="138"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="139"><highlight class="normal">KeyCmd;</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/>isize<sp/>port;</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>x;</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">double</highlight><highlight class="normal"><sp/>y;</highlight></codeline>
+<codeline lineno="146"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="147"><highlight class="normal">CoordCmd;</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/>isize<sp/>port;</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/>GamePadAction<sp/>action;</highlight></codeline>
+<codeline lineno="153"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="154"><highlight class="normal">GamePadCmd;</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="157"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*tape;</highlight></codeline>
+<codeline lineno="159"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="160"><highlight class="normal">TapeCmd;</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/>i64<sp/>cycle;</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/>i64<sp/>value;</highlight></codeline>
+<codeline lineno="166"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="167"><highlight class="normal">AlarmCmd;</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="170"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*command;</highlight></codeline>
+<codeline lineno="172"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="173"><highlight class="normal">ShellCmd;</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"></highlight></codeline>
+<codeline lineno="175"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="176"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">Cmd</highlight></codeline>
+<codeline lineno="177"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Header</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref><sp/>type;</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"></highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Payload</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"></highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>i64<sp/>value;</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>KeyCmd<sp/>key;</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>CoordCmd<sp/>coord;</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>GamePadCmd<sp/>action;</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>TapeCmd<sp/>tape;</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>AlarmCmd<sp/>alarm;</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ShellCmd<sp/>shell;</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/>Cmd()<sp/>{<sp/>}</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/>Cmd(<ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref><sp/>type,<sp/>i64<sp/>value<sp/>=<sp/>0)<sp/>:<sp/>type(type),<sp/>value(value)<sp/>{<sp/>}</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/>Cmd(<ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref><sp/>type,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>KeyCmd<sp/>&amp;cmd)<sp/>:<sp/>type(type),<sp/>key(cmd)<sp/>{<sp/>}</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/>Cmd(<ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref><sp/>type,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>CoordCmd<sp/>&amp;cmd)<sp/>:<sp/>type(type),<sp/>coord(cmd)<sp/>{<sp/>}</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/>Cmd(<ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref><sp/>type,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>GamePadCmd<sp/>&amp;cmd)<sp/>:<sp/>type(type),<sp/>action(cmd)<sp/>{<sp/>}</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/>Cmd(<ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref><sp/>type,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>TapeCmd<sp/>&amp;cmd)<sp/>:<sp/>type(type),<sp/>tape(cmd)<sp/>{<sp/>}</highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/><sp/><sp/>Cmd(<ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref><sp/>type,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>AlarmCmd<sp/>&amp;cmd)<sp/>:<sp/>type(type),<sp/>alarm(cmd)<sp/>{<sp/>}</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/><sp/><sp/>Cmd(<ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref><sp/>type,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>ShellCmd<sp/>&amp;cmd)<sp/>:<sp/>type(type),<sp/>shell(cmd)<sp/>{<sp/>}</highlight></codeline>
+<codeline lineno="201"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"></highlight></codeline>
+<codeline lineno="203"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
     </programlisting>
     <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h"/>
   </compounddef>

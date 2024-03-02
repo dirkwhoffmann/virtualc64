@@ -9,95 +9,7 @@ Public API.
 
 {\ttfamily \#include $<$Virtual\+C64.\+h$>$}
 
-\doxysubsubsection*{Classes}
-\begin{DoxyCompactItemize}
-\item 
-struct \mbox{\hyperlink{struct_virtual_c64_1_1_c64_a_p_i}{C64\+API}}
-\item 
-struct \mbox{\hyperlink{struct_virtual_c64_1_1_c_i_a_a_p_i}{CIAAPI}}
-\item 
-struct \mbox{\hyperlink{struct_virtual_c64_1_1_control_port_a_p_i}{Control\+Port\+API}}
-\item 
-struct \mbox{\hyperlink{struct_virtual_c64_1_1_c_p_u_a_p_i}{CPUAPI}}
-\item 
-struct \mbox{\hyperlink{struct_virtual_c64_1_1_datasette_a_p_i}{Datasette\+API}}
-\item 
-struct \mbox{\hyperlink{struct_virtual_c64_1_1_disk_a_p_i}{Disk\+API}}
-\item 
-struct \mbox{\hyperlink{struct_virtual_c64_1_1_dma_debugger_a_p_i}{Dma\+Debugger\+API}}
-\item 
-struct \mbox{\hyperlink{struct_virtual_c64_1_1_drive_a_p_i}{Drive\+API}}
-\item 
-struct \mbox{\hyperlink{struct_virtual_c64_1_1_expansion_port_a_p_i}{Expansion\+Port\+API}}
-\item 
-struct \mbox{\hyperlink{struct_virtual_c64_1_1_guard_a_p_i}{Guard\+API}}
-\item 
-struct \mbox{\hyperlink{struct_virtual_c64_1_1_i_e_c_a_p_i}{IECAPI}}
-\item 
-struct \mbox{\hyperlink{struct_virtual_c64_1_1_joystick_a_p_i}{Joystick\+API}}
-\item 
-struct \mbox{\hyperlink{struct_virtual_c64_1_1_keyboard_a_p_i}{Keyboard\+API}}
-\item 
-struct \mbox{\hyperlink{struct_virtual_c64_1_1_memory_a_p_i}{Memory\+API}}
-\item 
-struct \mbox{\hyperlink{struct_virtual_c64_1_1_mouse_a_p_i}{Mouse\+API}}
-\item 
-struct \mbox{\hyperlink{struct_virtual_c64_1_1_recorder_a_p_i}{Recorder\+API}}
-\item 
-struct \mbox{\hyperlink{struct_virtual_c64_1_1_retro_shell_a_p_i}{Retro\+Shell\+API}}
-\item 
-struct \mbox{\hyperlink{struct_virtual_c64_1_1_s_i_d_a_p_i}{SIDAPI}}
-\item 
-struct \mbox{\hyperlink{struct_virtual_c64_1_1_v_i_c_i_i_a_p_i}{VICIIAPI}}
-\end{DoxyCompactItemize}
 \doxysubsubsection*{Public Member Functions}
-\begin{DoxyCompactItemize}
-\item 
-\Hypertarget{class_virtual_c64_a2328503412f9342f271bb85edf634128}\label{class_virtual_c64_a2328503412f9342f271bb85edf634128} 
-u32 \texorpdfstring{$\ast$}{*} {\bfseries get\+Texture} () const
-\item 
-\Hypertarget{class_virtual_c64_ab6f3babeba6fe9942705ce4d0ee46903}\label{class_virtual_c64_ab6f3babeba6fe9942705ce4d0ee46903} 
-u32 \texorpdfstring{$\ast$}{*} {\bfseries get\+Noise} () const
-\item 
-\Hypertarget{class_virtual_c64_adc2d8190ca673dc5263881182d48effa}\label{class_virtual_c64_adc2d8190ca673dc5263881182d48effa} 
-void {\bfseries launch} (const void \texorpdfstring{$\ast$}{*}listener, Callback \texorpdfstring{$\ast$}{*}func)
-\item 
-\Hypertarget{class_virtual_c64_aa90fefdc0ac225fa42171a96bc169c5a}\label{class_virtual_c64_aa90fefdc0ac225fa42171a96bc169c5a} 
-i64 {\bfseries get} (\mbox{\hyperlink{group__doxy__types_ga273e435dabd576e6dcff3f18024d1fa8}{Option}} option) const
-\item 
-\Hypertarget{class_virtual_c64_ac34d478e23f8aefec5f0cac5508ce33a}\label{class_virtual_c64_ac34d478e23f8aefec5f0cac5508ce33a} 
-i64 {\bfseries get} (\mbox{\hyperlink{group__doxy__types_ga273e435dabd576e6dcff3f18024d1fa8}{Option}} option, long id) const
-\item 
-\Hypertarget{class_virtual_c64_a0fe88a8972d006fd042e32c477fd8649}\label{class_virtual_c64_a0fe88a8972d006fd042e32c477fd8649} 
-void {\bfseries set} (C64\+Model model)
-\item 
-\Hypertarget{class_virtual_c64_a5044a51bce1455e8dc300d77c05cf939}\label{class_virtual_c64_a5044a51bce1455e8dc300d77c05cf939} 
-void {\bfseries set} (\mbox{\hyperlink{group__doxy__types_ga273e435dabd576e6dcff3f18024d1fa8}{Option}} option, i64 value) throws
-\item 
-\Hypertarget{class_virtual_c64_a26293c22d6d674a7afbb656bac93f3f7}\label{class_virtual_c64_a26293c22d6d674a7afbb656bac93f3f7} 
-void {\bfseries set} (\mbox{\hyperlink{group__doxy__types_ga273e435dabd576e6dcff3f18024d1fa8}{Option}} option, long id, i64 value) throws
-\item 
-\Hypertarget{class_virtual_c64_aba0326d79d52fb569aeba85db9bd67c3}\label{class_virtual_c64_aba0326d79d52fb569aeba85db9bd67c3} 
-void {\bfseries put} (const Cmd \&cmd)
-\item 
-\Hypertarget{class_virtual_c64_ae46f53e58ffebac8e641b0154149b337}\label{class_virtual_c64_ae46f53e58ffebac8e641b0154149b337} 
-void {\bfseries put} (\mbox{\hyperlink{group__doxy__types_ga63ebdc688313e444b486514798e48df3}{Cmd\+Type}} type, i64 payload=0)
-\item 
-\Hypertarget{class_virtual_c64_a47ed6c2c7b4c8faa3628a7e5eb1f526b}\label{class_virtual_c64_a47ed6c2c7b4c8faa3628a7e5eb1f526b} 
-void {\bfseries put} (\mbox{\hyperlink{group__doxy__types_ga63ebdc688313e444b486514798e48df3}{Cmd\+Type}} type, \mbox{\hyperlink{struct_key_cmd}{Key\+Cmd}} payload)
-\item 
-\Hypertarget{class_virtual_c64_a864a6c0d1b037237a8d4c62cfb3b0a02}\label{class_virtual_c64_a864a6c0d1b037237a8d4c62cfb3b0a02} 
-void {\bfseries put} (\mbox{\hyperlink{group__doxy__types_ga63ebdc688313e444b486514798e48df3}{Cmd\+Type}} type, \mbox{\hyperlink{struct_coord_cmd}{Coord\+Cmd}} payload)
-\item 
-\Hypertarget{class_virtual_c64_ab629a663cfcecf7ad7b1561f1778e068}\label{class_virtual_c64_ab629a663cfcecf7ad7b1561f1778e068} 
-void {\bfseries put} (\mbox{\hyperlink{group__doxy__types_ga63ebdc688313e444b486514798e48df3}{Cmd\+Type}} type, \mbox{\hyperlink{struct_game_pad_cmd}{Game\+Pad\+Cmd}} payload)
-\item 
-\Hypertarget{class_virtual_c64_a9cefbb32ff4492548c348f2346c845a4}\label{class_virtual_c64_a9cefbb32ff4492548c348f2346c845a4} 
-void {\bfseries put} (\mbox{\hyperlink{group__doxy__types_ga63ebdc688313e444b486514798e48df3}{Cmd\+Type}} type, \mbox{\hyperlink{struct_tape_cmd}{Tape\+Cmd}} payload)
-\item 
-\Hypertarget{class_virtual_c64_a748407d15849ef3eb050248a1986afd3}\label{class_virtual_c64_a748407d15849ef3eb050248a1986afd3} 
-void {\bfseries put} (\mbox{\hyperlink{group__doxy__types_ga63ebdc688313e444b486514798e48df3}{Cmd\+Type}} type, \mbox{\hyperlink{struct_alarm_cmd}{Alarm\+Cmd}} payload)
-\end{DoxyCompactItemize}
 \begin{Indent}\textbf{ Controlling the emulator state}\par
 \begin{DoxyCompactItemize}
 \item 
@@ -131,68 +43,11 @@ void \mbox{\hyperlink{class_virtual_c64_aca3821452aac3065cf92f63db8121674}{wake\
 \doxysubsubsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-static string \mbox{\hyperlink{class_virtual_c64_a17ff135464512a12d1610cabb9758d67}{version}} ()
+static string \mbox{\hyperlink{class_virtual_c64_a43ebd54660892e4438319149a3f08561}{version}} ()
 \begin{DoxyCompactList}\small\item\em Returns a version string for this release. \end{DoxyCompactList}\item 
-\Hypertarget{class_virtual_c64_ad0c1b1fd2fb7da11c0975cabbc58ca5a}\label{class_virtual_c64_ad0c1b1fd2fb7da11c0975cabbc58ca5a} 
+\Hypertarget{class_virtual_c64_af225a63e1c37cf8e67f9203f70bf0efc}\label{class_virtual_c64_af225a63e1c37cf8e67f9203f70bf0efc} 
 static string {\bfseries build} ()
 \begin{DoxyCompactList}\small\item\em Returns a build number string for this release. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsubsection*{Public Attributes}
-\begin{DoxyCompactItemize}
-\item 
-\Hypertarget{class_virtual_c64_a472096a1d73b55903d2767d372b46cb2}\label{class_virtual_c64_a472096a1d73b55903d2767d372b46cb2} 
-\mbox{\hyperlink{struct_virtual_c64_1_1_c64_a_p_i}{Virtual\+C64\+::\+C64\+API}} {\bfseries c64}
-\item 
-\Hypertarget{class_virtual_c64_a76d4385f411fd5b2367573e3a88b86d8}\label{class_virtual_c64_a76d4385f411fd5b2367573e3a88b86d8} 
-\mbox{\hyperlink{struct_virtual_c64_1_1_memory_a_p_i}{Virtual\+C64\+::\+Memory\+API}} {\bfseries mem}
-\item 
-\Hypertarget{class_virtual_c64_a8f1c2204c2952caf8355953466f1aedd}\label{class_virtual_c64_a8f1c2204c2952caf8355953466f1aedd} 
-\mbox{\hyperlink{struct_virtual_c64_1_1_c_p_u_a_p_i}{Virtual\+C64\+::\+CPUAPI}} {\bfseries cpu}
-\item 
-\Hypertarget{class_virtual_c64_a014575d53b523b082bfcb82b8f41dfda}\label{class_virtual_c64_a014575d53b523b082bfcb82b8f41dfda} 
-\mbox{\hyperlink{struct_virtual_c64_1_1_c_i_a_a_p_i}{Virtual\+C64\+::\+CIAAPI}} {\bfseries cia1}
-\item 
-\Hypertarget{class_virtual_c64_a8fd94dfea6bc44df0a5f6011839418bc}\label{class_virtual_c64_a8fd94dfea6bc44df0a5f6011839418bc} 
-\mbox{\hyperlink{struct_virtual_c64_1_1_c_i_a_a_p_i}{Virtual\+C64\+::\+CIAAPI}} {\bfseries cia2}
-\item 
-\Hypertarget{class_virtual_c64_aa65548f8252729ebe6912e0eb0591778}\label{class_virtual_c64_aa65548f8252729ebe6912e0eb0591778} 
-\mbox{\hyperlink{struct_virtual_c64_1_1_v_i_c_i_i_a_p_i}{Virtual\+C64\+::\+VICIIAPI}} {\bfseries vicii}
-\item 
-\Hypertarget{class_virtual_c64_ae868e28547d54efedea05c3bba33cbe1}\label{class_virtual_c64_ae868e28547d54efedea05c3bba33cbe1} 
-\mbox{\hyperlink{struct_virtual_c64_1_1_s_i_d_a_p_i}{Virtual\+C64\+::\+SIDAPI}} {\bfseries muxer}
-\item 
-\Hypertarget{class_virtual_c64_a939a30d5f1fa7e62ae57a1d9c4e4d4f5}\label{class_virtual_c64_a939a30d5f1fa7e62ae57a1d9c4e4d4f5} 
-\mbox{\hyperlink{struct_virtual_c64_1_1_dma_debugger_a_p_i}{Virtual\+C64\+::\+Dma\+Debugger\+API}} {\bfseries dma\+Debugger}
-\item 
-\Hypertarget{class_virtual_c64_af57574d16d1e4ab9984b4a60e727cb19}\label{class_virtual_c64_af57574d16d1e4ab9984b4a60e727cb19} 
-\mbox{\hyperlink{struct_virtual_c64_1_1_keyboard_a_p_i}{Virtual\+C64\+::\+Keyboard\+API}} {\bfseries keyboard}
-\item 
-\Hypertarget{class_virtual_c64_ab575b365c58f8ec34a5e98c1519ac7b9}\label{class_virtual_c64_ab575b365c58f8ec34a5e98c1519ac7b9} 
-\mbox{\hyperlink{struct_virtual_c64_1_1_datasette_a_p_i}{Virtual\+C64\+::\+Datasette\+API}} {\bfseries datasette}
-\item 
-\Hypertarget{class_virtual_c64_a40721f21d0ed80b51c71e0e1c7f59f4c}\label{class_virtual_c64_a40721f21d0ed80b51c71e0e1c7f59f4c} 
-\mbox{\hyperlink{struct_virtual_c64_1_1_control_port_a_p_i}{Virtual\+C64\+::\+Control\+Port\+API}} {\bfseries port1}
-\item 
-\Hypertarget{class_virtual_c64_ad0a4943431f9fe192fc585b76a268f21}\label{class_virtual_c64_ad0a4943431f9fe192fc585b76a268f21} 
-\mbox{\hyperlink{struct_virtual_c64_1_1_control_port_a_p_i}{Virtual\+C64\+::\+Control\+Port\+API}} {\bfseries port2}
-\item 
-\Hypertarget{class_virtual_c64_afa0c94a6a4231b13ebcd02ec6a384b15}\label{class_virtual_c64_afa0c94a6a4231b13ebcd02ec6a384b15} 
-\mbox{\hyperlink{struct_virtual_c64_1_1_recorder_a_p_i}{Virtual\+C64\+::\+Recorder\+API}} {\bfseries recorder}
-\item 
-\Hypertarget{class_virtual_c64_a88265800e09ca2145d19a44d1a1f76a5}\label{class_virtual_c64_a88265800e09ca2145d19a44d1a1f76a5} 
-\mbox{\hyperlink{struct_virtual_c64_1_1_expansion_port_a_p_i}{Virtual\+C64\+::\+Expansion\+Port\+API}} {\bfseries expansionport}
-\item 
-\Hypertarget{class_virtual_c64_a61fc7bfcd2e3058ab21bc39c54ff9f75}\label{class_virtual_c64_a61fc7bfcd2e3058ab21bc39c54ff9f75} 
-\mbox{\hyperlink{struct_virtual_c64_1_1_i_e_c_a_p_i}{Virtual\+C64\+::\+IECAPI}} {\bfseries iec}
-\item 
-\Hypertarget{class_virtual_c64_a58a84246652cdb87e12c44305f6cffe7}\label{class_virtual_c64_a58a84246652cdb87e12c44305f6cffe7} 
-\mbox{\hyperlink{struct_virtual_c64_1_1_drive_a_p_i}{Virtual\+C64\+::\+Drive\+API}} {\bfseries drive8}
-\item 
-\Hypertarget{class_virtual_c64_ae57be64d160101dbf1c9548267e81c8a}\label{class_virtual_c64_ae57be64d160101dbf1c9548267e81c8a} 
-\mbox{\hyperlink{struct_virtual_c64_1_1_drive_a_p_i}{Virtual\+C64\+::\+Drive\+API}} {\bfseries drive9}
-\item 
-\Hypertarget{class_virtual_c64_a189b10a131ecbd898db42fc821d90745}\label{class_virtual_c64_a189b10a131ecbd898db42fc821d90745} 
-\mbox{\hyperlink{struct_virtual_c64_1_1_retro_shell_a_p_i}{Virtual\+C64\+::\+Retro\+Shell\+API}} {\bfseries retro\+Shell}
-\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -207,11 +62,11 @@ This class declares the emulator\textquotesingle{}s public API. It consists of f
 \doxysubsubsection{\texorpdfstring{halt()}{halt()}}
 {\footnotesize\ttfamily void Virtual\+C64\+::halt (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
-Terminates the emulator thread This function puts the emulator into halt state and terminates the emulator thread. Entering this state is part of the shutdown procedure. \Hypertarget{class_virtual_c64_a17ff135464512a12d1610cabb9758d67}\label{class_virtual_c64_a17ff135464512a12d1610cabb9758d67} 
+Terminates the emulator thread This function puts the emulator into halt state and terminates the emulator thread. Entering this state is part of the shutdown procedure. \Hypertarget{class_virtual_c64_a43ebd54660892e4438319149a3f08561}\label{class_virtual_c64_a43ebd54660892e4438319149a3f08561} 
 \index{VirtualC64@{VirtualC64}!version@{version}}
 \index{version@{version}!VirtualC64@{VirtualC64}}
 \doxysubsubsection{\texorpdfstring{version()}{version()}}
-{\footnotesize\ttfamily static string Virtual\+C64\+::version (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily string Virtual\+C64\+::version (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -229,6 +84,7 @@ Sends a wakeup signal to the emulator thread.
 
 Some thread mode require the GUI to send a wakeup signal. Once this signal is received, the next frame is computed. 
 
-The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-/\+Users/hoff/\+Retro/virtualc64/\+Emulator/Virtual\+C64.\+h\end{DoxyCompactItemize}
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\mbox{\hyperlink{_virtual_c64_8h}{Virtual\+C64.\+h}}\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/Virtual\+C64.\+cpp\end{DoxyCompactItemize}

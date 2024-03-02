@@ -1,0 +1,2246 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_file_system" kind="class" language="C++" prot="public">
+    <compoundname>vc64::FileSystem</compoundname>
+    <basecompoundref prot="private" virt="non-virtual">vc64::CoreObject</basecompoundref>
+    <sectiondef kind="friend">
+      <memberdef kind="friend" id="classvc64_1_1_file_system_1a56dfb96fc1815d183a1674fd596a9632" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class FSBlock</definition>
+        <argsstring></argsstring>
+        <name>FSBlock</name>
+        <qualifiedname>vc64::FileSystem::FSBlock</qualifiedname>
+        <param>
+          <type>FSBlock</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="27" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_file_system_1ac25eed6f77934ba31d3a9334722bb8a1" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; BlockPtr &gt;</type>
+        <definition>std::vector&lt;BlockPtr&gt; vc64::FileSystem::blocks</definition>
+        <argsstring></argsstring>
+        <name>blocks</name>
+        <qualifiedname>vc64::FileSystem::blocks</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="30" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="30" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_file_system_1a9668fe8620ccbbcc30043c50cc81d61f" prot="public" static="no" mutable="no">
+        <type>FSDeviceDescriptor</type>
+        <definition>FSDeviceDescriptor vc64::FileSystem::layout</definition>
+        <argsstring></argsstring>
+        <name>layout</name>
+        <qualifiedname>vc64::FileSystem::layout</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="35" column="24" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_file_system_1a9a261405e9d4cdeadaf152efe635cb2c" prot="public" static="no" mutable="no">
+        <type>std::vector&lt; FSDirEntry * &gt;</type>
+        <definition>std::vector&lt;FSDirEntry *&gt; vc64::FileSystem::dir</definition>
+        <argsstring></argsstring>
+        <name>dir</name>
+        <qualifiedname>vc64::FileSystem::dir</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="38" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_file_system_1aeb9ca5bd817989a8438a276ca2285baf" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::FileSystem::FileSystem</definition>
+        <argsstring>(isize capacity)</argsstring>
+        <name>FileSystem</name>
+        <qualifiedname>vc64::FileSystem::FileSystem</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>capacity</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="47" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="47" bodyend="47"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1adf22ce3a35d5ef1fa22d379386eb7dac" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::FileSystem::FileSystem</definition>
+        <argsstring>(FSDeviceDescriptor &amp;layout)</argsstring>
+        <name>FileSystem</name>
+        <qualifiedname>vc64::FileSystem::FileSystem</qualifiedname>
+        <param>
+          <type>FSDeviceDescriptor &amp;</type>
+          <declname>layout</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="48" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="48" bodyend="48"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a8a2c27cb6eb1e990aefc951be79c8d39" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::FileSystem::FileSystem</definition>
+        <argsstring>(DiskType type, DOSType vType)</argsstring>
+        <name>FileSystem</name>
+        <qualifiedname>vc64::FileSystem::FileSystem</qualifiedname>
+        <param>
+          <type>DiskType</type>
+          <declname>type</declname>
+        </param>
+        <param>
+          <type>DOSType</type>
+          <declname>vType</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="49" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="49" bodyend="49"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1aa6bcfc0dbab6e86e139c513358ee01fe" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::FileSystem::FileSystem</definition>
+        <argsstring>(const class D64File &amp;d64)</argsstring>
+        <name>FileSystem</name>
+        <qualifiedname>vc64::FileSystem::FileSystem</qualifiedname>
+        <param>
+          <type>const class D64File &amp;</type>
+          <declname>d64</declname>
+        </param>
+        <exceptions> throws </exceptions>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="50" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="50" bodyend="50"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1aa776db08a91ebf49cfbcd396bf6f1c4c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::FileSystem::FileSystem</definition>
+        <argsstring>(class Disk &amp;disk)</argsstring>
+        <name>FileSystem</name>
+        <qualifiedname>vc64::FileSystem::FileSystem</qualifiedname>
+        <param>
+          <type>class Disk &amp;</type>
+          <declname>disk</declname>
+        </param>
+        <exceptions> throws </exceptions>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="51" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="51" bodyend="51"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1ad36f72f0b5549b87a6ac8ad90238f0b2" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::FileSystem::FileSystem</definition>
+        <argsstring>(AnyCollection &amp;collection)</argsstring>
+        <name>FileSystem</name>
+        <qualifiedname>vc64::FileSystem::FileSystem</qualifiedname>
+        <param>
+          <type>AnyCollection &amp;</type>
+          <declname>collection</declname>
+        </param>
+        <exceptions> throws </exceptions>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="52" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="52" bodyend="52"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a8953e1425eb49e47e66ae4d599ef193f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::FileSystem::FileSystem</definition>
+        <argsstring>(const string &amp;path)</argsstring>
+        <name>FileSystem</name>
+        <qualifiedname>vc64::FileSystem::FileSystem</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <exceptions> throws </exceptions>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="53" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="53" bodyend="53"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a4cc2ccecbcccdbfd7f6e9b2db6f45e28" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::FileSystem::~FileSystem</definition>
+        <argsstring>()</argsstring>
+        <name>~FileSystem</name>
+        <qualifiedname>vc64::FileSystem::~FileSystem</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="54" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="27" bodyend="30"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1afb04acc78240ee6dbbcb439577cbe18a" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::FileSystem::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::FileSystem::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="69" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="69" bodyend="69"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1af2e35ef99e11d79c939c71410024743c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::info</definition>
+        <argsstring>()</argsstring>
+        <name>info</name>
+        <qualifiedname>vc64::FileSystem::info</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="72" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="189" bodyend="192"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a5fc700ef70b75ae87b91de37aad51010" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::dump</definition>
+        <argsstring>() const</argsstring>
+        <name>dump</name>
+        <qualifiedname>vc64::FileSystem::dump</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="82" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="195" bodyend="206"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a1691c30019d59866dc4332b09465dc7f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::printDirectory</definition>
+        <argsstring>()</argsstring>
+        <name>printDirectory</name>
+        <qualifiedname>vc64::FileSystem::printDirectory</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="85" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="209" bodyend="221"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a16fbd91f71746e4bb44dfa605b9e26b7" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>DOSType</type>
+        <definition>DOSType vc64::FileSystem::dos</definition>
+        <argsstring>() const</argsstring>
+        <name>dos</name>
+        <qualifiedname>vc64::FileSystem::dos</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="95" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="95" bodyend="95"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a7ef826d2dfc2e5a2058a45a1aaac4c26" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>PETName&lt; 16 &gt;</type>
+        <definition>PETName&lt; 16 &gt; vc64::FileSystem::getName</definition>
+        <argsstring>() const</argsstring>
+        <name>getName</name>
+        <qualifiedname>vc64::FileSystem::getName</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="98" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="297" bodyend="301"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a6e28292b1d33bf6978f9b34bc0a4d490" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::setName</definition>
+        <argsstring>(PETName&lt; 16 &gt; name)</argsstring>
+        <name>setName</name>
+        <qualifiedname>vc64::FileSystem::setName</qualifiedname>
+        <param>
+          <type>PETName&lt; 16 &gt;</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="99" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="304" bodyend="308"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a568bdef19d1c1dfd49550f6f02416efc" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>PETName&lt; 2 &gt;</type>
+        <definition>PETName&lt; 2 &gt; vc64::FileSystem::getID</definition>
+        <argsstring>() const</argsstring>
+        <name>getID</name>
+        <qualifiedname>vc64::FileSystem::getID</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="102" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="311" bodyend="315"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a9bbfe6c07f45bff63e12eccdddb3851d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::setID</definition>
+        <argsstring>(PETName&lt; 2 &gt; name)</argsstring>
+        <name>setID</name>
+        <qualifiedname>vc64::FileSystem::setID</qualifiedname>
+        <param>
+          <type>PETName&lt; 2 &gt;</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="103" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="318" bodyend="322"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a130b52deaab11d4959f97e172a6dc8ea" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::FileSystem::diskId1</definition>
+        <argsstring>() const</argsstring>
+        <name>diskId1</name>
+        <qualifiedname>vc64::FileSystem::diskId1</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="106" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="106" bodyend="106"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1aaa3781e03402043463a837b27a7adeaf" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::FileSystem::diskId2</definition>
+        <argsstring>() const</argsstring>
+        <name>diskId2</name>
+        <qualifiedname>vc64::FileSystem::diskId2</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="107" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="107" bodyend="107"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a67b9f10cc0ad098c7414778d3a86a695" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::getNumCyls</definition>
+        <argsstring>() const</argsstring>
+        <name>getNumCyls</name>
+        <qualifiedname>vc64::FileSystem::getNumCyls</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="110" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="110" bodyend="110"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a18ee915a17919637701f893960788e35" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::getNumHeads</definition>
+        <argsstring>() const</argsstring>
+        <name>getNumHeads</name>
+        <qualifiedname>vc64::FileSystem::getNumHeads</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="111" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="111" bodyend="111"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a4e9782992db0942198b4ddedc58cf121" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::getNumTracks</definition>
+        <argsstring>() const</argsstring>
+        <name>getNumTracks</name>
+        <qualifiedname>vc64::FileSystem::getNumTracks</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="112" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="112" bodyend="112"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a1c99e9a751ec159eb3c174dfb122f51d" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::getNumSectors</definition>
+        <argsstring>(Track track) const</argsstring>
+        <name>getNumSectors</name>
+        <qualifiedname>vc64::FileSystem::getNumSectors</qualifiedname>
+        <param>
+          <type>Track</type>
+          <declname>track</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="113" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="113" bodyend="113"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a39f29044bb21c88dda3e5ea1f8764536" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::getNumBlocks</definition>
+        <argsstring>() const</argsstring>
+        <name>getNumBlocks</name>
+        <qualifiedname>vc64::FileSystem::getNumBlocks</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="114" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="114" bodyend="114"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a155094d474b6f80d712bdee8cbae8a07" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::getNumBytes</definition>
+        <argsstring>() const</argsstring>
+        <name>getNumBytes</name>
+        <qualifiedname>vc64::FileSystem::getNumBytes</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="115" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="115" bodyend="115"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a77e10e8d04e9ae35790f57d7e4c9bbd1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::freeBlocks</definition>
+        <argsstring>() const</argsstring>
+        <name>freeBlocks</name>
+        <qualifiedname>vc64::FileSystem::freeBlocks</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="118" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="224" bodyend="234"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a2add381e8bafd83b0e1261a0c15f98c3" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::usedBlocks</definition>
+        <argsstring>() const</argsstring>
+        <name>usedBlocks</name>
+        <qualifiedname>vc64::FileSystem::usedBlocks</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="119" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="237" bodyend="247"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a254a782bff52ea0cd8b0d78c5dcabd3e" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::freeBytes</definition>
+        <argsstring>() const</argsstring>
+        <name>freeBytes</name>
+        <qualifiedname>vc64::FileSystem::freeBytes</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="120" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="120" bodyend="120"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a8e5d028c9fefd8bea868fb2d620583bb" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::usedBytes</definition>
+        <argsstring>() const</argsstring>
+        <name>usedBytes</name>
+        <qualifiedname>vc64::FileSystem::usedBytes</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="121" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="121" bodyend="121"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a97edb35ace872de15ac80c611e756e99" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>double</type>
+        <definition>double vc64::FileSystem::fillLevel</definition>
+        <argsstring>() const</argsstring>
+        <name>fillLevel</name>
+        <qualifiedname>vc64::FileSystem::fillLevel</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="122" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="122" bodyend="122"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1ac7646ce3a9306385274509bc7e4434e8" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::numFiles</definition>
+        <argsstring>() const</argsstring>
+        <name>numFiles</name>
+        <qualifiedname>vc64::FileSystem::numFiles</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="125" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="125" bodyend="125"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a9c07b732706253c648587c96f91423b3" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>FSBlockType</type>
+        <definition>FSBlockType vc64::FileSystem::blockType</definition>
+        <argsstring>(Block b) const</argsstring>
+        <name>blockType</name>
+        <qualifiedname>vc64::FileSystem::blockType</qualifiedname>
+        <param>
+          <type>Block</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="135" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="250" bodyend="253"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a19753053a8cee4e0fe99e0966dd08a00" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>FSBlockType</type>
+        <definition>FSBlockType vc64::FileSystem::blockType</definition>
+        <argsstring>(TSLink ts) const</argsstring>
+        <name>blockType</name>
+        <qualifiedname>vc64::FileSystem::blockType</qualifiedname>
+        <param>
+          <type>TSLink</type>
+          <declname>ts</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="136" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="136" bodyend="136"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a3e7318aef953f079ec900d63637cb358" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>FSUsage</type>
+        <definition>FSUsage vc64::FileSystem::usage</definition>
+        <argsstring>(Block b, u32 pos) const</argsstring>
+        <name>usage</name>
+        <qualifiedname>vc64::FileSystem::usage</qualifiedname>
+        <param>
+          <type>Block</type>
+          <declname>b</declname>
+        </param>
+        <param>
+          <type>u32</type>
+          <declname>pos</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="139" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="256" bodyend="259"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a7ac86bda92570913e819f8793c9cc6c7" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>FSUsage</type>
+        <definition>FSUsage vc64::FileSystem::usage</definition>
+        <argsstring>(TSLink ts, u32 pos) const</argsstring>
+        <name>usage</name>
+        <qualifiedname>vc64::FileSystem::usage</qualifiedname>
+        <param>
+          <type>TSLink</type>
+          <declname>ts</declname>
+        </param>
+        <param>
+          <type>u32</type>
+          <declname>pos</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="140" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="140" bodyend="140"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1aa650febc4338e3dcaca339d58833f72a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::FileSystem::getErrorCode</definition>
+        <argsstring>(Block b) const</argsstring>
+        <name>getErrorCode</name>
+        <qualifiedname>vc64::FileSystem::getErrorCode</qualifiedname>
+        <param>
+          <type>Block</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="143" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="262" bodyend="265"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a148f203415e16f7fe2c594d902704239" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::FileSystem::getErrorCode</definition>
+        <argsstring>(TSLink ts) const</argsstring>
+        <name>getErrorCode</name>
+        <qualifiedname>vc64::FileSystem::getErrorCode</qualifiedname>
+        <param>
+          <type>TSLink</type>
+          <declname>ts</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="144" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="144" bodyend="144"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a7300fc9f986114099c48b935399323b6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::setErrorCode</definition>
+        <argsstring>(Block b, u8 code)</argsstring>
+        <name>setErrorCode</name>
+        <qualifiedname>vc64::FileSystem::setErrorCode</qualifiedname>
+        <param>
+          <type>Block</type>
+          <declname>b</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>code</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="145" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="268" bodyend="271"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a46ebdeec1078e588fd08352c1826be8d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::setErrorCode</definition>
+        <argsstring>(TSLink ts, u8 code)</argsstring>
+        <name>setErrorCode</name>
+        <qualifiedname>vc64::FileSystem::setErrorCode</qualifiedname>
+        <param>
+          <type>TSLink</type>
+          <declname>ts</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>code</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="146" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="146" bodyend="146"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1ab5184dbc04c68c9288074c24fa0ae72b" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>FSBlock *</type>
+        <definition>FSBlock * vc64::FileSystem::blockPtr</definition>
+        <argsstring>(Block b) const</argsstring>
+        <name>blockPtr</name>
+        <qualifiedname>vc64::FileSystem::blockPtr</qualifiedname>
+        <param>
+          <type>Block</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="149" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="274" bodyend="277"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1acd9318e304a5977e9b9b19bb0a4e4b55" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>FSBlock *</type>
+        <definition>FSBlock * vc64::FileSystem::blockPtr</definition>
+        <argsstring>(TSLink ts) const</argsstring>
+        <name>blockPtr</name>
+        <qualifiedname>vc64::FileSystem::blockPtr</qualifiedname>
+        <param>
+          <type>TSLink</type>
+          <declname>ts</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="150" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="150" bodyend="150"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1ab60e6da7807d0e86af1f89f083e9ad60" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>FSBlock *</type>
+        <definition>FSBlock * vc64::FileSystem::bamPtr</definition>
+        <argsstring>() const</argsstring>
+        <name>bamPtr</name>
+        <qualifiedname>vc64::FileSystem::bamPtr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="151" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="151" bodyend="151"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a004c54d266519638e8ed587098ee891a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>FSBlock *</type>
+        <definition>FSBlock * vc64::FileSystem::nextBlockPtr</definition>
+        <argsstring>(Block b) const</argsstring>
+        <name>nextBlockPtr</name>
+        <qualifiedname>vc64::FileSystem::nextBlockPtr</qualifiedname>
+        <param>
+          <type>Block</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="154" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="280" bodyend="288"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1aa6ae84c5b40e8757d2b3e32187fe42e9" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>FSBlock *</type>
+        <definition>FSBlock * vc64::FileSystem::nextBlockPtr</definition>
+        <argsstring>(TSLink ts) const</argsstring>
+        <name>nextBlockPtr</name>
+        <qualifiedname>vc64::FileSystem::nextBlockPtr</qualifiedname>
+        <param>
+          <type>TSLink</type>
+          <declname>ts</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="155" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="155" bodyend="155"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a4590c608d46e11c964d4af62312cc2bb" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>FSBlock *</type>
+        <definition>FSBlock * vc64::FileSystem::nextBlockPtr</definition>
+        <argsstring>(FSBlock *ptr) const</argsstring>
+        <name>nextBlockPtr</name>
+        <qualifiedname>vc64::FileSystem::nextBlockPtr</qualifiedname>
+        <param>
+          <type>FSBlock *</type>
+          <declname>ptr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="156" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="291" bodyend="294"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a387dc133a7e6334255787101821f5db6" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::FileSystem::isFree</definition>
+        <argsstring>(Block b) const</argsstring>
+        <name>isFree</name>
+        <qualifiedname>vc64::FileSystem::isFree</qualifiedname>
+        <param>
+          <type>Block</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="164" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="164" bodyend="164"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1ac974a41324df3dce46afc5f26508b07b" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::FileSystem::isFree</definition>
+        <argsstring>(TSLink ts) const</argsstring>
+        <name>isFree</name>
+        <qualifiedname>vc64::FileSystem::isFree</qualifiedname>
+        <param>
+          <type>TSLink</type>
+          <declname>ts</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="165" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="325" bodyend="331"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a26b7c3baba8475340c5514d51353db5c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>TSLink</type>
+        <definition>TSLink vc64::FileSystem::nextFreeBlock</definition>
+        <argsstring>(TSLink start) const</argsstring>
+        <name>nextFreeBlock</name>
+        <qualifiedname>vc64::FileSystem::nextFreeBlock</qualifiedname>
+        <param>
+          <type>TSLink</type>
+          <declname>start</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="168" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="334" bodyend="343"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a84b19d03d2e26a2a957e2fe21198cf7e" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>TSLink</type>
+        <definition>TSLink vc64::FileSystem::firstFreeBlock</definition>
+        <argsstring>() const</argsstring>
+        <name>firstFreeBlock</name>
+        <qualifiedname>vc64::FileSystem::firstFreeBlock</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="169" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="169" bodyend="169"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a6cc0a75b862b2748c3dbdb9b51adc2cd" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::markAsAllocated</definition>
+        <argsstring>(Block b)</argsstring>
+        <name>markAsAllocated</name>
+        <qualifiedname>vc64::FileSystem::markAsAllocated</qualifiedname>
+        <param>
+          <type>Block</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="172" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="172" bodyend="172"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a6f59afadd7ad3be6d7fe558235444e8a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::markAsAllocated</definition>
+        <argsstring>(TSLink ts)</argsstring>
+        <name>markAsAllocated</name>
+        <qualifiedname>vc64::FileSystem::markAsAllocated</qualifiedname>
+        <param>
+          <type>TSLink</type>
+          <declname>ts</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="173" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="173" bodyend="173"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a22b400342f0df5516954cfb71b691b4c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::markAsFree</definition>
+        <argsstring>(Block b)</argsstring>
+        <name>markAsFree</name>
+        <qualifiedname>vc64::FileSystem::markAsFree</qualifiedname>
+        <param>
+          <type>Block</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="175" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="175" bodyend="175"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a83ebd94c5a5f7bf77afce1794ab6ec2f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::markAsFree</definition>
+        <argsstring>(TSLink ts)</argsstring>
+        <name>markAsFree</name>
+        <qualifiedname>vc64::FileSystem::markAsFree</qualifiedname>
+        <param>
+          <type>TSLink</type>
+          <declname>ts</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="176" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="176" bodyend="176"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a4e96dcb5d9342c5234f405fe93b45f46" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::setAllocBit</definition>
+        <argsstring>(Block b, bool value)</argsstring>
+        <name>setAllocBit</name>
+        <qualifiedname>vc64::FileSystem::setAllocBit</qualifiedname>
+        <param>
+          <type>Block</type>
+          <declname>b</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="178" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="178" bodyend="178"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a884c577869faa583906645ac122b735a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::setAllocBit</definition>
+        <argsstring>(TSLink ts, bool value)</argsstring>
+        <name>setAllocBit</name>
+        <qualifiedname>vc64::FileSystem::setAllocBit</qualifiedname>
+        <param>
+          <type>TSLink</type>
+          <declname>ts</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="179" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="346" bodyend="368"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a35d120c4a09c9c99c960e7cb4657514c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::vector&lt; TSLink &gt;</type>
+        <definition>std::vector&lt; TSLink &gt; vc64::FileSystem::allocate</definition>
+        <argsstring>(TSLink ref, u32 n)</argsstring>
+        <name>allocate</name>
+        <qualifiedname>vc64::FileSystem::allocate</qualifiedname>
+        <param>
+          <type>TSLink</type>
+          <declname>ref</declname>
+        </param>
+        <param>
+          <type>u32</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="182" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="371" bodyend="402"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1acd1c36c6997cc45ee193cfd139d76cfb" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>std::vector&lt; TSLink &gt;</type>
+        <definition>std::vector&lt; TSLink &gt; vc64::FileSystem::allocate</definition>
+        <argsstring>(u32 n)</argsstring>
+        <name>allocate</name>
+        <qualifiedname>vc64::FileSystem::allocate</qualifiedname>
+        <param>
+          <type>u32</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="183" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="183" bodyend="183"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a67f6b1ab5abca27b27425a919f67ca15" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>PETName&lt; 16 &gt;</type>
+        <definition>PETName&lt; 16 &gt; vc64::FileSystem::fileName</definition>
+        <argsstring>(isize nr) const</argsstring>
+        <name>fileName</name>
+        <qualifiedname>vc64::FileSystem::fileName</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="199" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="430" bodyend="434"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a6563b344fc5cb383a07ffb12830c2cdd" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>PETName&lt; 16 &gt;</type>
+        <definition>PETName&lt; 16 &gt; vc64::FileSystem::fileName</definition>
+        <argsstring>(FSDirEntry *entry) const</argsstring>
+        <name>fileName</name>
+        <qualifiedname>vc64::FileSystem::fileName</qualifiedname>
+        <param>
+          <type>FSDirEntry *</type>
+          <declname>entry</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="200" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="437" bodyend="441"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1add294dd8edcadf052c4ea2182838a297" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>FSFileType</type>
+        <definition>FSFileType vc64::FileSystem::fileType</definition>
+        <argsstring>(isize nr) const</argsstring>
+        <name>fileType</name>
+        <qualifiedname>vc64::FileSystem::fileType</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="203" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="444" bodyend="448"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1ace3a50189fa222a9cd0811fb095ff266" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>FSFileType</type>
+        <definition>FSFileType vc64::FileSystem::fileType</definition>
+        <argsstring>(FSDirEntry *entry) const</argsstring>
+        <name>fileType</name>
+        <qualifiedname>vc64::FileSystem::fileType</qualifiedname>
+        <param>
+          <type>FSDirEntry *</type>
+          <declname>entry</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="204" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="451" bodyend="455"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1af89008406226b3136dc8bb8ac66666e5" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::fileSize</definition>
+        <argsstring>(isize nr) const</argsstring>
+        <name>fileSize</name>
+        <qualifiedname>vc64::FileSystem::fileSize</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="207" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="458" bodyend="462"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1aa8cf5e316c7cf6e7276bca0e0e87e4b1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::fileSize</definition>
+        <argsstring>(FSDirEntry *entry) const</argsstring>
+        <name>fileSize</name>
+        <qualifiedname>vc64::FileSystem::fileSize</qualifiedname>
+        <param>
+          <type>FSDirEntry *</type>
+          <declname>entry</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="208" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="465" bodyend="491"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a3e5161324643ff216f895b83243e0131" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::fileBlocks</definition>
+        <argsstring>(isize nr) const</argsstring>
+        <name>fileBlocks</name>
+        <qualifiedname>vc64::FileSystem::fileBlocks</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="211" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="494" bodyend="498"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a3a202a9a24b2991e917915afc437f2e2" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::fileBlocks</definition>
+        <argsstring>(FSDirEntry *entry) const</argsstring>
+        <name>fileBlocks</name>
+        <qualifiedname>vc64::FileSystem::fileBlocks</qualifiedname>
+        <param>
+          <type>FSDirEntry *</type>
+          <declname>entry</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="212" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="501" bodyend="505"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a4eee73e54f464e92955996240e36eebf" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u16</type>
+        <definition>u16 vc64::FileSystem::loadAddr</definition>
+        <argsstring>(isize nr) const</argsstring>
+        <name>loadAddr</name>
+        <qualifiedname>vc64::FileSystem::loadAddr</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="215" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="508" bodyend="512"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1ac55ee04f063b05df96c869f6be32ff28" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u16</type>
+        <definition>u16 vc64::FileSystem::loadAddr</definition>
+        <argsstring>(FSDirEntry *entry) const</argsstring>
+        <name>loadAddr</name>
+        <qualifiedname>vc64::FileSystem::loadAddr</qualifiedname>
+        <param>
+          <type>FSDirEntry *</type>
+          <declname>entry</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="216" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="515" bodyend="520"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a0eaa902726a00cdbf72a55e7f1bd3f30" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::copyFile</definition>
+        <argsstring>(isize nr, u8 *buf, u64 len, u64 offset=0) const</argsstring>
+        <name>copyFile</name>
+        <qualifiedname>vc64::FileSystem::copyFile</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <param>
+          <type>u8 *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>u64</type>
+          <declname>len</declname>
+        </param>
+        <param>
+          <type>u64</type>
+          <declname>offset</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="219" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="523" bodyend="527"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a128b75d22c9216656d64a19bad97472f" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::copyFile</definition>
+        <argsstring>(FSDirEntry *entry, u8 *buf, u64 len, u64 offset=0) const</argsstring>
+        <name>copyFile</name>
+        <qualifiedname>vc64::FileSystem::copyFile</qualifiedname>
+        <param>
+          <type>FSDirEntry *</type>
+          <declname>entry</declname>
+        </param>
+        <param>
+          <type>u8 *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>u64</type>
+          <declname>len</declname>
+        </param>
+        <param>
+          <type>u64</type>
+          <declname>offset</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="220" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="530" bodyend="553"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a4f38e9645a6fa61e6b6282ffe7cc1404" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::scanDirectory</definition>
+        <argsstring>(bool skipInvisible=true)</argsstring>
+        <name>scanDirectory</name>
+        <qualifiedname>vc64::FileSystem::scanDirectory</qualifiedname>
+        <param>
+          <type>bool</type>
+          <declname>skipInvisible</declname>
+          <defval>true</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="223" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="585" bodyend="607"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1aa2ee76e2418207a1699a077d2e48e9fd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>FSDirEntry *</type>
+        <definition>FSDirEntry * vc64::FileSystem::getOrCreateNextFreeDirEntry</definition>
+        <argsstring>()</argsstring>
+        <name>getOrCreateNextFreeDirEntry</name>
+        <qualifiedname>vc64::FileSystem::getOrCreateNextFreeDirEntry</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="231" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="556" bodyend="582"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1aa08e735f16e32c8becdc88b1aeb3a32e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::FileSystem::makeFile</definition>
+        <argsstring>(PETName&lt; 16 &gt; name, const u8 *buf, isize cnt)</argsstring>
+        <name>makeFile</name>
+        <qualifiedname>vc64::FileSystem::makeFile</qualifiedname>
+        <param>
+          <type>PETName&lt; 16 &gt;</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>const u8 *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>cnt</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="234" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="610" bodyend="619"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1ab12286171a18581248a4c462c4ef04ac" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>FSErrorReport</type>
+        <definition>FSErrorReport vc64::FileSystem::check</definition>
+        <argsstring>(bool strict)</argsstring>
+        <name>check</name>
+        <qualifiedname>vc64::FileSystem::check</qualifiedname>
+        <param>
+          <type>bool</type>
+          <declname>strict</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="248" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="657" bodyend="688"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1aa23eddc018a41361c08c3e29ac1f55f4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3" kindref="member">ErrorCode</ref></type>
+        <definition>ErrorCode vc64::FileSystem::check</definition>
+        <argsstring>(isize blockNr, u32 pos, u8 *expected, bool strict)</argsstring>
+        <name>check</name>
+        <qualifiedname>vc64::FileSystem::check</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>blockNr</declname>
+        </param>
+        <param>
+          <type>u32</type>
+          <declname>pos</declname>
+        </param>
+        <param>
+          <type>u8 *</type>
+          <declname>expected</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>strict</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="251" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="691" bodyend="694"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a1b60f7671ae440493a7beda8e61abcb2" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::FileSystem::isBlockNumber</definition>
+        <argsstring>(isize nr) const</argsstring>
+        <name>isBlockNumber</name>
+        <qualifiedname>vc64::FileSystem::isBlockNumber</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="254" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="254" bodyend="254"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a16ecd15ca27bbb6c6c1dd862b1d7c582" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::getCorrupted</definition>
+        <argsstring>(isize blockNr) const</argsstring>
+        <name>getCorrupted</name>
+        <qualifiedname>vc64::FileSystem::getCorrupted</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>blockNr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="257" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="697" bodyend="700"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a39e422c5e26cafdf5450267fb68410f3" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::FileSystem::isCorrupted</definition>
+        <argsstring>(isize blockNr) const</argsstring>
+        <name>isCorrupted</name>
+        <qualifiedname>vc64::FileSystem::isCorrupted</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>blockNr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="260" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="260" bodyend="260"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a788c34df12cb6febfc57f7f6c4ad1389" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::nextCorrupted</definition>
+        <argsstring>(isize blockNr) const</argsstring>
+        <name>nextCorrupted</name>
+        <qualifiedname>vc64::FileSystem::nextCorrupted</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>blockNr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="263" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="718" bodyend="726"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a5cc9cc373b3bc05ed58ca1a5a752f721" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::prevCorrupted</definition>
+        <argsstring>(isize blockNr) const</argsstring>
+        <name>prevCorrupted</name>
+        <qualifiedname>vc64::FileSystem::prevCorrupted</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>blockNr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="264" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="729" bodyend="737"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a0b4f9fa52c5efc81f7f1c32a43bbcdbd" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::FileSystem::isCorrupted</definition>
+        <argsstring>(isize blockNr, isize n) const</argsstring>
+        <name>isCorrupted</name>
+        <qualifiedname>vc64::FileSystem::isCorrupted</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>blockNr</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="267" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="703" bodyend="715"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a368b452bf98d406973cc47457e70408f" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::seekCorruptedBlock</definition>
+        <argsstring>(isize n) const</argsstring>
+        <name>seekCorruptedBlock</name>
+        <qualifiedname>vc64::FileSystem::seekCorruptedBlock</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="270" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a8800a8e4280671616c3c424ffe7f7939" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::FileSystem::readByte</definition>
+        <argsstring>(Block block, isize offset) const</argsstring>
+        <name>readByte</name>
+        <qualifiedname>vc64::FileSystem::readByte</qualifiedname>
+        <param>
+          <type>Block</type>
+          <declname>block</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>offset</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="280" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="740" bodyend="746"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a2bcdc2a02f0f02ea397e0c375387d779" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::FileSystem::readByte</definition>
+        <argsstring>(TSLink ts, isize offset) const</argsstring>
+        <name>readByte</name>
+        <qualifiedname>vc64::FileSystem::readByte</qualifiedname>
+        <param>
+          <type>TSLink</type>
+          <declname>ts</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>offset</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="281" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="281" bodyend="281"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a1798dbf669e7b3f89312c97c49c52c30" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string vc64::FileSystem::ascii</definition>
+        <argsstring>(Block nr, isize offset, isize len) const</argsstring>
+        <name>ascii</name>
+        <qualifiedname>vc64::FileSystem::ascii</qualifiedname>
+        <param>
+          <type>Block</type>
+          <declname>nr</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>offset</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>len</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="284" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="749" bodyend="756"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a19772cbd86310edb2ce2d7daac003ccf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::importVolume</definition>
+        <argsstring>(const u8 *src, isize size) throws</argsstring>
+        <name>importVolume</name>
+        <qualifiedname>vc64::FileSystem::importVolume</qualifiedname>
+        <param>
+          <type>const u8 *</type>
+          <declname>src</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="287" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="759" bodyend="764"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a5ab89849c785fc9882137bfc3ede484c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::FileSystem::importVolume</definition>
+        <argsstring>(const u8 *src, isize size, ErrorCode *err)</argsstring>
+        <name>importVolume</name>
+        <qualifiedname>vc64::FileSystem::importVolume</qualifiedname>
+        <param>
+          <type>const u8 *</type>
+          <declname>src</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>size</declname>
+        </param>
+        <param>
+          <type><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3" kindref="member">ErrorCode</ref> *</type>
+          <declname>err</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="288" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="767" bodyend="800"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1ace229add17ee17f9b72fc62776ada78f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::importDirectory</definition>
+        <argsstring>(const string &amp;path) throws</argsstring>
+        <name>importDirectory</name>
+        <qualifiedname>vc64::FileSystem::importDirectory</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="291" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="803" bodyend="811"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1abf4158063f8ecfa77ff3108c24fceaf2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::importDirectory</definition>
+        <argsstring>(const fs::directory_entry &amp;dir) throws</argsstring>
+        <name>importDirectory</name>
+        <qualifiedname>vc64::FileSystem::importDirectory</qualifiedname>
+        <param>
+          <type>const fs::directory_entry &amp;</type>
+          <declname>dir</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="292" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="814" bodyend="841"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a96a018a9a783487b5e09078b1fa53971" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::FileSystem::exportVolume</definition>
+        <argsstring>(u8 *dst, isize size, ErrorCode *err=nullptr)</argsstring>
+        <name>exportVolume</name>
+        <qualifiedname>vc64::FileSystem::exportVolume</qualifiedname>
+        <param>
+          <type>u8 *</type>
+          <declname>dst</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>size</declname>
+        </param>
+        <param>
+          <type><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3" kindref="member">ErrorCode</ref> *</type>
+          <declname>err</declname>
+          <defval>nullptr</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="295" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="844" bodyend="847"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a3dd1c0405e8bc3adb7dacb565a022cc5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::FileSystem::exportBlock</definition>
+        <argsstring>(isize nr, u8 *dst, isize size, ErrorCode *err=nullptr)</argsstring>
+        <name>exportBlock</name>
+        <qualifiedname>vc64::FileSystem::exportBlock</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <param>
+          <type>u8 *</type>
+          <declname>dst</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>size</declname>
+        </param>
+        <param>
+          <type><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3" kindref="member">ErrorCode</ref> *</type>
+          <declname>err</declname>
+          <defval>nullptr</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="298" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="850" bodyend="853"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a06064ae8fb9e2033e5a22a06ffc3e56a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::FileSystem::exportBlocks</definition>
+        <argsstring>(isize first, isize last, u8 *dst, isize size, ErrorCode *err=nullptr)</argsstring>
+        <name>exportBlocks</name>
+        <qualifiedname>vc64::FileSystem::exportBlocks</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>first</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>last</declname>
+        </param>
+        <param>
+          <type>u8 *</type>
+          <declname>dst</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>size</declname>
+        </param>
+        <param>
+          <type><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3" kindref="member">ErrorCode</ref> *</type>
+          <declname>err</declname>
+          <defval>nullptr</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="299" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="856" bodyend="885"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a2f55693ef77fb4c1d398f77bf8f1e2a0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::exportDirectory</definition>
+        <argsstring>(const string &amp;path, bool createDir=true) throws</argsstring>
+        <name>exportDirectory</name>
+        <qualifiedname>vc64::FileSystem::exportDirectory</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>createDir</declname>
+          <defval>true</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="302" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="888" bodyend="920"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a6f2cdfe8696876bfc5874d903cd1882c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::exportFile</definition>
+        <argsstring>(FSDirEntry *item, const string &amp;path) throws</argsstring>
+        <name>exportFile</name>
+        <qualifiedname>vc64::FileSystem::exportFile</qualifiedname>
+        <param>
+          <type>FSDirEntry *</type>
+          <declname>item</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="303" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="923" bodyend="932"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a34bcc2b8b868259b79acc3a416d37786" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::exportFile</definition>
+        <argsstring>(FSDirEntry *entry, std::ofstream &amp;stream) throws</argsstring>
+        <name>exportFile</name>
+        <qualifiedname>vc64::FileSystem::exportFile</qualifiedname>
+        <param>
+          <type>FSDirEntry *</type>
+          <declname>entry</declname>
+        </param>
+        <param>
+          <type>std::ofstream &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="304" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="935" bodyend="953"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a81fc5a671cf8fdc907390cb7ea937ed5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>FSBlockType</type>
+        <definition>FSBlockType vc64::FileSystem::getDisplayType</definition>
+        <argsstring>(isize column)</argsstring>
+        <name>getDisplayType</name>
+        <qualifiedname>vc64::FileSystem::getDisplayType</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>column</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="312" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="956" bodyend="999"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a9b49c5734aa39dd7544fb8a3946329f2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>FSBlockType vc64::FileSystem::diagnoseImageSlice</definition>
+        <argsstring>(isize column)</argsstring>
+        <name>diagnoseImageSlice</name>
+        <qualifiedname>vc64::FileSystem::diagnoseImageSlice</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>column</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="315" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="1002" bodyend="1040"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a498ce62935fc8fb0a77c317d725e8b4a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::nextBlockOfType</definition>
+        <argsstring>(FSBlockType type, isize after)</argsstring>
+        <name>nextBlockOfType</name>
+        <qualifiedname>vc64::FileSystem::nextBlockOfType</qualifiedname>
+        <param>
+          <type>FSBlockType</type>
+          <declname>type</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>after</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="318" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="1043" bodyend="1056"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1acfc203054da02fd2cb5bffece9da428c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::FileSystem::nextCorruptedBlock</definition>
+        <argsstring>(isize after)</argsstring>
+        <name>nextCorruptedBlock</name>
+        <qualifiedname>vc64::FileSystem::nextCorruptedBlock</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>after</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="321" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="1059" bodyend="1072"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvc64_1_1_file_system_1acce076c95c68e3f50b6d80997f0e4a55" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::init</definition>
+        <argsstring>(isize capacity)</argsstring>
+        <name>init</name>
+        <qualifiedname>vc64::FileSystem::init</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>capacity</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="58" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="33" bodyend="43"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a1f5759ada7fb402d53bdd82543920fac" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::init</definition>
+        <argsstring>(FSDeviceDescriptor &amp;layout)</argsstring>
+        <name>init</name>
+        <qualifiedname>vc64::FileSystem::init</qualifiedname>
+        <param>
+          <type>FSDeviceDescriptor &amp;</type>
+          <declname>layout</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="59" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="46" bodyend="50"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1aeaeae4f184218902226a753ee638d9b9" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::init</definition>
+        <argsstring>(DiskType type, DOSType vType)</argsstring>
+        <name>init</name>
+        <qualifiedname>vc64::FileSystem::init</qualifiedname>
+        <param>
+          <type>DiskType</type>
+          <declname>type</declname>
+        </param>
+        <param>
+          <type>DOSType</type>
+          <declname>vType</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="60" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="53" bodyend="61"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a1872b4236f49e46e5f3c4b29c4a78a22" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::init</definition>
+        <argsstring>(const class D64File &amp;d64) throws</argsstring>
+        <name>init</name>
+        <qualifiedname>vc64::FileSystem::init</qualifiedname>
+        <param>
+          <type>const class D64File &amp;</type>
+          <declname>d64</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="61" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1afb8c1a9c8f5155ea8c215b67a6f24dfa" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::init</definition>
+        <argsstring>(class Disk &amp;disk) throws</argsstring>
+        <name>init</name>
+        <qualifiedname>vc64::FileSystem::init</qualifiedname>
+        <param>
+          <type>class Disk &amp;</type>
+          <declname>disk</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="62" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="82" bodyend="105"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a363e32b3efe815be3db8879390ce19fe" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::init</definition>
+        <argsstring>(AnyCollection &amp;collection) throws</argsstring>
+        <name>init</name>
+        <qualifiedname>vc64::FileSystem::init</qualifiedname>
+        <param>
+          <type>AnyCollection &amp;</type>
+          <declname>collection</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="63" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="108" bodyend="134"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1af37c69c99eb950a1437368e32c5eb2f6" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::FileSystem::init</definition>
+        <argsstring>(const string &amp;path) throws</argsstring>
+        <name>init</name>
+        <qualifiedname>vc64::FileSystem::init</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="64" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="137" bodyend="186"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a2bac5c81db9ed2772e5e6af56dc148d3" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>FSBlock *</type>
+        <definition>FSBlock * vc64::FileSystem::locateAllocBit</definition>
+        <argsstring>(Block b, isize *byte, isize *bit) const</argsstring>
+        <name>locateAllocBit</name>
+        <qualifiedname>vc64::FileSystem::locateAllocBit</qualifiedname>
+        <param>
+          <type>Block</type>
+          <declname>b</declname>
+        </param>
+        <param>
+          <type>isize *</type>
+          <declname>byte</declname>
+        </param>
+        <param>
+          <type>isize *</type>
+          <declname>bit</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="188" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="405" bodyend="408"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a007f66b103c2208aa1bb283a3e5ffb08" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>FSBlock *</type>
+        <definition>FSBlock * vc64::FileSystem::locateAllocBit</definition>
+        <argsstring>(TSLink ref, isize *byte, isize *bit) const</argsstring>
+        <name>locateAllocBit</name>
+        <qualifiedname>vc64::FileSystem::locateAllocBit</qualifiedname>
+        <param>
+          <type>TSLink</type>
+          <declname>ref</declname>
+        </param>
+        <param>
+          <type>isize *</type>
+          <declname>byte</declname>
+        </param>
+        <param>
+          <type>isize *</type>
+          <declname>bit</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="189" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="411" bodyend="427"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_file_system_1a72b28201107a27df71d91749748431a7" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::FileSystem::makeFile</definition>
+        <argsstring>(PETName&lt; 16 &gt; name, FSDirEntry *entry, const u8 *buf, isize cnt)</argsstring>
+        <name>makeFile</name>
+        <qualifiedname>vc64::FileSystem::makeFile</qualifiedname>
+        <param>
+          <type>PETName&lt; 16 &gt;</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>FSDirEntry *</type>
+          <declname>entry</declname>
+        </param>
+        <param>
+          <type>const u8 *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>cnt</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="238" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="622" bodyend="654"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="25" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" bodystart="25" bodyend="322"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_file_system_1a35d120c4a09c9c99c960e7cb4657514c" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>allocate</name></member>
+      <member refid="classvc64_1_1_file_system_1acd1c36c6997cc45ee193cfd139d76cfb" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>allocate</name></member>
+      <member refid="classvc64_1_1_file_system_1a1798dbf669e7b3f89312c97c49c52c30" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>ascii</name></member>
+      <member refid="classvc64_1_1_file_system_1ab60e6da7807d0e86af1f89f083e9ad60" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>bamPtr</name></member>
+      <member refid="classvc64_1_1_file_system_1ab5184dbc04c68c9288074c24fa0ae72b" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>blockPtr</name></member>
+      <member refid="classvc64_1_1_file_system_1acd9318e304a5977e9b9b19bb0a4e4b55" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>blockPtr</name></member>
+      <member refid="classvc64_1_1_file_system_1ac25eed6f77934ba31d3a9334722bb8a1" prot="private" virt="non-virtual"><scope>vc64::FileSystem</scope><name>blocks</name></member>
+      <member refid="classvc64_1_1_file_system_1a9c07b732706253c648587c96f91423b3" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>blockType</name></member>
+      <member refid="classvc64_1_1_file_system_1a19753053a8cee4e0fe99e0966dd08a00" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>blockType</name></member>
+      <member refid="classvc64_1_1_file_system_1ab12286171a18581248a4c462c4ef04ac" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>check</name></member>
+      <member refid="classvc64_1_1_file_system_1aa23eddc018a41361c08c3e29ac1f55f4" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>check</name></member>
+      <member refid="classvc64_1_1_file_system_1a0eaa902726a00cdbf72a55e7f1bd3f30" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>copyFile</name></member>
+      <member refid="classvc64_1_1_file_system_1a128b75d22c9216656d64a19bad97472f" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>copyFile</name></member>
+      <member refid="classvc64_1_1_file_system_1a9b49c5734aa39dd7544fb8a3946329f2" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>diagnoseImageSlice</name></member>
+      <member refid="classvc64_1_1_file_system_1a9a261405e9d4cdeadaf152efe635cb2c" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>dir</name></member>
+      <member refid="classvc64_1_1_file_system_1a130b52deaab11d4959f97e172a6dc8ea" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>diskId1</name></member>
+      <member refid="classvc64_1_1_file_system_1aaa3781e03402043463a837b27a7adeaf" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>diskId2</name></member>
+      <member refid="classvc64_1_1_file_system_1a16fbd91f71746e4bb44dfa605b9e26b7" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>dos</name></member>
+      <member refid="classvc64_1_1_file_system_1a5fc700ef70b75ae87b91de37aad51010" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_file_system_1a3dd1c0405e8bc3adb7dacb565a022cc5" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>exportBlock</name></member>
+      <member refid="classvc64_1_1_file_system_1a06064ae8fb9e2033e5a22a06ffc3e56a" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>exportBlocks</name></member>
+      <member refid="classvc64_1_1_file_system_1a2f55693ef77fb4c1d398f77bf8f1e2a0" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>exportDirectory</name></member>
+      <member refid="classvc64_1_1_file_system_1a6f2cdfe8696876bfc5874d903cd1882c" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>exportFile</name></member>
+      <member refid="classvc64_1_1_file_system_1a34bcc2b8b868259b79acc3a416d37786" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>exportFile</name></member>
+      <member refid="classvc64_1_1_file_system_1a96a018a9a783487b5e09078b1fa53971" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>exportVolume</name></member>
+      <member refid="classvc64_1_1_file_system_1a3e5161324643ff216f895b83243e0131" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>fileBlocks</name></member>
+      <member refid="classvc64_1_1_file_system_1a3a202a9a24b2991e917915afc437f2e2" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>fileBlocks</name></member>
+      <member refid="classvc64_1_1_file_system_1a67f6b1ab5abca27b27425a919f67ca15" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>fileName</name></member>
+      <member refid="classvc64_1_1_file_system_1a6563b344fc5cb383a07ffb12830c2cdd" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>fileName</name></member>
+      <member refid="classvc64_1_1_file_system_1af89008406226b3136dc8bb8ac66666e5" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>fileSize</name></member>
+      <member refid="classvc64_1_1_file_system_1aa8cf5e316c7cf6e7276bca0e0e87e4b1" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>fileSize</name></member>
+      <member refid="classvc64_1_1_file_system_1aeb9ca5bd817989a8438a276ca2285baf" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>FileSystem</name></member>
+      <member refid="classvc64_1_1_file_system_1adf22ce3a35d5ef1fa22d379386eb7dac" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>FileSystem</name></member>
+      <member refid="classvc64_1_1_file_system_1a8a2c27cb6eb1e990aefc951be79c8d39" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>FileSystem</name></member>
+      <member refid="classvc64_1_1_file_system_1aa6bcfc0dbab6e86e139c513358ee01fe" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>FileSystem</name></member>
+      <member refid="classvc64_1_1_file_system_1aa776db08a91ebf49cfbcd396bf6f1c4c" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>FileSystem</name></member>
+      <member refid="classvc64_1_1_file_system_1ad36f72f0b5549b87a6ac8ad90238f0b2" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>FileSystem</name></member>
+      <member refid="classvc64_1_1_file_system_1a8953e1425eb49e47e66ae4d599ef193f" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>FileSystem</name></member>
+      <member refid="classvc64_1_1_file_system_1add294dd8edcadf052c4ea2182838a297" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>fileType</name></member>
+      <member refid="classvc64_1_1_file_system_1ace3a50189fa222a9cd0811fb095ff266" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>fileType</name></member>
+      <member refid="classvc64_1_1_file_system_1a97edb35ace872de15ac80c611e756e99" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>fillLevel</name></member>
+      <member refid="classvc64_1_1_file_system_1a84b19d03d2e26a2a957e2fe21198cf7e" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>firstFreeBlock</name></member>
+      <member refid="classvc64_1_1_file_system_1a77e10e8d04e9ae35790f57d7e4c9bbd1" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>freeBlocks</name></member>
+      <member refid="classvc64_1_1_file_system_1a254a782bff52ea0cd8b0d78c5dcabd3e" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>freeBytes</name></member>
+      <member refid="classvc64_1_1_file_system_1a56dfb96fc1815d183a1674fd596a9632" prot="private" virt="non-virtual"><scope>vc64::FileSystem</scope><name>FSBlock</name></member>
+      <member refid="classvc64_1_1_file_system_1a16ecd15ca27bbb6c6c1dd862b1d7c582" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>getCorrupted</name></member>
+      <member refid="classvc64_1_1_file_system_1afb04acc78240ee6dbbcb439577cbe18a" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_file_system_1a81fc5a671cf8fdc907390cb7ea937ed5" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>getDisplayType</name></member>
+      <member refid="classvc64_1_1_file_system_1aa650febc4338e3dcaca339d58833f72a" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>getErrorCode</name></member>
+      <member refid="classvc64_1_1_file_system_1a148f203415e16f7fe2c594d902704239" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>getErrorCode</name></member>
+      <member refid="classvc64_1_1_file_system_1a568bdef19d1c1dfd49550f6f02416efc" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>getID</name></member>
+      <member refid="classvc64_1_1_file_system_1a7ef826d2dfc2e5a2058a45a1aaac4c26" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>getName</name></member>
+      <member refid="classvc64_1_1_file_system_1a39f29044bb21c88dda3e5ea1f8764536" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>getNumBlocks</name></member>
+      <member refid="classvc64_1_1_file_system_1a155094d474b6f80d712bdee8cbae8a07" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>getNumBytes</name></member>
+      <member refid="classvc64_1_1_file_system_1a67b9f10cc0ad098c7414778d3a86a695" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>getNumCyls</name></member>
+      <member refid="classvc64_1_1_file_system_1a18ee915a17919637701f893960788e35" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>getNumHeads</name></member>
+      <member refid="classvc64_1_1_file_system_1a1c99e9a751ec159eb3c174dfb122f51d" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>getNumSectors</name></member>
+      <member refid="classvc64_1_1_file_system_1a4e9782992db0942198b4ddedc58cf121" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>getNumTracks</name></member>
+      <member refid="classvc64_1_1_file_system_1aa2ee76e2418207a1699a077d2e48e9fd" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>getOrCreateNextFreeDirEntry</name></member>
+      <member refid="classvc64_1_1_file_system_1ace229add17ee17f9b72fc62776ada78f" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>importDirectory</name></member>
+      <member refid="classvc64_1_1_file_system_1abf4158063f8ecfa77ff3108c24fceaf2" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>importDirectory</name></member>
+      <member refid="classvc64_1_1_file_system_1a19772cbd86310edb2ce2d7daac003ccf" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>importVolume</name></member>
+      <member refid="classvc64_1_1_file_system_1a5ab89849c785fc9882137bfc3ede484c" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>importVolume</name></member>
+      <member refid="classvc64_1_1_file_system_1af2e35ef99e11d79c939c71410024743c" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>info</name></member>
+      <member refid="classvc64_1_1_file_system_1acce076c95c68e3f50b6d80997f0e4a55" prot="private" virt="non-virtual"><scope>vc64::FileSystem</scope><name>init</name></member>
+      <member refid="classvc64_1_1_file_system_1a1f5759ada7fb402d53bdd82543920fac" prot="private" virt="non-virtual"><scope>vc64::FileSystem</scope><name>init</name></member>
+      <member refid="classvc64_1_1_file_system_1aeaeae4f184218902226a753ee638d9b9" prot="private" virt="non-virtual"><scope>vc64::FileSystem</scope><name>init</name></member>
+      <member refid="classvc64_1_1_file_system_1a1872b4236f49e46e5f3c4b29c4a78a22" prot="private" virt="non-virtual"><scope>vc64::FileSystem</scope><name>init</name></member>
+      <member refid="classvc64_1_1_file_system_1afb8c1a9c8f5155ea8c215b67a6f24dfa" prot="private" virt="non-virtual"><scope>vc64::FileSystem</scope><name>init</name></member>
+      <member refid="classvc64_1_1_file_system_1a363e32b3efe815be3db8879390ce19fe" prot="private" virt="non-virtual"><scope>vc64::FileSystem</scope><name>init</name></member>
+      <member refid="classvc64_1_1_file_system_1af37c69c99eb950a1437368e32c5eb2f6" prot="private" virt="non-virtual"><scope>vc64::FileSystem</scope><name>init</name></member>
+      <member refid="classvc64_1_1_file_system_1a1b60f7671ae440493a7beda8e61abcb2" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>isBlockNumber</name></member>
+      <member refid="classvc64_1_1_file_system_1a39e422c5e26cafdf5450267fb68410f3" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>isCorrupted</name></member>
+      <member refid="classvc64_1_1_file_system_1a0b4f9fa52c5efc81f7f1c32a43bbcdbd" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>isCorrupted</name></member>
+      <member refid="classvc64_1_1_file_system_1a387dc133a7e6334255787101821f5db6" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>isFree</name></member>
+      <member refid="classvc64_1_1_file_system_1ac974a41324df3dce46afc5f26508b07b" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>isFree</name></member>
+      <member refid="classvc64_1_1_file_system_1a9668fe8620ccbbcc30043c50cc81d61f" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>layout</name></member>
+      <member refid="classvc64_1_1_file_system_1a4eee73e54f464e92955996240e36eebf" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>loadAddr</name></member>
+      <member refid="classvc64_1_1_file_system_1ac55ee04f063b05df96c869f6be32ff28" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>loadAddr</name></member>
+      <member refid="classvc64_1_1_file_system_1a2bac5c81db9ed2772e5e6af56dc148d3" prot="private" virt="non-virtual"><scope>vc64::FileSystem</scope><name>locateAllocBit</name></member>
+      <member refid="classvc64_1_1_file_system_1a007f66b103c2208aa1bb283a3e5ffb08" prot="private" virt="non-virtual"><scope>vc64::FileSystem</scope><name>locateAllocBit</name></member>
+      <member refid="classvc64_1_1_file_system_1aa08e735f16e32c8becdc88b1aeb3a32e" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>makeFile</name></member>
+      <member refid="classvc64_1_1_file_system_1a72b28201107a27df71d91749748431a7" prot="private" virt="non-virtual"><scope>vc64::FileSystem</scope><name>makeFile</name></member>
+      <member refid="classvc64_1_1_file_system_1a6cc0a75b862b2748c3dbdb9b51adc2cd" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>markAsAllocated</name></member>
+      <member refid="classvc64_1_1_file_system_1a6f59afadd7ad3be6d7fe558235444e8a" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>markAsAllocated</name></member>
+      <member refid="classvc64_1_1_file_system_1a22b400342f0df5516954cfb71b691b4c" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>markAsFree</name></member>
+      <member refid="classvc64_1_1_file_system_1a83ebd94c5a5f7bf77afce1794ab6ec2f" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>markAsFree</name></member>
+      <member refid="classvc64_1_1_file_system_1a498ce62935fc8fb0a77c317d725e8b4a" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>nextBlockOfType</name></member>
+      <member refid="classvc64_1_1_file_system_1a004c54d266519638e8ed587098ee891a" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>nextBlockPtr</name></member>
+      <member refid="classvc64_1_1_file_system_1aa6ae84c5b40e8757d2b3e32187fe42e9" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>nextBlockPtr</name></member>
+      <member refid="classvc64_1_1_file_system_1a4590c608d46e11c964d4af62312cc2bb" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>nextBlockPtr</name></member>
+      <member refid="classvc64_1_1_file_system_1a788c34df12cb6febfc57f7f6c4ad1389" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>nextCorrupted</name></member>
+      <member refid="classvc64_1_1_file_system_1acfc203054da02fd2cb5bffece9da428c" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>nextCorruptedBlock</name></member>
+      <member refid="classvc64_1_1_file_system_1a26b7c3baba8475340c5514d51353db5c" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>nextFreeBlock</name></member>
+      <member refid="classvc64_1_1_file_system_1ac7646ce3a9306385274509bc7e4434e8" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>numFiles</name></member>
+      <member refid="classvc64_1_1_file_system_1a5cc9cc373b3bc05ed58ca1a5a752f721" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>prevCorrupted</name></member>
+      <member refid="classvc64_1_1_file_system_1a1691c30019d59866dc4332b09465dc7f" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>printDirectory</name></member>
+      <member refid="classvc64_1_1_file_system_1a8800a8e4280671616c3c424ffe7f7939" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>readByte</name></member>
+      <member refid="classvc64_1_1_file_system_1a2bcdc2a02f0f02ea397e0c375387d779" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>readByte</name></member>
+      <member refid="classvc64_1_1_file_system_1a4f38e9645a6fa61e6b6282ffe7cc1404" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>scanDirectory</name></member>
+      <member refid="classvc64_1_1_file_system_1a368b452bf98d406973cc47457e70408f" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>seekCorruptedBlock</name></member>
+      <member refid="classvc64_1_1_file_system_1a4e96dcb5d9342c5234f405fe93b45f46" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>setAllocBit</name></member>
+      <member refid="classvc64_1_1_file_system_1a884c577869faa583906645ac122b735a" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>setAllocBit</name></member>
+      <member refid="classvc64_1_1_file_system_1a7300fc9f986114099c48b935399323b6" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>setErrorCode</name></member>
+      <member refid="classvc64_1_1_file_system_1a46ebdeec1078e588fd08352c1826be8d" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>setErrorCode</name></member>
+      <member refid="classvc64_1_1_file_system_1a9bbfe6c07f45bff63e12eccdddb3851d" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>setID</name></member>
+      <member refid="classvc64_1_1_file_system_1a6e28292b1d33bf6978f9b34bc0a4d490" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>setName</name></member>
+      <member refid="classvc64_1_1_file_system_1a3e7318aef953f079ec900d63637cb358" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>usage</name></member>
+      <member refid="classvc64_1_1_file_system_1a7ac86bda92570913e819f8793c9cc6c7" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>usage</name></member>
+      <member refid="classvc64_1_1_file_system_1a2add381e8bafd83b0e1261a0c15f98c3" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>usedBlocks</name></member>
+      <member refid="classvc64_1_1_file_system_1a8e5d028c9fefd8bea868fb2d620583bb" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>usedBytes</name></member>
+      <member refid="classvc64_1_1_file_system_1a4cc2ccecbcccdbfd7f6e9b2db6f45e28" prot="public" virt="non-virtual"><scope>vc64::FileSystem</scope><name>~FileSystem</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

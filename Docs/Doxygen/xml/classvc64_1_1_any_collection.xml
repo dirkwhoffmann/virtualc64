@@ -1,0 +1,288 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_any_collection" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>vc64::AnyCollection</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">vc64::AnyFile</basecompoundref>
+    <derivedcompoundref refid="classvc64_1_1_folder" prot="public" virt="non-virtual">vc64::Folder</derivedcompoundref>
+    <derivedcompoundref refid="classvc64_1_1_p00_file" prot="public" virt="non-virtual">vc64::P00File</derivedcompoundref>
+    <derivedcompoundref refid="classvc64_1_1_p_r_g_file" prot="public" virt="non-virtual">vc64::PRGFile</derivedcompoundref>
+    <derivedcompoundref refid="classvc64_1_1_t64_file" prot="public" virt="non-virtual">vc64::T64File</derivedcompoundref>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_any_collection_1a13b2ddaa4987287da177f7d3d2301b08" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::AnyCollection::AnyCollection</definition>
+        <argsstring>()</argsstring>
+        <name>AnyCollection</name>
+        <qualifiedname>vc64::AnyCollection::AnyCollection</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h" line="23" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h" bodystart="23" bodyend="23"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_collection_1aa1f03ecacf935879096f732a4b0dd768" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::AnyCollection::AnyCollection</definition>
+        <argsstring>(isize capacity)</argsstring>
+        <name>AnyCollection</name>
+        <qualifiedname>vc64::AnyCollection::AnyCollection</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>capacity</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h" line="24" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h" bodystart="24" bodyend="24"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_collection_1a9cd5d1ddb4c8ffed48296a7c324e8cc5" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type></type>
+        <definition>virtual vc64::AnyCollection::~AnyCollection</definition>
+        <argsstring>()=default</argsstring>
+        <name>~AnyCollection</name>
+        <qualifiedname>vc64::AnyCollection::~AnyCollection</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h" line="25" column="13"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_collection_1a8b77f4e1eeb4c08f4ca33e6a93ceda6a" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>PETName&lt; 16 &gt;</type>
+        <definition>virtual PETName&lt; 16 &gt; vc64::AnyCollection::collectionName</definition>
+        <argsstring>()=0</argsstring>
+        <name>collectionName</name>
+        <qualifiedname>vc64::AnyCollection::collectionName</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h" line="28" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_collection_1a3a98d80f9b1f705d2860514c567cf222" prot="public" static="no" const="yes" explicit="no" inline="no" virt="pure-virtual">
+        <type>isize</type>
+        <definition>virtual isize vc64::AnyCollection::collectionCount</definition>
+        <argsstring>() const =0</argsstring>
+        <name>collectionCount</name>
+        <qualifiedname>vc64::AnyCollection::collectionCount</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h" line="31" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_collection_1a360b180687a0412161efbbfb0f051a1f" prot="public" static="no" const="yes" explicit="no" inline="no" virt="pure-virtual">
+        <type>PETName&lt; 16 &gt;</type>
+        <definition>virtual PETName&lt; 16 &gt; vc64::AnyCollection::itemName</definition>
+        <argsstring>(isize nr) const =0</argsstring>
+        <name>itemName</name>
+        <qualifiedname>vc64::AnyCollection::itemName</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h" line="34" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_collection_1abbd952dc30fbe879c5dbc6baf7fd05c7" prot="public" static="no" const="yes" explicit="no" inline="no" virt="pure-virtual">
+        <type>isize</type>
+        <definition>virtual isize vc64::AnyCollection::itemSize</definition>
+        <argsstring>(isize nr) const =0</argsstring>
+        <name>itemSize</name>
+        <qualifiedname>vc64::AnyCollection::itemSize</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h" line="37" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_collection_1aa72da7777591b51f5deb26f4bc7546e1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="pure-virtual">
+        <type>u8</type>
+        <definition>virtual u8 vc64::AnyCollection::readByte</definition>
+        <argsstring>(isize nr, isize pos) const =0</argsstring>
+        <name>readByte</name>
+        <qualifiedname>vc64::AnyCollection::readByte</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>pos</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h" line="40" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_collection_1acef8ad71dd445fd8315bc1e418c8601e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u16</type>
+        <definition>u16 vc64::AnyCollection::readWordBE</definition>
+        <argsstring>(isize nr, isize pos) const</argsstring>
+        <name>readWordBE</name>
+        <qualifiedname>vc64::AnyCollection::readWordBE</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>pos</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h" line="48" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.cpp" bodystart="19" bodyend="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_collection_1ae9e5bf6bbe6220252510110d4d484438" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u16</type>
+        <definition>u16 vc64::AnyCollection::readWordLE</definition>
+        <argsstring>(isize nr, isize pos) const</argsstring>
+        <name>readWordLE</name>
+        <qualifiedname>vc64::AnyCollection::readWordLE</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>pos</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h" line="49" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.cpp" bodystart="25" bodyend="28"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_collection_1a04fc08828f4d6bf703dbdacc00b11f8d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u16</type>
+        <definition>u16 vc64::AnyCollection::itemLoadAddr</definition>
+        <argsstring>(isize nr) const</argsstring>
+        <name>itemLoadAddr</name>
+        <qualifiedname>vc64::AnyCollection::itemLoadAddr</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h" line="52" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.cpp" bodystart="31" bodyend="34"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_any_collection_1a3d3d9bc6745f383e9e60e0fe0c7bc301" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void vc64::AnyCollection::copyItem</definition>
+        <argsstring>(isize nr, u8 *buf, isize len, isize offset=0) const</argsstring>
+        <name>copyItem</name>
+        <qualifiedname>vc64::AnyCollection::copyItem</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <param>
+          <type>u8 *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>len</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>offset</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h" line="55" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.cpp" bodystart="37" bodyend="40"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h" line="19" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h" bodystart="19" bodyend="56"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_any_collection_1a13b2ddaa4987287da177f7d3d2301b08" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>AnyCollection</name></member>
+      <member refid="classvc64_1_1_any_collection_1aa1f03ecacf935879096f732a4b0dd768" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>AnyCollection</name></member>
+      <member refid="classvc64_1_1_any_file_1a2402e3e1f185e9768c61131bafe44407" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>AnyFile</name></member>
+      <member refid="classvc64_1_1_any_file_1a5a036fda46ad75cda310157aace55f73" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>AnyFile</name></member>
+      <member refid="classvc64_1_1_any_collection_1a3a98d80f9b1f705d2860514c567cf222" prot="public" virt="pure-virtual"><scope>vc64::AnyCollection</scope><name>collectionCount</name></member>
+      <member refid="classvc64_1_1_any_collection_1a8b77f4e1eeb4c08f4ca33e6a93ceda6a" prot="public" virt="pure-virtual"><scope>vc64::AnyCollection</scope><name>collectionName</name></member>
+      <member refid="classvc64_1_1_any_collection_1a3d3d9bc6745f383e9e60e0fe0c7bc301" prot="public" virt="virtual"><scope>vc64::AnyCollection</scope><name>copyItem</name></member>
+      <member refid="classvc64_1_1_any_file_1a26e482da8776c614eb0ba61fead71c22" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>data</name></member>
+      <member refid="classvc64_1_1_any_file_1ae9e72360ebb682344186a0227c77f041" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>flash</name></member>
+      <member refid="classvc64_1_1_any_file_1a979934fcfdfeb8c68fcc470352d0edcf" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>fnv</name></member>
+      <member refid="classvc64_1_1_any_file_1a34a65043ea6edd72503e9d32d48fe673" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>getData</name></member>
+      <member refid="classvc64_1_1_core_object_1ae78e394ac636b5d056f8a199fcfcd42d" prot="public" virt="pure-virtual"><scope>vc64::AnyCollection</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_any_file_1abf770dc34618d1bfc67a23c55c44e85c" prot="public" virt="virtual"><scope>vc64::AnyCollection</scope><name>getName</name></member>
+      <member refid="classvc64_1_1_any_file_1ac734a20b4c309a84c275a773ca3df60d" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1a0c85ade04b494932cfd05be8969a5170" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1a68011b5dfea05008375629cc233e5100" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1ab650113d803492cd225753a3f58dd877" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1a3c8d04bbb9fdfd05ea7f1dc8efc54016" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1ab84764d78d6f620f80d942796b1aa1f0" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1a9fd0650226ab857e2da617fc9909cd90" prot="protected" virt="pure-virtual"><scope>vc64::AnyCollection</scope><name>isCompatiblePath</name></member>
+      <member refid="classvc64_1_1_any_file_1a78aefb71fdb4902838d9361f1658a031" prot="protected" virt="pure-virtual"><scope>vc64::AnyCollection</scope><name>isCompatibleStream</name></member>
+      <member refid="classvc64_1_1_any_collection_1a04fc08828f4d6bf703dbdacc00b11f8d" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>itemLoadAddr</name></member>
+      <member refid="classvc64_1_1_any_collection_1a360b180687a0412161efbbfb0f051a1f" prot="public" virt="pure-virtual"><scope>vc64::AnyCollection</scope><name>itemName</name></member>
+      <member refid="classvc64_1_1_any_collection_1abbd952dc30fbe879c5dbc6baf7fd05c7" prot="public" virt="pure-virtual"><scope>vc64::AnyCollection</scope><name>itemSize</name></member>
+      <member refid="classvc64_1_1_any_file_1a89548c3c156d0d989b19698860eda1ac" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>path</name></member>
+      <member refid="classvc64_1_1_core_object_1ab05f272c10fd455a9cafbb667293d044" prot="public" virt="virtual"><scope>vc64::AnyCollection</scope><name>prefix</name></member>
+      <member refid="classvc64_1_1_any_collection_1aa72da7777591b51f5deb26f4bc7546e1" prot="public" virt="pure-virtual"><scope>vc64::AnyCollection</scope><name>readByte</name></member>
+      <member refid="classvc64_1_1_any_file_1a8efe89e48777753f29e4a81ad2cee2a1" prot="protected" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>readFromBuffer</name></member>
+      <member refid="classvc64_1_1_any_file_1a3668025b9000a087977407b64c9473fd" prot="protected" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>readFromFile</name></member>
+      <member refid="classvc64_1_1_any_file_1ae0e3aa0d0a8c07187c688f5d98f13947" prot="protected" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>readFromStream</name></member>
+      <member refid="classvc64_1_1_any_collection_1acef8ad71dd445fd8315bc1e418c8601e" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>readWordBE</name></member>
+      <member refid="classvc64_1_1_any_collection_1ae9e5bf6bbe6220252510110d4d484438" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>readWordLE</name></member>
+      <member refid="classvc64_1_1_any_file_1a7ed08cce3080c43c7292063bf048f06f" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>size</name></member>
+      <member refid="classvc64_1_1_any_file_1ad74ebc6d4c511bf9013aede268cc483f" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>strip</name></member>
+      <member refid="classvc64_1_1_any_file_1ad47c49694822b542c3afbb8c57cc8533" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>type</name></member>
+      <member refid="classvc64_1_1_any_file_1a2dd03067b59cb4a6c02646c2e5a8a1c4" prot="public" virt="virtual"><scope>vc64::AnyCollection</scope><name>type</name></member>
+      <member refid="classvc64_1_1_core_object_1aa17ada334edf800da9ea768925ffa885" prot="protected" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_any_file_1adad618b6c94fcd35846b1edd740d7448" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>writeToBuffer</name></member>
+      <member refid="classvc64_1_1_any_file_1ab2dd3dbc31ee164578fbf199ba2c49ba" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>writeToFile</name></member>
+      <member refid="classvc64_1_1_any_file_1a1219474084e9d60e4cbea9c0a6d7dcd4" prot="public" virt="non-virtual"><scope>vc64::AnyCollection</scope><name>writeToStream</name></member>
+      <member refid="classvc64_1_1_any_collection_1a9cd5d1ddb4c8ffed48296a7c324e8cc5" prot="public" virt="virtual"><scope>vc64::AnyCollection</scope><name>~AnyCollection</name></member>
+      <member refid="classvc64_1_1_any_file_1ab8de483b0e9c975ab6c2b35afd9f5f8c" prot="public" virt="virtual"><scope>vc64::AnyCollection</scope><name>~AnyFile</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>vc64::AnyCollection</scope><name>~CoreObject</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

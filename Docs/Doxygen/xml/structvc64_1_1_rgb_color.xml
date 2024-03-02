@@ -1,0 +1,379 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="structvc64_1_1_rgb_color" kind="struct" language="C++" prot="public">
+    <compoundname>vc64::RgbColor</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structvc64_1_1_rgb_color_1a34bad94a3e07d8c9a6ff30a2da89fa85" prot="public" static="no" mutable="no">
+        <type>double</type>
+        <definition>double vc64::RgbColor::r</definition>
+        <argsstring></argsstring>
+        <name>r</name>
+        <qualifiedname>vc64::RgbColor::r</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="21" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_rgb_color_1afcb1804d286be81192ab41053fb9b21d" prot="public" static="no" mutable="no">
+        <type>double</type>
+        <definition>double vc64::RgbColor::g</definition>
+        <argsstring></argsstring>
+        <name>g</name>
+        <qualifiedname>vc64::RgbColor::g</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="22" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_rgb_color_1a5f3f9a922348cf79517b846ce98423b8" prot="public" static="no" mutable="no">
+        <type>double</type>
+        <definition>double vc64::RgbColor::b</definition>
+        <argsstring></argsstring>
+        <name>b</name>
+        <qualifiedname>vc64::RgbColor::b</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="23" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" bodystart="23" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-static-attrib">
+      <memberdef kind="variable" id="structvc64_1_1_rgb_color_1ad5ec26d3912c71a50f46140ef0f3b8a8" prot="public" static="yes" mutable="no">
+        <type>const RgbColor</type>
+        <definition>const RgbColor vc64::RgbColor::black</definition>
+        <argsstring></argsstring>
+        <name>black</name>
+        <qualifiedname>vc64::RgbColor::black</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="31" column="27" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" bodystart="31" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_rgb_color_1aef4b1dea89b0ff2e86f35ce8a6884e92" prot="public" static="yes" mutable="no">
+        <type>const RgbColor</type>
+        <definition>const RgbColor vc64::RgbColor::white</definition>
+        <argsstring></argsstring>
+        <name>white</name>
+        <qualifiedname>vc64::RgbColor::white</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="32" column="27" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" bodystart="32" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_rgb_color_1a5878f71f9688854b17a93af2c7a78c3b" prot="public" static="yes" mutable="no">
+        <type>const RgbColor</type>
+        <definition>const RgbColor vc64::RgbColor::red</definition>
+        <argsstring></argsstring>
+        <name>red</name>
+        <qualifiedname>vc64::RgbColor::red</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="33" column="27" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_rgb_color_1a6892502534fe559d000c3036322f08a3" prot="public" static="yes" mutable="no">
+        <type>const RgbColor</type>
+        <definition>const RgbColor vc64::RgbColor::green</definition>
+        <argsstring></argsstring>
+        <name>green</name>
+        <qualifiedname>vc64::RgbColor::green</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="34" column="27" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_rgb_color_1ac7f781c46239445010d400a8a80a7da2" prot="public" static="yes" mutable="no">
+        <type>const RgbColor</type>
+        <definition>const RgbColor vc64::RgbColor::blue</definition>
+        <argsstring></argsstring>
+        <name>blue</name>
+        <qualifiedname>vc64::RgbColor::blue</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="35" column="27" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_rgb_color_1a36d80a50f1bf87536214a7387a9f4052" prot="public" static="yes" mutable="no">
+        <type>const RgbColor</type>
+        <definition>const RgbColor vc64::RgbColor::yellow</definition>
+        <argsstring></argsstring>
+        <name>yellow</name>
+        <qualifiedname>vc64::RgbColor::yellow</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="36" column="27" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_rgb_color_1adfd31da9aa83676a25539557d00c885f" prot="public" static="yes" mutable="no">
+        <type>const RgbColor</type>
+        <definition>const RgbColor vc64::RgbColor::magenta</definition>
+        <argsstring></argsstring>
+        <name>magenta</name>
+        <qualifiedname>vc64::RgbColor::magenta</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="37" column="27" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_rgb_color_1a4c68a383e74f44ad6e5a512fb63ff43d" prot="public" static="yes" mutable="no">
+        <type>const RgbColor</type>
+        <definition>const RgbColor vc64::RgbColor::cyan</definition>
+        <argsstring></argsstring>
+        <name>cyan</name>
+        <qualifiedname>vc64::RgbColor::cyan</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="38" column="27" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="structvc64_1_1_rgb_color_1a5180ae2c156a64ff130b4727a2feb3ed" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::RgbColor::RgbColor</definition>
+        <argsstring>()</argsstring>
+        <name>RgbColor</name>
+        <qualifiedname>vc64::RgbColor::RgbColor</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="25" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" bodystart="25" bodyend="25"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_rgb_color_1ab08ef2adcd02ee99f1aca6706321e686" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::RgbColor::RgbColor</definition>
+        <argsstring>(double rv, double gv, double bv)</argsstring>
+        <name>RgbColor</name>
+        <qualifiedname>vc64::RgbColor::RgbColor</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>rv</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>gv</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>bv</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="26" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" bodystart="26" bodyend="26"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_rgb_color_1aefb00e09d075e93041646aae12d68355" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::RgbColor::RgbColor</definition>
+        <argsstring>(u8 rv, u8 gv, u8 bv)</argsstring>
+        <name>RgbColor</name>
+        <qualifiedname>vc64::RgbColor::RgbColor</qualifiedname>
+        <param>
+          <type>u8</type>
+          <declname>rv</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>gv</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>bv</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="27" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" bodystart="27" bodyend="27"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_rgb_color_1ab274137ca08879fa6783ad67d15977a5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::RgbColor::RgbColor</definition>
+        <argsstring>(const struct YuvColor &amp;c)</argsstring>
+        <name>RgbColor</name>
+        <qualifiedname>vc64::RgbColor::RgbColor</qualifiedname>
+        <param>
+          <type>const struct YuvColor &amp;</type>
+          <declname>c</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="28" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_rgb_color_1a4d990a9c53cc26a28d54624a36cfd5e0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::RgbColor::RgbColor</definition>
+        <argsstring>(const struct GpuColor &amp;c)</argsstring>
+        <name>RgbColor</name>
+        <qualifiedname>vc64::RgbColor::RgbColor</qualifiedname>
+        <param>
+          <type>const struct GpuColor &amp;</type>
+          <declname>c</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="29" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_rgb_color_1aa211f9c7171690e8b784c1218b7bd6c2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>RgbColor</type>
+        <definition>RgbColor vc64::RgbColor::mix</definition>
+        <argsstring>(RgbColor additive, double weight)</argsstring>
+        <name>mix</name>
+        <qualifiedname>vc64::RgbColor::mix</qualifiedname>
+        <param>
+          <type>RgbColor</type>
+          <declname>additive</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>weight</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="40" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.cpp" bodystart="33" bodyend="50"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_rgb_color_1ab28ab09f973014d5caaaef5461fc3060" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>RgbColor</type>
+        <definition>RgbColor vc64::RgbColor::mix</definition>
+        <argsstring>(RgbColor additive, double weight1, double weight2)</argsstring>
+        <name>mix</name>
+        <qualifiedname>vc64::RgbColor::mix</qualifiedname>
+        <param>
+          <type>RgbColor</type>
+          <declname>additive</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>weight1</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>weight2</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="41" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.cpp" bodystart="53" bodyend="64"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_rgb_color_1aa0dbebafa7768cd6342dc01f8448657f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>RgbColor</type>
+        <definition>RgbColor vc64::RgbColor::tint</definition>
+        <argsstring>(double weight)</argsstring>
+        <name>tint</name>
+        <qualifiedname>vc64::RgbColor::tint</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>weight</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="42" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" bodystart="42" bodyend="42"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_rgb_color_1a6d28a52ce225504ae6e2f9e7f2b2de1d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>RgbColor</type>
+        <definition>RgbColor vc64::RgbColor::shade</definition>
+        <argsstring>(double weight)</argsstring>
+        <name>shade</name>
+        <qualifiedname>vc64::RgbColor::shade</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>weight</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="43" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" bodystart="43" bodyend="43"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" line="19" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Colors.h" bodystart="19" bodyend="44"/>
+    <listofallmembers>
+      <member refid="structvc64_1_1_rgb_color_1a5f3f9a922348cf79517b846ce98423b8" prot="public" virt="non-virtual"><scope>vc64::RgbColor</scope><name>b</name></member>
+      <member refid="structvc64_1_1_rgb_color_1ad5ec26d3912c71a50f46140ef0f3b8a8" prot="public" virt="non-virtual"><scope>vc64::RgbColor</scope><name>black</name></member>
+      <member refid="structvc64_1_1_rgb_color_1ac7f781c46239445010d400a8a80a7da2" prot="public" virt="non-virtual"><scope>vc64::RgbColor</scope><name>blue</name></member>
+      <member refid="structvc64_1_1_rgb_color_1a4c68a383e74f44ad6e5a512fb63ff43d" prot="public" virt="non-virtual"><scope>vc64::RgbColor</scope><name>cyan</name></member>
+      <member refid="structvc64_1_1_rgb_color_1afcb1804d286be81192ab41053fb9b21d" prot="public" virt="non-virtual"><scope>vc64::RgbColor</scope><name>g</name></member>
+      <member refid="structvc64_1_1_rgb_color_1a6892502534fe559d000c3036322f08a3" prot="public" virt="non-virtual"><scope>vc64::RgbColor</scope><name>green</name></member>
+      <member refid="structvc64_1_1_rgb_color_1adfd31da9aa83676a25539557d00c885f" prot="public" virt="non-virtual"><scope>vc64::RgbColor</scope><name>magenta</name></member>
+      <member refid="structvc64_1_1_rgb_color_1aa211f9c7171690e8b784c1218b7bd6c2" prot="public" virt="non-virtual"><scope>vc64::RgbColor</scope><name>mix</name></member>
+      <member refid="structvc64_1_1_rgb_color_1ab28ab09f973014d5caaaef5461fc3060" prot="public" virt="non-virtual"><scope>vc64::RgbColor</scope><name>mix</name></member>
+      <member refid="structvc64_1_1_rgb_color_1a34bad94a3e07d8c9a6ff30a2da89fa85" prot="public" virt="non-virtual"><scope>vc64::RgbColor</scope><name>r</name></member>
+      <member refid="structvc64_1_1_rgb_color_1a5878f71f9688854b17a93af2c7a78c3b" prot="public" virt="non-virtual"><scope>vc64::RgbColor</scope><name>red</name></member>
+      <member refid="structvc64_1_1_rgb_color_1a5180ae2c156a64ff130b4727a2feb3ed" prot="public" virt="non-virtual"><scope>vc64::RgbColor</scope><name>RgbColor</name></member>
+      <member refid="structvc64_1_1_rgb_color_1ab08ef2adcd02ee99f1aca6706321e686" prot="public" virt="non-virtual"><scope>vc64::RgbColor</scope><name>RgbColor</name></member>
+      <member refid="structvc64_1_1_rgb_color_1aefb00e09d075e93041646aae12d68355" prot="public" virt="non-virtual"><scope>vc64::RgbColor</scope><name>RgbColor</name></member>
+      <member refid="structvc64_1_1_rgb_color_1ab274137ca08879fa6783ad67d15977a5" prot="public" virt="non-virtual"><scope>vc64::RgbColor</scope><name>RgbColor</name></member>
+      <member refid="structvc64_1_1_rgb_color_1a4d990a9c53cc26a28d54624a36cfd5e0" prot="public" virt="non-virtual"><scope>vc64::RgbColor</scope><name>RgbColor</name></member>
+      <member refid="structvc64_1_1_rgb_color_1a6d28a52ce225504ae6e2f9e7f2b2de1d" prot="public" virt="non-virtual"><scope>vc64::RgbColor</scope><name>shade</name></member>
+      <member refid="structvc64_1_1_rgb_color_1aa0dbebafa7768cd6342dc01f8448657f" prot="public" virt="non-virtual"><scope>vc64::RgbColor</scope><name>tint</name></member>
+      <member refid="structvc64_1_1_rgb_color_1aef4b1dea89b0ff2e86f35ce8a6884e92" prot="public" virt="non-virtual"><scope>vc64::RgbColor</scope><name>white</name></member>
+      <member refid="structvc64_1_1_rgb_color_1a36d80a50f1bf87536214a7387a9f4052" prot="public" virt="non-virtual"><scope>vc64::RgbColor</scope><name>yellow</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

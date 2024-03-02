@@ -1,0 +1,607 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_joystick" kind="class" language="C++" prot="public" final="yes">
+    <compoundname>vc64::Joystick</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">vc64::SubComponent</basecompoundref>
+    <basecompoundref prot="public" virt="non-virtual">vc64::Dumpable</basecompoundref>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_joystick_1a87214c300bc7664660fcde6c7f1fe10a" prot="private" static="no" mutable="no">
+        <type>ConfigOptions</type>
+        <definition>ConfigOptions vc64::Joystick::options</definition>
+        <argsstring></argsstring>
+        <name>options</name>
+        <qualifiedname>vc64::Joystick::options</qualifiedname>
+        <initializer>= {
+
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a9aa2995e2060ff2e4a8d851aef4118c8" kindref="member">OPT_AUTOFIRE</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a28c9d9fd1dd7b828149fea622a5ee650" kindref="member">OPT_AUTOFIRE_BURSTS</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a9b791917de5df9cc9d76ae58b0736271" kindref="member">OPT_AUTOFIRE_BULLETS</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8ae3fdac31c23133da2c70806b0669e49b" kindref="member">OPT_AUTOFIRE_DELAY</ref>
+    }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="22" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" bodystart="22" bodyend="28"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_joystick_1a5690f726ffb04474196544ffe985504d" prot="private" static="no" mutable="no">
+        <type>const long</type>
+        <definition>const long vc64::Joystick::nr</definition>
+        <argsstring></argsstring>
+        <name>nr</name>
+        <qualifiedname>vc64::Joystick::nr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="30" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_joystick_1a5816a9dcafe605cf51e3dfc428eb3100" prot="private" static="no" mutable="no">
+        <type>ControlPort &amp;</type>
+        <definition>ControlPort&amp; vc64::Joystick::port</definition>
+        <argsstring></argsstring>
+        <name>port</name>
+        <qualifiedname>vc64::Joystick::port</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="33" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_joystick_1a277b0c100e1af999a34a16c3cd4ea9f0" prot="private" static="no" mutable="no">
+        <type>JoystickConfig</type>
+        <definition>JoystickConfig vc64::Joystick::config</definition>
+        <argsstring></argsstring>
+        <name>config</name>
+        <qualifiedname>vc64::Joystick::config</qualifiedname>
+        <initializer>= { }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="36" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" bodystart="36" bodyend="36"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_joystick_1a12d5dd4d340ed9957de73452f5e6e304" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::Joystick::button</definition>
+        <argsstring></argsstring>
+        <name>button</name>
+        <qualifiedname>vc64::Joystick::button</qualifiedname>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="39" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_joystick_1a102d47f13730de5416fde5eb9de2a9c4" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int vc64::Joystick::axisX</definition>
+        <argsstring></argsstring>
+        <name>axisX</name>
+        <qualifiedname>vc64::Joystick::axisX</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="42" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_joystick_1abc6c835cd2e2bc5bbb0d497a406dc6a6" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int vc64::Joystick::axisY</definition>
+        <argsstring></argsstring>
+        <name>axisY</name>
+        <qualifiedname>vc64::Joystick::axisY</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="45" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_joystick_1a7396936dca4f66f10c23468fe4384577" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::Joystick::Joystick</definition>
+        <argsstring>(C64 &amp;ref, ControlPort &amp;pref)</argsstring>
+        <name>Joystick</name>
+        <qualifiedname>vc64::Joystick::Joystick</qualifiedname>
+        <param>
+          <type>C64 &amp;</type>
+          <declname>ref</declname>
+        </param>
+        <param>
+          <type>ControlPort &amp;</type>
+          <declname>pref</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="54" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.cpp" bodystart="20" bodyend="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_joystick_1ab176dd8e12dfc2daf7a60df942351867" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::Joystick::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::Joystick::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="56" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.cpp" bodystart="25" bodyend="28"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_joystick_1a4a1d834a3a16c3aa447f3394d7e7acc3" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Joystick::_dump</definition>
+        <argsstring>(Category category, std::ostream &amp;os) const override</argsstring>
+        <name>_dump</name>
+        <qualifiedname>vc64::Joystick::_dump</qualifiedname>
+        <param>
+          <type>Category</type>
+          <declname>category</declname>
+        </param>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="57" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.cpp" bodystart="95" bodyend="111"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_joystick_1ab11daed241ce9437b4ba0d8c27788c42" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Joystick &amp;</type>
+        <definition>Joystick &amp; vc64::Joystick::operator=</definition>
+        <argsstring>(const Joystick &amp;other)</argsstring>
+        <name>operator=</name>
+        <qualifiedname>vc64::Joystick::operator=</qualifiedname>
+        <param>
+          <type>const Joystick &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="59" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" bodystart="59" bodyend="68"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_joystick_1a96cf6b4fa2b313d0b4ff54da7396658d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>class T</type>
+          </param>
+        </templateparamlist>
+        <type>void</type>
+        <definition>void vc64::Joystick::serialize</definition>
+        <argsstring>(T &amp;worker)</argsstring>
+        <name>serialize</name>
+        <qualifiedname>vc64::Joystick::serialize</qualifiedname>
+        <param>
+          <type>T &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="70" column="22" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" bodystart="70" bodyend="80"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_joystick_1a844bcf452cfd9c0ae1b409a3d9fabab2" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Joystick::operator&lt;&lt;</definition>
+        <argsstring>(SerChecker &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::Joystick::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerChecker &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="81" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" bodystart="81" bodyend="81"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_joystick_1a3bd117f661cc46611d57b1f478d73c27" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Joystick::operator&lt;&lt;</definition>
+        <argsstring>(SerCounter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::Joystick::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerCounter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="82" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" bodystart="82" bodyend="82"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_joystick_1abe2fb29b8e9a58e1c62a996abadd7159" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Joystick::operator&lt;&lt;</definition>
+        <argsstring>(SerResetter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::Joystick::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerResetter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="83" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.cpp" bodystart="32" bodyend="38"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_joystick_1a5c85e641659d4cce958162fd93c3c24e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Joystick::operator&lt;&lt;</definition>
+        <argsstring>(SerReader &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::Joystick::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerReader &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="84" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.cpp" bodystart="41" bodyend="47"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_joystick_1a7988bfb384c15b637e4b65c00ac22dab" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Joystick::operator&lt;&lt;</definition>
+        <argsstring>(SerWriter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::Joystick::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerWriter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="85" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" bodystart="85" bodyend="85"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_joystick_1a0e5f623142c549cf64727e8135a022e8" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const JoystickConfig &amp;</type>
+        <definition>const JoystickConfig &amp; vc64::Joystick::getConfig</definition>
+        <argsstring>() const</argsstring>
+        <name>getConfig</name>
+        <qualifiedname>vc64::Joystick::getConfig</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="94" column="26" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" bodystart="94" bodyend="94"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_joystick_1a245d17a11009d99ada2df433775fb21a" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const ConfigOptions &amp;</type>
+        <definition>const ConfigOptions &amp; vc64::Joystick::getOptions</definition>
+        <argsstring>() const override</argsstring>
+        <name>getOptions</name>
+        <qualifiedname>vc64::Joystick::getOptions</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="95" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" bodystart="95" bodyend="95"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_joystick_1a44940a617e32b36a239800b0d00137fa" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>i64</type>
+        <definition>i64 vc64::Joystick::getOption</definition>
+        <argsstring>(Option opt) const override</argsstring>
+        <name>getOption</name>
+        <qualifiedname>vc64::Joystick::getOption</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>opt</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="96" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.cpp" bodystart="50" bodyend="62"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_joystick_1a80e815b535d12040009ab2e2538626f6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Joystick::setOption</definition>
+        <argsstring>(Option opt, i64 value) override</argsstring>
+        <name>setOption</name>
+        <qualifiedname>vc64::Joystick::setOption</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>opt</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="97" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.cpp" bodystart="65" bodyend="92"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_joystick_1a95418a19ebd66b703d94e40c3bdc09f9" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::Joystick::getControlPort</definition>
+        <argsstring>() const</argsstring>
+        <name>getControlPort</name>
+        <qualifiedname>vc64::Joystick::getControlPort</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="107" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.cpp" bodystart="114" bodyend="125"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_joystick_1ac6f3b5e5150e8561584b04985600fc77" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Joystick::trigger</definition>
+        <argsstring>(GamePadAction event)</argsstring>
+        <name>trigger</name>
+        <qualifiedname>vc64::Joystick::trigger</qualifiedname>
+        <param>
+          <type>GamePadAction</type>
+          <declname>event</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="110" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.cpp" bodystart="128" bodyend="166"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_joystick_1a2d50f37f88b2d1cc3bbb040cb1c435ad" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Joystick::processEvent</definition>
+        <argsstring>()</argsstring>
+        <name>processEvent</name>
+        <qualifiedname>vc64::Joystick::processEvent</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="120" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.cpp" bodystart="169" bodyend="189"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvc64_1_1_joystick_1aa64172ce3ec601ab8c41666543c812c5" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Joystick::isAutofiring</definition>
+        <argsstring>()</argsstring>
+        <name>isAutofiring</name>
+        <qualifiedname>vc64::Joystick::isAutofiring</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="125" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.cpp" bodystart="192" bodyend="195"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_joystick_1a4d4d7de27070ad3219a479a4ee4a9944" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Joystick::reload</definition>
+        <argsstring>()</argsstring>
+        <name>reload</name>
+        <qualifiedname>vc64::Joystick::reload</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="128" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.cpp" bodystart="198" bodyend="201"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_joystick_1a9487b5543d5f561b89b16e820775fc6a" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Joystick::reload</definition>
+        <argsstring>(isize bullets)</argsstring>
+        <name>reload</name>
+        <qualifiedname>vc64::Joystick::reload</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>bullets</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="129" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.cpp" bodystart="204" bodyend="207"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_joystick_1a0ea81f366975a160be6eb4ef4313bc67" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>long</type>
+            <declname>Slot</declname>
+            <defname>Slot</defname>
+          </param>
+        </templateparamlist>
+        <type>void</type>
+        <definition>void vc64::Joystick::reload</definition>
+        <argsstring>(isize bullets)</argsstring>
+        <name>reload</name>
+        <qualifiedname>vc64::Joystick::reload</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>bullets</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="130" column="22" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.cpp" bodystart="210" bodyend="234"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" line="20" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h" bodystart="20" bodyend="131"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_joystick_1a4a1d834a3a16c3aa447f3394d7e7acc3" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>_dump</name></member>
+      <member refid="classvc64_1_1_core_component_1aa7dd5e7a2020ad2348fea3edd724f538" prot="public" virt="virtual"><scope>vc64::Joystick</scope><name>_initialize</name></member>
+      <member refid="classvc64_1_1_core_component_1ab4d7e4961fa32234f400d835c3b5f038" prot="public" virt="virtual"><scope>vc64::Joystick</scope><name>_reset</name></member>
+      <member refid="classvc64_1_1_configurable_1a947ce65dab57ea328e9959014b7f9dfb" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>argList</name></member>
+      <member refid="classvc64_1_1_joystick_1a102d47f13730de5416fde5eb9de2a9c4" prot="private" virt="non-virtual"><scope>vc64::Joystick</scope><name>axisX</name></member>
+      <member refid="classvc64_1_1_joystick_1abc6c835cd2e2bc5bbb0d497a406dc6a6" prot="private" virt="non-virtual"><scope>vc64::Joystick</scope><name>axisY</name></member>
+      <member refid="classvc64_1_1_joystick_1a12d5dd4d340ed9957de73452f5e6e304" prot="private" virt="non-virtual"><scope>vc64::Joystick</scope><name>button</name></member>
+      <member refid="classvc64_1_1_sub_component_1a7691c720c74fd0e19a63978efe4cd851" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>c64</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae066edf64de901ee3f3b65eb0c02b202" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>cia1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9fe5ed30db982340524f7dcbf6fbf34c" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>cia2</name></member>
+      <member refid="classvc64_1_1_joystick_1a277b0c100e1af999a34a16c3cd4ea9f0" prot="private" virt="non-virtual"><scope>vc64::Joystick</scope><name>config</name></member>
+      <member refid="classvc64_1_1_core_component_1a18f454d0d572fa1b2e5023c4eaba6d07" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>CoreComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1acaece01018438ab083bd38a220d34f10" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>cpu</name></member>
+      <member refid="classvc64_1_1_sub_component_1a157963272dd927ec5c77b4090be57e89" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>datasette</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae85ede3d9ed8315d992eed300932eaf7" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>drive</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae44705f9377cf06d91323d8dca13a8a8" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>drive8</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5d876614a31fb29b8317350ed6a3158b" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>drive9</name></member>
+      <member refid="classvc64_1_1_dumpable_1a28d8b76288598fc0309bd6247e5479db" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_dumpable_1afc31b73f9b651bba5cf37dc88158755a" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_configurable_1a459505cd1eed2c174bf78b29808ad07b" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>dumpConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1a606e5261773126791e44ee8238f5876e" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>emulator</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5dc793ff2aa4ff3b36fdd061fd3f816b" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>expansionport</name></member>
+      <member refid="classvc64_1_1_joystick_1a0e5f623142c549cf64727e8135a022e8" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>getConfig</name></member>
+      <member refid="classvc64_1_1_joystick_1a95418a19ebd66b703d94e40c3bdc09f9" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>getControlPort</name></member>
+      <member refid="classvc64_1_1_joystick_1ab176dd8e12dfc2daf7a60df942351867" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_joystick_1a44940a617e32b36a239800b0d00137fa" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>getOption</name></member>
+      <member refid="classvc64_1_1_joystick_1a245d17a11009d99ada2df433775fb21a" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>getOptions</name></member>
+      <member refid="classvc64_1_1_core_component_1a936940e4e5cf0c617935ea3070bcbd4d" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>halt</name></member>
+      <member refid="classvc64_1_1_sub_component_1add6521bbcffbe5ca85afd6105d54e5ad" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>host</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5c8620301453e0b91374683d0c7b28ab" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>iec</name></member>
+      <member refid="classvc64_1_1_core_component_1a250f9ac5bbc00892bf195ec2ef523a2b" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>initialize</name></member>
+      <member refid="classvc64_1_1_joystick_1aa64172ce3ec601ab8c41666543c812c5" prot="private" virt="non-virtual"><scope>vc64::Joystick</scope><name>isAutofiring</name></member>
+      <member refid="classvc64_1_1_core_component_1a7b95994acc6e7ba59d4b2f50f2dc8df5" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>isEmulatorThread</name></member>
+      <member refid="classvc64_1_1_core_component_1a0e8c3dd97f64e2487fba4c22ba66d487" prot="public" virt="virtual"><scope>vc64::Joystick</scope><name>isHalted</name></member>
+      <member refid="classvc64_1_1_core_component_1a4f0f63ef65776aceecb329d03c3b5f17" prot="public" virt="virtual"><scope>vc64::Joystick</scope><name>isPaused</name></member>
+      <member refid="classvc64_1_1_core_component_1ac4dadc5fecfac3cd2dfb7e8b70767b42" prot="public" virt="virtual"><scope>vc64::Joystick</scope><name>isPoweredOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a0f9912b36ec181a0410d4f564baef127" prot="public" virt="virtual"><scope>vc64::Joystick</scope><name>isPoweredOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a77bf78d982163a6797f24d23106c5098" prot="public" virt="virtual"><scope>vc64::Joystick</scope><name>isReady</name></member>
+      <member refid="classvc64_1_1_core_component_1a121143d811f91157272bb67a0ca48d8f" prot="public" virt="virtual"><scope>vc64::Joystick</scope><name>isRunning</name></member>
+      <member refid="classvc64_1_1_core_component_1a490512fe63211f42eb57e7ed59f9b6a1" prot="public" virt="virtual"><scope>vc64::Joystick</scope><name>isSuspended</name></member>
+      <member refid="classvc64_1_1_configurable_1af6260d08823e90bdb51d1bf7bb596c35" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>isValidOption</name></member>
+      <member refid="classvc64_1_1_joystick_1a7396936dca4f66f10c23468fe4384577" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>Joystick</name></member>
+      <member refid="classvc64_1_1_sub_component_1aa9a0c663f877801b651969f86dbf2aae" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>keyboard</name></member>
+      <member refid="classvc64_1_1_configurable_1a0d6caf30eeaae95d1898d08cf3ca8e28" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>keyList</name></member>
+      <member refid="classvc64_1_1_sub_component_1ad160280522e5c27cd731289b9396c44f" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>mem</name></member>
+      <member refid="classvc64_1_1_sub_component_1a478be9b50f9e5c4c07dd2830e9964711" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>msgQueue</name></member>
+      <member refid="classvc64_1_1_synchronizable_1a595f618a9c91e91148882a79760f0f0f" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>mutex</name></member>
+      <member refid="classvc64_1_1_sub_component_1a712af82456373bd6e688a174ac756bcb" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>muxer</name></member>
+      <member refid="classvc64_1_1_joystick_1a5690f726ffb04474196544ffe985504d" prot="private" virt="non-virtual"><scope>vc64::Joystick</scope><name>nr</name></member>
+      <member refid="classvc64_1_1_core_component_1af47e1017ec1d938b1b613b36bdc8be57" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>operator!=</name></member>
+      <member refid="classvc64_1_1_joystick_1a844bcf452cfd9c0ae1b409a3d9fabab2" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_joystick_1a3bd117f661cc46611d57b1f478d73c27" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_joystick_1abe2fb29b8e9a58e1c62a996abadd7159" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_joystick_1a5c85e641659d4cce958162fd93c3c24e" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_joystick_1a7988bfb384c15b637e4b65c00ac22dab" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_joystick_1ab11daed241ce9437b4ba0d8c27788c42" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>operator=</name></member>
+      <member refid="classvc64_1_1_core_component_1aae8879dd8b62291254ec498fa9b2e2cf" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>operator==</name></member>
+      <member refid="classvc64_1_1_joystick_1a87214c300bc7664660fcde6c7f1fe10a" prot="private" virt="non-virtual"><scope>vc64::Joystick</scope><name>options</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9dfb837b941848b6b87e6a57da28348d" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>parCable</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a9c059588a19eeba521b79ff28e3dd8" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>pause</name></member>
+      <member refid="classvc64_1_1_joystick_1a5816a9dcafe605cf51e3dfc428eb3100" prot="private" virt="non-virtual"><scope>vc64::Joystick</scope><name>port</name></member>
+      <member refid="classvc64_1_1_sub_component_1a8c0718eb9d42f335961eaed51ba7cb8d" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>port1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a217a6ea39994b6ecae4e1ebd9cc220e7" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>port2</name></member>
+      <member refid="classvc64_1_1_core_component_1a05e1ba6d62516f796256f1cc394bf2f5" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>powerOff</name></member>
+      <member refid="classvc64_1_1_core_component_1ad606699d83a017fbee805e8d40245475" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>powerOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a74ab4149c152b98c6d5cc15bbac63887" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>powerOnOff</name></member>
+      <member refid="classvc64_1_1_sub_component_1a4fa2405b078fe61c302ff1c8047d9c4f" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>powerSupply</name></member>
+      <member refid="classvc64_1_1_sub_component_1aba0c66cd1ce8a6d1c3529825afdb4a02" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>prefix</name></member>
+      <member refid="classvc64_1_1_joystick_1a2d50f37f88b2d1cc3bbb040cb1c435ad" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>processEvent</name></member>
+      <member refid="classvc64_1_1_sub_component_1a2e1d97a260e9d4d637b0f8fb95fbf1d8" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>recorder</name></member>
+      <member refid="classvc64_1_1_sub_component_1afe6a4ca2f661ec44fd67637b14647436" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>regressionTester</name></member>
+      <member refid="classvc64_1_1_joystick_1a4d4d7de27070ad3219a479a4ee4a9944" prot="private" virt="non-virtual"><scope>vc64::Joystick</scope><name>reload</name></member>
+      <member refid="classvc64_1_1_joystick_1a9487b5543d5f561b89b16e820775fc6a" prot="private" virt="non-virtual"><scope>vc64::Joystick</scope><name>reload</name></member>
+      <member refid="classvc64_1_1_joystick_1a0ea81f366975a160be6eb4ef4313bc67" prot="private" virt="non-virtual"><scope>vc64::Joystick</scope><name>reload</name></member>
+      <member refid="classvc64_1_1_core_component_1a3910be506f5067fe6cf31a69dcd76b0c" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>reset</name></member>
+      <member refid="classvc64_1_1_core_component_1a082147809d967c961a7ac7c15c5f072a" prot="public" virt="virtual"><scope>vc64::Joystick</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1aec76d436c865101509bceb2daf47890b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::Joystick</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1af9ec0fb5e73fd1f0433a4f3bfcd39d9b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::Joystick</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1aab9305af3e38cc19bd1067ca87fe3e0d" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>resume</name></member>
+      <member refid="classvc64_1_1_sub_component_1ada641e2232ca8bdd3ef8fbecc883658d" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>retroShell</name></member>
+      <member refid="classvc64_1_1_core_component_1ae7093017e8a84768103c67b24de5c578" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>run</name></member>
+      <member refid="classvc64_1_1_joystick_1a96cf6b4fa2b313d0b4ff54da7396658d" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>serialize</name></member>
+      <member refid="classvc64_1_1_joystick_1a80e815b535d12040009ab2e2538626f6" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a51756d7f1f0ed1caa0e247ab6e789a3b" prot="public" virt="non-virtual" ambiguityscope="vc64::SubComponent::"><scope>vc64::Joystick</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a689b1a17fac237ca960b062df637" prot="public" virt="non-virtual" ambiguityscope="vc64::SubComponent::"><scope>vc64::Joystick</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_sub_component_1adce334c26f07e67bc936fbf7c935a759" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1a61d8a843718ff2f39e1575338a527676" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_core_component_1aa8b45810bedbdf78b88710ae8db3f495" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>subComponents</name></member>
+      <member refid="classvc64_1_1_core_component_1afd3f09724b119d73a122c3fc02ac1736" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>suspend</name></member>
+      <member refid="classvc64_1_1_suspendable_1a7f9f608d5b2b9b6e944176cde77b8f85" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>Suspendable</name></member>
+      <member refid="classvc64_1_1_core_component_1a0a4c841e543ecfc6cf988592a933a564" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>trackOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a4832ab0ebef49b591fe6e2785e969c89" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>trackOn</name></member>
+      <member refid="classvc64_1_1_core_component_1aae437c6ccf5f91155464dd4953c3baab" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>trackOnOff</name></member>
+      <member refid="classvc64_1_1_joystick_1ac6f3b5e5150e8561584b04985600fc77" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>trigger</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a24c5efde497d14b519ad15c9053949" prot="public" virt="non-virtual"><scope>vc64::Joystick</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9c1a4b73d1514ddc64567d4521abdecd" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>vic</name></member>
+      <member refid="classvc64_1_1_core_component_1a45399f75688ba5ba157a479c3ce76633" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>warpOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a5df664aeda300338d0568d59673ff536" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>warpOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a6760d32857901c415f4d75031d1e2654" prot="protected" virt="non-virtual"><scope>vc64::Joystick</scope><name>warpOnOff</name></member>
+      <member refid="classvc64_1_1_configurable_1a5aa5d945e768c40297f1bf71e200bde3" prot="public" virt="virtual"><scope>vc64::Joystick</scope><name>~Configurable</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>vc64::Joystick</scope><name>~CoreObject</name></member>
+      <member refid="classvc64_1_1_dumpable_1a843e874f633f7dcd8e2f1dcf1d8f0c25" prot="public" virt="virtual"><scope>vc64::Joystick</scope><name>~Dumpable</name></member>
+      <member refid="classvc64_1_1_suspendable_1a35809d3a4c20db1f096e8dc5c78c49b9" prot="public" virt="virtual"><scope>vc64::Joystick</scope><name>~Suspendable</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

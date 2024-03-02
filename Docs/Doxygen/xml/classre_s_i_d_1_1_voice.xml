@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classre_s_i_d_1_1_voice" kind="class" language="C++" prot="public">
+    <compoundname>reSID::Voice</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="classre_s_i_d_1_1_voice_1a704f659e954494a9baf06ea09b01817d" prot="public" static="no" mutable="no">
+        <type>WaveformGenerator</type>
+        <definition>WaveformGenerator reSID::Voice::wave</definition>
+        <argsstring></argsstring>
+        <name>wave</name>
+        <qualifiedname>reSID::Voice::wave</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.h" line="45" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classre_s_i_d_1_1_voice_1a2e136e482826899862b3e5bc8e04131b" prot="public" static="no" mutable="no">
+        <type>EnvelopeGenerator</type>
+        <definition>EnvelopeGenerator reSID::Voice::envelope</definition>
+        <argsstring></argsstring>
+        <name>envelope</name>
+        <qualifiedname>reSID::Voice::envelope</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.h" line="46" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classre_s_i_d_1_1_voice_1a826791ce0ce3b5dc921279c84d1acedb" prot="protected" static="no" mutable="no">
+        <type>short</type>
+        <definition>short reSID::Voice::wave_zero</definition>
+        <argsstring></argsstring>
+        <name>wave_zero</name>
+        <qualifiedname>reSID::Voice::wave_zero</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.h" line="50" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="friend">
+      <memberdef kind="friend" id="classre_s_i_d_1_1_voice_1ae302711fe9d1d70934653f2ba5903a33" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class SID</definition>
+        <argsstring></argsstring>
+        <name>SID</name>
+        <qualifiedname>reSID::Voice::SID</qualifiedname>
+        <param>
+          <type>SID</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.h" line="52" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classre_s_i_d_1_1_voice_1ae8e30d0c50715a216f8a9b56a31d20c6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>reSID::Voice::Voice</definition>
+        <argsstring>()</argsstring>
+        <name>Voice</name>
+        <qualifiedname>reSID::Voice::Voice</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.h" line="33" column="3" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.cc" bodystart="30" bodyend="33"/>
+      </memberdef>
+      <memberdef kind="function" id="classre_s_i_d_1_1_voice_1ae8c45dc94d6cee8470ce8b32d49ffb03" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void reSID::Voice::set_chip_model</definition>
+        <argsstring>(chip_model model)</argsstring>
+        <name>set_chip_model</name>
+        <qualifiedname>reSID::Voice::set_chip_model</qualifiedname>
+        <param>
+          <type>chip_model</type>
+          <declname>model</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.h" line="35" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.cc" bodystart="38" bodyend="99"/>
+      </memberdef>
+      <memberdef kind="function" id="classre_s_i_d_1_1_voice_1a04c505460020ed20b5eaa75cb48a21a9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void reSID::Voice::set_sync_source</definition>
+        <argsstring>(Voice *)</argsstring>
+        <name>set_sync_source</name>
+        <qualifiedname>reSID::Voice::set_sync_source</qualifiedname>
+        <param>
+          <type>Voice *</type>
+          <defname>source</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.h" line="36" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.cc" bodystart="104" bodyend="107"/>
+      </memberdef>
+      <memberdef kind="function" id="classre_s_i_d_1_1_voice_1a33762caa5cb872a3dfc1e7d1594d1adf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void reSID::Voice::reset</definition>
+        <argsstring>()</argsstring>
+        <name>reset</name>
+        <qualifiedname>reSID::Voice::reset</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.h" line="37" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.cc" bodystart="121" bodyend="125"/>
+      </memberdef>
+      <memberdef kind="function" id="classre_s_i_d_1_1_voice_1a0999bde661d6c7e332cc97b39f7902f9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void reSID::Voice::writeCONTROL_REG</definition>
+        <argsstring>(reg8)</argsstring>
+        <name>writeCONTROL_REG</name>
+        <qualifiedname>reSID::Voice::writeCONTROL_REG</qualifiedname>
+        <param>
+          <type>reg8</type>
+          <defname>control</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.h" line="39" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.cc" bodystart="112" bodyend="116"/>
+      </memberdef>
+      <memberdef kind="function" id="classre_s_i_d_1_1_voice_1a648292e49c535e2882356829ee836649" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int reSID::Voice::output</definition>
+        <argsstring>()</argsstring>
+        <name>output</name>
+        <qualifiedname>reSID::Voice::output</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.h" line="43" column="7"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.h" line="30" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.h" bodystart="31" bodyend="53"/>
+    <listofallmembers>
+      <member refid="classre_s_i_d_1_1_voice_1a2e136e482826899862b3e5bc8e04131b" prot="public" virt="non-virtual"><scope>reSID::Voice</scope><name>envelope</name></member>
+      <member refid="classre_s_i_d_1_1_voice_1a648292e49c535e2882356829ee836649" prot="public" virt="non-virtual"><scope>reSID::Voice</scope><name>output</name></member>
+      <member refid="classre_s_i_d_1_1_voice_1a33762caa5cb872a3dfc1e7d1594d1adf" prot="public" virt="non-virtual"><scope>reSID::Voice</scope><name>reset</name></member>
+      <member refid="classre_s_i_d_1_1_voice_1ae8c45dc94d6cee8470ce8b32d49ffb03" prot="public" virt="non-virtual"><scope>reSID::Voice</scope><name>set_chip_model</name></member>
+      <member refid="classre_s_i_d_1_1_voice_1a04c505460020ed20b5eaa75cb48a21a9" prot="public" virt="non-virtual"><scope>reSID::Voice</scope><name>set_sync_source</name></member>
+      <member refid="classre_s_i_d_1_1_voice_1ae302711fe9d1d70934653f2ba5903a33" prot="protected" virt="non-virtual"><scope>reSID::Voice</scope><name>SID</name></member>
+      <member refid="classre_s_i_d_1_1_voice_1ae8e30d0c50715a216f8a9b56a31d20c6" prot="public" virt="non-virtual"><scope>reSID::Voice</scope><name>Voice</name></member>
+      <member refid="classre_s_i_d_1_1_voice_1a704f659e954494a9baf06ea09b01817d" prot="public" virt="non-virtual"><scope>reSID::Voice</scope><name>wave</name></member>
+      <member refid="classre_s_i_d_1_1_voice_1a826791ce0ce3b5dc921279c84d1acedb" prot="protected" virt="non-virtual"><scope>reSID::Voice</scope><name>wave_zero</name></member>
+      <member refid="classre_s_i_d_1_1_voice_1a0999bde661d6c7e332cc97b39f7902f9" prot="public" virt="non-virtual"><scope>reSID::Voice</scope><name>writeCONTROL_REG</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

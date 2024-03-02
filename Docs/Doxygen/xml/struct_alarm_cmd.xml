@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="166" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="166" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="164" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="164" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_alarm_cmd_1a9e07fb01e558e77e4dc1b8a8797fe39e" prot="public" static="no" mutable="no">
         <type>i64</type>
@@ -29,14 +29,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="167" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="167" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="165" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="165" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="164" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="165" bodyend="168"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="162" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="163" bodyend="166"/>
     <listofallmembers>
       <member refid="struct_alarm_cmd_1a79f4a347c7c71e5773d7b8091965a19e" prot="public" virt="non-virtual"><scope>AlarmCmd</scope><name>cycle</name></member>
       <member refid="struct_alarm_cmd_1a9e07fb01e558e77e4dc1b8a8797fe39e" prot="public" virt="non-virtual"><scope>AlarmCmd</scope><name>value</name></member>

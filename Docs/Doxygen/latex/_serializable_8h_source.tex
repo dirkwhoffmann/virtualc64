@@ -1,0 +1,635 @@
+\doxysection{Serializable.\+h}
+\hypertarget{_serializable_8h_source}{}\label{_serializable_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Base/Serializable.h@{/Users/hoff/Retro/virtualc64/Emulator/Base/Serializable.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}Macros.h"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}MemUtils.h"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}Buffer.h"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }Serializable\ \{}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~Serializable()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{comment}{//\ Serialization\ operators\ (to\ be\ implemented\ by\ the\ subclass)}}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ operator\ <<\ (\textcolor{keyword}{class}\ SerCounter\ \&worker)\ =\ 0;}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ operator\ <<\ (\textcolor{keyword}{class}\ SerChecker\ \&worker)\ =\ 0;}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ operator\ <<\ (\textcolor{keyword}{class}\ SerResetter\ \&worker)\ =\ 0;}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ operator\ <<\ (\textcolor{keyword}{class}\ SerReader\ \&worker)\ =\ 0;}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ operator\ <<\ (\textcolor{keyword}{class}\ SerWriter\ \&worker)\ =\ 0;}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//\ Zeroes\ out\ all\ items}}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ hardReset();}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ softReset();}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ Calculates\ the\ snapshot\ size}}
+\DoxyCodeLine{00042\ \ \ \ \ isize\ size();}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{comment}{//\ Computes\ a\ checksum}}
+\DoxyCodeLine{00045\ \ \ \ \ u64\ checksum();}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{comment}{//\ Recreates\ the\ component\ from\ a\ buffer}}
+\DoxyCodeLine{00048\ \ \ \ \ isize\ load(\textcolor{keyword}{const}\ u8\ *buffer);}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Serializes\ the\ component\ into\ a\ buffer}}
+\DoxyCodeLine{00051\ \ \ \ \ isize\ save(u8\ *buffer);}
+\DoxyCodeLine{00052\ \};}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{comment}{//}}
+\DoxyCodeLine{00056\ \textcolor{comment}{//\ Basic\ memory\ buffer\ I/O}}
+\DoxyCodeLine{00057\ \textcolor{comment}{//}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{keyword}{inline}\ u8\ read8(\textcolor{keyword}{const}\ u8\ *\&\ buf)}
+\DoxyCodeLine{00060\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ u8\ result\ =\ R8BE(buf);}
+\DoxyCodeLine{00062\ \ \ \ \ buf\ +=\ 1;}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00064\ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{keyword}{inline}\ u16\ read16(\textcolor{keyword}{const}\ u8\ *\&\ buf)}
+\DoxyCodeLine{00067\ \{}
+\DoxyCodeLine{00068\ \ \ \ \ u16\ result\ =\ R16BE(buf);}
+\DoxyCodeLine{00069\ \ \ \ \ buf\ +=\ 2;}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00071\ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{keyword}{inline}\ u32\ read32(\textcolor{keyword}{const}\ u8\ *\&\ buf)}
+\DoxyCodeLine{00074\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ u32\ result\ =\ R32BE(buf);}
+\DoxyCodeLine{00076\ \ \ \ \ buf\ +=\ 4;}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00078\ \}}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \textcolor{keyword}{inline}\ u64\ read64(\textcolor{keyword}{const}\ u8\ *\&\ buf)}
+\DoxyCodeLine{00081\ \{}
+\DoxyCodeLine{00082\ \ \ \ \ u32\ hi\ =\ read32(buf);}
+\DoxyCodeLine{00083\ \ \ \ \ u32\ lo\ =\ read32(buf);}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordflow}{return}\ ((u64)hi\ <<\ 32)\ |\ lo;}
+\DoxyCodeLine{00085\ \}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{double}\ readDouble(\textcolor{keyword}{const}\ u8\ *\&\ buf)}
+\DoxyCodeLine{00088\ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{double}\ result\ =\ 0;}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordflow}{for}\ (isize\ i\ =\ 0;\ i\ <\ 8;\ i++)\ ((u8\ *)\&result)[i]\ =\ read8(buf);}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00092\ \}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{string}\ readString(\textcolor{keyword}{const}\ u8\ *\&\ buf)}
+\DoxyCodeLine{00095\ \{}
+\DoxyCodeLine{00096\ \ \ \ \ u8\ len\ =\ read8(buf);}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{string}\ result\ =\ string((\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *)buf,\ len);}
+\DoxyCodeLine{00098\ \ \ \ \ buf\ +=\ len;}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00100\ \}}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ write8(u8\ *\&\ buf,\ u8\ value)}
+\DoxyCodeLine{00103\ \{}
+\DoxyCodeLine{00104\ \ \ \ \ W8BE(buf,\ value);}
+\DoxyCodeLine{00105\ \ \ \ \ buf\ +=\ 1;}
+\DoxyCodeLine{00106\ \}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ write16(u8\ *\&\ buf,\ u16\ value)}
+\DoxyCodeLine{00109\ \{}
+\DoxyCodeLine{00110\ \ \ \ \ W16BE(buf,\ value);}
+\DoxyCodeLine{00111\ \ \ \ \ buf\ +=\ 2;}
+\DoxyCodeLine{00112\ \}}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ write32(u8\ *\&\ buf,\ u32\ value)}
+\DoxyCodeLine{00115\ \{}
+\DoxyCodeLine{00116\ \ \ \ \ W32BE(buf,\ value);}
+\DoxyCodeLine{00117\ \ \ \ \ buf\ +=\ 4;}
+\DoxyCodeLine{00118\ \}}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ write64(u8\ *\&\ buf,\ u64\ value)}
+\DoxyCodeLine{00121\ \{}
+\DoxyCodeLine{00122\ \ \ \ \ write32(buf,\ (u32)(value\ >>\ 32));}
+\DoxyCodeLine{00123\ \ \ \ \ write32(buf,\ (u32)(value));}
+\DoxyCodeLine{00124\ \}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ writeDouble(u8\ *\&\ buf,\ \textcolor{keywordtype}{double}\ value)}
+\DoxyCodeLine{00127\ \{}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordflow}{for}\ (isize\ i\ =\ 0;\ i\ <\ 8;\ i++)\ write8(buf,\ ((u8\ *)\&value)[i]);}
+\DoxyCodeLine{00129\ \}}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ writeString(u8\ *\&\ buf,\ \textcolor{keywordtype}{string}\ value)}
+\DoxyCodeLine{00132\ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keyword}{auto}\ len\ =\ value.length();}
+\DoxyCodeLine{00134\ \ \ \ \ assert(len\ <\ 256);}
+\DoxyCodeLine{00135\ \ \ \ \ write8(buf,\ u8(len));}
+\DoxyCodeLine{00136\ \ \ \ \ value.copy((\textcolor{keywordtype}{char}\ *)buf,\ len);}
+\DoxyCodeLine{00137\ \ \ \ \ buf\ +=\ len;}
+\DoxyCodeLine{00138\ \}}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \textcolor{comment}{//}}
+\DoxyCodeLine{00142\ \textcolor{comment}{//\ Counter\ (determines\ the\ state\ size)}}
+\DoxyCodeLine{00143\ \textcolor{comment}{//}}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \textcolor{preprocessor}{\#define\ COUNT(type,size)\ \(\backslash\)}}
+\DoxyCodeLine{00146\ \textcolor{preprocessor}{auto\&\ operator<<(type\&\ v)\ \(\backslash\)}}
+\DoxyCodeLine{00147\ \textcolor{preprocessor}{\{\ \(\backslash\)}}
+\DoxyCodeLine{00148\ \textcolor{preprocessor}{count\ +=\ size;\ \(\backslash\)}}
+\DoxyCodeLine{00149\ \textcolor{preprocessor}{return\ *this;\ \(\backslash\)}}
+\DoxyCodeLine{00150\ \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \textcolor{preprocessor}{\#define\ COUNT8(type)\ static\_assert(sizeof(type)\ ==\ 1);\ COUNT(type,1)}}
+\DoxyCodeLine{00153\ \textcolor{preprocessor}{\#define\ COUNT16(type)\ static\_assert(sizeof(type)\ ==\ 2);\ COUNT(type,2)}}
+\DoxyCodeLine{00154\ \textcolor{preprocessor}{\#define\ COUNT64(type)\ static\_assert(sizeof(type)\ <=\ 8);\ COUNT(type,8)}}
+\DoxyCodeLine{00155\ \textcolor{preprocessor}{\#define\ COUNTD(type)\ static\_assert(sizeof(type)\ <=\ 8);\ COUNT(type,8)}}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00157\ \textcolor{keyword}{class\ }SerCounter}
+\DoxyCodeLine{00158\ \{}
+\DoxyCodeLine{00159\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00161\ \ \ \ \ isize\ count;}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ \ \ \ \ SerCounter()\ \{\ count\ =\ 0;\ \}}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \ \ \ \ COUNT8(\textcolor{keyword}{const}\ \textcolor{keywordtype}{bool})}
+\DoxyCodeLine{00166\ \ \ \ \ COUNT8(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char})}
+\DoxyCodeLine{00167\ \ \ \ \ COUNT8(\textcolor{keyword}{const}\ \textcolor{keywordtype}{signed}\ \textcolor{keywordtype}{char})}
+\DoxyCodeLine{00168\ \ \ \ \ COUNT8(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char})}
+\DoxyCodeLine{00169\ \ \ \ \ COUNT16(\textcolor{keyword}{const}\ \textcolor{keywordtype}{short})}
+\DoxyCodeLine{00170\ \ \ \ \ COUNT16(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{short})}
+\DoxyCodeLine{00171\ \ \ \ \ COUNT64(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int})}
+\DoxyCodeLine{00172\ \ \ \ \ COUNT64(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int})}
+\DoxyCodeLine{00173\ \ \ \ \ COUNT64(\textcolor{keyword}{const}\ \textcolor{keywordtype}{long})}
+\DoxyCodeLine{00174\ \ \ \ \ COUNT64(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long})}
+\DoxyCodeLine{00175\ \ \ \ \ COUNT64(\textcolor{keyword}{const}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long})}
+\DoxyCodeLine{00176\ \ \ \ \ COUNT64(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long})}
+\DoxyCodeLine{00177\ \ \ \ \ COUNTD(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float})}
+\DoxyCodeLine{00178\ \ \ \ \ COUNTD(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double})}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keyword}{auto}\&\ operator<<(util::Allocator<T>\ \&a)}
+\DoxyCodeLine{00182\ \ \ \ \ \{}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ count\ +=\ 8\ +\ a.size;}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00185\ \ \ \ \ \}}
+\DoxyCodeLine{00186\ \ \ \ \ }
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keyword}{auto}\&\ operator<<(\textcolor{keywordtype}{string}\ \&v)}
+\DoxyCodeLine{00188\ \ \ \ \ \{}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ len\ =\ v.length();}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ assert(len\ <\ 256);}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ count\ +=\ 1\ +\ isize(len);}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00193\ \ \ \ \ \}}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00196\ \ \ \ \ \textcolor{keyword}{auto}\&\ operator<<(std::vector\ <T>\ \&v)}
+\DoxyCodeLine{00197\ \ \ \ \ \{}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ len\ =\ v.size();}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(usize\ i\ =\ 0;\ i\ <\ len;\ i++)\ *\textcolor{keyword}{this}\ <<\ v[i];}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ count\ +=\ 8;}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00202\ \ \ \ \ \}}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ isize\ N>}
+\DoxyCodeLine{00205\ \ \ \ \ SerCounter\&\ operator<<(T\ (\&v)[N])}
+\DoxyCodeLine{00206\ \ \ \ \ \{}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(isize\ i\ =\ 0;\ i\ <\ N;\ ++i)\ \{}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ *\textcolor{keyword}{this}\ <<\ v[i];}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00211\ \ \ \ \ \}}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keyword}{template}\ <std::derived\_from<Serializable>\ T>}
+\DoxyCodeLine{00214\ \ \ \ \ SerCounter\&\ operator<<(T\ \&v)}
+\DoxyCodeLine{00215\ \ \ \ \ \{}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ v\ <<\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00218\ \ \ \ \ \}}
+\DoxyCodeLine{00219\ \};}
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00222\ \textcolor{comment}{//}}
+\DoxyCodeLine{00223\ \textcolor{comment}{//\ Checksum\ generator}}
+\DoxyCodeLine{00224\ \textcolor{comment}{//}}
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00226\ \textcolor{preprocessor}{\#define\ CHECK(type)\ \(\backslash\)}}
+\DoxyCodeLine{00227\ \textcolor{preprocessor}{auto\&\ operator<<(type\&\ v)\ \(\backslash\)}}
+\DoxyCodeLine{00228\ \textcolor{preprocessor}{\{\ \(\backslash\)}}
+\DoxyCodeLine{00229\ \textcolor{preprocessor}{hash\ =\ util::fnvIt64(hash,\ (u64)v);\ \(\backslash\)}}
+\DoxyCodeLine{00230\ \textcolor{preprocessor}{return\ *this;\ \(\backslash\)}}
+\DoxyCodeLine{00231\ \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00233\ \textcolor{keyword}{class\ }SerChecker}
+\DoxyCodeLine{00234\ \{}
+\DoxyCodeLine{00235\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00237\ \ \ \ \ u64\ hash;}
+\DoxyCodeLine{00238\ }
+\DoxyCodeLine{00239\ \ \ \ \ SerChecker()\ \{\ hash\ =\ util::fnvInit64();\ \}}
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00241\ \ \ \ \ CHECK(\textcolor{keyword}{const}\ \textcolor{keywordtype}{bool})}
+\DoxyCodeLine{00242\ \ \ \ \ CHECK(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char})}
+\DoxyCodeLine{00243\ \ \ \ \ CHECK(\textcolor{keyword}{const}\ \textcolor{keywordtype}{signed}\ \textcolor{keywordtype}{char})}
+\DoxyCodeLine{00244\ \ \ \ \ CHECK(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char})}
+\DoxyCodeLine{00245\ \ \ \ \ CHECK(\textcolor{keyword}{const}\ \textcolor{keywordtype}{short})}
+\DoxyCodeLine{00246\ \ \ \ \ CHECK(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{short})}
+\DoxyCodeLine{00247\ \ \ \ \ CHECK(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int})}
+\DoxyCodeLine{00248\ \ \ \ \ CHECK(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int})}
+\DoxyCodeLine{00249\ \ \ \ \ CHECK(\textcolor{keyword}{const}\ \textcolor{keywordtype}{long})}
+\DoxyCodeLine{00250\ \ \ \ \ CHECK(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long})}
+\DoxyCodeLine{00251\ \ \ \ \ CHECK(\textcolor{keyword}{const}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long})}
+\DoxyCodeLine{00252\ \ \ \ \ CHECK(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long})}
+\DoxyCodeLine{00253\ \ \ \ \ CHECK(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float})}
+\DoxyCodeLine{00254\ \ \ \ \ CHECK(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double})}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00256\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00257\ \ \ \ \ \textcolor{keyword}{auto}\&\ operator<<(util::Allocator<T>\ \&a)}
+\DoxyCodeLine{00258\ \ \ \ \ \{}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ hash\ =\ util::fnvIt64(hash,\ a.fnv64());}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00261\ \ \ \ \ \}}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00263\ \ \ \ \ \textcolor{keyword}{auto}\&\ operator<<(\textcolor{keywordtype}{string}\ \&v)}
+\DoxyCodeLine{00264\ \ \ \ \ \{}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ len\ =\ v.length();}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (usize\ i\ =\ 0;\ i\ <\ len;\ i++)\ \{}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ hash\ =\ util::fnvIt64(hash,\ v[i]);}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00270\ \ \ \ \ \}}
+\DoxyCodeLine{00271\ }
+\DoxyCodeLine{00272\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00273\ \ \ \ \ \textcolor{keyword}{auto}\&\ operator<<(std::vector\ <T>\ \&v)}
+\DoxyCodeLine{00274\ \ \ \ \ \{}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ isize\ len\ =\ isize(v.size());}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (isize\ i\ =\ 0;\ i\ <\ len;\ i++)\ \{}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \ \ \ \ *\textcolor{keyword}{this}\ <<\ v[i];}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00280\ \ \ \ \ \}}
+\DoxyCodeLine{00281\ }
+\DoxyCodeLine{00282\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ isize\ N>}
+\DoxyCodeLine{00283\ \ \ \ \ SerChecker\&\ operator<<(T\ (\&v)[N])}
+\DoxyCodeLine{00284\ \ \ \ \ \{}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(isize\ i\ =\ 0;\ i\ <\ N;\ ++i)\ \{}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ \ \ *\textcolor{keyword}{this}\ <<\ v[i];}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00289\ \ \ \ \ \}}
+\DoxyCodeLine{00290\ }
+\DoxyCodeLine{00291\ \ \ \ \ \textcolor{keyword}{template}\ <std::derived\_from<Serializable>\ T>}
+\DoxyCodeLine{00292\ \ \ \ \ SerChecker\&\ operator<<(T\ \&v)}
+\DoxyCodeLine{00293\ \ \ \ \ \{}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ v\ <<\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00296\ \ \ \ \ \}}
+\DoxyCodeLine{00297\ \};}
+\DoxyCodeLine{00298\ }
+\DoxyCodeLine{00299\ }
+\DoxyCodeLine{00300\ \textcolor{comment}{//}}
+\DoxyCodeLine{00301\ \textcolor{comment}{//\ Reader\ (Deserializer)}}
+\DoxyCodeLine{00302\ \textcolor{comment}{//}}
+\DoxyCodeLine{00303\ }
+\DoxyCodeLine{00304\ \textcolor{preprocessor}{\#define\ DESERIALIZE(type,function)\ \(\backslash\)}}
+\DoxyCodeLine{00305\ \textcolor{preprocessor}{SerReader\&\ operator<<(type\&\ v)\ \(\backslash\)}}
+\DoxyCodeLine{00306\ \textcolor{preprocessor}{\{\ \(\backslash\)}}
+\DoxyCodeLine{00307\ \textcolor{preprocessor}{v\ =\ (type)function(ptr);\ \(\backslash\)}}
+\DoxyCodeLine{00308\ \textcolor{preprocessor}{return\ *this;\ \(\backslash\)}}
+\DoxyCodeLine{00309\ \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{00310\ }
+\DoxyCodeLine{00311\ \textcolor{preprocessor}{\#define\ DESERIALIZE8(type)\ \ static\_assert(sizeof(type)\ ==\ 1);\ DESERIALIZE(type,read8)}}
+\DoxyCodeLine{00312\ \textcolor{preprocessor}{\#define\ DESERIALIZE16(type)\ static\_assert(sizeof(type)\ ==\ 2);\ DESERIALIZE(type,read16)}}
+\DoxyCodeLine{00313\ \textcolor{preprocessor}{\#define\ DESERIALIZE64(type)\ static\_assert(sizeof(type)\ <=\ 8);\ DESERIALIZE(type,read64)}}
+\DoxyCodeLine{00314\ \textcolor{preprocessor}{\#define\ DESERIALIZED(type)\ static\_assert(sizeof(type)\ <=\ 8);\ DESERIALIZE(type,readDouble)}}
+\DoxyCodeLine{00315\ }
+\DoxyCodeLine{00316\ \textcolor{keyword}{class\ }SerReader}
+\DoxyCodeLine{00317\ \{}
+\DoxyCodeLine{00318\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00320\ \ \ \ \ \textcolor{keyword}{const}\ u8\ *ptr;}
+\DoxyCodeLine{00321\ }
+\DoxyCodeLine{00322\ \ \ \ \ SerReader(\textcolor{keyword}{const}\ u8\ *p)\ :\ ptr(p)}
+\DoxyCodeLine{00323\ \ \ \ \ \{}
+\DoxyCodeLine{00324\ \ \ \ \ \}}
+\DoxyCodeLine{00325\ }
+\DoxyCodeLine{00326\ \ \ \ \ DESERIALIZE8(\textcolor{keywordtype}{bool})}
+\DoxyCodeLine{00327\ \ \ \ \ DESERIALIZE8(\textcolor{keywordtype}{char})}
+\DoxyCodeLine{00328\ \ \ \ \ DESERIALIZE8(\textcolor{keywordtype}{signed}\ \textcolor{keywordtype}{char})}
+\DoxyCodeLine{00329\ \ \ \ \ DESERIALIZE8(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char})}
+\DoxyCodeLine{00330\ \ \ \ \ DESERIALIZE16(\textcolor{keywordtype}{short})}
+\DoxyCodeLine{00331\ \ \ \ \ DESERIALIZE16(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{short})}
+\DoxyCodeLine{00332\ \ \ \ \ DESERIALIZE64(\textcolor{keywordtype}{int})}
+\DoxyCodeLine{00333\ \ \ \ \ DESERIALIZE64(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int})}
+\DoxyCodeLine{00334\ \ \ \ \ DESERIALIZE64(\textcolor{keywordtype}{long})}
+\DoxyCodeLine{00335\ \ \ \ \ DESERIALIZE64(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long})}
+\DoxyCodeLine{00336\ \ \ \ \ DESERIALIZE64(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long})}
+\DoxyCodeLine{00337\ \ \ \ \ DESERIALIZE64(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long})}
+\DoxyCodeLine{00338\ \ \ \ \ DESERIALIZED(\textcolor{keywordtype}{float})}
+\DoxyCodeLine{00339\ \ \ \ \ DESERIALIZED(\textcolor{keywordtype}{double})}
+\DoxyCodeLine{00340\ }
+\DoxyCodeLine{00341\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00342\ \ \ \ \ \textcolor{keyword}{auto}\&\ operator<<(util::Allocator<T>\ \&a)}
+\DoxyCodeLine{00343\ \ \ \ \ \{}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ i64\ len;}
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ *\textcolor{keyword}{this}\ <<\ len;}
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ a.init(ptr,\ isize(len));}
+\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ ptr\ +=\ len;}
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00349\ \ \ \ \ \}}
+\DoxyCodeLine{00350\ }
+\DoxyCodeLine{00351\ \ \ \ \ \textcolor{keyword}{auto}\&\ operator<<(\textcolor{keywordtype}{string}\ \&v)}
+\DoxyCodeLine{00352\ \ \ \ \ \{}
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ v\ =\ readString(ptr);}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00355\ \ \ \ \ \}}
+\DoxyCodeLine{00356\ }
+\DoxyCodeLine{00357\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00358\ \ \ \ \ \textcolor{keyword}{auto}\&\ operator<<(std::vector\ <T>\ \&v)}
+\DoxyCodeLine{00359\ \ \ \ \ \{}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ i64\ len;}
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ *\textcolor{keyword}{this}\ <<\ len;}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ v.clear();}
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ v.reserve(len);}
+\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (isize\ i\ =\ 0;\ i\ <\ len;\ i++)\ \{}
+\DoxyCodeLine{00365\ \ \ \ \ \ \ \ \ \ \ \ \ v.push\_back(T());}
+\DoxyCodeLine{00366\ \ \ \ \ \ \ \ \ \ \ \ \ *\textcolor{keyword}{this}\ <<\ v.back();}
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00369\ \ \ \ \ \}}
+\DoxyCodeLine{00370\ }
+\DoxyCodeLine{00371\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ isize\ N>}
+\DoxyCodeLine{00372\ \ \ \ \ SerReader\&\ operator<<(T\ (\&v)[N])}
+\DoxyCodeLine{00373\ \ \ \ \ \{}
+\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(isize\ i\ =\ 0;\ i\ <\ N;\ ++i)\ \{}
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \ \ \ \ *\textcolor{keyword}{this}\ <<\ v[i];}
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00378\ \ \ \ \ \}}
+\DoxyCodeLine{00379\ }
+\DoxyCodeLine{00380\ \ \ \ \ \textcolor{keywordtype}{void}\ copy(\textcolor{keywordtype}{void}\ *dst,\ isize\ n)}
+\DoxyCodeLine{00381\ \ \ \ \ \{}
+\DoxyCodeLine{00382\ \ \ \ \ \ \ \ \ std::memcpy(dst,\ (\textcolor{keywordtype}{void}\ *)ptr,\ n);}
+\DoxyCodeLine{00383\ \ \ \ \ \ \ \ \ ptr\ +=\ n;}
+\DoxyCodeLine{00384\ \ \ \ \ \}}
+\DoxyCodeLine{00385\ }
+\DoxyCodeLine{00386\ \ \ \ \ \textcolor{keyword}{template}\ <std::derived\_from<Serializable>\ T>}
+\DoxyCodeLine{00387\ \ \ \ \ SerReader\&\ operator<<(T\ \&v)}
+\DoxyCodeLine{00388\ \ \ \ \ \{}
+\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ v\ <<\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00391\ \ \ \ \ \}}
+\DoxyCodeLine{00392\ \};}
+\DoxyCodeLine{00393\ }
+\DoxyCodeLine{00394\ }
+\DoxyCodeLine{00395\ \textcolor{comment}{//}}
+\DoxyCodeLine{00396\ \textcolor{comment}{//\ Writer\ (Serializer)}}
+\DoxyCodeLine{00397\ \textcolor{comment}{//}}
+\DoxyCodeLine{00398\ }
+\DoxyCodeLine{00399\ \textcolor{preprocessor}{\#define\ SERIALIZE(type,function,cast)\ \(\backslash\)}}
+\DoxyCodeLine{00400\ \textcolor{preprocessor}{SerWriter\&\ operator<<(type\&\ v)\ \(\backslash\)}}
+\DoxyCodeLine{00401\ \textcolor{preprocessor}{\{\ \(\backslash\)}}
+\DoxyCodeLine{00402\ \textcolor{preprocessor}{function(ptr,\ (cast)v);\ \(\backslash\)}}
+\DoxyCodeLine{00403\ \textcolor{preprocessor}{return\ *this;\ \(\backslash\)}}
+\DoxyCodeLine{00404\ \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{00405\ }
+\DoxyCodeLine{00406\ \textcolor{preprocessor}{\#define\ SERIALIZE8(type)\ \ static\_assert(sizeof(type)\ ==\ 1);\ SERIALIZE(type,write8,u8)}}
+\DoxyCodeLine{00407\ \textcolor{preprocessor}{\#define\ SERIALIZE16(type)\ static\_assert(sizeof(type)\ ==\ 2);\ SERIALIZE(type,write16,u16)}}
+\DoxyCodeLine{00408\ \textcolor{preprocessor}{\#define\ SERIALIZE64(type)\ static\_assert(sizeof(type)\ <=\ 8);\ SERIALIZE(type,write64,u64)}}
+\DoxyCodeLine{00409\ \textcolor{preprocessor}{\#define\ SERIALIZED(type)\ static\_assert(sizeof(type)\ <=\ 8);\ SERIALIZE(type,writeDouble,double)}}
+\DoxyCodeLine{00410\ }
+\DoxyCodeLine{00411\ \textcolor{keyword}{class\ }SerWriter}
+\DoxyCodeLine{00412\ \{}
+\DoxyCodeLine{00413\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00414\ }
+\DoxyCodeLine{00415\ \ \ \ \ u8\ *ptr;}
+\DoxyCodeLine{00416\ }
+\DoxyCodeLine{00417\ \ \ \ \ SerWriter(u8\ *p)\ :\ ptr(p)}
+\DoxyCodeLine{00418\ \ \ \ \ \{}
+\DoxyCodeLine{00419\ \ \ \ \ \}}
+\DoxyCodeLine{00420\ }
+\DoxyCodeLine{00421\ \ \ \ \ SERIALIZE8(\textcolor{keyword}{const}\ \textcolor{keywordtype}{bool})}
+\DoxyCodeLine{00422\ \ \ \ \ SERIALIZE8(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char})}
+\DoxyCodeLine{00423\ \ \ \ \ SERIALIZE8(\textcolor{keyword}{const}\ \textcolor{keywordtype}{signed}\ \textcolor{keywordtype}{char})}
+\DoxyCodeLine{00424\ \ \ \ \ SERIALIZE8(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char})}
+\DoxyCodeLine{00425\ \ \ \ \ SERIALIZE16(\textcolor{keyword}{const}\ \textcolor{keywordtype}{short})}
+\DoxyCodeLine{00426\ \ \ \ \ SERIALIZE16(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{short})}
+\DoxyCodeLine{00427\ \ \ \ \ SERIALIZE64(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int})}
+\DoxyCodeLine{00428\ \ \ \ \ SERIALIZE64(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int})}
+\DoxyCodeLine{00429\ \ \ \ \ SERIALIZE64(\textcolor{keyword}{const}\ \textcolor{keywordtype}{long})}
+\DoxyCodeLine{00430\ \ \ \ \ SERIALIZE64(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long})}
+\DoxyCodeLine{00431\ \ \ \ \ SERIALIZE64(\textcolor{keyword}{const}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long})}
+\DoxyCodeLine{00432\ \ \ \ \ SERIALIZE64(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long})}
+\DoxyCodeLine{00433\ \ \ \ \ SERIALIZED(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float})}
+\DoxyCodeLine{00434\ \ \ \ \ SERIALIZED(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double})}
+\DoxyCodeLine{00435\ }
+\DoxyCodeLine{00436\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00437\ \ \ \ \ \textcolor{keyword}{auto}\&\ operator<<(util::Allocator<T>\ \&a)}
+\DoxyCodeLine{00438\ \ \ \ \ \{}
+\DoxyCodeLine{00439\ \ \ \ \ \ \ \ \ *\textcolor{keyword}{this}\ <<\ i64(a.size);}
+\DoxyCodeLine{00440\ \ \ \ \ \ \ \ \ a.copy(ptr);}
+\DoxyCodeLine{00441\ \ \ \ \ \ \ \ \ ptr\ +=\ a.size;}
+\DoxyCodeLine{00442\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00443\ \ \ \ \ \}}
+\DoxyCodeLine{00444\ }
+\DoxyCodeLine{00445\ \ \ \ \ \textcolor{keyword}{auto}\&\ operator<<(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&v)}
+\DoxyCodeLine{00446\ \ \ \ \ \{}
+\DoxyCodeLine{00447\ \ \ \ \ \ \ \ \ writeString(ptr,\ v);}
+\DoxyCodeLine{00448\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00449\ \ \ \ \ \}}
+\DoxyCodeLine{00450\ }
+\DoxyCodeLine{00451\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00452\ \ \ \ \ \textcolor{keyword}{auto}\&\ operator<<(std::vector\ <T>\ \&v)}
+\DoxyCodeLine{00453\ \ \ \ \ \{}
+\DoxyCodeLine{00454\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ len\ =\ v.size();}
+\DoxyCodeLine{00455\ \ \ \ \ \ \ \ \ *\textcolor{keyword}{this}\ <<\ i64(len);}
+\DoxyCodeLine{00456\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (usize\ i\ =\ 0;\ i\ <\ len;\ i++)\ \{}
+\DoxyCodeLine{00457\ \ \ \ \ \ \ \ \ \ \ \ \ *\textcolor{keyword}{this}\ <<\ v[i];}
+\DoxyCodeLine{00458\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00459\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00460\ \ \ \ \ \}}
+\DoxyCodeLine{00461\ }
+\DoxyCodeLine{00462\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ isize\ N>}
+\DoxyCodeLine{00463\ \ \ \ \ SerWriter\&\ operator<<(T\ (\&v)[N])}
+\DoxyCodeLine{00464\ \ \ \ \ \{}
+\DoxyCodeLine{00465\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(isize\ i\ =\ 0;\ i\ <\ N;\ ++i)\ \{}
+\DoxyCodeLine{00466\ \ \ \ \ \ \ \ \ \ \ \ \ *\textcolor{keyword}{this}\ <<\ v[i];}
+\DoxyCodeLine{00467\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00468\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00469\ \ \ \ \ \}}
+\DoxyCodeLine{00470\ }
+\DoxyCodeLine{00471\ \ \ \ \ \textcolor{keyword}{template}\ <std::derived\_from<Serializable>\ T>}
+\DoxyCodeLine{00472\ \ \ \ \ SerWriter\&\ operator<<(T\ \&v)}
+\DoxyCodeLine{00473\ \ \ \ \ \{}
+\DoxyCodeLine{00474\ \ \ \ \ \ \ \ \ v\ <<\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00475\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00476\ \ \ \ \ \}}
+\DoxyCodeLine{00477\ }
+\DoxyCodeLine{00478\ \ \ \ \ \textcolor{keywordtype}{void}\ copy(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *src,\ isize\ n)}
+\DoxyCodeLine{00479\ \ \ \ \ \{}
+\DoxyCodeLine{00480\ \ \ \ \ \ \ \ \ std::memcpy((\textcolor{keywordtype}{void}\ *)ptr,\ src,\ n);}
+\DoxyCodeLine{00481\ \ \ \ \ \ \ \ \ ptr\ +=\ n;}
+\DoxyCodeLine{00482\ \ \ \ \ \}}
+\DoxyCodeLine{00483\ \};}
+\DoxyCodeLine{00484\ }
+\DoxyCodeLine{00485\ }
+\DoxyCodeLine{00486\ \textcolor{comment}{//}}
+\DoxyCodeLine{00487\ \textcolor{comment}{//\ Resetter}}
+\DoxyCodeLine{00488\ \textcolor{comment}{//}}
+\DoxyCodeLine{00489\ }
+\DoxyCodeLine{00490\ \textcolor{preprocessor}{\#define\ RESET(type)\ \(\backslash\)}}
+\DoxyCodeLine{00491\ \textcolor{preprocessor}{SerResetter\ \&\ operator<<(type\&\ v)\ \(\backslash\)}}
+\DoxyCodeLine{00492\ \textcolor{preprocessor}{\{\ \(\backslash\)}}
+\DoxyCodeLine{00493\ \textcolor{preprocessor}{v\ =\ (type)0;\ \(\backslash\)}}
+\DoxyCodeLine{00494\ \textcolor{preprocessor}{return\ *this;\ \(\backslash\)}}
+\DoxyCodeLine{00495\ \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{00496\ }
+\DoxyCodeLine{00497\ \textcolor{keyword}{class\ }SerResetter}
+\DoxyCodeLine{00498\ \{}
+\DoxyCodeLine{00499\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00500\ }
+\DoxyCodeLine{00501\ \ \ \ \ SerResetter()\ \{\ \}}
+\DoxyCodeLine{00502\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~SerResetter()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00503\ \ \ \ \ }
+\DoxyCodeLine{00504\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00505\ }
+\DoxyCodeLine{00506\ \ \ \ \ RESET(\textcolor{keywordtype}{bool})}
+\DoxyCodeLine{00507\ \ \ \ \ RESET(\textcolor{keywordtype}{char})}
+\DoxyCodeLine{00508\ \ \ \ \ RESET(\textcolor{keywordtype}{signed}\ \textcolor{keywordtype}{char})}
+\DoxyCodeLine{00509\ \ \ \ \ RESET(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char})}
+\DoxyCodeLine{00510\ \ \ \ \ RESET(\textcolor{keywordtype}{short})}
+\DoxyCodeLine{00511\ \ \ \ \ RESET(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{short})}
+\DoxyCodeLine{00512\ \ \ \ \ RESET(\textcolor{keywordtype}{int})}
+\DoxyCodeLine{00513\ \ \ \ \ RESET(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int})}
+\DoxyCodeLine{00514\ \ \ \ \ RESET(\textcolor{keywordtype}{long})}
+\DoxyCodeLine{00515\ \ \ \ \ RESET(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long})}
+\DoxyCodeLine{00516\ \ \ \ \ RESET(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long})}
+\DoxyCodeLine{00517\ \ \ \ \ RESET(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long})}
+\DoxyCodeLine{00518\ \ \ \ \ RESET(\textcolor{keywordtype}{float})}
+\DoxyCodeLine{00519\ \ \ \ \ RESET(\textcolor{keywordtype}{double})}
+\DoxyCodeLine{00520\ }
+\DoxyCodeLine{00521\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00522\ \ \ \ \ \textcolor{keyword}{auto}\&\ operator<<(util::Allocator<T>\ \&a)}
+\DoxyCodeLine{00523\ \ \ \ \ \{}
+\DoxyCodeLine{00524\ \ \ \ \ \ \ \ \ a.clear();}
+\DoxyCodeLine{00525\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00526\ \ \ \ \ \}}
+\DoxyCodeLine{00527\ }
+\DoxyCodeLine{00528\ \ \ \ \ \textcolor{keyword}{auto}\&\ operator<<(\textcolor{keywordtype}{string}\ \&v)}
+\DoxyCodeLine{00529\ \ \ \ \ \{}
+\DoxyCodeLine{00530\ \ \ \ \ \ \ \ \ v\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00531\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00532\ \ \ \ \ \}}
+\DoxyCodeLine{00533\ \ \ \ \ }
+\DoxyCodeLine{00534\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00535\ \ \ \ \ \textcolor{keyword}{auto}\&\ operator<<(std::vector\ <T>\ \&v)}
+\DoxyCodeLine{00536\ \ \ \ \ \{}
+\DoxyCodeLine{00537\ \ \ \ \ \ \ \ \ v.clear();}
+\DoxyCodeLine{00538\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00539\ \ \ \ \ \}}
+\DoxyCodeLine{00540\ }
+\DoxyCodeLine{00541\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ isize\ N>}
+\DoxyCodeLine{00542\ \ \ \ \ SerResetter\ \&\ operator<<(T\ (\&v)[N])}
+\DoxyCodeLine{00543\ \ \ \ \ \{}
+\DoxyCodeLine{00544\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(isize\ i\ =\ 0;\ i\ <\ N;\ ++i)\ \{}
+\DoxyCodeLine{00545\ \ \ \ \ \ \ \ \ \ \ \ \ *\textcolor{keyword}{this}\ <<\ v[i];}
+\DoxyCodeLine{00546\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00547\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00548\ \ \ \ \ \}}
+\DoxyCodeLine{00549\ }
+\DoxyCodeLine{00550\ \ \ \ \ \textcolor{keyword}{template}\ <std::derived\_from<Serializable>\ T>}
+\DoxyCodeLine{00551\ \ \ \ \ SerResetter\ \&\ operator<<(T\ \&v)}
+\DoxyCodeLine{00552\ \ \ \ \ \{}
+\DoxyCodeLine{00553\ \ \ \ \ \ \ \ \ v\ <<\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00554\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00555\ \ \ \ \ \}}
+\DoxyCodeLine{00556\ \};}
+\DoxyCodeLine{00557\ }
+\DoxyCodeLine{00558\ \textcolor{keyword}{class\ }SerSoftResetter\ :\ \textcolor{keyword}{public}\ SerResetter}
+\DoxyCodeLine{00559\ \{}
+\DoxyCodeLine{00560\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00561\ \ \ \ \ SerSoftResetter()\ \{\ \}}
+\DoxyCodeLine{00562\ \};}
+\DoxyCodeLine{00563\ }
+\DoxyCodeLine{00564\ \textcolor{keyword}{class\ }SerHardResetter\ :\ \textcolor{keyword}{public}\ SerResetter}
+\DoxyCodeLine{00565\ \{}
+\DoxyCodeLine{00566\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00567\ \ \ \ \ SerHardResetter()\ \{\ \}}
+\DoxyCodeLine{00568\ \};}
+\DoxyCodeLine{00569\ }
+\DoxyCodeLine{00570\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00571\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ isSoftResetter(T\ \&worker)\ \{}
+\DoxyCodeLine{00572\ }
+\DoxyCodeLine{00573\ \ \ \ \ \textcolor{keyword}{auto}\ \&\textcolor{keywordtype}{id}\ =\ \textcolor{keyword}{typeid}(worker);}
+\DoxyCodeLine{00574\ }
+\DoxyCodeLine{00575\ \ \ \ \ assert(\textcolor{keywordtype}{id}\ ==\ \textcolor{keyword}{typeid}(SerCounter)\ ||}
+\DoxyCodeLine{00576\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}\ ==\ \textcolor{keyword}{typeid}(SerChecker)\ ||}
+\DoxyCodeLine{00577\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}\ ==\ \textcolor{keyword}{typeid}(SerSoftResetter)\ ||}
+\DoxyCodeLine{00578\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}\ ==\ \textcolor{keyword}{typeid}(SerHardResetter)\ ||}
+\DoxyCodeLine{00579\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}\ ==\ \textcolor{keyword}{typeid}(SerReader)\ ||}
+\DoxyCodeLine{00580\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}\ ==\ \textcolor{keyword}{typeid}(SerWriter));}
+\DoxyCodeLine{00581\ }
+\DoxyCodeLine{00582\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{id}\ ==\ \textcolor{keyword}{typeid}(SerSoftResetter);}
+\DoxyCodeLine{00583\ \}}
+\DoxyCodeLine{00584\ }
+\DoxyCodeLine{00585\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00586\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ isHardResetter(T\ \&worker)\ \{}
+\DoxyCodeLine{00587\ }
+\DoxyCodeLine{00588\ \ \ \ \ \textcolor{keyword}{auto}\ \&\textcolor{keywordtype}{id}\ =\ \textcolor{keyword}{typeid}(worker);}
+\DoxyCodeLine{00589\ }
+\DoxyCodeLine{00590\ \ \ \ \ assert(\textcolor{keywordtype}{id}\ ==\ \textcolor{keyword}{typeid}(SerCounter)\ ||}
+\DoxyCodeLine{00591\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}\ ==\ \textcolor{keyword}{typeid}(SerChecker)\ ||}
+\DoxyCodeLine{00592\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}\ ==\ \textcolor{keyword}{typeid}(SerSoftResetter)\ ||}
+\DoxyCodeLine{00593\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}\ ==\ \textcolor{keyword}{typeid}(SerHardResetter)\ ||}
+\DoxyCodeLine{00594\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}\ ==\ \textcolor{keyword}{typeid}(SerReader)\ ||}
+\DoxyCodeLine{00595\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}\ ==\ \textcolor{keyword}{typeid}(SerWriter));}
+\DoxyCodeLine{00596\ }
+\DoxyCodeLine{00597\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{id}\ ==\ \textcolor{keyword}{typeid}(SerHardResetter);}
+\DoxyCodeLine{00598\ \}}
+\DoxyCodeLine{00599\ }
+\DoxyCodeLine{00600\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00601\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ isResetter(T\ \&worker)\ \{}
+\DoxyCodeLine{00602\ \ \ \ \ \textcolor{keywordflow}{return}\ isSoftResetter(worker)\ ||\ isHardResetter(worker);}
+\DoxyCodeLine{00603\ \}}
+\DoxyCodeLine{00604\ }
+\DoxyCodeLine{00605\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00606\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ isChecker(T\ \&worker)\ \{}
+\DoxyCodeLine{00607\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{typeid}(worker)\ ==\ \textcolor{keyword}{typeid}(SerChecker);}
+\DoxyCodeLine{00608\ \}}
+\DoxyCodeLine{00609\ }
+\DoxyCodeLine{00610\ \}}
+\DoxyCodeLine{00611\ }
+\DoxyCodeLine{00612\ \textcolor{preprocessor}{\#define\ SERIALIZERS(fn)\ \(\backslash\)}}
+\DoxyCodeLine{00613\ \textcolor{preprocessor}{void\ operator\ <<\ (SerChecker\ \&worker)\ override\ \{\ fn(worker);\ \}\ \(\backslash\)}}
+\DoxyCodeLine{00614\ \textcolor{preprocessor}{void\ operator\ <<\ (SerCounter\ \&worker)\ override\ \{\ fn(worker);\ \}\ \(\backslash\)}}
+\DoxyCodeLine{00615\ \textcolor{preprocessor}{void\ operator\ <<\ (SerResetter\ \&worker)\ override\ \{\ fn(worker);\ \}\ \(\backslash\)}}
+\DoxyCodeLine{00616\ \textcolor{preprocessor}{void\ operator\ <<\ (SerReader\ \&worker)\ override\ \{\ fn(worker);\ \}\ \(\backslash\)}}
+\DoxyCodeLine{00617\ \textcolor{preprocessor}{void\ operator\ <<\ (SerWriter\ \&worker)\ override\ \{\ fn(worker);\ \}}}
+\DoxyCodeLine{00618\ }
+\DoxyCodeLine{00619\ \textcolor{preprocessor}{\#define\ CARTRIDGE\_SERIALIZERS(fn)\ \(\backslash\)}}
+\DoxyCodeLine{00620\ \textcolor{preprocessor}{void\ operator\ <<\ (SerChecker\ \&worker)\ override\ \{\ Cartridge::operator<<(worker);\ fn(worker);\ \}\ \(\backslash\)}}
+\DoxyCodeLine{00621\ \textcolor{preprocessor}{void\ operator\ <<\ (SerCounter\ \&worker)\ override\ \{\ Cartridge::operator<<(worker);\ fn(worker);\ \}\ \(\backslash\)}}
+\DoxyCodeLine{00622\ \textcolor{preprocessor}{void\ operator\ <<\ (SerResetter\ \&worker)\ override\ \{\ Cartridge::operator<<(worker);\ fn(worker);\ \}\ \(\backslash\)}}
+\DoxyCodeLine{00623\ \textcolor{preprocessor}{void\ operator\ <<\ (SerReader\ \&worker)\ override\ \{\ Cartridge::operator<<(worker);\ fn(worker);\ \}\ \(\backslash\)}}
+\DoxyCodeLine{00624\ \textcolor{preprocessor}{void\ operator\ <<\ (SerWriter\ \&worker)\ override\ \{\ Cartridge::operator<<(worker);\ fn(worker);\ \}}}
+\DoxyCodeLine{00625\ }
+\DoxyCodeLine{00626\ \textcolor{preprocessor}{\#define\ CLONE(x)\ x\ =\ other.x;}}
+\DoxyCodeLine{00627\ \textcolor{preprocessor}{\#define\ CLONE\_ARRAY(x)\ std::copy(std::begin(other.x),\ std::end(other.x),\ std::begin(x));}}
+\DoxyCodeLine{00628\ }
+\DoxyCodeLine{00629\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

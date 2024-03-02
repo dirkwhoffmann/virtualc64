@@ -1,0 +1,55 @@
+\doxysection{Aliases.\+h}
+\hypertarget{_aliases_8h_source}{}\label{_aliases_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h@{/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Macros.h"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{comment}{//}}
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ Type\ aliases}}
+\DoxyCodeLine{00019\ \textcolor{comment}{//}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{typedef}\ i64\ Cycle;}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{typedef}\ isize\ Cylinder;}
+\DoxyCodeLine{00024\ \textcolor{keyword}{typedef}\ isize\ Head;}
+\DoxyCodeLine{00025\ \textcolor{keyword}{typedef}\ isize\ Track;}
+\DoxyCodeLine{00026\ \textcolor{keyword}{typedef}\ isize\ Halftrack;}
+\DoxyCodeLine{00027\ \textcolor{keyword}{typedef}\ isize\ Sector;}
+\DoxyCodeLine{00028\ \textcolor{keyword}{typedef}\ isize\ Block;}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{typedef}\ isize\ HeadPos;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{comment}{//}}
+\DoxyCodeLine{00034\ \textcolor{comment}{//\ Conversion\ macros}}
+\DoxyCodeLine{00035\ \textcolor{comment}{//}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{comment}{//\ Converts\ a\ time\ span\ to\ an\ (approximate)\ cycle\ count}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ USEC(delay)\ \ \ \ \ \ \ \ \ \ \ (Cycle)((delay)\ *\ 1)}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#define\ MSEC(delay)\ \ \ \ \ \ \ \ \ \ \ (Cycle)((delay)\ *\ 1000)}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#define\ SEC(delay)\ \ \ \ \ \ \ \ \ \ \ \ (Cycle)((delay)\ *\ 1000000)}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{comment}{//\ Converts\ kilo\ and\ mega\ bytes\ to\ bytes}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#define\ KB(x)\ ((x)\ <<\ 10)}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#define\ MB(x)\ ((x)\ <<\ 20)}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#define\ GB(x)\ ((x)\ <<\ 30)}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{comment}{//\ Converts\ kilo\ and\ mega\ Hertz\ to\ Hertz}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#define\ KHz(x)\ ((x)\ *\ 1000)}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#define\ MHz(x)\ ((x)\ *\ 1000000)}}
+
+\end{DoxyCode}

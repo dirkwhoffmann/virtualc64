@@ -1,0 +1,179 @@
+\doxysection{FSTypes.\+h}
+\hypertarget{_f_s_types_8h_source}{}\label{_f_s_types_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSTypes.h@{/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSTypes.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Aliases.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Reflection.h"{}}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{comment}{//}}
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ Enumerations}}
+\DoxyCodeLine{00020\ \textcolor{comment}{//}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ enum\_long(DOS\_TYPE)}
+\DoxyCodeLine{00023\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ DOS\_TYPE\_NODOS,}
+\DoxyCodeLine{00025\ \ \ \ \ DOS\_TYPE\_CBM}
+\DoxyCodeLine{00026\ \};}
+\DoxyCodeLine{00027\ \textcolor{keyword}{typedef}\ DOS\_TYPE\ DOSType;}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00030\ \textcolor{keyword}{struct\ }DOSTypeEnum\ :\ util::Reflection<DOSTypeEnum,\ DOSType>\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ DOS\_TYPE\_CBM;}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00035\ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DOS\_TYPE"{}};\ \}}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(DOSType\ value)}
+\DoxyCodeLine{00038\ \ \ \ \ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ DOS\_TYPE\_NODOS:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}NODOS"{}};}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ DOS\_TYPE\_CBM:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CBM"{}};}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00045\ \ \ \ \ \}}
+\DoxyCodeLine{00046\ \};}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ enum\_long(FS\_FILETYPE)}
+\DoxyCodeLine{00050\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ FS\_FILETYPE\_DEL,}
+\DoxyCodeLine{00052\ \ \ \ \ FS\_FILETYPE\_SEQ,}
+\DoxyCodeLine{00053\ \ \ \ \ FS\_FILETYPE\_PRG,}
+\DoxyCodeLine{00054\ \ \ \ \ FS\_FILETYPE\_USR,}
+\DoxyCodeLine{00055\ \ \ \ \ FS\_FILETYPE\_REL}
+\DoxyCodeLine{00056\ \};}
+\DoxyCodeLine{00057\ \textcolor{keyword}{typedef}\ FS\_FILETYPE\ FSFileType;}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00060\ \textcolor{keyword}{struct\ }FSFileTypeEnum\ :\ util::Reflection<FSFileTypeEnum,\ FSFileType>\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ FS\_FILETYPE\_REL;}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00065\ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}FS\_FILETYPE"{}};\ \}}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(FSFileType\ value)}
+\DoxyCodeLine{00068\ \ \ \ \ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FS\_FILETYPE\_DEL:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DEL"{}};}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FS\_FILETYPE\_SEQ:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SEQ"{}};}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FS\_FILETYPE\_PRG:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PRG"{}};}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FS\_FILETYPE\_USR:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}USR"{}};}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FS\_FILETYPE\_REL:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}REL"{}};}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00078\ \ \ \ \ \}}
+\DoxyCodeLine{00079\ \};}
+\DoxyCodeLine{00080\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ enum\_long(FS\_BLOCKTYPE)}
+\DoxyCodeLine{00083\ \{}
+\DoxyCodeLine{00084\ \ \ \ \ FS\_BLOCKTYPE\_UNKNOWN,}
+\DoxyCodeLine{00085\ \ \ \ \ FS\_BLOCKTYPE\_EMPTY,}
+\DoxyCodeLine{00086\ \ \ \ \ FS\_BLOCKTYPE\_BAM,}
+\DoxyCodeLine{00087\ \ \ \ \ FS\_BLOCKTYPE\_DIR,}
+\DoxyCodeLine{00088\ \ \ \ \ FS\_BLOCKTYPE\_DATA}
+\DoxyCodeLine{00089\ \};}
+\DoxyCodeLine{00090\ \textcolor{keyword}{typedef}\ FS\_BLOCKTYPE\ FSBlockType;}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00093\ \textcolor{keyword}{struct\ }FSBlockTypeEnum\ :\ util::Reflection<FSBlockTypeEnum,\ FSBlockType>\ \{}
+\DoxyCodeLine{00094\ \ \ \ \ }
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ FS\_BLOCKTYPE\_DATA;}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00098\ \ \ \ \ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}FS\_BLOCKTYPE"{}};\ \}}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(FSBlockType\ value)}
+\DoxyCodeLine{00101\ \ \ \ \ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FS\_BLOCKTYPE\_UNKNOWN:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}UNKNOWN"{}};}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FS\_BLOCKTYPE\_EMPTY:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}EMPTY"{}};}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FS\_BLOCKTYPE\_BAM:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}BAM"{}};}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FS\_BLOCKTYPE\_DIR:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DIR"{}};}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FS\_BLOCKTYPE\_DATA:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DATA"{}};}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00111\ \ \ \ \ \}}
+\DoxyCodeLine{00112\ \};}
+\DoxyCodeLine{00113\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ enum\_long(FS\_USAGE)}
+\DoxyCodeLine{00116\ \{}
+\DoxyCodeLine{00117\ \ \ \ \ FS\_USAGE\_UNKNOWN,}
+\DoxyCodeLine{00118\ \ \ \ \ FS\_USAGE\_UNUSED,}
+\DoxyCodeLine{00119\ \ \ \ \ FS\_USAGE\_DOS\_VERSION,}
+\DoxyCodeLine{00120\ \ \ \ \ FS\_USAGE\_DOS\_TYPE,}
+\DoxyCodeLine{00121\ \ \ \ \ FS\_USAGE\_ALLOCATION\_BITS,}
+\DoxyCodeLine{00122\ \ \ \ \ FS\_USAGE\_DISK\_ID,}
+\DoxyCodeLine{00123\ \ \ \ \ FS\_USAGE\_DISK\_NAME,}
+\DoxyCodeLine{00124\ \ \ \ \ FS\_USAGE\_TRACK\_LINK,}
+\DoxyCodeLine{00125\ \ \ \ \ FS\_USAGE\_SECTOR\_LINK,}
+\DoxyCodeLine{00126\ \ \ \ \ FS\_USAGE\_FIRST\_FILE\_TRACK,}
+\DoxyCodeLine{00127\ \ \ \ \ FS\_USAGE\_FIRST\_FILE\_SECTOR,}
+\DoxyCodeLine{00128\ \ \ \ \ FS\_USAGE\_FIRST\_REL\_TRACK,}
+\DoxyCodeLine{00129\ \ \ \ \ FS\_USAGE\_FIRST\_REL\_SECTOR,}
+\DoxyCodeLine{00130\ \ \ \ \ FS\_USAGE\_FIRST\_DIR\_TRACK,}
+\DoxyCodeLine{00131\ \ \ \ \ FS\_USAGE\_FIRST\_DIR\_SECTOR,}
+\DoxyCodeLine{00132\ \ \ \ \ FS\_USAGE\_FILE\_TYPE,}
+\DoxyCodeLine{00133\ \ \ \ \ FS\_USAGE\_FILE\_NAME,}
+\DoxyCodeLine{00134\ \ \ \ \ FS\_USAGE\_FILE\_LENGTH\_LO,}
+\DoxyCodeLine{00135\ \ \ \ \ FS\_USAGE\_FILE\_LENGTH\_HI,}
+\DoxyCodeLine{00136\ \ \ \ \ FS\_USAGE\_REL\_RECORD\_LENGTH,}
+\DoxyCodeLine{00137\ \ \ \ \ FS\_USAGE\_GEOS,}
+\DoxyCodeLine{00138\ \ \ \ \ FS\_USAGE\_DATA}
+\DoxyCodeLine{00139\ \};}
+\DoxyCodeLine{00140\ \textcolor{keyword}{typedef}\ FS\_USAGE\ FSUsage;}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00143\ \textcolor{keyword}{struct\ }FSUsageEnum\ :\ util::Reflection<FSUsageEnum,\ FSUsage>\ \{}
+\DoxyCodeLine{00144\ \ \ \ \ }
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ FS\_USAGE\_DATA;}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00148\ \ \ \ \ }
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}FS\_USAGE"{}};\ \}}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(FSUsage\ value)\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};\ \}}
+\DoxyCodeLine{00151\ \};}
+\DoxyCodeLine{00152\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ \textcolor{comment}{//}}
+\DoxyCodeLine{00156\ \textcolor{comment}{//\ Structures}}
+\DoxyCodeLine{00157\ \textcolor{comment}{//}}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00160\ \{}
+\DoxyCodeLine{00161\ \ \ \ \ Track\ t;}
+\DoxyCodeLine{00162\ \ \ \ \ Sector\ s;}
+\DoxyCodeLine{00163\ \}}
+\DoxyCodeLine{00164\ TSLink;}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00167\ \{}
+\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordtype}{long}\ bitmapErrors;}
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keywordtype}{long}\ corruptedBlocks;}
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keywordtype}{long}\ firstErrorBlock;}
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordtype}{long}\ lastErrorBlock;}
+\DoxyCodeLine{00172\ \}}
+\DoxyCodeLine{00173\ FSErrorReport;}
+
+\end{DoxyCode}

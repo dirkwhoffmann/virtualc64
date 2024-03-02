@@ -9,14 +9,12 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
 #include "Aliases.h"
 #include "Reflection.h"
-
-/// @addtogroup doxy_types Types
-/// @{
 
 //
 // Enumerations
@@ -343,5 +341,3 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
     }
 };
 #endif
-
-/// @}

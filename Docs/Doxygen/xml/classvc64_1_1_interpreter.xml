@@ -1,0 +1,884 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_interpreter" kind="class" language="C++" prot="public">
+    <compoundname>vc64::Interpreter</compoundname>
+    <basecompoundref prot="private" virt="non-virtual">vc64::SubComponent</basecompoundref>
+    <basecompoundref prot="public" virt="non-virtual">vc64::Dumpable</basecompoundref>
+    <sectiondef kind="private-type">
+      <memberdef kind="enum" id="classvc64_1_1_interpreter_1aa2381badf1ffafa5f3ba7bb40f986fa5" prot="private" static="no" strong="yes">
+        <type></type>
+        <name>Shell</name>
+        <qualifiedname>vc64::Interpreter::Shell</qualifiedname>
+        <enumvalue id="classvc64_1_1_interpreter_1aa2381badf1ffafa5f3ba7bb40f986fa5aee97be03cb04119af45014d815621ce1" prot="private">
+          <name>Command</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="classvc64_1_1_interpreter_1aa2381badf1ffafa5f3ba7bb40f986fa5aa603905470e2a5b8c13e96b579ef0dba" prot="private">
+          <name>Debug</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="37" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" bodystart="37" bodyend="37"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_interpreter_1a606b791840b569e9b73cb5a6bcff31a9" prot="private" static="no" mutable="no">
+        <type>Shell</type>
+        <definition>Shell vc64::Interpreter::shell</definition>
+        <argsstring></argsstring>
+        <name>shell</name>
+        <qualifiedname>vc64::Interpreter::shell</qualifiedname>
+        <initializer>= Shell::Command</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="40" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_interpreter_1aaf742a612142aa52c8052cff628f288f" prot="private" static="no" mutable="no">
+        <type>Command</type>
+        <definition>Command vc64::Interpreter::commandShellRoot</definition>
+        <argsstring></argsstring>
+        <name>commandShellRoot</name>
+        <qualifiedname>vc64::Interpreter::commandShellRoot</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="43" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_interpreter_1a172733f8a0cd801bdf578373a52d1817" prot="private" static="no" mutable="no">
+        <type>Command</type>
+        <definition>Command vc64::Interpreter::debugShellRoot</definition>
+        <argsstring></argsstring>
+        <name>debugShellRoot</name>
+        <qualifiedname>vc64::Interpreter::debugShellRoot</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="46" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a5fd8992d6867a5124aa10ad1fa4d7697" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::Interpreter::Interpreter</definition>
+        <argsstring>(C64 &amp;ref)</argsstring>
+        <name>Interpreter</name>
+        <qualifiedname>vc64::Interpreter::Interpreter</qualifiedname>
+        <param>
+          <type>C64 &amp;</type>
+          <declname>ref</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="55" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="19" bodyend="23"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a22aa0d9fa6e6a1027d85a11a604e53af" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Interpreter &amp;</type>
+        <definition>Interpreter &amp; vc64::Interpreter::operator=</definition>
+        <argsstring>(const Interpreter &amp;other)</argsstring>
+        <name>operator=</name>
+        <qualifiedname>vc64::Interpreter::operator=</qualifiedname>
+        <param>
+          <type>const Interpreter &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="80" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" bodystart="80" bodyend="80"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a960ef3ce3a9d8b091fefd88a2a723635" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>class T</type>
+          </param>
+        </templateparamlist>
+        <type>void</type>
+        <definition>void vc64::Interpreter::serialize</definition>
+        <argsstring>(T &amp;worker)</argsstring>
+        <name>serialize</name>
+        <qualifiedname>vc64::Interpreter::serialize</qualifiedname>
+        <param>
+          <type>T &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="81" column="22" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" bodystart="81" bodyend="81"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a5a3f0f0576ee54eb5e600fb146569a02" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::Interpreter::SERIALIZERS</definition>
+        <argsstring>(serialize)</argsstring>
+        <name>SERIALIZERS</name>
+        <qualifiedname>vc64::Interpreter::SERIALIZERS</qualifiedname>
+        <param>
+          <type>serialize</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="81" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a711c33fcdff091d69ce7ab32d59e757c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string vc64::Interpreter::autoComplete</definition>
+        <argsstring>(const string &amp;userInput)</argsstring>
+        <name>autoComplete</name>
+        <qualifiedname>vc64::Interpreter::autoComplete</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>userInput</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="91" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="63" bodyend="80"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1aa199f66088afdb4217fb6690e2cd54ba" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>Command &amp;</type>
+        <definition>Command &amp; vc64::Interpreter::getRoot</definition>
+        <argsstring>()</argsstring>
+        <name>getRoot</name>
+        <qualifiedname>vc64::Interpreter::getRoot</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="132" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="176" bodyend="186"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a07329e4a15f08832717eeb60521f70cb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Interpreter::switchInterpreter</definition>
+        <argsstring>()</argsstring>
+        <name>switchInterpreter</name>
+        <qualifiedname>vc64::Interpreter::switchInterpreter</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="135" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="189" bodyend="205"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a8596bd5c29a2cc8053f8b1ad26cb63ed" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Interpreter::inCommandShell</definition>
+        <argsstring>()</argsstring>
+        <name>inCommandShell</name>
+        <qualifiedname>vc64::Interpreter::inCommandShell</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="137" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" bodystart="137" bodyend="137"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a1c43ab4d248ad42f8f959e6acdab409f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Interpreter::inDebugShell</definition>
+        <argsstring>()</argsstring>
+        <name>inDebugShell</name>
+        <qualifiedname>vc64::Interpreter::inDebugShell</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="138" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" bodystart="138" bodyend="138"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a0a59f33cfd472f1a7ede2fa2f9af960b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Interpreter::exec</definition>
+        <argsstring>(const string &amp;userInput, bool verbose=false) throws</argsstring>
+        <name>exec</name>
+        <qualifiedname>vc64::Interpreter::exec</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>userInput</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>verbose</declname>
+          <defval>false</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="149" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="208" bodyend="224"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a437fd698db7bef3c3a7dafb099a51999" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Interpreter::exec</definition>
+        <argsstring>(const Arguments &amp;argv, bool verbose=false) throws</argsstring>
+        <name>exec</name>
+        <qualifiedname>vc64::Interpreter::exec</qualifiedname>
+        <param>
+          <type>const Arguments &amp;</type>
+          <declname>argv</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>verbose</declname>
+          <defval>false</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="150" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="227" bodyend="263"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1ae6c0fddc4de06a083dcbece67c3cf790" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Interpreter::usage</definition>
+        <argsstring>(const Command &amp;command)</argsstring>
+        <name>usage</name>
+        <qualifiedname>vc64::Interpreter::usage</qualifiedname>
+        <param>
+          <type>const Command &amp;</type>
+          <declname>command</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="153" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="266" bodyend="269"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a9b3ff37e8404fe0f8a9eef996c263802" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Interpreter::help</definition>
+        <argsstring>(const string &amp;userInput)</argsstring>
+        <name>help</name>
+        <qualifiedname>vc64::Interpreter::help</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>userInput</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="156" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="272" bodyend="282"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a0a8397a5b55f17178c92f8f9e5290dcd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Interpreter::help</definition>
+        <argsstring>(const Arguments &amp;argv)</argsstring>
+        <name>help</name>
+        <qualifiedname>vc64::Interpreter::help</qualifiedname>
+        <param>
+          <type>const Arguments &amp;</type>
+          <declname>argv</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="157" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="285" bodyend="295"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a82746bf5b7861f60db16e58d41d19743" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Interpreter::help</definition>
+        <argsstring>(const Command &amp;command)</argsstring>
+        <name>help</name>
+        <qualifiedname>vc64::Interpreter::help</qualifiedname>
+        <param>
+          <type>const Command &amp;</type>
+          <declname>command</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="158" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="298" bodyend="340"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a8b408bbaca266c5ba4bc661511adbb61" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Interpreter::configure</definition>
+        <argsstring>(Option option, i64 value) throws</argsstring>
+        <name>configure</name>
+        <qualifiedname>vc64::Interpreter::configure</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="165" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="343" bodyend="346"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a2d20687dcf1d95fc71c1a2987cfe770d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Interpreter::configure</definition>
+        <argsstring>(Option option, long id, i64 value) throws</argsstring>
+        <name>configure</name>
+        <qualifiedname>vc64::Interpreter::configure</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>id</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="166" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="349" bodyend="352"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1aeae10c4f5772937efe2cc8ce68f40c0d" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Interpreter::initCommons</definition>
+        <argsstring>(Command &amp;root)</argsstring>
+        <name>initCommons</name>
+        <qualifiedname>vc64::Interpreter::initCommons</qualifiedname>
+        <param>
+          <type>Command &amp;</type>
+          <declname>root</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="59" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/InterpreterCmds.cpp" bodystart="21" bodyend="83"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1aea8cad0db513db21415443b101c390e8" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Interpreter::initCommandShell</definition>
+        <argsstring>(Command &amp;root)</argsstring>
+        <name>initCommandShell</name>
+        <qualifiedname>vc64::Interpreter::initCommandShell</qualifiedname>
+        <param>
+          <type>Command &amp;</type>
+          <declname>root</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="60" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/InterpreterCmds.cpp" bodystart="86" bodyend="911"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1adc682eda20e6d5fff000f23f6a0456e9" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Interpreter::initDebugShell</definition>
+        <argsstring>(Command &amp;root)</argsstring>
+        <name>initDebugShell</name>
+        <qualifiedname>vc64::Interpreter::initDebugShell</qualifiedname>
+        <param>
+          <type>Command &amp;</type>
+          <declname>root</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="61" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/InterpreterDebugCmds.cpp" bodystart="25" bodyend="502"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a58ffd690f0c2c652a9c183f610b76c35" prot="private" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::Interpreter::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::Interpreter::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="70" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" bodystart="70" bodyend="70"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a22ef3a4ca026ca7283e418db4d376314" prot="private" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Interpreter::_dump</definition>
+        <argsstring>(Category category, std::ostream &amp;os) const override</argsstring>
+        <name>_dump</name>
+        <qualifiedname>vc64::Interpreter::_dump</qualifiedname>
+        <param>
+          <type>Category</type>
+          <declname>category</declname>
+        </param>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="71" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" bodystart="71" bodyend="71"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1abd237028ddbb34063b883fa500412bec" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>Arguments</type>
+        <definition>Arguments vc64::Interpreter::split</definition>
+        <argsstring>(const string &amp;userInput)</argsstring>
+        <name>split</name>
+        <qualifiedname>vc64::Interpreter::split</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>userInput</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="96" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="26" bodyend="60"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1aec66657b73c65e3b14fc4fb48be6c921" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Interpreter::autoComplete</definition>
+        <argsstring>(Arguments &amp;argv)</argsstring>
+        <name>autoComplete</name>
+        <qualifiedname>vc64::Interpreter::autoComplete</qualifiedname>
+        <param>
+          <type>Arguments &amp;</type>
+          <declname>argv</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="99" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="83" bodyend="93"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a106e46d0531c2f11af45890afa62359e" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Interpreter::isBool</definition>
+        <argsstring>(const string &amp;argv)</argsstring>
+        <name>isBool</name>
+        <qualifiedname>vc64::Interpreter::isBool</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>argv</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="102" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="96" bodyend="99"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1aa9e65df89af0b13565cdd07af2cee3e5" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Interpreter::isOnOff</definition>
+        <argsstring>(const string &amp;argv)</argsstring>
+        <name>isOnOff</name>
+        <qualifiedname>vc64::Interpreter::isOnOff</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>argv</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="103" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="102" bodyend="105"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1ac0f02322ec1a9dca19fe90d50c5ffd79" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long</type>
+        <definition>long vc64::Interpreter::isNum</definition>
+        <argsstring>(const string &amp;argv)</argsstring>
+        <name>isNum</name>
+        <qualifiedname>vc64::Interpreter::isNum</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>argv</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="104" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="108" bodyend="111"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1aae6c9e34c571376f60d80494c37b448b" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Interpreter::parseBool</definition>
+        <argsstring>(const string &amp;argv)</argsstring>
+        <name>parseBool</name>
+        <qualifiedname>vc64::Interpreter::parseBool</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>argv</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="105" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="114" bodyend="117"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a08964f95b904d63051e6c33edbfcdfda" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Interpreter::parseBool</definition>
+        <argsstring>(const string &amp;argv, bool fallback)</argsstring>
+        <name>parseBool</name>
+        <qualifiedname>vc64::Interpreter::parseBool</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>argv</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>fallback</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="106" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="120" bodyend="123"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a2a52adee793f3afdedb10a28c0b9fd5d" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Interpreter::parseOnOff</definition>
+        <argsstring>(const string &amp;argv)</argsstring>
+        <name>parseOnOff</name>
+        <qualifiedname>vc64::Interpreter::parseOnOff</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>argv</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="107" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="126" bodyend="129"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a2616e4f474d62456bb642e6c06b6b3cc" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Interpreter::parseOnOff</definition>
+        <argsstring>(const string &amp;argv, bool fallback)</argsstring>
+        <name>parseOnOff</name>
+        <qualifiedname>vc64::Interpreter::parseOnOff</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>argv</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>fallback</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="108" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="132" bodyend="135"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1ab670ab4a0319109bc0c2685e2552ac71" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long</type>
+        <definition>long vc64::Interpreter::parseNum</definition>
+        <argsstring>(const string &amp;argv)</argsstring>
+        <name>parseNum</name>
+        <qualifiedname>vc64::Interpreter::parseNum</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>argv</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="109" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="138" bodyend="141"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1aa5e8adf738cf5912ccca52b79f0b870e" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long</type>
+        <definition>long vc64::Interpreter::parseNum</definition>
+        <argsstring>(const string &amp;argv, long fallback)</argsstring>
+        <name>parseNum</name>
+        <qualifiedname>vc64::Interpreter::parseNum</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>argv</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>fallback</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="110" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="144" bodyend="147"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a915cf6b75c32429a8758fb06254bb45b" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>u16</type>
+        <definition>u16 vc64::Interpreter::parseAddr</definition>
+        <argsstring>(const string &amp;argv)</argsstring>
+        <name>parseAddr</name>
+        <qualifiedname>vc64::Interpreter::parseAddr</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>argv</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="111" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" bodystart="111" bodyend="111"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a081c427a5ea83e17d84e0a1019900766" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>u16</type>
+        <definition>u16 vc64::Interpreter::parseAddr</definition>
+        <argsstring>(const string &amp;argv, long fallback)</argsstring>
+        <name>parseAddr</name>
+        <qualifiedname>vc64::Interpreter::parseAddr</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>argv</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>fallback</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="112" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" bodystart="112" bodyend="112"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a02f698d4eefed1e35b11a52cc33016dd" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string vc64::Interpreter::parseSeq</definition>
+        <argsstring>(const string &amp;argv)</argsstring>
+        <name>parseSeq</name>
+        <qualifiedname>vc64::Interpreter::parseSeq</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>argv</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="115" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="150" bodyend="153"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a42e9a7afe1ca351da9c0a4bea5814a5a" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string vc64::Interpreter::parseSeq</definition>
+        <argsstring>(const string &amp;argv, const string &amp;fallback)</argsstring>
+        <name>parseSeq</name>
+        <qualifiedname>vc64::Interpreter::parseSeq</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>argv</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>fallback</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="116" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.cpp" bodystart="156" bodyend="159"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a46fe1521be39b1a9508864a49131af59" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>long</type>
+        <definition>long vc64::Interpreter::parseEnum</definition>
+        <argsstring>(const string &amp;argv)</argsstring>
+        <name>parseEnum</name>
+        <qualifiedname>vc64::Interpreter::parseEnum</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>argv</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="117" column="22" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" bodystart="117" bodyend="119"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_interpreter_1a7002de3f0a73cff62bbc16dea222c551" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>long</type>
+        <definition>long vc64::Interpreter::parseEnum</definition>
+        <argsstring>(const string &amp;argv, long fallback)</argsstring>
+        <name>parseEnum</name>
+        <qualifiedname>vc64::Interpreter::parseEnum</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>argv</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>fallback</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="120" column="22" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" bodystart="120" bodyend="122"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" line="35" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h" bodystart="36" bodyend="167"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_interpreter_1a22ef3a4ca026ca7283e418db4d376314" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>_dump</name></member>
+      <member refid="classvc64_1_1_interpreter_1a711c33fcdff091d69ce7ab32d59e757c" prot="public" virt="non-virtual"><scope>vc64::Interpreter</scope><name>autoComplete</name></member>
+      <member refid="classvc64_1_1_interpreter_1aec66657b73c65e3b14fc4fb48be6c921" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>autoComplete</name></member>
+      <member refid="classvc64_1_1_interpreter_1aaf742a612142aa52c8052cff628f288f" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>commandShellRoot</name></member>
+      <member refid="classvc64_1_1_interpreter_1a8b408bbaca266c5ba4bc661511adbb61" prot="public" virt="non-virtual"><scope>vc64::Interpreter</scope><name>configure</name></member>
+      <member refid="classvc64_1_1_interpreter_1a2d20687dcf1d95fc71c1a2987cfe770d" prot="public" virt="non-virtual"><scope>vc64::Interpreter</scope><name>configure</name></member>
+      <member refid="classvc64_1_1_interpreter_1a172733f8a0cd801bdf578373a52d1817" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>debugShellRoot</name></member>
+      <member refid="classvc64_1_1_dumpable_1a28d8b76288598fc0309bd6247e5479db" prot="public" virt="non-virtual"><scope>vc64::Interpreter</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_dumpable_1afc31b73f9b651bba5cf37dc88158755a" prot="public" virt="non-virtual"><scope>vc64::Interpreter</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_interpreter_1a0a59f33cfd472f1a7ede2fa2f9af960b" prot="public" virt="non-virtual"><scope>vc64::Interpreter</scope><name>exec</name></member>
+      <member refid="classvc64_1_1_interpreter_1a437fd698db7bef3c3a7dafb099a51999" prot="public" virt="non-virtual"><scope>vc64::Interpreter</scope><name>exec</name></member>
+      <member refid="classvc64_1_1_interpreter_1a58ffd690f0c2c652a9c183f610b76c35" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_interpreter_1aa199f66088afdb4217fb6690e2cd54ba" prot="public" virt="non-virtual"><scope>vc64::Interpreter</scope><name>getRoot</name></member>
+      <member refid="classvc64_1_1_interpreter_1a9b3ff37e8404fe0f8a9eef996c263802" prot="public" virt="non-virtual"><scope>vc64::Interpreter</scope><name>help</name></member>
+      <member refid="classvc64_1_1_interpreter_1a0a8397a5b55f17178c92f8f9e5290dcd" prot="public" virt="non-virtual"><scope>vc64::Interpreter</scope><name>help</name></member>
+      <member refid="classvc64_1_1_interpreter_1a82746bf5b7861f60db16e58d41d19743" prot="public" virt="non-virtual"><scope>vc64::Interpreter</scope><name>help</name></member>
+      <member refid="classvc64_1_1_interpreter_1a8596bd5c29a2cc8053f8b1ad26cb63ed" prot="public" virt="non-virtual"><scope>vc64::Interpreter</scope><name>inCommandShell</name></member>
+      <member refid="classvc64_1_1_interpreter_1a1c43ab4d248ad42f8f959e6acdab409f" prot="public" virt="non-virtual"><scope>vc64::Interpreter</scope><name>inDebugShell</name></member>
+      <member refid="classvc64_1_1_interpreter_1aea8cad0db513db21415443b101c390e8" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>initCommandShell</name></member>
+      <member refid="classvc64_1_1_interpreter_1aeae10c4f5772937efe2cc8ce68f40c0d" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>initCommons</name></member>
+      <member refid="classvc64_1_1_interpreter_1adc682eda20e6d5fff000f23f6a0456e9" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>initDebugShell</name></member>
+      <member refid="classvc64_1_1_interpreter_1a5fd8992d6867a5124aa10ad1fa4d7697" prot="public" virt="non-virtual"><scope>vc64::Interpreter</scope><name>Interpreter</name></member>
+      <member refid="classvc64_1_1_interpreter_1a106e46d0531c2f11af45890afa62359e" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>isBool</name></member>
+      <member refid="classvc64_1_1_interpreter_1ac0f02322ec1a9dca19fe90d50c5ffd79" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>isNum</name></member>
+      <member refid="classvc64_1_1_interpreter_1aa9e65df89af0b13565cdd07af2cee3e5" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>isOnOff</name></member>
+      <member refid="classvc64_1_1_interpreter_1a22aa0d9fa6e6a1027d85a11a604e53af" prot="public" virt="non-virtual"><scope>vc64::Interpreter</scope><name>operator=</name></member>
+      <member refid="classvc64_1_1_interpreter_1a915cf6b75c32429a8758fb06254bb45b" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>parseAddr</name></member>
+      <member refid="classvc64_1_1_interpreter_1a081c427a5ea83e17d84e0a1019900766" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>parseAddr</name></member>
+      <member refid="classvc64_1_1_interpreter_1aae6c9e34c571376f60d80494c37b448b" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>parseBool</name></member>
+      <member refid="classvc64_1_1_interpreter_1a08964f95b904d63051e6c33edbfcdfda" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>parseBool</name></member>
+      <member refid="classvc64_1_1_interpreter_1a46fe1521be39b1a9508864a49131af59" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>parseEnum</name></member>
+      <member refid="classvc64_1_1_interpreter_1a7002de3f0a73cff62bbc16dea222c551" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>parseEnum</name></member>
+      <member refid="classvc64_1_1_interpreter_1ab670ab4a0319109bc0c2685e2552ac71" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>parseNum</name></member>
+      <member refid="classvc64_1_1_interpreter_1aa5e8adf738cf5912ccca52b79f0b870e" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>parseNum</name></member>
+      <member refid="classvc64_1_1_interpreter_1a2a52adee793f3afdedb10a28c0b9fd5d" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>parseOnOff</name></member>
+      <member refid="classvc64_1_1_interpreter_1a2616e4f474d62456bb642e6c06b6b3cc" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>parseOnOff</name></member>
+      <member refid="classvc64_1_1_interpreter_1a02f698d4eefed1e35b11a52cc33016dd" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>parseSeq</name></member>
+      <member refid="classvc64_1_1_interpreter_1a42e9a7afe1ca351da9c0a4bea5814a5a" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>parseSeq</name></member>
+      <member refid="classvc64_1_1_interpreter_1a960ef3ce3a9d8b091fefd88a2a723635" prot="public" virt="non-virtual"><scope>vc64::Interpreter</scope><name>serialize</name></member>
+      <member refid="classvc64_1_1_interpreter_1a5a3f0f0576ee54eb5e600fb146569a02" prot="public" virt="non-virtual"><scope>vc64::Interpreter</scope><name>SERIALIZERS</name></member>
+      <member refid="classvc64_1_1_interpreter_1aa2381badf1ffafa5f3ba7bb40f986fa5" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>Shell</name></member>
+      <member refid="classvc64_1_1_interpreter_1a606b791840b569e9b73cb5a6bcff31a9" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>shell</name></member>
+      <member refid="classvc64_1_1_interpreter_1abd237028ddbb34063b883fa500412bec" prot="private" virt="non-virtual"><scope>vc64::Interpreter</scope><name>split</name></member>
+      <member refid="classvc64_1_1_interpreter_1a07329e4a15f08832717eeb60521f70cb" prot="public" virt="non-virtual"><scope>vc64::Interpreter</scope><name>switchInterpreter</name></member>
+      <member refid="classvc64_1_1_interpreter_1ae6c0fddc4de06a083dcbece67c3cf790" prot="public" virt="non-virtual"><scope>vc64::Interpreter</scope><name>usage</name></member>
+      <member refid="classvc64_1_1_dumpable_1a843e874f633f7dcd8e2f1dcf1d8f0c25" prot="public" virt="virtual"><scope>vc64::Interpreter</scope><name>~Dumpable</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

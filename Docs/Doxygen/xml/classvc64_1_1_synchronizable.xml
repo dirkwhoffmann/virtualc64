@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_synchronizable" kind="class" language="C++" prot="public">
+    <compoundname>vc64::Synchronizable</compoundname>
+    <derivedcompoundref refid="classvc64_1_1_cmd_queue" prot="private" virt="non-virtual">vc64::CmdQueue</derivedcompoundref>
+    <derivedcompoundref refid="classvc64_1_1_core_component" prot="public" virt="non-virtual">vc64::CoreComponent</derivedcompoundref>
+    <derivedcompoundref refid="classvc64_1_1_msg_queue" prot="private" virt="non-virtual">vc64::MsgQueue</derivedcompoundref>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_synchronizable_1a595f618a9c91e91148882a79760f0f0f" prot="public" static="no" mutable="yes">
+        <type>util::ReentrantMutex</type>
+        <definition>util::ReentrantMutex vc64::Synchronizable::mutex</definition>
+        <argsstring></argsstring>
+        <name>mutex</name>
+        <qualifiedname>vc64::Synchronizable::mutex</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Synchronizable.h" line="27" column="34" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Synchronizable.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Synchronizable.h" line="19" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Synchronizable.h" bodystart="19" bodyend="29"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_synchronizable_1a595f618a9c91e91148882a79760f0f0f" prot="public" virt="non-virtual"><scope>vc64::Synchronizable</scope><name>mutex</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

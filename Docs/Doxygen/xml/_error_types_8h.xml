@@ -2,42 +2,1308 @@
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
   <compounddef id="_error_types_8h" kind="file" language="C++">
     <compoundname>ErrorTypes.h</compoundname>
-    <includes local="yes">Aliases.h</includes>
-    <includes local="yes">Reflection.h</includes>
+    <includes refid="_aliases_8h" local="yes">Aliases.h</includes>
+    <includes refid="_reflection_8h" local="yes">Reflection.h</includes>
     <includedby refid="_error_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h</includedby>
+    <includedby refid="_virtual_c64_types_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/VirtualC64Types.h</includedby>
     <incdepgraph>
-      <node id="1">
-        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/ErrorTypes.h</label>
-        <link refid="_error_types_8h"/>
-        <childnode refid="2" relation="include">
-        </childnode>
+      <node id="2">
+        <label>Aliases.h</label>
+        <link refid="_aliases_8h_source"/>
         <childnode refid="3" relation="include">
         </childnode>
       </node>
-      <node id="2">
-        <label>Aliases.h</label>
+      <node id="1">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/ErrorTypes.h</label>
+        <link refid="_error_types_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
       </node>
       <node id="3">
+        <label>Macros.h</label>
+        <link refid="_macros_8h_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
         <label>Reflection.h</label>
+        <link refid="_reflection_8h_source"/>
+      </node>
+      <node id="4">
+        <label>Types.h</label>
+        <link refid="_types_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>stdbool.h</label>
+      </node>
+      <node id="6">
+        <label>stdint.h</label>
+      </node>
+      <node id="5">
+        <label>sys/types.h</label>
       </node>
     </incdepgraph>
     <invincdepgraph>
+      <node id="4">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h</label>
+        <link refid="_cmd_queue_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="82">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/Configurable.h</label>
+        <link refid="_configurable_8h_source"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/CoreComponent.h</label>
+        <link refid="_core_component_8h_source"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="80" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/CoreObject.h</label>
+        <link refid="_core_object_8h_source"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="81" relation="include">
+        </childnode>
+        <childnode refid="83" relation="include">
+        </childnode>
+        <childnode refid="84" relation="include">
+        </childnode>
+        <childnode refid="85" relation="include">
+        </childnode>
+        <childnode refid="87" relation="include">
+        </childnode>
+        <childnode refid="88" relation="include">
+        </childnode>
+        <childnode refid="101" relation="include">
+        </childnode>
+        <childnode refid="103" relation="include">
+        </childnode>
+      </node>
+      <node id="81">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/Defaults.h</label>
+        <link refid="_defaults_8h_source"/>
+        <childnode refid="82" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
       <node id="2">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h</label>
-        <link refid="_error_8h_source"/>
+        <link refid="_error_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="68" relation="include">
+        </childnode>
       </node>
       <node id="1">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Base/ErrorTypes.h</label>
         <link refid="_error_types_8h"/>
         <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="104" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/Host.h</label>
+        <link refid="_host_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="83">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueue.h</label>
+        <link refid="_msg_queue_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/SubComponent.h</label>
+        <link refid="_sub_component_8h_source"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="58" relation="include">
+        </childnode>
+        <childnode refid="59" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+        <childnode refid="62" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+        <childnode refid="64" relation="include">
+        </childnode>
+        <childnode refid="66" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+        <childnode refid="67" relation="include">
+        </childnode>
+        <childnode refid="68" relation="include">
+        </childnode>
+        <childnode refid="69" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="70" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="71" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+        <childnode refid="73" relation="include">
+        </childnode>
+        <childnode refid="74" relation="include">
+        </childnode>
+        <childnode refid="75" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="76" relation="include">
+        </childnode>
+        <childnode refid="77" relation="include">
+        </childnode>
+        <childnode refid="78" relation="include">
+        </childnode>
+        <childnode refid="79" relation="include">
+        </childnode>
+      </node>
+      <node id="80">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/Thread.h</label>
+        <link refid="_thread_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/Cartridge.h</label>
+        <link refid="_cartridge_8h_source"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+      </node>
+      <node id="45">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeRom.h</label>
+        <link refid="_cartridge_rom_8h_source"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/ActionReplay.h</label>
+        <link refid="_action_replay_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Comal80.h</label>
+        <link refid="_comal80_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/CustomCartridges.h</label>
+        <link refid="_custom_cartridges_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Dinamic.h</label>
+        <link refid="_dinamic_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/EasyFlash.h</label>
+        <link refid="_easy_flash_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Epyx.h</label>
+        <link refid="_epyx_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Expert.h</label>
+        <link refid="_expert_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/FinalIII.h</label>
+        <link refid="_final_i_i_i_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/FreezeFrame.h</label>
+        <link refid="_freeze_frame_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Funplay.h</label>
+        <link refid="_funplay_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/GameKiller.h</label>
+        <link refid="_game_killer_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/GeoRam.h</label>
+        <link refid="_geo_ram_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Isepic.h</label>
+        <link refid="_isepic_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Kcs.h</label>
+        <link refid="_kcs_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Kingsoft.h</label>
+        <link refid="_kingsoft_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Mach5.h</label>
+        <link refid="_mach5_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/MagicDesk.h</label>
+        <link refid="_magic_desk_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/MikroAss.h</label>
+        <link refid="_mikro_ass_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Ocean.h</label>
+        <link refid="_ocean_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/PageFox.h</label>
+        <link refid="_page_fox_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Reu.h</label>
+        <link refid="_reu_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Rex.h</label>
+        <link refid="_rex_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/SimonsBasic.h</label>
+        <link refid="_simons_basic_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="38">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/StarDos.h</label>
+        <link refid="_star_dos_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="39">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/StructuredBasic.h</label>
+        <link refid="_structured_basic_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="40">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/SuperGames.h</label>
+        <link refid="_super_games_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/WarpSpeed.h</label>
+        <link refid="_warp_speed_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="42">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Westermann.h</label>
+        <link refid="_westermann_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="43">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Zaxxon.h</label>
+        <link refid="_zaxxon_8h_source"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="46">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/FlashRom.h</label>
+        <link refid="_flash_rom_8h_source"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/C64.h</label>
+        <link refid="_c64_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIA.h</label>
+        <link refid="_c_i_a_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="48">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/TOD.h</label>
+        <link refid="_t_o_d_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+      </node>
+      <node id="49">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/CPU.h</label>
+        <link refid="_c_p_u_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+      </node>
+      <node id="84">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/CPUInspector.h</label>
+        <link refid="_c_p_u_inspector_8h_source"/>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="84" relation="include">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/Peddle.h</label>
+        <link refid="_peddle_8h_source"/>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+      </node>
+      <node id="52">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h</label>
+        <link refid="_peddle_debugger_8h_source"/>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+      </node>
+      <node id="54">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDisassembler.h</label>
+        <link refid="_peddle_disassembler_8h_source"/>
+        <childnode refid="51" relation="include">
+        </childnode>
+      </node>
+      <node id="53">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/StrWriter.h</label>
+        <link refid="_str_writer_8h_source"/>
+        <childnode refid="54" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/Emulator.h</label>
+        <link refid="_emulator_8h_source"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="55">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ControlPort.h</label>
+        <link refid="_control_port_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="44">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ExpansionPort.h</label>
+        <link refid="_expansion_port_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="56">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h</label>
+        <link refid="_i_e_c_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="57">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/PowerSupply.h</label>
+        <link refid="_power_supply_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="58">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/C64Memory.h</label>
+        <link refid="_c64_memory_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="59">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/SID/Muxer.h</label>
+        <link refid="_muxer_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="60">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h</label>
+        <link refid="_re_s_i_d_8h_source"/>
+        <childnode refid="61" relation="include">
+        </childnode>
+      </node>
+      <node id="61">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SID.h</label>
+        <link refid="sid_8h_source"/>
+        <childnode refid="59" relation="include">
+        </childnode>
+      </node>
+      <node id="62">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastSID.h</label>
+        <link refid="_fast_s_i_d_8h_source"/>
+        <childnode refid="61" relation="include">
+        </childnode>
+      </node>
+      <node id="63">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastVoice.h</label>
+        <link refid="_fast_voice_8h_source"/>
+        <childnode refid="62" relation="include">
+        </childnode>
+      </node>
+      <node id="64">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebugger.h</label>
+        <link refid="_dma_debugger_8h_source"/>
+        <childnode refid="65" relation="include">
+        </childnode>
+      </node>
+      <node id="66">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/Recorder/Recorder.h</label>
+        <link refid="_recorder_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="65">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICII.h</label>
+        <link refid="_v_i_c_i_i_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="85">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSBlock.h</label>
+        <link refid="_f_s_block_8h_source"/>
+        <childnode refid="86" relation="include">
+        </childnode>
+      </node>
+      <node id="87">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDescriptors.h</label>
+        <link refid="_f_s_descriptors_8h_source"/>
+        <childnode refid="86" relation="include">
+        </childnode>
+      </node>
+      <node id="102">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSDirEntry.h</label>
+        <link refid="_f_s_dir_entry_8h_source"/>
+        <childnode refid="86" relation="include">
+        </childnode>
+      </node>
+      <node id="86">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h</label>
+        <link refid="_file_system_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Headless.h</label>
+        <link refid="_headless_8h_source"/>
+      </node>
+      <node id="89">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h</label>
+        <link refid="_any_collection_8h_source"/>
+        <childnode refid="86" relation="include">
+        </childnode>
+        <childnode refid="90" relation="include">
+        </childnode>
+        <childnode refid="91" relation="include">
+        </childnode>
+        <childnode refid="92" relation="include">
+        </childnode>
+        <childnode refid="93" relation="include">
+        </childnode>
+      </node>
+      <node id="88">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/AnyFile.h</label>
+        <link refid="_any_file_8h_source"/>
+        <childnode refid="89" relation="include">
+        </childnode>
+        <childnode refid="94" relation="include">
+        </childnode>
+        <childnode refid="95" relation="include">
+        </childnode>
+        <childnode refid="96" relation="include">
+        </childnode>
+        <childnode refid="97" relation="include">
+        </childnode>
+        <childnode refid="98" relation="include">
+        </childnode>
+        <childnode refid="99" relation="include">
+        </childnode>
+        <childnode refid="100" relation="include">
+        </childnode>
+      </node>
+      <node id="94">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/CRTFile.h</label>
+        <link refid="_c_r_t_file_8h_source"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="95">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/D64File.h</label>
+        <link refid="_d64_file_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="86" relation="include">
+        </childnode>
+      </node>
+      <node id="90">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/Folder.h</label>
+        <link refid="_folder_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="96">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h</label>
+        <link refid="_g64_file_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="91">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/P00File.h</label>
+        <link refid="_p00_file_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="101">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h</label>
+        <link refid="_p_e_t_name_8h_source"/>
+        <childnode refid="85" relation="include">
+        </childnode>
+        <childnode refid="102" relation="include">
+        </childnode>
+        <childnode refid="88" relation="include">
+        </childnode>
+        <childnode refid="70" relation="include">
+        </childnode>
+      </node>
+      <node id="92">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h</label>
+        <link refid="_p_r_g_file_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="97">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/RomFile.h</label>
+        <link refid="_rom_file_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="98">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/Script.h</label>
+        <link refid="_script_8h_source"/>
+      </node>
+      <node id="99">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/Snapshot.h</label>
+        <link refid="_snapshot_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="93">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/T64File.h</label>
+        <link refid="_t64_file_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="100">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Media/TAPFile.h</label>
+        <link refid="_t_a_p_file_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="67">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Misc/RegressionTester/RegressionTester.h</label>
+        <link refid="_regression_tester_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="68">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/Interpreter.h</label>
+        <link refid="_interpreter_8h_source"/>
+        <childnode refid="69" relation="include">
+        </childnode>
+      </node>
+      <node id="69">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShell.h</label>
+        <link refid="_retro_shell_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/Datasette.h</label>
+        <link refid="_datasette_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="70">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Disk.h</label>
+        <link refid="_disk_8h_source"/>
+        <childnode refid="50" relation="include">
+        </childnode>
+      </node>
+      <node id="103">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h</label>
+        <link refid="_disk_analyzer_8h_source"/>
+        <childnode refid="50" relation="include">
+        </childnode>
+      </node>
+      <node id="50">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h</label>
+        <link refid="_drive_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="71">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h</label>
+        <link refid="_drive_memory_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+      </node>
+      <node id="72">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/PIA.h</label>
+        <link refid="_p_i_a_8h_source"/>
+        <childnode refid="50" relation="include">
+        </childnode>
+      </node>
+      <node id="73">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/ParCable.h</label>
+        <link refid="_par_cable_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="74">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.h</label>
+        <link refid="_v_i_a_8h_source"/>
+        <childnode refid="50" relation="include">
+        </childnode>
+      </node>
+      <node id="75">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/Joystick.h</label>
+        <link refid="_joystick_8h_source"/>
+        <childnode refid="55" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/Keyboard.h</label>
+        <link refid="_keyboard_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="76">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.h</label>
+        <link refid="_mouse_8h_source"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+      </node>
+      <node id="77">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h</label>
+        <link refid="_mouse1350_8h_source"/>
+        <childnode refid="76" relation="include">
+        </childnode>
+      </node>
+      <node id="78">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1351.h</label>
+        <link refid="_mouse1351_8h_source"/>
+        <childnode refid="76" relation="include">
+        </childnode>
+      </node>
+      <node id="79">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/NeosMouse.h</label>
+        <link refid="_neos_mouse_8h_source"/>
+        <childnode refid="76" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h</label>
+        <link refid="_virtual_c64_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="104">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/VirtualC64Types.h</label>
+        <link refid="_virtual_c64_types_8h"/>
+        <childnode refid="6" relation="include">
         </childnode>
       </node>
     </invincdepgraph>
     <sectiondef kind="enum">
-      <member refid="group__doxy__types_1ga52f90e25735e172d279183e61d90d3e3" kind="enum"><name>ERROR_CODE</name></member>
+      <memberdef kind="enum" id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3" prot="public" static="no" strong="no">
+        <type>long</type>
+        <name>ERROR_CODE</name>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3aadeb5032c03491611646c1c64f7c0e0c" prot="public">
+          <name>ERROR_OK</name>
+          <briefdescription>
+<para>No error. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a2c8108ceb9a85cecbbe3af50dbc1cf8c" prot="public">
+          <name>ERROR_UNKNOWN</name>
+          <briefdescription>
+<para>Unclassified error condition. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ad15dfe854b0141a245bd0983c5421305" prot="public">
+          <name>ERROR_POWERED_OFF</name>
+          <briefdescription>
+<para>The emulator is powered off. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a237d77aa10791ffeba791b0cc3c44019" prot="public">
+          <name>ERROR_POWERED_ON</name>
+          <briefdescription>
+<para>The emulator is powered on. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3adc7fcc7400d3490d5bd58a225c210434" prot="public">
+          <name>ERROR_RUNNING</name>
+          <briefdescription>
+<para>The emulator is running. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a29fe5781cb813c4fc13f9ed91b9b2378" prot="public">
+          <name>ERROR_OPT_UNSUPPORTED</name>
+          <briefdescription>
+<para>Unsupported configuration option. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ac8d7329a9083105d05aa8f5e0877a0cc" prot="public">
+          <name>ERROR_OPT_INVARG</name>
+          <briefdescription>
+<para>Invalid argument. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a9c3336d11c3f11b5b0c049c969481e73" prot="public">
+          <name>ERROR_OPT_LOCKED</name>
+          <briefdescription>
+<para>The option is temporarily locked. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a31846fcd73423f08cca08d9acf9b3f8e" prot="public">
+          <name>ERROR_INVALID_KEY</name>
+          <briefdescription>
+<para>Invalid property key. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a9294dc250d7e5f76ff3ec77e33431665" prot="public">
+          <name>ERROR_SYNTAX</name>
+          <briefdescription>
+<para>Syntax error. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ac0a554045048d2fb61387cf735676f69" prot="public">
+          <name>ERROR_OUT_OF_MEMORY</name>
+          <briefdescription>
+<para>Out of memory. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a4eeae91e8fc0b68d8003bf6f02eef060" prot="public">
+          <name>ERROR_DIR_NOT_FOUND</name>
+          <briefdescription>
+<para>Directory does not exist. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a6292b68f782fe0bdaac9afeed2fa1954" prot="public">
+          <name>ERROR_DIR_ACCESS_DENIED</name>
+          <briefdescription>
+<para>File access denied. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a006dc4629b952fadd2ac75b912f30314" prot="public">
+          <name>ERROR_DIR_CANT_CREATE</name>
+          <briefdescription>
+<para>Unable to create a directory. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ad3d4451b8a1e1c3c6f67ea8666e57bbd" prot="public">
+          <name>ERROR_DIR_NOT_EMPTY</name>
+          <briefdescription>
+<para>Directory is not empty. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a25792ced3439733c593173a3b7420ba6" prot="public">
+          <name>ERROR_FILE_NOT_FOUND</name>
+          <briefdescription>
+<para>File not found error. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a9c174c9b266e3a70ec4895d4c61ac047" prot="public">
+          <name>ERROR_FILE_EXISTS</name>
+          <briefdescription>
+<para>File already exists. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a84d2f270ae4b33d6046a7583ef1d2886" prot="public">
+          <name>ERROR_FILE_IS_DIRECTORY</name>
+          <briefdescription>
+<para>The file is a directory. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a7eaa57d4fd426bde506577d445b92725" prot="public">
+          <name>ERROR_FILE_ACCESS_DENIED</name>
+          <briefdescription>
+<para>File access denied. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a81d31f6c275ccf8cffb2cf8b4bea2195" prot="public">
+          <name>ERROR_FILE_TYPE_MISMATCH</name>
+          <briefdescription>
+<para>File type mismatch. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a033ddbe542fecd694d4fe952255c795a" prot="public">
+          <name>ERROR_FILE_TYPE_UNSUPPORTED</name>
+          <briefdescription>
+<para>Unsupported file type. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a5221d42f76a3c65da8ee547f29948fe6" prot="public">
+          <name>ERROR_FILE_CANT_READ</name>
+          <briefdescription>
+<para>Can&apos;t read from file. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a918dc458ec15026ac44cb7bc11056471" prot="public">
+          <name>ERROR_FILE_CANT_WRITE</name>
+          <briefdescription>
+<para>Can&apos;t write to file. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a4827796d2732c98f7a26deb6e5532b81" prot="public">
+          <name>ERROR_FILE_CANT_CREATE</name>
+          <briefdescription>
+<para>Can&apos;t create file. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ad1d9f35c32fbca3b2619b93a478792eb" prot="public">
+          <name>ERROR_ROM_BASIC_MISSING</name>
+          <briefdescription>
+<para>No Basic Rom installed. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ae26fbb8e09bab208de6df1a37ea570ed" prot="public">
+          <name>ERROR_ROM_CHAR_MISSING</name>
+          <briefdescription>
+<para>No Character Rom installed. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a0bcbf029b5c317a2ebedbea62441659b" prot="public">
+          <name>ERROR_ROM_KERNAL_MISSING</name>
+          <briefdescription>
+<para>No Kernel Rom installed. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a89efe101fe5cb267167a2626a9946576" prot="public">
+          <name>ERROR_ROM_DRIVE_MISSING</name>
+          <briefdescription>
+<para>No Floppy Drive Rom installed. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a8bc4ac22f5e6ca12d31275a5c6ed3915" prot="public">
+          <name>ERROR_ROM_MEGA65_MISMATCH</name>
+          <briefdescription>
+<para>MEGA65 Roms have different version numbers. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a237f74aa6764f4231056109509846136" prot="public">
+          <name>ERROR_REC_LAUNCH</name>
+          <briefdescription>
+<para>Can&apos;t launch the screen recorder. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a6c137682ff8f4fc55c4b6b834fac6940" prot="public">
+          <name>ERROR_SNAP_TOO_OLD</name>
+          <briefdescription>
+<para>Snapshot was created with an older version. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ada6d363a1ac0c77e500413064fe0cbf1" prot="public">
+          <name>ERROR_SNAP_TOO_NEW</name>
+          <briefdescription>
+<para>Snapshot was created with a later version. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a793af0086efdb0e923a8e6f85e12914e" prot="public">
+          <name>ERROR_SNAP_IS_BETA</name>
+          <briefdescription>
+<para>Snapshot was created with a beta release. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a9aa1be001e158b5bad6afb7ed6125f65" prot="public">
+          <name>ERROR_SNAP_CORRUPTED</name>
+          <briefdescription>
+<para>Snapshot data is corrupted. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a1ab5f70bbe545161fc991beaffd764d4" prot="public">
+          <name>ERROR_DRV_UNCONNECTED</name>
+          <briefdescription>
+<para>Floppy drive is not connected. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a57d9322f178b3ed152d45bcaec09da13" prot="public">
+          <name>ERROR_CRT_UNKNOWN</name>
+          <briefdescription>
+<para>Unknown cartridge type. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3acc1ee80c155471d2bbc5e4e716dfc0b4" prot="public">
+          <name>ERROR_CRT_UNSUPPORTED</name>
+          <briefdescription>
+<para>Unsupported cartridge type. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a053564238e0140f0986c00f3d6a8291a" prot="public">
+          <name>ERROR_CRT_TOO_MANY_PACKETS</name>
+          <briefdescription>
+<para>CRT file contains too many Rom packets. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a58e818ec9b611fa386aa95f44784c258" prot="public">
+          <name>ERROR_CRT_CORRUPTED_PACKET</name>
+          <briefdescription>
+<para>CRT file contains a corrupted Rom package. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a66b5acdcfa247b85d366227990f385cd" prot="public">
+          <name>ERROR_FS_UNSUPPORTED</name>
+          <briefdescription>
+<para>Unsupported file system. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ad06fe3246c0338eefc4376d41ab74158" prot="public">
+          <name>ERROR_FS_WRONG_CAPACITY</name>
+          <briefdescription>
+<para>Wrong file system capacity. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a34bfbca57d8a9b1a49e21b4b952e170a" prot="public">
+          <name>ERROR_FS_CORRUPTED</name>
+          <briefdescription>
+<para>File system is corrupted. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ad6503a83766b1e4719e961ccd89107a6" prot="public">
+          <name>ERROR_FS_HAS_NO_FILES</name>
+          <briefdescription>
+<para>File system is empty. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a9a6252e84bf6d86addba81d11b11866a" prot="public">
+          <name>ERROR_FS_HAS_CYCLES</name>
+          <briefdescription>
+<para>File system has cyclic links. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a0359654c53b1d2cefc266c98a8decf2b" prot="public">
+          <name>ERROR_FS_CANT_IMPORT</name>
+          <briefdescription>
+<para>Failed to import a file system. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a47498d5f4e2573f44e2297475fecac94" prot="public">
+          <name>ERROR_FS_EXPECTED_VAL</name>
+          <briefdescription>
+<para>Unexpected value found. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a689846c3d646a45a1438a51d8abcc564" prot="public">
+          <name>ERROR_FS_EXPECTED_MIN</name>
+          <briefdescription>
+<para>Value is too small. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a85910c60d08d20a7c047d3bed7b9f79d" prot="public">
+          <name>ERROR_FS_EXPECTED_MAX</name>
+          <briefdescription>
+<para>Value is too big. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a728235f0b5555823c4573eac15e24623" prot="public">
+          <name>ERROR_COUNT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+<para>Error condition. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/ErrorTypes.h" line="20" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/ErrorTypes.h" bodystart="21" bodyend="94"/>
+      </memberdef>
     </sectiondef>
     <sectiondef kind="typedef">
-      <member refid="group__doxy__types_1ga750bfc12acff352beabb828ba5629a4e" kind="typedef"><name>ErrorCode</name></member>
+      <memberdef kind="typedef" id="_error_types_8h_1a750bfc12acff352beabb828ba5629a4e" prot="public" static="no">
+        <type><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3" kindref="member">ERROR_CODE</ref></type>
+        <definition>typedef ERROR_CODE ErrorCode</definition>
+        <argsstring></argsstring>
+        <name>ErrorCode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/ErrorTypes.h" line="95" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/ErrorTypes.h" bodystart="95" bodyend="-1"/>
+      </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
@@ -54,170 +1320,168 @@
 <codeline lineno="8"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>-<sp/>The<sp/>Mozilla<sp/>Public<sp/>License<sp/>v2</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="9"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="10"><highlight class="normal"></highlight><highlight class="comment">//<sp/>SPDX-License-Identifier:<sp/>GPL-3.0-or-later<sp/>OR<sp/>MPL-2.0</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="11"><highlight class="normal"></highlight><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="12"><highlight class="normal"></highlight></codeline>
-<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="14"><highlight class="normal"></highlight></codeline>
-<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Aliases.h&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Reflection.h&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="17"><highlight class="normal"></highlight></codeline>
-<codeline lineno="20"></codeline>
-<codeline lineno="22" refid="group__doxy__types_1ga52f90e25735e172d279183e61d90d3e3" refkind="member"><highlight class="normal">enum_long(<ref refid="group__doxy__types_1ga52f90e25735e172d279183e61d90d3e3" kindref="member">ERROR_CODE</ref>)</highlight></codeline>
-<codeline lineno="23"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="24" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3aadeb5032c03491611646c1c64f7c0e0c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3aadeb5032c03491611646c1c64f7c0e0c" kindref="member">ERROR_OK</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="25" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a2c8108ceb9a85cecbbe3af50dbc1cf8c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a2c8108ceb9a85cecbbe3af50dbc1cf8c" kindref="member">ERROR_UNKNOWN</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="26"><highlight class="normal"></highlight></codeline>
-<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Emulator<sp/>state</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="28" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ad15dfe854b0141a245bd0983c5421305" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ad15dfe854b0141a245bd0983c5421305" kindref="member">ERROR_POWERED_OFF</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="29" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a237d77aa10791ffeba791b0cc3c44019" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a237d77aa10791ffeba791b0cc3c44019" kindref="member">ERROR_POWERED_ON</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="30" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3adc7fcc7400d3490d5bd58a225c210434" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3adc7fcc7400d3490d5bd58a225c210434" kindref="member">ERROR_RUNNING</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="31"><highlight class="normal"></highlight></codeline>
-<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Configuration</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a29fe5781cb813c4fc13f9ed91b9b2378" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a29fe5781cb813c4fc13f9ed91b9b2378" kindref="member">ERROR_OPT_UNSUPPORTED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="34" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ac8d7329a9083105d05aa8f5e0877a0cc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ac8d7329a9083105d05aa8f5e0877a0cc" kindref="member">ERROR_OPT_INVARG</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="35" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a9c3336d11c3f11b5b0c049c969481e73" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a9c3336d11c3f11b5b0c049c969481e73" kindref="member">ERROR_OPT_LOCKED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="36"><highlight class="normal"></highlight></codeline>
-<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Property<sp/>storage</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="38" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a31846fcd73423f08cca08d9acf9b3f8e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a31846fcd73423f08cca08d9acf9b3f8e" kindref="member">ERROR_INVALID_KEY</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="39" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a9294dc250d7e5f76ff3ec77e33431665" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a9294dc250d7e5f76ff3ec77e33431665" kindref="member">ERROR_SYNTAX</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="40"><highlight class="normal"></highlight></codeline>
-<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Memory</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="42" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ac0a554045048d2fb61387cf735676f69" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ac0a554045048d2fb61387cf735676f69" kindref="member">ERROR_OUT_OF_MEMORY</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="43"><highlight class="normal"></highlight></codeline>
-<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>File<sp/>IO</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="45" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a4eeae91e8fc0b68d8003bf6f02eef060" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a4eeae91e8fc0b68d8003bf6f02eef060" kindref="member">ERROR_DIR_NOT_FOUND</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="46" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a6292b68f782fe0bdaac9afeed2fa1954" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a6292b68f782fe0bdaac9afeed2fa1954" kindref="member">ERROR_DIR_ACCESS_DENIED</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="47" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a006dc4629b952fadd2ac75b912f30314" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a006dc4629b952fadd2ac75b912f30314" kindref="member">ERROR_DIR_CANT_CREATE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="48" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ad3d4451b8a1e1c3c6f67ea8666e57bbd" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ad3d4451b8a1e1c3c6f67ea8666e57bbd" kindref="member">ERROR_DIR_NOT_EMPTY</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="49" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a25792ced3439733c593173a3b7420ba6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a25792ced3439733c593173a3b7420ba6" kindref="member">ERROR_FILE_NOT_FOUND</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="50" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a9c174c9b266e3a70ec4895d4c61ac047" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a9c174c9b266e3a70ec4895d4c61ac047" kindref="member">ERROR_FILE_EXISTS</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="51" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a84d2f270ae4b33d6046a7583ef1d2886" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a84d2f270ae4b33d6046a7583ef1d2886" kindref="member">ERROR_FILE_IS_DIRECTORY</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="52" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a7eaa57d4fd426bde506577d445b92725" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a7eaa57d4fd426bde506577d445b92725" kindref="member">ERROR_FILE_ACCESS_DENIED</ref>,<sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="53" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a81d31f6c275ccf8cffb2cf8b4bea2195" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a81d31f6c275ccf8cffb2cf8b4bea2195" kindref="member">ERROR_FILE_TYPE_MISMATCH</ref>,<sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="54" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a033ddbe542fecd694d4fe952255c795a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a033ddbe542fecd694d4fe952255c795a" kindref="member">ERROR_FILE_TYPE_UNSUPPORTED</ref>,</highlight></codeline>
-<codeline lineno="55" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a5221d42f76a3c65da8ee547f29948fe6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a5221d42f76a3c65da8ee547f29948fe6" kindref="member">ERROR_FILE_CANT_READ</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="56" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a918dc458ec15026ac44cb7bc11056471" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a918dc458ec15026ac44cb7bc11056471" kindref="member">ERROR_FILE_CANT_WRITE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="57" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a4827796d2732c98f7a26deb6e5532b81" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a4827796d2732c98f7a26deb6e5532b81" kindref="member">ERROR_FILE_CANT_CREATE</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="58"><highlight class="normal"></highlight></codeline>
-<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Roms</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="60" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ad1d9f35c32fbca3b2619b93a478792eb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ad1d9f35c32fbca3b2619b93a478792eb" kindref="member">ERROR_ROM_BASIC_MISSING</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="61" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ae26fbb8e09bab208de6df1a37ea570ed" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ae26fbb8e09bab208de6df1a37ea570ed" kindref="member">ERROR_ROM_CHAR_MISSING</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="62" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a0bcbf029b5c317a2ebedbea62441659b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a0bcbf029b5c317a2ebedbea62441659b" kindref="member">ERROR_ROM_KERNAL_MISSING</ref>,<sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="63" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a89efe101fe5cb267167a2626a9946576" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a89efe101fe5cb267167a2626a9946576" kindref="member">ERROR_ROM_DRIVE_MISSING</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="64" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a8bc4ac22f5e6ca12d31275a5c6ed3915" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a8bc4ac22f5e6ca12d31275a5c6ed3915" kindref="member">ERROR_ROM_MEGA65_MISMATCH</ref>,<sp/><sp/></highlight></codeline>
-<codeline lineno="65"><highlight class="normal"></highlight></codeline>
-<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Recorder</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="67" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a237f74aa6764f4231056109509846136" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a237f74aa6764f4231056109509846136" kindref="member">ERROR_REC_LAUNCH</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="68"><highlight class="normal"></highlight></codeline>
-<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Snapshots</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="70" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a6c137682ff8f4fc55c4b6b834fac6940" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a6c137682ff8f4fc55c4b6b834fac6940" kindref="member">ERROR_SNAP_TOO_OLD</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="71" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ada6d363a1ac0c77e500413064fe0cbf1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ada6d363a1ac0c77e500413064fe0cbf1" kindref="member">ERROR_SNAP_TOO_NEW</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="72" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a793af0086efdb0e923a8e6f85e12914e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a793af0086efdb0e923a8e6f85e12914e" kindref="member">ERROR_SNAP_IS_BETA</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="73" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a9aa1be001e158b5bad6afb7ed6125f65" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a9aa1be001e158b5bad6afb7ed6125f65" kindref="member">ERROR_SNAP_CORRUPTED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="74"><highlight class="normal"></highlight></codeline>
-<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Drives</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="76" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a1ab5f70bbe545161fc991beaffd764d4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a1ab5f70bbe545161fc991beaffd764d4" kindref="member">ERROR_DRV_UNCONNECTED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="77"><highlight class="normal"></highlight></codeline>
-<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Cartridges</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="79" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a57d9322f178b3ed152d45bcaec09da13" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a57d9322f178b3ed152d45bcaec09da13" kindref="member">ERROR_CRT_UNKNOWN</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="80" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3acc1ee80c155471d2bbc5e4e716dfc0b4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3acc1ee80c155471d2bbc5e4e716dfc0b4" kindref="member">ERROR_CRT_UNSUPPORTED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="81" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a053564238e0140f0986c00f3d6a8291a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a053564238e0140f0986c00f3d6a8291a" kindref="member">ERROR_CRT_TOO_MANY_PACKETS</ref>,<sp/></highlight></codeline>
-<codeline lineno="82" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a58e818ec9b611fa386aa95f44784c258" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a58e818ec9b611fa386aa95f44784c258" kindref="member">ERROR_CRT_CORRUPTED_PACKET</ref>,<sp/></highlight></codeline>
-<codeline lineno="83"><highlight class="normal"></highlight></codeline>
-<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>File<sp/>systems</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="85" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a66b5acdcfa247b85d366227990f385cd" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a66b5acdcfa247b85d366227990f385cd" kindref="member">ERROR_FS_UNSUPPORTED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="86" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ad06fe3246c0338eefc4376d41ab74158" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ad06fe3246c0338eefc4376d41ab74158" kindref="member">ERROR_FS_WRONG_CAPACITY</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="87" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a34bfbca57d8a9b1a49e21b4b952e170a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a34bfbca57d8a9b1a49e21b4b952e170a" kindref="member">ERROR_FS_CORRUPTED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="88" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ad6503a83766b1e4719e961ccd89107a6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ad6503a83766b1e4719e961ccd89107a6" kindref="member">ERROR_FS_HAS_NO_FILES</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="89" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a9a6252e84bf6d86addba81d11b11866a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a9a6252e84bf6d86addba81d11b11866a" kindref="member">ERROR_FS_HAS_CYCLES</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="90" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a0359654c53b1d2cefc266c98a8decf2b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a0359654c53b1d2cefc266c98a8decf2b" kindref="member">ERROR_FS_CANT_IMPORT</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="91" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a47498d5f4e2573f44e2297475fecac94" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a47498d5f4e2573f44e2297475fecac94" kindref="member">ERROR_FS_EXPECTED_VAL</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="92" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a689846c3d646a45a1438a51d8abcc564" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a689846c3d646a45a1438a51d8abcc564" kindref="member">ERROR_FS_EXPECTED_MIN</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="93" refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a85910c60d08d20a7c047d3bed7b9f79d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a85910c60d08d20a7c047d3bed7b9f79d" kindref="member">ERROR_FS_EXPECTED_MAX</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="94"><highlight class="normal"></highlight></codeline>
-<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/>ERROR_COUNT</highlight></codeline>
-<codeline lineno="96"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="97"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1ga52f90e25735e172d279183e61d90d3e3" kindref="member">ERROR_CODE</ref><sp/><ref refid="group__doxy__types_1ga52f90e25735e172d279183e61d90d3e3" kindref="member">ErrorCode</ref>;</highlight></codeline>
-<codeline lineno="98"><highlight class="normal"></highlight></codeline>
-<codeline lineno="99"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="100"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">ErrorCodeEnum<sp/>:<sp/>util::Reflection&lt;ErrorCodeEnum,<sp/>ErrorCode&gt;<sp/>{</highlight></codeline>
-<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>minVal<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>maxVal<sp/>=<sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a85910c60d08d20a7c047d3bed7b9f79d" kindref="member">ERROR_FS_EXPECTED_MAX</ref>;</highlight></codeline>
-<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>isValid(</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>value)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>value<sp/>&gt;=<sp/>minVal<sp/>&amp;&amp;<sp/>value<sp/>&lt;=<sp/>maxVal;<sp/>}</highlight></codeline>
-<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*prefix()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ERROR&quot;</highlight><highlight class="normal">;<sp/>}</highlight></codeline>
-<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*key(<ref refid="group__doxy__types_1ga52f90e25735e172d279183e61d90d3e3" kindref="member">ErrorCode</ref><sp/>value)</highlight></codeline>
-<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
-<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(value)<sp/>{</highlight></codeline>
-<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3aadeb5032c03491611646c1c64f7c0e0c" kindref="member">ERROR_OK</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;OK&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a2c8108ceb9a85cecbbe3af50dbc1cf8c" kindref="member">ERROR_UNKNOWN</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;UNKNOWN&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="113"><highlight class="normal"></highlight></codeline>
-<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ad15dfe854b0141a245bd0983c5421305" kindref="member">ERROR_POWERED_OFF</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;POWERED_OFF&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a237d77aa10791ffeba791b0cc3c44019" kindref="member">ERROR_POWERED_ON</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;POWERED_ON&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3adc7fcc7400d3490d5bd58a225c210434" kindref="member">ERROR_RUNNING</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RUNNING&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="117"><highlight class="normal"></highlight></codeline>
-<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a29fe5781cb813c4fc13f9ed91b9b2378" kindref="member">ERROR_OPT_UNSUPPORTED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;OPT_UNSUPPORTED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ac8d7329a9083105d05aa8f5e0877a0cc" kindref="member">ERROR_OPT_INVARG</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;OPT_INV_ARG&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a9c3336d11c3f11b5b0c049c969481e73" kindref="member">ERROR_OPT_LOCKED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;OPT_LOCKED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="121"><highlight class="normal"></highlight></codeline>
-<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a31846fcd73423f08cca08d9acf9b3f8e" kindref="member">ERROR_INVALID_KEY</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;INVALID_KEY&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a9294dc250d7e5f76ff3ec77e33431665" kindref="member">ERROR_SYNTAX</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SYNTAX&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Aliases.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Reflection.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3" refkind="member"><highlight class="normal">enum_long(<ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3" kindref="member">ERROR_CODE</ref>)</highlight></codeline>
+<codeline lineno="21"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="22" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3aadeb5032c03491611646c1c64f7c0e0c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3aadeb5032c03491611646c1c64f7c0e0c" kindref="member">ERROR_OK</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="23" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a2c8108ceb9a85cecbbe3af50dbc1cf8c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a2c8108ceb9a85cecbbe3af50dbc1cf8c" kindref="member">ERROR_UNKNOWN</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Emulator<sp/>state</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ad15dfe854b0141a245bd0983c5421305" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ad15dfe854b0141a245bd0983c5421305" kindref="member">ERROR_POWERED_OFF</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="27" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a237d77aa10791ffeba791b0cc3c44019" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a237d77aa10791ffeba791b0cc3c44019" kindref="member">ERROR_POWERED_ON</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="28" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3adc7fcc7400d3490d5bd58a225c210434" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3adc7fcc7400d3490d5bd58a225c210434" kindref="member">ERROR_RUNNING</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Configuration</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a29fe5781cb813c4fc13f9ed91b9b2378" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a29fe5781cb813c4fc13f9ed91b9b2378" kindref="member">ERROR_OPT_UNSUPPORTED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="32" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ac8d7329a9083105d05aa8f5e0877a0cc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ac8d7329a9083105d05aa8f5e0877a0cc" kindref="member">ERROR_OPT_INVARG</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="33" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a9c3336d11c3f11b5b0c049c969481e73" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a9c3336d11c3f11b5b0c049c969481e73" kindref="member">ERROR_OPT_LOCKED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Property<sp/>storage</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a31846fcd73423f08cca08d9acf9b3f8e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a31846fcd73423f08cca08d9acf9b3f8e" kindref="member">ERROR_INVALID_KEY</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="37" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a9294dc250d7e5f76ff3ec77e33431665" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a9294dc250d7e5f76ff3ec77e33431665" kindref="member">ERROR_SYNTAX</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Memory</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ac0a554045048d2fb61387cf735676f69" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ac0a554045048d2fb61387cf735676f69" kindref="member">ERROR_OUT_OF_MEMORY</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>File<sp/>IO</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a4eeae91e8fc0b68d8003bf6f02eef060" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a4eeae91e8fc0b68d8003bf6f02eef060" kindref="member">ERROR_DIR_NOT_FOUND</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="44" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a6292b68f782fe0bdaac9afeed2fa1954" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a6292b68f782fe0bdaac9afeed2fa1954" kindref="member">ERROR_DIR_ACCESS_DENIED</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="45" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a006dc4629b952fadd2ac75b912f30314" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a006dc4629b952fadd2ac75b912f30314" kindref="member">ERROR_DIR_CANT_CREATE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="46" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ad3d4451b8a1e1c3c6f67ea8666e57bbd" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ad3d4451b8a1e1c3c6f67ea8666e57bbd" kindref="member">ERROR_DIR_NOT_EMPTY</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="47" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a25792ced3439733c593173a3b7420ba6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a25792ced3439733c593173a3b7420ba6" kindref="member">ERROR_FILE_NOT_FOUND</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="48" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a9c174c9b266e3a70ec4895d4c61ac047" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a9c174c9b266e3a70ec4895d4c61ac047" kindref="member">ERROR_FILE_EXISTS</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="49" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a84d2f270ae4b33d6046a7583ef1d2886" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a84d2f270ae4b33d6046a7583ef1d2886" kindref="member">ERROR_FILE_IS_DIRECTORY</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="50" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a7eaa57d4fd426bde506577d445b92725" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a7eaa57d4fd426bde506577d445b92725" kindref="member">ERROR_FILE_ACCESS_DENIED</ref>,<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="51" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a81d31f6c275ccf8cffb2cf8b4bea2195" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a81d31f6c275ccf8cffb2cf8b4bea2195" kindref="member">ERROR_FILE_TYPE_MISMATCH</ref>,<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="52" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a033ddbe542fecd694d4fe952255c795a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a033ddbe542fecd694d4fe952255c795a" kindref="member">ERROR_FILE_TYPE_UNSUPPORTED</ref>,</highlight></codeline>
+<codeline lineno="53" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a5221d42f76a3c65da8ee547f29948fe6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a5221d42f76a3c65da8ee547f29948fe6" kindref="member">ERROR_FILE_CANT_READ</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="54" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a918dc458ec15026ac44cb7bc11056471" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a918dc458ec15026ac44cb7bc11056471" kindref="member">ERROR_FILE_CANT_WRITE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="55" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a4827796d2732c98f7a26deb6e5532b81" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a4827796d2732c98f7a26deb6e5532b81" kindref="member">ERROR_FILE_CANT_CREATE</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Roms</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ad1d9f35c32fbca3b2619b93a478792eb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ad1d9f35c32fbca3b2619b93a478792eb" kindref="member">ERROR_ROM_BASIC_MISSING</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="59" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ae26fbb8e09bab208de6df1a37ea570ed" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ae26fbb8e09bab208de6df1a37ea570ed" kindref="member">ERROR_ROM_CHAR_MISSING</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="60" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a0bcbf029b5c317a2ebedbea62441659b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a0bcbf029b5c317a2ebedbea62441659b" kindref="member">ERROR_ROM_KERNAL_MISSING</ref>,<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="61" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a89efe101fe5cb267167a2626a9946576" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a89efe101fe5cb267167a2626a9946576" kindref="member">ERROR_ROM_DRIVE_MISSING</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="62" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a8bc4ac22f5e6ca12d31275a5c6ed3915" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a8bc4ac22f5e6ca12d31275a5c6ed3915" kindref="member">ERROR_ROM_MEGA65_MISMATCH</ref>,<sp/><sp/></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Recorder</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a237f74aa6764f4231056109509846136" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a237f74aa6764f4231056109509846136" kindref="member">ERROR_REC_LAUNCH</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Snapshots</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a6c137682ff8f4fc55c4b6b834fac6940" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a6c137682ff8f4fc55c4b6b834fac6940" kindref="member">ERROR_SNAP_TOO_OLD</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="69" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ada6d363a1ac0c77e500413064fe0cbf1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ada6d363a1ac0c77e500413064fe0cbf1" kindref="member">ERROR_SNAP_TOO_NEW</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="70" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a793af0086efdb0e923a8e6f85e12914e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a793af0086efdb0e923a8e6f85e12914e" kindref="member">ERROR_SNAP_IS_BETA</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="71" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a9aa1be001e158b5bad6afb7ed6125f65" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a9aa1be001e158b5bad6afb7ed6125f65" kindref="member">ERROR_SNAP_CORRUPTED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Drives</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a1ab5f70bbe545161fc991beaffd764d4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a1ab5f70bbe545161fc991beaffd764d4" kindref="member">ERROR_DRV_UNCONNECTED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Cartridges</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a57d9322f178b3ed152d45bcaec09da13" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a57d9322f178b3ed152d45bcaec09da13" kindref="member">ERROR_CRT_UNKNOWN</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="78" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3acc1ee80c155471d2bbc5e4e716dfc0b4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3acc1ee80c155471d2bbc5e4e716dfc0b4" kindref="member">ERROR_CRT_UNSUPPORTED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="79" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a053564238e0140f0986c00f3d6a8291a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a053564238e0140f0986c00f3d6a8291a" kindref="member">ERROR_CRT_TOO_MANY_PACKETS</ref>,<sp/></highlight></codeline>
+<codeline lineno="80" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a58e818ec9b611fa386aa95f44784c258" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a58e818ec9b611fa386aa95f44784c258" kindref="member">ERROR_CRT_CORRUPTED_PACKET</ref>,<sp/></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>File<sp/>systems</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a66b5acdcfa247b85d366227990f385cd" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a66b5acdcfa247b85d366227990f385cd" kindref="member">ERROR_FS_UNSUPPORTED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="84" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ad06fe3246c0338eefc4376d41ab74158" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ad06fe3246c0338eefc4376d41ab74158" kindref="member">ERROR_FS_WRONG_CAPACITY</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="85" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a34bfbca57d8a9b1a49e21b4b952e170a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a34bfbca57d8a9b1a49e21b4b952e170a" kindref="member">ERROR_FS_CORRUPTED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="86" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ad6503a83766b1e4719e961ccd89107a6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ad6503a83766b1e4719e961ccd89107a6" kindref="member">ERROR_FS_HAS_NO_FILES</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="87" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a9a6252e84bf6d86addba81d11b11866a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a9a6252e84bf6d86addba81d11b11866a" kindref="member">ERROR_FS_HAS_CYCLES</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="88" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a0359654c53b1d2cefc266c98a8decf2b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a0359654c53b1d2cefc266c98a8decf2b" kindref="member">ERROR_FS_CANT_IMPORT</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="89" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a47498d5f4e2573f44e2297475fecac94" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a47498d5f4e2573f44e2297475fecac94" kindref="member">ERROR_FS_EXPECTED_VAL</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="90" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a689846c3d646a45a1438a51d8abcc564" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a689846c3d646a45a1438a51d8abcc564" kindref="member">ERROR_FS_EXPECTED_MIN</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="91" refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a85910c60d08d20a7c047d3bed7b9f79d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a85910c60d08d20a7c047d3bed7b9f79d" kindref="member">ERROR_FS_EXPECTED_MAX</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/>ERROR_COUNT</highlight></codeline>
+<codeline lineno="94"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3" kindref="member">ERROR_CODE</ref><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3" kindref="member">ErrorCode</ref>;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">ErrorCodeEnum<sp/>:<sp/>util::Reflection&lt;ErrorCodeEnum,<sp/>ErrorCode&gt;<sp/>{</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>minVal<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>maxVal<sp/>=<sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a85910c60d08d20a7c047d3bed7b9f79d" kindref="member">ERROR_FS_EXPECTED_MAX</ref>;</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>isValid(</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>value)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>value<sp/>&gt;=<sp/>minVal<sp/>&amp;&amp;<sp/>value<sp/>&lt;=<sp/>maxVal;<sp/>}</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*prefix()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ERROR&quot;</highlight><highlight class="normal">;<sp/>}</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*key(<ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3" kindref="member">ErrorCode</ref><sp/>value)</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(value)<sp/>{</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3aadeb5032c03491611646c1c64f7c0e0c" kindref="member">ERROR_OK</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;OK&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a2c8108ceb9a85cecbbe3af50dbc1cf8c" kindref="member">ERROR_UNKNOWN</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;UNKNOWN&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ad15dfe854b0141a245bd0983c5421305" kindref="member">ERROR_POWERED_OFF</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;POWERED_OFF&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a237d77aa10791ffeba791b0cc3c44019" kindref="member">ERROR_POWERED_ON</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;POWERED_ON&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3adc7fcc7400d3490d5bd58a225c210434" kindref="member">ERROR_RUNNING</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RUNNING&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a29fe5781cb813c4fc13f9ed91b9b2378" kindref="member">ERROR_OPT_UNSUPPORTED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;OPT_UNSUPPORTED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ac8d7329a9083105d05aa8f5e0877a0cc" kindref="member">ERROR_OPT_INVARG</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;OPT_INV_ARG&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a9c3336d11c3f11b5b0c049c969481e73" kindref="member">ERROR_OPT_LOCKED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;OPT_LOCKED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a31846fcd73423f08cca08d9acf9b3f8e" kindref="member">ERROR_INVALID_KEY</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;INVALID_KEY&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a9294dc250d7e5f76ff3ec77e33431665" kindref="member">ERROR_SYNTAX</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SYNTAX&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ac0a554045048d2fb61387cf735676f69" kindref="member">ERROR_OUT_OF_MEMORY</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;OUT_OF_MEMORY&quot;</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="124"><highlight class="normal"></highlight></codeline>
-<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ac0a554045048d2fb61387cf735676f69" kindref="member">ERROR_OUT_OF_MEMORY</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;OUT_OF_MEMORY&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="126"><highlight class="normal"></highlight></codeline>
-<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a4eeae91e8fc0b68d8003bf6f02eef060" kindref="member">ERROR_DIR_NOT_FOUND</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DIR_NOT_FOUND&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a6292b68f782fe0bdaac9afeed2fa1954" kindref="member">ERROR_DIR_ACCESS_DENIED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DIR_ACCESS_DENIED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a006dc4629b952fadd2ac75b912f30314" kindref="member">ERROR_DIR_CANT_CREATE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DIR_CANT_CREATE&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ad3d4451b8a1e1c3c6f67ea8666e57bbd" kindref="member">ERROR_DIR_NOT_EMPTY</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DIR_NOT_EMPTY&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a25792ced3439733c593173a3b7420ba6" kindref="member">ERROR_FILE_NOT_FOUND</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILE_NOT_FOUND&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a9c174c9b266e3a70ec4895d4c61ac047" kindref="member">ERROR_FILE_EXISTS</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILE_EXISTS&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a84d2f270ae4b33d6046a7583ef1d2886" kindref="member">ERROR_FILE_IS_DIRECTORY</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILE_IS_DIRECtORY&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a7eaa57d4fd426bde506577d445b92725" kindref="member">ERROR_FILE_ACCESS_DENIED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILE_ACCESS_DENIED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a81d31f6c275ccf8cffb2cf8b4bea2195" kindref="member">ERROR_FILE_TYPE_MISMATCH</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILE_TYPE_MISMATCH&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a033ddbe542fecd694d4fe952255c795a" kindref="member">ERROR_FILE_TYPE_UNSUPPORTED</ref>:<sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILE_TYPE_UNSUPPORTED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a5221d42f76a3c65da8ee547f29948fe6" kindref="member">ERROR_FILE_CANT_READ</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILE_CANT_READ&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a918dc458ec15026ac44cb7bc11056471" kindref="member">ERROR_FILE_CANT_WRITE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILE_CANT_WRITE&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a4827796d2732c98f7a26deb6e5532b81" kindref="member">ERROR_FILE_CANT_CREATE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILE_CANT_CREATE&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="140"><highlight class="normal"></highlight></codeline>
-<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ad1d9f35c32fbca3b2619b93a478792eb" kindref="member">ERROR_ROM_BASIC_MISSING</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ROM_BASIC_MISSING&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ae26fbb8e09bab208de6df1a37ea570ed" kindref="member">ERROR_ROM_CHAR_MISSING</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ROM_CHAR_MISSING&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a0bcbf029b5c317a2ebedbea62441659b" kindref="member">ERROR_ROM_KERNAL_MISSING</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ROM_KERNAL_MISSING&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a89efe101fe5cb267167a2626a9946576" kindref="member">ERROR_ROM_DRIVE_MISSING</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ROM_DRIVE_MISSING&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a8bc4ac22f5e6ca12d31275a5c6ed3915" kindref="member">ERROR_ROM_MEGA65_MISMATCH</ref>:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ROM_MEGA65_MISMATCH&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a4eeae91e8fc0b68d8003bf6f02eef060" kindref="member">ERROR_DIR_NOT_FOUND</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DIR_NOT_FOUND&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a6292b68f782fe0bdaac9afeed2fa1954" kindref="member">ERROR_DIR_ACCESS_DENIED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DIR_ACCESS_DENIED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a006dc4629b952fadd2ac75b912f30314" kindref="member">ERROR_DIR_CANT_CREATE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DIR_CANT_CREATE&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ad3d4451b8a1e1c3c6f67ea8666e57bbd" kindref="member">ERROR_DIR_NOT_EMPTY</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DIR_NOT_EMPTY&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a25792ced3439733c593173a3b7420ba6" kindref="member">ERROR_FILE_NOT_FOUND</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILE_NOT_FOUND&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a9c174c9b266e3a70ec4895d4c61ac047" kindref="member">ERROR_FILE_EXISTS</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILE_EXISTS&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a84d2f270ae4b33d6046a7583ef1d2886" kindref="member">ERROR_FILE_IS_DIRECTORY</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILE_IS_DIRECtORY&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a7eaa57d4fd426bde506577d445b92725" kindref="member">ERROR_FILE_ACCESS_DENIED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILE_ACCESS_DENIED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a81d31f6c275ccf8cffb2cf8b4bea2195" kindref="member">ERROR_FILE_TYPE_MISMATCH</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILE_TYPE_MISMATCH&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a033ddbe542fecd694d4fe952255c795a" kindref="member">ERROR_FILE_TYPE_UNSUPPORTED</ref>:<sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILE_TYPE_UNSUPPORTED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a5221d42f76a3c65da8ee547f29948fe6" kindref="member">ERROR_FILE_CANT_READ</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILE_CANT_READ&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a918dc458ec15026ac44cb7bc11056471" kindref="member">ERROR_FILE_CANT_WRITE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILE_CANT_WRITE&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a4827796d2732c98f7a26deb6e5532b81" kindref="member">ERROR_FILE_CANT_CREATE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILE_CANT_CREATE&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ad1d9f35c32fbca3b2619b93a478792eb" kindref="member">ERROR_ROM_BASIC_MISSING</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ROM_BASIC_MISSING&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ae26fbb8e09bab208de6df1a37ea570ed" kindref="member">ERROR_ROM_CHAR_MISSING</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ROM_CHAR_MISSING&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a0bcbf029b5c317a2ebedbea62441659b" kindref="member">ERROR_ROM_KERNAL_MISSING</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ROM_KERNAL_MISSING&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a89efe101fe5cb267167a2626a9946576" kindref="member">ERROR_ROM_DRIVE_MISSING</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ROM_DRIVE_MISSING&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a8bc4ac22f5e6ca12d31275a5c6ed3915" kindref="member">ERROR_ROM_MEGA65_MISMATCH</ref>:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ROM_MEGA65_MISMATCH&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a237f74aa6764f4231056109509846136" kindref="member">ERROR_REC_LAUNCH</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;REC_LAUNCH&quot;</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="146"><highlight class="normal"></highlight></codeline>
-<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a237f74aa6764f4231056109509846136" kindref="member">ERROR_REC_LAUNCH</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;REC_LAUNCH&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="148"><highlight class="normal"></highlight></codeline>
-<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a6c137682ff8f4fc55c4b6b834fac6940" kindref="member">ERROR_SNAP_TOO_OLD</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SNAP_TOO_OLD&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ada6d363a1ac0c77e500413064fe0cbf1" kindref="member">ERROR_SNAP_TOO_NEW</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SNAP_TOO_NEW&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a793af0086efdb0e923a8e6f85e12914e" kindref="member">ERROR_SNAP_IS_BETA</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SNAP_IS_BETA&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a9aa1be001e158b5bad6afb7ed6125f65" kindref="member">ERROR_SNAP_CORRUPTED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SNAP_CORRUPTED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a1ab5f70bbe545161fc991beaffd764d4" kindref="member">ERROR_DRV_UNCONNECTED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRV_UNCONNECTED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="155"><highlight class="normal"></highlight></codeline>
-<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a57d9322f178b3ed152d45bcaec09da13" kindref="member">ERROR_CRT_UNKNOWN</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ERROR_CRT_UNKNOWN&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3acc1ee80c155471d2bbc5e4e716dfc0b4" kindref="member">ERROR_CRT_UNSUPPORTED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CRT_UNSUPPORTED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a053564238e0140f0986c00f3d6a8291a" kindref="member">ERROR_CRT_TOO_MANY_PACKETS</ref>:<sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CRT_TOO_MANY_PACKETS&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a58e818ec9b611fa386aa95f44784c258" kindref="member">ERROR_CRT_CORRUPTED_PACKET</ref>:<sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CRT_CORRUPTED_PACKET&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a66b5acdcfa247b85d366227990f385cd" kindref="member">ERROR_FS_UNSUPPORTED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FS_UNSUPPORTED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ad06fe3246c0338eefc4376d41ab74158" kindref="member">ERROR_FS_WRONG_CAPACITY</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FS_WRONG_CAPACITY&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a34bfbca57d8a9b1a49e21b4b952e170a" kindref="member">ERROR_FS_CORRUPTED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FS_CORRUPTED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3ad6503a83766b1e4719e961ccd89107a6" kindref="member">ERROR_FS_HAS_NO_FILES</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ERROR_FS_HAS_NO_FILES&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a9a6252e84bf6d86addba81d11b11866a" kindref="member">ERROR_FS_HAS_CYCLES</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FS_HAS_CYCLES&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a0359654c53b1d2cefc266c98a8decf2b" kindref="member">ERROR_FS_CANT_IMPORT</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FS_CANT_IMPORT&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a47498d5f4e2573f44e2297475fecac94" kindref="member">ERROR_FS_EXPECTED_VAL</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FS_EXPECTED_VAL&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a689846c3d646a45a1438a51d8abcc564" kindref="member">ERROR_FS_EXPECTED_MIN</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FS_EXPECTED_MIN&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__doxy__types_1gga52f90e25735e172d279183e61d90d3e3a85910c60d08d20a7c047d3bed7b9f79d" kindref="member">ERROR_FS_EXPECTED_MAX</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FS_EXPECTED_MAX&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="170"><highlight class="normal"></highlight></codeline>
-<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>ERROR_COUNT:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;???&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;???&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="175"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="176"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="177"><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a6c137682ff8f4fc55c4b6b834fac6940" kindref="member">ERROR_SNAP_TOO_OLD</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SNAP_TOO_OLD&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ada6d363a1ac0c77e500413064fe0cbf1" kindref="member">ERROR_SNAP_TOO_NEW</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SNAP_TOO_NEW&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a793af0086efdb0e923a8e6f85e12914e" kindref="member">ERROR_SNAP_IS_BETA</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SNAP_IS_BETA&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a9aa1be001e158b5bad6afb7ed6125f65" kindref="member">ERROR_SNAP_CORRUPTED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SNAP_CORRUPTED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a1ab5f70bbe545161fc991beaffd764d4" kindref="member">ERROR_DRV_UNCONNECTED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRV_UNCONNECTED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a57d9322f178b3ed152d45bcaec09da13" kindref="member">ERROR_CRT_UNKNOWN</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ERROR_CRT_UNKNOWN&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3acc1ee80c155471d2bbc5e4e716dfc0b4" kindref="member">ERROR_CRT_UNSUPPORTED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CRT_UNSUPPORTED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a053564238e0140f0986c00f3d6a8291a" kindref="member">ERROR_CRT_TOO_MANY_PACKETS</ref>:<sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CRT_TOO_MANY_PACKETS&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a58e818ec9b611fa386aa95f44784c258" kindref="member">ERROR_CRT_CORRUPTED_PACKET</ref>:<sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CRT_CORRUPTED_PACKET&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a66b5acdcfa247b85d366227990f385cd" kindref="member">ERROR_FS_UNSUPPORTED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FS_UNSUPPORTED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ad06fe3246c0338eefc4376d41ab74158" kindref="member">ERROR_FS_WRONG_CAPACITY</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FS_WRONG_CAPACITY&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a34bfbca57d8a9b1a49e21b4b952e170a" kindref="member">ERROR_FS_CORRUPTED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FS_CORRUPTED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ad6503a83766b1e4719e961ccd89107a6" kindref="member">ERROR_FS_HAS_NO_FILES</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ERROR_FS_HAS_NO_FILES&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a9a6252e84bf6d86addba81d11b11866a" kindref="member">ERROR_FS_HAS_CYCLES</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FS_HAS_CYCLES&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a0359654c53b1d2cefc266c98a8decf2b" kindref="member">ERROR_FS_CANT_IMPORT</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FS_CANT_IMPORT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a47498d5f4e2573f44e2297475fecac94" kindref="member">ERROR_FS_EXPECTED_VAL</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FS_EXPECTED_VAL&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a689846c3d646a45a1438a51d8abcc564" kindref="member">ERROR_FS_EXPECTED_MIN</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FS_EXPECTED_MIN&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3a85910c60d08d20a7c047d3bed7b9f79d" kindref="member">ERROR_FS_EXPECTED_MAX</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FS_EXPECTED_MAX&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>ERROR_COUNT:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;???&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;???&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="173"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
     </programlisting>
     <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/ErrorTypes.h"/>
   </compounddef>

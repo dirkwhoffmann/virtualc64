@@ -1,0 +1,64 @@
+\doxysection{Any\+Collection.\+h}
+\hypertarget{_any_collection_8h_source}{}\label{_any_collection_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h@{/Users/hoff/Retro/virtualc64/Emulator/Media/AnyCollection.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}AnyFile.h"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }AnyCollection\ :\ \textcolor{keyword}{public}\ AnyFile\ \{}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00022\ \ \ \ \ }
+\DoxyCodeLine{00023\ \ \ \ \ AnyCollection()\ :\ AnyFile()\ \{\ \}}
+\DoxyCodeLine{00024\ \ \ \ \ AnyCollection(isize\ capacity)\ :\ AnyFile(capacity)\ \{\ \}}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~AnyCollection()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00026\ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ name\ of\ this\ collection}}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{virtual}\ PETName<16>\ collectionName()\ =\ 0;}
+\DoxyCodeLine{00029\ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ number\ of\ items\ stored\ in\ this\ collection}}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{virtual}\ isize\ collectionCount()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00032\ \ \ \ \ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ name\ of\ a\ certain\ item}}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{virtual}\ PETName<16>\ itemName(isize\ nr)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00035\ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ size\ of\ a\ certain\ in\ bytes}}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{virtual}\ isize\ itemSize(isize\ nr)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{comment}{//\ Reads\ a\ byte\ from\ a\ certain\ item}}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{virtual}\ u8\ readByte(isize\ nr,\ isize\ pos)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{comment}{//\ Derived\ functions}}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{comment}{//\ Reads\ a\ word\ from\ a\ certain\ item\ in\ little\ endian\ or\ big\ endian\ format}}
+\DoxyCodeLine{00048\ \ \ \ \ u16\ readWordBE(isize\ nr,\ isize\ pos)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00049\ \ \ \ \ u16\ readWordLE(isize\ nr,\ isize\ pos)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00050\ \ \ \ \ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{comment}{//\ Return\ the\ load\ address\ of\ this\ item}}
+\DoxyCodeLine{00052\ \ \ \ \ u16\ itemLoadAddr(isize\ nr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{comment}{//\ Copies\ an\ item\ into\ a\ buffer}}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ copyItem(isize\ nr,\ u8\ *buf,\ isize\ len,\ isize\ offset\ =\ 0)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00056\ \};}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \}}
+
+\end{DoxyCode}

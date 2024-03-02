@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="dir_6b79b23ee49a90c4b025118d2044bedb" kind="dir">
+    <compoundname>/Users/hoff/Retro/virtualc64/Emulator/Misc/RegressionTester</compoundname>
+    <innerfile refid="_regression_tester_8cpp">RegressionTester.cpp</innerfile>
+    <innerfile refid="_regression_tester_8h">RegressionTester.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Misc/RegressionTester/"/>
+  </compounddef>
+</doxygen>

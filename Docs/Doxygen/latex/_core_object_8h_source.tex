@@ -1,0 +1,130 @@
+\doxysection{Core\+Object.\+h}
+\hypertarget{_core_object_8h_source}{}\label{_core_object_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Base/CoreObject.h@{/Users/hoff/Retro/virtualc64/Emulator/Base/CoreObject.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_error_8h}{Error.h}}"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Inspectable.h"{}}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{comment}{/*\ Object\ model:}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ *\ |\ \ \ CoreObject\ \ \ |}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ *\ |\ CoreComponent\ \ |}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ |\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ |-\/-\/>|\ \ \ \ \ Thread\ \ \ \ \ |-\/-\/>|\ \ \ \ \ C64\ \ \ \ \ \ |}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ |\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ |\ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ |-\/-\/>|\ \ SubComponent\ \ |}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ \ \ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00037\ \textcolor{comment}{\ *\ CoreObject\ is\ the\ base\ class\ for\ all\ C64\ related\ classes.\ It\ provides\ a}}
+\DoxyCodeLine{00038\ \textcolor{comment}{\ *\ a\ textual\ description\ for\ the\ object\ as\ well\ as\ various\ functions\ for}}
+\DoxyCodeLine{00039\ \textcolor{comment}{\ *\ printing\ debug\ information.}}
+\DoxyCodeLine{00040\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00041\ \textcolor{comment}{\ *\ CoreComponent\ defines\ the\ base\ functionality\ of\ all\ hardware\ components.\ It}}
+\DoxyCodeLine{00042\ \textcolor{comment}{\ *\ comprises\ functions\ for\ initializing,\ configuring,\ and\ serializing\ the}}
+\DoxyCodeLine{00043\ \textcolor{comment}{\ *\ object,\ as\ well\ as\ functions\ for\ powering\ up\ and\ down,\ running\ and}}
+\DoxyCodeLine{00044\ \textcolor{comment}{\ *\ pausing.\ Furthermore,\ a\ 'SYNCHRONIZED'\ macro\ is\ provided\ to\ prevent\ mutual}}
+\DoxyCodeLine{00045\ \textcolor{comment}{\ *\ execution\ of\ certain\ code\ blocks.}}
+\DoxyCodeLine{00046\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00047\ \textcolor{comment}{\ *\ Thread\ adds\ the\ ability\ to\ run\ the\ component\ asynchroneously.\ It\ implements}}
+\DoxyCodeLine{00048\ \textcolor{comment}{\ *\ the\ emulator's\ state\ model.}}
+\DoxyCodeLine{00049\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{keyword}{class\ }CoreObject\ \{}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ verbose;}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{comment}{//\ Initializing}}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00060\ \ \ \ \ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00062\ \ \ \ \ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~CoreObject()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00064\ \ \ \ \ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ name\ for\ this\ component\ (e.g.,\ "{}CPU"{}\ or\ "{}VICII"{})}}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00067\ \ \ \ \ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{comment}{//\ Called\ by\ debug()\ and\ trace()\ to\ produce\ a\ detailed\ debug\ output}}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ prefix()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00070\ \};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{comment}{/*\ This\ file\ provides\ multiple\ macros\ for\ printing\ messages:}}
+\DoxyCodeLine{00073\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00074\ \textcolor{comment}{\ *\ \ \ -\/\ msg\ \ \ \ Information\ message\ \ \ (Shows\ up\ in\ all\ builds)}}
+\DoxyCodeLine{00075\ \textcolor{comment}{\ *\ \ \ -\/\ warn\ \ \ Warning\ message\ \ \ \ \ \ \ (Shows\ up\ in\ all\ builds)}}
+\DoxyCodeLine{00076\ \textcolor{comment}{\ *\ \ \ -\/\ fatal\ \ Error\ message\ +\ Exit\ \ (Shows\ up\ in\ all\ builds)}}
+\DoxyCodeLine{00077\ \textcolor{comment}{\ *\ \ \ -\/\ debug\ \ Debug\ message\ \ \ \ \ \ \ \ \ (Shows\ up\ in\ debug\ builds\ only)}}
+\DoxyCodeLine{00078\ \textcolor{comment}{\ *\ \ \ -\/\ plain\ \ Plain\ debug\ message\ \ \ (Shows\ up\ in\ debug\ builds\ only)}}
+\DoxyCodeLine{00079\ \textcolor{comment}{\ *\ \ \ -\/\ trace\ \ Detailed\ debug\ output\ (Shows\ up\ in\ debug\ builds\ only)}}
+\DoxyCodeLine{00080\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00081\ \textcolor{comment}{\ *\ Debug\ messages\ are\ prefixed\ by\ the\ component\ name\ and\ a\ line\ number.\ Trace}}
+\DoxyCodeLine{00082\ \textcolor{comment}{\ *\ messages\ are\ prefixed\ by\ a\ more\ detailed\ string\ description\ produced\ by\ the}}
+\DoxyCodeLine{00083\ \textcolor{comment}{\ *\ prefix()\ function.}}
+\DoxyCodeLine{00084\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00085\ \textcolor{comment}{\ *\ Debug,\ plain,\ and\ trace\ messages\ are\ accompanied\ by\ an\ optional\ 'enable'}}
+\DoxyCodeLine{00086\ \textcolor{comment}{\ *\ parameter.\ If\ 0\ is\ passed\ in,\ no\ output\ will\ be\ generated.\ In\ addition,}}
+\DoxyCodeLine{00087\ \textcolor{comment}{\ *\ variable\ 'verbose'\ is\ checked\ which\ is\ set\ to\ true\ by\ default.\ By\ setting}}
+\DoxyCodeLine{00088\ \textcolor{comment}{\ *\ this\ variable\ to\ false,\ debug\ output\ can\ be\ silenced\ temporarily.}}
+\DoxyCodeLine{00089\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00090\ \textcolor{comment}{\ *\ Sidenote:\ In\ previous\ releases\ the\ printing\ macros\ were\ implemented\ in\ form}}
+\DoxyCodeLine{00091\ \textcolor{comment}{\ *\ of\ variadic\ functions.\ Although\ this\ might\ seem\ to\ be\ superior\ at\ first}}
+\DoxyCodeLine{00092\ \textcolor{comment}{\ *\ glance,\ it\ is\ not.\ Using\ macros\ allows\ modern\ compilers\ to\ verify\ the\ format}}
+\DoxyCodeLine{00093\ \textcolor{comment}{\ *\ strings\ against\ the\ data\ types\ of\ the\ provided\ arguments.\ This\ check\ can't}}
+\DoxyCodeLine{00094\ \textcolor{comment}{\ *\ be\ performed\ when\ variadic\ functions\ are\ used.}}
+\DoxyCodeLine{00095\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \textcolor{preprocessor}{\#define\ msg(format,\ ...)\ \(\backslash\)}}
+\DoxyCodeLine{00098\ \textcolor{preprocessor}{fprintf(stderr,\ format,\ \#\#\_\_VA\_ARGS\_\_);}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \textcolor{preprocessor}{\#define\ warn(format,\ ...)\ \(\backslash\)}}
+\DoxyCodeLine{00101\ \textcolor{preprocessor}{fprintf(stderr,\ "{}Warning:\ "{}\ format,\ \#\#\_\_VA\_ARGS\_\_);}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \textcolor{preprocessor}{\#define\ fatal(format,\ ...)\ \(\backslash\)}}
+\DoxyCodeLine{00104\ \textcolor{preprocessor}{\{\ fprintf(stderr,\ "{}Fatal:\ "{}\ format,\ \#\#\_\_VA\_ARGS\_\_);\ exit(1);\ \}}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \textcolor{preprocessor}{\#define\ debug(enable,\ format,\ ...)\ \(\backslash\)}}
+\DoxyCodeLine{00107\ \textcolor{preprocessor}{if\ (enable)\ \{\ if\ (verbose)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00108\ \textcolor{preprocessor}{fprintf(stderr,\ "{}\%s:\%d\ "{}\ format,\ getDescription(),\ \_\_LINE\_\_,\ \#\#\_\_VA\_ARGS\_\_);\ \}\}}}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \textcolor{preprocessor}{\#define\ plain(enable,\ format,\ ...)\ \(\backslash\)}}
+\DoxyCodeLine{00111\ \textcolor{preprocessor}{if\ (enable)\ \{\ if\ (verbose)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00112\ \textcolor{preprocessor}{fprintf(stderr,\ format,\ \#\#\_\_VA\_ARGS\_\_);\ \}\}}}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \textcolor{preprocessor}{\#define\ trace(enable,\ format,\ ...)\ \(\backslash\)}}
+\DoxyCodeLine{00115\ \textcolor{preprocessor}{if\ (enable)\ \{\ if\ (verbose)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00116\ \textcolor{preprocessor}{prefix();\ \(\backslash\)}}
+\DoxyCodeLine{00117\ \textcolor{preprocessor}{fprintf(stderr,\ "{}\%s:\%d\ "{}\ format,\ getDescription(),\ \_\_LINE\_\_,\ \#\#\_\_VA\_ARGS\_\_);\ \}\}}}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \textcolor{preprocessor}{\#define\ xfiles(format,\ ...)\ \(\backslash\)}}
+\DoxyCodeLine{00120\ \textcolor{preprocessor}{if\ (XFILES)\ \{\ if\ (verbose)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00121\ \textcolor{preprocessor}{prefix();\ \(\backslash\)}}
+\DoxyCodeLine{00122\ \textcolor{preprocessor}{fprintf(stderr,\ "{}XFILES:\ "{}\ format,\ \#\#\_\_VA\_ARGS\_\_);\ \}\}}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \}}
+
+\end{DoxyCode}

@@ -9,14 +9,12 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
 #include "Aliases.h"
 #include "Reflection.h"
-
-/// @addtogroup doxy_types Types
-/// @{
 
 /// Error condition
 enum_long(ERROR_CODE)
@@ -174,5 +172,3 @@ struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
     }
 };
 #endif
-
-/// @}

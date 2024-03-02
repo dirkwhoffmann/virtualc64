@@ -1,0 +1,108 @@
+\doxysection{vc64\+::Any\+File Class Reference}
+\hypertarget{classvc64_1_1_any_file}{}\label{classvc64_1_1_any_file}\index{vc64::AnyFile@{vc64::AnyFile}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_any_file_a5a036fda46ad75cda310157aace55f73}\label{classvc64_1_1_any_file_a5a036fda46ad75cda310157aace55f73} 
+{\bfseries Any\+File} (isize capacity)
+\item 
+\Hypertarget{classvc64_1_1_any_file_ac734a20b4c309a84c275a773ca3df60d}\label{classvc64_1_1_any_file_ac734a20b4c309a84c275a773ca3df60d} 
+void {\bfseries init} (isize capacity)
+\item 
+\Hypertarget{classvc64_1_1_any_file_a0c85ade04b494932cfd05be8969a5170}\label{classvc64_1_1_any_file_a0c85ade04b494932cfd05be8969a5170} 
+void {\bfseries init} (const string \&path) throws
+\item 
+\Hypertarget{classvc64_1_1_any_file_a68011b5dfea05008375629cc233e5100}\label{classvc64_1_1_any_file_a68011b5dfea05008375629cc233e5100} 
+void {\bfseries init} (const string \&path, std\+::istream \&stream) throws
+\item 
+\Hypertarget{classvc64_1_1_any_file_ab650113d803492cd225753a3f58dd877}\label{classvc64_1_1_any_file_ab650113d803492cd225753a3f58dd877} 
+void {\bfseries init} (std\+::istream \&stream) throws
+\item 
+\Hypertarget{classvc64_1_1_any_file_a3c8d04bbb9fdfd05ea7f1dc8efc54016}\label{classvc64_1_1_any_file_a3c8d04bbb9fdfd05ea7f1dc8efc54016} 
+void {\bfseries init} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len) throws
+\item 
+\Hypertarget{classvc64_1_1_any_file_ab84764d78d6f620f80d942796b1aa1f0}\label{classvc64_1_1_any_file_ab84764d78d6f620f80d942796b1aa1f0} 
+void {\bfseries init} (FILE \texorpdfstring{$\ast$}{*}file) throws
+\item 
+\Hypertarget{classvc64_1_1_any_file_abf770dc34618d1bfc67a23c55c44e85c}\label{classvc64_1_1_any_file_abf770dc34618d1bfc67a23c55c44e85c} 
+virtual \mbox{\hyperlink{classvc64_1_1_p_e_t_name}{PETName}}$<$ 16 $>$ {\bfseries get\+Name} () const
+\item 
+\Hypertarget{classvc64_1_1_any_file_a2dd03067b59cb4a6c02646c2e5a8a1c4}\label{classvc64_1_1_any_file_a2dd03067b59cb4a6c02646c2e5a8a1c4} 
+virtual File\+Type {\bfseries type} () const
+\item 
+\Hypertarget{classvc64_1_1_any_file_a34a65043ea6edd72503e9d32d48fe673}\label{classvc64_1_1_any_file_a34a65043ea6edd72503e9d32d48fe673} 
+u8 {\bfseries get\+Data} (isize nr)
+\item 
+\Hypertarget{classvc64_1_1_any_file_a979934fcfdfeb8c68fcc470352d0edcf}\label{classvc64_1_1_any_file_a979934fcfdfeb8c68fcc470352d0edcf} 
+u64 {\bfseries fnv} () const
+\item 
+\Hypertarget{classvc64_1_1_any_file_ad74ebc6d4c511bf9013aede268cc483f}\label{classvc64_1_1_any_file_ad74ebc6d4c511bf9013aede268cc483f} 
+void {\bfseries strip} (isize count)
+\item 
+\Hypertarget{classvc64_1_1_any_file_ae9e72360ebb682344186a0227c77f041}\label{classvc64_1_1_any_file_ae9e72360ebb682344186a0227c77f041} 
+void {\bfseries flash} (u8 \texorpdfstring{$\ast$}{*}buf, isize offset=0) const
+\item 
+\Hypertarget{classvc64_1_1_any_file_a1219474084e9d60e4cbea9c0a6d7dcd4}\label{classvc64_1_1_any_file_a1219474084e9d60e4cbea9c0a6d7dcd4} 
+void {\bfseries write\+To\+Stream} (std\+::ostream \&stream) throws
+\item 
+\Hypertarget{classvc64_1_1_any_file_ab2dd3dbc31ee164578fbf199ba2c49ba}\label{classvc64_1_1_any_file_ab2dd3dbc31ee164578fbf199ba2c49ba} 
+void {\bfseries write\+To\+File} (const string \&path) throws
+\item 
+\Hypertarget{classvc64_1_1_any_file_adad618b6c94fcd35846b1edd740d7448}\label{classvc64_1_1_any_file_adad618b6c94fcd35846b1edd740d7448} 
+void {\bfseries write\+To\+Buffer} (u8 \texorpdfstring{$\ast$}{*}buf) throws
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual const char \texorpdfstring{$\ast$}{*} {\bfseries get\+Description} () const =0
+\item 
+virtual void {\bfseries prefix} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_any_file_ad47c49694822b542c3afbb8c57cc8533}\label{classvc64_1_1_any_file_ad47c49694822b542c3afbb8c57cc8533} 
+static File\+Type {\bfseries type} (const string \&path)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_any_file_a89548c3c156d0d989b19698860eda1ac}\label{classvc64_1_1_any_file_a89548c3c156d0d989b19698860eda1ac} 
+string {\bfseries path} = "{}"{}
+\item 
+\Hypertarget{classvc64_1_1_any_file_a26e482da8776c614eb0ba61fead71c22}\label{classvc64_1_1_any_file_a26e482da8776c614eb0ba61fead71c22} 
+u8 \texorpdfstring{$\ast$}{*} {\bfseries data} = nullptr
+\item 
+\Hypertarget{classvc64_1_1_any_file_a7ed08cce3080c43c7292063bf048f06f}\label{classvc64_1_1_any_file_a7ed08cce3080c43c7292063bf048f06f} 
+isize {\bfseries size} = 0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_any_file_a9fd0650226ab857e2da617fc9909cd90}\label{classvc64_1_1_any_file_a9fd0650226ab857e2da617fc9909cd90} 
+virtual bool {\bfseries is\+Compatible\+Path} (const string \&path)=0
+\item 
+\Hypertarget{classvc64_1_1_any_file_a78aefb71fdb4902838d9361f1658a031}\label{classvc64_1_1_any_file_a78aefb71fdb4902838d9361f1658a031} 
+virtual bool {\bfseries is\+Compatible\+Stream} (std\+::istream \&stream)=0
+\item 
+\Hypertarget{classvc64_1_1_any_file_ae0e3aa0d0a8c07187c688f5d98f13947}\label{classvc64_1_1_any_file_ae0e3aa0d0a8c07187c688f5d98f13947} 
+void {\bfseries read\+From\+Stream} (std\+::istream \&stream) throws
+\item 
+\Hypertarget{classvc64_1_1_any_file_a3668025b9000a087977407b64c9473fd}\label{classvc64_1_1_any_file_a3668025b9000a087977407b64c9473fd} 
+void {\bfseries read\+From\+File} (const string \&path) throws
+\item 
+\Hypertarget{classvc64_1_1_any_file_a8efe89e48777753f29e4a81ad2cee2a1}\label{classvc64_1_1_any_file_a8efe89e48777753f29e4a81ad2cee2a1} 
+void {\bfseries read\+From\+Buffer} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len) throws
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+static bool {\bfseries verbose} = true
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Media/Any\+File.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Media/Any\+File.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classutil_1_1_mutex" kind="class" language="C++" prot="public">
+    <compoundname>util::Mutex</compoundname>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classutil_1_1_mutex_1a120464589de0182f6abac6022d582440" prot="private" static="no" mutable="no">
+        <type>std::mutex</type>
+        <definition>std::mutex util::Mutex::mutex</definition>
+        <argsstring></argsstring>
+        <name>mutex</name>
+        <qualifiedname>util::Mutex::mutex</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Concurrency.h" line="23" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Concurrency.h" bodystart="23" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classutil_1_1_mutex_1a4292480a67a265cf1d89e71d62dcc652" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::Mutex::lock</definition>
+        <argsstring>()</argsstring>
+        <name>lock</name>
+        <qualifiedname>util::Mutex::lock</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Concurrency.h" line="27" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Concurrency.h" bodystart="27" bodyend="27"/>
+      </memberdef>
+      <memberdef kind="function" id="classutil_1_1_mutex_1a6d3a5d8b719988858e2ad623b901901e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void util::Mutex::unlock</definition>
+        <argsstring>()</argsstring>
+        <name>unlock</name>
+        <qualifiedname>util::Mutex::unlock</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Concurrency.h" line="28" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Concurrency.h" bodystart="28" bodyend="28"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Concurrency.h" line="21" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Concurrency.h" bodystart="22" bodyend="29"/>
+    <listofallmembers>
+      <member refid="classutil_1_1_mutex_1a4292480a67a265cf1d89e71d62dcc652" prot="public" virt="non-virtual"><scope>util::Mutex</scope><name>lock</name></member>
+      <member refid="classutil_1_1_mutex_1a120464589de0182f6abac6022d582440" prot="private" virt="non-virtual"><scope>util::Mutex</scope><name>mutex</name></member>
+      <member refid="classutil_1_1_mutex_1a6d3a5d8b719988858e2ad623b901901e" prot="public" virt="non-virtual"><scope>util::Mutex</scope><name>unlock</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

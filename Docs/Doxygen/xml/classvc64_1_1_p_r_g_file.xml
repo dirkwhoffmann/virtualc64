@@ -1,0 +1,368 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_p_r_g_file" kind="class" language="C++" prot="public">
+    <compoundname>vc64::PRGFile</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">vc64::AnyCollection</basecompoundref>
+    <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classvc64_1_1_p_r_g_file_1ae641337aa125a477938017c57ce52d18" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::PRGFile::isCompatible</definition>
+        <argsstring>(const string &amp;name)</argsstring>
+        <name>isCompatible</name>
+        <qualifiedname>vc64::PRGFile::isCompatible</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" line="27" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.cpp" bodystart="21" bodyend="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_r_g_file_1a7711ffc25a1a5595ba7ec38792dfb7bf" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::PRGFile::isCompatible</definition>
+        <argsstring>(std::istream &amp;stream)</argsstring>
+        <name>isCompatible</name>
+        <qualifiedname>vc64::PRGFile::isCompatible</qualifiedname>
+        <param>
+          <type>std::istream &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" line="28" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.cpp" bodystart="28" bodyend="31"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_p_r_g_file_1aca8836a573aa8ae06eea54ad7108393d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::PRGFile::PRGFile</definition>
+        <argsstring>()</argsstring>
+        <name>PRGFile</name>
+        <qualifiedname>vc64::PRGFile::PRGFile</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" line="35" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" bodystart="35" bodyend="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_r_g_file_1a07718f14541bfda21b9bd6e5729d1174" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::PRGFile::PRGFile</definition>
+        <argsstring>(isize capacity)</argsstring>
+        <name>PRGFile</name>
+        <qualifiedname>vc64::PRGFile::PRGFile</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>capacity</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" line="36" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" bodystart="36" bodyend="36"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_r_g_file_1ab62944d21db6d79f3d3bf6de60e2e414" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::PRGFile::PRGFile</definition>
+        <argsstring>(const string &amp;path)</argsstring>
+        <name>PRGFile</name>
+        <qualifiedname>vc64::PRGFile::PRGFile</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <exceptions> throws </exceptions>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" line="37" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" bodystart="37" bodyend="37"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_r_g_file_1af6f46cda95953b90bb21be69a8bb0ccd" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::PRGFile::PRGFile</definition>
+        <argsstring>(const u8 *buf, isize len)</argsstring>
+        <name>PRGFile</name>
+        <qualifiedname>vc64::PRGFile::PRGFile</qualifiedname>
+        <param>
+          <type>const u8 *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>len</declname>
+        </param>
+        <exceptions> throws </exceptions>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" line="38" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" bodystart="38" bodyend="38"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_r_g_file_1aa4704d3ea65d55ad9b1b5a950dab63e2" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::PRGFile::PRGFile</definition>
+        <argsstring>(class FileSystem &amp;fs)</argsstring>
+        <name>PRGFile</name>
+        <qualifiedname>vc64::PRGFile::PRGFile</qualifiedname>
+        <param>
+          <type>class FileSystem &amp;</type>
+          <declname>fs</declname>
+        </param>
+        <exceptions> throws </exceptions>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" line="39" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" bodystart="39" bodyend="39"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvc64_1_1_p_r_g_file_1a28b7fdff27dc35fc3b3e13103bfb166c" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::PRGFile::init</definition>
+        <argsstring>(FileSystem &amp;fs) throws</argsstring>
+        <name>init</name>
+        <qualifiedname>vc64::PRGFile::init</qualifiedname>
+        <param>
+          <type>FileSystem &amp;</type>
+          <declname>fs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" line="44" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.cpp" bodystart="34" bodyend="47"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_r_g_file_1a40675e7e45f14a58708e528ec1857b8d" prot="private" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::PRGFile::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::PRGFile::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" line="51" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" bodystart="51" bodyend="51"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_r_g_file_1a129da53bb6a33fa8211c7cfd7e0a29ff" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::PRGFile::isCompatiblePath</definition>
+        <argsstring>(const string &amp;path) override</argsstring>
+        <name>isCompatiblePath</name>
+        <qualifiedname>vc64::PRGFile::isCompatiblePath</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" line="58" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" bodystart="58" bodyend="58"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_r_g_file_1a161c4d12a1fb4815722fb81c2607f1f3" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::PRGFile::isCompatibleStream</definition>
+        <argsstring>(std::istream &amp;stream) override</argsstring>
+        <name>isCompatibleStream</name>
+        <qualifiedname>vc64::PRGFile::isCompatibleStream</qualifiedname>
+        <param>
+          <type>std::istream &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" line="59" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" bodystart="59" bodyend="59"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_r_g_file_1af8138fba5411ecdf377fc28d6197ce15" prot="private" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>FileType</type>
+        <definition>FileType vc64::PRGFile::type</definition>
+        <argsstring>() const override</argsstring>
+        <name>type</name>
+        <qualifiedname>vc64::PRGFile::type</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" line="60" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" bodystart="60" bodyend="60"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_r_g_file_1a1156b8e7d5d2808f87a129c10c3c3072" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>PETName&lt; 16 &gt;</type>
+        <definition>PETName&lt; 16 &gt; vc64::PRGFile::collectionName</definition>
+        <argsstring>() override</argsstring>
+        <name>collectionName</name>
+        <qualifiedname>vc64::PRGFile::collectionName</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" line="67" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.cpp" bodystart="50" bodyend="53"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_r_g_file_1abe30ec455827e722cc8c0148b87d8306" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::PRGFile::collectionCount</definition>
+        <argsstring>() const override</argsstring>
+        <name>collectionCount</name>
+        <qualifiedname>vc64::PRGFile::collectionCount</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" line="68" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.cpp" bodystart="56" bodyend="59"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_r_g_file_1a37a9efb4ef808269acb6afd1aa562ec1" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>PETName&lt; 16 &gt;</type>
+        <definition>PETName&lt; 16 &gt; vc64::PRGFile::itemName</definition>
+        <argsstring>(isize nr) const override</argsstring>
+        <name>itemName</name>
+        <qualifiedname>vc64::PRGFile::itemName</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" line="69" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.cpp" bodystart="62" bodyend="66"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_r_g_file_1a8b196366c1e65ca8ea7e2ac649cceccc" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::PRGFile::itemSize</definition>
+        <argsstring>(isize nr) const override</argsstring>
+        <name>itemSize</name>
+        <qualifiedname>vc64::PRGFile::itemSize</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" line="70" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.cpp" bodystart="69" bodyend="73"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_r_g_file_1a98bde088c08ad532a1e0ac4b18b8085b" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::PRGFile::readByte</definition>
+        <argsstring>(isize nr, isize pos) const override</argsstring>
+        <name>readByte</name>
+        <qualifiedname>vc64::PRGFile::readByte</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>pos</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" line="71" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.cpp" bodystart="76" bodyend="81"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" line="19" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PRGFile.h" bodystart="19" bodyend="72"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_any_collection_1a13b2ddaa4987287da177f7d3d2301b08" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>AnyCollection</name></member>
+      <member refid="classvc64_1_1_any_collection_1aa1f03ecacf935879096f732a4b0dd768" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>AnyCollection</name></member>
+      <member refid="classvc64_1_1_any_file_1a2402e3e1f185e9768c61131bafe44407" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>AnyFile</name></member>
+      <member refid="classvc64_1_1_any_file_1a5a036fda46ad75cda310157aace55f73" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>AnyFile</name></member>
+      <member refid="classvc64_1_1_p_r_g_file_1abe30ec455827e722cc8c0148b87d8306" prot="private" virt="non-virtual"><scope>vc64::PRGFile</scope><name>collectionCount</name></member>
+      <member refid="classvc64_1_1_p_r_g_file_1a1156b8e7d5d2808f87a129c10c3c3072" prot="private" virt="non-virtual"><scope>vc64::PRGFile</scope><name>collectionName</name></member>
+      <member refid="classvc64_1_1_any_collection_1a3d3d9bc6745f383e9e60e0fe0c7bc301" prot="public" virt="virtual"><scope>vc64::PRGFile</scope><name>copyItem</name></member>
+      <member refid="classvc64_1_1_any_file_1a26e482da8776c614eb0ba61fead71c22" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>data</name></member>
+      <member refid="classvc64_1_1_any_file_1ae9e72360ebb682344186a0227c77f041" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>flash</name></member>
+      <member refid="classvc64_1_1_any_file_1a979934fcfdfeb8c68fcc470352d0edcf" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>fnv</name></member>
+      <member refid="classvc64_1_1_any_file_1a34a65043ea6edd72503e9d32d48fe673" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>getData</name></member>
+      <member refid="classvc64_1_1_p_r_g_file_1a40675e7e45f14a58708e528ec1857b8d" prot="private" virt="non-virtual"><scope>vc64::PRGFile</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_any_file_1abf770dc34618d1bfc67a23c55c44e85c" prot="public" virt="virtual"><scope>vc64::PRGFile</scope><name>getName</name></member>
+      <member refid="classvc64_1_1_p_r_g_file_1a28b7fdff27dc35fc3b3e13103bfb166c" prot="private" virt="non-virtual"><scope>vc64::PRGFile</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1ac734a20b4c309a84c275a773ca3df60d" prot="public" virt="non-virtual" ambiguityscope="vc64::AnyCollection::"><scope>vc64::PRGFile</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1a0c85ade04b494932cfd05be8969a5170" prot="public" virt="non-virtual" ambiguityscope="vc64::AnyCollection::"><scope>vc64::PRGFile</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1a68011b5dfea05008375629cc233e5100" prot="public" virt="non-virtual" ambiguityscope="vc64::AnyCollection::"><scope>vc64::PRGFile</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1ab650113d803492cd225753a3f58dd877" prot="public" virt="non-virtual" ambiguityscope="vc64::AnyCollection::"><scope>vc64::PRGFile</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1a3c8d04bbb9fdfd05ea7f1dc8efc54016" prot="public" virt="non-virtual" ambiguityscope="vc64::AnyCollection::"><scope>vc64::PRGFile</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1ab84764d78d6f620f80d942796b1aa1f0" prot="public" virt="non-virtual" ambiguityscope="vc64::AnyCollection::"><scope>vc64::PRGFile</scope><name>init</name></member>
+      <member refid="classvc64_1_1_p_r_g_file_1ae641337aa125a477938017c57ce52d18" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>isCompatible</name></member>
+      <member refid="classvc64_1_1_p_r_g_file_1a7711ffc25a1a5595ba7ec38792dfb7bf" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>isCompatible</name></member>
+      <member refid="classvc64_1_1_p_r_g_file_1a129da53bb6a33fa8211c7cfd7e0a29ff" prot="private" virt="non-virtual"><scope>vc64::PRGFile</scope><name>isCompatiblePath</name></member>
+      <member refid="classvc64_1_1_p_r_g_file_1a161c4d12a1fb4815722fb81c2607f1f3" prot="private" virt="non-virtual"><scope>vc64::PRGFile</scope><name>isCompatibleStream</name></member>
+      <member refid="classvc64_1_1_any_collection_1a04fc08828f4d6bf703dbdacc00b11f8d" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>itemLoadAddr</name></member>
+      <member refid="classvc64_1_1_p_r_g_file_1a37a9efb4ef808269acb6afd1aa562ec1" prot="private" virt="non-virtual"><scope>vc64::PRGFile</scope><name>itemName</name></member>
+      <member refid="classvc64_1_1_p_r_g_file_1a8b196366c1e65ca8ea7e2ac649cceccc" prot="private" virt="non-virtual"><scope>vc64::PRGFile</scope><name>itemSize</name></member>
+      <member refid="classvc64_1_1_any_file_1a89548c3c156d0d989b19698860eda1ac" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>path</name></member>
+      <member refid="classvc64_1_1_core_object_1ab05f272c10fd455a9cafbb667293d044" prot="public" virt="virtual"><scope>vc64::PRGFile</scope><name>prefix</name></member>
+      <member refid="classvc64_1_1_p_r_g_file_1aca8836a573aa8ae06eea54ad7108393d" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>PRGFile</name></member>
+      <member refid="classvc64_1_1_p_r_g_file_1a07718f14541bfda21b9bd6e5729d1174" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>PRGFile</name></member>
+      <member refid="classvc64_1_1_p_r_g_file_1ab62944d21db6d79f3d3bf6de60e2e414" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>PRGFile</name></member>
+      <member refid="classvc64_1_1_p_r_g_file_1af6f46cda95953b90bb21be69a8bb0ccd" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>PRGFile</name></member>
+      <member refid="classvc64_1_1_p_r_g_file_1aa4704d3ea65d55ad9b1b5a950dab63e2" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>PRGFile</name></member>
+      <member refid="classvc64_1_1_p_r_g_file_1a98bde088c08ad532a1e0ac4b18b8085b" prot="private" virt="non-virtual"><scope>vc64::PRGFile</scope><name>readByte</name></member>
+      <member refid="classvc64_1_1_any_file_1a8efe89e48777753f29e4a81ad2cee2a1" prot="protected" virt="non-virtual"><scope>vc64::PRGFile</scope><name>readFromBuffer</name></member>
+      <member refid="classvc64_1_1_any_file_1a3668025b9000a087977407b64c9473fd" prot="protected" virt="non-virtual"><scope>vc64::PRGFile</scope><name>readFromFile</name></member>
+      <member refid="classvc64_1_1_any_file_1ae0e3aa0d0a8c07187c688f5d98f13947" prot="protected" virt="non-virtual"><scope>vc64::PRGFile</scope><name>readFromStream</name></member>
+      <member refid="classvc64_1_1_any_collection_1acef8ad71dd445fd8315bc1e418c8601e" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>readWordBE</name></member>
+      <member refid="classvc64_1_1_any_collection_1ae9e5bf6bbe6220252510110d4d484438" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>readWordLE</name></member>
+      <member refid="classvc64_1_1_any_file_1a7ed08cce3080c43c7292063bf048f06f" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>size</name></member>
+      <member refid="classvc64_1_1_any_file_1ad74ebc6d4c511bf9013aede268cc483f" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>strip</name></member>
+      <member refid="classvc64_1_1_p_r_g_file_1af8138fba5411ecdf377fc28d6197ce15" prot="private" virt="non-virtual"><scope>vc64::PRGFile</scope><name>type</name></member>
+      <member refid="classvc64_1_1_any_file_1ad47c49694822b542c3afbb8c57cc8533" prot="public" virt="non-virtual" ambiguityscope="vc64::AnyCollection::"><scope>vc64::PRGFile</scope><name>type</name></member>
+      <member refid="classvc64_1_1_core_object_1aa17ada334edf800da9ea768925ffa885" prot="protected" virt="non-virtual"><scope>vc64::PRGFile</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_any_file_1adad618b6c94fcd35846b1edd740d7448" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>writeToBuffer</name></member>
+      <member refid="classvc64_1_1_any_file_1ab2dd3dbc31ee164578fbf199ba2c49ba" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>writeToFile</name></member>
+      <member refid="classvc64_1_1_any_file_1a1219474084e9d60e4cbea9c0a6d7dcd4" prot="public" virt="non-virtual"><scope>vc64::PRGFile</scope><name>writeToStream</name></member>
+      <member refid="classvc64_1_1_any_collection_1a9cd5d1ddb4c8ffed48296a7c324e8cc5" prot="public" virt="virtual"><scope>vc64::PRGFile</scope><name>~AnyCollection</name></member>
+      <member refid="classvc64_1_1_any_file_1ab8de483b0e9c975ab6c2b35afd9f5f8c" prot="public" virt="virtual"><scope>vc64::PRGFile</scope><name>~AnyFile</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>vc64::PRGFile</scope><name>~CoreObject</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

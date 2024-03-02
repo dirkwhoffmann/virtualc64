@@ -1,0 +1,192 @@
+\doxysection{SIDTypes.\+h}
+\hypertarget{_s_i_d_types_8h_source}{}\label{_s_i_d_types_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h@{/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Aliases.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Reflection.h"{}}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{comment}{//}}
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ Enumerations}}
+\DoxyCodeLine{00020\ \textcolor{comment}{//}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ enum\_long(SIDREV)}
+\DoxyCodeLine{00023\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ MOS\_6581,}
+\DoxyCodeLine{00025\ \ \ \ \ MOS\_8580}
+\DoxyCodeLine{00026\ \};}
+\DoxyCodeLine{00027\ \textcolor{keyword}{typedef}\ SIDREV\ SIDRevision;}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00030\ \textcolor{keyword}{struct\ }SIDRevisionEnum\ :\ util::Reflection<SIDRevisionEnum,\ SIDRevision>\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ MOS\_8580;}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00035\ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};\ \}}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(SIDRevision\ value)}
+\DoxyCodeLine{00038\ \ \ \ \ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MOS\_6581:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}MOS\_6581"{}};}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MOS\_8580:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}MOS\_8580"{}};}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00045\ \ \ \ \ \}}
+\DoxyCodeLine{00046\ \};}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ enum\_long(SIDENGINE)}
+\DoxyCodeLine{00050\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ SIDENGINE\_FASTSID,}
+\DoxyCodeLine{00052\ \ \ \ \ SIDENGINE\_RESID}
+\DoxyCodeLine{00053\ \};}
+\DoxyCodeLine{00054\ \textcolor{keyword}{typedef}\ SIDENGINE\ SIDEngine;}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00057\ \textcolor{keyword}{struct\ }SIDEngineEnum\ :\ util::Reflection<SIDEngineEnum,\ SIDEngine>\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ SIDENGINE\_RESID;}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00062\ \ \ \ \ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SIDENGINE"{}};\ \}}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(SIDEngine\ value)}
+\DoxyCodeLine{00065\ \ \ \ \ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SIDENGINE\_FASTSID:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}FASTSID"{}};}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SIDENGINE\_RESID:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RESID"{}};}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00072\ \ \ \ \ \}}
+\DoxyCodeLine{00073\ \};}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ enum\_long(SAMPLING)}
+\DoxyCodeLine{00077\ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{comment}{//\ Elements\ must\ appear\ in\ the\ same\ order\ as\ in\ resid::sampling\_method}}
+\DoxyCodeLine{00079\ \ \ \ \ SAMPLING\_FAST,}
+\DoxyCodeLine{00080\ \ \ \ \ SAMPLING\_INTERPOLATE,}
+\DoxyCodeLine{00081\ \ \ \ \ SAMPLING\_RESAMPLE,}
+\DoxyCodeLine{00082\ \ \ \ \ SAMPLING\_RESAMPLE\_FASTMEM}
+\DoxyCodeLine{00083\ \};}
+\DoxyCodeLine{00084\ \textcolor{keyword}{typedef}\ SAMPLING\ SamplingMethod;}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00087\ \textcolor{keyword}{struct\ }SamplingMethodEnum\ :\ util::Reflection<SamplingMethodEnum,\ SamplingMethod>\ \{}
+\DoxyCodeLine{00088\ \ \ \ \ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ SAMPLING\_RESAMPLE\_FASTMEM;}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00092\ \ \ \ \ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SAMPLING"{}};\ \}}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(SamplingMethod\ value)}
+\DoxyCodeLine{00095\ \ \ \ \ \{}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SAMPLING\_FAST:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}FAST"{}};}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SAMPLING\_INTERPOLATE:\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}INTERPOLATE"{}};}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SAMPLING\_RESAMPLE:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RESAMPLE"{}};}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SAMPLING\_RESAMPLE\_FASTMEM:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RESAMPLE\_FASTMEM"{}};}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00104\ \ \ \ \ \}}
+\DoxyCodeLine{00105\ \};}
+\DoxyCodeLine{00106\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{comment}{//}}
+\DoxyCodeLine{00110\ \textcolor{comment}{//\ Structures}}
+\DoxyCodeLine{00111\ \textcolor{comment}{//}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00114\ \{}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{comment}{//\ Indicates\ if\ this\ SID\ is\ plugged\ in}}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{bool}\ enabled;}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{comment}{//\ Location\ of\ the\ SID\ registers\ in\ memory}}
+\DoxyCodeLine{00119\ \ \ \ \ u16\ address;}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{comment}{//\ Channel\ volumes\ and\ pan\ factors}}
+\DoxyCodeLine{00122\ \ \ \ \ i64\ vol;}
+\DoxyCodeLine{00123\ \ \ \ \ i64\ pan;}
+\DoxyCodeLine{00124\ \}}
+\DoxyCodeLine{00125\ SIDConfig;}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00128\ \{}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{comment}{//\ Hardware\ settings}}
+\DoxyCodeLine{00130\ \ \ \ \ SIDRevision\ revision;}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordtype}{bool}\ powerSave;}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{bool}\ filter;}
+\DoxyCodeLine{00133\ \ \ \ \ }
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{comment}{//\ Emlation\ engine\ settings}}
+\DoxyCodeLine{00135\ \ \ \ \ SIDEngine\ engine;}
+\DoxyCodeLine{00136\ \ \ \ \ SamplingMethod\ sampling;}
+\DoxyCodeLine{00137\ \ \ \ \ }
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{comment}{//\ Master\ volume\ (left\ and\ right\ channel)}}
+\DoxyCodeLine{00139\ \ \ \ \ i64\ volL;}
+\DoxyCodeLine{00140\ \ \ \ \ i64\ volR;}
+\DoxyCodeLine{00141\ \}}
+\DoxyCodeLine{00142\ MuxerConfig;}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00145\ \{}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{comment}{//\ Current\ ring\ buffer\ fill\ level}}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordtype}{double}\ fillLevel;}
+\DoxyCodeLine{00148\ \ \ \ \ }
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{comment}{//\ Number\ of\ buffer\ underflows\ since\ power\ up}}
+\DoxyCodeLine{00150\ \ \ \ \ u64\ bufferUnderflows;}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{comment}{//\ Number\ of\ buffer\ overflows\ since\ power\ up}}
+\DoxyCodeLine{00153\ \ \ \ \ u64\ bufferOverflows;}
+\DoxyCodeLine{00154\ \}}
+\DoxyCodeLine{00155\ MuxerStats;}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00157\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00158\ \{}
+\DoxyCodeLine{00159\ \ \ \ \ u8\ reg[7];}
+\DoxyCodeLine{00160\ \ \ \ \ u16\ frequency;}
+\DoxyCodeLine{00161\ \ \ \ \ u16\ pulseWidth;}
+\DoxyCodeLine{00162\ \ \ \ \ u8\ waveform;}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordtype}{bool}\ ringMod;}
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keywordtype}{bool}\ hardSync;}
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keywordtype}{bool}\ gateBit;}
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keywordtype}{bool}\ testBit;}
+\DoxyCodeLine{00167\ \ \ \ \ u8\ attackRate;}
+\DoxyCodeLine{00168\ \ \ \ \ u8\ decayRate;}
+\DoxyCodeLine{00169\ \ \ \ \ u8\ sustainRate;}
+\DoxyCodeLine{00170\ \ \ \ \ u8\ releaseRate;}
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordtype}{bool}\ filterEnableBit;}
+\DoxyCodeLine{00172\ \}}
+\DoxyCodeLine{00173\ VoiceInfo;}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00176\ \{}
+\DoxyCodeLine{00177\ \ \ \ \ u8\ volume;}
+\DoxyCodeLine{00178\ \ \ \ \ u16\ filterCutoff;}
+\DoxyCodeLine{00179\ \ \ \ \ u8\ filterResonance;}
+\DoxyCodeLine{00180\ \ \ \ \ u8\ filterModeBits;}
+\DoxyCodeLine{00181\ \ \ \ \ u8\ filterType;}
+\DoxyCodeLine{00182\ \ \ \ \ u8\ filterEnableBits;}
+\DoxyCodeLine{00183\ \ \ \ \ u8\ potX;}
+\DoxyCodeLine{00184\ \ \ \ \ u8\ potY;}
+\DoxyCodeLine{00185\ \}}
+\DoxyCodeLine{00186\ SIDInfo;}
+
+\end{DoxyCode}

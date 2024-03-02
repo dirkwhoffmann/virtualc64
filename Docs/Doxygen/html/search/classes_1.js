@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['boolparser_0',['BoolParser',['../classvc64_1_1_bool_parser.html',1,'vc64']]]
+  ['virtualc64_0',['VirtualC64',['../class_virtual_c64.html',1,'']]]
 ];

@@ -1,0 +1,331 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_g64_file" kind="class" language="C++" prot="public">
+    <compoundname>vc64::G64File</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">vc64::AnyFile</basecompoundref>
+    <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classvc64_1_1_g64_file_1a56a7811d736b0af38ff1fdf799a98682" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::G64File::isCompatible</definition>
+        <argsstring>(const string &amp;name)</argsstring>
+        <name>isCompatible</name>
+        <qualifiedname>vc64::G64File::isCompatible</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" line="27" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.cpp" bodystart="21" bodyend="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_g64_file_1aec797a44ed906315f75c6d022e022a33" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::G64File::isCompatible</definition>
+        <argsstring>(std::istream &amp;stream)</argsstring>
+        <name>isCompatible</name>
+        <qualifiedname>vc64::G64File::isCompatible</qualifiedname>
+        <param>
+          <type>std::istream &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" line="28" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.cpp" bodystart="28" bodyend="35"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_g64_file_1a53bc399282cda998a76bd7904fe62bb5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::G64File::G64File</definition>
+        <argsstring>()</argsstring>
+        <name>G64File</name>
+        <qualifiedname>vc64::G64File::G64File</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" line="35" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" bodystart="35" bodyend="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_g64_file_1a9c4ac050313a2aba569025bb51570c5b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::G64File::G64File</definition>
+        <argsstring>(isize capacity)</argsstring>
+        <name>G64File</name>
+        <qualifiedname>vc64::G64File::G64File</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>capacity</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" line="36" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.cpp" bodystart="37" bodyend="43"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_g64_file_1ac861485ffc42a4e1ab1d5197e014ec1e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::G64File::G64File</definition>
+        <argsstring>(const string &amp;path)</argsstring>
+        <name>G64File</name>
+        <qualifiedname>vc64::G64File::G64File</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <exceptions> throws </exceptions>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" line="37" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" bodystart="37" bodyend="37"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_g64_file_1a714d5efda390da428b49d80953fabd31" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::G64File::G64File</definition>
+        <argsstring>(const u8 *buf, isize len)</argsstring>
+        <name>G64File</name>
+        <qualifiedname>vc64::G64File::G64File</qualifiedname>
+        <param>
+          <type>const u8 *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>len</declname>
+        </param>
+        <exceptions> throws </exceptions>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" line="38" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" bodystart="38" bodyend="38"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_g64_file_1a662c5897f38c1922617d097f832b95cd" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::G64File::G64File</definition>
+        <argsstring>(class Disk &amp;disk)</argsstring>
+        <name>G64File</name>
+        <qualifiedname>vc64::G64File::G64File</qualifiedname>
+        <param>
+          <type>class Disk &amp;</type>
+          <declname>disk</declname>
+        </param>
+        <exceptions> throws </exceptions>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" line="39" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" bodystart="39" bodyend="39"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_g64_file_1af81c28bba0d3cb3cd9b45c6cd75810b3" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::G64File::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::G64File::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" line="53" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" bodystart="53" bodyend="53"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_g64_file_1a486207b2829de33836adf4bb0e18b58a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::G64File::isCompatiblePath</definition>
+        <argsstring>(const string &amp;path) override</argsstring>
+        <name>isCompatiblePath</name>
+        <qualifiedname>vc64::G64File::isCompatiblePath</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" line="60" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" bodystart="60" bodyend="60"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_g64_file_1a3c404d328a06aaf7ff32b1dad2074349" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::G64File::isCompatibleStream</definition>
+        <argsstring>(std::istream &amp;stream) override</argsstring>
+        <name>isCompatibleStream</name>
+        <qualifiedname>vc64::G64File::isCompatibleStream</qualifiedname>
+        <param>
+          <type>std::istream &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" line="61" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" bodystart="61" bodyend="61"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_g64_file_1aaf51e39427effee24dfc8af60d9bf99a" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>FileType</type>
+        <definition>FileType vc64::G64File::type</definition>
+        <argsstring>() const override</argsstring>
+        <name>type</name>
+        <qualifiedname>vc64::G64File::type</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" line="62" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" bodystart="62" bodyend="62"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_g64_file_1a5bc3c04456c0c856d5e86fc232f158be" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::G64File::getSizeOfHalftrack</definition>
+        <argsstring>(Halftrack ht) const</argsstring>
+        <name>getSizeOfHalftrack</name>
+        <qualifiedname>vc64::G64File::getSizeOfHalftrack</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" line="72" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.cpp" bodystart="126" bodyend="132"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_g64_file_1a2b3e2eb55acdb287f1fa67df81ce0f3d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::G64File::copyHalftrack</definition>
+        <argsstring>(Halftrack ht, u8 *buf) const</argsstring>
+        <name>copyHalftrack</name>
+        <qualifiedname>vc64::G64File::copyHalftrack</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <param>
+          <type>u8 *</type>
+          <declname>buf</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" line="75" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.cpp" bodystart="135" bodyend="143"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvc64_1_1_g64_file_1af452b3df183f49ef2dd5cd1e5765de5c" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::G64File::init</definition>
+        <argsstring>(class Disk &amp;disk) throws</argsstring>
+        <name>init</name>
+        <qualifiedname>vc64::G64File::init</qualifiedname>
+        <param>
+          <type>class Disk &amp;</type>
+          <declname>disk</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" line="44" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.cpp" bodystart="46" bodyend="123"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_g64_file_1ad5cdb28582ce5ae1464c987dd01d9366" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::G64File::getStartOfHalftrack</definition>
+        <argsstring>(Halftrack ht) const</argsstring>
+        <name>getStartOfHalftrack</name>
+        <qualifiedname>vc64::G64File::getStartOfHalftrack</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" line="79" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.cpp" bodystart="146" bodyend="152"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" line="19" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/G64File.h" bodystart="19" bodyend="80"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_any_file_1a2402e3e1f185e9768c61131bafe44407" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>AnyFile</name></member>
+      <member refid="classvc64_1_1_any_file_1a5a036fda46ad75cda310157aace55f73" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>AnyFile</name></member>
+      <member refid="classvc64_1_1_g64_file_1a2b3e2eb55acdb287f1fa67df81ce0f3d" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>copyHalftrack</name></member>
+      <member refid="classvc64_1_1_any_file_1a26e482da8776c614eb0ba61fead71c22" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>data</name></member>
+      <member refid="classvc64_1_1_any_file_1ae9e72360ebb682344186a0227c77f041" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>flash</name></member>
+      <member refid="classvc64_1_1_any_file_1a979934fcfdfeb8c68fcc470352d0edcf" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>fnv</name></member>
+      <member refid="classvc64_1_1_g64_file_1a53bc399282cda998a76bd7904fe62bb5" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>G64File</name></member>
+      <member refid="classvc64_1_1_g64_file_1a9c4ac050313a2aba569025bb51570c5b" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>G64File</name></member>
+      <member refid="classvc64_1_1_g64_file_1ac861485ffc42a4e1ab1d5197e014ec1e" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>G64File</name></member>
+      <member refid="classvc64_1_1_g64_file_1a714d5efda390da428b49d80953fabd31" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>G64File</name></member>
+      <member refid="classvc64_1_1_g64_file_1a662c5897f38c1922617d097f832b95cd" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>G64File</name></member>
+      <member refid="classvc64_1_1_any_file_1a34a65043ea6edd72503e9d32d48fe673" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>getData</name></member>
+      <member refid="classvc64_1_1_g64_file_1af81c28bba0d3cb3cd9b45c6cd75810b3" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_any_file_1abf770dc34618d1bfc67a23c55c44e85c" prot="public" virt="virtual"><scope>vc64::G64File</scope><name>getName</name></member>
+      <member refid="classvc64_1_1_g64_file_1a5bc3c04456c0c856d5e86fc232f158be" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>getSizeOfHalftrack</name></member>
+      <member refid="classvc64_1_1_g64_file_1ad5cdb28582ce5ae1464c987dd01d9366" prot="private" virt="non-virtual"><scope>vc64::G64File</scope><name>getStartOfHalftrack</name></member>
+      <member refid="classvc64_1_1_g64_file_1af452b3df183f49ef2dd5cd1e5765de5c" prot="private" virt="non-virtual"><scope>vc64::G64File</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1ac734a20b4c309a84c275a773ca3df60d" prot="public" virt="non-virtual" ambiguityscope="vc64::AnyFile::"><scope>vc64::G64File</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1a0c85ade04b494932cfd05be8969a5170" prot="public" virt="non-virtual" ambiguityscope="vc64::AnyFile::"><scope>vc64::G64File</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1a68011b5dfea05008375629cc233e5100" prot="public" virt="non-virtual" ambiguityscope="vc64::AnyFile::"><scope>vc64::G64File</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1ab650113d803492cd225753a3f58dd877" prot="public" virt="non-virtual" ambiguityscope="vc64::AnyFile::"><scope>vc64::G64File</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1a3c8d04bbb9fdfd05ea7f1dc8efc54016" prot="public" virt="non-virtual" ambiguityscope="vc64::AnyFile::"><scope>vc64::G64File</scope><name>init</name></member>
+      <member refid="classvc64_1_1_any_file_1ab84764d78d6f620f80d942796b1aa1f0" prot="public" virt="non-virtual" ambiguityscope="vc64::AnyFile::"><scope>vc64::G64File</scope><name>init</name></member>
+      <member refid="classvc64_1_1_g64_file_1a56a7811d736b0af38ff1fdf799a98682" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>isCompatible</name></member>
+      <member refid="classvc64_1_1_g64_file_1aec797a44ed906315f75c6d022e022a33" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>isCompatible</name></member>
+      <member refid="classvc64_1_1_g64_file_1a486207b2829de33836adf4bb0e18b58a" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>isCompatiblePath</name></member>
+      <member refid="classvc64_1_1_g64_file_1a3c404d328a06aaf7ff32b1dad2074349" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>isCompatibleStream</name></member>
+      <member refid="classvc64_1_1_any_file_1a89548c3c156d0d989b19698860eda1ac" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>path</name></member>
+      <member refid="classvc64_1_1_core_object_1ab05f272c10fd455a9cafbb667293d044" prot="public" virt="virtual"><scope>vc64::G64File</scope><name>prefix</name></member>
+      <member refid="classvc64_1_1_any_file_1a8efe89e48777753f29e4a81ad2cee2a1" prot="protected" virt="non-virtual"><scope>vc64::G64File</scope><name>readFromBuffer</name></member>
+      <member refid="classvc64_1_1_any_file_1a3668025b9000a087977407b64c9473fd" prot="protected" virt="non-virtual"><scope>vc64::G64File</scope><name>readFromFile</name></member>
+      <member refid="classvc64_1_1_any_file_1ae0e3aa0d0a8c07187c688f5d98f13947" prot="protected" virt="non-virtual"><scope>vc64::G64File</scope><name>readFromStream</name></member>
+      <member refid="classvc64_1_1_any_file_1a7ed08cce3080c43c7292063bf048f06f" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>size</name></member>
+      <member refid="classvc64_1_1_any_file_1ad74ebc6d4c511bf9013aede268cc483f" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>strip</name></member>
+      <member refid="classvc64_1_1_g64_file_1aaf51e39427effee24dfc8af60d9bf99a" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>type</name></member>
+      <member refid="classvc64_1_1_any_file_1ad47c49694822b542c3afbb8c57cc8533" prot="public" virt="non-virtual" ambiguityscope="vc64::AnyFile::"><scope>vc64::G64File</scope><name>type</name></member>
+      <member refid="classvc64_1_1_core_object_1aa17ada334edf800da9ea768925ffa885" prot="protected" virt="non-virtual"><scope>vc64::G64File</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_any_file_1adad618b6c94fcd35846b1edd740d7448" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>writeToBuffer</name></member>
+      <member refid="classvc64_1_1_any_file_1ab2dd3dbc31ee164578fbf199ba2c49ba" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>writeToFile</name></member>
+      <member refid="classvc64_1_1_any_file_1a1219474084e9d60e4cbea9c0a6d7dcd4" prot="public" virt="non-virtual"><scope>vc64::G64File</scope><name>writeToStream</name></member>
+      <member refid="classvc64_1_1_any_file_1ab8de483b0e9c975ab6c2b35afd9f5f8c" prot="public" virt="virtual"><scope>vc64::G64File</scope><name>~AnyFile</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>vc64::G64File</scope><name>~CoreObject</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

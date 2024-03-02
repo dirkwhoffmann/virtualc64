@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="dir_2fb434ef6d991966eae34475cb5121ae" kind="dir">
+    <compoundname>/Users/hoff/Retro/virtualc64/Emulator/Components/CIA</compoundname>
+    <innerfile refid="_c_i_a_8cpp">CIA.cpp</innerfile>
+    <innerfile refid="_c_i_a_8h">CIA.h</innerfile>
+    <innerfile refid="_c_i_a_regs_8cpp">CIARegs.cpp</innerfile>
+    <innerfile refid="_c_i_a_types_8h">CIATypes.h</innerfile>
+    <innerfile refid="_t_o_d_8cpp">TOD.cpp</innerfile>
+    <innerfile refid="_t_o_d_8h">TOD.h</innerfile>
+    <innerfile refid="_t_o_d_types_8h">TODTypes.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/"/>
+  </compounddef>
+</doxygen>

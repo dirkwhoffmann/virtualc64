@@ -1,0 +1,143 @@
+\doxysection{Expert.\+h}
+\hypertarget{_expert_8h_source}{}\label{_expert_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Expert.h@{/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Expert.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Cartridge.h"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }Expert\ final\ :\ \textcolor{keyword}{public}\ Cartridge\ \{}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ CartridgeTraits\ traits\ =\ \{}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ .type\ \ \ \ \ \ \ \ \ \ \ =\ CRT\_EXPERT,}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ .title\ \ \ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}Expert"{}},}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ .memory\ \ \ \ \ \ \ \ \ =\ KB(8),}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ .battery\ \ \ \ \ \ \ \ =\ \textcolor{keyword}{true},}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ .buttons\ \ \ \ \ \ \ \ =\ 2,}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ .button1\ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}Reset"{}},}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ .button2\ \ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}ESM"{}},}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ .switches\ \ \ \ \ \ \ =\ 1,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ .switchLeft\ \ \ \ \ =\ \textcolor{stringliteral}{"{}Prg"{}},}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ .switchNeutral\ \ =\ \textcolor{stringliteral}{"{}Off"{}},}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ .switchRight\ \ \ \ =\ \textcolor{stringliteral}{"{}On"{}}}
+\DoxyCodeLine{00037\ \ \ \ \ \};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ CartridgeTraits\ \&getTraits()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ traits;\ \}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ Flipflop\ deciding\ whether\ the\ cartridge\ is\ enabled\ or\ disabled}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{bool}\ active\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//\ Initializing}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{using\ }Cartridge::Cartridge;}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreObject}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ \_dump(Category\ category,\ std::ostream\&\ os)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreComponent}}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ Expert\&\ operator=\ (\textcolor{keyword}{const}\ Expert\&\ other)\ \{}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ Cartridge::operator=(other);}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ CLONE(active)}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00074\ \ \ \ \ \}}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ clone(\textcolor{keyword}{const}\ Cartridge\ \&other)\textcolor{keyword}{\ override\ }\{\ *\textcolor{keyword}{this}\ =\ (\textcolor{keyword}{const}\ Expert\ \&)other;\ \}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{void}\ serialize(T\&\ worker)}
+\DoxyCodeLine{00079\ \ \ \ \ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (isResetter(worker))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ <<\ active;}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \}\ CARTRIDGE\_SERIALIZERS(serialize);}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{comment}{//\ Handling\ ROM\ packets}}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{void}\ loadChip(isize\ nr,\ \textcolor{keyword}{const}\ CRTFile\ \&crt)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{comment}{//\ Accessing\ cartridge\ memory}}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{void}\ updatePeekPokeLookupTables()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00101\ \ \ \ \ u8\ peek(u16\ addr)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00102\ \ \ \ \ u8\ peekIO1(u16\ addr)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00103\ \ \ \ \ u8\ spypeekIO1(u16\ addr)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{void}\ poke(u16\ addr,\ u8\ value)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{void}\ pokeIO1(u16\ addr,\ u8\ value)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{bool}\ cartridgeRamIsVisible(u16\ addr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{bool}\ cartridgeRamIsWritable(u16\ addr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{comment}{//\ Operating\ buttons}}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \ \ isize\ numButtons()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ 2;\ \}}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getButtonTitle(isize\ nr)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{void}\ pressButton(isize\ nr)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{comment}{//\ Operating\ switches}}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getSwitchDescription(isize\ pos)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{bool}\ switchInPrgPosition()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ switchIsLeft();\ \}}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordtype}{bool}\ switchInOffPosition()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ switchIsNeutral();\ \}}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{bool}\ switchInOnPosition()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ switchIsRight();\ \}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{comment}{//\ Handling\ delegation\ calls}}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordtype}{void}\ nmiWillTrigger()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00135\ \};}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \}}
+
+\end{DoxyCode}

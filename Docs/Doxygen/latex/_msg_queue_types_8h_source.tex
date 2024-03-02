@@ -1,0 +1,255 @@
+\doxysection{Msg\+Queue\+Types.\+h}
+\hypertarget{_msg_queue_types_8h_source}{}\label{_msg_queue_types_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h@{/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Aliases.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Reflection.h"{}}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{comment}{//}}
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ Enumerations}}
+\DoxyCodeLine{00020\ \textcolor{comment}{//}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ enum\_long(MSG\_TYPE)}
+\DoxyCodeLine{00023\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ MSG\_NONE\ =\ 0,}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{comment}{//\ Emulator\ state}}
+\DoxyCodeLine{00027\ \ \ \ \ MSG\_CONFIG,}
+\DoxyCodeLine{00028\ \ \ \ \ MSG\_POWER,}
+\DoxyCodeLine{00029\ \ \ \ \ MSG\_RUN,}
+\DoxyCodeLine{00030\ \ \ \ \ MSG\_PAUSE,}
+\DoxyCodeLine{00031\ \ \ \ \ MSG\_STEP,}
+\DoxyCodeLine{00032\ \ \ \ \ MSG\_RESET,}
+\DoxyCodeLine{00033\ \ \ \ \ MSG\_SHUTDOWN,}
+\DoxyCodeLine{00034\ \ \ \ \ MSG\_ABORT,}
+\DoxyCodeLine{00035\ \ \ \ \ MSG\_WARP,}
+\DoxyCodeLine{00036\ \ \ \ \ MSG\_TRACK,}
+\DoxyCodeLine{00037\ \ \ \ \ MSG\_MUTE,}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{comment}{//\ Retro\ shell}}
+\DoxyCodeLine{00040\ \ \ \ \ MSG\_CONSOLE\_CLOSE,}
+\DoxyCodeLine{00041\ \ \ \ \ MSG\_CONSOLE\_UPDATE,}
+\DoxyCodeLine{00042\ \ \ \ \ MSG\_CONSOLE\_DEBUGGER,}
+\DoxyCodeLine{00043\ \ \ \ \ MSG\_SCRIPT\_DONE,}
+\DoxyCodeLine{00044\ \ \ \ \ MSG\_SCRIPT\_ABORT,}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//\ ROMs}}
+\DoxyCodeLine{00047\ \ \ \ \ MSG\_BASIC\_ROM\_LOADED,}
+\DoxyCodeLine{00048\ \ \ \ \ MSG\_CHAR\_ROM\_LOADED,}
+\DoxyCodeLine{00049\ \ \ \ \ MSG\_KERNAL\_ROM\_LOADED,}
+\DoxyCodeLine{00050\ \ \ \ \ MSG\_DRIVE\_ROM\_LOADED,}
+\DoxyCodeLine{00051\ \ \ \ \ MSG\_ROM\_MISSING,}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{comment}{//\ CPU}}
+\DoxyCodeLine{00054\ \ \ \ \ MSG\_CPU\_JAMMED,}
+\DoxyCodeLine{00055\ \ \ \ \ MSG\_CPU\_JUMPED,}
+\DoxyCodeLine{00056\ \ \ \ \ MSG\_BREAKPOINT\_REACHED,}
+\DoxyCodeLine{00057\ \ \ \ \ MSG\_WATCHPOINT\_REACHED,}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//\ VIC}}
+\DoxyCodeLine{00060\ \ \ \ \ MSG\_PAL,}
+\DoxyCodeLine{00061\ \ \ \ \ MSG\_NTSC,}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{comment}{//\ IEC\ Bus}}
+\DoxyCodeLine{00064\ \ \ \ \ MSG\_IEC\_BUS\_BUSY,}
+\DoxyCodeLine{00065\ \ \ \ \ MSG\_IEC\_BUS\_IDLE,}
+\DoxyCodeLine{00066\ \ \ \ \ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{comment}{//\ Floppy\ drives}}
+\DoxyCodeLine{00068\ \ \ \ \ MSG\_DRIVE\_CONNECT,}
+\DoxyCodeLine{00069\ \ \ \ \ MSG\_DRIVE\_DISCONNECT,}
+\DoxyCodeLine{00070\ \ \ \ \ MSG\_DRIVE\_POWER\_ON,}
+\DoxyCodeLine{00071\ \ \ \ \ MSG\_DRIVE\_POWER\_OFF,}
+\DoxyCodeLine{00072\ \ \ \ \ MSG\_DRIVE\_POWER\_SAVE\_ON,}
+\DoxyCodeLine{00073\ \ \ \ \ MSG\_DRIVE\_POWER\_SAVE\_OFF,}
+\DoxyCodeLine{00074\ \ \ \ \ MSG\_DRIVE\_READ,}
+\DoxyCodeLine{00075\ \ \ \ \ MSG\_DRIVE\_WRITE,}
+\DoxyCodeLine{00076\ \ \ \ \ MSG\_DRIVE\_LED\_ON,}
+\DoxyCodeLine{00077\ \ \ \ \ MSG\_DRIVE\_LED\_OFF,}
+\DoxyCodeLine{00078\ \ \ \ \ MSG\_DRIVE\_MOTOR\_ON,}
+\DoxyCodeLine{00079\ \ \ \ \ MSG\_DRIVE\_MOTOR\_OFF,}
+\DoxyCodeLine{00080\ \ \ \ \ MSG\_DRIVE\_STEP,}
+\DoxyCodeLine{00081\ \ \ \ \ MSG\_DISK\_INSERT,}
+\DoxyCodeLine{00082\ \ \ \ \ MSG\_DISK\_EJECT,}
+\DoxyCodeLine{00083\ \ \ \ \ MSG\_DISK\_SAVED,}
+\DoxyCodeLine{00084\ \ \ \ \ MSG\_DISK\_UNSAVED,}
+\DoxyCodeLine{00085\ \ \ \ \ MSG\_DISK\_PROTECT,}
+\DoxyCodeLine{00086\ \ \ \ \ MSG\_FILE\_FLASHED,}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{comment}{//\ Peripherals\ (Datasette)}}
+\DoxyCodeLine{00089\ \ \ \ \ MSG\_VC1530\_CONNECT,}
+\DoxyCodeLine{00090\ \ \ \ \ MSG\_VC1530\_TAPE,}
+\DoxyCodeLine{00091\ \ \ \ \ MSG\_VC1530\_PLAY,}
+\DoxyCodeLine{00092\ \ \ \ \ MSG\_VC1530\_MOTOR,}
+\DoxyCodeLine{00093\ \ \ \ \ MSG\_VC1530\_COUNTER,}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{comment}{//\ Peripherals\ (Expansion\ port)}}
+\DoxyCodeLine{00096\ \ \ \ \ MSG\_CRT\_ATTACHED,}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//\ Peripherals\ (Keyboard)}}
+\DoxyCodeLine{00099\ \ \ \ \ MSG\_KB\_AUTO\_PRESS,}
+\DoxyCodeLine{00100\ \ \ \ \ MSG\_KB\_AUTO\_RELEASE,}
+\DoxyCodeLine{00101\ \ \ \ \ }
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{comment}{//\ Peripherals\ (Mouse)}}
+\DoxyCodeLine{00103\ \ \ \ \ MSG\_SHAKING,}
+\DoxyCodeLine{00104\ \ \ \ \ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{comment}{//\ Snapshots}}
+\DoxyCodeLine{00106\ \ \ \ \ MSG\_AUTO\_SNAPSHOT\_TAKEN,}
+\DoxyCodeLine{00107\ \ \ \ \ MSG\_USER\_SNAPSHOT\_TAKEN,}
+\DoxyCodeLine{00108\ \ \ \ \ MSG\_SNAPSHOT\_RESTORED,}
+\DoxyCodeLine{00109\ \ \ \ \ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{comment}{//\ Screen\ recording}}
+\DoxyCodeLine{00111\ \ \ \ \ MSG\_RECORDING\_STARTED,}
+\DoxyCodeLine{00112\ \ \ \ \ MSG\_RECORDING\_STOPPED,}
+\DoxyCodeLine{00113\ \ \ \ \ MSG\_RECORDING\_ABORTED,}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{comment}{//\ Debugging}}
+\DoxyCodeLine{00116\ \ \ \ \ MSG\_DMA\_DEBUG,}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{comment}{//\ Scheduled\ alarms}}
+\DoxyCodeLine{00119\ \ \ \ \ MSG\_ALARM}
+\DoxyCodeLine{00120\ \};}
+\DoxyCodeLine{00121\ \textcolor{keyword}{typedef}\ MSG\_TYPE\ MsgType;}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00124\ \textcolor{keyword}{struct\ }MsgTypeEnum\ :\ util::Reflection<MsgType,\ MsgType>\ \{}
+\DoxyCodeLine{00125\ \ \ \ \ }
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ MSG\_ALARM;}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}MSG"{}};\ \}}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(MsgType\ value)}
+\DoxyCodeLine{00132\ \ \ \ \ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_NONE:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}NONE"{}};}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_CONFIG:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CONFIG"{}};}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_POWER:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}POWER"{}};}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_RUN:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RUN"{}};}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_PAUSE:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PAUSE"{}};}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_RESET:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RESET"{}};}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_SHUTDOWN:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SHUTDOWN"{}};}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_ABORT:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}ABORT"{}};}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_WARP:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}WARP"{}};}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_TRACK:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TRACK"{}};}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_MUTE:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}MUTE"{}};}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_CONSOLE\_CLOSE:\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CONSOLE\_CLOSE"{}};}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_CONSOLE\_UPDATE:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CONSOLE\_UPDATE"{}};}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_CONSOLE\_DEBUGGER:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CONSOLE\_DEBUGGER"{}};}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_SCRIPT\_DONE:\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SCRIPT\_DONE"{}};}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_SCRIPT\_ABORT:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SCRIPT\_ABORT"{}};}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_BASIC\_ROM\_LOADED:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}BASIC\_ROM\_LOADED"{}};}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_CHAR\_ROM\_LOADED:\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CHAR\_ROM\_LOADED"{}};}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_KERNAL\_ROM\_LOADED:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}KERNAL\_ROM\_LOADED"{}};}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_ROM\_LOADED:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_ROM\_LOADED"{}};}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_ROM\_MISSING:\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}ROM\_MISSING"{}};}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_CPU\_JAMMED:\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CPU\_JAMMED"{}};}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_BREAKPOINT\_REACHED:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}BREAKPOINT\_REACHED"{}};}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_WATCHPOINT\_REACHED:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}WATCHPOINT\_REACHED"{}};}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_PAL:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PAL"{}};}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_NTSC:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}NTSC"{}};}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_IEC\_BUS\_BUSY:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}IEC\_BUS\_BUSY"{}};}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_IEC\_BUS\_IDLE:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}IEC\_BUS\_IDLE"{}};}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_CONNECT:\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_CONNECT"{}};}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_DISCONNECT:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_DISCONNECT"{}};}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_POWER\_ON:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_POWER\_ON"{}};}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_POWER\_OFF:\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_POWER\_OFF"{}};}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_POWER\_SAVE\_ON:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_POWER\_SAVE\_ON"{}};}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_POWER\_SAVE\_OFF:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_POWER\_SAVE\_OFF"{}};}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_READ:\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_READ"{}};}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_WRITE:\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_WRITE"{}};}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_LED\_ON:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_LED\_ON"{}};}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_LED\_OFF:\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_LED\_OFF"{}};}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_MOTOR\_ON:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_MOTOR\_ON"{}};}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_MOTOR\_OFF:\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_MOTOR\_OFF"{}};}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_STEP:\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_STEP"{}};}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DISK\_INSERT:\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DISK\_INSERT"{}};}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DISK\_EJECT:\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DISK\_EJECT"{}};}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DISK\_SAVED:\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DISK\_SAVED"{}};}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DISK\_UNSAVED:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DISK\_UNSAVED"{}};}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DISK\_PROTECT:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DISK\_PROTECT"{}};}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_FILE\_FLASHED:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}FILE\_FLASHED"{}};}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_VC1530\_CONNECT:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VC1530\_CONNECT"{}};}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_VC1530\_TAPE:\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VC1530\_TAPE"{}};}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_VC1530\_PLAY:\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VC1530\_PLAY"{}};}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_VC1530\_MOTOR:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VC1530\_MOTOR"{}};}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_VC1530\_COUNTER:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VC1530\_COUNTER"{}};}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_CRT\_ATTACHED:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CRT\_ATTACHED"{}};}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_KB\_AUTO\_PRESS:\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}KB\_AUTO\_PRESS"{}};}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_KB\_AUTO\_RELEASE:\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}KB\_AUTO\_RELEASE"{}};}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_SHAKING:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SHAKING"{}};}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_AUTO\_SNAPSHOT\_TAKEN:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}AUTO\_SNAPSHOT\_TAKEN"{}};}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_USER\_SNAPSHOT\_TAKEN:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}USER\_SNAPSHOT\_TAKEN"{}};}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_SNAPSHOT\_RESTORED:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SNAPSHOT\_RESTORED"{}};}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_RECORDING\_STARTED:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RECORDING\_STARTED"{}};}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_RECORDING\_STOPPED:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RECORDING\_STOPPED"{}};}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_RECORDING\_ABORTED:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RECORDING\_ABORTED"{}};}
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DMA\_DEBUG:\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DMA\_DEBUG"{}};}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_ALARM:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}ALARM"{}};}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00216\ \ \ \ \ \}}
+\DoxyCodeLine{00217\ \};}
+\DoxyCodeLine{00218\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00221\ \textcolor{comment}{//}}
+\DoxyCodeLine{00222\ \textcolor{comment}{//\ Structures}}
+\DoxyCodeLine{00223\ \textcolor{comment}{//}}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{\ u16\ pc;\ \}\ CpuMsg;}
+\DoxyCodeLine{00226\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{\ i16\ nr;\ i16\ value;\ i16\ volume;\ i16\ pan;\ \}\ DriveMsg;}
+\DoxyCodeLine{00227\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{\ isize\ line;\ i16\ delay;\ \}\ ScriptMsg;}
+\DoxyCodeLine{00228\ }
+\DoxyCodeLine{00229\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00230\ \{}
+\DoxyCodeLine{00231\ \ \ \ \ \textcolor{comment}{//\ Header}}
+\DoxyCodeLine{00232\ \ \ \ \ MsgType\ type;}
+\DoxyCodeLine{00233\ }
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{comment}{//\ Payload}}
+\DoxyCodeLine{00235\ \ \ \ \ \textcolor{keyword}{union\ }\{}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ i64\ value;}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ CpuMsg\ cpu;}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ DriveMsg\ drive;}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ ScriptMsg\ script;}
+\DoxyCodeLine{00240\ \ \ \ \ \};}
+\DoxyCodeLine{00241\ \}}
+\DoxyCodeLine{00242\ Message;}
+\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00245\ \textcolor{comment}{//}}
+\DoxyCodeLine{00246\ \textcolor{comment}{//\ Signatures}}
+\DoxyCodeLine{00247\ \textcolor{comment}{//}}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00249\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{void}\ Callback(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *,\ Message);}
+
+\end{DoxyCode}

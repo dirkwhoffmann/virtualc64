@@ -1,0 +1,451 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_mouse1350" kind="class" language="C++" prot="public" final="yes">
+    <compoundname>vc64::Mouse1350</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">vc64::SubComponent</basecompoundref>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_mouse1350_1a8159e5e5db05108b439d2d8fadabafd7" prot="private" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 vc64::Mouse1350::mouseX</definition>
+        <argsstring></argsstring>
+        <name>mouseX</name>
+        <qualifiedname>vc64::Mouse1350::mouseX</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="24" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_mouse1350_1a2b2d3983aa79bc7aaea84137591821ed" prot="private" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 vc64::Mouse1350::mouseY</definition>
+        <argsstring></argsstring>
+        <name>mouseY</name>
+        <qualifiedname>vc64::Mouse1350::mouseY</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="25" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_mouse1350_1ae19c128794ada4771b83a78c384621b7" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::Mouse1350::leftButton</definition>
+        <argsstring></argsstring>
+        <name>leftButton</name>
+        <qualifiedname>vc64::Mouse1350::leftButton</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="28" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_mouse1350_1a5c740d44a360dec785bfe75998a5e8b3" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::Mouse1350::rightButton</definition>
+        <argsstring></argsstring>
+        <name>rightButton</name>
+        <qualifiedname>vc64::Mouse1350::rightButton</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="29" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_mouse1350_1abac4847fef716e8c84595c0688c617db" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int vc64::Mouse1350::dividerX</definition>
+        <argsstring></argsstring>
+        <name>dividerX</name>
+        <qualifiedname>vc64::Mouse1350::dividerX</qualifiedname>
+        <initializer>= 64</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="32" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" bodystart="32" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_mouse1350_1a4e76403b315c166453e2d54ba3e87875" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int vc64::Mouse1350::dividerY</definition>
+        <argsstring></argsstring>
+        <name>dividerY</name>
+        <qualifiedname>vc64::Mouse1350::dividerY</qualifiedname>
+        <initializer>= 64</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="33" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_mouse1350_1a24238db45d54bd07180a83e352ad416e" prot="private" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 vc64::Mouse1350::latchedX[3]</definition>
+        <argsstring>[3]</argsstring>
+        <name>latchedX</name>
+        <qualifiedname>vc64::Mouse1350::latchedX</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="36" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_mouse1350_1a7a45fa48717713c7921b5f875f8790fb" prot="private" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 vc64::Mouse1350::latchedY[3]</definition>
+        <argsstring>[3]</argsstring>
+        <name>latchedY</name>
+        <qualifiedname>vc64::Mouse1350::latchedY</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="37" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_mouse1350_1ae85568d62f00b1b1eced30159d9439b8" prot="private" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::Mouse1350::controlPort</definition>
+        <argsstring></argsstring>
+        <name>controlPort</name>
+        <qualifiedname>vc64::Mouse1350::controlPort</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="40" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_mouse1350_1abf20376736c89cb577e1198f68e2dfde" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::Mouse1350::Mouse1350</definition>
+        <argsstring>(C64 &amp;ref)</argsstring>
+        <name>Mouse1350</name>
+        <qualifiedname>vc64::Mouse1350::Mouse1350</qualifiedname>
+        <param>
+          <type>C64 &amp;</type>
+          <declname>ref</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="49" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" bodystart="49" bodyend="49"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_mouse1350_1a3d7a81bfe89b407939faf744e8b4eacb" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Mouse1350 &amp;</type>
+        <definition>Mouse1350 &amp; vc64::Mouse1350::operator=</definition>
+        <argsstring>(const Mouse1350 &amp;other)</argsstring>
+        <name>operator=</name>
+        <qualifiedname>vc64::Mouse1350::operator=</qualifiedname>
+        <param>
+          <type>const Mouse1350 &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="67" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" bodystart="67" bodyend="67"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_mouse1350_1a958ed428dac536dc7cdd1bed0a50faae" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>class T</type>
+          </param>
+        </templateparamlist>
+        <type>void</type>
+        <definition>void vc64::Mouse1350::serialize</definition>
+        <argsstring>(T &amp;worker)</argsstring>
+        <name>serialize</name>
+        <qualifiedname>vc64::Mouse1350::serialize</qualifiedname>
+        <param>
+          <type>T &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="68" column="22" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" bodystart="68" bodyend="68"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_mouse1350_1aba84207ee2762af4e009bdd19bc11589" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::Mouse1350::SERIALIZERS</definition>
+        <argsstring>(serialize)</argsstring>
+        <name>SERIALIZERS</name>
+        <qualifiedname>vc64::Mouse1350::SERIALIZERS</qualifiedname>
+        <param>
+          <type>serialize</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="68" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_mouse1350_1aaee70f5beaf504f7942efb069ddd53d9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Mouse1350::_reset</definition>
+        <argsstring>(bool hard) override</argsstring>
+        <name>_reset</name>
+        <qualifiedname>vc64::Mouse1350::_reset</qualifiedname>
+        <param>
+          <type>bool</type>
+          <declname>hard</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="69" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.cpp" bodystart="22" bodyend="32"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_mouse1350_1ab5a31d607bd89160f211b959404abcd5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Mouse1350::setLeftMouseButton</definition>
+        <argsstring>(bool value)</argsstring>
+        <name>setLeftMouseButton</name>
+        <qualifiedname>vc64::Mouse1350::setLeftMouseButton</qualifiedname>
+        <param>
+          <type>bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="79" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" bodystart="79" bodyend="79"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_mouse1350_1aefd56eb214554a53bec58b4554403c17" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Mouse1350::setRightMouseButton</definition>
+        <argsstring>(bool value)</argsstring>
+        <name>setRightMouseButton</name>
+        <qualifiedname>vc64::Mouse1350::setRightMouseButton</qualifiedname>
+        <param>
+          <type>bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="80" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" bodystart="80" bodyend="80"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_mouse1350_1a4cccfd285bc3567e6d945b039a27f718" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::Mouse1350::readPotX</definition>
+        <argsstring>() const</argsstring>
+        <name>readPotX</name>
+        <qualifiedname>vc64::Mouse1350::readPotX</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="83" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.cpp" bodystart="35" bodyend="38"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_mouse1350_1aec154e0469745290fbf2e67661042099" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::Mouse1350::readPotY</definition>
+        <argsstring>() const</argsstring>
+        <name>readPotY</name>
+        <qualifiedname>vc64::Mouse1350::readPotY</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="84" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.cpp" bodystart="41" bodyend="44"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_mouse1350_1a0514e71dc9a0ec0c600071efdfd66f7b" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::Mouse1350::readControlPort</definition>
+        <argsstring>() const</argsstring>
+        <name>readControlPort</name>
+        <qualifiedname>vc64::Mouse1350::readControlPort</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="87" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.cpp" bodystart="47" bodyend="50"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_mouse1350_1a0184a255e71bb76c7088ae49118c1132" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Mouse1350::execute</definition>
+        <argsstring>(i64 targetX, i64 targetY)</argsstring>
+        <name>execute</name>
+        <qualifiedname>vc64::Mouse1350::execute</qualifiedname>
+        <param>
+          <type>i64</type>
+          <declname>targetX</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>targetY</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="90" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.cpp" bodystart="53" bodyend="84"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvc64_1_1_mouse1350_1ab6d028ac6012efe87f0abc951d251e7a" prot="private" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::Mouse1350::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::Mouse1350::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="58" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" bodystart="58" bodyend="58"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" line="19" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse1350.h" bodystart="19" bodyend="91"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_core_component_1aa7dd5e7a2020ad2348fea3edd724f538" prot="public" virt="virtual"><scope>vc64::Mouse1350</scope><name>_initialize</name></member>
+      <member refid="classvc64_1_1_mouse1350_1aaee70f5beaf504f7942efb069ddd53d9" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>_reset</name></member>
+      <member refid="classvc64_1_1_configurable_1a947ce65dab57ea328e9959014b7f9dfb" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>argList</name></member>
+      <member refid="classvc64_1_1_sub_component_1a7691c720c74fd0e19a63978efe4cd851" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>c64</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae066edf64de901ee3f3b65eb0c02b202" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>cia1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9fe5ed30db982340524f7dcbf6fbf34c" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>cia2</name></member>
+      <member refid="classvc64_1_1_mouse1350_1ae85568d62f00b1b1eced30159d9439b8" prot="private" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>controlPort</name></member>
+      <member refid="classvc64_1_1_core_component_1a18f454d0d572fa1b2e5023c4eaba6d07" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>CoreComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1acaece01018438ab083bd38a220d34f10" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>cpu</name></member>
+      <member refid="classvc64_1_1_sub_component_1a157963272dd927ec5c77b4090be57e89" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>datasette</name></member>
+      <member refid="classvc64_1_1_mouse1350_1abac4847fef716e8c84595c0688c617db" prot="private" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>dividerX</name></member>
+      <member refid="classvc64_1_1_mouse1350_1a4e76403b315c166453e2d54ba3e87875" prot="private" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>dividerY</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae85ede3d9ed8315d992eed300932eaf7" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>drive</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae44705f9377cf06d91323d8dca13a8a8" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>drive8</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5d876614a31fb29b8317350ed6a3158b" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>drive9</name></member>
+      <member refid="classvc64_1_1_configurable_1a459505cd1eed2c174bf78b29808ad07b" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>dumpConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1a606e5261773126791e44ee8238f5876e" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>emulator</name></member>
+      <member refid="classvc64_1_1_mouse1350_1a0184a255e71bb76c7088ae49118c1132" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>execute</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5dc793ff2aa4ff3b36fdd061fd3f816b" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>expansionport</name></member>
+      <member refid="classvc64_1_1_mouse1350_1ab6d028ac6012efe87f0abc951d251e7a" prot="private" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_configurable_1ae5d8ab4ec08470113b7123cd2ffdf4af" prot="public" virt="virtual"><scope>vc64::Mouse1350</scope><name>getOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a80a7c09f7f0d153cb87000c9d82f" prot="public" virt="virtual"><scope>vc64::Mouse1350</scope><name>getOptions</name></member>
+      <member refid="classvc64_1_1_core_component_1a936940e4e5cf0c617935ea3070bcbd4d" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>halt</name></member>
+      <member refid="classvc64_1_1_sub_component_1add6521bbcffbe5ca85afd6105d54e5ad" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>host</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5c8620301453e0b91374683d0c7b28ab" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>iec</name></member>
+      <member refid="classvc64_1_1_core_component_1a250f9ac5bbc00892bf195ec2ef523a2b" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>initialize</name></member>
+      <member refid="classvc64_1_1_core_component_1a7b95994acc6e7ba59d4b2f50f2dc8df5" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>isEmulatorThread</name></member>
+      <member refid="classvc64_1_1_core_component_1a0e8c3dd97f64e2487fba4c22ba66d487" prot="public" virt="virtual"><scope>vc64::Mouse1350</scope><name>isHalted</name></member>
+      <member refid="classvc64_1_1_core_component_1a4f0f63ef65776aceecb329d03c3b5f17" prot="public" virt="virtual"><scope>vc64::Mouse1350</scope><name>isPaused</name></member>
+      <member refid="classvc64_1_1_core_component_1ac4dadc5fecfac3cd2dfb7e8b70767b42" prot="public" virt="virtual"><scope>vc64::Mouse1350</scope><name>isPoweredOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a0f9912b36ec181a0410d4f564baef127" prot="public" virt="virtual"><scope>vc64::Mouse1350</scope><name>isPoweredOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a77bf78d982163a6797f24d23106c5098" prot="public" virt="virtual"><scope>vc64::Mouse1350</scope><name>isReady</name></member>
+      <member refid="classvc64_1_1_core_component_1a121143d811f91157272bb67a0ca48d8f" prot="public" virt="virtual"><scope>vc64::Mouse1350</scope><name>isRunning</name></member>
+      <member refid="classvc64_1_1_core_component_1a490512fe63211f42eb57e7ed59f9b6a1" prot="public" virt="virtual"><scope>vc64::Mouse1350</scope><name>isSuspended</name></member>
+      <member refid="classvc64_1_1_configurable_1af6260d08823e90bdb51d1bf7bb596c35" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>isValidOption</name></member>
+      <member refid="classvc64_1_1_sub_component_1aa9a0c663f877801b651969f86dbf2aae" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>keyboard</name></member>
+      <member refid="classvc64_1_1_configurable_1a0d6caf30eeaae95d1898d08cf3ca8e28" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>keyList</name></member>
+      <member refid="classvc64_1_1_mouse1350_1a24238db45d54bd07180a83e352ad416e" prot="private" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>latchedX</name></member>
+      <member refid="classvc64_1_1_mouse1350_1a7a45fa48717713c7921b5f875f8790fb" prot="private" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>latchedY</name></member>
+      <member refid="classvc64_1_1_mouse1350_1ae19c128794ada4771b83a78c384621b7" prot="private" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>leftButton</name></member>
+      <member refid="classvc64_1_1_sub_component_1ad160280522e5c27cd731289b9396c44f" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>mem</name></member>
+      <member refid="classvc64_1_1_mouse1350_1abf20376736c89cb577e1198f68e2dfde" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>Mouse1350</name></member>
+      <member refid="classvc64_1_1_mouse1350_1a8159e5e5db05108b439d2d8fadabafd7" prot="private" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>mouseX</name></member>
+      <member refid="classvc64_1_1_mouse1350_1a2b2d3983aa79bc7aaea84137591821ed" prot="private" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>mouseY</name></member>
+      <member refid="classvc64_1_1_sub_component_1a478be9b50f9e5c4c07dd2830e9964711" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>msgQueue</name></member>
+      <member refid="classvc64_1_1_synchronizable_1a595f618a9c91e91148882a79760f0f0f" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>mutex</name></member>
+      <member refid="classvc64_1_1_sub_component_1a712af82456373bd6e688a174ac756bcb" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>muxer</name></member>
+      <member refid="classvc64_1_1_core_component_1af47e1017ec1d938b1b613b36bdc8be57" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>operator!=</name></member>
+      <member refid="classvc64_1_1_mouse1350_1a3d7a81bfe89b407939faf744e8b4eacb" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>operator=</name></member>
+      <member refid="classvc64_1_1_core_component_1aae8879dd8b62291254ec498fa9b2e2cf" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>operator==</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9dfb837b941848b6b87e6a57da28348d" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>parCable</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a9c059588a19eeba521b79ff28e3dd8" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>pause</name></member>
+      <member refid="classvc64_1_1_sub_component_1a8c0718eb9d42f335961eaed51ba7cb8d" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>port1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a217a6ea39994b6ecae4e1ebd9cc220e7" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>port2</name></member>
+      <member refid="classvc64_1_1_core_component_1a05e1ba6d62516f796256f1cc394bf2f5" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>powerOff</name></member>
+      <member refid="classvc64_1_1_core_component_1ad606699d83a017fbee805e8d40245475" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>powerOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a74ab4149c152b98c6d5cc15bbac63887" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>powerOnOff</name></member>
+      <member refid="classvc64_1_1_sub_component_1a4fa2405b078fe61c302ff1c8047d9c4f" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>powerSupply</name></member>
+      <member refid="classvc64_1_1_sub_component_1aba0c66cd1ce8a6d1c3529825afdb4a02" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>prefix</name></member>
+      <member refid="classvc64_1_1_mouse1350_1a0514e71dc9a0ec0c600071efdfd66f7b" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>readControlPort</name></member>
+      <member refid="classvc64_1_1_mouse1350_1a4cccfd285bc3567e6d945b039a27f718" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>readPotX</name></member>
+      <member refid="classvc64_1_1_mouse1350_1aec154e0469745290fbf2e67661042099" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>readPotY</name></member>
+      <member refid="classvc64_1_1_sub_component_1a2e1d97a260e9d4d637b0f8fb95fbf1d8" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>recorder</name></member>
+      <member refid="classvc64_1_1_sub_component_1afe6a4ca2f661ec44fd67637b14647436" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>regressionTester</name></member>
+      <member refid="classvc64_1_1_core_component_1a3910be506f5067fe6cf31a69dcd76b0c" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>reset</name></member>
+      <member refid="classvc64_1_1_core_component_1a082147809d967c961a7ac7c15c5f072a" prot="public" virt="virtual"><scope>vc64::Mouse1350</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1aec76d436c865101509bceb2daf47890b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::Mouse1350</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1af9ec0fb5e73fd1f0433a4f3bfcd39d9b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::Mouse1350</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1aab9305af3e38cc19bd1067ca87fe3e0d" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>resume</name></member>
+      <member refid="classvc64_1_1_sub_component_1ada641e2232ca8bdd3ef8fbecc883658d" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>retroShell</name></member>
+      <member refid="classvc64_1_1_mouse1350_1a5c740d44a360dec785bfe75998a5e8b3" prot="private" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>rightButton</name></member>
+      <member refid="classvc64_1_1_core_component_1ae7093017e8a84768103c67b24de5c578" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>run</name></member>
+      <member refid="classvc64_1_1_mouse1350_1a958ed428dac536dc7cdd1bed0a50faae" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>serialize</name></member>
+      <member refid="classvc64_1_1_mouse1350_1aba84207ee2762af4e009bdd19bc11589" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>SERIALIZERS</name></member>
+      <member refid="classvc64_1_1_mouse1350_1ab5a31d607bd89160f211b959404abcd5" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>setLeftMouseButton</name></member>
+      <member refid="classvc64_1_1_configurable_1ae56ba20ac3ec36bd84dbeb04aba3e8b0" prot="public" virt="virtual"><scope>vc64::Mouse1350</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a51756d7f1f0ed1caa0e247ab6e789a3b" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a689b1a17fac237ca960b062df637" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_mouse1350_1aefd56eb214554a53bec58b4554403c17" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>setRightMouseButton</name></member>
+      <member refid="classvc64_1_1_sub_component_1adce334c26f07e67bc936fbf7c935a759" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1a61d8a843718ff2f39e1575338a527676" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_core_component_1aa8b45810bedbdf78b88710ae8db3f495" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>subComponents</name></member>
+      <member refid="classvc64_1_1_core_component_1afd3f09724b119d73a122c3fc02ac1736" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>suspend</name></member>
+      <member refid="classvc64_1_1_suspendable_1a7f9f608d5b2b9b6e944176cde77b8f85" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>Suspendable</name></member>
+      <member refid="classvc64_1_1_core_component_1a0a4c841e543ecfc6cf988592a933a564" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>trackOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a4832ab0ebef49b591fe6e2785e969c89" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>trackOn</name></member>
+      <member refid="classvc64_1_1_core_component_1aae437c6ccf5f91155464dd4953c3baab" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>trackOnOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a24c5efde497d14b519ad15c9053949" prot="public" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9c1a4b73d1514ddc64567d4521abdecd" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>vic</name></member>
+      <member refid="classvc64_1_1_core_component_1a45399f75688ba5ba157a479c3ce76633" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>warpOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a5df664aeda300338d0568d59673ff536" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>warpOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a6760d32857901c415f4d75031d1e2654" prot="protected" virt="non-virtual"><scope>vc64::Mouse1350</scope><name>warpOnOff</name></member>
+      <member refid="classvc64_1_1_configurable_1a5aa5d945e768c40297f1bf71e200bde3" prot="public" virt="virtual"><scope>vc64::Mouse1350</scope><name>~Configurable</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>vc64::Mouse1350</scope><name>~CoreObject</name></member>
+      <member refid="classvc64_1_1_suspendable_1a35809d3a4c20db1f096e8dc5c78c49b9" prot="public" virt="virtual"><scope>vc64::Mouse1350</scope><name>~Suspendable</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,65 @@
+\doxysection{vc64\+::PETName\texorpdfstring{$<$}{<} len \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classvc64_1_1_p_e_t_name}{}\label{classvc64_1_1_p_e_t_name}\index{vc64::PETName$<$ len $>$@{vc64::PETName$<$ len $>$}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_p_e_t_name_a8304c158df7e6df406569d6f4e30c6ae}\label{classvc64_1_1_p_e_t_name_a8304c158df7e6df406569d6f4e30c6ae} 
+{\bfseries PETName} (const u8 \texorpdfstring{$\ast$}{*}\+\_\+pet, u8 \+\_\+pad=0x\+A0)
+\item 
+\Hypertarget{classvc64_1_1_p_e_t_name_a24879b5b12f6f9f03b1f81a7cded6cd9}\label{classvc64_1_1_p_e_t_name_a24879b5b12f6f9f03b1f81a7cded6cd9} 
+{\bfseries PETName} (const char \texorpdfstring{$\ast$}{*}\+\_\+str, u8 \+\_\+pad=0x\+A0)
+\item 
+\Hypertarget{classvc64_1_1_p_e_t_name_a7b59fbca82e1a465f50f6ffb806ae885}\label{classvc64_1_1_p_e_t_name_a7b59fbca82e1a465f50f6ffb806ae885} 
+{\bfseries PETName} (string str)
+\item 
+\Hypertarget{classvc64_1_1_p_e_t_name_af78c687f57988e222e49d4e44d1a3c52}\label{classvc64_1_1_p_e_t_name_af78c687f57988e222e49d4e44d1a3c52} 
+void {\bfseries set\+Pad} (u8 \+\_\+pad)
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classvc64_1_1_p_e_t_name_a76efb44b2f693855cfcf5a62e5fdcbbb}{get\+Description}} () const override
+\item 
+\Hypertarget{classvc64_1_1_p_e_t_name_a6ab591ed3017a80381580bab2ce90985}\label{classvc64_1_1_p_e_t_name_a6ab591ed3017a80381580bab2ce90985} 
+bool {\bfseries operator==} (\mbox{\hyperlink{classvc64_1_1_p_e_t_name}{PETName}} \&rhs)
+\item 
+\Hypertarget{classvc64_1_1_p_e_t_name_ae595e989176fc126c5d0d34d9422f96a}\label{classvc64_1_1_p_e_t_name_ae595e989176fc126c5d0d34d9422f96a} 
+\mbox{\hyperlink{classvc64_1_1_p_e_t_name}{PETName}}$<$ len $>$ {\bfseries stripped} (u8 c)
+\item 
+\Hypertarget{classvc64_1_1_p_e_t_name_ad38eb7e09054c572892cf45fdbda954d}\label{classvc64_1_1_p_e_t_name_ad38eb7e09054c572892cf45fdbda954d} 
+void {\bfseries write} (u8 \texorpdfstring{$\ast$}{*}p, isize length)
+\item 
+\Hypertarget{classvc64_1_1_p_e_t_name_a5c7ee5c89869b50f02b794d3924cc7d3}\label{classvc64_1_1_p_e_t_name_a5c7ee5c89869b50f02b794d3924cc7d3} 
+void {\bfseries write} (u8 \texorpdfstring{$\ast$}{*}p)
+\item 
+\Hypertarget{classvc64_1_1_p_e_t_name_ab65c59a74a454f212b7d43e8d6935f4a}\label{classvc64_1_1_p_e_t_name_ab65c59a74a454f212b7d43e8d6935f4a} 
+const char \texorpdfstring{$\ast$}{*} {\bfseries c\+\_\+str} ()
+\item 
+\Hypertarget{classvc64_1_1_p_e_t_name_a3997cef14dde93f620db32f2dd48eff1}\label{classvc64_1_1_p_e_t_name_a3997cef14dde93f620db32f2dd48eff1} 
+string {\bfseries str} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_p_e_t_name_ab10fe7d2db97902c7ac23217e7f2643b}\label{classvc64_1_1_p_e_t_name_ab10fe7d2db97902c7ac23217e7f2643b} 
+static u8 {\bfseries petscii2printable} (u8 c, u8 subst)
+\item 
+\Hypertarget{classvc64_1_1_p_e_t_name_a4fd67d7c7f6eae62d950891f1300e52f}\label{classvc64_1_1_p_e_t_name_a4fd67d7c7f6eae62d950891f1300e52f} 
+static u8 {\bfseries ascii2pet} (u8 asciichar)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvc64_1_1_p_e_t_name_a76efb44b2f693855cfcf5a62e5fdcbbb}\label{classvc64_1_1_p_e_t_name_a76efb44b2f693855cfcf5a62e5fdcbbb} 
+\index{vc64::PETName$<$ len $>$@{vc64::PETName$<$ len $>$}!getDescription@{getDescription}}
+\index{getDescription@{getDescription}!vc64::PETName$<$ len $>$@{vc64::PETName$<$ len $>$}}
+\doxysubsubsection{\texorpdfstring{getDescription()}{getDescription()}}
+{\footnotesize\ttfamily template$<$int len$>$ \\
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classvc64_1_1_p_e_t_name}{vc64\+::\+PETName}}$<$ len $>$\+::get\+Description (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Media/PETName.\+h\end{DoxyCompactItemize}

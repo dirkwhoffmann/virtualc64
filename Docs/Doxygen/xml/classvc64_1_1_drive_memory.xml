@@ -1,0 +1,867 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_drive_memory" kind="class" language="C++" prot="public" final="yes">
+    <compoundname>vc64::DriveMemory</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">vc64::SubComponent</basecompoundref>
+    <basecompoundref prot="public" virt="non-virtual">vc64::Dumpable</basecompoundref>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_drive_memory_1adc154a3123d5f697e4ff9e76b7a6e01b" prot="private" static="no" mutable="no">
+        <type>ConfigOptions</type>
+        <definition>ConfigOptions vc64::DriveMemory::options</definition>
+        <argsstring></argsstring>
+        <name>options</name>
+        <qualifiedname>vc64::DriveMemory::options</qualifiedname>
+        <initializer>= {
+
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8afdff745c618394723a7642317fbc0404" kindref="member">OPT_SAVE_ROMS</ref>
+    }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="22" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="22" bodyend="25"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_memory_1a02ce2a82f483cb3f4be0e95479738570" prot="private" static="no" mutable="no">
+        <type>DriveMemConfig</type>
+        <definition>DriveMemConfig vc64::DriveMemory::config</definition>
+        <argsstring></argsstring>
+        <name>config</name>
+        <qualifiedname>vc64::DriveMemory::config</qualifiedname>
+        <initializer>= { }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="28" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="28" bodyend="28"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_memory_1aa370712a60588aed53ba77d9dd3b314e" prot="private" static="no" mutable="no">
+        <type>class Drive &amp;</type>
+        <definition>class Drive&amp; vc64::DriveMemory::drive</definition>
+        <argsstring></argsstring>
+        <name>drive</name>
+        <qualifiedname>vc64::DriveMemory::drive</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="31" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="31" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_drive_memory_1ae918244282e1bbb9b31931be5dca6f16" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::DriveMemory::ram[0xA000]</definition>
+        <argsstring>[0xA000]</argsstring>
+        <name>ram</name>
+        <qualifiedname>vc64::DriveMemory::ram</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="47" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_memory_1a2a54238e7b9b53acc4edad8a64740438" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::DriveMemory::rom[0x8000]</definition>
+        <argsstring>[0x8000]</argsstring>
+        <name>rom</name>
+        <qualifiedname>vc64::DriveMemory::rom</qualifiedname>
+        <initializer>= {}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="48" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="48" bodyend="48"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_memory_1a416c67c5aaccf815a453e57a936bf18d" prot="public" static="no" mutable="no">
+        <type>DrvMemType</type>
+        <definition>DrvMemType vc64::DriveMemory::usage[64]</definition>
+        <argsstring>[64]</argsstring>
+        <name>usage</name>
+        <qualifiedname>vc64::DriveMemory::usage</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="51" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a93c89ea2de9e264413e920c6e464a3c8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::DriveMemory::DriveMemory</definition>
+        <argsstring>(C64 &amp;ref, Drive &amp;drive)</argsstring>
+        <name>DriveMemory</name>
+        <qualifiedname>vc64::DriveMemory::DriveMemory</qualifiedname>
+        <param>
+          <type>C64 &amp;</type>
+          <declname>ref</declname>
+        </param>
+        <param>
+          <type>Drive &amp;</type>
+          <declname>drive</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="60" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp" bodystart="21" bodyend="24"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a4d00daa66741b59c3477de735c2276c0" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::DriveMemory::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::DriveMemory::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="62" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="62" bodyend="62"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1aa891420e60f10d385fe313a309f5ccfe" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DriveMemory::_dump</definition>
+        <argsstring>(Category category, std::ostream &amp;os) const override</argsstring>
+        <name>_dump</name>
+        <qualifiedname>vc64::DriveMemory::_dump</qualifiedname>
+        <param>
+          <type>Category</type>
+          <declname>category</declname>
+        </param>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="63" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp" bodystart="84" bodyend="104"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a61635bb83744dda8122144d4a7264331" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>DriveMemory &amp;</type>
+        <definition>DriveMemory &amp; vc64::DriveMemory::operator=</definition>
+        <argsstring>(const DriveMemory &amp;other)</argsstring>
+        <name>operator=</name>
+        <qualifiedname>vc64::DriveMemory::operator=</qualifiedname>
+        <param>
+          <type>const DriveMemory &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="65" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="65" bodyend="72"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a97dddce08501bc33bc2950a93695863e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>class T</type>
+          </param>
+        </templateparamlist>
+        <type>void</type>
+        <definition>void vc64::DriveMemory::serialize</definition>
+        <argsstring>(T &amp;worker)</argsstring>
+        <name>serialize</name>
+        <qualifiedname>vc64::DriveMemory::serialize</qualifiedname>
+        <param>
+          <type>T &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="75" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="75" bodyend="83"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1aeb51714de9a969750021cddad037252c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DriveMemory::operator&lt;&lt;</definition>
+        <argsstring>(SerResetter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::DriveMemory::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerResetter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="85" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="85" bodyend="85"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a6059843a81860b97ec04243e286c0419" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DriveMemory::operator&lt;&lt;</definition>
+        <argsstring>(SerChecker &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::DriveMemory::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerChecker &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="86" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="86" bodyend="86"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1ab5006c56f2cfdda2d3d7c961fbe97fe1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DriveMemory::operator&lt;&lt;</definition>
+        <argsstring>(SerCounter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::DriveMemory::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerCounter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="87" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp" bodystart="36" bodyend="40"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a9eef8459bdbe2c3f78e1f9180fdb2d3c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DriveMemory::operator&lt;&lt;</definition>
+        <argsstring>(SerReader &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::DriveMemory::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerReader &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="88" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp" bodystart="43" bodyend="47"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1aced1b80dcb5ff86ef6ac816aff40beb2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DriveMemory::operator&lt;&lt;</definition>
+        <argsstring>(SerWriter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::DriveMemory::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerWriter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="89" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp" bodystart="50" bodyend="54"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1ad6ca57dea544051df3715e83501850e5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DriveMemory::_reset</definition>
+        <argsstring>(bool hard) override</argsstring>
+        <name>_reset</name>
+        <qualifiedname>vc64::DriveMemory::_reset</qualifiedname>
+        <param>
+          <type>bool</type>
+          <declname>hard</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="91" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp" bodystart="27" bodyend="33"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a5d318b88ccf66a4d05e79978aad88c29" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const DriveMemConfig &amp;</type>
+        <definition>const DriveMemConfig &amp; vc64::DriveMemory::getConfig</definition>
+        <argsstring>() const</argsstring>
+        <name>getConfig</name>
+        <qualifiedname>vc64::DriveMemory::getConfig</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="98" column="26" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="98" bodyend="98"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a4bc6b032cbc35a173cdbf321dc7c8ac3" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const ConfigOptions &amp;</type>
+        <definition>const ConfigOptions &amp; vc64::DriveMemory::getOptions</definition>
+        <argsstring>() const override</argsstring>
+        <name>getOptions</name>
+        <qualifiedname>vc64::DriveMemory::getOptions</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="99" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="99" bodyend="99"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1ab71a9d1399ca5ade376cf243e80d973d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>i64</type>
+        <definition>i64 vc64::DriveMemory::getOption</definition>
+        <argsstring>(Option opt) const override</argsstring>
+        <name>getOption</name>
+        <qualifiedname>vc64::DriveMemory::getOption</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>opt</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="100" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp" bodystart="57" bodyend="66"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a62201b1cdb6629bef6a6a3944ac00156" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DriveMemory::setOption</definition>
+        <argsstring>(Option opt, i64 value) override</argsstring>
+        <name>setOption</name>
+        <qualifiedname>vc64::DriveMemory::setOption</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>opt</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="101" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp" bodystart="69" bodyend="81"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a8b0d3cb1d5d0df5f455a493cea7ec30f" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u16</type>
+        <definition>u16 vc64::DriveMemory::romSize</definition>
+        <argsstring>() const</argsstring>
+        <name>romSize</name>
+        <qualifiedname>vc64::DriveMemory::romSize</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="111" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp" bodystart="107" bodyend="120"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a24441587f96ff80f2e2656d76dd3c8d6" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u16</type>
+        <definition>u16 vc64::DriveMemory::romAddr</definition>
+        <argsstring>() const</argsstring>
+        <name>romAddr</name>
+        <qualifiedname>vc64::DriveMemory::romAddr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="112" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp" bodystart="123" bodyend="136"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a74c3ab40638b10b31f5cd7b668bd8328" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::DriveMemory::hasRom</definition>
+        <argsstring>() const</argsstring>
+        <name>hasRom</name>
+        <qualifiedname>vc64::DriveMemory::hasRom</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="115" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="115" bodyend="115"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a48ffbd91569be880876c16cbb36dc7b6" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u32</type>
+        <definition>u32 vc64::DriveMemory::romCRC32</definition>
+        <argsstring>() const</argsstring>
+        <name>romCRC32</name>
+        <qualifiedname>vc64::DriveMemory::romCRC32</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="118" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp" bodystart="139" bodyend="145"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a76853bb0eb62bd70f581269cfecb851a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u64</type>
+        <definition>u64 vc64::DriveMemory::romFNV64</definition>
+        <argsstring>() const</argsstring>
+        <name>romFNV64</name>
+        <qualifiedname>vc64::DriveMemory::romFNV64</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="119" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp" bodystart="148" bodyend="154"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1aa2b44e7b025d2800019ef6bdc686aa66" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DriveMemory::deleteRom</definition>
+        <argsstring>()</argsstring>
+        <name>deleteRom</name>
+        <qualifiedname>vc64::DriveMemory::deleteRom</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="122" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp" bodystart="157" bodyend="161"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1adb14229882b3386354395f20452d5cd9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DriveMemory::loadRom</definition>
+        <argsstring>(const RomFile &amp;file)</argsstring>
+        <name>loadRom</name>
+        <qualifiedname>vc64::DriveMemory::loadRom</qualifiedname>
+        <param>
+          <type>const RomFile &amp;</type>
+          <declname>file</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="125" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp" bodystart="164" bodyend="167"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a1660d316e862c8c98ce891632393a62c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DriveMemory::loadRom</definition>
+        <argsstring>(const u8 *buf, isize size)</argsstring>
+        <name>loadRom</name>
+        <qualifiedname>vc64::DriveMemory::loadRom</qualifiedname>
+        <param>
+          <type>const u8 *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="126" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp" bodystart="170" bodyend="197"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a51c3e36e7a0b2680cefff4ced5cecdda" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DriveMemory::saveRom</definition>
+        <argsstring>(const string &amp;path) throws</argsstring>
+        <name>saveRom</name>
+        <qualifiedname>vc64::DriveMemory::saveRom</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="129" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp" bodystart="200" bodyend="209"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a4c3766d7743706e5dae4ba01063983cc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::DriveMemory::peek</definition>
+        <argsstring>(u16 addr)</argsstring>
+        <name>peek</name>
+        <qualifiedname>vc64::DriveMemory::peek</qualifiedname>
+        <param>
+          <type>u16</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="139" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp" bodystart="212" bodyend="258"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a53557b0c5ea51f6a8f931872e17ea5fd" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::DriveMemory::peekZP</definition>
+        <argsstring>(u8 addr)</argsstring>
+        <name>peekZP</name>
+        <qualifiedname>vc64::DriveMemory::peekZP</qualifiedname>
+        <param>
+          <type>u8</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="140" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="140" bodyend="140"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a4a4ec86121908a371fe914f115beff86" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::DriveMemory::peekStack</definition>
+        <argsstring>(u8 sp)</argsstring>
+        <name>peekStack</name>
+        <qualifiedname>vc64::DriveMemory::peekStack</qualifiedname>
+        <param>
+          <type>u8</type>
+          <declname>sp</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="141" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="141" bodyend="141"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1ae101943a4850d3eeff2a5d8f1f173991" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DriveMemory::peekIdle</definition>
+        <argsstring>(u16 addr)</argsstring>
+        <name>peekIdle</name>
+        <qualifiedname>vc64::DriveMemory::peekIdle</qualifiedname>
+        <param>
+          <type>u16</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="144" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="144" bodyend="144"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1ad1a509196951e4925e93e441050a866b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DriveMemory::peekZPIdle</definition>
+        <argsstring>(u8 addr)</argsstring>
+        <name>peekZPIdle</name>
+        <qualifiedname>vc64::DriveMemory::peekZPIdle</qualifiedname>
+        <param>
+          <type>u8</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="145" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="145" bodyend="145"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1acb5f2cb7eabae676a3fe116a5401bade" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DriveMemory::peekStackIdle</definition>
+        <argsstring>(u8 sp)</argsstring>
+        <name>peekStackIdle</name>
+        <qualifiedname>vc64::DriveMemory::peekStackIdle</qualifiedname>
+        <param>
+          <type>u8</type>
+          <declname>sp</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="146" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="146" bodyend="146"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1ae17ba4c3648a4f083346939b4caa8a4b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DriveMemory::peekIOIdle</definition>
+        <argsstring>(u16 addr)</argsstring>
+        <name>peekIOIdle</name>
+        <qualifiedname>vc64::DriveMemory::peekIOIdle</qualifiedname>
+        <param>
+          <type>u16</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="147" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="147" bodyend="147"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1ab072022c457b5f673146315a01f92551" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::DriveMemory::spypeek</definition>
+        <argsstring>(u16 addr) const</argsstring>
+        <name>spypeek</name>
+        <qualifiedname>vc64::DriveMemory::spypeek</qualifiedname>
+        <param>
+          <type>u16</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="150" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp" bodystart="261" bodyend="307"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a29f7045f973d2caf403fadfbf8024426" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DriveMemory::poke</definition>
+        <argsstring>(u16 addr, u8 value)</argsstring>
+        <name>poke</name>
+        <qualifiedname>vc64::DriveMemory::poke</qualifiedname>
+        <param>
+          <type>u16</type>
+          <declname>addr</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="153" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp" bodystart="310" bodyend="342"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a63b919f3c0bf3412fcdd4d9a50abd7d0" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DriveMemory::pokeZP</definition>
+        <argsstring>(u8 addr, u8 value)</argsstring>
+        <name>pokeZP</name>
+        <qualifiedname>vc64::DriveMemory::pokeZP</qualifiedname>
+        <param>
+          <type>u8</type>
+          <declname>addr</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="154" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="154" bodyend="154"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1a3fdb511cfd71953edf0d5a72d392e99a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DriveMemory::pokeStack</definition>
+        <argsstring>(u8 sp, u8 value)</argsstring>
+        <name>pokeStack</name>
+        <qualifiedname>vc64::DriveMemory::pokeStack</qualifiedname>
+        <param>
+          <type>u8</type>
+          <declname>sp</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="155" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="155" bodyend="155"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_memory_1ad9d2e09b826c014364589d4821b11280" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DriveMemory::updateBankMap</definition>
+        <argsstring>()</argsstring>
+        <name>updateBankMap</name>
+        <qualifiedname>vc64::DriveMemory::updateBankMap</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="158" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.cpp" bodystart="345" bodyend="394"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" line="20" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveMemory.h" bodystart="20" bodyend="159"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_drive_memory_1aa891420e60f10d385fe313a309f5ccfe" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>_dump</name></member>
+      <member refid="classvc64_1_1_core_component_1aa7dd5e7a2020ad2348fea3edd724f538" prot="public" virt="virtual"><scope>vc64::DriveMemory</scope><name>_initialize</name></member>
+      <member refid="classvc64_1_1_drive_memory_1ad6ca57dea544051df3715e83501850e5" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>_reset</name></member>
+      <member refid="classvc64_1_1_configurable_1a947ce65dab57ea328e9959014b7f9dfb" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>argList</name></member>
+      <member refid="classvc64_1_1_sub_component_1a7691c720c74fd0e19a63978efe4cd851" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>c64</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae066edf64de901ee3f3b65eb0c02b202" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>cia1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9fe5ed30db982340524f7dcbf6fbf34c" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>cia2</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a02ce2a82f483cb3f4be0e95479738570" prot="private" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>config</name></member>
+      <member refid="classvc64_1_1_core_component_1a18f454d0d572fa1b2e5023c4eaba6d07" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>CoreComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1acaece01018438ab083bd38a220d34f10" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>cpu</name></member>
+      <member refid="classvc64_1_1_sub_component_1a157963272dd927ec5c77b4090be57e89" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>datasette</name></member>
+      <member refid="classvc64_1_1_drive_memory_1aa2b44e7b025d2800019ef6bdc686aa66" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>deleteRom</name></member>
+      <member refid="classvc64_1_1_drive_memory_1aa370712a60588aed53ba77d9dd3b314e" prot="private" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>drive</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae44705f9377cf06d91323d8dca13a8a8" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>drive8</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5d876614a31fb29b8317350ed6a3158b" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>drive9</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a93c89ea2de9e264413e920c6e464a3c8" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>DriveMemory</name></member>
+      <member refid="classvc64_1_1_dumpable_1a28d8b76288598fc0309bd6247e5479db" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_dumpable_1afc31b73f9b651bba5cf37dc88158755a" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_configurable_1a459505cd1eed2c174bf78b29808ad07b" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>dumpConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1a606e5261773126791e44ee8238f5876e" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>emulator</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5dc793ff2aa4ff3b36fdd061fd3f816b" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>expansionport</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a5d318b88ccf66a4d05e79978aad88c29" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>getConfig</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a4d00daa66741b59c3477de735c2276c0" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_drive_memory_1ab71a9d1399ca5ade376cf243e80d973d" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>getOption</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a4bc6b032cbc35a173cdbf321dc7c8ac3" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>getOptions</name></member>
+      <member refid="classvc64_1_1_core_component_1a936940e4e5cf0c617935ea3070bcbd4d" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>halt</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a74c3ab40638b10b31f5cd7b668bd8328" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>hasRom</name></member>
+      <member refid="classvc64_1_1_sub_component_1add6521bbcffbe5ca85afd6105d54e5ad" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>host</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5c8620301453e0b91374683d0c7b28ab" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>iec</name></member>
+      <member refid="classvc64_1_1_core_component_1a250f9ac5bbc00892bf195ec2ef523a2b" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>initialize</name></member>
+      <member refid="classvc64_1_1_core_component_1a7b95994acc6e7ba59d4b2f50f2dc8df5" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>isEmulatorThread</name></member>
+      <member refid="classvc64_1_1_core_component_1a0e8c3dd97f64e2487fba4c22ba66d487" prot="public" virt="virtual"><scope>vc64::DriveMemory</scope><name>isHalted</name></member>
+      <member refid="classvc64_1_1_core_component_1a4f0f63ef65776aceecb329d03c3b5f17" prot="public" virt="virtual"><scope>vc64::DriveMemory</scope><name>isPaused</name></member>
+      <member refid="classvc64_1_1_core_component_1ac4dadc5fecfac3cd2dfb7e8b70767b42" prot="public" virt="virtual"><scope>vc64::DriveMemory</scope><name>isPoweredOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a0f9912b36ec181a0410d4f564baef127" prot="public" virt="virtual"><scope>vc64::DriveMemory</scope><name>isPoweredOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a77bf78d982163a6797f24d23106c5098" prot="public" virt="virtual"><scope>vc64::DriveMemory</scope><name>isReady</name></member>
+      <member refid="classvc64_1_1_core_component_1a121143d811f91157272bb67a0ca48d8f" prot="public" virt="virtual"><scope>vc64::DriveMemory</scope><name>isRunning</name></member>
+      <member refid="classvc64_1_1_core_component_1a490512fe63211f42eb57e7ed59f9b6a1" prot="public" virt="virtual"><scope>vc64::DriveMemory</scope><name>isSuspended</name></member>
+      <member refid="classvc64_1_1_configurable_1af6260d08823e90bdb51d1bf7bb596c35" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>isValidOption</name></member>
+      <member refid="classvc64_1_1_sub_component_1aa9a0c663f877801b651969f86dbf2aae" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>keyboard</name></member>
+      <member refid="classvc64_1_1_configurable_1a0d6caf30eeaae95d1898d08cf3ca8e28" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>keyList</name></member>
+      <member refid="classvc64_1_1_drive_memory_1adb14229882b3386354395f20452d5cd9" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>loadRom</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a1660d316e862c8c98ce891632393a62c" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>loadRom</name></member>
+      <member refid="classvc64_1_1_sub_component_1ad160280522e5c27cd731289b9396c44f" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>mem</name></member>
+      <member refid="classvc64_1_1_sub_component_1a478be9b50f9e5c4c07dd2830e9964711" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>msgQueue</name></member>
+      <member refid="classvc64_1_1_synchronizable_1a595f618a9c91e91148882a79760f0f0f" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>mutex</name></member>
+      <member refid="classvc64_1_1_sub_component_1a712af82456373bd6e688a174ac756bcb" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>muxer</name></member>
+      <member refid="classvc64_1_1_core_component_1af47e1017ec1d938b1b613b36bdc8be57" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>operator!=</name></member>
+      <member refid="classvc64_1_1_drive_memory_1aeb51714de9a969750021cddad037252c" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a6059843a81860b97ec04243e286c0419" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_drive_memory_1ab5006c56f2cfdda2d3d7c961fbe97fe1" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a9eef8459bdbe2c3f78e1f9180fdb2d3c" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_drive_memory_1aced1b80dcb5ff86ef6ac816aff40beb2" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a61635bb83744dda8122144d4a7264331" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>operator=</name></member>
+      <member refid="classvc64_1_1_core_component_1aae8879dd8b62291254ec498fa9b2e2cf" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>operator==</name></member>
+      <member refid="classvc64_1_1_drive_memory_1adc154a3123d5f697e4ff9e76b7a6e01b" prot="private" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>options</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9dfb837b941848b6b87e6a57da28348d" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>parCable</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a9c059588a19eeba521b79ff28e3dd8" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>pause</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a4c3766d7743706e5dae4ba01063983cc" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>peek</name></member>
+      <member refid="classvc64_1_1_drive_memory_1ae101943a4850d3eeff2a5d8f1f173991" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>peekIdle</name></member>
+      <member refid="classvc64_1_1_drive_memory_1ae17ba4c3648a4f083346939b4caa8a4b" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>peekIOIdle</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a4a4ec86121908a371fe914f115beff86" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>peekStack</name></member>
+      <member refid="classvc64_1_1_drive_memory_1acb5f2cb7eabae676a3fe116a5401bade" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>peekStackIdle</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a53557b0c5ea51f6a8f931872e17ea5fd" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>peekZP</name></member>
+      <member refid="classvc64_1_1_drive_memory_1ad1a509196951e4925e93e441050a866b" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>peekZPIdle</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a29f7045f973d2caf403fadfbf8024426" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>poke</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a3fdb511cfd71953edf0d5a72d392e99a" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>pokeStack</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a63b919f3c0bf3412fcdd4d9a50abd7d0" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>pokeZP</name></member>
+      <member refid="classvc64_1_1_sub_component_1a8c0718eb9d42f335961eaed51ba7cb8d" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>port1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a217a6ea39994b6ecae4e1ebd9cc220e7" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>port2</name></member>
+      <member refid="classvc64_1_1_core_component_1a05e1ba6d62516f796256f1cc394bf2f5" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>powerOff</name></member>
+      <member refid="classvc64_1_1_core_component_1ad606699d83a017fbee805e8d40245475" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>powerOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a74ab4149c152b98c6d5cc15bbac63887" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>powerOnOff</name></member>
+      <member refid="classvc64_1_1_sub_component_1a4fa2405b078fe61c302ff1c8047d9c4f" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>powerSupply</name></member>
+      <member refid="classvc64_1_1_sub_component_1aba0c66cd1ce8a6d1c3529825afdb4a02" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>prefix</name></member>
+      <member refid="classvc64_1_1_drive_memory_1ae918244282e1bbb9b31931be5dca6f16" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>ram</name></member>
+      <member refid="classvc64_1_1_sub_component_1a2e1d97a260e9d4d637b0f8fb95fbf1d8" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>recorder</name></member>
+      <member refid="classvc64_1_1_sub_component_1afe6a4ca2f661ec44fd67637b14647436" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>regressionTester</name></member>
+      <member refid="classvc64_1_1_core_component_1a3910be506f5067fe6cf31a69dcd76b0c" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>reset</name></member>
+      <member refid="classvc64_1_1_core_component_1a082147809d967c961a7ac7c15c5f072a" prot="public" virt="virtual"><scope>vc64::DriveMemory</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1aec76d436c865101509bceb2daf47890b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::DriveMemory</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1af9ec0fb5e73fd1f0433a4f3bfcd39d9b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::DriveMemory</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1aab9305af3e38cc19bd1067ca87fe3e0d" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>resume</name></member>
+      <member refid="classvc64_1_1_sub_component_1ada641e2232ca8bdd3ef8fbecc883658d" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>retroShell</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a2a54238e7b9b53acc4edad8a64740438" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>rom</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a24441587f96ff80f2e2656d76dd3c8d6" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>romAddr</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a48ffbd91569be880876c16cbb36dc7b6" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>romCRC32</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a76853bb0eb62bd70f581269cfecb851a" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>romFNV64</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a8b0d3cb1d5d0df5f455a493cea7ec30f" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>romSize</name></member>
+      <member refid="classvc64_1_1_core_component_1ae7093017e8a84768103c67b24de5c578" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>run</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a51c3e36e7a0b2680cefff4ced5cecdda" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>saveRom</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a97dddce08501bc33bc2950a93695863e" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>serialize</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a62201b1cdb6629bef6a6a3944ac00156" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a51756d7f1f0ed1caa0e247ab6e789a3b" prot="public" virt="non-virtual" ambiguityscope="vc64::SubComponent::"><scope>vc64::DriveMemory</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a689b1a17fac237ca960b062df637" prot="public" virt="non-virtual" ambiguityscope="vc64::SubComponent::"><scope>vc64::DriveMemory</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_drive_memory_1ab072022c457b5f673146315a01f92551" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>spypeek</name></member>
+      <member refid="classvc64_1_1_sub_component_1adce334c26f07e67bc936fbf7c935a759" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1a61d8a843718ff2f39e1575338a527676" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_core_component_1aa8b45810bedbdf78b88710ae8db3f495" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>subComponents</name></member>
+      <member refid="classvc64_1_1_core_component_1afd3f09724b119d73a122c3fc02ac1736" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>suspend</name></member>
+      <member refid="classvc64_1_1_suspendable_1a7f9f608d5b2b9b6e944176cde77b8f85" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>Suspendable</name></member>
+      <member refid="classvc64_1_1_core_component_1a0a4c841e543ecfc6cf988592a933a564" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>trackOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a4832ab0ebef49b591fe6e2785e969c89" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>trackOn</name></member>
+      <member refid="classvc64_1_1_core_component_1aae437c6ccf5f91155464dd4953c3baab" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>trackOnOff</name></member>
+      <member refid="classvc64_1_1_drive_memory_1ad9d2e09b826c014364589d4821b11280" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>updateBankMap</name></member>
+      <member refid="classvc64_1_1_drive_memory_1a416c67c5aaccf815a453e57a936bf18d" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>usage</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a24c5efde497d14b519ad15c9053949" prot="public" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9c1a4b73d1514ddc64567d4521abdecd" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>vic</name></member>
+      <member refid="classvc64_1_1_core_component_1a45399f75688ba5ba157a479c3ce76633" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>warpOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a5df664aeda300338d0568d59673ff536" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>warpOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a6760d32857901c415f4d75031d1e2654" prot="protected" virt="non-virtual"><scope>vc64::DriveMemory</scope><name>warpOnOff</name></member>
+      <member refid="classvc64_1_1_configurable_1a5aa5d945e768c40297f1bf71e200bde3" prot="public" virt="virtual"><scope>vc64::DriveMemory</scope><name>~Configurable</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>vc64::DriveMemory</scope><name>~CoreObject</name></member>
+      <member refid="classvc64_1_1_dumpable_1a843e874f633f7dcd8e2f1dcf1d8f0c25" prot="public" virt="virtual"><scope>vc64::DriveMemory</scope><name>~Dumpable</name></member>
+      <member refid="classvc64_1_1_suspendable_1a35809d3a4c20db1f096e8dc5c78c49b9" prot="public" virt="virtual"><scope>vc64::DriveMemory</scope><name>~Suspendable</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

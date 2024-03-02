@@ -1,0 +1,555 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_v_i_c_i_i_info" kind="struct" language="C++" prot="public">
+    <compoundname>VICIIInfo</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a8ba1ae92f9f4c6bdef61f1fd5c682609" prot="public" static="no" mutable="no">
+        <type>u16</type>
+        <definition>u16 VICIIInfo::scanline</definition>
+        <argsstring></argsstring>
+        <name>scanline</name>
+        <qualifiedname>VICIIInfo::scanline</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="392" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="392" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a3c22cfd2c87ca61b723148d938c56271" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VICIIInfo::rasterCycle</definition>
+        <argsstring></argsstring>
+        <name>rasterCycle</name>
+        <qualifiedname>VICIIInfo::rasterCycle</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="393" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="393" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a6ecbc0ea9c63c5d7471e417a85e13143" prot="public" static="no" mutable="no">
+        <type>u32</type>
+        <definition>u32 VICIIInfo::yCounter</definition>
+        <argsstring></argsstring>
+        <name>yCounter</name>
+        <qualifiedname>VICIIInfo::yCounter</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="394" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="394" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1ae39f9721fcd2d9f718f5d838a4c36cfb" prot="public" static="no" mutable="no">
+        <type>u16</type>
+        <definition>u16 VICIIInfo::xCounter</definition>
+        <argsstring></argsstring>
+        <name>xCounter</name>
+        <qualifiedname>VICIIInfo::xCounter</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="395" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="395" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1ae6353cc500ea091496662cf7bc550a49" prot="public" static="no" mutable="no">
+        <type>u16</type>
+        <definition>u16 VICIIInfo::vc</definition>
+        <argsstring></argsstring>
+        <name>vc</name>
+        <qualifiedname>VICIIInfo::vc</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="396" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="396" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a5224351f108a17d6945d9da3ee2f862d" prot="public" static="no" mutable="no">
+        <type>u16</type>
+        <definition>u16 VICIIInfo::vcBase</definition>
+        <argsstring></argsstring>
+        <name>vcBase</name>
+        <qualifiedname>VICIIInfo::vcBase</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="397" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="397" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1af7bdaa0c9a4a0e31844782ffdbdab13a" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VICIIInfo::rc</definition>
+        <argsstring></argsstring>
+        <name>rc</name>
+        <qualifiedname>VICIIInfo::rc</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="398" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="398" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a7a5177a7c65d8c89e10875679ea3d6e5" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VICIIInfo::vmli</definition>
+        <argsstring></argsstring>
+        <name>vmli</name>
+        <qualifiedname>VICIIInfo::vmli</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="399" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="399" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a287560f1190cc88c009985c3dc59357e" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VICIIInfo::ctrl1</definition>
+        <argsstring></argsstring>
+        <name>ctrl1</name>
+        <qualifiedname>VICIIInfo::ctrl1</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="402" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="402" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1ab89b23ebbd0f6ccd8b173aa26073e46c" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VICIIInfo::ctrl2</definition>
+        <argsstring></argsstring>
+        <name>ctrl2</name>
+        <qualifiedname>VICIIInfo::ctrl2</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="403" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="403" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1af76082fd11b9cef650facb8e6cb6f9c6" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VICIIInfo::dy</definition>
+        <argsstring></argsstring>
+        <name>dy</name>
+        <qualifiedname>VICIIInfo::dy</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="404" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="404" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a60e8c6458510f4f3782947bb163e30f8" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VICIIInfo::dx</definition>
+        <argsstring></argsstring>
+        <name>dx</name>
+        <qualifiedname>VICIIInfo::dx</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="405" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="405" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a065436183d1e8cc170f9e986dfbbb64f" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool VICIIInfo::denBit</definition>
+        <argsstring></argsstring>
+        <name>denBit</name>
+        <qualifiedname>VICIIInfo::denBit</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="406" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="406" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a09318b4af41cecfa26fa0a91fb169150" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool VICIIInfo::badLine</definition>
+        <argsstring></argsstring>
+        <name>badLine</name>
+        <qualifiedname>VICIIInfo::badLine</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="407" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="407" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a70abc0aa2f25a2d8270e99435db51718" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool VICIIInfo::displayState</definition>
+        <argsstring></argsstring>
+        <name>displayState</name>
+        <qualifiedname>VICIIInfo::displayState</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="408" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="408" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a4082d5bf09fca85946482cc0f53cda3d" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool VICIIInfo::vblank</definition>
+        <argsstring></argsstring>
+        <name>vblank</name>
+        <qualifiedname>VICIIInfo::vblank</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="409" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="409" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a96498da858f1c96f7cdaa0e8a4e4b6fa" prot="public" static="no" mutable="no">
+        <type><ref refid="_v_i_c_i_i_types_8h_1a4b4722e29346b1d0c0c0faa810ec4c93" kindref="member">ScreenGeometry</ref></type>
+        <definition>ScreenGeometry VICIIInfo::screenGeometry</definition>
+        <argsstring></argsstring>
+        <name>screenGeometry</name>
+        <qualifiedname>VICIIInfo::screenGeometry</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="410" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="410" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1ac3e2dc28d75054cb19b460b6515f3937" prot="public" static="no" mutable="no">
+        <type>FrameFlipflops</type>
+        <definition>FrameFlipflops VICIIInfo::frameFF</definition>
+        <argsstring></argsstring>
+        <name>frameFF</name>
+        <qualifiedname>VICIIInfo::frameFF</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="411" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="411" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1abd65baea54db326f6fd48721e29cd18d" prot="public" static="no" mutable="no">
+        <type><ref refid="_v_i_c_i_i_types_8h_1a6a3401992bca5c147311f680458a6582" kindref="member">DisplayMode</ref></type>
+        <definition>DisplayMode VICIIInfo::displayMode</definition>
+        <argsstring></argsstring>
+        <name>displayMode</name>
+        <qualifiedname>VICIIInfo::displayMode</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="412" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="412" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a654f4a6bd6f02a038214cbee7575673a" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VICIIInfo::borderColor</definition>
+        <argsstring></argsstring>
+        <name>borderColor</name>
+        <qualifiedname>VICIIInfo::borderColor</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="413" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="413" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1abb5559f5030192e626d26d17df862ec5" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VICIIInfo::bgColor0</definition>
+        <argsstring></argsstring>
+        <name>bgColor0</name>
+        <qualifiedname>VICIIInfo::bgColor0</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="414" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="414" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a1fff035e7199024e58c1787a5be3903f" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VICIIInfo::bgColor1</definition>
+        <argsstring></argsstring>
+        <name>bgColor1</name>
+        <qualifiedname>VICIIInfo::bgColor1</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="415" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="415" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1af9e94418a2ec8094a87a2b03bb78c248" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VICIIInfo::bgColor2</definition>
+        <argsstring></argsstring>
+        <name>bgColor2</name>
+        <qualifiedname>VICIIInfo::bgColor2</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="416" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="416" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a6fbeb4c8e3c54fd2ef65efb6234663f1" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VICIIInfo::bgColor3</definition>
+        <argsstring></argsstring>
+        <name>bgColor3</name>
+        <qualifiedname>VICIIInfo::bgColor3</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="417" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="417" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a43c42eab51e702396ca7c2d1fbdc400a" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VICIIInfo::memSelect</definition>
+        <argsstring></argsstring>
+        <name>memSelect</name>
+        <qualifiedname>VICIIInfo::memSelect</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="420" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="420" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1aafac19b19350deb7c20f98523bad33e0" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool VICIIInfo::ultimax</definition>
+        <argsstring></argsstring>
+        <name>ultimax</name>
+        <qualifiedname>VICIIInfo::ultimax</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="421" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="421" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a6ff72e5c82e08926698db7c0e376b092" prot="public" static="no" mutable="no">
+        <type>u16</type>
+        <definition>u16 VICIIInfo::memoryBankAddr</definition>
+        <argsstring></argsstring>
+        <name>memoryBankAddr</name>
+        <qualifiedname>VICIIInfo::memoryBankAddr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="422" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="422" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1ab57cf10bebf66b653cbc79904a3670df" prot="public" static="no" mutable="no">
+        <type>u16</type>
+        <definition>u16 VICIIInfo::screenMemoryAddr</definition>
+        <argsstring></argsstring>
+        <name>screenMemoryAddr</name>
+        <qualifiedname>VICIIInfo::screenMemoryAddr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="423" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="423" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a152f7f650deb09e008e842a9dc78620b" prot="public" static="no" mutable="no">
+        <type>u16</type>
+        <definition>u16 VICIIInfo::charMemoryAddr</definition>
+        <argsstring></argsstring>
+        <name>charMemoryAddr</name>
+        <qualifiedname>VICIIInfo::charMemoryAddr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="424" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="424" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1aa7bb6efce2cdb96ee68e6541ce2d406b" prot="public" static="no" mutable="no">
+        <type>u16</type>
+        <definition>u16 VICIIInfo::irqLine</definition>
+        <argsstring></argsstring>
+        <name>irqLine</name>
+        <qualifiedname>VICIIInfo::irqLine</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="427" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="427" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1af26f03c7887debb3a1de315752304c86" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VICIIInfo::irr</definition>
+        <argsstring></argsstring>
+        <name>irr</name>
+        <qualifiedname>VICIIInfo::irr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="428" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="428" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a5c52c5f444814fe8080e1aa320441f61" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VICIIInfo::imr</definition>
+        <argsstring></argsstring>
+        <name>imr</name>
+        <qualifiedname>VICIIInfo::imr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="429" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="429" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1ad6147acdc16882749cd8eb5945bf3cdc" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VICIIInfo::latchedLPX</definition>
+        <argsstring></argsstring>
+        <name>latchedLPX</name>
+        <qualifiedname>VICIIInfo::latchedLPX</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="432" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="432" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a6fb6e706ba463092022de721cced8bd1" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VICIIInfo::latchedLPY</definition>
+        <argsstring></argsstring>
+        <name>latchedLPY</name>
+        <qualifiedname>VICIIInfo::latchedLPY</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="433" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="433" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a37710019f2f0ca75ba965ad8f23264cd" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool VICIIInfo::lpLine</definition>
+        <argsstring></argsstring>
+        <name>lpLine</name>
+        <qualifiedname>VICIIInfo::lpLine</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="434" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="434" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a1e68d0f4dd7db63e66ed0d36e07451e6" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool VICIIInfo::lpIrqHasOccurred</definition>
+        <argsstring></argsstring>
+        <name>lpIrqHasOccurred</name>
+        <qualifiedname>VICIIInfo::lpIrqHasOccurred</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="435" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="435" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="389" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="390" bodyend="439"/>
+    <listofallmembers>
+      <member refid="struct_v_i_c_i_i_info_1a09318b4af41cecfa26fa0a91fb169150" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>badLine</name></member>
+      <member refid="struct_v_i_c_i_i_info_1abb5559f5030192e626d26d17df862ec5" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>bgColor0</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a1fff035e7199024e58c1787a5be3903f" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>bgColor1</name></member>
+      <member refid="struct_v_i_c_i_i_info_1af9e94418a2ec8094a87a2b03bb78c248" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>bgColor2</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a6fbeb4c8e3c54fd2ef65efb6234663f1" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>bgColor3</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a654f4a6bd6f02a038214cbee7575673a" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>borderColor</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a152f7f650deb09e008e842a9dc78620b" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>charMemoryAddr</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a287560f1190cc88c009985c3dc59357e" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>ctrl1</name></member>
+      <member refid="struct_v_i_c_i_i_info_1ab89b23ebbd0f6ccd8b173aa26073e46c" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>ctrl2</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a065436183d1e8cc170f9e986dfbbb64f" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>denBit</name></member>
+      <member refid="struct_v_i_c_i_i_info_1abd65baea54db326f6fd48721e29cd18d" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>displayMode</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a70abc0aa2f25a2d8270e99435db51718" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>displayState</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a60e8c6458510f4f3782947bb163e30f8" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>dx</name></member>
+      <member refid="struct_v_i_c_i_i_info_1af76082fd11b9cef650facb8e6cb6f9c6" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>dy</name></member>
+      <member refid="struct_v_i_c_i_i_info_1ac3e2dc28d75054cb19b460b6515f3937" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>frameFF</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a5c52c5f444814fe8080e1aa320441f61" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>imr</name></member>
+      <member refid="struct_v_i_c_i_i_info_1aa7bb6efce2cdb96ee68e6541ce2d406b" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>irqLine</name></member>
+      <member refid="struct_v_i_c_i_i_info_1af26f03c7887debb3a1de315752304c86" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>irr</name></member>
+      <member refid="struct_v_i_c_i_i_info_1ad6147acdc16882749cd8eb5945bf3cdc" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>latchedLPX</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a6fb6e706ba463092022de721cced8bd1" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>latchedLPY</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a1e68d0f4dd7db63e66ed0d36e07451e6" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>lpIrqHasOccurred</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a37710019f2f0ca75ba965ad8f23264cd" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>lpLine</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a6ff72e5c82e08926698db7c0e376b092" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>memoryBankAddr</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a43c42eab51e702396ca7c2d1fbdc400a" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>memSelect</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a3c22cfd2c87ca61b723148d938c56271" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>rasterCycle</name></member>
+      <member refid="struct_v_i_c_i_i_info_1af7bdaa0c9a4a0e31844782ffdbdab13a" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>rc</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a8ba1ae92f9f4c6bdef61f1fd5c682609" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>scanline</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a96498da858f1c96f7cdaa0e8a4e4b6fa" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>screenGeometry</name></member>
+      <member refid="struct_v_i_c_i_i_info_1ab57cf10bebf66b653cbc79904a3670df" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>screenMemoryAddr</name></member>
+      <member refid="struct_v_i_c_i_i_info_1aafac19b19350deb7c20f98523bad33e0" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>ultimax</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a4082d5bf09fca85946482cc0f53cda3d" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>vblank</name></member>
+      <member refid="struct_v_i_c_i_i_info_1ae6353cc500ea091496662cf7bc550a49" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>vc</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a5224351f108a17d6945d9da3ee2f862d" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>vcBase</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a7a5177a7c65d8c89e10875679ea3d6e5" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>vmli</name></member>
+      <member refid="struct_v_i_c_i_i_info_1ae39f9721fcd2d9f718f5d838a4c36cfb" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>xCounter</name></member>
+      <member refid="struct_v_i_c_i_i_info_1a6ecbc0ea9c63c5d7471e417a85e13143" prot="public" virt="non-virtual"><scope>VICIIInfo</scope><name>yCounter</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

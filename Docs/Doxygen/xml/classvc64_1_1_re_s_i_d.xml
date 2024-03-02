@@ -1,0 +1,801 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_re_s_i_d" kind="class" language="C++" prot="public" final="yes">
+    <compoundname>vc64::ReSID</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">vc64::SubComponent</basecompoundref>
+    <basecompoundref prot="public" virt="non-virtual">vc64::Inspectable&lt; SIDInfo, Void &gt;</basecompoundref>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_re_s_i_d_1ad665be864032693ad9eab3d1375fde6a" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int vc64::ReSID::nr</definition>
+        <argsstring></argsstring>
+        <name>nr</name>
+        <qualifiedname>vc64::ReSID::nr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="39" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_re_s_i_d_1ad5ad0d66359de554d4cb09c62f919135" prot="private" static="no" mutable="no">
+        <type>reSID::SID *</type>
+        <definition>reSID::SID* vc64::ReSID::sid</definition>
+        <argsstring></argsstring>
+        <name>sid</name>
+        <qualifiedname>vc64::ReSID::sid</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="42" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_re_s_i_d_1afb0c45a219361f958480cfb5aaf51ab7" prot="private" static="no" mutable="yes">
+        <type>VoiceInfo</type>
+        <definition>VoiceInfo vc64::ReSID::voiceInfo[3]</definition>
+        <argsstring>[3]</argsstring>
+        <name>voiceInfo</name>
+        <qualifiedname>vc64::ReSID::voiceInfo</qualifiedname>
+        <initializer>= { }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="45" column="23" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" bodystart="45" bodyend="45"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_re_s_i_d_1a04a5e5c7f7ec309146c029596d13734d" prot="private" static="no" mutable="no">
+        <type>reSID::SID::State</type>
+        <definition>reSID::SID::State vc64::ReSID::st</definition>
+        <argsstring></argsstring>
+        <name>st</name>
+        <qualifiedname>vc64::ReSID::st</qualifiedname>
+        <initializer>= { }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="50" column="23" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" bodystart="50" bodyend="50"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_re_s_i_d_1adb55f207bc8b2f5279c65fa4076e26b6" prot="private" static="no" mutable="no">
+        <type>SIDRevision</type>
+        <definition>SIDRevision vc64::ReSID::model</definition>
+        <argsstring></argsstring>
+        <name>model</name>
+        <qualifiedname>vc64::ReSID::model</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="53" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_re_s_i_d_1a426a9f91619cc34717c01241f214f2d6" prot="private" static="no" mutable="no">
+        <type>u32</type>
+        <definition>u32 vc64::ReSID::clockFrequency</definition>
+        <argsstring></argsstring>
+        <name>clockFrequency</name>
+        <qualifiedname>vc64::ReSID::clockFrequency</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="56" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_re_s_i_d_1a97a416be73bfe91b8dcb3e7a50e61dfa" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double vc64::ReSID::sampleRate</definition>
+        <argsstring></argsstring>
+        <name>sampleRate</name>
+        <qualifiedname>vc64::ReSID::sampleRate</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="59" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_re_s_i_d_1a6a29eb46ce6ed529c628874e4ca84d94" prot="private" static="no" mutable="no">
+        <type>SamplingMethod</type>
+        <definition>SamplingMethod vc64::ReSID::samplingMethod</definition>
+        <argsstring></argsstring>
+        <name>samplingMethod</name>
+        <qualifiedname>vc64::ReSID::samplingMethod</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="62" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_re_s_i_d_1addd1c8e49682c782a00b5efe7fa8ea7d" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::ReSID::emulateFilter</definition>
+        <argsstring></argsstring>
+        <name>emulateFilter</name>
+        <qualifiedname>vc64::ReSID::emulateFilter</qualifiedname>
+        <initializer>= true</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="65" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1acdd6bf526c9065aa322dbf28cea39b77" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::ReSID::ReSID</definition>
+        <argsstring>(C64 &amp;ref, int n)</argsstring>
+        <name>ReSID</name>
+        <qualifiedname>vc64::ReSID::ReSID</qualifiedname>
+        <param>
+          <type>C64 &amp;</type>
+          <declname>ref</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="74" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="20" bodyend="32"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1a88f0457664f39f28858f984c4007eb5e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::ReSID::~ReSID</definition>
+        <argsstring>()</argsstring>
+        <name>~ReSID</name>
+        <qualifiedname>vc64::ReSID::~ReSID</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="75" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="34" bodyend="37"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1a2da78a194d5e35ce35bd9fd06470050b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>ReSID &amp;</type>
+        <definition>ReSID &amp; vc64::ReSID::operator=</definition>
+        <argsstring>(const ReSID &amp;other)</argsstring>
+        <name>operator=</name>
+        <qualifiedname>vc64::ReSID::operator=</qualifiedname>
+        <param>
+          <type>const ReSID &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="93" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" bodystart="93" bodyend="102"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1a418f785889f8a2e89d7b45bb70dbdc6a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>class T</type>
+          </param>
+        </templateparamlist>
+        <type>void</type>
+        <definition>void vc64::ReSID::serialize</definition>
+        <argsstring>(T &amp;worker)</argsstring>
+        <name>serialize</name>
+        <qualifiedname>vc64::ReSID::serialize</qualifiedname>
+        <param>
+          <type>T &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="106" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" bodystart="106" bodyend="137"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1af7f7c5ba9208d9c46033980217260c3d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::ReSID::operator&lt;&lt;</definition>
+        <argsstring>(SerResetter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::ReSID::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerResetter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="139" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" bodystart="139" bodyend="139"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1ac853ee133f4b110730845d2deed8e6ff" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::ReSID::operator&lt;&lt;</definition>
+        <argsstring>(SerChecker &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::ReSID::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerChecker &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="140" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" bodystart="140" bodyend="140"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1afd7b9bee0886f3c4b57310bcc8efe7fb" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::ReSID::operator&lt;&lt;</definition>
+        <argsstring>(SerCounter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::ReSID::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerCounter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="141" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" bodystart="141" bodyend="141"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1abd0004e9df94db6a0e20eeec4ba7dc17" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::ReSID::operator&lt;&lt;</definition>
+        <argsstring>(SerReader &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::ReSID::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerReader &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="142" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="123" bodyend="127"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1a35a55c825a1c92929676577f345ea27f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::ReSID::operator&lt;&lt;</definition>
+        <argsstring>(SerWriter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::ReSID::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerWriter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="143" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="130" bodyend="134"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1a37b89adbfb3ed5fbf23381c151d2cb9c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::ReSID::_reset</definition>
+        <argsstring>(bool hard) override</argsstring>
+        <name>_reset</name>
+        <qualifiedname>vc64::ReSID::_reset</qualifiedname>
+        <param>
+          <type>bool</type>
+          <declname>hard</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="145" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="40" bodyend="53"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1a34f23ab7c0d1b61baf3663a82adabe65" prot="public" static="no" const="yes" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void vc64::ReSID::record</definition>
+        <argsstring>() const override</argsstring>
+        <name>record</name>
+        <qualifiedname>vc64::ReSID::record</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="154" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="137" bodyend="146"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1ad5e45192389814d0ef568c166d5c8bc3" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::ReSID::autoInspect</definition>
+        <argsstring>() const override</argsstring>
+        <name>autoInspect</name>
+        <qualifiedname>vc64::ReSID::autoInspect</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="155" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="149" bodyend="152"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1a14c0e7d463929ca59a2ea1b58f160db9" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::ReSID::recordState</definition>
+        <argsstring>(SIDInfo &amp;result) const override</argsstring>
+        <name>recordState</name>
+        <qualifiedname>vc64::ReSID::recordState</qualifiedname>
+        <param>
+          <type>SIDInfo &amp;</type>
+          <declname>result</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="156" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="155" bodyend="185"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1a1e04cc7fd2b85f0164e824cf2063eacb" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>VoiceInfo</type>
+        <definition>VoiceInfo vc64::ReSID::getVoiceInfo</definition>
+        <argsstring>(isize nr) const</argsstring>
+        <name>getVoiceInfo</name>
+        <qualifiedname>vc64::ReSID::getVoiceInfo</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="158" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="188" bodyend="191"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1ab6879915fac28463872a096da1347971" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u32</type>
+        <definition>u32 vc64::ReSID::getClockFrequency</definition>
+        <argsstring>() const</argsstring>
+        <name>getClockFrequency</name>
+        <qualifiedname>vc64::ReSID::getClockFrequency</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="167" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="56" bodyend="60"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1a2654d4ee257ac3739e0e4932f09e5d3a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::ReSID::setClockFrequency</definition>
+        <argsstring>(u32 frequency)</argsstring>
+        <name>setClockFrequency</name>
+        <qualifiedname>vc64::ReSID::setClockFrequency</qualifiedname>
+        <param>
+          <type>u32</type>
+          <declname>frequency</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="168" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="63" bodyend="74"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1a5be5efbf0fe0ebdb83b539cd09fb60e3" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>SIDRevision</type>
+        <definition>SIDRevision vc64::ReSID::getRevision</definition>
+        <argsstring>() const</argsstring>
+        <name>getRevision</name>
+        <qualifiedname>vc64::ReSID::getRevision</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="170" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="194" bodyend="198"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1acabb7374c8481bd0cd9d4186397a7f99" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::ReSID::setRevision</definition>
+        <argsstring>(SIDRevision m)</argsstring>
+        <name>setRevision</name>
+        <qualifiedname>vc64::ReSID::setRevision</qualifiedname>
+        <param>
+          <type>SIDRevision</type>
+          <declname>m</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="171" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="201" bodyend="215"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1ac97293a29081f0c34cb8eae9354893de" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>double</type>
+        <definition>double vc64::ReSID::getSampleRate</definition>
+        <argsstring>() const</argsstring>
+        <name>getSampleRate</name>
+        <qualifiedname>vc64::ReSID::getSampleRate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="173" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" bodystart="173" bodyend="173"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1a5f4fb383bfc3e73f0024f445bfe995ae" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::ReSID::setSampleRate</definition>
+        <argsstring>(double rate)</argsstring>
+        <name>setSampleRate</name>
+        <qualifiedname>vc64::ReSID::setSampleRate</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>rate</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="174" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="218" bodyend="227"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1a53405eacb736bb8de1af14290064c566" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::ReSID::getAudioFilter</definition>
+        <argsstring>() const</argsstring>
+        <name>getAudioFilter</name>
+        <qualifiedname>vc64::ReSID::getAudioFilter</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="176" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" bodystart="176" bodyend="176"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1ab46794b8074bed9147fe89fc315681f1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::ReSID::setAudioFilter</definition>
+        <argsstring>(bool enable)</argsstring>
+        <name>setAudioFilter</name>
+        <qualifiedname>vc64::ReSID::setAudioFilter</qualifiedname>
+        <param>
+          <type>bool</type>
+          <declname>enable</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="177" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="230" bodyend="242"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1af7f3a393485d68c5fae718e2bd91b812" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>SamplingMethod</type>
+        <definition>SamplingMethod vc64::ReSID::getSamplingMethod</definition>
+        <argsstring>() const</argsstring>
+        <name>getSamplingMethod</name>
+        <qualifiedname>vc64::ReSID::getSamplingMethod</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="179" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="245" bodyend="249"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1aef07e6ad89a535a848cbb06c25f5fb87" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::ReSID::setSamplingMethod</definition>
+        <argsstring>(SamplingMethod value)</argsstring>
+        <name>setSamplingMethod</name>
+        <qualifiedname>vc64::ReSID::setSamplingMethod</qualifiedname>
+        <param>
+          <type>SamplingMethod</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="180" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="252" bodyend="284"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1a6a36c8575115d57086eb711141f0e482" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::ReSID::peek</definition>
+        <argsstring>(u16 addr)</argsstring>
+        <name>peek</name>
+        <qualifiedname>vc64::ReSID::peek</qualifiedname>
+        <param>
+          <type>u16</type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="199" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="287" bodyend="290"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1a4e7546858c8c7d2b0339c33ee602a0b9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::ReSID::poke</definition>
+        <argsstring>(u16 addr, u8 value)</argsstring>
+        <name>poke</name>
+        <qualifiedname>vc64::ReSID::poke</qualifiedname>
+        <param>
+          <type>u16</type>
+          <declname>addr</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="200" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="293" bodyend="296"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1a4989c8cde2b64b93eff2d65470f68107" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::ReSID::executeCycles</definition>
+        <argsstring>(isize numCycles, SampleStream &amp;stream)</argsstring>
+        <name>executeCycles</name>
+        <qualifiedname>vc64::ReSID::executeCycles</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>numCycles</declname>
+        </param>
+        <param>
+          <type>SampleStream &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="211" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="299" bodyend="327"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1a53b093b92af5c8d5342685cf604c1984" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::ReSID::executeCycles</definition>
+        <argsstring>(isize numCycles)</argsstring>
+        <name>executeCycles</name>
+        <qualifiedname>vc64::ReSID::executeCycles</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>numCycles</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="212" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="330" bodyend="333"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1a72773d2b4104356ea306a70f41776d55" prot="private" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::ReSID::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::ReSID::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="84" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" bodystart="84" bodyend="84"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1ad19af13cd136da15a5ba2ebdb92d2771" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::ReSID::_dump</definition>
+        <argsstring>(Category category, std::ostream &amp;os) const override</argsstring>
+        <name>_dump</name>
+        <qualifiedname>vc64::ReSID::_dump</qualifiedname>
+        <param>
+          <type>Category</type>
+          <declname>category</declname>
+        </param>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="189" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="77" bodyend="120"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="36" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" bodystart="36" bodyend="213"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_re_s_i_d_1ad19af13cd136da15a5ba2ebdb92d2771" prot="private" virt="non-virtual"><scope>vc64::ReSID</scope><name>_dump</name></member>
+      <member refid="classvc64_1_1_core_component_1aa7dd5e7a2020ad2348fea3edd724f538" prot="public" virt="virtual"><scope>vc64::ReSID</scope><name>_initialize</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a37b89adbfb3ed5fbf23381c151d2cb9c" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>_reset</name></member>
+      <member refid="classvc64_1_1_configurable_1a947ce65dab57ea328e9959014b7f9dfb" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>argList</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1ad5e45192389814d0ef568c166d5c8bc3" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>autoInspect</name></member>
+      <member refid="classvc64_1_1_sub_component_1a7691c720c74fd0e19a63978efe4cd851" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>c64</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae066edf64de901ee3f3b65eb0c02b202" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>cia1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9fe5ed30db982340524f7dcbf6fbf34c" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>cia2</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a426a9f91619cc34717c01241f214f2d6" prot="private" virt="non-virtual"><scope>vc64::ReSID</scope><name>clockFrequency</name></member>
+      <member refid="classvc64_1_1_core_component_1a18f454d0d572fa1b2e5023c4eaba6d07" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>CoreComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1acaece01018438ab083bd38a220d34f10" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>cpu</name></member>
+      <member refid="classvc64_1_1_sub_component_1a157963272dd927ec5c77b4090be57e89" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>datasette</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae85ede3d9ed8315d992eed300932eaf7" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>drive</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae44705f9377cf06d91323d8dca13a8a8" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>drive8</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5d876614a31fb29b8317350ed6a3158b" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>drive9</name></member>
+      <member refid="classvc64_1_1_dumpable_1a28d8b76288598fc0309bd6247e5479db" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_dumpable_1afc31b73f9b651bba5cf37dc88158755a" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_configurable_1a459505cd1eed2c174bf78b29808ad07b" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>dumpConfig</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1addd1c8e49682c782a00b5efe7fa8ea7d" prot="private" virt="non-virtual"><scope>vc64::ReSID</scope><name>emulateFilter</name></member>
+      <member refid="classvc64_1_1_core_component_1a606e5261773126791e44ee8238f5876e" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>emulator</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a4989c8cde2b64b93eff2d65470f68107" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>executeCycles</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a53b093b92af5c8d5342685cf604c1984" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>executeCycles</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5dc793ff2aa4ff3b36fdd061fd3f816b" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>expansionport</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a53405eacb736bb8de1af14290064c566" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>getAudioFilter</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1ab6879915fac28463872a096da1347971" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>getClockFrequency</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a72773d2b4104356ea306a70f41776d55" prot="private" virt="non-virtual"><scope>vc64::ReSID</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_configurable_1ae5d8ab4ec08470113b7123cd2ffdf4af" prot="public" virt="virtual"><scope>vc64::ReSID</scope><name>getOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a80a7c09f7f0d153cb87000c9d82f" prot="public" virt="virtual"><scope>vc64::ReSID</scope><name>getOptions</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a5be5efbf0fe0ebdb83b539cd09fb60e3" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>getRevision</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1ac97293a29081f0c34cb8eae9354893de" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>getSampleRate</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1af7f3a393485d68c5fae718e2bd91b812" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>getSamplingMethod</name></member>
+      <member refid="classvc64_1_1_inspectable_1a2b2b1b7b86eb95e7f1de5900121744d5" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>getState</name></member>
+      <member refid="classvc64_1_1_inspectable_1a792e6f2f3969af7ee496efcdf1f0f2cf" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>getStats</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a1e04cc7fd2b85f0164e824cf2063eacb" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>getVoiceInfo</name></member>
+      <member refid="classvc64_1_1_core_component_1a936940e4e5cf0c617935ea3070bcbd4d" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>halt</name></member>
+      <member refid="classvc64_1_1_sub_component_1add6521bbcffbe5ca85afd6105d54e5ad" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>host</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5c8620301453e0b91374683d0c7b28ab" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>iec</name></member>
+      <member refid="classvc64_1_1_inspectable_1ad8f0ee7c1f197bdb25e542eec4ea940f" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>info</name></member>
+      <member refid="classvc64_1_1_core_component_1a250f9ac5bbc00892bf195ec2ef523a2b" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>initialize</name></member>
+      <member refid="classvc64_1_1_inspectable_1a9b905b27f0935083c5bda29fbd832a80" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>Inspectable</name></member>
+      <member refid="classvc64_1_1_core_component_1a7b95994acc6e7ba59d4b2f50f2dc8df5" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>isEmulatorThread</name></member>
+      <member refid="classvc64_1_1_core_component_1a0e8c3dd97f64e2487fba4c22ba66d487" prot="public" virt="virtual"><scope>vc64::ReSID</scope><name>isHalted</name></member>
+      <member refid="classvc64_1_1_core_component_1a4f0f63ef65776aceecb329d03c3b5f17" prot="public" virt="virtual"><scope>vc64::ReSID</scope><name>isPaused</name></member>
+      <member refid="classvc64_1_1_core_component_1ac4dadc5fecfac3cd2dfb7e8b70767b42" prot="public" virt="virtual"><scope>vc64::ReSID</scope><name>isPoweredOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a0f9912b36ec181a0410d4f564baef127" prot="public" virt="virtual"><scope>vc64::ReSID</scope><name>isPoweredOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a77bf78d982163a6797f24d23106c5098" prot="public" virt="virtual"><scope>vc64::ReSID</scope><name>isReady</name></member>
+      <member refid="classvc64_1_1_core_component_1a121143d811f91157272bb67a0ca48d8f" prot="public" virt="virtual"><scope>vc64::ReSID</scope><name>isRunning</name></member>
+      <member refid="classvc64_1_1_core_component_1a490512fe63211f42eb57e7ed59f9b6a1" prot="public" virt="virtual"><scope>vc64::ReSID</scope><name>isSuspended</name></member>
+      <member refid="classvc64_1_1_configurable_1af6260d08823e90bdb51d1bf7bb596c35" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>isValidOption</name></member>
+      <member refid="classvc64_1_1_sub_component_1aa9a0c663f877801b651969f86dbf2aae" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>keyboard</name></member>
+      <member refid="classvc64_1_1_configurable_1a0d6caf30eeaae95d1898d08cf3ca8e28" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>keyList</name></member>
+      <member refid="classvc64_1_1_sub_component_1ad160280522e5c27cd731289b9396c44f" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>mem</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1adb55f207bc8b2f5279c65fa4076e26b6" prot="private" virt="non-virtual"><scope>vc64::ReSID</scope><name>model</name></member>
+      <member refid="classvc64_1_1_sub_component_1a478be9b50f9e5c4c07dd2830e9964711" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>msgQueue</name></member>
+      <member refid="classvc64_1_1_synchronizable_1a595f618a9c91e91148882a79760f0f0f" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>mutex</name></member>
+      <member refid="classvc64_1_1_sub_component_1a712af82456373bd6e688a174ac756bcb" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>muxer</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1ad665be864032693ad9eab3d1375fde6a" prot="private" virt="non-virtual"><scope>vc64::ReSID</scope><name>nr</name></member>
+      <member refid="classvc64_1_1_core_component_1af47e1017ec1d938b1b613b36bdc8be57" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>operator!=</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1af7f7c5ba9208d9c46033980217260c3d" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1ac853ee133f4b110730845d2deed8e6ff" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1afd7b9bee0886f3c4b57310bcc8efe7fb" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1abd0004e9df94db6a0e20eeec4ba7dc17" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a35a55c825a1c92929676577f345ea27f" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a2da78a194d5e35ce35bd9fd06470050b" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>operator=</name></member>
+      <member refid="classvc64_1_1_core_component_1aae8879dd8b62291254ec498fa9b2e2cf" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>operator==</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9dfb837b941848b6b87e6a57da28348d" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>parCable</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a9c059588a19eeba521b79ff28e3dd8" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>pause</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a6a36c8575115d57086eb711141f0e482" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>peek</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a4e7546858c8c7d2b0339c33ee602a0b9" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>poke</name></member>
+      <member refid="classvc64_1_1_sub_component_1a8c0718eb9d42f335961eaed51ba7cb8d" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>port1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a217a6ea39994b6ecae4e1ebd9cc220e7" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>port2</name></member>
+      <member refid="classvc64_1_1_core_component_1a05e1ba6d62516f796256f1cc394bf2f5" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>powerOff</name></member>
+      <member refid="classvc64_1_1_core_component_1ad606699d83a017fbee805e8d40245475" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>powerOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a74ab4149c152b98c6d5cc15bbac63887" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>powerOnOff</name></member>
+      <member refid="classvc64_1_1_sub_component_1a4fa2405b078fe61c302ff1c8047d9c4f" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>powerSupply</name></member>
+      <member refid="classvc64_1_1_sub_component_1aba0c66cd1ce8a6d1c3529825afdb4a02" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>prefix</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a34f23ab7c0d1b61baf3663a82adabe65" prot="public" virt="virtual"><scope>vc64::ReSID</scope><name>record</name></member>
+      <member refid="classvc64_1_1_sub_component_1a2e1d97a260e9d4d637b0f8fb95fbf1d8" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>recorder</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a14c0e7d463929ca59a2ea1b58f160db9" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>recordState</name></member>
+      <member refid="classvc64_1_1_sub_component_1afe6a4ca2f661ec44fd67637b14647436" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>regressionTester</name></member>
+      <member refid="classvc64_1_1_core_component_1a3910be506f5067fe6cf31a69dcd76b0c" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>reset</name></member>
+      <member refid="classvc64_1_1_core_component_1a082147809d967c961a7ac7c15c5f072a" prot="public" virt="virtual"><scope>vc64::ReSID</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1aec76d436c865101509bceb2daf47890b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::ReSID</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1af9ec0fb5e73fd1f0433a4f3bfcd39d9b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::ReSID</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1acdd6bf526c9065aa322dbf28cea39b77" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>ReSID</name></member>
+      <member refid="classvc64_1_1_core_component_1aab9305af3e38cc19bd1067ca87fe3e0d" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>resume</name></member>
+      <member refid="classvc64_1_1_sub_component_1ada641e2232ca8bdd3ef8fbecc883658d" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>retroShell</name></member>
+      <member refid="classvc64_1_1_core_component_1ae7093017e8a84768103c67b24de5c578" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>run</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a97a416be73bfe91b8dcb3e7a50e61dfa" prot="private" virt="non-virtual"><scope>vc64::ReSID</scope><name>sampleRate</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a6a29eb46ce6ed529c628874e4ca84d94" prot="private" virt="non-virtual"><scope>vc64::ReSID</scope><name>samplingMethod</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a418f785889f8a2e89d7b45bb70dbdc6a" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>serialize</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1ab46794b8074bed9147fe89fc315681f1" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>setAudioFilter</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a2654d4ee257ac3739e0e4932f09e5d3a" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>setClockFrequency</name></member>
+      <member refid="classvc64_1_1_configurable_1ae56ba20ac3ec36bd84dbeb04aba3e8b0" prot="public" virt="virtual"><scope>vc64::ReSID</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a51756d7f1f0ed1caa0e247ab6e789a3b" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a689b1a17fac237ca960b062df637" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1acabb7374c8481bd0cd9d4186397a7f99" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>setRevision</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a5f4fb383bfc3e73f0024f445bfe995ae" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>setSampleRate</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1aef07e6ad89a535a848cbb06c25f5fb87" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>setSamplingMethod</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1ad5ad0d66359de554d4cb09c62f919135" prot="private" virt="non-virtual"><scope>vc64::ReSID</scope><name>sid</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a04a5e5c7f7ec309146c029596d13734d" prot="private" virt="non-virtual"><scope>vc64::ReSID</scope><name>st</name></member>
+      <member refid="classvc64_1_1_inspectable_1aecec7b2e020d4320ac56123bce570986" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>stats</name></member>
+      <member refid="classvc64_1_1_sub_component_1adce334c26f07e67bc936fbf7c935a759" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1a61d8a843718ff2f39e1575338a527676" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_core_component_1aa8b45810bedbdf78b88710ae8db3f495" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>subComponents</name></member>
+      <member refid="classvc64_1_1_core_component_1afd3f09724b119d73a122c3fc02ac1736" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>suspend</name></member>
+      <member refid="classvc64_1_1_suspendable_1a7f9f608d5b2b9b6e944176cde77b8f85" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>Suspendable</name></member>
+      <member refid="classvc64_1_1_core_component_1a0a4c841e543ecfc6cf988592a933a564" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>trackOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a4832ab0ebef49b591fe6e2785e969c89" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>trackOn</name></member>
+      <member refid="classvc64_1_1_core_component_1aae437c6ccf5f91155464dd4953c3baab" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>trackOnOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a24c5efde497d14b519ad15c9053949" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9c1a4b73d1514ddc64567d4521abdecd" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>vic</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1afb0c45a219361f958480cfb5aaf51ab7" prot="private" virt="non-virtual"><scope>vc64::ReSID</scope><name>voiceInfo</name></member>
+      <member refid="classvc64_1_1_core_component_1a45399f75688ba5ba157a479c3ce76633" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>warpOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a5df664aeda300338d0568d59673ff536" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>warpOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a6760d32857901c415f4d75031d1e2654" prot="protected" virt="non-virtual"><scope>vc64::ReSID</scope><name>warpOnOff</name></member>
+      <member refid="classvc64_1_1_configurable_1a5aa5d945e768c40297f1bf71e200bde3" prot="public" virt="virtual"><scope>vc64::ReSID</scope><name>~Configurable</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>vc64::ReSID</scope><name>~CoreObject</name></member>
+      <member refid="classvc64_1_1_dumpable_1a843e874f633f7dcd8e2f1dcf1d8f0c25" prot="public" virt="virtual"><scope>vc64::ReSID</scope><name>~Dumpable</name></member>
+      <member refid="classvc64_1_1_inspectable_1acf833bce62ebc43dac5b42fed0427d67" prot="public" virt="virtual"><scope>vc64::ReSID</scope><name>~Inspectable</name></member>
+      <member refid="classvc64_1_1_re_s_i_d_1a88f0457664f39f28858f984c4007eb5e" prot="public" virt="non-virtual"><scope>vc64::ReSID</scope><name>~ReSID</name></member>
+      <member refid="classvc64_1_1_suspendable_1a35809d3a4c20db1f096e8dc5c78c49b9" prot="public" virt="virtual"><scope>vc64::ReSID</scope><name>~Suspendable</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

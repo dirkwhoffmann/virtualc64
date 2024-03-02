@@ -1,0 +1,152 @@
+\doxysection{Peddle\+Memory\+\_\+cpp.\+h}
+\hypertarget{_peddle_memory__cpp_8h_source}{}\label{_peddle_memory__cpp_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleMemory\_cpp.h@{/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleMemory\_cpp.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ Peddle\ -\/\ A\ MOS\ 65xx\ CPU\ emulator}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ Published\ under\ the\ terms\ of\ the\ MIT\ License}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ CHECK\_WATCHPOINT\ \(\backslash\)}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{if\ constexpr\ (PEDDLE\_ENABLE\_WATCHPOINTS)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{if\ ((flags\ \&\ CPU\_CHECK\_WP)\ \&\&\ debugger.watchpointMatches(addr))\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{watchpointReached(addr);\ \(\backslash\)}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\}\}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#if\ PEDDLE\_SIMPLE\_MEMORY\_API\ ==\ true}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{template}\ <CPURevision\ C>\ u8}
+\DoxyCodeLine{00017\ Peddle::read(u16\ addr)}
+\DoxyCodeLine{00018\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ CHECK\_WATCHPOINT}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordflow}{if}\ (hasProcessorPort<C>())\ \{}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (addr\ <\ 2)\ \textcolor{keywordflow}{return}\ addr\ ?\ readPort()\ :\ readPortDir();}
+\DoxyCodeLine{00024\ \ \ \ \ \}}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordflow}{return}\ read(addr\ \&\ addrMask<C>());}
+\DoxyCodeLine{00026\ \}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{template}\ <CPURevision\ C>\ u8}
+\DoxyCodeLine{00029\ Peddle::readZeroPage(u8\ addr)}
+\DoxyCodeLine{00030\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ CHECK\_WATCHPOINT}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{if}\ (hasProcessorPort<C>())\ \{}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (addr\ <\ 2)\ \textcolor{keywordflow}{return}\ addr\ ?\ readPort()\ :\ readPortDir();}
+\DoxyCodeLine{00036\ \ \ \ \ \}}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordflow}{return}\ read(addr\ \&\ addrMask<C>());}
+\DoxyCodeLine{00038\ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{keyword}{template}\ <CPURevision\ C>\ u8}
+\DoxyCodeLine{00041\ Peddle::readStack(u8\ addr)}
+\DoxyCodeLine{00042\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ CHECK\_WATCHPOINT}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordflow}{return}\ read(u16(addr)\ +\ 0x100);}
+\DoxyCodeLine{00045\ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{keyword}{template}\ <CPURevision\ C>\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00048\ Peddle::readIdle(u16\ addr)}
+\DoxyCodeLine{00049\ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordflow}{if}\ (PEDDLE\_EMULATE\_IDLE\_ACCESSES)\ \{}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ CHECK\_WATCHPOINT}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (hasProcessorPort<C>())\ \{}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (addr\ <\ 2)\ \textcolor{keywordflow}{return}\ addr\ ?\ (void)readPort()\ :\ (void)readPortDir();}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ (void)read(addr\ \&\ addrMask<C>());}
+\DoxyCodeLine{00059\ \ \ \ \ \}}
+\DoxyCodeLine{00060\ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{keyword}{template}\ <CPURevision\ C>\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00063\ Peddle::readZeroPageIdle(u8\ addr)}
+\DoxyCodeLine{00064\ \{}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordflow}{if}\ (PEDDLE\_EMULATE\_IDLE\_ACCESSES)\ \{}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ CHECK\_WATCHPOINT}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (hasProcessorPort<C>())\ \{}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (addr\ <\ 2)\ \textcolor{keywordflow}{return}\ addr\ ?\ (void)readPort()\ :\ (void)readPortDir();}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ (void)read(u16(addr));}
+\DoxyCodeLine{00074\ \ \ \ \ \}}
+\DoxyCodeLine{00075\ \}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \textcolor{keyword}{template}\ <CPURevision\ C>\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00078\ Peddle::readStackIdle(u8\ addr)}
+\DoxyCodeLine{00079\ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordflow}{if}\ (PEDDLE\_EMULATE\_IDLE\_ACCESSES)\ \{}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ CHECK\_WATCHPOINT}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ (\textcolor{keywordtype}{void})read(u16(addr)\ +\ 0x100);}
+\DoxyCodeLine{00084\ \ \ \ \ \}}
+\DoxyCodeLine{00085\ \}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \textcolor{keyword}{template}\ <CPURevision\ C>\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00088\ Peddle::write(u16\ addr,\ u8\ val)}
+\DoxyCodeLine{00089\ \{}
+\DoxyCodeLine{00090\ \ \ \ \ CHECK\_WATCHPOINT}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordflow}{if}\ (hasProcessorPort<C>())\ \{}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (addr\ <\ 2)\ \{\ addr\ ?\ writePort(val)\ :\ writePortDir(val);\ \textcolor{keywordflow}{return};\ \}}
+\DoxyCodeLine{00095\ \ \ \ \ \}}
+\DoxyCodeLine{00096\ \ \ \ \ write(addr\ \&\ addrMask<C>(),\ val);}
+\DoxyCodeLine{00097\ \}}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \textcolor{keyword}{template}\ <CPURevision\ C>\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00100\ Peddle::writeZeroPage(u8\ addr,\ u8\ val)}
+\DoxyCodeLine{00101\ \{}
+\DoxyCodeLine{00102\ \ \ \ \ CHECK\_WATCHPOINT}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordflow}{if}\ (hasProcessorPort<C>())\ \{}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (addr\ <\ 2)\ \{\ addr\ ?\ writePort(val)\ :\ writePortDir(val);\ \textcolor{keywordflow}{return};\ \}}
+\DoxyCodeLine{00107\ \ \ \ \ \}}
+\DoxyCodeLine{00108\ \ \ \ \ write(u16(addr),\ val);}
+\DoxyCodeLine{00109\ \}}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \textcolor{keyword}{template}\ <CPURevision\ C>\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00112\ Peddle::writeStack(u8\ addr,\ u8\ val)}
+\DoxyCodeLine{00113\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ CHECK\_WATCHPOINT}
+\DoxyCodeLine{00115\ \ \ \ \ write(u16(addr)\ +\ 0x100,\ val);}
+\DoxyCodeLine{00116\ \}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00119\ \textcolor{comment}{template\ <CPURevision\ C>\ u16}}
+\DoxyCodeLine{00120\ \textcolor{comment}{Peddle::readResetVector()}}
+\DoxyCodeLine{00121\ \textcolor{comment}{\{}}
+\DoxyCodeLine{00122\ \textcolor{comment}{\ \ \ \ u16\ addr\ =\ 0xFFFC\ \&\ addrMask<C>();}}
+\DoxyCodeLine{00123\ \textcolor{comment}{\ \ \ \ return\ u16(read<C>(addr)\ |\ read<C>(addr\ +\ 1)\ <<\ 8);}}
+\DoxyCodeLine{00124\ \textcolor{comment}{\}}}
+\DoxyCodeLine{00125\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ u16}
+\DoxyCodeLine{00130\ Peddle::readResetVector()}
+\DoxyCodeLine{00131\ \{}
+\DoxyCodeLine{00132\ \ \ \ \ u16\ addr\ =\ 0xFFFC\ \&\ addrMask();}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordflow}{return}\ u16(read(addr)\ |\ read(addr\ +\ 1)\ <<\ 8);}
+\DoxyCodeLine{00134\ \}}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \textcolor{keyword}{template}\ <CPURevision\ C>\ u16}
+\DoxyCodeLine{00137\ Peddle::readDasm(u16\ addr)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00138\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keywordflow}{return}\ readDasm(addr\ \&\ addrMask<C>());}
+\DoxyCodeLine{00140\ \}}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ u8}
+\DoxyCodeLine{00143\ Peddle::readPort()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00144\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordflow}{return}\ (reg.pport.data\ \&\ reg.pport.direction)\ |\ (externalPortBits()\ \&\ \string~reg.pport.direction);}
+\DoxyCodeLine{00146\ \}}
+
+\end{DoxyCode}

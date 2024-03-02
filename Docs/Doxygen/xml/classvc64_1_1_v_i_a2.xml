@@ -1,0 +1,310 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_v_i_a2" kind="class" language="C++" prot="public" final="yes">
+    <compoundname>vc64::VIA2</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">vc64::VIA6522</basecompoundref>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_v_i_a2_1a5cee335c0cde962fd1c7a8cfe25bce6f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::VIA2::VIA2</definition>
+        <argsstring>(C64 &amp;ref, Drive &amp;drvref)</argsstring>
+        <name>VIA2</name>
+        <qualifiedname>vc64::VIA2::VIA2</qualifiedname>
+        <param>
+          <type>C64 &amp;</type>
+          <declname>ref</declname>
+        </param>
+        <param>
+          <type>Drive &amp;</type>
+          <declname>drvref</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.h" line="573" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.h" bodystart="573" bodyend="573"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_v_i_a2_1ab569e1587e1dd8cb863c85e7189a4c65" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::VIA2::~VIA2</definition>
+        <argsstring>()</argsstring>
+        <name>~VIA2</name>
+        <qualifiedname>vc64::VIA2::~VIA2</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.h" line="574" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.h" bodystart="574" bodyend="574"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_v_i_a2_1a80761e2d6e528eb7f12d36aa5ea912bb" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::VIA2::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::VIA2::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.h" line="575" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.h" bodystart="575" bodyend="575"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_v_i_a2_1a019db0b60ec247c94d92a9fd9ec26e6c" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::VIA2::isVia1</definition>
+        <argsstring>() const override</argsstring>
+        <name>isVia1</name>
+        <qualifiedname>vc64::VIA2::isVia1</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.h" line="576" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.h" bodystart="576" bodyend="576"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_v_i_a2_1af36090ed8b39ebfc20bda333f77d7005" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::VIA2::portAexternal</definition>
+        <argsstring>() const override</argsstring>
+        <name>portAexternal</name>
+        <qualifiedname>vc64::VIA2::portAexternal</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.h" line="578" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.cpp" bodystart="1008" bodyend="1012"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_v_i_a2_1a36e8f971b6b1886b05ecb5a59009c061" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::VIA2::portBexternal</definition>
+        <argsstring>() const override</argsstring>
+        <name>portBexternal</name>
+        <qualifiedname>vc64::VIA2::portBexternal</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.h" line="579" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.cpp" bodystart="1015" bodyend="1021"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_v_i_a2_1a59433f6e3a53b3c05347dc5e774ef085" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::VIA2::updatePB</definition>
+        <argsstring>() override</argsstring>
+        <name>updatePB</name>
+        <qualifiedname>vc64::VIA2::updatePB</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.h" line="580" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.cpp" bodystart="1024" bodyend="1088"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_v_i_a2_1a0883eb6b908c56e1bbcc4face9a6de5e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::VIA2::pullDownIrqLine</definition>
+        <argsstring>() override</argsstring>
+        <name>pullDownIrqLine</name>
+        <qualifiedname>vc64::VIA2::pullDownIrqLine</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.h" line="581" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.cpp" bodystart="1091" bodyend="1094"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_v_i_a2_1a14724c2cd73726fb438a7bc6816329f6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::VIA2::releaseIrqLine</definition>
+        <argsstring>() override</argsstring>
+        <name>releaseIrqLine</name>
+        <qualifiedname>vc64::VIA2::releaseIrqLine</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.h" line="582" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.cpp" bodystart="1097" bodyend="1100"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.h" line="569" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/VIA.h" bodystart="569" bodyend="583"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_core_component_1aa7dd5e7a2020ad2348fea3edd724f538" prot="public" virt="virtual"><scope>vc64::VIA2</scope><name>_initialize</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a2cdd6b1ad54f937a8d25f4dc79b12ecf" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>_reset</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1abaeb20f2ab68b2593474b3ddad66118e" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>acr</name></member>
+      <member refid="classvc64_1_1_configurable_1a947ce65dab57ea328e9959014b7f9dfb" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>argList</name></member>
+      <member refid="classvc64_1_1_sub_component_1a7691c720c74fd0e19a63978efe4cd851" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>c64</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a4ab9bd58ba678cc94c6857aad138e742" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>ca1</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1aa168130d3390aa772a07ebce710b2747" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>CA1action</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1ab4292a9a728953f3ac8bb9e802df171a" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>ca1Control</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a4a3e4a9f9d9dc93e82064afdce1854f4" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>ca2</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1aa6786a14479b4e0a999a765d43c0178b" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>ca2Control</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a8350ef2e44e9c4feb6875a17ea53410c" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>cb1</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a6b9b9ca9300ae0bdbdb2f5f60c260e8b" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>cb1Control</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1afb36ebf8b0a46345f7a67733751076c4" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>cb2</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1abb02be4f490269935a83810294e676cc" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>cb2Control</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae066edf64de901ee3f3b65eb0c02b202" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>cia1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9fe5ed30db982340524f7dcbf6fbf34c" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>cia2</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a883315e8332b9c2285a945139c537891" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>clearInterruptFlag_CA1</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a997ed284393596009b59e43f780fd550" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>clearInterruptFlag_CA2</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a2e36d29b03ff4eb2c5725597664e3a4c" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>clearInterruptFlag_CB1</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1ad694bf245390ee1f842b27bb017cc874" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>clearInterruptFlag_CB2</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a462389671fcecf63b13877741e0b9ac8" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>clearInterruptFlag_SR</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a5f70cf89bec8600869224108d18a0861" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>clearInterruptFlag_T1</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1ae50688108336e53d1d0e77efcbe27823" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>clearInterruptFlag_T2</name></member>
+      <member refid="classvc64_1_1_core_component_1a18f454d0d572fa1b2e5023c4eaba6d07" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>CoreComponent</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1ad5952aded5477f84a4500449cfac41b9" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>countPulses</name></member>
+      <member refid="classvc64_1_1_sub_component_1acaece01018438ab083bd38a220d34f10" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>cpu</name></member>
+      <member refid="classvc64_1_1_sub_component_1a157963272dd927ec5c77b4090be57e89" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>datasette</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1aef8de8eccd02b39e1a9c90d0efbbe4b2" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>ddra</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1ad69b4eb3183473e8c0ff7ea6358a3e29" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>ddrb</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a1102d7b14e026a93fda0a03208a5d93d" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>delay</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a7ff2306355862a456771a143efe818f4" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>drive</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae44705f9377cf06d91323d8dca13a8a8" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>drive8</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5d876614a31fb29b8317350ed6a3158b" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>drive9</name></member>
+      <member refid="classvc64_1_1_dumpable_1a28d8b76288598fc0309bd6247e5479db" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_dumpable_1afc31b73f9b651bba5cf37dc88158755a" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_configurable_1a459505cd1eed2c174bf78b29808ad07b" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>dumpConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1a606e5261773126791e44ee8238f5876e" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>emulator</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a569b45b412825b6a62ec9d9e8045eb23" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>execute</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5dc793ff2aa4ff3b36fdd061fd3f816b" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>expansionport</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a8acd387d38b37c20f8be9758393fec42" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>feed</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1ae3ad87e245e7d749bac5e43d9ae40d1a" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>freeRun</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a505237f044493c73a4265775caa13df0" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>getCA2</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1ad7e2d8c913bb41724c351784407c26b7" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>getCB2</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1aceb403367084715cdaf03542cef80851" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>getDDRA</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a6cc861d814281b74d6627d84422bc5d4" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>getDDRB</name></member>
+      <member refid="classvc64_1_1_v_i_a2_1a80761e2d6e528eb7f12d36aa5ea912bb" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_configurable_1ae5d8ab4ec08470113b7123cd2ffdf4af" prot="public" virt="virtual"><scope>vc64::VIA2</scope><name>getOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a80a7c09f7f0d153cb87000c9d82f" prot="public" virt="virtual"><scope>vc64::VIA2</scope><name>getOptions</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a247711652afb3abe915eecb859df0cac" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>getPA</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a951c4f854f293ebcdfcb9048ceb36502" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>getPB</name></member>
+      <member refid="classvc64_1_1_core_component_1a936940e4e5cf0c617935ea3070bcbd4d" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>halt</name></member>
+      <member refid="classvc64_1_1_sub_component_1add6521bbcffbe5ca85afd6105d54e5ad" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>host</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a543ac91d02ebdc8638688889e3997cd3" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>idleCounter</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5c8620301453e0b91374683d0c7b28ab" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>iec</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a4d293beef17243d838ea23f91299a49b" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>ier</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a197f1585aa8aaeacadb68f4c4d406488" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>ifr</name></member>
+      <member refid="classvc64_1_1_core_component_1a250f9ac5bbc00892bf195ec2ef523a2b" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>initialize</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a512c6f0fdcd7f3d78213414283f929bf" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>inputLatchingEnabledA</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1acdb940dea5d013130c25758b714ba7e7" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>inputLatchingEnabledB</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1acd65c0bb400dff4f15a5e56174512c90" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>ira</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a9a9ee111aa3005994736ba28bb80bc8f" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>irb</name></member>
+      <member refid="classvc64_1_1_core_component_1a7b95994acc6e7ba59d4b2f50f2dc8df5" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>isEmulatorThread</name></member>
+      <member refid="classvc64_1_1_core_component_1a0e8c3dd97f64e2487fba4c22ba66d487" prot="public" virt="virtual"><scope>vc64::VIA2</scope><name>isHalted</name></member>
+      <member refid="classvc64_1_1_core_component_1a4f0f63ef65776aceecb329d03c3b5f17" prot="public" virt="virtual"><scope>vc64::VIA2</scope><name>isPaused</name></member>
+      <member refid="classvc64_1_1_core_component_1ac4dadc5fecfac3cd2dfb7e8b70767b42" prot="public" virt="virtual"><scope>vc64::VIA2</scope><name>isPoweredOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a0f9912b36ec181a0410d4f564baef127" prot="public" virt="virtual"><scope>vc64::VIA2</scope><name>isPoweredOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a77bf78d982163a6797f24d23106c5098" prot="public" virt="virtual"><scope>vc64::VIA2</scope><name>isReady</name></member>
+      <member refid="classvc64_1_1_core_component_1a121143d811f91157272bb67a0ca48d8f" prot="public" virt="virtual"><scope>vc64::VIA2</scope><name>isRunning</name></member>
+      <member refid="classvc64_1_1_core_component_1a490512fe63211f42eb57e7ed59f9b6a1" prot="public" virt="virtual"><scope>vc64::VIA2</scope><name>isSuspended</name></member>
+      <member refid="classvc64_1_1_configurable_1af6260d08823e90bdb51d1bf7bb596c35" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>isValidOption</name></member>
+      <member refid="classvc64_1_1_v_i_a2_1a019db0b60ec247c94d92a9fd9ec26e6c" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>isVia1</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1aa76519b0b6f3eca3bf6a0c2941c8a670" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>isVia2</name></member>
+      <member refid="classvc64_1_1_sub_component_1aa9a0c663f877801b651969f86dbf2aae" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>keyboard</name></member>
+      <member refid="classvc64_1_1_configurable_1a0d6caf30eeaae95d1898d08cf3ca8e28" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>keyList</name></member>
+      <member refid="classvc64_1_1_sub_component_1ad160280522e5c27cd731289b9396c44f" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>mem</name></member>
+      <member refid="classvc64_1_1_sub_component_1a478be9b50f9e5c4c07dd2830e9964711" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>msgQueue</name></member>
+      <member refid="classvc64_1_1_synchronizable_1a595f618a9c91e91148882a79760f0f0f" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>mutex</name></member>
+      <member refid="classvc64_1_1_sub_component_1a712af82456373bd6e688a174ac756bcb" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>muxer</name></member>
+      <member refid="classvc64_1_1_core_component_1af47e1017ec1d938b1b613b36bdc8be57" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>operator!=</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1aff298870990ab77fcb54322b417eebec" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>operator=</name></member>
+      <member refid="classvc64_1_1_core_component_1aae8879dd8b62291254ec498fa9b2e2cf" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>operator==</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1affd6b325918245e395a9b8fba6388b4f" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>ora</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1ac6edae81fcf6cc48287008af83b48be4" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>orb</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1ab1c483b45984ec598a0f7f31d4a4335c" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>pa</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9dfb837b941848b6b87e6a57da28348d" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>parCable</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a9c059588a19eeba521b79ff28e3dd8" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>pause</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a8fe8fd4016a8922a99e9cad66dd7cb5a" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>pb</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a8f3b4b11df7d82626c68b6c6e6eb8cf8" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>PB7OutputEnabled</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a81cb17a1172f433dee2a28c04d6237cd" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>pcr</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a9cd660621e51fa13ea2d4137dad3c0e5" prot="public" virt="virtual"><scope>vc64::VIA2</scope><name>peek</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1abf6a5dfc85994a722ffb4341b1bc7db4" prot="protected" virt="virtual"><scope>vc64::VIA2</scope><name>peekORA</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a26bca7f82e73b051fa4ee28ae37d6472" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>peekORB</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a12be16944a9aed738119fbb57f07a42c" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>poke</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1adf9357f9c98cc87e3eea115b5d72b5bd" prot="protected" virt="virtual"><scope>vc64::VIA2</scope><name>pokeORA</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1aff37311e0b2fbcd7815011091f906098" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>pokeORB</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a61df921dd1f44bb769402f583400c7b4" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>pokePCR</name></member>
+      <member refid="classvc64_1_1_sub_component_1a8c0718eb9d42f335961eaed51ba7cb8d" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>port1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a217a6ea39994b6ecae4e1ebd9cc220e7" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>port2</name></member>
+      <member refid="classvc64_1_1_v_i_a2_1af36090ed8b39ebfc20bda333f77d7005" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>portAexternal</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1af8c639bcaedb377b155c88f0e1cb283c" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>portAinternal</name></member>
+      <member refid="classvc64_1_1_v_i_a2_1a36e8f971b6b1886b05ecb5a59009c061" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>portBexternal</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a444687fe6848f04d8055cd14bdcbdecc" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>portBinternal</name></member>
+      <member refid="classvc64_1_1_core_component_1a05e1ba6d62516f796256f1cc394bf2f5" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>powerOff</name></member>
+      <member refid="classvc64_1_1_core_component_1ad606699d83a017fbee805e8d40245475" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>powerOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a74ab4149c152b98c6d5cc15bbac63887" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>powerOnOff</name></member>
+      <member refid="classvc64_1_1_sub_component_1a4fa2405b078fe61c302ff1c8047d9c4f" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>powerSupply</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a042e24823f6869e1df719292b93ec071" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>prefix</name></member>
+      <member refid="classvc64_1_1_v_i_a2_1a0883eb6b908c56e1bbcc4face9a6de5e" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>pullDownIrqLine</name></member>
+      <member refid="classvc64_1_1_sub_component_1a2e1d97a260e9d4d637b0f8fb95fbf1d8" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>recorder</name></member>
+      <member refid="classvc64_1_1_sub_component_1afe6a4ca2f661ec44fd67637b14647436" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>regressionTester</name></member>
+      <member refid="classvc64_1_1_v_i_a2_1a14724c2cd73726fb438a7bc6816329f6" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>releaseIrqLine</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1aeb852c46485db181b51445ce4fc84c72" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>releaseIrqLineIfNeeded</name></member>
+      <member refid="classvc64_1_1_core_component_1a3910be506f5067fe6cf31a69dcd76b0c" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>reset</name></member>
+      <member refid="classvc64_1_1_core_component_1a082147809d967c961a7ac7c15c5f072a" prot="public" virt="virtual"><scope>vc64::VIA2</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1aec76d436c865101509bceb2daf47890b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::VIA2</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1af9ec0fb5e73fd1f0433a4f3bfcd39d9b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::VIA2</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1aab9305af3e38cc19bd1067ca87fe3e0d" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>resume</name></member>
+      <member refid="classvc64_1_1_sub_component_1ada641e2232ca8bdd3ef8fbecc883658d" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>retroShell</name></member>
+      <member refid="classvc64_1_1_core_component_1ae7093017e8a84768103c67b24de5c578" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>run</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a32e74dbd186738168f3381a2106a9926" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>serialize</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a831ec845508ec31843a6b377c3fbb0a4" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>SERIALIZERS</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1affa486d12b4c5b7ff6337c66abb27462" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>setInterruptFlag_CB1</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a83ae2e3ae86e302a8945a9d4fa4ade7c" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>setInterruptFlag_T1</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a764ece907500663fcaf7640a3d4d8ecb" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>setInterruptFlag_T2</name></member>
+      <member refid="classvc64_1_1_configurable_1ae56ba20ac3ec36bd84dbeb04aba3e8b0" prot="public" virt="virtual"><scope>vc64::VIA2</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a51756d7f1f0ed1caa0e247ab6e789a3b" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a689b1a17fac237ca960b062df637" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a43cbc99ee9c07cf2a716041f62f8e572" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>sleep</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a09c067c2d189f75edaf98229ce564338" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>spypeek</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1afa104596d4e42b64922c038854ab5c6d" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>sr</name></member>
+      <member refid="classvc64_1_1_sub_component_1adce334c26f07e67bc936fbf7c935a759" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1a61d8a843718ff2f39e1575338a527676" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_core_component_1aa8b45810bedbdf78b88710ae8db3f495" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>subComponents</name></member>
+      <member refid="classvc64_1_1_core_component_1afd3f09724b119d73a122c3fc02ac1736" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>suspend</name></member>
+      <member refid="classvc64_1_1_suspendable_1a7f9f608d5b2b9b6e944176cde77b8f85" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>Suspendable</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a8e37993ab3c927d3bb3b2dd7f3c128a7" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>t1</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1aaa6f9a02970d9e7c3896471725f96638" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>t1_latch_hi</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a0bd62fe1386ad5c9dfeaa18e8fee35cf" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>t1_latch_lo</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a5097467b766b2e0385f2d36d4c4a1246" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>t2</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1ab2ffd226882de60d34e512c14d636ce7" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>t2_latch_lo</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a9f96fe7d50c079e9152936fcdba667dd" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>tiredness</name></member>
+      <member refid="classvc64_1_1_core_component_1a0a4c841e543ecfc6cf988592a933a564" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>trackOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a4832ab0ebef49b591fe6e2785e969c89" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>trackOn</name></member>
+      <member refid="classvc64_1_1_core_component_1aae437c6ccf5f91155464dd4953c3baab" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>trackOnOff</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a48eb59b1976c30b67332d237efec62fc" prot="protected" virt="virtual"><scope>vc64::VIA2</scope><name>updatePA</name></member>
+      <member refid="classvc64_1_1_v_i_a2_1a59433f6e3a53b3c05347dc5e774ef085" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>updatePB</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a24c5efde497d14b519ad15c9053949" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_v_i_a2_1a5cee335c0cde962fd1c7a8cfe25bce6f" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>VIA2</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1ac933f0b9d84056ed058775a3203db555" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>VIA6522</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9c1a4b73d1514ddc64567d4521abdecd" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>vic</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1a81ac885bfeacc76947a84ab4c692c327" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>wakeUp</name></member>
+      <member refid="classvc64_1_1_v_i_a6522_1aef1e8af072366f66aa6d4db0de0ad9f1" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>wakeUpCycle</name></member>
+      <member refid="classvc64_1_1_core_component_1a45399f75688ba5ba157a479c3ce76633" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>warpOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a5df664aeda300338d0568d59673ff536" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>warpOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a6760d32857901c415f4d75031d1e2654" prot="protected" virt="non-virtual"><scope>vc64::VIA2</scope><name>warpOnOff</name></member>
+      <member refid="classvc64_1_1_configurable_1a5aa5d945e768c40297f1bf71e200bde3" prot="public" virt="virtual"><scope>vc64::VIA2</scope><name>~Configurable</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>vc64::VIA2</scope><name>~CoreObject</name></member>
+      <member refid="classvc64_1_1_dumpable_1a843e874f633f7dcd8e2f1dcf1d8f0c25" prot="public" virt="virtual"><scope>vc64::VIA2</scope><name>~Dumpable</name></member>
+      <member refid="classvc64_1_1_suspendable_1a35809d3a4c20db1f096e8dc5c78c49b9" prot="public" virt="virtual"><scope>vc64::VIA2</scope><name>~Suspendable</name></member>
+      <member refid="classvc64_1_1_v_i_a2_1ab569e1587e1dd8cb863c85e7189a4c65" prot="public" virt="non-virtual"><scope>vc64::VIA2</scope><name>~VIA2</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,148 @@
+\doxysection{Keyboard.\+h}
+\hypertarget{_keyboard_8h_source}{}\label{_keyboard_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/Keyboard.h@{/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/Keyboard.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}SubComponent.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_cmd_queue_8h}{CmdQueue.h}}"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}C64Types.h"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}C64Key.h"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}Buffer.h"{}}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{class\ }Keyboard\ final\ :\ \textcolor{keyword}{public}\ SubComponent,\ \textcolor{keyword}{public}\ Dumpable\ \{}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{comment}{//\ The\ keyboard\ matrix\ (indexed\ by\ row\ or\ by\ column)}}
+\DoxyCodeLine{00026\ \ \ \ \ u8\ kbMatrixRow[8]\ =\ \{\ \};}
+\DoxyCodeLine{00027\ \ \ \ \ u8\ kbMatrixCol[8]\ =\ \{\ \};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{comment}{//\ The\ number\ of\ pressed\ keys\ in\ a\ certain\ row\ or\ column}}
+\DoxyCodeLine{00030\ \ \ \ \ u8\ kbMatrixRowCnt[8]\ =\ \{\ \};}
+\DoxyCodeLine{00031\ \ \ \ \ u8\ kbMatrixColCnt[8]\ =\ \{\ \};}
+\DoxyCodeLine{00032\ \ \ \ \ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//\ Indicates\ if\ the\ shift\ lock\ is\ currently\ pressed}}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ shiftLock\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{comment}{//\ Delayed\ keyboard\ commands\ (auto-\/typing)}}
+\DoxyCodeLine{00037\ \ \ \ \ util::SortedRingBuffer<Cmd,\ 1024>\ pending;}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ Initializing}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00043\ \ \ \ \ }
+\DoxyCodeLine{00044\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00045\ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ Keyboard(C64\ \&ref)\ :\ SubComponent(ref)\ \{\ \}}
+\DoxyCodeLine{00047\ \ \ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreObject}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00052\ \ \ \ \ }
+\DoxyCodeLine{00053\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00054\ \ \ \ \ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Keyboard"{}};\ \}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ \_dump(Category\ category,\ std::ostream\&\ os)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreComponent}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00062\ \ \ \ \ }
+\DoxyCodeLine{00063\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ Keyboard\&\ operator=\ (\textcolor{keyword}{const}\ Keyboard\&\ other)\ \{}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ CLONE\_ARRAY(kbMatrixRow)}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ CLONE\_ARRAY(kbMatrixCol)}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ CLONE\_ARRAY(kbMatrixRowCnt)}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ CLONE\_ARRAY(kbMatrixColCnt)}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ CLONE(shiftLock)}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ CLONE(pending)}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00075\ \ \ \ \ \}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{void}\ serialize(T\&\ worker)}
+\DoxyCodeLine{00079\ \ \ \ \ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ <<\ kbMatrixRow}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ <<\ kbMatrixCol}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ <<\ kbMatrixRowCnt}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ <<\ kbMatrixColCnt}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ <<\ shiftLock;}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \}\ SERIALIZERS(serialize);}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{void}\ \_reset(\textcolor{keywordtype}{bool}\ hard)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{comment}{//\ Accessing\ the\ keyboard\ matrix}}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00096\ \ \ \ \ }
+\DoxyCodeLine{00097\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{comment}{//\ Reads\ a\ column\ or\ row\ from\ the\ keyboard\ matrix}}
+\DoxyCodeLine{00100\ \ \ \ \ u8\ getColumnValues(u8\ rowMask)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00101\ \ \ \ \ u8\ getRowValues(u8\ columnMask)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00102\ \ \ \ \ u8\ getRowValues(u8\ columnMask,\ u8\ thresholdMask)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{comment}{//\ Checks\ whether\ a\ certain\ key\ is\ pressed}}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{bool}\ isPressed(C64Key\ key)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{comment}{//\ Presses\ or\ releases\ a\ key}}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{void}\ press(C64Key\ key);}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{void}\ release(C64Key\ key);}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{void}\ toggle(C64Key\ key)\ \{\ isPressed(key)\ ?\ release(key)\ :\ press(key);\ \}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{comment}{//\ Clears\ the\ keyboard\ matrix}}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{void}\ releaseAll();}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{comment}{//\ Auto\ typing}}
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00119\ \ \ \ \ }
+\DoxyCodeLine{00120\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00121\ \ \ \ \ }
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{comment}{//\ Auto-\/types\ a\ string}}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordtype}{void}\ autoType(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&text);}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{comment}{//\ Discards\ all\ pending\ key\ events\ and\ clears\ the\ keyboard\ matrix}}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordtype}{void}\ abortAutoTyping();}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{comment}{//\ Processing\ commands\ and\ events}}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{comment}{//\ Processes\ a\ keyboard\ command}}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordtype}{void}\ processCommand(\textcolor{keyword}{const}\ Cmd\ \&cmd);}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{comment}{//\ Processes\ the\ next\ auto-\/type\ event}}
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keywordtype}{void}\ processKeyEvent(EventID\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00140\ \};}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \}}
+
+\end{DoxyCode}

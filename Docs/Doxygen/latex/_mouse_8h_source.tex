@@ -1,0 +1,214 @@
+\doxysection{Mouse.\+h}
+\hypertarget{_mouse_8h_source}{}\label{_mouse_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.h@{/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/Mouse.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}MouseTypes.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}JoystickTypes.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}SubComponent.h"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}Chrono.h"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}Mouse1350.h"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ "{}Mouse1351.h"{}}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ "{}NeosMouse.h"{}}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{class\ }ShakeDetector\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{comment}{//\ Horizontal\ position}}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{double}\ x\ =\ 0.0;}
+\DoxyCodeLine{00029\ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{comment}{//\ Moved\ distance}}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{double}\ dxsum\ =\ 0.0;}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//\ Direction\ (1\ or\ -\/1)}}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{double}\ dxsign\ =\ 1.0;}
+\DoxyCodeLine{00035\ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{comment}{//\ Number\ of\ turns}}
+\DoxyCodeLine{00037\ \ \ \ \ isize\ dxturns\ =\ 0;}
+\DoxyCodeLine{00038\ \ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{comment}{//\ Time\ stamps}}
+\DoxyCodeLine{00040\ \ \ \ \ u64\ lastTurn\ =\ 0;}
+\DoxyCodeLine{00041\ \ \ \ \ util::Time\ lastShake;}
+\DoxyCodeLine{00042\ \ \ \ \ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00044\ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{comment}{//\ Feed\ in\ new\ coordinates\ and\ checks\ for\ a\ shake}}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{bool}\ isShakingAbs(\textcolor{keywordtype}{double}\ x);}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{bool}\ isShakingRel(\textcolor{keywordtype}{double}\ dx);}
+\DoxyCodeLine{00048\ \};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{keyword}{class\ }Mouse\ final\ :\ \textcolor{keyword}{public}\ SubComponent,\ \textcolor{keyword}{public}\ Dumpable\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ }
+\DoxyCodeLine{00052\ \ \ \ \ ConfigOptions\ options\ =\ \{}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8ac11f0587ebf5940597e095b0ea5625a6}{OPT\_MOUSE\_MODEL}},}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8a0f98538a031fc7b0099d1768c9faf528}{OPT\_MOUSE\_SHAKE\_DETECT}},}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8a2380d7bf1ef9c99b09025aaa5689c606}{OPT\_MOUSE\_VELOCITY}}}
+\DoxyCodeLine{00057\ \ \ \ \ \};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//\ Reference\ to\ the\ control\ port\ this\ device\ belongs\ to}}
+\DoxyCodeLine{00060\ \ \ \ \ ControlPort\ \&port;}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{comment}{//\ Current\ configuration}}
+\DoxyCodeLine{00063\ \ \ \ \ MouseConfig\ config\ =\ \{\ \};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{comment}{//\ Sub\ components}}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{comment}{//\ Shake\ detector}}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{class\ }ShakeDetector\ shakeDetector;}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{comment}{//\ A\ Commdore\ 1350\ (digital)\ mouse}}
+\DoxyCodeLine{00074\ \ \ \ \ Mouse1350\ mouse1350\ =\ Mouse1350(c64);}
+\DoxyCodeLine{00075\ \ \ \ \ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{comment}{//\ A\ Commdore\ 1351\ (analog)\ mouse}}
+\DoxyCodeLine{00077\ \ \ \ \ Mouse1351\ mouse1351\ =\ Mouse1351(c64);}
+\DoxyCodeLine{00078\ \ \ \ \ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{//\ A\ Neos\ (analog)\ mouse}}
+\DoxyCodeLine{00080\ \ \ \ \ NeosMouse\ mouseNeos\ =\ NeosMouse(c64);}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{comment}{/*\ Target\ mouse\ position.\ In\ order\ to\ achieve\ a\ smooth\ mouse\ movement,\ a}}
+\DoxyCodeLine{00083\ \textcolor{comment}{\ \ \ \ \ *\ new\ mouse\ coordinate\ is\ not\ written\ directly\ into\ mouseX\ and\ mouseY.}}
+\DoxyCodeLine{00084\ \textcolor{comment}{\ \ \ \ \ *\ Instead,\ these\ variables\ are\ set.\ In\ execute(),\ mouseX\ and\ mouseY\ are}}
+\DoxyCodeLine{00085\ \textcolor{comment}{\ \ \ \ \ *\ shifted\ smoothly\ towards\ the\ target\ positions.}}
+\DoxyCodeLine{00086\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{double}\ targetX\ =\ 0.0;}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{double}\ targetY\ =\ 0.0;}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{comment}{//\ Scaling\ factors\ applied\ to\ the\ raw\ mouse\ coordinates\ in\ setXY()}}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{double}\ scaleX\ =\ 1.0;}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{double}\ scaleY\ =\ 1.0;}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ }
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{comment}{//\ Initializing}}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00098\ \ \ \ \ }
+\DoxyCodeLine{00099\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00100\ \ \ \ \ }
+\DoxyCodeLine{00101\ \ \ \ \ Mouse(C64\ \&ref,\ ControlPort\&\ pref);}
+\DoxyCodeLine{00102\ \ \ \ \ }
+\DoxyCodeLine{00103\ \ \ \ \ }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreObject}}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00109\ \ \ \ \ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Mouse"{}};\ \}}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{void}\ \_dump(Category\ category,\ std::ostream\&\ os)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreComponent}}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \ \ \ \ Mouse\&\ operator=\ (\textcolor{keyword}{const}\ Mouse\&\ other)\ \{}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ CLONE(mouse1350)}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ CLONE(mouse1351)}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ CLONE(mouseNeos)}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00127\ \ \ \ \ \}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{void}\ serialize(T\&\ worker)}
+\DoxyCodeLine{00131\ \ \ \ \ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ <<\ mouse1350}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ <<\ mouse1351}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ <<\ mouseNeos;}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (isResetter(worker))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ <<\ config.model;}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \ \ \ \ \}\ SERIALIZERS(serialize)}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordtype}{void}\ \_reset(\textcolor{keywordtype}{bool}\ hard)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{comment}{//\ Configuring}}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keyword}{const}\ MouseConfig\ \&getConfig()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ config;\ \}}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keyword}{const}\ ConfigOptions\ \&getOptions()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ options;\ \}}
+\DoxyCodeLine{00157\ \ \ \ \ i64\ getOption(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ opt)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordtype}{void}\ setOption(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ opt,\ i64\ value)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00160\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00161\ \ \ \ \ }
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keywordtype}{void}\ updateScalingFactors();}
+\DoxyCodeLine{00163\ \ \ \ \ }
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{comment}{//\ Accessing}}
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00168\ \ \ \ \ }
+\DoxyCodeLine{00169\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{comment}{//\ Runs\ the\ shake\ detector}}
+\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keywordtype}{bool}\ detectShakeXY(\textcolor{keywordtype}{double}\ x,\ \textcolor{keywordtype}{double}\ y);}
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keywordtype}{bool}\ detectShakeDxDy(\textcolor{keywordtype}{double}\ dx,\ \textcolor{keywordtype}{double}\ dy);}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{comment}{//\ Emulates\ a\ mouse\ movement}}
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keywordtype}{void}\ setXY(\textcolor{keywordtype}{double}\ x,\ \textcolor{keywordtype}{double}\ y);}
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keywordtype}{void}\ setDxDy(\textcolor{keywordtype}{double}\ dx,\ \textcolor{keywordtype}{double}\ dy);}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{comment}{//\ Presses\ or\ releases\ a\ mouse\ button}}
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keywordtype}{void}\ setLeftButton(\textcolor{keywordtype}{bool}\ value);}
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keywordtype}{void}\ setRightButton(\textcolor{keywordtype}{bool}\ value);}
+\DoxyCodeLine{00182\ \ \ \ \ }
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{comment}{//\ Triggers\ a\ gamepad\ event}}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordtype}{void}\ trigger(GamePadAction\ event);}
+\DoxyCodeLine{00185\ \ \ \ \ }
+\DoxyCodeLine{00186\ \ \ \ \ \textcolor{comment}{//\ Triggers\ a\ state\ change\ (Neos\ mouse\ only)}}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordtype}{void}\ risingStrobe();}
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordtype}{void}\ fallingStrobe();}
+\DoxyCodeLine{00189\ \ \ \ \ }
+\DoxyCodeLine{00190\ \ \ \ \ \textcolor{comment}{//\ Updates\ the\ control\ port\ bits\ (must\ be\ called\ before\ reading)}}
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keywordtype}{void}\ updateControlPort();}
+\DoxyCodeLine{00192\ \ \ \ \ }
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ control\ port\ bits\ as\ set\ by\ the\ mouse}}
+\DoxyCodeLine{00194\ \ \ \ \ u8\ getControlPort()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \ \ \ \ \textcolor{comment}{//\ Updates\ the\ pot\ bits\ (must\ be\ called\ before\ reading)}}
+\DoxyCodeLine{00197\ \ \ \ \ \textcolor{keywordtype}{void}\ updatePotX();}
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keywordtype}{void}\ updatePotY();}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{comment}{//\ Reads\ the\ pot\ bits\ that\ show\ up\ in\ the\ SID\ registers}}
+\DoxyCodeLine{00201\ \ \ \ \ u8\ readPotX()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00202\ \ \ \ \ u8\ readPotY()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{comment}{//\ Performs\ periodic\ actions\ for\ this\ device}}
+\DoxyCodeLine{00205\ \ \ \ \ \textcolor{keywordtype}{void}\ execute();}
+\DoxyCodeLine{00206\ \};}
+\DoxyCodeLine{00207\ }
+\DoxyCodeLine{00208\ \}}
+
+\end{DoxyCode}

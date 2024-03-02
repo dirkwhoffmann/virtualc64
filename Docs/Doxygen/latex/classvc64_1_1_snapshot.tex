@@ -1,0 +1,195 @@
+\doxysection{vc64\+::Snapshot Class Reference}
+\hypertarget{classvc64_1_1_snapshot}{}\label{classvc64_1_1_snapshot}\index{vc64::Snapshot@{vc64::Snapshot}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_snapshot_a499e190dbc9e36de29349b13c9478f79}\label{classvc64_1_1_snapshot_a499e190dbc9e36de29349b13c9478f79} 
+{\bfseries Snapshot} (const string \&path)  throws 
+\item 
+\Hypertarget{classvc64_1_1_snapshot_ad961e62f5df68245cae04297b9b9487c}\label{classvc64_1_1_snapshot_ad961e62f5df68245cae04297b9b9487c} 
+{\bfseries Snapshot} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len)  throws 
+\item 
+\Hypertarget{classvc64_1_1_snapshot_a7670e4fef47158c0c42563d7534f765e}\label{classvc64_1_1_snapshot_a7670e4fef47158c0c42563d7534f765e} 
+{\bfseries Snapshot} (isize capacity)
+\item 
+\Hypertarget{classvc64_1_1_snapshot_a2123d7f374c745c676bc62f48ba8efb2}\label{classvc64_1_1_snapshot_a2123d7f374c745c676bc62f48ba8efb2} 
+{\bfseries Snapshot} (\mbox{\hyperlink{classvc64_1_1_c64}{C64}} \&c64)
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classvc64_1_1_snapshot_ae748c86412b7dea50d3eb0d24b06b54e}{get\+Description}} () const override
+\item 
+File\+Type \mbox{\hyperlink{classvc64_1_1_snapshot_a74534926abde0a32db5988b5045cc058}{type}} () const override
+\item 
+bool \mbox{\hyperlink{classvc64_1_1_snapshot_a7ffbac3bfc98d8552a07ddb87b27b3ec}{is\+Compatible\+Path}} (const string \&path) override
+\item 
+bool \mbox{\hyperlink{classvc64_1_1_snapshot_a4fadbbae51a89abde7d8b5b777b33ade}{is\+Compatible\+Stream}} (std\+::istream \&stream) override
+\item 
+void \mbox{\hyperlink{classvc64_1_1_snapshot_ad020e778f60b1d942e345b8a2e715fe9}{finalize\+Read}} ()  throws override
+\item 
+\Hypertarget{classvc64_1_1_snapshot_ae6108ef8365a4e275942d2b8ad785a09}\label{classvc64_1_1_snapshot_ae6108ef8365a4e275942d2b8ad785a09} 
+bool {\bfseries is\+Too\+Old} () const
+\item 
+\Hypertarget{classvc64_1_1_snapshot_a6e9f6f3dd5983accc737131b25a5723f}\label{classvc64_1_1_snapshot_a6e9f6f3dd5983accc737131b25a5723f} 
+bool {\bfseries is\+Too\+New} () const
+\item 
+\Hypertarget{classvc64_1_1_snapshot_a1117be2194479f6ed141adb563dd9f69}\label{classvc64_1_1_snapshot_a1117be2194479f6ed141adb563dd9f69} 
+bool {\bfseries is\+Beta} () const
+\item 
+\Hypertarget{classvc64_1_1_snapshot_a57da44cc8787c1849473052643be7bc7}\label{classvc64_1_1_snapshot_a57da44cc8787c1849473052643be7bc7} 
+bool {\bfseries matches} ()
+\item 
+\Hypertarget{classvc64_1_1_snapshot_a238aa5d314483a6fe5848e1bbb3f8600}\label{classvc64_1_1_snapshot_a238aa5d314483a6fe5848e1bbb3f8600} 
+\mbox{\hyperlink{structvc64_1_1_snapshot_header}{Snapshot\+Header}} \texorpdfstring{$\ast$}{*} {\bfseries get\+Header} () const
+\item 
+\Hypertarget{classvc64_1_1_snapshot_a780095d5f6d75ec419dbd1151e0bc81e}\label{classvc64_1_1_snapshot_a780095d5f6d75ec419dbd1151e0bc81e} 
+const \mbox{\hyperlink{structvc64_1_1_thumbnail}{Thumbnail}} \& {\bfseries get\+Thumbnail} () const
+\item 
+\Hypertarget{classvc64_1_1_snapshot_a681a59ce1a8a31b4fc8bb12511bb4fa5}\label{classvc64_1_1_snapshot_a681a59ce1a8a31b4fc8bb12511bb4fa5} 
+u8 \texorpdfstring{$\ast$}{*} {\bfseries get\+Data} () const
+\item 
+\Hypertarget{classvc64_1_1_snapshot_a08eb9154fa76357c0286a7eda55fa1f3}\label{classvc64_1_1_snapshot_a08eb9154fa76357c0286a7eda55fa1f3} 
+void {\bfseries take\+Screenshot} (\mbox{\hyperlink{classvc64_1_1_c64}{C64}} \&c64)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Any\+File} (isize capacity)
+\item 
+void {\bfseries init} (isize capacity)
+\item 
+void {\bfseries init} (const string \&path) throws
+\item 
+void {\bfseries init} (const string \&path, std\+::istream \&stream) throws
+\item 
+void {\bfseries init} (std\+::istream \&stream) throws
+\item 
+void {\bfseries init} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len) throws
+\item 
+void {\bfseries init} (FILE \texorpdfstring{$\ast$}{*}file) throws
+\item 
+virtual \mbox{\hyperlink{classvc64_1_1_p_e_t_name}{PETName}}$<$ 16 $>$ {\bfseries get\+Name} () const
+\item 
+u8 {\bfseries get\+Data} (isize nr)
+\item 
+u64 {\bfseries fnv} () const
+\item 
+void {\bfseries strip} (isize count)
+\item 
+void {\bfseries flash} (u8 \texorpdfstring{$\ast$}{*}buf, isize offset=0) const
+\item 
+void {\bfseries write\+To\+Stream} (std\+::ostream \&stream) throws
+\item 
+void {\bfseries write\+To\+File} (const string \&path) throws
+\item 
+void {\bfseries write\+To\+Buffer} (u8 \texorpdfstring{$\ast$}{*}buf) throws
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual void {\bfseries prefix} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_dumpable}{vc64\+::\+Dumpable}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual void {\bfseries \+\_\+dump} (Category category, std\+::ostream \&ss) const
+\item 
+void {\bfseries dump} (Category category, std\+::ostream \&ss) const
+\item 
+void {\bfseries dump} (Category category) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_snapshot_a1059b018948082e9d1db4e59987afad7}\label{classvc64_1_1_snapshot_a1059b018948082e9d1db4e59987afad7} 
+static bool {\bfseries is\+Compatible} (const string \&name)
+\item 
+\Hypertarget{classvc64_1_1_snapshot_a103a545dcd79065c66400d8f1bcefb7a}\label{classvc64_1_1_snapshot_a103a545dcd79065c66400d8f1bcefb7a} 
+static bool {\bfseries is\+Compatible} (std\+::istream \&stream)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}}
+\begin{DoxyCompactItemize}
+\item 
+static File\+Type {\bfseries type} (const string \&path)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}}
+\begin{DoxyCompactItemize}
+\item 
+string {\bfseries path} = "{}"{}
+\item 
+u8 \texorpdfstring{$\ast$}{*} {\bfseries data} = nullptr
+\item 
+isize {\bfseries size} = 0
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries read\+From\+Stream} (std\+::istream \&stream) throws
+\item 
+void {\bfseries read\+From\+File} (const string \&path) throws
+\item 
+void {\bfseries read\+From\+Buffer} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len) throws
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+static bool {\bfseries verbose} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvc64_1_1_snapshot_ad020e778f60b1d942e345b8a2e715fe9}\label{classvc64_1_1_snapshot_ad020e778f60b1d942e345b8a2e715fe9} 
+\index{vc64::Snapshot@{vc64::Snapshot}!finalizeRead@{finalizeRead}}
+\index{finalizeRead@{finalizeRead}!vc64::Snapshot@{vc64::Snapshot}}
+\doxysubsubsection{\texorpdfstring{finalizeRead()}{finalizeRead()}}
+{\footnotesize\ttfamily void vc64\+::\+Snapshot\+::finalize\+Read (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) throws override\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}.
+
+\Hypertarget{classvc64_1_1_snapshot_ae748c86412b7dea50d3eb0d24b06b54e}\label{classvc64_1_1_snapshot_ae748c86412b7dea50d3eb0d24b06b54e} 
+\index{vc64::Snapshot@{vc64::Snapshot}!getDescription@{getDescription}}
+\index{getDescription@{getDescription}!vc64::Snapshot@{vc64::Snapshot}}
+\doxysubsubsection{\texorpdfstring{getDescription()}{getDescription()}}
+{\footnotesize\ttfamily const char \texorpdfstring{$\ast$}{*} vc64\+::\+Snapshot\+::get\+Description (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}.
+
+\Hypertarget{classvc64_1_1_snapshot_a7ffbac3bfc98d8552a07ddb87b27b3ec}\label{classvc64_1_1_snapshot_a7ffbac3bfc98d8552a07ddb87b27b3ec} 
+\index{vc64::Snapshot@{vc64::Snapshot}!isCompatiblePath@{isCompatiblePath}}
+\index{isCompatiblePath@{isCompatiblePath}!vc64::Snapshot@{vc64::Snapshot}}
+\doxysubsubsection{\texorpdfstring{isCompatiblePath()}{isCompatiblePath()}}
+{\footnotesize\ttfamily bool vc64\+::\+Snapshot\+::is\+Compatible\+Path (\begin{DoxyParamCaption}\item[{const string \&}]{path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}.
+
+\Hypertarget{classvc64_1_1_snapshot_a4fadbbae51a89abde7d8b5b777b33ade}\label{classvc64_1_1_snapshot_a4fadbbae51a89abde7d8b5b777b33ade} 
+\index{vc64::Snapshot@{vc64::Snapshot}!isCompatibleStream@{isCompatibleStream}}
+\index{isCompatibleStream@{isCompatibleStream}!vc64::Snapshot@{vc64::Snapshot}}
+\doxysubsubsection{\texorpdfstring{isCompatibleStream()}{isCompatibleStream()}}
+{\footnotesize\ttfamily bool vc64\+::\+Snapshot\+::is\+Compatible\+Stream (\begin{DoxyParamCaption}\item[{std\+::istream \&}]{stream }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}.
+
+\Hypertarget{classvc64_1_1_snapshot_a74534926abde0a32db5988b5045cc058}\label{classvc64_1_1_snapshot_a74534926abde0a32db5988b5045cc058} 
+\index{vc64::Snapshot@{vc64::Snapshot}!type@{type}}
+\index{type@{type}!vc64::Snapshot@{vc64::Snapshot}}
+\doxysubsubsection{\texorpdfstring{type()}{type()}}
+{\footnotesize\ttfamily File\+Type vc64\+::\+Snapshot\+::type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Media/Snapshot.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Media/Snapshot.\+cpp\end{DoxyCompactItemize}

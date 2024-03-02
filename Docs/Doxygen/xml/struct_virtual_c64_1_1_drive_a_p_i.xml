@@ -2,7 +2,7 @@
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
   <compounddef id="struct_virtual_c64_1_1_drive_a_p_i" kind="struct" language="C++" prot="public">
     <compoundname>VirtualC64::DriveAPI</compoundname>
-    <basecompoundref prot="public" virt="non-virtual">API</basecompoundref>
+    <basecompoundref prot="public" virt="non-virtual">vc64::API</basecompoundref>
     <sectiondef kind="public-attrib">
       <memberdef kind="variable" id="struct_virtual_c64_1_1_drive_a_p_i_1ab242d0dbb7d999c84c4ef9f851ba9fac" prot="public" static="no" mutable="no">
         <type>Drive &amp;</type>
@@ -16,10 +16,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="525" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="525" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="527" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="527" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_virtual_c64_1_1_drive_a_p_i_1ae56ff5d5e440fb56a88dd8714a9e3af4" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_disk_a_p_i" kindref="compound">DiskAPI</ref></type>
+        <type>DiskAPI</type>
         <definition>DiskAPI VirtualC64::DriveAPI::disk</definition>
         <argsstring></argsstring>
         <name>disk</name>
@@ -30,7 +30,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="528" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="528" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="530" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="530" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <sectiondef kind="public-func">
@@ -54,7 +54,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="526" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="526" bodyend="526"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="528" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="528" bodyend="528"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_drive_a_p_i_1a4805bee802212284eb07d1d13d017942" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>const DriveConfig &amp;</type>
@@ -68,7 +68,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="530" column="27"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="532" column="27" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="996" bodyend="999"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_drive_a_p_i_1af54b54ff03b46153bc6c9ea440c992df" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
         <type>DriveInfo</type>
@@ -82,7 +82,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="531" column="19"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="533" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="1002" bodyend="1005"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_drive_a_p_i_1a6bb4682bd44453817590eb1eb5d02da3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -104,7 +104,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="533" column="14"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="535" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="1008" bodyend="1012"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_drive_a_p_i_1a8625d9d7e8179749751acf63b75bbf69" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -126,7 +126,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="534" column="14"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="536" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="1015" bodyend="1019"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_drive_a_p_i_1a4244f12d48a1fbdbccfa8c582a8245f1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -148,7 +148,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="535" column="14"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="537" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="1022" bodyend="1026"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_drive_a_p_i_1a9a87e8fcc6d5824c45377252991fee49" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -170,7 +170,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="536" column="14"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="538" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="1029" bodyend="1033"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_drive_a_p_i_1a70d71b514d79c1984077dd189d899db6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -192,7 +192,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="537" column="14"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="539" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="1036" bodyend="1040"/>
       </memberdef>
       <memberdef kind="function" id="struct_virtual_c64_1_1_drive_a_p_i_1a88fc7e13884475c7f86b5b6128c8b80a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
@@ -206,57 +206,56 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="538" column="14"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="540" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.cpp" bodystart="1043" bodyend="1047"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <inheritancegraph>
-      <node id="2">
-        <label>API</label>
-      </node>
-      <node id="1">
-        <label>VirtualC64::DriveAPI</label>
-        <link refid="struct_virtual_c64_1_1_drive_a_p_i"/>
-        <childnode refid="2" relation="public-inheritance">
-        </childnode>
-      </node>
-    </inheritancegraph>
-    <collaborationgraph>
-      <node id="2">
-        <label>API</label>
-      </node>
-      <node id="3">
-        <label>VirtualC64::DiskAPI</label>
-        <link refid="struct_virtual_c64_1_1_disk_a_p_i"/>
-        <childnode refid="2" relation="public-inheritance">
-        </childnode>
-      </node>
-      <node id="1">
-        <label>VirtualC64::DriveAPI</label>
-        <link refid="struct_virtual_c64_1_1_drive_a_p_i"/>
-        <childnode refid="2" relation="public-inheritance">
-        </childnode>
-        <childnode refid="3" relation="usage">
-          <edgelabel>disk</edgelabel>
-        </childnode>
-      </node>
-    </collaborationgraph>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="523" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="523" bodyend="540"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="525" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="525" bodyend="542"/>
     <listofallmembers>
+      <member refid="classvc64_1_1_a_p_i_1ac69be018cb6509eaa5a618c276c30fe1" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>API</name></member>
+      <member refid="classvc64_1_1_references_1a3fbc169a9900f006d1ad6170b0bd0639" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>c64</name></member>
+      <member refid="classvc64_1_1_references_1afa87c57a43c5b7feb3b8780a4ac1008b" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>cia1</name></member>
+      <member refid="classvc64_1_1_references_1a6c3a729faae4d28880a897789e3ba081" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>cia2</name></member>
+      <member refid="classvc64_1_1_references_1a6d4dd5f97953b9c588bd29396dc7e879" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>cpu</name></member>
+      <member refid="classvc64_1_1_references_1a7fd1bd6cae9304cdbaa7e388c80149da" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>datasette</name></member>
       <member refid="struct_virtual_c64_1_1_drive_a_p_i_1ae56ff5d5e440fb56a88dd8714a9e3af4" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>disk</name></member>
       <member refid="struct_virtual_c64_1_1_drive_a_p_i_1ab242d0dbb7d999c84c4ef9f851ba9fac" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>drive</name></member>
+      <member refid="classvc64_1_1_references_1a9fb58675ffdd6371f702e67e933c440c" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>drive8</name></member>
+      <member refid="classvc64_1_1_references_1ad4f53254b1db026d281f98e14a1065ef" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>drive9</name></member>
       <member refid="struct_virtual_c64_1_1_drive_a_p_i_1a054703d9ef05a24e55a35b8afce46cef" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>DriveAPI</name></member>
       <member refid="struct_virtual_c64_1_1_drive_a_p_i_1a88fc7e13884475c7f86b5b6128c8b80a" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>ejectDisk</name></member>
+      <member refid="classvc64_1_1_a_p_i_1a82d6586bef7dac77b2ea35fe6728595f" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>emulator</name></member>
+      <member refid="classvc64_1_1_references_1a96a558a1ee0efe17d9087b03edd68d9c" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>expansionport</name></member>
       <member refid="struct_virtual_c64_1_1_drive_a_p_i_1a4805bee802212284eb07d1d13d017942" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>getConfig</name></member>
       <member refid="struct_virtual_c64_1_1_drive_a_p_i_1af54b54ff03b46153bc6c9ea440c992df" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>getInfo</name></member>
+      <member refid="classvc64_1_1_references_1ae039cd601c96e99965c9e51a7a5d37a2" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>host</name></member>
+      <member refid="classvc64_1_1_references_1a56adc0ba90182bde337fb3510a262136" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>iec</name></member>
       <member refid="struct_virtual_c64_1_1_drive_a_p_i_1a6bb4682bd44453817590eb1eb5d02da3" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>insertBlankDisk</name></member>
       <member refid="struct_virtual_c64_1_1_drive_a_p_i_1a9a87e8fcc6d5824c45377252991fee49" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>insertCollection</name></member>
       <member refid="struct_virtual_c64_1_1_drive_a_p_i_1a8625d9d7e8179749751acf63b75bbf69" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>insertD64</name></member>
       <member refid="struct_virtual_c64_1_1_drive_a_p_i_1a70d71b514d79c1984077dd189d899db6" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>insertFileSystem</name></member>
       <member refid="struct_virtual_c64_1_1_drive_a_p_i_1a4244f12d48a1fbdbccfa8c582a8245f1" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>insertG64</name></member>
+      <member refid="classvc64_1_1_a_p_i_1a815d94d61d7a5ecf7f1dccf21de51ca3" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>isUserThread</name></member>
+      <member refid="classvc64_1_1_references_1a2d7c7bdb02194750f58b4b464f9a4e27" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>keyboard</name></member>
+      <member refid="classvc64_1_1_references_1abcfca0e0c6484b0b5ef1c235113f4a57" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>mem</name></member>
+      <member refid="classvc64_1_1_references_1a107318ccbff5b11cb77026cd274974f3" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>msgQueue</name></member>
+      <member refid="classvc64_1_1_references_1ad7af8e9288a5ccdd69e1ebe3a017e3f6" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>muxer</name></member>
+      <member refid="classvc64_1_1_references_1a1c3c3487396e208b6495fcdc73936de2" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>oscillator</name></member>
+      <member refid="classvc64_1_1_references_1adfdca8ba1967e6d1de209ce8f6a40816" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>parCable</name></member>
+      <member refid="classvc64_1_1_references_1aab0477bdbf0257957007dc495e49ee0e" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>port1</name></member>
+      <member refid="classvc64_1_1_references_1a054a39fcb2357fc321e56ea4103860ee" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>port2</name></member>
+      <member refid="classvc64_1_1_references_1a3fa1751dc3d018d0813409f0495cdcab" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>recorder</name></member>
+      <member refid="classvc64_1_1_references_1a466a1bc4bfe90a7f29afb596df1c530d" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>References</name></member>
+      <member refid="classvc64_1_1_references_1a0951b2824424d9fda808b88efd9b50e4" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>regressionTester</name></member>
+      <member refid="classvc64_1_1_a_p_i_1abf5b5cc4514382edc5e80528d956ab96" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>resume</name></member>
+      <member refid="classvc64_1_1_references_1a1d81ee2f6b3a1daed8df1142c0e299e3" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>retroShell</name></member>
+      <member refid="classvc64_1_1_a_p_i_1aaf072770fe8db16f4eb6187afd5e56c1" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>suspend</name></member>
+      <member refid="classvc64_1_1_suspendable_1a7f9f608d5b2b9b6e944176cde77b8f85" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>Suspendable</name></member>
+      <member refid="classvc64_1_1_references_1a1f1e51f8cba9a1a920b7113f5105febd" prot="protected" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>vic</name></member>
+      <member refid="classvc64_1_1_suspendable_1a35809d3a4c20db1f096e8dc5c78c49b9" prot="public" virt="virtual"><scope>VirtualC64::DriveAPI</scope><name>~Suspendable</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

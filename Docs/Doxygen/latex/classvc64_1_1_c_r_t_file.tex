@@ -1,0 +1,214 @@
+\doxysection{vc64\+::CRTFile Class Reference}
+\hypertarget{classvc64_1_1_c_r_t_file}{}\label{classvc64_1_1_c_r_t_file}\index{vc64::CRTFile@{vc64::CRTFile}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_c_r_t_file_a3f4eabc9b2e5dc08a8e622b657240f53}\label{classvc64_1_1_c_r_t_file_a3f4eabc9b2e5dc08a8e622b657240f53} 
+{\bfseries CRTFile} (const string \&path)  throws 
+\item 
+\Hypertarget{classvc64_1_1_c_r_t_file_ab5b8521353bff68011b27a5fb1499cbb}\label{classvc64_1_1_c_r_t_file_ab5b8521353bff68011b27a5fb1499cbb} 
+{\bfseries CRTFile} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len)  throws 
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classvc64_1_1_c_r_t_file_a0b819044e8241f1a925160976895e543}{get\+Description}} () const override
+\item 
+bool \mbox{\hyperlink{classvc64_1_1_c_r_t_file_a651b9ba864629d15443c33069371afb2}{is\+Compatible\+Path}} (const string \&path) override
+\item 
+bool \mbox{\hyperlink{classvc64_1_1_c_r_t_file_a1dc3517ba2567ed6240291468bb4ae07}{is\+Compatible\+Stream}} (std\+::istream \&stream) override
+\item 
+File\+Type \mbox{\hyperlink{classvc64_1_1_c_r_t_file_ae7c08a43f34b13bff4b0d1a99eaee7bd}{type}} () const override
+\item 
+\mbox{\hyperlink{classvc64_1_1_p_e_t_name}{PETName}}$<$ 16 $>$ \mbox{\hyperlink{classvc64_1_1_c_r_t_file_a843c23d42acbbed35ab21de4ed5b65bd}{get\+Name}} () const override
+\item 
+void \mbox{\hyperlink{classvc64_1_1_c_r_t_file_aeab682604f609b0902537772c39dfe9a}{finalize\+Read}} () override
+\item 
+\Hypertarget{classvc64_1_1_c_r_t_file_a352193a4b76a079da0b8d09a83434f37}\label{classvc64_1_1_c_r_t_file_a352193a4b76a079da0b8d09a83434f37} 
+u16 {\bfseries cartridge\+Version} () const
+\item 
+\Hypertarget{classvc64_1_1_c_r_t_file_ac95e571c4ce9f230d587c845c3dae266}\label{classvc64_1_1_c_r_t_file_ac95e571c4ce9f230d587c845c3dae266} 
+u32 {\bfseries header\+Size} () const
+\item 
+\Hypertarget{classvc64_1_1_c_r_t_file_a3c9ce6b552973c79cbb221e7c73e7d08}\label{classvc64_1_1_c_r_t_file_a3c9ce6b552973c79cbb221e7c73e7d08} 
+Cartridge\+Type {\bfseries cartridge\+Type} () const
+\item 
+\Hypertarget{classvc64_1_1_c_r_t_file_a1ad64fff39cfeee2f0a50fef7e273147}\label{classvc64_1_1_c_r_t_file_a1ad64fff39cfeee2f0a50fef7e273147} 
+string {\bfseries cartridge\+Type\+Name} () const
+\item 
+\Hypertarget{classvc64_1_1_c_r_t_file_a86dc92757b945183307a56813b97ff35}\label{classvc64_1_1_c_r_t_file_a86dc92757b945183307a56813b97ff35} 
+bool {\bfseries is\+Supported} () const
+\item 
+\Hypertarget{classvc64_1_1_c_r_t_file_ac77e57368a385b5072b9b8ec6d7619ea}\label{classvc64_1_1_c_r_t_file_ac77e57368a385b5072b9b8ec6d7619ea} 
+bool {\bfseries initial\+Exrom\+Line} () const
+\item 
+\Hypertarget{classvc64_1_1_c_r_t_file_a963d140bbd305e858138d427b02bdaa7}\label{classvc64_1_1_c_r_t_file_a963d140bbd305e858138d427b02bdaa7} 
+bool {\bfseries initial\+Game\+Line} () const
+\item 
+\Hypertarget{classvc64_1_1_c_r_t_file_a639755b37d5aaf931264773214ba59e3}\label{classvc64_1_1_c_r_t_file_a639755b37d5aaf931264773214ba59e3} 
+isize {\bfseries chip\+Count} () const
+\item 
+\Hypertarget{classvc64_1_1_c_r_t_file_a72b0f31bd27de4ec0660308fea0c3764}\label{classvc64_1_1_c_r_t_file_a72b0f31bd27de4ec0660308fea0c3764} 
+u8 \texorpdfstring{$\ast$}{*} {\bfseries chip\+Data} (isize nr) const
+\item 
+\Hypertarget{classvc64_1_1_c_r_t_file_aabca8623e1eead1397ee65edfcff4260}\label{classvc64_1_1_c_r_t_file_aabca8623e1eead1397ee65edfcff4260} 
+u16 {\bfseries chip\+Size} (isize nr) const
+\item 
+\Hypertarget{classvc64_1_1_c_r_t_file_a4611c503904ef0fd27315ba7a74bb4df}\label{classvc64_1_1_c_r_t_file_a4611c503904ef0fd27315ba7a74bb4df} 
+u16 {\bfseries chip\+Type} (isize nr) const
+\item 
+\Hypertarget{classvc64_1_1_c_r_t_file_a5f7bef50c17183bdc2a1491d8c5e9d9f}\label{classvc64_1_1_c_r_t_file_a5f7bef50c17183bdc2a1491d8c5e9d9f} 
+u16 {\bfseries chip\+Bank} (isize nr) const
+\item 
+\Hypertarget{classvc64_1_1_c_r_t_file_a13531248750e0a86313521d3130f956a}\label{classvc64_1_1_c_r_t_file_a13531248750e0a86313521d3130f956a} 
+u16 {\bfseries chip\+Addr} (isize nr) const
+\item 
+\Hypertarget{classvc64_1_1_c_r_t_file_aea02c72ba4218fe817ce4b00848209d5}\label{classvc64_1_1_c_r_t_file_aea02c72ba4218fe817ce4b00848209d5} 
+void {\bfseries dump} () const
+\item 
+\Hypertarget{classvc64_1_1_c_r_t_file_a8dd519fd66d52f64f91715f939fd702c}\label{classvc64_1_1_c_r_t_file_a8dd519fd66d52f64f91715f939fd702c} 
+void {\bfseries repair} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Any\+File} (isize capacity)
+\item 
+void {\bfseries init} (isize capacity)
+\item 
+void {\bfseries init} (const string \&path) throws
+\item 
+void {\bfseries init} (const string \&path, std\+::istream \&stream) throws
+\item 
+void {\bfseries init} (std\+::istream \&stream) throws
+\item 
+void {\bfseries init} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len) throws
+\item 
+void {\bfseries init} (FILE \texorpdfstring{$\ast$}{*}file) throws
+\item 
+u8 {\bfseries get\+Data} (isize nr)
+\item 
+u64 {\bfseries fnv} () const
+\item 
+void {\bfseries strip} (isize count)
+\item 
+void {\bfseries flash} (u8 \texorpdfstring{$\ast$}{*}buf, isize offset=0) const
+\item 
+void {\bfseries write\+To\+Stream} (std\+::ostream \&stream) throws
+\item 
+void {\bfseries write\+To\+File} (const string \&path) throws
+\item 
+void {\bfseries write\+To\+Buffer} (u8 \texorpdfstring{$\ast$}{*}buf) throws
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual void {\bfseries prefix} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_c_r_t_file_a0ee9f7bcec5b150fb752c6e58535eedf}\label{classvc64_1_1_c_r_t_file_a0ee9f7bcec5b150fb752c6e58535eedf} 
+static string {\bfseries cartridge\+Type\+Name} (Cartridge\+Type type)
+\item 
+\Hypertarget{classvc64_1_1_c_r_t_file_aa5c40e2922854a7b09fe208f3510be1b}\label{classvc64_1_1_c_r_t_file_aa5c40e2922854a7b09fe208f3510be1b} 
+static bool {\bfseries is\+Compatible} (const string \&name)
+\item 
+\Hypertarget{classvc64_1_1_c_r_t_file_a645e25d5dc1935670f15b64ee2045b2a}\label{classvc64_1_1_c_r_t_file_a645e25d5dc1935670f15b64ee2045b2a} 
+static bool {\bfseries is\+Compatible} (std\+::istream \&stream)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}}
+\begin{DoxyCompactItemize}
+\item 
+static File\+Type {\bfseries type} (const string \&path)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}}
+\begin{DoxyCompactItemize}
+\item 
+string {\bfseries path} = "{}"{}
+\item 
+u8 \texorpdfstring{$\ast$}{*} {\bfseries data} = nullptr
+\item 
+isize {\bfseries size} = 0
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries read\+From\+Stream} (std\+::istream \&stream) throws
+\item 
+void {\bfseries read\+From\+File} (const string \&path) throws
+\item 
+void {\bfseries read\+From\+Buffer} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len) throws
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+static bool {\bfseries verbose} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvc64_1_1_c_r_t_file_aeab682604f609b0902537772c39dfe9a}\label{classvc64_1_1_c_r_t_file_aeab682604f609b0902537772c39dfe9a} 
+\index{vc64::CRTFile@{vc64::CRTFile}!finalizeRead@{finalizeRead}}
+\index{finalizeRead@{finalizeRead}!vc64::CRTFile@{vc64::CRTFile}}
+\doxysubsubsection{\texorpdfstring{finalizeRead()}{finalizeRead()}}
+{\footnotesize\ttfamily void vc64\+::\+CRTFile\+::finalize\+Read (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}.
+
+\Hypertarget{classvc64_1_1_c_r_t_file_a0b819044e8241f1a925160976895e543}\label{classvc64_1_1_c_r_t_file_a0b819044e8241f1a925160976895e543} 
+\index{vc64::CRTFile@{vc64::CRTFile}!getDescription@{getDescription}}
+\index{getDescription@{getDescription}!vc64::CRTFile@{vc64::CRTFile}}
+\doxysubsubsection{\texorpdfstring{getDescription()}{getDescription()}}
+{\footnotesize\ttfamily const char \texorpdfstring{$\ast$}{*} vc64\+::\+CRTFile\+::get\+Description (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}.
+
+\Hypertarget{classvc64_1_1_c_r_t_file_a843c23d42acbbed35ab21de4ed5b65bd}\label{classvc64_1_1_c_r_t_file_a843c23d42acbbed35ab21de4ed5b65bd} 
+\index{vc64::CRTFile@{vc64::CRTFile}!getName@{getName}}
+\index{getName@{getName}!vc64::CRTFile@{vc64::CRTFile}}
+\doxysubsubsection{\texorpdfstring{getName()}{getName()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classvc64_1_1_p_e_t_name}{PETName}}$<$ 16 $>$ vc64\+::\+CRTFile\+::get\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}.
+
+\Hypertarget{classvc64_1_1_c_r_t_file_a651b9ba864629d15443c33069371afb2}\label{classvc64_1_1_c_r_t_file_a651b9ba864629d15443c33069371afb2} 
+\index{vc64::CRTFile@{vc64::CRTFile}!isCompatiblePath@{isCompatiblePath}}
+\index{isCompatiblePath@{isCompatiblePath}!vc64::CRTFile@{vc64::CRTFile}}
+\doxysubsubsection{\texorpdfstring{isCompatiblePath()}{isCompatiblePath()}}
+{\footnotesize\ttfamily bool vc64\+::\+CRTFile\+::is\+Compatible\+Path (\begin{DoxyParamCaption}\item[{const string \&}]{path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}.
+
+\Hypertarget{classvc64_1_1_c_r_t_file_a1dc3517ba2567ed6240291468bb4ae07}\label{classvc64_1_1_c_r_t_file_a1dc3517ba2567ed6240291468bb4ae07} 
+\index{vc64::CRTFile@{vc64::CRTFile}!isCompatibleStream@{isCompatibleStream}}
+\index{isCompatibleStream@{isCompatibleStream}!vc64::CRTFile@{vc64::CRTFile}}
+\doxysubsubsection{\texorpdfstring{isCompatibleStream()}{isCompatibleStream()}}
+{\footnotesize\ttfamily bool vc64\+::\+CRTFile\+::is\+Compatible\+Stream (\begin{DoxyParamCaption}\item[{std\+::istream \&}]{stream }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}.
+
+\Hypertarget{classvc64_1_1_c_r_t_file_ae7c08a43f34b13bff4b0d1a99eaee7bd}\label{classvc64_1_1_c_r_t_file_ae7c08a43f34b13bff4b0d1a99eaee7bd} 
+\index{vc64::CRTFile@{vc64::CRTFile}!type@{type}}
+\index{type@{type}!vc64::CRTFile@{vc64::CRTFile}}
+\doxysubsubsection{\texorpdfstring{type()}{type()}}
+{\footnotesize\ttfamily File\+Type vc64\+::\+CRTFile\+::type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Media/CRTFile.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Media/CRTFile.\+cpp\end{DoxyCompactItemize}

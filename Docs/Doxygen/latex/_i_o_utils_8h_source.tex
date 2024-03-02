@@ -1,0 +1,172 @@
+\doxysection{IOUtils.\+h}
+\hypertarget{_i_o_utils_8h_source}{}\label{_i_o_utils_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h@{/Users/hoff/Retro/virtualc64/Emulator/Utilities/IOUtils.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Types.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}StringUtils.h"{}}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <fcntl.h>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <filesystem>}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <istream>}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ <sys/stat.h>}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{namespace\ }fs\ =\ std::filesystem;}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{namespace\ }util\ \{}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{comment}{//}}
+\DoxyCodeLine{00032\ \textcolor{comment}{//\ Handling\ file\ names}}
+\DoxyCodeLine{00033\ \textcolor{comment}{//}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{comment}{//\ Extracts\ a\ certain\ component\ from\ a\ path}}
+\DoxyCodeLine{00036\ \textcolor{keywordtype}{string}\ extractPath(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
+\DoxyCodeLine{00037\ \textcolor{keywordtype}{string}\ extractName(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
+\DoxyCodeLine{00038\ \textcolor{keywordtype}{string}\ extractSuffix(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{comment}{//\ Strips\ a\ certain\ component\ from\ a\ path}}
+\DoxyCodeLine{00041\ \textcolor{keywordtype}{string}\ stripPath(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
+\DoxyCodeLine{00042\ \textcolor{keywordtype}{string}\ stripName(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
+\DoxyCodeLine{00043\ \textcolor{keywordtype}{string}\ stripSuffix(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{comment}{//\ Concatenates\ two\ path\ segments}}
+\DoxyCodeLine{00046\ \textcolor{keywordtype}{string}\ appendPath(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path2);}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{comment}{//\ Checks\ or\ creates\ an\ absolute\ path}}
+\DoxyCodeLine{00049\ \textcolor{keywordtype}{bool}\ isAbsolutePath(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
+\DoxyCodeLine{00050\ \textcolor{keywordtype}{string}\ makeAbsolutePath(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{comment}{//\ Makes\ a\ file\ name\ unique\ if\ a\ file\ with\ the\ provided\ name\ already\ exists}}
+\DoxyCodeLine{00053\ \textcolor{keywordtype}{string}\ makeUniquePath(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{comment}{//}}
+\DoxyCodeLine{00057\ \textcolor{comment}{//\ Handling\ files}}
+\DoxyCodeLine{00058\ \textcolor{comment}{//}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \textcolor{comment}{//\ Returns\ the\ size\ of\ a\ file\ in\ bytes}}
+\DoxyCodeLine{00061\ isize\ getSizeOfFile(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{comment}{//\ Checks\ if\ a\ file\ exists}}
+\DoxyCodeLine{00064\ \textcolor{keywordtype}{bool}\ fileExists(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{comment}{//\ Checks\ if\ a\ path\ points\ to\ a\ directory}}
+\DoxyCodeLine{00067\ \textcolor{keywordtype}{bool}\ isDirectory(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{comment}{//\ Creates\ a\ directory}}
+\DoxyCodeLine{00070\ \textcolor{keywordtype}{bool}\ createDirectory(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{comment}{//\ Returns\ the\ number\ of\ files\ in\ a\ directory}}
+\DoxyCodeLine{00073\ isize\ numDirectoryItems(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path);}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \textcolor{comment}{//\ Returns\ a\ list\ of\ files\ in\ a\ directory}}
+\DoxyCodeLine{00076\ std::vector<string>\ files(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&suffix\ =\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00077\ std::vector<string>\ files(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path,\ std::vector\ <string>\ \&suffixes);}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \textcolor{comment}{//\ Checks\ the\ header\ signature\ (magic\ bytes)\ of\ a\ stream\ or\ buffer}}
+\DoxyCodeLine{00080\ \textcolor{keywordtype}{bool}\ matchingStreamHeader(std::istream\ \&is,\ \textcolor{keyword}{const}\ u8\ *header,\ isize\ len,\ isize\ offset\ =\ 0);}
+\DoxyCodeLine{00081\ \textcolor{keywordtype}{bool}\ matchingStreamHeader(std::istream\ \&is,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&header,\ isize\ offset\ =\ 0);}
+\DoxyCodeLine{00082\ \textcolor{keywordtype}{bool}\ matchingBufferHeader(\textcolor{keyword}{const}\ u8\ *buffer,\ \textcolor{keyword}{const}\ u8\ *header,\ isize\ len,\ isize\ offset\ =\ 0);}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \textcolor{comment}{//}}
+\DoxyCodeLine{00085\ \textcolor{comment}{//\ Pretty\ printing}}
+\DoxyCodeLine{00086\ \textcolor{comment}{//}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \textcolor{comment}{//\ Writes\ an\ integer\ into\ a\ string\ in\ decimal\ format}}
+\DoxyCodeLine{00089\ \textcolor{keywordtype}{void}\ sprint8d(\textcolor{keywordtype}{char}\ *s,\ u8\ value);}
+\DoxyCodeLine{00090\ \textcolor{keywordtype}{void}\ sprint16d(\textcolor{keywordtype}{char}\ *s,\ u16\ value);}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \textcolor{comment}{//\ Writes\ an\ integer\ into\ a\ string\ in\ hexadecimal\ format}}
+\DoxyCodeLine{00093\ \textcolor{keywordtype}{void}\ sprint8x(\textcolor{keywordtype}{char}\ *s,\ u8\ value);}
+\DoxyCodeLine{00094\ \textcolor{keywordtype}{void}\ sprint16x(\textcolor{keywordtype}{char}\ *s,\ u16\ value);}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \textcolor{comment}{//\ Writes\ an\ integer\ into\ a\ string\ in\ binary\ format}}
+\DoxyCodeLine{00097\ \textcolor{keywordtype}{void}\ sprint8b(\textcolor{keywordtype}{char}\ *s,\ u8\ value);}
+\DoxyCodeLine{00098\ \textcolor{keywordtype}{void}\ sprint16b(\textcolor{keywordtype}{char}\ *s,\ u16\ value);}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \textcolor{comment}{//}}
+\DoxyCodeLine{00102\ \textcolor{comment}{//\ Handling\ streams}}
+\DoxyCodeLine{00103\ \textcolor{comment}{//}}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ isize\ streamLength(std::istream\ \&stream);}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \textcolor{keyword}{struct\ }dec\ \{}
+\DoxyCodeLine{00108\ \ \ \ \ }
+\DoxyCodeLine{00109\ \ \ \ \ i64\ value;}
+\DoxyCodeLine{00110\ \ \ \ \ }
+\DoxyCodeLine{00111\ \ \ \ \ dec(i64\ v)\ :\ value(v)\ \{\ \};}
+\DoxyCodeLine{00112\ \ \ \ \ std::ostream\ \&operator()(std::ostream\ \&os)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00113\ \};}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \textcolor{keyword}{struct\ }hex\ \{}
+\DoxyCodeLine{00116\ \ \ \ \ }
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{int}\ digits;}
+\DoxyCodeLine{00118\ \ \ \ \ u64\ value;}
+\DoxyCodeLine{00119\ \ \ \ \ }
+\DoxyCodeLine{00120\ \ \ \ \ hex(\textcolor{keywordtype}{int}\ d,\ u64\ v)\ :\ digits(d),\ value(v)\ \{\ \};}
+\DoxyCodeLine{00121\ \ \ \ \ hex(u64\ v)\ :\ hex(16,\ v)\ \{\ \};}
+\DoxyCodeLine{00122\ \ \ \ \ hex(u32\ v)\ :\ hex(8,\ v)\ \{\ \};}
+\DoxyCodeLine{00123\ \ \ \ \ hex(u16\ v)\ :\ hex(4,\ v)\ \{\ \};}
+\DoxyCodeLine{00124\ \ \ \ \ hex(u8\ v)\ :\ hex(2,\ v)\ \{\ \};}
+\DoxyCodeLine{00125\ \ \ \ \ std::ostream\ \&operator()(std::ostream\ \&os)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00126\ \};}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \textcolor{keyword}{struct\ }flt\ \{}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{double}\ value;}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \ flt(\textcolor{keywordtype}{double}\ v)\ :\ value(v)\ \{\ \};}
+\DoxyCodeLine{00133\ \ \ \ \ flt(\textcolor{keywordtype}{float}\ v)\ :\ value(double(v))\ \{\ \};}
+\DoxyCodeLine{00134\ \ \ \ \ std::ostream\ \&operator()(std::ostream\ \&os)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00135\ \};}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \textcolor{keyword}{struct\ }tab\ \{}
+\DoxyCodeLine{00138\ \ \ \ \ }
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keywordtype}{int}\ pads;}
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&str;}
+\DoxyCodeLine{00141\ \ \ \ \ }
+\DoxyCodeLine{00142\ \ \ \ \ tab(\textcolor{keywordtype}{int}\ p,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&s)\ :\ pads(p),\ str(s)\ \{\ \};}
+\DoxyCodeLine{00143\ \ \ \ \ tab(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&s)\ :\ tab(24,\ s)\ \{\ \};}
+\DoxyCodeLine{00144\ \ \ \ \ std::ostream\ \&operator()(std::ostream\ \&os)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00145\ \};}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \textcolor{keyword}{struct\ }bol\ \{}
+\DoxyCodeLine{00148\ \ \ \ \ }
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ yes;}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ no;}
+\DoxyCodeLine{00151\ \ \ \ \ }
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordtype}{bool}\ value;}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&str1,\ \&str2;}
+\DoxyCodeLine{00154\ \ \ \ \ }
+\DoxyCodeLine{00155\ \ \ \ \ bol(\textcolor{keywordtype}{bool}\ v,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&s1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&s2)\ :\ value(v),\ str1(s1),\ str2(s2)\ \{\ \};}
+\DoxyCodeLine{00156\ \ \ \ \ bol(\textcolor{keywordtype}{bool}\ v)\ :\ bol(v,\ yes,\ no)\ \{\ \};}
+\DoxyCodeLine{00157\ \ \ \ \ std::ostream\ \&operator()(std::ostream\ \&os)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00158\ \};}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00160\ \textcolor{keyword}{inline}\ std::ostream\ \&operator\ <<(std::ostream\ \&os,\ dec\ v)\ \{\ \textcolor{keywordflow}{return}\ v(os);\ \}}
+\DoxyCodeLine{00161\ \textcolor{keyword}{inline}\ std::ostream\ \&operator\ <<(std::ostream\ \&os,\ hex\ v)\ \{\ \textcolor{keywordflow}{return}\ v(os);\ \}}
+\DoxyCodeLine{00162\ \textcolor{keyword}{inline}\ std::ostream\ \&operator\ <<(std::ostream\ \&os,\ flt\ v)\ \{\ \textcolor{keywordflow}{return}\ v(os);\ \}}
+\DoxyCodeLine{00163\ \textcolor{keyword}{inline}\ std::ostream\ \&operator\ <<(std::ostream\ \&os,\ tab\ v)\ \{\ \textcolor{keywordflow}{return}\ v(os);\ \}}
+\DoxyCodeLine{00164\ \textcolor{keyword}{inline}\ std::ostream\ \&operator\ <<(std::ostream\ \&os,\ bol\ v)\ \{\ \textcolor{keywordflow}{return}\ v(os);\ \}}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \}}
+
+\end{DoxyCode}

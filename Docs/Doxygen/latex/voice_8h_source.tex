@@ -1,0 +1,115 @@
+\doxysection{voice.\+h}
+\hypertarget{voice_8h_source}{}\label{voice_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.h@{/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ \ This\ file\ is\ part\ of\ reSID,\ a\ MOS6581\ SID\ emulator\ engine.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ \ Copyright\ (C)\ 2010\ \ Dag\ Lem\ <resid@nimrod.no>}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ \ This\ program\ is\ free\ software;\ you\ can\ redistribute\ it\ and/or\ modify}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ \ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ the\ Free\ Software\ Foundation;\ either\ version\ 2\ of\ the\ License,\ or}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ \ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ \ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{//}}
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ General\ Public\ License}}
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ \ along\ with\ this\ program;\ if\ not,\ write\ to\ the\ Free\ Software}}
+\DoxyCodeLine{00017\ \textcolor{comment}{//\ \ Foundation,\ Inc.,\ 59\ Temple\ Place,\ Suite\ 330,\ Boston,\ MA\ \ 02111-\/1307\ \ USA}}
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#ifndef\ RESID\_VOICE\_H}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ RESID\_VOICE\_H}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ "{}resid-\/config.h"{}}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ "{}wave.h"{}}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ "{}envelope.h"{}}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{namespace\ }reSID}
+\DoxyCodeLine{00028\ \{}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{class\ }Voice}
+\DoxyCodeLine{00031\ \{}
+\DoxyCodeLine{00032\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00033\ \ \ Voice();}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \textcolor{keywordtype}{void}\ set\_chip\_model(chip\_model\ model);}
+\DoxyCodeLine{00036\ \ \ \textcolor{keywordtype}{void}\ set\_sync\_source(Voice*);}
+\DoxyCodeLine{00037\ \ \ \textcolor{keywordtype}{void}\ reset();}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \textcolor{keywordtype}{void}\ writeCONTROL\_REG(reg8);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \textcolor{comment}{//\ Amplitude\ modulated\ waveform\ output.}}
+\DoxyCodeLine{00042\ \ \ \textcolor{comment}{//\ Range\ [-\/2048*255,\ 2047*255].}}
+\DoxyCodeLine{00043\ \ \ \textcolor{keywordtype}{int}\ output();}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ WaveformGenerator\ wave;}
+\DoxyCodeLine{00046\ \ \ EnvelopeGenerator\ envelope;}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00049\ \ \ \textcolor{comment}{//\ Waveform\ D/A\ zero\ level.}}
+\DoxyCodeLine{00050\ \ \ \textcolor{keywordtype}{short}\ wave\_zero;}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }SID;}
+\DoxyCodeLine{00053\ \};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00057\ \textcolor{comment}{//\ Inline\ functions.}}
+\DoxyCodeLine{00058\ \textcolor{comment}{//\ The\ following\ function\ is\ defined\ inline\ because\ it\ is\ called\ every}}
+\DoxyCodeLine{00059\ \textcolor{comment}{//\ time\ a\ sample\ is\ calculated.}}
+\DoxyCodeLine{00060\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#if\ RESID\_INLINING\ ||\ defined(RESID\_VOICE\_CC)}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00065\ \textcolor{comment}{//\ Amplitude\ modulated\ waveform\ output\ (20\ bits).}}
+\DoxyCodeLine{00066\ \textcolor{comment}{//\ Ideal\ range\ [-\/2048*255,\ 2047*255].}}
+\DoxyCodeLine{00067\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{comment}{//\ The\ output\ for\ a\ voice\ is\ produced\ by\ a\ multiplying\ DAC,\ where\ the}}
+\DoxyCodeLine{00070\ \textcolor{comment}{//\ waveform\ output\ modulates\ the\ envelope\ output.}}
+\DoxyCodeLine{00071\ \textcolor{comment}{//}}
+\DoxyCodeLine{00072\ \textcolor{comment}{//\ As\ noted\ by\ Bob\ Yannes:\ "{}The\ 8-\/bit\ output\ of\ the\ Envelope\ Generator\ was\ then}}
+\DoxyCodeLine{00073\ \textcolor{comment}{//\ sent\ to\ the\ Multiplying\ D/A\ converter\ to\ modulate\ the\ amplitude\ of\ the}}
+\DoxyCodeLine{00074\ \textcolor{comment}{//\ selected\ Oscillator\ Waveform\ (to\ be\ technically\ accurate,\ actually\ the}}
+\DoxyCodeLine{00075\ \textcolor{comment}{//\ waveform\ was\ modulating\ the\ output\ of\ the\ Envelope\ Generator,\ but\ the\ result}}
+\DoxyCodeLine{00076\ \textcolor{comment}{//\ is\ the\ same)"{}.}}
+\DoxyCodeLine{00077\ \textcolor{comment}{//}}
+\DoxyCodeLine{00078\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ 7\ \ \ 6\ \ \ 5\ \ \ 4\ \ \ 3\ \ \ 2\ \ \ 1\ \ \ 0\ \ \ VGND}}
+\DoxyCodeLine{00079\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ |\ \ \ |\ \ \ |\ \ \ |\ \ \ |\ \ \ |\ \ \ |\ \ \ |\ \ \ \ \ |\ \ \ Missing}}
+\DoxyCodeLine{00080\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ 2R\ \ 2R\ \ 2R\ \ 2R\ \ 2R\ \ 2R\ \ 2R\ \ 2R\ \ \ \ 2R\ \ \ termination}}
+\DoxyCodeLine{00081\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ |\ \ \ |\ \ \ |\ \ \ |\ \ \ |\ \ \ |\ \ \ |\ \ \ |\ \ \ \ \ |}}
+\DoxyCodeLine{00082\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ -\/-\/R-\/-\/-\/R-\/-\/-\/R-\/-\/-\/R-\/-\/-\/R-\/-\/-\/R-\/-\/-\/R-\/-\/\ \ \ -\/-\/-\/}}
+\DoxyCodeLine{00083\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ |\ \ \ \ \ \ \ \ \ \ \_\_\_\_\_}}
+\DoxyCodeLine{00084\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \_\_|\_\_\ \ \ \ \ \_\_|\_\_\ \ \ |}}
+\DoxyCodeLine{00085\ \textcolor{comment}{//\ \ \ \ \ \ \ \ -\/-\/-\/-\/-\/\ \ \ \ \ =====\ \ \ |}}
+\DoxyCodeLine{00086\ \textcolor{comment}{//\ \ \ \ \ \ \ \ |\ \ \ |\ \ \ \ \ |\ \ \ |\ \ \ |}}
+\DoxyCodeLine{00087\ \textcolor{comment}{//\ 12V\ -\/-\/-\/\ \ \ \ \ -\/-\/-\/-\/-\/\ \ \ \ \ -\/-\/-\/-\/-\/-\/-\/\ GND}}
+\DoxyCodeLine{00088\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00089\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ vout}}
+\DoxyCodeLine{00090\ \textcolor{comment}{//}}
+\DoxyCodeLine{00091\ \textcolor{comment}{//\ Bit\ on:\ \ wout\ (see\ figure\ in\ wave.h)}}
+\DoxyCodeLine{00092\ \textcolor{comment}{//\ Bit\ off:\ 5V\ (VGND)}}
+\DoxyCodeLine{00093\ \textcolor{comment}{//}}
+\DoxyCodeLine{00094\ \textcolor{comment}{//\ As\ is\ the\ case\ with\ all\ MOS\ 6581\ DACs,\ the\ termination\ to\ (virtual)\ ground}}
+\DoxyCodeLine{00095\ \textcolor{comment}{//\ at\ bit\ 0\ is\ missing.\ The\ MOS\ 8580\ has\ correct\ termination.}}
+\DoxyCodeLine{00096\ \textcolor{comment}{//}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ RESID\_INLINE}
+\DoxyCodeLine{00099\ \textcolor{keywordtype}{int}\ Voice::output()}
+\DoxyCodeLine{00100\ \{}
+\DoxyCodeLine{00101\ \ \ \textcolor{comment}{//\ Multiply\ oscillator\ output\ with\ envelope\ output.}}
+\DoxyCodeLine{00102\ \ \ \textcolor{keywordflow}{return}\ (wave.output()\ -\/\ wave\_zero)*envelope.output();}
+\DoxyCodeLine{00103\ \}}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ RESID\_INLINING\ ||\ defined(RESID\_VOICE\_CC)}}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \}\ \textcolor{comment}{//\ namespace\ reSID}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ not\ RESID\_VOICE\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,181 @@
+\doxysection{/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Base/\+Cmd\+Queue\+Types.h File Reference}
+\hypertarget{_cmd_queue_types_8h}{}\label{_cmd_queue_types_8h}\index{/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h@{/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h}}
+{\ttfamily \#include "{}Aliases.\+h"{}}\newline
+{\ttfamily \#include "{}Reflection.\+h"{}}\newline
+{\ttfamily \#include "{}Joystick\+Types.\+h"{}}\newline
+Include dependency graph for Cmd\+Queue\+Types.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=321pt]{_cmd_queue_types_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_cmd_queue_types_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3}{CMD\+\_\+\+TYPE}} \+: long \{ \newline
+\mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a93c1ce1fac89139d9f4df4b6db21b1cc}{CMD\+\_\+\+NONE}} = 0
+, \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3ac8e628de5d800200ea73ca97d6ef1e91}{CMD\+\_\+\+SNAPSHOT\+\_\+\+AUTO}}
+, \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a7aa07e1b63a8309e8356d855537043d0}{CMD\+\_\+\+SNAPSHOT\+\_\+\+USER}}
+, \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a998871469ccfa34ee7b9b304e5086e37}{CMD\+\_\+\+ALARM\+\_\+\+ABS}}
+, \newline
+\mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3ab25e2356709a51ea2257298a1f74eae9}{CMD\+\_\+\+ALARM\+\_\+\+REL}}
+, \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3ab4c2c070b619b1f808238cc49c31a8f7}{CMD\+\_\+\+CPU\+\_\+\+BRK}}
+, \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a1ee50b12ac4517b6b8848792a903bd8e}{CMD\+\_\+\+CPU\+\_\+\+NMI}}
+, \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a0d00e2f0cba95a7ae85699036485fd7f}{CMD\+\_\+\+KEY\+\_\+\+PRESS}}
+, \newline
+\mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3af74c08e0d502f1233a3e12e8c5dff7f5}{CMD\+\_\+\+KEY\+\_\+\+RELEASE}}
+, \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3aba97321e55d4e9320993cfe49f1e68b9}{CMD\+\_\+\+KEY\+\_\+\+RELEASE\+\_\+\+ALL}}
+, \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3aa9859a03cc385ec099f044fe68d819e9}{CMD\+\_\+\+KEY\+\_\+\+TOGGLE}}
+, \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a9700907d31668e74487df274bd415d0e}{CMD\+\_\+\+MOUSE\+\_\+\+MOVE\+\_\+\+ABS}}
+, \newline
+\mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a95a4824dcfff64873d6e718545e6ab04}{CMD\+\_\+\+MOUSE\+\_\+\+MOVE\+\_\+\+REL}}
+, \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a0e4d2eac3e3a9bb323dd933d7d2bfdfc}{CMD\+\_\+\+MOUSE\+\_\+\+EVENT}}
+, \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a685bf3a2b9e507d383cdd8eef9527e25}{CMD\+\_\+\+JOY\+\_\+\+EVENT}}
+, \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a8533d86b1ac4bda87ba9db602acf98e3}{CMD\+\_\+\+DSK\+\_\+\+TOGGLE\+\_\+\+WP}}
+, \newline
+\mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a3debc19e1cad98e6b0f484445c306f30}{CMD\+\_\+\+DSK\+\_\+\+MODIFIED}}
+, \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a6ae7661f4ed38ef563c81680b681c64d}{CMD\+\_\+\+DSK\+\_\+\+UNMODIFIED}}
+, \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a2e51e8d28a5df7a2ad790e7d7a4cc5af}{CMD\+\_\+\+DATASETTE\+\_\+\+PLAY}}
+, \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a257c1eff3f5a2ae97064df677b809936}{CMD\+\_\+\+DATASETTE\+\_\+\+STOP}}
+, \newline
+\mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a945c23a37311b1df5a129778a17f4cf9}{CMD\+\_\+\+DATASETTE\+\_\+\+REWIND}}
+, \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3ad9116107b0be9868d4d2563f40e33fd4}{CMD\+\_\+\+CRT\+\_\+\+BUTTON\+\_\+\+PRESS}}
+, \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a61105b208370c0fad8cb6b925ac3ef3e}{CMD\+\_\+\+CRT\+\_\+\+BUTTON\+\_\+\+RELEASE}}
+, \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3ad969b2766e60e084e39b47424e11e6ea}{CMD\+\_\+\+CRT\+\_\+\+SWITCH\+\_\+\+LEFT}}
+, \newline
+\mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3ad6b727e3d07c4845f09dc5eab83d3bcc}{CMD\+\_\+\+CRT\+\_\+\+SWITCH\+\_\+\+NEUTRAL}}
+, \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a092eb67ee6a7425139087d44561a030c}{CMD\+\_\+\+CRT\+\_\+\+SWITCH\+\_\+\+RIGHT}}
+, \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3af91039778727323fb4b230805558c27a}{CMD\+\_\+\+RSH\+\_\+\+EXECUTE}}
+ \}
+\begin{DoxyCompactList}\small\item\em Emulator command. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3} 
+\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_TYPE@{CMD\_TYPE}}
+\index{CMD\_TYPE@{CMD\_TYPE}!CmdQueueTypes.h@{CmdQueueTypes.h}}
+\doxysubsubsection{\texorpdfstring{CMD\_TYPE}{CMD\_TYPE}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3}{CMD\+\_\+\+TYPE}} \+: long}
+
+
+
+Emulator command. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_NONE@{CMD\_NONE}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_NONE@{CMD\_NONE}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a93c1ce1fac89139d9f4df4b6db21b1cc}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a93c1ce1fac89139d9f4df4b6db21b1cc} 
+CMD\+\_\+\+NONE&None. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_SNAPSHOT\_AUTO@{CMD\_SNAPSHOT\_AUTO}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_SNAPSHOT\_AUTO@{CMD\_SNAPSHOT\_AUTO}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3ac8e628de5d800200ea73ca97d6ef1e91}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3ac8e628de5d800200ea73ca97d6ef1e91} 
+CMD\+\_\+\+SNAPSHOT\+\_\+\+AUTO&Take a snapshot (emulator triggered) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_SNAPSHOT\_USER@{CMD\_SNAPSHOT\_USER}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_SNAPSHOT\_USER@{CMD\_SNAPSHOT\_USER}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a7aa07e1b63a8309e8356d855537043d0}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a7aa07e1b63a8309e8356d855537043d0} 
+CMD\+\_\+\+SNAPSHOT\+\_\+\+USER&Take a snapshot (user triggered) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_ALARM\_ABS@{CMD\_ALARM\_ABS}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_ALARM\_ABS@{CMD\_ALARM\_ABS}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a998871469ccfa34ee7b9b304e5086e37}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a998871469ccfa34ee7b9b304e5086e37} 
+CMD\+\_\+\+ALARM\+\_\+\+ABS&Schedule an alarm (absolute cycle) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_ALARM\_REL@{CMD\_ALARM\_REL}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_ALARM\_REL@{CMD\_ALARM\_REL}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3ab25e2356709a51ea2257298a1f74eae9}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3ab25e2356709a51ea2257298a1f74eae9} 
+CMD\+\_\+\+ALARM\+\_\+\+REL&Schedule an alarm (relative cycle) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_CPU\_BRK@{CMD\_CPU\_BRK}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_CPU\_BRK@{CMD\_CPU\_BRK}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3ab4c2c070b619b1f808238cc49c31a8f7}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3ab4c2c070b619b1f808238cc49c31a8f7} 
+CMD\+\_\+\+CPU\+\_\+\+BRK&Let the CPU execute a BRK instruction. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_CPU\_NMI@{CMD\_CPU\_NMI}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_CPU\_NMI@{CMD\_CPU\_NMI}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a1ee50b12ac4517b6b8848792a903bd8e}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a1ee50b12ac4517b6b8848792a903bd8e} 
+CMD\+\_\+\+CPU\+\_\+\+NMI&Emulate an external expansion port NMI. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_KEY\_PRESS@{CMD\_KEY\_PRESS}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_KEY\_PRESS@{CMD\_KEY\_PRESS}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a0d00e2f0cba95a7ae85699036485fd7f}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a0d00e2f0cba95a7ae85699036485fd7f} 
+CMD\+\_\+\+KEY\+\_\+\+PRESS&Press a key on the C64 keyboard. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_KEY\_RELEASE@{CMD\_KEY\_RELEASE}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_KEY\_RELEASE@{CMD\_KEY\_RELEASE}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3af74c08e0d502f1233a3e12e8c5dff7f5}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3af74c08e0d502f1233a3e12e8c5dff7f5} 
+CMD\+\_\+\+KEY\+\_\+\+RELEASE&Release a key on the C64 keyboard. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_KEY\_RELEASE\_ALL@{CMD\_KEY\_RELEASE\_ALL}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_KEY\_RELEASE\_ALL@{CMD\_KEY\_RELEASE\_ALL}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3aba97321e55d4e9320993cfe49f1e68b9}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3aba97321e55d4e9320993cfe49f1e68b9} 
+CMD\+\_\+\+KEY\+\_\+\+RELEASE\+\_\+\+ALL&Clear the keyboard matrix. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_KEY\_TOGGLE@{CMD\_KEY\_TOGGLE}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_KEY\_TOGGLE@{CMD\_KEY\_TOGGLE}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3aa9859a03cc385ec099f044fe68d819e9}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3aa9859a03cc385ec099f044fe68d819e9} 
+CMD\+\_\+\+KEY\+\_\+\+TOGGLE&Press or release a key on the C64 keyboard. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_MOUSE\_MOVE\_ABS@{CMD\_MOUSE\_MOVE\_ABS}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_MOUSE\_MOVE\_ABS@{CMD\_MOUSE\_MOVE\_ABS}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a9700907d31668e74487df274bd415d0e}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a9700907d31668e74487df274bd415d0e} 
+CMD\+\_\+\+MOUSE\+\_\+\+MOVE\+\_\+\+ABS&Signal a mouse movement (absolut coordinates) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_MOUSE\_MOVE\_REL@{CMD\_MOUSE\_MOVE\_REL}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_MOUSE\_MOVE\_REL@{CMD\_MOUSE\_MOVE\_REL}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a95a4824dcfff64873d6e718545e6ab04}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a95a4824dcfff64873d6e718545e6ab04} 
+CMD\+\_\+\+MOUSE\+\_\+\+MOVE\+\_\+\+REL&Signal a mouse movement (relative coordinates) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_MOUSE\_EVENT@{CMD\_MOUSE\_EVENT}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_MOUSE\_EVENT@{CMD\_MOUSE\_EVENT}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a0e4d2eac3e3a9bb323dd933d7d2bfdfc}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a0e4d2eac3e3a9bb323dd933d7d2bfdfc} 
+CMD\+\_\+\+MOUSE\+\_\+\+EVENT&Signal a mouse button event. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_JOY\_EVENT@{CMD\_JOY\_EVENT}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_JOY\_EVENT@{CMD\_JOY\_EVENT}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a685bf3a2b9e507d383cdd8eef9527e25}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a685bf3a2b9e507d383cdd8eef9527e25} 
+CMD\+\_\+\+JOY\+\_\+\+EVENT&Signal a joystick button event. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_DSK\_TOGGLE\_WP@{CMD\_DSK\_TOGGLE\_WP}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_DSK\_TOGGLE\_WP@{CMD\_DSK\_TOGGLE\_WP}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a8533d86b1ac4bda87ba9db602acf98e3}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a8533d86b1ac4bda87ba9db602acf98e3} 
+CMD\+\_\+\+DSK\+\_\+\+TOGGLE\+\_\+\+WP&Toggle write-\/protection. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_DSK\_MODIFIED@{CMD\_DSK\_MODIFIED}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_DSK\_MODIFIED@{CMD\_DSK\_MODIFIED}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a3debc19e1cad98e6b0f484445c306f30}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a3debc19e1cad98e6b0f484445c306f30} 
+CMD\+\_\+\+DSK\+\_\+\+MODIFIED&Signal that the disk has been saved. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_DSK\_UNMODIFIED@{CMD\_DSK\_UNMODIFIED}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_DSK\_UNMODIFIED@{CMD\_DSK\_UNMODIFIED}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a6ae7661f4ed38ef563c81680b681c64d}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a6ae7661f4ed38ef563c81680b681c64d} 
+CMD\+\_\+\+DSK\+\_\+\+UNMODIFIED&Signan that the disk needs saving. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_DATASETTE\_PLAY@{CMD\_DATASETTE\_PLAY}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_DATASETTE\_PLAY@{CMD\_DATASETTE\_PLAY}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a2e51e8d28a5df7a2ad790e7d7a4cc5af}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a2e51e8d28a5df7a2ad790e7d7a4cc5af} 
+CMD\+\_\+\+DATASETTE\+\_\+\+PLAY&Press the datasette play key. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_DATASETTE\_STOP@{CMD\_DATASETTE\_STOP}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_DATASETTE\_STOP@{CMD\_DATASETTE\_STOP}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a257c1eff3f5a2ae97064df677b809936}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a257c1eff3f5a2ae97064df677b809936} 
+CMD\+\_\+\+DATASETTE\+\_\+\+STOP&Press the datasette stop key. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_DATASETTE\_REWIND@{CMD\_DATASETTE\_REWIND}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_DATASETTE\_REWIND@{CMD\_DATASETTE\_REWIND}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a945c23a37311b1df5a129778a17f4cf9}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a945c23a37311b1df5a129778a17f4cf9} 
+CMD\+\_\+\+DATASETTE\+\_\+\+REWIND&Rewind the tape. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_CRT\_BUTTON\_PRESS@{CMD\_CRT\_BUTTON\_PRESS}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_CRT\_BUTTON\_PRESS@{CMD\_CRT\_BUTTON\_PRESS}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3ad9116107b0be9868d4d2563f40e33fd4}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3ad9116107b0be9868d4d2563f40e33fd4} 
+CMD\+\_\+\+CRT\+\_\+\+BUTTON\+\_\+\+PRESS&Press a cartridge button. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_CRT\_BUTTON\_RELEASE@{CMD\_CRT\_BUTTON\_RELEASE}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_CRT\_BUTTON\_RELEASE@{CMD\_CRT\_BUTTON\_RELEASE}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a61105b208370c0fad8cb6b925ac3ef3e}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a61105b208370c0fad8cb6b925ac3ef3e} 
+CMD\+\_\+\+CRT\+\_\+\+BUTTON\+\_\+\+RELEASE&Release a cartridge button. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_CRT\_SWITCH\_LEFT@{CMD\_CRT\_SWITCH\_LEFT}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_CRT\_SWITCH\_LEFT@{CMD\_CRT\_SWITCH\_LEFT}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3ad969b2766e60e084e39b47424e11e6ea}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3ad969b2766e60e084e39b47424e11e6ea} 
+CMD\+\_\+\+CRT\+\_\+\+SWITCH\+\_\+\+LEFT&Pull the cartridge switch left. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_CRT\_SWITCH\_NEUTRAL@{CMD\_CRT\_SWITCH\_NEUTRAL}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_CRT\_SWITCH\_NEUTRAL@{CMD\_CRT\_SWITCH\_NEUTRAL}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3ad6b727e3d07c4845f09dc5eab83d3bcc}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3ad6b727e3d07c4845f09dc5eab83d3bcc} 
+CMD\+\_\+\+CRT\+\_\+\+SWITCH\+\_\+\+NEUTRAL&Put the cartridge switch in neutral position. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_CRT\_SWITCH\_RIGHT@{CMD\_CRT\_SWITCH\_RIGHT}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_CRT\_SWITCH\_RIGHT@{CMD\_CRT\_SWITCH\_RIGHT}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a092eb67ee6a7425139087d44561a030c}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3a092eb67ee6a7425139087d44561a030c} 
+CMD\+\_\+\+CRT\+\_\+\+SWITCH\+\_\+\+RIGHT&Pull the cartridge switch right. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CMD\_RSH\_EXECUTE@{CMD\_RSH\_EXECUTE}!CmdQueueTypes.h@{CmdQueueTypes.h}}\index{CmdQueueTypes.h@{CmdQueueTypes.h}!CMD\_RSH\_EXECUTE@{CMD\_RSH\_EXECUTE}}}\Hypertarget{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3af91039778727323fb4b230805558c27a}\label{_cmd_queue_types_8h_a63ebdc688313e444b486514798e48df3af91039778727323fb4b230805558c27a} 
+CMD\+\_\+\+RSH\+\_\+\+EXECUTE&Execute a script command. \\
+\hline
+
+\end{DoxyEnumFields}

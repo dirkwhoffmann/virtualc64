@@ -1,0 +1,325 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_p_e_t_name" kind="class" language="C++" prot="public">
+    <compoundname>vc64::PETName</compoundname>
+    <basecompoundref prot="private" virt="non-virtual">vc64::CoreObject</basecompoundref>
+    <templateparamlist>
+      <param>
+        <type>int</type>
+        <declname>len</declname>
+        <defname>len</defname>
+      </param>
+    </templateparamlist>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_p_e_t_name_1a0fd7f9de0a5493dca3284ed9ca9c85e7" prot="private" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::PETName&lt; len &gt;::pet[len+1]</definition>
+        <argsstring>[len+1]</argsstring>
+        <name>pet</name>
+        <qualifiedname>vc64::PETName::pet</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" line="23" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_p_e_t_name_1af359e7c1635267977550236e79a6bec7" prot="private" static="no" mutable="no">
+        <type>char</type>
+        <definition>char vc64::PETName&lt; len &gt;::asc[len+1]</definition>
+        <argsstring>[len+1]</argsstring>
+        <name>asc</name>
+        <qualifiedname>vc64::PETName::asc</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" line="26" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_p_e_t_name_1a70f497a117cc4c5121a78bece738ea00" prot="private" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::PETName&lt; len &gt;::pad</definition>
+        <argsstring></argsstring>
+        <name>pad</name>
+        <qualifiedname>vc64::PETName::pad</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" line="29" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" bodystart="29" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classvc64_1_1_p_e_t_name_1ab10fe7d2db97902c7ac23217e7f2643b" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>u8</type>
+        <definition>static u8 vc64::PETName&lt; len &gt;::petscii2printable</definition>
+        <argsstring>(u8 c, u8 subst)</argsstring>
+        <name>petscii2printable</name>
+        <qualifiedname>vc64::PETName::petscii2printable</qualifiedname>
+        <param>
+          <type>u8</type>
+          <declname>c</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>subst</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" line="33" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" bodystart="33" bodyend="37"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_e_t_name_1a4fd67d7c7f6eae62d950891f1300e52f" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>u8</type>
+        <definition>static u8 vc64::PETName&lt; len &gt;::ascii2pet</definition>
+        <argsstring>(u8 asciichar)</argsstring>
+        <name>ascii2pet</name>
+        <qualifiedname>vc64::PETName::ascii2pet</qualifiedname>
+        <param>
+          <type>u8</type>
+          <declname>asciichar</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" line="39" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" bodystart="39" bodyend="45"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_p_e_t_name_1a8304c158df7e6df406569d6f4e30c6ae" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::PETName&lt; len &gt;::PETName</definition>
+        <argsstring>(const u8 *_pet, u8 _pad=0xA0)</argsstring>
+        <name>PETName</name>
+        <qualifiedname>vc64::PETName::PETName</qualifiedname>
+        <param>
+          <type>const u8 *</type>
+          <declname>_pet</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>_pad</declname>
+          <defval>0xA0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" line="47" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" bodystart="47" bodyend="59"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_e_t_name_1a24879b5b12f6f9f03b1f81a7cded6cd9" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::PETName&lt; len &gt;::PETName</definition>
+        <argsstring>(const char *_str, u8 _pad=0xA0)</argsstring>
+        <name>PETName</name>
+        <qualifiedname>vc64::PETName::PETName</qualifiedname>
+        <param>
+          <type>const char *</type>
+          <declname>_str</declname>
+        </param>
+        <param>
+          <type>u8</type>
+          <declname>_pad</declname>
+          <defval>0xA0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" line="61" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" bodystart="61" bodyend="73"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_e_t_name_1a7b59fbca82e1a465f50f6ffb806ae885" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::PETName&lt; len &gt;::PETName</definition>
+        <argsstring>(string str)</argsstring>
+        <name>PETName</name>
+        <qualifiedname>vc64::PETName::PETName</qualifiedname>
+        <param>
+          <type>string</type>
+          <declname>str</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" line="75" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" bodystart="75" bodyend="75"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_e_t_name_1af78c687f57988e222e49d4e44d1a3c52" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::PETName&lt; len &gt;::setPad</definition>
+        <argsstring>(u8 _pad)</argsstring>
+        <name>setPad</name>
+        <qualifiedname>vc64::PETName::setPad</qualifiedname>
+        <param>
+          <type>u8</type>
+          <declname>_pad</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" line="77" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" bodystart="77" bodyend="83"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_e_t_name_1a76efb44b2f693855cfcf5a62e5fdcbbb" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::PETName&lt; len &gt;::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::PETName::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" line="85" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" bodystart="85" bodyend="85"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_e_t_name_1a6ab591ed3017a80381580bab2ce90985" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::PETName&lt; len &gt;::operator==</definition>
+        <argsstring>(PETName &amp;rhs)</argsstring>
+        <name>operator==</name>
+        <qualifiedname>vc64::PETName::operator==</qualifiedname>
+        <param>
+          <type>PETName &amp;</type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" line="87" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" bodystart="87" bodyend="96"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_e_t_name_1ae595e989176fc126c5d0d34d9422f96a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>PETName&lt; len &gt;</type>
+        <definition>PETName&lt; len &gt; vc64::PETName&lt; len &gt;::stripped</definition>
+        <argsstring>(u8 c)</argsstring>
+        <name>stripped</name>
+        <qualifiedname>vc64::PETName::stripped</qualifiedname>
+        <param>
+          <type>u8</type>
+          <declname>c</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" line="98" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" bodystart="98" bodyend="110"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_e_t_name_1ad38eb7e09054c572892cf45fdbda954d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::PETName&lt; len &gt;::write</definition>
+        <argsstring>(u8 *p, isize length)</argsstring>
+        <name>write</name>
+        <qualifiedname>vc64::PETName::write</qualifiedname>
+        <param>
+          <type>u8 *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>length</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" line="112" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" bodystart="112" bodyend="118"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_e_t_name_1a5c7ee5c89869b50f02b794d3924cc7d3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::PETName&lt; len &gt;::write</definition>
+        <argsstring>(u8 *p)</argsstring>
+        <name>write</name>
+        <qualifiedname>vc64::PETName::write</qualifiedname>
+        <param>
+          <type>u8 *</type>
+          <declname>p</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" line="120" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" bodystart="120" bodyend="120"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_e_t_name_1ab65c59a74a454f212b7d43e8d6935f4a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::PETName&lt; len &gt;::c_str</definition>
+        <argsstring>()</argsstring>
+        <name>c_str</name>
+        <qualifiedname>vc64::PETName::c_str</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" line="122" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" bodystart="122" bodyend="122"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_p_e_t_name_1a3997cef14dde93f620db32f2dd48eff1" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>string</type>
+        <definition>string vc64::PETName&lt; len &gt;::str</definition>
+        <argsstring>()</argsstring>
+        <name>str</name>
+        <qualifiedname>vc64::PETName::str</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" line="123" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" bodystart="123" bodyend="123"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" line="20" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Media/PETName.h" bodystart="20" bodyend="124"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_p_e_t_name_1af359e7c1635267977550236e79a6bec7" prot="private" virt="non-virtual"><scope>vc64::PETName</scope><name>asc</name></member>
+      <member refid="classvc64_1_1_p_e_t_name_1a4fd67d7c7f6eae62d950891f1300e52f" prot="public" virt="non-virtual"><scope>vc64::PETName</scope><name>ascii2pet</name></member>
+      <member refid="classvc64_1_1_p_e_t_name_1ab65c59a74a454f212b7d43e8d6935f4a" prot="public" virt="non-virtual"><scope>vc64::PETName</scope><name>c_str</name></member>
+      <member refid="classvc64_1_1_p_e_t_name_1a76efb44b2f693855cfcf5a62e5fdcbbb" prot="public" virt="non-virtual"><scope>vc64::PETName</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_p_e_t_name_1a6ab591ed3017a80381580bab2ce90985" prot="public" virt="non-virtual"><scope>vc64::PETName</scope><name>operator==</name></member>
+      <member refid="classvc64_1_1_p_e_t_name_1a70f497a117cc4c5121a78bece738ea00" prot="private" virt="non-virtual"><scope>vc64::PETName</scope><name>pad</name></member>
+      <member refid="classvc64_1_1_p_e_t_name_1a0fd7f9de0a5493dca3284ed9ca9c85e7" prot="private" virt="non-virtual"><scope>vc64::PETName</scope><name>pet</name></member>
+      <member refid="classvc64_1_1_p_e_t_name_1a8304c158df7e6df406569d6f4e30c6ae" prot="public" virt="non-virtual"><scope>vc64::PETName</scope><name>PETName</name></member>
+      <member refid="classvc64_1_1_p_e_t_name_1a24879b5b12f6f9f03b1f81a7cded6cd9" prot="public" virt="non-virtual"><scope>vc64::PETName</scope><name>PETName</name></member>
+      <member refid="classvc64_1_1_p_e_t_name_1a7b59fbca82e1a465f50f6ffb806ae885" prot="public" virt="non-virtual"><scope>vc64::PETName</scope><name>PETName</name></member>
+      <member refid="classvc64_1_1_p_e_t_name_1ab10fe7d2db97902c7ac23217e7f2643b" prot="public" virt="non-virtual"><scope>vc64::PETName</scope><name>petscii2printable</name></member>
+      <member refid="classvc64_1_1_p_e_t_name_1af78c687f57988e222e49d4e44d1a3c52" prot="public" virt="non-virtual"><scope>vc64::PETName</scope><name>setPad</name></member>
+      <member refid="classvc64_1_1_p_e_t_name_1a3997cef14dde93f620db32f2dd48eff1" prot="public" virt="non-virtual"><scope>vc64::PETName</scope><name>str</name></member>
+      <member refid="classvc64_1_1_p_e_t_name_1ae595e989176fc126c5d0d34d9422f96a" prot="public" virt="non-virtual"><scope>vc64::PETName</scope><name>stripped</name></member>
+      <member refid="classvc64_1_1_p_e_t_name_1ad38eb7e09054c572892cf45fdbda954d" prot="public" virt="non-virtual"><scope>vc64::PETName</scope><name>write</name></member>
+      <member refid="classvc64_1_1_p_e_t_name_1a5c7ee5c89869b50f02b794d3924cc7d3" prot="public" virt="non-virtual"><scope>vc64::PETName</scope><name>write</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

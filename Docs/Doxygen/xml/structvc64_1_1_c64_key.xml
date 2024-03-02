@@ -1,0 +1,1121 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="structvc64_1_1_c64_key" kind="struct" language="C++" prot="public">
+    <compoundname>vc64::C64Key</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a8d17e67a4ebfd784daf8aedabe0f0578" prot="public" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize vc64::C64Key::nr</definition>
+        <argsstring></argsstring>
+        <name>nr</name>
+        <qualifiedname>vc64::C64Key::nr</qualifiedname>
+        <initializer>= -1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="23" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1ac83598fdf634bc632ee648190d3a144c" prot="public" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize vc64::C64Key::row</definition>
+        <argsstring></argsstring>
+        <name>row</name>
+        <qualifiedname>vc64::C64Key::row</qualifiedname>
+        <initializer>= -1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="26" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1aae8bee1dbf70108a281439d1b3245f44" prot="public" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize vc64::C64Key::col</definition>
+        <argsstring></argsstring>
+        <name>col</name>
+        <qualifiedname>vc64::C64Key::col</qualifiedname>
+        <initializer>= -1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="27" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-static-attrib">
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a1198a9c8aefed25dc2506170dba5a7a3" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::del</definition>
+        <argsstring></argsstring>
+        <name>del</name>
+        <qualifiedname>vc64::C64Key::del</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="35" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a08692bed3fa1abb4e72c9aa5e76b76ea" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::ret</definition>
+        <argsstring></argsstring>
+        <name>ret</name>
+        <qualifiedname>vc64::C64Key::ret</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="36" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a84646398829ccb408d4a3c45fb78faed" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::curLeftRight</definition>
+        <argsstring></argsstring>
+        <name>curLeftRight</name>
+        <qualifiedname>vc64::C64Key::curLeftRight</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="37" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a15c0de10fc0832a5d319cc048f9c641c" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::F7F8</definition>
+        <argsstring></argsstring>
+        <name>F7F8</name>
+        <qualifiedname>vc64::C64Key::F7F8</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="38" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a3d00c987c63a10f33b11906132a710b2" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::F1F2</definition>
+        <argsstring></argsstring>
+        <name>F1F2</name>
+        <qualifiedname>vc64::C64Key::F1F2</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="39" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a63cc4c2087e183a037f2240f412d3128" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::F3F4</definition>
+        <argsstring></argsstring>
+        <name>F3F4</name>
+        <qualifiedname>vc64::C64Key::F3F4</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="40" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1ac999607392af5d1c5de43768393c455b" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::F5F6</definition>
+        <argsstring></argsstring>
+        <name>F5F6</name>
+        <qualifiedname>vc64::C64Key::F5F6</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="41" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a5a36d23a287c9c60e7747ff7edc89dfb" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::curUpDown</definition>
+        <argsstring></argsstring>
+        <name>curUpDown</name>
+        <qualifiedname>vc64::C64Key::curUpDown</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="42" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1ae20a9d7ca9efc46a1af71cc1f759f3c8" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::digit3</definition>
+        <argsstring></argsstring>
+        <name>digit3</name>
+        <qualifiedname>vc64::C64Key::digit3</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="45" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a5b19717acf1aef94a3c146205880c60f" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::W</definition>
+        <argsstring></argsstring>
+        <name>W</name>
+        <qualifiedname>vc64::C64Key::W</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="46" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a159f6675a2078c6c4f739313851a4be9" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::A</definition>
+        <argsstring></argsstring>
+        <name>A</name>
+        <qualifiedname>vc64::C64Key::A</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="47" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a0634128aa874c7072fb652e0046c7652" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::digit4</definition>
+        <argsstring></argsstring>
+        <name>digit4</name>
+        <qualifiedname>vc64::C64Key::digit4</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="48" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1ad9c17d44724ed78627a7fc4baafeff40" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::Z</definition>
+        <argsstring></argsstring>
+        <name>Z</name>
+        <qualifiedname>vc64::C64Key::Z</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="49" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1af5069091a232496b148caaf630b5c7c9" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::S</definition>
+        <argsstring></argsstring>
+        <name>S</name>
+        <qualifiedname>vc64::C64Key::S</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="50" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a062a1891380a84500e4a59c1ead58bc1" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::E</definition>
+        <argsstring></argsstring>
+        <name>E</name>
+        <qualifiedname>vc64::C64Key::E</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="51" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a756ff71b48e837e001d2a90fc298d1eb" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::leftShift</definition>
+        <argsstring></argsstring>
+        <name>leftShift</name>
+        <qualifiedname>vc64::C64Key::leftShift</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="52" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a8f1b5f035c6fc0d615786836dd762808" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::digit5</definition>
+        <argsstring></argsstring>
+        <name>digit5</name>
+        <qualifiedname>vc64::C64Key::digit5</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="55" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a6aacf387b485148420a9149d41f813ed" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::R</definition>
+        <argsstring></argsstring>
+        <name>R</name>
+        <qualifiedname>vc64::C64Key::R</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="56" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a0433ab625c8f4a04750f1964d7484a6e" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::D</definition>
+        <argsstring></argsstring>
+        <name>D</name>
+        <qualifiedname>vc64::C64Key::D</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="57" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1aab887e4560870c53fd55f37ed9647a07" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::digit6</definition>
+        <argsstring></argsstring>
+        <name>digit6</name>
+        <qualifiedname>vc64::C64Key::digit6</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="58" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a5707338d46dcd6ad9fbeccfaccf5deb4" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::C</definition>
+        <argsstring></argsstring>
+        <name>C</name>
+        <qualifiedname>vc64::C64Key::C</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="59" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a961c5123f8810c1704c7f9942c737d49" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::F</definition>
+        <argsstring></argsstring>
+        <name>F</name>
+        <qualifiedname>vc64::C64Key::F</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="60" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1abd24f3f8b46588d52f60813440763b49" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::T</definition>
+        <argsstring></argsstring>
+        <name>T</name>
+        <qualifiedname>vc64::C64Key::T</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="61" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a1e9c8e6e0c70ec907a666444a08c1185" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::X</definition>
+        <argsstring></argsstring>
+        <name>X</name>
+        <qualifiedname>vc64::C64Key::X</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="62" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a873b5493f142b4fea5d90df0783d350b" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::digit7</definition>
+        <argsstring></argsstring>
+        <name>digit7</name>
+        <qualifiedname>vc64::C64Key::digit7</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="65" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a0d616fc68190c02027c8b0fa939daa7a" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::Y</definition>
+        <argsstring></argsstring>
+        <name>Y</name>
+        <qualifiedname>vc64::C64Key::Y</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="66" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a4729b889d46c65ae697fe12439535b51" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::G</definition>
+        <argsstring></argsstring>
+        <name>G</name>
+        <qualifiedname>vc64::C64Key::G</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="67" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a55e20d3515d4ea948efae366fe428ce8" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::digit8</definition>
+        <argsstring></argsstring>
+        <name>digit8</name>
+        <qualifiedname>vc64::C64Key::digit8</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="68" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1ac99591fe094e29bfc5eaea4dc099c3be" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::B</definition>
+        <argsstring></argsstring>
+        <name>B</name>
+        <qualifiedname>vc64::C64Key::B</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="69" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a8b4927f402d576cbe44cd22a572f02bd" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::H</definition>
+        <argsstring></argsstring>
+        <name>H</name>
+        <qualifiedname>vc64::C64Key::H</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="70" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1aadafb16903fdc89c1bdd5a26957f281b" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::U</definition>
+        <argsstring></argsstring>
+        <name>U</name>
+        <qualifiedname>vc64::C64Key::U</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="71" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1ac28b403e5f9893cbcc509df35906c7b4" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::V</definition>
+        <argsstring></argsstring>
+        <name>V</name>
+        <qualifiedname>vc64::C64Key::V</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="72" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a5fde2cb1ae76e736896c14de171fd2ec" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::digit9</definition>
+        <argsstring></argsstring>
+        <name>digit9</name>
+        <qualifiedname>vc64::C64Key::digit9</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="75" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a6df6708250e1e2beaf9b34f7230701c3" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::I</definition>
+        <argsstring></argsstring>
+        <name>I</name>
+        <qualifiedname>vc64::C64Key::I</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="76" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1aa58dfc7547e87002bd0549f4388cb74e" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::J</definition>
+        <argsstring></argsstring>
+        <name>J</name>
+        <qualifiedname>vc64::C64Key::J</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="77" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a9739e86c86b73edd09600ad87cc98c27" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::digit0</definition>
+        <argsstring></argsstring>
+        <name>digit0</name>
+        <qualifiedname>vc64::C64Key::digit0</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="78" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a9f65e4a35ffdeb7b631617055f5aaea5" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::M</definition>
+        <argsstring></argsstring>
+        <name>M</name>
+        <qualifiedname>vc64::C64Key::M</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="79" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a8aa13f583cfa53ddc71c9039966672a9" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::K</definition>
+        <argsstring></argsstring>
+        <name>K</name>
+        <qualifiedname>vc64::C64Key::K</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="80" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1aa0364b1b605d7e0dd96cdace6f580ba4" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::O</definition>
+        <argsstring></argsstring>
+        <name>O</name>
+        <qualifiedname>vc64::C64Key::O</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="81" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a1684521f02faeeff50ca20a8f3c70475" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::N</definition>
+        <argsstring></argsstring>
+        <name>N</name>
+        <qualifiedname>vc64::C64Key::N</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="82" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1ab3e5421a2a0afc4a4d45e5549b509624" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::plus</definition>
+        <argsstring></argsstring>
+        <name>plus</name>
+        <qualifiedname>vc64::C64Key::plus</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="85" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1ab474a7c725b33c68ee7b7d08f72c748e" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::P</definition>
+        <argsstring></argsstring>
+        <name>P</name>
+        <qualifiedname>vc64::C64Key::P</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="86" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1af1de8c06e5ddad7a5cbad5fea1f5b801" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::L</definition>
+        <argsstring></argsstring>
+        <name>L</name>
+        <qualifiedname>vc64::C64Key::L</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="87" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a54976347cbb54e072b6f2242ddcfa1f3" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::minus</definition>
+        <argsstring></argsstring>
+        <name>minus</name>
+        <qualifiedname>vc64::C64Key::minus</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="88" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="88" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1ab5b932f7f10d858457956a25fd9be3a5" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::period</definition>
+        <argsstring></argsstring>
+        <name>period</name>
+        <qualifiedname>vc64::C64Key::period</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="89" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a8da55d4483d9c64f5b32d6626be085ab" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::colon</definition>
+        <argsstring></argsstring>
+        <name>colon</name>
+        <qualifiedname>vc64::C64Key::colon</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="90" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="90" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1acf3a6123e05088d99539c1715b36328b" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::at</definition>
+        <argsstring></argsstring>
+        <name>at</name>
+        <qualifiedname>vc64::C64Key::at</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="91" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a67b443bf9cb7f277915519a5f0b2a1cc" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::comma</definition>
+        <argsstring></argsstring>
+        <name>comma</name>
+        <qualifiedname>vc64::C64Key::comma</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="92" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a36a06416254a8a2dc251bfd13c182d7f" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::pound</definition>
+        <argsstring></argsstring>
+        <name>pound</name>
+        <qualifiedname>vc64::C64Key::pound</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="95" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="95" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a6f6873796ba3318db7f74e2a75c8e80a" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::asterisk</definition>
+        <argsstring></argsstring>
+        <name>asterisk</name>
+        <qualifiedname>vc64::C64Key::asterisk</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="96" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="96" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a6f46006b3626110548b712f107158f90" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::semicolon</definition>
+        <argsstring></argsstring>
+        <name>semicolon</name>
+        <qualifiedname>vc64::C64Key::semicolon</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="97" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a006187e3558982223d521e204b2b41ab" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::home</definition>
+        <argsstring></argsstring>
+        <name>home</name>
+        <qualifiedname>vc64::C64Key::home</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="98" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1ac938d2b43227bc2900c0d97947a7c12c" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::rightShift</definition>
+        <argsstring></argsstring>
+        <name>rightShift</name>
+        <qualifiedname>vc64::C64Key::rightShift</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="99" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1aa3197f44b25a11a984078415f99c5fec" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::equal</definition>
+        <argsstring></argsstring>
+        <name>equal</name>
+        <qualifiedname>vc64::C64Key::equal</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="100" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="100" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a24902104db59ca057588a75d56471ed4" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::upArrow</definition>
+        <argsstring></argsstring>
+        <name>upArrow</name>
+        <qualifiedname>vc64::C64Key::upArrow</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="101" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="101" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a0df23b34737fe8d6249f74c9a7e19a72" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::slash</definition>
+        <argsstring></argsstring>
+        <name>slash</name>
+        <qualifiedname>vc64::C64Key::slash</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="102" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1aefc8e04e8428de7b325c09402e5bb7d4" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::digit1</definition>
+        <argsstring></argsstring>
+        <name>digit1</name>
+        <qualifiedname>vc64::C64Key::digit1</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="105" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="105" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a4aa6854711a296ccc2f7d2c4276078e7" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::leftArrow</definition>
+        <argsstring></argsstring>
+        <name>leftArrow</name>
+        <qualifiedname>vc64::C64Key::leftArrow</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="106" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="106" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1ae4f950993fccd5da060b82834c3fe271" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::control</definition>
+        <argsstring></argsstring>
+        <name>control</name>
+        <qualifiedname>vc64::C64Key::control</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="107" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="107" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a975f33997f5befc400f35ca285f9d56a" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::digit2</definition>
+        <argsstring></argsstring>
+        <name>digit2</name>
+        <qualifiedname>vc64::C64Key::digit2</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="108" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="108" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1af40a6760d536392f588554c6f15ebe59" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::space</definition>
+        <argsstring></argsstring>
+        <name>space</name>
+        <qualifiedname>vc64::C64Key::space</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="109" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="109" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a4f41819b063b78c872baa0d596d59fe2" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::commodore</definition>
+        <argsstring></argsstring>
+        <name>commodore</name>
+        <qualifiedname>vc64::C64Key::commodore</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="110" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="110" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1acfe1dcec6d30dde762c11cf9504582a8" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::Q</definition>
+        <argsstring></argsstring>
+        <name>Q</name>
+        <qualifiedname>vc64::C64Key::Q</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="111" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="111" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1adb359a7da87736c2d55721c009e265ca" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::runStop</definition>
+        <argsstring></argsstring>
+        <name>runStop</name>
+        <qualifiedname>vc64::C64Key::runStop</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="112" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="112" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1aabf3cabf6f375acc3a26cf8283ddec20" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::restore</definition>
+        <argsstring></argsstring>
+        <name>restore</name>
+        <qualifiedname>vc64::C64Key::restore</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="115" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="115" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvc64_1_1_c64_key_1a43dbe19fc529670d6f234081ece29d51" prot="public" static="yes" mutable="no">
+        <type>const C64Key</type>
+        <definition>const C64Key vc64::C64Key::shiftLock</definition>
+        <argsstring></argsstring>
+        <name>shiftLock</name>
+        <qualifiedname>vc64::C64Key::shiftLock</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="116" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="116" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="structvc64_1_1_c64_key_1ad87d39719b050fbf440e0a96060ce96a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::C64Key::C64Key</definition>
+        <argsstring>(isize nr=0)</argsstring>
+        <name>C64Key</name>
+        <qualifiedname>vc64::C64Key::C64Key</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="123" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.cpp" bodystart="93" bodyend="127"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_c64_key_1abf228eef137e7b780712387e0864372f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::C64Key::C64Key</definition>
+        <argsstring>(isize row, isize col)</argsstring>
+        <name>C64Key</name>
+        <qualifiedname>vc64::C64Key::C64Key</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>row</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>col</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="124" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.cpp" bodystart="129" bodyend="148"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="structvc64_1_1_c64_key_1a0bd3f2e5e76f7769468fc995b64b887f" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::vector&lt; C64Key &gt;</type>
+        <definition>std::vector&lt; C64Key &gt; vc64::C64Key::translate</definition>
+        <argsstring>(char c)</argsstring>
+        <name>translate</name>
+        <qualifiedname>vc64::C64Key::translate</qualifiedname>
+        <param>
+          <type>char</type>
+          <declname>c</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="131" column="24" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.cpp" bodystart="151" bodyend="250"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" line="20" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Keyboard/C64Key.h" bodystart="20" bodyend="132"/>
+    <listofallmembers>
+      <member refid="structvc64_1_1_c64_key_1a159f6675a2078c6c4f739313851a4be9" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>A</name></member>
+      <member refid="structvc64_1_1_c64_key_1a6f6873796ba3318db7f74e2a75c8e80a" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>asterisk</name></member>
+      <member refid="structvc64_1_1_c64_key_1acf3a6123e05088d99539c1715b36328b" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>at</name></member>
+      <member refid="structvc64_1_1_c64_key_1ac99591fe094e29bfc5eaea4dc099c3be" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>B</name></member>
+      <member refid="structvc64_1_1_c64_key_1a5707338d46dcd6ad9fbeccfaccf5deb4" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>C</name></member>
+      <member refid="structvc64_1_1_c64_key_1ad87d39719b050fbf440e0a96060ce96a" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>C64Key</name></member>
+      <member refid="structvc64_1_1_c64_key_1abf228eef137e7b780712387e0864372f" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>C64Key</name></member>
+      <member refid="structvc64_1_1_c64_key_1aae8bee1dbf70108a281439d1b3245f44" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>col</name></member>
+      <member refid="structvc64_1_1_c64_key_1a8da55d4483d9c64f5b32d6626be085ab" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>colon</name></member>
+      <member refid="structvc64_1_1_c64_key_1a67b443bf9cb7f277915519a5f0b2a1cc" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>comma</name></member>
+      <member refid="structvc64_1_1_c64_key_1a4f41819b063b78c872baa0d596d59fe2" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>commodore</name></member>
+      <member refid="structvc64_1_1_c64_key_1ae4f950993fccd5da060b82834c3fe271" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>control</name></member>
+      <member refid="structvc64_1_1_c64_key_1a84646398829ccb408d4a3c45fb78faed" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>curLeftRight</name></member>
+      <member refid="structvc64_1_1_c64_key_1a5a36d23a287c9c60e7747ff7edc89dfb" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>curUpDown</name></member>
+      <member refid="structvc64_1_1_c64_key_1a0433ab625c8f4a04750f1964d7484a6e" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>D</name></member>
+      <member refid="structvc64_1_1_c64_key_1a1198a9c8aefed25dc2506170dba5a7a3" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>del</name></member>
+      <member refid="structvc64_1_1_c64_key_1a9739e86c86b73edd09600ad87cc98c27" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>digit0</name></member>
+      <member refid="structvc64_1_1_c64_key_1aefc8e04e8428de7b325c09402e5bb7d4" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>digit1</name></member>
+      <member refid="structvc64_1_1_c64_key_1a975f33997f5befc400f35ca285f9d56a" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>digit2</name></member>
+      <member refid="structvc64_1_1_c64_key_1ae20a9d7ca9efc46a1af71cc1f759f3c8" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>digit3</name></member>
+      <member refid="structvc64_1_1_c64_key_1a0634128aa874c7072fb652e0046c7652" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>digit4</name></member>
+      <member refid="structvc64_1_1_c64_key_1a8f1b5f035c6fc0d615786836dd762808" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>digit5</name></member>
+      <member refid="structvc64_1_1_c64_key_1aab887e4560870c53fd55f37ed9647a07" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>digit6</name></member>
+      <member refid="structvc64_1_1_c64_key_1a873b5493f142b4fea5d90df0783d350b" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>digit7</name></member>
+      <member refid="structvc64_1_1_c64_key_1a55e20d3515d4ea948efae366fe428ce8" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>digit8</name></member>
+      <member refid="structvc64_1_1_c64_key_1a5fde2cb1ae76e736896c14de171fd2ec" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>digit9</name></member>
+      <member refid="structvc64_1_1_c64_key_1a062a1891380a84500e4a59c1ead58bc1" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>E</name></member>
+      <member refid="structvc64_1_1_c64_key_1aa3197f44b25a11a984078415f99c5fec" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>equal</name></member>
+      <member refid="structvc64_1_1_c64_key_1a961c5123f8810c1704c7f9942c737d49" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>F</name></member>
+      <member refid="structvc64_1_1_c64_key_1a3d00c987c63a10f33b11906132a710b2" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>F1F2</name></member>
+      <member refid="structvc64_1_1_c64_key_1a63cc4c2087e183a037f2240f412d3128" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>F3F4</name></member>
+      <member refid="structvc64_1_1_c64_key_1ac999607392af5d1c5de43768393c455b" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>F5F6</name></member>
+      <member refid="structvc64_1_1_c64_key_1a15c0de10fc0832a5d319cc048f9c641c" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>F7F8</name></member>
+      <member refid="structvc64_1_1_c64_key_1a4729b889d46c65ae697fe12439535b51" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>G</name></member>
+      <member refid="structvc64_1_1_c64_key_1a8b4927f402d576cbe44cd22a572f02bd" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>H</name></member>
+      <member refid="structvc64_1_1_c64_key_1a006187e3558982223d521e204b2b41ab" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>home</name></member>
+      <member refid="structvc64_1_1_c64_key_1a6df6708250e1e2beaf9b34f7230701c3" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>I</name></member>
+      <member refid="structvc64_1_1_c64_key_1aa58dfc7547e87002bd0549f4388cb74e" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>J</name></member>
+      <member refid="structvc64_1_1_c64_key_1a8aa13f583cfa53ddc71c9039966672a9" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>K</name></member>
+      <member refid="structvc64_1_1_c64_key_1af1de8c06e5ddad7a5cbad5fea1f5b801" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>L</name></member>
+      <member refid="structvc64_1_1_c64_key_1a4aa6854711a296ccc2f7d2c4276078e7" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>leftArrow</name></member>
+      <member refid="structvc64_1_1_c64_key_1a756ff71b48e837e001d2a90fc298d1eb" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>leftShift</name></member>
+      <member refid="structvc64_1_1_c64_key_1a9f65e4a35ffdeb7b631617055f5aaea5" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>M</name></member>
+      <member refid="structvc64_1_1_c64_key_1a54976347cbb54e072b6f2242ddcfa1f3" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>minus</name></member>
+      <member refid="structvc64_1_1_c64_key_1a1684521f02faeeff50ca20a8f3c70475" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>N</name></member>
+      <member refid="structvc64_1_1_c64_key_1a8d17e67a4ebfd784daf8aedabe0f0578" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>nr</name></member>
+      <member refid="structvc64_1_1_c64_key_1aa0364b1b605d7e0dd96cdace6f580ba4" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>O</name></member>
+      <member refid="structvc64_1_1_c64_key_1ab474a7c725b33c68ee7b7d08f72c748e" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>P</name></member>
+      <member refid="structvc64_1_1_c64_key_1ab5b932f7f10d858457956a25fd9be3a5" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>period</name></member>
+      <member refid="structvc64_1_1_c64_key_1ab3e5421a2a0afc4a4d45e5549b509624" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>plus</name></member>
+      <member refid="structvc64_1_1_c64_key_1a36a06416254a8a2dc251bfd13c182d7f" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>pound</name></member>
+      <member refid="structvc64_1_1_c64_key_1acfe1dcec6d30dde762c11cf9504582a8" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>Q</name></member>
+      <member refid="structvc64_1_1_c64_key_1a6aacf387b485148420a9149d41f813ed" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>R</name></member>
+      <member refid="structvc64_1_1_c64_key_1aabf3cabf6f375acc3a26cf8283ddec20" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>restore</name></member>
+      <member refid="structvc64_1_1_c64_key_1a08692bed3fa1abb4e72c9aa5e76b76ea" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>ret</name></member>
+      <member refid="structvc64_1_1_c64_key_1ac938d2b43227bc2900c0d97947a7c12c" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>rightShift</name></member>
+      <member refid="structvc64_1_1_c64_key_1ac83598fdf634bc632ee648190d3a144c" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>row</name></member>
+      <member refid="structvc64_1_1_c64_key_1adb359a7da87736c2d55721c009e265ca" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>runStop</name></member>
+      <member refid="structvc64_1_1_c64_key_1af5069091a232496b148caaf630b5c7c9" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>S</name></member>
+      <member refid="structvc64_1_1_c64_key_1a6f46006b3626110548b712f107158f90" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>semicolon</name></member>
+      <member refid="structvc64_1_1_c64_key_1a43dbe19fc529670d6f234081ece29d51" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>shiftLock</name></member>
+      <member refid="structvc64_1_1_c64_key_1a0df23b34737fe8d6249f74c9a7e19a72" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>slash</name></member>
+      <member refid="structvc64_1_1_c64_key_1af40a6760d536392f588554c6f15ebe59" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>space</name></member>
+      <member refid="structvc64_1_1_c64_key_1abd24f3f8b46588d52f60813440763b49" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>T</name></member>
+      <member refid="structvc64_1_1_c64_key_1a0bd3f2e5e76f7769468fc995b64b887f" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>translate</name></member>
+      <member refid="structvc64_1_1_c64_key_1aadafb16903fdc89c1bdd5a26957f281b" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>U</name></member>
+      <member refid="structvc64_1_1_c64_key_1a24902104db59ca057588a75d56471ed4" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>upArrow</name></member>
+      <member refid="structvc64_1_1_c64_key_1ac28b403e5f9893cbcc509df35906c7b4" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>V</name></member>
+      <member refid="structvc64_1_1_c64_key_1a5b19717acf1aef94a3c146205880c60f" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>W</name></member>
+      <member refid="structvc64_1_1_c64_key_1a1e9c8e6e0c70ec907a666444a08c1185" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>X</name></member>
+      <member refid="structvc64_1_1_c64_key_1a0d616fc68190c02027c8b0fa939daa7a" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>Y</name></member>
+      <member refid="structvc64_1_1_c64_key_1ad9c17d44724ed78627a7fc4baafeff40" prot="public" virt="non-virtual"><scope>vc64::C64Key</scope><name>Z</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

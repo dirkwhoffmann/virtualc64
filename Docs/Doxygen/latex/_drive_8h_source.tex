@@ -1,0 +1,563 @@
+\doxysection{Drive.\+h}
+\hypertarget{_drive_8h_source}{}\label{_drive_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h@{/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}DriveTypes.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}C64Types.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_cmd_queue_types_8h}{CmdQueueTypes.h}}"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}SubComponent.h"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}CPU.h"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ "{}Disk.h"{}}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ "{}DiskAnalyzer.h"{}}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ "{}DriveMemory.h"{}}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ "{}VIA.h"{}}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ "{}PIA.h"{}}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ *\ This\ implementation\ is\ based\ on\ the\ following\ two\ documents\ written}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ *\ by\ Ruud\ Baltissen.\ Ruud,\ thank\ you\ for\ this\ excellent\ work!}}
+\DoxyCodeLine{00031\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ *\ Description:\ http://www.baltissen.org/newhtm/1541a.htm}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ *\ Schematics:\ \ http://www.baltissen.org/images/1540.gif}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{class\ }Drive\ final\ :\ \textcolor{keyword}{public}\ SubComponent,\ \textcolor{keyword}{public}\ Inspectable<DriveInfo,\ Void>\ \{}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ ConfigOptions\ options\ =\ \{}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8a674e5364818dd4395d6a74935adfb7f8}{OPT\_DRV\_AUTO\_CONFIG}},}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8a47b946fb087dc076855bad12b6064b48}{OPT\_DRV\_TYPE}},}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8a83f3562d31b570ea41a3681fd4fdc703}{OPT\_DRV\_RAM}},}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8a0250ed79d845c41e3c02b392a42a8857}{OPT\_DRV\_PARCABLE}},}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8aaa1666b3d0aca950e259601ec87d3efe}{OPT\_DRV\_CONNECT}},}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8a7568dffe88a76c64cc124c3af1611fa4}{OPT\_DRV\_POWER\_SWITCH}},}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8ac7e083374d51af754bc06a3d08c30e1a}{OPT\_DRV\_POWER\_SAVE}},}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8a34ce09b9bd29eb1cb0a5e3bfebf10108}{OPT\_DRV\_EJECT\_DELAY}},}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8a637c8b082ab99202b2c716f2b9ad1c3a}{OPT\_DRV\_SWAP\_DELAY}},}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8a699030b32e036cb1c8cd8b0aa740e4f6}{OPT\_DRV\_INSERT\_DELAY}},}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8a68a88630934fc8c0f91a84f1508933d7}{OPT\_DRV\_PAN}},}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8ab09c82345efb3d45f34d5442f79c7c14}{OPT\_DRV\_POWER\_VOL}},}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8ad8097703cb83bead140bde321cb24baa}{OPT\_DRV\_STEP\_VOL}},}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8a8a4a225b3133ade149bbc70644b9cf36}{OPT\_DRV\_INSERT\_VOL}},}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8a93cfeb08201706311ab61aedd1fb1be7}{OPT\_DRV\_EJECT\_VOL}}}
+\DoxyCodeLine{00055\ \ \ \ \ \};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }DriveMemory;}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }VIA1;}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }VIA2;}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{comment}{//\ Constants}}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{/*\ Power-\/safe\ threshold\ measured\ in\ frames.\ If\ the\ drive\ was\ inactive\ for}}
+\DoxyCodeLine{00066\ \textcolor{comment}{\ \ \ \ \ *\ the\ specified\ number\ of\ frames,\ it\ is\ put\ into\ power-\/safe\ mode\ (if\ this}}
+\DoxyCodeLine{00067\ \textcolor{comment}{\ \ \ \ \ *\ option\ is\ enabled).\ In\ this\ mode,\ executing\ the\ drive\ is\ skipped\ inside}}
+\DoxyCodeLine{00068\ \textcolor{comment}{\ \ \ \ \ *\ the\ run\ loop.\ As\ a\ effect,\ the\ current\ drive\ state\ is\ frozen\ until\ the}}
+\DoxyCodeLine{00069\ \textcolor{comment}{\ \ \ \ \ *\ drive\ is\ woken\ up.}}
+\DoxyCodeLine{00070\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ i64\ powerSafeThreshold\ =\ 100;}
+\DoxyCodeLine{00072\ \ \ \ \ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{comment}{/*\ Time\ between\ two\ carry\ pulses\ of\ UE7\ in\ 1/10\ nano\ seconds.\ The\ VC1541}}
+\DoxyCodeLine{00074\ \textcolor{comment}{\ \ \ \ \ *\ drive\ is\ clocked\ by\ 16\ Mhz.\ The\ base\ frequency\ is\ divided\ by\ N\ where\ N}}
+\DoxyCodeLine{00075\ \textcolor{comment}{\ \ \ \ \ *\ ranges\ from\ 13\ (density\ bits\ =\ 11)\ to\ 16\ (density\ bits\ =\ 00).\ On\ the}}
+\DoxyCodeLine{00076\ \textcolor{comment}{\ \ \ \ \ *\ logic\ board,\ this\ is\ done\ with\ a\ 4-\/bit\ counter\ of\ type\ 74SL193\ whose}}
+\DoxyCodeLine{00077\ \textcolor{comment}{\ \ \ \ \ *\ reset\ value\ bits\ are\ connected\ to\ the\ two\ density\ bits\ (PB5\ and\ PB6}}
+\DoxyCodeLine{00078\ \textcolor{comment}{\ \ \ \ \ *\ of\ VIA2).\ It\ follows\ that\ a\ single\ bit\ is\ ready\ after\ approx.\ 3.25\ CPU}}
+\DoxyCodeLine{00079\ \textcolor{comment}{\ \ \ \ \ *\ cycles\ in\ the\ fastest\ zone\ and\ approx.\ 4\ CPU\ cycles\ in\ the\ slowest\ zone.}}
+\DoxyCodeLine{00080\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{const}\ u64\ delayBetweenTwoCarryPulses[4]\ =\ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ 10000,\ \textcolor{comment}{//\ Density\ bits\ =\ 00:\ Carry\ pulse\ every\ 16/16\ *\ 10\string^4\ 1/10\ nsec}}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ 9375,\ \ \textcolor{comment}{//\ Density\ bits\ =\ 01:\ Carry\ pulse\ every\ 15/16\ *\ 10\string^4\ 1/10\ nsec}}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ 8750,\ \ \textcolor{comment}{//\ Density\ bits\ =\ 10:\ Carry\ pulse\ every\ 14/16\ *\ 10\string^4\ 1/10\ nsec}}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ 8125\ \ \ \textcolor{comment}{//\ Density\ bits\ =\ 11:\ Carry\ pulse\ every\ 13/16\ *\ 10\string^4\ 1/10\ nsec}}
+\DoxyCodeLine{00087\ \ \ \ \ \};}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{comment}{//\ Number\ of\ this\ disk\ drive\ (DRIVE8\ or\ DRIVE9)}}
+\DoxyCodeLine{00090\ \ \ \ \ isize\ deviceNr;}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{comment}{//\ Current\ configuration}}
+\DoxyCodeLine{00093\ \ \ \ \ DriveConfig\ config\ =\ \{\ \};}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{comment}{//\ Sub\ components}}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00099\ \ \ \ \ }
+\DoxyCodeLine{00100\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00101\ \ \ \ \ }
+\DoxyCodeLine{00102\ \ \ \ \ DriveMemory\ mem\ =\ DriveMemory(c64,\ *\textcolor{keyword}{this});}
+\DoxyCodeLine{00103\ \ \ \ \ CPU\ cpu\ =\ CPU(MOS\_6502,\ c64);}
+\DoxyCodeLine{00104\ \ \ \ \ VIA1\ via1\ =\ VIA1(c64,\ *\textcolor{keyword}{this});}
+\DoxyCodeLine{00105\ \ \ \ \ VIA2\ via2\ =\ VIA2(c64,\ *\textcolor{keyword}{this});}
+\DoxyCodeLine{00106\ \ \ \ \ PiaDolphin\ pia\ =\ PiaDolphin(c64,\ *\textcolor{keyword}{this});}
+\DoxyCodeLine{00107\ \ \ \ \ }
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{comment}{//\ The\ currently\ inserted\ disk\ (if\ any)}}
+\DoxyCodeLine{00109\ \ \ \ \ std::unique\_ptr<Disk>\ disk;}
+\DoxyCodeLine{00110\ \ \ \ \ }
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{comment}{//\ Disk\ change\ logic}}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00115\ \ \ \ \ }
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{comment}{//\ A\ disk\ waiting\ to\ be\ inserted}}
+\DoxyCodeLine{00117\ \ \ \ \ std::unique\_ptr<Disk>\ diskToInsert;}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00119\ \ \ \ \ }
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{comment}{//\ Drive\ state}}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00123\ \ \ \ \ }
+\DoxyCodeLine{00124\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{comment}{//\ Indicates\ whether\ the\ disk\ is\ rotating}}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{bool}\ spinning\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00128\ \ \ \ \ }
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{comment}{//\ Indicates\ whether\ the\ red\ LED\ is\ on}}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{bool}\ redLED\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00131\ \ \ \ \ }
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{comment}{//\ Indicates\ if\ or\ how\ a\ disk\ is\ inserted}}
+\DoxyCodeLine{00133\ \ \ \ \ InsertionStatus\ insertionStatus\ =\ DISK\_FULLY\_EJECTED;}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ \ }
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{comment}{//\ Clocking\ logic}}
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00139\ \ \ \ \ }
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{comment}{//\ Elapsed\ time\ since\ power\ up\ in\ 1/10\ nano\ seconds}}
+\DoxyCodeLine{00141\ \ \ \ \ u64\ elapsedTime\ =\ 0;}
+\DoxyCodeLine{00142\ \ \ \ \ }
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{comment}{/*\ Indicates\ when\ the\ next\ drive\ clock\ cycle\ occurs.\ The\ VC1541\ drive\ is}}
+\DoxyCodeLine{00144\ \textcolor{comment}{\ \ \ \ \ *\ clocked\ by\ 16\ MHz.\ The\ clock\ signal\ is\ fed\ into\ a\ counter\ which\ serves}}
+\DoxyCodeLine{00145\ \textcolor{comment}{\ \ \ \ \ *\ as\ a\ frequency\ divider.\ It's\ output\ is\ used\ to\ clock\ the\ drive's\ CPU\ and}}
+\DoxyCodeLine{00146\ \textcolor{comment}{\ \ \ \ \ *\ the\ two\ VIA\ chips.}}
+\DoxyCodeLine{00147\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00148\ \ \ \ \ i64\ nextClock\ =\ 0;}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{comment}{/*\ Indicates\ when\ the\ next\ carry\ output\ pulse\ occurs\ on\ UE7.\ The\ 16\ MHz}}
+\DoxyCodeLine{00151\ \textcolor{comment}{\ \ \ \ \ *\ signal\ is\ also\ fed\ into\ UE7,\ a\ 74SL193\ 4-\/bit\ couter,\ which\ generates\ a}}
+\DoxyCodeLine{00152\ \textcolor{comment}{\ \ \ \ \ *\ carry\ output\ signal\ on\ overflow.\ The\ pre-\/load\ inputs\ of\ this\ counter\ are}}
+\DoxyCodeLine{00153\ \textcolor{comment}{\ \ \ \ \ *\ connected\ to\ PB5\ and\ PB6\ of\ VIA2\ (the\ 'density\ bits').\ This\ means\ that\ a}}
+\DoxyCodeLine{00154\ \textcolor{comment}{\ \ \ \ \ *\ carry\ signal\ is\ generated\ every\ 13th\ cycle\ (from\ the\ 16\ Mhz\ clock)\ when}}
+\DoxyCodeLine{00155\ \textcolor{comment}{\ \ \ \ \ *\ both\ density\ bits\ are\ 0\ and\ every\ 16th\ cycle\ when\ both\ density\ bits\ are}}
+\DoxyCodeLine{00156\ \textcolor{comment}{\ \ \ \ \ *\ 1.\ The\ carry\ signal\ drives\ uf4,\ a\ counter\ of\ the\ same\ type.}}
+\DoxyCodeLine{00157\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00158\ \ \ \ \ i64\ nextCarry\ =\ 0;}
+\DoxyCodeLine{00159\ \ \ \ \ }
+\DoxyCodeLine{00160\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00161\ \ \ \ \ }
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{comment}{/*\ Counts\ the\ number\ of\ carry\ pulses\ from\ UE7.\ In\ a\ perfect\ setting,\ a\ new}}
+\DoxyCodeLine{00163\ \textcolor{comment}{\ \ \ \ \ *\ bit\ is\ read\ from\ or\ written\ to\ the\ drive\ after\ four\ carry\ pulses.}}
+\DoxyCodeLine{00164\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00165\ \ \ \ \ i64\ carryCounter\ =\ 0;}
+\DoxyCodeLine{00166\ \ \ \ \ }
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{comment}{/*\ The\ second\ 74SL193\ 4-\/bit\ counter\ on\ the\ logic\ board.\ This\ counter\ is}}
+\DoxyCodeLine{00168\ \textcolor{comment}{\ \ \ \ \ *\ driven\ by\ the\ carry\ output\ of\ UE7.\ It\ has\ four\ outputs\ QA,\ QB,\ QC,\ and}}
+\DoxyCodeLine{00169\ \textcolor{comment}{\ \ \ \ \ *\ QD.\ QA\ and\ QB\ are\ used\ to\ clock\ most\ of\ the\ other\ components.\ QC\ and\ QD}}
+\DoxyCodeLine{00170\ \textcolor{comment}{\ \ \ \ \ *\ are\ fed\ into\ a\ NOR\ gate\ whose\ output\ is\ connected\ to\ the\ serial\ input}}
+\DoxyCodeLine{00171\ \textcolor{comment}{\ \ \ \ \ *\ pin\ of\ the\ input\ shift\ register.}}
+\DoxyCodeLine{00172\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00173\ \ \ \ \ u8\ counterUF4\ =\ 0;}
+\DoxyCodeLine{00174\ \ \ \ \ }
+\DoxyCodeLine{00175\ \ \ \ \ }
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{comment}{//\ Read/Write\ logic}}
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00179\ \ \ \ \ }
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{comment}{//\ The\ next\ bit\ will\ be\ ready\ after\ this\ number\ of\ cycles}}
+\DoxyCodeLine{00181\ \ \ \ \ i16\ bitReadyTimer\ =\ 0;}
+\DoxyCodeLine{00182\ \ \ \ \ }
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{comment}{/*\ Byte\ ready\ counter\ (UE3).\ The\ VC1540\ logic\ board\ contains\ a\ 4\ bit}}
+\DoxyCodeLine{00184\ \textcolor{comment}{\ \ \ \ \ *\ counter\ of\ type\ 72LS191\ which\ is\ advanced\ whenever\ a\ bit\ is\ ready.\ By}}
+\DoxyCodeLine{00185\ \textcolor{comment}{\ \ \ \ \ *\ reaching\ 7,\ the\ counter\ signals\ that\ a\ byte\ is\ ready.\ In\ that\ case,\ the}}
+\DoxyCodeLine{00186\ \textcolor{comment}{\ \ \ \ \ *\ write\ shift\ register\ is\ loaded\ with\ new\ data\ and\ pin\ CA1\ of\ VIA2\ changes}}
+\DoxyCodeLine{00187\ \textcolor{comment}{\ \ \ \ \ *\ state.\ This\ state\ change\ causes\ the\ current\ contents\ of\ the\ read\ shift}}
+\DoxyCodeLine{00188\ \textcolor{comment}{\ \ \ \ \ *\ register\ to\ be\ latched\ into\ the\ input\ register\ of\ VIA2.}}
+\DoxyCodeLine{00189\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00190\ \ \ \ \ u8\ byteReadyCounter\ =\ 0;}
+\DoxyCodeLine{00191\ \ \ \ \ }
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{comment}{//\ Halftrack\ position\ of\ the\ drive\ head}}
+\DoxyCodeLine{00193\ \ \ \ \ Halftrack\ halftrack\ =\ 0;}
+\DoxyCodeLine{00194\ \ \ \ \ }
+\DoxyCodeLine{00195\ \ \ \ \ \textcolor{comment}{//\ Position\ of\ the\ drive\ head\ inside\ the\ current\ track}}
+\DoxyCodeLine{00196\ \ \ \ \ HeadPos\ offset\ =\ 0;}
+\DoxyCodeLine{00197\ \ \ \ \ }
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{comment}{/*\ Current\ disk\ zone.\ Each\ track\ belongs\ to\ one\ of\ four\ zones.\ Whenever\ the}}
+\DoxyCodeLine{00199\ \textcolor{comment}{\ \ \ \ \ *\ drive\ moves\ the\ r/w\ head,\ it\ computes\ the\ new\ number\ and\ writes\ into\ PB5}}
+\DoxyCodeLine{00200\ \textcolor{comment}{\ \ \ \ \ *\ and\ PB6\ of\ via2.\ These\ bits\ are\ hard-\/wired\ to\ a\ 74LS193\ counter\ on\ the}}
+\DoxyCodeLine{00201\ \textcolor{comment}{\ \ \ \ \ *\ logic\ board\ that\ breaks\ down\ the\ 16\ Mhz\ base\ frequency.\ This\ mechanism}}
+\DoxyCodeLine{00202\ \textcolor{comment}{\ \ \ \ \ *\ is\ used\ to\ slow\ down\ the\ read/write\ process\ on\ inner\ tracks.}}
+\DoxyCodeLine{00203\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00204\ \ \ \ \ isize\ zone\ =\ 0;}
+\DoxyCodeLine{00205\ \ \ \ \ }
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{comment}{/*\ The\ 74LS164\ serial\ to\ parallel\ shift\ register.\ In\ read\ mode,\ this}}
+\DoxyCodeLine{00207\ \textcolor{comment}{\ \ \ \ \ *\ register\ is\ fed\ by\ the\ drive\ head\ with\ data.}}
+\DoxyCodeLine{00208\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00209\ \ \ \ \ u16\ readShiftreg\ =\ 0;}
+\DoxyCodeLine{00210\ \ \ \ \ }
+\DoxyCodeLine{00211\ \ \ \ \ \textcolor{comment}{/*\ The\ 74LS165\ parallel\ to\ serial\ shift\ register.\ In\ write\ mode,\ this}}
+\DoxyCodeLine{00212\ \textcolor{comment}{\ \ \ \ \ *\ register\ feeds\ the\ drive\ head\ with\ data.}}
+\DoxyCodeLine{00213\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00214\ \ \ \ \ u8\ writeShiftreg\ =\ 0;}
+\DoxyCodeLine{00215\ \ \ \ \ }
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{comment}{/*\ Current\ value\ of\ the\ SYNC\ line.\ The\ SYNC\ signal\ plays\ an\ important\ role}}
+\DoxyCodeLine{00217\ \textcolor{comment}{\ \ \ \ \ *\ for\ timing\ synchronization.\ It\ becomes\ true\ when\ the\ beginning\ of\ a\ SYNC}}
+\DoxyCodeLine{00218\ \textcolor{comment}{\ \ \ \ \ *\ is\ detected.\ On\ the\ logic\ board,\ the\ SYNC\ signal\ is\ computed\ by\ a\ NAND}}
+\DoxyCodeLine{00219\ \textcolor{comment}{\ \ \ \ \ *\ gate\ that\ combines\ the\ 10\ previously\ read\ bits\ from\ the\ input\ shift}}
+\DoxyCodeLine{00220\ \textcolor{comment}{\ \ \ \ \ *\ register\ and\ VIA2::CB2\ (the\ r/w\ mode\ pin).\ Connecting\ CB2\ to\ the\ NAND}}
+\DoxyCodeLine{00221\ \textcolor{comment}{\ \ \ \ \ *\ gates\ ensures\ that\ SYNC\ can\ only\ be\ true\ in\ read\ mode.\ When\ SYNC\ becomes}}
+\DoxyCodeLine{00222\ \textcolor{comment}{\ \ \ \ \ *\ false\ (meaning\ that\ a\ 0\ was\ pushed\ into\ the\ shift\ register),\ the}}
+\DoxyCodeLine{00223\ \textcolor{comment}{\ \ \ \ \ *\ byteReadyCounter\ is\ reset.}}
+\DoxyCodeLine{00224\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00225\ \ \ \ \ \textcolor{keywordtype}{bool}\ sync\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00226\ \ \ \ \ }
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{comment}{/*\ Current\ value\ of\ the\ ByteReady\ line.\ This\ signal\ goes\ low\ when\ a\ byte}}
+\DoxyCodeLine{00228\ \textcolor{comment}{\ \ \ \ \ *\ has\ been\ processed.}}
+\DoxyCodeLine{00229\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00230\ \ \ \ \ \textcolor{keywordtype}{bool}\ byteReady\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00231\ \ \ \ \ }
+\DoxyCodeLine{00232\ \ \ \ \ }
+\DoxyCodeLine{00233\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{comment}{//\ Speed\ logic\ (power-\/save)}}
+\DoxyCodeLine{00235\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00236\ \ \ \ \ }
+\DoxyCodeLine{00237\ \ \ \ \ \textcolor{comment}{//\ Idle\ counter}}
+\DoxyCodeLine{00238\ \ \ \ \ i64\ watchdog\ =\ INT64\_MAX;}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00240\ \ \ \ \ \textcolor{comment}{//\ Indicates\ whether\ execute()\ should\ be\ called\ inside\ the\ run\ loop}}
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{keywordtype}{bool}\ needsEmulation\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00242\ \ \ \ \ }
+\DoxyCodeLine{00243\ \ \ \ \ }
+\DoxyCodeLine{00244\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00245\ \ \ \ \ \textcolor{comment}{//\ Methods}}
+\DoxyCodeLine{00246\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00247\ \ \ \ \ }
+\DoxyCodeLine{00248\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00249\ \ \ \ \ }
+\DoxyCodeLine{00250\ \ \ \ \ Drive(isize\ nr,\ C64\ \&ref);}
+\DoxyCodeLine{00251\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00252\ \ \ \ \ }
+\DoxyCodeLine{00253\ \ \ \ \ \textcolor{keywordtype}{void}\ \_dump(Category\ category,\ std::ostream\&\ os)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00254\ }
+\DoxyCodeLine{00255\ \ \ \ \ \textcolor{keywordtype}{void}\ \_initialize()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00256\ \ \ \ \ }
+\DoxyCodeLine{00257\ \ \ \ \ Drive\&\ operator=\ (\textcolor{keyword}{const}\ Drive\&\ other)\ \{}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ CLONE(mem)}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ CLONE(cpu)}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ CLONE(via1)}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ CLONE(via2)}
+\DoxyCodeLine{00263\ }
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ CLONE(spinning)}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ CLONE(redLED)}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ CLONE(elapsedTime)}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ CLONE(nextClock)}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ CLONE(nextCarry)}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ CLONE(carryCounter)}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ CLONE(counterUF4)}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ CLONE(bitReadyTimer)}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ CLONE(byteReadyCounter)}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ CLONE(halftrack)}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ CLONE(offset)}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ CLONE(zone)}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ CLONE(readShiftreg)}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ CLONE(writeShiftreg)}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ CLONE(sync)}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ CLONE(byteReady)}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ CLONE(watchdog)}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ CLONE(insertionStatus)}
+\DoxyCodeLine{00282\ }
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ CLONE(config)}
+\DoxyCodeLine{00284\ }
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (other.disk\ \&\&\ !disk)\ disk\ =\ std::make\_unique<Disk>();}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!other.disk)\ disk\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (disk)\ *disk\ =\ *other.disk;}
+\DoxyCodeLine{00288\ }
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (other.diskToInsert\ \&\&\ !diskToInsert)\ diskToInsert\ =\ std::make\_unique<Disk>();}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!other.diskToInsert)\ diskToInsert\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (diskToInsert)\ *diskToInsert\ =\ *other.diskToInsert;}
+\DoxyCodeLine{00292\ }
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00294\ \ \ \ \ \}}
+\DoxyCodeLine{00295\ }
+\DoxyCodeLine{00296\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00297\ \ \ \ \ \textcolor{keywordtype}{void}\ serialize(T\&\ worker)}
+\DoxyCodeLine{00298\ \ \ \ \ \{}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ <<\ mem}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ <<\ cpu}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ <<\ via1}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ <<\ via2}
+\DoxyCodeLine{00305\ }
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ <<\ spinning}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ <<\ redLED}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ <<\ elapsedTime}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ <<\ nextClock}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ <<\ nextCarry}
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ <<\ carryCounter}
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ <<\ counterUF4}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ <<\ bitReadyTimer}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ <<\ byteReadyCounter}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ <<\ halftrack}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ <<\ offset}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ <<\ zone}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ <<\ readShiftreg}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ <<\ writeShiftreg}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ <<\ sync}
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ <<\ byteReady}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ <<\ watchdog}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ <<\ insertionStatus;}
+\DoxyCodeLine{00324\ }
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (isResetter(worker))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00326\ }
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00328\ }
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ <<\ config.type}
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \ \ <<\ config.ram}
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ <<\ config.parCable}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ <<\ config.powerSave}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ <<\ config.connected}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ <<\ config.switchedOn}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ <<\ config.ejectDelay}
+\DoxyCodeLine{00336\ \ \ \ \ \ \ \ \ <<\ config.swapDelay}
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ <<\ config.insertDelay}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ <<\ config.pan}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ <<\ config.powerVolume}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ <<\ config.stepVolume}
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ <<\ config.insertVolume}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ <<\ config.ejectVolume}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ <<\ config.saveRoms;}
+\DoxyCodeLine{00344\ \ \ \ \ \}}
+\DoxyCodeLine{00345\ \ \ \ \ }
+\DoxyCodeLine{00346\ \ \ \ \ \textcolor{keywordtype}{void}\ operator\ <<\ (SerResetter\ \&worker)\textcolor{keyword}{\ override\ }\{\ serialize(worker);\ \};}
+\DoxyCodeLine{00347\ \ \ \ \ \textcolor{keywordtype}{void}\ operator\ <<\ (SerChecker\ \&worker)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00348\ \ \ \ \ \textcolor{keywordtype}{void}\ operator\ <<\ (SerCounter\ \&worker)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00349\ \ \ \ \ \textcolor{keywordtype}{void}\ operator\ <<\ (SerReader\ \&worker)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00350\ \ \ \ \ \textcolor{keywordtype}{void}\ operator\ <<\ (SerWriter\ \&worker)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00351\ }
+\DoxyCodeLine{00352\ \ \ \ \ \textcolor{keywordtype}{void}\ \_reset(\textcolor{keywordtype}{bool}\ hard)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00353\ }
+\DoxyCodeLine{00354\ }
+\DoxyCodeLine{00355\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00356\ \ \ \ \ \textcolor{comment}{//\ Configuring}}
+\DoxyCodeLine{00357\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00358\ }
+\DoxyCodeLine{00359\ \ \ \ \ \textcolor{keyword}{const}\ DriveConfig\ \&getConfig()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ config;\ \}}
+\DoxyCodeLine{00360\ \ \ \ \ \textcolor{keyword}{const}\ ConfigOptions\ \&getOptions()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ options;\ \}}
+\DoxyCodeLine{00361\ \ \ \ \ i64\ getOption(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ opt)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00362\ \ \ \ \ \textcolor{keywordtype}{void}\ setOption(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ opt,\ i64\ value)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00363\ \ \ \ \ \textcolor{keywordtype}{void}\ resetConfig()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00364\ }
+\DoxyCodeLine{00365\ \ \ \ \ \textcolor{comment}{//\ Updates\ the\ current\ configuration\ according\ to\ the\ installed\ ROM}}
+\DoxyCodeLine{00366\ \ \ \ \ \textcolor{keywordtype}{void}\ autoConfigure();}
+\DoxyCodeLine{00367\ }
+\DoxyCodeLine{00368\ \ \ \ \ \textcolor{keywordtype}{bool}\ canConnect();}
+\DoxyCodeLine{00369\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasParCable()\ \{\ \textcolor{keywordflow}{return}\ config.parCable\ !=\ PAR\_CABLE\_NONE;\ \}}
+\DoxyCodeLine{00370\ \ \ \ \ ParCableType\ getParCableType()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ config.parCable;\ \}}
+\DoxyCodeLine{00371\ }
+\DoxyCodeLine{00372\ }
+\DoxyCodeLine{00373\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00374\ \ \ \ \ \textcolor{comment}{//\ Inspecting}}
+\DoxyCodeLine{00375\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00376\ }
+\DoxyCodeLine{00377\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00378\ }
+\DoxyCodeLine{00379\ \ \ \ \ \textcolor{comment}{//\ TODO:\ Implement\ recordInfo}}
+\DoxyCodeLine{00380\ \ \ \ \ DriveInfo\ getInfo()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00381\ }
+\DoxyCodeLine{00382\ }
+\DoxyCodeLine{00383\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00384\ \ \ \ \ \textcolor{comment}{//\ Working\ with\ the\ drive}}
+\DoxyCodeLine{00385\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00386\ }
+\DoxyCodeLine{00387\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00388\ \ \ \ \ }
+\DoxyCodeLine{00389\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ device\ number}}
+\DoxyCodeLine{00390\ \ \ \ \ isize\ getDeviceNr()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ deviceNr;\ \}}
+\DoxyCodeLine{00391\ }
+\DoxyCodeLine{00392\ \ \ \ \ \textcolor{comment}{//\ Convenience\ wrappers}}
+\DoxyCodeLine{00393\ \ \ \ \ \textcolor{keywordtype}{bool}\ isDrive8()\ \{\ \textcolor{keywordflow}{return}\ getDeviceNr()\ ==\ DRIVE8;\ \}}
+\DoxyCodeLine{00394\ \ \ \ \ \textcolor{keywordtype}{bool}\ isDrive9()\ \{\ \textcolor{keywordflow}{return}\ getDeviceNr()\ ==\ DRIVE9;\ \}}
+\DoxyCodeLine{00395\ }
+\DoxyCodeLine{00396\ \ \ \ \ \textcolor{comment}{//\ Returns\ true\ iff\ the\ red\ drive\ LED\ is\ on}}
+\DoxyCodeLine{00397\ \ \ \ \ \textcolor{keywordtype}{bool}\ getRedLED()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ redLED;\ \};}
+\DoxyCodeLine{00398\ }
+\DoxyCodeLine{00399\ \ \ \ \ \textcolor{comment}{//\ Turns\ the\ red\ drive\ LED\ on\ or\ off}}
+\DoxyCodeLine{00400\ \ \ \ \ \textcolor{keywordtype}{void}\ setRedLED(\textcolor{keywordtype}{bool}\ b);}
+\DoxyCodeLine{00401\ }
+\DoxyCodeLine{00402\ \ \ \ \ \textcolor{comment}{//\ Returns\ true\ iff\ the\ drive\ engine\ is\ on}}
+\DoxyCodeLine{00403\ \ \ \ \ \textcolor{keywordtype}{bool}\ isRotating()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ spinning;\ \};}
+\DoxyCodeLine{00404\ }
+\DoxyCodeLine{00405\ \ \ \ \ \textcolor{comment}{//\ Turns\ the\ drive\ engine\ on\ or\ off}}
+\DoxyCodeLine{00406\ \ \ \ \ \textcolor{keywordtype}{void}\ setRotating(\textcolor{keywordtype}{bool}\ b);}
+\DoxyCodeLine{00407\ \ \ \ \ }
+\DoxyCodeLine{00408\ \ \ \ \ \textcolor{comment}{//\ Wakes\ up\ the\ drive\ (clears\ the\ idle\ state)}}
+\DoxyCodeLine{00409\ \ \ \ \ \textcolor{keywordtype}{void}\ wakeUp(isize\ awakeness\ =\ powerSafeThreshold);}
+\DoxyCodeLine{00410\ }
+\DoxyCodeLine{00411\ \ \ \ \ \textcolor{comment}{//\ Checks\ whether\ the\ drive\ has\ been\ idle\ for\ a\ while}}
+\DoxyCodeLine{00412\ \ \ \ \ \textcolor{keywordtype}{bool}\ isIdle()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ watchdog\ <\ 0;\ \}}
+\DoxyCodeLine{00413\ \ \ \ \ }
+\DoxyCodeLine{00414\ \ \ \ \ \textcolor{comment}{//\ Checks\ whether\ the\ drive\ is\ connected\ and\ switched\ on}}
+\DoxyCodeLine{00415\ \ \ \ \ \textcolor{keywordtype}{bool}\ connectedAndOn()\ \{\ \textcolor{keywordflow}{return}\ config.connected\ \&\&\ config.switchedOn;\ \}}
+\DoxyCodeLine{00416\ \ \ \ \ }
+\DoxyCodeLine{00417\ \ \ \ \ }
+\DoxyCodeLine{00418\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00419\ \ \ \ \ \textcolor{comment}{//\ Handling\ disks}}
+\DoxyCodeLine{00420\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00421\ }
+\DoxyCodeLine{00422\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00423\ }
+\DoxyCodeLine{00424\ \ \ \ \ \textcolor{comment}{//\ Checks\ whether\ the\ drive\ contains\ a\ disk\ of\ a\ certain\ kind}}
+\DoxyCodeLine{00425\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasDisk()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00426\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasPartiallyRemovedDisk()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00427\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasProtectedDisk()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ hasDisk()\ \&\&\ disk-\/>isWriteProtected();\ \}}
+\DoxyCodeLine{00428\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasModifiedDisk()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ hasDisk()\ \&\&\ disk-\/>isModified();\ \}}
+\DoxyCodeLine{00429\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasUnmodifiedDisk()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ hasDisk()\ \&\&\ !hasModifiedDisk();\ \}}
+\DoxyCodeLine{00430\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasUnprotectedDisk()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ hasDisk()\ \&\&\ !hasProtectedDisk();\ \}}
+\DoxyCodeLine{00431\ }
+\DoxyCodeLine{00432\ \ \ \ \ \textcolor{comment}{//\ Changes\ the\ modification\ state}}
+\DoxyCodeLine{00433\ \ \ \ \ \textcolor{keywordtype}{void}\ setModificationFlag(\textcolor{keywordtype}{bool}\ value);}
+\DoxyCodeLine{00434\ \ \ \ \ \textcolor{keywordtype}{void}\ markDiskAsModified()\ \{\ setModificationFlag(\textcolor{keyword}{true});\ \}}
+\DoxyCodeLine{00435\ \ \ \ \ \textcolor{keywordtype}{void}\ markDiskAsUnmodified()\ \{\ setModificationFlag(\textcolor{keyword}{false});\ \}}
+\DoxyCodeLine{00436\ }
+\DoxyCodeLine{00437\ \ \ \ \ \textcolor{comment}{/*\ Returns\ the\ current\ state\ of\ the\ write\ protection\ barrier.\ If\ the\ light}}
+\DoxyCodeLine{00438\ \textcolor{comment}{\ \ \ \ \ *\ barrier\ is\ blocked,\ the\ drive\ head\ is\ unable\ to\ modify\ bits\ on\ disk.}}
+\DoxyCodeLine{00439\ \textcolor{comment}{\ \ \ \ \ *\ Note:\ We\ block\ the\ write\ barrier\ on\ power\ up\ for\ about\ 1.5\ sec,\ because}}
+\DoxyCodeLine{00440\ \textcolor{comment}{\ \ \ \ \ *\ the\ drive\ enters\ write\ mode\ during\ the\ power\ up\ phase.\ I'm\ unsure\ if}}
+\DoxyCodeLine{00441\ \textcolor{comment}{\ \ \ \ \ *\ this\ is\ normal\ drive\ behavior\ or\ an\ emulator\ bug.\ Any\ hint\ on\ this\ is}}
+\DoxyCodeLine{00442\ \textcolor{comment}{\ \ \ \ \ *\ very\ welcome!}}
+\DoxyCodeLine{00443\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00444\ \ \ \ \ \textcolor{keywordtype}{bool}\ getLightBarrier()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00445\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00446\ \ \ \ \ \ \ \ \ cpu.clock\ <\ 1500000}
+\DoxyCodeLine{00447\ \ \ \ \ \ \ \ \ ||\ hasPartiallyRemovedDisk()}
+\DoxyCodeLine{00448\ \ \ \ \ \ \ \ \ ||\ hasProtectedDisk();}
+\DoxyCodeLine{00449\ \ \ \ \ \}}
+\DoxyCodeLine{00450\ }
+\DoxyCodeLine{00451\ \ \ \ \ \textcolor{comment}{/*\ Requests\ the\ emulator\ to\ inserts\ or\ eject\ a\ disk.\ Background:\ Many\ C64}}
+\DoxyCodeLine{00452\ \textcolor{comment}{\ \ \ \ \ *\ programs\ try\ to\ detect\ a\ disk\ change\ by\ checking\ the\ light\ barrier.\ This}}
+\DoxyCodeLine{00453\ \textcolor{comment}{\ \ \ \ \ *\ means\ that\ proper\ physical\ delays\ have\ to\ be\ taken\ in\ account.\ For\ that}}
+\DoxyCodeLine{00454\ \textcolor{comment}{\ \ \ \ \ *\ reason,\ these\ functions\ initiate\ a\ sequence\ of\ events\ that\ are\ processed}}
+\DoxyCodeLine{00455\ \textcolor{comment}{\ \ \ \ \ *\ one\ after\ another\ with\ a\ proper\ time\ delay.\ The\ sequence\ includes\ pulling}}
+\DoxyCodeLine{00456\ \textcolor{comment}{\ \ \ \ \ *\ the\ currently\ inserted\ disk\ halfway\ out\ before\ it\ is\ removed\ completely,}}
+\DoxyCodeLine{00457\ \textcolor{comment}{\ \ \ \ \ *\ and\ pushing\ the\ new\ disk\ halfway\ in\ before\ it\ is\ inserted\ completely.}}
+\DoxyCodeLine{00458\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00459\ \ \ \ \ \textcolor{keywordtype}{void}\ insertDisk(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path,\ \textcolor{keywordtype}{bool}\ wp)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00460\ \ \ \ \ \textcolor{keywordtype}{void}\ insertDisk(std::unique\_ptr<Disk>\ disk);}
+\DoxyCodeLine{00461\ \ \ \ \ \textcolor{keywordtype}{void}\ insertNewDisk(DOSType\ fstype,\ PETName<16>\ name);}
+\DoxyCodeLine{00462\ \ \ \ \ \textcolor{keywordtype}{void}\ insertD64(\textcolor{keyword}{const}\ D64File\ \&d64,\ \textcolor{keywordtype}{bool}\ wp);}
+\DoxyCodeLine{00463\ \ \ \ \ \textcolor{keywordtype}{void}\ insertG64(\textcolor{keyword}{const}\ G64File\ \&g64,\ \textcolor{keywordtype}{bool}\ wp);}
+\DoxyCodeLine{00464\ \ \ \ \ \textcolor{keywordtype}{void}\ insertCollection(AnyCollection\ \&archive,\ \textcolor{keywordtype}{bool}\ wp)\ \textcolor{keywordflow}{throws};}
+\DoxyCodeLine{00465\ \ \ \ \ \textcolor{keywordtype}{void}\ insertFileSystem(\textcolor{keyword}{const}\ \textcolor{keyword}{class}\ FileSystem\ \&device,\ \textcolor{keywordtype}{bool}\ wp);}
+\DoxyCodeLine{00466\ \ \ \ \ \textcolor{keywordtype}{void}\ ejectDisk();}
+\DoxyCodeLine{00467\ }
+\DoxyCodeLine{00468\ }
+\DoxyCodeLine{00469\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00470\ \ \ \ \ \textcolor{comment}{//\ Emulating}}
+\DoxyCodeLine{00471\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00472\ \ \ \ \ }
+\DoxyCodeLine{00473\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00474\ \ \ \ \ }
+\DoxyCodeLine{00475\ \ \ \ \ \textcolor{comment}{/*\ Executes\ all\ pending\ cycles\ of\ the\ virtual\ drive.\ The\ number\ of\ cycles}}
+\DoxyCodeLine{00476\ \textcolor{comment}{\ \ \ \ \ *\ is\ determined\ by\ the\ target\ time\ which\ is\ elapsedTime\ +\ duration.}}
+\DoxyCodeLine{00477\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00478\ \ \ \ \ \textcolor{keywordtype}{void}\ execute(u64\ duration);}
+\DoxyCodeLine{00479\ }
+\DoxyCodeLine{00480\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00481\ \ \ \ \ }
+\DoxyCodeLine{00482\ \ \ \ \ \textcolor{comment}{//\ Emulates\ a\ trigger\ event\ on\ the\ carry\ output\ pin\ of\ UE7.}}
+\DoxyCodeLine{00483\ \ \ \ \ \textcolor{keywordtype}{void}\ executeUF4();}
+\DoxyCodeLine{00484\ \ \ \ \ }
+\DoxyCodeLine{00485\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00486\ }
+\DoxyCodeLine{00487\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ current\ access\ mode\ of\ this\ drive\ (read\ or\ write)}}
+\DoxyCodeLine{00488\ \ \ \ \ \textcolor{keywordtype}{bool}\ readMode()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ via2.getCB2();\ \}}
+\DoxyCodeLine{00489\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeMode()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ !readMode();\ \}}
+\DoxyCodeLine{00490\ \ \ \ \ }
+\DoxyCodeLine{00491\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ current\ halftrack\ or\ track\ number}}
+\DoxyCodeLine{00492\ \ \ \ \ Halftrack\ getHalftrack()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ halftrack;\ \}}
+\DoxyCodeLine{00493\ \ \ \ \ Track\ getTrack()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (halftrack\ +\ 1)\ /\ 2;\ \}}
+\DoxyCodeLine{00494\ }
+\DoxyCodeLine{00495\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ number\ of\ bits\ in\ a\ halftrack}}
+\DoxyCodeLine{00496\ \ \ \ \ isize\ sizeOfHalftrack(Halftrack\ ht)\ \{}
+\DoxyCodeLine{00497\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ hasDisk()\ ?\ disk-\/>lengthOfHalftrack(ht)\ :\ 0;\ \}}
+\DoxyCodeLine{00498\ \ \ \ \ isize\ sizeOfCurrentHalftrack()\ \{\ \textcolor{keywordflow}{return}\ sizeOfHalftrack(halftrack);\ \}}
+\DoxyCodeLine{00499\ }
+\DoxyCodeLine{00500\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ position\ of\ the\ drive\ head\ inside\ the\ current\ track}}
+\DoxyCodeLine{00501\ \ \ \ \ HeadPos\ getOffset()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ offset;\ \}}
+\DoxyCodeLine{00502\ }
+\DoxyCodeLine{00503\ \ \ \ \ \textcolor{comment}{//\ Moves\ head\ one\ halftrack\ up}}
+\DoxyCodeLine{00504\ \ \ \ \ \textcolor{keywordtype}{void}\ moveHeadUp();}
+\DoxyCodeLine{00505\ \ \ \ \ }
+\DoxyCodeLine{00506\ \ \ \ \ \textcolor{comment}{//\ Moves\ head\ one\ halftrack\ down}}
+\DoxyCodeLine{00507\ \ \ \ \ \textcolor{keywordtype}{void}\ moveHeadDown();}
+\DoxyCodeLine{00508\ }
+\DoxyCodeLine{00509\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ current\ value\ of\ the\ sync\ signal}}
+\DoxyCodeLine{00510\ \ \ \ \ \textcolor{keywordtype}{bool}\ getSync()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ sync;\ \}}
+\DoxyCodeLine{00511\ \ \ \ \ }
+\DoxyCodeLine{00512\ \ \ \ \ \textcolor{comment}{/*\ Updates\ the\ byte\ ready\ line.\ The\ byte\ ready\ line\ is\ connected\ to\ pin\ CA1}}
+\DoxyCodeLine{00513\ \textcolor{comment}{\ \ \ \ \ *\ of\ VIA2.\ Pulling\ this\ signal\ low\ causes\ important\ side\ effects.\ Firstly,}}
+\DoxyCodeLine{00514\ \textcolor{comment}{\ \ \ \ \ *\ the\ contents\ of\ the\ read\ shift\ register\ is\ latched\ into\ the\ VIA\ chip.}}
+\DoxyCodeLine{00515\ \textcolor{comment}{\ \ \ \ \ *\ Secondly,\ the\ V\ flag\ is\ set\ inside\ the\ CPU.\ See\ also\ CA1action().}}
+\DoxyCodeLine{00516\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00517\ \ \ \ \ \textcolor{keywordtype}{void}\ updateByteReady();}
+\DoxyCodeLine{00518\ \ \ \ \ }
+\DoxyCodeLine{00519\ \ \ \ \ \textcolor{comment}{//\ Raises\ the\ byte\ ready\ line}}
+\DoxyCodeLine{00520\ \ \ \ \ \textcolor{keywordtype}{void}\ raiseByteReady();}
+\DoxyCodeLine{00521\ \ \ \ \ }
+\DoxyCodeLine{00522\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ current\ track\ zone\ (0\ to\ 3)}}
+\DoxyCodeLine{00523\ \ \ \ \ \textcolor{keywordtype}{bool}\ getZone()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ zone;\ \}}
+\DoxyCodeLine{00524\ }
+\DoxyCodeLine{00525\ \ \ \ \ \textcolor{comment}{//\ Sets\ the\ current\ track\ zone\ (0\ to\ 3)}}
+\DoxyCodeLine{00526\ \ \ \ \ \textcolor{keywordtype}{void}\ setZone(isize\ value);}
+\DoxyCodeLine{00527\ }
+\DoxyCodeLine{00528\ \ \ \ \ \textcolor{comment}{//\ Reads\ a\ single\ bit\ from\ the\ disk\ head\ (result\ is\ 0\ or\ 1)}}
+\DoxyCodeLine{00529\ \ \ \ \ u8\ readBitFromHead()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00530\ \ \ \ \ }
+\DoxyCodeLine{00531\ \ \ \ \ \textcolor{comment}{//\ Writes\ a\ single\ bit\ to\ the\ disk\ head}}
+\DoxyCodeLine{00532\ \ \ \ \ \textcolor{keywordtype}{void}\ writeBitToHead(u8\ bit);}
+\DoxyCodeLine{00533\ \ \ \ \ }
+\DoxyCodeLine{00534\ \ \ \ \ \textcolor{comment}{//\ Advances\ drive\ head\ position\ by\ one\ bit}}
+\DoxyCodeLine{00535\ \ \ \ \ \textcolor{keywordtype}{void}\ rotateDisk();}
+\DoxyCodeLine{00536\ }
+\DoxyCodeLine{00537\ \ \ \ \ \textcolor{comment}{//\ Performs\ periodic\ actions}}
+\DoxyCodeLine{00538\ \ \ \ \ \textcolor{keywordtype}{void}\ vsyncHandler();}
+\DoxyCodeLine{00539\ \ \ \ \ }
+\DoxyCodeLine{00540\ }
+\DoxyCodeLine{00541\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00542\ \ \ \ \ \textcolor{comment}{//\ Processing\ commands\ and\ events}}
+\DoxyCodeLine{00543\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00544\ }
+\DoxyCodeLine{00545\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00546\ }
+\DoxyCodeLine{00547\ \ \ \ \ \textcolor{comment}{//\ Processes\ a\ datasette\ command}}
+\DoxyCodeLine{00548\ \ \ \ \ \textcolor{keywordtype}{void}\ processCommand(\textcolor{keyword}{const}\ Cmd\ \&cmd);}
+\DoxyCodeLine{00549\ }
+\DoxyCodeLine{00550\ \ \ \ \ \textcolor{comment}{//\ Initiates\ the\ disk\ change\ procedure}}
+\DoxyCodeLine{00551\ \ \ \ \ \textcolor{keywordtype}{void}\ scheduleFirstDiskChangeEvent(EventID\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00552\ }
+\DoxyCodeLine{00553\ \ \ \ \ \textcolor{comment}{//\ Carries\ out\ the\ disk\ change\ procedure}}
+\DoxyCodeLine{00554\ \ \ \ \ \textcolor{keywordtype}{void}\ processDiskChangeEvent(EventID\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00555\ \};}
+\DoxyCodeLine{00556\ }
+\DoxyCodeLine{00557\ \}}
+
+\end{DoxyCode}

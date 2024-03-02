@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="138" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="138" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="136" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="136" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_key_cmd_1a736b6bd6fbdfeffb70318e3b18eb7f23" prot="public" static="no" mutable="no">
         <type>double</type>
@@ -29,14 +29,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="139" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="139" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="137" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="137" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="136" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="137" bodyend="140"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="134" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="135" bodyend="138"/>
     <listofallmembers>
       <member refid="struct_key_cmd_1a736b6bd6fbdfeffb70318e3b18eb7f23" prot="public" virt="non-virtual"><scope>KeyCmd</scope><name>delay</name></member>
       <member refid="struct_key_cmd_1a9c52bd74f904cb580a519483ce4d4477" prot="public" virt="non-virtual"><scope>KeyCmd</scope><name>keycode</name></member>

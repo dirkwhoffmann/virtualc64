@@ -1,0 +1,657 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_disk_analyzer" kind="class" language="C++" prot="public" final="yes">
+    <compoundname>vc64::DiskAnalyzer</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">vc64::CoreObject</basecompoundref>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_disk_analyzer_1a9d7daaaab96677683ccf2e4057b9050e" prot="private" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize vc64::DiskAnalyzer::length[85]</definition>
+        <argsstring>[85]</argsstring>
+        <name>length</name>
+        <qualifiedname>vc64::DiskAnalyzer::length</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="27" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_disk_analyzer_1af38b7657186a6eec0271bfcb33f63921" prot="private" static="no" mutable="no">
+        <type>u8 *</type>
+        <definition>u8* vc64::DiskAnalyzer::data[85]</definition>
+        <argsstring>[85]</argsstring>
+        <name>data</name>
+        <qualifiedname>vc64::DiskAnalyzer::data</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="30" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_disk_analyzer_1a6b0c146e2a2e1d321c76f83e7911a7a3" prot="private" static="no" mutable="no">
+        <type>DiskInfo</type>
+        <definition>DiskInfo vc64::DiskAnalyzer::diskInfo</definition>
+        <argsstring></argsstring>
+        <name>diskInfo</name>
+        <qualifiedname>vc64::DiskAnalyzer::diskInfo</qualifiedname>
+        <initializer>= { }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="33" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" bodystart="33" bodyend="33"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_disk_analyzer_1ac8853ca30d9d758de9d1402aca3ce385" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; string &gt;</type>
+        <definition>std::vector&lt;string&gt; vc64::DiskAnalyzer::errorLog[85]</definition>
+        <argsstring>[85]</argsstring>
+        <name>errorLog</name>
+        <qualifiedname>vc64::DiskAnalyzer::errorLog</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="36" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_disk_analyzer_1a30cdb980f6d65f4f9d93b2f19b88e63f" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; isize &gt;</type>
+        <definition>std::vector&lt;isize&gt; vc64::DiskAnalyzer::errorStartIndex[85]</definition>
+        <argsstring>[85]</argsstring>
+        <name>errorStartIndex</name>
+        <qualifiedname>vc64::DiskAnalyzer::errorStartIndex</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="39" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_disk_analyzer_1a4589238fd4b97e6a67c848ebcc22c034" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; isize &gt;</type>
+        <definition>std::vector&lt;isize&gt; vc64::DiskAnalyzer::errorEndIndex[85]</definition>
+        <argsstring>[85]</argsstring>
+        <name>errorEndIndex</name>
+        <qualifiedname>vc64::DiskAnalyzer::errorEndIndex</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="42" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_disk_analyzer_1aa0d2e135b5f5e91609a6c5c9e96245f0" prot="private" static="no" mutable="no">
+        <type>char</type>
+        <definition>char vc64::DiskAnalyzer::text[maxBitsOnTrack+1]</definition>
+        <argsstring>[maxBitsOnTrack+1]</argsstring>
+        <name>text</name>
+        <qualifiedname>vc64::DiskAnalyzer::text</qualifiedname>
+        <initializer>= { }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="45" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" bodystart="45" bodyend="45"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1abaa64ca2f353aa728ca2f091ca36a69d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::DiskAnalyzer::DiskAnalyzer</definition>
+        <argsstring>(const class Disk &amp;disk)</argsstring>
+        <name>DiskAnalyzer</name>
+        <qualifiedname>vc64::DiskAnalyzer::DiskAnalyzer</qualifiedname>
+        <param>
+          <type>const class Disk &amp;</type>
+          <declname>disk</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="54" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.cpp" bodystart="21" bodyend="41"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1a8321e0a04b57e71d809433421982e1a6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::DiskAnalyzer::~DiskAnalyzer</definition>
+        <argsstring>()</argsstring>
+        <name>~DiskAnalyzer</name>
+        <qualifiedname>vc64::DiskAnalyzer::~DiskAnalyzer</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="55" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.cpp" bodystart="43" bodyend="46"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1a68f53399ee2b39dfb88edb8ec8b471b1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::DiskAnalyzer::lengthOfTrack</definition>
+        <argsstring>(Track t) const</argsstring>
+        <name>lengthOfTrack</name>
+        <qualifiedname>vc64::DiskAnalyzer::lengthOfTrack</qualifiedname>
+        <param>
+          <type>Track</type>
+          <declname>t</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="74" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.cpp" bodystart="49" bodyend="53"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1a4348ad040d60855191b49109afa6b27c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::DiskAnalyzer::lengthOfHalftrack</definition>
+        <argsstring>(Halftrack ht) const</argsstring>
+        <name>lengthOfHalftrack</name>
+        <qualifiedname>vc64::DiskAnalyzer::lengthOfHalftrack</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="75" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.cpp" bodystart="56" bodyend="60"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1a16574c9d313989ca710edd003e6cf8ec" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::DiskAnalyzer::decodeGcrNibble</definition>
+        <argsstring>(Halftrack ht, isize offset)</argsstring>
+        <name>decodeGcrNibble</name>
+        <qualifiedname>vc64::DiskAnalyzer::decodeGcrNibble</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>offset</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="78" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.cpp" bodystart="63" bodyend="71"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1a7ec1b5ce240c6b7c5efa928d9670dae5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::DiskAnalyzer::decodeGcr</definition>
+        <argsstring>(Halftrack ht, isize offset)</argsstring>
+        <name>decodeGcr</name>
+        <qualifiedname>vc64::DiskAnalyzer::decodeGcr</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>offset</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="79" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.cpp" bodystart="74" bodyend="80"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1af185e8638e654f320d7cf516369bf0c8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const SectorInfo &amp;</type>
+        <definition>const SectorInfo &amp; vc64::DiskAnalyzer::sectorLayout</definition>
+        <argsstring>(Halftrack ht, Sector nr)</argsstring>
+        <name>sectorLayout</name>
+        <qualifiedname>vc64::DiskAnalyzer::sectorLayout</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <param>
+          <type>Sector</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="103" column="22" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.cpp" bodystart="247" bodyend="253"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1a62b9f34e898fedaeb3f60954d66fe687" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::DiskAnalyzer::numErrors</definition>
+        <argsstring>(Halftrack ht)</argsstring>
+        <name>numErrors</name>
+        <qualifiedname>vc64::DiskAnalyzer::numErrors</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="106" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" bodystart="106" bodyend="106"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1a12f5aee4a350a2a04b76e803ce67edb0" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>string</type>
+        <definition>string vc64::DiskAnalyzer::errorMessage</definition>
+        <argsstring>(Halftrack ht, isize nr) const</argsstring>
+        <name>errorMessage</name>
+        <qualifiedname>vc64::DiskAnalyzer::errorMessage</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="109" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" bodystart="109" bodyend="109"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1a3ce10401b90e10d8342a651ccf635ace" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::DiskAnalyzer::firstErroneousBit</definition>
+        <argsstring>(Halftrack ht, isize nr) const</argsstring>
+        <name>firstErroneousBit</name>
+        <qualifiedname>vc64::DiskAnalyzer::firstErroneousBit</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="112" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" bodystart="112" bodyend="112"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1a00e9a259d7043808dfe9026ed7febff6" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::DiskAnalyzer::lastErroneousBit</definition>
+        <argsstring>(Halftrack ht, isize nr) const</argsstring>
+        <name>lastErroneousBit</name>
+        <qualifiedname>vc64::DiskAnalyzer::lastErroneousBit</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="115" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" bodystart="115" bodyend="115"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1a08176a8ce80f166dedeb2ccf63db1b4d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::DiskAnalyzer::diskNameAsString</definition>
+        <argsstring>()</argsstring>
+        <name>diskNameAsString</name>
+        <qualifiedname>vc64::DiskAnalyzer::diskNameAsString</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="118" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.cpp" bodystart="271" bodyend="286"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1a1442d23da9fa2fe8021bb5835663d3ab" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::DiskAnalyzer::trackBitsAsString</definition>
+        <argsstring>(Halftrack ht)</argsstring>
+        <name>trackBitsAsString</name>
+        <qualifiedname>vc64::DiskAnalyzer::trackBitsAsString</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="121" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.cpp" bodystart="290" bodyend="305"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1a3b39db47d8adcc409a64fdf3ebe08540" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::DiskAnalyzer::sectorHeaderBytesAsString</definition>
+        <argsstring>(Halftrack ht, Sector nr, bool hex)</argsstring>
+        <name>sectorHeaderBytesAsString</name>
+        <qualifiedname>vc64::DiskAnalyzer::sectorHeaderBytesAsString</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <param>
+          <type>Sector</type>
+          <declname>nr</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>hex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="124" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.cpp" bodystart="308" bodyend="318"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1a39314dfb528c1c05124428d4a9445f55" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::DiskAnalyzer::sectorDataBytesAsString</definition>
+        <argsstring>(Halftrack ht, Sector nr, bool hex)</argsstring>
+        <name>sectorDataBytesAsString</name>
+        <qualifiedname>vc64::DiskAnalyzer::sectorDataBytesAsString</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <param>
+          <type>Sector</type>
+          <declname>nr</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>hex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="127" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.cpp" bodystart="321" bodyend="331"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1a53262a85ad02d00d106510e117582934" prot="private" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::DiskAnalyzer::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::DiskAnalyzer::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="64" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" bodystart="64" bodyend="64"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1a72b17f4ef12077444c3309afe0176a33" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DiskAnalyzer::analyzeDisk</definition>
+        <argsstring>()</argsstring>
+        <name>analyzeDisk</name>
+        <qualifiedname>vc64::DiskAnalyzer::analyzeDisk</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="84" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.cpp" bodystart="82" bodyend="87"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1a8a03c6ceacc29873989ac8a967425797" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>TrackInfo</type>
+        <definition>TrackInfo vc64::DiskAnalyzer::analyzeTrack</definition>
+        <argsstring>(Track t)</argsstring>
+        <name>analyzeTrack</name>
+        <qualifiedname>vc64::DiskAnalyzer::analyzeTrack</qualifiedname>
+        <param>
+          <type>Track</type>
+          <declname>t</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="87" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.cpp" bodystart="90" bodyend="94"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1ad1bced714cd7082fc46772d8efcbebd3" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>TrackInfo</type>
+        <definition>TrackInfo vc64::DiskAnalyzer::analyzeHalftrack</definition>
+        <argsstring>(Halftrack ht)</argsstring>
+        <name>analyzeHalftrack</name>
+        <qualifiedname>vc64::DiskAnalyzer::analyzeHalftrack</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="88" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.cpp" bodystart="97" bodyend="178"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1a4f58d06cc03c72d99c8c975e7ec5ec90" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DiskAnalyzer::analyzeSectorBlocks</definition>
+        <argsstring>(Halftrack ht, TrackInfo &amp;trackInfo)</argsstring>
+        <name>analyzeSectorBlocks</name>
+        <qualifiedname>vc64::DiskAnalyzer::analyzeSectorBlocks</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <param>
+          <type>TrackInfo &amp;</type>
+          <declname>trackInfo</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="91" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.cpp" bodystart="181" bodyend="208"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1a1413a00a467314b3ca9f57f83dd5edab" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DiskAnalyzer::analyzeSectorHeaderBlock</definition>
+        <argsstring>(Halftrack ht, isize offset, TrackInfo &amp;trackInfo)</argsstring>
+        <name>analyzeSectorHeaderBlock</name>
+        <qualifiedname>vc64::DiskAnalyzer::analyzeSectorHeaderBlock</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>offset</declname>
+        </param>
+        <param>
+          <type>TrackInfo &amp;</type>
+          <declname>trackInfo</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="94" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.cpp" bodystart="211" bodyend="227"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1a014e964574c63c2bf9407e153e0331eb" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DiskAnalyzer::analyzeSectorDataBlock</definition>
+        <argsstring>(Halftrack ht, isize offset, TrackInfo &amp;trackInfo)</argsstring>
+        <name>analyzeSectorDataBlock</name>
+        <qualifiedname>vc64::DiskAnalyzer::analyzeSectorDataBlock</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>offset</declname>
+        </param>
+        <param>
+          <type>TrackInfo &amp;</type>
+          <declname>trackInfo</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="95" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.cpp" bodystart="230" bodyend="244"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1af7824e72fa2d0e0505036bf978a75094" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::DiskAnalyzer::log</definition>
+        <argsstring>(Halftrack ht, isize begin, isize length, const char *fmt,...)</argsstring>
+        <name>log</name>
+        <qualifiedname>vc64::DiskAnalyzer::log</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>begin</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>length</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>fmt</declname>
+        </param>
+        <param>
+          <type>...</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="98" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.cpp" bodystart="256" bodyend="268"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_disk_analyzer_1a70ea1bb4272a58e2ce073c08d91f4566" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::DiskAnalyzer::sectorBytesAsString</definition>
+        <argsstring>(Halftrack ht, isize offset, isize length, bool hex)</argsstring>
+        <name>sectorBytesAsString</name>
+        <qualifiedname>vc64::DiskAnalyzer::sectorBytesAsString</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>offset</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>length</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>hex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="132" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.cpp" bodystart="334" bodyend="355"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" line="22" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DiskAnalyzer.h" bodystart="22" bodyend="133"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_disk_analyzer_1a72b17f4ef12077444c3309afe0176a33" prot="private" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>analyzeDisk</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1ad1bced714cd7082fc46772d8efcbebd3" prot="private" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>analyzeHalftrack</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a4f58d06cc03c72d99c8c975e7ec5ec90" prot="private" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>analyzeSectorBlocks</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a014e964574c63c2bf9407e153e0331eb" prot="private" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>analyzeSectorDataBlock</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a1413a00a467314b3ca9f57f83dd5edab" prot="private" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>analyzeSectorHeaderBlock</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a8a03c6ceacc29873989ac8a967425797" prot="private" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>analyzeTrack</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1af38b7657186a6eec0271bfcb33f63921" prot="private" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>data</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a7ec1b5ce240c6b7c5efa928d9670dae5" prot="public" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>decodeGcr</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a16574c9d313989ca710edd003e6cf8ec" prot="public" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>decodeGcrNibble</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1abaa64ca2f353aa728ca2f091ca36a69d" prot="public" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>DiskAnalyzer</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a6b0c146e2a2e1d321c76f83e7911a7a3" prot="private" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>diskInfo</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a08176a8ce80f166dedeb2ccf63db1b4d" prot="public" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>diskNameAsString</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a4589238fd4b97e6a67c848ebcc22c034" prot="private" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>errorEndIndex</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1ac8853ca30d9d758de9d1402aca3ce385" prot="private" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>errorLog</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a12f5aee4a350a2a04b76e803ce67edb0" prot="public" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>errorMessage</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a30cdb980f6d65f4f9d93b2f19b88e63f" prot="private" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>errorStartIndex</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a3ce10401b90e10d8342a651ccf635ace" prot="public" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>firstErroneousBit</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a53262a85ad02d00d106510e117582934" prot="private" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a00e9a259d7043808dfe9026ed7febff6" prot="public" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>lastErroneousBit</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a9d7daaaab96677683ccf2e4057b9050e" prot="private" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>length</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a4348ad040d60855191b49109afa6b27c" prot="public" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>lengthOfHalftrack</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a68f53399ee2b39dfb88edb8ec8b471b1" prot="public" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>lengthOfTrack</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1af7824e72fa2d0e0505036bf978a75094" prot="private" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>log</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a62b9f34e898fedaeb3f60954d66fe687" prot="public" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>numErrors</name></member>
+      <member refid="classvc64_1_1_core_object_1ab05f272c10fd455a9cafbb667293d044" prot="public" virt="virtual"><scope>vc64::DiskAnalyzer</scope><name>prefix</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a70ea1bb4272a58e2ce073c08d91f4566" prot="private" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>sectorBytesAsString</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a39314dfb528c1c05124428d4a9445f55" prot="public" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>sectorDataBytesAsString</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a3b39db47d8adcc409a64fdf3ebe08540" prot="public" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>sectorHeaderBytesAsString</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1af185e8638e654f320d7cf516369bf0c8" prot="public" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>sectorLayout</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1aa0d2e135b5f5e91609a6c5c9e96245f0" prot="private" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>text</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a1442d23da9fa2fe8021bb5835663d3ab" prot="public" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>trackBitsAsString</name></member>
+      <member refid="classvc64_1_1_core_object_1aa17ada334edf800da9ea768925ffa885" prot="protected" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>vc64::DiskAnalyzer</scope><name>~CoreObject</name></member>
+      <member refid="classvc64_1_1_disk_analyzer_1a8321e0a04b57e71d809433421982e1a6" prot="public" virt="non-virtual"><scope>vc64::DiskAnalyzer</scope><name>~DiskAnalyzer</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="dir_785735119cac6aaae703f4b201f10d8d" kind="dir">
+    <compoundname>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive</compoundname>
+    <innerfile refid="_disk_8cpp">Disk.cpp</innerfile>
+    <innerfile refid="_disk_8h">Disk.h</innerfile>
+    <innerfile refid="_disk_analyzer_8cpp">DiskAnalyzer.cpp</innerfile>
+    <innerfile refid="_disk_analyzer_8h">DiskAnalyzer.h</innerfile>
+    <innerfile refid="_disk_analyzer_types_8h">DiskAnalyzerTypes.h</innerfile>
+    <innerfile refid="_disk_types_8h">DiskTypes.h</innerfile>
+    <innerfile refid="_drive_8cpp">Drive.cpp</innerfile>
+    <innerfile refid="_drive_8h">Drive.h</innerfile>
+    <innerfile refid="_drive_memory_8cpp">DriveMemory.cpp</innerfile>
+    <innerfile refid="_drive_memory_8h">DriveMemory.h</innerfile>
+    <innerfile refid="_drive_types_8h">DriveTypes.h</innerfile>
+    <innerfile refid="_par_cable_8cpp">ParCable.cpp</innerfile>
+    <innerfile refid="_par_cable_8h">ParCable.h</innerfile>
+    <innerfile refid="_par_cable_types_8h">ParCableTypes.h</innerfile>
+    <innerfile refid="_p_i_a_8cpp">PIA.cpp</innerfile>
+    <innerfile refid="_p_i_a_8h">PIA.h</innerfile>
+    <innerfile refid="_v_i_a_8cpp">VIA.cpp</innerfile>
+    <innerfile refid="_v_i_a_8h">VIA.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/"/>
+  </compounddef>
+</doxygen>

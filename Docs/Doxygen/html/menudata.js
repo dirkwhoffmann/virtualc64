@@ -33,4 +33,24 @@ var menudata={children:[
 {text:"All",url:"functions.html"},
 {text:"Functions",url:"functions_func.html"}]}]},
 {text:"Files",url:"files.html",children:[
-{text:"File List",url:"files.html"}]}]}
+{text:"File List",url:"files.html"},
+{text:"File Members",url:"globals.html",children:[
+{text:"All",url:"globals.html",children:[
+{text:"c",url:"globals.html#index_c"},
+{text:"d",url:"globals.html#index_d"},
+{text:"e",url:"globals.html#index_e"},
+{text:"g",url:"globals.html#index_g"},
+{text:"o",url:"globals.html#index_o"},
+{text:"p",url:"globals.html#index_p"},
+{text:"s",url:"globals.html#index_s"},
+{text:"v",url:"globals.html#index_v"}]},
+{text:"Enumerations",url:"globals_enum.html"},
+{text:"Enumerator",url:"globals_eval.html",children:[
+{text:"c",url:"globals_eval.html#index_c"},
+{text:"d",url:"globals_eval.html#index_d"},
+{text:"e",url:"globals_eval.html#index_e"},
+{text:"g",url:"globals_eval.html#index_g"},
+{text:"o",url:"globals_eval.html#index_o"},
+{text:"p",url:"globals_eval.html#index_p"},
+{text:"s",url:"globals_eval.html#index_s"},
+{text:"v",url:"globals_eval.html#index_v"}]}]}]}]}

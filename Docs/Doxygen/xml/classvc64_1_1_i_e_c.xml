@@ -1,0 +1,554 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_i_e_c" kind="class" language="C++" prot="public" final="yes">
+    <compoundname>vc64::IEC</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">vc64::SubComponent</basecompoundref>
+    <basecompoundref prot="public" virt="non-virtual">vc64::Dumpable</basecompoundref>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_i_e_c_1a281ff6f01b3b60c65753697b1184e417" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::IEC::atnLine</definition>
+        <argsstring></argsstring>
+        <name>atnLine</name>
+        <qualifiedname>vc64::IEC::atnLine</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="24" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_i_e_c_1afb99d0b5eb212b24e9d9fc12e2dc1fc2" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::IEC::clockLine</definition>
+        <argsstring></argsstring>
+        <name>clockLine</name>
+        <qualifiedname>vc64::IEC::clockLine</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="25" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_i_e_c_1a707c66e65dbd6c754a4fc86d64419e1d" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::IEC::dataLine</definition>
+        <argsstring></argsstring>
+        <name>dataLine</name>
+        <qualifiedname>vc64::IEC::dataLine</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="26" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_i_e_c_1ace5ca293691e22d7030711b8c3f69c15" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::IEC::device1Atn</definition>
+        <argsstring></argsstring>
+        <name>device1Atn</name>
+        <qualifiedname>vc64::IEC::device1Atn</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="29" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_i_e_c_1ac815c148c473dcc2c9c82adba16a8a27" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::IEC::device1Clock</definition>
+        <argsstring></argsstring>
+        <name>device1Clock</name>
+        <qualifiedname>vc64::IEC::device1Clock</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="30" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_i_e_c_1a49c49064ea0c2dfc8c9f74f2be7faa9b" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::IEC::device1Data</definition>
+        <argsstring></argsstring>
+        <name>device1Data</name>
+        <qualifiedname>vc64::IEC::device1Data</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="31" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" bodystart="31" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_i_e_c_1aab103ce33740eb3aaf7a3eceece22385" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::IEC::device2Atn</definition>
+        <argsstring></argsstring>
+        <name>device2Atn</name>
+        <qualifiedname>vc64::IEC::device2Atn</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="34" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_i_e_c_1a14cfbe83363e2bdac2e57bb5d085a7c1" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::IEC::device2Clock</definition>
+        <argsstring></argsstring>
+        <name>device2Clock</name>
+        <qualifiedname>vc64::IEC::device2Clock</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="35" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_i_e_c_1ad3c5ba7bdc1ecab22fec522485e1579c" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::IEC::device2Data</definition>
+        <argsstring></argsstring>
+        <name>device2Data</name>
+        <qualifiedname>vc64::IEC::device2Data</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="36" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_i_e_c_1a7a7b7c876445c4d7f95099d3678a3b49" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::IEC::ciaAtn</definition>
+        <argsstring></argsstring>
+        <name>ciaAtn</name>
+        <qualifiedname>vc64::IEC::ciaAtn</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="39" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_i_e_c_1a86ab7e664ed679c8ae043b9f9ab8c9ee" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::IEC::ciaClock</definition>
+        <argsstring></argsstring>
+        <name>ciaClock</name>
+        <qualifiedname>vc64::IEC::ciaClock</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="40" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_i_e_c_1ae4b8cd6cfa3c7b2cf519c62d64db2283" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::IEC::ciaData</definition>
+        <argsstring></argsstring>
+        <name>ciaData</name>
+        <qualifiedname>vc64::IEC::ciaData</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="41" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_i_e_c_1a4b3a2c4cab646eb5f76216b0ef717689" prot="public" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 vc64::IEC::idle</definition>
+        <argsstring></argsstring>
+        <name>idle</name>
+        <qualifiedname>vc64::IEC::idle</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="44" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_i_e_c_1acaae9ef62c55552f8fab5e654ca582be" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::IEC::transferring</definition>
+        <argsstring></argsstring>
+        <name>transferring</name>
+        <qualifiedname>vc64::IEC::transferring</qualifiedname>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="49" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_i_e_c_1a798e37a56e61fe0ec564eeb629253dc0" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::IEC::IEC</definition>
+        <argsstring>(C64 &amp;ref)</argsstring>
+        <name>IEC</name>
+        <qualifiedname>vc64::IEC::IEC</qualifiedname>
+        <param>
+          <type>C64 &amp;</type>
+          <declname>ref</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="58" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" bodystart="58" bodyend="58"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_i_e_c_1a612dfa0ed474d741a177b5cf300e421c" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::IEC::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::IEC::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="60" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" bodystart="60" bodyend="60"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_i_e_c_1a6ecf2a0c8c49e310bbcad3171c8a7c96" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::IEC::_dump</definition>
+        <argsstring>(Category category, std::ostream &amp;os) const override</argsstring>
+        <name>_dump</name>
+        <qualifiedname>vc64::IEC::_dump</qualifiedname>
+        <param>
+          <type>Category</type>
+          <declname>category</declname>
+        </param>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="61" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.cpp" bodystart="40" bodyend="53"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_i_e_c_1ad3b9a8851f7cf53e4113b8a0eabd752d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>IEC &amp;</type>
+        <definition>IEC &amp; vc64::IEC::operator=</definition>
+        <argsstring>(const IEC &amp;other)</argsstring>
+        <name>operator=</name>
+        <qualifiedname>vc64::IEC::operator=</qualifiedname>
+        <param>
+          <type>const IEC &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="70" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" bodystart="70" bodyend="87"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_i_e_c_1ae93f40f0bb76107660516d1ed453fb25" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>class T</type>
+          </param>
+        </templateparamlist>
+        <type>void</type>
+        <definition>void vc64::IEC::serialize</definition>
+        <argsstring>(T &amp;worker)</argsstring>
+        <name>serialize</name>
+        <qualifiedname>vc64::IEC::serialize</qualifiedname>
+        <param>
+          <type>T &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="90" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" bodystart="90" bodyend="108"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_i_e_c_1a28e3a8ee951b6bbfee2d6bd6deaa958f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::IEC::SERIALIZERS</definition>
+        <argsstring>(serialize)</argsstring>
+        <name>SERIALIZERS</name>
+        <qualifiedname>vc64::IEC::SERIALIZERS</qualifiedname>
+        <param>
+          <type>serialize</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="108" column="6"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_i_e_c_1a02eeab74ee4bf8ed6532e21099b3bfcf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::IEC::_reset</definition>
+        <argsstring>(bool hard) override</argsstring>
+        <name>_reset</name>
+        <qualifiedname>vc64::IEC::_reset</qualifiedname>
+        <param>
+          <type>bool</type>
+          <declname>hard</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="110" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.cpp" bodystart="20" bodyend="37"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_i_e_c_1ab9adf007e4d7f23b3e0c9898e1617ade" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::IEC::setNeedsUpdate</definition>
+        <argsstring>()</argsstring>
+        <name>setNeedsUpdate</name>
+        <qualifiedname>vc64::IEC::setNeedsUpdate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="120" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.cpp" bodystart="131" bodyend="134"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_i_e_c_1a22644c2789d00fde918223e0e9033d1c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::IEC::update</definition>
+        <argsstring>()</argsstring>
+        <name>update</name>
+        <qualifiedname>vc64::IEC::update</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="125" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.cpp" bodystart="137" bodyend="160"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_i_e_c_1ac6e488bb68390e59cf3756d8025c677e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::IEC::execute</definition>
+        <argsstring>()</argsstring>
+        <name>execute</name>
+        <qualifiedname>vc64::IEC::execute</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="131" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.cpp" bodystart="163" bodyend="168"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_i_e_c_1a7b1967cb2e67c805d36ac5304c7f3d0f" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::IEC::isTransferring</definition>
+        <argsstring>() const</argsstring>
+        <name>isTransferring</name>
+        <qualifiedname>vc64::IEC::isTransferring</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="134" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" bodystart="134" bodyend="134"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_i_e_c_1adff50ed9ba4d38caf68cc3ad3a25ca11" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::IEC::updateTransferStatus</definition>
+        <argsstring>()</argsstring>
+        <name>updateTransferStatus</name>
+        <qualifiedname>vc64::IEC::updateTransferStatus</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="137" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.cpp" bodystart="171" bodyend="182"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvc64_1_1_i_e_c_1a5893e5d84ecd4ff0b0e2cb69245e5887" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::IEC::updateIecLines</definition>
+        <argsstring>()</argsstring>
+        <name>updateIecLines</name>
+        <qualifiedname>vc64::IEC::updateIecLines</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="141" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.cpp" bodystart="103" bodyend="128"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_i_e_c_1a9fc33bde666ac1a274535b9fc1aaef41" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::IEC::_updateIecLines</definition>
+        <argsstring>()</argsstring>
+        <name>_updateIecLines</name>
+        <qualifiedname>vc64::IEC::_updateIecLines</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="146" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.cpp" bodystart="55" bodyend="100"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" line="19" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/IEC.h" bodystart="19" bodyend="147"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_i_e_c_1a6ecf2a0c8c49e310bbcad3171c8a7c96" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>_dump</name></member>
+      <member refid="classvc64_1_1_core_component_1aa7dd5e7a2020ad2348fea3edd724f538" prot="public" virt="virtual"><scope>vc64::IEC</scope><name>_initialize</name></member>
+      <member refid="classvc64_1_1_i_e_c_1a02eeab74ee4bf8ed6532e21099b3bfcf" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>_reset</name></member>
+      <member refid="classvc64_1_1_i_e_c_1a9fc33bde666ac1a274535b9fc1aaef41" prot="private" virt="non-virtual"><scope>vc64::IEC</scope><name>_updateIecLines</name></member>
+      <member refid="classvc64_1_1_configurable_1a947ce65dab57ea328e9959014b7f9dfb" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>argList</name></member>
+      <member refid="classvc64_1_1_i_e_c_1a281ff6f01b3b60c65753697b1184e417" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>atnLine</name></member>
+      <member refid="classvc64_1_1_sub_component_1a7691c720c74fd0e19a63978efe4cd851" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>c64</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae066edf64de901ee3f3b65eb0c02b202" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>cia1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9fe5ed30db982340524f7dcbf6fbf34c" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>cia2</name></member>
+      <member refid="classvc64_1_1_i_e_c_1a7a7b7c876445c4d7f95099d3678a3b49" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>ciaAtn</name></member>
+      <member refid="classvc64_1_1_i_e_c_1a86ab7e664ed679c8ae043b9f9ab8c9ee" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>ciaClock</name></member>
+      <member refid="classvc64_1_1_i_e_c_1ae4b8cd6cfa3c7b2cf519c62d64db2283" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>ciaData</name></member>
+      <member refid="classvc64_1_1_i_e_c_1afb99d0b5eb212b24e9d9fc12e2dc1fc2" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>clockLine</name></member>
+      <member refid="classvc64_1_1_core_component_1a18f454d0d572fa1b2e5023c4eaba6d07" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>CoreComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1acaece01018438ab083bd38a220d34f10" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>cpu</name></member>
+      <member refid="classvc64_1_1_i_e_c_1a707c66e65dbd6c754a4fc86d64419e1d" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>dataLine</name></member>
+      <member refid="classvc64_1_1_sub_component_1a157963272dd927ec5c77b4090be57e89" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>datasette</name></member>
+      <member refid="classvc64_1_1_i_e_c_1ace5ca293691e22d7030711b8c3f69c15" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>device1Atn</name></member>
+      <member refid="classvc64_1_1_i_e_c_1ac815c148c473dcc2c9c82adba16a8a27" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>device1Clock</name></member>
+      <member refid="classvc64_1_1_i_e_c_1a49c49064ea0c2dfc8c9f74f2be7faa9b" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>device1Data</name></member>
+      <member refid="classvc64_1_1_i_e_c_1aab103ce33740eb3aaf7a3eceece22385" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>device2Atn</name></member>
+      <member refid="classvc64_1_1_i_e_c_1a14cfbe83363e2bdac2e57bb5d085a7c1" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>device2Clock</name></member>
+      <member refid="classvc64_1_1_i_e_c_1ad3c5ba7bdc1ecab22fec522485e1579c" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>device2Data</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae85ede3d9ed8315d992eed300932eaf7" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>drive</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae44705f9377cf06d91323d8dca13a8a8" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>drive8</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5d876614a31fb29b8317350ed6a3158b" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>drive9</name></member>
+      <member refid="classvc64_1_1_dumpable_1a28d8b76288598fc0309bd6247e5479db" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_dumpable_1afc31b73f9b651bba5cf37dc88158755a" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_configurable_1a459505cd1eed2c174bf78b29808ad07b" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>dumpConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1a606e5261773126791e44ee8238f5876e" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>emulator</name></member>
+      <member refid="classvc64_1_1_i_e_c_1ac6e488bb68390e59cf3756d8025c677e" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>execute</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5dc793ff2aa4ff3b36fdd061fd3f816b" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>expansionport</name></member>
+      <member refid="classvc64_1_1_i_e_c_1a612dfa0ed474d741a177b5cf300e421c" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_configurable_1ae5d8ab4ec08470113b7123cd2ffdf4af" prot="public" virt="virtual"><scope>vc64::IEC</scope><name>getOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a80a7c09f7f0d153cb87000c9d82f" prot="public" virt="virtual"><scope>vc64::IEC</scope><name>getOptions</name></member>
+      <member refid="classvc64_1_1_core_component_1a936940e4e5cf0c617935ea3070bcbd4d" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>halt</name></member>
+      <member refid="classvc64_1_1_sub_component_1add6521bbcffbe5ca85afd6105d54e5ad" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>host</name></member>
+      <member refid="classvc64_1_1_i_e_c_1a4b3a2c4cab646eb5f76216b0ef717689" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>idle</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5c8620301453e0b91374683d0c7b28ab" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>iec</name></member>
+      <member refid="classvc64_1_1_i_e_c_1a798e37a56e61fe0ec564eeb629253dc0" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>IEC</name></member>
+      <member refid="classvc64_1_1_core_component_1a250f9ac5bbc00892bf195ec2ef523a2b" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>initialize</name></member>
+      <member refid="classvc64_1_1_core_component_1a7b95994acc6e7ba59d4b2f50f2dc8df5" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>isEmulatorThread</name></member>
+      <member refid="classvc64_1_1_core_component_1a0e8c3dd97f64e2487fba4c22ba66d487" prot="public" virt="virtual"><scope>vc64::IEC</scope><name>isHalted</name></member>
+      <member refid="classvc64_1_1_core_component_1a4f0f63ef65776aceecb329d03c3b5f17" prot="public" virt="virtual"><scope>vc64::IEC</scope><name>isPaused</name></member>
+      <member refid="classvc64_1_1_core_component_1ac4dadc5fecfac3cd2dfb7e8b70767b42" prot="public" virt="virtual"><scope>vc64::IEC</scope><name>isPoweredOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a0f9912b36ec181a0410d4f564baef127" prot="public" virt="virtual"><scope>vc64::IEC</scope><name>isPoweredOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a77bf78d982163a6797f24d23106c5098" prot="public" virt="virtual"><scope>vc64::IEC</scope><name>isReady</name></member>
+      <member refid="classvc64_1_1_core_component_1a121143d811f91157272bb67a0ca48d8f" prot="public" virt="virtual"><scope>vc64::IEC</scope><name>isRunning</name></member>
+      <member refid="classvc64_1_1_core_component_1a490512fe63211f42eb57e7ed59f9b6a1" prot="public" virt="virtual"><scope>vc64::IEC</scope><name>isSuspended</name></member>
+      <member refid="classvc64_1_1_i_e_c_1a7b1967cb2e67c805d36ac5304c7f3d0f" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>isTransferring</name></member>
+      <member refid="classvc64_1_1_configurable_1af6260d08823e90bdb51d1bf7bb596c35" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>isValidOption</name></member>
+      <member refid="classvc64_1_1_sub_component_1aa9a0c663f877801b651969f86dbf2aae" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>keyboard</name></member>
+      <member refid="classvc64_1_1_configurable_1a0d6caf30eeaae95d1898d08cf3ca8e28" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>keyList</name></member>
+      <member refid="classvc64_1_1_sub_component_1ad160280522e5c27cd731289b9396c44f" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>mem</name></member>
+      <member refid="classvc64_1_1_sub_component_1a478be9b50f9e5c4c07dd2830e9964711" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>msgQueue</name></member>
+      <member refid="classvc64_1_1_synchronizable_1a595f618a9c91e91148882a79760f0f0f" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>mutex</name></member>
+      <member refid="classvc64_1_1_sub_component_1a712af82456373bd6e688a174ac756bcb" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>muxer</name></member>
+      <member refid="classvc64_1_1_core_component_1af47e1017ec1d938b1b613b36bdc8be57" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>operator!=</name></member>
+      <member refid="classvc64_1_1_i_e_c_1ad3b9a8851f7cf53e4113b8a0eabd752d" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>operator=</name></member>
+      <member refid="classvc64_1_1_core_component_1aae8879dd8b62291254ec498fa9b2e2cf" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>operator==</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9dfb837b941848b6b87e6a57da28348d" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>parCable</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a9c059588a19eeba521b79ff28e3dd8" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>pause</name></member>
+      <member refid="classvc64_1_1_sub_component_1a8c0718eb9d42f335961eaed51ba7cb8d" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>port1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a217a6ea39994b6ecae4e1ebd9cc220e7" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>port2</name></member>
+      <member refid="classvc64_1_1_core_component_1a05e1ba6d62516f796256f1cc394bf2f5" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>powerOff</name></member>
+      <member refid="classvc64_1_1_core_component_1ad606699d83a017fbee805e8d40245475" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>powerOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a74ab4149c152b98c6d5cc15bbac63887" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>powerOnOff</name></member>
+      <member refid="classvc64_1_1_sub_component_1a4fa2405b078fe61c302ff1c8047d9c4f" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>powerSupply</name></member>
+      <member refid="classvc64_1_1_sub_component_1aba0c66cd1ce8a6d1c3529825afdb4a02" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>prefix</name></member>
+      <member refid="classvc64_1_1_sub_component_1a2e1d97a260e9d4d637b0f8fb95fbf1d8" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>recorder</name></member>
+      <member refid="classvc64_1_1_sub_component_1afe6a4ca2f661ec44fd67637b14647436" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>regressionTester</name></member>
+      <member refid="classvc64_1_1_core_component_1a3910be506f5067fe6cf31a69dcd76b0c" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>reset</name></member>
+      <member refid="classvc64_1_1_core_component_1a082147809d967c961a7ac7c15c5f072a" prot="public" virt="virtual"><scope>vc64::IEC</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1aec76d436c865101509bceb2daf47890b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::IEC</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1af9ec0fb5e73fd1f0433a4f3bfcd39d9b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::IEC</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1aab9305af3e38cc19bd1067ca87fe3e0d" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>resume</name></member>
+      <member refid="classvc64_1_1_sub_component_1ada641e2232ca8bdd3ef8fbecc883658d" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>retroShell</name></member>
+      <member refid="classvc64_1_1_core_component_1ae7093017e8a84768103c67b24de5c578" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>run</name></member>
+      <member refid="classvc64_1_1_i_e_c_1ae93f40f0bb76107660516d1ed453fb25" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>serialize</name></member>
+      <member refid="classvc64_1_1_i_e_c_1a28e3a8ee951b6bbfee2d6bd6deaa958f" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>SERIALIZERS</name></member>
+      <member refid="classvc64_1_1_i_e_c_1ab9adf007e4d7f23b3e0c9898e1617ade" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>setNeedsUpdate</name></member>
+      <member refid="classvc64_1_1_configurable_1ae56ba20ac3ec36bd84dbeb04aba3e8b0" prot="public" virt="virtual"><scope>vc64::IEC</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a51756d7f1f0ed1caa0e247ab6e789a3b" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a689b1a17fac237ca960b062df637" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_sub_component_1adce334c26f07e67bc936fbf7c935a759" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1a61d8a843718ff2f39e1575338a527676" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_core_component_1aa8b45810bedbdf78b88710ae8db3f495" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>subComponents</name></member>
+      <member refid="classvc64_1_1_core_component_1afd3f09724b119d73a122c3fc02ac1736" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>suspend</name></member>
+      <member refid="classvc64_1_1_suspendable_1a7f9f608d5b2b9b6e944176cde77b8f85" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>Suspendable</name></member>
+      <member refid="classvc64_1_1_core_component_1a0a4c841e543ecfc6cf988592a933a564" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>trackOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a4832ab0ebef49b591fe6e2785e969c89" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>trackOn</name></member>
+      <member refid="classvc64_1_1_core_component_1aae437c6ccf5f91155464dd4953c3baab" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>trackOnOff</name></member>
+      <member refid="classvc64_1_1_i_e_c_1acaae9ef62c55552f8fab5e654ca582be" prot="private" virt="non-virtual"><scope>vc64::IEC</scope><name>transferring</name></member>
+      <member refid="classvc64_1_1_i_e_c_1a22644c2789d00fde918223e0e9033d1c" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>update</name></member>
+      <member refid="classvc64_1_1_i_e_c_1a5893e5d84ecd4ff0b0e2cb69245e5887" prot="private" virt="non-virtual"><scope>vc64::IEC</scope><name>updateIecLines</name></member>
+      <member refid="classvc64_1_1_i_e_c_1adff50ed9ba4d38caf68cc3ad3a25ca11" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>updateTransferStatus</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a24c5efde497d14b519ad15c9053949" prot="public" virt="non-virtual"><scope>vc64::IEC</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9c1a4b73d1514ddc64567d4521abdecd" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>vic</name></member>
+      <member refid="classvc64_1_1_core_component_1a45399f75688ba5ba157a479c3ce76633" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>warpOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a5df664aeda300338d0568d59673ff536" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>warpOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a6760d32857901c415f4d75031d1e2654" prot="protected" virt="non-virtual"><scope>vc64::IEC</scope><name>warpOnOff</name></member>
+      <member refid="classvc64_1_1_configurable_1a5aa5d945e768c40297f1bf71e200bde3" prot="public" virt="virtual"><scope>vc64::IEC</scope><name>~Configurable</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>vc64::IEC</scope><name>~CoreObject</name></member>
+      <member refid="classvc64_1_1_dumpable_1a843e874f633f7dcd8e2f1dcf1d8f0c25" prot="public" virt="virtual"><scope>vc64::IEC</scope><name>~Dumpable</name></member>
+      <member refid="classvc64_1_1_suspendable_1a35809d3a4c20db1f096e8dc5c78c49b9" prot="public" virt="virtual"><scope>vc64::IEC</scope><name>~Suspendable</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

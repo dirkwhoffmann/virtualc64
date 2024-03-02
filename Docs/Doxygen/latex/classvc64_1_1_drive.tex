@@ -1,0 +1,557 @@
+\doxysection{vc64\+::Drive Class Reference}
+\hypertarget{classvc64_1_1_drive}{}\label{classvc64_1_1_drive}\index{vc64::Drive@{vc64::Drive}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_drive_a161c43e7fe4ade183d518a4d36c577d2}\label{classvc64_1_1_drive_a161c43e7fe4ade183d518a4d36c577d2} 
+{\bfseries Drive} (isize nr, \mbox{\hyperlink{classvc64_1_1_c64}{C64}} \&ref)
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classvc64_1_1_drive_a4a4debb567c501bd60aff7059325f4a9}{get\+Description}} () const override
+\item 
+void \mbox{\hyperlink{classvc64_1_1_drive_a3dc43d02357d594e53e64d2faa170674}{\+\_\+dump}} (Category category, std\+::ostream \&os) const override
+\item 
+void \mbox{\hyperlink{classvc64_1_1_drive_ae093fd7a809b915a5586de6e5046a947}{\+\_\+initialize}} () override
+\item 
+\Hypertarget{classvc64_1_1_drive_a1689245acfe0e2a10b028a1465a3aca3}\label{classvc64_1_1_drive_a1689245acfe0e2a10b028a1465a3aca3} 
+\mbox{\hyperlink{classvc64_1_1_drive}{Drive}} \& {\bfseries operator=} (const \mbox{\hyperlink{classvc64_1_1_drive}{Drive}} \&other)
+\item 
+\Hypertarget{classvc64_1_1_drive_a108eb3e695848ad5dbe2cc0a277f2aec}\label{classvc64_1_1_drive_a108eb3e695848ad5dbe2cc0a277f2aec} 
+{\footnotesize template$<$class T $>$ }\\void {\bfseries serialize} (T \&worker)
+\item 
+\Hypertarget{classvc64_1_1_drive_adfa34de6e19fc8a3dfa35b1deb1a9b2c}\label{classvc64_1_1_drive_adfa34de6e19fc8a3dfa35b1deb1a9b2c} 
+void {\bfseries operator$<$$<$} (Ser\+Resetter \&worker) override
+\item 
+\Hypertarget{classvc64_1_1_drive_abc24cac9dec522a887be3e44659ea34e}\label{classvc64_1_1_drive_abc24cac9dec522a887be3e44659ea34e} 
+void {\bfseries operator$<$$<$} (Ser\+Checker \&worker) override
+\item 
+\Hypertarget{classvc64_1_1_drive_a3e759e8bbfc575be01b313e657c0dc40}\label{classvc64_1_1_drive_a3e759e8bbfc575be01b313e657c0dc40} 
+void {\bfseries operator$<$$<$} (Ser\+Counter \&worker) override
+\item 
+\Hypertarget{classvc64_1_1_drive_a1e67ca3991579d97a4c099500fb9e3ad}\label{classvc64_1_1_drive_a1e67ca3991579d97a4c099500fb9e3ad} 
+void {\bfseries operator$<$$<$} (Ser\+Reader \&worker) override
+\item 
+\Hypertarget{classvc64_1_1_drive_af4e8a9a7fcc13ab1ff4bd15dfd20b560}\label{classvc64_1_1_drive_af4e8a9a7fcc13ab1ff4bd15dfd20b560} 
+void {\bfseries operator$<$$<$} (Ser\+Writer \&worker) override
+\item 
+void \mbox{\hyperlink{classvc64_1_1_drive_a544d2bef8791caa804d4b00dc2dc33e3}{\+\_\+reset}} (bool hard) override
+\item 
+\Hypertarget{classvc64_1_1_drive_a2e21d00c5b52201d8475dd19b1a3a6e0}\label{classvc64_1_1_drive_a2e21d00c5b52201d8475dd19b1a3a6e0} 
+const \mbox{\hyperlink{struct_drive_config}{Drive\+Config}} \& {\bfseries get\+Config} () const
+\item 
+const Config\+Options \& \mbox{\hyperlink{classvc64_1_1_drive_a28276449fb433a5d7231791efd4dee7d}{get\+Options}} () const override
+\item 
+i64 \mbox{\hyperlink{classvc64_1_1_drive_ae52bdde1d48bc7a3b2702a6e4d932cc6}{get\+Option}} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt) const override
+\item 
+void \mbox{\hyperlink{classvc64_1_1_drive_a347cdcd8f889a3dd98202471fcda784e}{set\+Option}} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt, i64 value) override
+\item 
+void \mbox{\hyperlink{classvc64_1_1_drive_a4506e947c216e2a5951005c88e24b6f9}{reset\+Config}} () override
+\item 
+\Hypertarget{classvc64_1_1_drive_a7552d8eba9371142c72398e1d9370ef6}\label{classvc64_1_1_drive_a7552d8eba9371142c72398e1d9370ef6} 
+void {\bfseries auto\+Configure} ()
+\item 
+\Hypertarget{classvc64_1_1_drive_aba1113dd7775d67ded129823c8631b0f}\label{classvc64_1_1_drive_aba1113dd7775d67ded129823c8631b0f} 
+bool {\bfseries can\+Connect} ()
+\item 
+\Hypertarget{classvc64_1_1_drive_a55e0897a67a1df6702ce9d384176902d}\label{classvc64_1_1_drive_a55e0897a67a1df6702ce9d384176902d} 
+bool {\bfseries has\+Par\+Cable} ()
+\item 
+\Hypertarget{classvc64_1_1_drive_a00cacb816f59bf7b41c2d85bfcd7fe57}\label{classvc64_1_1_drive_a00cacb816f59bf7b41c2d85bfcd7fe57} 
+Par\+Cable\+Type {\bfseries get\+Par\+Cable\+Type} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_a0a5a5198601b37d77f96c02d5429a269}\label{classvc64_1_1_drive_a0a5a5198601b37d77f96c02d5429a269} 
+\mbox{\hyperlink{struct_drive_info}{Drive\+Info}} {\bfseries get\+Info} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_a43bb81f32b9ad58738abe0bedb5786ae}\label{classvc64_1_1_drive_a43bb81f32b9ad58738abe0bedb5786ae} 
+isize {\bfseries get\+Device\+Nr} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_a066f4789a76d5b8709c815e0499c44e5}\label{classvc64_1_1_drive_a066f4789a76d5b8709c815e0499c44e5} 
+bool {\bfseries is\+Drive8} ()
+\item 
+\Hypertarget{classvc64_1_1_drive_a0ad885d1977420a060fc660b00d04f23}\label{classvc64_1_1_drive_a0ad885d1977420a060fc660b00d04f23} 
+bool {\bfseries is\+Drive9} ()
+\item 
+\Hypertarget{classvc64_1_1_drive_a8753377d04dc137d24a16d9c202dd5c6}\label{classvc64_1_1_drive_a8753377d04dc137d24a16d9c202dd5c6} 
+bool {\bfseries get\+Red\+LED} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_a060264dc71ef86fd97399c5885f953a1}\label{classvc64_1_1_drive_a060264dc71ef86fd97399c5885f953a1} 
+void {\bfseries set\+Red\+LED} (bool b)
+\item 
+\Hypertarget{classvc64_1_1_drive_ac77b8d8053a06d3e6fc5a3f0b307d1a3}\label{classvc64_1_1_drive_ac77b8d8053a06d3e6fc5a3f0b307d1a3} 
+bool {\bfseries is\+Rotating} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_aa6d5f8f11fe5b7d9ad5bd76b106bfe95}\label{classvc64_1_1_drive_aa6d5f8f11fe5b7d9ad5bd76b106bfe95} 
+void {\bfseries set\+Rotating} (bool b)
+\item 
+\Hypertarget{classvc64_1_1_drive_a9dec0119539afc8ec43ef6d80a1ab49a}\label{classvc64_1_1_drive_a9dec0119539afc8ec43ef6d80a1ab49a} 
+void {\bfseries wake\+Up} (isize awakeness=power\+Safe\+Threshold)
+\item 
+\Hypertarget{classvc64_1_1_drive_a3a1be9a3e2b6d06c7a25a7ec3015bdfe}\label{classvc64_1_1_drive_a3a1be9a3e2b6d06c7a25a7ec3015bdfe} 
+bool {\bfseries is\+Idle} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_aa65d7a786ada5bcbc27c4f5f1d813984}\label{classvc64_1_1_drive_aa65d7a786ada5bcbc27c4f5f1d813984} 
+bool {\bfseries connected\+And\+On} ()
+\item 
+\Hypertarget{classvc64_1_1_drive_af8e5c8aa965f165485b484782cd5b571}\label{classvc64_1_1_drive_af8e5c8aa965f165485b484782cd5b571} 
+bool {\bfseries has\+Disk} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_a1c9404bacf30b1d56a8a6e047c98a2fa}\label{classvc64_1_1_drive_a1c9404bacf30b1d56a8a6e047c98a2fa} 
+bool {\bfseries has\+Partially\+Removed\+Disk} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_a92659011c6f3fb88afc6298658dfe65d}\label{classvc64_1_1_drive_a92659011c6f3fb88afc6298658dfe65d} 
+bool {\bfseries has\+Protected\+Disk} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_ab6a32d8f886d98eb3d573b5b0a4188f4}\label{classvc64_1_1_drive_ab6a32d8f886d98eb3d573b5b0a4188f4} 
+bool {\bfseries has\+Modified\+Disk} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_a058014661b4398f2e0aab06432f50e62}\label{classvc64_1_1_drive_a058014661b4398f2e0aab06432f50e62} 
+bool {\bfseries has\+Unmodified\+Disk} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_a0aecff0fa4df1faadbea7761b9e0ae32}\label{classvc64_1_1_drive_a0aecff0fa4df1faadbea7761b9e0ae32} 
+bool {\bfseries has\+Unprotected\+Disk} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_a42981e4ecb9a1b3e32766ebf245e0355}\label{classvc64_1_1_drive_a42981e4ecb9a1b3e32766ebf245e0355} 
+void {\bfseries set\+Modification\+Flag} (bool value)
+\item 
+\Hypertarget{classvc64_1_1_drive_a7ca9809b81aa6311ab54afc2d1e72b6e}\label{classvc64_1_1_drive_a7ca9809b81aa6311ab54afc2d1e72b6e} 
+void {\bfseries mark\+Disk\+As\+Modified} ()
+\item 
+\Hypertarget{classvc64_1_1_drive_a05ee62654e6f7d24711d7ac8bf9dd0ca}\label{classvc64_1_1_drive_a05ee62654e6f7d24711d7ac8bf9dd0ca} 
+void {\bfseries mark\+Disk\+As\+Unmodified} ()
+\item 
+\Hypertarget{classvc64_1_1_drive_a992e72809b42253afb21542699d2ccd6}\label{classvc64_1_1_drive_a992e72809b42253afb21542699d2ccd6} 
+bool {\bfseries get\+Light\+Barrier} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_a54f8c33ac5ccb86830c9f3b969918efe}\label{classvc64_1_1_drive_a54f8c33ac5ccb86830c9f3b969918efe} 
+void {\bfseries insert\+Disk} (const string \&path, bool wp) throws
+\item 
+\Hypertarget{classvc64_1_1_drive_acdf49db9a21706b0e1fa256e62d9bba2}\label{classvc64_1_1_drive_acdf49db9a21706b0e1fa256e62d9bba2} 
+void {\bfseries insert\+Disk} (std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classvc64_1_1_disk}{Disk}} $>$ disk)
+\item 
+\Hypertarget{classvc64_1_1_drive_a7220307b547927275764814f5befcd2a}\label{classvc64_1_1_drive_a7220307b547927275764814f5befcd2a} 
+void {\bfseries insert\+New\+Disk} (DOSType fstype, \mbox{\hyperlink{classvc64_1_1_p_e_t_name}{PETName}}$<$ 16 $>$ name)
+\item 
+\Hypertarget{classvc64_1_1_drive_a06dfd387468986bf6854a24fb1bf98a0}\label{classvc64_1_1_drive_a06dfd387468986bf6854a24fb1bf98a0} 
+void {\bfseries insert\+D64} (const \mbox{\hyperlink{classvc64_1_1_d64_file}{D64\+File}} \&d64, bool wp)
+\item 
+\Hypertarget{classvc64_1_1_drive_a8ec3637f7d71d9ebff66c95c980b0717}\label{classvc64_1_1_drive_a8ec3637f7d71d9ebff66c95c980b0717} 
+void {\bfseries insert\+G64} (const \mbox{\hyperlink{classvc64_1_1_g64_file}{G64\+File}} \&g64, bool wp)
+\item 
+\Hypertarget{classvc64_1_1_drive_a0228395ce268eaca69089b2ce71063f4}\label{classvc64_1_1_drive_a0228395ce268eaca69089b2ce71063f4} 
+void {\bfseries insert\+Collection} (\mbox{\hyperlink{classvc64_1_1_any_collection}{Any\+Collection}} \&archive, bool wp) throws
+\item 
+\Hypertarget{classvc64_1_1_drive_af90bc8671995ae9c1ff01cbe97075d57}\label{classvc64_1_1_drive_af90bc8671995ae9c1ff01cbe97075d57} 
+void {\bfseries insert\+File\+System} (const class \mbox{\hyperlink{classvc64_1_1_file_system}{File\+System}} \&device, bool wp)
+\item 
+\Hypertarget{classvc64_1_1_drive_aa1db07d613125e68076804ad8eef0b81}\label{classvc64_1_1_drive_aa1db07d613125e68076804ad8eef0b81} 
+void {\bfseries eject\+Disk} ()
+\item 
+\Hypertarget{classvc64_1_1_drive_ad3817eba9af93c7bfd4c1173bf947308}\label{classvc64_1_1_drive_ad3817eba9af93c7bfd4c1173bf947308} 
+void {\bfseries execute} (u64 duration)
+\item 
+\Hypertarget{classvc64_1_1_drive_a73c3d3538cfd3476c805c6d5fbf16401}\label{classvc64_1_1_drive_a73c3d3538cfd3476c805c6d5fbf16401} 
+bool {\bfseries read\+Mode} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_a0b150bc3432b2e2cf04cfea3b06944f3}\label{classvc64_1_1_drive_a0b150bc3432b2e2cf04cfea3b06944f3} 
+bool {\bfseries write\+Mode} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_a5c4692e3a653b481ca4ebe41289acf0a}\label{classvc64_1_1_drive_a5c4692e3a653b481ca4ebe41289acf0a} 
+Halftrack {\bfseries get\+Halftrack} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_a71b354fade42a303fe9dc09a40b0ffa9}\label{classvc64_1_1_drive_a71b354fade42a303fe9dc09a40b0ffa9} 
+Track {\bfseries get\+Track} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_aa3b8d2361eba0f44270d08b520fd8d85}\label{classvc64_1_1_drive_aa3b8d2361eba0f44270d08b520fd8d85} 
+isize {\bfseries size\+Of\+Halftrack} (Halftrack ht)
+\item 
+\Hypertarget{classvc64_1_1_drive_ab9f7f4337b6afcd1dff83d6dc1662965}\label{classvc64_1_1_drive_ab9f7f4337b6afcd1dff83d6dc1662965} 
+isize {\bfseries size\+Of\+Current\+Halftrack} ()
+\item 
+\Hypertarget{classvc64_1_1_drive_a58e3647769f175230f6a2b8e2d04d0a3}\label{classvc64_1_1_drive_a58e3647769f175230f6a2b8e2d04d0a3} 
+Head\+Pos {\bfseries get\+Offset} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_a65c07b9a7a15cf3af4b0e1564e860469}\label{classvc64_1_1_drive_a65c07b9a7a15cf3af4b0e1564e860469} 
+void {\bfseries move\+Head\+Up} ()
+\item 
+\Hypertarget{classvc64_1_1_drive_ab4a8d27e84c2d96de7fa83e85bf5dd53}\label{classvc64_1_1_drive_ab4a8d27e84c2d96de7fa83e85bf5dd53} 
+void {\bfseries move\+Head\+Down} ()
+\item 
+\Hypertarget{classvc64_1_1_drive_af4e3b3e1722026f3430bce92ffbe331f}\label{classvc64_1_1_drive_af4e3b3e1722026f3430bce92ffbe331f} 
+bool {\bfseries get\+Sync} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_a014b1e3a591ba075aa16de25fc448c19}\label{classvc64_1_1_drive_a014b1e3a591ba075aa16de25fc448c19} 
+void {\bfseries update\+Byte\+Ready} ()
+\item 
+\Hypertarget{classvc64_1_1_drive_a68477048ba33e5c3bd97420532a6a13b}\label{classvc64_1_1_drive_a68477048ba33e5c3bd97420532a6a13b} 
+void {\bfseries raise\+Byte\+Ready} ()
+\item 
+\Hypertarget{classvc64_1_1_drive_a608773b227567212c30eb2aeaaf08b07}\label{classvc64_1_1_drive_a608773b227567212c30eb2aeaaf08b07} 
+bool {\bfseries get\+Zone} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_a83df32691d57486a0ec4ae0824b1d077}\label{classvc64_1_1_drive_a83df32691d57486a0ec4ae0824b1d077} 
+void {\bfseries set\+Zone} (isize value)
+\item 
+\Hypertarget{classvc64_1_1_drive_aae5fb920d89f76639152177b0ce459bd}\label{classvc64_1_1_drive_aae5fb920d89f76639152177b0ce459bd} 
+u8 {\bfseries read\+Bit\+From\+Head} () const
+\item 
+\Hypertarget{classvc64_1_1_drive_a05dbb6996d5b7780be4e4ab7d9c6b17f}\label{classvc64_1_1_drive_a05dbb6996d5b7780be4e4ab7d9c6b17f} 
+void {\bfseries write\+Bit\+To\+Head} (u8 bit)
+\item 
+\Hypertarget{classvc64_1_1_drive_ae5d77d4114dbfc6089c833c08efed0ad}\label{classvc64_1_1_drive_ae5d77d4114dbfc6089c833c08efed0ad} 
+void {\bfseries rotate\+Disk} ()
+\item 
+\Hypertarget{classvc64_1_1_drive_a986946e22fc68f3fdf24accfaf5aa955}\label{classvc64_1_1_drive_a986946e22fc68f3fdf24accfaf5aa955} 
+void {\bfseries vsync\+Handler} ()
+\item 
+\Hypertarget{classvc64_1_1_drive_a01cb39eb96df9183c6ab30b31264847c}\label{classvc64_1_1_drive_a01cb39eb96df9183c6ab30b31264847c} 
+void {\bfseries process\+Command} (const Cmd \&cmd)
+\item 
+\Hypertarget{classvc64_1_1_drive_a3d2ed1abf145c464dba237939e21d698}\label{classvc64_1_1_drive_a3d2ed1abf145c464dba237939e21d698} 
+void {\bfseries schedule\+First\+Disk\+Change\+Event} (Event\+ID id)
+\item 
+\Hypertarget{classvc64_1_1_drive_a24963f5173887993981c28faa8a50a5c}\label{classvc64_1_1_drive_a24963f5173887993981c28faa8a50a5c} 
+void {\bfseries process\+Disk\+Change\+Event} (Event\+ID id)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_sub_component}{vc64\+::\+Sub\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Sub\+Component} (\mbox{\hyperlink{classvc64_1_1_c64}{C64}} \&ref)
+\item 
+{\bfseries Sub\+Component} (const \mbox{\hyperlink{classvc64_1_1_sub_component}{Sub\+Component}} \&other)
+\item 
+void \mbox{\hyperlink{classvc64_1_1_sub_component_aba0c66cd1ce8a6d1c3529825afdb4a02}{prefix}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_core_component}{vc64\+::\+Core\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Core\+Component} (\mbox{\hyperlink{classvc64_1_1_emulator}{Emulator}} \&ref)
+\item 
+bool {\bfseries operator==} (\mbox{\hyperlink{classvc64_1_1_core_component}{Core\+Component}} \&other)
+\item 
+bool {\bfseries operator!=} (\mbox{\hyperlink{classvc64_1_1_core_component}{Core\+Component}} \&other)
+\item 
+void {\bfseries initialize} ()
+\item 
+void {\bfseries reset} (bool hard)
+\item 
+virtual bool {\bfseries is\+Powered\+Off} () const
+\item 
+virtual bool {\bfseries is\+Powered\+On} () const
+\item 
+virtual bool {\bfseries is\+Paused} () const
+\item 
+virtual bool {\bfseries is\+Running} () const
+\item 
+virtual bool {\bfseries is\+Suspended} () const
+\item 
+virtual bool {\bfseries is\+Halted} () const
+\item 
+void \mbox{\hyperlink{classvc64_1_1_core_component_afd3f09724b119d73a122c3fc02ac1736}{suspend}} ()
+\item 
+void \mbox{\hyperlink{classvc64_1_1_core_component_aab9305af3e38cc19bd1067ca87fe3e0d}{resume}} ()
+\item 
+virtual void {\bfseries is\+Ready} () const throws
+\item 
+bool {\bfseries is\+Emulator\+Thread} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_configurable}{vc64\+::\+Configurable}}}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries is\+Valid\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt) const
+\item 
+void {\bfseries set\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt, const string \&value)
+\item 
+void {\bfseries set\+Option} (const string \&opt, const string \&value)
+\item 
+void {\bfseries reset\+Config} (const \mbox{\hyperlink{classvc64_1_1_defaults}{Defaults}} \&defaults)
+\item 
+void {\bfseries reset\+Config} (const \mbox{\hyperlink{classvc64_1_1_defaults}{Defaults}} \&defaults, isize i)
+\item 
+void {\bfseries dump\+Config} (std\+::ostream \&os) const
+\item 
+string {\bfseries key\+List} ()
+\item 
+string {\bfseries arg\+List} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_inspectable}{vc64\+::\+Inspectable$<$ Drive\+Info, Void $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_drive_info}{Drive\+Info}} \& {\bfseries get\+State} () const
+\item 
+\mbox{\hyperlink{structvc64_1_1_void}{Void}} \& {\bfseries get\+Stats} () const
+\item 
+virtual void {\bfseries record} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_dumpable}{vc64\+::\+Dumpable}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries dump} (Category category, std\+::ostream \&ss) const
+\item 
+void {\bfseries dump} (Category category) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_drive_a5c498ad72b891a9ec4ebf00c4697b9e7}\label{classvc64_1_1_drive_a5c498ad72b891a9ec4ebf00c4697b9e7} 
+\mbox{\hyperlink{classvc64_1_1_drive_memory}{Drive\+Memory}} {\bfseries mem} = \mbox{\hyperlink{classvc64_1_1_drive_memory}{Drive\+Memory}}(c64, \texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_drive_abe3e70d9c1647df31d9b8af0515fcb4f}\label{classvc64_1_1_drive_abe3e70d9c1647df31d9b8af0515fcb4f} 
+\mbox{\hyperlink{classvc64_1_1_c_p_u}{CPU}} {\bfseries cpu} = \mbox{\hyperlink{classvc64_1_1_c_p_u}{CPU}}(MOS\+\_\+6502, c64)
+\item 
+\Hypertarget{classvc64_1_1_drive_ad8f05903df8b7b8271e2654dc4c078fa}\label{classvc64_1_1_drive_ad8f05903df8b7b8271e2654dc4c078fa} 
+\mbox{\hyperlink{classvc64_1_1_v_i_a1}{VIA1}} {\bfseries via1} = \mbox{\hyperlink{classvc64_1_1_v_i_a1}{VIA1}}(c64, \texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_drive_a6e76634417c66025dd6bd5aae255a5a2}\label{classvc64_1_1_drive_a6e76634417c66025dd6bd5aae255a5a2} 
+\mbox{\hyperlink{classvc64_1_1_v_i_a2}{VIA2}} {\bfseries via2} = \mbox{\hyperlink{classvc64_1_1_v_i_a2}{VIA2}}(c64, \texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_drive_a600d37cc1e024a4af45595064097237f}\label{classvc64_1_1_drive_a600d37cc1e024a4af45595064097237f} 
+\mbox{\hyperlink{classvc64_1_1_pia_dolphin}{Pia\+Dolphin}} {\bfseries pia} = \mbox{\hyperlink{classvc64_1_1_pia_dolphin}{Pia\+Dolphin}}(c64, \texorpdfstring{$\ast$}{*}this)
+\item 
+\Hypertarget{classvc64_1_1_drive_a21fee93396469b504eb659aaac4fcdda}\label{classvc64_1_1_drive_a21fee93396469b504eb659aaac4fcdda} 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classvc64_1_1_disk}{Disk}} $>$ {\bfseries disk}
+\item 
+\Hypertarget{classvc64_1_1_drive_a7965ddf84eb93f059be76cc196ffed6b}\label{classvc64_1_1_drive_a7965ddf84eb93f059be76cc196ffed6b} 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classvc64_1_1_disk}{Disk}} $>$ {\bfseries disk\+To\+Insert}
+\item 
+\Hypertarget{classvc64_1_1_drive_a16afab0963a51d04404d74c2fd6f3fe6}\label{classvc64_1_1_drive_a16afab0963a51d04404d74c2fd6f3fe6} 
+i64 {\bfseries carry\+Counter} = 0
+\item 
+\Hypertarget{classvc64_1_1_drive_afbbc21698bc28f6ede7c8b6e2b6e396b}\label{classvc64_1_1_drive_afbbc21698bc28f6ede7c8b6e2b6e396b} 
+u8 {\bfseries counter\+UF4} = 0
+\item 
+\Hypertarget{classvc64_1_1_drive_a941ee0fc3593b10fc2b270ac17f59266}\label{classvc64_1_1_drive_a941ee0fc3593b10fc2b270ac17f59266} 
+i16 {\bfseries bit\+Ready\+Timer} = 0
+\item 
+\Hypertarget{classvc64_1_1_drive_a5f560d8e95e897c77f87156d6993f206}\label{classvc64_1_1_drive_a5f560d8e95e897c77f87156d6993f206} 
+u8 {\bfseries byte\+Ready\+Counter} = 0
+\item 
+\Hypertarget{classvc64_1_1_drive_a3cd541173e58377ec4d254b169155609}\label{classvc64_1_1_drive_a3cd541173e58377ec4d254b169155609} 
+Halftrack {\bfseries halftrack} = 0
+\item 
+\Hypertarget{classvc64_1_1_drive_aa45445199e72d9e03c324a868dda2dce}\label{classvc64_1_1_drive_aa45445199e72d9e03c324a868dda2dce} 
+Head\+Pos {\bfseries offset} = 0
+\item 
+\Hypertarget{classvc64_1_1_drive_a607369e3a85d35412073682c25f00050}\label{classvc64_1_1_drive_a607369e3a85d35412073682c25f00050} 
+isize {\bfseries zone} = 0
+\item 
+\Hypertarget{classvc64_1_1_drive_a1076a5045d5212b26f74522699328c84}\label{classvc64_1_1_drive_a1076a5045d5212b26f74522699328c84} 
+u16 {\bfseries read\+Shiftreg} = 0
+\item 
+\Hypertarget{classvc64_1_1_drive_a46b9c06e632cc1120953030a17d7732d}\label{classvc64_1_1_drive_a46b9c06e632cc1120953030a17d7732d} 
+u8 {\bfseries write\+Shiftreg} = 0
+\item 
+\Hypertarget{classvc64_1_1_drive_a265fba6d7c06c16636a29e2b52bd5187}\label{classvc64_1_1_drive_a265fba6d7c06c16636a29e2b52bd5187} 
+bool {\bfseries sync} = false
+\item 
+\Hypertarget{classvc64_1_1_drive_ad9ff92a591c947220162f55fbc54e9a8}\label{classvc64_1_1_drive_ad9ff92a591c947220162f55fbc54e9a8} 
+bool {\bfseries byte\+Ready} = false
+\item 
+\Hypertarget{classvc64_1_1_drive_a47145847c280906bd4c474379a6d0354}\label{classvc64_1_1_drive_a47145847c280906bd4c474379a6d0354} 
+i64 {\bfseries watchdog} = INT64\+\_\+\+MAX
+\item 
+\Hypertarget{classvc64_1_1_drive_a6af865779348750cc0d56eb978187ee8}\label{classvc64_1_1_drive_a6af865779348750cc0d56eb978187ee8} 
+bool {\bfseries needs\+Emulation} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classvc64_1_1_core_component}{vc64\+::\+Core\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classvc64_1_1_emulator}{Emulator}} \& {\bfseries emulator}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classvc64_1_1_core_component}{Core\+Component}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries sub\+Components}
+\item 
+bool {\bfseries verbose} = true
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classvc64_1_1_synchronizable}{vc64\+::\+Synchronizable}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classutil_1_1_reentrant_mutex}{util\+::\+Reentrant\+Mutex}} {\bfseries mutex}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_drive_a752d0eb08c65a5b17f4d9fe984e14c09}\label{classvc64_1_1_drive_a752d0eb08c65a5b17f4d9fe984e14c09} 
+class {\bfseries Drive\+Memory}
+\item 
+\Hypertarget{classvc64_1_1_drive_aaac1fb78098190bf72ce5c8e3c19a35c}\label{classvc64_1_1_drive_aaac1fb78098190bf72ce5c8e3c19a35c} 
+class {\bfseries VIA1}
+\item 
+\Hypertarget{classvc64_1_1_drive_a369c3335a5cd37d67df1d5c5bc9fbfbd}\label{classvc64_1_1_drive_a369c3335a5cd37d67df1d5c5bc9fbfbd} 
+class {\bfseries VIA2}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_core_component}{vc64\+::\+Core\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries power\+On} ()
+\item 
+void {\bfseries power\+Off} ()
+\item 
+void {\bfseries run} ()
+\item 
+void {\bfseries pause} ()
+\item 
+void {\bfseries halt} ()
+\item 
+void {\bfseries warp\+On} ()
+\item 
+void {\bfseries warp\+Off} ()
+\item 
+void {\bfseries track\+On} ()
+\item 
+void {\bfseries track\+Off} ()
+\item 
+void {\bfseries power\+On\+Off} (bool value)
+\item 
+void {\bfseries warp\+On\+Off} (bool value)
+\item 
+void {\bfseries track\+On\+Off} (bool value)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_sub_component}{vc64\+::\+Sub\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c64}{C64}} \& {\bfseries c64}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c_i_a1}{CIA1}} \& {\bfseries cia1}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c_i_a2}{CIA2}} \& {\bfseries cia2}
+\item 
+\mbox{\hyperlink{classvc64_1_1_control_port}{Control\+Port}} \& {\bfseries port1}
+\item 
+\mbox{\hyperlink{classvc64_1_1_control_port}{Control\+Port}} \& {\bfseries port2}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c_p_u}{CPU}} \& {\bfseries cpu}
+\item 
+\mbox{\hyperlink{classvc64_1_1_datasette}{Datasette}} \& {\bfseries datasette}
+\item 
+\mbox{\hyperlink{classvc64_1_1_drive}{Drive}} \& {\bfseries drive8}
+\item 
+\mbox{\hyperlink{classvc64_1_1_drive}{Drive}} \& {\bfseries drive9}
+\item 
+\mbox{\hyperlink{classvc64_1_1_expansion_port}{Expansion\+Port}} \& {\bfseries expansionport}
+\item 
+\mbox{\hyperlink{classvc64_1_1_host}{Host}} \& {\bfseries host}
+\item 
+\mbox{\hyperlink{classvc64_1_1_i_e_c}{IEC}} \& {\bfseries iec}
+\item 
+\mbox{\hyperlink{classvc64_1_1_keyboard}{Keyboard}} \& {\bfseries keyboard}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c64_memory}{C64\+Memory}} \& {\bfseries mem}
+\item 
+\mbox{\hyperlink{classvc64_1_1_msg_queue}{Msg\+Queue}} \& {\bfseries msg\+Queue}
+\item 
+\mbox{\hyperlink{classvc64_1_1_power_supply}{Power\+Supply}} \& {\bfseries power\+Supply}
+\item 
+\mbox{\hyperlink{classvc64_1_1_par_cable}{Par\+Cable}} \& {\bfseries par\+Cable}
+\item 
+\mbox{\hyperlink{classvc64_1_1_recorder}{Recorder}} \& {\bfseries recorder}
+\item 
+\mbox{\hyperlink{classvc64_1_1_regression_tester}{Regression\+Tester}} \& {\bfseries regression\+Tester}
+\item 
+\mbox{\hyperlink{classvc64_1_1_retro_shell}{Retro\+Shell}} \& {\bfseries retro\+Shell}
+\item 
+\mbox{\hyperlink{classvc64_1_1_muxer}{Muxer}} \& {\bfseries muxer}
+\item 
+\mbox{\hyperlink{classvc64_1_1_v_i_c_i_i}{VICII}} \& {\bfseries vic}
+\item 
+\mbox{\hyperlink{classvc64_1_1_drive}{Drive}} \texorpdfstring{$\ast$}{*} {\bfseries drive} \mbox{[}2\mbox{]} = \{ \&drive8, \&drive9 \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_inspectable}{vc64\+::\+Inspectable$<$ Drive\+Info, Void $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_drive_info}{Drive\+Info}} {\bfseries info}
+\item 
+\mbox{\hyperlink{structvc64_1_1_void}{Void}} {\bfseries stats}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+static bool {\bfseries verbose} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvc64_1_1_drive_a3dc43d02357d594e53e64d2faa170674}\label{classvc64_1_1_drive_a3dc43d02357d594e53e64d2faa170674} 
+\index{vc64::Drive@{vc64::Drive}!\_dump@{\_dump}}
+\index{\_dump@{\_dump}!vc64::Drive@{vc64::Drive}}
+\doxysubsubsection{\texorpdfstring{\_dump()}{\_dump()}}
+{\footnotesize\ttfamily void vc64\+::\+Drive\+::\+\_\+dump (\begin{DoxyParamCaption}\item[{Category}]{category,  }\item[{std\+::ostream \&}]{os }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_dumpable}{vc64\+::\+Dumpable}}.
+
+\Hypertarget{classvc64_1_1_drive_ae093fd7a809b915a5586de6e5046a947}\label{classvc64_1_1_drive_ae093fd7a809b915a5586de6e5046a947} 
+\index{vc64::Drive@{vc64::Drive}!\_initialize@{\_initialize}}
+\index{\_initialize@{\_initialize}!vc64::Drive@{vc64::Drive}}
+\doxysubsubsection{\texorpdfstring{\_initialize()}{\_initialize()}}
+{\footnotesize\ttfamily void vc64\+::\+Drive\+::\+\_\+initialize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_core_component}{vc64\+::\+Core\+Component}}.
+
+\Hypertarget{classvc64_1_1_drive_a544d2bef8791caa804d4b00dc2dc33e3}\label{classvc64_1_1_drive_a544d2bef8791caa804d4b00dc2dc33e3} 
+\index{vc64::Drive@{vc64::Drive}!\_reset@{\_reset}}
+\index{\_reset@{\_reset}!vc64::Drive@{vc64::Drive}}
+\doxysubsubsection{\texorpdfstring{\_reset()}{\_reset()}}
+{\footnotesize\ttfamily void vc64\+::\+Drive\+::\+\_\+reset (\begin{DoxyParamCaption}\item[{bool}]{hard }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_core_component}{vc64\+::\+Core\+Component}}.
+
+\Hypertarget{classvc64_1_1_drive_a4a4debb567c501bd60aff7059325f4a9}\label{classvc64_1_1_drive_a4a4debb567c501bd60aff7059325f4a9} 
+\index{vc64::Drive@{vc64::Drive}!getDescription@{getDescription}}
+\index{getDescription@{getDescription}!vc64::Drive@{vc64::Drive}}
+\doxysubsubsection{\texorpdfstring{getDescription()}{getDescription()}}
+{\footnotesize\ttfamily const char \texorpdfstring{$\ast$}{*} vc64\+::\+Drive\+::get\+Description (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}.
+
+\Hypertarget{classvc64_1_1_drive_ae52bdde1d48bc7a3b2702a6e4d932cc6}\label{classvc64_1_1_drive_ae52bdde1d48bc7a3b2702a6e4d932cc6} 
+\index{vc64::Drive@{vc64::Drive}!getOption@{getOption}}
+\index{getOption@{getOption}!vc64::Drive@{vc64::Drive}}
+\doxysubsubsection{\texorpdfstring{getOption()}{getOption()}}
+{\footnotesize\ttfamily i64 vc64\+::\+Drive\+::get\+Option (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}}]{opt }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_configurable}{vc64\+::\+Configurable}}.
+
+\Hypertarget{classvc64_1_1_drive_a28276449fb433a5d7231791efd4dee7d}\label{classvc64_1_1_drive_a28276449fb433a5d7231791efd4dee7d} 
+\index{vc64::Drive@{vc64::Drive}!getOptions@{getOptions}}
+\index{getOptions@{getOptions}!vc64::Drive@{vc64::Drive}}
+\doxysubsubsection{\texorpdfstring{getOptions()}{getOptions()}}
+{\footnotesize\ttfamily const Config\+Options \& vc64\+::\+Drive\+::get\+Options (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_configurable}{vc64\+::\+Configurable}}.
+
+\Hypertarget{classvc64_1_1_drive_a4506e947c216e2a5951005c88e24b6f9}\label{classvc64_1_1_drive_a4506e947c216e2a5951005c88e24b6f9} 
+\index{vc64::Drive@{vc64::Drive}!resetConfig@{resetConfig}}
+\index{resetConfig@{resetConfig}!vc64::Drive@{vc64::Drive}}
+\doxysubsubsection{\texorpdfstring{resetConfig()}{resetConfig()}}
+{\footnotesize\ttfamily void vc64\+::\+Drive\+::reset\+Config (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_core_component}{vc64\+::\+Core\+Component}}.
+
+\Hypertarget{classvc64_1_1_drive_a347cdcd8f889a3dd98202471fcda784e}\label{classvc64_1_1_drive_a347cdcd8f889a3dd98202471fcda784e} 
+\index{vc64::Drive@{vc64::Drive}!setOption@{setOption}}
+\index{setOption@{setOption}!vc64::Drive@{vc64::Drive}}
+\doxysubsubsection{\texorpdfstring{setOption()}{setOption()}}
+{\footnotesize\ttfamily void vc64\+::\+Drive\+::set\+Option (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}}]{opt,  }\item[{i64}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_configurable}{vc64\+::\+Configurable}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Peripherals/\+Drive/Drive.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Peripherals/\+Drive/Drive.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_message" kind="struct" language="C++" prot="public">
+    <compoundname>Message</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_message_1ad5e704a3add1eb57db9efeaa1fb59b40" prot="public" static="no" mutable="no">
+        <type>MsgType</type>
+        <definition>MsgType Message::type</definition>
+        <argsstring></argsstring>
+        <name>type</name>
+        <qualifiedname>Message::type</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="232" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="232" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_message_1ae1dc1ecf7d4cdd6a924e922349a375ed" prot="public" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 Message::value</definition>
+        <argsstring></argsstring>
+        <name>value</name>
+        <qualifiedname>Message::value</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="236" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="236" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_message_1ac949afcce6d178d0fed3266f33852c0f" prot="public" static="no" mutable="no">
+        <type>CpuMsg</type>
+        <definition>CpuMsg Message::cpu</definition>
+        <argsstring></argsstring>
+        <name>cpu</name>
+        <qualifiedname>Message::cpu</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="237" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="237" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_message_1a28aa2b63962b98cf1aac20dd0fe0d3ac" prot="public" static="no" mutable="no">
+        <type>DriveMsg</type>
+        <definition>DriveMsg Message::drive</definition>
+        <argsstring></argsstring>
+        <name>drive</name>
+        <qualifiedname>Message::drive</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="238" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="238" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_message_1a546c02128f78650bbe6c3e7c33b94521" prot="public" static="no" mutable="no">
+        <type>ScriptMsg</type>
+        <definition>ScriptMsg Message::script</definition>
+        <argsstring></argsstring>
+        <name>script</name>
+        <qualifiedname>Message::script</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="239" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="239" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_message_1a6fd3262ee164f19ebcd115776fce7abf" prot="public" static="no" mutable="no">
+        <type>union Message</type>
+        <definition>union Message Message</definition>
+        <argsstring></argsstring>
+        <name></name>
+        <qualifiedname>Message</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="240" column="5"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="229" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="230" bodyend="241"/>
+    <listofallmembers>
+      <member refid="struct_message_1ac949afcce6d178d0fed3266f33852c0f" prot="public" virt="non-virtual"><scope>Message</scope><name>cpu</name></member>
+      <member refid="struct_message_1a28aa2b63962b98cf1aac20dd0fe0d3ac" prot="public" virt="non-virtual"><scope>Message</scope><name>drive</name></member>
+      <member refid="struct_message_1a546c02128f78650bbe6c3e7c33b94521" prot="public" virt="non-virtual"><scope>Message</scope><name>script</name></member>
+      <member refid="struct_message_1ad5e704a3add1eb57db9efeaa1fb59b40" prot="public" virt="non-virtual"><scope>Message</scope><name>type</name></member>
+      <member refid="struct_message_1ae1dc1ecf7d4cdd6a924e922349a375ed" prot="public" virt="non-virtual"><scope>Message</scope><name>value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

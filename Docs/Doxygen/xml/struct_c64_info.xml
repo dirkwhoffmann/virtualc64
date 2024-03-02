@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_c64_info" kind="struct" language="C++" prot="public">
+    <compoundname>C64Info</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_c64_info_1afd92f4565735cf2bc2f58ab6f94f9189" prot="public" static="no" mutable="no">
+        <type>Cycle</type>
+        <definition>Cycle C64Info::cpuProgress</definition>
+        <argsstring></argsstring>
+        <name>cpuProgress</name>
+        <qualifiedname>C64Info::cpuProgress</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="291" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="291" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_c64_info_1a68e81505aa0f064c4f502530a8e5509a" prot="public" static="no" mutable="no">
+        <type>Cycle</type>
+        <definition>Cycle C64Info::cia1Progress</definition>
+        <argsstring></argsstring>
+        <name>cia1Progress</name>
+        <qualifiedname>C64Info::cia1Progress</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="292" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="292" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_c64_info_1adf223e9093f317f54d2afec45bffa88f" prot="public" static="no" mutable="no">
+        <type>Cycle</type>
+        <definition>Cycle C64Info::cia2Progress</definition>
+        <argsstring></argsstring>
+        <name>cia2Progress</name>
+        <qualifiedname>C64Info::cia2Progress</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="293" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="293" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_c64_info_1a80c10d3c29777c999a21e13af8a26143" prot="public" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 C64Info::frame</definition>
+        <argsstring></argsstring>
+        <name>frame</name>
+        <qualifiedname>C64Info::frame</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="294" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="294" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_c64_info_1a07cf2e4b4906dc6d4e74ff21e26b9a3d" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long C64Info::vpos</definition>
+        <argsstring></argsstring>
+        <name>vpos</name>
+        <qualifiedname>C64Info::vpos</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="295" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="295" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_c64_info_1a3841f942df0c31965a813f9344b6fbb7" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long C64Info::hpos</definition>
+        <argsstring></argsstring>
+        <name>hpos</name>
+        <qualifiedname>C64Info::hpos</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="296" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="296" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="289" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="290" bodyend="297"/>
+    <listofallmembers>
+      <member refid="struct_c64_info_1a68e81505aa0f064c4f502530a8e5509a" prot="public" virt="non-virtual"><scope>C64Info</scope><name>cia1Progress</name></member>
+      <member refid="struct_c64_info_1adf223e9093f317f54d2afec45bffa88f" prot="public" virt="non-virtual"><scope>C64Info</scope><name>cia2Progress</name></member>
+      <member refid="struct_c64_info_1afd92f4565735cf2bc2f58ab6f94f9189" prot="public" virt="non-virtual"><scope>C64Info</scope><name>cpuProgress</name></member>
+      <member refid="struct_c64_info_1a80c10d3c29777c999a21e13af8a26143" prot="public" virt="non-virtual"><scope>C64Info</scope><name>frame</name></member>
+      <member refid="struct_c64_info_1a3841f942df0c31965a813f9344b6fbb7" prot="public" virt="non-virtual"><scope>C64Info</scope><name>hpos</name></member>
+      <member refid="struct_c64_info_1a07cf2e4b4906dc6d4e74ff21e26b9a3d" prot="public" virt="non-virtual"><scope>C64Info</scope><name>vpos</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

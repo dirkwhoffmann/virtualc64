@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['joystickapi_0',['JoystickAPI',['../struct_virtual_c64_1_1_joystick_a_p_i.html',1,'VirtualC64']]]
+  ['headless_0',['Headless',['../classvc64_1_1_headless.html',1,'vc64']]],
+  ['hex_1',['hex',['../structutil_1_1hex.html',1,'util']]],
+  ['host_2',['Host',['../classvc64_1_1_host.html',1,'vc64']]],
+  ['hostconfig_3',['HostConfig',['../struct_host_config.html',1,'']]]
 ];

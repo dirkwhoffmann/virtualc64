@@ -1,0 +1,157 @@
+\doxysection{Final\+III.\+h}
+\hypertarget{_final_i_i_i_8h_source}{}\label{_final_i_i_i_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/FinalIII.h@{/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/FinalIII.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Cartridge.h"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }FinalIII\ final\ :\ \textcolor{keyword}{public}\ Cartridge\ \{}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ CartridgeTraits\ traits\ =\ \{}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ .type\ \ \ \ \ \ \ =\ CRT\_FINAL\_III,}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ .title\ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}Final\ Cartridge\ III"{}},}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ .buttons\ \ \ \ =\ 2,}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ .button1\ \ \ \ =\ \textcolor{stringliteral}{"{}Freeze"{}},}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ .button2\ \ \ \ =\ \textcolor{stringliteral}{"{}Reset"{}}}
+\DoxyCodeLine{00029\ \ \ \ \ \};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ CartridgeTraits\ \&getTraits()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ traits;\ \}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//\ Indicates\ whether\ the\ freeze\ button\ is\ pressed}}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ freeezeButtonIsPressed\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{comment}{/*\ The\ QD\ pin\ of\ the\ Final\ Cartridge\ III's\ 4-\/bit\ counter.\ The\ counter's}}
+\DoxyCodeLine{00037\ \textcolor{comment}{\ \ \ \ \ *\ purpose\ is\ to\ delay\ the\ grounding\ the\ Game\ line\ when\ the\ freeze\ button}}
+\DoxyCodeLine{00038\ \textcolor{comment}{\ \ \ \ \ *\ is\ pressed.\ Doing\ so\ lets\ the\ CPU\ read\ the\ NMI\ vector\ with\ the\ old}}
+\DoxyCodeLine{00039\ \textcolor{comment}{\ \ \ \ \ *\ Game/Exrom\ combination.}}
+\DoxyCodeLine{00040\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{bool}\ qD\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{comment}{//\ Initializing}}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{using\ }Cartridge::Cartridge;}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ resetCartConfig()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreObject}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ \_dump(Category\ category,\ std::ostream\&\ os)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{comment}{//\ Methods\ from\ CoreComponent}}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ FinalIII\&\ operator=\ (\textcolor{keyword}{const}\ FinalIII\&\ other)\ \{}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ Cartridge::operator=(other);}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ CLONE(qD)}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ CLONE(freeezeButtonIsPressed)}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00077\ \ \ \ \ \}}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ clone(\textcolor{keyword}{const}\ Cartridge\ \&other)\textcolor{keyword}{\ override\ }\{\ *\textcolor{keyword}{this}\ =\ (\textcolor{keyword}{const}\ FinalIII\ \&)other;\ \}}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{void}\ serialize(T\&\ worker)}
+\DoxyCodeLine{00082\ \ \ \ \ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ <<\ qD;}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (isResetter(worker))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ worker}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ <<\ freeezeButtonIsPressed;}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \}\ CARTRIDGE\_SERIALIZERS(serialize);}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{void}\ \_reset(\textcolor{keywordtype}{bool}\ hard)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{comment}{//\ Accessing\ cartridge\ memory}}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ u8\ peekIO1(u16\ addr)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00105\ \ \ \ \ u8\ spypeekIO1(u16\ addr)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00106\ \ \ \ \ u8\ peekIO2(u16\ addr)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00107\ \ \ \ \ u8\ spypeekIO2(u16\ addr)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{void}\ pokeIO2(u16\ addr,\ u8\ value)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{void}\ nmiDidTrigger()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{comment}{//\ Accessing\ the\ control\ register}}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keywordtype}{void}\ setControlReg(u8\ value);}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordtype}{bool}\ hidden()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (control\ \&\ 0x80)\ !=\ 0;\ \}}
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keywordtype}{bool}\ nmi()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (control\ \&\ 0x40)\ !=\ 0;\ \}}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordtype}{bool}\ game()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (control\ \&\ 0x20)\ !=\ 0;\ \}}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordtype}{bool}\ exrom()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (control\ \&\ 0x10)\ !=\ 0;\ \}}
+\DoxyCodeLine{00123\ \ \ \ \ u8\ bank()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (control\ \&\ 0x03);\ \}}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{comment}{/*\ Indicates\ if\ the\ control\ register\ is\ write\ enabled.\ Final\ Cartridge\ III}}
+\DoxyCodeLine{00126\ \textcolor{comment}{\ \ \ \ \ *\ enables\ and\ disables\ the\ control\ register\ by\ masking\ the\ clock\ signal.}}
+\DoxyCodeLine{00127\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeEnabled()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{comment}{/*\ Updates\ the\ NMI\ line.\ The\ NMI\ line\ is\ driven\ by\ the\ control\ register\ and}}
+\DoxyCodeLine{00131\ \textcolor{comment}{\ \ \ \ \ *\ the\ current\ position\ of\ the\ freeze\ button.}}
+\DoxyCodeLine{00132\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{void}\ updateNMI();}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{comment}{/*\ Updates\ the\ Game\ line.\ The\ game\ line\ is\ driven\ by\ the\ control\ register}}
+\DoxyCodeLine{00136\ \textcolor{comment}{\ \ \ \ \ *\ and\ counter\ output\ qD.}}
+\DoxyCodeLine{00137\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keywordtype}{void}\ updateGame();}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{comment}{//\ Operating\ buttons}}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ isize\ numButtons()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ 2;\ \}}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getButtonTitle(isize\ nr)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordtype}{void}\ pressButton(isize\ nr)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordtype}{void}\ releaseButton(isize\ nr)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00149\ \};}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \}}
+
+\end{DoxyCode}

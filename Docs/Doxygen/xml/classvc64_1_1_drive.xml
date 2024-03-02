@@ -1,0 +1,1931 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_drive" kind="class" language="C++" prot="public" final="yes">
+    <compoundname>vc64::Drive</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">vc64::SubComponent</basecompoundref>
+    <basecompoundref prot="public" virt="non-virtual">vc64::Inspectable&lt; DriveInfo, Void &gt;</basecompoundref>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a3015ee08fcd5d01ea170339c26f4190a" prot="private" static="no" mutable="no">
+        <type>ConfigOptions</type>
+        <definition>ConfigOptions vc64::Drive::options</definition>
+        <argsstring></argsstring>
+        <name>options</name>
+        <qualifiedname>vc64::Drive::options</qualifiedname>
+        <initializer>= {
+
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a674e5364818dd4395d6a74935adfb7f8" kindref="member">OPT_DRV_AUTO_CONFIG</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a47b946fb087dc076855bad12b6064b48" kindref="member">OPT_DRV_TYPE</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a83f3562d31b570ea41a3681fd4fdc703" kindref="member">OPT_DRV_RAM</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a0250ed79d845c41e3c02b392a42a8857" kindref="member">OPT_DRV_PARCABLE</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8aaa1666b3d0aca950e259601ec87d3efe" kindref="member">OPT_DRV_CONNECT</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a7568dffe88a76c64cc124c3af1611fa4" kindref="member">OPT_DRV_POWER_SWITCH</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8ac7e083374d51af754bc06a3d08c30e1a" kindref="member">OPT_DRV_POWER_SAVE</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a34ce09b9bd29eb1cb0a5e3bfebf10108" kindref="member">OPT_DRV_EJECT_DELAY</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a637c8b082ab99202b2c716f2b9ad1c3a" kindref="member">OPT_DRV_SWAP_DELAY</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a699030b32e036cb1c8cd8b0aa740e4f6" kindref="member">OPT_DRV_INSERT_DELAY</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a68a88630934fc8c0f91a84f1508933d7" kindref="member">OPT_DRV_PAN</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8ab09c82345efb3d45f34d5442f79c7c14" kindref="member">OPT_DRV_POWER_VOL</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8ad8097703cb83bead140bde321cb24baa" kindref="member">OPT_DRV_STEP_VOL</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a8a4a225b3133ade149bbc70644b9cf36" kindref="member">OPT_DRV_INSERT_VOL</ref>,
+        <ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a93cfeb08201706311ab61aedd1fb1be7" kindref="member">OPT_DRV_EJECT_VOL</ref>
+    }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="38" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="38" bodyend="55"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a3a0d06201eea745ed2ae173799a68b14" prot="private" static="no" mutable="no">
+        <type>const u64</type>
+        <definition>const u64 vc64::Drive::delayBetweenTwoCarryPulses[4]</definition>
+        <argsstring>[4]</argsstring>
+        <name>delayBetweenTwoCarryPulses</name>
+        <qualifiedname>vc64::Drive::delayBetweenTwoCarryPulses</qualifiedname>
+        <initializer>= {
+        
+        10000, 
+        9375,  
+        8750,  
+        8125   
+    }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="81" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="81" bodyend="87"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a6a1c9984a433200479011410ccca9a10" prot="private" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize vc64::Drive::deviceNr</definition>
+        <argsstring></argsstring>
+        <name>deviceNr</name>
+        <qualifiedname>vc64::Drive::deviceNr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="90" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="90" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a5203e9271fbe418c7966d137b6df1e4b" prot="private" static="no" mutable="no">
+        <type>DriveConfig</type>
+        <definition>DriveConfig vc64::Drive::config</definition>
+        <argsstring></argsstring>
+        <name>config</name>
+        <qualifiedname>vc64::Drive::config</qualifiedname>
+        <initializer>= { }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="93" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="93" bodyend="93"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a9b7b286d943f702194698371fb2984f9" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::Drive::spinning</definition>
+        <argsstring></argsstring>
+        <name>spinning</name>
+        <qualifiedname>vc64::Drive::spinning</qualifiedname>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="127" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="127" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a02317ab7ac8cb77068f3936645f5ea90" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::Drive::redLED</definition>
+        <argsstring></argsstring>
+        <name>redLED</name>
+        <qualifiedname>vc64::Drive::redLED</qualifiedname>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="130" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="130" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1aaef6fb003db3baa82d34225e03ba6448" prot="private" static="no" mutable="no">
+        <type>InsertionStatus</type>
+        <definition>InsertionStatus vc64::Drive::insertionStatus</definition>
+        <argsstring></argsstring>
+        <name>insertionStatus</name>
+        <qualifiedname>vc64::Drive::insertionStatus</qualifiedname>
+        <initializer>= DISK_FULLY_EJECTED</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="133" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="133" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a7b2eb2a112ce860fab6de21e9c22c7f4" prot="private" static="no" mutable="no">
+        <type>u64</type>
+        <definition>u64 vc64::Drive::elapsedTime</definition>
+        <argsstring></argsstring>
+        <name>elapsedTime</name>
+        <qualifiedname>vc64::Drive::elapsedTime</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="141" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="141" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a739e1d057117fd3b7735b003fefa64c4" prot="private" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 vc64::Drive::nextClock</definition>
+        <argsstring></argsstring>
+        <name>nextClock</name>
+        <qualifiedname>vc64::Drive::nextClock</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="148" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="148" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a38afd911d9f27249c322cd4ad52b58d5" prot="private" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 vc64::Drive::nextCarry</definition>
+        <argsstring></argsstring>
+        <name>nextCarry</name>
+        <qualifiedname>vc64::Drive::nextCarry</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="158" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="158" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="friend">
+      <memberdef kind="friend" id="classvc64_1_1_drive_1a752d0eb08c65a5b17f4d9fe984e14c09" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class DriveMemory</definition>
+        <argsstring></argsstring>
+        <name>DriveMemory</name>
+        <qualifiedname>vc64::Drive::DriveMemory</qualifiedname>
+        <param>
+          <type>DriveMemory</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="57" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="friend" id="classvc64_1_1_drive_1aaac1fb78098190bf72ce5c8e3c19a35c" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class VIA1</definition>
+        <argsstring></argsstring>
+        <name>VIA1</name>
+        <qualifiedname>vc64::Drive::VIA1</qualifiedname>
+        <param>
+          <type>VIA1</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="58" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="friend" id="classvc64_1_1_drive_1a369c3335a5cd37d67df1d5c5bc9fbfbd" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class VIA2</definition>
+        <argsstring></argsstring>
+        <name>VIA2</name>
+        <qualifiedname>vc64::Drive::VIA2</qualifiedname>
+        <param>
+          <type>VIA2</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="59" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-static-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a798348f32ef0a5aa3cf8fa612a3cd6b6" prot="private" static="yes" constexpr="yes" mutable="no">
+        <type>constexpr i64</type>
+        <definition>constexpr i64 vc64::Drive::powerSafeThreshold</definition>
+        <argsstring></argsstring>
+        <name>powerSafeThreshold</name>
+        <qualifiedname>vc64::Drive::powerSafeThreshold</qualifiedname>
+        <initializer>= 100</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="71" column="26" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a5c498ad72b891a9ec4ebf00c4697b9e7" prot="public" static="no" mutable="no">
+        <type>DriveMemory</type>
+        <definition>DriveMemory vc64::Drive::mem</definition>
+        <argsstring></argsstring>
+        <name>mem</name>
+        <qualifiedname>vc64::Drive::mem</qualifiedname>
+        <initializer>= DriveMemory(c64, *this)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="102" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1abe3e70d9c1647df31d9b8af0515fcb4f" prot="public" static="no" mutable="no">
+        <type>CPU</type>
+        <definition>CPU vc64::Drive::cpu</definition>
+        <argsstring></argsstring>
+        <name>cpu</name>
+        <qualifiedname>vc64::Drive::cpu</qualifiedname>
+        <initializer>= CPU(MOS_6502, c64)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="103" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="103" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1ad8f05903df8b7b8271e2654dc4c078fa" prot="public" static="no" mutable="no">
+        <type>VIA1</type>
+        <definition>VIA1 vc64::Drive::via1</definition>
+        <argsstring></argsstring>
+        <name>via1</name>
+        <qualifiedname>vc64::Drive::via1</qualifiedname>
+        <initializer>= VIA1(c64, *this)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="104" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="104" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a6e76634417c66025dd6bd5aae255a5a2" prot="public" static="no" mutable="no">
+        <type>VIA2</type>
+        <definition>VIA2 vc64::Drive::via2</definition>
+        <argsstring></argsstring>
+        <name>via2</name>
+        <qualifiedname>vc64::Drive::via2</qualifiedname>
+        <initializer>= VIA2(c64, *this)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="105" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="105" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a600d37cc1e024a4af45595064097237f" prot="public" static="no" mutable="no">
+        <type>PiaDolphin</type>
+        <definition>PiaDolphin vc64::Drive::pia</definition>
+        <argsstring></argsstring>
+        <name>pia</name>
+        <qualifiedname>vc64::Drive::pia</qualifiedname>
+        <initializer>= PiaDolphin(c64, *this)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="106" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="106" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a21fee93396469b504eb659aaac4fcdda" prot="public" static="no" mutable="no">
+        <type>std::unique_ptr&lt; Disk &gt;</type>
+        <definition>std::unique_ptr&lt;Disk&gt; vc64::Drive::disk</definition>
+        <argsstring></argsstring>
+        <name>disk</name>
+        <qualifiedname>vc64::Drive::disk</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="109" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="109" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a7965ddf84eb93f059be76cc196ffed6b" prot="public" static="no" mutable="no">
+        <type>std::unique_ptr&lt; Disk &gt;</type>
+        <definition>std::unique_ptr&lt;Disk&gt; vc64::Drive::diskToInsert</definition>
+        <argsstring></argsstring>
+        <name>diskToInsert</name>
+        <qualifiedname>vc64::Drive::diskToInsert</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="117" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="117" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a16afab0963a51d04404d74c2fd6f3fe6" prot="public" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 vc64::Drive::carryCounter</definition>
+        <argsstring></argsstring>
+        <name>carryCounter</name>
+        <qualifiedname>vc64::Drive::carryCounter</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="165" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="165" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1afbbc21698bc28f6ede7c8b6e2b6e396b" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::Drive::counterUF4</definition>
+        <argsstring></argsstring>
+        <name>counterUF4</name>
+        <qualifiedname>vc64::Drive::counterUF4</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="173" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="173" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a941ee0fc3593b10fc2b270ac17f59266" prot="public" static="no" mutable="no">
+        <type>i16</type>
+        <definition>i16 vc64::Drive::bitReadyTimer</definition>
+        <argsstring></argsstring>
+        <name>bitReadyTimer</name>
+        <qualifiedname>vc64::Drive::bitReadyTimer</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="181" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="181" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a5f560d8e95e897c77f87156d6993f206" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::Drive::byteReadyCounter</definition>
+        <argsstring></argsstring>
+        <name>byteReadyCounter</name>
+        <qualifiedname>vc64::Drive::byteReadyCounter</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="190" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="190" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a3cd541173e58377ec4d254b169155609" prot="public" static="no" mutable="no">
+        <type>Halftrack</type>
+        <definition>Halftrack vc64::Drive::halftrack</definition>
+        <argsstring></argsstring>
+        <name>halftrack</name>
+        <qualifiedname>vc64::Drive::halftrack</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="193" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="193" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1aa45445199e72d9e03c324a868dda2dce" prot="public" static="no" mutable="no">
+        <type>HeadPos</type>
+        <definition>HeadPos vc64::Drive::offset</definition>
+        <argsstring></argsstring>
+        <name>offset</name>
+        <qualifiedname>vc64::Drive::offset</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="196" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="196" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a607369e3a85d35412073682c25f00050" prot="public" static="no" mutable="no">
+        <type>isize</type>
+        <definition>isize vc64::Drive::zone</definition>
+        <argsstring></argsstring>
+        <name>zone</name>
+        <qualifiedname>vc64::Drive::zone</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="204" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="204" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a1076a5045d5212b26f74522699328c84" prot="public" static="no" mutable="no">
+        <type>u16</type>
+        <definition>u16 vc64::Drive::readShiftreg</definition>
+        <argsstring></argsstring>
+        <name>readShiftreg</name>
+        <qualifiedname>vc64::Drive::readShiftreg</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="209" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="209" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a46b9c06e632cc1120953030a17d7732d" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 vc64::Drive::writeShiftreg</definition>
+        <argsstring></argsstring>
+        <name>writeShiftreg</name>
+        <qualifiedname>vc64::Drive::writeShiftreg</qualifiedname>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="214" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="214" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a265fba6d7c06c16636a29e2b52bd5187" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::Drive::sync</definition>
+        <argsstring></argsstring>
+        <name>sync</name>
+        <qualifiedname>vc64::Drive::sync</qualifiedname>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="225" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="225" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1ad9ff92a591c947220162f55fbc54e9a8" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::Drive::byteReady</definition>
+        <argsstring></argsstring>
+        <name>byteReady</name>
+        <qualifiedname>vc64::Drive::byteReady</qualifiedname>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="230" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="230" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a47145847c280906bd4c474379a6d0354" prot="public" static="no" mutable="no">
+        <type>i64</type>
+        <definition>i64 vc64::Drive::watchdog</definition>
+        <argsstring></argsstring>
+        <name>watchdog</name>
+        <qualifiedname>vc64::Drive::watchdog</qualifiedname>
+        <initializer>= INT64_MAX</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="238" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="238" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_drive_1a6af865779348750cc0d56eb978187ee8" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool vc64::Drive::needsEmulation</definition>
+        <argsstring></argsstring>
+        <name>needsEmulation</name>
+        <qualifiedname>vc64::Drive::needsEmulation</qualifiedname>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="241" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="241" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_drive_1a161c43e7fe4ade183d518a4d36c577d2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::Drive::Drive</definition>
+        <argsstring>(isize nr, C64 &amp;ref)</argsstring>
+        <name>Drive</name>
+        <qualifiedname>vc64::Drive::Drive</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <param>
+          <type>C64 &amp;</type>
+          <declname>ref</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="250" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="20" bodyend="36"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a4a4debb567c501bd60aff7059325f4a9" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::Drive::getDescription</definition>
+        <argsstring>() const override</argsstring>
+        <name>getDescription</name>
+        <qualifiedname>vc64::Drive::getDescription</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="251" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="39" bodyend="42"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a3dc43d02357d594e53e64d2faa170674" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::_dump</definition>
+        <argsstring>(Category category, std::ostream &amp;os) const override</argsstring>
+        <name>_dump</name>
+        <qualifiedname>vc64::Drive::_dump</qualifiedname>
+        <param>
+          <type>Category</type>
+          <declname>category</declname>
+        </param>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="253" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="331" bodyend="400"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1ae093fd7a809b915a5586de6e5046a947" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::_initialize</definition>
+        <argsstring>() override</argsstring>
+        <name>_initialize</name>
+        <qualifiedname>vc64::Drive::_initialize</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="255" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="45" bodyend="51"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a1689245acfe0e2a10b028a1465a3aca3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Drive &amp;</type>
+        <definition>Drive &amp; vc64::Drive::operator=</definition>
+        <argsstring>(const Drive &amp;other)</argsstring>
+        <name>operator=</name>
+        <qualifiedname>vc64::Drive::operator=</qualifiedname>
+        <param>
+          <type>const Drive &amp;</type>
+          <declname>other</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="257" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="257" bodyend="294"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a108eb3e695848ad5dbe2cc0a277f2aec" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>class T</type>
+          </param>
+        </templateparamlist>
+        <type>void</type>
+        <definition>void vc64::Drive::serialize</definition>
+        <argsstring>(T &amp;worker)</argsstring>
+        <name>serialize</name>
+        <qualifiedname>vc64::Drive::serialize</qualifiedname>
+        <param>
+          <type>T &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="297" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="297" bodyend="344"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1adfa34de6e19fc8a3dfa35b1deb1a9b2c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::operator&lt;&lt;</definition>
+        <argsstring>(SerResetter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::Drive::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerResetter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="346" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="346" bodyend="346"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1abc24cac9dec522a887be3e44659ea34e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::operator&lt;&lt;</definition>
+        <argsstring>(SerChecker &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::Drive::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerChecker &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="347" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="403" bodyend="408"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a3e759e8bbfc575be01b313e657c0dc40" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::operator&lt;&lt;</definition>
+        <argsstring>(SerCounter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::Drive::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerCounter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="348" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="411" bodyend="420"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a1e67ca3991579d97a4c099500fb9e3ad" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::operator&lt;&lt;</definition>
+        <argsstring>(SerReader &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::Drive::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerReader &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="349" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="423" bodyend="437"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1af4e8a9a7fcc13ab1ff4bd15dfd20b560" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::operator&lt;&lt;</definition>
+        <argsstring>(SerWriter &amp;worker) override</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>vc64::Drive::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type>SerWriter &amp;</type>
+          <declname>worker</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="350" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="440" bodyend="450"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a544d2bef8791caa804d4b00dc2dc33e3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::_reset</definition>
+        <argsstring>(bool hard) override</argsstring>
+        <name>_reset</name>
+        <qualifiedname>vc64::Drive::_reset</qualifiedname>
+        <param>
+          <type>bool</type>
+          <declname>hard</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="352" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="54" bodyend="60"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a2e21d00c5b52201d8475dd19b1a3a6e0" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const DriveConfig &amp;</type>
+        <definition>const DriveConfig &amp; vc64::Drive::getConfig</definition>
+        <argsstring>() const</argsstring>
+        <name>getConfig</name>
+        <qualifiedname>vc64::Drive::getConfig</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="359" column="23" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="359" bodyend="359"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a28276449fb433a5d7231791efd4dee7d" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>const ConfigOptions &amp;</type>
+        <definition>const ConfigOptions &amp; vc64::Drive::getOptions</definition>
+        <argsstring>() const override</argsstring>
+        <name>getOptions</name>
+        <qualifiedname>vc64::Drive::getOptions</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="360" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="360" bodyend="360"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1ae52bdde1d48bc7a3b2702a6e4d932cc6" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>i64</type>
+        <definition>i64 vc64::Drive::getOption</definition>
+        <argsstring>(Option opt) const override</argsstring>
+        <name>getOption</name>
+        <qualifiedname>vc64::Drive::getOption</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>opt</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="361" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="106" bodyend="129"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a347cdcd8f889a3dd98202471fcda784e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::setOption</definition>
+        <argsstring>(Option opt, i64 value) override</argsstring>
+        <name>setOption</name>
+        <qualifiedname>vc64::Drive::setOption</qualifiedname>
+        <param>
+          <type><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>opt</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="362" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="132" bodyend="262"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a4506e947c216e2a5951005c88e24b6f9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::resetConfig</definition>
+        <argsstring>() override</argsstring>
+        <name>resetConfig</name>
+        <qualifiedname>vc64::Drive::resetConfig</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="363" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="88" bodyend="103"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a7552d8eba9371142c72398e1d9370ef6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::autoConfigure</definition>
+        <argsstring>()</argsstring>
+        <name>autoConfigure</name>
+        <qualifiedname>vc64::Drive::autoConfigure</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="366" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="265" bodyend="322"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1aba1113dd7775d67ded129823c8631b0f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Drive::canConnect</definition>
+        <argsstring>()</argsstring>
+        <name>canConnect</name>
+        <qualifiedname>vc64::Drive::canConnect</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="368" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="325" bodyend="328"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a55e0897a67a1df6702ce9d384176902d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Drive::hasParCable</definition>
+        <argsstring>()</argsstring>
+        <name>hasParCable</name>
+        <qualifiedname>vc64::Drive::hasParCable</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="369" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="369" bodyend="369"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a00cacb816f59bf7b41c2d85bfcd7fe57" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>ParCableType</type>
+        <definition>ParCableType vc64::Drive::getParCableType</definition>
+        <argsstring>() const</argsstring>
+        <name>getParCableType</name>
+        <qualifiedname>vc64::Drive::getParCableType</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="370" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="370" bodyend="370"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a0a5a5198601b37d77f96c02d5429a269" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>DriveInfo</type>
+        <definition>DriveInfo vc64::Drive::getInfo</definition>
+        <argsstring>() const</argsstring>
+        <name>getInfo</name>
+        <qualifiedname>vc64::Drive::getInfo</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="380" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="63" bodyend="85"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a43bb81f32b9ad58738abe0bedb5786ae" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::Drive::getDeviceNr</definition>
+        <argsstring>() const</argsstring>
+        <name>getDeviceNr</name>
+        <qualifiedname>vc64::Drive::getDeviceNr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="390" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="390" bodyend="390"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a066f4789a76d5b8709c815e0499c44e5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Drive::isDrive8</definition>
+        <argsstring>()</argsstring>
+        <name>isDrive8</name>
+        <qualifiedname>vc64::Drive::isDrive8</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="393" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="393" bodyend="393"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a0ad885d1977420a060fc660b00d04f23" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Drive::isDrive9</definition>
+        <argsstring>()</argsstring>
+        <name>isDrive9</name>
+        <qualifiedname>vc64::Drive::isDrive9</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="394" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="394" bodyend="394"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a8753377d04dc137d24a16d9c202dd5c6" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Drive::getRedLED</definition>
+        <argsstring>() const</argsstring>
+        <name>getRedLED</name>
+        <qualifiedname>vc64::Drive::getRedLED</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="397" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="397" bodyend="397"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a060264dc71ef86fd97399c5885f953a1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::setRedLED</definition>
+        <argsstring>(bool b)</argsstring>
+        <name>setRedLED</name>
+        <qualifiedname>vc64::Drive::setRedLED</qualifiedname>
+        <param>
+          <type>bool</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="400" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="642" bodyend="658"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1ac77b8d8053a06d3e6fc5a3f0b307d1a3" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Drive::isRotating</definition>
+        <argsstring>() const</argsstring>
+        <name>isRotating</name>
+        <qualifiedname>vc64::Drive::isRotating</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="403" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="403" bodyend="403"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1aa6d5f8f11fe5b7d9ad5bd76b106bfe95" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::setRotating</definition>
+        <argsstring>(bool b)</argsstring>
+        <name>setRotating</name>
+        <qualifiedname>vc64::Drive::setRotating</qualifiedname>
+        <param>
+          <type>bool</type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="406" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="661" bodyend="668"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a9dec0119539afc8ec43ef6d80a1ab49a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::wakeUp</definition>
+        <argsstring>(isize awakeness=powerSafeThreshold)</argsstring>
+        <name>wakeUp</name>
+        <qualifiedname>vc64::Drive::wakeUp</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>awakeness</declname>
+          <defval>powerSafeThreshold</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="409" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="671" bodyend="681"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a3a1be9a3e2b6d06c7a25a7ec3015bdfe" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Drive::isIdle</definition>
+        <argsstring>() const</argsstring>
+        <name>isIdle</name>
+        <qualifiedname>vc64::Drive::isIdle</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="412" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="412" bodyend="412"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1aa65d7a786ada5bcbc27c4f5f1d813984" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Drive::connectedAndOn</definition>
+        <argsstring>()</argsstring>
+        <name>connectedAndOn</name>
+        <qualifiedname>vc64::Drive::connectedAndOn</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="415" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="415" bodyend="415"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1af8e5c8aa965f165485b484782cd5b571" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Drive::hasDisk</definition>
+        <argsstring>() const</argsstring>
+        <name>hasDisk</name>
+        <qualifiedname>vc64::Drive::hasDisk</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="425" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="740" bodyend="743"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a1c9404bacf30b1d56a8a6e047c98a2fa" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Drive::hasPartiallyRemovedDisk</definition>
+        <argsstring>() const</argsstring>
+        <name>hasPartiallyRemovedDisk</name>
+        <qualifiedname>vc64::Drive::hasPartiallyRemovedDisk</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="426" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="746" bodyend="751"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a92659011c6f3fb88afc6298658dfe65d" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Drive::hasProtectedDisk</definition>
+        <argsstring>() const</argsstring>
+        <name>hasProtectedDisk</name>
+        <qualifiedname>vc64::Drive::hasProtectedDisk</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="427" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="427" bodyend="427"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1ab6a32d8f886d98eb3d573b5b0a4188f4" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Drive::hasModifiedDisk</definition>
+        <argsstring>() const</argsstring>
+        <name>hasModifiedDisk</name>
+        <qualifiedname>vc64::Drive::hasModifiedDisk</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="428" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="428" bodyend="428"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a058014661b4398f2e0aab06432f50e62" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Drive::hasUnmodifiedDisk</definition>
+        <argsstring>() const</argsstring>
+        <name>hasUnmodifiedDisk</name>
+        <qualifiedname>vc64::Drive::hasUnmodifiedDisk</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="429" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="429" bodyend="429"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a0aecff0fa4df1faadbea7761b9e0ae32" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Drive::hasUnprotectedDisk</definition>
+        <argsstring>() const</argsstring>
+        <name>hasUnprotectedDisk</name>
+        <qualifiedname>vc64::Drive::hasUnprotectedDisk</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="430" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="430" bodyend="430"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a42981e4ecb9a1b3e32766ebf245e0355" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::setModificationFlag</definition>
+        <argsstring>(bool value)</argsstring>
+        <name>setModificationFlag</name>
+        <qualifiedname>vc64::Drive::setModificationFlag</qualifiedname>
+        <param>
+          <type>bool</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="433" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="754" bodyend="758"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a7ca9809b81aa6311ab54afc2d1e72b6e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::markDiskAsModified</definition>
+        <argsstring>()</argsstring>
+        <name>markDiskAsModified</name>
+        <qualifiedname>vc64::Drive::markDiskAsModified</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="434" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="434" bodyend="434"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a05ee62654e6f7d24711d7ac8bf9dd0ca" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::markDiskAsUnmodified</definition>
+        <argsstring>()</argsstring>
+        <name>markDiskAsUnmodified</name>
+        <qualifiedname>vc64::Drive::markDiskAsUnmodified</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="435" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="435" bodyend="435"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a992e72809b42253afb21542699d2ccd6" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Drive::getLightBarrier</definition>
+        <argsstring>() const</argsstring>
+        <name>getLightBarrier</name>
+        <qualifiedname>vc64::Drive::getLightBarrier</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="444" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="444" bodyend="449"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a54f8c33ac5ccb86830c9f3b969918efe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::insertDisk</definition>
+        <argsstring>(const string &amp;path, bool wp) throws</argsstring>
+        <name>insertDisk</name>
+        <qualifiedname>vc64::Drive::insertDisk</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>wp</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="459" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="761" bodyend="764"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1acdf49db9a21706b0e1fa256e62d9bba2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::insertDisk</definition>
+        <argsstring>(std::unique_ptr&lt; Disk &gt; disk)</argsstring>
+        <name>insertDisk</name>
+        <qualifiedname>vc64::Drive::insertDisk</qualifiedname>
+        <param>
+          <type>std::unique_ptr&lt; Disk &gt;</type>
+          <declname>disk</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="460" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="767" bodyend="781"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a7220307b547927275764814f5befcd2a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::insertNewDisk</definition>
+        <argsstring>(DOSType fstype, PETName&lt; 16 &gt; name)</argsstring>
+        <name>insertNewDisk</name>
+        <qualifiedname>vc64::Drive::insertNewDisk</qualifiedname>
+        <param>
+          <type>DOSType</type>
+          <declname>fstype</declname>
+        </param>
+        <param>
+          <type>PETName&lt; 16 &gt;</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="461" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="784" bodyend="787"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a06dfd387468986bf6854a24fb1bf98a0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::insertD64</definition>
+        <argsstring>(const D64File &amp;d64, bool wp)</argsstring>
+        <name>insertD64</name>
+        <qualifiedname>vc64::Drive::insertD64</qualifiedname>
+        <param>
+          <type>const D64File &amp;</type>
+          <declname>d64</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>wp</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="462" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="796" bodyend="799"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a8ec3637f7d71d9ebff66c95c980b0717" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::insertG64</definition>
+        <argsstring>(const G64File &amp;g64, bool wp)</argsstring>
+        <name>insertG64</name>
+        <qualifiedname>vc64::Drive::insertG64</qualifiedname>
+        <param>
+          <type>const G64File &amp;</type>
+          <declname>g64</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>wp</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="463" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="802" bodyend="805"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a0228395ce268eaca69089b2ce71063f4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::insertCollection</definition>
+        <argsstring>(AnyCollection &amp;archive, bool wp) throws</argsstring>
+        <name>insertCollection</name>
+        <qualifiedname>vc64::Drive::insertCollection</qualifiedname>
+        <param>
+          <type>AnyCollection &amp;</type>
+          <declname>archive</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>wp</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="464" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="808" bodyend="811"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1af90bc8671995ae9c1ff01cbe97075d57" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::insertFileSystem</definition>
+        <argsstring>(const class FileSystem &amp;device, bool wp)</argsstring>
+        <name>insertFileSystem</name>
+        <qualifiedname>vc64::Drive::insertFileSystem</qualifiedname>
+        <param>
+          <type>const class FileSystem &amp;</type>
+          <declname>device</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>wp</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="465" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="790" bodyend="793"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1aa1db07d613125e68076804ad8eef0b81" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::ejectDisk</definition>
+        <argsstring>()</argsstring>
+        <name>ejectDisk</name>
+        <qualifiedname>vc64::Drive::ejectDisk</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="466" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="814" bodyend="826"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1ad3817eba9af93c7bfd4c1173bf947308" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::execute</definition>
+        <argsstring>(u64 duration)</argsstring>
+        <name>execute</name>
+        <qualifiedname>vc64::Drive::execute</qualifiedname>
+        <param>
+          <type>u64</type>
+          <declname>duration</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="478" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="453" bodyend="477"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a73c3d3538cfd3476c805c6d5fbf16401" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Drive::readMode</definition>
+        <argsstring>() const</argsstring>
+        <name>readMode</name>
+        <qualifiedname>vc64::Drive::readMode</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="488" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="488" bodyend="488"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a0b150bc3432b2e2cf04cfea3b06944f3" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Drive::writeMode</definition>
+        <argsstring>() const</argsstring>
+        <name>writeMode</name>
+        <qualifiedname>vc64::Drive::writeMode</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="489" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="489" bodyend="489"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a5c4692e3a653b481ca4ebe41289acf0a" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>Halftrack</type>
+        <definition>Halftrack vc64::Drive::getHalftrack</definition>
+        <argsstring>() const</argsstring>
+        <name>getHalftrack</name>
+        <qualifiedname>vc64::Drive::getHalftrack</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="492" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="492" bodyend="492"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a71b354fade42a303fe9dc09a40b0ffa9" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>Track</type>
+        <definition>Track vc64::Drive::getTrack</definition>
+        <argsstring>() const</argsstring>
+        <name>getTrack</name>
+        <qualifiedname>vc64::Drive::getTrack</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="493" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="493" bodyend="493"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1aa3b8d2361eba0f44270d08b520fd8d85" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::Drive::sizeOfHalftrack</definition>
+        <argsstring>(Halftrack ht)</argsstring>
+        <name>sizeOfHalftrack</name>
+        <qualifiedname>vc64::Drive::sizeOfHalftrack</qualifiedname>
+        <param>
+          <type>Halftrack</type>
+          <declname>ht</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="496" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="496" bodyend="497"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1ab9f7f4337b6afcd1dff83d6dc1662965" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize vc64::Drive::sizeOfCurrentHalftrack</definition>
+        <argsstring>()</argsstring>
+        <name>sizeOfCurrentHalftrack</name>
+        <qualifiedname>vc64::Drive::sizeOfCurrentHalftrack</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="498" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="498" bodyend="498"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a58e3647769f175230f6a2b8e2d04d0a3" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>HeadPos</type>
+        <definition>HeadPos vc64::Drive::getOffset</definition>
+        <argsstring>() const</argsstring>
+        <name>getOffset</name>
+        <qualifiedname>vc64::Drive::getOffset</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="501" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="501" bodyend="501"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a65c07b9a7a15cf3af4b0e1564e860469" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::moveHeadUp</definition>
+        <argsstring>()</argsstring>
+        <name>moveHeadUp</name>
+        <qualifiedname>vc64::Drive::moveHeadUp</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="504" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="684" bodyend="709"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1ab4a8d27e84c2d96de7fa83e85bf5dd53" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::moveHeadDown</definition>
+        <argsstring>()</argsstring>
+        <name>moveHeadDown</name>
+        <qualifiedname>vc64::Drive::moveHeadDown</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="507" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="712" bodyend="737"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1af4e3b3e1722026f3430bce92ffbe331f" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Drive::getSync</definition>
+        <argsstring>() const</argsstring>
+        <name>getSync</name>
+        <qualifiedname>vc64::Drive::getSync</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="510" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="510" bodyend="510"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a014b1e3a591ba075aa16de25fc448c19" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::updateByteReady</definition>
+        <argsstring>()</argsstring>
+        <name>updateByteReady</name>
+        <qualifiedname>vc64::Drive::updateByteReady</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="517" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="574" bodyend="597"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a68477048ba33e5c3bd97420532a6a13b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::raiseByteReady</definition>
+        <argsstring>()</argsstring>
+        <name>raiseByteReady</name>
+        <qualifiedname>vc64::Drive::raiseByteReady</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="520" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="600" bodyend="606"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a608773b227567212c30eb2aeaaf08b07" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool vc64::Drive::getZone</definition>
+        <argsstring>() const</argsstring>
+        <name>getZone</name>
+        <qualifiedname>vc64::Drive::getZone</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="523" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="523" bodyend="523"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a83df32691d57486a0ec4ae0824b1d077" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::setZone</definition>
+        <argsstring>(isize value)</argsstring>
+        <name>setZone</name>
+        <qualifiedname>vc64::Drive::setZone</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="526" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="609" bodyend="617"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1aae5fb920d89f76639152177b0ce459bd" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>u8</type>
+        <definition>u8 vc64::Drive::readBitFromHead</definition>
+        <argsstring>() const</argsstring>
+        <name>readBitFromHead</name>
+        <qualifiedname>vc64::Drive::readBitFromHead</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="529" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="620" bodyend="624"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a05dbb6996d5b7780be4e4ab7d9c6b17f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::writeBitToHead</definition>
+        <argsstring>(u8 bit)</argsstring>
+        <name>writeBitToHead</name>
+        <qualifiedname>vc64::Drive::writeBitToHead</qualifiedname>
+        <param>
+          <type>u8</type>
+          <declname>bit</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="532" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="627" bodyend="631"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1ae5d77d4114dbfc6089c833c08efed0ad" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::rotateDisk</definition>
+        <argsstring>()</argsstring>
+        <name>rotateDisk</name>
+        <qualifiedname>vc64::Drive::rotateDisk</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="535" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="634" bodyend="639"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a986946e22fc68f3fdf24accfaf5aa955" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::vsyncHandler</definition>
+        <argsstring>()</argsstring>
+        <name>vsyncHandler</name>
+        <qualifiedname>vc64::Drive::vsyncHandler</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="538" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="829" bodyend="844"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a01cb39eb96df9183c6ab30b31264847c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::processCommand</definition>
+        <argsstring>(const Cmd &amp;cmd)</argsstring>
+        <name>processCommand</name>
+        <qualifiedname>vc64::Drive::processCommand</qualifiedname>
+        <param>
+          <type>const Cmd &amp;</type>
+          <declname>cmd</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="548" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="847" bodyend="858"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a3d2ed1abf145c464dba237939e21d698" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::scheduleFirstDiskChangeEvent</definition>
+        <argsstring>(EventID id)</argsstring>
+        <name>scheduleFirstDiskChangeEvent</name>
+        <qualifiedname>vc64::Drive::scheduleFirstDiskChangeEvent</qualifiedname>
+        <param>
+          <type>EventID</type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="551" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="861" bodyend="869"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_drive_1a24963f5173887993981c28faa8a50a5c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::processDiskChangeEvent</definition>
+        <argsstring>(EventID id)</argsstring>
+        <name>processDiskChangeEvent</name>
+        <qualifiedname>vc64::Drive::processDiskChangeEvent</qualifiedname>
+        <param>
+          <type>EventID</type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="554" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="872" bodyend="954"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvc64_1_1_drive_1a26bb8dedcae3761ca85b863a8a4bde73" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Drive::executeUF4</definition>
+        <argsstring>()</argsstring>
+        <name>executeUF4</name>
+        <qualifiedname>vc64::Drive::executeUF4</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="483" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.cpp" bodystart="480" bodyend="571"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="36" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="36" bodyend="555"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_drive_1a3dc43d02357d594e53e64d2faa170674" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>_dump</name></member>
+      <member refid="classvc64_1_1_drive_1ae093fd7a809b915a5586de6e5046a947" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>_initialize</name></member>
+      <member refid="classvc64_1_1_drive_1a544d2bef8791caa804d4b00dc2dc33e3" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>_reset</name></member>
+      <member refid="classvc64_1_1_configurable_1a947ce65dab57ea328e9959014b7f9dfb" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>argList</name></member>
+      <member refid="classvc64_1_1_drive_1a7552d8eba9371142c72398e1d9370ef6" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>autoConfigure</name></member>
+      <member refid="classvc64_1_1_drive_1a941ee0fc3593b10fc2b270ac17f59266" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>bitReadyTimer</name></member>
+      <member refid="classvc64_1_1_drive_1ad9ff92a591c947220162f55fbc54e9a8" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>byteReady</name></member>
+      <member refid="classvc64_1_1_drive_1a5f560d8e95e897c77f87156d6993f206" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>byteReadyCounter</name></member>
+      <member refid="classvc64_1_1_sub_component_1a7691c720c74fd0e19a63978efe4cd851" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>c64</name></member>
+      <member refid="classvc64_1_1_drive_1aba1113dd7775d67ded129823c8631b0f" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>canConnect</name></member>
+      <member refid="classvc64_1_1_drive_1a16afab0963a51d04404d74c2fd6f3fe6" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>carryCounter</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae066edf64de901ee3f3b65eb0c02b202" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>cia1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9fe5ed30db982340524f7dcbf6fbf34c" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>cia2</name></member>
+      <member refid="classvc64_1_1_drive_1a5203e9271fbe418c7966d137b6df1e4b" prot="private" virt="non-virtual"><scope>vc64::Drive</scope><name>config</name></member>
+      <member refid="classvc64_1_1_drive_1aa65d7a786ada5bcbc27c4f5f1d813984" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>connectedAndOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a18f454d0d572fa1b2e5023c4eaba6d07" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>CoreComponent</name></member>
+      <member refid="classvc64_1_1_drive_1afbbc21698bc28f6ede7c8b6e2b6e396b" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>counterUF4</name></member>
+      <member refid="classvc64_1_1_drive_1abe3e70d9c1647df31d9b8af0515fcb4f" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>cpu</name></member>
+      <member refid="classvc64_1_1_sub_component_1a157963272dd927ec5c77b4090be57e89" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>datasette</name></member>
+      <member refid="classvc64_1_1_drive_1a3a0d06201eea745ed2ae173799a68b14" prot="private" virt="non-virtual"><scope>vc64::Drive</scope><name>delayBetweenTwoCarryPulses</name></member>
+      <member refid="classvc64_1_1_drive_1a6a1c9984a433200479011410ccca9a10" prot="private" virt="non-virtual"><scope>vc64::Drive</scope><name>deviceNr</name></member>
+      <member refid="classvc64_1_1_drive_1a21fee93396469b504eb659aaac4fcdda" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>disk</name></member>
+      <member refid="classvc64_1_1_drive_1a7965ddf84eb93f059be76cc196ffed6b" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>diskToInsert</name></member>
+      <member refid="classvc64_1_1_drive_1a161c43e7fe4ade183d518a4d36c577d2" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>Drive</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae85ede3d9ed8315d992eed300932eaf7" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>drive</name></member>
+      <member refid="classvc64_1_1_sub_component_1ae44705f9377cf06d91323d8dca13a8a8" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>drive8</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5d876614a31fb29b8317350ed6a3158b" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>drive9</name></member>
+      <member refid="classvc64_1_1_drive_1a752d0eb08c65a5b17f4d9fe984e14c09" prot="private" virt="non-virtual"><scope>vc64::Drive</scope><name>DriveMemory</name></member>
+      <member refid="classvc64_1_1_dumpable_1a28d8b76288598fc0309bd6247e5479db" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_dumpable_1afc31b73f9b651bba5cf37dc88158755a" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>dump</name></member>
+      <member refid="classvc64_1_1_configurable_1a459505cd1eed2c174bf78b29808ad07b" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>dumpConfig</name></member>
+      <member refid="classvc64_1_1_drive_1aa1db07d613125e68076804ad8eef0b81" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>ejectDisk</name></member>
+      <member refid="classvc64_1_1_drive_1a7b2eb2a112ce860fab6de21e9c22c7f4" prot="private" virt="non-virtual"><scope>vc64::Drive</scope><name>elapsedTime</name></member>
+      <member refid="classvc64_1_1_core_component_1a606e5261773126791e44ee8238f5876e" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>emulator</name></member>
+      <member refid="classvc64_1_1_drive_1ad3817eba9af93c7bfd4c1173bf947308" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>execute</name></member>
+      <member refid="classvc64_1_1_drive_1a26bb8dedcae3761ca85b863a8a4bde73" prot="private" virt="non-virtual"><scope>vc64::Drive</scope><name>executeUF4</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5dc793ff2aa4ff3b36fdd061fd3f816b" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>expansionport</name></member>
+      <member refid="classvc64_1_1_drive_1a2e21d00c5b52201d8475dd19b1a3a6e0" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>getConfig</name></member>
+      <member refid="classvc64_1_1_drive_1a4a4debb567c501bd60aff7059325f4a9" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>getDescription</name></member>
+      <member refid="classvc64_1_1_drive_1a43bb81f32b9ad58738abe0bedb5786ae" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>getDeviceNr</name></member>
+      <member refid="classvc64_1_1_drive_1a5c4692e3a653b481ca4ebe41289acf0a" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>getHalftrack</name></member>
+      <member refid="classvc64_1_1_drive_1a0a5a5198601b37d77f96c02d5429a269" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>getInfo</name></member>
+      <member refid="classvc64_1_1_drive_1a992e72809b42253afb21542699d2ccd6" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>getLightBarrier</name></member>
+      <member refid="classvc64_1_1_drive_1a58e3647769f175230f6a2b8e2d04d0a3" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>getOffset</name></member>
+      <member refid="classvc64_1_1_drive_1ae52bdde1d48bc7a3b2702a6e4d932cc6" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>getOption</name></member>
+      <member refid="classvc64_1_1_drive_1a28276449fb433a5d7231791efd4dee7d" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>getOptions</name></member>
+      <member refid="classvc64_1_1_drive_1a00cacb816f59bf7b41c2d85bfcd7fe57" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>getParCableType</name></member>
+      <member refid="classvc64_1_1_drive_1a8753377d04dc137d24a16d9c202dd5c6" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>getRedLED</name></member>
+      <member refid="classvc64_1_1_inspectable_1a2b2b1b7b86eb95e7f1de5900121744d5" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>getState</name></member>
+      <member refid="classvc64_1_1_inspectable_1a792e6f2f3969af7ee496efcdf1f0f2cf" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>getStats</name></member>
+      <member refid="classvc64_1_1_drive_1af4e3b3e1722026f3430bce92ffbe331f" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>getSync</name></member>
+      <member refid="classvc64_1_1_drive_1a71b354fade42a303fe9dc09a40b0ffa9" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>getTrack</name></member>
+      <member refid="classvc64_1_1_drive_1a608773b227567212c30eb2aeaaf08b07" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>getZone</name></member>
+      <member refid="classvc64_1_1_drive_1a3cd541173e58377ec4d254b169155609" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>halftrack</name></member>
+      <member refid="classvc64_1_1_core_component_1a936940e4e5cf0c617935ea3070bcbd4d" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>halt</name></member>
+      <member refid="classvc64_1_1_drive_1af8e5c8aa965f165485b484782cd5b571" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>hasDisk</name></member>
+      <member refid="classvc64_1_1_drive_1ab6a32d8f886d98eb3d573b5b0a4188f4" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>hasModifiedDisk</name></member>
+      <member refid="classvc64_1_1_drive_1a55e0897a67a1df6702ce9d384176902d" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>hasParCable</name></member>
+      <member refid="classvc64_1_1_drive_1a1c9404bacf30b1d56a8a6e047c98a2fa" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>hasPartiallyRemovedDisk</name></member>
+      <member refid="classvc64_1_1_drive_1a92659011c6f3fb88afc6298658dfe65d" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>hasProtectedDisk</name></member>
+      <member refid="classvc64_1_1_drive_1a058014661b4398f2e0aab06432f50e62" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>hasUnmodifiedDisk</name></member>
+      <member refid="classvc64_1_1_drive_1a0aecff0fa4df1faadbea7761b9e0ae32" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>hasUnprotectedDisk</name></member>
+      <member refid="classvc64_1_1_sub_component_1add6521bbcffbe5ca85afd6105d54e5ad" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>host</name></member>
+      <member refid="classvc64_1_1_sub_component_1a5c8620301453e0b91374683d0c7b28ab" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>iec</name></member>
+      <member refid="classvc64_1_1_inspectable_1ad8f0ee7c1f197bdb25e542eec4ea940f" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>info</name></member>
+      <member refid="classvc64_1_1_core_component_1a250f9ac5bbc00892bf195ec2ef523a2b" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>initialize</name></member>
+      <member refid="classvc64_1_1_drive_1a0228395ce268eaca69089b2ce71063f4" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>insertCollection</name></member>
+      <member refid="classvc64_1_1_drive_1a06dfd387468986bf6854a24fb1bf98a0" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>insertD64</name></member>
+      <member refid="classvc64_1_1_drive_1a54f8c33ac5ccb86830c9f3b969918efe" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>insertDisk</name></member>
+      <member refid="classvc64_1_1_drive_1acdf49db9a21706b0e1fa256e62d9bba2" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>insertDisk</name></member>
+      <member refid="classvc64_1_1_drive_1af90bc8671995ae9c1ff01cbe97075d57" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>insertFileSystem</name></member>
+      <member refid="classvc64_1_1_drive_1a8ec3637f7d71d9ebff66c95c980b0717" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>insertG64</name></member>
+      <member refid="classvc64_1_1_drive_1aaef6fb003db3baa82d34225e03ba6448" prot="private" virt="non-virtual"><scope>vc64::Drive</scope><name>insertionStatus</name></member>
+      <member refid="classvc64_1_1_drive_1a7220307b547927275764814f5befcd2a" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>insertNewDisk</name></member>
+      <member refid="classvc64_1_1_inspectable_1a9b905b27f0935083c5bda29fbd832a80" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>Inspectable</name></member>
+      <member refid="classvc64_1_1_drive_1a066f4789a76d5b8709c815e0499c44e5" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>isDrive8</name></member>
+      <member refid="classvc64_1_1_drive_1a0ad885d1977420a060fc660b00d04f23" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>isDrive9</name></member>
+      <member refid="classvc64_1_1_core_component_1a7b95994acc6e7ba59d4b2f50f2dc8df5" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>isEmulatorThread</name></member>
+      <member refid="classvc64_1_1_core_component_1a0e8c3dd97f64e2487fba4c22ba66d487" prot="public" virt="virtual"><scope>vc64::Drive</scope><name>isHalted</name></member>
+      <member refid="classvc64_1_1_drive_1a3a1be9a3e2b6d06c7a25a7ec3015bdfe" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>isIdle</name></member>
+      <member refid="classvc64_1_1_core_component_1a4f0f63ef65776aceecb329d03c3b5f17" prot="public" virt="virtual"><scope>vc64::Drive</scope><name>isPaused</name></member>
+      <member refid="classvc64_1_1_core_component_1ac4dadc5fecfac3cd2dfb7e8b70767b42" prot="public" virt="virtual"><scope>vc64::Drive</scope><name>isPoweredOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a0f9912b36ec181a0410d4f564baef127" prot="public" virt="virtual"><scope>vc64::Drive</scope><name>isPoweredOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a77bf78d982163a6797f24d23106c5098" prot="public" virt="virtual"><scope>vc64::Drive</scope><name>isReady</name></member>
+      <member refid="classvc64_1_1_drive_1ac77b8d8053a06d3e6fc5a3f0b307d1a3" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>isRotating</name></member>
+      <member refid="classvc64_1_1_core_component_1a121143d811f91157272bb67a0ca48d8f" prot="public" virt="virtual"><scope>vc64::Drive</scope><name>isRunning</name></member>
+      <member refid="classvc64_1_1_core_component_1a490512fe63211f42eb57e7ed59f9b6a1" prot="public" virt="virtual"><scope>vc64::Drive</scope><name>isSuspended</name></member>
+      <member refid="classvc64_1_1_configurable_1af6260d08823e90bdb51d1bf7bb596c35" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>isValidOption</name></member>
+      <member refid="classvc64_1_1_sub_component_1aa9a0c663f877801b651969f86dbf2aae" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>keyboard</name></member>
+      <member refid="classvc64_1_1_configurable_1a0d6caf30eeaae95d1898d08cf3ca8e28" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>keyList</name></member>
+      <member refid="classvc64_1_1_drive_1a7ca9809b81aa6311ab54afc2d1e72b6e" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>markDiskAsModified</name></member>
+      <member refid="classvc64_1_1_drive_1a05ee62654e6f7d24711d7ac8bf9dd0ca" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>markDiskAsUnmodified</name></member>
+      <member refid="classvc64_1_1_drive_1a5c498ad72b891a9ec4ebf00c4697b9e7" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>mem</name></member>
+      <member refid="classvc64_1_1_drive_1ab4a8d27e84c2d96de7fa83e85bf5dd53" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>moveHeadDown</name></member>
+      <member refid="classvc64_1_1_drive_1a65c07b9a7a15cf3af4b0e1564e860469" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>moveHeadUp</name></member>
+      <member refid="classvc64_1_1_sub_component_1a478be9b50f9e5c4c07dd2830e9964711" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>msgQueue</name></member>
+      <member refid="classvc64_1_1_synchronizable_1a595f618a9c91e91148882a79760f0f0f" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>mutex</name></member>
+      <member refid="classvc64_1_1_sub_component_1a712af82456373bd6e688a174ac756bcb" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>muxer</name></member>
+      <member refid="classvc64_1_1_drive_1a6af865779348750cc0d56eb978187ee8" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>needsEmulation</name></member>
+      <member refid="classvc64_1_1_drive_1a38afd911d9f27249c322cd4ad52b58d5" prot="private" virt="non-virtual"><scope>vc64::Drive</scope><name>nextCarry</name></member>
+      <member refid="classvc64_1_1_drive_1a739e1d057117fd3b7735b003fefa64c4" prot="private" virt="non-virtual"><scope>vc64::Drive</scope><name>nextClock</name></member>
+      <member refid="classvc64_1_1_drive_1aa45445199e72d9e03c324a868dda2dce" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>offset</name></member>
+      <member refid="classvc64_1_1_core_component_1af47e1017ec1d938b1b613b36bdc8be57" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>operator!=</name></member>
+      <member refid="classvc64_1_1_drive_1adfa34de6e19fc8a3dfa35b1deb1a9b2c" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_drive_1abc24cac9dec522a887be3e44659ea34e" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_drive_1a3e759e8bbfc575be01b313e657c0dc40" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_drive_1a1e67ca3991579d97a4c099500fb9e3ad" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_drive_1af4e8a9a7fcc13ab1ff4bd15dfd20b560" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>operator&lt;&lt;</name></member>
+      <member refid="classvc64_1_1_drive_1a1689245acfe0e2a10b028a1465a3aca3" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>operator=</name></member>
+      <member refid="classvc64_1_1_core_component_1aae8879dd8b62291254ec498fa9b2e2cf" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>operator==</name></member>
+      <member refid="classvc64_1_1_drive_1a3015ee08fcd5d01ea170339c26f4190a" prot="private" virt="non-virtual"><scope>vc64::Drive</scope><name>options</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9dfb837b941848b6b87e6a57da28348d" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>parCable</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a9c059588a19eeba521b79ff28e3dd8" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>pause</name></member>
+      <member refid="classvc64_1_1_drive_1a600d37cc1e024a4af45595064097237f" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>pia</name></member>
+      <member refid="classvc64_1_1_sub_component_1a8c0718eb9d42f335961eaed51ba7cb8d" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>port1</name></member>
+      <member refid="classvc64_1_1_sub_component_1a217a6ea39994b6ecae4e1ebd9cc220e7" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>port2</name></member>
+      <member refid="classvc64_1_1_core_component_1a05e1ba6d62516f796256f1cc394bf2f5" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>powerOff</name></member>
+      <member refid="classvc64_1_1_core_component_1ad606699d83a017fbee805e8d40245475" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>powerOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a74ab4149c152b98c6d5cc15bbac63887" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>powerOnOff</name></member>
+      <member refid="classvc64_1_1_drive_1a798348f32ef0a5aa3cf8fa612a3cd6b6" prot="private" virt="non-virtual"><scope>vc64::Drive</scope><name>powerSafeThreshold</name></member>
+      <member refid="classvc64_1_1_sub_component_1a4fa2405b078fe61c302ff1c8047d9c4f" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>powerSupply</name></member>
+      <member refid="classvc64_1_1_sub_component_1aba0c66cd1ce8a6d1c3529825afdb4a02" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>prefix</name></member>
+      <member refid="classvc64_1_1_drive_1a01cb39eb96df9183c6ab30b31264847c" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>processCommand</name></member>
+      <member refid="classvc64_1_1_drive_1a24963f5173887993981c28faa8a50a5c" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>processDiskChangeEvent</name></member>
+      <member refid="classvc64_1_1_drive_1a68477048ba33e5c3bd97420532a6a13b" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>raiseByteReady</name></member>
+      <member refid="classvc64_1_1_drive_1aae5fb920d89f76639152177b0ce459bd" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>readBitFromHead</name></member>
+      <member refid="classvc64_1_1_drive_1a73c3d3538cfd3476c805c6d5fbf16401" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>readMode</name></member>
+      <member refid="classvc64_1_1_drive_1a1076a5045d5212b26f74522699328c84" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>readShiftreg</name></member>
+      <member refid="classvc64_1_1_inspectable_1a49bce64b6ddf46247b1b041cfc482e70" prot="public" virt="virtual"><scope>vc64::Drive</scope><name>record</name></member>
+      <member refid="classvc64_1_1_sub_component_1a2e1d97a260e9d4d637b0f8fb95fbf1d8" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>recorder</name></member>
+      <member refid="classvc64_1_1_drive_1a02317ab7ac8cb77068f3936645f5ea90" prot="private" virt="non-virtual"><scope>vc64::Drive</scope><name>redLED</name></member>
+      <member refid="classvc64_1_1_sub_component_1afe6a4ca2f661ec44fd67637b14647436" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>regressionTester</name></member>
+      <member refid="classvc64_1_1_core_component_1a3910be506f5067fe6cf31a69dcd76b0c" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>reset</name></member>
+      <member refid="classvc64_1_1_drive_1a4506e947c216e2a5951005c88e24b6f9" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1aec76d436c865101509bceb2daf47890b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::Drive</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_configurable_1af9ec0fb5e73fd1f0433a4f3bfcd39d9b" prot="public" virt="non-virtual" ambiguityscope="vc64::Configurable::"><scope>vc64::Drive</scope><name>resetConfig</name></member>
+      <member refid="classvc64_1_1_core_component_1aab9305af3e38cc19bd1067ca87fe3e0d" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>resume</name></member>
+      <member refid="classvc64_1_1_sub_component_1ada641e2232ca8bdd3ef8fbecc883658d" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>retroShell</name></member>
+      <member refid="classvc64_1_1_drive_1ae5d77d4114dbfc6089c833c08efed0ad" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>rotateDisk</name></member>
+      <member refid="classvc64_1_1_core_component_1ae7093017e8a84768103c67b24de5c578" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>run</name></member>
+      <member refid="classvc64_1_1_drive_1a3d2ed1abf145c464dba237939e21d698" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>scheduleFirstDiskChangeEvent</name></member>
+      <member refid="classvc64_1_1_drive_1a108eb3e695848ad5dbe2cc0a277f2aec" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>serialize</name></member>
+      <member refid="classvc64_1_1_drive_1a42981e4ecb9a1b3e32766ebf245e0355" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>setModificationFlag</name></member>
+      <member refid="classvc64_1_1_drive_1a347cdcd8f889a3dd98202471fcda784e" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a51756d7f1f0ed1caa0e247ab6e789a3b" prot="public" virt="non-virtual" ambiguityscope="vc64::SubComponent::"><scope>vc64::Drive</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_configurable_1a653a689b1a17fac237ca960b062df637" prot="public" virt="non-virtual" ambiguityscope="vc64::SubComponent::"><scope>vc64::Drive</scope><name>setOption</name></member>
+      <member refid="classvc64_1_1_drive_1a060264dc71ef86fd97399c5885f953a1" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>setRedLED</name></member>
+      <member refid="classvc64_1_1_drive_1aa6d5f8f11fe5b7d9ad5bd76b106bfe95" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>setRotating</name></member>
+      <member refid="classvc64_1_1_drive_1a83df32691d57486a0ec4ae0824b1d077" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>setZone</name></member>
+      <member refid="classvc64_1_1_drive_1ab9f7f4337b6afcd1dff83d6dc1662965" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>sizeOfCurrentHalftrack</name></member>
+      <member refid="classvc64_1_1_drive_1aa3b8d2361eba0f44270d08b520fd8d85" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>sizeOfHalftrack</name></member>
+      <member refid="classvc64_1_1_drive_1a9b7b286d943f702194698371fb2984f9" prot="private" virt="non-virtual"><scope>vc64::Drive</scope><name>spinning</name></member>
+      <member refid="classvc64_1_1_inspectable_1aecec7b2e020d4320ac56123bce570986" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>stats</name></member>
+      <member refid="classvc64_1_1_sub_component_1adce334c26f07e67bc936fbf7c935a759" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_sub_component_1a61d8a843718ff2f39e1575338a527676" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>SubComponent</name></member>
+      <member refid="classvc64_1_1_core_component_1aa8b45810bedbdf78b88710ae8db3f495" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>subComponents</name></member>
+      <member refid="classvc64_1_1_core_component_1afd3f09724b119d73a122c3fc02ac1736" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>suspend</name></member>
+      <member refid="classvc64_1_1_suspendable_1a7f9f608d5b2b9b6e944176cde77b8f85" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>Suspendable</name></member>
+      <member refid="classvc64_1_1_drive_1a265fba6d7c06c16636a29e2b52bd5187" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>sync</name></member>
+      <member refid="classvc64_1_1_core_component_1a0a4c841e543ecfc6cf988592a933a564" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>trackOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a4832ab0ebef49b591fe6e2785e969c89" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>trackOn</name></member>
+      <member refid="classvc64_1_1_core_component_1aae437c6ccf5f91155464dd4953c3baab" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>trackOnOff</name></member>
+      <member refid="classvc64_1_1_drive_1a014b1e3a591ba075aa16de25fc448c19" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>updateByteReady</name></member>
+      <member refid="classvc64_1_1_core_component_1a7a24c5efde497d14b519ad15c9053949" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>verbose</name></member>
+      <member refid="classvc64_1_1_drive_1ad8f05903df8b7b8271e2654dc4c078fa" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>via1</name></member>
+      <member refid="classvc64_1_1_drive_1aaac1fb78098190bf72ce5c8e3c19a35c" prot="private" virt="non-virtual"><scope>vc64::Drive</scope><name>VIA1</name></member>
+      <member refid="classvc64_1_1_drive_1a6e76634417c66025dd6bd5aae255a5a2" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>via2</name></member>
+      <member refid="classvc64_1_1_drive_1a369c3335a5cd37d67df1d5c5bc9fbfbd" prot="private" virt="non-virtual"><scope>vc64::Drive</scope><name>VIA2</name></member>
+      <member refid="classvc64_1_1_sub_component_1a9c1a4b73d1514ddc64567d4521abdecd" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>vic</name></member>
+      <member refid="classvc64_1_1_drive_1a986946e22fc68f3fdf24accfaf5aa955" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>vsyncHandler</name></member>
+      <member refid="classvc64_1_1_drive_1a9dec0119539afc8ec43ef6d80a1ab49a" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>wakeUp</name></member>
+      <member refid="classvc64_1_1_core_component_1a45399f75688ba5ba157a479c3ce76633" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>warpOff</name></member>
+      <member refid="classvc64_1_1_core_component_1a5df664aeda300338d0568d59673ff536" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>warpOn</name></member>
+      <member refid="classvc64_1_1_core_component_1a6760d32857901c415f4d75031d1e2654" prot="protected" virt="non-virtual"><scope>vc64::Drive</scope><name>warpOnOff</name></member>
+      <member refid="classvc64_1_1_drive_1a47145847c280906bd4c474379a6d0354" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>watchdog</name></member>
+      <member refid="classvc64_1_1_drive_1a05dbb6996d5b7780be4e4ab7d9c6b17f" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>writeBitToHead</name></member>
+      <member refid="classvc64_1_1_drive_1a0b150bc3432b2e2cf04cfea3b06944f3" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>writeMode</name></member>
+      <member refid="classvc64_1_1_drive_1a46b9c06e632cc1120953030a17d7732d" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>writeShiftreg</name></member>
+      <member refid="classvc64_1_1_drive_1a607369e3a85d35412073682c25f00050" prot="public" virt="non-virtual"><scope>vc64::Drive</scope><name>zone</name></member>
+      <member refid="classvc64_1_1_configurable_1a5aa5d945e768c40297f1bf71e200bde3" prot="public" virt="virtual"><scope>vc64::Drive</scope><name>~Configurable</name></member>
+      <member refid="classvc64_1_1_core_object_1a5ef9c1d437ebdeb30df4125cf867e004" prot="public" virt="virtual"><scope>vc64::Drive</scope><name>~CoreObject</name></member>
+      <member refid="classvc64_1_1_dumpable_1a843e874f633f7dcd8e2f1dcf1d8f0c25" prot="public" virt="virtual"><scope>vc64::Drive</scope><name>~Dumpable</name></member>
+      <member refid="classvc64_1_1_inspectable_1acf833bce62ebc43dac5b42fed0427d67" prot="public" virt="virtual"><scope>vc64::Drive</scope><name>~Inspectable</name></member>
+      <member refid="classvc64_1_1_suspendable_1a35809d3a4c20db1f096e8dc5c78c49b9" prot="public" virt="virtual"><scope>vc64::Drive</scope><name>~Suspendable</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

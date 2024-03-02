@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['state_5fhalted_0',['STATE_HALTED',['../group__doxy__types.html#gga44fb3bfc9b3abc142d662a5ffb4e9cbca99bff5383ce10ea512c8443243adf5b3',1,'ThreadTypes.h']]],
-  ['state_5foff_1',['STATE_OFF',['../group__doxy__types.html#gga44fb3bfc9b3abc142d662a5ffb4e9cbca4038ca872e1ed104c16122c365bd3ca0',1,'ThreadTypes.h']]],
-  ['state_5fpaused_2',['STATE_PAUSED',['../group__doxy__types.html#gga44fb3bfc9b3abc142d662a5ffb4e9cbca6291ce9aab12208cc66968c97a1ce7dd',1,'ThreadTypes.h']]],
-  ['state_5frunning_3',['STATE_RUNNING',['../group__doxy__types.html#gga44fb3bfc9b3abc142d662a5ffb4e9cbcaddfe11c6d06c4e27bd6efc18cc4862a6',1,'ThreadTypes.h']]],
-  ['state_5fsuspended_4',['STATE_SUSPENDED',['../group__doxy__types.html#gga44fb3bfc9b3abc142d662a5ffb4e9cbca9acde879501201b19fcb37cdd08eff6d',1,'ThreadTypes.h']]]
+  ['glue_5flogic_5fdiscrete_0',['GLUE_LOGIC_DISCRETE',['../_v_i_c_i_i_types_8h.html#a1b9e054b18647ae68a514badefcbdf1fab0a367ca69f132394f596e30f9dedc80',1,'VICIITypes.h']]],
+  ['glue_5flogic_5fic_1',['GLUE_LOGIC_IC',['../_v_i_c_i_i_types_8h.html#a1b9e054b18647ae68a514badefcbdf1fa0fcdcf2c0a1c19b28f6a2b74f7d61643',1,'VICIITypes.h']]]
 ];

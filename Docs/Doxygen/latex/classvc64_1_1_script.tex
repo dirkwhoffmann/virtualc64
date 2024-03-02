@@ -1,0 +1,147 @@
+\doxysection{vc64\+::Script Class Reference}
+\hypertarget{classvc64_1_1_script}{}\label{classvc64_1_1_script}\index{vc64::Script@{vc64::Script}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_script_a74dd4a8c5f6e86adcdcdbfd513a5ca45}\label{classvc64_1_1_script_a74dd4a8c5f6e86adcdcdbfd513a5ca45} 
+{\bfseries Script} (const string \&path)  throws 
+\item 
+\Hypertarget{classvc64_1_1_script_a5d7d52282d96771dd0b1d2847e721522}\label{classvc64_1_1_script_a5d7d52282d96771dd0b1d2847e721522} 
+{\bfseries Script} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len)  throws 
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classvc64_1_1_script_a809c5d88c286465001111aacf88d36d1}{get\+Description}} () const override
+\item 
+bool \mbox{\hyperlink{classvc64_1_1_script_acd885b40d3d4bfdc1966857a44102c30}{is\+Compatible\+Path}} (const string \&path) override
+\item 
+bool \mbox{\hyperlink{classvc64_1_1_script_aab779214588c86561a367e86c2edc709}{is\+Compatible\+Stream}} (std\+::istream \&stream) override
+\item 
+File\+Type \mbox{\hyperlink{classvc64_1_1_script_ae17548bdfc61549f7269189878df047e}{type}} () const override
+\item 
+\Hypertarget{classvc64_1_1_script_a97723d8282d3e65747aee3bde2c8dffb}\label{classvc64_1_1_script_a97723d8282d3e65747aee3bde2c8dffb} 
+void {\bfseries execute} (\mbox{\hyperlink{class_virtual_c64}{Virtual\+C64}} \&c64)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Any\+File} (isize capacity)
+\item 
+void {\bfseries init} (isize capacity)
+\item 
+void {\bfseries init} (const string \&path) throws
+\item 
+void {\bfseries init} (const string \&path, std\+::istream \&stream) throws
+\item 
+void {\bfseries init} (std\+::istream \&stream) throws
+\item 
+void {\bfseries init} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len) throws
+\item 
+void {\bfseries init} (FILE \texorpdfstring{$\ast$}{*}file) throws
+\item 
+virtual \mbox{\hyperlink{classvc64_1_1_p_e_t_name}{PETName}}$<$ 16 $>$ {\bfseries get\+Name} () const
+\item 
+u8 {\bfseries get\+Data} (isize nr)
+\item 
+u64 {\bfseries fnv} () const
+\item 
+void {\bfseries strip} (isize count)
+\item 
+void {\bfseries flash} (u8 \texorpdfstring{$\ast$}{*}buf, isize offset=0) const
+\item 
+void {\bfseries write\+To\+Stream} (std\+::ostream \&stream) throws
+\item 
+void {\bfseries write\+To\+File} (const string \&path) throws
+\item 
+void {\bfseries write\+To\+Buffer} (u8 \texorpdfstring{$\ast$}{*}buf) throws
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual void {\bfseries prefix} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_script_a232fcad1dde23ba6e8db4a068cda9c31}\label{classvc64_1_1_script_a232fcad1dde23ba6e8db4a068cda9c31} 
+static bool {\bfseries is\+Compatible} (const string \&path)
+\item 
+\Hypertarget{classvc64_1_1_script_afceeb2267245a531cb970879445a3e8f}\label{classvc64_1_1_script_afceeb2267245a531cb970879445a3e8f} 
+static bool {\bfseries is\+Compatible} (std\+::istream \&stream)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}}
+\begin{DoxyCompactItemize}
+\item 
+static File\+Type {\bfseries type} (const string \&path)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}}
+\begin{DoxyCompactItemize}
+\item 
+string {\bfseries path} = "{}"{}
+\item 
+u8 \texorpdfstring{$\ast$}{*} {\bfseries data} = nullptr
+\item 
+isize {\bfseries size} = 0
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries read\+From\+Stream} (std\+::istream \&stream) throws
+\item 
+void {\bfseries read\+From\+File} (const string \&path) throws
+\item 
+void {\bfseries read\+From\+Buffer} (const u8 \texorpdfstring{$\ast$}{*}buf, isize len) throws
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+static bool {\bfseries verbose} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvc64_1_1_script_a809c5d88c286465001111aacf88d36d1}\label{classvc64_1_1_script_a809c5d88c286465001111aacf88d36d1} 
+\index{vc64::Script@{vc64::Script}!getDescription@{getDescription}}
+\index{getDescription@{getDescription}!vc64::Script@{vc64::Script}}
+\doxysubsubsection{\texorpdfstring{getDescription()}{getDescription()}}
+{\footnotesize\ttfamily const char \texorpdfstring{$\ast$}{*} vc64\+::\+Script\+::get\+Description (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}.
+
+\Hypertarget{classvc64_1_1_script_acd885b40d3d4bfdc1966857a44102c30}\label{classvc64_1_1_script_acd885b40d3d4bfdc1966857a44102c30} 
+\index{vc64::Script@{vc64::Script}!isCompatiblePath@{isCompatiblePath}}
+\index{isCompatiblePath@{isCompatiblePath}!vc64::Script@{vc64::Script}}
+\doxysubsubsection{\texorpdfstring{isCompatiblePath()}{isCompatiblePath()}}
+{\footnotesize\ttfamily bool vc64\+::\+Script\+::is\+Compatible\+Path (\begin{DoxyParamCaption}\item[{const string \&}]{path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}.
+
+\Hypertarget{classvc64_1_1_script_aab779214588c86561a367e86c2edc709}\label{classvc64_1_1_script_aab779214588c86561a367e86c2edc709} 
+\index{vc64::Script@{vc64::Script}!isCompatibleStream@{isCompatibleStream}}
+\index{isCompatibleStream@{isCompatibleStream}!vc64::Script@{vc64::Script}}
+\doxysubsubsection{\texorpdfstring{isCompatibleStream()}{isCompatibleStream()}}
+{\footnotesize\ttfamily bool vc64\+::\+Script\+::is\+Compatible\+Stream (\begin{DoxyParamCaption}\item[{std\+::istream \&}]{stream }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}.
+
+\Hypertarget{classvc64_1_1_script_ae17548bdfc61549f7269189878df047e}\label{classvc64_1_1_script_ae17548bdfc61549f7269189878df047e} 
+\index{vc64::Script@{vc64::Script}!type@{type}}
+\index{type@{type}!vc64::Script@{vc64::Script}}
+\doxysubsubsection{\texorpdfstring{type()}{type()}}
+{\footnotesize\ttfamily File\+Type vc64\+::\+Script\+::type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_any_file}{vc64\+::\+Any\+File}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Media/Script.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Media/Script.\+cpp\end{DoxyCompactItemize}

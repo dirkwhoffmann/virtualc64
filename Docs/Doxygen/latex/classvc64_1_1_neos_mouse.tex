@@ -1,0 +1,229 @@
+\doxysection{vc64\+::Neos\+Mouse Class Reference}
+\hypertarget{classvc64_1_1_neos_mouse}{}\label{classvc64_1_1_neos_mouse}\index{vc64::NeosMouse@{vc64::NeosMouse}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvc64_1_1_neos_mouse_a0ddabfc071486eb12c5cee49401294a1}\label{classvc64_1_1_neos_mouse_a0ddabfc071486eb12c5cee49401294a1} 
+{\bfseries Neos\+Mouse} (\mbox{\hyperlink{classvc64_1_1_c64}{C64}} \&ref)
+\item 
+\Hypertarget{classvc64_1_1_neos_mouse_a7aaa68ae8dffaee67196a7f872e35ced}\label{classvc64_1_1_neos_mouse_a7aaa68ae8dffaee67196a7f872e35ced} 
+\mbox{\hyperlink{classvc64_1_1_neos_mouse}{Neos\+Mouse}} \& {\bfseries operator=} (const \mbox{\hyperlink{classvc64_1_1_neos_mouse}{Neos\+Mouse}} \&other)
+\item 
+\Hypertarget{classvc64_1_1_neos_mouse_a95702194ee64bcde3c7e4d0bf1378b6d}\label{classvc64_1_1_neos_mouse_a95702194ee64bcde3c7e4d0bf1378b6d} 
+{\footnotesize template$<$class T $>$ }\\void {\bfseries serialize} (T \&worker)
+\item 
+\Hypertarget{classvc64_1_1_neos_mouse_ac43b6cfc9dd937748e5e43542e2ccc65}\label{classvc64_1_1_neos_mouse_ac43b6cfc9dd937748e5e43542e2ccc65} 
+{\bfseries SERIALIZERS} (serialize)
+\item 
+void \mbox{\hyperlink{classvc64_1_1_neos_mouse_ab33d7767194b9eb0f2284f570bf80c3f}{\+\_\+reset}} (bool hard) override
+\item 
+\Hypertarget{classvc64_1_1_neos_mouse_a0ebfb74323ec32716e543eaa2de2f062}\label{classvc64_1_1_neos_mouse_a0ebfb74323ec32716e543eaa2de2f062} 
+void {\bfseries set\+Left\+Mouse\+Button} (bool value)
+\item 
+\Hypertarget{classvc64_1_1_neos_mouse_a071b0f6c781435bea2822fc54c9a5755}\label{classvc64_1_1_neos_mouse_a071b0f6c781435bea2822fc54c9a5755} 
+void {\bfseries set\+Right\+Mouse\+Button} (bool value)
+\item 
+\Hypertarget{classvc64_1_1_neos_mouse_af5117e0dbde6258a76fc5c0c0573e481}\label{classvc64_1_1_neos_mouse_af5117e0dbde6258a76fc5c0c0573e481} 
+u8 {\bfseries read\+PotX} () const
+\item 
+\Hypertarget{classvc64_1_1_neos_mouse_a38eab8335fa438a16b8c97120ddb3952}\label{classvc64_1_1_neos_mouse_a38eab8335fa438a16b8c97120ddb3952} 
+u8 {\bfseries read\+PotY} () const
+\item 
+\Hypertarget{classvc64_1_1_neos_mouse_a628969c008a84f9f46be85a5aba5a13d}\label{classvc64_1_1_neos_mouse_a628969c008a84f9f46be85a5aba5a13d} 
+void {\bfseries update\+Control\+Port} (i64 targetX, i64 targetY)
+\item 
+\Hypertarget{classvc64_1_1_neos_mouse_ae696a25ffd3a2e44c25856f536573c57}\label{classvc64_1_1_neos_mouse_ae696a25ffd3a2e44c25856f536573c57} 
+u8 {\bfseries read\+Control\+Port} () const
+\item 
+\Hypertarget{classvc64_1_1_neos_mouse_a01f1752c3b69a3cf5daabf791af1befb}\label{classvc64_1_1_neos_mouse_a01f1752c3b69a3cf5daabf791af1befb} 
+void {\bfseries rising\+Strobe} (i64 targetX, i64 targetY)
+\item 
+\Hypertarget{classvc64_1_1_neos_mouse_a5389a6d5aedb07e90ea7f2d88111069a}\label{classvc64_1_1_neos_mouse_a5389a6d5aedb07e90ea7f2d88111069a} 
+void {\bfseries falling\+Strobe} (i64 targetX, i64 targetY)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_sub_component}{vc64\+::\+Sub\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Sub\+Component} (\mbox{\hyperlink{classvc64_1_1_c64}{C64}} \&ref)
+\item 
+{\bfseries Sub\+Component} (const \mbox{\hyperlink{classvc64_1_1_sub_component}{Sub\+Component}} \&other)
+\item 
+void \mbox{\hyperlink{classvc64_1_1_sub_component_aba0c66cd1ce8a6d1c3529825afdb4a02}{prefix}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_core_component}{vc64\+::\+Core\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Core\+Component} (\mbox{\hyperlink{classvc64_1_1_emulator}{Emulator}} \&ref)
+\item 
+bool {\bfseries operator==} (\mbox{\hyperlink{classvc64_1_1_core_component}{Core\+Component}} \&other)
+\item 
+bool {\bfseries operator!=} (\mbox{\hyperlink{classvc64_1_1_core_component}{Core\+Component}} \&other)
+\item 
+void {\bfseries initialize} ()
+\item 
+virtual void {\bfseries \+\_\+initialize} ()
+\item 
+void {\bfseries reset} (bool hard)
+\item 
+virtual void {\bfseries reset\+Config} ()
+\item 
+virtual bool {\bfseries is\+Powered\+Off} () const
+\item 
+virtual bool {\bfseries is\+Powered\+On} () const
+\item 
+virtual bool {\bfseries is\+Paused} () const
+\item 
+virtual bool {\bfseries is\+Running} () const
+\item 
+virtual bool {\bfseries is\+Suspended} () const
+\item 
+virtual bool {\bfseries is\+Halted} () const
+\item 
+void \mbox{\hyperlink{classvc64_1_1_core_component_afd3f09724b119d73a122c3fc02ac1736}{suspend}} ()
+\item 
+void \mbox{\hyperlink{classvc64_1_1_core_component_aab9305af3e38cc19bd1067ca87fe3e0d}{resume}} ()
+\item 
+virtual void {\bfseries is\+Ready} () const throws
+\item 
+bool {\bfseries is\+Emulator\+Thread} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_configurable}{vc64\+::\+Configurable}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual const Config\+Options \& {\bfseries get\+Options} () const
+\item 
+bool {\bfseries is\+Valid\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt) const
+\item 
+virtual i64 {\bfseries get\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt) const
+\item 
+virtual void {\bfseries set\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt, i64 value)
+\item 
+void {\bfseries set\+Option} (\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}} opt, const string \&value)
+\item 
+void {\bfseries set\+Option} (const string \&opt, const string \&value)
+\item 
+void {\bfseries reset\+Config} (const \mbox{\hyperlink{classvc64_1_1_defaults}{Defaults}} \&defaults)
+\item 
+void {\bfseries reset\+Config} (const \mbox{\hyperlink{classvc64_1_1_defaults}{Defaults}} \&defaults, isize i)
+\item 
+void {\bfseries dump\+Config} (std\+::ostream \&os) const
+\item 
+string {\bfseries key\+List} ()
+\item 
+string {\bfseries arg\+List} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classvc64_1_1_core_component}{vc64\+::\+Core\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classvc64_1_1_emulator}{Emulator}} \& {\bfseries emulator}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classvc64_1_1_core_component}{Core\+Component}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries sub\+Components}
+\item 
+bool {\bfseries verbose} = true
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classvc64_1_1_synchronizable}{vc64\+::\+Synchronizable}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classutil_1_1_reentrant_mutex}{util\+::\+Reentrant\+Mutex}} {\bfseries mutex}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classvc64_1_1_core_component}{vc64\+::\+Core\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries power\+On} ()
+\item 
+void {\bfseries power\+Off} ()
+\item 
+void {\bfseries run} ()
+\item 
+void {\bfseries pause} ()
+\item 
+void {\bfseries halt} ()
+\item 
+void {\bfseries warp\+On} ()
+\item 
+void {\bfseries warp\+Off} ()
+\item 
+void {\bfseries track\+On} ()
+\item 
+void {\bfseries track\+Off} ()
+\item 
+void {\bfseries power\+On\+Off} (bool value)
+\item 
+void {\bfseries warp\+On\+Off} (bool value)
+\item 
+void {\bfseries track\+On\+Off} (bool value)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_sub_component}{vc64\+::\+Sub\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c64}{C64}} \& {\bfseries c64}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c_i_a1}{CIA1}} \& {\bfseries cia1}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c_i_a2}{CIA2}} \& {\bfseries cia2}
+\item 
+\mbox{\hyperlink{classvc64_1_1_control_port}{Control\+Port}} \& {\bfseries port1}
+\item 
+\mbox{\hyperlink{classvc64_1_1_control_port}{Control\+Port}} \& {\bfseries port2}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c_p_u}{CPU}} \& {\bfseries cpu}
+\item 
+\mbox{\hyperlink{classvc64_1_1_datasette}{Datasette}} \& {\bfseries datasette}
+\item 
+\mbox{\hyperlink{classvc64_1_1_drive}{Drive}} \& {\bfseries drive8}
+\item 
+\mbox{\hyperlink{classvc64_1_1_drive}{Drive}} \& {\bfseries drive9}
+\item 
+\mbox{\hyperlink{classvc64_1_1_expansion_port}{Expansion\+Port}} \& {\bfseries expansionport}
+\item 
+\mbox{\hyperlink{classvc64_1_1_host}{Host}} \& {\bfseries host}
+\item 
+\mbox{\hyperlink{classvc64_1_1_i_e_c}{IEC}} \& {\bfseries iec}
+\item 
+\mbox{\hyperlink{classvc64_1_1_keyboard}{Keyboard}} \& {\bfseries keyboard}
+\item 
+\mbox{\hyperlink{classvc64_1_1_c64_memory}{C64\+Memory}} \& {\bfseries mem}
+\item 
+\mbox{\hyperlink{classvc64_1_1_msg_queue}{Msg\+Queue}} \& {\bfseries msg\+Queue}
+\item 
+\mbox{\hyperlink{classvc64_1_1_power_supply}{Power\+Supply}} \& {\bfseries power\+Supply}
+\item 
+\mbox{\hyperlink{classvc64_1_1_par_cable}{Par\+Cable}} \& {\bfseries par\+Cable}
+\item 
+\mbox{\hyperlink{classvc64_1_1_recorder}{Recorder}} \& {\bfseries recorder}
+\item 
+\mbox{\hyperlink{classvc64_1_1_regression_tester}{Regression\+Tester}} \& {\bfseries regression\+Tester}
+\item 
+\mbox{\hyperlink{classvc64_1_1_retro_shell}{Retro\+Shell}} \& {\bfseries retro\+Shell}
+\item 
+\mbox{\hyperlink{classvc64_1_1_muxer}{Muxer}} \& {\bfseries muxer}
+\item 
+\mbox{\hyperlink{classvc64_1_1_v_i_c_i_i}{VICII}} \& {\bfseries vic}
+\item 
+\mbox{\hyperlink{classvc64_1_1_drive}{Drive}} \texorpdfstring{$\ast$}{*} {\bfseries drive} \mbox{[}2\mbox{]} = \{ \&drive8, \&drive9 \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes inherited from \mbox{\hyperlink{classvc64_1_1_core_object}{vc64\+::\+Core\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+static bool {\bfseries verbose} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvc64_1_1_neos_mouse_ab33d7767194b9eb0f2284f570bf80c3f}\label{classvc64_1_1_neos_mouse_ab33d7767194b9eb0f2284f570bf80c3f} 
+\index{vc64::NeosMouse@{vc64::NeosMouse}!\_reset@{\_reset}}
+\index{\_reset@{\_reset}!vc64::NeosMouse@{vc64::NeosMouse}}
+\doxysubsubsection{\texorpdfstring{\_reset()}{\_reset()}}
+{\footnotesize\ttfamily void vc64\+::\+Neos\+Mouse\+::\+\_\+reset (\begin{DoxyParamCaption}\item[{bool}]{hard }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvc64_1_1_core_component}{vc64\+::\+Core\+Component}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Peripherals/\+Mouse/Neos\+Mouse.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Peripherals/\+Mouse/Neos\+Mouse.\+cpp\end{DoxyCompactItemize}

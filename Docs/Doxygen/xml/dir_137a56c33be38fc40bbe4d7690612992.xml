@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="dir_137a56c33be38fc40bbe4d7690612992" kind="dir">
+    <compoundname>/Users/hoff/Retro/virtualc64/Emulator/Components/VICII</compoundname>
+    <innerdir refid="dir_68e84640da040d55926e3964b2d7e5ab">/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/Recorder</innerdir>
+    <innerfile refid="_bus_types_8h">BusTypes.h</innerfile>
+    <innerfile refid="_dma_debugger_8cpp">DmaDebugger.cpp</innerfile>
+    <innerfile refid="_dma_debugger_8h">DmaDebugger.h</innerfile>
+    <innerfile refid="_dma_debugger_types_8h">DmaDebuggerTypes.h</innerfile>
+    <innerfile refid="_v_i_c_i_i_8cpp">VICII.cpp</innerfile>
+    <innerfile refid="_v_i_c_i_i_8h">VICII.h</innerfile>
+    <innerfile refid="_v_i_c_i_i__colors_8cpp">VICII_colors.cpp</innerfile>
+    <innerfile refid="_v_i_c_i_i__cycles_8cpp">VICII_cycles.cpp</innerfile>
+    <innerfile refid="_v_i_c_i_i__debug_8cpp">VICII_debug.cpp</innerfile>
+    <innerfile refid="_v_i_c_i_i__draw_8cpp">VICII_draw.cpp</innerfile>
+    <innerfile refid="_v_i_c_i_i__memory_8cpp">VICII_memory.cpp</innerfile>
+    <innerfile refid="_v_i_c_i_i__sprites_8cpp">VICII_sprites.cpp</innerfile>
+    <innerfile refid="_v_i_c_i_i__table_8cpp">VICII_table.cpp</innerfile>
+    <innerfile refid="_v_i_c_i_i_types_8h">VICIITypes.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/"/>
+  </compounddef>
+</doxygen>

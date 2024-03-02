@@ -1,0 +1,257 @@
+\doxysection{Peddle\+Debugger.\+h}
+\hypertarget{_peddle_debugger_8h_source}{}\label{_peddle_debugger_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h@{/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleDebugger.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ Peddle\ -\/\ A\ MOS\ 65xx\ CPU\ emulator}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ Published\ under\ the\ terms\ of\ the\ MIT\ License}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}PeddleDebugger.h"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}Peddle.h"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }vc64::peddle\ \{}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ Base\ structure\ for\ a\ single\ breakpoint\ or\ watchpoint}}
+\DoxyCodeLine{00016\ \textcolor{keyword}{struct\ }Guard\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{comment}{//\ The\ observed\ address}}
+\DoxyCodeLine{00019\ \ \ \ \ u32\ addr;}
+\DoxyCodeLine{00020\ \ \ \ \ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//\ Disabled\ guards\ never\ trigger}}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{bool}\ enabled;}
+\DoxyCodeLine{00023\ \ \ \ \ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{comment}{//\ Counts\ the\ number\ of\ hits}}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{long}\ hits;}
+\DoxyCodeLine{00026\ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{comment}{//\ Number\ of\ skipped\ hits\ before\ a\ match\ is\ signalled}}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{long}\ skip;}
+\DoxyCodeLine{00029\ \ \ \ \ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ \ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//\ Returns\ true\ if\ the\ guard\ hits}}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{bool}\ eval(u32\ addr);}
+\DoxyCodeLine{00034\ \};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{comment}{//\ Base\ class\ for\ a\ collection\ of\ guards}}
+\DoxyCodeLine{00037\ \textcolor{keyword}{class\ }Guards\ \{}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }Debugger;}
+\DoxyCodeLine{00040\ \ \ \ \ }
+\DoxyCodeLine{00041\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//\ Reference\ to\ the\ connected\ CPU}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{class\ }Peddle\ \&cpu;}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//\ Capacity\ of\ the\ guards\ array}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{long}\ capacity\ =\ 1;}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{comment}{//\ Array\ holding\ all\ guards}}
+\DoxyCodeLine{00050\ \ \ \ \ Guard\ *guards\ =\ \textcolor{keyword}{new}\ Guard[1];}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{comment}{//\ Number\ of\ currently\ stored\ guards}}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{long}\ count\ =\ 0;}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{comment}{//\ Indicates\ if\ guard\ checking\ is\ necessary}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setNeedsCheck(\textcolor{keywordtype}{bool}\ value)\ =\ 0;}
+\DoxyCodeLine{00057\ \ \ \ \ }
+\DoxyCodeLine{00058\ \ \ \ \ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ Constructing}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ Guards(Peddle\&\ ref)\ :\ cpu(ref)\ \{\ \}}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~Guards();}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{comment}{//\ Inspecting\ the\ guard\ list}}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00072\ \ \ \ \ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{long}\ elements()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ count;\ \}}
+\DoxyCodeLine{00074\ \ \ \ \ Guard\ *guardWithNr(\textcolor{keywordtype}{long}\ nr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00075\ \ \ \ \ Guard\ *guardAtAddr(u32\ addr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00076\ \ \ \ \ }
+\DoxyCodeLine{00077\ \ \ \ \ u32\ guardAddr(\textcolor{keywordtype}{long}\ nr)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ nr\ <\ count\ ?\ guards[nr].addr\ :\ 0;\ \}}
+\DoxyCodeLine{00078\ \ \ \ \ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{bool}\ isSetAt(u32\ addr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{bool}\ isSetAndEnabledAt(u32\ addr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{bool}\ isSetAndDisabledAt(u32\ addr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{bool}\ isSetAndConditionalAt(u32\ addr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00083\ \ \ \ \ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//\ Adding\ or\ removing\ guards}}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00087\ \ \ \ \ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{void}\ addAt(u32\ addr,\ \textcolor{keywordtype}{long}\ skip\ =\ 0);}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{void}\ removeAt(u32\ addr);}
+\DoxyCodeLine{00090\ \ \ \ \ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{void}\ remove(\textcolor{keywordtype}{long}\ nr);}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ removeAll()\ \{\ count\ =\ 0;\ setNeedsCheck(\textcolor{keyword}{false});\ \}}
+\DoxyCodeLine{00093\ \ \ \ \ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{void}\ replace(\textcolor{keywordtype}{long}\ nr,\ u32\ addr);}
+\DoxyCodeLine{00095\ \ \ \ \ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{comment}{//\ Enabling\ or\ disabling\ guards}}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00099\ \ \ \ \ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{bool}\ isEnabled(\textcolor{keywordtype}{long}\ nr)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{bool}\ isDisabled(\textcolor{keywordtype}{long}\ nr)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ !isEnabled(nr);\ \}}
+\DoxyCodeLine{00102\ \ \ \ \ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{void}\ setEnable(\textcolor{keywordtype}{long}\ nr,\ \textcolor{keywordtype}{bool}\ val);}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{void}\ enable(\textcolor{keywordtype}{long}\ nr)\ \{\ setEnable(nr,\ \textcolor{keyword}{true});\ \}}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{void}\ disable(\textcolor{keywordtype}{long}\ nr)\ \{\ setEnable(nr,\ \textcolor{keyword}{false});\ \}}
+\DoxyCodeLine{00106\ \ \ \ \ }
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{void}\ setEnableAt(u32\ addr,\ \textcolor{keywordtype}{bool}\ val);}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{void}\ enableAt(u32\ addr)\ \{\ setEnableAt(addr,\ \textcolor{keyword}{true});\ \}}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{void}\ disableAt(u32\ addr)\ \{\ setEnableAt(addr,\ \textcolor{keyword}{false});\ \}}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{comment}{//\ Checking\ a\ guard}}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00114\ \ \ \ \ }
+\DoxyCodeLine{00115\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00116\ \ \ \ \ }
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{bool}\ eval(u32\ addr);}
+\DoxyCodeLine{00118\ \};}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \textcolor{keyword}{class\ }Breakpoints\ :\ \textcolor{keyword}{public}\ Guards\ \{}
+\DoxyCodeLine{00121\ \ \ \ \ }
+\DoxyCodeLine{00122\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00123\ \ \ \ \ }
+\DoxyCodeLine{00124\ \ \ \ \ Breakpoints(Peddle\&\ ref)\ :\ Guards(ref)\ \{\ \}}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{void}\ setNeedsCheck(\textcolor{keywordtype}{bool}\ value)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00126\ \};}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \textcolor{keyword}{class\ }Watchpoints\ :\ \textcolor{keyword}{public}\ Guards\ \{}
+\DoxyCodeLine{00129\ \ \ \ \ }
+\DoxyCodeLine{00130\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00131\ \ \ \ \ }
+\DoxyCodeLine{00132\ \ \ \ \ Watchpoints(Peddle\&\ ref)\ :\ Guards(ref)\ \{\ \}}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{void}\ setNeedsCheck(\textcolor{keywordtype}{bool}\ value)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00134\ \};}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \textcolor{keyword}{class\ }Debugger\ \{}
+\DoxyCodeLine{00137\ \ \ \ \ }
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }Peddle;}
+\DoxyCodeLine{00139\ \ \ \ \ }
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{comment}{//\ Reference\ to\ the\ connected\ CPU}}
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keyword}{class\ }Peddle\ \&cpu;}
+\DoxyCodeLine{00142\ \ \ \ \ }
+\DoxyCodeLine{00143\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00144\ \ \ \ \ }
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{comment}{//\ Log\ buffer}}
+\DoxyCodeLine{00146\ \ \ \ \ RecordedInstruction\ logBuffer[LOG\_BUFFER\_CAPACITY];}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{comment}{//\ Breakpoint\ storage}}
+\DoxyCodeLine{00149\ \ \ \ \ Breakpoints\ breakpoints\ =\ Breakpoints(cpu);}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{comment}{//\ Watchpoint\ storage\ (not\ yet\ supported)}}
+\DoxyCodeLine{00152\ \ \ \ \ Watchpoints\ watchpoints\ =\ Watchpoints(cpu);}
+\DoxyCodeLine{00153\ \ \ \ \ }
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{comment}{//\ Saved\ program\ counters}}
+\DoxyCodeLine{00155\ \ \ \ \ i32\ breakpointPC\ =\ -\/1;}
+\DoxyCodeLine{00156\ \ \ \ \ i32\ watchpointPC\ =\ -\/1;}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00159\ \ \ \ \ }
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{comment}{/*\ Number\ of\ logged\ instructions.}}
+\DoxyCodeLine{00161\ \textcolor{comment}{\ \ \ \ \ *\ Note:\ This\ variable\ counts\ the\ total\ number\ of\ logged\ instructions\ and}}
+\DoxyCodeLine{00162\ \textcolor{comment}{\ \ \ \ \ *\ eventually\ exceeds\ the\ log\ buffer\ capacity.\ Use\ 'loggedInstruction()'}}
+\DoxyCodeLine{00163\ \textcolor{comment}{\ \ \ \ \ *\ to\ obtain\ the\ number\ of\ available\ instructions\ in\ the\ log\ buffer.}}
+\DoxyCodeLine{00164\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00165\ \ \ \ \ isize\ logCnt\ =\ 0;}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{comment}{/*\ Soft\ breakpoint\ for\ implementing\ single-\/stepping.}}
+\DoxyCodeLine{00168\ \textcolor{comment}{\ \ \ \ \ *\ In\ contrast\ to\ a\ standard\ (hard)\ breakpoint,\ a\ soft\ breakpoint\ is}}
+\DoxyCodeLine{00169\ \textcolor{comment}{\ \ \ \ \ *\ deleted\ when\ reached.\ The\ CPU\ halts\ if\ softStop\ matches\ the\ CPU's}}
+\DoxyCodeLine{00170\ \textcolor{comment}{\ \ \ \ \ *\ program\ counter\ (used\ to\ implement\ "{}step\ over"{})\ or\ if\ softStop\ equals}}
+\DoxyCodeLine{00171\ \textcolor{comment}{\ \ \ \ \ *\ UINT64\_MAX\ (used\ to\ implement\ "{}step\ into"{}).\ To\ disable\ soft\ stopping,}}
+\DoxyCodeLine{00172\ \textcolor{comment}{\ \ \ \ \ *\ simply\ set\ softStop\ to\ an\ unreachable\ memory\ location\ such\ as}}
+\DoxyCodeLine{00173\ \textcolor{comment}{\ \ \ \ \ *\ UINT64\_MAX\ -\/\ 1.}}
+\DoxyCodeLine{00174\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00175\ \ \ \ \ u64\ softStop\ =\ UINT64\_MAX\ -\/\ 1;}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00177\ \ \ \ \ }
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{comment}{//\ Initializing}}
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00181\ \ \ \ \ }
+\DoxyCodeLine{00182\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00183\ \ \ \ \ }
+\DoxyCodeLine{00184\ \ \ \ \ Debugger(Peddle\&\ ref)\ :\ cpu(ref)\ \{\ \};}
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keywordtype}{void}\ reset();}
+\DoxyCodeLine{00186\ }
+\DoxyCodeLine{00187\ \ \ \ \ }
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{comment}{//\ Working\ with\ breakpoints\ and\ watchpoints}}
+\DoxyCodeLine{00190\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00192\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{comment}{//\ Sets\ a\ soft\ breakpoint}}
+\DoxyCodeLine{00195\ \ \ \ \ \textcolor{keywordtype}{void}\ setSoftStop(u64\ addr);}
+\DoxyCodeLine{00196\ \ \ \ \ \textcolor{keywordtype}{void}\ setSoftStopAtNextInstr();}
+\DoxyCodeLine{00197\ \ \ \ \ }
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{comment}{//\ Returns\ true\ if\ a\ breakpoint\ hits\ at\ the\ provides\ address}}
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keywordtype}{bool}\ breakpointMatches(u32\ addr);}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{comment}{//\ Returns\ true\ if\ a\ watchpoint\ hits\ at\ the\ provides\ address}}
+\DoxyCodeLine{00202\ \ \ \ \ \textcolor{keywordtype}{bool}\ watchpointMatches(u32\ addr);}
+\DoxyCodeLine{00203\ \ \ \ \ }
+\DoxyCodeLine{00204\ \ \ \ \ }
+\DoxyCodeLine{00205\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{comment}{//\ Working\ with\ the\ instruction\ log}}
+\DoxyCodeLine{00207\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{comment}{//\ Dumps\ a\ portion\ of\ the\ log\ buffer}}
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keywordtype}{void}\ dumpLogBuffer(std::ostream\&\ os,\ isize\ count);}
+\DoxyCodeLine{00211\ \ \ \ \ \textcolor{keywordtype}{void}\ dumpLogBuffer(std::ostream\&\ os);}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{comment}{//\ Turns\ instruction\ logging\ on\ or\ off}}
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keywordtype}{void}\ enableLogging();}
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keywordtype}{void}\ disableLogging();}
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ number\ of\ logged\ instructions}}
+\DoxyCodeLine{00218\ \ \ \ \ isize\ loggedInstructions()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00219\ \ \ \ \ }
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{comment}{//\ Logs\ an\ instruction}}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keywordtype}{void}\ logInstruction();}
+\DoxyCodeLine{00222\ \ \ \ \ }
+\DoxyCodeLine{00223\ \ \ \ \ \textcolor{comment}{/*\ Reads\ an\ item\ from\ the\ log\ buffer}}
+\DoxyCodeLine{00224\ \textcolor{comment}{\ \ \ \ \ *}}
+\DoxyCodeLine{00225\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ xxxRel:\ n\ ==\ 0\ returns\ the\ most\ recently\ recorded\ entry}}
+\DoxyCodeLine{00226\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ xxxAbs:\ n\ ==\ 0\ returns\ the\ oldest\ entry}}
+\DoxyCodeLine{00227\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{keyword}{const}\ RecordedInstruction\ \&logEntryRel(isize\ n)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{keyword}{const}\ RecordedInstruction\ \&logEntryAbs(isize\ n)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00230\ \ \ \ \ u16\ loggedPC0Rel(isize\ n)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00231\ \ \ \ \ u16\ loggedPC0Abs(isize\ n)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00233\ \ \ \ \ \textcolor{comment}{//\ Disassembles\ an\ item\ from\ the\ log\ buffer}}
+\DoxyCodeLine{00234\ \ \ \ \ isize\ disassembleRecordedInstr(isize\ i,\ \textcolor{keywordtype}{char}\ *str)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00235\ \ \ \ \ isize\ disassembleRecordedBytes(isize\ i,\ \textcolor{keywordtype}{char}\ *str)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00236\ \ \ \ \ \textcolor{keywordtype}{void}\ disassembleRecordedFlags(isize\ i,\ \textcolor{keywordtype}{char}\ *str)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00237\ \ \ \ \ \textcolor{keywordtype}{void}\ disassembleRecordedPC(isize\ i,\ \textcolor{keywordtype}{char}\ *str)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00238\ }
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{comment}{//\ Clears\ the\ log\ buffer}}
+\DoxyCodeLine{00240\ \ \ \ \ \textcolor{keywordtype}{void}\ clearLog()\ \{\ logCnt\ =\ 0;\ \}}
+\DoxyCodeLine{00241\ }
+\DoxyCodeLine{00242\ }
+\DoxyCodeLine{00243\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00244\ \ \ \ \ \textcolor{comment}{//\ Changing\ state}}
+\DoxyCodeLine{00245\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00247\ \ \ \ \ \textcolor{comment}{//\ Continues\ program\ execution\ at\ the\ specified\ address}}
+\DoxyCodeLine{00248\ \ \ \ \ \textcolor{keywordtype}{void}\ jump(u16\ addr);}
+\DoxyCodeLine{00249\ \};}
+\DoxyCodeLine{00250\ }
+\DoxyCodeLine{00251\ \}}
+
+\end{DoxyCode}

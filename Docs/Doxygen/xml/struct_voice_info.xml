@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_voice_info" kind="struct" language="C++" prot="public">
+    <compoundname>VoiceInfo</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_voice_info_1a8ce4be51f9c5434103a700043b62e12d" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VoiceInfo::reg[7]</definition>
+        <argsstring>[7]</argsstring>
+        <name>reg</name>
+        <qualifiedname>VoiceInfo::reg</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="159" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="159" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_voice_info_1a9e3798f969a5762df46ee6d63bb143b0" prot="public" static="no" mutable="no">
+        <type>u16</type>
+        <definition>u16 VoiceInfo::frequency</definition>
+        <argsstring></argsstring>
+        <name>frequency</name>
+        <qualifiedname>VoiceInfo::frequency</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="160" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="160" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_voice_info_1ac87ccaaef3ea0775d30df4000381ee93" prot="public" static="no" mutable="no">
+        <type>u16</type>
+        <definition>u16 VoiceInfo::pulseWidth</definition>
+        <argsstring></argsstring>
+        <name>pulseWidth</name>
+        <qualifiedname>VoiceInfo::pulseWidth</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="161" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="161" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_voice_info_1a199f85693ad69044986f7e909abc1f37" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VoiceInfo::waveform</definition>
+        <argsstring></argsstring>
+        <name>waveform</name>
+        <qualifiedname>VoiceInfo::waveform</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="162" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="162" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_voice_info_1a11b7dd883c3533fba9953326d44135eb" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool VoiceInfo::ringMod</definition>
+        <argsstring></argsstring>
+        <name>ringMod</name>
+        <qualifiedname>VoiceInfo::ringMod</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="163" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="163" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_voice_info_1a2443e43b3effb4d9cdc513f92ea4fa35" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool VoiceInfo::hardSync</definition>
+        <argsstring></argsstring>
+        <name>hardSync</name>
+        <qualifiedname>VoiceInfo::hardSync</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="164" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="164" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_voice_info_1a668608fe2ff4232926ed8b2668d5901a" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool VoiceInfo::gateBit</definition>
+        <argsstring></argsstring>
+        <name>gateBit</name>
+        <qualifiedname>VoiceInfo::gateBit</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="165" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="165" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_voice_info_1ab4dde13fd0018ddcfe020b0952bc83c2" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool VoiceInfo::testBit</definition>
+        <argsstring></argsstring>
+        <name>testBit</name>
+        <qualifiedname>VoiceInfo::testBit</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="166" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="166" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_voice_info_1a4a638df9587ae7b99ca3e5567d0c0372" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VoiceInfo::attackRate</definition>
+        <argsstring></argsstring>
+        <name>attackRate</name>
+        <qualifiedname>VoiceInfo::attackRate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="167" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="167" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_voice_info_1a38f54930ac3cf2fd146ba8358fd0a978" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VoiceInfo::decayRate</definition>
+        <argsstring></argsstring>
+        <name>decayRate</name>
+        <qualifiedname>VoiceInfo::decayRate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="168" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="168" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_voice_info_1a7ec6d97ee4bcbfd15fd8a39e28d26608" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VoiceInfo::sustainRate</definition>
+        <argsstring></argsstring>
+        <name>sustainRate</name>
+        <qualifiedname>VoiceInfo::sustainRate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="169" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="169" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_voice_info_1aa32bb46c44904f00ad6d6b11b35c1776" prot="public" static="no" mutable="no">
+        <type>u8</type>
+        <definition>u8 VoiceInfo::releaseRate</definition>
+        <argsstring></argsstring>
+        <name>releaseRate</name>
+        <qualifiedname>VoiceInfo::releaseRate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="170" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="170" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_voice_info_1a1aa8a7846b111177bd4f88fa672bda2a" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool VoiceInfo::filterEnableBit</definition>
+        <argsstring></argsstring>
+        <name>filterEnableBit</name>
+        <qualifiedname>VoiceInfo::filterEnableBit</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="171" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="171" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="157" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="158" bodyend="172"/>
+    <listofallmembers>
+      <member refid="struct_voice_info_1a4a638df9587ae7b99ca3e5567d0c0372" prot="public" virt="non-virtual"><scope>VoiceInfo</scope><name>attackRate</name></member>
+      <member refid="struct_voice_info_1a38f54930ac3cf2fd146ba8358fd0a978" prot="public" virt="non-virtual"><scope>VoiceInfo</scope><name>decayRate</name></member>
+      <member refid="struct_voice_info_1a1aa8a7846b111177bd4f88fa672bda2a" prot="public" virt="non-virtual"><scope>VoiceInfo</scope><name>filterEnableBit</name></member>
+      <member refid="struct_voice_info_1a9e3798f969a5762df46ee6d63bb143b0" prot="public" virt="non-virtual"><scope>VoiceInfo</scope><name>frequency</name></member>
+      <member refid="struct_voice_info_1a668608fe2ff4232926ed8b2668d5901a" prot="public" virt="non-virtual"><scope>VoiceInfo</scope><name>gateBit</name></member>
+      <member refid="struct_voice_info_1a2443e43b3effb4d9cdc513f92ea4fa35" prot="public" virt="non-virtual"><scope>VoiceInfo</scope><name>hardSync</name></member>
+      <member refid="struct_voice_info_1ac87ccaaef3ea0775d30df4000381ee93" prot="public" virt="non-virtual"><scope>VoiceInfo</scope><name>pulseWidth</name></member>
+      <member refid="struct_voice_info_1a8ce4be51f9c5434103a700043b62e12d" prot="public" virt="non-virtual"><scope>VoiceInfo</scope><name>reg</name></member>
+      <member refid="struct_voice_info_1aa32bb46c44904f00ad6d6b11b35c1776" prot="public" virt="non-virtual"><scope>VoiceInfo</scope><name>releaseRate</name></member>
+      <member refid="struct_voice_info_1a11b7dd883c3533fba9953326d44135eb" prot="public" virt="non-virtual"><scope>VoiceInfo</scope><name>ringMod</name></member>
+      <member refid="struct_voice_info_1a7ec6d97ee4bcbfd15fd8a39e28d26608" prot="public" virt="non-virtual"><scope>VoiceInfo</scope><name>sustainRate</name></member>
+      <member refid="struct_voice_info_1ab4dde13fd0018ddcfe020b0952bc83c2" prot="public" virt="non-virtual"><scope>VoiceInfo</scope><name>testBit</name></member>
+      <member refid="struct_voice_info_1a199f85693ad69044986f7e909abc1f37" prot="public" virt="non-virtual"><scope>VoiceInfo</scope><name>waveform</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

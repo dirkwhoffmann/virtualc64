@@ -1,0 +1,85 @@
+\doxysection{String\+Utils.\+h}
+\hypertarget{_string_utils_8h_source}{}\label{_string_utils_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.h@{/Users/hoff/Retro/virtualc64/Emulator/Utilities/StringUtils.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Types.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }util\ \{}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{comment}{//}}
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ Creating}}
+\DoxyCodeLine{00022\ \textcolor{comment}{//}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{comment}{//\ Creates\ a\ string\ from\ a\ buffer}}
+\DoxyCodeLine{00025\ \textcolor{keywordtype}{string}\ createStr(\textcolor{keyword}{const}\ u8\ *buf,\ isize\ maxLen);}
+\DoxyCodeLine{00026\ \textcolor{keywordtype}{string}\ createAscii(\textcolor{keyword}{const}\ u8\ *buf,\ isize\ len,\ \textcolor{keywordtype}{char}\ fill\ =\ \textcolor{charliteral}{'.'});}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{comment}{//}}
+\DoxyCodeLine{00030\ \textcolor{comment}{//\ Converting}}
+\DoxyCodeLine{00031\ \textcolor{comment}{//}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{comment}{//\ Parses\ a\ hexadecimal\ number\ in\ string\ format}}
+\DoxyCodeLine{00034\ \textcolor{keywordtype}{bool}\ parseHex(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&s,\ isize\ *result);}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{comment}{//\ Converts\ an\ integer\ value\ to\ a\ hexadecimal\ string\ representation}}
+\DoxyCodeLine{00037\ \textcolor{keyword}{template}\ <isize\ digits>\ \textcolor{keywordtype}{string}\ hexstr(isize\ number);}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{comment}{//}}
+\DoxyCodeLine{00041\ \textcolor{comment}{//\ Transforming}}
+\DoxyCodeLine{00042\ \textcolor{comment}{//}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{comment}{//\ Converts\ the\ capitalization\ of\ a\ string}}
+\DoxyCodeLine{00045\ \textcolor{keywordtype}{string}\ lowercased(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ s);}
+\DoxyCodeLine{00046\ \textcolor{keywordtype}{string}\ uppercased(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ s);}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{comment}{//\ Replaces\ all\ unprintable\ characters}}
+\DoxyCodeLine{00049\ \textcolor{keywordtype}{string}\ makePrintable(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ s);}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{comment}{//}}
+\DoxyCodeLine{00053\ \textcolor{comment}{//\ Stripping\ off\ characters}}
+\DoxyCodeLine{00054\ \textcolor{comment}{//}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{keywordtype}{string}\ ltrim(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&s,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&characters\ =\ \textcolor{stringliteral}{"{}\ "{}});}
+\DoxyCodeLine{00057\ \textcolor{keywordtype}{string}\ rtrim(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&s,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&characters\ =\ \textcolor{stringliteral}{"{}\ "{}});}
+\DoxyCodeLine{00058\ \textcolor{keywordtype}{string}\ trim(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&s,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&characters\ =\ \textcolor{stringliteral}{"{}\ "{}});}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{comment}{//}}
+\DoxyCodeLine{00062\ \textcolor{comment}{//\ Splitting\ and\ concatenating}}
+\DoxyCodeLine{00063\ \textcolor{comment}{//}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ std::vector<string>\ split(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&s,\ \textcolor{keywordtype}{char}\ delimiter);}
+\DoxyCodeLine{00066\ \textcolor{keywordtype}{string}\ concat(std::vector<string>\ \&s,\ \textcolor{keywordtype}{string}\ delimiter);}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{comment}{//}}
+\DoxyCodeLine{00070\ \textcolor{comment}{//\ Pretty\ printing}}
+\DoxyCodeLine{00071\ \textcolor{comment}{//}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{comment}{//\ Returns\ a\ textual\ description\ for\ a\ byte\ count}}
+\DoxyCodeLine{00074\ \textcolor{keywordtype}{string}\ byteCountAsString(isize\ bytes);}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{comment}{//\ Returns\ a\ textual\ description\ for\ a\ fill\ level}}
+\DoxyCodeLine{00077\ \textcolor{keywordtype}{string}\ fillLevelAsString(\textcolor{keywordtype}{double}\ percentage);}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \}}
+
+\end{DoxyCode}
