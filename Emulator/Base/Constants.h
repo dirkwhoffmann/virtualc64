@@ -9,8 +9,11 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
+
+#ifdef __cplusplus
 
 #include "Aliases.h"
 
@@ -65,8 +68,9 @@ static const long NTSC_PIXELS              = 520;  // 104 + 32 + 320 + 32 + 32
 // Vertical parameters
 static const long FIRST_VISIBLE_LINE       = 16;
 
-// Width and height of the emulator texture
-static const long TEX_HEIGHT               = 312;  // PAL height
-static const long TEX_WIDTH                = 520;  // NTSC width
+// Dimensions of the emulator texture
+static const long TEX_HEIGHT               = 312;  ///< Texture height
+static const long TEX_WIDTH                = 520;  ///< Texture width
 
 }
+#endif

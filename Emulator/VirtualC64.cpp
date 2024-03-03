@@ -13,6 +13,9 @@
 #include "config.h"
 #include "VirtualC64.h"
 
+const Defaults &
+VirtualC64::defaults = Emulator::defaults;
+
 string
 VirtualC64::version()
 {
@@ -61,18 +64,6 @@ void
 VirtualC64::stepOver()
 {
     Emulator::stepOver();
-}
-
-u32 *
-VirtualC64::getTexture() const
-{
-    return Emulator::getTexture();
-}
-
-u32 *
-VirtualC64::getNoise() const
-{
-    return Emulator::getNoise();
 }
 
 void

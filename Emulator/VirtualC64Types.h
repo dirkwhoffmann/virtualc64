@@ -39,3 +39,5 @@
 #include "RetroShellTypes.h"
 #include "SIDTypes.h"
 #include "VICIITypes.h"
+
+#include "Constants.h"

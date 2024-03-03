@@ -2106,7 +2106,7 @@ using namespace vc64;
 
 + (DefaultsProxy *) defaults
 {
-    return [[DefaultsProxy alloc] initWith:&VirtualC64::defaults];
+    return [[DefaultsProxy alloc] initWith:(void *)&VirtualC64::defaults];
 }
 
 - (void)dealloc

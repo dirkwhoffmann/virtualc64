@@ -1,7 +1,0 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$structutil_1_1_ring_buffer.html" title=" " alt="" coords="5,39,136,79"/>
-<area shape="rect" id="Node000001" href="$structutil_1_1_sorted_ring_buffer.html" title=" " alt="" coords="184,5,330,46"/>
-<area shape="poly" id="edge15_Node000000_Node000001" title=" " alt="" coords="151,42,183,36,184,41,152,47"/>
-<area shape="rect" id="Node000002" href="$structutil_1_1_sorted_ring_buffer.html" title=" " alt="" coords="184,71,330,111"/>
-<area shape="poly" id="edge16_Node000000_Node000002" title=" " alt="" coords="152,70,184,76,183,81,151,75"/>
-</map>

@@ -16,7 +16,7 @@
 #include "VirtualC64Types.h"
 #include "Emulator.h"
 
-/** Public API
+/** Main class
  *
  * This class declares the emulator's public API. It consists of functions
  * controlling the emulator state, such as running or pausing the emulator, as
@@ -37,11 +37,11 @@ class VirtualC64 : vc64::Emulator {
 public:
 
     /** Returns a version string for this release.
-     *  E.g., "5.0b1"
+     *  @example "5.0b1"
      */
     static string version();
 
-    /// Returns a build number string for this release.
+    /// Returns a build-number string for this release.
     static string build();
 
 
@@ -50,15 +50,28 @@ public:
     //
 
 public:
-    
+
     VirtualC64();
     ~VirtualC64();
 
-    // Expose portions of the Emulator API
-    using vc64::Emulator::defaults;
-    using vc64::Emulator::getState;
-    using vc64::Emulator::getStats;
+    /// Reference to the user default storage
+    static const Defaults &defaults;
 
+    ///
+    /// @name Analyzing
+    /// @{
+
+    /// Returns the current configuration
+    const EmulatorConfig &getConfig() const { return Emulator::getConfig(); }
+
+    /// Returns the current state
+    const EmulatorInfo &getState() const { return Emulator::getState(); }
+
+    /// Returns some statistical information
+    const EmulatorStats &getStats() const { return Emulator::getStats(); }
+
+
+    /// @}
     /// @name Controlling the emulator state
     /// @{
 
@@ -71,7 +84,7 @@ public:
     /// Starts emulation
     void run() { Emulator::Thread::run(); }
 
-    /// Stops emulation
+    /// Pauses emulation
     void pause() { Emulator::Thread::pause(); }
 
     /*! Terminates the emulator thread
@@ -80,23 +93,50 @@ public:
      */
     void halt() { Emulator::Thread::halt(); }
 
-    using vc64::Emulator::Thread::stopAndGo;
-    using vc64::Emulator::Thread::suspend;
-    using vc64::Emulator::Thread::resume;
+    /// Toggles between pause and running
+    void stopAndGo() { Emulator::stopAndGo(); }
 
-    using vc64::Emulator::Thread::isPoweredOn;
-    using vc64::Emulator::Thread::isPoweredOff;
-    using vc64::Emulator::Thread::isPaused;
-    using vc64::Emulator::Thread::isRunning;
-    using vc64::Emulator::Thread::isSuspended;
-    using vc64::Emulator::Thread::isHalted;
-    using vc64::Emulator::Thread::isWarping;
-    using vc64::Emulator::Thread::isTracking;
+    /// Suspends the emulator thread
+    void suspend() { Emulator::suspend(); }
 
-    using vc64::Emulator::Thread::warpOn;
-    using vc64::Emulator::Thread::warpOff;
-    using vc64::Emulator::Thread::trackOn;
-    using vc64::Emulator::Thread::trackOff;
+    /// Resumes the emulator thread
+    void resume() { Emulator::resume(); }
+
+    /// Returns true iff the emulator if the emulator is powered on
+    bool isPoweredOn() { return Emulator::isPoweredOn(); }
+
+    /// Returns true iff the emulator if the emulator is powered on
+    bool isPoweredOff() { return Emulator::isPoweredOff(); }
+
+    /// Returns true iff the emulator is in pause state
+    bool isPaused() { return Emulator::isPaused(); }
+
+    /// Returns true iff the emulator is running
+    bool isRunning() { return Emulator::isRunning(); }
+
+    /// Returns true iff the emulator has been suspended
+    bool isSuspended() { return Emulator::isSuspended(); }
+
+    /// Returns true iff the emulator has shut down
+    bool isHalted() { return Emulator::isHalted(); }
+
+    /// Returns true iff warp mode is active
+    bool isWarping() { return Emulator::isWarping(); }
+
+    /// Returns true iff the emulator runs in track mode
+    bool isTracking() { return Emulator::isTracking(); }
+
+    /// Enables warp mode
+    void warpOn(isize source = 0) { Emulator::warpOn(source); }
+
+    /// Disables warp mode
+    void warpOff(isize source = 0) { Emulator::warpOff(source); }
+
+    /// Enables track mode
+    void trackOn(isize source = 0) { Emulator::trackOn(source); }
+
+    /// Disables track mode
+    void trackOff(isize source = 0) { Emulator::trackOff(source); }
 
     /// Steps a single instruction
     void stepInto();
@@ -104,26 +144,29 @@ public:
     /// Steps to the next instruction
     void stepOver();
 
-    /// @}
-
-    ///
-    /// @name Synchronizing the emulator thread
-    /// @{
-
     /** Sends a wakeup signal to the emulator thread.
      *  Some thread mode require the GUI to send a wakeup signal. Once this
      *  signal is received, the next frame is computed.
      */
     void wakeUp() { vc64::Emulator::Thread::wakeUp(); }
 
+
     /// @}
+    /// @name Processing audio and video
+    /// @{
 
-    //
-    // Audio and Video
-    //
+    /** Returns a pointer to the most recent stable texture
+     */
+    u32 *getTexture() const { return Emulator::getTexture(); }
 
-    u32 *getTexture() const;
-    u32 *getNoise() const;
+    /** Returns a pointer to a noise pattern
+     *
+     *  The pattern resembles the white noise produced by older analog TVs when
+     *  TV signal was present. In the Mac app, this pattern is shown when the
+     *  emulator is powered off. The returned pattern is pseudo-random and
+     *  changes with each call of this function.
+     */
+    u32 *getNoise() const { return Emulator::getNoise(); }
 
 
     //
