@@ -1,4 +1,4 @@
-# Thread model
+# State model
 
 After lauching, the emulator runs as a single thread alongside the GUI. The thread exists during the lifetime of the application, but may not compute new frames all the time. The exact behavior is controlled by the internal state. 
  

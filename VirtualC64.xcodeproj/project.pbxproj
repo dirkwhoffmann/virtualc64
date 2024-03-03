@@ -548,6 +548,27 @@
 		504268AC24F0F76F006BB841 /* C64Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Types.h; sourceTree = "<group>"; };
 		504268AD24F12705006BB841 /* DiskTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskTypes.h; sourceTree = "<group>"; };
 		50441A872B93CE2600102A4D /* VirtualC64Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtualC64Types.h; sourceTree = "<group>"; };
+		50441A8A2B9495BE00102A4D /* communication.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = communication.md; sourceTree = "<group>"; };
+		50441A8C2B9495BE00102A4D /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		50441A8D2B9495BE00102A4D /* banner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banner.png; sourceTree = "<group>"; };
+		50441A8E2B9495BE00102A4D /* ad-vc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ad-vc.png"; sourceTree = "<group>"; };
+		50441A8F2B9495BE00102A4D /* communication.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = communication.png; sourceTree = "<group>"; };
+		50441A902B9495BE00102A4D /* thread.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thread.png; sourceTree = "<group>"; };
+		50441A912B9495BE00102A4D /* state.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = state.md; sourceTree = "<group>"; };
+		50441A922B9495BE00102A4D /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
+		50441A932B9495BE00102A4D /* delete_me.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = delete_me.html; sourceTree = "<group>"; };
+		50441A952B9495BE00102A4D /* doxygen-awesome-sidebar-only-darkmode-toggle.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = "doxygen-awesome-sidebar-only-darkmode-toggle.css"; sourceTree = "<group>"; };
+		50441A962B9495BE00102A4D /* doxygen-awesome-sidebar-only.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = "doxygen-awesome-sidebar-only.css"; sourceTree = "<group>"; };
+		50441A972B9495BE00102A4D /* doxygen-awesome.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = "doxygen-awesome.css"; sourceTree = "<group>"; };
+		50441A982B9495BE00102A4D /* custom.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = custom.css; sourceTree = "<group>"; };
+		50441A992B9495BE00102A4D /* doxygen-awesome-tabs.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "doxygen-awesome-tabs.js"; sourceTree = "<group>"; };
+		50441A9A2B9495BE00102A4D /* doxygen-awesome-paragraph-link.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "doxygen-awesome-paragraph-link.js"; sourceTree = "<group>"; };
+		50441A9B2B9495BE00102A4D /* doxygen-awesome-interactive-toc.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "doxygen-awesome-interactive-toc.js"; sourceTree = "<group>"; };
+		50441A9C2B9495BE00102A4D /* doxygen-awesome-fragment-copy-button.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "doxygen-awesome-fragment-copy-button.js"; sourceTree = "<group>"; };
+		50441A9D2B9495BE00102A4D /* doxygen-awesome-darkmode-toggle.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "doxygen-awesome-darkmode-toggle.js"; sourceTree = "<group>"; };
+		50441A9E2B9495BE00102A4D /* Doxyfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
+		50441A9F2B9495BE00102A4D /* header.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = header.html; sourceTree = "<group>"; };
+		50441AA02B9495BE00102A4D /* delete_me.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = delete_me.css; sourceTree = "<group>"; };
 		5044A0392657A7A800C551C6 /* Recorder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Recorder.cpp; sourceTree = "<group>"; };
 		5044A03A2657A7A800C551C6 /* Recorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Recorder.h; sourceTree = "<group>"; };
 		5044C5D02931F94800F4A413 /* PeddleInit_cpp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleInit_cpp.h; sourceTree = "<group>"; };
@@ -1051,6 +1072,7 @@
 				504C428D24AF29AB00E69CAE /* Emulator */,
 				5070D72224AF3330005862D0 /* Proxy */,
 				50176C6D0A6F7357009E80BD /* GUI */,
+				50441A882B9495BE00102A4D /* Docs */,
 				5070D72124AF2EB1005862D0 /* Resources */,
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
@@ -1304,6 +1326,58 @@
 				50726F2A295B61C50031F2F5 /* InterpreterDebugCmds.cpp */,
 			);
 			path = RetroShell;
+			sourceTree = "<group>";
+		};
+		50441A882B9495BE00102A4D /* Docs */ = {
+			isa = PBXGroup;
+			children = (
+				50441A892B9495BE00102A4D /* Doxygen */,
+			);
+			path = Docs;
+			sourceTree = "<group>";
+		};
+		50441A892B9495BE00102A4D /* Doxygen */ = {
+			isa = PBXGroup;
+			children = (
+				50441A922B9495BE00102A4D /* readme.md */,
+				50441A912B9495BE00102A4D /* state.md */,
+				50441A8A2B9495BE00102A4D /* communication.md */,
+				50441A8B2B9495BE00102A4D /* images */,
+				50441A932B9495BE00102A4D /* delete_me.html */,
+				50441A942B9495BE00102A4D /* doxygen-awesome */,
+				50441A9E2B9495BE00102A4D /* Doxyfile */,
+				50441A9F2B9495BE00102A4D /* header.html */,
+				50441AA02B9495BE00102A4D /* delete_me.css */,
+			);
+			path = Doxygen;
+			sourceTree = "<group>";
+		};
+		50441A8B2B9495BE00102A4D /* images */ = {
+			isa = PBXGroup;
+			children = (
+				50441A8C2B9495BE00102A4D /* icon.png */,
+				50441A8D2B9495BE00102A4D /* banner.png */,
+				50441A8E2B9495BE00102A4D /* ad-vc.png */,
+				50441A8F2B9495BE00102A4D /* communication.png */,
+				50441A902B9495BE00102A4D /* thread.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
+		50441A942B9495BE00102A4D /* doxygen-awesome */ = {
+			isa = PBXGroup;
+			children = (
+				50441A952B9495BE00102A4D /* doxygen-awesome-sidebar-only-darkmode-toggle.css */,
+				50441A962B9495BE00102A4D /* doxygen-awesome-sidebar-only.css */,
+				50441A972B9495BE00102A4D /* doxygen-awesome.css */,
+				50441A982B9495BE00102A4D /* custom.css */,
+				50441A992B9495BE00102A4D /* doxygen-awesome-tabs.js */,
+				50441A9A2B9495BE00102A4D /* doxygen-awesome-paragraph-link.js */,
+				50441A9B2B9495BE00102A4D /* doxygen-awesome-interactive-toc.js */,
+				50441A9C2B9495BE00102A4D /* doxygen-awesome-fragment-copy-button.js */,
+				50441A9D2B9495BE00102A4D /* doxygen-awesome-darkmode-toggle.js */,
+			);
+			path = "doxygen-awesome";
 			sourceTree = "<group>";
 		};
 		504C428D24AF29AB00E69CAE /* Emulator */ = {

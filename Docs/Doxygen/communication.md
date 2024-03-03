@@ -1,0 +1,4 @@
+# Communication model
+
+Lorem ipsum
+
