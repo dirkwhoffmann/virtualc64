@@ -555,7 +555,7 @@
 		50441A8F2B9495BE00102A4D /* communication.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = communication.png; sourceTree = "<group>"; };
 		50441A902B9495BE00102A4D /* thread.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thread.png; sourceTree = "<group>"; };
 		50441A912B9495BE00102A4D /* state.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = state.md; sourceTree = "<group>"; };
-		50441A922B9495BE00102A4D /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
+		50441A922B9495BE00102A4D /* home.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = home.md; sourceTree = "<group>"; };
 		50441A932B9495BE00102A4D /* delete_me.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = delete_me.html; sourceTree = "<group>"; };
 		50441A952B9495BE00102A4D /* doxygen-awesome-sidebar-only-darkmode-toggle.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = "doxygen-awesome-sidebar-only-darkmode-toggle.css"; sourceTree = "<group>"; };
 		50441A962B9495BE00102A4D /* doxygen-awesome-sidebar-only.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = "doxygen-awesome-sidebar-only.css"; sourceTree = "<group>"; };
@@ -569,6 +569,7 @@
 		50441A9E2B9495BE00102A4D /* Doxyfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
 		50441A9F2B9495BE00102A4D /* header.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = header.html; sourceTree = "<group>"; };
 		50441AA02B9495BE00102A4D /* delete_me.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = delete_me.css; sourceTree = "<group>"; };
+		50441AA22B94CDE400102A4D /* headless.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = headless.md; sourceTree = "<group>"; };
 		5044A0392657A7A800C551C6 /* Recorder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Recorder.cpp; sourceTree = "<group>"; };
 		5044A03A2657A7A800C551C6 /* Recorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Recorder.h; sourceTree = "<group>"; };
 		5044C5D02931F94800F4A413 /* PeddleInit_cpp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleInit_cpp.h; sourceTree = "<group>"; };
@@ -1339,9 +1340,7 @@
 		50441A892B9495BE00102A4D /* Doxygen */ = {
 			isa = PBXGroup;
 			children = (
-				50441A922B9495BE00102A4D /* readme.md */,
-				50441A912B9495BE00102A4D /* state.md */,
-				50441A8A2B9495BE00102A4D /* communication.md */,
+				50441AA12B94CA3700102A4D /* pages */,
 				50441A8B2B9495BE00102A4D /* images */,
 				50441A932B9495BE00102A4D /* delete_me.html */,
 				50441A942B9495BE00102A4D /* doxygen-awesome */,
@@ -1378,6 +1377,17 @@
 				50441A9D2B9495BE00102A4D /* doxygen-awesome-darkmode-toggle.js */,
 			);
 			path = "doxygen-awesome";
+			sourceTree = "<group>";
+		};
+		50441AA12B94CA3700102A4D /* pages */ = {
+			isa = PBXGroup;
+			children = (
+				50441A922B9495BE00102A4D /* home.md */,
+				50441AA22B94CDE400102A4D /* headless.md */,
+				50441A912B9495BE00102A4D /* state.md */,
+				50441A8A2B9495BE00102A4D /* communication.md */,
+			);
+			path = pages;
 			sourceTree = "<group>";
 		};
 		504C428D24AF29AB00E69CAE /* Emulator */ = {

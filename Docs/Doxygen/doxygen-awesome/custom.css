@@ -1,5 +1,17 @@
 html {
 
+    --fragment-background: #fdf6e3;
+    --fragment-foreground: #586e75;
+    --fragment-keyword: #cb4b16;
+    --fragment-keywordtype: #268bd2;
+    --fragment-keywordflow: #859900;
+    --fragment-token: #2aa198;
+    --fragment-comment: #657b83;
+    --fragment-link: #d33682;
+    --fragment-preprocessor: #2aa198;
+    --fragment-linenumber-color: #586e75;
+    --fragment-linenumber-background: #eee8d5;
+    
  div.groupHeader {
     margin-left: 16px;
     margin-top: 16px;

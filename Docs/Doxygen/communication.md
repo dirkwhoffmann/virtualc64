@@ -1,4 +1,0 @@
-# Communication model
-
-Lorem ipsum
-

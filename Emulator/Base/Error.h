@@ -22,6 +22,7 @@ namespace vc64 {
 // VCError
 //
 
+/// Emulator exception
 struct VC64Error : public util::Exception
 {
     VC64Error(ErrorCode code, const string &s);

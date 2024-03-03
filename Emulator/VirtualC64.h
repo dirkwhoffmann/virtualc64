@@ -16,7 +16,7 @@
 #include "VirtualC64Types.h"
 #include "Emulator.h"
 
-/** Main class
+/** Public API
  *
  * This class declares the emulator's public API. It consists of functions
  * controlling the emulator state, such as running or pausing the emulator, as
@@ -36,9 +36,7 @@ class VirtualC64 : vc64::Emulator {
 
 public:
 
-    /** Returns a version string for this release.
-     *  @example "5.0b1"
-     */
+    /// Returns a version string for this release.
     static string version();
 
     /// Returns a build-number string for this release.
@@ -54,7 +52,7 @@ public:
     VirtualC64();
     ~VirtualC64();
 
-    /// Reference to the user default storage
+    /// A reference to the user default storage.
     static const Defaults &defaults;
 
     ///

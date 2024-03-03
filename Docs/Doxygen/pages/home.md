@@ -4,6 +4,14 @@ Welcome to the official VirtualC64 documentation. Here you will find a detailed 
 
 \image html ad-vc.png width=400px
 
+![Watchers](https://img.shields.io/github/watchers/dirkwhoffmann/virtualC64?style=social)
+![Stars](https://img.shields.io/github/stars/dirkwhoffmann/virtualC64?style=social)
+![Forks](https://img.shields.io/github/forks/dirkwhoffmann/virtualC64?style=social)
+
+![Build](https://github.com/dirkwhoffmann/virtualC64/workflows/CMake/badge.svg)
+![Build](https://github.com/dirkwhoffmann/virtualC64/workflows/CMake-MinGW/badge.svg)
+![MSVC](https://github.com/dirkwhoffmann/virtualC64/workflows/CMake-MSVC/badge.svg)
+
 ## Example
 
 VirtualC64 is implemented in C++20 with high portability in mind. The following code snippet demonstrates the general usage model of the emulator core.
@@ -32,8 +40,14 @@ int main(int argc, char *argv[])
 }
 ```
 
-For a runnable demo program, please see the Headless application in the main folder. It creates an emulator instance and utilizes it to perform some simple smoke tests.
+## See also
 
-## Where to go from here? 
+- Class VirtualC64 which provides the public API.
 
-Start with the VirtualC64 class which is provides the public API.
+<div class="section_buttons">
+
+|                        Next |
+|----------------------------:|
+| [Headless App](headless.md) |
+ 
+</div>
