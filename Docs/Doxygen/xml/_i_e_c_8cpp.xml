@@ -138,7 +138,7 @@
       </node>
       <node id="50">
         <label>MsgQueueTypes.h</label>
-        <link refid="_msg_queue_types_8h_source"/>
+        <link refid="_msg_queue_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -232,7 +232,7 @@
       </node>
       <node id="60">
         <label>CartridgeTypes.h</label>
-        <link refid="_cartridge_types_8h_source"/>
+        <link refid="_cartridge_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -556,7 +556,7 @@
       </node>
       <node id="48">
         <label>C64Types.h</label>
-        <link refid="_c64_types_8h_source"/>
+        <link refid="_c64_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -576,7 +576,7 @@
       </node>
       <node id="116">
         <label>CIATypes.h</label>
-        <link refid="_c_i_a_types_8h_source"/>
+        <link refid="_c_i_a_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -692,7 +692,7 @@
       </node>
       <node id="7">
         <label>EmulatorTypes.h</label>
-        <link refid="_emulator_types_8h_source"/>
+        <link refid="_emulator_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -716,7 +716,7 @@
       </node>
       <node id="75">
         <label>ControlPortTypes.h</label>
-        <link refid="_control_port_types_8h_source"/>
+        <link refid="_control_port_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -736,7 +736,7 @@
       </node>
       <node id="56">
         <label>ExpansionPortTypes.h</label>
-        <link refid="_expansion_port_types_8h_source"/>
+        <link refid="_expansion_port_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -770,7 +770,7 @@
       </node>
       <node id="128">
         <label>PowerSupplyTypes.h</label>
-        <link refid="_power_supply_types_8h_source"/>
+        <link refid="_power_supply_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -786,7 +786,7 @@
       </node>
       <node id="83">
         <label>MemoryTypes.h</label>
-        <link refid="_memory_types_8h_source"/>
+        <link refid="_memory_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -844,7 +844,7 @@
       </node>
       <node id="97">
         <label>SIDTypes.h</label>
-        <link refid="_s_i_d_types_8h_source"/>
+        <link refid="_s_i_d_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -944,7 +944,7 @@
       </node>
       <node id="90">
         <label>BusTypes.h</label>
-        <link refid="_bus_types_8h_source"/>
+        <link refid="_bus_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -962,7 +962,7 @@
       </node>
       <node id="91">
         <label>DmaDebuggerTypes.h</label>
-        <link refid="_dma_debugger_types_8h_source"/>
+        <link refid="_dma_debugger_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1016,7 +1016,7 @@
       </node>
       <node id="89">
         <label>VICIITypes.h</label>
-        <link refid="_v_i_c_i_i_types_8h"/>
+        <link refid="_v_i_c_i_i_types_8h_source"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1062,7 +1062,7 @@
       </node>
       <node id="174">
         <label>FSTypes.h</label>
-        <link refid="_f_s_types_8h_source"/>
+        <link refid="_f_s_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1122,7 +1122,7 @@
       </node>
       <node id="64">
         <label>FileTypes.h</label>
-        <link refid="_file_types_8h_source"/>
+        <link refid="_file_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1240,7 +1240,7 @@
       </node>
       <node id="134">
         <label>RetroShellTypes.h</label>
-        <link refid="_retro_shell_types_8h_source"/>
+        <link refid="_retro_shell_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1276,7 +1276,7 @@
       </node>
       <node id="180">
         <label>DatasetteTypes.h</label>
-        <link refid="_datasette_types_8h_source"/>
+        <link refid="_datasette_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1358,7 +1358,7 @@
       </node>
       <node id="85">
         <label>DriveTypes.h</label>
-        <link refid="_drive_types_8h_source"/>
+        <link refid="_drive_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1384,7 +1384,7 @@
       </node>
       <node id="86">
         <label>ParCableTypes.h</label>
-        <link refid="_par_cable_types_8h_source"/>
+        <link refid="_par_cable_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1406,7 +1406,7 @@
       </node>
       <node id="58">
         <label>JoystickTypes.h</label>
-        <link refid="_joystick_types_8h_source"/>
+        <link refid="_joystick_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1466,7 +1466,7 @@
       </node>
       <node id="78">
         <label>MouseTypes.h</label>
-        <link refid="_mouse_types_8h_source"/>
+        <link refid="_mouse_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1863,7 +1863,7 @@
 <codeline lineno="177"><highlight class="normal"></highlight></codeline>
 <codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>transferring<sp/>=<sp/>newValue;</highlight></codeline>
 <codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>c64.updateWarpState();</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(newValue<sp/>?<sp/>MSG_IEC_BUS_BUSY<sp/>:<sp/>MSG_IEC_BUS_IDLE);</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(newValue<sp/>?<sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac623cc7b2383f7b19548f21076acb4ac" kindref="member">MSG_IEC_BUS_BUSY</ref><sp/>:<sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba77a7c08e806359e8fb74753b040bae4c" kindref="member">MSG_IEC_BUS_IDLE</ref>);</highlight></codeline>
 <codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="182"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="183"><highlight class="normal"></highlight></codeline>

@@ -1,6 +1,6 @@
 \doxysection{Dma\+Debugger\+Types.\+h}
 \hypertarget{_dma_debugger_types_8h_source}{}\label{_dma_debugger_types_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h@{/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h}}
-
+\mbox{\hyperlink{_dma_debugger_types_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
 \DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
@@ -13,64 +13,64 @@
 \DoxyCodeLine{00009\ \textcolor{comment}{//}}
 \DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
 \DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
-\DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Aliases.h"{}}}
-\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Reflection.h"{}}}
-\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}BusTypes.h"{}}}
-\DoxyCodeLine{00018\ }
-\DoxyCodeLine{00019\ \textcolor{comment}{//}}
-\DoxyCodeLine{00020\ \textcolor{comment}{//\ Enumerations}}
-\DoxyCodeLine{00021\ \textcolor{comment}{//}}
-\DoxyCodeLine{00022\ }
-\DoxyCodeLine{00023\ enum\_long(DMA\_DISPLAY\_MODE)}
-\DoxyCodeLine{00024\ \{}
-\DoxyCodeLine{00025\ \ \ \ \ DMA\_DISPLAY\_MODE\_FG\_LAYER,}
-\DoxyCodeLine{00026\ \ \ \ \ DMA\_DISPLAY\_MODE\_BG\_LAYER,}
-\DoxyCodeLine{00027\ \ \ \ \ DMA\_DISPLAY\_MODE\_ODD\_EVEN\_LAYERS}
-\DoxyCodeLine{00028\ \};}
-\DoxyCodeLine{00029\ \textcolor{keyword}{typedef}\ DMA\_DISPLAY\_MODE\ DmaDisplayMode;}
-\DoxyCodeLine{00030\ }
-\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
-\DoxyCodeLine{00032\ \textcolor{keyword}{struct\ }DmaDisplayModeEnum\ :\ util::Reflection<DmaDisplayModeEnum,\ DmaDisplayMode>\ \{}
-\DoxyCodeLine{00033\ \ \ \ \ }
-\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
-\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ DMA\_DISPLAY\_MODE\_ODD\_EVEN\_LAYERS;}
-\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
-\DoxyCodeLine{00037\ \ \ \ \ }
-\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DMA\_DISPLAY\_MODE"{}};\ \}}
-\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(DmaDisplayMode\ value)}
-\DoxyCodeLine{00040\ \ \ \ \ \{}
-\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
-\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ DMA\_DISPLAY\_MODE\_FG\_LAYER:\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}FG\_LAYER"{}};}
-\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ DMA\_DISPLAY\_MODE\_BG\_LAYER:\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}BG\_LAYER"{}};}
-\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ DMA\_DISPLAY\_MODE\_ODD\_EVEN\_LAYERS:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}ODD\_EVEN\_LAYERS"{}};}
-\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
-\DoxyCodeLine{00048\ \ \ \ \ \}}
-\DoxyCodeLine{00049\ \};}
-\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00051\ }
-\DoxyCodeLine{00052\ }
-\DoxyCodeLine{00053\ \textcolor{comment}{//}}
-\DoxyCodeLine{00054\ \textcolor{comment}{//\ Structures}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Aliases.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}Reflection.h"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_bus_types_8h}{BusTypes.h}}"{}}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{comment}{//}}
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ Enumerations}}
+\DoxyCodeLine{00022\ \textcolor{comment}{//}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00025\ enum\_long(\mbox{\hyperlink{_dma_debugger_types_8h_ae7fb354a0110238ce89d7875f10c79fb}{DMA\_DISPLAY\_MODE}})}
+\DoxyCodeLine{00026\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \mbox{\hyperlink{_dma_debugger_types_8h_ae7fb354a0110238ce89d7875f10c79fba15f4629169710000a7018a3fe91b0c7b}{DMA\_DISPLAY\_MODE\_FG\_LAYER}},\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{_dma_debugger_types_8h_ae7fb354a0110238ce89d7875f10c79fba4ede3e84454c682ef89da63a1a66f559}{DMA\_DISPLAY\_MODE\_BG\_LAYER}},\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{_dma_debugger_types_8h_ae7fb354a0110238ce89d7875f10c79fba730180a8880a444ab380c0f5146b00a6}{DMA\_DISPLAY\_MODE\_ODD\_EVEN\_LAYERS}}\ \ \ \ }
+\DoxyCodeLine{00030\ \};}
+\DoxyCodeLine{00031\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{_dma_debugger_types_8h_ae7fb354a0110238ce89d7875f10c79fb}{DMA\_DISPLAY\_MODE}}\ \mbox{\hyperlink{_dma_debugger_types_8h_ae7fb354a0110238ce89d7875f10c79fb}{DmaDisplayMode}};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00034\ \textcolor{keyword}{struct\ }DmaDisplayModeEnum\ :\ util::Reflection<DmaDisplayModeEnum,\ DmaDisplayMode>\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ \mbox{\hyperlink{_dma_debugger_types_8h_ae7fb354a0110238ce89d7875f10c79fba730180a8880a444ab380c0f5146b00a6}{DMA\_DISPLAY\_MODE\_ODD\_EVEN\_LAYERS}};}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00039\ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DMA\_DISPLAY\_MODE"{}};\ \}}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(\mbox{\hyperlink{_dma_debugger_types_8h_ae7fb354a0110238ce89d7875f10c79fb}{DmaDisplayMode}}\ value)}
+\DoxyCodeLine{00042\ \ \ \ \ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_dma_debugger_types_8h_ae7fb354a0110238ce89d7875f10c79fba15f4629169710000a7018a3fe91b0c7b}{DMA\_DISPLAY\_MODE\_FG\_LAYER}}:\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}FG\_LAYER"{}};}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_dma_debugger_types_8h_ae7fb354a0110238ce89d7875f10c79fba4ede3e84454c682ef89da63a1a66f559}{DMA\_DISPLAY\_MODE\_BG\_LAYER}}:\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}BG\_LAYER"{}};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_dma_debugger_types_8h_ae7fb354a0110238ce89d7875f10c79fba730180a8880a444ab380c0f5146b00a6}{DMA\_DISPLAY\_MODE\_ODD\_EVEN\_LAYERS}}:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}ODD\_EVEN\_LAYERS"{}};}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00050\ \ \ \ \ \}}
+\DoxyCodeLine{00051\ \};}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ }
 \DoxyCodeLine{00055\ \textcolor{comment}{//}}
-\DoxyCodeLine{00056\ }
-\DoxyCodeLine{00057\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
-\DoxyCodeLine{00058\ \{}
-\DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//\ DMA\ debugger}}
-\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{bool}\ dmaDebug;}
-\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{bool}\ dmaChannel[6];}
-\DoxyCodeLine{00062\ \ \ \ \ u32\ dmaColor[6];}
-\DoxyCodeLine{00063\ \ \ \ \ DmaDisplayMode\ dmaDisplayMode;}
-\DoxyCodeLine{00064\ \ \ \ \ u8\ dmaOpacity;}
-\DoxyCodeLine{00065\ \ \ \ \ }
-\DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//\ Cutter}}
-\DoxyCodeLine{00067\ \ \ \ \ u16\ cutLayers;}
-\DoxyCodeLine{00068\ \ \ \ \ u8\ cutOpacity;}
-\DoxyCodeLine{00069\ \}}
-\DoxyCodeLine{00070\ DmaDebuggerConfig;}
+\DoxyCodeLine{00056\ \textcolor{comment}{//\ Structures}}
+\DoxyCodeLine{00057\ \textcolor{comment}{//}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00060\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//\ DMA\ debugger}}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{bool}\ dmaDebug;}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{bool}\ dmaChannel[6];}
+\DoxyCodeLine{00064\ \ \ \ \ u32\ dmaColor[6];}
+\DoxyCodeLine{00065\ \ \ \ \ \mbox{\hyperlink{_dma_debugger_types_8h_ae7fb354a0110238ce89d7875f10c79fb}{DmaDisplayMode}}\ dmaDisplayMode;}
+\DoxyCodeLine{00066\ \ \ \ \ u8\ dmaOpacity;}
+\DoxyCodeLine{00067\ \ \ \ \ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{comment}{//\ Cutter}}
+\DoxyCodeLine{00069\ \ \ \ \ u16\ cutLayers;}
+\DoxyCodeLine{00070\ \ \ \ \ u8\ cutOpacity;}
+\DoxyCodeLine{00071\ \}}
+\DoxyCodeLine{00072\ DmaDebuggerConfig;}
 
 \end{DoxyCode}

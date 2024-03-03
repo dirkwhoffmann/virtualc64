@@ -59,7 +59,7 @@
 <!-- Node78 -->
 <g id="Node000078" class="node">
 <title>Node78</title>
-<g id="a_Node000078"><a xlink:href="_emulator_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000078"><a xlink:href="_emulator_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="3727.12,-674 3534.12,-674 3534.12,-643.5 3727.12,-643.5 3727.12,-674"/>
 <text text-anchor="start" x="3542.12" y="-660.5" font-family="Helvetica,sans-Serif" font-size="10.00">/Users/hoff/Retro/virtualc64</text>
 <text text-anchor="middle" x="3630.62" y="-649.25" font-family="Helvetica,sans-Serif" font-size="10.00">/Emulator/Components/EmulatorTypes.h</text>

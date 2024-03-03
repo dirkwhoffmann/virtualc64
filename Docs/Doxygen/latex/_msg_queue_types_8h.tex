@@ -1,0 +1,387 @@
+\doxysection{/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Base/\+Msg\+Queue\+Types.h File Reference}
+\hypertarget{_msg_queue_types_8h}{}\label{_msg_queue_types_8h}\index{/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h@{/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h}}
+{\ttfamily \#include "{}Aliases.\+h"{}}\newline
+{\ttfamily \#include "{}Reflection.\+h"{}}\newline
+Include dependency graph for Msg\+Queue\+Types.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=314pt]{_msg_queue_types_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_msg_queue_types_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25b}{MSG\+\_\+\+TYPE}} \+: long \{ \newline
+\mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba40e71b65f54da2ea5d97c37e720346b1}{MSG\+\_\+\+NONE}} = 0
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baa76f18ac4fd6e013a62d7ac04fba4edf}{MSG\+\_\+\+CONFIG}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baec73dd1957fd94c8cde729186480fa5c}{MSG\+\_\+\+POWER}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bae868897e5cee1df30873d828256a4d77}{MSG\+\_\+\+RUN}}
+, \newline
+\mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba1b44e026389fb3b26434f3d74b3b6e7e}{MSG\+\_\+\+PAUSE}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba86cdd34af78d2cbeb91299d3d9f2c360}{MSG\+\_\+\+STEP}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba66a2805e00d510437311c54dfcf010b6}{MSG\+\_\+\+RESET}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba621b8f7f84a5fe2cbb10c08ce2c58ff3}{MSG\+\_\+\+SHUTDOWN}}
+, \newline
+\mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bab5a09c07a9ce6862250f18e81ed80d3f}{MSG\+\_\+\+ABORT}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba22374907c62cce9e112ec43cd6fb7b0e}{MSG\+\_\+\+WARP}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baffcad1d28fd3ec4302fa1fc157bc73aa}{MSG\+\_\+\+TRACK}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bace9f16f3e50f0d17c0a02191b82c0a2c}{MSG\+\_\+\+MUTE}}
+, \newline
+\mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba262afa148b59fd1f0843949cb3cae8cf}{MSG\+\_\+\+CONSOLE\+\_\+\+CLOSE}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba3a4a8450bdeeb6864ea81a49d04557f4}{MSG\+\_\+\+CONSOLE\+\_\+\+UPDATE}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba77a07987640c4e81b300be38becd2b5d}{MSG\+\_\+\+CONSOLE\+\_\+\+DEBUGGER}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baa4d10009296b03ca20e5e0782de8bcbd}{MSG\+\_\+\+SCRIPT\+\_\+\+DONE}}
+, \newline
+\mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bacfb923a604b38a3581f9df2e17f31a86}{MSG\+\_\+\+SCRIPT\+\_\+\+ABORT}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba2522aa8b55849618404362e794e66614}{MSG\+\_\+\+ROM\+\_\+\+MISSING}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba54eb386fc6dc685fbfcb1bcd6f1a0514}{MSG\+\_\+\+BASIC\+\_\+\+ROM\+\_\+\+LOADED}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba49a97dc2eefc7e1a23cb479fd071532b}{MSG\+\_\+\+CHAR\+\_\+\+ROM\+\_\+\+LOADED}}
+, \newline
+\mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba41c7e29f283e38f5207e447c82b28de3}{MSG\+\_\+\+KERNAL\+\_\+\+ROM\+\_\+\+LOADED}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bad82084a3c105f29495e03e98b8192637}{MSG\+\_\+\+DRIVE\+\_\+\+ROM\+\_\+\+LOADED}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba8c193db10f35e9453d0b41c238fc31a7}{MSG\+\_\+\+CPU\+\_\+\+JAMMED}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba8601eda9cfe0b03211b41a146cfa21a2}{MSG\+\_\+\+CPU\+\_\+\+JUMPED}}
+, \newline
+\mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baa69769d77f682ba101215104460fe1b9}{MSG\+\_\+\+BREAKPOINT\+\_\+\+REACHED}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba09717b122df319863b8176e201167bda}{MSG\+\_\+\+WATCHPOINT\+\_\+\+REACHED}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bab7e30ed8c854a6ab53e757b6007d71bf}{MSG\+\_\+\+PAL}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baa0bb0c451712258f42ef5c26d9509918}{MSG\+\_\+\+NTSC}}
+, \newline
+\mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bac623cc7b2383f7b19548f21076acb4ac}{MSG\+\_\+\+IEC\+\_\+\+BUS\+\_\+\+BUSY}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba77a7c08e806359e8fb74753b040bae4c}{MSG\+\_\+\+IEC\+\_\+\+BUS\+\_\+\+IDLE}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baf613d4432782de9459706b8d3aa05933}{MSG\+\_\+\+DRIVE\+\_\+\+CONNECT}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bab303b79cc5c99d4c6532d895fca481f1}{MSG\+\_\+\+DRIVE\+\_\+\+DISCONNECT}}
+, \newline
+\mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bab57a7a4eea6ce8e25030e16017fc0122}{MSG\+\_\+\+DRIVE\+\_\+\+POWER\+\_\+\+ON}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba53fd751f1e173f6c45ab2a7ddd433220}{MSG\+\_\+\+DRIVE\+\_\+\+POWER\+\_\+\+OFF}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bae98a227565064885e1a5389b88c04e18}{MSG\+\_\+\+DRIVE\+\_\+\+POWER\+\_\+\+SAVE\+\_\+\+ON}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba52562262a0e29ed1fc1938c52add6706}{MSG\+\_\+\+DRIVE\+\_\+\+POWER\+\_\+\+SAVE\+\_\+\+OFF}}
+, \newline
+\mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba48b07144cb8afcc6b110410c7981cb53}{MSG\+\_\+\+DRIVE\+\_\+\+READ}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bae18265e2cbc5c26861d0eea81fbee6a9}{MSG\+\_\+\+DRIVE\+\_\+\+WRITE}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba22b40799c770ffdf3d25d7afa18e1a59}{MSG\+\_\+\+DRIVE\+\_\+\+LED\+\_\+\+ON}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baea180b57ba6610eccd18e11ead4dee8b}{MSG\+\_\+\+DRIVE\+\_\+\+LED\+\_\+\+OFF}}
+, \newline
+\mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baba8fdd226c88062ec60620849a2e4296}{MSG\+\_\+\+DRIVE\+\_\+\+MOTOR\+\_\+\+ON}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bad2777aa5f678d740d959905fdda757f1}{MSG\+\_\+\+DRIVE\+\_\+\+MOTOR\+\_\+\+OFF}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba92d63f973c2a5ba8d7b33b2f29044493}{MSG\+\_\+\+DRIVE\+\_\+\+STEP}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baabb1071ba56ef61e7368ab7f062693c0}{MSG\+\_\+\+DISK\+\_\+\+INSERT}}
+, \newline
+\mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba9e8a5fa167cc5b5f06cade241c31b55c}{MSG\+\_\+\+DISK\+\_\+\+EJECT}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba2254429633d74f465c26f6f72ecf3a6d}{MSG\+\_\+\+DISK\+\_\+\+SAVED}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba472eadd62c4716bf158521a635a25153}{MSG\+\_\+\+DISK\+\_\+\+UNSAVED}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba184125ad0fdbe4f528c667312481b845}{MSG\+\_\+\+DISK\+\_\+\+PROTECT}}
+, \newline
+\mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba96e0db358ce470edeaf8e950166d7a49}{MSG\+\_\+\+FILE\+\_\+\+FLASHED}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba63c9f8d5975faaf72f35296b778a97fe}{MSG\+\_\+\+VC1530\+\_\+\+CONNECT}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bac76626691016373c1316a76dd99d561e}{MSG\+\_\+\+VC1530\+\_\+\+TAPE}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba9061902c86cb3a76e532c4162b24a30f}{MSG\+\_\+\+VC1530\+\_\+\+PLAY}}
+, \newline
+\mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba42f2cb3022cffead0b3df46d83278c43}{MSG\+\_\+\+VC1530\+\_\+\+MOTOR}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba5a3e8a30eb9567a51ef0be850c601964}{MSG\+\_\+\+VC1530\+\_\+\+COUNTER}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba5cf180e4d4b5f8e8f085f66e2a506ea3}{MSG\+\_\+\+CRT\+\_\+\+ATTACHED}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba5f58705aebe08870b67400c6064200fc}{MSG\+\_\+\+KB\+\_\+\+AUTO\+\_\+\+PRESS}}
+, \newline
+\mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baf29f487f3574e58367a2fc55f0a06c36}{MSG\+\_\+\+KB\+\_\+\+AUTO\+\_\+\+RELEASE}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba8abf7e47fb0c036bbf491be50146319c}{MSG\+\_\+\+SHAKING}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bac2b3d245154652064c5c8c03fd5d20cd}{MSG\+\_\+\+AUTO\+\_\+\+SNAPSHOT\+\_\+\+TAKEN}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baefc990ae4f843de5b787d2c1e2943d1d}{MSG\+\_\+\+USER\+\_\+\+SNAPSHOT\+\_\+\+TAKEN}}
+, \newline
+\mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba5d759e1721fc70f681ba9e99d1ac5791}{MSG\+\_\+\+SNAPSHOT\+\_\+\+RESTORED}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba40515090334b8adcf080ab96216896f4}{MSG\+\_\+\+RECORDING\+\_\+\+STARTED}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba2b6f215428af049e25a379996d8bdaa0}{MSG\+\_\+\+RECORDING\+\_\+\+STOPPED}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bac3e694f804f4e02dc8b2803c2636f8b5}{MSG\+\_\+\+RECORDING\+\_\+\+ABORTED}}
+, \newline
+\mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba652e19f4e085397b02f09e1734668ebb}{MSG\+\_\+\+DMA\+\_\+\+DEBUG}}
+, \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bafcde3912e1e5f1e8b0a48ebd9068934b}{MSG\+\_\+\+ALARM}}
+ \}
+\begin{DoxyCompactList}\small\item\em ! Emulator message \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25b}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25b} 
+\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_TYPE@{MSG\_TYPE}}
+\index{MSG\_TYPE@{MSG\_TYPE}!MsgQueueTypes.h@{MsgQueueTypes.h}}
+\doxysubsubsection{\texorpdfstring{MSG\_TYPE}{MSG\_TYPE}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25b}{MSG\+\_\+\+TYPE}} \+: long}
+
+
+
+! Emulator message 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_NONE@{MSG\_NONE}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_NONE@{MSG\_NONE}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba40e71b65f54da2ea5d97c37e720346b1}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba40e71b65f54da2ea5d97c37e720346b1} 
+MSG\+\_\+\+NONE&Unclassified. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_CONFIG@{MSG\_CONFIG}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_CONFIG@{MSG\_CONFIG}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baa76f18ac4fd6e013a62d7ac04fba4edf}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baa76f18ac4fd6e013a62d7ac04fba4edf} 
+MSG\+\_\+\+CONFIG&The configuration has changed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_POWER@{MSG\_POWER}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_POWER@{MSG\_POWER}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baec73dd1957fd94c8cde729186480fa5c}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baec73dd1957fd94c8cde729186480fa5c} 
+MSG\+\_\+\+POWER&The emulator has been powered on or off. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_RUN@{MSG\_RUN}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_RUN@{MSG\_RUN}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bae868897e5cee1df30873d828256a4d77}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bae868897e5cee1df30873d828256a4d77} 
+MSG\+\_\+\+RUN&The emulator has entered STATE\+\_\+\+RUNNING. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_PAUSE@{MSG\_PAUSE}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_PAUSE@{MSG\_PAUSE}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba1b44e026389fb3b26434f3d74b3b6e7e}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba1b44e026389fb3b26434f3d74b3b6e7e} 
+MSG\+\_\+\+PAUSE&The emulator has entered STATE\+\_\+\+PAUSED. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_STEP@{MSG\_STEP}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_STEP@{MSG\_STEP}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba86cdd34af78d2cbeb91299d3d9f2c360}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba86cdd34af78d2cbeb91299d3d9f2c360} 
+MSG\+\_\+\+STEP&The emulator has stepped a single instruction. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_RESET@{MSG\_RESET}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_RESET@{MSG\_RESET}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba66a2805e00d510437311c54dfcf010b6}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba66a2805e00d510437311c54dfcf010b6} 
+MSG\+\_\+\+RESET&The emulator has been reset. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_SHUTDOWN@{MSG\_SHUTDOWN}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_SHUTDOWN@{MSG\_SHUTDOWN}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba621b8f7f84a5fe2cbb10c08ce2c58ff3}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba621b8f7f84a5fe2cbb10c08ce2c58ff3} 
+MSG\+\_\+\+SHUTDOWN&The emulator has been shut down. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_ABORT@{MSG\_ABORT}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_ABORT@{MSG\_ABORT}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bab5a09c07a9ce6862250f18e81ed80d3f}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bab5a09c07a9ce6862250f18e81ed80d3f} 
+MSG\+\_\+\+ABORT&The emulator requests the GUI to quit the app. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_WARP@{MSG\_WARP}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_WARP@{MSG\_WARP}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba22374907c62cce9e112ec43cd6fb7b0e}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba22374907c62cce9e112ec43cd6fb7b0e} 
+MSG\+\_\+\+WARP&The emulator has entered or exited warp mode. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_TRACK@{MSG\_TRACK}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_TRACK@{MSG\_TRACK}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baffcad1d28fd3ec4302fa1fc157bc73aa}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baffcad1d28fd3ec4302fa1fc157bc73aa} 
+MSG\+\_\+\+TRACK&The emulator has entered or exited track mode. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_MUTE@{MSG\_MUTE}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_MUTE@{MSG\_MUTE}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bace9f16f3e50f0d17c0a02191b82c0a2c}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bace9f16f3e50f0d17c0a02191b82c0a2c} 
+MSG\+\_\+\+MUTE&The emulator has been muted or unmuted. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_CONSOLE\_CLOSE@{MSG\_CONSOLE\_CLOSE}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_CONSOLE\_CLOSE@{MSG\_CONSOLE\_CLOSE}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba262afa148b59fd1f0843949cb3cae8cf}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba262afa148b59fd1f0843949cb3cae8cf} 
+MSG\+\_\+\+CONSOLE\+\_\+\+CLOSE&Retro\+Shell has been closed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_CONSOLE\_UPDATE@{MSG\_CONSOLE\_UPDATE}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_CONSOLE\_UPDATE@{MSG\_CONSOLE\_UPDATE}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba3a4a8450bdeeb6864ea81a49d04557f4}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba3a4a8450bdeeb6864ea81a49d04557f4} 
+MSG\+\_\+\+CONSOLE\+\_\+\+UPDATE&Retro\+Shell has generated new output. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_CONSOLE\_DEBUGGER@{MSG\_CONSOLE\_DEBUGGER}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_CONSOLE\_DEBUGGER@{MSG\_CONSOLE\_DEBUGGER}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba77a07987640c4e81b300be38becd2b5d}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba77a07987640c4e81b300be38becd2b5d} 
+MSG\+\_\+\+CONSOLE\+\_\+\+DEBUGGER&The Retro\+Shell debugger has been opend or closed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_SCRIPT\_DONE@{MSG\_SCRIPT\_DONE}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_SCRIPT\_DONE@{MSG\_SCRIPT\_DONE}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baa4d10009296b03ca20e5e0782de8bcbd}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baa4d10009296b03ca20e5e0782de8bcbd} 
+MSG\+\_\+\+SCRIPT\+\_\+\+DONE&A Retro\+Shell script has been successfully executed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_SCRIPT\_ABORT@{MSG\_SCRIPT\_ABORT}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_SCRIPT\_ABORT@{MSG\_SCRIPT\_ABORT}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bacfb923a604b38a3581f9df2e17f31a86}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bacfb923a604b38a3581f9df2e17f31a86} 
+MSG\+\_\+\+SCRIPT\+\_\+\+ABORT&The execution of a Retro\+Shell ccript has been aborted. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_ROM\_MISSING@{MSG\_ROM\_MISSING}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_ROM\_MISSING@{MSG\_ROM\_MISSING}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba2522aa8b55849618404362e794e66614}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba2522aa8b55849618404362e794e66614} 
+MSG\+\_\+\+ROM\+\_\+\+MISSING&The emulator can\textquotesingle{}t run due to a missing Rom. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_BASIC\_ROM\_LOADED@{MSG\_BASIC\_ROM\_LOADED}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_BASIC\_ROM\_LOADED@{MSG\_BASIC\_ROM\_LOADED}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba54eb386fc6dc685fbfcb1bcd6f1a0514}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba54eb386fc6dc685fbfcb1bcd6f1a0514} 
+MSG\+\_\+\+BASIC\+\_\+\+ROM\+\_\+\+LOADED&A valid Basis Rom has been installed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_CHAR\_ROM\_LOADED@{MSG\_CHAR\_ROM\_LOADED}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_CHAR\_ROM\_LOADED@{MSG\_CHAR\_ROM\_LOADED}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba49a97dc2eefc7e1a23cb479fd071532b}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba49a97dc2eefc7e1a23cb479fd071532b} 
+MSG\+\_\+\+CHAR\+\_\+\+ROM\+\_\+\+LOADED&A valid Character has been installed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_KERNAL\_ROM\_LOADED@{MSG\_KERNAL\_ROM\_LOADED}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_KERNAL\_ROM\_LOADED@{MSG\_KERNAL\_ROM\_LOADED}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba41c7e29f283e38f5207e447c82b28de3}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba41c7e29f283e38f5207e447c82b28de3} 
+MSG\+\_\+\+KERNAL\+\_\+\+ROM\+\_\+\+LOADED&A valid Kernal Rom has been installed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_DRIVE\_ROM\_LOADED@{MSG\_DRIVE\_ROM\_LOADED}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_DRIVE\_ROM\_LOADED@{MSG\_DRIVE\_ROM\_LOADED}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bad82084a3c105f29495e03e98b8192637}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bad82084a3c105f29495e03e98b8192637} 
+MSG\+\_\+\+DRIVE\+\_\+\+ROM\+\_\+\+LOADED&A valid Drive Rom has been installed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_CPU\_JAMMED@{MSG\_CPU\_JAMMED}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_CPU\_JAMMED@{MSG\_CPU\_JAMMED}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba8c193db10f35e9453d0b41c238fc31a7}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba8c193db10f35e9453d0b41c238fc31a7} 
+MSG\+\_\+\+CPU\+\_\+\+JAMMED&The CPU has halted due to an illegal instruction. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_CPU\_JUMPED@{MSG\_CPU\_JUMPED}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_CPU\_JUMPED@{MSG\_CPU\_JUMPED}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba8601eda9cfe0b03211b41a146cfa21a2}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba8601eda9cfe0b03211b41a146cfa21a2} 
+MSG\+\_\+\+CPU\+\_\+\+JUMPED&The program counter has been modified manually. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_BREAKPOINT\_REACHED@{MSG\_BREAKPOINT\_REACHED}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_BREAKPOINT\_REACHED@{MSG\_BREAKPOINT\_REACHED}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baa69769d77f682ba101215104460fe1b9}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baa69769d77f682ba101215104460fe1b9} 
+MSG\+\_\+\+BREAKPOINT\+\_\+\+REACHED&A breakpoint has been reached. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_WATCHPOINT\_REACHED@{MSG\_WATCHPOINT\_REACHED}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_WATCHPOINT\_REACHED@{MSG\_WATCHPOINT\_REACHED}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba09717b122df319863b8176e201167bda}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba09717b122df319863b8176e201167bda} 
+MSG\+\_\+\+WATCHPOINT\+\_\+\+REACHED&A watchpoint has been reached. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_PAL@{MSG\_PAL}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_PAL@{MSG\_PAL}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bab7e30ed8c854a6ab53e757b6007d71bf}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bab7e30ed8c854a6ab53e757b6007d71bf} 
+MSG\+\_\+\+PAL&The emulator runs in PAL mode now. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_NTSC@{MSG\_NTSC}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_NTSC@{MSG\_NTSC}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baa0bb0c451712258f42ef5c26d9509918}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baa0bb0c451712258f42ef5c26d9509918} 
+MSG\+\_\+\+NTSC&The emulator runs in NTSC mode now. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_IEC\_BUS\_BUSY@{MSG\_IEC\_BUS\_BUSY}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_IEC\_BUS\_BUSY@{MSG\_IEC\_BUS\_BUSY}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bac623cc7b2383f7b19548f21076acb4ac}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bac623cc7b2383f7b19548f21076acb4ac} 
+MSG\+\_\+\+IEC\+\_\+\+BUS\+\_\+\+BUSY&The IEC bus is transferring data. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_IEC\_BUS\_IDLE@{MSG\_IEC\_BUS\_IDLE}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_IEC\_BUS\_IDLE@{MSG\_IEC\_BUS\_IDLE}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba77a7c08e806359e8fb74753b040bae4c}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba77a7c08e806359e8fb74753b040bae4c} 
+MSG\+\_\+\+IEC\+\_\+\+BUS\+\_\+\+IDLE&The IEC bus has returned to idle state. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_DRIVE\_CONNECT@{MSG\_DRIVE\_CONNECT}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_DRIVE\_CONNECT@{MSG\_DRIVE\_CONNECT}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baf613d4432782de9459706b8d3aa05933}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baf613d4432782de9459706b8d3aa05933} 
+MSG\+\_\+\+DRIVE\+\_\+\+CONNECT&A floppy drive has been connected. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_DRIVE\_DISCONNECT@{MSG\_DRIVE\_DISCONNECT}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_DRIVE\_DISCONNECT@{MSG\_DRIVE\_DISCONNECT}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bab303b79cc5c99d4c6532d895fca481f1}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bab303b79cc5c99d4c6532d895fca481f1} 
+MSG\+\_\+\+DRIVE\+\_\+\+DISCONNECT&A floopy drive has been disconnected. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_DRIVE\_POWER\_ON@{MSG\_DRIVE\_POWER\_ON}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_DRIVE\_POWER\_ON@{MSG\_DRIVE\_POWER\_ON}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bab57a7a4eea6ce8e25030e16017fc0122}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bab57a7a4eea6ce8e25030e16017fc0122} 
+MSG\+\_\+\+DRIVE\+\_\+\+POWER\+\_\+\+ON&The emulator has been powered on. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_DRIVE\_POWER\_OFF@{MSG\_DRIVE\_POWER\_OFF}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_DRIVE\_POWER\_OFF@{MSG\_DRIVE\_POWER\_OFF}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba53fd751f1e173f6c45ab2a7ddd433220}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba53fd751f1e173f6c45ab2a7ddd433220} 
+MSG\+\_\+\+DRIVE\+\_\+\+POWER\+\_\+\+OFF&The emulator has been powered off. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_DRIVE\_POWER\_SAVE\_ON@{MSG\_DRIVE\_POWER\_SAVE\_ON}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_DRIVE\_POWER\_SAVE\_ON@{MSG\_DRIVE\_POWER\_SAVE\_ON}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bae98a227565064885e1a5389b88c04e18}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bae98a227565064885e1a5389b88c04e18} 
+MSG\+\_\+\+DRIVE\+\_\+\+POWER\+\_\+\+SAVE\+\_\+\+ON&Fast paths have been enabled. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_DRIVE\_POWER\_SAVE\_OFF@{MSG\_DRIVE\_POWER\_SAVE\_OFF}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_DRIVE\_POWER\_SAVE\_OFF@{MSG\_DRIVE\_POWER\_SAVE\_OFF}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba52562262a0e29ed1fc1938c52add6706}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba52562262a0e29ed1fc1938c52add6706} 
+MSG\+\_\+\+DRIVE\+\_\+\+POWER\+\_\+\+SAVE\+\_\+\+OFF&Fast paths have been disabled. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_DRIVE\_READ@{MSG\_DRIVE\_READ}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_DRIVE\_READ@{MSG\_DRIVE\_READ}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba48b07144cb8afcc6b110410c7981cb53}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba48b07144cb8afcc6b110410c7981cb53} 
+MSG\+\_\+\+DRIVE\+\_\+\+READ&The floopy drive has switched to read mode. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_DRIVE\_WRITE@{MSG\_DRIVE\_WRITE}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_DRIVE\_WRITE@{MSG\_DRIVE\_WRITE}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bae18265e2cbc5c26861d0eea81fbee6a9}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bae18265e2cbc5c26861d0eea81fbee6a9} 
+MSG\+\_\+\+DRIVE\+\_\+\+WRITE&The floppy drive has switched to write mode. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_DRIVE\_LED\_ON@{MSG\_DRIVE\_LED\_ON}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_DRIVE\_LED\_ON@{MSG\_DRIVE\_LED\_ON}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba22b40799c770ffdf3d25d7afa18e1a59}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba22b40799c770ffdf3d25d7afa18e1a59} 
+MSG\+\_\+\+DRIVE\+\_\+\+LED\+\_\+\+ON&The green drive LED has switched on. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_DRIVE\_LED\_OFF@{MSG\_DRIVE\_LED\_OFF}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_DRIVE\_LED\_OFF@{MSG\_DRIVE\_LED\_OFF}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baea180b57ba6610eccd18e11ead4dee8b}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baea180b57ba6610eccd18e11ead4dee8b} 
+MSG\+\_\+\+DRIVE\+\_\+\+LED\+\_\+\+OFF&The green drive LED has switched off. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_DRIVE\_MOTOR\_ON@{MSG\_DRIVE\_MOTOR\_ON}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_DRIVE\_MOTOR\_ON@{MSG\_DRIVE\_MOTOR\_ON}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baba8fdd226c88062ec60620849a2e4296}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baba8fdd226c88062ec60620849a2e4296} 
+MSG\+\_\+\+DRIVE\+\_\+\+MOTOR\+\_\+\+ON&The disk has started spinning. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_DRIVE\_MOTOR\_OFF@{MSG\_DRIVE\_MOTOR\_OFF}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_DRIVE\_MOTOR\_OFF@{MSG\_DRIVE\_MOTOR\_OFF}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bad2777aa5f678d740d959905fdda757f1}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bad2777aa5f678d740d959905fdda757f1} 
+MSG\+\_\+\+DRIVE\+\_\+\+MOTOR\+\_\+\+OFF&The disk has stopped spinning. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_DRIVE\_STEP@{MSG\_DRIVE\_STEP}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_DRIVE\_STEP@{MSG\_DRIVE\_STEP}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba92d63f973c2a5ba8d7b33b2f29044493}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba92d63f973c2a5ba8d7b33b2f29044493} 
+MSG\+\_\+\+DRIVE\+\_\+\+STEP&The drive head has stepped. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_DISK\_INSERT@{MSG\_DISK\_INSERT}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_DISK\_INSERT@{MSG\_DISK\_INSERT}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baabb1071ba56ef61e7368ab7f062693c0}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baabb1071ba56ef61e7368ab7f062693c0} 
+MSG\+\_\+\+DISK\+\_\+\+INSERT&A disk has been inserted. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_DISK\_EJECT@{MSG\_DISK\_EJECT}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_DISK\_EJECT@{MSG\_DISK\_EJECT}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba9e8a5fa167cc5b5f06cade241c31b55c}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba9e8a5fa167cc5b5f06cade241c31b55c} 
+MSG\+\_\+\+DISK\+\_\+\+EJECT&A disk has been ejected. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_DISK\_SAVED@{MSG\_DISK\_SAVED}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_DISK\_SAVED@{MSG\_DISK\_SAVED}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba2254429633d74f465c26f6f72ecf3a6d}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba2254429633d74f465c26f6f72ecf3a6d} 
+MSG\+\_\+\+DISK\+\_\+\+SAVED&The floppy drive contains a saved disk. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_DISK\_UNSAVED@{MSG\_DISK\_UNSAVED}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_DISK\_UNSAVED@{MSG\_DISK\_UNSAVED}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba472eadd62c4716bf158521a635a25153}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba472eadd62c4716bf158521a635a25153} 
+MSG\+\_\+\+DISK\+\_\+\+UNSAVED&The floppy drive contains an unsaved disk. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_DISK\_PROTECT@{MSG\_DISK\_PROTECT}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_DISK\_PROTECT@{MSG\_DISK\_PROTECT}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba184125ad0fdbe4f528c667312481b845}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba184125ad0fdbe4f528c667312481b845} 
+MSG\+\_\+\+DISK\+\_\+\+PROTECT&The write protection status has changed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_FILE\_FLASHED@{MSG\_FILE\_FLASHED}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_FILE\_FLASHED@{MSG\_FILE\_FLASHED}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba96e0db358ce470edeaf8e950166d7a49}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba96e0db358ce470edeaf8e950166d7a49} 
+MSG\+\_\+\+FILE\+\_\+\+FLASHED&A file has been flashed into memory. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_VC1530\_CONNECT@{MSG\_VC1530\_CONNECT}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_VC1530\_CONNECT@{MSG\_VC1530\_CONNECT}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba63c9f8d5975faaf72f35296b778a97fe}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba63c9f8d5975faaf72f35296b778a97fe} 
+MSG\+\_\+\+VC1530\+\_\+\+CONNECT&A datasette has been connected or disconnected. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_VC1530\_TAPE@{MSG\_VC1530\_TAPE}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_VC1530\_TAPE@{MSG\_VC1530\_TAPE}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bac76626691016373c1316a76dd99d561e}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bac76626691016373c1316a76dd99d561e} 
+MSG\+\_\+\+VC1530\+\_\+\+TAPE&A tape has been inserted or ejected. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_VC1530\_PLAY@{MSG\_VC1530\_PLAY}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_VC1530\_PLAY@{MSG\_VC1530\_PLAY}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba9061902c86cb3a76e532c4162b24a30f}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba9061902c86cb3a76e532c4162b24a30f} 
+MSG\+\_\+\+VC1530\+\_\+\+PLAY&The play key has been pressed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_VC1530\_MOTOR@{MSG\_VC1530\_MOTOR}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_VC1530\_MOTOR@{MSG\_VC1530\_MOTOR}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba42f2cb3022cffead0b3df46d83278c43}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba42f2cb3022cffead0b3df46d83278c43} 
+MSG\+\_\+\+VC1530\+\_\+\+MOTOR&The drive motor has started or stopped. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_VC1530\_COUNTER@{MSG\_VC1530\_COUNTER}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_VC1530\_COUNTER@{MSG\_VC1530\_COUNTER}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba5a3e8a30eb9567a51ef0be850c601964}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba5a3e8a30eb9567a51ef0be850c601964} 
+MSG\+\_\+\+VC1530\+\_\+\+COUNTER&The tape counter has stepped. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_CRT\_ATTACHED@{MSG\_CRT\_ATTACHED}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_CRT\_ATTACHED@{MSG\_CRT\_ATTACHED}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba5cf180e4d4b5f8e8f085f66e2a506ea3}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba5cf180e4d4b5f8e8f085f66e2a506ea3} 
+MSG\+\_\+\+CRT\+\_\+\+ATTACHED&A cartridge has been plugged into the expansion port. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_KB\_AUTO\_PRESS@{MSG\_KB\_AUTO\_PRESS}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_KB\_AUTO\_PRESS@{MSG\_KB\_AUTO\_PRESS}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba5f58705aebe08870b67400c6064200fc}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba5f58705aebe08870b67400c6064200fc} 
+MSG\+\_\+\+KB\+\_\+\+AUTO\+\_\+\+PRESS&The auto-\/typing daemon has pressed a key. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_KB\_AUTO\_RELEASE@{MSG\_KB\_AUTO\_RELEASE}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_KB\_AUTO\_RELEASE@{MSG\_KB\_AUTO\_RELEASE}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baf29f487f3574e58367a2fc55f0a06c36}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baf29f487f3574e58367a2fc55f0a06c36} 
+MSG\+\_\+\+KB\+\_\+\+AUTO\+\_\+\+RELEASE&The auto-\/typing daemon has released a key. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_SHAKING@{MSG\_SHAKING}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_SHAKING@{MSG\_SHAKING}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba8abf7e47fb0c036bbf491be50146319c}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba8abf7e47fb0c036bbf491be50146319c} 
+MSG\+\_\+\+SHAKING&A shaking mouse has been detected. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_AUTO\_SNAPSHOT\_TAKEN@{MSG\_AUTO\_SNAPSHOT\_TAKEN}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_AUTO\_SNAPSHOT\_TAKEN@{MSG\_AUTO\_SNAPSHOT\_TAKEN}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bac2b3d245154652064c5c8c03fd5d20cd}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bac2b3d245154652064c5c8c03fd5d20cd} 
+MSG\+\_\+\+AUTO\+\_\+\+SNAPSHOT\+\_\+\+TAKEN&A snapshot has been taken (auto snapshot) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_USER\_SNAPSHOT\_TAKEN@{MSG\_USER\_SNAPSHOT\_TAKEN}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_USER\_SNAPSHOT\_TAKEN@{MSG\_USER\_SNAPSHOT\_TAKEN}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baefc990ae4f843de5b787d2c1e2943d1d}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baefc990ae4f843de5b787d2c1e2943d1d} 
+MSG\+\_\+\+USER\+\_\+\+SNAPSHOT\+\_\+\+TAKEN&A snapshot has been taken (user snapshot) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_SNAPSHOT\_RESTORED@{MSG\_SNAPSHOT\_RESTORED}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_SNAPSHOT\_RESTORED@{MSG\_SNAPSHOT\_RESTORED}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba5d759e1721fc70f681ba9e99d1ac5791}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba5d759e1721fc70f681ba9e99d1ac5791} 
+MSG\+\_\+\+SNAPSHOT\+\_\+\+RESTORED&A snapshot has been restored. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_RECORDING\_STARTED@{MSG\_RECORDING\_STARTED}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_RECORDING\_STARTED@{MSG\_RECORDING\_STARTED}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba40515090334b8adcf080ab96216896f4}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba40515090334b8adcf080ab96216896f4} 
+MSG\+\_\+\+RECORDING\+\_\+\+STARTED&The screen recorder has started. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_RECORDING\_STOPPED@{MSG\_RECORDING\_STOPPED}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_RECORDING\_STOPPED@{MSG\_RECORDING\_STOPPED}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba2b6f215428af049e25a379996d8bdaa0}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba2b6f215428af049e25a379996d8bdaa0} 
+MSG\+\_\+\+RECORDING\+\_\+\+STOPPED&The screen recorder has stopped. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_RECORDING\_ABORTED@{MSG\_RECORDING\_ABORTED}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_RECORDING\_ABORTED@{MSG\_RECORDING\_ABORTED}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bac3e694f804f4e02dc8b2803c2636f8b5}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bac3e694f804f4e02dc8b2803c2636f8b5} 
+MSG\+\_\+\+RECORDING\+\_\+\+ABORTED&Screen recording has been aborted. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_DMA\_DEBUG@{MSG\_DMA\_DEBUG}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_DMA\_DEBUG@{MSG\_DMA\_DEBUG}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba652e19f4e085397b02f09e1734668ebb}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba652e19f4e085397b02f09e1734668ebb} 
+MSG\+\_\+\+DMA\+\_\+\+DEBUG&The DMA debugger has been started or stopped. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MSG\_ALARM@{MSG\_ALARM}!MsgQueueTypes.h@{MsgQueueTypes.h}}\index{MsgQueueTypes.h@{MsgQueueTypes.h}!MSG\_ALARM@{MSG\_ALARM}}}\Hypertarget{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bafcde3912e1e5f1e8b0a48ebd9068934b}\label{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bafcde3912e1e5f1e8b0a48ebd9068934b} 
+MSG\+\_\+\+ALARM&A user-\/set alarm event has fired. \\
+\hline
+
+\end{DoxyEnumFields}

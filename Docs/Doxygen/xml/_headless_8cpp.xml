@@ -157,7 +157,7 @@
       </node>
       <node id="37">
         <label>MsgQueueTypes.h</label>
-        <link refid="_msg_queue_types_8h_source"/>
+        <link refid="_msg_queue_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -251,7 +251,7 @@
       </node>
       <node id="15">
         <label>CartridgeTypes.h</label>
-        <link refid="_cartridge_types_8h_source"/>
+        <link refid="_cartridge_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -575,7 +575,7 @@
       </node>
       <node id="7">
         <label>C64Types.h</label>
-        <link refid="_c64_types_8h_source"/>
+        <link refid="_c64_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -595,7 +595,7 @@
       </node>
       <node id="16">
         <label>CIATypes.h</label>
-        <link refid="_c_i_a_types_8h_source"/>
+        <link refid="_c_i_a_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -727,7 +727,7 @@
       </node>
       <node id="28">
         <label>EmulatorTypes.h</label>
-        <link refid="_emulator_types_8h_source"/>
+        <link refid="_emulator_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -751,7 +751,7 @@
       </node>
       <node id="20">
         <label>ControlPortTypes.h</label>
-        <link refid="_control_port_types_8h_source"/>
+        <link refid="_control_port_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -771,7 +771,7 @@
       </node>
       <node id="31">
         <label>ExpansionPortTypes.h</label>
-        <link refid="_expansion_port_types_8h_source"/>
+        <link refid="_expansion_port_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -795,7 +795,7 @@
       </node>
       <node id="39">
         <label>PowerSupplyTypes.h</label>
-        <link refid="_power_supply_types_8h_source"/>
+        <link refid="_power_supply_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -811,7 +811,7 @@
       </node>
       <node id="35">
         <label>MemoryTypes.h</label>
-        <link refid="_memory_types_8h_source"/>
+        <link refid="_memory_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -869,7 +869,7 @@
       </node>
       <node id="41">
         <label>SIDTypes.h</label>
-        <link refid="_s_i_d_types_8h_source"/>
+        <link refid="_s_i_d_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -969,7 +969,7 @@
       </node>
       <node id="44">
         <label>BusTypes.h</label>
-        <link refid="_bus_types_8h_source"/>
+        <link refid="_bus_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -987,7 +987,7 @@
       </node>
       <node id="45">
         <label>DmaDebuggerTypes.h</label>
-        <link refid="_dma_debugger_types_8h_source"/>
+        <link refid="_dma_debugger_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1041,7 +1041,7 @@
       </node>
       <node id="42">
         <label>VICIITypes.h</label>
-        <link refid="_v_i_c_i_i_types_8h"/>
+        <link refid="_v_i_c_i_i_types_8h_source"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1087,7 +1087,7 @@
       </node>
       <node id="33">
         <label>FSTypes.h</label>
-        <link refid="_f_s_types_8h_source"/>
+        <link refid="_f_s_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1171,7 +1171,7 @@
       </node>
       <node id="32">
         <label>FileTypes.h</label>
-        <link refid="_file_types_8h_source"/>
+        <link refid="_file_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1295,7 +1295,7 @@
       </node>
       <node id="40">
         <label>RetroShellTypes.h</label>
-        <link refid="_retro_shell_types_8h_source"/>
+        <link refid="_retro_shell_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1331,7 +1331,7 @@
       </node>
       <node id="23">
         <label>DatasetteTypes.h</label>
-        <link refid="_datasette_types_8h_source"/>
+        <link refid="_datasette_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1413,7 +1413,7 @@
       </node>
       <node id="26">
         <label>DriveTypes.h</label>
-        <link refid="_drive_types_8h_source"/>
+        <link refid="_drive_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1439,7 +1439,7 @@
       </node>
       <node id="27">
         <label>ParCableTypes.h</label>
-        <link refid="_par_cable_types_8h_source"/>
+        <link refid="_par_cable_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1461,7 +1461,7 @@
       </node>
       <node id="19">
         <label>JoystickTypes.h</label>
-        <link refid="_joystick_types_8h_source"/>
+        <link refid="_joystick_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1521,7 +1521,7 @@
       </node>
       <node id="36">
         <label>MouseTypes.h</label>
-        <link refid="_mouse_types_8h_source"/>
+        <link refid="_mouse_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -2064,13 +2064,13 @@
 <codeline lineno="226"><highlight class="normal"></highlight></codeline>
 <codeline lineno="227"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(msg.type)<sp/>{</highlight></codeline>
 <codeline lineno="228"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="229"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_SCRIPT_DONE:</highlight></codeline>
+<codeline lineno="229"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baa4d10009296b03ca20e5e0782de8bcbd" kindref="member">MSG_SCRIPT_DONE</ref>:</highlight></codeline>
 <codeline lineno="230"><highlight class="normal"></highlight></codeline>
 <codeline lineno="231"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>returnCode<sp/>=<sp/>0;</highlight></codeline>
 <codeline lineno="232"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="233"><highlight class="normal"></highlight></codeline>
-<codeline lineno="234"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_SCRIPT_ABORT:</highlight></codeline>
-<codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_ABORT:</highlight></codeline>
+<codeline lineno="234"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bacfb923a604b38a3581f9df2e17f31a86" kindref="member">MSG_SCRIPT_ABORT</ref>:</highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bab5a09c07a9ce6862250f18e81ed80d3f" kindref="member">MSG_ABORT</ref>:</highlight></codeline>
 <codeline lineno="236"><highlight class="normal"></highlight></codeline>
 <codeline lineno="237"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>returnCode<sp/>=<sp/>1;</highlight></codeline>
 <codeline lineno="238"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>

@@ -128,7 +128,7 @@ $(function(){initNavTree('_re_s_i_d_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;SIDTypes.h&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="_s_i_d_types_8h.html">SIDTypes.h</a>&quot;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;SubComponent.h&quot;</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;SIDStreams.h&quot;</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;<a class="code" href="resid_2sid_8h.html">resid/sid.h</a>&quot;</span></div>
@@ -166,7 +166,7 @@ $(function(){initNavTree('_re_s_i_d_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    reSID::SID::State st = { };</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="comment">// The emulated chip model</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    SIDRevision model = 0;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <a class="code hl_enumeration" href="_s_i_d_types_8h.html#a17273940e560b4b27f1b419da23312ed">SIDRevision</a> model = 0;</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="comment">// Clock frequency</span></div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    u32 clockFrequency = 0;</div>
@@ -283,8 +283,8 @@ $(function(){initNavTree('_re_s_i_d_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    u32 getClockFrequency() <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    <span class="keywordtype">void</span> setClockFrequency(u32 frequency);</div>
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    </div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    SIDRevision getRevision() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    <span class="keywordtype">void</span> setRevision(SIDRevision m);</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    <a class="code hl_enumeration" href="_s_i_d_types_8h.html#a17273940e560b4b27f1b419da23312ed">SIDRevision</a> getRevision() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    <span class="keywordtype">void</span> setRevision(<a class="code hl_enumeration" href="_s_i_d_types_8h.html#a17273940e560b4b27f1b419da23312ed">SIDRevision</a> m);</div>
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    </div>
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    <span class="keywordtype">double</span> getSampleRate()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> sampleRate; }</div>
 <div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    <span class="keywordtype">void</span> setSampleRate(<span class="keywordtype">double</span> rate);</div>
@@ -329,6 +329,8 @@ $(function(){initNavTree('_re_s_i_d_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>};</div>
 <div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> </div>
 <div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>}</div>
+<div class="ttc" id="a_s_i_d_types_8h_html"><div class="ttname"><a href="_s_i_d_types_8h.html">SIDTypes.h</a></div></div>
+<div class="ttc" id="a_s_i_d_types_8h_html_a17273940e560b4b27f1b419da23312ed"><div class="ttname"><a href="_s_i_d_types_8h.html#a17273940e560b4b27f1b419da23312ed">SIDREV</a></div><div class="ttdeci">SIDREV</div><div class="ttdoc">Chip revision.</div><div class="ttdef"><b>Definition</b> SIDTypes.h:25</div></div>
 <div class="ttc" id="aresid_2sid_8h_html"><div class="ttname"><a href="resid_2sid_8h.html">sid.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

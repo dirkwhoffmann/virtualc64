@@ -61,7 +61,7 @@
       </node>
       <node id="27">
         <label>CartridgeTypes.h</label>
-        <link refid="_cartridge_types_8h_source"/>
+        <link refid="_cartridge_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -69,7 +69,7 @@
       </node>
       <node id="35">
         <label>C64Types.h</label>
-        <link refid="_c64_types_8h_source"/>
+        <link refid="_c64_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -143,7 +143,7 @@
       </node>
       <node id="19">
         <label>FileTypes.h</label>
-        <link refid="_file_types_8h_source"/>
+        <link refid="_file_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">

@@ -56,7 +56,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ControlPort.h" line="29" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ControlPort.h" bodystart="29" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="classvc64_1_1_control_port_1a28d545b514d954d0059fb932f491f846" prot="private" static="no" mutable="no">
-        <type>ControlPortDevice</type>
+        <type><ref refid="_control_port_types_8h_1aa3619f9c768a49030116c497f465ec3c" kindref="member">ControlPortDevice</ref></type>
         <definition>ControlPortDevice vc64::ControlPort::device</definition>
         <argsstring></argsstring>
         <name>device</name>

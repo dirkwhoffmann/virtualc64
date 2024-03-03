@@ -107,7 +107,7 @@
 \DoxyCodeLine{00138\ \ \ \ \ i64\ get(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option,\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{id})\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00139\ }
 \DoxyCodeLine{00140\ \ \ \ \ \textcolor{comment}{//\ Configures\ the\ emulator\ to\ match\ a\ specific\ C64\ model}}
-\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordtype}{void}\ set(C64Model\ model);}
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordtype}{void}\ set(\mbox{\hyperlink{_c64_types_8h_a34fe42cc2e5fba851b026b25c4af9e03}{C64Model}}\ model);}
 \DoxyCodeLine{00142\ }
 \DoxyCodeLine{00143\ \ \ \ \ \textcolor{comment}{//\ Sets\ an\ option}}
 \DoxyCodeLine{00144\ \ \ \ \ \textcolor{keywordtype}{void}\ set(\mbox{\hyperlink{_option_types_8h_a273e435dabd576e6dcff3f18024d1fa8}{Option}}\ option,\ i64\ value)\ \textcolor{keywordflow}{throws};}
@@ -178,8 +178,8 @@
 \DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ MemInfo\ getInfo()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00210\ }
 \DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Returns\ a\ string\ representations\ for\ a\ portion\ of\ memory}}
-\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ memdump(u16\ addr,\ isize\ num,\ \textcolor{keywordtype}{bool}\ hex,\ isize\ pads,\ MemoryType\ src)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ txtdump(u16\ addr,\ isize\ num,\ MemoryType\ src)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ memdump(u16\ addr,\ isize\ num,\ \textcolor{keywordtype}{bool}\ hex,\ isize\ pads,\ \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915a}{MemoryType}}\ src)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ txtdump(u16\ addr,\ isize\ num,\ \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915a}{MemoryType}}\ src)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00214\ }
 \DoxyCodeLine{00215\ \ \ \ \ \}\ mem;}
 \DoxyCodeLine{00216\ }
@@ -290,7 +290,7 @@
 \DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ pal()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00322\ }
 \DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ u32\ getColor(isize\ nr)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ u32\ getColor(isize\ nr,\ \mbox{\hyperlink{_v_i_c_i_i_types_8h_af59eb4c57176022b657e35f92a7d01c9}{Palette}}\ palette)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ u32\ getColor(isize\ nr,\ Palette\ palette)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00325\ }
 \DoxyCodeLine{00326\ \ \ \ \ \}\ vicii;}
 \DoxyCodeLine{00327\ }
@@ -367,7 +367,7 @@
 \DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setDxDy(\textcolor{keywordtype}{double}\ dx,\ \textcolor{keywordtype}{double}\ dy);}
 \DoxyCodeLine{00399\ }
 \DoxyCodeLine{00400\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Triggers\ a\ gamepad\ event}}
-\DoxyCodeLine{00401\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ trigger(GamePadAction\ event);}
+\DoxyCodeLine{00401\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ trigger(\mbox{\hyperlink{_joystick_types_8h_ae2114e40c8dc40375c0d0a60904ca8e2}{GamePadAction}}\ event);}
 \DoxyCodeLine{00402\ \ \ \ \ \};}
 \DoxyCodeLine{00403\ }
 \DoxyCodeLine{00404\ }
@@ -381,7 +381,7 @@
 \DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ JoystickAPI(Emulator\ \&emu,\ Joystick\&\ joystick)\ :\ API(emu),\ joystick(joystick)\ \{\ \}}
 \DoxyCodeLine{00413\ }
 \DoxyCodeLine{00414\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Triggers\ a\ gamepad\ event}}
-\DoxyCodeLine{00415\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ trigger(GamePadAction\ event);}
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ trigger(\mbox{\hyperlink{_joystick_types_8h_ae2114e40c8dc40375c0d0a60904ca8e2}{GamePadAction}}\ event);}
 \DoxyCodeLine{00416\ \ \ \ \ \};}
 \DoxyCodeLine{00417\ }
 \DoxyCodeLine{00418\ }
@@ -501,7 +501,7 @@
 \DoxyCodeLine{00532\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ DriveConfig\ \&getConfig()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00533\ \ \ \ \ \ \ \ \ DriveInfo\ getInfo()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00534\ }
-\DoxyCodeLine{00535\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ insertBlankDisk(DOSType\ fstype,\ PETName<16>\ name);}
+\DoxyCodeLine{00535\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ insertBlankDisk(\mbox{\hyperlink{_f_s_types_8h_aa499a0fc379c037c4be2ad9be44035e4}{DOSType}}\ fstype,\ PETName<16>\ name);}
 \DoxyCodeLine{00536\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ insertD64(\textcolor{keyword}{const}\ D64File\ \&d64,\ \textcolor{keywordtype}{bool}\ wp);}
 \DoxyCodeLine{00537\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ insertG64(\textcolor{keyword}{const}\ G64File\ \&g64,\ \textcolor{keywordtype}{bool}\ wp);}
 \DoxyCodeLine{00538\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ insertCollection(AnyCollection\ \&archive,\ \textcolor{keywordtype}{bool}\ wp)\ \textcolor{keywordflow}{throws};}
@@ -522,7 +522,7 @@
 \DoxyCodeLine{00553\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *text();}
 \DoxyCodeLine{00554\ \ \ \ \ \ \ \ \ isize\ cursorRel();}
 \DoxyCodeLine{00555\ }
-\DoxyCodeLine{00556\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ press(RetroShellKey\ key,\ \textcolor{keywordtype}{bool}\ shift\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00556\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ press(\mbox{\hyperlink{_retro_shell_types_8h_a266a24d8f1b5150281f89401b43752aa}{RetroShellKey}}\ key,\ \textcolor{keywordtype}{bool}\ shift\ =\ \textcolor{keyword}{false});}
 \DoxyCodeLine{00557\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ press(\textcolor{keywordtype}{char}\ c);}
 \DoxyCodeLine{00558\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ press(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&s);}
 \DoxyCodeLine{00559\ }

@@ -9,6 +9,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -19,10 +20,11 @@
 // Enumerations
 //
 
+/// File system type
 enum_long(DOS_TYPE)
 {
-    DOS_TYPE_NODOS,
-    DOS_TYPE_CBM
+    DOS_TYPE_NODOS, ///< No file system
+    DOS_TYPE_CBM    ///< C64 CBM file system
 };
 typedef DOS_TYPE DOSType;
 

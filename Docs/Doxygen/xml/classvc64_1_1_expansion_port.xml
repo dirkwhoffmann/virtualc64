@@ -590,7 +590,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ExpansionPort.h" line="128" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ExpansionPort.cpp" bodystart="240" bodyend="246"/>
       </memberdef>
       <memberdef kind="function" id="classvc64_1_1_expansion_port_1acad862f509fead3f1dc6af2fca2b1ccc" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>CRTMode</type>
+        <type><ref refid="_expansion_port_types_8h_1afc7f01a600ec402128634d1936792984" kindref="member">CRTMode</ref></type>
         <definition>CRTMode vc64::ExpansionPort::getCartridgeMode</definition>
         <argsstring>() const</argsstring>
         <name>getCartridgeMode</name>
@@ -610,7 +610,7 @@
         <name>setCartridgeMode</name>
         <qualifiedname>vc64::ExpansionPort::setCartridgeMode</qualifiedname>
         <param>
-          <type>CRTMode</type>
+          <type><ref refid="_expansion_port_types_8h_1afc7f01a600ec402128634d1936792984" kindref="member">CRTMode</ref></type>
           <declname>mode</declname>
         </param>
         <briefdescription>

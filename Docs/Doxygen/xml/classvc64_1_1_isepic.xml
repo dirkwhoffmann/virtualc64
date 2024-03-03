@@ -42,7 +42,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Isepic.h" line="34" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Isepic.h" bodystart="34" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="classvc64_1_1_isepic_1a334984e90ca6dcd8e06cf1de3afb3f19" prot="private" static="no" mutable="no">
-        <type>MemoryType</type>
+        <type><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref></type>
         <definition>MemoryType vc64::Isepic::oldPeekSource</definition>
         <argsstring></argsstring>
         <name>oldPeekSource</name>
@@ -56,7 +56,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Isepic.h" line="37" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Isepic.h" bodystart="37" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="classvc64_1_1_isepic_1a21c4b6665db66c98700aa234c167e198" prot="private" static="no" mutable="no">
-        <type>MemoryType</type>
+        <type><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref></type>
         <definition>MemoryType vc64::Isepic::oldPokeTarget</definition>
         <argsstring></argsstring>
         <name>oldPokeTarget</name>

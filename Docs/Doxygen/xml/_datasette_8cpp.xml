@@ -146,7 +146,7 @@
       </node>
       <node id="59">
         <label>MsgQueueTypes.h</label>
-        <link refid="_msg_queue_types_8h_source"/>
+        <link refid="_msg_queue_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -240,7 +240,7 @@
       </node>
       <node id="65">
         <label>CartridgeTypes.h</label>
-        <link refid="_cartridge_types_8h_source"/>
+        <link refid="_cartridge_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -564,7 +564,7 @@
       </node>
       <node id="13">
         <label>C64Types.h</label>
-        <link refid="_c64_types_8h_source"/>
+        <link refid="_c64_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -584,7 +584,7 @@
       </node>
       <node id="119">
         <label>CIATypes.h</label>
-        <link refid="_c_i_a_types_8h_source"/>
+        <link refid="_c_i_a_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -716,7 +716,7 @@
       </node>
       <node id="35">
         <label>EmulatorTypes.h</label>
-        <link refid="_emulator_types_8h_source"/>
+        <link refid="_emulator_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -740,7 +740,7 @@
       </node>
       <node id="79">
         <label>ControlPortTypes.h</label>
-        <link refid="_control_port_types_8h_source"/>
+        <link refid="_control_port_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -760,7 +760,7 @@
       </node>
       <node id="63">
         <label>ExpansionPortTypes.h</label>
-        <link refid="_expansion_port_types_8h_source"/>
+        <link refid="_expansion_port_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -784,7 +784,7 @@
       </node>
       <node id="131">
         <label>PowerSupplyTypes.h</label>
-        <link refid="_power_supply_types_8h_source"/>
+        <link refid="_power_supply_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -800,7 +800,7 @@
       </node>
       <node id="87">
         <label>MemoryTypes.h</label>
-        <link refid="_memory_types_8h_source"/>
+        <link refid="_memory_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -858,7 +858,7 @@
       </node>
       <node id="100">
         <label>SIDTypes.h</label>
-        <link refid="_s_i_d_types_8h_source"/>
+        <link refid="_s_i_d_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -958,7 +958,7 @@
       </node>
       <node id="94">
         <label>BusTypes.h</label>
-        <link refid="_bus_types_8h_source"/>
+        <link refid="_bus_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -976,7 +976,7 @@
       </node>
       <node id="95">
         <label>DmaDebuggerTypes.h</label>
-        <link refid="_dma_debugger_types_8h_source"/>
+        <link refid="_dma_debugger_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1030,7 +1030,7 @@
       </node>
       <node id="93">
         <label>VICIITypes.h</label>
-        <link refid="_v_i_c_i_i_types_8h"/>
+        <link refid="_v_i_c_i_i_types_8h_source"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1076,7 +1076,7 @@
       </node>
       <node id="177">
         <label>FSTypes.h</label>
-        <link refid="_f_s_types_8h_source"/>
+        <link refid="_f_s_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1136,7 +1136,7 @@
       </node>
       <node id="69">
         <label>FileTypes.h</label>
-        <link refid="_file_types_8h_source"/>
+        <link refid="_file_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1254,7 +1254,7 @@
       </node>
       <node id="137">
         <label>RetroShellTypes.h</label>
-        <link refid="_retro_shell_types_8h_source"/>
+        <link refid="_retro_shell_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1300,7 +1300,7 @@
       </node>
       <node id="5">
         <label>DatasetteTypes.h</label>
-        <link refid="_datasette_types_8h_source"/>
+        <link refid="_datasette_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1382,7 +1382,7 @@
       </node>
       <node id="89">
         <label>DriveTypes.h</label>
-        <link refid="_drive_types_8h_source"/>
+        <link refid="_drive_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1408,7 +1408,7 @@
       </node>
       <node id="90">
         <label>ParCableTypes.h</label>
-        <link refid="_par_cable_types_8h_source"/>
+        <link refid="_par_cable_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1430,7 +1430,7 @@
       </node>
       <node id="16">
         <label>JoystickTypes.h</label>
-        <link refid="_joystick_types_8h_source"/>
+        <link refid="_joystick_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1490,7 +1490,7 @@
       </node>
       <node id="82">
         <label>MouseTypes.h</label>
-        <link refid="_mouse_types_8h_source"/>
+        <link refid="_mouse_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1852,7 +1852,7 @@
 <codeline lineno="142"><highlight class="normal"></highlight></codeline>
 <codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8adf48f07259725597ab9342f68e67ffeb" kindref="member">OPT_DAT_MODEL</ref>:</highlight></codeline>
 <codeline lineno="144"><highlight class="normal"></highlight></codeline>
-<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.model<sp/>=<sp/>DatasetteModel(value);</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.model<sp/>=<sp/><ref refid="_datasette_types_8h_1a9ce0db5d2dda39ceff533153bd7fb206" kindref="member">DatasetteModel</ref>(value);</highlight></codeline>
 <codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="147"><highlight class="normal"></highlight></codeline>
 <codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8ab7392cd61342fb719ccd3a9857a20ece" kindref="member">OPT_DAT_CONNECT</ref>:</highlight></codeline>
@@ -1863,7 +1863,7 @@
 <codeline lineno="153"><highlight class="normal"></highlight></codeline>
 <codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.connected<sp/>=<sp/>bool(value);</highlight></codeline>
 <codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>updateDatEvent();</highlight></codeline>
-<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(MSG_VC1530_CONNECT,<sp/>value);</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba63c9f8d5975faaf72f35296b778a97fe" kindref="member">MSG_VC1530_CONNECT</ref>,<sp/>value);</highlight></codeline>
 <codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="159"><highlight class="normal"></highlight></codeline>
@@ -1924,7 +1924,7 @@
 <codeline lineno="214"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>updateDatEvent();</highlight></codeline>
 <codeline lineno="215"><highlight class="normal"></highlight></codeline>
 <codeline lineno="216"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Inform<sp/>the<sp/>GUI</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(MSG_VC1530_TAPE,<sp/>1);</highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac76626691016373c1316a76dd99d561e" kindref="member">MSG_VC1530_TAPE</ref>,<sp/>1);</highlight></codeline>
 <codeline lineno="218"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="219"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="220"><highlight class="normal"></highlight></codeline>
@@ -1942,7 +1942,7 @@
 <codeline lineno="232"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>rewind();</highlight></codeline>
 <codeline lineno="233"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>dealloc();</highlight></codeline>
 <codeline lineno="234"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(MSG_VC1530_TAPE,<sp/>0);</highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac76626691016373c1316a76dd99d561e" kindref="member">MSG_VC1530_TAPE</ref>,<sp/>0);</highlight></codeline>
 <codeline lineno="236"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="237"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="238"><highlight class="normal"></highlight></codeline>
@@ -1962,7 +1962,7 @@
 <codeline lineno="252"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="253"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Inform<sp/>the<sp/>GUI</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="254"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(old<sp/>!=<sp/>(i64)counter.asSeconds())<sp/>{</highlight></codeline>
-<codeline lineno="255"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(MSG_VC1530_COUNTER,<sp/>(i64)counter.asSeconds());</highlight></codeline>
+<codeline lineno="255"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba5a3e8a30eb9567a51ef0be850c601964" kindref="member">MSG_VC1530_COUNTER</ref>,<sp/>(i64)counter.asSeconds());</highlight></codeline>
 <codeline lineno="256"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="257"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="258"><highlight class="normal"></highlight></codeline>
@@ -1978,7 +1978,7 @@
 <codeline lineno="268"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="269"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Inform<sp/>the<sp/>GUI</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="270"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(old<sp/>!=<sp/>(i64)counter.asSeconds())<sp/>{</highlight></codeline>
-<codeline lineno="271"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(MSG_VC1530_COUNTER,<sp/>(i64)counter.asSeconds());</highlight></codeline>
+<codeline lineno="271"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba5a3e8a30eb9567a51ef0be850c601964" kindref="member">MSG_VC1530_COUNTER</ref>,<sp/>(i64)counter.asSeconds());</highlight></codeline>
 <codeline lineno="272"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="273"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="274"><highlight class="normal"></highlight></codeline>
@@ -2012,7 +2012,7 @@
 <codeline lineno="302"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>updateDatEvent();</highlight></codeline>
 <codeline lineno="303"><highlight class="normal"></highlight></codeline>
 <codeline lineno="304"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Inform<sp/>the<sp/>GUI</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="305"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(MSG_VC1530_PLAY,<sp/>1);</highlight></codeline>
+<codeline lineno="305"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba9061902c86cb3a76e532c4162b24a30f" kindref="member">MSG_VC1530_PLAY</ref>,<sp/>1);</highlight></codeline>
 <codeline lineno="306"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="307"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="308"><highlight class="normal"></highlight></codeline>
@@ -2039,7 +2039,7 @@
 <codeline lineno="329"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Update<sp/>the<sp/>execution<sp/>event<sp/>slot</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="330"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>scheduleNextDatEvent();</highlight></codeline>
 <codeline lineno="331"><highlight class="normal"></highlight></codeline>
-<codeline lineno="332"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(MSG_VC1530_PLAY,<sp/>0);</highlight></codeline>
+<codeline lineno="332"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba9061902c86cb3a76e532c4162b24a30f" kindref="member">MSG_VC1530_PLAY</ref>,<sp/>0);</highlight></codeline>
 <codeline lineno="333"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="334"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="335"><highlight class="normal"></highlight></codeline>
@@ -2086,8 +2086,8 @@
 <codeline lineno="376"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="377"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(event)<sp/>{</highlight></codeline>
 <codeline lineno="378"><highlight class="normal"></highlight></codeline>
-<codeline lineno="379"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MOT_START:<sp/>msgQueue.put(MSG_VC1530_MOTOR,<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="380"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MOT_STOP:<sp/><sp/>msgQueue.put(MSG_VC1530_MOTOR,<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="379"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MOT_START:<sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba42f2cb3022cffead0b3df46d83278c43" kindref="member">MSG_VC1530_MOTOR</ref>,<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="380"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MOT_STOP:<sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba42f2cb3022cffead0b3df46d83278c43" kindref="member">MSG_VC1530_MOTOR</ref>,<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="381"><highlight class="normal"></highlight></codeline>
 <codeline lineno="382"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
 <codeline lineno="383"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>

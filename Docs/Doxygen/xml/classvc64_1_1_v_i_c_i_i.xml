@@ -816,7 +816,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICII.h" line="438" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICII.h" bodystart="438" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="classvc64_1_1_v_i_c_i_i_1af0773f7b84c1eb0f4044a7d7cc34008d" prot="private" static="no" mutable="no">
-        <type>MemoryType</type>
+        <type><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref></type>
         <definition>MemoryType vc64::VICII::memSrc[16]</definition>
         <argsstring>[16]</argsstring>
         <name>memSrc</name>
@@ -1430,7 +1430,7 @@
         <name>initFuncTable</name>
         <qualifiedname>vc64::VICII::initFuncTable</qualifiedname>
         <param>
-          <type><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44" kindref="member">VICIIRevision</ref></type>
+          <type>VICIIRevision</type>
           <declname>revision</declname>
         </param>
         <briefdescription>
@@ -1448,7 +1448,7 @@
         <name>initFuncTable</name>
         <qualifiedname>vc64::VICII::initFuncTable</qualifiedname>
         <param>
-          <type><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44" kindref="member">VICIIRevision</ref></type>
+          <type>VICIIRevision</type>
           <declname>revision</declname>
         </param>
         <param>
@@ -1928,7 +1928,7 @@
           <declname>nr</declname>
         </param>
         <param>
-          <type><ref refid="_v_i_c_i_i_types_8h_1af59eb4c57176022b657e35f92a7d01c9" kindref="member">Palette</ref></type>
+          <type>Palette</type>
           <declname>palette</declname>
         </param>
         <briefdescription>
@@ -2838,7 +2838,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICII.h" line="1284" column="22" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICII_cycles.cpp" bodystart="800" bodyend="819"/>
       </memberdef>
       <memberdef kind="function" id="classvc64_1_1_v_i_c_i_i_1aa4c38b380452d810523ce31216a06ec5" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="_v_i_c_i_i_types_8h_1a4b4722e29346b1d0c0c0faa810ec4c93" kindref="member">ScreenGeometry</ref></type>
+        <type>ScreenGeometry</type>
         <definition>ScreenGeometry vc64::VICII::getScreenGeometry</definition>
         <argsstring>(void) const</argsstring>
         <name>getScreenGeometry</name>
@@ -3142,7 +3142,7 @@
         <name>setRevision</name>
         <qualifiedname>vc64::VICII::setRevision</qualifiedname>
         <param>
-          <type><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44" kindref="member">VICIIRevision</ref></type>
+          <type>VICIIRevision</type>
           <declname>revision</declname>
         </param>
         <briefdescription>
@@ -4234,7 +4234,7 @@
         <name>delayedLightPenIrqs</name>
         <qualifiedname>vc64::VICII::delayedLightPenIrqs</qualifiedname>
         <param>
-          <type><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44" kindref="member">VICIIRevision</ref></type>
+          <type>VICIIRevision</type>
           <declname>rev</declname>
         </param>
         <briefdescription>
@@ -4252,7 +4252,7 @@
         <name>getFps</name>
         <qualifiedname>vc64::VICII::getFps</qualifiedname>
         <param>
-          <type><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44" kindref="member">VICIIRevision</ref></type>
+          <type>VICIIRevision</type>
           <declname>rev</declname>
         </param>
         <briefdescription>
@@ -4270,7 +4270,7 @@
         <name>getFrequency</name>
         <qualifiedname>vc64::VICII::getFrequency</qualifiedname>
         <param>
-          <type><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44" kindref="member">VICIIRevision</ref></type>
+          <type>VICIIRevision</type>
           <declname>rev</declname>
         </param>
         <briefdescription>
@@ -4288,7 +4288,7 @@
         <name>getCyclesPerLine</name>
         <qualifiedname>vc64::VICII::getCyclesPerLine</qualifiedname>
         <param>
-          <type><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44" kindref="member">VICIIRevision</ref></type>
+          <type>VICIIRevision</type>
           <declname>rev</declname>
         </param>
         <briefdescription>
@@ -4306,7 +4306,7 @@
         <name>getLinesPerFrame</name>
         <qualifiedname>vc64::VICII::getLinesPerFrame</qualifiedname>
         <param>
-          <type><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44" kindref="member">VICIIRevision</ref></type>
+          <type>VICIIRevision</type>
           <declname>rev</declname>
         </param>
         <briefdescription>
@@ -4324,7 +4324,7 @@
         <name>getCyclesPerFrame</name>
         <qualifiedname>vc64::VICII::getCyclesPerFrame</qualifiedname>
         <param>
-          <type><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44" kindref="member">VICIIRevision</ref></type>
+          <type>VICIIRevision</type>
           <declname>rev</declname>
         </param>
         <briefdescription>
@@ -4342,7 +4342,7 @@
         <name>numVisibleLines</name>
         <qualifiedname>vc64::VICII::numVisibleLines</qualifiedname>
         <param>
-          <type><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44" kindref="member">VICIIRevision</ref></type>
+          <type>VICIIRevision</type>
           <declname>rev</declname>
         </param>
         <briefdescription>
@@ -4360,7 +4360,7 @@
         <name>hasGrayCodeBug</name>
         <qualifiedname>vc64::VICII::hasGrayCodeBug</qualifiedname>
         <param>
-          <type><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44" kindref="member">VICIIRevision</ref></type>
+          <type>VICIIRevision</type>
           <declname>rev</declname>
         </param>
         <briefdescription>

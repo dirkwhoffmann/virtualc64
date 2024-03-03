@@ -35,7 +35,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastSID.h" line="51" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastSID.h" bodystart="51" bodyend="51"/>
       </memberdef>
       <memberdef kind="variable" id="class_fast_s_i_d_1a8447b273fb12686696539338dddb6aaa" prot="private" static="no" mutable="no">
-        <type>SIDRevision</type>
+        <type><ref refid="_s_i_d_types_8h_1a17273940e560b4b27f1b419da23312ed" kindref="member">SIDRevision</ref></type>
         <definition>SIDRevision FastSID::model</definition>
         <argsstring></argsstring>
         <name>model</name>
@@ -438,7 +438,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastSID.h" line="189" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/fastsid/FastSID.cpp" bodystart="151" bodyend="159"/>
       </memberdef>
       <memberdef kind="function" id="class_fast_s_i_d_1a78fdfb424c275361756efe63a45c0a4c" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
-        <type>SIDRevision</type>
+        <type><ref refid="_s_i_d_types_8h_1a17273940e560b4b27f1b419da23312ed" kindref="member">SIDRevision</ref></type>
         <definition>SIDRevision FastSID::getRevision</definition>
         <argsstring>() const</argsstring>
         <name>getRevision</name>
@@ -458,7 +458,7 @@
         <name>setRevision</name>
         <qualifiedname>FastSID::setRevision</qualifiedname>
         <param>
-          <type>SIDRevision</type>
+          <type><ref refid="_s_i_d_types_8h_1a17273940e560b4b27f1b419da23312ed" kindref="member">SIDRevision</ref></type>
           <declname>m</declname>
         </param>
         <briefdescription>

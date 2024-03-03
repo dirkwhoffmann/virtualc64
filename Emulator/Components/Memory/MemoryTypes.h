@@ -9,6 +9,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -19,17 +20,18 @@
 // Enumerations
 //
 
+/// Memory type
 enum_long(M_TYPE)
 {
-    M_RAM = 1,
-    M_CHAR,
-    M_KERNAL,
-    M_BASIC,
-    M_IO,
-    M_CRTLO,
-    M_CRTHI,
-    M_PP,
-    M_NONE,
+    M_RAM = 1,      ///< Ram
+    M_CHAR,         ///< Character Rom
+    M_KERNAL,       ///< Kernal Rom
+    M_BASIC,        ///< Basic Rom
+    M_IO,           ///< IO space
+    M_CRTLO,        ///< Cartridge Rom (low bank)
+    M_CRTHI,        ///< Cartridge Rom (high bank)
+    M_PP,           ///< Processor port
+    M_NONE,         ///< Unmapped
     M_COUNT
 };
 typedef M_TYPE MemoryType;
@@ -62,13 +64,14 @@ struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
 };
 #endif
 
+/// Ram startup pattern
 enum_long(RAM_PATTERN)
 {
-    RAM_PATTERN_VICE,
-    RAM_PATTERN_CCS,
-    RAM_PATTERN_ZEROES,
-    RAM_PATTERN_ONES,
-    RAM_PATTERN_RANDOM
+    RAM_PATTERN_VICE,       ///< Pattern used by the VICE emulator
+    RAM_PATTERN_CCS,        ///< Pattern used by the CCS emulator
+    RAM_PATTERN_ZEROES,     ///< Initialize with all zeroes
+    RAM_PATTERN_ONES,       ///< Initialize with all ones
+    RAM_PATTERN_RANDOM      ///< Initialize with pseudo-random values
 };
 typedef RAM_PATTERN RamPattern;
 

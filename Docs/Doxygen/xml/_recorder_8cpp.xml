@@ -147,7 +147,7 @@
       </node>
       <node id="52">
         <label>MsgQueueTypes.h</label>
-        <link refid="_msg_queue_types_8h_source"/>
+        <link refid="_msg_queue_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -241,7 +241,7 @@
       </node>
       <node id="62">
         <label>CartridgeTypes.h</label>
-        <link refid="_cartridge_types_8h_source"/>
+        <link refid="_cartridge_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -565,7 +565,7 @@
       </node>
       <node id="50">
         <label>C64Types.h</label>
-        <link refid="_c64_types_8h_source"/>
+        <link refid="_c64_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -585,7 +585,7 @@
       </node>
       <node id="119">
         <label>CIATypes.h</label>
-        <link refid="_c_i_a_types_8h_source"/>
+        <link refid="_c_i_a_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -701,7 +701,7 @@
       </node>
       <node id="7">
         <label>EmulatorTypes.h</label>
-        <link refid="_emulator_types_8h_source"/>
+        <link refid="_emulator_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -725,7 +725,7 @@
       </node>
       <node id="78">
         <label>ControlPortTypes.h</label>
-        <link refid="_control_port_types_8h_source"/>
+        <link refid="_control_port_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -745,7 +745,7 @@
       </node>
       <node id="58">
         <label>ExpansionPortTypes.h</label>
-        <link refid="_expansion_port_types_8h_source"/>
+        <link refid="_expansion_port_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -769,7 +769,7 @@
       </node>
       <node id="131">
         <label>PowerSupplyTypes.h</label>
-        <link refid="_power_supply_types_8h_source"/>
+        <link refid="_power_supply_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -785,7 +785,7 @@
       </node>
       <node id="86">
         <label>MemoryTypes.h</label>
-        <link refid="_memory_types_8h_source"/>
+        <link refid="_memory_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -843,7 +843,7 @@
       </node>
       <node id="100">
         <label>SIDTypes.h</label>
-        <link refid="_s_i_d_types_8h_source"/>
+        <link refid="_s_i_d_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -943,7 +943,7 @@
       </node>
       <node id="93">
         <label>BusTypes.h</label>
-        <link refid="_bus_types_8h_source"/>
+        <link refid="_bus_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -961,7 +961,7 @@
       </node>
       <node id="94">
         <label>DmaDebuggerTypes.h</label>
-        <link refid="_dma_debugger_types_8h_source"/>
+        <link refid="_dma_debugger_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1027,7 +1027,7 @@
       </node>
       <node id="92">
         <label>VICIITypes.h</label>
-        <link refid="_v_i_c_i_i_types_8h"/>
+        <link refid="_v_i_c_i_i_types_8h_source"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1073,7 +1073,7 @@
       </node>
       <node id="174">
         <label>FSTypes.h</label>
-        <link refid="_f_s_types_8h_source"/>
+        <link refid="_f_s_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1133,7 +1133,7 @@
       </node>
       <node id="66">
         <label>FileTypes.h</label>
-        <link refid="_file_types_8h_source"/>
+        <link refid="_file_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1251,7 +1251,7 @@
       </node>
       <node id="134">
         <label>RetroShellTypes.h</label>
-        <link refid="_retro_shell_types_8h_source"/>
+        <link refid="_retro_shell_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1287,7 +1287,7 @@
       </node>
       <node id="180">
         <label>DatasetteTypes.h</label>
-        <link refid="_datasette_types_8h_source"/>
+        <link refid="_datasette_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1369,7 +1369,7 @@
       </node>
       <node id="88">
         <label>DriveTypes.h</label>
-        <link refid="_drive_types_8h_source"/>
+        <link refid="_drive_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1395,7 +1395,7 @@
       </node>
       <node id="89">
         <label>ParCableTypes.h</label>
-        <link refid="_par_cable_types_8h_source"/>
+        <link refid="_par_cable_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1417,7 +1417,7 @@
       </node>
       <node id="60">
         <label>JoystickTypes.h</label>
-        <link refid="_joystick_types_8h_source"/>
+        <link refid="_joystick_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1477,7 +1477,7 @@
       </node>
       <node id="81">
         <label>MouseTypes.h</label>
-        <link refid="_mouse_types_8h_source"/>
+        <link refid="_mouse_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -2038,7 +2038,7 @@
 <codeline lineno="341"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Switch<sp/>state<sp/>and<sp/>inform<sp/>the<sp/>GUI</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="342"><highlight class="normal"><sp/><sp/><sp/><sp/>state<sp/>=<sp/>State::record;</highlight></codeline>
 <codeline lineno="343"><highlight class="normal"><sp/><sp/><sp/><sp/>recStart<sp/>=<sp/>util::Time::now();</highlight></codeline>
-<codeline lineno="344"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(MSG_RECORDING_STARTED);</highlight></codeline>
+<codeline lineno="344"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba40515090334b8adcf080ab96216896f4" kindref="member">MSG_RECORDING_STARTED</ref>);</highlight></codeline>
 <codeline lineno="345"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="346"><highlight class="normal"></highlight></codeline>
 <codeline lineno="347"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
@@ -2119,7 +2119,7 @@
 <codeline lineno="422"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Switch<sp/>state<sp/>and<sp/>inform<sp/>the<sp/>GUI</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="423"><highlight class="normal"><sp/><sp/><sp/><sp/>state<sp/>=<sp/>State::wait;</highlight></codeline>
 <codeline lineno="424"><highlight class="normal"><sp/><sp/><sp/><sp/>recStop<sp/>=<sp/>util::Time::now();</highlight></codeline>
-<codeline lineno="425"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(MSG_RECORDING_STOPPED);</highlight></codeline>
+<codeline lineno="425"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba2b6f215428af049e25a379996d8bdaa0" kindref="member">MSG_RECORDING_STOPPED</ref>);</highlight></codeline>
 <codeline lineno="426"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="427"><highlight class="normal"></highlight></codeline>
 <codeline lineno="428"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
@@ -2151,7 +2151,7 @@
 <codeline lineno="454"><highlight class="normal">Recorder::abort()</highlight></codeline>
 <codeline lineno="455"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="456"><highlight class="normal"><sp/><sp/><sp/><sp/>finalize();</highlight></codeline>
-<codeline lineno="457"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(MSG_RECORDING_ABORTED);</highlight></codeline>
+<codeline lineno="457"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac3e694f804f4e02dc8b2803c2636f8b5" kindref="member">MSG_RECORDING_ABORTED</ref>);</highlight></codeline>
 <codeline lineno="458"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="459"><highlight class="normal"></highlight></codeline>
 <codeline lineno="460"><highlight class="normal">}</highlight></codeline>

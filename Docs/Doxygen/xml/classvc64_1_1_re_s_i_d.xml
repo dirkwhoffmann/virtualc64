@@ -64,7 +64,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="50" column="23" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" bodystart="50" bodyend="50"/>
       </memberdef>
       <memberdef kind="variable" id="classvc64_1_1_re_s_i_d_1adb55f207bc8b2f5279c65fa4076e26b6" prot="private" static="no" mutable="no">
-        <type>SIDRevision</type>
+        <type><ref refid="_s_i_d_types_8h_1a17273940e560b4b27f1b419da23312ed" kindref="member">SIDRevision</ref></type>
         <definition>SIDRevision vc64::ReSID::model</definition>
         <argsstring></argsstring>
         <name>model</name>
@@ -422,7 +422,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.h" line="168" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/ReSID.cpp" bodystart="63" bodyend="74"/>
       </memberdef>
       <memberdef kind="function" id="classvc64_1_1_re_s_i_d_1a5be5efbf0fe0ebdb83b539cd09fb60e3" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>SIDRevision</type>
+        <type><ref refid="_s_i_d_types_8h_1a17273940e560b4b27f1b419da23312ed" kindref="member">SIDRevision</ref></type>
         <definition>SIDRevision vc64::ReSID::getRevision</definition>
         <argsstring>() const</argsstring>
         <name>getRevision</name>
@@ -442,7 +442,7 @@
         <name>setRevision</name>
         <qualifiedname>vc64::ReSID::setRevision</qualifiedname>
         <param>
-          <type>SIDRevision</type>
+          <type><ref refid="_s_i_d_types_8h_1a17273940e560b4b27f1b419da23312ed" kindref="member">SIDRevision</ref></type>
           <declname>m</declname>
         </param>
         <briefdescription>

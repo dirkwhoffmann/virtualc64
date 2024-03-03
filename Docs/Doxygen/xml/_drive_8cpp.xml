@@ -147,7 +147,7 @@
       </node>
       <node id="78">
         <label>MsgQueueTypes.h</label>
-        <link refid="_msg_queue_types_8h_source"/>
+        <link refid="_msg_queue_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -241,7 +241,7 @@
       </node>
       <node id="86">
         <label>CartridgeTypes.h</label>
-        <link refid="_cartridge_types_8h_source"/>
+        <link refid="_cartridge_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -565,7 +565,7 @@
       </node>
       <node id="14">
         <label>C64Types.h</label>
-        <link refid="_c64_types_8h_source"/>
+        <link refid="_c64_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -585,7 +585,7 @@
       </node>
       <node id="135">
         <label>CIATypes.h</label>
-        <link refid="_c_i_a_types_8h_source"/>
+        <link refid="_c_i_a_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -717,7 +717,7 @@
       </node>
       <node id="19">
         <label>EmulatorTypes.h</label>
-        <link refid="_emulator_types_8h_source"/>
+        <link refid="_emulator_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -741,7 +741,7 @@
       </node>
       <node id="98">
         <label>ControlPortTypes.h</label>
-        <link refid="_control_port_types_8h_source"/>
+        <link refid="_control_port_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -761,7 +761,7 @@
       </node>
       <node id="84">
         <label>ExpansionPortTypes.h</label>
-        <link refid="_expansion_port_types_8h_source"/>
+        <link refid="_expansion_port_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -785,7 +785,7 @@
       </node>
       <node id="137">
         <label>PowerSupplyTypes.h</label>
-        <link refid="_power_supply_types_8h_source"/>
+        <link refid="_power_supply_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -801,7 +801,7 @@
       </node>
       <node id="106">
         <label>MemoryTypes.h</label>
-        <link refid="_memory_types_8h_source"/>
+        <link refid="_memory_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -859,7 +859,7 @@
       </node>
       <node id="116">
         <label>SIDTypes.h</label>
-        <link refid="_s_i_d_types_8h_source"/>
+        <link refid="_s_i_d_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -959,7 +959,7 @@
       </node>
       <node id="110">
         <label>BusTypes.h</label>
-        <link refid="_bus_types_8h_source"/>
+        <link refid="_bus_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -977,7 +977,7 @@
       </node>
       <node id="111">
         <label>DmaDebuggerTypes.h</label>
-        <link refid="_dma_debugger_types_8h_source"/>
+        <link refid="_dma_debugger_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1031,7 +1031,7 @@
       </node>
       <node id="109">
         <label>VICIITypes.h</label>
-        <link refid="_v_i_c_i_i_types_8h"/>
+        <link refid="_v_i_c_i_i_types_8h_source"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1077,7 +1077,7 @@
       </node>
       <node id="66">
         <label>FSTypes.h</label>
-        <link refid="_f_s_types_8h_source"/>
+        <link refid="_f_s_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1137,7 +1137,7 @@
       </node>
       <node id="90">
         <label>FileTypes.h</label>
-        <link refid="_file_types_8h_source"/>
+        <link refid="_file_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1255,7 +1255,7 @@
       </node>
       <node id="143">
         <label>RetroShellTypes.h</label>
-        <link refid="_retro_shell_types_8h_source"/>
+        <link refid="_retro_shell_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1291,7 +1291,7 @@
       </node>
       <node id="181">
         <label>DatasetteTypes.h</label>
-        <link refid="_datasette_types_8h_source"/>
+        <link refid="_datasette_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1385,7 +1385,7 @@
       </node>
       <node id="5">
         <label>DriveTypes.h</label>
-        <link refid="_drive_types_8h_source"/>
+        <link refid="_drive_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1411,7 +1411,7 @@
       </node>
       <node id="13">
         <label>ParCableTypes.h</label>
-        <link refid="_par_cable_types_8h_source"/>
+        <link refid="_par_cable_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1433,7 +1433,7 @@
       </node>
       <node id="16">
         <label>JoystickTypes.h</label>
-        <link refid="_joystick_types_8h_source"/>
+        <link refid="_joystick_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1493,7 +1493,7 @@
       </node>
       <node id="101">
         <label>MouseTypes.h</label>
-        <link refid="_mouse_types_8h_source"/>
+        <link refid="_mouse_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1863,7 +1863,7 @@
 <codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">throw</highlight><highlight class="normal"><sp/>VC64Error(<ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ac8d7329a9083105d05aa8f5e0877a0cc" kindref="member">ERROR_OPT_INVARG</ref>,<sp/>DriveTypeEnum::keyList());</highlight></codeline>
 <codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.type<sp/>=<sp/>DriveType(value);</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.type<sp/>=<sp/><ref refid="_drive_types_8h_1a5a215cb87e878cacc0f17d17adcddd53" kindref="member">DriveType</ref>(value);</highlight></codeline>
 <codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="155"><highlight class="normal"></highlight></codeline>
 <codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a83f3562d31b570ea41a3681fd4fdc703" kindref="member">OPT_DRV_RAM</ref>:</highlight></codeline>
@@ -1887,7 +1887,7 @@
 <codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><sp/><sp/>SUSPENDED</highlight></codeline>
 <codeline lineno="176"><highlight class="normal"></highlight></codeline>
-<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.parCable<sp/>=<sp/>ParCableType(value);</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.parCable<sp/>=<sp/><ref refid="_par_cable_types_8h_1a494dcbce5bcb891dfa50c460ae94f7cb" kindref="member">ParCableType</ref>(value);</highlight></codeline>
 <codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mem.updateBankMap();</highlight></codeline>
 <codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
@@ -1903,7 +1903,7 @@
 <codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.connected<sp/>=<sp/>bool(value);</highlight></codeline>
 <codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>hardReset();</highlight></codeline>
 <codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(value<sp/>?<sp/>MSG_DRIVE_CONNECT<sp/>:<sp/>MSG_DRIVE_DISCONNECT,<sp/>deviceNr);</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(value<sp/>?<sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baf613d4432782de9459706b8d3aa05933" kindref="member">MSG_DRIVE_CONNECT</ref><sp/>:<sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bab303b79cc5c99d4c6532d895fca481f1" kindref="member">MSG_DRIVE_DISCONNECT</ref>,<sp/>deviceNr);</highlight></codeline>
 <codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a7568dffe88a76c64cc124c3af1611fa4" kindref="member">OPT_DRV_POWER_SWITCH</ref>:</highlight></codeline>
@@ -1913,7 +1913,7 @@
 <codeline lineno="200"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.switchedOn<sp/>=<sp/>bool(value);</highlight></codeline>
 <codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>hardReset();</highlight></codeline>
 <codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="203"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(value<sp/>?<sp/>MSG_DRIVE_POWER_ON<sp/>:<sp/>MSG_DRIVE_POWER_OFF,<sp/>deviceNr);</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(value<sp/>?<sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bab57a7a4eea6ce8e25030e16017fc0122" kindref="member">MSG_DRIVE_POWER_ON</ref><sp/>:<sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba53fd751f1e173f6c45ab2a7ddd433220" kindref="member">MSG_DRIVE_POWER_OFF</ref>,<sp/>deviceNr);</highlight></codeline>
 <codeline lineno="204"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="205"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="206"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8ac7e083374d51af754bc06a3d08c30e1a" kindref="member">OPT_DRV_POWER_SAVE</ref>:</highlight></codeline>
@@ -1985,7 +1985,7 @@
 <codeline lineno="272"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>debug(CNF_DEBUG,<sp/></highlight><highlight class="stringliteral">&quot;autoConfigure:<sp/>VC1541C\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="273"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a47b946fb087dc076855bad12b6064b48" kindref="member">OPT_DRV_TYPE</ref>,<sp/>DRIVE_VC1541C);</highlight></codeline>
 <codeline lineno="274"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a83f3562d31b570ea41a3681fd4fdc703" kindref="member">OPT_DRV_RAM</ref>,<sp/>DRVRAM_NONE);</highlight></codeline>
-<codeline lineno="275"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a0250ed79d845c41e3c02b392a42a8857" kindref="member">OPT_DRV_PARCABLE</ref>,<sp/>PAR_CABLE_NONE);</highlight></codeline>
+<codeline lineno="275"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a0250ed79d845c41e3c02b392a42a8857" kindref="member">OPT_DRV_PARCABLE</ref>,<sp/><ref refid="_par_cable_types_8h_1a494dcbce5bcb891dfa50c460ae94f7cba81945a06dbef11f06e247cc7b6531986" kindref="member">PAR_CABLE_NONE</ref>);</highlight></codeline>
 <codeline lineno="276"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="277"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="278"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>VC1541_II_1987:</highlight></codeline>
@@ -1998,7 +1998,7 @@
 <codeline lineno="285"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>debug(CNF_DEBUG,<sp/></highlight><highlight class="stringliteral">&quot;autoConfigure:<sp/>VC1541<sp/>II\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="286"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a47b946fb087dc076855bad12b6064b48" kindref="member">OPT_DRV_TYPE</ref>,<sp/>DRIVE_VC1541II);</highlight></codeline>
 <codeline lineno="287"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a83f3562d31b570ea41a3681fd4fdc703" kindref="member">OPT_DRV_RAM</ref>,<sp/>DRVRAM_NONE);</highlight></codeline>
-<codeline lineno="288"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a0250ed79d845c41e3c02b392a42a8857" kindref="member">OPT_DRV_PARCABLE</ref>,<sp/>PAR_CABLE_NONE);</highlight></codeline>
+<codeline lineno="288"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a0250ed79d845c41e3c02b392a42a8857" kindref="member">OPT_DRV_PARCABLE</ref>,<sp/><ref refid="_par_cable_types_8h_1a494dcbce5bcb891dfa50c460ae94f7cba81945a06dbef11f06e247cc7b6531986" kindref="member">PAR_CABLE_NONE</ref>);</highlight></codeline>
 <codeline lineno="289"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="290"><highlight class="normal"></highlight></codeline>
 <codeline lineno="291"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>VC1541_SPEEDDOS_PLUS:</highlight></codeline>
@@ -2007,7 +2007,7 @@
 <codeline lineno="294"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>debug(CNF_DEBUG,<sp/></highlight><highlight class="stringliteral">&quot;autoConfigure:<sp/>VC1541<sp/>SpeedDOS\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="295"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a47b946fb087dc076855bad12b6064b48" kindref="member">OPT_DRV_TYPE</ref>,<sp/>DRIVE_VC1541II);</highlight></codeline>
 <codeline lineno="296"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a83f3562d31b570ea41a3681fd4fdc703" kindref="member">OPT_DRV_RAM</ref>,<sp/>DRVRAM_NONE);</highlight></codeline>
-<codeline lineno="297"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a0250ed79d845c41e3c02b392a42a8857" kindref="member">OPT_DRV_PARCABLE</ref>,<sp/>PAR_CABLE_STANDARD);</highlight></codeline>
+<codeline lineno="297"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a0250ed79d845c41e3c02b392a42a8857" kindref="member">OPT_DRV_PARCABLE</ref>,<sp/><ref refid="_par_cable_types_8h_1a494dcbce5bcb891dfa50c460ae94f7cba0e1baffb1f66a2ea9cce145c0dc0d069" kindref="member">PAR_CABLE_STANDARD</ref>);</highlight></codeline>
 <codeline lineno="298"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="299"><highlight class="normal"></highlight></codeline>
 <codeline lineno="300"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>VC1541_DOLPHIN_20:</highlight></codeline>
@@ -2016,7 +2016,7 @@
 <codeline lineno="303"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>debug(CNF_DEBUG,<sp/></highlight><highlight class="stringliteral">&quot;autoConfig:<sp/>Dolphin<sp/>DOS\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="304"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a47b946fb087dc076855bad12b6064b48" kindref="member">OPT_DRV_TYPE</ref>,<sp/>DRIVE_VC1541II);</highlight></codeline>
 <codeline lineno="305"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a83f3562d31b570ea41a3681fd4fdc703" kindref="member">OPT_DRV_RAM</ref>,<sp/>DRVRAM_8000_9FFF);</highlight></codeline>
-<codeline lineno="306"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a0250ed79d845c41e3c02b392a42a8857" kindref="member">OPT_DRV_PARCABLE</ref>,<sp/>PAR_CABLE_STANDARD);</highlight></codeline>
+<codeline lineno="306"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a0250ed79d845c41e3c02b392a42a8857" kindref="member">OPT_DRV_PARCABLE</ref>,<sp/><ref refid="_par_cable_types_8h_1a494dcbce5bcb891dfa50c460ae94f7cba0e1baffb1f66a2ea9cce145c0dc0d069" kindref="member">PAR_CABLE_STANDARD</ref>);</highlight></codeline>
 <codeline lineno="307"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="308"><highlight class="normal"></highlight></codeline>
 <codeline lineno="309"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>VC1541_DOLPHIN_30:</highlight></codeline>
@@ -2025,7 +2025,7 @@
 <codeline lineno="312"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>debug(CNF_DEBUG,<sp/></highlight><highlight class="stringliteral">&quot;autoConfig:<sp/>Dolphin<sp/>DOS<sp/>3\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="313"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a47b946fb087dc076855bad12b6064b48" kindref="member">OPT_DRV_TYPE</ref>,<sp/>DRIVE_VC1541II);</highlight></codeline>
 <codeline lineno="314"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a83f3562d31b570ea41a3681fd4fdc703" kindref="member">OPT_DRV_RAM</ref>,<sp/>DRVRAM_6000_7FFF);</highlight></codeline>
-<codeline lineno="315"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a0250ed79d845c41e3c02b392a42a8857" kindref="member">OPT_DRV_PARCABLE</ref>,<sp/>PAR_CABLE_DOLPHIN3);</highlight></codeline>
+<codeline lineno="315"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>setOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a0250ed79d845c41e3c02b392a42a8857" kindref="member">OPT_DRV_PARCABLE</ref>,<sp/><ref refid="_par_cable_types_8h_1a494dcbce5bcb891dfa50c460ae94f7cba9b9da9e2262200bc40eede03c40fbaac" kindref="member">PAR_CABLE_DOLPHIN3</ref>);</highlight></codeline>
 <codeline lineno="316"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="317"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="318"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
@@ -2358,14 +2358,14 @@
 <codeline lineno="645"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="646"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>redLED<sp/>=<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="647"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>wakeUp();</highlight></codeline>
-<codeline lineno="648"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(MSG_DRIVE_LED_ON,<sp/>deviceNr);</highlight></codeline>
+<codeline lineno="648"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba22b40799c770ffdf3d25d7afa18e1a59" kindref="member">MSG_DRIVE_LED_ON</ref>,<sp/>deviceNr);</highlight></codeline>
 <codeline lineno="649"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="650"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="651"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(redLED<sp/>&amp;&amp;<sp/>!b)<sp/>{</highlight></codeline>
 <codeline lineno="652"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="653"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>redLED<sp/>=<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="654"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>wakeUp();</highlight></codeline>
-<codeline lineno="655"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(MSG_DRIVE_LED_OFF,<sp/>deviceNr);</highlight></codeline>
+<codeline lineno="655"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baea180b57ba6610eccd18e11ead4dee8b" kindref="member">MSG_DRIVE_LED_OFF</ref>,<sp/>deviceNr);</highlight></codeline>
 <codeline lineno="656"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="657"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="658"><highlight class="normal">}</highlight></codeline>
@@ -2376,7 +2376,7 @@
 <codeline lineno="663"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(spinning<sp/>==<sp/>b)<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="664"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="665"><highlight class="normal"><sp/><sp/><sp/><sp/>spinning<sp/>=<sp/>b;</highlight></codeline>
-<codeline lineno="666"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(b<sp/>?<sp/>MSG_DRIVE_MOTOR_ON<sp/>:<sp/>MSG_DRIVE_MOTOR_OFF,<sp/>deviceNr);</highlight></codeline>
+<codeline lineno="666"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(b<sp/>?<sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baba8fdd226c88062ec60620849a2e4296" kindref="member">MSG_DRIVE_MOTOR_ON</ref><sp/>:<sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bad2777aa5f678d740d959905fdda757f1" kindref="member">MSG_DRIVE_MOTOR_OFF</ref>,<sp/>deviceNr);</highlight></codeline>
 <codeline lineno="667"><highlight class="normal"><sp/><sp/><sp/><sp/>iec.updateTransferStatus();</highlight></codeline>
 <codeline lineno="668"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="669"><highlight class="normal"></highlight></codeline>
@@ -2386,7 +2386,7 @@
 <codeline lineno="673"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(isIdle())<sp/>{</highlight></codeline>
 <codeline lineno="674"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="675"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>trace(DRV_DEBUG,<sp/></highlight><highlight class="stringliteral">&quot;Exiting<sp/>power-safe<sp/>mode\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="676"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(MSG_DRIVE_POWER_SAVE_OFF,<sp/>deviceNr);</highlight></codeline>
+<codeline lineno="676"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba52562262a0e29ed1fc1938c52add6706" kindref="member">MSG_DRIVE_POWER_SAVE_OFF</ref>,<sp/>deviceNr);</highlight></codeline>
 <codeline lineno="677"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>needsEmulation<sp/>=<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="678"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="679"><highlight class="normal"></highlight></codeline>
@@ -2416,7 +2416,7 @@
 <codeline lineno="703"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>halftrack,<sp/>(halftrack<sp/>+<sp/>1)<sp/>/<sp/>2.0,<sp/>offset);</highlight></codeline>
 <codeline lineno="704"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="705"><highlight class="normal"></highlight></codeline>
-<codeline lineno="706"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(MSG_DRIVE_STEP,<sp/>DriveMsg<sp/>{</highlight></codeline>
+<codeline lineno="706"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba92d63f973c2a5ba8d7b33b2f29044493" kindref="member">MSG_DRIVE_STEP</ref>,<sp/>DriveMsg<sp/>{</highlight></codeline>
 <codeline lineno="707"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>i16(deviceNr),<sp/>i16(halftrack),<sp/>config.stepVolume,<sp/>config.pan</highlight></codeline>
 <codeline lineno="708"><highlight class="normal"><sp/><sp/><sp/><sp/>});</highlight></codeline>
 <codeline lineno="709"><highlight class="normal">}</highlight></codeline>
@@ -2444,7 +2444,7 @@
 <codeline lineno="731"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>halftrack,<sp/>(halftrack<sp/>+<sp/>1)<sp/>/<sp/>2.0);</highlight></codeline>
 <codeline lineno="732"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="733"><highlight class="normal"></highlight></codeline>
-<codeline lineno="734"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(MSG_DRIVE_STEP,<sp/>DriveMsg<sp/>{</highlight></codeline>
+<codeline lineno="734"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba92d63f973c2a5ba8d7b33b2f29044493" kindref="member">MSG_DRIVE_STEP</ref>,<sp/>DriveMsg<sp/>{</highlight></codeline>
 <codeline lineno="735"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>i16(deviceNr),<sp/>i16(halftrack),<sp/>config.stepVolume,<sp/>config.pan</highlight></codeline>
 <codeline lineno="736"><highlight class="normal"><sp/><sp/><sp/><sp/>});</highlight></codeline>
 <codeline lineno="737"><highlight class="normal">}</highlight></codeline>
@@ -2467,7 +2467,7 @@
 <codeline lineno="754"><highlight class="normal">Drive::setModificationFlag(</highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>value)</highlight></codeline>
 <codeline lineno="755"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="756"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(hasDisk())<sp/>disk-&gt;setModified(value);</highlight></codeline>
-<codeline lineno="757"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(value<sp/>?<sp/>MSG_DISK_UNSAVED<sp/>:<sp/>MSG_DISK_SAVED,<sp/>deviceNr);</highlight></codeline>
+<codeline lineno="757"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(value<sp/>?<sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba472eadd62c4716bf158521a635a25153" kindref="member">MSG_DISK_UNSAVED</ref><sp/>:<sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba2254429633d74f465c26f6f72ecf3a6d" kindref="member">MSG_DISK_SAVED</ref>,<sp/>deviceNr);</highlight></codeline>
 <codeline lineno="758"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="759"><highlight class="normal"></highlight></codeline>
 <codeline lineno="760"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
@@ -2494,7 +2494,7 @@
 <codeline lineno="781"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="782"><highlight class="normal"></highlight></codeline>
 <codeline lineno="783"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="784"><highlight class="normal">Drive::insertNewDisk(DOSType<sp/>fsType,<sp/>PETName&lt;16&gt;<sp/>name)</highlight></codeline>
+<codeline lineno="784"><highlight class="normal">Drive::insertNewDisk(<ref refid="_f_s_types_8h_1aa499a0fc379c037c4be2ad9be44035e4" kindref="member">DOSType</ref><sp/>fsType,<sp/>PETName&lt;16&gt;<sp/>name)</highlight></codeline>
 <codeline lineno="785"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="786"><highlight class="normal"><sp/><sp/><sp/><sp/>insertDisk(std::make_unique&lt;Disk&gt;(fsType,<sp/>name));</highlight></codeline>
 <codeline lineno="787"><highlight class="normal">}</highlight></codeline>
@@ -2551,7 +2551,7 @@
 <codeline lineno="838"><highlight class="normal"></highlight></codeline>
 <codeline lineno="839"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>trace(DRV_DEBUG,<sp/></highlight><highlight class="stringliteral">&quot;Entering<sp/>power-save<sp/>mode\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="840"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>needsEmulation<sp/>=<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="841"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(MSG_DRIVE_POWER_SAVE_ON,<sp/>deviceNr);</highlight></codeline>
+<codeline lineno="841"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bae98a227565064885e1a5389b88c04e18" kindref="member">MSG_DRIVE_POWER_SAVE_ON</ref>,<sp/>deviceNr);</highlight></codeline>
 <codeline lineno="842"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="843"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="844"><highlight class="normal">}</highlight></codeline>
@@ -2622,7 +2622,7 @@
 <codeline lineno="909"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>insertionStatus<sp/>=<sp/>DISK_FULLY_EJECTED;</highlight></codeline>
 <codeline lineno="910"><highlight class="normal"></highlight></codeline>
 <codeline lineno="911"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Inform<sp/>the<sp/>GUI</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="912"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(MSG_DISK_EJECT,<sp/>DriveMsg<sp/>{</highlight></codeline>
+<codeline lineno="912"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba9e8a5fa167cc5b5f06cade241c31b55c" kindref="member">MSG_DISK_EJECT</ref>,<sp/>DriveMsg<sp/>{</highlight></codeline>
 <codeline lineno="913"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>i16(deviceNr),<sp/>i16(halftrack),<sp/>config.stepVolume,<sp/>config.pan</highlight></codeline>
 <codeline lineno="914"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
 <codeline lineno="915"><highlight class="normal"></highlight></codeline>
@@ -2653,7 +2653,7 @@
 <codeline lineno="940"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>disk<sp/>=<sp/>std::move(diskToInsert);</highlight></codeline>
 <codeline lineno="941"><highlight class="normal"></highlight></codeline>
 <codeline lineno="942"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Inform<sp/>the<sp/>GUI</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="943"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(MSG_DISK_INSERT,<sp/>DriveMsg<sp/>{</highlight></codeline>
+<codeline lineno="943"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baabb1071ba56ef61e7368ab7f062693c0" kindref="member">MSG_DISK_INSERT</ref>,<sp/>DriveMsg<sp/>{</highlight></codeline>
 <codeline lineno="944"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>i16(deviceNr),<sp/>i16(halftrack),<sp/>config.stepVolume,<sp/>config.pan</highlight></codeline>
 <codeline lineno="945"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>});</highlight></codeline>
 <codeline lineno="946"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>

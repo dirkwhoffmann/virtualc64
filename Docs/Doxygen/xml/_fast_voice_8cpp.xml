@@ -153,7 +153,7 @@
       </node>
       <node id="7">
         <label>EmulatorTypes.h</label>
-        <link refid="_emulator_types_8h_source"/>
+        <link refid="_emulator_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -173,7 +173,7 @@
       </node>
       <node id="48">
         <label>SIDTypes.h</label>
-        <link refid="_s_i_d_types_8h_source"/>
+        <link refid="_s_i_d_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -516,7 +516,7 @@
 <codeline lineno="117"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="118"><highlight class="normal">FastVoice::updateWaveTablePtr()</highlight></codeline>
 <codeline lineno="119"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/>SIDRevision<sp/>revision<sp/>=<sp/>fastsid-&gt;getRevision();</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_s_i_d_types_8h_1a17273940e560b4b27f1b419da23312ed" kindref="member">SIDRevision</ref><sp/>revision<sp/>=<sp/>fastsid-&gt;getRevision();</highlight></codeline>
 <codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/>assert(revision<sp/>==<sp/>MOS_6581<sp/>||<sp/>revision<sp/>==<sp/>MOS_8580);</highlight></codeline>
 <codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/>offset;</highlight></codeline>

@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSTypes.h" line="161" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSTypes.h" bodystart="161" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSTypes.h" line="163" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSTypes.h" bodystart="163" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_t_s_link_1a9e1a62b8adda3f8959596990037718d2" prot="public" static="no" mutable="no">
         <type>Sector</type>
@@ -29,14 +29,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSTypes.h" line="162" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSTypes.h" bodystart="162" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSTypes.h" line="164" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSTypes.h" bodystart="164" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSTypes.h" line="159" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSTypes.h" bodystart="160" bodyend="163"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSTypes.h" line="161" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSTypes.h" bodystart="162" bodyend="165"/>
     <listofallmembers>
       <member refid="struct_t_s_link_1a9e1a62b8adda3f8959596990037718d2" prot="public" virt="non-virtual"><scope>TSLink</scope><name>s</name></member>
       <member refid="struct_t_s_link_1ad69b21c273c7a08ad206c91d3c07877d" prot="public" virt="non-virtual"><scope>TSLink</scope><name>t</name></member>

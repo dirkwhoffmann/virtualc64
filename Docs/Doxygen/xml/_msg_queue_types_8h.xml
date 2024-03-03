@@ -107,6 +107,7 @@
           <name>MSG_NONE</name>
           <initializer>= 0</initializer>
           <briefdescription>
+<para>Unclassified. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -114,6 +115,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baa76f18ac4fd6e013a62d7ac04fba4edf" prot="public">
           <name>MSG_CONFIG</name>
           <briefdescription>
+<para>The configuration has changed. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -121,6 +123,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baec73dd1957fd94c8cde729186480fa5c" prot="public">
           <name>MSG_POWER</name>
           <briefdescription>
+<para>The emulator has been powered on or off. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -128,6 +131,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bae868897e5cee1df30873d828256a4d77" prot="public">
           <name>MSG_RUN</name>
           <briefdescription>
+<para>The emulator has entered STATE_RUNNING. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -135,6 +139,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba1b44e026389fb3b26434f3d74b3b6e7e" prot="public">
           <name>MSG_PAUSE</name>
           <briefdescription>
+<para>The emulator has entered STATE_PAUSED. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -142,6 +147,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba86cdd34af78d2cbeb91299d3d9f2c360" prot="public">
           <name>MSG_STEP</name>
           <briefdescription>
+<para>The emulator has stepped a single instruction. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -149,6 +155,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba66a2805e00d510437311c54dfcf010b6" prot="public">
           <name>MSG_RESET</name>
           <briefdescription>
+<para>The emulator has been reset. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -156,6 +163,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba621b8f7f84a5fe2cbb10c08ce2c58ff3" prot="public">
           <name>MSG_SHUTDOWN</name>
           <briefdescription>
+<para>The emulator has been shut down. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -163,6 +171,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bab5a09c07a9ce6862250f18e81ed80d3f" prot="public">
           <name>MSG_ABORT</name>
           <briefdescription>
+<para>The emulator requests the GUI to quit the app. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -170,6 +179,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba22374907c62cce9e112ec43cd6fb7b0e" prot="public">
           <name>MSG_WARP</name>
           <briefdescription>
+<para>The emulator has entered or exited warp mode. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -177,6 +187,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baffcad1d28fd3ec4302fa1fc157bc73aa" prot="public">
           <name>MSG_TRACK</name>
           <briefdescription>
+<para>The emulator has entered or exited track mode. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -184,6 +195,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bace9f16f3e50f0d17c0a02191b82c0a2c" prot="public">
           <name>MSG_MUTE</name>
           <briefdescription>
+<para>The emulator has been muted or unmuted. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -191,6 +203,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba262afa148b59fd1f0843949cb3cae8cf" prot="public">
           <name>MSG_CONSOLE_CLOSE</name>
           <briefdescription>
+<para>RetroShell has been closed. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -198,6 +211,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba3a4a8450bdeeb6864ea81a49d04557f4" prot="public">
           <name>MSG_CONSOLE_UPDATE</name>
           <briefdescription>
+<para>RetroShell has generated new output. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -205,6 +219,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba77a07987640c4e81b300be38becd2b5d" prot="public">
           <name>MSG_CONSOLE_DEBUGGER</name>
           <briefdescription>
+<para>The RetroShell debugger has been opend or closed. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -212,6 +227,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baa4d10009296b03ca20e5e0782de8bcbd" prot="public">
           <name>MSG_SCRIPT_DONE</name>
           <briefdescription>
+<para>A RetroShell script has been successfully executed. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -219,34 +235,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bacfb923a604b38a3581f9df2e17f31a86" prot="public">
           <name>MSG_SCRIPT_ABORT</name>
           <briefdescription>
-          </briefdescription>
-          <detaileddescription>
-          </detaileddescription>
-        </enumvalue>
-        <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba54eb386fc6dc685fbfcb1bcd6f1a0514" prot="public">
-          <name>MSG_BASIC_ROM_LOADED</name>
-          <briefdescription>
-          </briefdescription>
-          <detaileddescription>
-          </detaileddescription>
-        </enumvalue>
-        <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba49a97dc2eefc7e1a23cb479fd071532b" prot="public">
-          <name>MSG_CHAR_ROM_LOADED</name>
-          <briefdescription>
-          </briefdescription>
-          <detaileddescription>
-          </detaileddescription>
-        </enumvalue>
-        <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba41c7e29f283e38f5207e447c82b28de3" prot="public">
-          <name>MSG_KERNAL_ROM_LOADED</name>
-          <briefdescription>
-          </briefdescription>
-          <detaileddescription>
-          </detaileddescription>
-        </enumvalue>
-        <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bad82084a3c105f29495e03e98b8192637" prot="public">
-          <name>MSG_DRIVE_ROM_LOADED</name>
-          <briefdescription>
+<para>The execution of a RetroShell ccript has been aborted. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -254,6 +243,39 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba2522aa8b55849618404362e794e66614" prot="public">
           <name>MSG_ROM_MISSING</name>
           <briefdescription>
+<para>The emulator can&apos;t run due to a missing Rom. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba54eb386fc6dc685fbfcb1bcd6f1a0514" prot="public">
+          <name>MSG_BASIC_ROM_LOADED</name>
+          <briefdescription>
+<para>A valid Basis Rom has been installed. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba49a97dc2eefc7e1a23cb479fd071532b" prot="public">
+          <name>MSG_CHAR_ROM_LOADED</name>
+          <briefdescription>
+<para>A valid Character has been installed. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba41c7e29f283e38f5207e447c82b28de3" prot="public">
+          <name>MSG_KERNAL_ROM_LOADED</name>
+          <briefdescription>
+<para>A valid Kernal Rom has been installed. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bad82084a3c105f29495e03e98b8192637" prot="public">
+          <name>MSG_DRIVE_ROM_LOADED</name>
+          <briefdescription>
+<para>A valid Drive Rom has been installed. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -261,6 +283,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba8c193db10f35e9453d0b41c238fc31a7" prot="public">
           <name>MSG_CPU_JAMMED</name>
           <briefdescription>
+<para>The CPU has halted due to an illegal instruction. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -268,6 +291,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba8601eda9cfe0b03211b41a146cfa21a2" prot="public">
           <name>MSG_CPU_JUMPED</name>
           <briefdescription>
+<para>The program counter has been modified manually. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -275,6 +299,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baa69769d77f682ba101215104460fe1b9" prot="public">
           <name>MSG_BREAKPOINT_REACHED</name>
           <briefdescription>
+<para>A breakpoint has been reached. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -282,6 +307,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba09717b122df319863b8176e201167bda" prot="public">
           <name>MSG_WATCHPOINT_REACHED</name>
           <briefdescription>
+<para>A watchpoint has been reached. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -289,6 +315,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bab7e30ed8c854a6ab53e757b6007d71bf" prot="public">
           <name>MSG_PAL</name>
           <briefdescription>
+<para>The emulator runs in PAL mode now. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -296,6 +323,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baa0bb0c451712258f42ef5c26d9509918" prot="public">
           <name>MSG_NTSC</name>
           <briefdescription>
+<para>The emulator runs in NTSC mode now. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -303,6 +331,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac623cc7b2383f7b19548f21076acb4ac" prot="public">
           <name>MSG_IEC_BUS_BUSY</name>
           <briefdescription>
+<para>The IEC bus is transferring data. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -310,6 +339,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba77a7c08e806359e8fb74753b040bae4c" prot="public">
           <name>MSG_IEC_BUS_IDLE</name>
           <briefdescription>
+<para>The IEC bus has returned to idle state. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -317,6 +347,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baf613d4432782de9459706b8d3aa05933" prot="public">
           <name>MSG_DRIVE_CONNECT</name>
           <briefdescription>
+<para>A floppy drive has been connected. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -324,6 +355,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bab303b79cc5c99d4c6532d895fca481f1" prot="public">
           <name>MSG_DRIVE_DISCONNECT</name>
           <briefdescription>
+<para>A floopy drive has been disconnected. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -331,6 +363,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bab57a7a4eea6ce8e25030e16017fc0122" prot="public">
           <name>MSG_DRIVE_POWER_ON</name>
           <briefdescription>
+<para>The emulator has been powered on. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -338,6 +371,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba53fd751f1e173f6c45ab2a7ddd433220" prot="public">
           <name>MSG_DRIVE_POWER_OFF</name>
           <briefdescription>
+<para>The emulator has been powered off. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -345,6 +379,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bae98a227565064885e1a5389b88c04e18" prot="public">
           <name>MSG_DRIVE_POWER_SAVE_ON</name>
           <briefdescription>
+<para>Fast paths have been enabled. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -352,6 +387,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba52562262a0e29ed1fc1938c52add6706" prot="public">
           <name>MSG_DRIVE_POWER_SAVE_OFF</name>
           <briefdescription>
+<para>Fast paths have been disabled. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -359,6 +395,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba48b07144cb8afcc6b110410c7981cb53" prot="public">
           <name>MSG_DRIVE_READ</name>
           <briefdescription>
+<para>The floopy drive has switched to read mode. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -366,6 +403,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bae18265e2cbc5c26861d0eea81fbee6a9" prot="public">
           <name>MSG_DRIVE_WRITE</name>
           <briefdescription>
+<para>The floppy drive has switched to write mode. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -373,6 +411,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba22b40799c770ffdf3d25d7afa18e1a59" prot="public">
           <name>MSG_DRIVE_LED_ON</name>
           <briefdescription>
+<para>The green drive LED has switched on. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -380,6 +419,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baea180b57ba6610eccd18e11ead4dee8b" prot="public">
           <name>MSG_DRIVE_LED_OFF</name>
           <briefdescription>
+<para>The green drive LED has switched off. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -387,6 +427,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baba8fdd226c88062ec60620849a2e4296" prot="public">
           <name>MSG_DRIVE_MOTOR_ON</name>
           <briefdescription>
+<para>The disk has started spinning. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -394,6 +435,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bad2777aa5f678d740d959905fdda757f1" prot="public">
           <name>MSG_DRIVE_MOTOR_OFF</name>
           <briefdescription>
+<para>The disk has stopped spinning. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -401,6 +443,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba92d63f973c2a5ba8d7b33b2f29044493" prot="public">
           <name>MSG_DRIVE_STEP</name>
           <briefdescription>
+<para>The drive head has stepped. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -408,6 +451,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baabb1071ba56ef61e7368ab7f062693c0" prot="public">
           <name>MSG_DISK_INSERT</name>
           <briefdescription>
+<para>A disk has been inserted. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -415,6 +459,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba9e8a5fa167cc5b5f06cade241c31b55c" prot="public">
           <name>MSG_DISK_EJECT</name>
           <briefdescription>
+<para>A disk has been ejected. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -422,6 +467,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba2254429633d74f465c26f6f72ecf3a6d" prot="public">
           <name>MSG_DISK_SAVED</name>
           <briefdescription>
+<para>The floppy drive contains a saved disk. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -429,6 +475,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba472eadd62c4716bf158521a635a25153" prot="public">
           <name>MSG_DISK_UNSAVED</name>
           <briefdescription>
+<para>The floppy drive contains an unsaved disk. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -436,6 +483,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba184125ad0fdbe4f528c667312481b845" prot="public">
           <name>MSG_DISK_PROTECT</name>
           <briefdescription>
+<para>The write protection status has changed. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -443,6 +491,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba96e0db358ce470edeaf8e950166d7a49" prot="public">
           <name>MSG_FILE_FLASHED</name>
           <briefdescription>
+<para>A file has been flashed into memory. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -450,6 +499,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba63c9f8d5975faaf72f35296b778a97fe" prot="public">
           <name>MSG_VC1530_CONNECT</name>
           <briefdescription>
+<para>A datasette has been connected or disconnected. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -457,6 +507,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac76626691016373c1316a76dd99d561e" prot="public">
           <name>MSG_VC1530_TAPE</name>
           <briefdescription>
+<para>A tape has been inserted or ejected. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -464,6 +515,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba9061902c86cb3a76e532c4162b24a30f" prot="public">
           <name>MSG_VC1530_PLAY</name>
           <briefdescription>
+<para>The play key has been pressed. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -471,6 +523,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba42f2cb3022cffead0b3df46d83278c43" prot="public">
           <name>MSG_VC1530_MOTOR</name>
           <briefdescription>
+<para>The drive motor has started or stopped. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -478,6 +531,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba5a3e8a30eb9567a51ef0be850c601964" prot="public">
           <name>MSG_VC1530_COUNTER</name>
           <briefdescription>
+<para>The tape counter has stepped. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -485,6 +539,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba5cf180e4d4b5f8e8f085f66e2a506ea3" prot="public">
           <name>MSG_CRT_ATTACHED</name>
           <briefdescription>
+<para>A cartridge has been plugged into the expansion port. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -492,6 +547,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba5f58705aebe08870b67400c6064200fc" prot="public">
           <name>MSG_KB_AUTO_PRESS</name>
           <briefdescription>
+<para>The auto-typing daemon has pressed a key. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -499,6 +555,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baf29f487f3574e58367a2fc55f0a06c36" prot="public">
           <name>MSG_KB_AUTO_RELEASE</name>
           <briefdescription>
+<para>The auto-typing daemon has released a key. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -506,6 +563,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba8abf7e47fb0c036bbf491be50146319c" prot="public">
           <name>MSG_SHAKING</name>
           <briefdescription>
+<para>A shaking mouse has been detected. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -513,6 +571,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac2b3d245154652064c5c8c03fd5d20cd" prot="public">
           <name>MSG_AUTO_SNAPSHOT_TAKEN</name>
           <briefdescription>
+<para>A snapshot has been taken (auto snapshot) </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -520,6 +579,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baefc990ae4f843de5b787d2c1e2943d1d" prot="public">
           <name>MSG_USER_SNAPSHOT_TAKEN</name>
           <briefdescription>
+<para>A snapshot has been taken (user snapshot) </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -527,6 +587,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba5d759e1721fc70f681ba9e99d1ac5791" prot="public">
           <name>MSG_SNAPSHOT_RESTORED</name>
           <briefdescription>
+<para>A snapshot has been restored. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -534,6 +595,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba40515090334b8adcf080ab96216896f4" prot="public">
           <name>MSG_RECORDING_STARTED</name>
           <briefdescription>
+<para>The screen recorder has started. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -541,6 +603,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba2b6f215428af049e25a379996d8bdaa0" prot="public">
           <name>MSG_RECORDING_STOPPED</name>
           <briefdescription>
+<para>The screen recorder has stopped. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -548,6 +611,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac3e694f804f4e02dc8b2803c2636f8b5" prot="public">
           <name>MSG_RECORDING_ABORTED</name>
           <briefdescription>
+<para>Screen recording has been aborted. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -555,6 +619,7 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba652e19f4e085397b02f09e1734668ebb" prot="public">
           <name>MSG_DMA_DEBUG</name>
           <briefdescription>
+<para>The DMA debugger has been started or stopped. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -562,22 +627,24 @@
         <enumvalue id="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bafcde3912e1e5f1e8b0a48ebd9068934b" prot="public">
           <name>MSG_ALARM</name>
           <briefdescription>
+<para>A user-set alarm event has fired. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
         </enumvalue>
         <briefdescription>
+<para>! Emulator message </para>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="22" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="23" bodyend="120"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="24" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="25" bodyend="122"/>
       </memberdef>
     </sectiondef>
     <sectiondef kind="typedef">
       <memberdef kind="typedef" id="_msg_queue_types_8h_1a3d83bd345fa99277581ea44dcb4a3256" prot="public" static="no">
-        <type>MSG_TYPE</type>
+        <type><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25b" kindref="member">MSG_TYPE</ref></type>
         <definition>typedef MSG_TYPE MsgType</definition>
         <argsstring></argsstring>
         <name>MsgType</name>
@@ -587,7 +654,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="121" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="121" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="123" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="123" bodyend="-1"/>
       </memberdef>
       <memberdef kind="typedef" id="_msg_queue_types_8h_1a00db60e0d888df7bd903f501b2ce6fc7" prot="public" static="no">
         <type>void</type>
@@ -600,7 +667,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="249" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="249" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="250" column="14" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="250" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -618,245 +685,244 @@
 <codeline lineno="8"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>-<sp/>The<sp/>Mozilla<sp/>Public<sp/>License<sp/>v2</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="9"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="10"><highlight class="normal"></highlight><highlight class="comment">//<sp/>SPDX-License-Identifier:<sp/>GPL-3.0-or-later<sp/>OR<sp/>MPL-2.0</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="11"><highlight class="normal"></highlight><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="12"><highlight class="normal"></highlight></codeline>
-<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="14"><highlight class="normal"></highlight></codeline>
-<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Aliases.h&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Reflection.h&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="17"><highlight class="normal"></highlight></codeline>
-<codeline lineno="18"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="19"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Enumerations</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="20"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="21"><highlight class="normal"></highlight></codeline>
-<codeline lineno="22"><highlight class="normal">enum_long(MSG_TYPE)</highlight></codeline>
-<codeline lineno="23"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_NONE<sp/>=<sp/>0,</highlight></codeline>
-<codeline lineno="25"><highlight class="normal"></highlight></codeline>
-<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Emulator<sp/>state</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_CONFIG,</highlight></codeline>
-<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_POWER,</highlight></codeline>
-<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_RUN,</highlight></codeline>
-<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_PAUSE,</highlight></codeline>
-<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_STEP,</highlight></codeline>
-<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_RESET,</highlight></codeline>
-<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_SHUTDOWN,</highlight></codeline>
-<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_ABORT,</highlight></codeline>
-<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_WARP,</highlight></codeline>
-<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_TRACK,</highlight></codeline>
-<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_MUTE,</highlight></codeline>
-<codeline lineno="38"><highlight class="normal"></highlight></codeline>
-<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Retro<sp/>shell</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_CONSOLE_CLOSE,</highlight></codeline>
-<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_CONSOLE_UPDATE,</highlight></codeline>
-<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_CONSOLE_DEBUGGER,</highlight></codeline>
-<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_SCRIPT_DONE,</highlight></codeline>
-<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_SCRIPT_ABORT,</highlight></codeline>
-<codeline lineno="45"><highlight class="normal"></highlight></codeline>
-<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>ROMs</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_BASIC_ROM_LOADED,</highlight></codeline>
-<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_CHAR_ROM_LOADED,</highlight></codeline>
-<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_KERNAL_ROM_LOADED,</highlight></codeline>
-<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_DRIVE_ROM_LOADED,</highlight></codeline>
-<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_ROM_MISSING,</highlight></codeline>
-<codeline lineno="52"><highlight class="normal"></highlight></codeline>
-<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>CPU</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_CPU_JAMMED,</highlight></codeline>
-<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_CPU_JUMPED,</highlight></codeline>
-<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_BREAKPOINT_REACHED,</highlight></codeline>
-<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_WATCHPOINT_REACHED,</highlight></codeline>
-<codeline lineno="58"><highlight class="normal"></highlight></codeline>
-<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>VIC</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_PAL,</highlight></codeline>
-<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_NTSC,</highlight></codeline>
-<codeline lineno="62"><highlight class="normal"></highlight></codeline>
-<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>IEC<sp/>Bus</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_IEC_BUS_BUSY,</highlight></codeline>
-<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_IEC_BUS_IDLE,</highlight></codeline>
-<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Floppy<sp/>drives</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_DRIVE_CONNECT,</highlight></codeline>
-<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_DRIVE_DISCONNECT,</highlight></codeline>
-<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_DRIVE_POWER_ON,</highlight></codeline>
-<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_DRIVE_POWER_OFF,</highlight></codeline>
-<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_DRIVE_POWER_SAVE_ON,</highlight></codeline>
-<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_DRIVE_POWER_SAVE_OFF,</highlight></codeline>
-<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_DRIVE_READ,</highlight></codeline>
-<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_DRIVE_WRITE,</highlight></codeline>
-<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_DRIVE_LED_ON,</highlight></codeline>
-<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_DRIVE_LED_OFF,</highlight></codeline>
-<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_DRIVE_MOTOR_ON,</highlight></codeline>
-<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_DRIVE_MOTOR_OFF,</highlight></codeline>
-<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_DRIVE_STEP,</highlight></codeline>
-<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_DISK_INSERT,</highlight></codeline>
-<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_DISK_EJECT,</highlight></codeline>
-<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_DISK_SAVED,</highlight></codeline>
-<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_DISK_UNSAVED,</highlight></codeline>
-<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_DISK_PROTECT,</highlight></codeline>
-<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_FILE_FLASHED,</highlight></codeline>
-<codeline lineno="87"><highlight class="normal"></highlight></codeline>
-<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Peripherals<sp/>(Datasette)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_VC1530_CONNECT,</highlight></codeline>
-<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_VC1530_TAPE,</highlight></codeline>
-<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_VC1530_PLAY,</highlight></codeline>
-<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_VC1530_MOTOR,</highlight></codeline>
-<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_VC1530_COUNTER,</highlight></codeline>
-<codeline lineno="94"><highlight class="normal"></highlight></codeline>
-<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Peripherals<sp/>(Expansion<sp/>port)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_CRT_ATTACHED,</highlight></codeline>
-<codeline lineno="97"><highlight class="normal"></highlight></codeline>
-<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Peripherals<sp/>(Keyboard)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_KB_AUTO_PRESS,</highlight></codeline>
-<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_KB_AUTO_RELEASE,</highlight></codeline>
-<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Peripherals<sp/>(Mouse)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_SHAKING,</highlight></codeline>
-<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Snapshots</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_AUTO_SNAPSHOT_TAKEN,</highlight></codeline>
-<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_USER_SNAPSHOT_TAKEN,</highlight></codeline>
-<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_SNAPSHOT_RESTORED,</highlight></codeline>
-<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Screen<sp/>recording</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_RECORDING_STARTED,</highlight></codeline>
-<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_RECORDING_STOPPED,</highlight></codeline>
-<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_RECORDING_ABORTED,</highlight></codeline>
-<codeline lineno="114"><highlight class="normal"></highlight></codeline>
-<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Debugging</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_DMA_DEBUG,</highlight></codeline>
-<codeline lineno="117"><highlight class="normal"></highlight></codeline>
-<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Scheduled<sp/>alarms</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/>MSG_ALARM</highlight></codeline>
-<codeline lineno="120"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="121"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>MSG_TYPE<sp/>MsgType;</highlight></codeline>
-<codeline lineno="122"><highlight class="normal"></highlight></codeline>
-<codeline lineno="123"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="124"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">MsgTypeEnum<sp/>:<sp/>util::Reflection&lt;MsgType,<sp/>MsgType&gt;<sp/>{</highlight></codeline>
-<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>minVal<sp/>=<sp/>0;</highlight></codeline>
-<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>maxVal<sp/>=<sp/>MSG_ALARM;</highlight></codeline>
-<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>isValid(</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>value)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>value<sp/>&gt;=<sp/>minVal<sp/>&amp;&amp;<sp/>value<sp/>&lt;=<sp/>maxVal;<sp/>}</highlight></codeline>
-<codeline lineno="129"><highlight class="normal"></highlight></codeline>
-<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*prefix()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;MSG&quot;</highlight><highlight class="normal">;<sp/>}</highlight></codeline>
-<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*key(MsgType<sp/>value)</highlight></codeline>
-<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
-<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(value)<sp/>{</highlight></codeline>
-<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_NONE:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;NONE&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="136"><highlight class="normal"></highlight></codeline>
-<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_CONFIG:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CONFIG&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_POWER:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;POWER&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_RUN:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RUN&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_PAUSE:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PAUSE&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_RESET:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RESET&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_SHUTDOWN:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SHUTDOWN&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_ABORT:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ABORT&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_WARP:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;WARP&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_TRACK:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;TRACK&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_MUTE:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;MUTE&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="147"><highlight class="normal"></highlight></codeline>
-<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_CONSOLE_CLOSE:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CONSOLE_CLOSE&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_CONSOLE_UPDATE:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CONSOLE_UPDATE&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_CONSOLE_DEBUGGER:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CONSOLE_DEBUGGER&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_SCRIPT_DONE:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SCRIPT_DONE&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_SCRIPT_ABORT:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SCRIPT_ABORT&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="153"><highlight class="normal"></highlight></codeline>
-<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_BASIC_ROM_LOADED:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;BASIC_ROM_LOADED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_CHAR_ROM_LOADED:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CHAR_ROM_LOADED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_KERNAL_ROM_LOADED:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;KERNAL_ROM_LOADED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_DRIVE_ROM_LOADED:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_ROM_LOADED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_ROM_MISSING:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ROM_MISSING&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_CPU_JAMMED:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CPU_JAMMED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_BREAKPOINT_REACHED:<sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;BREAKPOINT_REACHED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_WATCHPOINT_REACHED:<sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;WATCHPOINT_REACHED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_PAL:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PAL&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_NTSC:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;NTSC&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_IEC_BUS_BUSY:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;IEC_BUS_BUSY&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_IEC_BUS_IDLE:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;IEC_BUS_IDLE&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_DRIVE_CONNECT:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_CONNECT&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_DRIVE_DISCONNECT:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_DISCONNECT&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_DRIVE_POWER_ON:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_POWER_ON&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_DRIVE_POWER_OFF:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_POWER_OFF&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_DRIVE_POWER_SAVE_ON:<sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_POWER_SAVE_ON&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_DRIVE_POWER_SAVE_OFF:<sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_POWER_SAVE_OFF&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_DRIVE_READ:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_READ&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_DRIVE_WRITE:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_WRITE&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_DRIVE_LED_ON:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_LED_ON&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_DRIVE_LED_OFF:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_LED_OFF&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_DRIVE_MOTOR_ON:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_MOTOR_ON&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_DRIVE_MOTOR_OFF:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_MOTOR_OFF&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_DRIVE_STEP:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_STEP&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_DISK_INSERT:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DISK_INSERT&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_DISK_EJECT:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DISK_EJECT&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_DISK_SAVED:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DISK_SAVED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_DISK_UNSAVED:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DISK_UNSAVED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_DISK_PROTECT:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DISK_PROTECT&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_FILE_FLASHED:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILE_FLASHED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="189"><highlight class="normal"></highlight></codeline>
-<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_VC1530_CONNECT:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;VC1530_CONNECT&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_VC1530_TAPE:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;VC1530_TAPE&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_VC1530_PLAY:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;VC1530_PLAY&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_VC1530_MOTOR:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;VC1530_MOTOR&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_VC1530_COUNTER:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;VC1530_COUNTER&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_CRT_ATTACHED:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CRT_ATTACHED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_KB_AUTO_PRESS:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;KB_AUTO_PRESS&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="199"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_KB_AUTO_RELEASE:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;KB_AUTO_RELEASE&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="200"><highlight class="normal"></highlight></codeline>
-<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_SHAKING:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SHAKING&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="203"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_AUTO_SNAPSHOT_TAKEN:<sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;AUTO_SNAPSHOT_TAKEN&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="204"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_USER_SNAPSHOT_TAKEN:<sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;USER_SNAPSHOT_TAKEN&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="205"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_SNAPSHOT_RESTORED:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SNAPSHOT_RESTORED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="206"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="207"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_RECORDING_STARTED:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RECORDING_STARTED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="208"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_RECORDING_STOPPED:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RECORDING_STOPPED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="209"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_RECORDING_ABORTED:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RECORDING_ABORTED&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="210"><highlight class="normal"></highlight></codeline>
-<codeline lineno="211"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_DMA_DEBUG:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DMA_DEBUG&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="212"><highlight class="normal"></highlight></codeline>
-<codeline lineno="213"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MSG_ALARM:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ALARM&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="214"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="215"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;???&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="216"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="217"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="218"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="219"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Aliases.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Reflection.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Enumerations</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25b" refkind="member"><highlight class="normal">enum_long(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25b" kindref="member">MSG_TYPE</ref>)</highlight></codeline>
+<codeline lineno="25"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="26" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba40e71b65f54da2ea5d97c37e720346b1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba40e71b65f54da2ea5d97c37e720346b1" kindref="member">MSG_NONE</ref><sp/>=<sp/>0,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Emulator<sp/>state</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baa76f18ac4fd6e013a62d7ac04fba4edf" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baa76f18ac4fd6e013a62d7ac04fba4edf" kindref="member">MSG_CONFIG</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="30" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baec73dd1957fd94c8cde729186480fa5c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baec73dd1957fd94c8cde729186480fa5c" kindref="member">MSG_POWER</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="31" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bae868897e5cee1df30873d828256a4d77" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bae868897e5cee1df30873d828256a4d77" kindref="member">MSG_RUN</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="32" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba1b44e026389fb3b26434f3d74b3b6e7e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba1b44e026389fb3b26434f3d74b3b6e7e" kindref="member">MSG_PAUSE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="33" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba86cdd34af78d2cbeb91299d3d9f2c360" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba86cdd34af78d2cbeb91299d3d9f2c360" kindref="member">MSG_STEP</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="34" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba66a2805e00d510437311c54dfcf010b6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba66a2805e00d510437311c54dfcf010b6" kindref="member">MSG_RESET</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="35" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba621b8f7f84a5fe2cbb10c08ce2c58ff3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba621b8f7f84a5fe2cbb10c08ce2c58ff3" kindref="member">MSG_SHUTDOWN</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="36" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bab5a09c07a9ce6862250f18e81ed80d3f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bab5a09c07a9ce6862250f18e81ed80d3f" kindref="member">MSG_ABORT</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="37" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba22374907c62cce9e112ec43cd6fb7b0e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba22374907c62cce9e112ec43cd6fb7b0e" kindref="member">MSG_WARP</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="38" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baffcad1d28fd3ec4302fa1fc157bc73aa" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baffcad1d28fd3ec4302fa1fc157bc73aa" kindref="member">MSG_TRACK</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="39" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bace9f16f3e50f0d17c0a02191b82c0a2c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bace9f16f3e50f0d17c0a02191b82c0a2c" kindref="member">MSG_MUTE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Retro<sp/>shell</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba262afa148b59fd1f0843949cb3cae8cf" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba262afa148b59fd1f0843949cb3cae8cf" kindref="member">MSG_CONSOLE_CLOSE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="43" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba3a4a8450bdeeb6864ea81a49d04557f4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba3a4a8450bdeeb6864ea81a49d04557f4" kindref="member">MSG_CONSOLE_UPDATE</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="44" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba77a07987640c4e81b300be38becd2b5d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba77a07987640c4e81b300be38becd2b5d" kindref="member">MSG_CONSOLE_DEBUGGER</ref>,<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="45" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baa4d10009296b03ca20e5e0782de8bcbd" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baa4d10009296b03ca20e5e0782de8bcbd" kindref="member">MSG_SCRIPT_DONE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="46" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bacfb923a604b38a3581f9df2e17f31a86" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bacfb923a604b38a3581f9df2e17f31a86" kindref="member">MSG_SCRIPT_ABORT</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>ROMs</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba2522aa8b55849618404362e794e66614" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba2522aa8b55849618404362e794e66614" kindref="member">MSG_ROM_MISSING</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="50" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba54eb386fc6dc685fbfcb1bcd6f1a0514" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba54eb386fc6dc685fbfcb1bcd6f1a0514" kindref="member">MSG_BASIC_ROM_LOADED</ref>,<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="51" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba49a97dc2eefc7e1a23cb479fd071532b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba49a97dc2eefc7e1a23cb479fd071532b" kindref="member">MSG_CHAR_ROM_LOADED</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="52" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba41c7e29f283e38f5207e447c82b28de3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba41c7e29f283e38f5207e447c82b28de3" kindref="member">MSG_KERNAL_ROM_LOADED</ref>,<sp/><sp/></highlight></codeline>
+<codeline lineno="53" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bad82084a3c105f29495e03e98b8192637" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bad82084a3c105f29495e03e98b8192637" kindref="member">MSG_DRIVE_ROM_LOADED</ref>,<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>CPU</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba8c193db10f35e9453d0b41c238fc31a7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba8c193db10f35e9453d0b41c238fc31a7" kindref="member">MSG_CPU_JAMMED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="57" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba8601eda9cfe0b03211b41a146cfa21a2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba8601eda9cfe0b03211b41a146cfa21a2" kindref="member">MSG_CPU_JUMPED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="58" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baa69769d77f682ba101215104460fe1b9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baa69769d77f682ba101215104460fe1b9" kindref="member">MSG_BREAKPOINT_REACHED</ref>,<sp/></highlight></codeline>
+<codeline lineno="59" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba09717b122df319863b8176e201167bda" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba09717b122df319863b8176e201167bda" kindref="member">MSG_WATCHPOINT_REACHED</ref>,<sp/></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>VIC</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bab7e30ed8c854a6ab53e757b6007d71bf" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bab7e30ed8c854a6ab53e757b6007d71bf" kindref="member">MSG_PAL</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="63" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baa0bb0c451712258f42ef5c26d9509918" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baa0bb0c451712258f42ef5c26d9509918" kindref="member">MSG_NTSC</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>IEC<sp/>Bus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac623cc7b2383f7b19548f21076acb4ac" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac623cc7b2383f7b19548f21076acb4ac" kindref="member">MSG_IEC_BUS_BUSY</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="67" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba77a7c08e806359e8fb74753b040bae4c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba77a7c08e806359e8fb74753b040bae4c" kindref="member">MSG_IEC_BUS_IDLE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Floppy<sp/>drives</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baf613d4432782de9459706b8d3aa05933" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baf613d4432782de9459706b8d3aa05933" kindref="member">MSG_DRIVE_CONNECT</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="71" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bab303b79cc5c99d4c6532d895fca481f1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bab303b79cc5c99d4c6532d895fca481f1" kindref="member">MSG_DRIVE_DISCONNECT</ref>,<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="72" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bab57a7a4eea6ce8e25030e16017fc0122" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bab57a7a4eea6ce8e25030e16017fc0122" kindref="member">MSG_DRIVE_POWER_ON</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="73" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba53fd751f1e173f6c45ab2a7ddd433220" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba53fd751f1e173f6c45ab2a7ddd433220" kindref="member">MSG_DRIVE_POWER_OFF</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="74" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bae98a227565064885e1a5389b88c04e18" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bae98a227565064885e1a5389b88c04e18" kindref="member">MSG_DRIVE_POWER_SAVE_ON</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="75" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba52562262a0e29ed1fc1938c52add6706" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba52562262a0e29ed1fc1938c52add6706" kindref="member">MSG_DRIVE_POWER_SAVE_OFF</ref>,<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="76" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba48b07144cb8afcc6b110410c7981cb53" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba48b07144cb8afcc6b110410c7981cb53" kindref="member">MSG_DRIVE_READ</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="77" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bae18265e2cbc5c26861d0eea81fbee6a9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bae18265e2cbc5c26861d0eea81fbee6a9" kindref="member">MSG_DRIVE_WRITE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="78" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba22b40799c770ffdf3d25d7afa18e1a59" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba22b40799c770ffdf3d25d7afa18e1a59" kindref="member">MSG_DRIVE_LED_ON</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="79" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baea180b57ba6610eccd18e11ead4dee8b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baea180b57ba6610eccd18e11ead4dee8b" kindref="member">MSG_DRIVE_LED_OFF</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="80" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baba8fdd226c88062ec60620849a2e4296" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baba8fdd226c88062ec60620849a2e4296" kindref="member">MSG_DRIVE_MOTOR_ON</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="81" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bad2777aa5f678d740d959905fdda757f1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bad2777aa5f678d740d959905fdda757f1" kindref="member">MSG_DRIVE_MOTOR_OFF</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="82" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba92d63f973c2a5ba8d7b33b2f29044493" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba92d63f973c2a5ba8d7b33b2f29044493" kindref="member">MSG_DRIVE_STEP</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="83" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baabb1071ba56ef61e7368ab7f062693c0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baabb1071ba56ef61e7368ab7f062693c0" kindref="member">MSG_DISK_INSERT</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="84" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba9e8a5fa167cc5b5f06cade241c31b55c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba9e8a5fa167cc5b5f06cade241c31b55c" kindref="member">MSG_DISK_EJECT</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="85" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba2254429633d74f465c26f6f72ecf3a6d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba2254429633d74f465c26f6f72ecf3a6d" kindref="member">MSG_DISK_SAVED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="86" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba472eadd62c4716bf158521a635a25153" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba472eadd62c4716bf158521a635a25153" kindref="member">MSG_DISK_UNSAVED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="87" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba184125ad0fdbe4f528c667312481b845" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba184125ad0fdbe4f528c667312481b845" kindref="member">MSG_DISK_PROTECT</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="88" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba96e0db358ce470edeaf8e950166d7a49" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba96e0db358ce470edeaf8e950166d7a49" kindref="member">MSG_FILE_FLASHED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Peripherals<sp/>(Datasette)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba63c9f8d5975faaf72f35296b778a97fe" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba63c9f8d5975faaf72f35296b778a97fe" kindref="member">MSG_VC1530_CONNECT</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="92" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac76626691016373c1316a76dd99d561e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac76626691016373c1316a76dd99d561e" kindref="member">MSG_VC1530_TAPE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="93" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba9061902c86cb3a76e532c4162b24a30f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba9061902c86cb3a76e532c4162b24a30f" kindref="member">MSG_VC1530_PLAY</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="94" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba42f2cb3022cffead0b3df46d83278c43" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba42f2cb3022cffead0b3df46d83278c43" kindref="member">MSG_VC1530_MOTOR</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="95" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba5a3e8a30eb9567a51ef0be850c601964" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba5a3e8a30eb9567a51ef0be850c601964" kindref="member">MSG_VC1530_COUNTER</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Peripherals<sp/>(Expansion<sp/>port)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba5cf180e4d4b5f8e8f085f66e2a506ea3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba5cf180e4d4b5f8e8f085f66e2a506ea3" kindref="member">MSG_CRT_ATTACHED</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Peripherals<sp/>(Keyboard)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba5f58705aebe08870b67400c6064200fc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba5f58705aebe08870b67400c6064200fc" kindref="member">MSG_KB_AUTO_PRESS</ref>,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="102" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baf29f487f3574e58367a2fc55f0a06c36" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baf29f487f3574e58367a2fc55f0a06c36" kindref="member">MSG_KB_AUTO_RELEASE</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Peripherals<sp/>(Mouse)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="105" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba8abf7e47fb0c036bbf491be50146319c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba8abf7e47fb0c036bbf491be50146319c" kindref="member">MSG_SHAKING</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Snapshots</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac2b3d245154652064c5c8c03fd5d20cd" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac2b3d245154652064c5c8c03fd5d20cd" kindref="member">MSG_AUTO_SNAPSHOT_TAKEN</ref>,<sp/><sp/></highlight></codeline>
+<codeline lineno="109" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baefc990ae4f843de5b787d2c1e2943d1d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baefc990ae4f843de5b787d2c1e2943d1d" kindref="member">MSG_USER_SNAPSHOT_TAKEN</ref>,<sp/><sp/></highlight></codeline>
+<codeline lineno="110" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba5d759e1721fc70f681ba9e99d1ac5791" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba5d759e1721fc70f681ba9e99d1ac5791" kindref="member">MSG_SNAPSHOT_RESTORED</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Screen<sp/>recording</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="113" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba40515090334b8adcf080ab96216896f4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba40515090334b8adcf080ab96216896f4" kindref="member">MSG_RECORDING_STARTED</ref>,<sp/><sp/></highlight></codeline>
+<codeline lineno="114" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba2b6f215428af049e25a379996d8bdaa0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba2b6f215428af049e25a379996d8bdaa0" kindref="member">MSG_RECORDING_STOPPED</ref>,<sp/><sp/></highlight></codeline>
+<codeline lineno="115" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac3e694f804f4e02dc8b2803c2636f8b5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac3e694f804f4e02dc8b2803c2636f8b5" kindref="member">MSG_RECORDING_ABORTED</ref>,<sp/><sp/></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Debugging</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="118" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba652e19f4e085397b02f09e1734668ebb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba652e19f4e085397b02f09e1734668ebb" kindref="member">MSG_DMA_DEBUG</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Scheduled<sp/>alarms</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bafcde3912e1e5f1e8b0a48ebd9068934b" kindref="member">MSG_ALARM</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="122" refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bafcde3912e1e5f1e8b0a48ebd9068934b" refkind="member"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25b" kindref="member">MSG_TYPE</ref><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25b" kindref="member">MsgType</ref>;</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">MsgTypeEnum<sp/>:<sp/>util::Reflection&lt;MsgType,<sp/>MsgType&gt;<sp/>{</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>minVal<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>maxVal<sp/>=<sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bafcde3912e1e5f1e8b0a48ebd9068934b" kindref="member">MSG_ALARM</ref>;</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>isValid(</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>value)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>value<sp/>&gt;=<sp/>minVal<sp/>&amp;&amp;<sp/>value<sp/>&lt;=<sp/>maxVal;<sp/>}</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*prefix()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;MSG&quot;</highlight><highlight class="normal">;<sp/>}</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*key(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25b" kindref="member">MsgType</ref><sp/>value)</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(value)<sp/>{</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba40e71b65f54da2ea5d97c37e720346b1" kindref="member">MSG_NONE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;NONE&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baa76f18ac4fd6e013a62d7ac04fba4edf" kindref="member">MSG_CONFIG</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CONFIG&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baec73dd1957fd94c8cde729186480fa5c" kindref="member">MSG_POWER</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;POWER&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bae868897e5cee1df30873d828256a4d77" kindref="member">MSG_RUN</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RUN&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba1b44e026389fb3b26434f3d74b3b6e7e" kindref="member">MSG_PAUSE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PAUSE&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba66a2805e00d510437311c54dfcf010b6" kindref="member">MSG_RESET</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RESET&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba621b8f7f84a5fe2cbb10c08ce2c58ff3" kindref="member">MSG_SHUTDOWN</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SHUTDOWN&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bab5a09c07a9ce6862250f18e81ed80d3f" kindref="member">MSG_ABORT</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ABORT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba22374907c62cce9e112ec43cd6fb7b0e" kindref="member">MSG_WARP</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;WARP&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baffcad1d28fd3ec4302fa1fc157bc73aa" kindref="member">MSG_TRACK</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;TRACK&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bace9f16f3e50f0d17c0a02191b82c0a2c" kindref="member">MSG_MUTE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;MUTE&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba262afa148b59fd1f0843949cb3cae8cf" kindref="member">MSG_CONSOLE_CLOSE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CONSOLE_CLOSE&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba3a4a8450bdeeb6864ea81a49d04557f4" kindref="member">MSG_CONSOLE_UPDATE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CONSOLE_UPDATE&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba77a07987640c4e81b300be38becd2b5d" kindref="member">MSG_CONSOLE_DEBUGGER</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CONSOLE_DEBUGGER&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baa4d10009296b03ca20e5e0782de8bcbd" kindref="member">MSG_SCRIPT_DONE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SCRIPT_DONE&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bacfb923a604b38a3581f9df2e17f31a86" kindref="member">MSG_SCRIPT_ABORT</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SCRIPT_ABORT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba54eb386fc6dc685fbfcb1bcd6f1a0514" kindref="member">MSG_BASIC_ROM_LOADED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;BASIC_ROM_LOADED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba49a97dc2eefc7e1a23cb479fd071532b" kindref="member">MSG_CHAR_ROM_LOADED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CHAR_ROM_LOADED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba41c7e29f283e38f5207e447c82b28de3" kindref="member">MSG_KERNAL_ROM_LOADED</ref>:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;KERNAL_ROM_LOADED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bad82084a3c105f29495e03e98b8192637" kindref="member">MSG_DRIVE_ROM_LOADED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_ROM_LOADED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"></highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba8c193db10f35e9453d0b41c238fc31a7" kindref="member">MSG_CPU_JAMMED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CPU_JAMMED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baa69769d77f682ba101215104460fe1b9" kindref="member">MSG_BREAKPOINT_REACHED</ref>:<sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;BREAKPOINT_REACHED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba09717b122df319863b8176e201167bda" kindref="member">MSG_WATCHPOINT_REACHED</ref>:<sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;WATCHPOINT_REACHED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bab7e30ed8c854a6ab53e757b6007d71bf" kindref="member">MSG_PAL</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PAL&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baa0bb0c451712258f42ef5c26d9509918" kindref="member">MSG_NTSC</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;NTSC&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac623cc7b2383f7b19548f21076acb4ac" kindref="member">MSG_IEC_BUS_BUSY</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;IEC_BUS_BUSY&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba77a7c08e806359e8fb74753b040bae4c" kindref="member">MSG_IEC_BUS_IDLE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;IEC_BUS_IDLE&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baf613d4432782de9459706b8d3aa05933" kindref="member">MSG_DRIVE_CONNECT</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_CONNECT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bab303b79cc5c99d4c6532d895fca481f1" kindref="member">MSG_DRIVE_DISCONNECT</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_DISCONNECT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bab57a7a4eea6ce8e25030e16017fc0122" kindref="member">MSG_DRIVE_POWER_ON</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_POWER_ON&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba53fd751f1e173f6c45ab2a7ddd433220" kindref="member">MSG_DRIVE_POWER_OFF</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_POWER_OFF&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bae98a227565064885e1a5389b88c04e18" kindref="member">MSG_DRIVE_POWER_SAVE_ON</ref>:<sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_POWER_SAVE_ON&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba52562262a0e29ed1fc1938c52add6706" kindref="member">MSG_DRIVE_POWER_SAVE_OFF</ref>:<sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_POWER_SAVE_OFF&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba48b07144cb8afcc6b110410c7981cb53" kindref="member">MSG_DRIVE_READ</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_READ&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bae18265e2cbc5c26861d0eea81fbee6a9" kindref="member">MSG_DRIVE_WRITE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_WRITE&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba22b40799c770ffdf3d25d7afa18e1a59" kindref="member">MSG_DRIVE_LED_ON</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_LED_ON&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baea180b57ba6610eccd18e11ead4dee8b" kindref="member">MSG_DRIVE_LED_OFF</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_LED_OFF&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baba8fdd226c88062ec60620849a2e4296" kindref="member">MSG_DRIVE_MOTOR_ON</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_MOTOR_ON&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bad2777aa5f678d740d959905fdda757f1" kindref="member">MSG_DRIVE_MOTOR_OFF</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_MOTOR_OFF&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba92d63f973c2a5ba8d7b33b2f29044493" kindref="member">MSG_DRIVE_STEP</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DRIVE_STEP&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baabb1071ba56ef61e7368ab7f062693c0" kindref="member">MSG_DISK_INSERT</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DISK_INSERT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba9e8a5fa167cc5b5f06cade241c31b55c" kindref="member">MSG_DISK_EJECT</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DISK_EJECT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba2254429633d74f465c26f6f72ecf3a6d" kindref="member">MSG_DISK_SAVED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DISK_SAVED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba472eadd62c4716bf158521a635a25153" kindref="member">MSG_DISK_UNSAVED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DISK_UNSAVED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba184125ad0fdbe4f528c667312481b845" kindref="member">MSG_DISK_PROTECT</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DISK_PROTECT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba96e0db358ce470edeaf8e950166d7a49" kindref="member">MSG_FILE_FLASHED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;FILE_FLASHED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba63c9f8d5975faaf72f35296b778a97fe" kindref="member">MSG_VC1530_CONNECT</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;VC1530_CONNECT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac76626691016373c1316a76dd99d561e" kindref="member">MSG_VC1530_TAPE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;VC1530_TAPE&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba9061902c86cb3a76e532c4162b24a30f" kindref="member">MSG_VC1530_PLAY</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;VC1530_PLAY&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba42f2cb3022cffead0b3df46d83278c43" kindref="member">MSG_VC1530_MOTOR</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;VC1530_MOTOR&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba5a3e8a30eb9567a51ef0be850c601964" kindref="member">MSG_VC1530_COUNTER</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;VC1530_COUNTER&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba5cf180e4d4b5f8e8f085f66e2a506ea3" kindref="member">MSG_CRT_ATTACHED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;CRT_ATTACHED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba5f58705aebe08870b67400c6064200fc" kindref="member">MSG_KB_AUTO_PRESS</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;KB_AUTO_PRESS&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baf29f487f3574e58367a2fc55f0a06c36" kindref="member">MSG_KB_AUTO_RELEASE</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;KB_AUTO_RELEASE&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"></highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba8abf7e47fb0c036bbf491be50146319c" kindref="member">MSG_SHAKING</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SHAKING&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac2b3d245154652064c5c8c03fd5d20cd" kindref="member">MSG_AUTO_SNAPSHOT_TAKEN</ref>:<sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;AUTO_SNAPSHOT_TAKEN&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baefc990ae4f843de5b787d2c1e2943d1d" kindref="member">MSG_USER_SNAPSHOT_TAKEN</ref>:<sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;USER_SNAPSHOT_TAKEN&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba5d759e1721fc70f681ba9e99d1ac5791" kindref="member">MSG_SNAPSHOT_RESTORED</ref>:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SNAPSHOT_RESTORED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="207"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba40515090334b8adcf080ab96216896f4" kindref="member">MSG_RECORDING_STARTED</ref>:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RECORDING_STARTED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba2b6f215428af049e25a379996d8bdaa0" kindref="member">MSG_RECORDING_STOPPED</ref>:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RECORDING_STOPPED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac3e694f804f4e02dc8b2803c2636f8b5" kindref="member">MSG_RECORDING_ABORTED</ref>:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RECORDING_ABORTED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"></highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba652e19f4e085397b02f09e1734668ebb" kindref="member">MSG_DMA_DEBUG</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;DMA_DEBUG&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"></highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bafcde3912e1e5f1e8b0a48ebd9068934b" kindref="member">MSG_ALARM</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;ALARM&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;???&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="218"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="220"><highlight class="normal"></highlight></codeline>
-<codeline lineno="221"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="222"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Structures</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="223"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="224"><highlight class="normal"></highlight></codeline>
-<codeline lineno="225"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{<sp/>u16<sp/>pc;<sp/>}<sp/>CpuMsg;</highlight></codeline>
-<codeline lineno="226"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{<sp/>i16<sp/>nr;<sp/>i16<sp/>value;<sp/>i16<sp/>volume;<sp/>i16<sp/>pan;<sp/>}<sp/>DriveMsg;</highlight></codeline>
-<codeline lineno="227"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{<sp/>isize<sp/>line;<sp/>i16<sp/>delay;<sp/>}<sp/>ScriptMsg;</highlight></codeline>
-<codeline lineno="228"><highlight class="normal"></highlight></codeline>
-<codeline lineno="229"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="230"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="231"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Header</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="232"><highlight class="normal"><sp/><sp/><sp/><sp/>MsgType<sp/>type;</highlight></codeline>
-<codeline lineno="233"><highlight class="normal"></highlight></codeline>
-<codeline lineno="234"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Payload</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal">{</highlight></codeline>
-<codeline lineno="236"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>i64<sp/>value;</highlight></codeline>
-<codeline lineno="237"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>CpuMsg<sp/>cpu;</highlight></codeline>
-<codeline lineno="238"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>DriveMsg<sp/>drive;</highlight></codeline>
-<codeline lineno="239"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ScriptMsg<sp/>script;</highlight></codeline>
-<codeline lineno="240"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
-<codeline lineno="241"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="242"><highlight class="normal">Message;</highlight></codeline>
-<codeline lineno="243"><highlight class="normal"></highlight></codeline>
+<codeline lineno="221"><highlight class="normal"></highlight></codeline>
+<codeline lineno="222"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="223"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Structures</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="224"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="225"><highlight class="normal"></highlight></codeline>
+<codeline lineno="226"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{<sp/>u16<sp/>pc;<sp/>}<sp/>CpuMsg;</highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{<sp/>i16<sp/>nr;<sp/>i16<sp/>value;<sp/>i16<sp/>volume;<sp/>i16<sp/>pan;<sp/>}<sp/>DriveMsg;</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{<sp/>isize<sp/>line;<sp/>i16<sp/>delay;<sp/>}<sp/>ScriptMsg;</highlight></codeline>
+<codeline lineno="229"><highlight class="normal"></highlight></codeline>
+<codeline lineno="230"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="231"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="232"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Header</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="233"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25b" kindref="member">MsgType</ref><sp/>type;</highlight></codeline>
+<codeline lineno="234"><highlight class="normal"></highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Payload</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="236"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="237"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>i64<sp/>value;</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>CpuMsg<sp/>cpu;</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>DriveMsg<sp/>drive;</highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ScriptMsg<sp/>script;</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="242"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="243"><highlight class="normal">Message;</highlight></codeline>
 <codeline lineno="244"><highlight class="normal"></highlight></codeline>
-<codeline lineno="245"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="246"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Signatures</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="247"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="248"><highlight class="normal"></highlight></codeline>
-<codeline lineno="249"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>Callback(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*,<sp/>Message);</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"></highlight></codeline>
+<codeline lineno="246"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="247"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Signatures</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="248"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="249"><highlight class="normal"></highlight></codeline>
+<codeline lineno="250"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>Callback(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*,<sp/>Message);</highlight></codeline>
     </programlisting>
     <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h"/>
   </compounddef>

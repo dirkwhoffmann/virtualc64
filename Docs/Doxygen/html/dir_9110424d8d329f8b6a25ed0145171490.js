@@ -15,7 +15,7 @@ var dir_9110424d8d329f8b6a25ed0145171490 =
     [ "Host.h", "_host_8h_source.html", null ],
     [ "Inspectable.h", "_inspectable_8h_source.html", null ],
     [ "MsgQueue.h", "_msg_queue_8h_source.html", null ],
-    [ "MsgQueueTypes.h", "_msg_queue_types_8h_source.html", null ],
+    [ "MsgQueueTypes.h", "_msg_queue_types_8h.html", "_msg_queue_types_8h" ],
     [ "Option.h", "_option_8h.html", null ],
     [ "OptionTypes.h", "_option_types_8h.html", "_option_types_8h" ],
     [ "Serializable.h", "_serializable_8h_source.html", null ],

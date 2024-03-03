@@ -138,7 +138,7 @@
       </node>
       <node id="58">
         <label>MsgQueueTypes.h</label>
-        <link refid="_msg_queue_types_8h_source"/>
+        <link refid="_msg_queue_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -232,7 +232,7 @@
       </node>
       <node id="68">
         <label>CartridgeTypes.h</label>
-        <link refid="_cartridge_types_8h_source"/>
+        <link refid="_cartridge_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -556,7 +556,7 @@
       </node>
       <node id="56">
         <label>C64Types.h</label>
-        <link refid="_c64_types_8h_source"/>
+        <link refid="_c64_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -576,7 +576,7 @@
       </node>
       <node id="116">
         <label>CIATypes.h</label>
-        <link refid="_c_i_a_types_8h_source"/>
+        <link refid="_c_i_a_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -692,7 +692,7 @@
       </node>
       <node id="18">
         <label>EmulatorTypes.h</label>
-        <link refid="_emulator_types_8h_source"/>
+        <link refid="_emulator_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -716,7 +716,7 @@
       </node>
       <node id="84">
         <label>ControlPortTypes.h</label>
-        <link refid="_control_port_types_8h_source"/>
+        <link refid="_control_port_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -736,7 +736,7 @@
       </node>
       <node id="64">
         <label>ExpansionPortTypes.h</label>
-        <link refid="_expansion_port_types_8h_source"/>
+        <link refid="_expansion_port_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -760,7 +760,7 @@
       </node>
       <node id="128">
         <label>PowerSupplyTypes.h</label>
-        <link refid="_power_supply_types_8h_source"/>
+        <link refid="_power_supply_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -776,7 +776,7 @@
       </node>
       <node id="53">
         <label>MemoryTypes.h</label>
-        <link refid="_memory_types_8h_source"/>
+        <link refid="_memory_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -834,7 +834,7 @@
       </node>
       <node id="97">
         <label>SIDTypes.h</label>
-        <link refid="_s_i_d_types_8h_source"/>
+        <link refid="_s_i_d_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -934,7 +934,7 @@
       </node>
       <node id="14">
         <label>BusTypes.h</label>
-        <link refid="_bus_types_8h_source"/>
+        <link refid="_bus_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -952,7 +952,7 @@
       </node>
       <node id="15">
         <label>DmaDebuggerTypes.h</label>
-        <link refid="_dma_debugger_types_8h_source"/>
+        <link refid="_dma_debugger_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1006,7 +1006,7 @@
       </node>
       <node id="5">
         <label>VICIITypes.h</label>
-        <link refid="_v_i_c_i_i_types_8h"/>
+        <link refid="_v_i_c_i_i_types_8h_source"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1062,7 +1062,7 @@
       </node>
       <node id="174">
         <label>FSTypes.h</label>
-        <link refid="_f_s_types_8h_source"/>
+        <link refid="_f_s_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1122,7 +1122,7 @@
       </node>
       <node id="72">
         <label>FileTypes.h</label>
-        <link refid="_file_types_8h_source"/>
+        <link refid="_file_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1240,7 +1240,7 @@
       </node>
       <node id="134">
         <label>RetroShellTypes.h</label>
-        <link refid="_retro_shell_types_8h_source"/>
+        <link refid="_retro_shell_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1276,7 +1276,7 @@
       </node>
       <node id="180">
         <label>DatasetteTypes.h</label>
-        <link refid="_datasette_types_8h_source"/>
+        <link refid="_datasette_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1358,7 +1358,7 @@
       </node>
       <node id="93">
         <label>DriveTypes.h</label>
-        <link refid="_drive_types_8h_source"/>
+        <link refid="_drive_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1384,7 +1384,7 @@
       </node>
       <node id="94">
         <label>ParCableTypes.h</label>
-        <link refid="_par_cable_types_8h_source"/>
+        <link refid="_par_cable_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1406,7 +1406,7 @@
       </node>
       <node id="66">
         <label>JoystickTypes.h</label>
-        <link refid="_joystick_types_8h_source"/>
+        <link refid="_joystick_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1466,7 +1466,7 @@
       </node>
       <node id="87">
         <label>MouseTypes.h</label>
-        <link refid="_mouse_types_8h_source"/>
+        <link refid="_mouse_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1703,7 +1703,7 @@
 <codeline lineno="17"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">vc64<sp/>{</highlight></codeline>
 <codeline lineno="18"><highlight class="normal"></highlight></codeline>
 <codeline lineno="19"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="20"><highlight class="normal">VICII::initFuncTable(<ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44" kindref="member">VICIIRevision</ref><sp/>revision)</highlight></codeline>
+<codeline lineno="20"><highlight class="normal">VICII::initFuncTable(VICIIRevision<sp/>revision)</highlight></codeline>
 <codeline lineno="21"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/>initFuncTable(revision,<sp/>0);</highlight></codeline>
 <codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/>initFuncTable(revision,<sp/>DEBUG_CYCLE);</highlight></codeline>
@@ -1711,22 +1711,22 @@
 <codeline lineno="25"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="26"><highlight class="normal"></highlight></codeline>
 <codeline lineno="27"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="28"><highlight class="normal">VICII::initFuncTable(<ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44" kindref="member">VICIIRevision</ref><sp/>revision,<sp/>u16<sp/>flags)</highlight></codeline>
+<codeline lineno="28"><highlight class="normal">VICII::initFuncTable(VICIIRevision<sp/>revision,<sp/>u16<sp/>flags)</highlight></codeline>
 <codeline lineno="29"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>*table<sp/>=<sp/>functable[revision][flags];</highlight></codeline>
 <codeline lineno="31"><highlight class="normal"></highlight></codeline>
 <codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(revision)<sp/>{</highlight></codeline>
 <codeline lineno="33"><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44ac7e437a81800809d00fac037aeafbcef" kindref="member">VICII_PAL_6569_R1</ref>:</highlight></codeline>
-<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44adc3bee104de1d168495740b13aadb8e1" kindref="member">VICII_PAL_6569_R3</ref>:</highlight></codeline>
-<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44a898cc57c38b191c5f894c31a9acbf565" kindref="member">VICII_PAL_8565</ref>:</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>VICII_PAL_6569_R1:</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>VICII_PAL_6569_R3:</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>VICII_PAL_8565:</highlight></codeline>
 <codeline lineno="37"><highlight class="normal"></highlight></codeline>
 <codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(isize<sp/>i<sp/>=<sp/>1;<sp/>i<sp/>&lt;=<sp/>63;<sp/>i++)<sp/>{</highlight></codeline>
 <codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>table[i]<sp/>=<sp/>getViciiFunc(PAL_CYCLE<sp/>|<sp/>flags,<sp/>i);</highlight></codeline>
 <codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="42"><highlight class="normal"></highlight></codeline>
-<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44a448c631f7ce74b9f6d2acdd2c060a0e1" kindref="member">VICII_NTSC_6567_R56A</ref>:</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>VICII_NTSC_6567_R56A:</highlight></codeline>
 <codeline lineno="44"><highlight class="normal"></highlight></codeline>
 <codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(isize<sp/>i<sp/>=<sp/>1;<sp/>i<sp/>&lt;=<sp/>11;<sp/>i++)<sp/>{</highlight></codeline>
 <codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>table[i]<sp/>=<sp/>getViciiFunc(PAL_CYCLE<sp/>|<sp/>flags,<sp/>i);</highlight></codeline>
@@ -1736,8 +1736,8 @@
 <codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="52"><highlight class="normal"></highlight></codeline>
-<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44ab9bb6be4ede8b2ea0cc7f84aef15c0d3" kindref="member">VICII_NTSC_6567</ref>:</highlight></codeline>
-<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44a57afb637b596f3e0175e2c101da21c64" kindref="member">VICII_NTSC_8562</ref>:</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>VICII_NTSC_6567:</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>VICII_NTSC_8562:</highlight></codeline>
 <codeline lineno="55"><highlight class="normal"></highlight></codeline>
 <codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(isize<sp/>i<sp/>=<sp/>1;<sp/>i<sp/>&lt;=<sp/>65;<sp/>i++)<sp/>{</highlight></codeline>
 <codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>table[i]<sp/>=<sp/>getViciiFunc(flags,<sp/>i);</highlight></codeline>

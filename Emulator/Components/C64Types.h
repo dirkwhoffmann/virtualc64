@@ -9,6 +9,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -20,14 +21,15 @@
 // Enumerations
 //
 
+/// C64 model
 enum_long(C64_MODEL)
 {
-    C64_MODEL_PAL,
-    C64_MODEL_PAL_II,
-    C64_MODEL_PAL_OLD,
-    C64_MODEL_NTSC,
-    C64_MODEL_NTSC_II,
-    C64_MODEL_NTSC_OLD
+    C64_MODEL_PAL,      ///< C64 (PAL)
+    C64_MODEL_PAL_II,   ///< C64 II (PAL)
+    C64_MODEL_PAL_OLD,  ///< Early C64 (PAL)
+    C64_MODEL_NTSC,     ///< C64 (NTSC)
+    C64_MODEL_NTSC_II,  ///< C64 II (NTSC)
+    C64_MODEL_NTSC_OLD  ///< Early C64 (NTSC)
 };
 typedef C64_MODEL C64Model;
 

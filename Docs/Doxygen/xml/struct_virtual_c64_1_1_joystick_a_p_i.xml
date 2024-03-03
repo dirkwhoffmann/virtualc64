@@ -49,7 +49,7 @@
         <name>trigger</name>
         <qualifiedname>VirtualC64::JoystickAPI::trigger</qualifiedname>
         <param>
-          <type>GamePadAction</type>
+          <type><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2" kindref="member">GamePadAction</ref></type>
           <declname>event</declname>
         </param>
         <briefdescription>

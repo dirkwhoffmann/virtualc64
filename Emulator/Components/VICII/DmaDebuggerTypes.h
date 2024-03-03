@@ -9,6 +9,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -20,11 +21,12 @@
 // Enumerations
 //
 
+/// DMA debugger display mode
 enum_long(DMA_DISPLAY_MODE)
 {
-    DMA_DISPLAY_MODE_FG_LAYER,
-    DMA_DISPLAY_MODE_BG_LAYER,
-    DMA_DISPLAY_MODE_ODD_EVEN_LAYERS
+    DMA_DISPLAY_MODE_FG_LAYER,          ///< Modulate the foreground layer
+    DMA_DISPLAY_MODE_BG_LAYER,          ///< Modulate the background layer
+    DMA_DISPLAY_MODE_ODD_EVEN_LAYERS    ///< Modulate both layers
 };
 typedef DMA_DISPLAY_MODE DmaDisplayMode;
 

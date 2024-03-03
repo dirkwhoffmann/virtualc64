@@ -9,6 +9,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -28,6 +29,7 @@
 // Enumerations
 //
 
+/// Drive model
 enum_long(DRIVE_TYPE)
 {
     DRIVE_VC1541,

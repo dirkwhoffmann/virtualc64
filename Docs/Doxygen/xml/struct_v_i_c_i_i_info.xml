@@ -228,7 +228,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="409" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="409" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_v_i_c_i_i_info_1a96498da858f1c96f7cdaa0e8a4e4b6fa" prot="public" static="no" mutable="no">
-        <type><ref refid="_v_i_c_i_i_types_8h_1a4b4722e29346b1d0c0c0faa810ec4c93" kindref="member">ScreenGeometry</ref></type>
+        <type>ScreenGeometry</type>
         <definition>ScreenGeometry VICIIInfo::screenGeometry</definition>
         <argsstring></argsstring>
         <name>screenGeometry</name>
@@ -256,7 +256,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="411" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="411" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_v_i_c_i_i_info_1abd65baea54db326f6fd48721e29cd18d" prot="public" static="no" mutable="no">
-        <type><ref refid="_v_i_c_i_i_types_8h_1a6a3401992bca5c147311f680458a6582" kindref="member">DisplayMode</ref></type>
+        <type>DisplayMode</type>
         <definition>DisplayMode VICIIInfo::displayMode</definition>
         <argsstring></argsstring>
         <name>displayMode</name>

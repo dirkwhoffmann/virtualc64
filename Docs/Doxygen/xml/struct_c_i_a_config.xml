@@ -4,7 +4,7 @@
     <compoundname>CIAConfig</compoundname>
     <sectiondef kind="public-attrib">
       <memberdef kind="variable" id="struct_c_i_a_config_1a3699124bfc96b4e8c8485d107f4bbbba" prot="public" static="no" mutable="no">
-        <type>CIARevision</type>
+        <type><ref refid="_c_i_a_types_8h_1ae9e8ff692b14e7f0e068e20a76769a87" kindref="member">CIARevision</ref></type>
         <definition>CIARevision CIAConfig::revision</definition>
         <argsstring></argsstring>
         <name>revision</name>
@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="108" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="108" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="110" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="110" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_c_i_a_config_1a017a1c6c870ac395c63c1ea0c049d95b" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -29,14 +29,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="109" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="109" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="111" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="111" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="106" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="107" bodyend="110"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="108" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="109" bodyend="112"/>
     <listofallmembers>
       <member refid="struct_c_i_a_config_1a3699124bfc96b4e8c8485d107f4bbbba" prot="public" virt="non-virtual"><scope>CIAConfig</scope><name>revision</name></member>
       <member refid="struct_c_i_a_config_1a017a1c6c870ac395c63c1ea0c049d95b" prot="public" virt="non-virtual"><scope>CIAConfig</scope><name>timerBBug</name></member>

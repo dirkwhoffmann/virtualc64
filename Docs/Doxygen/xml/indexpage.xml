@@ -23,7 +23,7 @@
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>c64.launch(</highlight><highlight class="keyword">this</highlight><highlight class="normal">,<sp/>messageReceiver);</highlight></codeline>
 <codeline><highlight class="normal"></highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Configure<sp/>the<sp/>emulator</highlight><highlight class="normal"></highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>c64.set(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a097615e0e27fb679e172516082f1a5b6" kindref="member">OPT_VICII_REVISION</ref>,<sp/><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44adc3bee104de1d168495740b13aadb8e1" kindref="member">VICII_PAL_6569_R3</ref>);</highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>c64.set(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a097615e0e27fb679e172516082f1a5b6" kindref="member">OPT_VICII_REVISION</ref>,<sp/>VICII_PAL_6569_R3);</highlight></codeline>
 <codeline><highlight class="normal"></highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Start<sp/>the<sp/>emulator</highlight><highlight class="normal"></highlight></codeline>
 <codeline><highlight class="normal"><sp/><sp/><sp/><sp/>c64.<ref refid="class_virtual_c64_1a468f440c88ff5f399e67364425a43556" kindref="member">run</ref>()<sp/></highlight></codeline>

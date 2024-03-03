@@ -9,6 +9,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -19,6 +20,7 @@
 // Enumerations
 //
 
+/// RetroShell special key
 enum_long(RSKEY_KEY)
 {
 	RSKEY_UP,

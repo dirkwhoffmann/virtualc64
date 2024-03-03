@@ -114,7 +114,7 @@
         <name>put</name>
         <qualifiedname>vc64::MsgQueue::put</qualifiedname>
         <param>
-          <type>MsgType</type>
+          <type><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25b" kindref="member">MsgType</ref></type>
           <declname>type</declname>
         </param>
         <param>
@@ -137,7 +137,7 @@
         <name>put</name>
         <qualifiedname>vc64::MsgQueue::put</qualifiedname>
         <param>
-          <type>MsgType</type>
+          <type><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25b" kindref="member">MsgType</ref></type>
           <declname>type</declname>
         </param>
         <param>
@@ -159,7 +159,7 @@
         <name>put</name>
         <qualifiedname>vc64::MsgQueue::put</qualifiedname>
         <param>
-          <type>MsgType</type>
+          <type><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25b" kindref="member">MsgType</ref></type>
           <declname>type</declname>
         </param>
         <param>
@@ -181,7 +181,7 @@
         <name>put</name>
         <qualifiedname>vc64::MsgQueue::put</qualifiedname>
         <param>
-          <type>MsgType</type>
+          <type><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25b" kindref="member">MsgType</ref></type>
           <declname>type</declname>
         </param>
         <param>

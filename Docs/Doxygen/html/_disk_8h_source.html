@@ -130,7 +130,7 @@ $(function(){initNavTree('_disk_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;DiskTypes.h&quot;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;DiskAnalyzerTypes.h&quot;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;FSTypes.h&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="_f_s_types_8h.html">FSTypes.h</a>&quot;</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;SubComponent.h&quot;</span></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;PETName.h&quot;</span></div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
@@ -228,7 +228,7 @@ $(function(){initNavTree('_disk_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    </div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    Disk();</div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    Disk(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;path, <span class="keywordtype">bool</span> wp = <span class="keyword">false</span>) { init(path, wp); } <span class="keywordflow">throws</span></div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    Disk(DOSType type, PETName&lt;16&gt; name, <span class="keywordtype">bool</span> wp = <span class="keyword">false</span>) { init(type, name, wp); }</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    Disk(<a class="code hl_enumeration" href="_f_s_types_8h.html#aa499a0fc379c037c4be2ad9be44035e4">DOSType</a> type, PETName&lt;16&gt; name, <span class="keywordtype">bool</span> wp = <span class="keyword">false</span>) { init(type, name, wp); }</div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    Disk(<span class="keyword">const</span> FileSystem &amp;device, <span class="keywordtype">bool</span> wp = <span class="keyword">false</span>) { init(device, wp); }</div>
 <div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    Disk(<span class="keyword">const</span> G64File &amp;g64, <span class="keywordtype">bool</span> wp = <span class="keyword">false</span>) { init(g64, wp); }</div>
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    Disk(<span class="keyword">const</span> D64File &amp;d64, <span class="keywordtype">bool</span> wp = <span class="keyword">false</span>) { init(d64, wp); } <span class="keywordflow">throws</span></div>
@@ -238,7 +238,7 @@ $(function(){initNavTree('_disk_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span><span class="keyword">private</span>:</div>
 <div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    </div>
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="keywordtype">void</span> init(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;path, <span class="keywordtype">bool</span> wp) <span class="keywordflow">throws</span>;</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <span class="keywordtype">void</span> init(DOSType type, PETName&lt;16&gt; name, <span class="keywordtype">bool</span> wp);</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <span class="keywordtype">void</span> init(<a class="code hl_enumeration" href="_f_s_types_8h.html#aa499a0fc379c037c4be2ad9be44035e4">DOSType</a> type, PETName&lt;16&gt; name, <span class="keywordtype">bool</span> wp);</div>
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    <span class="keywordtype">void</span> init(<span class="keyword">const</span> <span class="keyword">class</span> FileSystem &amp;device, <span class="keywordtype">bool</span> wp);</div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <span class="keywordtype">void</span> init(<span class="keyword">const</span> G64File &amp;g64, <span class="keywordtype">bool</span> wp);</div>
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="keywordtype">void</span> init(<span class="keyword">const</span> D64File &amp;d64, <span class="keywordtype">bool</span> wp) <span class="keywordflow">throws</span>;</div>
@@ -479,6 +479,8 @@ $(function(){initNavTree('_disk_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span> </div>
 <div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>}</div>
 <div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span> </div>
+<div class="ttc" id="a_f_s_types_8h_html"><div class="ttname"><a href="_f_s_types_8h.html">FSTypes.h</a></div></div>
+<div class="ttc" id="a_f_s_types_8h_html_aa499a0fc379c037c4be2ad9be44035e4"><div class="ttname"><a href="_f_s_types_8h.html#aa499a0fc379c037c4be2ad9be44035e4">DOS_TYPE</a></div><div class="ttdeci">DOS_TYPE</div><div class="ttdoc">File system type.</div><div class="ttdef"><b>Definition</b> FSTypes.h:25</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

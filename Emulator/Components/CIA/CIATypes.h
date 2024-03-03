@@ -9,6 +9,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -16,6 +17,7 @@
 #include "Reflection.h"
 #include "TODTypes.h"
 
+/// Chip revision
 enum_long(CIAREV)
 {
     MOS_6526,

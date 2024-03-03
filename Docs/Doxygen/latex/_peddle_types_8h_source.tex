@@ -65,412 +65,412 @@
 \DoxyCodeLine{00061\ \textcolor{comment}{//\ Enumerations}}
 \DoxyCodeLine{00062\ \textcolor{comment}{//}}
 \DoxyCodeLine{00063\ }
-\DoxyCodeLine{00064\ enum\_long(CPUREV)}
-\DoxyCodeLine{00065\ \{}
-\DoxyCodeLine{00066\ \ \ \ \ MOS\_6502,\ \ \ \ \ \ \ \textcolor{comment}{//\ PET\ 2001,\ VC\ 20,\ Atari\ 800,\ Apple\ I/II,\ BBC\ Micro}}
-\DoxyCodeLine{00067\ \ \ \ \ MOS\_6507,\ \ \ \ \ \ \ \textcolor{comment}{//\ Atari\ 2600}}
-\DoxyCodeLine{00068\ \ \ \ \ MOS\_6510,\ \ \ \ \ \ \ \textcolor{comment}{//\ C64}}
-\DoxyCodeLine{00069\ \ \ \ \ MOS\_8502\ \ \ \ \ \ \ \ \textcolor{comment}{//\ C128}}
-\DoxyCodeLine{00070\ \};}
-\DoxyCodeLine{00071\ \textcolor{keyword}{typedef}\ CPUREV\ CPURevision;}
-\DoxyCodeLine{00072\ }
-\DoxyCodeLine{00073\ enum\_long(ADDR\_MODE)}
-\DoxyCodeLine{00074\ \{}
-\DoxyCodeLine{00075\ \ \ \ \ ADDR\_IMPLIED,}
-\DoxyCodeLine{00076\ \ \ \ \ ADDR\_ACCUMULATOR,}
-\DoxyCodeLine{00077\ \ \ \ \ ADDR\_IMMEDIATE,}
-\DoxyCodeLine{00078\ \ \ \ \ ADDR\_ZERO\_PAGE,}
-\DoxyCodeLine{00079\ \ \ \ \ ADDR\_ZERO\_PAGE\_X,}
-\DoxyCodeLine{00080\ \ \ \ \ ADDR\_ZERO\_PAGE\_Y,}
-\DoxyCodeLine{00081\ \ \ \ \ ADDR\_ABSOLUTE,}
-\DoxyCodeLine{00082\ \ \ \ \ ADDR\_ABSOLUTE\_X,}
-\DoxyCodeLine{00083\ \ \ \ \ ADDR\_ABSOLUTE\_Y,}
-\DoxyCodeLine{00084\ \ \ \ \ ADDR\_INDIRECT\_X,}
-\DoxyCodeLine{00085\ \ \ \ \ ADDR\_INDIRECT\_Y,}
-\DoxyCodeLine{00086\ \ \ \ \ ADDR\_RELATIVE,}
-\DoxyCodeLine{00087\ \ \ \ \ ADDR\_DIRECT,}
-\DoxyCodeLine{00088\ \ \ \ \ ADDR\_INDIRECT}
-\DoxyCodeLine{00089\ \};}
-\DoxyCodeLine{00090\ \textcolor{keyword}{typedef}\ ADDR\_MODE\ AddressingMode;}
-\DoxyCodeLine{00091\ }
-\DoxyCodeLine{00092\ enum\_long(MICRO\_INSTRUCTION)\ \{}
-\DoxyCodeLine{00093\ }
-\DoxyCodeLine{00094\ \ \ \ \ fetch,}
-\DoxyCodeLine{00095\ }
-\DoxyCodeLine{00096\ \ \ \ \ JAM,\ JAM\_2,}
-\DoxyCodeLine{00097\ }
-\DoxyCodeLine{00098\ \ \ \ \ irq\_2,\ irq\_3,\ irq\_4,\ irq\_5,\ irq\_6,\ irq\_7,}
-\DoxyCodeLine{00099\ \ \ \ \ nmi\_2,\ nmi\_3,\ nmi\_4,\ nmi\_5,\ nmi\_6,\ nmi\_7,}
-\DoxyCodeLine{00100\ }
-\DoxyCodeLine{00101\ \ \ \ \ ADC\_imm,}
-\DoxyCodeLine{00102\ \ \ \ \ ADC\_zpg,\ \ \ ADC\_zpg\_2,}
-\DoxyCodeLine{00103\ \ \ \ \ ADC\_zpg\_x,\ ADC\_zpg\_x\_2,\ ADC\_zpg\_x\_3,}
-\DoxyCodeLine{00104\ \ \ \ \ ADC\_abs,\ \ \ ADC\_abs\_2,\ \ \ ADC\_abs\_3,}
-\DoxyCodeLine{00105\ \ \ \ \ ADC\_abs\_x,\ ADC\_abs\_x\_2,\ ADC\_abs\_x\_3,\ ADC\_abs\_x\_4,}
-\DoxyCodeLine{00106\ \ \ \ \ ADC\_abs\_y,\ ADC\_abs\_y\_2,\ ADC\_abs\_y\_3,\ ADC\_abs\_y\_4,}
-\DoxyCodeLine{00107\ \ \ \ \ ADC\_ind\_x,\ ADC\_ind\_x\_2,\ ADC\_ind\_x\_3,\ ADC\_ind\_x\_4,\ ADC\_ind\_x\_5,}
-\DoxyCodeLine{00108\ \ \ \ \ ADC\_ind\_y,\ ADC\_ind\_y\_2,\ ADC\_ind\_y\_3,\ ADC\_ind\_y\_4,\ ADC\_ind\_y\_5,}
-\DoxyCodeLine{00109\ }
-\DoxyCodeLine{00110\ \ \ \ \ AND\_imm,}
-\DoxyCodeLine{00111\ \ \ \ \ AND\_zpg,\ \ \ AND\_zpg\_2,}
-\DoxyCodeLine{00112\ \ \ \ \ AND\_zpg\_x,\ AND\_zpg\_x\_2,\ AND\_zpg\_x\_3,}
-\DoxyCodeLine{00113\ \ \ \ \ AND\_abs,\ \ \ AND\_abs\_2,\ \ \ AND\_abs\_3,}
-\DoxyCodeLine{00114\ \ \ \ \ AND\_abs\_x,\ AND\_abs\_x\_2,\ AND\_abs\_x\_3,\ AND\_abs\_x\_4,}
-\DoxyCodeLine{00115\ \ \ \ \ AND\_abs\_y,\ AND\_abs\_y\_2,\ AND\_abs\_y\_3,\ AND\_abs\_y\_4,}
-\DoxyCodeLine{00116\ \ \ \ \ AND\_ind\_x,\ AND\_ind\_x\_2,\ AND\_ind\_x\_3,\ AND\_ind\_x\_4,\ AND\_ind\_x\_5,}
-\DoxyCodeLine{00117\ \ \ \ \ AND\_ind\_y,\ AND\_ind\_y\_2,\ AND\_ind\_y\_3,\ AND\_ind\_y\_4,\ AND\_ind\_y\_5,}
-\DoxyCodeLine{00118\ }
-\DoxyCodeLine{00119\ \ \ \ \ ASL\_acc,}
-\DoxyCodeLine{00120\ \ \ \ \ ASL\_zpg,\ \ \ ASL\_zpg\_2,\ \ \ ASL\_zpg\_3,\ \ \ ASL\_zpg\_4,}
-\DoxyCodeLine{00121\ \ \ \ \ ASL\_zpg\_x,\ ASL\_zpg\_x\_2,\ ASL\_zpg\_x\_3,\ ASL\_zpg\_x\_4,\ ASL\_zpg\_x\_5,}
-\DoxyCodeLine{00122\ \ \ \ \ ASL\_abs,\ \ \ ASL\_abs\_2,\ \ \ ASL\_abs\_3,\ \ \ ASL\_abs\_4,\ \ \ ASL\_abs\_5,}
-\DoxyCodeLine{00123\ \ \ \ \ ASL\_abs\_x,\ ASL\_abs\_x\_2,\ ASL\_abs\_x\_3,\ ASL\_abs\_x\_4,\ ASL\_abs\_x\_5,\ ASL\_abs\_x\_6,}
-\DoxyCodeLine{00124\ \ \ \ \ ASL\_ind\_x,\ ASL\_ind\_x\_2,\ ASL\_ind\_x\_3,\ ASL\_ind\_x\_4,\ ASL\_ind\_x\_5,\ ASL\_ind\_x\_6,\ ASL\_ind\_x\_7,}
-\DoxyCodeLine{00125\ }
-\DoxyCodeLine{00126\ \ \ \ \ branch\_3\_underflow,\ branch\_3\_overflow,}
-\DoxyCodeLine{00127\ \ \ \ \ BCC\_rel,\ BCC\_rel\_2,}
-\DoxyCodeLine{00128\ \ \ \ \ BCS\_rel,\ BCS\_rel\_2,}
-\DoxyCodeLine{00129\ \ \ \ \ BEQ\_rel,\ BEQ\_rel\_2,}
-\DoxyCodeLine{00130\ }
-\DoxyCodeLine{00131\ \ \ \ \ BIT\_zpg,\ BIT\_zpg\_2,}
-\DoxyCodeLine{00132\ \ \ \ \ BIT\_abs,\ BIT\_abs\_2,\ BIT\_abs\_3,}
-\DoxyCodeLine{00133\ }
-\DoxyCodeLine{00134\ \ \ \ \ BMI\_rel,\ BMI\_rel\_2,}
-\DoxyCodeLine{00135\ \ \ \ \ BNE\_rel,\ BNE\_rel\_2,}
-\DoxyCodeLine{00136\ \ \ \ \ BPL\_rel,\ BPL\_rel\_2,}
-\DoxyCodeLine{00137\ }
-\DoxyCodeLine{00138\ \ \ \ \ BRK,\ BRK\_2,\ BRK\_3,\ BRK\_4,\ BRK\_5,\ BRK\_6,}
-\DoxyCodeLine{00139\ \ \ \ \ BRK\_nmi\_4,\ BRK\_nmi\_5,\ BRK\_nmi\_6,}
-\DoxyCodeLine{00140\ }
-\DoxyCodeLine{00141\ \ \ \ \ BVC\_rel,\ BVC\_rel\_2,}
-\DoxyCodeLine{00142\ \ \ \ \ BVS\_rel,\ BVS\_rel\_2,}
-\DoxyCodeLine{00143\ \ \ \ \ CLC,}
-\DoxyCodeLine{00144\ \ \ \ \ CLD,}
-\DoxyCodeLine{00145\ \ \ \ \ CLI,}
-\DoxyCodeLine{00146\ \ \ \ \ CLV,}
-\DoxyCodeLine{00147\ }
-\DoxyCodeLine{00148\ \ \ \ \ CMP\_imm,}
-\DoxyCodeLine{00149\ \ \ \ \ CMP\_zpg,\ \ \ CMP\_zpg\_2,}
-\DoxyCodeLine{00150\ \ \ \ \ CMP\_zpg\_x,\ CMP\_zpg\_x\_2,\ CMP\_zpg\_x\_3,}
-\DoxyCodeLine{00151\ \ \ \ \ CMP\_abs,\ \ \ CMP\_abs\_2,\ \ \ CMP\_abs\_3,}
-\DoxyCodeLine{00152\ \ \ \ \ CMP\_abs\_x,\ CMP\_abs\_x\_2,\ CMP\_abs\_x\_3,\ CMP\_abs\_x\_4,}
-\DoxyCodeLine{00153\ \ \ \ \ CMP\_abs\_y,\ CMP\_abs\_y\_2,\ CMP\_abs\_y\_3,\ CMP\_abs\_y\_4,}
-\DoxyCodeLine{00154\ \ \ \ \ CMP\_ind\_x,\ CMP\_ind\_x\_2,\ CMP\_ind\_x\_3,\ CMP\_ind\_x\_4,\ CMP\_ind\_x\_5,}
-\DoxyCodeLine{00155\ \ \ \ \ CMP\_ind\_y,\ CMP\_ind\_y\_2,\ CMP\_ind\_y\_3,\ CMP\_ind\_y\_4,\ CMP\_ind\_y\_5,}
-\DoxyCodeLine{00156\ }
-\DoxyCodeLine{00157\ \ \ \ \ CPX\_imm,}
-\DoxyCodeLine{00158\ \ \ \ \ CPX\_zpg,\ CPX\_zpg\_2,}
-\DoxyCodeLine{00159\ \ \ \ \ CPX\_abs,\ CPX\_abs\_2,\ CPX\_abs\_3,}
-\DoxyCodeLine{00160\ }
-\DoxyCodeLine{00161\ \ \ \ \ CPY\_imm,}
-\DoxyCodeLine{00162\ \ \ \ \ CPY\_zpg,\ CPY\_zpg\_2,}
-\DoxyCodeLine{00163\ \ \ \ \ CPY\_abs,\ CPY\_abs\_2,\ CPY\_abs\_3,}
-\DoxyCodeLine{00164\ }
-\DoxyCodeLine{00165\ \ \ \ \ DEC\_zpg,\ \ \ DEC\_zpg\_2,\ \ \ DEC\_zpg\_3,\ \ \ DEC\_zpg\_4,}
-\DoxyCodeLine{00166\ \ \ \ \ DEC\_zpg\_x,\ DEC\_zpg\_x\_2,\ DEC\_zpg\_x\_3,\ DEC\_zpg\_x\_4,\ DEC\_zpg\_x\_5,}
-\DoxyCodeLine{00167\ \ \ \ \ DEC\_abs,\ \ \ DEC\_abs\_2,\ \ \ DEC\_abs\_3,\ \ \ DEC\_abs\_4,\ \ \ DEC\_abs\_5,}
-\DoxyCodeLine{00168\ \ \ \ \ DEC\_abs\_x,\ DEC\_abs\_x\_2,\ DEC\_abs\_x\_3,\ DEC\_abs\_x\_4,\ DEC\_abs\_x\_5,\ DEC\_abs\_x\_6,}
-\DoxyCodeLine{00169\ \ \ \ \ DEC\_ind\_x,\ DEC\_ind\_x\_2,\ DEC\_ind\_x\_3,\ DEC\_ind\_x\_4,\ DEC\_ind\_x\_5,\ DEC\_ind\_x\_6,\ DEC\_ind\_x\_7,}
-\DoxyCodeLine{00170\ }
-\DoxyCodeLine{00171\ \ \ \ \ DEX,}
-\DoxyCodeLine{00172\ \ \ \ \ DEY,}
-\DoxyCodeLine{00173\ }
-\DoxyCodeLine{00174\ \ \ \ \ EOR\_imm,}
-\DoxyCodeLine{00175\ \ \ \ \ EOR\_zpg,\ \ \ EOR\_zpg\_2,}
-\DoxyCodeLine{00176\ \ \ \ \ EOR\_zpg\_x,\ EOR\_zpg\_x\_2,\ EOR\_zpg\_x\_3,}
-\DoxyCodeLine{00177\ \ \ \ \ EOR\_abs,\ \ \ EOR\_abs\_2,\ \ \ EOR\_abs\_3,}
-\DoxyCodeLine{00178\ \ \ \ \ EOR\_abs\_x,\ EOR\_abs\_x\_2,\ EOR\_abs\_x\_3,\ EOR\_abs\_x\_4,}
-\DoxyCodeLine{00179\ \ \ \ \ EOR\_abs\_y,\ EOR\_abs\_y\_2,\ EOR\_abs\_y\_3,\ EOR\_abs\_y\_4,}
-\DoxyCodeLine{00180\ \ \ \ \ EOR\_ind\_x,\ EOR\_ind\_x\_2,\ EOR\_ind\_x\_3,\ EOR\_ind\_x\_4,\ EOR\_ind\_x\_5,}
-\DoxyCodeLine{00181\ \ \ \ \ EOR\_ind\_y,\ EOR\_ind\_y\_2,\ EOR\_ind\_y\_3,\ EOR\_ind\_y\_4,\ EOR\_ind\_y\_5,}
-\DoxyCodeLine{00182\ }
-\DoxyCodeLine{00183\ \ \ \ \ INC\_zpg,\ \ \ INC\_zpg\_2,\ \ \ INC\_zpg\_3,\ \ \ INC\_zpg\_4,}
-\DoxyCodeLine{00184\ \ \ \ \ INC\_zpg\_x,\ INC\_zpg\_x\_2,\ INC\_zpg\_x\_3,\ INC\_zpg\_x\_4,\ INC\_zpg\_x\_5,}
-\DoxyCodeLine{00185\ \ \ \ \ INC\_abs,\ \ \ INC\_abs\_2,\ \ \ INC\_abs\_3,\ \ \ INC\_abs\_4,\ \ \ INC\_abs\_5,}
-\DoxyCodeLine{00186\ \ \ \ \ INC\_abs\_x,\ INC\_abs\_x\_2,\ INC\_abs\_x\_3,\ INC\_abs\_x\_4,\ INC\_abs\_x\_5,\ INC\_abs\_x\_6,}
-\DoxyCodeLine{00187\ \ \ \ \ INC\_ind\_x,\ INC\_ind\_x\_2,\ INC\_ind\_x\_3,\ INC\_ind\_x\_4,\ INC\_ind\_x\_5,\ INC\_ind\_x\_6,\ INC\_ind\_x\_7,}
-\DoxyCodeLine{00188\ }
-\DoxyCodeLine{00189\ \ \ \ \ INX,}
-\DoxyCodeLine{00190\ \ \ \ \ INY,}
-\DoxyCodeLine{00191\ }
-\DoxyCodeLine{00192\ \ \ \ \ JMP\_abs,\ JMP\_abs\_2,}
-\DoxyCodeLine{00193\ \ \ \ \ JMP\_abs\_ind,\ JMP\_abs\_ind\_2,\ JMP\_abs\_ind\_3,\ JMP\_abs\_ind\_4,}
-\DoxyCodeLine{00194\ }
-\DoxyCodeLine{00195\ \ \ \ \ JSR,\ JSR\_2,\ JSR\_3,\ JSR\_4,\ JSR\_5,}
-\DoxyCodeLine{00196\ }
-\DoxyCodeLine{00197\ \ \ \ \ LDA\_imm,}
-\DoxyCodeLine{00198\ \ \ \ \ LDA\_zpg,\ \ \ LDA\_zpg\_2,}
-\DoxyCodeLine{00199\ \ \ \ \ LDA\_zpg\_x,\ LDA\_zpg\_x\_2,\ LDA\_zpg\_x\_3,}
-\DoxyCodeLine{00200\ \ \ \ \ LDA\_abs,\ \ \ LDA\_abs\_2,\ \ \ LDA\_abs\_3,}
-\DoxyCodeLine{00201\ \ \ \ \ LDA\_abs\_x,\ LDA\_abs\_x\_2,\ LDA\_abs\_x\_3,\ LDA\_abs\_x\_4,}
-\DoxyCodeLine{00202\ \ \ \ \ LDA\_abs\_y,\ LDA\_abs\_y\_2,\ LDA\_abs\_y\_3,\ LDA\_abs\_y\_4,}
-\DoxyCodeLine{00203\ \ \ \ \ LDA\_ind\_x,\ LDA\_ind\_x\_2,\ LDA\_ind\_x\_3,\ LDA\_ind\_x\_4,\ LDA\_ind\_x\_5,}
-\DoxyCodeLine{00204\ \ \ \ \ LDA\_ind\_y,\ LDA\_ind\_y\_2,\ LDA\_ind\_y\_3,\ LDA\_ind\_y\_4,\ LDA\_ind\_y\_5,}
-\DoxyCodeLine{00205\ }
-\DoxyCodeLine{00206\ \ \ \ \ LDX\_imm,}
-\DoxyCodeLine{00207\ \ \ \ \ LDX\_zpg,\ \ \ LDX\_zpg\_2,}
-\DoxyCodeLine{00208\ \ \ \ \ LDX\_zpg\_y,\ LDX\_zpg\_y\_2,\ LDX\_zpg\_y\_3,}
-\DoxyCodeLine{00209\ \ \ \ \ LDX\_abs,\ \ \ LDX\_abs\_2,\ \ \ LDX\_abs\_3,}
-\DoxyCodeLine{00210\ \ \ \ \ LDX\_abs\_y,\ LDX\_abs\_y\_2,\ LDX\_abs\_y\_3,\ LDX\_abs\_y\_4,}
-\DoxyCodeLine{00211\ \ \ \ \ LDX\_ind\_x,\ LDX\_ind\_x\_2,\ LDX\_ind\_x\_3,\ LDX\_ind\_x\_4,\ LDX\_ind\_x\_5,}
-\DoxyCodeLine{00212\ \ \ \ \ LDX\_ind\_y,\ LDX\_ind\_y\_2,\ LDX\_ind\_y\_3,\ LDX\_ind\_y\_4,\ LDX\_ind\_y\_5,}
-\DoxyCodeLine{00213\ }
-\DoxyCodeLine{00214\ \ \ \ \ LDY\_imm,}
-\DoxyCodeLine{00215\ \ \ \ \ LDY\_zpg,\ \ \ LDY\_zpg\_2,}
-\DoxyCodeLine{00216\ \ \ \ \ LDY\_zpg\_x,\ LDY\_zpg\_x\_2,\ LDY\_zpg\_x\_3,}
-\DoxyCodeLine{00217\ \ \ \ \ LDY\_abs,\ \ \ LDY\_abs\_2,\ \ \ LDY\_abs\_3,}
-\DoxyCodeLine{00218\ \ \ \ \ LDY\_abs\_x,\ LDY\_abs\_x\_2,\ LDY\_abs\_x\_3,\ LDY\_abs\_x\_4,}
-\DoxyCodeLine{00219\ \ \ \ \ LDY\_ind\_x,\ LDY\_ind\_x\_2,\ LDY\_ind\_x\_3,\ LDY\_ind\_x\_4,\ LDY\_ind\_x\_5,}
-\DoxyCodeLine{00220\ \ \ \ \ LDY\_ind\_y,\ LDY\_ind\_y\_2,\ LDY\_ind\_y\_3,\ LDY\_ind\_y\_4,\ LDY\_ind\_y\_5,}
-\DoxyCodeLine{00221\ }
-\DoxyCodeLine{00222\ \ \ \ \ LSR\_acc,}
-\DoxyCodeLine{00223\ \ \ \ \ LSR\_zpg,\ \ \ LSR\_zpg\_2,\ \ \ LSR\_zpg\_3,\ \ \ LSR\_zpg\_4,}
-\DoxyCodeLine{00224\ \ \ \ \ LSR\_zpg\_x,\ LSR\_zpg\_x\_2,\ LSR\_zpg\_x\_3,\ LSR\_zpg\_x\_4,\ LSR\_zpg\_x\_5,}
-\DoxyCodeLine{00225\ \ \ \ \ LSR\_abs,\ \ \ LSR\_abs\_2,\ \ \ LSR\_abs\_3,\ \ \ LSR\_abs\_4,\ \ \ LSR\_abs\_5,}
-\DoxyCodeLine{00226\ \ \ \ \ LSR\_abs\_x,\ LSR\_abs\_x\_2,\ LSR\_abs\_x\_3,\ LSR\_abs\_x\_4,\ LSR\_abs\_x\_5,\ LSR\_abs\_x\_6,}
-\DoxyCodeLine{00227\ \ \ \ \ LSR\_abs\_y,\ LSR\_abs\_y\_2,\ LSR\_abs\_y\_3,\ LSR\_abs\_y\_4,\ LSR\_abs\_y\_5,\ LSR\_abs\_y\_6,}
-\DoxyCodeLine{00228\ \ \ \ \ LSR\_ind\_x,\ LSR\_ind\_x\_2,\ LSR\_ind\_x\_3,\ LSR\_ind\_x\_4,\ LSR\_ind\_x\_5,\ LSR\_ind\_x\_6,\ LSR\_ind\_x\_7,}
-\DoxyCodeLine{00229\ \ \ \ \ LSR\_ind\_y,\ LSR\_ind\_y\_2,\ LSR\_ind\_y\_3,\ LSR\_ind\_y\_4,\ LSR\_ind\_y\_5,\ LSR\_ind\_y\_6,\ LSR\_ind\_y\_7,}
-\DoxyCodeLine{00230\ }
-\DoxyCodeLine{00231\ \ \ \ \ NOP,}
-\DoxyCodeLine{00232\ \ \ \ \ NOP\_imm,}
-\DoxyCodeLine{00233\ \ \ \ \ NOP\_zpg,\ \ \ NOP\_zpg\_2,}
-\DoxyCodeLine{00234\ \ \ \ \ NOP\_zpg\_x,\ NOP\_zpg\_x\_2,\ NOP\_zpg\_x\_3,}
-\DoxyCodeLine{00235\ \ \ \ \ NOP\_abs,\ \ \ NOP\_abs\_2,\ \ \ NOP\_abs\_3,}
-\DoxyCodeLine{00236\ \ \ \ \ NOP\_abs\_x,\ NOP\_abs\_x\_2,\ NOP\_abs\_x\_3,\ NOP\_abs\_x\_4,}
-\DoxyCodeLine{00237\ }
-\DoxyCodeLine{00238\ \ \ \ \ ORA\_imm,}
-\DoxyCodeLine{00239\ \ \ \ \ ORA\_zpg,\ \ \ ORA\_zpg\_2,}
-\DoxyCodeLine{00240\ \ \ \ \ ORA\_zpg\_x,\ ORA\_zpg\_x\_2,\ ORA\_zpg\_x\_3,}
-\DoxyCodeLine{00241\ \ \ \ \ ORA\_abs,\ \ \ ORA\_abs\_2,\ \ \ ORA\_abs\_3,}
-\DoxyCodeLine{00242\ \ \ \ \ ORA\_abs\_x,\ ORA\_abs\_x\_2,\ ORA\_abs\_x\_3,\ ORA\_abs\_x\_4,}
-\DoxyCodeLine{00243\ \ \ \ \ ORA\_abs\_y,\ ORA\_abs\_y\_2,\ ORA\_abs\_y\_3,\ ORA\_abs\_y\_4,}
-\DoxyCodeLine{00244\ \ \ \ \ ORA\_ind\_x,\ ORA\_ind\_x\_2,\ ORA\_ind\_x\_3,\ ORA\_ind\_x\_4,\ ORA\_ind\_x\_5,}
-\DoxyCodeLine{00245\ \ \ \ \ ORA\_ind\_y,\ ORA\_ind\_y\_2,\ ORA\_ind\_y\_3,\ ORA\_ind\_y\_4,\ ORA\_ind\_y\_5,}
-\DoxyCodeLine{00246\ }
-\DoxyCodeLine{00247\ \ \ \ \ PHA,\ PHA\_2,}
-\DoxyCodeLine{00248\ \ \ \ \ PHP,\ PHP\_2,}
-\DoxyCodeLine{00249\ \ \ \ \ PLA,\ PLA\_2,\ PLA\_3,}
-\DoxyCodeLine{00250\ \ \ \ \ PLP,\ PLP\_2,\ PLP\_3,}
-\DoxyCodeLine{00251\ }
-\DoxyCodeLine{00252\ \ \ \ \ ROL\_acc,}
-\DoxyCodeLine{00253\ \ \ \ \ ROL\_zpg,\ \ \ ROL\_zpg\_2,\ \ \ ROL\_zpg\_3,\ \ \ ROL\_zpg\_4,}
-\DoxyCodeLine{00254\ \ \ \ \ ROL\_zpg\_x,\ ROL\_zpg\_x\_2,\ ROL\_zpg\_x\_3,\ ROL\_zpg\_x\_4,\ ROL\_zpg\_x\_5,}
-\DoxyCodeLine{00255\ \ \ \ \ ROL\_abs,\ \ \ ROL\_abs\_2,\ \ \ ROL\_abs\_3,\ \ \ ROL\_abs\_4,\ \ \ ROL\_abs\_5,}
-\DoxyCodeLine{00256\ \ \ \ \ ROL\_abs\_x,\ ROL\_abs\_x\_2,\ ROL\_abs\_x\_3,\ ROL\_abs\_x\_4,\ ROL\_abs\_x\_5,\ ROL\_abs\_x\_6,}
-\DoxyCodeLine{00257\ \ \ \ \ ROL\_ind\_x,\ ROL\_ind\_x\_2,\ ROL\_ind\_x\_3,\ ROL\_ind\_x\_4,\ ROL\_ind\_x\_5,\ ROL\_ind\_x\_6,\ ROL\_ind\_x\_7,}
-\DoxyCodeLine{00258\ }
-\DoxyCodeLine{00259\ \ \ \ \ ROR\_acc,}
-\DoxyCodeLine{00260\ \ \ \ \ ROR\_zpg,\ \ \ ROR\_zpg\_2,\ \ \ ROR\_zpg\_3,\ \ \ ROR\_zpg\_4,}
-\DoxyCodeLine{00261\ \ \ \ \ ROR\_zpg\_x,\ ROR\_zpg\_x\_2,\ ROR\_zpg\_x\_3,\ ROR\_zpg\_x\_4,\ ROR\_zpg\_x\_5,}
-\DoxyCodeLine{00262\ \ \ \ \ ROR\_abs,\ \ \ ROR\_abs\_2,\ \ \ ROR\_abs\_3,\ \ \ ROR\_abs\_4,\ \ \ ROR\_abs\_5,}
-\DoxyCodeLine{00263\ \ \ \ \ ROR\_abs\_x,\ ROR\_abs\_x\_2,\ ROR\_abs\_x\_3,\ ROR\_abs\_x\_4,\ ROR\_abs\_x\_5,\ ROR\_abs\_x\_6,}
-\DoxyCodeLine{00264\ \ \ \ \ ROR\_ind\_x,\ ROR\_ind\_x\_2,\ ROR\_ind\_x\_3,\ ROR\_ind\_x\_4,\ ROR\_ind\_x\_5,\ ROR\_ind\_x\_6,\ ROR\_ind\_x\_7,}
-\DoxyCodeLine{00265\ }
-\DoxyCodeLine{00266\ \ \ \ \ RTI,\ RTI\_2,\ RTI\_3,\ RTI\_4,\ RTI\_5,}
-\DoxyCodeLine{00267\ \ \ \ \ RTS,\ RTS\_2,\ RTS\_3,\ RTS\_4,\ RTS\_5,}
-\DoxyCodeLine{00268\ }
-\DoxyCodeLine{00269\ \ \ \ \ SBC\_imm,}
-\DoxyCodeLine{00270\ \ \ \ \ SBC\_zpg,\ \ \ SBC\_zpg\_2,}
-\DoxyCodeLine{00271\ \ \ \ \ SBC\_zpg\_x,\ SBC\_zpg\_x\_2,\ SBC\_zpg\_x\_3,}
-\DoxyCodeLine{00272\ \ \ \ \ SBC\_abs,\ \ \ SBC\_abs\_2,\ \ \ SBC\_abs\_3,}
-\DoxyCodeLine{00273\ \ \ \ \ SBC\_abs\_x,\ SBC\_abs\_x\_2,\ SBC\_abs\_x\_3,\ SBC\_abs\_x\_4,}
-\DoxyCodeLine{00274\ \ \ \ \ SBC\_abs\_y,\ SBC\_abs\_y\_2,\ SBC\_abs\_y\_3,\ SBC\_abs\_y\_4,}
-\DoxyCodeLine{00275\ \ \ \ \ SBC\_ind\_x,\ SBC\_ind\_x\_2,\ SBC\_ind\_x\_3,\ SBC\_ind\_x\_4,\ SBC\_ind\_x\_5,}
-\DoxyCodeLine{00276\ \ \ \ \ SBC\_ind\_y,\ SBC\_ind\_y\_2,\ SBC\_ind\_y\_3,\ SBC\_ind\_y\_4,\ SBC\_ind\_y\_5,}
-\DoxyCodeLine{00277\ }
-\DoxyCodeLine{00278\ \ \ \ \ SEC,}
-\DoxyCodeLine{00279\ \ \ \ \ SED,}
-\DoxyCodeLine{00280\ \ \ \ \ SEI,\ SEI\_cont,}
-\DoxyCodeLine{00281\ }
-\DoxyCodeLine{00282\ \ \ \ \ STA\_zpg,\ \ \ STA\_zpg\_2,}
-\DoxyCodeLine{00283\ \ \ \ \ STA\_zpg\_x,\ STA\_zpg\_x\_2,\ STA\_zpg\_x\_3,}
-\DoxyCodeLine{00284\ \ \ \ \ STA\_abs,\ \ \ STA\_abs\_2,\ \ \ STA\_abs\_3,}
-\DoxyCodeLine{00285\ \ \ \ \ STA\_abs\_x,\ STA\_abs\_x\_2,\ STA\_abs\_x\_3,\ STA\_abs\_x\_4,}
-\DoxyCodeLine{00286\ \ \ \ \ STA\_abs\_y,\ STA\_abs\_y\_2,\ STA\_abs\_y\_3,\ STA\_abs\_y\_4,}
-\DoxyCodeLine{00287\ \ \ \ \ STA\_ind\_x,\ STA\_ind\_x\_2,\ STA\_ind\_x\_3,\ STA\_ind\_x\_4,\ STA\_ind\_x\_5,}
-\DoxyCodeLine{00288\ \ \ \ \ STA\_ind\_y,\ STA\_ind\_y\_2,\ STA\_ind\_y\_3,\ STA\_ind\_y\_4,\ STA\_ind\_y\_5,}
-\DoxyCodeLine{00289\ }
-\DoxyCodeLine{00290\ \ \ \ \ STX\_zpg,\ \ \ STX\_zpg\_2,}
-\DoxyCodeLine{00291\ \ \ \ \ STX\_zpg\_y,\ STX\_zpg\_y\_2,\ STX\_zpg\_y\_3,}
-\DoxyCodeLine{00292\ \ \ \ \ STX\_abs,\ \ \ STX\_abs\_2,\ \ \ STX\_abs\_3,}
-\DoxyCodeLine{00293\ }
-\DoxyCodeLine{00294\ \ \ \ \ STY\_zpg,\ \ \ STY\_zpg\_2,}
-\DoxyCodeLine{00295\ \ \ \ \ STY\_zpg\_x,\ STY\_zpg\_x\_2,\ STY\_zpg\_x\_3,}
-\DoxyCodeLine{00296\ \ \ \ \ STY\_abs,\ \ \ STY\_abs\_2,\ \ \ STY\_abs\_3,}
-\DoxyCodeLine{00297\ }
-\DoxyCodeLine{00298\ \ \ \ \ TAX,}
-\DoxyCodeLine{00299\ \ \ \ \ TAY,}
-\DoxyCodeLine{00300\ \ \ \ \ TSX,}
-\DoxyCodeLine{00301\ \ \ \ \ TXA,}
-\DoxyCodeLine{00302\ \ \ \ \ TXS,}
-\DoxyCodeLine{00303\ \ \ \ \ TYA,}
-\DoxyCodeLine{00304\ }
-\DoxyCodeLine{00305\ \ \ \ \ \textcolor{comment}{//\ Illegal\ instructions}}
-\DoxyCodeLine{00306\ }
-\DoxyCodeLine{00307\ \ \ \ \ ALR\_imm,}
-\DoxyCodeLine{00308\ \ \ \ \ ANC\_imm,}
-\DoxyCodeLine{00309\ \ \ \ \ ANE\_imm,}
-\DoxyCodeLine{00310\ \ \ \ \ ARR\_imm,}
-\DoxyCodeLine{00311\ \ \ \ \ AXS\_imm,}
-\DoxyCodeLine{00312\ }
-\DoxyCodeLine{00313\ \ \ \ \ DCP\_zpg,\ \ \ DCP\_zpg\_2,\ \ \ DCP\_zpg\_3,\ \ \ DCP\_zpg\_4,}
-\DoxyCodeLine{00314\ \ \ \ \ DCP\_zpg\_x,\ DCP\_zpg\_x\_2,\ DCP\_zpg\_x\_3,\ DCP\_zpg\_x\_4,\ DCP\_zpg\_x\_5,}
-\DoxyCodeLine{00315\ \ \ \ \ DCP\_abs,\ \ \ DCP\_abs\_2,\ \ \ DCP\_abs\_3,\ \ \ DCP\_abs\_4,\ \ \ DCP\_abs\_5,}
-\DoxyCodeLine{00316\ \ \ \ \ DCP\_abs\_x,\ DCP\_abs\_x\_2,\ DCP\_abs\_x\_3,\ DCP\_abs\_x\_4,\ DCP\_abs\_x\_5,\ DCP\_abs\_x\_6,}
-\DoxyCodeLine{00317\ \ \ \ \ DCP\_abs\_y,\ DCP\_abs\_y\_2,\ DCP\_abs\_y\_3,\ DCP\_abs\_y\_4,\ DCP\_abs\_y\_5,\ DCP\_abs\_y\_6,}
-\DoxyCodeLine{00318\ \ \ \ \ DCP\_ind\_x,\ DCP\_ind\_x\_2,\ DCP\_ind\_x\_3,\ DCP\_ind\_x\_4,\ DCP\_ind\_x\_5,\ DCP\_ind\_x\_6,\ DCP\_ind\_x\_7,}
-\DoxyCodeLine{00319\ \ \ \ \ DCP\_ind\_y,\ DCP\_ind\_y\_2,\ DCP\_ind\_y\_3,\ DCP\_ind\_y\_4,\ DCP\_ind\_y\_5,\ DCP\_ind\_y\_6,\ DCP\_ind\_y\_7,}
-\DoxyCodeLine{00320\ }
-\DoxyCodeLine{00321\ \ \ \ \ ISC\_zpg,\ \ \ ISC\_zpg\_2,\ \ \ ISC\_zpg\_3,\ \ \ ISC\_zpg\_4,}
-\DoxyCodeLine{00322\ \ \ \ \ ISC\_zpg\_x,\ ISC\_zpg\_x\_2,\ ISC\_zpg\_x\_3,\ ISC\_zpg\_x\_4,\ ISC\_zpg\_x\_5,}
-\DoxyCodeLine{00323\ \ \ \ \ ISC\_abs,\ \ \ ISC\_abs\_2,\ \ \ ISC\_abs\_3,\ \ \ ISC\_abs\_4,\ \ \ ISC\_abs\_5,}
-\DoxyCodeLine{00324\ \ \ \ \ ISC\_abs\_x,\ ISC\_abs\_x\_2,\ ISC\_abs\_x\_3,\ ISC\_abs\_x\_4,\ ISC\_abs\_x\_5,\ ISC\_abs\_x\_6,}
-\DoxyCodeLine{00325\ \ \ \ \ ISC\_abs\_y,\ ISC\_abs\_y\_2,\ ISC\_abs\_y\_3,\ ISC\_abs\_y\_4,\ ISC\_abs\_y\_5,\ ISC\_abs\_y\_6,}
-\DoxyCodeLine{00326\ \ \ \ \ ISC\_ind\_x,\ ISC\_ind\_x\_2,\ ISC\_ind\_x\_3,\ ISC\_ind\_x\_4,\ ISC\_ind\_x\_5,\ ISC\_ind\_x\_6,\ ISC\_ind\_x\_7,}
-\DoxyCodeLine{00327\ \ \ \ \ ISC\_ind\_y,\ ISC\_ind\_y\_2,\ ISC\_ind\_y\_3,\ ISC\_ind\_y\_4,\ ISC\_ind\_y\_5,\ ISC\_ind\_y\_6,\ ISC\_ind\_y\_7,}
-\DoxyCodeLine{00328\ }
-\DoxyCodeLine{00329\ \ \ \ \ LAS\_abs\_y,\ LAS\_abs\_y\_2,\ LAS\_abs\_y\_3,\ LAS\_abs\_y\_4,}
-\DoxyCodeLine{00330\ }
-\DoxyCodeLine{00331\ \ \ \ \ LAX\_zpg,\ \ \ LAX\_zpg\_2,}
-\DoxyCodeLine{00332\ \ \ \ \ LAX\_zpg\_y,\ LAX\_zpg\_y\_2,\ LAX\_zpg\_y\_3,}
-\DoxyCodeLine{00333\ \ \ \ \ LAX\_abs,\ \ \ LAX\_abs\_2,\ \ \ LAX\_abs\_3,}
-\DoxyCodeLine{00334\ \ \ \ \ LAX\_abs\_y,\ LAX\_abs\_y\_2,\ LAX\_abs\_y\_3,\ LAX\_abs\_y\_4,}
-\DoxyCodeLine{00335\ \ \ \ \ LAX\_ind\_x,\ LAX\_ind\_x\_2,\ LAX\_ind\_x\_3,\ LAX\_ind\_x\_4,\ LAX\_ind\_x\_5,}
-\DoxyCodeLine{00336\ \ \ \ \ LAX\_ind\_y,\ LAX\_ind\_y\_2,\ LAX\_ind\_y\_3,\ LAX\_ind\_y\_4,\ LAX\_ind\_y\_5,}
-\DoxyCodeLine{00337\ }
-\DoxyCodeLine{00338\ \ \ \ \ LXA\_imm,}
-\DoxyCodeLine{00339\ }
-\DoxyCodeLine{00340\ \ \ \ \ RLA\_zpg,\ \ \ RLA\_zpg\_2,\ \ \ RLA\_zpg\_3,\ \ \ RLA\_zpg\_4,}
-\DoxyCodeLine{00341\ \ \ \ \ RLA\_zpg\_x,\ RLA\_zpg\_x\_2,\ RLA\_zpg\_x\_3,\ RLA\_zpg\_x\_4,\ RLA\_zpg\_x\_5,}
-\DoxyCodeLine{00342\ \ \ \ \ RLA\_abs,\ \ \ RLA\_abs\_2,\ \ \ RLA\_abs\_3,\ \ \ RLA\_abs\_4,\ \ \ RLA\_abs\_5,}
-\DoxyCodeLine{00343\ \ \ \ \ RLA\_abs\_x,\ RLA\_abs\_x\_2,\ RLA\_abs\_x\_3,\ RLA\_abs\_x\_4,\ RLA\_abs\_x\_5,\ RLA\_abs\_x\_6,}
-\DoxyCodeLine{00344\ \ \ \ \ RLA\_abs\_y,\ RLA\_abs\_y\_2,\ RLA\_abs\_y\_3,\ RLA\_abs\_y\_4,\ RLA\_abs\_y\_5,\ RLA\_abs\_y\_6,}
-\DoxyCodeLine{00345\ \ \ \ \ RLA\_ind\_x,\ RLA\_ind\_x\_2,\ RLA\_ind\_x\_3,\ RLA\_ind\_x\_4,\ RLA\_ind\_x\_5,\ RLA\_ind\_x\_6,\ RLA\_ind\_x\_7,}
-\DoxyCodeLine{00346\ \ \ \ \ RLA\_ind\_y,\ RLA\_ind\_y\_2,\ RLA\_ind\_y\_3,\ RLA\_ind\_y\_4,\ RLA\_ind\_y\_5,\ RLA\_ind\_y\_6,\ RLA\_ind\_y\_7,}
-\DoxyCodeLine{00347\ }
-\DoxyCodeLine{00348\ \ \ \ \ RRA\_zpg,\ \ \ RRA\_zpg\_2,\ \ \ RRA\_zpg\_3,\ \ \ RRA\_zpg\_4,}
-\DoxyCodeLine{00349\ \ \ \ \ RRA\_zpg\_x,\ RRA\_zpg\_x\_2,\ RRA\_zpg\_x\_3,\ RRA\_zpg\_x\_4,\ RRA\_zpg\_x\_5,}
-\DoxyCodeLine{00350\ \ \ \ \ RRA\_abs,\ \ \ RRA\_abs\_2,\ \ \ RRA\_abs\_3,\ \ \ RRA\_abs\_4,\ \ \ RRA\_abs\_5,}
-\DoxyCodeLine{00351\ \ \ \ \ RRA\_abs\_x,\ RRA\_abs\_x\_2,\ RRA\_abs\_x\_3,\ RRA\_abs\_x\_4,\ RRA\_abs\_x\_5,\ RRA\_abs\_x\_6,}
-\DoxyCodeLine{00352\ \ \ \ \ RRA\_abs\_y,\ RRA\_abs\_y\_2,\ RRA\_abs\_y\_3,\ RRA\_abs\_y\_4,\ RRA\_abs\_y\_5,\ RRA\_abs\_y\_6,}
-\DoxyCodeLine{00353\ \ \ \ \ RRA\_ind\_x,\ RRA\_ind\_x\_2,\ RRA\_ind\_x\_3,\ RRA\_ind\_x\_4,\ RRA\_ind\_x\_5,\ RRA\_ind\_x\_6,\ RRA\_ind\_x\_7,}
-\DoxyCodeLine{00354\ \ \ \ \ RRA\_ind\_y,\ RRA\_ind\_y\_2,\ RRA\_ind\_y\_3,\ RRA\_ind\_y\_4,\ RRA\_ind\_y\_5,\ RRA\_ind\_y\_6,\ RRA\_ind\_y\_7,}
-\DoxyCodeLine{00355\ }
-\DoxyCodeLine{00356\ \ \ \ \ SAX\_zpg,\ \ \ SAX\_zpg\_2,}
-\DoxyCodeLine{00357\ \ \ \ \ SAX\_zpg\_y,\ SAX\_zpg\_y\_2,\ SAX\_zpg\_y\_3,}
-\DoxyCodeLine{00358\ \ \ \ \ SAX\_abs,\ \ \ SAX\_abs\_2,\ \ \ SAX\_abs\_3,}
-\DoxyCodeLine{00359\ \ \ \ \ SAX\_ind\_x,\ SAX\_ind\_x\_2,\ SAX\_ind\_x\_3,\ SAX\_ind\_x\_4,\ SAX\_ind\_x\_5,}
-\DoxyCodeLine{00360\ }
-\DoxyCodeLine{00361\ \ \ \ \ SHA\_ind\_y,\ SHA\_ind\_y\_2,\ SHA\_ind\_y\_3,\ SHA\_ind\_y\_4,\ SHA\_ind\_y\_5,}
-\DoxyCodeLine{00362\ \ \ \ \ SHA\_abs\_y,\ SHA\_abs\_y\_2,\ SHA\_abs\_y\_3,\ SHA\_abs\_y\_4,}
-\DoxyCodeLine{00363\ }
-\DoxyCodeLine{00364\ \ \ \ \ SHX\_abs\_y,\ SHX\_abs\_y\_2,\ SHX\_abs\_y\_3,\ SHX\_abs\_y\_4,}
-\DoxyCodeLine{00365\ \ \ \ \ SHY\_abs\_x,\ SHY\_abs\_x\_2,\ SHY\_abs\_x\_3,\ SHY\_abs\_x\_4,}
-\DoxyCodeLine{00366\ }
-\DoxyCodeLine{00367\ \ \ \ \ SLO\_zpg,\ \ \ SLO\_zpg\_2,\ \ \ SLO\_zpg\_3,\ \ \ SLO\_zpg\_4,}
-\DoxyCodeLine{00368\ \ \ \ \ SLO\_zpg\_x,\ SLO\_zpg\_x\_2,\ SLO\_zpg\_x\_3,\ SLO\_zpg\_x\_4,\ SLO\_zpg\_x\_5,}
-\DoxyCodeLine{00369\ \ \ \ \ SLO\_abs,\ \ \ SLO\_abs\_2,\ \ \ SLO\_abs\_3,\ \ \ SLO\_abs\_4,\ \ \ SLO\_abs\_5,}
-\DoxyCodeLine{00370\ \ \ \ \ SLO\_abs\_x,\ SLO\_abs\_x\_2,\ SLO\_abs\_x\_3,\ SLO\_abs\_x\_4,\ SLO\_abs\_x\_5,\ SLO\_abs\_x\_6,}
-\DoxyCodeLine{00371\ \ \ \ \ SLO\_abs\_y,\ SLO\_abs\_y\_2,\ SLO\_abs\_y\_3,\ SLO\_abs\_y\_4,\ SLO\_abs\_y\_5,\ SLO\_abs\_y\_6,}
-\DoxyCodeLine{00372\ \ \ \ \ SLO\_ind\_x,\ SLO\_ind\_x\_2,\ SLO\_ind\_x\_3,\ SLO\_ind\_x\_4,\ SLO\_ind\_x\_5,\ SLO\_ind\_x\_6,\ SLO\_ind\_x\_7,}
-\DoxyCodeLine{00373\ \ \ \ \ SLO\_ind\_y,\ SLO\_ind\_y\_2,\ SLO\_ind\_y\_3,\ SLO\_ind\_y\_4,\ SLO\_ind\_y\_5,\ SLO\_ind\_y\_6,\ SLO\_ind\_y\_7,}
-\DoxyCodeLine{00374\ }
-\DoxyCodeLine{00375\ \ \ \ \ SRE\_zpg,\ \ \ SRE\_zpg\_2,\ \ \ SRE\_zpg\_3,\ \ \ SRE\_zpg\_4,}
-\DoxyCodeLine{00376\ \ \ \ \ SRE\_zpg\_x,\ SRE\_zpg\_x\_2,\ SRE\_zpg\_x\_3,\ SRE\_zpg\_x\_4,\ SRE\_zpg\_x\_5,}
-\DoxyCodeLine{00377\ \ \ \ \ SRE\_abs,\ \ \ SRE\_abs\_2,\ \ \ SRE\_abs\_3,\ \ \ SRE\_abs\_4,\ \ \ SRE\_abs\_5,}
-\DoxyCodeLine{00378\ \ \ \ \ SRE\_abs\_x,\ SRE\_abs\_x\_2,\ SRE\_abs\_x\_3,\ SRE\_abs\_x\_4,\ SRE\_abs\_x\_5,\ SRE\_abs\_x\_6,}
-\DoxyCodeLine{00379\ \ \ \ \ SRE\_abs\_y,\ SRE\_abs\_y\_2,\ SRE\_abs\_y\_3,\ SRE\_abs\_y\_4,\ SRE\_abs\_y\_5,\ SRE\_abs\_y\_6,}
-\DoxyCodeLine{00380\ \ \ \ \ SRE\_ind\_x,\ SRE\_ind\_x\_2,\ SRE\_ind\_x\_3,\ SRE\_ind\_x\_4,\ SRE\_ind\_x\_5,\ SRE\_ind\_x\_6,\ SRE\_ind\_x\_7,}
-\DoxyCodeLine{00381\ \ \ \ \ SRE\_ind\_y,\ SRE\_ind\_y\_2,\ SRE\_ind\_y\_3,\ SRE\_ind\_y\_4,\ SRE\_ind\_y\_5,\ SRE\_ind\_y\_6,\ SRE\_ind\_y\_7,}
-\DoxyCodeLine{00382\ }
-\DoxyCodeLine{00383\ \ \ \ \ TAS\_abs\_y,\ TAS\_abs\_y\_2,\ TAS\_abs\_y\_3,\ TAS\_abs\_y\_4}
-\DoxyCodeLine{00384\ \};}
-\DoxyCodeLine{00385\ \textcolor{keyword}{typedef}\ MICRO\_INSTRUCTION\ MicroInstruction;}
-\DoxyCodeLine{00386\ }
+\DoxyCodeLine{00065\ enum\_long(CPUREV)}
+\DoxyCodeLine{00066\ \{}
+\DoxyCodeLine{00067\ \ \ \ \ MOS\_6502,\ \ \ \ \ \ \ }
+\DoxyCodeLine{00068\ \ \ \ \ MOS\_6507,\ \ \ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ MOS\_6510,\ \ \ \ \ \ \ }
+\DoxyCodeLine{00070\ \ \ \ \ MOS\_8502\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00071\ \};}
+\DoxyCodeLine{00072\ \textcolor{keyword}{typedef}\ CPUREV\ CPURevision;}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ enum\_long(ADDR\_MODE)}
+\DoxyCodeLine{00075\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ ADDR\_IMPLIED,}
+\DoxyCodeLine{00077\ \ \ \ \ ADDR\_ACCUMULATOR,}
+\DoxyCodeLine{00078\ \ \ \ \ ADDR\_IMMEDIATE,}
+\DoxyCodeLine{00079\ \ \ \ \ ADDR\_ZERO\_PAGE,}
+\DoxyCodeLine{00080\ \ \ \ \ ADDR\_ZERO\_PAGE\_X,}
+\DoxyCodeLine{00081\ \ \ \ \ ADDR\_ZERO\_PAGE\_Y,}
+\DoxyCodeLine{00082\ \ \ \ \ ADDR\_ABSOLUTE,}
+\DoxyCodeLine{00083\ \ \ \ \ ADDR\_ABSOLUTE\_X,}
+\DoxyCodeLine{00084\ \ \ \ \ ADDR\_ABSOLUTE\_Y,}
+\DoxyCodeLine{00085\ \ \ \ \ ADDR\_INDIRECT\_X,}
+\DoxyCodeLine{00086\ \ \ \ \ ADDR\_INDIRECT\_Y,}
+\DoxyCodeLine{00087\ \ \ \ \ ADDR\_RELATIVE,}
+\DoxyCodeLine{00088\ \ \ \ \ ADDR\_DIRECT,}
+\DoxyCodeLine{00089\ \ \ \ \ ADDR\_INDIRECT}
+\DoxyCodeLine{00090\ \};}
+\DoxyCodeLine{00091\ \textcolor{keyword}{typedef}\ ADDR\_MODE\ AddressingMode;}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ enum\_long(MICRO\_INSTRUCTION)\ \{}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ fetch,}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ JAM,\ JAM\_2,}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ irq\_2,\ irq\_3,\ irq\_4,\ irq\_5,\ irq\_6,\ irq\_7,}
+\DoxyCodeLine{00100\ \ \ \ \ nmi\_2,\ nmi\_3,\ nmi\_4,\ nmi\_5,\ nmi\_6,\ nmi\_7,}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \ \ \ \ ADC\_imm,}
+\DoxyCodeLine{00103\ \ \ \ \ ADC\_zpg,\ \ \ ADC\_zpg\_2,}
+\DoxyCodeLine{00104\ \ \ \ \ ADC\_zpg\_x,\ ADC\_zpg\_x\_2,\ ADC\_zpg\_x\_3,}
+\DoxyCodeLine{00105\ \ \ \ \ ADC\_abs,\ \ \ ADC\_abs\_2,\ \ \ ADC\_abs\_3,}
+\DoxyCodeLine{00106\ \ \ \ \ ADC\_abs\_x,\ ADC\_abs\_x\_2,\ ADC\_abs\_x\_3,\ ADC\_abs\_x\_4,}
+\DoxyCodeLine{00107\ \ \ \ \ ADC\_abs\_y,\ ADC\_abs\_y\_2,\ ADC\_abs\_y\_3,\ ADC\_abs\_y\_4,}
+\DoxyCodeLine{00108\ \ \ \ \ ADC\_ind\_x,\ ADC\_ind\_x\_2,\ ADC\_ind\_x\_3,\ ADC\_ind\_x\_4,\ ADC\_ind\_x\_5,}
+\DoxyCodeLine{00109\ \ \ \ \ ADC\_ind\_y,\ ADC\_ind\_y\_2,\ ADC\_ind\_y\_3,\ ADC\_ind\_y\_4,\ ADC\_ind\_y\_5,}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \ \ AND\_imm,}
+\DoxyCodeLine{00112\ \ \ \ \ AND\_zpg,\ \ \ AND\_zpg\_2,}
+\DoxyCodeLine{00113\ \ \ \ \ AND\_zpg\_x,\ AND\_zpg\_x\_2,\ AND\_zpg\_x\_3,}
+\DoxyCodeLine{00114\ \ \ \ \ AND\_abs,\ \ \ AND\_abs\_2,\ \ \ AND\_abs\_3,}
+\DoxyCodeLine{00115\ \ \ \ \ AND\_abs\_x,\ AND\_abs\_x\_2,\ AND\_abs\_x\_3,\ AND\_abs\_x\_4,}
+\DoxyCodeLine{00116\ \ \ \ \ AND\_abs\_y,\ AND\_abs\_y\_2,\ AND\_abs\_y\_3,\ AND\_abs\_y\_4,}
+\DoxyCodeLine{00117\ \ \ \ \ AND\_ind\_x,\ AND\_ind\_x\_2,\ AND\_ind\_x\_3,\ AND\_ind\_x\_4,\ AND\_ind\_x\_5,}
+\DoxyCodeLine{00118\ \ \ \ \ AND\_ind\_y,\ AND\_ind\_y\_2,\ AND\_ind\_y\_3,\ AND\_ind\_y\_4,\ AND\_ind\_y\_5,}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \ \ \ \ ASL\_acc,}
+\DoxyCodeLine{00121\ \ \ \ \ ASL\_zpg,\ \ \ ASL\_zpg\_2,\ \ \ ASL\_zpg\_3,\ \ \ ASL\_zpg\_4,}
+\DoxyCodeLine{00122\ \ \ \ \ ASL\_zpg\_x,\ ASL\_zpg\_x\_2,\ ASL\_zpg\_x\_3,\ ASL\_zpg\_x\_4,\ ASL\_zpg\_x\_5,}
+\DoxyCodeLine{00123\ \ \ \ \ ASL\_abs,\ \ \ ASL\_abs\_2,\ \ \ ASL\_abs\_3,\ \ \ ASL\_abs\_4,\ \ \ ASL\_abs\_5,}
+\DoxyCodeLine{00124\ \ \ \ \ ASL\_abs\_x,\ ASL\_abs\_x\_2,\ ASL\_abs\_x\_3,\ ASL\_abs\_x\_4,\ ASL\_abs\_x\_5,\ ASL\_abs\_x\_6,}
+\DoxyCodeLine{00125\ \ \ \ \ ASL\_ind\_x,\ ASL\_ind\_x\_2,\ ASL\_ind\_x\_3,\ ASL\_ind\_x\_4,\ ASL\_ind\_x\_5,\ ASL\_ind\_x\_6,\ ASL\_ind\_x\_7,}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ branch\_3\_underflow,\ branch\_3\_overflow,}
+\DoxyCodeLine{00128\ \ \ \ \ BCC\_rel,\ BCC\_rel\_2,}
+\DoxyCodeLine{00129\ \ \ \ \ BCS\_rel,\ BCS\_rel\_2,}
+\DoxyCodeLine{00130\ \ \ \ \ BEQ\_rel,\ BEQ\_rel\_2,}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \ BIT\_zpg,\ BIT\_zpg\_2,}
+\DoxyCodeLine{00133\ \ \ \ \ BIT\_abs,\ BIT\_abs\_2,\ BIT\_abs\_3,}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ \ BMI\_rel,\ BMI\_rel\_2,}
+\DoxyCodeLine{00136\ \ \ \ \ BNE\_rel,\ BNE\_rel\_2,}
+\DoxyCodeLine{00137\ \ \ \ \ BPL\_rel,\ BPL\_rel\_2,}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ \ \ BRK,\ BRK\_2,\ BRK\_3,\ BRK\_4,\ BRK\_5,\ BRK\_6,}
+\DoxyCodeLine{00140\ \ \ \ \ BRK\_nmi\_4,\ BRK\_nmi\_5,\ BRK\_nmi\_6,}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \ BVC\_rel,\ BVC\_rel\_2,}
+\DoxyCodeLine{00143\ \ \ \ \ BVS\_rel,\ BVS\_rel\_2,}
+\DoxyCodeLine{00144\ \ \ \ \ CLC,}
+\DoxyCodeLine{00145\ \ \ \ \ CLD,}
+\DoxyCodeLine{00146\ \ \ \ \ CLI,}
+\DoxyCodeLine{00147\ \ \ \ \ CLV,}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ CMP\_imm,}
+\DoxyCodeLine{00150\ \ \ \ \ CMP\_zpg,\ \ \ CMP\_zpg\_2,}
+\DoxyCodeLine{00151\ \ \ \ \ CMP\_zpg\_x,\ CMP\_zpg\_x\_2,\ CMP\_zpg\_x\_3,}
+\DoxyCodeLine{00152\ \ \ \ \ CMP\_abs,\ \ \ CMP\_abs\_2,\ \ \ CMP\_abs\_3,}
+\DoxyCodeLine{00153\ \ \ \ \ CMP\_abs\_x,\ CMP\_abs\_x\_2,\ CMP\_abs\_x\_3,\ CMP\_abs\_x\_4,}
+\DoxyCodeLine{00154\ \ \ \ \ CMP\_abs\_y,\ CMP\_abs\_y\_2,\ CMP\_abs\_y\_3,\ CMP\_abs\_y\_4,}
+\DoxyCodeLine{00155\ \ \ \ \ CMP\_ind\_x,\ CMP\_ind\_x\_2,\ CMP\_ind\_x\_3,\ CMP\_ind\_x\_4,\ CMP\_ind\_x\_5,}
+\DoxyCodeLine{00156\ \ \ \ \ CMP\_ind\_y,\ CMP\_ind\_y\_2,\ CMP\_ind\_y\_3,\ CMP\_ind\_y\_4,\ CMP\_ind\_y\_5,}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \ \ \ \ CPX\_imm,}
+\DoxyCodeLine{00159\ \ \ \ \ CPX\_zpg,\ CPX\_zpg\_2,}
+\DoxyCodeLine{00160\ \ \ \ \ CPX\_abs,\ CPX\_abs\_2,\ CPX\_abs\_3,}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \ \ \ \ CPY\_imm,}
+\DoxyCodeLine{00163\ \ \ \ \ CPY\_zpg,\ CPY\_zpg\_2,}
+\DoxyCodeLine{00164\ \ \ \ \ CPY\_abs,\ CPY\_abs\_2,\ CPY\_abs\_3,}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \ \ \ \ DEC\_zpg,\ \ \ DEC\_zpg\_2,\ \ \ DEC\_zpg\_3,\ \ \ DEC\_zpg\_4,}
+\DoxyCodeLine{00167\ \ \ \ \ DEC\_zpg\_x,\ DEC\_zpg\_x\_2,\ DEC\_zpg\_x\_3,\ DEC\_zpg\_x\_4,\ DEC\_zpg\_x\_5,}
+\DoxyCodeLine{00168\ \ \ \ \ DEC\_abs,\ \ \ DEC\_abs\_2,\ \ \ DEC\_abs\_3,\ \ \ DEC\_abs\_4,\ \ \ DEC\_abs\_5,}
+\DoxyCodeLine{00169\ \ \ \ \ DEC\_abs\_x,\ DEC\_abs\_x\_2,\ DEC\_abs\_x\_3,\ DEC\_abs\_x\_4,\ DEC\_abs\_x\_5,\ DEC\_abs\_x\_6,}
+\DoxyCodeLine{00170\ \ \ \ \ DEC\_ind\_x,\ DEC\_ind\_x\_2,\ DEC\_ind\_x\_3,\ DEC\_ind\_x\_4,\ DEC\_ind\_x\_5,\ DEC\_ind\_x\_6,\ DEC\_ind\_x\_7,}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00172\ \ \ \ \ DEX,}
+\DoxyCodeLine{00173\ \ \ \ \ DEY,}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \ \ \ \ EOR\_imm,}
+\DoxyCodeLine{00176\ \ \ \ \ EOR\_zpg,\ \ \ EOR\_zpg\_2,}
+\DoxyCodeLine{00177\ \ \ \ \ EOR\_zpg\_x,\ EOR\_zpg\_x\_2,\ EOR\_zpg\_x\_3,}
+\DoxyCodeLine{00178\ \ \ \ \ EOR\_abs,\ \ \ EOR\_abs\_2,\ \ \ EOR\_abs\_3,}
+\DoxyCodeLine{00179\ \ \ \ \ EOR\_abs\_x,\ EOR\_abs\_x\_2,\ EOR\_abs\_x\_3,\ EOR\_abs\_x\_4,}
+\DoxyCodeLine{00180\ \ \ \ \ EOR\_abs\_y,\ EOR\_abs\_y\_2,\ EOR\_abs\_y\_3,\ EOR\_abs\_y\_4,}
+\DoxyCodeLine{00181\ \ \ \ \ EOR\_ind\_x,\ EOR\_ind\_x\_2,\ EOR\_ind\_x\_3,\ EOR\_ind\_x\_4,\ EOR\_ind\_x\_5,}
+\DoxyCodeLine{00182\ \ \ \ \ EOR\_ind\_y,\ EOR\_ind\_y\_2,\ EOR\_ind\_y\_3,\ EOR\_ind\_y\_4,\ EOR\_ind\_y\_5,}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ \ \ \ \ INC\_zpg,\ \ \ INC\_zpg\_2,\ \ \ INC\_zpg\_3,\ \ \ INC\_zpg\_4,}
+\DoxyCodeLine{00185\ \ \ \ \ INC\_zpg\_x,\ INC\_zpg\_x\_2,\ INC\_zpg\_x\_3,\ INC\_zpg\_x\_4,\ INC\_zpg\_x\_5,}
+\DoxyCodeLine{00186\ \ \ \ \ INC\_abs,\ \ \ INC\_abs\_2,\ \ \ INC\_abs\_3,\ \ \ INC\_abs\_4,\ \ \ INC\_abs\_5,}
+\DoxyCodeLine{00187\ \ \ \ \ INC\_abs\_x,\ INC\_abs\_x\_2,\ INC\_abs\_x\_3,\ INC\_abs\_x\_4,\ INC\_abs\_x\_5,\ INC\_abs\_x\_6,}
+\DoxyCodeLine{00188\ \ \ \ \ INC\_ind\_x,\ INC\_ind\_x\_2,\ INC\_ind\_x\_3,\ INC\_ind\_x\_4,\ INC\_ind\_x\_5,\ INC\_ind\_x\_6,\ INC\_ind\_x\_7,}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00190\ \ \ \ \ INX,}
+\DoxyCodeLine{00191\ \ \ \ \ INY,}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \ \ \ \ JMP\_abs,\ JMP\_abs\_2,}
+\DoxyCodeLine{00194\ \ \ \ \ JMP\_abs\_ind,\ JMP\_abs\_ind\_2,\ JMP\_abs\_ind\_3,\ JMP\_abs\_ind\_4,}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \ \ \ \ JSR,\ JSR\_2,\ JSR\_3,\ JSR\_4,\ JSR\_5,}
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00198\ \ \ \ \ LDA\_imm,}
+\DoxyCodeLine{00199\ \ \ \ \ LDA\_zpg,\ \ \ LDA\_zpg\_2,}
+\DoxyCodeLine{00200\ \ \ \ \ LDA\_zpg\_x,\ LDA\_zpg\_x\_2,\ LDA\_zpg\_x\_3,}
+\DoxyCodeLine{00201\ \ \ \ \ LDA\_abs,\ \ \ LDA\_abs\_2,\ \ \ LDA\_abs\_3,}
+\DoxyCodeLine{00202\ \ \ \ \ LDA\_abs\_x,\ LDA\_abs\_x\_2,\ LDA\_abs\_x\_3,\ LDA\_abs\_x\_4,}
+\DoxyCodeLine{00203\ \ \ \ \ LDA\_abs\_y,\ LDA\_abs\_y\_2,\ LDA\_abs\_y\_3,\ LDA\_abs\_y\_4,}
+\DoxyCodeLine{00204\ \ \ \ \ LDA\_ind\_x,\ LDA\_ind\_x\_2,\ LDA\_ind\_x\_3,\ LDA\_ind\_x\_4,\ LDA\_ind\_x\_5,}
+\DoxyCodeLine{00205\ \ \ \ \ LDA\_ind\_y,\ LDA\_ind\_y\_2,\ LDA\_ind\_y\_3,\ LDA\_ind\_y\_4,\ LDA\_ind\_y\_5,}
+\DoxyCodeLine{00206\ }
+\DoxyCodeLine{00207\ \ \ \ \ LDX\_imm,}
+\DoxyCodeLine{00208\ \ \ \ \ LDX\_zpg,\ \ \ LDX\_zpg\_2,}
+\DoxyCodeLine{00209\ \ \ \ \ LDX\_zpg\_y,\ LDX\_zpg\_y\_2,\ LDX\_zpg\_y\_3,}
+\DoxyCodeLine{00210\ \ \ \ \ LDX\_abs,\ \ \ LDX\_abs\_2,\ \ \ LDX\_abs\_3,}
+\DoxyCodeLine{00211\ \ \ \ \ LDX\_abs\_y,\ LDX\_abs\_y\_2,\ LDX\_abs\_y\_3,\ LDX\_abs\_y\_4,}
+\DoxyCodeLine{00212\ \ \ \ \ LDX\_ind\_x,\ LDX\_ind\_x\_2,\ LDX\_ind\_x\_3,\ LDX\_ind\_x\_4,\ LDX\_ind\_x\_5,}
+\DoxyCodeLine{00213\ \ \ \ \ LDX\_ind\_y,\ LDX\_ind\_y\_2,\ LDX\_ind\_y\_3,\ LDX\_ind\_y\_4,\ LDX\_ind\_y\_5,}
+\DoxyCodeLine{00214\ }
+\DoxyCodeLine{00215\ \ \ \ \ LDY\_imm,}
+\DoxyCodeLine{00216\ \ \ \ \ LDY\_zpg,\ \ \ LDY\_zpg\_2,}
+\DoxyCodeLine{00217\ \ \ \ \ LDY\_zpg\_x,\ LDY\_zpg\_x\_2,\ LDY\_zpg\_x\_3,}
+\DoxyCodeLine{00218\ \ \ \ \ LDY\_abs,\ \ \ LDY\_abs\_2,\ \ \ LDY\_abs\_3,}
+\DoxyCodeLine{00219\ \ \ \ \ LDY\_abs\_x,\ LDY\_abs\_x\_2,\ LDY\_abs\_x\_3,\ LDY\_abs\_x\_4,}
+\DoxyCodeLine{00220\ \ \ \ \ LDY\_ind\_x,\ LDY\_ind\_x\_2,\ LDY\_ind\_x\_3,\ LDY\_ind\_x\_4,\ LDY\_ind\_x\_5,}
+\DoxyCodeLine{00221\ \ \ \ \ LDY\_ind\_y,\ LDY\_ind\_y\_2,\ LDY\_ind\_y\_3,\ LDY\_ind\_y\_4,\ LDY\_ind\_y\_5,}
+\DoxyCodeLine{00222\ }
+\DoxyCodeLine{00223\ \ \ \ \ LSR\_acc,}
+\DoxyCodeLine{00224\ \ \ \ \ LSR\_zpg,\ \ \ LSR\_zpg\_2,\ \ \ LSR\_zpg\_3,\ \ \ LSR\_zpg\_4,}
+\DoxyCodeLine{00225\ \ \ \ \ LSR\_zpg\_x,\ LSR\_zpg\_x\_2,\ LSR\_zpg\_x\_3,\ LSR\_zpg\_x\_4,\ LSR\_zpg\_x\_5,}
+\DoxyCodeLine{00226\ \ \ \ \ LSR\_abs,\ \ \ LSR\_abs\_2,\ \ \ LSR\_abs\_3,\ \ \ LSR\_abs\_4,\ \ \ LSR\_abs\_5,}
+\DoxyCodeLine{00227\ \ \ \ \ LSR\_abs\_x,\ LSR\_abs\_x\_2,\ LSR\_abs\_x\_3,\ LSR\_abs\_x\_4,\ LSR\_abs\_x\_5,\ LSR\_abs\_x\_6,}
+\DoxyCodeLine{00228\ \ \ \ \ LSR\_abs\_y,\ LSR\_abs\_y\_2,\ LSR\_abs\_y\_3,\ LSR\_abs\_y\_4,\ LSR\_abs\_y\_5,\ LSR\_abs\_y\_6,}
+\DoxyCodeLine{00229\ \ \ \ \ LSR\_ind\_x,\ LSR\_ind\_x\_2,\ LSR\_ind\_x\_3,\ LSR\_ind\_x\_4,\ LSR\_ind\_x\_5,\ LSR\_ind\_x\_6,\ LSR\_ind\_x\_7,}
+\DoxyCodeLine{00230\ \ \ \ \ LSR\_ind\_y,\ LSR\_ind\_y\_2,\ LSR\_ind\_y\_3,\ LSR\_ind\_y\_4,\ LSR\_ind\_y\_5,\ LSR\_ind\_y\_6,\ LSR\_ind\_y\_7,}
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00232\ \ \ \ \ NOP,}
+\DoxyCodeLine{00233\ \ \ \ \ NOP\_imm,}
+\DoxyCodeLine{00234\ \ \ \ \ NOP\_zpg,\ \ \ NOP\_zpg\_2,}
+\DoxyCodeLine{00235\ \ \ \ \ NOP\_zpg\_x,\ NOP\_zpg\_x\_2,\ NOP\_zpg\_x\_3,}
+\DoxyCodeLine{00236\ \ \ \ \ NOP\_abs,\ \ \ NOP\_abs\_2,\ \ \ NOP\_abs\_3,}
+\DoxyCodeLine{00237\ \ \ \ \ NOP\_abs\_x,\ NOP\_abs\_x\_2,\ NOP\_abs\_x\_3,\ NOP\_abs\_x\_4,}
+\DoxyCodeLine{00238\ }
+\DoxyCodeLine{00239\ \ \ \ \ ORA\_imm,}
+\DoxyCodeLine{00240\ \ \ \ \ ORA\_zpg,\ \ \ ORA\_zpg\_2,}
+\DoxyCodeLine{00241\ \ \ \ \ ORA\_zpg\_x,\ ORA\_zpg\_x\_2,\ ORA\_zpg\_x\_3,}
+\DoxyCodeLine{00242\ \ \ \ \ ORA\_abs,\ \ \ ORA\_abs\_2,\ \ \ ORA\_abs\_3,}
+\DoxyCodeLine{00243\ \ \ \ \ ORA\_abs\_x,\ ORA\_abs\_x\_2,\ ORA\_abs\_x\_3,\ ORA\_abs\_x\_4,}
+\DoxyCodeLine{00244\ \ \ \ \ ORA\_abs\_y,\ ORA\_abs\_y\_2,\ ORA\_abs\_y\_3,\ ORA\_abs\_y\_4,}
+\DoxyCodeLine{00245\ \ \ \ \ ORA\_ind\_x,\ ORA\_ind\_x\_2,\ ORA\_ind\_x\_3,\ ORA\_ind\_x\_4,\ ORA\_ind\_x\_5,}
+\DoxyCodeLine{00246\ \ \ \ \ ORA\_ind\_y,\ ORA\_ind\_y\_2,\ ORA\_ind\_y\_3,\ ORA\_ind\_y\_4,\ ORA\_ind\_y\_5,}
+\DoxyCodeLine{00247\ }
+\DoxyCodeLine{00248\ \ \ \ \ PHA,\ PHA\_2,}
+\DoxyCodeLine{00249\ \ \ \ \ PHP,\ PHP\_2,}
+\DoxyCodeLine{00250\ \ \ \ \ PLA,\ PLA\_2,\ PLA\_3,}
+\DoxyCodeLine{00251\ \ \ \ \ PLP,\ PLP\_2,\ PLP\_3,}
+\DoxyCodeLine{00252\ }
+\DoxyCodeLine{00253\ \ \ \ \ ROL\_acc,}
+\DoxyCodeLine{00254\ \ \ \ \ ROL\_zpg,\ \ \ ROL\_zpg\_2,\ \ \ ROL\_zpg\_3,\ \ \ ROL\_zpg\_4,}
+\DoxyCodeLine{00255\ \ \ \ \ ROL\_zpg\_x,\ ROL\_zpg\_x\_2,\ ROL\_zpg\_x\_3,\ ROL\_zpg\_x\_4,\ ROL\_zpg\_x\_5,}
+\DoxyCodeLine{00256\ \ \ \ \ ROL\_abs,\ \ \ ROL\_abs\_2,\ \ \ ROL\_abs\_3,\ \ \ ROL\_abs\_4,\ \ \ ROL\_abs\_5,}
+\DoxyCodeLine{00257\ \ \ \ \ ROL\_abs\_x,\ ROL\_abs\_x\_2,\ ROL\_abs\_x\_3,\ ROL\_abs\_x\_4,\ ROL\_abs\_x\_5,\ ROL\_abs\_x\_6,}
+\DoxyCodeLine{00258\ \ \ \ \ ROL\_ind\_x,\ ROL\_ind\_x\_2,\ ROL\_ind\_x\_3,\ ROL\_ind\_x\_4,\ ROL\_ind\_x\_5,\ ROL\_ind\_x\_6,\ ROL\_ind\_x\_7,}
+\DoxyCodeLine{00259\ }
+\DoxyCodeLine{00260\ \ \ \ \ ROR\_acc,}
+\DoxyCodeLine{00261\ \ \ \ \ ROR\_zpg,\ \ \ ROR\_zpg\_2,\ \ \ ROR\_zpg\_3,\ \ \ ROR\_zpg\_4,}
+\DoxyCodeLine{00262\ \ \ \ \ ROR\_zpg\_x,\ ROR\_zpg\_x\_2,\ ROR\_zpg\_x\_3,\ ROR\_zpg\_x\_4,\ ROR\_zpg\_x\_5,}
+\DoxyCodeLine{00263\ \ \ \ \ ROR\_abs,\ \ \ ROR\_abs\_2,\ \ \ ROR\_abs\_3,\ \ \ ROR\_abs\_4,\ \ \ ROR\_abs\_5,}
+\DoxyCodeLine{00264\ \ \ \ \ ROR\_abs\_x,\ ROR\_abs\_x\_2,\ ROR\_abs\_x\_3,\ ROR\_abs\_x\_4,\ ROR\_abs\_x\_5,\ ROR\_abs\_x\_6,}
+\DoxyCodeLine{00265\ \ \ \ \ ROR\_ind\_x,\ ROR\_ind\_x\_2,\ ROR\_ind\_x\_3,\ ROR\_ind\_x\_4,\ ROR\_ind\_x\_5,\ ROR\_ind\_x\_6,\ ROR\_ind\_x\_7,}
+\DoxyCodeLine{00266\ }
+\DoxyCodeLine{00267\ \ \ \ \ RTI,\ RTI\_2,\ RTI\_3,\ RTI\_4,\ RTI\_5,}
+\DoxyCodeLine{00268\ \ \ \ \ RTS,\ RTS\_2,\ RTS\_3,\ RTS\_4,\ RTS\_5,}
+\DoxyCodeLine{00269\ }
+\DoxyCodeLine{00270\ \ \ \ \ SBC\_imm,}
+\DoxyCodeLine{00271\ \ \ \ \ SBC\_zpg,\ \ \ SBC\_zpg\_2,}
+\DoxyCodeLine{00272\ \ \ \ \ SBC\_zpg\_x,\ SBC\_zpg\_x\_2,\ SBC\_zpg\_x\_3,}
+\DoxyCodeLine{00273\ \ \ \ \ SBC\_abs,\ \ \ SBC\_abs\_2,\ \ \ SBC\_abs\_3,}
+\DoxyCodeLine{00274\ \ \ \ \ SBC\_abs\_x,\ SBC\_abs\_x\_2,\ SBC\_abs\_x\_3,\ SBC\_abs\_x\_4,}
+\DoxyCodeLine{00275\ \ \ \ \ SBC\_abs\_y,\ SBC\_abs\_y\_2,\ SBC\_abs\_y\_3,\ SBC\_abs\_y\_4,}
+\DoxyCodeLine{00276\ \ \ \ \ SBC\_ind\_x,\ SBC\_ind\_x\_2,\ SBC\_ind\_x\_3,\ SBC\_ind\_x\_4,\ SBC\_ind\_x\_5,}
+\DoxyCodeLine{00277\ \ \ \ \ SBC\_ind\_y,\ SBC\_ind\_y\_2,\ SBC\_ind\_y\_3,\ SBC\_ind\_y\_4,\ SBC\_ind\_y\_5,}
+\DoxyCodeLine{00278\ }
+\DoxyCodeLine{00279\ \ \ \ \ SEC,}
+\DoxyCodeLine{00280\ \ \ \ \ SED,}
+\DoxyCodeLine{00281\ \ \ \ \ SEI,\ SEI\_cont,}
+\DoxyCodeLine{00282\ }
+\DoxyCodeLine{00283\ \ \ \ \ STA\_zpg,\ \ \ STA\_zpg\_2,}
+\DoxyCodeLine{00284\ \ \ \ \ STA\_zpg\_x,\ STA\_zpg\_x\_2,\ STA\_zpg\_x\_3,}
+\DoxyCodeLine{00285\ \ \ \ \ STA\_abs,\ \ \ STA\_abs\_2,\ \ \ STA\_abs\_3,}
+\DoxyCodeLine{00286\ \ \ \ \ STA\_abs\_x,\ STA\_abs\_x\_2,\ STA\_abs\_x\_3,\ STA\_abs\_x\_4,}
+\DoxyCodeLine{00287\ \ \ \ \ STA\_abs\_y,\ STA\_abs\_y\_2,\ STA\_abs\_y\_3,\ STA\_abs\_y\_4,}
+\DoxyCodeLine{00288\ \ \ \ \ STA\_ind\_x,\ STA\_ind\_x\_2,\ STA\_ind\_x\_3,\ STA\_ind\_x\_4,\ STA\_ind\_x\_5,}
+\DoxyCodeLine{00289\ \ \ \ \ STA\_ind\_y,\ STA\_ind\_y\_2,\ STA\_ind\_y\_3,\ STA\_ind\_y\_4,\ STA\_ind\_y\_5,}
+\DoxyCodeLine{00290\ }
+\DoxyCodeLine{00291\ \ \ \ \ STX\_zpg,\ \ \ STX\_zpg\_2,}
+\DoxyCodeLine{00292\ \ \ \ \ STX\_zpg\_y,\ STX\_zpg\_y\_2,\ STX\_zpg\_y\_3,}
+\DoxyCodeLine{00293\ \ \ \ \ STX\_abs,\ \ \ STX\_abs\_2,\ \ \ STX\_abs\_3,}
+\DoxyCodeLine{00294\ }
+\DoxyCodeLine{00295\ \ \ \ \ STY\_zpg,\ \ \ STY\_zpg\_2,}
+\DoxyCodeLine{00296\ \ \ \ \ STY\_zpg\_x,\ STY\_zpg\_x\_2,\ STY\_zpg\_x\_3,}
+\DoxyCodeLine{00297\ \ \ \ \ STY\_abs,\ \ \ STY\_abs\_2,\ \ \ STY\_abs\_3,}
+\DoxyCodeLine{00298\ }
+\DoxyCodeLine{00299\ \ \ \ \ TAX,}
+\DoxyCodeLine{00300\ \ \ \ \ TAY,}
+\DoxyCodeLine{00301\ \ \ \ \ TSX,}
+\DoxyCodeLine{00302\ \ \ \ \ TXA,}
+\DoxyCodeLine{00303\ \ \ \ \ TXS,}
+\DoxyCodeLine{00304\ \ \ \ \ TYA,}
+\DoxyCodeLine{00305\ }
+\DoxyCodeLine{00306\ \ \ \ \ \textcolor{comment}{//\ Illegal\ instructions}}
+\DoxyCodeLine{00307\ }
+\DoxyCodeLine{00308\ \ \ \ \ ALR\_imm,}
+\DoxyCodeLine{00309\ \ \ \ \ ANC\_imm,}
+\DoxyCodeLine{00310\ \ \ \ \ ANE\_imm,}
+\DoxyCodeLine{00311\ \ \ \ \ ARR\_imm,}
+\DoxyCodeLine{00312\ \ \ \ \ AXS\_imm,}
+\DoxyCodeLine{00313\ }
+\DoxyCodeLine{00314\ \ \ \ \ DCP\_zpg,\ \ \ DCP\_zpg\_2,\ \ \ DCP\_zpg\_3,\ \ \ DCP\_zpg\_4,}
+\DoxyCodeLine{00315\ \ \ \ \ DCP\_zpg\_x,\ DCP\_zpg\_x\_2,\ DCP\_zpg\_x\_3,\ DCP\_zpg\_x\_4,\ DCP\_zpg\_x\_5,}
+\DoxyCodeLine{00316\ \ \ \ \ DCP\_abs,\ \ \ DCP\_abs\_2,\ \ \ DCP\_abs\_3,\ \ \ DCP\_abs\_4,\ \ \ DCP\_abs\_5,}
+\DoxyCodeLine{00317\ \ \ \ \ DCP\_abs\_x,\ DCP\_abs\_x\_2,\ DCP\_abs\_x\_3,\ DCP\_abs\_x\_4,\ DCP\_abs\_x\_5,\ DCP\_abs\_x\_6,}
+\DoxyCodeLine{00318\ \ \ \ \ DCP\_abs\_y,\ DCP\_abs\_y\_2,\ DCP\_abs\_y\_3,\ DCP\_abs\_y\_4,\ DCP\_abs\_y\_5,\ DCP\_abs\_y\_6,}
+\DoxyCodeLine{00319\ \ \ \ \ DCP\_ind\_x,\ DCP\_ind\_x\_2,\ DCP\_ind\_x\_3,\ DCP\_ind\_x\_4,\ DCP\_ind\_x\_5,\ DCP\_ind\_x\_6,\ DCP\_ind\_x\_7,}
+\DoxyCodeLine{00320\ \ \ \ \ DCP\_ind\_y,\ DCP\_ind\_y\_2,\ DCP\_ind\_y\_3,\ DCP\_ind\_y\_4,\ DCP\_ind\_y\_5,\ DCP\_ind\_y\_6,\ DCP\_ind\_y\_7,}
+\DoxyCodeLine{00321\ }
+\DoxyCodeLine{00322\ \ \ \ \ ISC\_zpg,\ \ \ ISC\_zpg\_2,\ \ \ ISC\_zpg\_3,\ \ \ ISC\_zpg\_4,}
+\DoxyCodeLine{00323\ \ \ \ \ ISC\_zpg\_x,\ ISC\_zpg\_x\_2,\ ISC\_zpg\_x\_3,\ ISC\_zpg\_x\_4,\ ISC\_zpg\_x\_5,}
+\DoxyCodeLine{00324\ \ \ \ \ ISC\_abs,\ \ \ ISC\_abs\_2,\ \ \ ISC\_abs\_3,\ \ \ ISC\_abs\_4,\ \ \ ISC\_abs\_5,}
+\DoxyCodeLine{00325\ \ \ \ \ ISC\_abs\_x,\ ISC\_abs\_x\_2,\ ISC\_abs\_x\_3,\ ISC\_abs\_x\_4,\ ISC\_abs\_x\_5,\ ISC\_abs\_x\_6,}
+\DoxyCodeLine{00326\ \ \ \ \ ISC\_abs\_y,\ ISC\_abs\_y\_2,\ ISC\_abs\_y\_3,\ ISC\_abs\_y\_4,\ ISC\_abs\_y\_5,\ ISC\_abs\_y\_6,}
+\DoxyCodeLine{00327\ \ \ \ \ ISC\_ind\_x,\ ISC\_ind\_x\_2,\ ISC\_ind\_x\_3,\ ISC\_ind\_x\_4,\ ISC\_ind\_x\_5,\ ISC\_ind\_x\_6,\ ISC\_ind\_x\_7,}
+\DoxyCodeLine{00328\ \ \ \ \ ISC\_ind\_y,\ ISC\_ind\_y\_2,\ ISC\_ind\_y\_3,\ ISC\_ind\_y\_4,\ ISC\_ind\_y\_5,\ ISC\_ind\_y\_6,\ ISC\_ind\_y\_7,}
+\DoxyCodeLine{00329\ }
+\DoxyCodeLine{00330\ \ \ \ \ LAS\_abs\_y,\ LAS\_abs\_y\_2,\ LAS\_abs\_y\_3,\ LAS\_abs\_y\_4,}
+\DoxyCodeLine{00331\ }
+\DoxyCodeLine{00332\ \ \ \ \ LAX\_zpg,\ \ \ LAX\_zpg\_2,}
+\DoxyCodeLine{00333\ \ \ \ \ LAX\_zpg\_y,\ LAX\_zpg\_y\_2,\ LAX\_zpg\_y\_3,}
+\DoxyCodeLine{00334\ \ \ \ \ LAX\_abs,\ \ \ LAX\_abs\_2,\ \ \ LAX\_abs\_3,}
+\DoxyCodeLine{00335\ \ \ \ \ LAX\_abs\_y,\ LAX\_abs\_y\_2,\ LAX\_abs\_y\_3,\ LAX\_abs\_y\_4,}
+\DoxyCodeLine{00336\ \ \ \ \ LAX\_ind\_x,\ LAX\_ind\_x\_2,\ LAX\_ind\_x\_3,\ LAX\_ind\_x\_4,\ LAX\_ind\_x\_5,}
+\DoxyCodeLine{00337\ \ \ \ \ LAX\_ind\_y,\ LAX\_ind\_y\_2,\ LAX\_ind\_y\_3,\ LAX\_ind\_y\_4,\ LAX\_ind\_y\_5,}
+\DoxyCodeLine{00338\ }
+\DoxyCodeLine{00339\ \ \ \ \ LXA\_imm,}
+\DoxyCodeLine{00340\ }
+\DoxyCodeLine{00341\ \ \ \ \ RLA\_zpg,\ \ \ RLA\_zpg\_2,\ \ \ RLA\_zpg\_3,\ \ \ RLA\_zpg\_4,}
+\DoxyCodeLine{00342\ \ \ \ \ RLA\_zpg\_x,\ RLA\_zpg\_x\_2,\ RLA\_zpg\_x\_3,\ RLA\_zpg\_x\_4,\ RLA\_zpg\_x\_5,}
+\DoxyCodeLine{00343\ \ \ \ \ RLA\_abs,\ \ \ RLA\_abs\_2,\ \ \ RLA\_abs\_3,\ \ \ RLA\_abs\_4,\ \ \ RLA\_abs\_5,}
+\DoxyCodeLine{00344\ \ \ \ \ RLA\_abs\_x,\ RLA\_abs\_x\_2,\ RLA\_abs\_x\_3,\ RLA\_abs\_x\_4,\ RLA\_abs\_x\_5,\ RLA\_abs\_x\_6,}
+\DoxyCodeLine{00345\ \ \ \ \ RLA\_abs\_y,\ RLA\_abs\_y\_2,\ RLA\_abs\_y\_3,\ RLA\_abs\_y\_4,\ RLA\_abs\_y\_5,\ RLA\_abs\_y\_6,}
+\DoxyCodeLine{00346\ \ \ \ \ RLA\_ind\_x,\ RLA\_ind\_x\_2,\ RLA\_ind\_x\_3,\ RLA\_ind\_x\_4,\ RLA\_ind\_x\_5,\ RLA\_ind\_x\_6,\ RLA\_ind\_x\_7,}
+\DoxyCodeLine{00347\ \ \ \ \ RLA\_ind\_y,\ RLA\_ind\_y\_2,\ RLA\_ind\_y\_3,\ RLA\_ind\_y\_4,\ RLA\_ind\_y\_5,\ RLA\_ind\_y\_6,\ RLA\_ind\_y\_7,}
+\DoxyCodeLine{00348\ }
+\DoxyCodeLine{00349\ \ \ \ \ RRA\_zpg,\ \ \ RRA\_zpg\_2,\ \ \ RRA\_zpg\_3,\ \ \ RRA\_zpg\_4,}
+\DoxyCodeLine{00350\ \ \ \ \ RRA\_zpg\_x,\ RRA\_zpg\_x\_2,\ RRA\_zpg\_x\_3,\ RRA\_zpg\_x\_4,\ RRA\_zpg\_x\_5,}
+\DoxyCodeLine{00351\ \ \ \ \ RRA\_abs,\ \ \ RRA\_abs\_2,\ \ \ RRA\_abs\_3,\ \ \ RRA\_abs\_4,\ \ \ RRA\_abs\_5,}
+\DoxyCodeLine{00352\ \ \ \ \ RRA\_abs\_x,\ RRA\_abs\_x\_2,\ RRA\_abs\_x\_3,\ RRA\_abs\_x\_4,\ RRA\_abs\_x\_5,\ RRA\_abs\_x\_6,}
+\DoxyCodeLine{00353\ \ \ \ \ RRA\_abs\_y,\ RRA\_abs\_y\_2,\ RRA\_abs\_y\_3,\ RRA\_abs\_y\_4,\ RRA\_abs\_y\_5,\ RRA\_abs\_y\_6,}
+\DoxyCodeLine{00354\ \ \ \ \ RRA\_ind\_x,\ RRA\_ind\_x\_2,\ RRA\_ind\_x\_3,\ RRA\_ind\_x\_4,\ RRA\_ind\_x\_5,\ RRA\_ind\_x\_6,\ RRA\_ind\_x\_7,}
+\DoxyCodeLine{00355\ \ \ \ \ RRA\_ind\_y,\ RRA\_ind\_y\_2,\ RRA\_ind\_y\_3,\ RRA\_ind\_y\_4,\ RRA\_ind\_y\_5,\ RRA\_ind\_y\_6,\ RRA\_ind\_y\_7,}
+\DoxyCodeLine{00356\ }
+\DoxyCodeLine{00357\ \ \ \ \ SAX\_zpg,\ \ \ SAX\_zpg\_2,}
+\DoxyCodeLine{00358\ \ \ \ \ SAX\_zpg\_y,\ SAX\_zpg\_y\_2,\ SAX\_zpg\_y\_3,}
+\DoxyCodeLine{00359\ \ \ \ \ SAX\_abs,\ \ \ SAX\_abs\_2,\ \ \ SAX\_abs\_3,}
+\DoxyCodeLine{00360\ \ \ \ \ SAX\_ind\_x,\ SAX\_ind\_x\_2,\ SAX\_ind\_x\_3,\ SAX\_ind\_x\_4,\ SAX\_ind\_x\_5,}
+\DoxyCodeLine{00361\ }
+\DoxyCodeLine{00362\ \ \ \ \ SHA\_ind\_y,\ SHA\_ind\_y\_2,\ SHA\_ind\_y\_3,\ SHA\_ind\_y\_4,\ SHA\_ind\_y\_5,}
+\DoxyCodeLine{00363\ \ \ \ \ SHA\_abs\_y,\ SHA\_abs\_y\_2,\ SHA\_abs\_y\_3,\ SHA\_abs\_y\_4,}
+\DoxyCodeLine{00364\ }
+\DoxyCodeLine{00365\ \ \ \ \ SHX\_abs\_y,\ SHX\_abs\_y\_2,\ SHX\_abs\_y\_3,\ SHX\_abs\_y\_4,}
+\DoxyCodeLine{00366\ \ \ \ \ SHY\_abs\_x,\ SHY\_abs\_x\_2,\ SHY\_abs\_x\_3,\ SHY\_abs\_x\_4,}
+\DoxyCodeLine{00367\ }
+\DoxyCodeLine{00368\ \ \ \ \ SLO\_zpg,\ \ \ SLO\_zpg\_2,\ \ \ SLO\_zpg\_3,\ \ \ SLO\_zpg\_4,}
+\DoxyCodeLine{00369\ \ \ \ \ SLO\_zpg\_x,\ SLO\_zpg\_x\_2,\ SLO\_zpg\_x\_3,\ SLO\_zpg\_x\_4,\ SLO\_zpg\_x\_5,}
+\DoxyCodeLine{00370\ \ \ \ \ SLO\_abs,\ \ \ SLO\_abs\_2,\ \ \ SLO\_abs\_3,\ \ \ SLO\_abs\_4,\ \ \ SLO\_abs\_5,}
+\DoxyCodeLine{00371\ \ \ \ \ SLO\_abs\_x,\ SLO\_abs\_x\_2,\ SLO\_abs\_x\_3,\ SLO\_abs\_x\_4,\ SLO\_abs\_x\_5,\ SLO\_abs\_x\_6,}
+\DoxyCodeLine{00372\ \ \ \ \ SLO\_abs\_y,\ SLO\_abs\_y\_2,\ SLO\_abs\_y\_3,\ SLO\_abs\_y\_4,\ SLO\_abs\_y\_5,\ SLO\_abs\_y\_6,}
+\DoxyCodeLine{00373\ \ \ \ \ SLO\_ind\_x,\ SLO\_ind\_x\_2,\ SLO\_ind\_x\_3,\ SLO\_ind\_x\_4,\ SLO\_ind\_x\_5,\ SLO\_ind\_x\_6,\ SLO\_ind\_x\_7,}
+\DoxyCodeLine{00374\ \ \ \ \ SLO\_ind\_y,\ SLO\_ind\_y\_2,\ SLO\_ind\_y\_3,\ SLO\_ind\_y\_4,\ SLO\_ind\_y\_5,\ SLO\_ind\_y\_6,\ SLO\_ind\_y\_7,}
+\DoxyCodeLine{00375\ }
+\DoxyCodeLine{00376\ \ \ \ \ SRE\_zpg,\ \ \ SRE\_zpg\_2,\ \ \ SRE\_zpg\_3,\ \ \ SRE\_zpg\_4,}
+\DoxyCodeLine{00377\ \ \ \ \ SRE\_zpg\_x,\ SRE\_zpg\_x\_2,\ SRE\_zpg\_x\_3,\ SRE\_zpg\_x\_4,\ SRE\_zpg\_x\_5,}
+\DoxyCodeLine{00378\ \ \ \ \ SRE\_abs,\ \ \ SRE\_abs\_2,\ \ \ SRE\_abs\_3,\ \ \ SRE\_abs\_4,\ \ \ SRE\_abs\_5,}
+\DoxyCodeLine{00379\ \ \ \ \ SRE\_abs\_x,\ SRE\_abs\_x\_2,\ SRE\_abs\_x\_3,\ SRE\_abs\_x\_4,\ SRE\_abs\_x\_5,\ SRE\_abs\_x\_6,}
+\DoxyCodeLine{00380\ \ \ \ \ SRE\_abs\_y,\ SRE\_abs\_y\_2,\ SRE\_abs\_y\_3,\ SRE\_abs\_y\_4,\ SRE\_abs\_y\_5,\ SRE\_abs\_y\_6,}
+\DoxyCodeLine{00381\ \ \ \ \ SRE\_ind\_x,\ SRE\_ind\_x\_2,\ SRE\_ind\_x\_3,\ SRE\_ind\_x\_4,\ SRE\_ind\_x\_5,\ SRE\_ind\_x\_6,\ SRE\_ind\_x\_7,}
+\DoxyCodeLine{00382\ \ \ \ \ SRE\_ind\_y,\ SRE\_ind\_y\_2,\ SRE\_ind\_y\_3,\ SRE\_ind\_y\_4,\ SRE\_ind\_y\_5,\ SRE\_ind\_y\_6,\ SRE\_ind\_y\_7,}
+\DoxyCodeLine{00383\ }
+\DoxyCodeLine{00384\ \ \ \ \ TAS\_abs\_y,\ TAS\_abs\_y\_2,\ TAS\_abs\_y\_3,\ TAS\_abs\_y\_4}
+\DoxyCodeLine{00385\ \};}
+\DoxyCodeLine{00386\ \textcolor{keyword}{typedef}\ MICRO\_INSTRUCTION\ MicroInstruction;}
 \DoxyCodeLine{00387\ }
-\DoxyCodeLine{00388\ \textcolor{comment}{//}}
-\DoxyCodeLine{00389\ \textcolor{comment}{//\ Structures}}
-\DoxyCodeLine{00390\ \textcolor{comment}{//}}
-\DoxyCodeLine{00391\ }
-\DoxyCodeLine{00392\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
-\DoxyCodeLine{00393\ \{}
-\DoxyCodeLine{00394\ \ \ \ \ \textcolor{keywordtype}{bool}\ n;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Negative\ flag}}
-\DoxyCodeLine{00395\ \ \ \ \ \textcolor{keywordtype}{bool}\ v;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Overflow\ flag}}
-\DoxyCodeLine{00396\ \ \ \ \ \textcolor{keywordtype}{bool}\ b;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Break\ flag}}
-\DoxyCodeLine{00397\ \ \ \ \ \textcolor{keywordtype}{bool}\ d;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Decimal\ flag}}
-\DoxyCodeLine{00398\ \ \ \ \ \textcolor{keywordtype}{bool}\ i;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Interrupt\ flag}}
-\DoxyCodeLine{00399\ \ \ \ \ \textcolor{keywordtype}{bool}\ z;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Zero\ flag}}
-\DoxyCodeLine{00400\ \ \ \ \ \textcolor{keywordtype}{bool}\ c;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Carry\ flag}}
-\DoxyCodeLine{00401\ \}}
-\DoxyCodeLine{00402\ StatusRegister;}
-\DoxyCodeLine{00403\ }
-\DoxyCodeLine{00404\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
-\DoxyCodeLine{00405\ \{}
-\DoxyCodeLine{00406\ \ \ \ \ u8\ data;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Processor\ port\ register}}
-\DoxyCodeLine{00407\ \ \ \ \ u8\ direction;\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Processor\ port\ direction\ register}}
-\DoxyCodeLine{00408\ \}}
-\DoxyCodeLine{00409\ PPort;}
-\DoxyCodeLine{00410\ }
-\DoxyCodeLine{00411\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
-\DoxyCodeLine{00412\ \{}
-\DoxyCodeLine{00413\ \ \ \ \ u16\ pc;\ \ \ \textcolor{comment}{//\ Program\ counter}}
-\DoxyCodeLine{00414\ \ \ \ \ u16\ pc0;\ \ \textcolor{comment}{//\ Frozen\ program\ counter\ (beginning\ of\ current\ instruction)}}
-\DoxyCodeLine{00415\ }
-\DoxyCodeLine{00416\ \ \ \ \ u8\ sp;\ \ \ \ \textcolor{comment}{//\ Stack\ pointer}}
-\DoxyCodeLine{00417\ }
-\DoxyCodeLine{00418\ \ \ \ \ u8\ a;\ \ \ \ \ \textcolor{comment}{//\ Accumulator}}
-\DoxyCodeLine{00419\ \ \ \ \ u8\ x;\ \ \ \ \ \textcolor{comment}{//\ First\ index\ register}}
-\DoxyCodeLine{00420\ \ \ \ \ u8\ y;\ \ \ \ \ \textcolor{comment}{//\ Second\ index\ register}}
-\DoxyCodeLine{00421\ }
-\DoxyCodeLine{00422\ \ \ \ \ u8\ adl;\ \ \ \textcolor{comment}{//\ Address\ data\ (low\ byte)}}
-\DoxyCodeLine{00423\ \ \ \ \ u8\ adh;\ \ \ \textcolor{comment}{//\ Address\ data\ (high\ byte)}}
-\DoxyCodeLine{00424\ \ \ \ \ u8\ idl;\ \ \ \textcolor{comment}{//\ Input\ data\ latch\ (indirect\ addressing\ modes)}}
-\DoxyCodeLine{00425\ \ \ \ \ u8\ d;\ \ \ \ \ \textcolor{comment}{//\ Data\ buffer}}
-\DoxyCodeLine{00426\ }
-\DoxyCodeLine{00427\ \ \ \ \ \textcolor{keywordtype}{bool}\ ovl;\ \textcolor{comment}{//\ Overflow\ indicator\ (page\ boundary\ crossings)}}
-\DoxyCodeLine{00428\ }
-\DoxyCodeLine{00429\ \ \ \ \ StatusRegister\ sr;}
-\DoxyCodeLine{00430\ \ \ \ \ PPort\ pport;}
-\DoxyCodeLine{00431\ \}}
-\DoxyCodeLine{00432\ Registers;}
-\DoxyCodeLine{00433\ }
-\DoxyCodeLine{00434\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
-\DoxyCodeLine{00435\ \{}
-\DoxyCodeLine{00436\ \ \ \ \ u64\ cycle;}
-\DoxyCodeLine{00437\ }
-\DoxyCodeLine{00438\ \ \ \ \ u8\ byte1;}
-\DoxyCodeLine{00439\ \ \ \ \ u8\ byte2;}
-\DoxyCodeLine{00440\ \ \ \ \ u8\ byte3;}
-\DoxyCodeLine{00441\ }
-\DoxyCodeLine{00442\ \ \ \ \ u16\ pc;}
-\DoxyCodeLine{00443\ \ \ \ \ u8\ sp;}
-\DoxyCodeLine{00444\ \ \ \ \ u8\ a;}
-\DoxyCodeLine{00445\ \ \ \ \ u8\ x;}
-\DoxyCodeLine{00446\ \ \ \ \ u8\ y;}
-\DoxyCodeLine{00447\ \ \ \ \ u8\ flags;}
-\DoxyCodeLine{00448\ \}}
-\DoxyCodeLine{00449\ RecordedInstruction;}
-\DoxyCodeLine{00450\ }
-\DoxyCodeLine{00451\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
-\DoxyCodeLine{00452\ \{}
-\DoxyCodeLine{00453\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix;\ \ \ \ \ \textcolor{comment}{//\ Prefix\ for\ hexidecimal\ numbers}}
-\DoxyCodeLine{00454\ \ \ \ \ u8\ radix;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 10\ (decimal)\ or\ 16\ (hexadecimal)}}
-\DoxyCodeLine{00455\ \ \ \ \ \textcolor{keywordtype}{bool}\ upperCase;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Lettercase\ for\ hexadecimal\ digits\ A...F}}
-\DoxyCodeLine{00456\ \ \ \ \ \textcolor{keywordtype}{char}\ fill;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Fill\ charachter:\ '\ ',\ '0',\ or\ 0\ (no\ fill)}}
-\DoxyCodeLine{00457\ \ \ \ \ \textcolor{keywordtype}{bool}\ plainZero;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Determines\ whether\ 0\ is\ printed\ with\ a\ prefix}}
-\DoxyCodeLine{00458\ \}}
-\DoxyCodeLine{00459\ DasmNumberFormat;}
-\DoxyCodeLine{00460\ }
-\DoxyCodeLine{00461\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
-\DoxyCodeLine{00462\ \{}
-\DoxyCodeLine{00463\ \ \ \ \ DasmNumberFormat\ numberFormat;}
-\DoxyCodeLine{00464\ \ \ \ \ \textcolor{keywordtype}{int}\ tab;}
-\DoxyCodeLine{00465\ \}}
-\DoxyCodeLine{00466\ DasmStyle;}
-\DoxyCodeLine{00467\ }
-\DoxyCodeLine{00468\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
-\DoxyCodeLine{00469\ \}}
-\DoxyCodeLine{00470\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00388\ }
+\DoxyCodeLine{00389\ \textcolor{comment}{//}}
+\DoxyCodeLine{00390\ \textcolor{comment}{//\ Structures}}
+\DoxyCodeLine{00391\ \textcolor{comment}{//}}
+\DoxyCodeLine{00392\ }
+\DoxyCodeLine{00393\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00394\ \{}
+\DoxyCodeLine{00395\ \ \ \ \ \textcolor{keywordtype}{bool}\ n;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Negative\ flag}}
+\DoxyCodeLine{00396\ \ \ \ \ \textcolor{keywordtype}{bool}\ v;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Overflow\ flag}}
+\DoxyCodeLine{00397\ \ \ \ \ \textcolor{keywordtype}{bool}\ b;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Break\ flag}}
+\DoxyCodeLine{00398\ \ \ \ \ \textcolor{keywordtype}{bool}\ d;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Decimal\ flag}}
+\DoxyCodeLine{00399\ \ \ \ \ \textcolor{keywordtype}{bool}\ i;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Interrupt\ flag}}
+\DoxyCodeLine{00400\ \ \ \ \ \textcolor{keywordtype}{bool}\ z;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Zero\ flag}}
+\DoxyCodeLine{00401\ \ \ \ \ \textcolor{keywordtype}{bool}\ c;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Carry\ flag}}
+\DoxyCodeLine{00402\ \}}
+\DoxyCodeLine{00403\ StatusRegister;}
+\DoxyCodeLine{00404\ }
+\DoxyCodeLine{00405\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00406\ \{}
+\DoxyCodeLine{00407\ \ \ \ \ u8\ data;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Processor\ port\ register}}
+\DoxyCodeLine{00408\ \ \ \ \ u8\ direction;\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Processor\ port\ direction\ register}}
+\DoxyCodeLine{00409\ \}}
+\DoxyCodeLine{00410\ PPort;}
+\DoxyCodeLine{00411\ }
+\DoxyCodeLine{00412\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00413\ \{}
+\DoxyCodeLine{00414\ \ \ \ \ u16\ pc;\ \ \ \textcolor{comment}{//\ Program\ counter}}
+\DoxyCodeLine{00415\ \ \ \ \ u16\ pc0;\ \ \textcolor{comment}{//\ Frozen\ program\ counter\ (beginning\ of\ current\ instruction)}}
+\DoxyCodeLine{00416\ }
+\DoxyCodeLine{00417\ \ \ \ \ u8\ sp;\ \ \ \ \textcolor{comment}{//\ Stack\ pointer}}
+\DoxyCodeLine{00418\ }
+\DoxyCodeLine{00419\ \ \ \ \ u8\ a;\ \ \ \ \ \textcolor{comment}{//\ Accumulator}}
+\DoxyCodeLine{00420\ \ \ \ \ u8\ x;\ \ \ \ \ \textcolor{comment}{//\ First\ index\ register}}
+\DoxyCodeLine{00421\ \ \ \ \ u8\ y;\ \ \ \ \ \textcolor{comment}{//\ Second\ index\ register}}
+\DoxyCodeLine{00422\ }
+\DoxyCodeLine{00423\ \ \ \ \ u8\ adl;\ \ \ \textcolor{comment}{//\ Address\ data\ (low\ byte)}}
+\DoxyCodeLine{00424\ \ \ \ \ u8\ adh;\ \ \ \textcolor{comment}{//\ Address\ data\ (high\ byte)}}
+\DoxyCodeLine{00425\ \ \ \ \ u8\ idl;\ \ \ \textcolor{comment}{//\ Input\ data\ latch\ (indirect\ addressing\ modes)}}
+\DoxyCodeLine{00426\ \ \ \ \ u8\ d;\ \ \ \ \ \textcolor{comment}{//\ Data\ buffer}}
+\DoxyCodeLine{00427\ }
+\DoxyCodeLine{00428\ \ \ \ \ \textcolor{keywordtype}{bool}\ ovl;\ \textcolor{comment}{//\ Overflow\ indicator\ (page\ boundary\ crossings)}}
+\DoxyCodeLine{00429\ }
+\DoxyCodeLine{00430\ \ \ \ \ StatusRegister\ sr;}
+\DoxyCodeLine{00431\ \ \ \ \ PPort\ pport;}
+\DoxyCodeLine{00432\ \}}
+\DoxyCodeLine{00433\ Registers;}
+\DoxyCodeLine{00434\ }
+\DoxyCodeLine{00435\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00436\ \{}
+\DoxyCodeLine{00437\ \ \ \ \ u64\ cycle;}
+\DoxyCodeLine{00438\ }
+\DoxyCodeLine{00439\ \ \ \ \ u8\ byte1;}
+\DoxyCodeLine{00440\ \ \ \ \ u8\ byte2;}
+\DoxyCodeLine{00441\ \ \ \ \ u8\ byte3;}
+\DoxyCodeLine{00442\ }
+\DoxyCodeLine{00443\ \ \ \ \ u16\ pc;}
+\DoxyCodeLine{00444\ \ \ \ \ u8\ sp;}
+\DoxyCodeLine{00445\ \ \ \ \ u8\ a;}
+\DoxyCodeLine{00446\ \ \ \ \ u8\ x;}
+\DoxyCodeLine{00447\ \ \ \ \ u8\ y;}
+\DoxyCodeLine{00448\ \ \ \ \ u8\ flags;}
+\DoxyCodeLine{00449\ \}}
+\DoxyCodeLine{00450\ RecordedInstruction;}
+\DoxyCodeLine{00451\ }
+\DoxyCodeLine{00452\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00453\ \{}
+\DoxyCodeLine{00454\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix;\ \ \ \ \ \textcolor{comment}{//\ Prefix\ for\ hexidecimal\ numbers}}
+\DoxyCodeLine{00455\ \ \ \ \ u8\ radix;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 10\ (decimal)\ or\ 16\ (hexadecimal)}}
+\DoxyCodeLine{00456\ \ \ \ \ \textcolor{keywordtype}{bool}\ upperCase;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Lettercase\ for\ hexadecimal\ digits\ A...F}}
+\DoxyCodeLine{00457\ \ \ \ \ \textcolor{keywordtype}{char}\ fill;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Fill\ charachter:\ '\ ',\ '0',\ or\ 0\ (no\ fill)}}
+\DoxyCodeLine{00458\ \ \ \ \ \textcolor{keywordtype}{bool}\ plainZero;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Determines\ whether\ 0\ is\ printed\ with\ a\ prefix}}
+\DoxyCodeLine{00459\ \}}
+\DoxyCodeLine{00460\ DasmNumberFormat;}
+\DoxyCodeLine{00461\ }
+\DoxyCodeLine{00462\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00463\ \{}
+\DoxyCodeLine{00464\ \ \ \ \ DasmNumberFormat\ numberFormat;}
+\DoxyCodeLine{00465\ \ \ \ \ \textcolor{keywordtype}{int}\ tab;}
+\DoxyCodeLine{00466\ \}}
+\DoxyCodeLine{00467\ DasmStyle;}
+\DoxyCodeLine{00468\ }
+\DoxyCodeLine{00469\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00470\ \}}
+\DoxyCodeLine{00471\ \textcolor{preprocessor}{\#endif}}
 
 \end{DoxyCode}

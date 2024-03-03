@@ -1,0 +1,16 @@
+<map id="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ExpansionPortTypes.h" name="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ExpansionPortTypes.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="98,5,323,61"/>
+<area shape="rect" id="Node000002" href="$_expansion_port_8h_source.html" title=" " alt="" coords="24,109,248,165"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,75,158,110,154,107,179,72"/>
+<area shape="rect" id="Node000007" href="$_virtual_c64_types_8h.html" title=" " alt="" coords="224,213,413,253"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="240,73,262,108,313,211,308,213,257,110,236,75"/>
+<area shape="rect" id="Node000003" href="$_c64_8h_source.html" title=" " alt="" coords="5,213,200,253"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="124,180,112,213,107,212,119,178"/>
+<area shape="rect" id="Node000004" href="$_emulator_8h_source.html" title=" " alt="" coords="25,301,247,342"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="118,267,131,300,126,302,113,269"/>
+<area shape="rect" id="Node000005" href="$_virtual_c64_8h.html" title=" " alt="" coords="118,390,300,431"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="164,352,195,388,191,391,160,356"/>
+<area shape="rect" id="Node000006" href="$_headless_8h_source.html" title=" " alt="" coords="118,479,300,519"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="212,446,212,478,207,478,207,446"/>
+<area shape="poly" id="edge7_Node000007_Node000005" title=" " alt="" coords="304,268,261,343,227,391,222,388,256,341,299,266"/>
+</map>

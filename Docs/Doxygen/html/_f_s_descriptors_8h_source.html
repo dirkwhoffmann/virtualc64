@@ -130,7 +130,7 @@ $(function(){initNavTree('_f_s_descriptors_8h_source.html',''); initResizable();
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;CoreObject.h&quot;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;DiskTypes.h&quot;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;FSTypes.h&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="_f_s_types_8h.html">FSTypes.h</a>&quot;</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">namespace </span>vc64 {</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
@@ -148,7 +148,7 @@ $(function(){initNavTree('_f_s_descriptors_8h_source.html',''); initResizable();
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">struct </span>FSDeviceDescriptor : CoreObject {</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    </div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="comment">// DOS type</span></div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    DOSType dos = DOS_TYPE_NODOS;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <a class="code hl_enumeration" href="_f_s_types_8h.html#aa499a0fc379c037c4be2ad9be44035e4">DOSType</a> dos = <a class="code hl_enumvalue" href="_f_s_types_8h.html#aa499a0fc379c037c4be2ad9be44035e4adaac0b67bf546a76eaa8914ac59ba8e6">DOS_TYPE_NODOS</a>;</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    </div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="comment">// Number of cylinders</span></div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    isize numCyls = 0;</div>
@@ -164,7 +164,7 @@ $(function(){initNavTree('_f_s_descriptors_8h_source.html',''); initResizable();
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    FSDeviceDescriptor() { }</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="comment">// Creates a device descriptor for a standard disk</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    FSDeviceDescriptor(DiskType type, DOSType dos = DOS_TYPE_CBM);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    FSDeviceDescriptor(DiskType type, <a class="code hl_enumeration" href="_f_s_types_8h.html#aa499a0fc379c037c4be2ad9be44035e4">DOSType</a> dos = <a class="code hl_enumvalue" href="_f_s_types_8h.html#aa499a0fc379c037c4be2ad9be44035e4a5857af2a40af18caba3bc3620edfe86b">DOS_TYPE_CBM</a>);</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="comment">// Creates a device descriptor from a D64 file</span></div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    FSDeviceDescriptor(<span class="keyword">const</span> <span class="keyword">class</span> D64File &amp;d64);</div>
@@ -220,6 +220,10 @@ $(function(){initNavTree('_f_s_descriptors_8h_source.html',''); initResizable();
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>};</div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>}</div>
+<div class="ttc" id="a_f_s_types_8h_html"><div class="ttname"><a href="_f_s_types_8h.html">FSTypes.h</a></div></div>
+<div class="ttc" id="a_f_s_types_8h_html_aa499a0fc379c037c4be2ad9be44035e4"><div class="ttname"><a href="_f_s_types_8h.html#aa499a0fc379c037c4be2ad9be44035e4">DOS_TYPE</a></div><div class="ttdeci">DOS_TYPE</div><div class="ttdoc">File system type.</div><div class="ttdef"><b>Definition</b> FSTypes.h:25</div></div>
+<div class="ttc" id="a_f_s_types_8h_html_aa499a0fc379c037c4be2ad9be44035e4a5857af2a40af18caba3bc3620edfe86b"><div class="ttname"><a href="_f_s_types_8h.html#aa499a0fc379c037c4be2ad9be44035e4a5857af2a40af18caba3bc3620edfe86b">DOS_TYPE_CBM</a></div><div class="ttdeci">@ DOS_TYPE_CBM</div><div class="ttdoc">C64 CBM file system.</div><div class="ttdef"><b>Definition</b> FSTypes.h:27</div></div>
+<div class="ttc" id="a_f_s_types_8h_html_aa499a0fc379c037c4be2ad9be44035e4adaac0b67bf546a76eaa8914ac59ba8e6"><div class="ttname"><a href="_f_s_types_8h.html#aa499a0fc379c037c4be2ad9be44035e4adaac0b67bf546a76eaa8914ac59ba8e6">DOS_TYPE_NODOS</a></div><div class="ttdeci">@ DOS_TYPE_NODOS</div><div class="ttdoc">No file system.</div><div class="ttdef"><b>Definition</b> FSTypes.h:26</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

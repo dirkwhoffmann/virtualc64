@@ -109,10 +109,11 @@ static const isize dataBlockSize = 325 * 8;
 // Enumerations
 //
 
+/// Disk type
 enum_long(DISK_TYPE)
 {
-    DISK_TYPE_SS_SD,   // Single-sided, single density (VC1541)
-    DISK_TYPE_DS_SD    // Double-sided, single density (VC1571) (not supported)
+    DISK_TYPE_SS_SD,   ///< Single-sided, single density (VC1541)
+    DISK_TYPE_DS_SD    ///< Double-sided, single density (VC1571) (unsupported)
 };
 typedef DISK_TYPE DiskType;
 

@@ -42,7 +42,7 @@
     </sectiondef>
     <sectiondef kind="public-attrib">
       <memberdef kind="variable" id="classvc64_1_1_c64_memory_1a5a1f909fd97d98e7253953c7c6efa552" prot="public" static="no" mutable="no">
-        <type>MemoryType</type>
+        <type><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref></type>
         <definition>MemoryType vc64::C64Memory::bankMap[32][16]</definition>
         <argsstring>[32][16]</argsstring>
         <name>bankMap</name>
@@ -98,7 +98,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/C64Memory.h" line="58" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/C64Memory.h" bodystart="58" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="classvc64_1_1_c64_memory_1a8e89e45b48019b4805223c00322b6ed1" prot="public" static="no" mutable="no">
-        <type>MemoryType</type>
+        <type><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref></type>
         <definition>MemoryType vc64::C64Memory::peekSrc[16]</definition>
         <argsstring>[16]</argsstring>
         <name>peekSrc</name>
@@ -112,7 +112,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/C64Memory.h" line="61" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/C64Memory.h" bodystart="61" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="classvc64_1_1_c64_memory_1a3f9c3549b99f58dc5c404e51e27ba119" prot="public" static="no" mutable="no">
-        <type>MemoryType</type>
+        <type><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref></type>
         <definition>MemoryType vc64::C64Memory::pokeTarget[16]</definition>
         <argsstring>[16]</argsstring>
         <name>pokeTarget</name>
@@ -452,7 +452,7 @@
         <name>eraseWithPattern</name>
         <qualifiedname>vc64::C64Memory::eraseWithPattern</qualifiedname>
         <param>
-          <type>RamPattern</type>
+          <type><ref refid="_memory_types_8h_1aed0a6af618528ae4df946b46f3db80b8" kindref="member">RamPattern</ref></type>
           <declname>pattern</declname>
         </param>
         <briefdescription>
@@ -478,7 +478,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/C64Memory.h" line="158" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/C64Memory.cpp" bodystart="309" bodyend="326"/>
       </memberdef>
       <memberdef kind="function" id="classvc64_1_1_c64_memory_1abad1343742a68460b52ee997911e31f5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
-        <type>MemoryType</type>
+        <type><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref></type>
         <definition>MemoryType vc64::C64Memory::getPeekSource</definition>
         <argsstring>(u16 addr)</argsstring>
         <name>getPeekSource</name>
@@ -496,7 +496,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/C64Memory.h" line="161" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/C64Memory.h" bodystart="161" bodyend="161"/>
       </memberdef>
       <memberdef kind="function" id="classvc64_1_1_c64_memory_1a7cac4886ebd896143d82e0c7d17ae99c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
-        <type>MemoryType</type>
+        <type><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref></type>
         <definition>MemoryType vc64::C64Memory::getPokeTarget</definition>
         <argsstring>(u16 addr)</argsstring>
         <name>getPokeTarget</name>
@@ -524,7 +524,7 @@
           <declname>addr</declname>
         </param>
         <param>
-          <type>MemoryType</type>
+          <type><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref></type>
           <declname>source</declname>
         </param>
         <briefdescription>
@@ -716,7 +716,7 @@
           <declname>addr</declname>
         </param>
         <param>
-          <type>MemoryType</type>
+          <type><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref></type>
           <declname>source</declname>
         </param>
         <briefdescription>
@@ -796,7 +796,7 @@
           <declname>value</declname>
         </param>
         <param>
-          <type>MemoryType</type>
+          <type><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref></type>
           <declname>target</declname>
         </param>
         <briefdescription>
@@ -990,7 +990,7 @@
           <declname>pads</declname>
         </param>
         <param>
-          <type>MemoryType</type>
+          <type><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref></type>
           <declname>src</declname>
         </param>
         <briefdescription>
@@ -1020,7 +1020,7 @@
           <declname>pads</declname>
         </param>
         <param>
-          <type>MemoryType</type>
+          <type><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref></type>
           <declname>src</declname>
         </param>
         <briefdescription>
@@ -1050,7 +1050,7 @@
           <declname>pads</declname>
         </param>
         <param>
-          <type>MemoryType</type>
+          <type><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref></type>
           <declname>src</declname>
         </param>
         <briefdescription>
@@ -1076,7 +1076,7 @@
           <declname>num</declname>
         </param>
         <param>
-          <type>MemoryType</type>
+          <type><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref></type>
           <declname>src</declname>
         </param>
         <briefdescription>

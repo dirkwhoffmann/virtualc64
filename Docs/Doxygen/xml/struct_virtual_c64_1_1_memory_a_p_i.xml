@@ -55,7 +55,7 @@
           <declname>pads</declname>
         </param>
         <param>
-          <type>MemoryType</type>
+          <type><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref></type>
           <declname>src</declname>
         </param>
         <briefdescription>
@@ -81,7 +81,7 @@
           <declname>num</declname>
         </param>
         <param>
-          <type>MemoryType</type>
+          <type><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref></type>
           <declname>src</declname>
         </param>
         <briefdescription>

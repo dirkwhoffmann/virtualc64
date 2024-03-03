@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="352" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="352" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="353" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="353" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_emulator_stats_1a5885b9df83cee94738a7777de1bdd2ec" prot="public" static="no" mutable="no">
         <type>double</type>
@@ -29,14 +29,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="353" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="353" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="354" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="354" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="350" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="351" bodyend="354"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="351" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="352" bodyend="355"/>
     <listofallmembers>
       <member refid="struct_emulator_stats_1aee64183e79a9049167da98ef86f8b2db" prot="public" virt="non-virtual"><scope>EmulatorStats</scope><name>cpuLoad</name></member>
       <member refid="struct_emulator_stats_1a5885b9df83cee94738a7777de1bdd2ec" prot="public" virt="non-virtual"><scope>EmulatorStats</scope><name>fps</name></member>

@@ -4,7 +4,7 @@ var dir_05d809685911b910dcd065bcbda36bec =
     [ "AnyFile.h", "_any_file_8h_source.html", null ],
     [ "CRTFile.h", "_c_r_t_file_8h_source.html", null ],
     [ "D64File.h", "_d64_file_8h_source.html", null ],
-    [ "FileTypes.h", "_file_types_8h_source.html", null ],
+    [ "FileTypes.h", "_file_types_8h.html", null ],
     [ "Folder.h", "_folder_8h_source.html", null ],
     [ "G64File.h", "_g64_file_8h_source.html", null ],
     [ "P00File.h", "_p00_file_8h_source.html", null ],

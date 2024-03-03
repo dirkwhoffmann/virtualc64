@@ -130,7 +130,7 @@ $(function(){initNavTree('_emulator_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;C64.h&quot;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;Defaults.h&quot;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;EmulatorTypes.h&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="_emulator_types_8h.html">EmulatorTypes.h</a>&quot;</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;Host.h&quot;</span></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;<a class="code" href="_thread_8h.html">Thread.h</a>&quot;</span></div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &quot;<a class="code" href="_cmd_queue_8h.html">CmdQueue.h</a>&quot;</span></div>
@@ -232,7 +232,7 @@ $(function(){initNavTree('_emulator_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    i64 get(<a class="code hl_enumeration" href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8">Option</a> option, isize <span class="keywordtype">id</span>) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="comment">// Configures the emulator to match a specific C64 model</span></div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <span class="keywordtype">void</span> set(C64Model model);</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <span class="keywordtype">void</span> set(<a class="code hl_enumeration" href="_c64_types_8h.html#a34fe42cc2e5fba851b026b25c4af9e03">C64Model</a> model);</div>
 <div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    <span class="comment">// Sets an option</span></div>
 <div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="keywordtype">void</span> set(<a class="code hl_enumeration" href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8">Option</a> option, i64 value) <span class="keywordflow">throws</span>;</div>
@@ -337,8 +337,10 @@ $(function(){initNavTree('_emulator_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>};</div>
 <div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> </div>
 <div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>}</div>
+<div class="ttc" id="a_c64_types_8h_html_a34fe42cc2e5fba851b026b25c4af9e03"><div class="ttname"><a href="_c64_types_8h.html#a34fe42cc2e5fba851b026b25c4af9e03">C64_MODEL</a></div><div class="ttdeci">C64_MODEL</div><div class="ttdoc">C64 model.</div><div class="ttdef"><b>Definition</b> C64Types.h:26</div></div>
 <div class="ttc" id="a_cmd_queue_8h_html"><div class="ttname"><a href="_cmd_queue_8h.html">CmdQueue.h</a></div></div>
 <div class="ttc" id="a_cmd_queue_types_8h_html_a63ebdc688313e444b486514798e48df3"><div class="ttname"><a href="_cmd_queue_types_8h.html#a63ebdc688313e444b486514798e48df3">CMD_TYPE</a></div><div class="ttdeci">CMD_TYPE</div><div class="ttdoc">Emulator command.</div><div class="ttdef"><b>Definition</b> CmdQueueTypes.h:26</div></div>
+<div class="ttc" id="a_emulator_types_8h_html"><div class="ttname"><a href="_emulator_types_8h.html">EmulatorTypes.h</a></div></div>
 <div class="ttc" id="a_option_types_8h_html_a273e435dabd576e6dcff3f18024d1fa8"><div class="ttname"><a href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8">OPT</a></div><div class="ttdeci">OPT</div><div class="ttdoc">Configuration option.</div><div class="ttdef"><b>Definition</b> OptionTypes.h:25</div></div>
 <div class="ttc" id="a_option_types_8h_html_a273e435dabd576e6dcff3f18024d1fa8a90ddc8a2dde5619b4eda1c8ca09afc2b"><div class="ttname"><a href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8a90ddc8a2dde5619b4eda1c8ca09afc2b">OPT_EMU_WARP_MODE</a></div><div class="ttdeci">@ OPT_EMU_WARP_MODE</div><div class="ttdoc">Warp activation mode.</div><div class="ttdef"><b>Definition</b> OptionTypes.h:34</div></div>
 <div class="ttc" id="a_option_types_8h_html_a273e435dabd576e6dcff3f18024d1fa8a94e87f1a82ff557d344df10952de2d56"><div class="ttname"><a href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8a94e87f1a82ff557d344df10952de2d56">OPT_EMU_RUN_AHEAD</a></div><div class="ttdeci">@ OPT_EMU_RUN_AHEAD</div><div class="ttdoc">Number of run-ahead frames.</div><div class="ttdef"><b>Definition</b> OptionTypes.h:37</div></div>

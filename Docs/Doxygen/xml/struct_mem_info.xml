@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="112" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="112" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="115" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="115" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_mem_info_1a8ee3b9c2a324f8c90d65147d0d1647de" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -29,7 +29,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="113" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="113" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="116" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="116" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_mem_info_1a6798eab88a745364f74b0c7d25b0768e" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -43,7 +43,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="114" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="114" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="117" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="117" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_mem_info_1a6c413dda10666fa32fcbb17ff61efa00" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -57,7 +57,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="115" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="115" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="118" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="118" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_mem_info_1ab93249d8c7d05a5e2db6924fc717c49f" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -71,7 +71,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="116" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="116" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="119" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="119" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_mem_info_1a927c0402cec8ed4db004875310a18a10" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -85,10 +85,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="117" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="117" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="120" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="120" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_mem_info_1af23bd64bce6deb3af101d085cee352b5" prot="public" static="no" mutable="no">
-        <type>MemoryType</type>
+        <type><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref></type>
         <definition>MemoryType MemInfo::peekSrc[16]</definition>
         <argsstring>[16]</argsstring>
         <name>peekSrc</name>
@@ -99,10 +99,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="119" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="119" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="122" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="122" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_mem_info_1a194b5d96f61efd30a7162a283cf44b8f" prot="public" static="no" mutable="no">
-        <type>MemoryType</type>
+        <type><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref></type>
         <definition>MemoryType MemInfo::vicPeekSrc[16]</definition>
         <argsstring>[16]</argsstring>
         <name>vicPeekSrc</name>
@@ -113,14 +113,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="120" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="120" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="123" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="123" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="110" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="111" bodyend="121"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" line="113" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" bodystart="114" bodyend="124"/>
     <listofallmembers>
       <member refid="struct_mem_info_1a927c0402cec8ed4db004875310a18a10" prot="public" virt="non-virtual"><scope>MemInfo</scope><name>bankMap</name></member>
       <member refid="struct_mem_info_1ab93249d8c7d05a5e2db6924fc717c49f" prot="public" virt="non-virtual"><scope>MemInfo</scope><name>charen</name></member>

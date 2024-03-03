@@ -128,12 +128,12 @@ $(function(){initNavTree('_v_i_c_i_i_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="_v_i_c_i_i_types_8h.html">VICIITypes.h</a>&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;VICIITypes.h&quot;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;SubComponent.h&quot;</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;Colors.h&quot;</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;Constants.h&quot;</span></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;DmaDebugger.h&quot;</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &quot;MemoryTypes.h&quot;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &quot;<a class="code" href="_memory_types_8h.html">MemoryTypes.h</a>&quot;</span></div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#include &quot;TimeDelayed.h&quot;</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">namespace </span>vc64 {</div>
@@ -564,7 +564,7 @@ $(function(){initNavTree('_v_i_c_i_i_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00448" name="l00448"></a><span class="lineno">  448</span><span class="comment">     * has access to RAM and the character Rom. In ultimax mode, VICII has</span></div>
 <div class="line"><a id="l00449" name="l00449"></a><span class="lineno">  449</span><span class="comment">     * access to ROMH and some portions of RAM.</span></div>
 <div class="line"><a id="l00450" name="l00450"></a><span class="lineno">  450</span><span class="comment">     */</span></div>
-<div class="line"><a id="l00451" name="l00451"></a><span class="lineno">  451</span>    MemoryType memSrc[16];</div>
+<div class="line"><a id="l00451" name="l00451"></a><span class="lineno">  451</span>    <a class="code hl_enumeration" href="_memory_types_8h.html#adea0e9ad7389791d42ae1d396d68915a">MemoryType</a> memSrc[16];</div>
 <div class="line"><a id="l00452" name="l00452"></a><span class="lineno">  452</span>    </div>
 <div class="line"><a id="l00453" name="l00453"></a><span class="lineno">  453</span>    <span class="comment">/* Indicates whether VICII is running in ultimax mode. Ultimax mode can be</span></div>
 <div class="line"><a id="l00454" name="l00454"></a><span class="lineno">  454</span><span class="comment">     * enabled by external cartridges by pulling the game line low and keeping</span></div>
@@ -724,8 +724,8 @@ $(function(){initNavTree('_v_i_c_i_i_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span> </div>
 <div class="line"><a id="l00609" name="l00609"></a><span class="lineno">  609</span>    <span class="keywordtype">void</span> _initialize() <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span> </div>
-<div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span>    <span class="keywordtype">void</span> initFuncTable(<a class="code hl_enumeration" href="_v_i_c_i_i_types_8h.html#aa6907eb49d9f65564eca99d8b6cd3c44">VICIIRevision</a> revision);</div>
-<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>    <span class="keywordtype">void</span> initFuncTable(<a class="code hl_enumeration" href="_v_i_c_i_i_types_8h.html#aa6907eb49d9f65564eca99d8b6cd3c44">VICIIRevision</a> revision, u16 flags);</div>
+<div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span>    <span class="keywordtype">void</span> initFuncTable(VICIIRevision revision);</div>
+<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>    <span class="keywordtype">void</span> initFuncTable(VICIIRevision revision, u16 flags);</div>
 <div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span> </div>
 <div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span>    <span class="keywordtype">void</span> updateVicFunctionTable();</div>
 <div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span> </div>
@@ -963,7 +963,7 @@ $(function(){initNavTree('_v_i_c_i_i_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00847" name="l00847"></a><span class="lineno">  847</span><span class="keyword">private</span>:</div>
 <div class="line"><a id="l00848" name="l00848"></a><span class="lineno">  848</span>    </div>
 <div class="line"><a id="l00849" name="l00849"></a><span class="lineno">  849</span>    <span class="keywordtype">void</span> updateRevision();</div>
-<div class="line"><a id="l00850" name="l00850"></a><span class="lineno">  850</span>    <span class="keywordtype">void</span> setRevision(<a class="code hl_enumeration" href="_v_i_c_i_i_types_8h.html#aa6907eb49d9f65564eca99d8b6cd3c44">VICIIRevision</a> revision);</div>
+<div class="line"><a id="l00850" name="l00850"></a><span class="lineno">  850</span>    <span class="keywordtype">void</span> setRevision(VICIIRevision revision);</div>
 <div class="line"><a id="l00851" name="l00851"></a><span class="lineno">  851</span> </div>
 <div class="line"><a id="l00852" name="l00852"></a><span class="lineno">  852</span>    </div>
 <div class="line"><a id="l00853" name="l00853"></a><span class="lineno">  853</span>    <span class="comment">//</span></div>
@@ -977,35 +977,35 @@ $(function(){initNavTree('_v_i_c_i_i_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00861" name="l00861"></a><span class="lineno">  861</span>    <span class="keywordtype">bool</span> ntsc()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> isNTSC; }</div>
 <div class="line"><a id="l00862" name="l00862"></a><span class="lineno">  862</span> </div>
 <div class="line"><a id="l00863" name="l00863"></a><span class="lineno">  863</span>    <span class="comment">// Returns true if light pen interrupts are triggered with a delay</span></div>
-<div class="line"><a id="l00864" name="l00864"></a><span class="lineno">  864</span>    <span class="keyword">static</span> <span class="keywordtype">bool</span> delayedLightPenIrqs(<a class="code hl_enumeration" href="_v_i_c_i_i_types_8h.html#aa6907eb49d9f65564eca99d8b6cd3c44">VICIIRevision</a> rev);</div>
+<div class="line"><a id="l00864" name="l00864"></a><span class="lineno">  864</span>    <span class="keyword">static</span> <span class="keywordtype">bool</span> delayedLightPenIrqs(VICIIRevision rev);</div>
 <div class="line"><a id="l00865" name="l00865"></a><span class="lineno">  865</span>    <span class="keywordtype">bool</span> delayedLightPenIrqs() { <span class="keywordflow">return</span> delayedLightPenIrqs(config.revision); }</div>
 <div class="line"><a id="l00866" name="l00866"></a><span class="lineno">  866</span> </div>
 <div class="line"><a id="l00867" name="l00867"></a><span class="lineno">  867</span>    <span class="comment">// Returns the display refresh rate</span></div>
-<div class="line"><a id="l00868" name="l00868"></a><span class="lineno">  868</span>    <span class="keyword">static</span> <span class="keywordtype">double</span> getFps(<a class="code hl_enumeration" href="_v_i_c_i_i_types_8h.html#aa6907eb49d9f65564eca99d8b6cd3c44">VICIIRevision</a> rev);</div>
+<div class="line"><a id="l00868" name="l00868"></a><span class="lineno">  868</span>    <span class="keyword">static</span> <span class="keywordtype">double</span> getFps(VICIIRevision rev);</div>
 <div class="line"><a id="l00869" name="l00869"></a><span class="lineno">  869</span>    <span class="keywordtype">double</span> getFps()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> getFps(config.revision); }</div>
 <div class="line"><a id="l00870" name="l00870"></a><span class="lineno">  870</span> </div>
 <div class="line"><a id="l00871" name="l00871"></a><span class="lineno">  871</span>    <span class="comment">// Returns the clock frequency</span></div>
-<div class="line"><a id="l00872" name="l00872"></a><span class="lineno">  872</span>    <span class="keyword">static</span> isize getFrequency(<a class="code hl_enumeration" href="_v_i_c_i_i_types_8h.html#aa6907eb49d9f65564eca99d8b6cd3c44">VICIIRevision</a> rev);</div>
+<div class="line"><a id="l00872" name="l00872"></a><span class="lineno">  872</span>    <span class="keyword">static</span> isize getFrequency(VICIIRevision rev);</div>
 <div class="line"><a id="l00873" name="l00873"></a><span class="lineno">  873</span>    isize getFrequency()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> getFrequency(config.revision); }</div>
 <div class="line"><a id="l00874" name="l00874"></a><span class="lineno">  874</span>    </div>
 <div class="line"><a id="l00875" name="l00875"></a><span class="lineno">  875</span>    <span class="comment">// Returns the number of CPU cycles performed per scanline</span></div>
-<div class="line"><a id="l00876" name="l00876"></a><span class="lineno">  876</span>    <span class="keyword">static</span> isize getCyclesPerLine(<a class="code hl_enumeration" href="_v_i_c_i_i_types_8h.html#aa6907eb49d9f65564eca99d8b6cd3c44">VICIIRevision</a> rev);</div>
+<div class="line"><a id="l00876" name="l00876"></a><span class="lineno">  876</span>    <span class="keyword">static</span> isize getCyclesPerLine(VICIIRevision rev);</div>
 <div class="line"><a id="l00877" name="l00877"></a><span class="lineno">  877</span>    isize getCyclesPerLine()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> getCyclesPerLine(config.revision); }</div>
 <div class="line"><a id="l00878" name="l00878"></a><span class="lineno">  878</span> </div>
 <div class="line"><a id="l00879" name="l00879"></a><span class="lineno">  879</span>    <span class="comment">// Returns the number of scanline drawn per frame</span></div>
-<div class="line"><a id="l00880" name="l00880"></a><span class="lineno">  880</span>    <span class="keyword">static</span> isize getLinesPerFrame(<a class="code hl_enumeration" href="_v_i_c_i_i_types_8h.html#aa6907eb49d9f65564eca99d8b6cd3c44">VICIIRevision</a> rev);</div>
+<div class="line"><a id="l00880" name="l00880"></a><span class="lineno">  880</span>    <span class="keyword">static</span> isize getLinesPerFrame(VICIIRevision rev);</div>
 <div class="line"><a id="l00881" name="l00881"></a><span class="lineno">  881</span>    isize getLinesPerFrame()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> getLinesPerFrame(config.revision); }</div>
 <div class="line"><a id="l00882" name="l00882"></a><span class="lineno">  882</span> </div>
 <div class="line"><a id="l00883" name="l00883"></a><span class="lineno">  883</span>    <span class="comment">// Returns the number of CPU cycles executed in one frame</span></div>
-<div class="line"><a id="l00884" name="l00884"></a><span class="lineno">  884</span>    <span class="keyword">static</span> isize getCyclesPerFrame(<a class="code hl_enumeration" href="_v_i_c_i_i_types_8h.html#aa6907eb49d9f65564eca99d8b6cd3c44">VICIIRevision</a> rev);</div>
+<div class="line"><a id="l00884" name="l00884"></a><span class="lineno">  884</span>    <span class="keyword">static</span> isize getCyclesPerFrame(VICIIRevision rev);</div>
 <div class="line"><a id="l00885" name="l00885"></a><span class="lineno">  885</span>    isize getCyclesPerFrame()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> getCyclesPerFrame(config.revision); }</div>
 <div class="line"><a id="l00886" name="l00886"></a><span class="lineno">  886</span> </div>
 <div class="line"><a id="l00887" name="l00887"></a><span class="lineno">  887</span>    <span class="comment">// Returns the number of visible scanlines in a single frame</span></div>
-<div class="line"><a id="l00888" name="l00888"></a><span class="lineno">  888</span>    <span class="keyword">static</span> isize numVisibleLines(<a class="code hl_enumeration" href="_v_i_c_i_i_types_8h.html#aa6907eb49d9f65564eca99d8b6cd3c44">VICIIRevision</a> rev);</div>
+<div class="line"><a id="l00888" name="l00888"></a><span class="lineno">  888</span>    <span class="keyword">static</span> isize numVisibleLines(VICIIRevision rev);</div>
 <div class="line"><a id="l00889" name="l00889"></a><span class="lineno">  889</span>    <span class="keywordtype">long</span> numVisibleLines()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> numVisibleLines(config.revision); }</div>
 <div class="line"><a id="l00890" name="l00890"></a><span class="lineno">  890</span>    </div>
 <div class="line"><a id="l00891" name="l00891"></a><span class="lineno">  891</span>    <span class="comment">// Indicates if VICII is affected by the gray-dot bug</span></div>
-<div class="line"><a id="l00892" name="l00892"></a><span class="lineno">  892</span>    <span class="keyword">static</span> <span class="keywordtype">bool</span> hasGrayCodeBug(<a class="code hl_enumeration" href="_v_i_c_i_i_types_8h.html#aa6907eb49d9f65564eca99d8b6cd3c44">VICIIRevision</a> rev);</div>
+<div class="line"><a id="l00892" name="l00892"></a><span class="lineno">  892</span>    <span class="keyword">static</span> <span class="keywordtype">bool</span> hasGrayCodeBug(VICIIRevision rev);</div>
 <div class="line"><a id="l00893" name="l00893"></a><span class="lineno">  893</span>    <span class="keywordtype">bool</span> hasGrayCodeBug()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> hasGrayCodeBug(config.revision); }</div>
 <div class="line"><a id="l00894" name="l00894"></a><span class="lineno">  894</span> </div>
 <div class="line"><a id="l00895" name="l00895"></a><span class="lineno">  895</span>    <span class="comment">// Returns true if the end of the scanline has been reached</span></div>
@@ -1028,7 +1028,7 @@ $(function(){initNavTree('_v_i_c_i_i_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00912" name="l00912"></a><span class="lineno">  912</span>    </div>
 <div class="line"><a id="l00913" name="l00913"></a><span class="lineno">  913</span>    <span class="comment">// Returns a C64 color in 32 bit big endian RGBA format</span></div>
 <div class="line"><a id="l00914" name="l00914"></a><span class="lineno">  914</span>    u32 getColor(isize nr)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> rgbaTable[nr]; }</div>
-<div class="line"><a id="l00915" name="l00915"></a><span class="lineno">  915</span>    u32 getColor(isize nr, <a class="code hl_enumeration" href="_v_i_c_i_i_types_8h.html#af59eb4c57176022b657e35f92a7d01c9">Palette</a> palette);</div>
+<div class="line"><a id="l00915" name="l00915"></a><span class="lineno">  915</span>    u32 getColor(isize nr, Palette palette);</div>
 <div class="line"><a id="l00916" name="l00916"></a><span class="lineno">  916</span> </div>
 <div class="line"><a id="l00917" name="l00917"></a><span class="lineno">  917</span><span class="keyword">private</span>:</div>
 <div class="line"><a id="l00918" name="l00918"></a><span class="lineno">  918</span>    </div>
@@ -1529,7 +1529,7 @@ $(function(){initNavTree('_v_i_c_i_i_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l01413" name="l01413"></a><span class="lineno"> 1413</span><span class="keyword">public</span>: </div>
 <div class="line"><a id="l01414" name="l01414"></a><span class="lineno"> 1414</span> </div>
 <div class="line"><a id="l01415" name="l01415"></a><span class="lineno"> 1415</span>    <span class="comment">// Returns the current screen geometry</span></div>
-<div class="line"><a id="l01416" name="l01416"></a><span class="lineno"> 1416</span>    <a class="code hl_enumeration" href="_v_i_c_i_i_types_8h.html#a4b4722e29346b1d0c0c0faa810ec4c93">ScreenGeometry</a> getScreenGeometry(<span class="keywordtype">void</span>) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l01416" name="l01416"></a><span class="lineno"> 1416</span>    ScreenGeometry getScreenGeometry(<span class="keywordtype">void</span>) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l01417" name="l01417"></a><span class="lineno"> 1417</span>    </div>
 <div class="line"><a id="l01418" name="l01418"></a><span class="lineno"> 1418</span>    <span class="comment">// Returns the coordinates of a certain sprite</span></div>
 <div class="line"><a id="l01419" name="l01419"></a><span class="lineno"> 1419</span>    u16 getSpriteX(<span class="keywordtype">int</span> nr)<span class="keyword"> const </span>{ assert(nr &lt; 8); <span class="keywordflow">return</span> reg.current.sprX[nr]; }</div>
@@ -1537,6 +1537,8 @@ $(function(){initNavTree('_v_i_c_i_i_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l01421" name="l01421"></a><span class="lineno"> 1421</span>};</div>
 <div class="line"><a id="l01422" name="l01422"></a><span class="lineno"> 1422</span> </div>
 <div class="line"><a id="l01423" name="l01423"></a><span class="lineno"> 1423</span>}</div>
+<div class="ttc" id="a_memory_types_8h_html"><div class="ttname"><a href="_memory_types_8h.html">MemoryTypes.h</a></div></div>
+<div class="ttc" id="a_memory_types_8h_html_adea0e9ad7389791d42ae1d396d68915a"><div class="ttname"><a href="_memory_types_8h.html#adea0e9ad7389791d42ae1d396d68915a">M_TYPE</a></div><div class="ttdeci">M_TYPE</div><div class="ttdoc">Memory type.</div><div class="ttdef"><b>Definition</b> MemoryTypes.h:25</div></div>
 <div class="ttc" id="a_option_types_8h_html_a273e435dabd576e6dcff3f18024d1fa8"><div class="ttname"><a href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8">OPT</a></div><div class="ttdeci">OPT</div><div class="ttdoc">Configuration option.</div><div class="ttdef"><b>Definition</b> OptionTypes.h:25</div></div>
 <div class="ttc" id="a_option_types_8h_html_a273e435dabd576e6dcff3f18024d1fa8a097615e0e27fb679e172516082f1a5b6"><div class="ttname"><a href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8a097615e0e27fb679e172516082f1a5b6">OPT_VICII_REVISION</a></div><div class="ttdeci">@ OPT_VICII_REVISION</div><div class="ttdoc">Chip revision.</div><div class="ttdef"><b>Definition</b> OptionTypes.h:40</div></div>
 <div class="ttc" id="a_option_types_8h_html_a273e435dabd576e6dcff3f18024d1fa8a23eefd98a66a2b07edc91b23845d3840"><div class="ttname"><a href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8a23eefd98a66a2b07edc91b23845d3840">OPT_VICII_POWER_SAVE</a></div><div class="ttdeci">@ OPT_VICII_POWER_SAVE</div><div class="ttdoc">Enable fast-paths.</div><div class="ttdef"><b>Definition</b> OptionTypes.h:46</div></div>
@@ -1549,10 +1551,6 @@ $(function(){initNavTree('_v_i_c_i_i_8h_source.html',''); initResizable(); });
 <div class="ttc" id="a_option_types_8h_html_a273e435dabd576e6dcff3f18024d1fa8ad749dedb1ec78b680c7aa47ebfe4010f"><div class="ttname"><a href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8ad749dedb1ec78b680c7aa47ebfe4010f">OPT_VICII_HIDE_SPRITES</a></div><div class="ttdeci">@ OPT_VICII_HIDE_SPRITES</div><div class="ttdoc">Hide some sprites.</div><div class="ttdef"><b>Definition</b> OptionTypes.h:47</div></div>
 <div class="ttc" id="a_option_types_8h_html_a273e435dabd576e6dcff3f18024d1fa8adb90bd2fb3bf6ff4edc7d871df89d9f6"><div class="ttname"><a href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8adb90bd2fb3bf6ff4edc7d871df89d9f6">OPT_VICII_SS_COLLISIONS</a></div><div class="ttdeci">@ OPT_VICII_SS_COLLISIONS</div><div class="ttdoc">Check for sprite-sprite collisions.</div><div class="ttdef"><b>Definition</b> OptionTypes.h:50</div></div>
 <div class="ttc" id="a_option_types_8h_html_a273e435dabd576e6dcff3f18024d1fa8adef705eaa36b3e7cac49606c570b0382"><div class="ttname"><a href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8adef705eaa36b3e7cac49606c570b0382">OPT_VICII_GRAY_DOT_BUG</a></div><div class="ttdeci">@ OPT_VICII_GRAY_DOT_BUG</div><div class="ttdoc">Emulate gray-dot bug.</div><div class="ttdef"><b>Definition</b> OptionTypes.h:45</div></div>
-<div class="ttc" id="a_v_i_c_i_i_types_8h_html"><div class="ttname"><a href="_v_i_c_i_i_types_8h.html">VICIITypes.h</a></div></div>
-<div class="ttc" id="a_v_i_c_i_i_types_8h_html_a4b4722e29346b1d0c0c0faa810ec4c93"><div class="ttname"><a href="_v_i_c_i_i_types_8h.html#a4b4722e29346b1d0c0c0faa810ec4c93">SCREEN_GEOMETRY</a></div><div class="ttdeci">SCREEN_GEOMETRY</div><div class="ttdoc">! C64 canvas size</div><div class="ttdef"><b>Definition</b> VICIITypes.h:191</div></div>
-<div class="ttc" id="a_v_i_c_i_i_types_8h_html_aa6907eb49d9f65564eca99d8b6cd3c44"><div class="ttname"><a href="_v_i_c_i_i_types_8h.html#aa6907eb49d9f65564eca99d8b6cd3c44">VICII_REV</a></div><div class="ttdeci">VICII_REV</div><div class="ttdoc">VICII chip revision.</div><div class="ttdef"><b>Definition</b> VICIITypes.h:91</div></div>
-<div class="ttc" id="a_v_i_c_i_i_types_8h_html_af59eb4c57176022b657e35f92a7d01c9"><div class="ttname"><a href="_v_i_c_i_i_types_8h.html#af59eb4c57176022b657e35f92a7d01c9">PALETTE</a></div><div class="ttdeci">PALETTE</div><div class="ttdoc">Color palette.</div><div class="ttdef"><b>Definition</b> VICIITypes.h:155</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -9,6 +9,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -27,11 +28,12 @@
 // Enumerations
 //
 
+/// Control port device
 enum_long(CPDEVICE)
 {
-    CPDEVICE_NONE,
-    CPDEVICE_MOUSE,
-    CPDEVICE_JOYSTICK
+    CPDEVICE_NONE,      ///! No device
+    CPDEVICE_MOUSE,     ///! Mouse
+    CPDEVICE_JOYSTICK   ///! Joystick
 };
 typedef CPDEVICE ControlPortDevice;
 

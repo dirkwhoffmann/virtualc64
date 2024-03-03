@@ -4,7 +4,7 @@
     <compoundname>Message</compoundname>
     <sectiondef kind="public-attrib">
       <memberdef kind="variable" id="struct_message_1ad5e704a3add1eb57db9efeaa1fb59b40" prot="public" static="no" mutable="no">
-        <type>MsgType</type>
+        <type><ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25b" kindref="member">MsgType</ref></type>
         <definition>MsgType Message::type</definition>
         <argsstring></argsstring>
         <name>type</name>
@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="232" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="232" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="233" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="233" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_message_1ae1dc1ecf7d4cdd6a924e922349a375ed" prot="public" static="no" mutable="no">
         <type>i64</type>
@@ -29,7 +29,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="236" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="236" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="237" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="237" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_message_1ac949afcce6d178d0fed3266f33852c0f" prot="public" static="no" mutable="no">
         <type>CpuMsg</type>
@@ -43,7 +43,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="237" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="237" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="238" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="238" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_message_1a28aa2b63962b98cf1aac20dd0fe0d3ac" prot="public" static="no" mutable="no">
         <type>DriveMsg</type>
@@ -57,7 +57,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="238" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="238" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="239" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="239" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_message_1a546c02128f78650bbe6c3e7c33b94521" prot="public" static="no" mutable="no">
         <type>ScriptMsg</type>
@@ -71,7 +71,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="239" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="239" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="240" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="240" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_message_1a6fd3262ee164f19ebcd115776fce7abf" prot="public" static="no" mutable="no">
         <type>union Message</type>
@@ -85,14 +85,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="240" column="5"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="241" column="5"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="229" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="230" bodyend="241"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="230" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="231" bodyend="242"/>
     <listofallmembers>
       <member refid="struct_message_1ac949afcce6d178d0fed3266f33852c0f" prot="public" virt="non-virtual"><scope>Message</scope><name>cpu</name></member>
       <member refid="struct_message_1a28aa2b63962b98cf1aac20dd0fe0d3ac" prot="public" virt="non-virtual"><scope>Message</scope><name>drive</name></member>

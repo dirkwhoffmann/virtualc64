@@ -9,6 +9,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -19,12 +20,13 @@
 // Enumerations
 //
 
+/// Power grip characteristics
 enum_long(GRID)
 {
-    GRID_STABLE_50HZ,
-    GRID_UNSTABLE_50HZ,
-    GRID_STABLE_60HZ,
-    GRID_UNSTABLE_60HZ
+    GRID_STABLE_50HZ,   ///< 50Hz constant
+    GRID_UNSTABLE_50HZ, ///< 50Hz with jitter
+    GRID_STABLE_60HZ,   ///< 60Hz constant
+    GRID_UNSTABLE_60HZ  ///< 60Hz with jitter
 };
 typedef GRID PowerGrid;
 

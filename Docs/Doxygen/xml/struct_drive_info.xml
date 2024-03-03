@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="202" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="202" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="204" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="204" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_drive_info_1a569c62d0a92b32ea544c0fb7ac452852" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -29,7 +29,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="204" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="204" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="206" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="206" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_drive_info_1a924fb4b3ca6d84a4d6ea71c03f03714d" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -43,7 +43,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="205" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="205" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="207" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="207" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_drive_info_1a4542e2bf812fb4a49c7804b513c056b9" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -57,7 +57,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="206" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="206" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="208" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="208" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_drive_info_1a362d6028fee5ee5be828664696427057" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -71,7 +71,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="207" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="207" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="209" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="209" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_drive_info_1af4629ceda3816aecf97eb4a31da6880f" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -85,7 +85,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="208" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="208" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="210" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="210" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_drive_info_1ae324f46d31a386820c79483b2a373cc6" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -99,7 +99,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="210" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="210" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="212" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="212" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_drive_info_1a718d923b9fbf52757296af06dfb53c40" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -113,7 +113,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="211" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="211" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="213" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="213" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_drive_info_1af6d8539470fa73c0cb57b548505a683a" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -127,7 +127,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="213" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="213" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="215" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="215" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_drive_info_1af4998f1a3e9d0b6c1e0cf379a306d535" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -141,7 +141,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="214" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="214" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="216" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="216" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_drive_info_1a061d9d092e496f16485bab7697ac75fa" prot="public" static="no" mutable="no">
         <type>Halftrack</type>
@@ -155,7 +155,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="216" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="216" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="218" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="218" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_drive_info_1a2482b316b107842b2346ffeb48a8e35a" prot="public" static="no" mutable="no">
         <type>HeadPos</type>
@@ -169,14 +169,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="217" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="217" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="219" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="219" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="200" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="201" bodyend="218"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" line="202" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h" bodystart="203" bodyend="220"/>
     <listofallmembers>
       <member refid="struct_drive_info_1a718d923b9fbf52757296af06dfb53c40" prot="public" virt="non-virtual"><scope>DriveInfo</scope><name>greenLED</name></member>
       <member refid="struct_drive_info_1a061d9d092e496f16485bab7697ac75fa" prot="public" virt="non-virtual"><scope>DriveInfo</scope><name>halftrack</name></member>

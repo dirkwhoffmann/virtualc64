@@ -148,7 +148,7 @@
       </node>
       <node id="52">
         <label>MsgQueueTypes.h</label>
-        <link refid="_msg_queue_types_8h_source"/>
+        <link refid="_msg_queue_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -242,7 +242,7 @@
       </node>
       <node id="62">
         <label>CartridgeTypes.h</label>
-        <link refid="_cartridge_types_8h_source"/>
+        <link refid="_cartridge_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -566,7 +566,7 @@
       </node>
       <node id="50">
         <label>C64Types.h</label>
-        <link refid="_c64_types_8h_source"/>
+        <link refid="_c64_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -586,7 +586,7 @@
       </node>
       <node id="117">
         <label>CIATypes.h</label>
-        <link refid="_c_i_a_types_8h_source"/>
+        <link refid="_c_i_a_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -718,7 +718,7 @@
       </node>
       <node id="15">
         <label>EmulatorTypes.h</label>
-        <link refid="_emulator_types_8h_source"/>
+        <link refid="_emulator_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -742,7 +742,7 @@
       </node>
       <node id="78">
         <label>ControlPortTypes.h</label>
-        <link refid="_control_port_types_8h_source"/>
+        <link refid="_control_port_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -762,7 +762,7 @@
       </node>
       <node id="58">
         <label>ExpansionPortTypes.h</label>
-        <link refid="_expansion_port_types_8h_source"/>
+        <link refid="_expansion_port_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -786,7 +786,7 @@
       </node>
       <node id="129">
         <label>PowerSupplyTypes.h</label>
-        <link refid="_power_supply_types_8h_source"/>
+        <link refid="_power_supply_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -816,7 +816,7 @@
       </node>
       <node id="5">
         <label>MemoryTypes.h</label>
-        <link refid="_memory_types_8h_source"/>
+        <link refid="_memory_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -874,7 +874,7 @@
       </node>
       <node id="98">
         <label>SIDTypes.h</label>
-        <link refid="_s_i_d_types_8h_source"/>
+        <link refid="_s_i_d_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -974,7 +974,7 @@
       </node>
       <node id="91">
         <label>BusTypes.h</label>
-        <link refid="_bus_types_8h_source"/>
+        <link refid="_bus_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -992,7 +992,7 @@
       </node>
       <node id="92">
         <label>DmaDebuggerTypes.h</label>
-        <link refid="_dma_debugger_types_8h_source"/>
+        <link refid="_dma_debugger_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1046,7 +1046,7 @@
       </node>
       <node id="90">
         <label>VICIITypes.h</label>
-        <link refid="_v_i_c_i_i_types_8h"/>
+        <link refid="_v_i_c_i_i_types_8h_source"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1092,7 +1092,7 @@
       </node>
       <node id="175">
         <label>FSTypes.h</label>
-        <link refid="_f_s_types_8h_source"/>
+        <link refid="_f_s_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1152,7 +1152,7 @@
       </node>
       <node id="66">
         <label>FileTypes.h</label>
-        <link refid="_file_types_8h_source"/>
+        <link refid="_file_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1270,7 +1270,7 @@
       </node>
       <node id="135">
         <label>RetroShellTypes.h</label>
-        <link refid="_retro_shell_types_8h_source"/>
+        <link refid="_retro_shell_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1306,7 +1306,7 @@
       </node>
       <node id="181">
         <label>DatasetteTypes.h</label>
-        <link refid="_datasette_types_8h_source"/>
+        <link refid="_datasette_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1388,7 +1388,7 @@
       </node>
       <node id="86">
         <label>DriveTypes.h</label>
-        <link refid="_drive_types_8h_source"/>
+        <link refid="_drive_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1414,7 +1414,7 @@
       </node>
       <node id="87">
         <label>ParCableTypes.h</label>
-        <link refid="_par_cable_types_8h_source"/>
+        <link refid="_par_cable_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1436,7 +1436,7 @@
       </node>
       <node id="60">
         <label>JoystickTypes.h</label>
-        <link refid="_joystick_types_8h_source"/>
+        <link refid="_joystick_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1496,7 +1496,7 @@
       </node>
       <node id="81">
         <label>MouseTypes.h</label>
-        <link refid="_mouse_types_8h_source"/>
+        <link refid="_mouse_types_8h"/>
         <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="12" relation="include">
@@ -1753,48 +1753,48 @@
 <codeline lineno="34"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/><sp/><sp/>map[x][4]<sp/>==<sp/>mapping<sp/>for<sp/>range<sp/>$D000<sp/>-<sp/>$DFFF</highlight></codeline>
 <codeline lineno="35"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/><sp/><sp/>map[x][5]<sp/>==<sp/>mapping<sp/>for<sp/>range<sp/>$E000<sp/>-<sp/>$FFFF</highlight></codeline>
 <codeline lineno="36"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/>MemoryType<sp/>map[32][6]<sp/>=<sp/>{</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref><sp/>map[32][6]<sp/>=<sp/>{</highlight></codeline>
 <codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/>M_RAM<sp/><sp/><sp/><sp/>},</highlight></codeline>
-<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/>M_RAM<sp/><sp/><sp/><sp/>},</highlight></codeline>
-<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/><sp/>M_CRTHI,<sp/>M_RAM,<sp/><sp/>M_CHAR,<sp/>M_KERNAL<sp/>},</highlight></codeline>
-<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_CRTLO,<sp/>M_CRTHI,<sp/>M_RAM,<sp/><sp/>M_CHAR,<sp/>M_KERNAL<sp/>},</highlight></codeline>
-<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/>M_RAM<sp/><sp/><sp/><sp/>},</highlight></codeline>
-<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/>M_IO,<sp/><sp/><sp/>M_RAM<sp/><sp/><sp/><sp/>},</highlight></codeline>
-<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/><sp/>M_CRTHI,<sp/>M_RAM,<sp/><sp/>M_IO,<sp/><sp/><sp/>M_KERNAL<sp/>},</highlight></codeline>
-<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_CRTLO,<sp/>M_CRTHI,<sp/>M_RAM,<sp/><sp/>M_IO,<sp/><sp/><sp/>M_KERNAL<sp/>},</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa0221b6d2b1fa217a7ef9db216224e16b" kindref="member">M_CRTHI</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf0e649f94b2c0b7eda468fc5630982b1" kindref="member">M_CHAR</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28" kindref="member">M_KERNAL</ref><sp/>},</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa2ea52710f1d98ab448b381a3e90b16fc" kindref="member">M_CRTLO</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa0221b6d2b1fa217a7ef9db216224e16b" kindref="member">M_CRTHI</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf0e649f94b2c0b7eda468fc5630982b1" kindref="member">M_CHAR</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28" kindref="member">M_KERNAL</ref><sp/>},</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229" kindref="member">M_IO</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa0221b6d2b1fa217a7ef9db216224e16b" kindref="member">M_CRTHI</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229" kindref="member">M_IO</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28" kindref="member">M_KERNAL</ref><sp/>},</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa2ea52710f1d98ab448b381a3e90b16fc" kindref="member">M_CRTLO</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa0221b6d2b1fa217a7ef9db216224e16b" kindref="member">M_CRTHI</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229" kindref="member">M_IO</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28" kindref="member">M_KERNAL</ref><sp/>},</highlight></codeline>
 <codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/>M_RAM<sp/><sp/><sp/><sp/>},</highlight></codeline>
-<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/>M_CHAR,<sp/>M_RAM<sp/><sp/><sp/><sp/>},</highlight></codeline>
-<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/>M_CHAR,<sp/>M_KERNAL<sp/>},</highlight></codeline>
-<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_CRTLO,<sp/>M_BASIC,<sp/>M_RAM,<sp/><sp/>M_CHAR,<sp/>M_KERNAL<sp/>},</highlight></codeline>
-<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/>M_RAM<sp/><sp/><sp/><sp/>},</highlight></codeline>
-<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/>M_IO,<sp/><sp/><sp/>M_RAM<sp/><sp/><sp/><sp/>},</highlight></codeline>
-<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/>M_IO,<sp/><sp/><sp/>M_KERNAL<sp/>},</highlight></codeline>
-<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_CRTLO,<sp/>M_BASIC,<sp/>M_RAM,<sp/><sp/>M_IO,<sp/><sp/><sp/>M_KERNAL<sp/>},</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf0e649f94b2c0b7eda468fc5630982b1" kindref="member">M_CHAR</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf0e649f94b2c0b7eda468fc5630982b1" kindref="member">M_CHAR</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28" kindref="member">M_KERNAL</ref><sp/>},</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa2ea52710f1d98ab448b381a3e90b16fc" kindref="member">M_CRTLO</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa253d2571b1383128fb6edac9bf4efe5f" kindref="member">M_BASIC</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf0e649f94b2c0b7eda468fc5630982b1" kindref="member">M_CHAR</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28" kindref="member">M_KERNAL</ref><sp/>},</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229" kindref="member">M_IO</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229" kindref="member">M_IO</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28" kindref="member">M_KERNAL</ref><sp/>},</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa2ea52710f1d98ab448b381a3e90b16fc" kindref="member">M_CRTLO</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa253d2571b1383128fb6edac9bf4efe5f" kindref="member">M_BASIC</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229" kindref="member">M_IO</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28" kindref="member">M_KERNAL</ref><sp/>},</highlight></codeline>
 <codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_NONE,<sp/>M_CRTLO,<sp/>M_NONE,<sp/><sp/>M_NONE,<sp/>M_IO,<sp/><sp/><sp/>M_CRTHI<sp/><sp/>},</highlight></codeline>
-<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_NONE,<sp/>M_CRTLO,<sp/>M_NONE,<sp/><sp/>M_NONE,<sp/>M_IO,<sp/><sp/><sp/>M_CRTHI<sp/><sp/>},</highlight></codeline>
-<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_NONE,<sp/>M_CRTLO,<sp/>M_NONE,<sp/><sp/>M_NONE,<sp/>M_IO,<sp/><sp/><sp/>M_CRTHI<sp/><sp/>},</highlight></codeline>
-<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_NONE,<sp/>M_CRTLO,<sp/>M_NONE,<sp/><sp/>M_NONE,<sp/>M_IO,<sp/><sp/><sp/>M_CRTHI<sp/><sp/>},</highlight></codeline>
-<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_NONE,<sp/>M_CRTLO,<sp/>M_NONE,<sp/><sp/>M_NONE,<sp/>M_IO,<sp/><sp/><sp/>M_CRTHI<sp/><sp/>},</highlight></codeline>
-<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_NONE,<sp/>M_CRTLO,<sp/>M_NONE,<sp/><sp/>M_NONE,<sp/>M_IO,<sp/><sp/><sp/>M_CRTHI<sp/><sp/>},</highlight></codeline>
-<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_NONE,<sp/>M_CRTLO,<sp/>M_NONE,<sp/><sp/>M_NONE,<sp/>M_IO,<sp/><sp/><sp/>M_CRTHI<sp/><sp/>},</highlight></codeline>
-<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_NONE,<sp/>M_CRTLO,<sp/>M_NONE,<sp/><sp/>M_NONE,<sp/>M_IO,<sp/><sp/><sp/>M_CRTHI<sp/><sp/>},</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa2ea52710f1d98ab448b381a3e90b16fc" kindref="member">M_CRTLO</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229" kindref="member">M_IO</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa0221b6d2b1fa217a7ef9db216224e16b" kindref="member">M_CRTHI</ref><sp/><sp/>},</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa2ea52710f1d98ab448b381a3e90b16fc" kindref="member">M_CRTLO</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229" kindref="member">M_IO</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa0221b6d2b1fa217a7ef9db216224e16b" kindref="member">M_CRTHI</ref><sp/><sp/>},</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa2ea52710f1d98ab448b381a3e90b16fc" kindref="member">M_CRTLO</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229" kindref="member">M_IO</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa0221b6d2b1fa217a7ef9db216224e16b" kindref="member">M_CRTHI</ref><sp/><sp/>},</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa2ea52710f1d98ab448b381a3e90b16fc" kindref="member">M_CRTLO</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229" kindref="member">M_IO</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa0221b6d2b1fa217a7ef9db216224e16b" kindref="member">M_CRTHI</ref><sp/><sp/>},</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa2ea52710f1d98ab448b381a3e90b16fc" kindref="member">M_CRTLO</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229" kindref="member">M_IO</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa0221b6d2b1fa217a7ef9db216224e16b" kindref="member">M_CRTHI</ref><sp/><sp/>},</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa2ea52710f1d98ab448b381a3e90b16fc" kindref="member">M_CRTLO</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229" kindref="member">M_IO</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa0221b6d2b1fa217a7ef9db216224e16b" kindref="member">M_CRTHI</ref><sp/><sp/>},</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa2ea52710f1d98ab448b381a3e90b16fc" kindref="member">M_CRTLO</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229" kindref="member">M_IO</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa0221b6d2b1fa217a7ef9db216224e16b" kindref="member">M_CRTHI</ref><sp/><sp/>},</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa2ea52710f1d98ab448b381a3e90b16fc" kindref="member">M_CRTLO</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229" kindref="member">M_IO</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa0221b6d2b1fa217a7ef9db216224e16b" kindref="member">M_CRTHI</ref><sp/><sp/>},</highlight></codeline>
 <codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/>M_RAM<sp/><sp/><sp/><sp/>},</highlight></codeline>
-<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/>M_CHAR,<sp/>M_RAM<sp/><sp/><sp/><sp/>},</highlight></codeline>
-<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/>M_CHAR,<sp/>M_KERNAL<sp/>},</highlight></codeline>
-<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/><sp/>M_BASIC,<sp/>M_RAM,<sp/><sp/>M_CHAR,<sp/>M_KERNAL<sp/>},</highlight></codeline>
-<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/>M_RAM<sp/><sp/><sp/><sp/>},</highlight></codeline>
-<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/>M_IO,<sp/><sp/><sp/>M_RAM<sp/><sp/><sp/><sp/>},</highlight></codeline>
-<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/><sp/>M_RAM,<sp/><sp/>M_IO,<sp/><sp/><sp/>M_KERNAL<sp/>},</highlight></codeline>
-<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>M_RAM,<sp/><sp/>M_RAM,<sp/><sp/><sp/>M_BASIC,<sp/>M_RAM,<sp/><sp/>M_IO,<sp/><sp/><sp/>M_KERNAL<sp/>}</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf0e649f94b2c0b7eda468fc5630982b1" kindref="member">M_CHAR</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf0e649f94b2c0b7eda468fc5630982b1" kindref="member">M_CHAR</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28" kindref="member">M_KERNAL</ref><sp/>},</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa253d2571b1383128fb6edac9bf4efe5f" kindref="member">M_BASIC</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf0e649f94b2c0b7eda468fc5630982b1" kindref="member">M_CHAR</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28" kindref="member">M_KERNAL</ref><sp/>},</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229" kindref="member">M_IO</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref><sp/><sp/><sp/><sp/>},</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229" kindref="member">M_IO</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28" kindref="member">M_KERNAL</ref><sp/>},</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa253d2571b1383128fb6edac9bf4efe5f" kindref="member">M_BASIC</ref>,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>,<sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229" kindref="member">M_IO</ref>,<sp/><sp/><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28" kindref="member">M_KERNAL</ref><sp/>}</highlight></codeline>
 <codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
 <codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(isize<sp/>i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>32;<sp/>i++)<sp/>{</highlight></codeline>
 <codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>bankMap[i][0x0]<sp/>=<sp/>M_PP;</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>bankMap[i][0x0]<sp/>=<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa79314351698710ef6516d7862b2b6351" kindref="member">M_PP</ref>;</highlight></codeline>
 <codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>bankMap[i][0x1]<sp/>=<sp/>map[i][0];</highlight></codeline>
 <codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>bankMap[i][0x2]<sp/>=<sp/>map[i][0];</highlight></codeline>
 <codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>bankMap[i][0x3]<sp/>=<sp/>map[i][0];</highlight></codeline>
@@ -1813,9 +1813,9 @@
 <codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Initialize<sp/>peekSource<sp/>and<sp/>pokeTarket<sp/>tables</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/>peekSrc[0x0]<sp/>=<sp/>pokeTarget[0x0]<sp/>=<sp/>M_PP;</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/>peekSrc[0x0]<sp/>=<sp/>pokeTarget[0x0]<sp/>=<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa79314351698710ef6516d7862b2b6351" kindref="member">M_PP</ref>;</highlight></codeline>
 <codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(isize<sp/>i<sp/>=<sp/>0x1;<sp/>i<sp/>&lt;=<sp/>0xF;<sp/>i++)<sp/>{</highlight></codeline>
-<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>peekSrc[i]<sp/>=<sp/>pokeTarget[i]<sp/>=<sp/>M_RAM;</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>peekSrc[i]<sp/>=<sp/>pokeTarget[i]<sp/>=<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>;</highlight></codeline>
 <codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="101"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="102"><highlight class="normal"></highlight></codeline>
@@ -1880,7 +1880,7 @@
 <codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">throw</highlight><highlight class="normal"><sp/>VC64Error(<ref refid="_error_types_8h_1a52f90e25735e172d279183e61d90d3e3ac8d7329a9083105d05aa8f5e0877a0cc" kindref="member">ERROR_OPT_INVARG</ref>,<sp/>RamPatternEnum::keyList());</highlight></codeline>
 <codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.ramPattern<sp/>=<sp/>(RamPattern)value;</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>config.ramPattern<sp/>=<sp/>(<ref refid="_memory_types_8h_1aed0a6af618528ae4df946b46f3db80b8" kindref="member">RamPattern</ref>)value;</highlight></codeline>
 <codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="166"><highlight class="normal"></highlight></codeline>
 <codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8afdff745c618394723a7642317fbc0404" kindref="member">OPT_SAVE_ROMS</ref>:</highlight></codeline>
@@ -1958,7 +1958,7 @@
 <codeline lineno="239"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="240"><highlight class="normal"></highlight></codeline>
 <codeline lineno="241"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="242"><highlight class="normal">C64Memory::eraseWithPattern(RamPattern<sp/>pattern)</highlight></codeline>
+<codeline lineno="242"><highlight class="normal">C64Memory::eraseWithPattern(<ref refid="_memory_types_8h_1aed0a6af618528ae4df946b46f3db80b8" kindref="member">RamPattern</ref><sp/>pattern)</highlight></codeline>
 <codeline lineno="243"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="244"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Note:<sp/>The<sp/>RAM<sp/>init<sp/>pattern<sp/>is<sp/>not<sp/>unique<sp/>across<sp/>C64<sp/>models<sp/>(for<sp/>details,</highlight></codeline>
 <codeline lineno="245"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>see<sp/>the<sp/>README<sp/>file<sp/>in<sp/>the<sp/>VICE<sp/>test<sp/>suite<sp/>C64/raminitpattern).<sp/>By</highlight></codeline>
@@ -1974,7 +1974,7 @@
 <codeline lineno="255"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="256"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(pattern)<sp/>{</highlight></codeline>
 <codeline lineno="257"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="258"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>RAM_PATTERN_VICE:</highlight></codeline>
+<codeline lineno="258"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1aed0a6af618528ae4df946b46f3db80b8ae78df2cc15466657d31cd74f5b5468b3" kindref="member">RAM_PATTERN_VICE</ref>:</highlight></codeline>
 <codeline lineno="259"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="260"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>$00<sp/>$00<sp/>$FF<sp/>$FF<sp/>$FF<sp/>$FF<sp/>$00<sp/>$00<sp/>...</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="261"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(isize<sp/>i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>isizeof(ram);<sp/>i++)</highlight></codeline>
@@ -1986,7 +1986,7 @@
 <codeline lineno="267"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="268"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="269"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="270"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>RAM_PATTERN_CCS:</highlight></codeline>
+<codeline lineno="270"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1aed0a6af618528ae4df946b46f3db80b8a70909d838e7c51ad660c9a498ad34a5b" kindref="member">RAM_PATTERN_CCS</ref>:</highlight></codeline>
 <codeline lineno="271"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="272"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>(64<sp/>x<sp/>$FF)<sp/>(64<sp/>x<sp/>$00)<sp/>...</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="273"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(isize<sp/>i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>isizeof(ram);<sp/>i++)</highlight></codeline>
@@ -1994,21 +1994,21 @@
 <codeline lineno="275"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="276"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="277"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="278"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>RAM_PATTERN_ZEROES:</highlight></codeline>
+<codeline lineno="278"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1aed0a6af618528ae4df946b46f3db80b8acac1a72e6127c38ca6b9114441c819df" kindref="member">RAM_PATTERN_ZEROES</ref>:</highlight></codeline>
 <codeline lineno="279"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="280"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(isize<sp/>i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>isizeof(ram);<sp/>i++)</highlight></codeline>
 <codeline lineno="281"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ram[i]<sp/>=<sp/>0;</highlight></codeline>
 <codeline lineno="282"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="283"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="284"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="285"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>RAM_PATTERN_ONES:</highlight></codeline>
+<codeline lineno="285"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1aed0a6af618528ae4df946b46f3db80b8a4c184d4f1e7dfe0adb905cdf83d85b67" kindref="member">RAM_PATTERN_ONES</ref>:</highlight></codeline>
 <codeline lineno="286"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="287"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(isize<sp/>i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>isizeof(ram);<sp/>i++)</highlight></codeline>
 <codeline lineno="288"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ram[i]<sp/>=<sp/>0xFF;</highlight></codeline>
 <codeline lineno="289"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="290"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="291"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="292"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>RAM_PATTERN_RANDOM:</highlight></codeline>
+<codeline lineno="292"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1aed0a6af618528ae4df946b46f3db80b8a60c03ae6d146776b9341c691a30d7ea9" kindref="member">RAM_PATTERN_RANDOM</ref>:</highlight></codeline>
 <codeline lineno="293"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
 <codeline lineno="294"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::random_device<sp/>rd;</highlight></codeline>
 <codeline lineno="295"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::mt19937<sp/>gen(rd());</highlight></codeline>
@@ -2045,30 +2045,30 @@
 <codeline lineno="326"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="327"><highlight class="normal"></highlight></codeline>
 <codeline lineno="328"><highlight class="normal">u8</highlight></codeline>
-<codeline lineno="329"><highlight class="normal">C64Memory::peek(u16<sp/>addr,<sp/>MemoryType<sp/>source)</highlight></codeline>
+<codeline lineno="329"><highlight class="normal">C64Memory::peek(u16<sp/>addr,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref><sp/>source)</highlight></codeline>
 <codeline lineno="330"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="331"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal">(source)<sp/>{</highlight></codeline>
 <codeline lineno="332"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="333"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_RAM:</highlight></codeline>
+<codeline lineno="333"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>:</highlight></codeline>
 <codeline lineno="334"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="335"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ram[addr];</highlight></codeline>
 <codeline lineno="336"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="337"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_BASIC:</highlight></codeline>
-<codeline lineno="338"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_CHAR:</highlight></codeline>
-<codeline lineno="339"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_KERNAL:</highlight></codeline>
+<codeline lineno="337"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa253d2571b1383128fb6edac9bf4efe5f" kindref="member">M_BASIC</ref>:</highlight></codeline>
+<codeline lineno="338"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf0e649f94b2c0b7eda468fc5630982b1" kindref="member">M_CHAR</ref>:</highlight></codeline>
+<codeline lineno="339"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28" kindref="member">M_KERNAL</ref>:</highlight></codeline>
 <codeline lineno="340"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="341"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>rom[addr];</highlight></codeline>
 <codeline lineno="342"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="343"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_IO:</highlight></codeline>
+<codeline lineno="343"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229" kindref="member">M_IO</ref>:</highlight></codeline>
 <codeline lineno="344"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="345"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>peekIO(addr);</highlight></codeline>
 <codeline lineno="346"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="347"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_CRTLO:</highlight></codeline>
-<codeline lineno="348"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_CRTHI:</highlight></codeline>
+<codeline lineno="347"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa2ea52710f1d98ab448b381a3e90b16fc" kindref="member">M_CRTLO</ref>:</highlight></codeline>
+<codeline lineno="348"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa0221b6d2b1fa217a7ef9db216224e16b" kindref="member">M_CRTHI</ref>:</highlight></codeline>
 <codeline lineno="349"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="350"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>expansionport.peek(addr);</highlight></codeline>
 <codeline lineno="351"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="352"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_PP:</highlight></codeline>
+<codeline lineno="352"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa79314351698710ef6516d7862b2b6351" kindref="member">M_PP</ref>:</highlight></codeline>
 <codeline lineno="353"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="354"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(likely(addr<sp/>&gt;=<sp/>0x02))<sp/>{</highlight></codeline>
 <codeline lineno="355"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ram[addr];</highlight></codeline>
@@ -2076,7 +2076,7 @@
 <codeline lineno="357"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>addr<sp/>?<sp/>cpu.readPort()<sp/>:<sp/>cpu.readPortDir();</highlight></codeline>
 <codeline lineno="358"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="359"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="360"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_NONE:</highlight></codeline>
+<codeline lineno="360"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>:</highlight></codeline>
 <codeline lineno="361"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="362"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>vic.getDataBusPhi1();</highlight></codeline>
 <codeline lineno="363"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
@@ -2164,30 +2164,30 @@
 <codeline lineno="445"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="446"><highlight class="normal"></highlight></codeline>
 <codeline lineno="447"><highlight class="normal">u8</highlight></codeline>
-<codeline lineno="448"><highlight class="normal">C64Memory::spypeek(u16<sp/>addr,<sp/>MemoryType<sp/>source)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="448"><highlight class="normal">C64Memory::spypeek(u16<sp/>addr,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref><sp/>source)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
 <codeline lineno="449"><highlight class="keyword"></highlight><highlight class="normal">{</highlight></codeline>
 <codeline lineno="450"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal">(source)<sp/>{</highlight></codeline>
 <codeline lineno="451"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="452"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_RAM:</highlight></codeline>
+<codeline lineno="452"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>:</highlight></codeline>
 <codeline lineno="453"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="454"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ram[addr];</highlight></codeline>
 <codeline lineno="455"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="456"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_BASIC:</highlight></codeline>
-<codeline lineno="457"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_CHAR:</highlight></codeline>
-<codeline lineno="458"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_KERNAL:</highlight></codeline>
+<codeline lineno="456"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa253d2571b1383128fb6edac9bf4efe5f" kindref="member">M_BASIC</ref>:</highlight></codeline>
+<codeline lineno="457"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf0e649f94b2c0b7eda468fc5630982b1" kindref="member">M_CHAR</ref>:</highlight></codeline>
+<codeline lineno="458"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28" kindref="member">M_KERNAL</ref>:</highlight></codeline>
 <codeline lineno="459"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="460"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>rom[addr];</highlight></codeline>
 <codeline lineno="461"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="462"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_IO:</highlight></codeline>
+<codeline lineno="462"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229" kindref="member">M_IO</ref>:</highlight></codeline>
 <codeline lineno="463"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="464"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>spypeekIO(addr);</highlight></codeline>
 <codeline lineno="465"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="466"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_CRTLO:</highlight></codeline>
-<codeline lineno="467"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_CRTHI:</highlight></codeline>
+<codeline lineno="466"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa2ea52710f1d98ab448b381a3e90b16fc" kindref="member">M_CRTLO</ref>:</highlight></codeline>
+<codeline lineno="467"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa0221b6d2b1fa217a7ef9db216224e16b" kindref="member">M_CRTHI</ref>:</highlight></codeline>
 <codeline lineno="468"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="469"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>expansionport.spypeek(addr);</highlight></codeline>
 <codeline lineno="470"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="471"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_PP:</highlight></codeline>
+<codeline lineno="471"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa79314351698710ef6516d7862b2b6351" kindref="member">M_PP</ref>:</highlight></codeline>
 <codeline lineno="472"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="473"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(addr<sp/>&gt;=<sp/>0x02)<sp/>{</highlight></codeline>
 <codeline lineno="474"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ram[addr];</highlight></codeline>
@@ -2195,7 +2195,7 @@
 <codeline lineno="476"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>addr<sp/>?<sp/>cpu.readPort()<sp/>:<sp/>cpu.readPortDir();</highlight></codeline>
 <codeline lineno="477"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="478"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="479"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_NONE:</highlight></codeline>
+<codeline lineno="479"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>:</highlight></codeline>
 <codeline lineno="480"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="481"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>ram[addr];</highlight></codeline>
 <codeline lineno="482"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
@@ -2262,30 +2262,30 @@
 <codeline lineno="543"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="544"><highlight class="normal"></highlight></codeline>
 <codeline lineno="545"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="546"><highlight class="normal">C64Memory::poke(u16<sp/>addr,<sp/>u8<sp/>value,<sp/>MemoryType<sp/>target)</highlight></codeline>
+<codeline lineno="546"><highlight class="normal">C64Memory::poke(u16<sp/>addr,<sp/>u8<sp/>value,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref><sp/>target)</highlight></codeline>
 <codeline lineno="547"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="548"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal">(target)<sp/>{</highlight></codeline>
 <codeline lineno="549"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="550"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_RAM:</highlight></codeline>
-<codeline lineno="551"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_BASIC:</highlight></codeline>
-<codeline lineno="552"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_CHAR:</highlight></codeline>
-<codeline lineno="553"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_KERNAL:</highlight></codeline>
+<codeline lineno="550"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e" kindref="member">M_RAM</ref>:</highlight></codeline>
+<codeline lineno="551"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa253d2571b1383128fb6edac9bf4efe5f" kindref="member">M_BASIC</ref>:</highlight></codeline>
+<codeline lineno="552"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaf0e649f94b2c0b7eda468fc5630982b1" kindref="member">M_CHAR</ref>:</highlight></codeline>
+<codeline lineno="553"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28" kindref="member">M_KERNAL</ref>:</highlight></codeline>
 <codeline lineno="554"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="555"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ram[addr]<sp/>=<sp/>value;</highlight></codeline>
 <codeline lineno="556"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="557"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="558"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_IO:</highlight></codeline>
+<codeline lineno="558"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229" kindref="member">M_IO</ref>:</highlight></codeline>
 <codeline lineno="559"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="560"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>pokeIO(addr,<sp/>value);</highlight></codeline>
 <codeline lineno="561"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="562"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="563"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_CRTLO:</highlight></codeline>
-<codeline lineno="564"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_CRTHI:</highlight></codeline>
+<codeline lineno="563"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa2ea52710f1d98ab448b381a3e90b16fc" kindref="member">M_CRTLO</ref>:</highlight></codeline>
+<codeline lineno="564"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa0221b6d2b1fa217a7ef9db216224e16b" kindref="member">M_CRTHI</ref>:</highlight></codeline>
 <codeline lineno="565"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="566"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>expansionport.poke(addr,<sp/>value);</highlight></codeline>
 <codeline lineno="567"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="568"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="569"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_PP:</highlight></codeline>
+<codeline lineno="569"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aa79314351698710ef6516d7862b2b6351" kindref="member">M_PP</ref>:</highlight></codeline>
 <codeline lineno="570"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="571"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(likely(addr<sp/>&gt;=<sp/>0x02))<sp/>{</highlight></codeline>
 <codeline lineno="572"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ram[addr]<sp/>=<sp/>value;</highlight></codeline>
@@ -2294,7 +2294,7 @@
 <codeline lineno="575"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="576"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="577"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="578"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>M_NONE:</highlight></codeline>
+<codeline lineno="578"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>:</highlight></codeline>
 <codeline lineno="579"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="580"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="581"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
@@ -2396,7 +2396,7 @@
 <codeline lineno="677"><highlight class="normal">u16</highlight></codeline>
 <codeline lineno="678"><highlight class="normal">C64Memory::nmiVector()</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
 <codeline lineno="679"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="680"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(peekSrc[0xF]<sp/>!=<sp/>M_KERNAL<sp/>||<sp/>c64.hasRom(ROM_TYPE_KERNAL))<sp/>{</highlight></codeline>
+<codeline lineno="680"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(peekSrc[0xF]<sp/>!=<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28" kindref="member">M_KERNAL</ref><sp/>||<sp/>c64.hasRom(ROM_TYPE_KERNAL))<sp/>{</highlight></codeline>
 <codeline lineno="681"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>LO_HI(spypeek(0xFFFA),<sp/>spypeek(0xFFFB));</highlight></codeline>
 <codeline lineno="682"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
 <codeline lineno="683"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0xFE43;</highlight></codeline>
@@ -2406,7 +2406,7 @@
 <codeline lineno="687"><highlight class="normal">u16</highlight></codeline>
 <codeline lineno="688"><highlight class="normal">C64Memory::irqVector()</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
 <codeline lineno="689"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="690"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(peekSrc[0xF]<sp/>!=<sp/>M_KERNAL<sp/>||<sp/>c64.hasRom(ROM_TYPE_KERNAL))<sp/>{</highlight></codeline>
+<codeline lineno="690"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(peekSrc[0xF]<sp/>!=<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28" kindref="member">M_KERNAL</ref><sp/>||<sp/>c64.hasRom(ROM_TYPE_KERNAL))<sp/>{</highlight></codeline>
 <codeline lineno="691"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>LO_HI(spypeek(0xFFFE),<sp/>spypeek(0xFFFF));</highlight></codeline>
 <codeline lineno="692"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
 <codeline lineno="693"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0xFF48;</highlight></codeline>
@@ -2418,7 +2418,7 @@
 <codeline lineno="699"><highlight class="normal"></highlight></codeline>
 <codeline lineno="700"><highlight class="normal"><sp/><sp/><sp/><sp/>updatePeekPokeLookupTables();</highlight></codeline>
 <codeline lineno="701"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="702"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(peekSrc[0xF]<sp/>!=<sp/>M_KERNAL<sp/>||<sp/>c64.hasRom(ROM_TYPE_KERNAL))<sp/>{</highlight></codeline>
+<codeline lineno="702"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(peekSrc[0xF]<sp/>!=<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28" kindref="member">M_KERNAL</ref><sp/>||<sp/>c64.hasRom(ROM_TYPE_KERNAL))<sp/>{</highlight></codeline>
 <codeline lineno="703"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>LO_HI(spypeek(0xFFFC),<sp/>spypeek(0xFFFD));</highlight></codeline>
 <codeline lineno="704"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
 <codeline lineno="705"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0xFCE2;</highlight></codeline>
@@ -2426,14 +2426,14 @@
 <codeline lineno="707"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="708"><highlight class="normal"></highlight></codeline>
 <codeline lineno="709"><highlight class="normal"></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="710"><highlight class="normal">C64Memory::memdump(u16<sp/>addr,<sp/>isize<sp/>num,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>hex,<sp/>isize<sp/>pads,<sp/>MemoryType<sp/>src)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="710"><highlight class="normal">C64Memory::memdump(u16<sp/>addr,<sp/>isize<sp/>num,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>hex,<sp/>isize<sp/>pads,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref><sp/>src)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
 <codeline lineno="711"><highlight class="keyword"></highlight><highlight class="normal">{</highlight></codeline>
 <codeline lineno="712"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>result[128];</highlight></codeline>
 <codeline lineno="713"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*p<sp/>=<sp/>result;</highlight></codeline>
 <codeline lineno="714"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="715"><highlight class="normal"><sp/><sp/><sp/><sp/>assert(num<sp/>&lt;=<sp/>16);</highlight></codeline>
 <codeline lineno="716"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="717"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(src<sp/>==<sp/>M_NONE)<sp/>{</highlight></codeline>
+<codeline lineno="717"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(src<sp/>==<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>)<sp/>{</highlight></codeline>
 <codeline lineno="718"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="719"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(isize<sp/>i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>num;<sp/>i++)<sp/>{</highlight></codeline>
 <codeline lineno="720"><highlight class="normal"></highlight></codeline>
@@ -2462,26 +2462,26 @@
 <codeline lineno="743"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="744"><highlight class="normal"></highlight></codeline>
 <codeline lineno="745"><highlight class="normal"></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="746"><highlight class="normal">C64Memory::hexdump(u16<sp/>addr,<sp/>isize<sp/>num,<sp/>isize<sp/>pads,<sp/>MemoryType<sp/>src)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="746"><highlight class="normal">C64Memory::hexdump(u16<sp/>addr,<sp/>isize<sp/>num,<sp/>isize<sp/>pads,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref><sp/>src)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
 <codeline lineno="747"><highlight class="keyword"></highlight><highlight class="normal">{</highlight></codeline>
 <codeline lineno="748"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>memdump(addr,<sp/>num,<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">,<sp/>pads,<sp/>src);</highlight></codeline>
 <codeline lineno="749"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="750"><highlight class="normal"></highlight></codeline>
 <codeline lineno="751"><highlight class="normal"></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="752"><highlight class="normal">C64Memory::decdump(u16<sp/>addr,<sp/>isize<sp/>num,<sp/>isize<sp/>pads,<sp/>MemoryType<sp/>src)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="752"><highlight class="normal">C64Memory::decdump(u16<sp/>addr,<sp/>isize<sp/>num,<sp/>isize<sp/>pads,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref><sp/>src)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
 <codeline lineno="753"><highlight class="keyword"></highlight><highlight class="normal">{</highlight></codeline>
 <codeline lineno="754"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>memdump(addr,<sp/>num,<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">,<sp/>pads,<sp/>src);</highlight></codeline>
 <codeline lineno="755"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="756"><highlight class="normal"></highlight></codeline>
 <codeline lineno="757"><highlight class="normal"></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="758"><highlight class="normal">C64Memory::txtdump(u16<sp/>addr,<sp/>isize<sp/>num,<sp/>MemoryType<sp/>src)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="758"><highlight class="normal">C64Memory::txtdump(u16<sp/>addr,<sp/>isize<sp/>num,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref><sp/>src)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
 <codeline lineno="759"><highlight class="keyword"></highlight><highlight class="normal">{</highlight></codeline>
 <codeline lineno="760"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>result[17];</highlight></codeline>
 <codeline lineno="761"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*p<sp/>=<sp/>result;</highlight></codeline>
 <codeline lineno="762"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="763"><highlight class="normal"><sp/><sp/><sp/><sp/>assert(num<sp/>&lt;=<sp/>16);</highlight></codeline>
 <codeline lineno="764"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="765"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(src<sp/>!=<sp/>M_NONE)<sp/>{</highlight></codeline>
+<codeline lineno="765"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(src<sp/>!=<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676" kindref="member">M_NONE</ref>)<sp/>{</highlight></codeline>
 <codeline lineno="766"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="767"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(isize<sp/>i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>num;<sp/>i++)<sp/>{</highlight></codeline>
 <codeline lineno="768"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>

@@ -895,7 +895,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" line="369" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/Drive.h" bodystart="369" bodyend="369"/>
       </memberdef>
       <memberdef kind="function" id="classvc64_1_1_drive_1a00cacb816f59bf7b41c2d85bfcd7fe57" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
-        <type>ParCableType</type>
+        <type><ref refid="_par_cable_types_8h_1a494dcbce5bcb891dfa50c460ae94f7cb" kindref="member">ParCableType</ref></type>
         <definition>ParCableType vc64::Drive::getParCableType</definition>
         <argsstring>() const</argsstring>
         <name>getParCableType</name>
@@ -1266,7 +1266,7 @@
         <name>insertNewDisk</name>
         <qualifiedname>vc64::Drive::insertNewDisk</qualifiedname>
         <param>
-          <type>DOSType</type>
+          <type><ref refid="_f_s_types_8h_1aa499a0fc379c037c4be2ad9be44035e4" kindref="member">DOSType</ref></type>
           <declname>fstype</declname>
         </param>
         <param>

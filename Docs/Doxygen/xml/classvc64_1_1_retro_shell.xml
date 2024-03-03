@@ -550,7 +550,7 @@
         <name>press</name>
         <qualifiedname>vc64::RetroShell::press</qualifiedname>
         <param>
-          <type>RetroShellKey</type>
+          <type><ref refid="_retro_shell_types_8h_1a266a24d8f1b5150281f89401b43752aa" kindref="member">RetroShellKey</ref></type>
           <declname>key</declname>
         </param>
         <param>

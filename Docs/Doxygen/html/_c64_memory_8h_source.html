@@ -128,7 +128,7 @@ $(function(){initNavTree('_c64_memory_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;MemoryTypes.h&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="_memory_types_8h.html">MemoryTypes.h</a>&quot;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;SubComponent.h&quot;</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">namespace </span>vc64 {</div>
@@ -153,7 +153,7 @@ $(function(){initNavTree('_c64_memory_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="comment">     *             index = (EXROM, GAME, CHAREN, HIRAM, LORAM)</span></div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="comment">     *             range = upper four bits of address</span></div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="comment">     */</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    MemoryType bankMap[32][16];</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <a class="code hl_enumeration" href="_memory_types_8h.html#adea0e9ad7389791d42ae1d396d68915a">MemoryType</a> bankMap[32][16];</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="comment">// Random Access Memory</span></div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    u8 ram[65536];</div>
@@ -174,10 +174,10 @@ $(function(){initNavTree('_c64_memory_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    u8 rom[65536];</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="comment">// Peek source lookup table</span></div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    MemoryType peekSrc[16];</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <a class="code hl_enumeration" href="_memory_types_8h.html#adea0e9ad7389791d42ae1d396d68915a">MemoryType</a> peekSrc[16];</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    </div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="comment">// Poke target lookup table</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    MemoryType pokeTarget[16];</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <a class="code hl_enumeration" href="_memory_types_8h.html#adea0e9ad7389791d42ae1d396d68915a">MemoryType</a> pokeTarget[16];</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    </div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="comment">// Indicates if watchpoints should be checked</span></div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keywordtype">bool</span> checkWatchpoints = <span class="keyword">false</span>;</div>
@@ -266,7 +266,7 @@ $(function(){initNavTree('_c64_memory_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="keyword">public</span>:</div>
 <div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    </div>
 <div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    <span class="comment">// Erases the RAM with the provided init pattern</span></div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    <span class="keywordtype">void</span> eraseWithPattern(RamPattern pattern);</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    <span class="keywordtype">void</span> eraseWithPattern(<a class="code hl_enumeration" href="_memory_types_8h.html#aed0a6af618528ae4df946b46f3db80b8">RamPattern</a> pattern);</div>
 <div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    </div>
 <div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <span class="comment">/* Updates the peek and poke lookup tables. The lookup values depend on</span></div>
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span><span class="comment">     * three processor port bits and the cartridge exrom and game lines.</span></div>
@@ -274,13 +274,13 @@ $(function(){initNavTree('_c64_memory_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    <span class="keywordtype">void</span> updatePeekPokeLookupTables();</div>
 <div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
 <div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    <span class="comment">// Returns the current peek source of the specified memory address</span></div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    MemoryType getPeekSource(u16 addr) { <span class="keywordflow">return</span> peekSrc[addr &gt;&gt; 12]; }</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    <a class="code hl_enumeration" href="_memory_types_8h.html#adea0e9ad7389791d42ae1d396d68915a">MemoryType</a> getPeekSource(u16 addr) { <span class="keywordflow">return</span> peekSrc[addr &gt;&gt; 12]; }</div>
 <div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    </div>
 <div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    <span class="comment">// Returns the current poke target of the specified memory address</span></div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    MemoryType getPokeTarget(u16 addr) { <span class="keywordflow">return</span> pokeTarget[addr &gt;&gt; 12]; }</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    <a class="code hl_enumeration" href="_memory_types_8h.html#adea0e9ad7389791d42ae1d396d68915a">MemoryType</a> getPokeTarget(u16 addr) { <span class="keywordflow">return</span> pokeTarget[addr &gt;&gt; 12]; }</div>
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    <span class="comment">// Reads a value from memory</span></div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    u8 peek(u16 addr, MemoryType source);</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    u8 peek(u16 addr, <a class="code hl_enumeration" href="_memory_types_8h.html#adea0e9ad7389791d42ae1d396d68915a">MemoryType</a> source);</div>
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    u8 peek(u16 addr, <span class="keywordtype">bool</span> gameLine, <span class="keywordtype">bool</span> exromLine);</div>
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    u8 peek(u16 addr) { <span class="keywordflow">return</span> peek(addr, peekSrc[addr &gt;&gt; 12]); }</div>
 <div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    u8 peekZP(u8 addr);</div>
@@ -294,13 +294,13 @@ $(function(){initNavTree('_c64_memory_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>    <span class="keywordtype">void</span> peekIOIdle(u16 addr) { (void)peekIO(addr); }</div>
 <div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    </div>
 <div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    <span class="comment">// Reads a value from memory without side effects</span></div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    u8 spypeek(u16 addr, MemoryType source) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    u8 spypeek(u16 addr, <a class="code hl_enumeration" href="_memory_types_8h.html#adea0e9ad7389791d42ae1d396d68915a">MemoryType</a> source) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    u8 spypeek(u16 addr)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> spypeek(addr, peekSrc[addr &gt;&gt; 12]); }</div>
 <div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    u8 spypeekIO(u16 addr) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    u8 spypeekColor(u16 addr) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
 <div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    <span class="comment">// Writing a value into memory</span></div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    <span class="keywordtype">void</span> poke(u16 addr, u8 value, MemoryType target);</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    <span class="keywordtype">void</span> poke(u16 addr, u8 value, <a class="code hl_enumeration" href="_memory_types_8h.html#adea0e9ad7389791d42ae1d396d68915a">MemoryType</a> target);</div>
 <div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    <span class="keywordtype">void</span> poke(u16 addr, u8 value, <span class="keywordtype">bool</span> gameLine, <span class="keywordtype">bool</span> exromLine);</div>
 <div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    <span class="keywordtype">void</span> poke(u16 addr, u8 value) { poke(addr, value, pokeTarget[addr &gt;&gt; 12]); }</div>
 <div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    <span class="keywordtype">void</span> pokeZP(u8 addr, u8 value);</div>
@@ -313,10 +313,10 @@ $(function(){initNavTree('_c64_memory_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    u16 resetVector();</div>
 <div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    </div>
 <div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    <span class="comment">// Returns a string representations for a portion of memory</span></div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    <span class="keywordtype">string</span> memdump(u16 addr, isize num, <span class="keywordtype">bool</span> hex, isize pads, MemoryType src) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    <span class="keywordtype">string</span> hexdump(u16 addr, isize num, isize pads, MemoryType src) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    <span class="keywordtype">string</span> decdump(u16 addr, isize num, isize pads, MemoryType src) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    <span class="keywordtype">string</span> txtdump(u16 addr, isize num, MemoryType src) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    <span class="keywordtype">string</span> memdump(u16 addr, isize num, <span class="keywordtype">bool</span> hex, isize pads, <a class="code hl_enumeration" href="_memory_types_8h.html#adea0e9ad7389791d42ae1d396d68915a">MemoryType</a> src) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    <span class="keywordtype">string</span> hexdump(u16 addr, isize num, isize pads, <a class="code hl_enumeration" href="_memory_types_8h.html#adea0e9ad7389791d42ae1d396d68915a">MemoryType</a> src) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    <span class="keywordtype">string</span> decdump(u16 addr, isize num, isize pads, <a class="code hl_enumeration" href="_memory_types_8h.html#adea0e9ad7389791d42ae1d396d68915a">MemoryType</a> src) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    <span class="keywordtype">string</span> txtdump(u16 addr, isize num, <a class="code hl_enumeration" href="_memory_types_8h.html#adea0e9ad7389791d42ae1d396d68915a">MemoryType</a> src) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
 <div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    <span class="comment">// Convenience wrappers</span></div>
 <div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    <span class="keywordtype">string</span> memdump(u16 addr, isize num, <span class="keywordtype">bool</span> hex) { <span class="keywordflow">return</span> memdump(addr, num, hex, 1, peekSrc[addr &gt;&gt; 12]); }</div>
@@ -329,6 +329,9 @@ $(function(){initNavTree('_c64_memory_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>};</div>
 <div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> </div>
 <div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>}</div>
+<div class="ttc" id="a_memory_types_8h_html"><div class="ttname"><a href="_memory_types_8h.html">MemoryTypes.h</a></div></div>
+<div class="ttc" id="a_memory_types_8h_html_adea0e9ad7389791d42ae1d396d68915a"><div class="ttname"><a href="_memory_types_8h.html#adea0e9ad7389791d42ae1d396d68915a">M_TYPE</a></div><div class="ttdeci">M_TYPE</div><div class="ttdoc">Memory type.</div><div class="ttdef"><b>Definition</b> MemoryTypes.h:25</div></div>
+<div class="ttc" id="a_memory_types_8h_html_aed0a6af618528ae4df946b46f3db80b8"><div class="ttname"><a href="_memory_types_8h.html#aed0a6af618528ae4df946b46f3db80b8">RAM_PATTERN</a></div><div class="ttdeci">RAM_PATTERN</div><div class="ttdoc">Ram startup pattern.</div><div class="ttdef"><b>Definition</b> MemoryTypes.h:69</div></div>
 <div class="ttc" id="a_option_types_8h_html_a273e435dabd576e6dcff3f18024d1fa8"><div class="ttname"><a href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8">OPT</a></div><div class="ttdeci">OPT</div><div class="ttdoc">Configuration option.</div><div class="ttdef"><b>Definition</b> OptionTypes.h:25</div></div>
 <div class="ttc" id="a_option_types_8h_html_a273e435dabd576e6dcff3f18024d1fa8ae0dc268b23eea94e380fd04fe0071afb"><div class="ttname"><a href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8ae0dc268b23eea94e380fd04fe0071afb">OPT_RAM_PATTERN</a></div><div class="ttdeci">@ OPT_RAM_PATTERN</div><div class="ttdoc">Ram initialization pattern.</div><div class="ttdef"><b>Definition</b> OptionTypes.h:96</div></div>
 <div class="ttc" id="a_option_types_8h_html_a273e435dabd576e6dcff3f18024d1fa8afdff745c618394723a7642317fbc0404"><div class="ttname"><a href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8afdff745c618394723a7642317fbc0404">OPT_SAVE_ROMS</a></div><div class="ttdeci">@ OPT_SAVE_ROMS</div><div class="ttdoc">Save Roms in snapshots.</div><div class="ttdef"><b>Definition</b> OptionTypes.h:97</div></div>

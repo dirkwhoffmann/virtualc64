@@ -387,7 +387,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SID.h" line="116" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SID.cpp" bodystart="126" bodyend="130"/>
       </memberdef>
       <memberdef kind="function" id="classvc64_1_1_s_i_d_1ac5f0cb3f19976f3ebcebb82e4b0b863e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
-        <type>SIDRevision</type>
+        <type><ref refid="_s_i_d_types_8h_1a17273940e560b4b27f1b419da23312ed" kindref="member">SIDRevision</ref></type>
         <definition>SIDRevision vc64::SID::getRevision</definition>
         <argsstring>() const</argsstring>
         <name>getRevision</name>
@@ -407,7 +407,7 @@
         <name>setRevision</name>
         <qualifiedname>vc64::SID::setRevision</qualifiedname>
         <param>
-          <type>SIDRevision</type>
+          <type><ref refid="_s_i_d_types_8h_1a17273940e560b4b27f1b419da23312ed" kindref="member">SIDRevision</ref></type>
           <declname>revision</declname>
         </param>
         <briefdescription>

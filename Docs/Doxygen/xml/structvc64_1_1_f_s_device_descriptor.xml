@@ -5,12 +5,12 @@
     <basecompoundref prot="public" virt="non-virtual">vc64::CoreObject</basecompoundref>
     <sectiondef kind="public-attrib">
       <memberdef kind="variable" id="structvc64_1_1_f_s_device_descriptor_1a17527b46b5bf6750c2695786e04200b5" prot="public" static="no" mutable="no">
-        <type>DOSType</type>
+        <type><ref refid="_f_s_types_8h_1aa499a0fc379c037c4be2ad9be44035e4" kindref="member">DOSType</ref></type>
         <definition>DOSType vc64::FSDeviceDescriptor::dos</definition>
         <argsstring></argsstring>
         <name>dos</name>
         <qualifiedname>vc64::FSDeviceDescriptor::dos</qualifiedname>
-        <initializer>= DOS_TYPE_NODOS</initializer>
+        <initializer>= <ref refid="_f_s_types_8h_1aa499a0fc379c037c4be2ad9be44035e4adaac0b67bf546a76eaa8914ac59ba8e6" kindref="member">DOS_TYPE_NODOS</ref></initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -76,9 +76,9 @@
           <declname>type</declname>
         </param>
         <param>
-          <type>DOSType</type>
+          <type><ref refid="_f_s_types_8h_1aa499a0fc379c037c4be2ad9be44035e4" kindref="member">DOSType</ref></type>
           <declname>dos</declname>
-          <defval>DOS_TYPE_CBM</defval>
+          <defval><ref refid="_f_s_types_8h_1aa499a0fc379c037c4be2ad9be44035e4a5857af2a40af18caba3bc3620edfe86b" kindref="member">DOS_TYPE_CBM</ref></defval>
         </param>
         <briefdescription>
         </briefdescription>

@@ -1,6 +1,6 @@
 \doxysection{File\+Types.\+h}
 \hypertarget{_file_types_8h_source}{}\label{_file_types_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h@{/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h}}
-
+\mbox{\hyperlink{_file_types_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
 \DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
@@ -13,187 +13,187 @@
 \DoxyCodeLine{00009\ \textcolor{comment}{//}}
 \DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
 \DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
-\DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Aliases.h"{}}}
-\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Reflection.h"{}}}
-\DoxyCodeLine{00017\ }
-\DoxyCodeLine{00018\ \textcolor{comment}{//}}
-\DoxyCodeLine{00019\ \textcolor{comment}{//\ Enumerations}}
-\DoxyCodeLine{00020\ \textcolor{comment}{//}}
-\DoxyCodeLine{00021\ }
-\DoxyCodeLine{00022\ enum\_long(FILETYPE)}
-\DoxyCodeLine{00023\ \{}
-\DoxyCodeLine{00024\ \ \ \ \ FILETYPE\_UNKNOWN\ =\ 0,}
-\DoxyCodeLine{00025\ \ \ \ \ FILETYPE\_SNAPSHOT,}
-\DoxyCodeLine{00026\ \ \ \ \ FILETYPE\_SCRIPT,}
-\DoxyCodeLine{00027\ \ \ \ \ FILETYPE\_CRT,}
-\DoxyCodeLine{00028\ \ \ \ \ FILETYPE\_T64,}
-\DoxyCodeLine{00029\ \ \ \ \ FILETYPE\_P00,}
-\DoxyCodeLine{00030\ \ \ \ \ FILETYPE\_PRG,}
-\DoxyCodeLine{00031\ \ \ \ \ FILETYPE\_FOLDER,}
-\DoxyCodeLine{00032\ \ \ \ \ FILETYPE\_D64,}
-\DoxyCodeLine{00033\ \ \ \ \ FILETYPE\_G64,}
-\DoxyCodeLine{00034\ \ \ \ \ FILETYPE\_TAP,}
-\DoxyCodeLine{00035\ \ \ \ \ FILETYPE\_BASIC\_ROM,}
-\DoxyCodeLine{00036\ \ \ \ \ FILETYPE\_CHAR\_ROM,}
-\DoxyCodeLine{00037\ \ \ \ \ FILETYPE\_KERNAL\_ROM,}
-\DoxyCodeLine{00038\ \ \ \ \ FILETYPE\_VC1541\_ROM}
-\DoxyCodeLine{00039\ \};}
-\DoxyCodeLine{00040\ \textcolor{keyword}{typedef}\ FILETYPE\ FileType;}
-\DoxyCodeLine{00041\ }
-\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
-\DoxyCodeLine{00043\ \textcolor{keyword}{struct\ }FileTypeEnum\ :\ util::Reflection<FileTypeEnum,\ FileType>\ \{}
-\DoxyCodeLine{00044\ \ \ \ \ }
-\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
-\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ FILETYPE\_VC1541\_ROM;}
-\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
-\DoxyCodeLine{00048\ \ \ \ \ }
-\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}FILETYPE"{}};\ \}}
-\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(FileType\ value)}
-\DoxyCodeLine{00051\ \ \ \ \ \{}
-\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
-\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_UNKNOWN:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}UNKNOWN"{}};}
-\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_SNAPSHOT:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SNAPSHOT"{}};}
-\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_SCRIPT:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SCRIPT"{}};}
-\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_CRT:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CRT"{}};}
-\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_T64:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}T64"{}};}
-\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_PRG:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PRG"{}};}
-\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_FOLDER:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}FOLDER"{}};}
-\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_P00:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}P00"{}};}
-\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_D64:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}D64"{}};}
-\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_G64:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}G64"{}};}
-\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_TAP:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TAP"{}};}
-\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_BASIC\_ROM:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}BASIC\_ROM"{}};}
-\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_CHAR\_ROM:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CHAR\_ROM"{}};}
-\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_KERNAL\_ROM:\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}KERNAL\_ROM"{}};}
-\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_VC1541\_ROM:\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VC1541\_ROM"{}};}
-\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
-\DoxyCodeLine{00071\ \ \ \ \ \}}
-\DoxyCodeLine{00072\ \};}
-\DoxyCodeLine{00073\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00074\ }
-\DoxyCodeLine{00075\ enum\_long(TAP\_VERSION)}
-\DoxyCodeLine{00076\ \{}
-\DoxyCodeLine{00077\ \ \ \ \ TAP\_VERSION\_ORIGINAL,}
-\DoxyCodeLine{00078\ \ \ \ \ TAP\_VERSION\_ADVANCED}
-\DoxyCodeLine{00079\ \};}
-\DoxyCodeLine{00080\ \textcolor{keyword}{typedef}\ TAP\_VERSION\ TAPVersion;}
-\DoxyCodeLine{00081\ }
-\DoxyCodeLine{00082\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
-\DoxyCodeLine{00083\ \textcolor{keyword}{struct\ }TAPVersionEnum\ :\ util::Reflection<TAPVersionEnum,\ TAPVersion>\ \{}
-\DoxyCodeLine{00084\ \ \ \ \ }
-\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
-\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ TAP\_VERSION\_ADVANCED;}
-\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
-\DoxyCodeLine{00088\ \ \ \ \ }
-\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TAP\_VERSION"{}};\ \}}
-\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(TAPVersion\ value)}
-\DoxyCodeLine{00091\ \ \ \ \ \{}
-\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
-\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ TAP\_VERSION\_ORIGINAL:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}ORIGINAL"{}};}
-\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ TAP\_VERSION\_ADVANCED:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}ADVANCED"{}};}
-\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
-\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00098\ \ \ \ \ \}}
-\DoxyCodeLine{00099\ \};}
-\DoxyCodeLine{00100\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00101\ }
-\DoxyCodeLine{00102\ enum\_long(FILE\_ERROR)}
-\DoxyCodeLine{00103\ \{}
-\DoxyCodeLine{00104\ \ \ \ \ ERR\_FILE\_OK,}
-\DoxyCodeLine{00105\ \ \ \ \ }
-\DoxyCodeLine{00106\ \ \ \ \ \textcolor{comment}{//\ General}}
-\DoxyCodeLine{00107\ \ \ \ \ ERR\_FILE\_NOT\_FOUND,}
-\DoxyCodeLine{00108\ \ \ \ \ ERR\_INVALID\_TYPE,}
-\DoxyCodeLine{00109\ \ \ \ \ ERR\_CANT\_READ,}
-\DoxyCodeLine{00110\ \ \ \ \ ERR\_CANT\_WRITE,}
-\DoxyCodeLine{00111\ \ \ \ \ ERR\_OUT\_OF\_MEMORY,}
-\DoxyCodeLine{00112\ \ \ \ \ ERR\_UNKNOWN,}
-\DoxyCodeLine{00113\ \ \ \ \ }
-\DoxyCodeLine{00114\ \ \ \ \ \textcolor{comment}{//\ Snapshots}}
-\DoxyCodeLine{00115\ \ \ \ \ ERR\_UNSUPPORTED\_SNAPSHOT}
-\DoxyCodeLine{00116\ \};}
-\DoxyCodeLine{00117\ \textcolor{keyword}{typedef}\ FILE\_ERROR\ FileError;}
-\DoxyCodeLine{00118\ }
-\DoxyCodeLine{00119\ enum\_long(ROM\_IDENTIFIER)}
-\DoxyCodeLine{00120\ \{}
-\DoxyCodeLine{00121\ \ \ \ \ ROM\_MISSING,}
-\DoxyCodeLine{00122\ \ \ \ \ ROM\_UNKNOWN,}
-\DoxyCodeLine{00123\ \ \ \ \ }
-\DoxyCodeLine{00124\ \ \ \ \ \textcolor{comment}{//\ Basic\ Roms}}
-\DoxyCodeLine{00125\ \ \ \ \ BASIC\_COMMODORE,}
-\DoxyCodeLine{00126\ }
-\DoxyCodeLine{00127\ \ \ \ \ \textcolor{comment}{//\ Character\ Roms}}
-\DoxyCodeLine{00128\ \ \ \ \ CHAR\_COMMODORE,}
-\DoxyCodeLine{00129\ \ \ \ \ CHAR\_SWEDISH\_C2D007,}
-\DoxyCodeLine{00130\ \ \ \ \ CHAR\_SWEDISH,}
-\DoxyCodeLine{00131\ \ \ \ \ CHAR\_SPANISH\_C64C,}
-\DoxyCodeLine{00132\ \ \ \ \ CHAR\_DANISH,}
-\DoxyCodeLine{00133\ \ \ \ \ CHAR\_ATARI800,}
-\DoxyCodeLine{00134\ \ \ \ \ CHAR\_MSX,}
-\DoxyCodeLine{00135\ \ \ \ \ CHAR\_ZX\_SPECTRUM,}
-\DoxyCodeLine{00136\ \ \ \ \ CHAR\_AMSTRAD\_CPC,}
-\DoxyCodeLine{00137\ \ \ \ \ CHAR\_A500\_TOPAZ\_BROKEN,}
-\DoxyCodeLine{00138\ \ \ \ \ CHAR\_A500\_TOPAZ\_V2,}
-\DoxyCodeLine{00139\ \ \ \ \ CHAR\_A1200\_TOPAZ\_BROKEN,}
-\DoxyCodeLine{00140\ \ \ \ \ CHAR\_A1200\_TOPAZ\_V2,}
-\DoxyCodeLine{00141\ \ \ \ \ CHAR\_TELETEXT,}
-\DoxyCodeLine{00142\ \ \ \ \ CHAR\_MEGA65,}
-\DoxyCodeLine{00143\ \ \ \ \ CHAR\_PXLFONT\_V23,}
-\DoxyCodeLine{00144\ }
-\DoxyCodeLine{00145\ \ \ \ \ \textcolor{comment}{//\ Kernal\ Roms}}
-\DoxyCodeLine{00146\ \ \ \ \ KERNAL\_1ST,}
-\DoxyCodeLine{00147\ \ \ \ \ KERNAL\_2ST,}
-\DoxyCodeLine{00148\ \ \ \ \ KERNAL\_3ST,}
-\DoxyCodeLine{00149\ \ \ \ \ KERNAL\_DANISH\_3RD,}
-\DoxyCodeLine{00150\ \ \ \ \ KERNAL\_SX64,}
-\DoxyCodeLine{00151\ \ \ \ \ KERNAL\_SX64\_SCAND,}
-\DoxyCodeLine{00152\ \ \ \ \ KERNAL\_4064,}
-\DoxyCodeLine{00153\ \ \ \ \ KERNAL\_64\_JIFFY,}
-\DoxyCodeLine{00154\ \ \ \ \ KERNAL\_SX64\_JIFFY,}
-\DoxyCodeLine{00155\ \ \ \ \ KERNAL\_TURBO\_ROM,}
-\DoxyCodeLine{00156\ \ \ \ \ KERNAL\_DATEL\_V32,}
-\DoxyCodeLine{00157\ \ \ \ \ KERNAL\_EXOS\_V3,}
-\DoxyCodeLine{00158\ \ \ \ \ KERNAL\_TURBO\_TAPE,}
-\DoxyCodeLine{00159\ \ \ \ \ KERNEL\_TURBO\_250,}
-\DoxyCodeLine{00160\ \ \ \ \ KERNAL\_64ER\_V3,}
-\DoxyCodeLine{00161\ \ \ \ \ KERNAL\_SPEEDDOS\_PLUS,}
-\DoxyCodeLine{00162\ \ \ \ \ KERNAL\_SPEEDDOS\_27,}
-\DoxyCodeLine{00163\ \ \ \ \ KERNAL\_DOLPHIN\_10,}
-\DoxyCodeLine{00164\ \ \ \ \ KERNAL\_DOLPHIN\_20\_1,}
-\DoxyCodeLine{00165\ \ \ \ \ KERNAL\_DOLPHIN\_20\_1\_MA,}
-\DoxyCodeLine{00166\ \ \ \ \ KERNAL\_DOLPHIN\_20\_2,}
-\DoxyCodeLine{00167\ \ \ \ \ KERNAL\_DOLPHIN\_20\_3,}
-\DoxyCodeLine{00168\ \ \ \ \ KERNAL\_DOLPHIN\_20\_SLVDR,}
-\DoxyCodeLine{00169\ \ \ \ \ KERNAL\_DOLPHIN\_30,}
-\DoxyCodeLine{00170\ \ \ \ \ KERNAL\_DOLPHIN\_JIFFY,}
-\DoxyCodeLine{00171\ \ \ \ \ KERNEL\_NORLAND\_30,}
-\DoxyCodeLine{00172\ \ \ \ \ KERNEL\_SD2IEC,}
-\DoxyCodeLine{00173\ \ \ \ \ KERNAL\_JAFFY,}
-\DoxyCodeLine{00174\ }
-\DoxyCodeLine{00175\ \ \ \ \ \textcolor{comment}{//\ VC1541\ Roms}}
-\DoxyCodeLine{00176\ \ \ \ \ VC1541C\_01,}
-\DoxyCodeLine{00177\ \ \ \ \ VC1541C\_02,}
-\DoxyCodeLine{00178\ \ \ \ \ VC1541\_II\_1987,}
-\DoxyCodeLine{00179\ \ \ \ \ VC1541\_II\_NEWTRONIC,}
-\DoxyCodeLine{00180\ \ \ \ \ VC1541\_II\_RELOC\_PATCH,}
-\DoxyCodeLine{00181\ \ \ \ \ VC1541\_II\_JIFFY,}
-\DoxyCodeLine{00182\ \ \ \ \ VC1541\_II\_JIFFY\_V600,}
-\DoxyCodeLine{00183\ \ \ \ \ VC1541\_64ER\_V3,}
-\DoxyCodeLine{00184\ \ \ \ \ VC1541\_SPEEDDOS\_PLUS,}
-\DoxyCodeLine{00185\ \ \ \ \ VC1541\_SPEEDDOS\_27,}
-\DoxyCodeLine{00186\ \ \ \ \ VC1541\_DOLPHIN\_20,}
-\DoxyCodeLine{00187\ \ \ \ \ VC1541\_DOLPHIN\_20\_SLVDR,}
-\DoxyCodeLine{00188\ \ \ \ \ VC1541\_DOLPHIN\_30,}
-\DoxyCodeLine{00189\ \ \ \ \ VC1541\_DOLPHIN\_30\_SLVDR,}
-\DoxyCodeLine{00190\ }
-\DoxyCodeLine{00191\ \ \ \ \ ROM\_IDENTIFIER\_COUNT}
-\DoxyCodeLine{00192\ \};}
-\DoxyCodeLine{00193\ \textcolor{keyword}{typedef}\ ROM\_IDENTIFIER\ RomIdentifier;}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Aliases.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}Reflection.h"{}}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{comment}{//}}
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ Enumerations}}
+\DoxyCodeLine{00021\ \textcolor{comment}{//}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ enum\_long(FILETYPE)}
+\DoxyCodeLine{00024\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ FILETYPE\_UNKNOWN\ =\ 0,}
+\DoxyCodeLine{00026\ \ \ \ \ FILETYPE\_SNAPSHOT,}
+\DoxyCodeLine{00027\ \ \ \ \ FILETYPE\_SCRIPT,}
+\DoxyCodeLine{00028\ \ \ \ \ FILETYPE\_CRT,}
+\DoxyCodeLine{00029\ \ \ \ \ FILETYPE\_T64,}
+\DoxyCodeLine{00030\ \ \ \ \ FILETYPE\_P00,}
+\DoxyCodeLine{00031\ \ \ \ \ FILETYPE\_PRG,}
+\DoxyCodeLine{00032\ \ \ \ \ FILETYPE\_FOLDER,}
+\DoxyCodeLine{00033\ \ \ \ \ FILETYPE\_D64,}
+\DoxyCodeLine{00034\ \ \ \ \ FILETYPE\_G64,}
+\DoxyCodeLine{00035\ \ \ \ \ FILETYPE\_TAP,}
+\DoxyCodeLine{00036\ \ \ \ \ FILETYPE\_BASIC\_ROM,}
+\DoxyCodeLine{00037\ \ \ \ \ FILETYPE\_CHAR\_ROM,}
+\DoxyCodeLine{00038\ \ \ \ \ FILETYPE\_KERNAL\_ROM,}
+\DoxyCodeLine{00039\ \ \ \ \ FILETYPE\_VC1541\_ROM}
+\DoxyCodeLine{00040\ \};}
+\DoxyCodeLine{00041\ \textcolor{keyword}{typedef}\ FILETYPE\ FileType;}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00044\ \textcolor{keyword}{struct\ }FileTypeEnum\ :\ util::Reflection<FileTypeEnum,\ FileType>\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ FILETYPE\_VC1541\_ROM;}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00049\ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}FILETYPE"{}};\ \}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(FileType\ value)}
+\DoxyCodeLine{00052\ \ \ \ \ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_UNKNOWN:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}UNKNOWN"{}};}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_SNAPSHOT:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SNAPSHOT"{}};}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_SCRIPT:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SCRIPT"{}};}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_CRT:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CRT"{}};}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_T64:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}T64"{}};}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_PRG:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PRG"{}};}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_FOLDER:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}FOLDER"{}};}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_P00:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}P00"{}};}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_D64:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}D64"{}};}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_G64:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}G64"{}};}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_TAP:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TAP"{}};}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_BASIC\_ROM:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}BASIC\_ROM"{}};}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_CHAR\_ROM:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CHAR\_ROM"{}};}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_KERNAL\_ROM:\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}KERNAL\_ROM"{}};}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ FILETYPE\_VC1541\_ROM:\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VC1541\_ROM"{}};}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00072\ \ \ \ \ \}}
+\DoxyCodeLine{00073\ \};}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ enum\_long(TAP\_VERSION)}
+\DoxyCodeLine{00077\ \{}
+\DoxyCodeLine{00078\ \ \ \ \ TAP\_VERSION\_ORIGINAL,}
+\DoxyCodeLine{00079\ \ \ \ \ TAP\_VERSION\_ADVANCED}
+\DoxyCodeLine{00080\ \};}
+\DoxyCodeLine{00081\ \textcolor{keyword}{typedef}\ TAP\_VERSION\ TAPVersion;}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00084\ \textcolor{keyword}{struct\ }TAPVersionEnum\ :\ util::Reflection<TAPVersionEnum,\ TAPVersion>\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ TAP\_VERSION\_ADVANCED;}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00089\ \ \ \ \ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TAP\_VERSION"{}};\ \}}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(TAPVersion\ value)}
+\DoxyCodeLine{00092\ \ \ \ \ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ TAP\_VERSION\_ORIGINAL:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}ORIGINAL"{}};}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ TAP\_VERSION\_ADVANCED:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}ADVANCED"{}};}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00099\ \ \ \ \ \}}
+\DoxyCodeLine{00100\ \};}
+\DoxyCodeLine{00101\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ enum\_long(FILE\_ERROR)}
+\DoxyCodeLine{00104\ \{}
+\DoxyCodeLine{00105\ \ \ \ \ ERR\_FILE\_OK,}
+\DoxyCodeLine{00106\ \ \ \ \ }
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{comment}{//\ General}}
+\DoxyCodeLine{00108\ \ \ \ \ ERR\_FILE\_NOT\_FOUND,}
+\DoxyCodeLine{00109\ \ \ \ \ ERR\_INVALID\_TYPE,}
+\DoxyCodeLine{00110\ \ \ \ \ ERR\_CANT\_READ,}
+\DoxyCodeLine{00111\ \ \ \ \ ERR\_CANT\_WRITE,}
+\DoxyCodeLine{00112\ \ \ \ \ ERR\_OUT\_OF\_MEMORY,}
+\DoxyCodeLine{00113\ \ \ \ \ ERR\_UNKNOWN,}
+\DoxyCodeLine{00114\ \ \ \ \ }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{comment}{//\ Snapshots}}
+\DoxyCodeLine{00116\ \ \ \ \ ERR\_UNSUPPORTED\_SNAPSHOT}
+\DoxyCodeLine{00117\ \};}
+\DoxyCodeLine{00118\ \textcolor{keyword}{typedef}\ FILE\_ERROR\ FileError;}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ enum\_long(ROM\_IDENTIFIER)}
+\DoxyCodeLine{00121\ \{}
+\DoxyCodeLine{00122\ \ \ \ \ ROM\_MISSING,}
+\DoxyCodeLine{00123\ \ \ \ \ ROM\_UNKNOWN,}
+\DoxyCodeLine{00124\ \ \ \ \ }
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{comment}{//\ Basic\ Roms}}
+\DoxyCodeLine{00126\ \ \ \ \ BASIC\_COMMODORE,}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{comment}{//\ Character\ Roms}}
+\DoxyCodeLine{00129\ \ \ \ \ CHAR\_COMMODORE,}
+\DoxyCodeLine{00130\ \ \ \ \ CHAR\_SWEDISH\_C2D007,}
+\DoxyCodeLine{00131\ \ \ \ \ CHAR\_SWEDISH,}
+\DoxyCodeLine{00132\ \ \ \ \ CHAR\_SPANISH\_C64C,}
+\DoxyCodeLine{00133\ \ \ \ \ CHAR\_DANISH,}
+\DoxyCodeLine{00134\ \ \ \ \ CHAR\_ATARI800,}
+\DoxyCodeLine{00135\ \ \ \ \ CHAR\_MSX,}
+\DoxyCodeLine{00136\ \ \ \ \ CHAR\_ZX\_SPECTRUM,}
+\DoxyCodeLine{00137\ \ \ \ \ CHAR\_AMSTRAD\_CPC,}
+\DoxyCodeLine{00138\ \ \ \ \ CHAR\_A500\_TOPAZ\_BROKEN,}
+\DoxyCodeLine{00139\ \ \ \ \ CHAR\_A500\_TOPAZ\_V2,}
+\DoxyCodeLine{00140\ \ \ \ \ CHAR\_A1200\_TOPAZ\_BROKEN,}
+\DoxyCodeLine{00141\ \ \ \ \ CHAR\_A1200\_TOPAZ\_V2,}
+\DoxyCodeLine{00142\ \ \ \ \ CHAR\_TELETEXT,}
+\DoxyCodeLine{00143\ \ \ \ \ CHAR\_MEGA65,}
+\DoxyCodeLine{00144\ \ \ \ \ CHAR\_PXLFONT\_V23,}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{comment}{//\ Kernal\ Roms}}
+\DoxyCodeLine{00147\ \ \ \ \ KERNAL\_1ST,}
+\DoxyCodeLine{00148\ \ \ \ \ KERNAL\_2ST,}
+\DoxyCodeLine{00149\ \ \ \ \ KERNAL\_3ST,}
+\DoxyCodeLine{00150\ \ \ \ \ KERNAL\_DANISH\_3RD,}
+\DoxyCodeLine{00151\ \ \ \ \ KERNAL\_SX64,}
+\DoxyCodeLine{00152\ \ \ \ \ KERNAL\_SX64\_SCAND,}
+\DoxyCodeLine{00153\ \ \ \ \ KERNAL\_4064,}
+\DoxyCodeLine{00154\ \ \ \ \ KERNAL\_64\_JIFFY,}
+\DoxyCodeLine{00155\ \ \ \ \ KERNAL\_SX64\_JIFFY,}
+\DoxyCodeLine{00156\ \ \ \ \ KERNAL\_TURBO\_ROM,}
+\DoxyCodeLine{00157\ \ \ \ \ KERNAL\_DATEL\_V32,}
+\DoxyCodeLine{00158\ \ \ \ \ KERNAL\_EXOS\_V3,}
+\DoxyCodeLine{00159\ \ \ \ \ KERNAL\_TURBO\_TAPE,}
+\DoxyCodeLine{00160\ \ \ \ \ KERNEL\_TURBO\_250,}
+\DoxyCodeLine{00161\ \ \ \ \ KERNAL\_64ER\_V3,}
+\DoxyCodeLine{00162\ \ \ \ \ KERNAL\_SPEEDDOS\_PLUS,}
+\DoxyCodeLine{00163\ \ \ \ \ KERNAL\_SPEEDDOS\_27,}
+\DoxyCodeLine{00164\ \ \ \ \ KERNAL\_DOLPHIN\_10,}
+\DoxyCodeLine{00165\ \ \ \ \ KERNAL\_DOLPHIN\_20\_1,}
+\DoxyCodeLine{00166\ \ \ \ \ KERNAL\_DOLPHIN\_20\_1\_MA,}
+\DoxyCodeLine{00167\ \ \ \ \ KERNAL\_DOLPHIN\_20\_2,}
+\DoxyCodeLine{00168\ \ \ \ \ KERNAL\_DOLPHIN\_20\_3,}
+\DoxyCodeLine{00169\ \ \ \ \ KERNAL\_DOLPHIN\_20\_SLVDR,}
+\DoxyCodeLine{00170\ \ \ \ \ KERNAL\_DOLPHIN\_30,}
+\DoxyCodeLine{00171\ \ \ \ \ KERNAL\_DOLPHIN\_JIFFY,}
+\DoxyCodeLine{00172\ \ \ \ \ KERNEL\_NORLAND\_30,}
+\DoxyCodeLine{00173\ \ \ \ \ KERNEL\_SD2IEC,}
+\DoxyCodeLine{00174\ \ \ \ \ KERNAL\_JAFFY,}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{comment}{//\ VC1541\ Roms}}
+\DoxyCodeLine{00177\ \ \ \ \ VC1541C\_01,}
+\DoxyCodeLine{00178\ \ \ \ \ VC1541C\_02,}
+\DoxyCodeLine{00179\ \ \ \ \ VC1541\_II\_1987,}
+\DoxyCodeLine{00180\ \ \ \ \ VC1541\_II\_NEWTRONIC,}
+\DoxyCodeLine{00181\ \ \ \ \ VC1541\_II\_RELOC\_PATCH,}
+\DoxyCodeLine{00182\ \ \ \ \ VC1541\_II\_JIFFY,}
+\DoxyCodeLine{00183\ \ \ \ \ VC1541\_II\_JIFFY\_V600,}
+\DoxyCodeLine{00184\ \ \ \ \ VC1541\_64ER\_V3,}
+\DoxyCodeLine{00185\ \ \ \ \ VC1541\_SPEEDDOS\_PLUS,}
+\DoxyCodeLine{00186\ \ \ \ \ VC1541\_SPEEDDOS\_27,}
+\DoxyCodeLine{00187\ \ \ \ \ VC1541\_DOLPHIN\_20,}
+\DoxyCodeLine{00188\ \ \ \ \ VC1541\_DOLPHIN\_20\_SLVDR,}
+\DoxyCodeLine{00189\ \ \ \ \ VC1541\_DOLPHIN\_30,}
+\DoxyCodeLine{00190\ \ \ \ \ VC1541\_DOLPHIN\_30\_SLVDR,}
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00192\ \ \ \ \ ROM\_IDENTIFIER\_COUNT}
+\DoxyCodeLine{00193\ \};}
+\DoxyCodeLine{00194\ \textcolor{keyword}{typedef}\ ROM\_IDENTIFIER\ RomIdentifier;}
 
 \end{DoxyCode}

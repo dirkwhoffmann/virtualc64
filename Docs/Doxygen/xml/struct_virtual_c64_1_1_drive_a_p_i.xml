@@ -91,7 +91,7 @@
         <name>insertBlankDisk</name>
         <qualifiedname>VirtualC64::DriveAPI::insertBlankDisk</qualifiedname>
         <param>
-          <type>DOSType</type>
+          <type><ref refid="_f_s_types_8h_1aa499a0fc379c037c4be2ad9be44035e4" kindref="member">DOSType</ref></type>
           <declname>fstype</declname>
         </param>
         <param>

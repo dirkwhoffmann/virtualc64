@@ -563,7 +563,7 @@
         <name>set</name>
         <qualifiedname>VirtualC64::set</qualifiedname>
         <param>
-          <type>C64Model</type>
+          <type><ref refid="_c64_types_8h_1a34fe42cc2e5fba851b026b25c4af9e03" kindref="member">C64Model</ref></type>
           <declname>model</declname>
         </param>
         <briefdescription>

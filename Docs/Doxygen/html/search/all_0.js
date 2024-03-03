@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['build_0',['build',['../class_virtual_c64.html#af225a63e1c37cf8e67f9203f70bf0efc',1,'VirtualC64']]]
+  ['0_20or_20later_20or_20mpl_202_200_0',['SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0',['../_v_i_c_i_i_types_8h.html#autotoc_md7',1,'']]]
 ];

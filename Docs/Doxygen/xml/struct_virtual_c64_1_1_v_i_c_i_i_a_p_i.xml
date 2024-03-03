@@ -121,7 +121,7 @@
           <declname>nr</declname>
         </param>
         <param>
-          <type><ref refid="_v_i_c_i_i_types_8h_1af59eb4c57176022b657e35f92a7d01c9" kindref="member">Palette</ref></type>
+          <type>Palette</type>
           <declname>palette</declname>
         </param>
         <briefdescription>

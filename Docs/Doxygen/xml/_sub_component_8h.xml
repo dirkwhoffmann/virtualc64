@@ -181,7 +181,7 @@
       </node>
       <node id="3">
         <label>EmulatorTypes.h</label>
-        <link refid="_emulator_types_8h_source"/>
+        <link refid="_emulator_types_8h"/>
         <childnode refid="4" relation="include">
         </childnode>
         <childnode refid="10" relation="include">

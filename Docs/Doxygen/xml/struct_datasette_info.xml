@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" line="61" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" bodystart="61" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" line="63" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" bodystart="63" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_datasette_info_1ab0f3e30b5a12b41bd2be50c3776118ba" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -29,7 +29,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" line="62" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" bodystart="62" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" line="64" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" bodystart="64" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_datasette_info_1aa7e59efd2606d8982db43383f74bdc58" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -43,7 +43,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" line="63" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" bodystart="63" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" line="65" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" bodystart="65" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_datasette_info_1a3cdf2dc370a2c0a0819c284f5a673c1b" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -57,7 +57,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" line="64" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" bodystart="64" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" line="66" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" bodystart="66" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_datasette_info_1a82b0922d35d0d07dfb0e00304a6891c4" prot="public" static="no" mutable="no">
         <type>isize</type>
@@ -71,14 +71,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" line="65" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" bodystart="65" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" line="67" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" bodystart="67" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" line="59" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" bodystart="60" bodyend="66"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" line="61" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" bodystart="62" bodyend="68"/>
     <listofallmembers>
       <member refid="struct_datasette_info_1a82b0922d35d0d07dfb0e00304a6891c4" prot="public" virt="non-virtual"><scope>DatasetteInfo</scope><name>counter</name></member>
       <member refid="struct_datasette_info_1af0a8480ac3360847c1d59235f027fff2" prot="public" virt="non-virtual"><scope>DatasetteInfo</scope><name>hasTape</name></member>

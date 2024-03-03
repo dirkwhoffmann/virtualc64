@@ -15,14 +15,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="225" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="225" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="226" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="226" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="225" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="225" bodyend="225"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="226" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="226" bodyend="226"/>
     <listofallmembers>
       <member refid="struct_cpu_msg_1ad115a12a0eed0a63666680411878ecd3" prot="public" virt="non-virtual"><scope>CpuMsg</scope><name>pc</name></member>
     </listofallmembers>

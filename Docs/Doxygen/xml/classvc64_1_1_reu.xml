@@ -152,7 +152,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Reu.h" line="60" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CustomCartridges/Reu.h" bodystart="60" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="classvc64_1_1_reu_1a7b4ed20f20b9d91d4bfd5672076c2220" prot="private" static="no" mutable="no">
-        <type>MemoryType</type>
+        <type><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref></type>
         <definition>MemoryType vc64::Reu::memTypeF</definition>
         <argsstring></argsstring>
         <name>memTypeF</name>

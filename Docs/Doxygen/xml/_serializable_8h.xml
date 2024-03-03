@@ -542,7 +542,7 @@
       </node>
       <node id="81">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h</label>
-        <link refid="_v_i_c_i_i_types_8h"/>
+        <link refid="_v_i_c_i_i_types_8h_source"/>
         <childnode refid="60" relation="include">
         </childnode>
         <childnode refid="82" relation="include">

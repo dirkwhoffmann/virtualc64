@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="413" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="413" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="414" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="414" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_registers_1a73d23362e51f3975c1f19af439dd9504" prot="public" static="no" mutable="no">
         <type>u16</type>
@@ -29,7 +29,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="414" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="414" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="415" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="415" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_registers_1ae4a4df6032f2d0dab7e761a57dd381d6" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -43,7 +43,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="416" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="416" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="417" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="417" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_registers_1ad3bed05757be0c7bea3a8d690b11e54e" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -57,7 +57,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="418" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="418" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="419" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="419" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_registers_1a2cbbb9e2cee901b679e6d785d13880ad" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -71,7 +71,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="419" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="419" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="420" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="420" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_registers_1a571568da4bbf4d2ac1e8f66c4edba0c5" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -85,7 +85,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="420" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="420" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="421" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="421" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_registers_1ad3c9899579e095a11fa10c626cb2dcc6" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -99,7 +99,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="422" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="422" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="423" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="423" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_registers_1a8152742173a28eb850f182e522cd3c4d" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -113,7 +113,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="423" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="423" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="424" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="424" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_registers_1a1c7088c7323f1b95a179cdf01edbd93d" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -127,7 +127,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="424" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="424" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="425" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="425" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_registers_1a5090046932a94a517ed4c2dd4f19b9b0" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -141,7 +141,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="425" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="425" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="426" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="426" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_registers_1a042182444effd5801a78f95cea797991" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -155,7 +155,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="427" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="427" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="428" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="428" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_registers_1ab6fe446aa585fa66fd7e8cd3ef1c1798" prot="public" static="no" mutable="no">
         <type>StatusRegister</type>
@@ -169,7 +169,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="429" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="429" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="430" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="430" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_registers_1ac5bd3e83ee3f2fee66b146e13082993e" prot="public" static="no" mutable="no">
         <type>PPort</type>
@@ -183,14 +183,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="430" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="430" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="431" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="431" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="411" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="412" bodyend="431"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="412" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="413" bodyend="432"/>
     <listofallmembers>
       <member refid="struct_registers_1ad3bed05757be0c7bea3a8d690b11e54e" prot="public" virt="non-virtual"><scope>Registers</scope><name>a</name></member>
       <member refid="struct_registers_1a8152742173a28eb850f182e522cd3c4d" prot="public" virt="non-virtual"><scope>Registers</scope><name>adh</name></member>

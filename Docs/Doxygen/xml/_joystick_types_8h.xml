@@ -171,6 +171,7 @@
         <enumvalue id="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a6d031447a3a4f4a8bd019caae5a8eefd" prot="public">
           <name>PULL_UP</name>
           <briefdescription>
+<para>Pull the joystick up. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -178,6 +179,7 @@
         <enumvalue id="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a0351276972489e49e38c22116a9b88be" prot="public">
           <name>PULL_DOWN</name>
           <briefdescription>
+<para>Pull the joystick down. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -185,6 +187,7 @@
         <enumvalue id="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2ad142aa7c5639bc390f766d95b33ec061" prot="public">
           <name>PULL_LEFT</name>
           <briefdescription>
+<para>Pull the joystick left. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -192,6 +195,7 @@
         <enumvalue id="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a6e472db9e57783f0c011528c8880477f" prot="public">
           <name>PULL_RIGHT</name>
           <briefdescription>
+<para>Pull the joystick right. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -199,6 +203,7 @@
         <enumvalue id="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a1bb68a7b3e5d3bf0ee77339a9cff9757" prot="public">
           <name>PRESS_FIRE</name>
           <briefdescription>
+<para>Press the joystick button. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -206,6 +211,7 @@
         <enumvalue id="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a9c7d086a65397560f71b99e17e0f0be0" prot="public">
           <name>PRESS_LEFT</name>
           <briefdescription>
+<para>Press the left mouse button. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -213,6 +219,7 @@
         <enumvalue id="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a94566d36f8add816976e3e8e3bbe77b6" prot="public">
           <name>PRESS_RIGHT</name>
           <briefdescription>
+<para>Press the right mouse button. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -220,6 +227,7 @@
         <enumvalue id="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2aeffcd76f43a4f01425d2e07aa974f641" prot="public">
           <name>RELEASE_X</name>
           <briefdescription>
+<para>Move back to neutral horizontally. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -227,6 +235,7 @@
         <enumvalue id="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2aa970e92b15829ed3d58281f117ddc54f" prot="public">
           <name>RELEASE_Y</name>
           <briefdescription>
+<para>Move back to neutral vertically. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -234,6 +243,7 @@
         <enumvalue id="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2af20328355c407a53e46d519f5c934230" prot="public">
           <name>RELEASE_XY</name>
           <briefdescription>
+<para>Move back to neutral. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -241,6 +251,7 @@
         <enumvalue id="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a649492e69facc29a91a9207affbaa921" prot="public">
           <name>RELEASE_FIRE</name>
           <briefdescription>
+<para>Release the joystick button. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -248,6 +259,7 @@
         <enumvalue id="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a06954ff82c1bb18bd5bfb8451425c071" prot="public">
           <name>RELEASE_LEFT</name>
           <briefdescription>
+<para>Release the left mouse button. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -255,22 +267,24 @@
         <enumvalue id="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a90882d19687c66d27f332a2e41aaab11" prot="public">
           <name>RELEASE_RIGHT</name>
           <briefdescription>
+<para>Release the right mouse button. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
         </enumvalue>
         <briefdescription>
+<para>Gamepad / Joystick event. </para>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/JoystickTypes.h" line="22" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/JoystickTypes.h" bodystart="23" bodyend="37"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/JoystickTypes.h" line="24" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/JoystickTypes.h" bodystart="25" bodyend="39"/>
       </memberdef>
     </sectiondef>
     <sectiondef kind="typedef">
       <memberdef kind="typedef" id="_joystick_types_8h_1ad170696d1829fdf66cb35bc99622af56" prot="public" static="no">
-        <type>GAME_PAD_ACTION</type>
+        <type><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2" kindref="member">GAME_PAD_ACTION</ref></type>
         <definition>typedef GAME_PAD_ACTION GamePadAction</definition>
         <argsstring></argsstring>
         <name>GamePadAction</name>
@@ -280,7 +294,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/JoystickTypes.h" line="38" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/JoystickTypes.h" bodystart="38" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/JoystickTypes.h" line="40" column="25" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/JoystickTypes.h" bodystart="40" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -298,79 +312,79 @@
 <codeline lineno="8"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>-<sp/>The<sp/>Mozilla<sp/>Public<sp/>License<sp/>v2</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="9"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="10"><highlight class="normal"></highlight><highlight class="comment">//<sp/>SPDX-License-Identifier:<sp/>GPL-3.0-or-later<sp/>OR<sp/>MPL-2.0</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="11"><highlight class="normal"></highlight><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="12"><highlight class="normal"></highlight></codeline>
-<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="14"><highlight class="normal"></highlight></codeline>
-<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Aliases.h&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Reflection.h&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="17"><highlight class="normal"></highlight></codeline>
-<codeline lineno="18"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="19"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Enumerations</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="20"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="21"><highlight class="normal"></highlight></codeline>
-<codeline lineno="22"><highlight class="normal">enum_long(GAME_PAD_ACTION)</highlight></codeline>
-<codeline lineno="23"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/>PULL_UP,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Pull<sp/>the<sp/>joystick<sp/>up</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/>PULL_DOWN,<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Pull<sp/>the<sp/>joystick<sp/>down</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/>PULL_LEFT,<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Pull<sp/>the<sp/>joystick<sp/>left</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/>PULL_RIGHT,<sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Pull<sp/>the<sp/>joystick<sp/>right</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/>PRESS_FIRE,<sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Press<sp/>the<sp/>joystick<sp/>button</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/>PRESS_LEFT,<sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Press<sp/>the<sp/>left<sp/>mouse<sp/>button</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/>PRESS_RIGHT,<sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Press<sp/>the<sp/>right<sp/>mouse<sp/>button</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/>RELEASE_X,<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Move<sp/>back<sp/>to<sp/>neutral<sp/>horizontally</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/>RELEASE_Y,<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Move<sp/>back<sp/>to<sp/>neutral<sp/>vertically</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/>RELEASE_XY,<sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Move<sp/>back<sp/>to<sp/>neutral</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/>RELEASE_FIRE,<sp/><sp/></highlight><highlight class="comment">//<sp/>Release<sp/>the<sp/>joystick<sp/>button</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/>RELEASE_LEFT,<sp/><sp/></highlight><highlight class="comment">//<sp/>Release<sp/>the<sp/>left<sp/>mouse<sp/>button</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/>RELEASE_RIGHT<sp/><sp/></highlight><highlight class="comment">//<sp/>Release<sp/>the<sp/>right<sp/>mouse<sp/>button</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="37"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="38"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>GAME_PAD_ACTION<sp/>GamePadAction;</highlight></codeline>
-<codeline lineno="39"><highlight class="normal"></highlight></codeline>
-<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="41"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">GamePadActionEnum<sp/>:<sp/>util::Reflection&lt;GamePadActionEnum,<sp/>GamePadAction&gt;<sp/>{</highlight></codeline>
-<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>min()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;<sp/>}</highlight></codeline>
-<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>max()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>RELEASE_RIGHT;<sp/>}</highlight></codeline>
-<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>isValid(</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>value)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>value<sp/>&gt;=<sp/>min()<sp/>&amp;&amp;<sp/>value<sp/>&lt;=<sp/>max();<sp/>}</highlight></codeline>
-<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*prefix()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">nullptr</highlight><highlight class="normal">;<sp/>}</highlight></codeline>
-<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*key(GamePadAction<sp/>value)</highlight></codeline>
-<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
-<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(value)<sp/>{</highlight></codeline>
-<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>PULL_UP:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PULL_UP&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>PULL_DOWN:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PULL_DOWN&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>PULL_LEFT:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PULL_LEFT&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>PULL_RIGHT:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PULL_RIGHT&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>PRESS_FIRE:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PRESS_FIRE&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>PRESS_LEFT:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PRESS_LEFT&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>PRESS_RIGHT:<sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PRESS_RIGHT&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>RELEASE_X:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RELEASE_X&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>RELEASE_Y:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RELEASE_Y&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>RELEASE_XY:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RELEASE_XY&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>RELEASE_FIRE:<sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RELEASE_FIRE&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>RELEASE_LEFT:<sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RELEASE_LEFT&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>RELEASE_RIGHT:<sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RELEASE_RIGHT&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;???&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
-<codeline lineno="68"><highlight class="normal">};</highlight></codeline>
-<codeline lineno="69"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="70"><highlight class="normal"></highlight></codeline>
-<codeline lineno="71"><highlight class="normal"></highlight></codeline>
-<codeline lineno="72"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="73"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Structures</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Aliases.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Reflection.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Enumerations</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24" refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2" refkind="member"><highlight class="normal">enum_long(<ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2" kindref="member">GAME_PAD_ACTION</ref>)</highlight></codeline>
+<codeline lineno="25"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="26" refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a6d031447a3a4f4a8bd019caae5a8eefd" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a6d031447a3a4f4a8bd019caae5a8eefd" kindref="member">PULL_UP</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="27" refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a0351276972489e49e38c22116a9b88be" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a0351276972489e49e38c22116a9b88be" kindref="member">PULL_DOWN</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="28" refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2ad142aa7c5639bc390f766d95b33ec061" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2ad142aa7c5639bc390f766d95b33ec061" kindref="member">PULL_LEFT</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="29" refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a6e472db9e57783f0c011528c8880477f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a6e472db9e57783f0c011528c8880477f" kindref="member">PULL_RIGHT</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="30" refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a1bb68a7b3e5d3bf0ee77339a9cff9757" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a1bb68a7b3e5d3bf0ee77339a9cff9757" kindref="member">PRESS_FIRE</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="31" refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a9c7d086a65397560f71b99e17e0f0be0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a9c7d086a65397560f71b99e17e0f0be0" kindref="member">PRESS_LEFT</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="32" refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a94566d36f8add816976e3e8e3bbe77b6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a94566d36f8add816976e3e8e3bbe77b6" kindref="member">PRESS_RIGHT</ref>,<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="33" refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2aeffcd76f43a4f01425d2e07aa974f641" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2aeffcd76f43a4f01425d2e07aa974f641" kindref="member">RELEASE_X</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="34" refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2aa970e92b15829ed3d58281f117ddc54f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2aa970e92b15829ed3d58281f117ddc54f" kindref="member">RELEASE_Y</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="35" refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2af20328355c407a53e46d519f5c934230" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2af20328355c407a53e46d519f5c934230" kindref="member">RELEASE_XY</ref>,<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="36" refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a649492e69facc29a91a9207affbaa921" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a649492e69facc29a91a9207affbaa921" kindref="member">RELEASE_FIRE</ref>,<sp/><sp/></highlight></codeline>
+<codeline lineno="37" refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a06954ff82c1bb18bd5bfb8451425c071" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a06954ff82c1bb18bd5bfb8451425c071" kindref="member">RELEASE_LEFT</ref>,<sp/><sp/></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a90882d19687c66d27f332a2e41aaab11" kindref="member">RELEASE_RIGHT</ref><sp/><sp/></highlight></codeline>
+<codeline lineno="39" refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a90882d19687c66d27f332a2e41aaab11" refkind="member"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2" kindref="member">GAME_PAD_ACTION</ref><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2" kindref="member">GamePadAction</ref>;</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">GamePadActionEnum<sp/>:<sp/>util::Reflection&lt;GamePadActionEnum,<sp/>GamePadAction&gt;<sp/>{</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>min()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;<sp/>}</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>max()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a90882d19687c66d27f332a2e41aaab11" kindref="member">RELEASE_RIGHT</ref>;<sp/>}</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>isValid(</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>value)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>value<sp/>&gt;=<sp/>min()<sp/>&amp;&amp;<sp/>value<sp/>&lt;=<sp/>max();<sp/>}</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*prefix()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">nullptr</highlight><highlight class="normal">;<sp/>}</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*key(<ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2" kindref="member">GamePadAction</ref><sp/>value)</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(value)<sp/>{</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a6d031447a3a4f4a8bd019caae5a8eefd" kindref="member">PULL_UP</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PULL_UP&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a0351276972489e49e38c22116a9b88be" kindref="member">PULL_DOWN</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PULL_DOWN&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2ad142aa7c5639bc390f766d95b33ec061" kindref="member">PULL_LEFT</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PULL_LEFT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a6e472db9e57783f0c011528c8880477f" kindref="member">PULL_RIGHT</ref>:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PULL_RIGHT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a1bb68a7b3e5d3bf0ee77339a9cff9757" kindref="member">PRESS_FIRE</ref>:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PRESS_FIRE&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a9c7d086a65397560f71b99e17e0f0be0" kindref="member">PRESS_LEFT</ref>:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PRESS_LEFT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a94566d36f8add816976e3e8e3bbe77b6" kindref="member">PRESS_RIGHT</ref>:<sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PRESS_RIGHT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2aeffcd76f43a4f01425d2e07aa974f641" kindref="member">RELEASE_X</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RELEASE_X&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2aa970e92b15829ed3d58281f117ddc54f" kindref="member">RELEASE_Y</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RELEASE_Y&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2af20328355c407a53e46d519f5c934230" kindref="member">RELEASE_XY</ref>:<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RELEASE_XY&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a649492e69facc29a91a9207affbaa921" kindref="member">RELEASE_FIRE</ref>:<sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RELEASE_FIRE&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a06954ff82c1bb18bd5bfb8451425c071" kindref="member">RELEASE_LEFT</ref>:<sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RELEASE_LEFT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2a90882d19687c66d27f332a2e41aaab11" kindref="member">RELEASE_RIGHT</ref>:<sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RELEASE_RIGHT&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;???&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="70"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
 <codeline lineno="74"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="75"><highlight class="normal"></highlight></codeline>
-<codeline lineno="76"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="77"><highlight class="normal">{</highlight></codeline>
-<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>autofire;</highlight></codeline>
-<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>autofireBursts;</highlight></codeline>
-<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/>isize<sp/>autofireBullets;</highlight></codeline>
-<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/>isize<sp/>autofireDelay;</highlight></codeline>
-<codeline lineno="82"><highlight class="normal">}</highlight></codeline>
-<codeline lineno="83"><highlight class="normal">JoystickConfig;</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Structures</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>autofire;</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>autofireBursts;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/>isize<sp/>autofireBullets;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/>isize<sp/>autofireDelay;</highlight></codeline>
+<codeline lineno="84"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="85"><highlight class="normal">JoystickConfig;</highlight></codeline>
     </programlisting>
     <location file="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/JoystickTypes.h"/>
   </compounddef>

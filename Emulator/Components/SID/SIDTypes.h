@@ -9,6 +9,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -19,6 +20,7 @@
 // Enumerations
 //
 
+/// Chip revision
 enum_long(SIDREV)
 {
     MOS_6581,
@@ -46,10 +48,11 @@ struct SIDRevisionEnum : util::Reflection<SIDRevisionEnum, SIDRevision> {
 };
 #endif
 
+/// SID backend
 enum_long(SIDENGINE)
 {
-    SIDENGINE_FASTSID,
-    SIDENGINE_RESID
+    SIDENGINE_FASTSID,  ///< Not recommended
+    SIDENGINE_RESID     ///< Recommended
 };
 typedef SIDENGINE SIDEngine;
 

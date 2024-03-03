@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="115" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="115" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="117" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="117" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_c_i_a_port_info_1a061a910854c162cd33e176bf68482233" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -29,7 +29,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="116" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="116" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="118" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="118" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_c_i_a_port_info_1afea7497c98c1315375294b89910116f5" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -43,14 +43,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="117" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="117" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="119" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="119" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="113" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="114" bodyend="118"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" line="115" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h" bodystart="116" bodyend="120"/>
     <listofallmembers>
       <member refid="struct_c_i_a_port_info_1afea7497c98c1315375294b89910116f5" prot="public" virt="non-virtual"><scope>CIAPortInfo</scope><name>dir</name></member>
       <member refid="struct_c_i_a_port_info_1a67f06aa6705bc928ed2b52c5d74fd2ea" prot="public" virt="non-virtual"><scope>CIAPortInfo</scope><name>port</name></member>

@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="277" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="277" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="279" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="279" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_rom_info_1a302c1a3412b5a54e098936a843ecd0d7" prot="public" static="no" mutable="no">
         <type>const char *</type>
@@ -29,7 +29,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="279" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="279" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="281" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="281" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_rom_info_1a1ea9dfd2cc0acd3b1defa49d423fa4ba" prot="public" static="no" mutable="no">
         <type>const char *</type>
@@ -43,7 +43,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="280" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="280" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="282" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="282" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_rom_info_1a3238ac0b314db056105f14f363d7704c" prot="public" static="no" mutable="no">
         <type>const char *</type>
@@ -57,7 +57,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="281" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="281" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="283" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="283" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_rom_info_1a6acc400143428a41046b851860a49f5d" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -71,7 +71,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="283" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="283" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="285" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="285" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_rom_info_1ac37e4ef4937127bbb8f8ad672b1cf471" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -85,7 +85,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="284" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="284" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="286" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="286" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_rom_info_1ac7f7ed0767eab37ba6604f93e9970f13" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -99,14 +99,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="285" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="285" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="287" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="287" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="275" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="276" bodyend="286"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="277" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="278" bodyend="288"/>
     <listofallmembers>
       <member refid="struct_rom_info_1ad726ea15f03fa50d6d426e9f02347dc4" prot="public" virt="non-virtual"><scope>RomInfo</scope><name>crc32</name></member>
       <member refid="struct_rom_info_1a6acc400143428a41046b851860a49f5d" prot="public" virt="non-virtual"><scope>RomInfo</scope><name>isCommodoreRom</name></member>

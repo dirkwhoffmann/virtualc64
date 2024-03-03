@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="227" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="227" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="228" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="228" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_script_msg_1a1bbc69992abef3273c114f65baba51bf" prot="public" static="no" mutable="no">
         <type>i16</type>
@@ -29,14 +29,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="227" column="30" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="227" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="228" column="30" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="228" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="227" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="227" bodyend="227"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" line="228" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" bodystart="228" bodyend="228"/>
     <listofallmembers>
       <member refid="struct_script_msg_1a1bbc69992abef3273c114f65baba51bf" prot="public" virt="non-virtual"><scope>ScriptMsg</scope><name>delay</name></member>
       <member refid="struct_script_msg_1a9088cd10f5270459b9f181ea9747a82c" prot="public" virt="non-virtual"><scope>ScriptMsg</scope><name>line</name></member>

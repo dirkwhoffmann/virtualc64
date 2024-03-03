@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['thread_0',['Thread',['../classvc64_1_1_thread.html',1,'vc64']]],
-  ['thread_2eh_1',['Thread.h',['../_thread_8h.html',1,'']]],
-  ['threadtypes_2eh_2',['ThreadTypes.h',['../_thread_types_8h.html',1,'']]],
-  ['to_20go_20from_20here_3',['Where to go from here?',['../index.html#autotoc_md2',1,'']]]
+  ['later_20or_20mpl_202_200_0',['SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0',['../_v_i_c_i_i_types_8h.html#autotoc_md7',1,'']]],
+  ['license_20identifier_3a_20gpl_203_200_20or_20later_20or_20mpl_202_200_1',['SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0',['../_v_i_c_i_i_types_8h.html#autotoc_md7',1,'']]]
 ];

@@ -5847,11 +5847,11 @@
     <member refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba77a07987640c4e81b300be38becd2b5d" kind="enumvalue"><name>MSG_CONSOLE_DEBUGGER</name></member>
     <member refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baa4d10009296b03ca20e5e0782de8bcbd" kind="enumvalue"><name>MSG_SCRIPT_DONE</name></member>
     <member refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bacfb923a604b38a3581f9df2e17f31a86" kind="enumvalue"><name>MSG_SCRIPT_ABORT</name></member>
+    <member refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba2522aa8b55849618404362e794e66614" kind="enumvalue"><name>MSG_ROM_MISSING</name></member>
     <member refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba54eb386fc6dc685fbfcb1bcd6f1a0514" kind="enumvalue"><name>MSG_BASIC_ROM_LOADED</name></member>
     <member refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba49a97dc2eefc7e1a23cb479fd071532b" kind="enumvalue"><name>MSG_CHAR_ROM_LOADED</name></member>
     <member refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba41c7e29f283e38f5207e447c82b28de3" kind="enumvalue"><name>MSG_KERNAL_ROM_LOADED</name></member>
     <member refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bad82084a3c105f29495e03e98b8192637" kind="enumvalue"><name>MSG_DRIVE_ROM_LOADED</name></member>
-    <member refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba2522aa8b55849618404362e794e66614" kind="enumvalue"><name>MSG_ROM_MISSING</name></member>
     <member refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba8c193db10f35e9453d0b41c238fc31a7" kind="enumvalue"><name>MSG_CPU_JAMMED</name></member>
     <member refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba8601eda9cfe0b03211b41a146cfa21a2" kind="enumvalue"><name>MSG_CPU_JUMPED</name></member>
     <member refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baa69769d77f682ba101215104460fe1b9" kind="enumvalue"><name>MSG_BREAKPOINT_REACHED</name></member>

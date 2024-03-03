@@ -9,6 +9,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -19,11 +20,12 @@
 // Enumerations
 //
 
+/// Mouse model
 enum_long(MOUSE_MODEL)
 {
-    MOUSE_C1350,
-    MOUSE_C1351,
-    MOUSE_NEOS
+    MOUSE_C1350,    ///< Joystick mouse (Commodore)
+    MOUSE_C1351,    ///< Analog mouse (Commodore)
+    MOUSE_NEOS      ///< Analog mouse (Neos)
 };
 typedef MOUSE_MODEL MouseModel;
 

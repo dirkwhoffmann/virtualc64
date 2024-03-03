@@ -16,7 +16,7 @@
 \DoxyCodeLine{00012\ }
 \DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}MemoryTypes.h"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_memory_types_8h}{MemoryTypes.h}}"{}}}
 \DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}SubComponent.h"{}}}
 \DoxyCodeLine{00017\ }
 \DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }vc64\ \{}
@@ -41,7 +41,7 @@
 \DoxyCodeLine{00037\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ \ \ \ \ \ \ \ \ \ index\ =\ (EXROM,\ GAME,\ CHAREN,\ HIRAM,\ LORAM)}}
 \DoxyCodeLine{00038\ \textcolor{comment}{\ \ \ \ \ *\ \ \ \ \ \ \ \ \ \ \ \ \ range\ =\ upper\ four\ bits\ of\ address}}
 \DoxyCodeLine{00039\ \textcolor{comment}{\ \ \ \ \ */}}
-\DoxyCodeLine{00040\ \ \ \ \ MemoryType\ bankMap[32][16];}
+\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915a}{MemoryType}}\ bankMap[32][16];}
 \DoxyCodeLine{00041\ }
 \DoxyCodeLine{00042\ \ \ \ \ \textcolor{comment}{//\ Random\ Access\ Memory}}
 \DoxyCodeLine{00043\ \ \ \ \ u8\ ram[65536];}
@@ -62,10 +62,10 @@
 \DoxyCodeLine{00058\ \ \ \ \ u8\ rom[65536];}
 \DoxyCodeLine{00059\ }
 \DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ Peek\ source\ lookup\ table}}
-\DoxyCodeLine{00061\ \ \ \ \ MemoryType\ peekSrc[16];}
+\DoxyCodeLine{00061\ \ \ \ \ \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915a}{MemoryType}}\ peekSrc[16];}
 \DoxyCodeLine{00062\ \ \ \ \ }
 \DoxyCodeLine{00063\ \ \ \ \ \textcolor{comment}{//\ Poke\ target\ lookup\ table}}
-\DoxyCodeLine{00064\ \ \ \ \ MemoryType\ pokeTarget[16];}
+\DoxyCodeLine{00064\ \ \ \ \ \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915a}{MemoryType}}\ pokeTarget[16];}
 \DoxyCodeLine{00065\ \ \ \ \ }
 \DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//\ Indicates\ if\ watchpoints\ should\ be\ checked}}
 \DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{bool}\ checkWatchpoints\ =\ \textcolor{keyword}{false};}
@@ -154,7 +154,7 @@
 \DoxyCodeLine{00150\ \textcolor{keyword}{public}:}
 \DoxyCodeLine{00151\ \ \ \ \ }
 \DoxyCodeLine{00152\ \ \ \ \ \textcolor{comment}{//\ Erases\ the\ RAM\ with\ the\ provided\ init\ pattern}}
-\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keywordtype}{void}\ eraseWithPattern(RamPattern\ pattern);}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keywordtype}{void}\ eraseWithPattern(\mbox{\hyperlink{_memory_types_8h_aed0a6af618528ae4df946b46f3db80b8}{RamPattern}}\ pattern);}
 \DoxyCodeLine{00154\ \ \ \ \ }
 \DoxyCodeLine{00155\ \ \ \ \ \textcolor{comment}{/*\ Updates\ the\ peek\ and\ poke\ lookup\ tables.\ The\ lookup\ values\ depend\ on}}
 \DoxyCodeLine{00156\ \textcolor{comment}{\ \ \ \ \ *\ three\ processor\ port\ bits\ and\ the\ cartridge\ exrom\ and\ game\ lines.}}
@@ -162,13 +162,13 @@
 \DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordtype}{void}\ updatePeekPokeLookupTables();}
 \DoxyCodeLine{00159\ }
 \DoxyCodeLine{00160\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ current\ peek\ source\ of\ the\ specified\ memory\ address}}
-\DoxyCodeLine{00161\ \ \ \ \ MemoryType\ getPeekSource(u16\ addr)\ \{\ \textcolor{keywordflow}{return}\ peekSrc[addr\ >>\ 12];\ \}}
+\DoxyCodeLine{00161\ \ \ \ \ \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915a}{MemoryType}}\ getPeekSource(u16\ addr)\ \{\ \textcolor{keywordflow}{return}\ peekSrc[addr\ >>\ 12];\ \}}
 \DoxyCodeLine{00162\ \ \ \ \ }
 \DoxyCodeLine{00163\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ current\ poke\ target\ of\ the\ specified\ memory\ address}}
-\DoxyCodeLine{00164\ \ \ \ \ MemoryType\ getPokeTarget(u16\ addr)\ \{\ \textcolor{keywordflow}{return}\ pokeTarget[addr\ >>\ 12];\ \}}
+\DoxyCodeLine{00164\ \ \ \ \ \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915a}{MemoryType}}\ getPokeTarget(u16\ addr)\ \{\ \textcolor{keywordflow}{return}\ pokeTarget[addr\ >>\ 12];\ \}}
 \DoxyCodeLine{00165\ }
 \DoxyCodeLine{00166\ \ \ \ \ \textcolor{comment}{//\ Reads\ a\ value\ from\ memory}}
-\DoxyCodeLine{00167\ \ \ \ \ u8\ peek(u16\ addr,\ MemoryType\ source);}
+\DoxyCodeLine{00167\ \ \ \ \ u8\ peek(u16\ addr,\ \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915a}{MemoryType}}\ source);}
 \DoxyCodeLine{00168\ \ \ \ \ u8\ peek(u16\ addr,\ \textcolor{keywordtype}{bool}\ gameLine,\ \textcolor{keywordtype}{bool}\ exromLine);}
 \DoxyCodeLine{00169\ \ \ \ \ u8\ peek(u16\ addr)\ \{\ \textcolor{keywordflow}{return}\ peek(addr,\ peekSrc[addr\ >>\ 12]);\ \}}
 \DoxyCodeLine{00170\ \ \ \ \ u8\ peekZP(u8\ addr);}
@@ -182,13 +182,13 @@
 \DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordtype}{void}\ peekIOIdle(u16\ addr)\ \{\ (void)peekIO(addr);\ \}}
 \DoxyCodeLine{00179\ \ \ \ \ }
 \DoxyCodeLine{00180\ \ \ \ \ \textcolor{comment}{//\ Reads\ a\ value\ from\ memory\ without\ side\ effects}}
-\DoxyCodeLine{00181\ \ \ \ \ u8\ spypeek(u16\ addr,\ MemoryType\ source)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00181\ \ \ \ \ u8\ spypeek(u16\ addr,\ \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915a}{MemoryType}}\ source)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00182\ \ \ \ \ u8\ spypeek(u16\ addr)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ spypeek(addr,\ peekSrc[addr\ >>\ 12]);\ \}}
 \DoxyCodeLine{00183\ \ \ \ \ u8\ spypeekIO(u16\ addr)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00184\ \ \ \ \ u8\ spypeekColor(u16\ addr)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00185\ }
 \DoxyCodeLine{00186\ \ \ \ \ \textcolor{comment}{//\ Writing\ a\ value\ into\ memory}}
-\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordtype}{void}\ poke(u16\ addr,\ u8\ value,\ MemoryType\ target);}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordtype}{void}\ poke(u16\ addr,\ u8\ value,\ \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915a}{MemoryType}}\ target);}
 \DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordtype}{void}\ poke(u16\ addr,\ u8\ value,\ \textcolor{keywordtype}{bool}\ gameLine,\ \textcolor{keywordtype}{bool}\ exromLine);}
 \DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{void}\ poke(u16\ addr,\ u8\ value)\ \{\ poke(addr,\ value,\ pokeTarget[addr\ >>\ 12]);\ \}}
 \DoxyCodeLine{00190\ \ \ \ \ \textcolor{keywordtype}{void}\ pokeZP(u8\ addr,\ u8\ value);}
@@ -201,10 +201,10 @@
 \DoxyCodeLine{00197\ \ \ \ \ u16\ resetVector();}
 \DoxyCodeLine{00198\ \ \ \ \ }
 \DoxyCodeLine{00199\ \ \ \ \ \textcolor{comment}{//\ Returns\ a\ string\ representations\ for\ a\ portion\ of\ memory}}
-\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keywordtype}{string}\ memdump(u16\ addr,\ isize\ num,\ \textcolor{keywordtype}{bool}\ hex,\ isize\ pads,\ MemoryType\ src)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keywordtype}{string}\ hexdump(u16\ addr,\ isize\ num,\ isize\ pads,\ MemoryType\ src)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00202\ \ \ \ \ \textcolor{keywordtype}{string}\ decdump(u16\ addr,\ isize\ num,\ isize\ pads,\ MemoryType\ src)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00203\ \ \ \ \ \textcolor{keywordtype}{string}\ txtdump(u16\ addr,\ isize\ num,\ MemoryType\ src)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keywordtype}{string}\ memdump(u16\ addr,\ isize\ num,\ \textcolor{keywordtype}{bool}\ hex,\ isize\ pads,\ \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915a}{MemoryType}}\ src)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keywordtype}{string}\ hexdump(u16\ addr,\ isize\ num,\ isize\ pads,\ \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915a}{MemoryType}}\ src)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00202\ \ \ \ \ \textcolor{keywordtype}{string}\ decdump(u16\ addr,\ isize\ num,\ isize\ pads,\ \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915a}{MemoryType}}\ src)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00203\ \ \ \ \ \textcolor{keywordtype}{string}\ txtdump(u16\ addr,\ isize\ num,\ \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915a}{MemoryType}}\ src)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00204\ }
 \DoxyCodeLine{00205\ \ \ \ \ \textcolor{comment}{//\ Convenience\ wrappers}}
 \DoxyCodeLine{00206\ \ \ \ \ \textcolor{keywordtype}{string}\ memdump(u16\ addr,\ isize\ num,\ \textcolor{keywordtype}{bool}\ hex)\ \{\ \textcolor{keywordflow}{return}\ memdump(addr,\ num,\ hex,\ 1,\ peekSrc[addr\ >>\ 12]);\ \}}

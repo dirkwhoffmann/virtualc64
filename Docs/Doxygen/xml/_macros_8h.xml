@@ -242,7 +242,7 @@
       </node>
       <node id="111">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h</label>
-        <link refid="_msg_queue_types_8h_source"/>
+        <link refid="_msg_queue_types_8h"/>
         <childnode refid="91" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -438,7 +438,7 @@
       </node>
       <node id="116">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h</label>
-        <link refid="_cartridge_types_8h_source"/>
+        <link refid="_cartridge_types_8h"/>
         <childnode refid="30" relation="include">
         </childnode>
         <childnode refid="61" relation="include">
@@ -638,7 +638,7 @@
       </node>
       <node id="117">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h</label>
-        <link refid="_c64_types_8h_source"/>
+        <link refid="_c64_types_8h"/>
         <childnode refid="9" relation="include">
         </childnode>
         <childnode refid="62" relation="include">
@@ -664,7 +664,7 @@
       </node>
       <node id="118">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h</label>
-        <link refid="_c_i_a_types_8h_source"/>
+        <link refid="_c_i_a_types_8h"/>
         <childnode refid="62" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -750,7 +750,7 @@
       </node>
       <node id="115">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h</label>
-        <link refid="_emulator_types_8h_source"/>
+        <link refid="_emulator_types_8h"/>
         <childnode refid="27" relation="include">
         </childnode>
         <childnode refid="5" relation="include">
@@ -766,7 +766,7 @@
       </node>
       <node id="121">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ControlPortTypes.h</label>
-        <link refid="_control_port_types_8h_source"/>
+        <link refid="_control_port_types_8h"/>
         <childnode refid="11" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -780,7 +780,7 @@
       </node>
       <node id="122">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ExpansionPortTypes.h</label>
-        <link refid="_expansion_port_types_8h_source"/>
+        <link refid="_expansion_port_types_8h"/>
         <childnode refid="12" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -800,7 +800,7 @@
       </node>
       <node id="123">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/PowerSupplyTypes.h</label>
-        <link refid="_power_supply_types_8h_source"/>
+        <link refid="_power_supply_types_8h"/>
         <childnode refid="70" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -814,7 +814,7 @@
       </node>
       <node id="124">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h</label>
-        <link refid="_memory_types_8h_source"/>
+        <link refid="_memory_types_8h"/>
         <childnode refid="71" relation="include">
         </childnode>
         <childnode refid="17" relation="include">
@@ -852,7 +852,7 @@
       </node>
       <node id="125">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h</label>
-        <link refid="_s_i_d_types_8h_source"/>
+        <link refid="_s_i_d_types_8h"/>
         <childnode refid="19" relation="include">
         </childnode>
         <childnode refid="72" relation="include">
@@ -886,7 +886,7 @@
       </node>
       <node id="128">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/BusTypes.h</label>
-        <link refid="_bus_types_8h_source"/>
+        <link refid="_bus_types_8h"/>
         <childnode refid="129" relation="include">
         </childnode>
         <childnode refid="130" relation="include">
@@ -900,7 +900,7 @@
       </node>
       <node id="129">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h</label>
-        <link refid="_dma_debugger_types_8h_source"/>
+        <link refid="_dma_debugger_types_8h"/>
         <childnode refid="16" relation="include">
         </childnode>
         <childnode refid="130" relation="include">
@@ -920,7 +920,7 @@
       </node>
       <node id="130">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h</label>
-        <link refid="_v_i_c_i_i_types_8h"/>
+        <link refid="_v_i_c_i_i_types_8h_source"/>
         <childnode refid="17" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -946,7 +946,7 @@
       </node>
       <node id="131">
         <label>/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FSTypes.h</label>
-        <link refid="_f_s_types_8h_source"/>
+        <link refid="_f_s_types_8h"/>
         <childnode refid="93" relation="include">
         </childnode>
         <childnode refid="95" relation="include">
@@ -1020,7 +1020,7 @@
       </node>
       <node id="132">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Media/FileTypes.h</label>
-        <link refid="_file_types_8h_source"/>
+        <link refid="_file_types_8h"/>
         <childnode refid="96" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1116,7 +1116,7 @@
       </node>
       <node id="134">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Misc/RetroShell/RetroShellTypes.h</label>
-        <link refid="_retro_shell_types_8h_source"/>
+        <link refid="_retro_shell_types_8h"/>
         <childnode refid="77" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1136,7 +1136,7 @@
       </node>
       <node id="135">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h</label>
-        <link refid="_datasette_types_8h_source"/>
+        <link refid="_datasette_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1194,7 +1194,7 @@
       </node>
       <node id="138">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/DriveTypes.h</label>
-        <link refid="_drive_types_8h_source"/>
+        <link refid="_drive_types_8h"/>
         <childnode refid="13" relation="include">
         </childnode>
         <childnode refid="79" relation="include">
@@ -1218,7 +1218,7 @@
       </node>
       <node id="139">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Drive/ParCableTypes.h</label>
-        <link refid="_par_cable_types_8h_source"/>
+        <link refid="_par_cable_types_8h"/>
         <childnode refid="138" relation="include">
         </childnode>
         <childnode refid="81" relation="include">
@@ -1240,7 +1240,7 @@
       </node>
       <node id="140">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Joystick/JoystickTypes.h</label>
-        <link refid="_joystick_types_8h_source"/>
+        <link refid="_joystick_types_8h"/>
         <childnode refid="3" relation="include">
         </childnode>
         <childnode refid="83" relation="include">
@@ -1284,7 +1284,7 @@
       </node>
       <node id="142">
         <label>/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/MouseTypes.h</label>
-        <link refid="_mouse_types_8h_source"/>
+        <link refid="_mouse_types_8h"/>
         <childnode refid="84" relation="include">
         </childnode>
         <childnode refid="14" relation="include">

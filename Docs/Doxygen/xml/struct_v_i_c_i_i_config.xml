@@ -4,7 +4,7 @@
     <compoundname>VICIIConfig</compoundname>
     <sectiondef kind="public-attrib">
       <memberdef kind="variable" id="struct_v_i_c_i_i_config_1a75634c8636b8192463a88d5ed52aa4f0" prot="public" static="no" mutable="no">
-        <type><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44" kindref="member">VICIIRevision</ref></type>
+        <type>VICIIRevision</type>
         <definition>VICIIRevision VICIIConfig::revision</definition>
         <argsstring></argsstring>
         <name>revision</name>
@@ -18,7 +18,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="349" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="349" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_v_i_c_i_i_config_1ae559a89f2b29538a810bbd4f161944e2" prot="public" static="no" mutable="no">
-        <type><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44" kindref="member">VICIIRevision</ref></type>
+        <type>VICIIRevision</type>
         <definition>VICIIRevision VICIIConfig::awaiting</definition>
         <argsstring></argsstring>
         <name>awaiting</name>
@@ -60,7 +60,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="352" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="352" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_v_i_c_i_i_config_1a54008423aa89cc225a83299eec8e165f" prot="public" static="no" mutable="no">
-        <type><ref refid="_v_i_c_i_i_types_8h_1a1b9e054b18647ae68a514badefcbdf1f" kindref="member">GlueLogic</ref></type>
+        <type>GlueLogic</type>
         <definition>GlueLogic VICIIConfig::glueLogic</definition>
         <argsstring></argsstring>
         <name>glueLogic</name>
@@ -74,7 +74,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" line="353" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/VICIITypes.h" bodystart="353" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_v_i_c_i_i_config_1a021393d781f5eb429ad70c0ed97d1066" prot="public" static="no" mutable="no">
-        <type><ref refid="_v_i_c_i_i_types_8h_1af59eb4c57176022b657e35f92a7d01c9" kindref="member">Palette</ref></type>
+        <type>Palette</type>
         <definition>Palette VICIIConfig::palette</definition>
         <argsstring></argsstring>
         <name>palette</name>

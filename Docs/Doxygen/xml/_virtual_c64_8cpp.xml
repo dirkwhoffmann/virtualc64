@@ -153,7 +153,7 @@
       </node>
       <node id="36">
         <label>MsgQueueTypes.h</label>
-        <link refid="_msg_queue_types_8h_source"/>
+        <link refid="_msg_queue_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -247,7 +247,7 @@
       </node>
       <node id="14">
         <label>CartridgeTypes.h</label>
-        <link refid="_cartridge_types_8h_source"/>
+        <link refid="_cartridge_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -571,7 +571,7 @@
       </node>
       <node id="6">
         <label>C64Types.h</label>
-        <link refid="_c64_types_8h_source"/>
+        <link refid="_c64_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -591,7 +591,7 @@
       </node>
       <node id="15">
         <label>CIATypes.h</label>
-        <link refid="_c_i_a_types_8h_source"/>
+        <link refid="_c_i_a_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -723,7 +723,7 @@
       </node>
       <node id="27">
         <label>EmulatorTypes.h</label>
-        <link refid="_emulator_types_8h_source"/>
+        <link refid="_emulator_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -747,7 +747,7 @@
       </node>
       <node id="19">
         <label>ControlPortTypes.h</label>
-        <link refid="_control_port_types_8h_source"/>
+        <link refid="_control_port_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -767,7 +767,7 @@
       </node>
       <node id="30">
         <label>ExpansionPortTypes.h</label>
-        <link refid="_expansion_port_types_8h_source"/>
+        <link refid="_expansion_port_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -791,7 +791,7 @@
       </node>
       <node id="38">
         <label>PowerSupplyTypes.h</label>
-        <link refid="_power_supply_types_8h_source"/>
+        <link refid="_power_supply_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -807,7 +807,7 @@
       </node>
       <node id="34">
         <label>MemoryTypes.h</label>
-        <link refid="_memory_types_8h_source"/>
+        <link refid="_memory_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -865,7 +865,7 @@
       </node>
       <node id="40">
         <label>SIDTypes.h</label>
-        <link refid="_s_i_d_types_8h_source"/>
+        <link refid="_s_i_d_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -965,7 +965,7 @@
       </node>
       <node id="43">
         <label>BusTypes.h</label>
-        <link refid="_bus_types_8h_source"/>
+        <link refid="_bus_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -983,7 +983,7 @@
       </node>
       <node id="44">
         <label>DmaDebuggerTypes.h</label>
-        <link refid="_dma_debugger_types_8h_source"/>
+        <link refid="_dma_debugger_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -1037,7 +1037,7 @@
       </node>
       <node id="41">
         <label>VICIITypes.h</label>
-        <link refid="_v_i_c_i_i_types_8h"/>
+        <link refid="_v_i_c_i_i_types_8h_source"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -1083,7 +1083,7 @@
       </node>
       <node id="32">
         <label>FSTypes.h</label>
-        <link refid="_f_s_types_8h_source"/>
+        <link refid="_f_s_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -1143,7 +1143,7 @@
       </node>
       <node id="31">
         <label>FileTypes.h</label>
-        <link refid="_file_types_8h_source"/>
+        <link refid="_file_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -1261,7 +1261,7 @@
       </node>
       <node id="39">
         <label>RetroShellTypes.h</label>
-        <link refid="_retro_shell_types_8h_source"/>
+        <link refid="_retro_shell_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -1297,7 +1297,7 @@
       </node>
       <node id="22">
         <label>DatasetteTypes.h</label>
-        <link refid="_datasette_types_8h_source"/>
+        <link refid="_datasette_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -1379,7 +1379,7 @@
       </node>
       <node id="25">
         <label>DriveTypes.h</label>
-        <link refid="_drive_types_8h_source"/>
+        <link refid="_drive_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -1405,7 +1405,7 @@
       </node>
       <node id="26">
         <label>ParCableTypes.h</label>
-        <link refid="_par_cable_types_8h_source"/>
+        <link refid="_par_cable_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -1427,7 +1427,7 @@
       </node>
       <node id="18">
         <label>JoystickTypes.h</label>
-        <link refid="_joystick_types_8h_source"/>
+        <link refid="_joystick_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -1487,7 +1487,7 @@
       </node>
       <node id="35">
         <label>MouseTypes.h</label>
-        <link refid="_mouse_types_8h_source"/>
+        <link refid="_mouse_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -1872,7 +1872,7 @@
 <codeline lineno="94"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="95"><highlight class="normal"></highlight></codeline>
 <codeline lineno="96"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="97"><highlight class="normal">VirtualC64::set(C64Model<sp/>model)</highlight></codeline>
+<codeline lineno="97"><highlight class="normal">VirtualC64::set(<ref refid="_c64_types_8h_1a34fe42cc2e5fba851b026b25c4af9e03" kindref="member">C64Model</ref><sp/>model)</highlight></codeline>
 <codeline lineno="98"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/>Emulator::set(model);</highlight></codeline>
 <codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/>main.markAsDirty();</highlight></codeline>
@@ -2293,14 +2293,14 @@
 <codeline lineno="515"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="516"><highlight class="normal"></highlight></codeline>
 <codeline lineno="517"><highlight class="normal"></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="518"><highlight class="normal">VirtualC64::MemoryAPI::memdump(u16<sp/>addr,<sp/>isize<sp/>num,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>hex,<sp/>isize<sp/>pads,<sp/>MemoryType<sp/>src)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="518"><highlight class="normal">VirtualC64::MemoryAPI::memdump(u16<sp/>addr,<sp/>isize<sp/>num,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>hex,<sp/>isize<sp/>pads,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref><sp/>src)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
 <codeline lineno="519"><highlight class="keyword"></highlight><highlight class="normal">{</highlight></codeline>
 <codeline lineno="520"><highlight class="normal"><sp/><sp/><sp/><sp/>assert(isUserThread());</highlight></codeline>
 <codeline lineno="521"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>mem.memdump(addr,<sp/>num,<sp/>hex,<sp/>pads,<sp/>src);</highlight></codeline>
 <codeline lineno="522"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="523"><highlight class="normal"></highlight></codeline>
 <codeline lineno="524"><highlight class="normal"></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="525"><highlight class="normal">VirtualC64::MemoryAPI::txtdump(u16<sp/>addr,<sp/>isize<sp/>num,<sp/>MemoryType<sp/>src)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="525"><highlight class="normal">VirtualC64::MemoryAPI::txtdump(u16<sp/>addr,<sp/>isize<sp/>num,<sp/><ref refid="_memory_types_8h_1adea0e9ad7389791d42ae1d396d68915a" kindref="member">MemoryType</ref><sp/>src)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
 <codeline lineno="526"><highlight class="keyword"></highlight><highlight class="normal">{</highlight></codeline>
 <codeline lineno="527"><highlight class="normal"><sp/><sp/><sp/><sp/>assert(isUserThread());</highlight></codeline>
 <codeline lineno="528"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>mem.txtdump(addr,<sp/>num,<sp/>src);</highlight></codeline>
@@ -2377,7 +2377,7 @@
 <codeline lineno="599"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="600"><highlight class="normal"></highlight></codeline>
 <codeline lineno="601"><highlight class="normal">u32</highlight></codeline>
-<codeline lineno="602"><highlight class="normal">VirtualC64::VICIIAPI::getColor(isize<sp/>nr,<sp/><ref refid="_v_i_c_i_i_types_8h_1af59eb4c57176022b657e35f92a7d01c9" kindref="member">Palette</ref><sp/>palette)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="602"><highlight class="normal">VirtualC64::VICIIAPI::getColor(isize<sp/>nr,<sp/>Palette<sp/>palette)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
 <codeline lineno="603"><highlight class="keyword"></highlight><highlight class="normal">{</highlight></codeline>
 <codeline lineno="604"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>vic.getColor(nr,<sp/>palette);</highlight></codeline>
 <codeline lineno="605"><highlight class="normal">}</highlight></codeline>
@@ -2504,7 +2504,7 @@
 <codeline lineno="726"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Joystick</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="727"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="728"><highlight class="normal"></highlight></codeline>
-<codeline lineno="729"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>VirtualC64::JoystickAPI::trigger(GamePadAction<sp/>event)</highlight></codeline>
+<codeline lineno="729"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>VirtualC64::JoystickAPI::trigger(<ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2" kindref="member">GamePadAction</ref><sp/>event)</highlight></codeline>
 <codeline lineno="730"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="731"><highlight class="normal"><sp/><sp/><sp/><sp/>joystick.trigger(event);</highlight></codeline>
 <codeline lineno="732"><highlight class="normal"><sp/><sp/><sp/><sp/>c64.markAsDirty();</highlight></codeline>
@@ -2562,7 +2562,7 @@
 <codeline lineno="784"><highlight class="normal"><sp/><sp/><sp/><sp/>c64.markAsDirty();</highlight></codeline>
 <codeline lineno="785"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="786"><highlight class="normal"></highlight></codeline>
-<codeline lineno="787"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>VirtualC64::MouseAPI::trigger(GamePadAction<sp/>event)</highlight></codeline>
+<codeline lineno="787"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>VirtualC64::MouseAPI::trigger(<ref refid="_joystick_types_8h_1ae2114e40c8dc40375c0d0a60904ca8e2" kindref="member">GamePadAction</ref><sp/>event)</highlight></codeline>
 <codeline lineno="788"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="789"><highlight class="normal"><sp/><sp/><sp/><sp/>mouse.trigger(event);</highlight></codeline>
 <codeline lineno="790"><highlight class="normal"><sp/><sp/><sp/><sp/>c64.markAsDirty();</highlight></codeline>
@@ -2652,7 +2652,7 @@
 <codeline lineno="874"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="875"><highlight class="normal"></highlight></codeline>
 <codeline lineno="876"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="877"><highlight class="normal">VirtualC64::RetroShellAPI::press(RetroShellKey<sp/>key,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>shift)</highlight></codeline>
+<codeline lineno="877"><highlight class="normal">VirtualC64::RetroShellAPI::press(<ref refid="_retro_shell_types_8h_1a266a24d8f1b5150281f89401b43752aa" kindref="member">RetroShellKey</ref><sp/>key,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>shift)</highlight></codeline>
 <codeline lineno="878"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="879"><highlight class="normal"><sp/><sp/><sp/><sp/>retroShell.press(key,<sp/>shift);<sp/></highlight></codeline>
 <codeline lineno="880"><highlight class="normal">}</highlight></codeline>
@@ -2783,7 +2783,7 @@
 <codeline lineno="1005"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="1006"><highlight class="normal"></highlight></codeline>
 <codeline lineno="1007"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="1008"><highlight class="normal">VirtualC64::DriveAPI::insertBlankDisk(DOSType<sp/>fstype,<sp/>PETName&lt;16&gt;<sp/>name)</highlight></codeline>
+<codeline lineno="1008"><highlight class="normal">VirtualC64::DriveAPI::insertBlankDisk(<ref refid="_f_s_types_8h_1aa499a0fc379c037c4be2ad9be44035e4" kindref="member">DOSType</ref><sp/>fstype,<sp/>PETName&lt;16&gt;<sp/>name)</highlight></codeline>
 <codeline lineno="1009"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="1010"><highlight class="normal"><sp/><sp/><sp/><sp/>drive.insertNewDisk(fstype,<sp/>name);</highlight></codeline>
 <codeline lineno="1011"><highlight class="normal"><sp/><sp/><sp/><sp/>c64.markAsDirty();</highlight></codeline>

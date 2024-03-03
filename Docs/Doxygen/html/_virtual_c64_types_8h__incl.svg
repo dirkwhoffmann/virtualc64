@@ -21,7 +21,7 @@
 <!-- Node2 -->
 <g id="Node000002" class="node">
 <title>Node2</title>
-<g id="a_Node000002"><a xlink:href="_c64_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000002"><a xlink:href="_c64_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="1384.79,-240.25 1316.29,-240.25 1316.29,-221 1384.79,-221 1384.79,-240.25"/>
 <text text-anchor="middle" x="1350.54" y="-226.75" font-family="Helvetica,sans-Serif" font-size="10.00">C64Types.h</text>
 </a>
@@ -39,7 +39,7 @@
 <!-- Node10 -->
 <g id="Node000010" class="node">
 <title>Node10</title>
-<g id="a_Node000010"><a xlink:href="_cartridge_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000010"><a xlink:href="_cartridge_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="2730.66,-240.25 2640.41,-240.25 2640.41,-221 2730.66,-221 2730.66,-240.25"/>
 <text text-anchor="middle" x="2685.54" y="-226.75" font-family="Helvetica,sans-Serif" font-size="10.00">CartridgeTypes.h</text>
 </a>
@@ -57,7 +57,7 @@
 <!-- Node11 -->
 <g id="Node000011" class="node">
 <title>Node11</title>
-<g id="a_Node000011"><a xlink:href="_c_i_a_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000011"><a xlink:href="_c_i_a_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="270.66,-295.5 204.41,-295.5 204.41,-276.25 270.66,-276.25 270.66,-295.5"/>
 <text text-anchor="middle" x="237.54" y="-282" font-family="Helvetica,sans-Serif" font-size="10.00">CIATypes.h</text>
 </a>
@@ -93,7 +93,7 @@
 <!-- Node14 -->
 <g id="Node000014" class="node">
 <title>Node14</title>
-<g id="a_Node000014"><a xlink:href="_joystick_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000014"><a xlink:href="_joystick_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="2078.16,-240.25 1990.91,-240.25 1990.91,-221 2078.16,-221 2078.16,-240.25"/>
 <text text-anchor="middle" x="2034.54" y="-226.75" font-family="Helvetica,sans-Serif" font-size="10.00">JoystickTypes.h</text>
 </a>
@@ -111,7 +111,7 @@
 <!-- Node15 -->
 <g id="Node000015" class="node">
 <title>Node15</title>
-<g id="a_Node000015"><a xlink:href="_control_port_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000015"><a xlink:href="_control_port_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="2468.54,-240.25 2368.54,-240.25 2368.54,-221 2468.54,-221 2468.54,-240.25"/>
 <text text-anchor="middle" x="2418.54" y="-226.75" font-family="Helvetica,sans-Serif" font-size="10.00">ControlPortTypes.h</text>
 </a>
@@ -147,7 +147,7 @@
 <!-- Node18 -->
 <g id="Node000018" class="node">
 <title>Node18</title>
-<g id="a_Node000018"><a xlink:href="_datasette_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000018"><a xlink:href="_datasette_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="1174.16,-240.25 1080.91,-240.25 1080.91,-221 1174.16,-221 1174.16,-240.25"/>
 <text text-anchor="middle" x="1127.54" y="-226.75" font-family="Helvetica,sans-Serif" font-size="10.00">DatasetteTypes.h</text>
 </a>
@@ -201,7 +201,7 @@
 <!-- Node21 -->
 <g id="Node000021" class="node">
 <title>Node21</title>
-<g id="a_Node000021"><a xlink:href="_drive_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000021"><a xlink:href="_drive_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="1787.41,-295.5 1713.66,-295.5 1713.66,-276.25 1787.41,-276.25 1787.41,-295.5"/>
 <text text-anchor="middle" x="1750.54" y="-282" font-family="Helvetica,sans-Serif" font-size="10.00">DriveTypes.h</text>
 </a>
@@ -219,7 +219,7 @@
 <!-- Node22 -->
 <g id="Node000022" class="node">
 <title>Node22</title>
-<g id="a_Node000022"><a xlink:href="_par_cable_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000022"><a xlink:href="_par_cable_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="1896.04,-240.25 1805.04,-240.25 1805.04,-221 1896.04,-221 1896.04,-240.25"/>
 <text text-anchor="middle" x="1850.54" y="-226.75" font-family="Helvetica,sans-Serif" font-size="10.00">ParCableTypes.h</text>
 </a>
@@ -237,7 +237,7 @@
 <!-- Node23 -->
 <g id="Node000023" class="node">
 <title>Node23</title>
-<g id="a_Node000023"><a xlink:href="_emulator_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000023"><a xlink:href="_emulator_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="2300.29,-295.5 2210.79,-295.5 2210.79,-276.25 2300.29,-276.25 2300.29,-295.5"/>
 <text text-anchor="middle" x="2255.54" y="-282" font-family="Helvetica,sans-Serif" font-size="10.00">EmulatorTypes.h</text>
 </a>
@@ -273,7 +273,7 @@
 <!-- Node26 -->
 <g id="Node000026" class="node">
 <title>Node26</title>
-<g id="a_Node000026"><a xlink:href="_expansion_port_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000026"><a xlink:href="_expansion_port_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="314.66,-240.25 200.41,-240.25 200.41,-221 314.66,-221 314.66,-240.25"/>
 <text text-anchor="middle" x="257.54" y="-226.75" font-family="Helvetica,sans-Serif" font-size="10.00">ExpansionPortTypes.h</text>
 </a>
@@ -291,7 +291,7 @@
 <!-- Node27 -->
 <g id="Node000027" class="node">
 <title>Node27</title>
-<g id="a_Node000027"><a xlink:href="_file_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000027"><a xlink:href="_file_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="512.66,-240.25 446.41,-240.25 446.41,-221 512.66,-221 512.66,-240.25"/>
 <text text-anchor="middle" x="479.54" y="-226.75" font-family="Helvetica,sans-Serif" font-size="10.00">FileTypes.h</text>
 </a>
@@ -309,7 +309,7 @@
 <!-- Node28 -->
 <g id="Node000028" class="node">
 <title>Node28</title>
-<g id="a_Node000028"><a xlink:href="_f_s_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000028"><a xlink:href="_f_s_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="1466.16,-240.25 1402.91,-240.25 1402.91,-221 1466.16,-221 1466.16,-240.25"/>
 <text text-anchor="middle" x="1434.54" y="-226.75" font-family="Helvetica,sans-Serif" font-size="10.00">FSTypes.h</text>
 </a>
@@ -345,7 +345,7 @@
 <!-- Node30 -->
 <g id="Node000030" class="node">
 <title>Node30</title>
-<g id="a_Node000030"><a xlink:href="_memory_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000030"><a xlink:href="_memory_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="1710.41,-240.25 1624.66,-240.25 1624.66,-221 1710.41,-221 1710.41,-240.25"/>
 <text text-anchor="middle" x="1667.54" y="-226.75" font-family="Helvetica,sans-Serif" font-size="10.00">MemoryTypes.h</text>
 </a>
@@ -363,7 +363,7 @@
 <!-- Node31 -->
 <g id="Node000031" class="node">
 <title>Node31</title>
-<g id="a_Node000031"><a xlink:href="_mouse_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000031"><a xlink:href="_mouse_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="2176.41,-240.25 2096.66,-240.25 2096.66,-221 2176.41,-221 2176.41,-240.25"/>
 <text text-anchor="middle" x="2136.54" y="-226.75" font-family="Helvetica,sans-Serif" font-size="10.00">MouseTypes.h</text>
 </a>
@@ -381,7 +381,7 @@
 <!-- Node32 -->
 <g id="Node000032" class="node">
 <title>Node32</title>
-<g id="a_Node000032"><a xlink:href="_msg_queue_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000032"><a xlink:href="_msg_queue_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="2584.41,-240.25 2486.66,-240.25 2486.66,-221 2584.41,-221 2584.41,-240.25"/>
 <text text-anchor="middle" x="2535.54" y="-226.75" font-family="Helvetica,sans-Serif" font-size="10.00">MsgQueueTypes.h</text>
 </a>
@@ -417,7 +417,7 @@
 <!-- Node34 -->
 <g id="Node000034" class="node">
 <title>Node34</title>
-<g id="a_Node000034"><a xlink:href="_power_supply_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000034"><a xlink:href="_power_supply_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="774.66,-240.25 666.41,-240.25 666.41,-221 774.66,-221 774.66,-240.25"/>
 <text text-anchor="middle" x="720.54" y="-226.75" font-family="Helvetica,sans-Serif" font-size="10.00">PowerSupplyTypes.h</text>
 </a>
@@ -435,7 +435,7 @@
 <!-- Node35 -->
 <g id="Node000035" class="node">
 <title>Node35</title>
-<g id="a_Node000035"><a xlink:href="_retro_shell_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000035"><a xlink:href="_retro_shell_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="888.66,-240.25 792.41,-240.25 792.41,-221 888.66,-221 888.66,-240.25"/>
 <text text-anchor="middle" x="840.54" y="-226.75" font-family="Helvetica,sans-Serif" font-size="10.00">RetroShellTypes.h</text>
 </a>
@@ -453,7 +453,7 @@
 <!-- Node36 -->
 <g id="Node000036" class="node">
 <title>Node36</title>
-<g id="a_Node000036"><a xlink:href="_s_i_d_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000036"><a xlink:href="_s_i_d_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="974.41,-240.25 906.66,-240.25 906.66,-221 974.41,-221 974.41,-240.25"/>
 <text text-anchor="middle" x="940.54" y="-226.75" font-family="Helvetica,sans-Serif" font-size="10.00">SIDTypes.h</text>
 </a>
@@ -471,7 +471,7 @@
 <!-- Node37 -->
 <g id="Node000037" class="node">
 <title>Node37</title>
-<g id="a_Node000037"><a xlink:href="_v_i_c_i_i_types_8h.html" target="_top" xlink:title=" ">
+<g id="a_Node000037"><a xlink:href="_v_i_c_i_i_types_8h_source.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="1361.41,-350.75 1287.66,-350.75 1287.66,-331.5 1361.41,-331.5 1361.41,-350.75"/>
 <text text-anchor="middle" x="1324.54" y="-337.25" font-family="Helvetica,sans-Serif" font-size="10.00">VICIITypes.h</text>
 </a>
@@ -1191,7 +1191,7 @@
 <!-- Node39 -->
 <g id="Node000039" class="node">
 <title>Node39</title>
-<g id="a_Node000039"><a xlink:href="_bus_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000039"><a xlink:href="_bus_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="1260.41,-240.25 1192.66,-240.25 1192.66,-221 1260.41,-221 1260.41,-240.25"/>
 <text text-anchor="middle" x="1226.54" y="-226.75" font-family="Helvetica,sans-Serif" font-size="10.00">BusTypes.h</text>
 </a>
@@ -1209,7 +1209,7 @@
 <!-- Node40 -->
 <g id="Node000040" class="node">
 <title>Node40</title>
-<g id="a_Node000040"><a xlink:href="_dma_debugger_types_8h_source.html" target="_top" xlink:title=" ">
+<g id="a_Node000040"><a xlink:href="_dma_debugger_types_8h.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="1325.29,-295.5 1211.79,-295.5 1211.79,-276.25 1325.29,-276.25 1325.29,-295.5"/>
 <text text-anchor="middle" x="1268.54" y="-282" font-family="Helvetica,sans-Serif" font-size="10.00">DmaDebuggerTypes.h</text>
 </a>

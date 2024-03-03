@@ -16,12 +16,12 @@
 \DoxyCodeLine{00012\ }
 \DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_v_i_c_i_i_types_8h}{VICIITypes.h}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}VICIITypes.h"{}}}
 \DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}SubComponent.h"{}}}
 \DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}Colors.h"{}}}
 \DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}Constants.h"{}}}
 \DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}DmaDebugger.h"{}}}
-\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ "{}MemoryTypes.h"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_memory_types_8h}{MemoryTypes.h}}"{}}}
 \DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ "{}TimeDelayed.h"{}}}
 \DoxyCodeLine{00022\ }
 \DoxyCodeLine{00023\ \textcolor{keyword}{namespace\ }vc64\ \{}
@@ -452,7 +452,7 @@
 \DoxyCodeLine{00448\ \textcolor{comment}{\ \ \ \ \ *\ has\ access\ to\ RAM\ and\ the\ character\ Rom.\ In\ ultimax\ mode,\ VICII\ has}}
 \DoxyCodeLine{00449\ \textcolor{comment}{\ \ \ \ \ *\ access\ to\ ROMH\ and\ some\ portions\ of\ RAM.}}
 \DoxyCodeLine{00450\ \textcolor{comment}{\ \ \ \ \ */}}
-\DoxyCodeLine{00451\ \ \ \ \ MemoryType\ memSrc[16];}
+\DoxyCodeLine{00451\ \ \ \ \ \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915a}{MemoryType}}\ memSrc[16];}
 \DoxyCodeLine{00452\ \ \ \ \ }
 \DoxyCodeLine{00453\ \ \ \ \ \textcolor{comment}{/*\ Indicates\ whether\ VICII\ is\ running\ in\ ultimax\ mode.\ Ultimax\ mode\ can\ be}}
 \DoxyCodeLine{00454\ \textcolor{comment}{\ \ \ \ \ *\ enabled\ by\ external\ cartridges\ by\ pulling\ the\ game\ line\ low\ and\ keeping}}
@@ -612,8 +612,8 @@
 \DoxyCodeLine{00608\ }
 \DoxyCodeLine{00609\ \ \ \ \ \textcolor{keywordtype}{void}\ \_initialize()\ \textcolor{keyword}{override};}
 \DoxyCodeLine{00610\ }
-\DoxyCodeLine{00611\ \ \ \ \ \textcolor{keywordtype}{void}\ initFuncTable(\mbox{\hyperlink{_v_i_c_i_i_types_8h_aa6907eb49d9f65564eca99d8b6cd3c44}{VICIIRevision}}\ revision);}
-\DoxyCodeLine{00612\ \ \ \ \ \textcolor{keywordtype}{void}\ initFuncTable(\mbox{\hyperlink{_v_i_c_i_i_types_8h_aa6907eb49d9f65564eca99d8b6cd3c44}{VICIIRevision}}\ revision,\ u16\ flags);}
+\DoxyCodeLine{00611\ \ \ \ \ \textcolor{keywordtype}{void}\ initFuncTable(VICIIRevision\ revision);}
+\DoxyCodeLine{00612\ \ \ \ \ \textcolor{keywordtype}{void}\ initFuncTable(VICIIRevision\ revision,\ u16\ flags);}
 \DoxyCodeLine{00613\ }
 \DoxyCodeLine{00614\ \ \ \ \ \textcolor{keywordtype}{void}\ updateVicFunctionTable();}
 \DoxyCodeLine{00615\ }
@@ -851,7 +851,7 @@
 \DoxyCodeLine{00847\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00848\ \ \ \ \ }
 \DoxyCodeLine{00849\ \ \ \ \ \textcolor{keywordtype}{void}\ updateRevision();}
-\DoxyCodeLine{00850\ \ \ \ \ \textcolor{keywordtype}{void}\ setRevision(\mbox{\hyperlink{_v_i_c_i_i_types_8h_aa6907eb49d9f65564eca99d8b6cd3c44}{VICIIRevision}}\ revision);}
+\DoxyCodeLine{00850\ \ \ \ \ \textcolor{keywordtype}{void}\ setRevision(VICIIRevision\ revision);}
 \DoxyCodeLine{00851\ }
 \DoxyCodeLine{00852\ \ \ \ \ }
 \DoxyCodeLine{00853\ \ \ \ \ \textcolor{comment}{//}}
@@ -865,35 +865,35 @@
 \DoxyCodeLine{00861\ \ \ \ \ \textcolor{keywordtype}{bool}\ ntsc()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ isNTSC;\ \}}
 \DoxyCodeLine{00862\ }
 \DoxyCodeLine{00863\ \ \ \ \ \textcolor{comment}{//\ Returns\ true\ if\ light\ pen\ interrupts\ are\ triggered\ with\ a\ delay}}
-\DoxyCodeLine{00864\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ delayedLightPenIrqs(\mbox{\hyperlink{_v_i_c_i_i_types_8h_aa6907eb49d9f65564eca99d8b6cd3c44}{VICIIRevision}}\ rev);}
+\DoxyCodeLine{00864\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ delayedLightPenIrqs(VICIIRevision\ rev);}
 \DoxyCodeLine{00865\ \ \ \ \ \textcolor{keywordtype}{bool}\ delayedLightPenIrqs()\ \{\ \textcolor{keywordflow}{return}\ delayedLightPenIrqs(config.revision);\ \}}
 \DoxyCodeLine{00866\ }
 \DoxyCodeLine{00867\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ display\ refresh\ rate}}
-\DoxyCodeLine{00868\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{double}\ getFps(\mbox{\hyperlink{_v_i_c_i_i_types_8h_aa6907eb49d9f65564eca99d8b6cd3c44}{VICIIRevision}}\ rev);}
+\DoxyCodeLine{00868\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{double}\ getFps(VICIIRevision\ rev);}
 \DoxyCodeLine{00869\ \ \ \ \ \textcolor{keywordtype}{double}\ getFps()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ getFps(config.revision);\ \}}
 \DoxyCodeLine{00870\ }
 \DoxyCodeLine{00871\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ clock\ frequency}}
-\DoxyCodeLine{00872\ \ \ \ \ \textcolor{keyword}{static}\ isize\ getFrequency(\mbox{\hyperlink{_v_i_c_i_i_types_8h_aa6907eb49d9f65564eca99d8b6cd3c44}{VICIIRevision}}\ rev);}
+\DoxyCodeLine{00872\ \ \ \ \ \textcolor{keyword}{static}\ isize\ getFrequency(VICIIRevision\ rev);}
 \DoxyCodeLine{00873\ \ \ \ \ isize\ getFrequency()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ getFrequency(config.revision);\ \}}
 \DoxyCodeLine{00874\ \ \ \ \ }
 \DoxyCodeLine{00875\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ number\ of\ CPU\ cycles\ performed\ per\ scanline}}
-\DoxyCodeLine{00876\ \ \ \ \ \textcolor{keyword}{static}\ isize\ getCyclesPerLine(\mbox{\hyperlink{_v_i_c_i_i_types_8h_aa6907eb49d9f65564eca99d8b6cd3c44}{VICIIRevision}}\ rev);}
+\DoxyCodeLine{00876\ \ \ \ \ \textcolor{keyword}{static}\ isize\ getCyclesPerLine(VICIIRevision\ rev);}
 \DoxyCodeLine{00877\ \ \ \ \ isize\ getCyclesPerLine()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ getCyclesPerLine(config.revision);\ \}}
 \DoxyCodeLine{00878\ }
 \DoxyCodeLine{00879\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ number\ of\ scanline\ drawn\ per\ frame}}
-\DoxyCodeLine{00880\ \ \ \ \ \textcolor{keyword}{static}\ isize\ getLinesPerFrame(\mbox{\hyperlink{_v_i_c_i_i_types_8h_aa6907eb49d9f65564eca99d8b6cd3c44}{VICIIRevision}}\ rev);}
+\DoxyCodeLine{00880\ \ \ \ \ \textcolor{keyword}{static}\ isize\ getLinesPerFrame(VICIIRevision\ rev);}
 \DoxyCodeLine{00881\ \ \ \ \ isize\ getLinesPerFrame()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ getLinesPerFrame(config.revision);\ \}}
 \DoxyCodeLine{00882\ }
 \DoxyCodeLine{00883\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ number\ of\ CPU\ cycles\ executed\ in\ one\ frame}}
-\DoxyCodeLine{00884\ \ \ \ \ \textcolor{keyword}{static}\ isize\ getCyclesPerFrame(\mbox{\hyperlink{_v_i_c_i_i_types_8h_aa6907eb49d9f65564eca99d8b6cd3c44}{VICIIRevision}}\ rev);}
+\DoxyCodeLine{00884\ \ \ \ \ \textcolor{keyword}{static}\ isize\ getCyclesPerFrame(VICIIRevision\ rev);}
 \DoxyCodeLine{00885\ \ \ \ \ isize\ getCyclesPerFrame()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ getCyclesPerFrame(config.revision);\ \}}
 \DoxyCodeLine{00886\ }
 \DoxyCodeLine{00887\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ number\ of\ visible\ scanlines\ in\ a\ single\ frame}}
-\DoxyCodeLine{00888\ \ \ \ \ \textcolor{keyword}{static}\ isize\ numVisibleLines(\mbox{\hyperlink{_v_i_c_i_i_types_8h_aa6907eb49d9f65564eca99d8b6cd3c44}{VICIIRevision}}\ rev);}
+\DoxyCodeLine{00888\ \ \ \ \ \textcolor{keyword}{static}\ isize\ numVisibleLines(VICIIRevision\ rev);}
 \DoxyCodeLine{00889\ \ \ \ \ \textcolor{keywordtype}{long}\ numVisibleLines()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ numVisibleLines(config.revision);\ \}}
 \DoxyCodeLine{00890\ \ \ \ \ }
 \DoxyCodeLine{00891\ \ \ \ \ \textcolor{comment}{//\ Indicates\ if\ VICII\ is\ affected\ by\ the\ gray-\/dot\ bug}}
-\DoxyCodeLine{00892\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ hasGrayCodeBug(\mbox{\hyperlink{_v_i_c_i_i_types_8h_aa6907eb49d9f65564eca99d8b6cd3c44}{VICIIRevision}}\ rev);}
+\DoxyCodeLine{00892\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ hasGrayCodeBug(VICIIRevision\ rev);}
 \DoxyCodeLine{00893\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasGrayCodeBug()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ hasGrayCodeBug(config.revision);\ \}}
 \DoxyCodeLine{00894\ }
 \DoxyCodeLine{00895\ \ \ \ \ \textcolor{comment}{//\ Returns\ true\ if\ the\ end\ of\ the\ scanline\ has\ been\ reached}}
@@ -916,7 +916,7 @@
 \DoxyCodeLine{00912\ \ \ \ \ }
 \DoxyCodeLine{00913\ \ \ \ \ \textcolor{comment}{//\ Returns\ a\ C64\ color\ in\ 32\ bit\ big\ endian\ RGBA\ format}}
 \DoxyCodeLine{00914\ \ \ \ \ u32\ getColor(isize\ nr)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ rgbaTable[nr];\ \}}
-\DoxyCodeLine{00915\ \ \ \ \ u32\ getColor(isize\ nr,\ \mbox{\hyperlink{_v_i_c_i_i_types_8h_af59eb4c57176022b657e35f92a7d01c9}{Palette}}\ palette);}
+\DoxyCodeLine{00915\ \ \ \ \ u32\ getColor(isize\ nr,\ Palette\ palette);}
 \DoxyCodeLine{00916\ }
 \DoxyCodeLine{00917\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00918\ \ \ \ \ }
@@ -1417,7 +1417,7 @@
 \DoxyCodeLine{01413\ \textcolor{keyword}{public}:\ }
 \DoxyCodeLine{01414\ }
 \DoxyCodeLine{01415\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ current\ screen\ geometry}}
-\DoxyCodeLine{01416\ \ \ \ \ \mbox{\hyperlink{_v_i_c_i_i_types_8h_a4b4722e29346b1d0c0c0faa810ec4c93}{ScreenGeometry}}\ getScreenGeometry(\textcolor{keywordtype}{void})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{01416\ \ \ \ \ ScreenGeometry\ getScreenGeometry(\textcolor{keywordtype}{void})\ \textcolor{keyword}{const};}
 \DoxyCodeLine{01417\ \ \ \ \ }
 \DoxyCodeLine{01418\ \ \ \ \ \textcolor{comment}{//\ Returns\ the\ coordinates\ of\ a\ certain\ sprite}}
 \DoxyCodeLine{01419\ \ \ \ \ u16\ getSpriteX(\textcolor{keywordtype}{int}\ nr)\textcolor{keyword}{\ const\ }\{\ assert(nr\ <\ 8);\ \textcolor{keywordflow}{return}\ reg.current.sprX[nr];\ \}}

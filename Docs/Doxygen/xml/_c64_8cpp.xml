@@ -148,7 +148,7 @@
       </node>
       <node id="15">
         <label>MsgQueueTypes.h</label>
-        <link refid="_msg_queue_types_8h_source"/>
+        <link refid="_msg_queue_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -242,7 +242,7 @@
       </node>
       <node id="60">
         <label>CartridgeTypes.h</label>
-        <link refid="_cartridge_types_8h_source"/>
+        <link refid="_cartridge_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -580,7 +580,7 @@
       </node>
       <node id="6">
         <label>C64Types.h</label>
-        <link refid="_c64_types_8h_source"/>
+        <link refid="_c64_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -600,7 +600,7 @@
       </node>
       <node id="117">
         <label>CIATypes.h</label>
-        <link refid="_c_i_a_types_8h_source"/>
+        <link refid="_c_i_a_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -732,7 +732,7 @@
       </node>
       <node id="34">
         <label>EmulatorTypes.h</label>
-        <link refid="_emulator_types_8h_source"/>
+        <link refid="_emulator_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -756,7 +756,7 @@
       </node>
       <node id="76">
         <label>ControlPortTypes.h</label>
-        <link refid="_control_port_types_8h_source"/>
+        <link refid="_control_port_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -776,7 +776,7 @@
       </node>
       <node id="53">
         <label>ExpansionPortTypes.h</label>
-        <link refid="_expansion_port_types_8h_source"/>
+        <link refid="_expansion_port_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -800,7 +800,7 @@
       </node>
       <node id="129">
         <label>PowerSupplyTypes.h</label>
-        <link refid="_power_supply_types_8h_source"/>
+        <link refid="_power_supply_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -816,7 +816,7 @@
       </node>
       <node id="84">
         <label>MemoryTypes.h</label>
-        <link refid="_memory_types_8h_source"/>
+        <link refid="_memory_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -874,7 +874,7 @@
       </node>
       <node id="98">
         <label>SIDTypes.h</label>
-        <link refid="_s_i_d_types_8h_source"/>
+        <link refid="_s_i_d_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -974,7 +974,7 @@
       </node>
       <node id="91">
         <label>BusTypes.h</label>
-        <link refid="_bus_types_8h_source"/>
+        <link refid="_bus_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -992,7 +992,7 @@
       </node>
       <node id="92">
         <label>DmaDebuggerTypes.h</label>
-        <link refid="_dma_debugger_types_8h_source"/>
+        <link refid="_dma_debugger_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -1046,7 +1046,7 @@
       </node>
       <node id="90">
         <label>VICIITypes.h</label>
-        <link refid="_v_i_c_i_i_types_8h"/>
+        <link refid="_v_i_c_i_i_types_8h_source"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -1092,7 +1092,7 @@
       </node>
       <node id="175">
         <label>FSTypes.h</label>
-        <link refid="_f_s_types_8h_source"/>
+        <link refid="_f_s_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -1152,7 +1152,7 @@
       </node>
       <node id="64">
         <label>FileTypes.h</label>
-        <link refid="_file_types_8h_source"/>
+        <link refid="_file_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -1270,7 +1270,7 @@
       </node>
       <node id="135">
         <label>RetroShellTypes.h</label>
-        <link refid="_retro_shell_types_8h_source"/>
+        <link refid="_retro_shell_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -1306,7 +1306,7 @@
       </node>
       <node id="181">
         <label>DatasetteTypes.h</label>
-        <link refid="_datasette_types_8h_source"/>
+        <link refid="_datasette_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -1388,7 +1388,7 @@
       </node>
       <node id="86">
         <label>DriveTypes.h</label>
-        <link refid="_drive_types_8h_source"/>
+        <link refid="_drive_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -1414,7 +1414,7 @@
       </node>
       <node id="87">
         <label>ParCableTypes.h</label>
-        <link refid="_par_cable_types_8h_source"/>
+        <link refid="_par_cable_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -1436,7 +1436,7 @@
       </node>
       <node id="55">
         <label>JoystickTypes.h</label>
-        <link refid="_joystick_types_8h_source"/>
+        <link refid="_joystick_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -1496,7 +1496,7 @@
       </node>
       <node id="79">
         <label>MouseTypes.h</label>
-        <link refid="_mouse_types_8h_source"/>
+        <link refid="_mouse_types_8h"/>
         <childnode refid="7" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
@@ -1951,7 +1951,7 @@
 <codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/>cpu.reg.pc<sp/>=<sp/>cpu.reg.pc0<sp/>=<sp/>mem.resetVector();</highlight></codeline>
 <codeline lineno="236"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="237"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Inform<sp/>the<sp/>GUI</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="238"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(MSG_RESET);</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba66a2805e00d510437311c54dfcf010b6" kindref="member">MSG_RESET</ref>);</highlight></codeline>
 <codeline lineno="239"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="240"><highlight class="normal"></highlight></codeline>
 <codeline lineno="241"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
@@ -1967,7 +1967,7 @@
 <codeline lineno="251"><highlight class="normal"><sp/><sp/><sp/><sp/>cpu.reg.pc<sp/>=<sp/>cpu.reg.pc0<sp/>=<sp/>mem.resetVector();</highlight></codeline>
 <codeline lineno="252"><highlight class="normal"></highlight></codeline>
 <codeline lineno="253"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Inform<sp/>the<sp/>GUI</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="254"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(MSG_RESET);</highlight></codeline>
+<codeline lineno="254"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba66a2805e00d510437311c54dfcf010b6" kindref="member">MSG_RESET</ref>);</highlight></codeline>
 <codeline lineno="255"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="256"><highlight class="normal"></highlight></codeline>
 <codeline lineno="257"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
@@ -2205,14 +2205,14 @@
 <codeline lineno="489"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(flags<sp/>&amp;<sp/>RL::BREAKPOINT)<sp/>{</highlight></codeline>
 <codeline lineno="490"><highlight class="normal"></highlight></codeline>
 <codeline lineno="491"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>clearFlag(RL::BREAKPOINT);</highlight></codeline>
-<codeline lineno="492"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(MSG_BREAKPOINT_REACHED,<sp/>CpuMsg<sp/>{u16(cpu.debugger.breakpointPC)});</highlight></codeline>
+<codeline lineno="492"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baa69769d77f682ba101215104460fe1b9" kindref="member">MSG_BREAKPOINT_REACHED</ref>,<sp/>CpuMsg<sp/>{u16(cpu.debugger.breakpointPC)});</highlight></codeline>
 <codeline lineno="493"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>interrupt<sp/>=<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="494"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="495"><highlight class="normal"></highlight></codeline>
 <codeline lineno="496"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(flags<sp/>&amp;<sp/>RL::WATCHPOINT)<sp/>{</highlight></codeline>
 <codeline lineno="497"><highlight class="normal"></highlight></codeline>
 <codeline lineno="498"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>clearFlag(RL::WATCHPOINT);</highlight></codeline>
-<codeline lineno="499"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(MSG_WATCHPOINT_REACHED,<sp/>CpuMsg<sp/>{u16(cpu.debugger.watchpointPC)});</highlight></codeline>
+<codeline lineno="499"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba09717b122df319863b8176e201167bda" kindref="member">MSG_WATCHPOINT_REACHED</ref>,<sp/>CpuMsg<sp/>{u16(cpu.debugger.watchpointPC)});</highlight></codeline>
 <codeline lineno="500"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>interrupt<sp/>=<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="501"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="502"><highlight class="normal"></highlight></codeline>
@@ -2225,7 +2225,7 @@
 <codeline lineno="509"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(flags<sp/>&amp;<sp/>RL::CPU_JAM)<sp/>{</highlight></codeline>
 <codeline lineno="510"><highlight class="normal"></highlight></codeline>
 <codeline lineno="511"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>clearFlag(RL::CPU_JAM);</highlight></codeline>
-<codeline lineno="512"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(MSG_CPU_JAMMED);</highlight></codeline>
+<codeline lineno="512"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba8c193db10f35e9453d0b41c238fc31a7" kindref="member">MSG_CPU_JAMMED</ref>);</highlight></codeline>
 <codeline lineno="513"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>interrupt<sp/>=<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="514"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="515"><highlight class="normal"></highlight></codeline>
@@ -2275,7 +2275,7 @@
 <codeline lineno="559"><highlight class="normal"><sp/><sp/><sp/><sp/>debug(RUN_DEBUG,<sp/></highlight><highlight class="stringliteral">&quot;_powerOn\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="560"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="561"><highlight class="normal"><sp/><sp/><sp/><sp/>hardReset();</highlight></codeline>
-<codeline lineno="562"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(MSG_POWER,<sp/>1);</highlight></codeline>
+<codeline lineno="562"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baec73dd1957fd94c8cde729186480fa5c" kindref="member">MSG_POWER</ref>,<sp/>1);</highlight></codeline>
 <codeline lineno="563"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="564"><highlight class="normal"></highlight></codeline>
 <codeline lineno="565"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
@@ -2283,7 +2283,7 @@
 <codeline lineno="567"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="568"><highlight class="normal"><sp/><sp/><sp/><sp/>debug(RUN_DEBUG,<sp/></highlight><highlight class="stringliteral">&quot;_powerOff\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="569"><highlight class="normal"></highlight></codeline>
-<codeline lineno="570"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(MSG_POWER,<sp/>0);</highlight></codeline>
+<codeline lineno="570"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baec73dd1957fd94c8cde729186480fa5c" kindref="member">MSG_POWER</ref>,<sp/>0);</highlight></codeline>
 <codeline lineno="571"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="572"><highlight class="normal"></highlight></codeline>
 <codeline lineno="573"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
@@ -2292,7 +2292,7 @@
 <codeline lineno="576"><highlight class="normal"><sp/><sp/><sp/><sp/>debug(RUN_DEBUG,<sp/></highlight><highlight class="stringliteral">&quot;_run\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="577"><highlight class="normal"><sp/><sp/><sp/><sp/>assert(cpu.inFetchPhase());</highlight></codeline>
 <codeline lineno="578"><highlight class="normal"></highlight></codeline>
-<codeline lineno="579"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(MSG_RUN);</highlight></codeline>
+<codeline lineno="579"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bae868897e5cee1df30873d828256a4d77" kindref="member">MSG_RUN</ref>);</highlight></codeline>
 <codeline lineno="580"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="581"><highlight class="normal"></highlight></codeline>
 <codeline lineno="582"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
@@ -2304,7 +2304,7 @@
 <codeline lineno="588"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Clear<sp/>pending<sp/>runloop<sp/>flags</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="589"><highlight class="normal"><sp/><sp/><sp/><sp/>flags<sp/>=<sp/>0;</highlight></codeline>
 <codeline lineno="590"><highlight class="normal"></highlight></codeline>
-<codeline lineno="591"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(MSG_PAUSE);</highlight></codeline>
+<codeline lineno="591"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba1b44e026389fb3b26434f3d74b3b6e7e" kindref="member">MSG_PAUSE</ref>);</highlight></codeline>
 <codeline lineno="592"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="593"><highlight class="normal"></highlight></codeline>
 <codeline lineno="594"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
@@ -2312,7 +2312,7 @@
 <codeline lineno="596"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="597"><highlight class="normal"><sp/><sp/><sp/><sp/>debug(RUN_DEBUG,<sp/></highlight><highlight class="stringliteral">&quot;_halt\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="598"><highlight class="normal"></highlight></codeline>
-<codeline lineno="599"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(MSG_SHUTDOWN);</highlight></codeline>
+<codeline lineno="599"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba621b8f7f84a5fe2cbb10c08ce2c58ff3" kindref="member">MSG_SHUTDOWN</ref>);</highlight></codeline>
 <codeline lineno="600"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="601"><highlight class="normal"></highlight></codeline>
 <codeline lineno="602"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
@@ -2320,7 +2320,7 @@
 <codeline lineno="604"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="605"><highlight class="normal"><sp/><sp/><sp/><sp/>debug(RUN_DEBUG,<sp/></highlight><highlight class="stringliteral">&quot;_warpOn\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="606"><highlight class="normal"></highlight></codeline>
-<codeline lineno="607"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(MSG_WARP,<sp/>1);</highlight></codeline>
+<codeline lineno="607"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba22374907c62cce9e112ec43cd6fb7b0e" kindref="member">MSG_WARP</ref>,<sp/>1);</highlight></codeline>
 <codeline lineno="608"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="609"><highlight class="normal"></highlight></codeline>
 <codeline lineno="610"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
@@ -2328,7 +2328,7 @@
 <codeline lineno="612"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="613"><highlight class="normal"><sp/><sp/><sp/><sp/>debug(RUN_DEBUG,<sp/></highlight><highlight class="stringliteral">&quot;_warpOff\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="614"><highlight class="normal"></highlight></codeline>
-<codeline lineno="615"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(MSG_WARP,<sp/>0);</highlight></codeline>
+<codeline lineno="615"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba22374907c62cce9e112ec43cd6fb7b0e" kindref="member">MSG_WARP</ref>,<sp/>0);</highlight></codeline>
 <codeline lineno="616"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="617"><highlight class="normal"></highlight></codeline>
 <codeline lineno="618"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
@@ -2336,7 +2336,7 @@
 <codeline lineno="620"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="621"><highlight class="normal"><sp/><sp/><sp/><sp/>debug(RUN_DEBUG,<sp/></highlight><highlight class="stringliteral">&quot;_trackOn\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="622"><highlight class="normal"></highlight></codeline>
-<codeline lineno="623"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(MSG_TRACK,<sp/>1);</highlight></codeline>
+<codeline lineno="623"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baffcad1d28fd3ec4302fa1fc157bc73aa" kindref="member">MSG_TRACK</ref>,<sp/>1);</highlight></codeline>
 <codeline lineno="624"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="625"><highlight class="normal"></highlight></codeline>
 <codeline lineno="626"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
@@ -2344,7 +2344,7 @@
 <codeline lineno="628"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="629"><highlight class="normal"><sp/><sp/><sp/><sp/>debug(RUN_DEBUG,<sp/></highlight><highlight class="stringliteral">&quot;_trackOff\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="630"><highlight class="normal"></highlight></codeline>
-<codeline lineno="631"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(MSG_TRACK,<sp/>0);</highlight></codeline>
+<codeline lineno="631"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baffcad1d28fd3ec4302fa1fc157bc73aa" kindref="member">MSG_TRACK</ref>,<sp/>0);</highlight></codeline>
 <codeline lineno="632"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="633"><highlight class="normal"></highlight></codeline>
 <codeline lineno="634"><highlight class="normal">isize</highlight></codeline>
@@ -2449,10 +2449,10 @@
 <codeline lineno="733"><highlight class="normal"></highlight></codeline>
 <codeline lineno="734"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(category<sp/>==<sp/>Category::Summary)<sp/>{</highlight></codeline>
 <codeline lineno="735"><highlight class="normal"></highlight></codeline>
-<codeline lineno="736"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>vicRev<sp/>=<sp/>(<ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44" kindref="member">VICIIRevision</ref>)emulator.get(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a097615e0e27fb679e172516082f1a5b6" kindref="member">OPT_VICII_REVISION</ref>);</highlight></codeline>
-<codeline lineno="737"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>sidRev<sp/>=<sp/>(SIDRevision)emulator.get(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8aeb16a666eaeb264a12ff01b176da0df7" kindref="member">OPT_SID_REVISION</ref>);</highlight></codeline>
-<codeline lineno="738"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>cia1Rev<sp/>=<sp/>(CIARevision)cia1.getOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a8bb0c2ecce66bfb081d124050f073eb6" kindref="member">OPT_CIA_REVISION</ref>);</highlight></codeline>
-<codeline lineno="739"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>cia2Rev<sp/>=<sp/>(CIARevision)cia2.getOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a8bb0c2ecce66bfb081d124050f073eb6" kindref="member">OPT_CIA_REVISION</ref>);</highlight></codeline>
+<codeline lineno="736"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>vicRev<sp/>=<sp/>(VICIIRevision)emulator.get(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a097615e0e27fb679e172516082f1a5b6" kindref="member">OPT_VICII_REVISION</ref>);</highlight></codeline>
+<codeline lineno="737"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>sidRev<sp/>=<sp/>(<ref refid="_s_i_d_types_8h_1a17273940e560b4b27f1b419da23312ed" kindref="member">SIDRevision</ref>)emulator.get(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8aeb16a666eaeb264a12ff01b176da0df7" kindref="member">OPT_SID_REVISION</ref>);</highlight></codeline>
+<codeline lineno="738"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>cia1Rev<sp/>=<sp/>(<ref refid="_c_i_a_types_8h_1ae9e8ff692b14e7f0e068e20a76769a87" kindref="member">CIARevision</ref>)cia1.getOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a8bb0c2ecce66bfb081d124050f073eb6" kindref="member">OPT_CIA_REVISION</ref>);</highlight></codeline>
+<codeline lineno="739"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>cia2Rev<sp/>=<sp/>(<ref refid="_c_i_a_types_8h_1ae9e8ff692b14e7f0e068e20a76769a87" kindref="member">CIARevision</ref>)cia2.getOption(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a8bb0c2ecce66bfb081d124050f073eb6" kindref="member">OPT_CIA_REVISION</ref>);</highlight></codeline>
 <codeline lineno="740"><highlight class="normal"></highlight></codeline>
 <codeline lineno="741"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>os<sp/>&lt;&lt;<sp/>tab(</highlight><highlight class="stringliteral">&quot;Model&quot;</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="742"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>os<sp/>&lt;&lt;<sp/>(vic.pal()<sp/>?<sp/></highlight><highlight class="stringliteral">&quot;PAL&quot;</highlight><highlight class="normal"><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;NTSC&quot;</highlight><highlight class="normal">)<sp/>&lt;&lt;<sp/>std::endl;</highlight></codeline>
@@ -2694,13 +2694,13 @@
 <codeline lineno="978"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3ac8e628de5d800200ea73ca97d6ef1e91" kindref="member">CMD_SNAPSHOT_AUTO</ref>:</highlight></codeline>
 <codeline lineno="979"><highlight class="normal"></highlight></codeline>
 <codeline lineno="980"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>autoSnapshot<sp/>=<sp/></highlight><highlight class="keyword">new</highlight><highlight class="normal"><sp/>Snapshot(*</highlight><highlight class="keyword">this</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="981"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(MSG_AUTO_SNAPSHOT_TAKEN);</highlight></codeline>
+<codeline lineno="981"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bac2b3d245154652064c5c8c03fd5d20cd" kindref="member">MSG_AUTO_SNAPSHOT_TAKEN</ref>);</highlight></codeline>
 <codeline lineno="982"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="983"><highlight class="normal"></highlight></codeline>
 <codeline lineno="984"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a7aa07e1b63a8309e8356d855537043d0" kindref="member">CMD_SNAPSHOT_USER</ref>:</highlight></codeline>
 <codeline lineno="985"><highlight class="normal"></highlight></codeline>
 <codeline lineno="986"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>userSnapshot<sp/>=<sp/></highlight><highlight class="keyword">new</highlight><highlight class="normal"><sp/>Snapshot(*</highlight><highlight class="keyword">this</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="987"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(MSG_USER_SNAPSHOT_TAKEN);</highlight></codeline>
+<codeline lineno="987"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25baefc990ae4f843de5b787d2c1e2943d1d" kindref="member">MSG_USER_SNAPSHOT_TAKEN</ref>);</highlight></codeline>
 <codeline lineno="988"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
 <codeline lineno="989"><highlight class="normal"></highlight></codeline>
 <codeline lineno="990"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="_cmd_queue_types_8h_1a63ebdc688313e444b486514798e48df3a998871469ccfa34ee7b9b304e5086e37" kindref="member">CMD_ALARM_ABS</ref>:</highlight></codeline>
@@ -2888,7 +2888,7 @@
 <codeline lineno="1172"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="1173"><highlight class="normal"></highlight></codeline>
 <codeline lineno="1174"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Inform<sp/>the<sp/>GUI</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="1175"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(MSG_SNAPSHOT_RESTORED);</highlight></codeline>
+<codeline lineno="1175"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba5d759e1721fc70f681ba9e99d1ac5791" kindref="member">MSG_SNAPSHOT_RESTORED</ref>);</highlight></codeline>
 <codeline lineno="1176"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="1177"><highlight class="normal"></highlight></codeline>
 <codeline lineno="1178"><highlight class="normal">RomInfo<sp/></highlight></codeline>
@@ -3314,7 +3314,7 @@
 <codeline lineno="1598"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="1599"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="1600"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="1601"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(MSG_FILE_FLASHED);</highlight></codeline>
+<codeline lineno="1601"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba96e0db358ce470edeaf8e950166d7a49" kindref="member">MSG_FILE_FLASHED</ref>);</highlight></codeline>
 <codeline lineno="1602"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="1603"><highlight class="normal"></highlight></codeline>
 <codeline lineno="1604"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
@@ -3338,7 +3338,7 @@
 <codeline lineno="1622"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mem.ram[0x2E]<sp/>=<sp/>HI_BYTE(addr<sp/>+<sp/>size);<sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>VARTAB<sp/>(high<sp/>byte)</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="1623"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="1624"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
-<codeline lineno="1625"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(MSG_FILE_FLASHED);</highlight></codeline>
+<codeline lineno="1625"><highlight class="normal"><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25ba96e0db358ce470edeaf8e950166d7a49" kindref="member">MSG_FILE_FLASHED</ref>);</highlight></codeline>
 <codeline lineno="1626"><highlight class="normal">}</highlight></codeline>
 <codeline lineno="1627"><highlight class="normal"></highlight></codeline>
 <codeline lineno="1628"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
@@ -3367,7 +3367,7 @@
 <codeline lineno="1651"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>it<sp/>=<sp/>alarms.begin();<sp/>it<sp/>!=<sp/>alarms.end();<sp/>)<sp/>{</highlight></codeline>
 <codeline lineno="1652"><highlight class="normal"></highlight></codeline>
 <codeline lineno="1653"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(it-&gt;trigger<sp/>&lt;=<sp/>cpu.clock)<sp/>{</highlight></codeline>
-<codeline lineno="1654"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(MSG_ALARM,<sp/>it-&gt;payload);</highlight></codeline>
+<codeline lineno="1654"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>msgQueue.put(<ref refid="_msg_queue_types_8h_1a757e1f41b6bd90e8fac8d083ab7ff25bafcde3912e1e5f1e8b0a48ebd9068934b" kindref="member">MSG_ALARM</ref>,<sp/>it-&gt;payload);</highlight></codeline>
 <codeline lineno="1655"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>it<sp/>=<sp/>alarms.erase(it);</highlight></codeline>
 <codeline lineno="1656"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
 <codeline lineno="1657"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>it++;</highlight></codeline>

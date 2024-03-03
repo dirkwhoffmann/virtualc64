@@ -128,8 +128,8 @@ $(function(){initNavTree('_drive_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;DriveTypes.h&quot;</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;C64Types.h&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="_drive_types_8h.html">DriveTypes.h</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="_c64_types_8h.html">C64Types.h</a>&quot;</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="_cmd_queue_types_8h.html">CmdQueueTypes.h</a>&quot;</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;SubComponent.h&quot;</span></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;CPU.h&quot;</span></div>
@@ -482,8 +482,8 @@ $(function(){initNavTree('_drive_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>    <span class="keywordtype">void</span> autoConfigure();</div>
 <div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span> </div>
 <div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>    <span class="keywordtype">bool</span> canConnect();</div>
-<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>    <span class="keywordtype">bool</span> hasParCable() { <span class="keywordflow">return</span> config.parCable != PAR_CABLE_NONE; }</div>
-<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>    ParCableType getParCableType()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> config.parCable; }</div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>    <span class="keywordtype">bool</span> hasParCable() { <span class="keywordflow">return</span> config.parCable != <a class="code hl_enumvalue" href="_par_cable_types_8h.html#a494dcbce5bcb891dfa50c460ae94f7cba81945a06dbef11f06e247cc7b6531986">PAR_CABLE_NONE</a>; }</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>    <a class="code hl_enumeration" href="_par_cable_types_8h.html#a494dcbce5bcb891dfa50c460ae94f7cb">ParCableType</a> getParCableType()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> config.parCable; }</div>
 <div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span> </div>
 <div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span> </div>
 <div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>    <span class="comment">//</span></div>
@@ -574,7 +574,7 @@ $(function(){initNavTree('_drive_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span><span class="comment">     */</span></div>
 <div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span>    <span class="keywordtype">void</span> insertDisk(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;path, <span class="keywordtype">bool</span> wp) <span class="keywordflow">throws</span>;</div>
 <div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>    <span class="keywordtype">void</span> insertDisk(std::unique_ptr&lt;Disk&gt; disk);</div>
-<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span>    <span class="keywordtype">void</span> insertNewDisk(DOSType fstype, PETName&lt;16&gt; name);</div>
+<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span>    <span class="keywordtype">void</span> insertNewDisk(<a class="code hl_enumeration" href="_f_s_types_8h.html#aa499a0fc379c037c4be2ad9be44035e4">DOSType</a> fstype, PETName&lt;16&gt; name);</div>
 <div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>    <span class="keywordtype">void</span> insertD64(<span class="keyword">const</span> D64File &amp;d64, <span class="keywordtype">bool</span> wp);</div>
 <div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span>    <span class="keywordtype">void</span> insertG64(<span class="keyword">const</span> G64File &amp;g64, <span class="keywordtype">bool</span> wp);</div>
 <div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span>    <span class="keywordtype">void</span> insertCollection(AnyCollection &amp;archive, <span class="keywordtype">bool</span> wp) <span class="keywordflow">throws</span>;</div>
@@ -671,7 +671,10 @@ $(function(){initNavTree('_drive_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span>};</div>
 <div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span> </div>
 <div class="line"><a id="l00557" name="l00557"></a><span class="lineno">  557</span>}</div>
+<div class="ttc" id="a_c64_types_8h_html"><div class="ttname"><a href="_c64_types_8h.html">C64Types.h</a></div></div>
 <div class="ttc" id="a_cmd_queue_types_8h_html"><div class="ttname"><a href="_cmd_queue_types_8h.html">CmdQueueTypes.h</a></div></div>
+<div class="ttc" id="a_drive_types_8h_html"><div class="ttname"><a href="_drive_types_8h.html">DriveTypes.h</a></div></div>
+<div class="ttc" id="a_f_s_types_8h_html_aa499a0fc379c037c4be2ad9be44035e4"><div class="ttname"><a href="_f_s_types_8h.html#aa499a0fc379c037c4be2ad9be44035e4">DOS_TYPE</a></div><div class="ttdeci">DOS_TYPE</div><div class="ttdoc">File system type.</div><div class="ttdef"><b>Definition</b> FSTypes.h:25</div></div>
 <div class="ttc" id="a_option_types_8h_html_a273e435dabd576e6dcff3f18024d1fa8"><div class="ttname"><a href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8">OPT</a></div><div class="ttdeci">OPT</div><div class="ttdoc">Configuration option.</div><div class="ttdef"><b>Definition</b> OptionTypes.h:25</div></div>
 <div class="ttc" id="a_option_types_8h_html_a273e435dabd576e6dcff3f18024d1fa8a0250ed79d845c41e3c02b392a42a8857"><div class="ttname"><a href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8a0250ed79d845c41e3c02b392a42a8857">OPT_DRV_PARCABLE</a></div><div class="ttdeci">@ OPT_DRV_PARCABLE</div><div class="ttdoc">Parallel cable type.</div><div class="ttdef"><b>Definition</b> OptionTypes.h:103</div></div>
 <div class="ttc" id="a_option_types_8h_html_a273e435dabd576e6dcff3f18024d1fa8a34ce09b9bd29eb1cb0a5e3bfebf10108"><div class="ttname"><a href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8a34ce09b9bd29eb1cb0a5e3bfebf10108">OPT_DRV_EJECT_DELAY</a></div><div class="ttdeci">@ OPT_DRV_EJECT_DELAY</div><div class="ttdoc">Disk ejection delay.</div><div class="ttdef"><b>Definition</b> OptionTypes.h:107</div></div>
@@ -688,6 +691,8 @@ $(function(){initNavTree('_drive_8h_source.html',''); initResizable(); });
 <div class="ttc" id="a_option_types_8h_html_a273e435dabd576e6dcff3f18024d1fa8ab09c82345efb3d45f34d5442f79c7c14"><div class="ttname"><a href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8ab09c82345efb3d45f34d5442f79c7c14">OPT_DRV_POWER_VOL</a></div><div class="ttdeci">@ OPT_DRV_POWER_VOL</div><div class="ttdoc">Volume (power-up sound)</div><div class="ttdef"><b>Definition</b> OptionTypes.h:111</div></div>
 <div class="ttc" id="a_option_types_8h_html_a273e435dabd576e6dcff3f18024d1fa8ac7e083374d51af754bc06a3d08c30e1a"><div class="ttname"><a href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8ac7e083374d51af754bc06a3d08c30e1a">OPT_DRV_POWER_SAVE</a></div><div class="ttdeci">@ OPT_DRV_POWER_SAVE</div><div class="ttdoc">Enable fast-paths.</div><div class="ttdef"><b>Definition</b> OptionTypes.h:106</div></div>
 <div class="ttc" id="a_option_types_8h_html_a273e435dabd576e6dcff3f18024d1fa8ad8097703cb83bead140bde321cb24baa"><div class="ttname"><a href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8ad8097703cb83bead140bde321cb24baa">OPT_DRV_STEP_VOL</a></div><div class="ttdeci">@ OPT_DRV_STEP_VOL</div><div class="ttdoc">Volume (head steps)</div><div class="ttdef"><b>Definition</b> OptionTypes.h:112</div></div>
+<div class="ttc" id="a_par_cable_types_8h_html_a494dcbce5bcb891dfa50c460ae94f7cb"><div class="ttname"><a href="_par_cable_types_8h.html#a494dcbce5bcb891dfa50c460ae94f7cb">PAR_CABLE_TYPE</a></div><div class="ttdeci">PAR_CABLE_TYPE</div><div class="ttdoc">Parallel cable type.</div><div class="ttdef"><b>Definition</b> ParCableTypes.h:25</div></div>
+<div class="ttc" id="a_par_cable_types_8h_html_a494dcbce5bcb891dfa50c460ae94f7cba81945a06dbef11f06e247cc7b6531986"><div class="ttname"><a href="_par_cable_types_8h.html#a494dcbce5bcb891dfa50c460ae94f7cba81945a06dbef11f06e247cc7b6531986">PAR_CABLE_NONE</a></div><div class="ttdeci">@ PAR_CABLE_NONE</div><div class="ttdoc">No parallel cable attached.</div><div class="ttdef"><b>Definition</b> ParCableTypes.h:26</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -162,7 +162,7 @@ $(function(){initNavTree('_file_system_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    FileSystem(isize capacity) { init(capacity); }</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    FileSystem(FSDeviceDescriptor &amp;layout) { init(layout); }</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    FileSystem(DiskType type, DOSType vType) { init(type, vType); }</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    FileSystem(DiskType type, <a class="code hl_enumeration" href="_f_s_types_8h.html#aa499a0fc379c037c4be2ad9be44035e4">DOSType</a> vType) { init(type, vType); }</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    FileSystem(<span class="keyword">const</span> <span class="keyword">class</span> D64File &amp;d64) <span class="keywordflow">throws</span> { init(d64); }</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    FileSystem(<span class="keyword">class</span> Disk &amp;disk) <span class="keywordflow">throws</span> { init(disk); }</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    FileSystem(AnyCollection &amp;collection) <span class="keywordflow">throws</span> { init(collection); }</div>
@@ -173,7 +173,7 @@ $(function(){initNavTree('_file_system_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    </div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keywordtype">void</span> init(isize capacity);</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="keywordtype">void</span> init(FSDeviceDescriptor &amp;layout);</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keywordtype">void</span> init(DiskType type, DOSType vType);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keywordtype">void</span> init(DiskType type, <a class="code hl_enumeration" href="_f_s_types_8h.html#aa499a0fc379c037c4be2ad9be44035e4">DOSType</a> vType);</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordtype">void</span> init(<span class="keyword">const</span> <span class="keyword">class</span> D64File &amp;d64) <span class="keywordflow">throws</span>;</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordtype">void</span> init(<span class="keyword">class</span> Disk &amp;disk) <span class="keywordflow">throws</span>;</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keywordtype">void</span> init(AnyCollection &amp;collection) <span class="keywordflow">throws</span>;</div>
@@ -208,7 +208,7 @@ $(function(){initNavTree('_file_system_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="keyword">public</span>:</div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    </div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <span class="comment">// Returns the DOS version of this file system</span></div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    DOSType dos()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> layout.dos; }</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <a class="code hl_enumeration" href="_f_s_types_8h.html#aa499a0fc379c037c4be2ad9be44035e4">DOSType</a> dos()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> layout.dos; }</div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    </div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="comment">// Gets or sets the disk name</span></div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    PETName&lt;16&gt; getName() <span class="keyword">const</span>;</div>
@@ -439,6 +439,7 @@ $(function(){initNavTree('_file_system_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span> </div>
 <div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>}</div>
 <div class="ttc" id="a_error_types_8h_html_a52f90e25735e172d279183e61d90d3e3"><div class="ttname"><a href="_error_types_8h.html#a52f90e25735e172d279183e61d90d3e3">ERROR_CODE</a></div><div class="ttdeci">ERROR_CODE</div><div class="ttdoc">Error condition.</div><div class="ttdef"><b>Definition</b> ErrorTypes.h:21</div></div>
+<div class="ttc" id="a_f_s_types_8h_html_aa499a0fc379c037c4be2ad9be44035e4"><div class="ttname"><a href="_f_s_types_8h.html#aa499a0fc379c037c4be2ad9be44035e4">DOS_TYPE</a></div><div class="ttdeci">DOS_TYPE</div><div class="ttdoc">File system type.</div><div class="ttdef"><b>Definition</b> FSTypes.h:25</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

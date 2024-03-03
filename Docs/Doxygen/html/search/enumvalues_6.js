@@ -1,12 +1,13 @@
 var searchData=
 [
-  ['screen_5fgeometry_5f24_5f38_0',['SCREEN_GEOMETRY_24_38',['../_v_i_c_i_i_types_8h.html#a4b4722e29346b1d0c0c0faa810ec4c93a5a12b01c06b4603c86d60982e0a795ae',1,'VICIITypes.h']]],
-  ['screen_5fgeometry_5f24_5f40_1',['SCREEN_GEOMETRY_24_40',['../_v_i_c_i_i_types_8h.html#a4b4722e29346b1d0c0c0faa810ec4c93a9dd387826785be158dffc29b4a08195a',1,'VICIITypes.h']]],
-  ['screen_5fgeometry_5f25_5f38_2',['SCREEN_GEOMETRY_25_38',['../_v_i_c_i_i_types_8h.html#a4b4722e29346b1d0c0c0faa810ec4c93a9dee273b76f76018e6a676484638e9fa',1,'VICIITypes.h']]],
-  ['screen_5fgeometry_5f25_5f40_3',['SCREEN_GEOMETRY_25_40',['../_v_i_c_i_i_types_8h.html#a4b4722e29346b1d0c0c0faa810ec4c93ac06839f7147d6f0ad33d6d2952b0574a',1,'VICIITypes.h']]],
-  ['state_5fhalted_4',['STATE_HALTED',['../_thread_types_8h.html#a44fb3bfc9b3abc142d662a5ffb4e9cbca99bff5383ce10ea512c8443243adf5b3',1,'ThreadTypes.h']]],
-  ['state_5foff_5',['STATE_OFF',['../_thread_types_8h.html#a44fb3bfc9b3abc142d662a5ffb4e9cbca4038ca872e1ed104c16122c365bd3ca0',1,'ThreadTypes.h']]],
-  ['state_5fpaused_6',['STATE_PAUSED',['../_thread_types_8h.html#a44fb3bfc9b3abc142d662a5ffb4e9cbca6291ce9aab12208cc66968c97a1ce7dd',1,'ThreadTypes.h']]],
-  ['state_5frunning_7',['STATE_RUNNING',['../_thread_types_8h.html#a44fb3bfc9b3abc142d662a5ffb4e9cbcaddfe11c6d06c4e27bd6efc18cc4862a6',1,'ThreadTypes.h']]],
-  ['state_5fsuspended_8',['STATE_SUSPENDED',['../_thread_types_8h.html#a44fb3bfc9b3abc142d662a5ffb4e9cbca9acde879501201b19fcb37cdd08eff6d',1,'ThreadTypes.h']]]
+  ['par_5fcable_5fdolphin3_0',['PAR_CABLE_DOLPHIN3',['../_par_cable_types_8h.html#a494dcbce5bcb891dfa50c460ae94f7cba9b9da9e2262200bc40eede03c40fbaac',1,'ParCableTypes.h']]],
+  ['par_5fcable_5fnone_1',['PAR_CABLE_NONE',['../_par_cable_types_8h.html#a494dcbce5bcb891dfa50c460ae94f7cba81945a06dbef11f06e247cc7b6531986',1,'ParCableTypes.h']]],
+  ['par_5fcable_5fstandard_2',['PAR_CABLE_STANDARD',['../_par_cable_types_8h.html#a494dcbce5bcb891dfa50c460ae94f7cba0e1baffb1f66a2ea9cce145c0dc0d069',1,'ParCableTypes.h']]],
+  ['press_5ffire_3',['PRESS_FIRE',['../_joystick_types_8h.html#ae2114e40c8dc40375c0d0a60904ca8e2a1bb68a7b3e5d3bf0ee77339a9cff9757',1,'JoystickTypes.h']]],
+  ['press_5fleft_4',['PRESS_LEFT',['../_joystick_types_8h.html#ae2114e40c8dc40375c0d0a60904ca8e2a9c7d086a65397560f71b99e17e0f0be0',1,'JoystickTypes.h']]],
+  ['press_5fright_5',['PRESS_RIGHT',['../_joystick_types_8h.html#ae2114e40c8dc40375c0d0a60904ca8e2a94566d36f8add816976e3e8e3bbe77b6',1,'JoystickTypes.h']]],
+  ['pull_5fdown_6',['PULL_DOWN',['../_joystick_types_8h.html#ae2114e40c8dc40375c0d0a60904ca8e2a0351276972489e49e38c22116a9b88be',1,'JoystickTypes.h']]],
+  ['pull_5fleft_7',['PULL_LEFT',['../_joystick_types_8h.html#ae2114e40c8dc40375c0d0a60904ca8e2ad142aa7c5639bc390f766d95b33ec061',1,'JoystickTypes.h']]],
+  ['pull_5fright_8',['PULL_RIGHT',['../_joystick_types_8h.html#ae2114e40c8dc40375c0d0a60904ca8e2a6e472db9e57783f0c011528c8880477f',1,'JoystickTypes.h']]],
+  ['pull_5fup_9',['PULL_UP',['../_joystick_types_8h.html#ae2114e40c8dc40375c0d0a60904ca8e2a6d031447a3a4f4a8bd019caae5a8eefd',1,'JoystickTypes.h']]]
 ];

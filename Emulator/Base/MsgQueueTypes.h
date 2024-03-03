@@ -9,6 +9,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -19,104 +20,105 @@
 // Enumerations
 //
 
+///! Emulator message
 enum_long(MSG_TYPE)
 {
-    MSG_NONE = 0,
+    MSG_NONE = 0,           ///< Unclassified
 
     // Emulator state
-    MSG_CONFIG,
-    MSG_POWER,
-    MSG_RUN,
-    MSG_PAUSE,
-    MSG_STEP,
-    MSG_RESET,
-    MSG_SHUTDOWN,
-    MSG_ABORT,
-    MSG_WARP,
-    MSG_TRACK,
-    MSG_MUTE,
+    MSG_CONFIG,             ///< The configuration has changed
+    MSG_POWER,              ///< The emulator has been powered on or off
+    MSG_RUN,                ///< The emulator has entered STATE_RUNNING
+    MSG_PAUSE,              ///< The emulator has entered STATE_PAUSED
+    MSG_STEP,               ///< The emulator has stepped a single instruction
+    MSG_RESET,              ///< The emulator has been reset
+    MSG_SHUTDOWN,           ///< The emulator has been shut down
+    MSG_ABORT,              ///< The emulator requests the GUI to quit the app
+    MSG_WARP,               ///< The emulator has entered or exited warp mode
+    MSG_TRACK,              ///< The emulator has entered or exited track mode
+    MSG_MUTE,               ///< The emulator has been muted or unmuted
 
     // Retro shell
-    MSG_CONSOLE_CLOSE,
-    MSG_CONSOLE_UPDATE,
-    MSG_CONSOLE_DEBUGGER,
-    MSG_SCRIPT_DONE,
-    MSG_SCRIPT_ABORT,
+    MSG_CONSOLE_CLOSE,      ///< RetroShell has been closed
+    MSG_CONSOLE_UPDATE,     ///< RetroShell has generated new output
+    MSG_CONSOLE_DEBUGGER,   ///< The RetroShell debugger has been opend or closed
+    MSG_SCRIPT_DONE,        ///< A RetroShell script has been successfully executed
+    MSG_SCRIPT_ABORT,       ///< The execution of a RetroShell ccript has been aborted
 
     // ROMs
-    MSG_BASIC_ROM_LOADED,
-    MSG_CHAR_ROM_LOADED,
-    MSG_KERNAL_ROM_LOADED,
-    MSG_DRIVE_ROM_LOADED,
-    MSG_ROM_MISSING,
+    MSG_ROM_MISSING,        ///< The emulator can't run due to a missing Rom
+    MSG_BASIC_ROM_LOADED,   ///< A valid Basis Rom has been installed
+    MSG_CHAR_ROM_LOADED,    ///< A valid Character has been installed
+    MSG_KERNAL_ROM_LOADED,  ///< A valid Kernal Rom has been installed
+    MSG_DRIVE_ROM_LOADED,   ///< A valid Drive Rom has been installed
 
     // CPU
-    MSG_CPU_JAMMED,
-    MSG_CPU_JUMPED,
-    MSG_BREAKPOINT_REACHED,
-    MSG_WATCHPOINT_REACHED,
+    MSG_CPU_JAMMED,         ///< The CPU has halted due to an illegal instruction
+    MSG_CPU_JUMPED,         ///< The program counter has been modified manually
+    MSG_BREAKPOINT_REACHED, ///< A breakpoint has been reached
+    MSG_WATCHPOINT_REACHED, ///< A watchpoint has been reached
 
     // VIC
-    MSG_PAL,
-    MSG_NTSC,
+    MSG_PAL,                ///< The emulator runs in PAL mode now
+    MSG_NTSC,               ///< The emulator runs in NTSC mode now
 
     // IEC Bus
-    MSG_IEC_BUS_BUSY,
-    MSG_IEC_BUS_IDLE,
-    
+    MSG_IEC_BUS_BUSY,       ///< The IEC bus is transferring data
+    MSG_IEC_BUS_IDLE,       ///< The IEC bus has returned to idle state
+
     // Floppy drives
-    MSG_DRIVE_CONNECT,
-    MSG_DRIVE_DISCONNECT,
-    MSG_DRIVE_POWER_ON,
-    MSG_DRIVE_POWER_OFF,
-    MSG_DRIVE_POWER_SAVE_ON,
-    MSG_DRIVE_POWER_SAVE_OFF,
-    MSG_DRIVE_READ,
-    MSG_DRIVE_WRITE,
-    MSG_DRIVE_LED_ON,
-    MSG_DRIVE_LED_OFF,
-    MSG_DRIVE_MOTOR_ON,
-    MSG_DRIVE_MOTOR_OFF,
-    MSG_DRIVE_STEP,
-    MSG_DISK_INSERT,
-    MSG_DISK_EJECT,
-    MSG_DISK_SAVED,
-    MSG_DISK_UNSAVED,
-    MSG_DISK_PROTECT,
-    MSG_FILE_FLASHED,
+    MSG_DRIVE_CONNECT,      ///< A floppy drive has been connected
+    MSG_DRIVE_DISCONNECT,   ///< A floopy drive has been disconnected
+    MSG_DRIVE_POWER_ON,     ///< The emulator has been powered on
+    MSG_DRIVE_POWER_OFF,    ///< The emulator has been powered off
+    MSG_DRIVE_POWER_SAVE_ON,    ///< Fast paths have been enabled
+    MSG_DRIVE_POWER_SAVE_OFF,   ///< Fast paths have been disabled
+    MSG_DRIVE_READ,         ///< The floopy drive has switched to read mode
+    MSG_DRIVE_WRITE,        ///< The floppy drive has switched to write mode
+    MSG_DRIVE_LED_ON,       ///< The green drive LED has switched on
+    MSG_DRIVE_LED_OFF,      ///< The green drive LED has switched off
+    MSG_DRIVE_MOTOR_ON,     ///< The disk has started spinning
+    MSG_DRIVE_MOTOR_OFF,    ///< The disk has stopped spinning
+    MSG_DRIVE_STEP,         ///< The drive head has stepped
+    MSG_DISK_INSERT,        ///< A disk has been inserted
+    MSG_DISK_EJECT,         ///< A disk has been ejected
+    MSG_DISK_SAVED,         ///< The floppy drive contains a saved disk
+    MSG_DISK_UNSAVED,       ///< The floppy drive contains an unsaved disk
+    MSG_DISK_PROTECT,       ///< The write protection status has changed
+    MSG_FILE_FLASHED,       ///< A file has been flashed into memory
 
     // Peripherals (Datasette)
-    MSG_VC1530_CONNECT,
-    MSG_VC1530_TAPE,
-    MSG_VC1530_PLAY,
-    MSG_VC1530_MOTOR,
-    MSG_VC1530_COUNTER,
+    MSG_VC1530_CONNECT,     ///< A datasette has been connected or disconnected
+    MSG_VC1530_TAPE,        ///< A tape has been inserted or ejected
+    MSG_VC1530_PLAY,        ///< The play key has been pressed
+    MSG_VC1530_MOTOR,       ///< The drive motor has started or stopped
+    MSG_VC1530_COUNTER,     ///< The tape counter has stepped
 
     // Peripherals (Expansion port)
-    MSG_CRT_ATTACHED,
+    MSG_CRT_ATTACHED,       ///< A cartridge has been plugged into the expansion port
 
     // Peripherals (Keyboard)
-    MSG_KB_AUTO_PRESS,
-    MSG_KB_AUTO_RELEASE,
-    
+    MSG_KB_AUTO_PRESS,      ///< The auto-typing daemon has pressed a key
+    MSG_KB_AUTO_RELEASE,    ///< The auto-typing daemon has released a key
+
     // Peripherals (Mouse)
-    MSG_SHAKING,
-    
+    MSG_SHAKING,            ///< A shaking mouse has been detected
+
     // Snapshots
-    MSG_AUTO_SNAPSHOT_TAKEN,
-    MSG_USER_SNAPSHOT_TAKEN,
-    MSG_SNAPSHOT_RESTORED,
-    
+    MSG_AUTO_SNAPSHOT_TAKEN,  ///< A snapshot has been taken (auto snapshot)
+    MSG_USER_SNAPSHOT_TAKEN,  ///< A snapshot has been taken (user snapshot)
+    MSG_SNAPSHOT_RESTORED,    ///< A snapshot has been restored
+
     // Screen recording
-    MSG_RECORDING_STARTED,
-    MSG_RECORDING_STOPPED,
-    MSG_RECORDING_ABORTED,
+    MSG_RECORDING_STARTED,  ///< The screen recorder has started
+    MSG_RECORDING_STOPPED,  ///< The screen recorder has stopped
+    MSG_RECORDING_ABORTED,  ///< Screen recording has been aborted
 
     // Debugging
-    MSG_DMA_DEBUG,
+    MSG_DMA_DEBUG,          ///< The DMA debugger has been started or stopped
 
     // Scheduled alarms
-    MSG_ALARM
+    MSG_ALARM               ///< A user-set alarm event has fired
 };
 typedef MSG_TYPE MsgType;
 
@@ -155,8 +157,7 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_CHAR_ROM_LOADED:       return "CHAR_ROM_LOADED";
             case MSG_KERNAL_ROM_LOADED:     return "KERNAL_ROM_LOADED";
             case MSG_DRIVE_ROM_LOADED:      return "DRIVE_ROM_LOADED";
-            case MSG_ROM_MISSING:           return "ROM_MISSING";
-                
+
             case MSG_CPU_JAMMED:            return "CPU_JAMMED";
             case MSG_BREAKPOINT_REACHED:    return "BREAKPOINT_REACHED";
             case MSG_WATCHPOINT_REACHED:    return "WATCHPOINT_REACHED";

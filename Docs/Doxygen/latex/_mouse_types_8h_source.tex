@@ -1,6 +1,6 @@
 \doxysection{Mouse\+Types.\+h}
 \hypertarget{_mouse_types_8h_source}{}\label{_mouse_types_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/MouseTypes.h@{/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Mouse/MouseTypes.h}}
-
+\mbox{\hyperlink{_mouse_types_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
 \DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
@@ -13,56 +13,56 @@
 \DoxyCodeLine{00009\ \textcolor{comment}{//}}
 \DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
 \DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
-\DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Aliases.h"{}}}
-\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Reflection.h"{}}}
-\DoxyCodeLine{00017\ }
-\DoxyCodeLine{00018\ \textcolor{comment}{//}}
-\DoxyCodeLine{00019\ \textcolor{comment}{//\ Enumerations}}
-\DoxyCodeLine{00020\ \textcolor{comment}{//}}
-\DoxyCodeLine{00021\ }
-\DoxyCodeLine{00022\ enum\_long(MOUSE\_MODEL)}
-\DoxyCodeLine{00023\ \{}
-\DoxyCodeLine{00024\ \ \ \ \ MOUSE\_C1350,}
-\DoxyCodeLine{00025\ \ \ \ \ MOUSE\_C1351,}
-\DoxyCodeLine{00026\ \ \ \ \ MOUSE\_NEOS}
-\DoxyCodeLine{00027\ \};}
-\DoxyCodeLine{00028\ \textcolor{keyword}{typedef}\ MOUSE\_MODEL\ MouseModel;}
-\DoxyCodeLine{00029\ }
-\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
-\DoxyCodeLine{00031\ \textcolor{keyword}{struct\ }MouseModelEnum\ :\ util::Reflection<MouseModelEnum,\ MouseModel>\ \{}
-\DoxyCodeLine{00032\ \ \ \ \ }
-\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
-\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ MOUSE\_NEOS;}
-\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
-\DoxyCodeLine{00036\ \ \ \ \ }
-\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}MOUSE"{}};\ \}}
-\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(MouseModel\ value)}
-\DoxyCodeLine{00039\ \ \ \ \ \{}
-\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
-\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MOUSE\_C1350:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}C1350"{}};}
-\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MOUSE\_C1351:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}C1351"{}};}
-\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MOUSE\_NEOS:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}NEOS"{}};}
-\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
-\DoxyCodeLine{00047\ \ \ \ \ \}}
-\DoxyCodeLine{00048\ \};}
-\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00050\ }
-\DoxyCodeLine{00051\ }
-\DoxyCodeLine{00052\ \textcolor{comment}{//}}
-\DoxyCodeLine{00053\ \textcolor{comment}{//\ Structures}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Aliases.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}Reflection.h"{}}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{comment}{//}}
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ Enumerations}}
+\DoxyCodeLine{00021\ \textcolor{comment}{//}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00024\ enum\_long(\mbox{\hyperlink{_mouse_types_8h_a3e5db2ad64d4fcd1484aead5939e79b4}{MOUSE\_MODEL}})}
+\DoxyCodeLine{00025\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{_mouse_types_8h_a3e5db2ad64d4fcd1484aead5939e79b4a044e3473c90f87f509cb889c2340a3af}{MOUSE\_C1350}},\ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ \mbox{\hyperlink{_mouse_types_8h_a3e5db2ad64d4fcd1484aead5939e79b4a31f63c607d45bc2b7f6eb1d536a80e15}{MOUSE\_C1351}},\ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{_mouse_types_8h_a3e5db2ad64d4fcd1484aead5939e79b4a6e2311c7c401d43971679d14e4b98c3a}{MOUSE\_NEOS}}\ \ \ \ \ \ }
+\DoxyCodeLine{00029\ \};}
+\DoxyCodeLine{00030\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{_mouse_types_8h_a3e5db2ad64d4fcd1484aead5939e79b4}{MOUSE\_MODEL}}\ \mbox{\hyperlink{_mouse_types_8h_a3e5db2ad64d4fcd1484aead5939e79b4}{MouseModel}};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00033\ \textcolor{keyword}{struct\ }MouseModelEnum\ :\ util::Reflection<MouseModelEnum,\ MouseModel>\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ \mbox{\hyperlink{_mouse_types_8h_a3e5db2ad64d4fcd1484aead5939e79b4a6e2311c7c401d43971679d14e4b98c3a}{MOUSE\_NEOS}};}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00038\ \ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}MOUSE"{}};\ \}}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(\mbox{\hyperlink{_mouse_types_8h_a3e5db2ad64d4fcd1484aead5939e79b4}{MouseModel}}\ value)}
+\DoxyCodeLine{00041\ \ \ \ \ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_mouse_types_8h_a3e5db2ad64d4fcd1484aead5939e79b4a044e3473c90f87f509cb889c2340a3af}{MOUSE\_C1350}}:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}C1350"{}};}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_mouse_types_8h_a3e5db2ad64d4fcd1484aead5939e79b4a31f63c607d45bc2b7f6eb1d536a80e15}{MOUSE\_C1351}}:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}C1351"{}};}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_mouse_types_8h_a3e5db2ad64d4fcd1484aead5939e79b4a6e2311c7c401d43971679d14e4b98c3a}{MOUSE\_NEOS}}:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}NEOS"{}};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00049\ \ \ \ \ \}}
+\DoxyCodeLine{00050\ \};}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ }
 \DoxyCodeLine{00054\ \textcolor{comment}{//}}
-\DoxyCodeLine{00055\ }
-\DoxyCodeLine{00056\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
-\DoxyCodeLine{00057\ \{}
-\DoxyCodeLine{00058\ \ \ \ \ MouseModel\ model;}
-\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{bool}\ shakeDetection;}
-\DoxyCodeLine{00060\ \ \ \ \ isize\ velocity;}
-\DoxyCodeLine{00061\ \}}
-\DoxyCodeLine{00062\ MouseConfig;}
+\DoxyCodeLine{00055\ \textcolor{comment}{//\ Structures}}
+\DoxyCodeLine{00056\ \textcolor{comment}{//}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00059\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \mbox{\hyperlink{_mouse_types_8h_a3e5db2ad64d4fcd1484aead5939e79b4}{MouseModel}}\ model;}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{bool}\ shakeDetection;}
+\DoxyCodeLine{00062\ \ \ \ \ isize\ velocity;}
+\DoxyCodeLine{00063\ \}}
+\DoxyCodeLine{00064\ MouseConfig;}
 
 \end{DoxyCode}

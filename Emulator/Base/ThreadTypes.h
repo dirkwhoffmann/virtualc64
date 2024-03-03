@@ -16,24 +16,14 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
-/** Emulator state 
- */
+/// Emulator state
 enum_long(EMULATOR_STATE)
 {
-    /// The emulator is powered off
-    STATE_OFF,
-
-    /// The emulator is powered on, but currently paused
-    STATE_PAUSED,
-
-    /// The emulator is up and running
-    STATE_RUNNING,
-
-    /// The emulator is shortly paused to perform an internal state change
-    STATE_SUSPENDED,
-
-    /// The emulator has been shut down
-    STATE_HALTED
+    STATE_OFF,          ///< Powered off
+    STATE_PAUSED,       ///< Powered on, but currently paused
+    STATE_RUNNING,      ///< Up and running
+    STATE_SUSPENDED,    ///< Shortly paused for an internal state change
+    STATE_HALTED        ///< Shut down
 };
 typedef EMULATOR_STATE EmulatorState;
 

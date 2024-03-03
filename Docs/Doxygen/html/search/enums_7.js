@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['vicii_5frev_0',['VICII_REV',['../_v_i_c_i_i_types_8h.html#aa6907eb49d9f65564eca99d8b6cd3c44',1,'VICIITypes.h']]]
+  ['ram_5fpattern_0',['RAM_PATTERN',['../_memory_types_8h.html#aed0a6af618528ae4df946b46f3db80b8',1,'MemoryTypes.h']]],
+  ['rskey_5fkey_1',['RSKEY_KEY',['../_retro_shell_types_8h.html#a266a24d8f1b5150281f89401b43752aa',1,'RetroShellTypes.h']]]
 ];

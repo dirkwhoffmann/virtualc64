@@ -1,0 +1,130 @@
+\doxysection{/\+Users/hoff/\+Retro/virtualc64/\+Emulator/\+Components/\+Memory/\+Memory\+Types.h File Reference}
+\hypertarget{_memory_types_8h}{}\label{_memory_types_8h}\index{/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h@{/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h}}
+{\ttfamily \#include "{}Aliases.\+h"{}}\newline
+{\ttfamily \#include "{}Reflection.\+h"{}}\newline
+Include dependency graph for Memory\+Types.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=307pt]{_memory_types_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_memory_types_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915a}{M\+\_\+\+TYPE}} \+: long \{ \newline
+\mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e}{M\+\_\+\+RAM}} = 1
+, \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aaf0e649f94b2c0b7eda468fc5630982b1}{M\+\_\+\+CHAR}}
+, \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28}{M\+\_\+\+KERNAL}}
+, \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aa253d2571b1383128fb6edac9bf4efe5f}{M\+\_\+\+BASIC}}
+, \newline
+\mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229}{M\+\_\+\+IO}}
+, \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aa2ea52710f1d98ab448b381a3e90b16fc}{M\+\_\+\+CRTLO}}
+, \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aa0221b6d2b1fa217a7ef9db216224e16b}{M\+\_\+\+CRTHI}}
+, \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aa79314351698710ef6516d7862b2b6351}{M\+\_\+\+PP}}
+, \newline
+\mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676}{M\+\_\+\+NONE}}
+, {\bfseries M\+\_\+\+COUNT}
+ \}
+\begin{DoxyCompactList}\small\item\em Memory type. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{_memory_types_8h_aed0a6af618528ae4df946b46f3db80b8}{RAM\+\_\+\+PATTERN}} \+: long \{ \newline
+\mbox{\hyperlink{_memory_types_8h_aed0a6af618528ae4df946b46f3db80b8ae78df2cc15466657d31cd74f5b5468b3}{RAM\+\_\+\+PATTERN\+\_\+\+VICE}}
+, \mbox{\hyperlink{_memory_types_8h_aed0a6af618528ae4df946b46f3db80b8a70909d838e7c51ad660c9a498ad34a5b}{RAM\+\_\+\+PATTERN\+\_\+\+CCS}}
+, \mbox{\hyperlink{_memory_types_8h_aed0a6af618528ae4df946b46f3db80b8acac1a72e6127c38ca6b9114441c819df}{RAM\+\_\+\+PATTERN\+\_\+\+ZEROES}}
+, \mbox{\hyperlink{_memory_types_8h_aed0a6af618528ae4df946b46f3db80b8a4c184d4f1e7dfe0adb905cdf83d85b67}{RAM\+\_\+\+PATTERN\+\_\+\+ONES}}
+, \newline
+\mbox{\hyperlink{_memory_types_8h_aed0a6af618528ae4df946b46f3db80b8a60c03ae6d146776b9341c691a30d7ea9}{RAM\+\_\+\+PATTERN\+\_\+\+RANDOM}}
+ \}
+\begin{DoxyCompactList}\small\item\em Ram startup pattern. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915a}\label{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915a} 
+\index{MemoryTypes.h@{MemoryTypes.h}!M\_TYPE@{M\_TYPE}}
+\index{M\_TYPE@{M\_TYPE}!MemoryTypes.h@{MemoryTypes.h}}
+\doxysubsubsection{\texorpdfstring{M\_TYPE}{M\_TYPE}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915a}{M\+\_\+\+TYPE}} \+: long}
+
+
+
+Memory type. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{M\_RAM@{M\_RAM}!MemoryTypes.h@{MemoryTypes.h}}\index{MemoryTypes.h@{MemoryTypes.h}!M\_RAM@{M\_RAM}}}\Hypertarget{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e}\label{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aaf204afa6a5655f668ed70bfbf87af21e} 
+M\+\_\+\+RAM&Ram. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{M\_CHAR@{M\_CHAR}!MemoryTypes.h@{MemoryTypes.h}}\index{MemoryTypes.h@{MemoryTypes.h}!M\_CHAR@{M\_CHAR}}}\Hypertarget{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aaf0e649f94b2c0b7eda468fc5630982b1}\label{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aaf0e649f94b2c0b7eda468fc5630982b1} 
+M\+\_\+\+CHAR&Character Rom. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{M\_KERNAL@{M\_KERNAL}!MemoryTypes.h@{MemoryTypes.h}}\index{MemoryTypes.h@{MemoryTypes.h}!M\_KERNAL@{M\_KERNAL}}}\Hypertarget{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28}\label{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aab64658f4fe3c35a9e0ab4bb04a1e8c28} 
+M\+\_\+\+KERNAL&Kernal Rom. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{M\_BASIC@{M\_BASIC}!MemoryTypes.h@{MemoryTypes.h}}\index{MemoryTypes.h@{MemoryTypes.h}!M\_BASIC@{M\_BASIC}}}\Hypertarget{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aa253d2571b1383128fb6edac9bf4efe5f}\label{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aa253d2571b1383128fb6edac9bf4efe5f} 
+M\+\_\+\+BASIC&Basic Rom. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{M\_IO@{M\_IO}!MemoryTypes.h@{MemoryTypes.h}}\index{MemoryTypes.h@{MemoryTypes.h}!M\_IO@{M\_IO}}}\Hypertarget{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229}\label{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aaca728a642df852da55e4993934f28229} 
+M\+\_\+\+IO&IO space. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{M\_CRTLO@{M\_CRTLO}!MemoryTypes.h@{MemoryTypes.h}}\index{MemoryTypes.h@{MemoryTypes.h}!M\_CRTLO@{M\_CRTLO}}}\Hypertarget{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aa2ea52710f1d98ab448b381a3e90b16fc}\label{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aa2ea52710f1d98ab448b381a3e90b16fc} 
+M\+\_\+\+CRTLO&Cartridge Rom (low bank) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{M\_CRTHI@{M\_CRTHI}!MemoryTypes.h@{MemoryTypes.h}}\index{MemoryTypes.h@{MemoryTypes.h}!M\_CRTHI@{M\_CRTHI}}}\Hypertarget{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aa0221b6d2b1fa217a7ef9db216224e16b}\label{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aa0221b6d2b1fa217a7ef9db216224e16b} 
+M\+\_\+\+CRTHI&Cartridge Rom (high bank) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{M\_PP@{M\_PP}!MemoryTypes.h@{MemoryTypes.h}}\index{MemoryTypes.h@{MemoryTypes.h}!M\_PP@{M\_PP}}}\Hypertarget{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aa79314351698710ef6516d7862b2b6351}\label{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aa79314351698710ef6516d7862b2b6351} 
+M\+\_\+\+PP&Processor port. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{M\_NONE@{M\_NONE}!MemoryTypes.h@{MemoryTypes.h}}\index{MemoryTypes.h@{MemoryTypes.h}!M\_NONE@{M\_NONE}}}\Hypertarget{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676}\label{_memory_types_8h_adea0e9ad7389791d42ae1d396d68915aae0d29ca59bf1683dbc7bcc22fc782676} 
+M\+\_\+\+NONE&Unmapped. \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{_memory_types_8h_aed0a6af618528ae4df946b46f3db80b8}\label{_memory_types_8h_aed0a6af618528ae4df946b46f3db80b8} 
+\index{MemoryTypes.h@{MemoryTypes.h}!RAM\_PATTERN@{RAM\_PATTERN}}
+\index{RAM\_PATTERN@{RAM\_PATTERN}!MemoryTypes.h@{MemoryTypes.h}}
+\doxysubsubsection{\texorpdfstring{RAM\_PATTERN}{RAM\_PATTERN}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{_memory_types_8h_aed0a6af618528ae4df946b46f3db80b8}{RAM\+\_\+\+PATTERN}} \+: long}
+
+
+
+Ram startup pattern. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RAM\_PATTERN\_VICE@{RAM\_PATTERN\_VICE}!MemoryTypes.h@{MemoryTypes.h}}\index{MemoryTypes.h@{MemoryTypes.h}!RAM\_PATTERN\_VICE@{RAM\_PATTERN\_VICE}}}\Hypertarget{_memory_types_8h_aed0a6af618528ae4df946b46f3db80b8ae78df2cc15466657d31cd74f5b5468b3}\label{_memory_types_8h_aed0a6af618528ae4df946b46f3db80b8ae78df2cc15466657d31cd74f5b5468b3} 
+RAM\+\_\+\+PATTERN\+\_\+\+VICE&Pattern used by the VICE emulator. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RAM\_PATTERN\_CCS@{RAM\_PATTERN\_CCS}!MemoryTypes.h@{MemoryTypes.h}}\index{MemoryTypes.h@{MemoryTypes.h}!RAM\_PATTERN\_CCS@{RAM\_PATTERN\_CCS}}}\Hypertarget{_memory_types_8h_aed0a6af618528ae4df946b46f3db80b8a70909d838e7c51ad660c9a498ad34a5b}\label{_memory_types_8h_aed0a6af618528ae4df946b46f3db80b8a70909d838e7c51ad660c9a498ad34a5b} 
+RAM\+\_\+\+PATTERN\+\_\+\+CCS&Pattern used by the CCS emulator. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RAM\_PATTERN\_ZEROES@{RAM\_PATTERN\_ZEROES}!MemoryTypes.h@{MemoryTypes.h}}\index{MemoryTypes.h@{MemoryTypes.h}!RAM\_PATTERN\_ZEROES@{RAM\_PATTERN\_ZEROES}}}\Hypertarget{_memory_types_8h_aed0a6af618528ae4df946b46f3db80b8acac1a72e6127c38ca6b9114441c819df}\label{_memory_types_8h_aed0a6af618528ae4df946b46f3db80b8acac1a72e6127c38ca6b9114441c819df} 
+RAM\+\_\+\+PATTERN\+\_\+\+ZEROES&Initialize with all zeroes. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RAM\_PATTERN\_ONES@{RAM\_PATTERN\_ONES}!MemoryTypes.h@{MemoryTypes.h}}\index{MemoryTypes.h@{MemoryTypes.h}!RAM\_PATTERN\_ONES@{RAM\_PATTERN\_ONES}}}\Hypertarget{_memory_types_8h_aed0a6af618528ae4df946b46f3db80b8a4c184d4f1e7dfe0adb905cdf83d85b67}\label{_memory_types_8h_aed0a6af618528ae4df946b46f3db80b8a4c184d4f1e7dfe0adb905cdf83d85b67} 
+RAM\+\_\+\+PATTERN\+\_\+\+ONES&Initialize with all ones. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RAM\_PATTERN\_RANDOM@{RAM\_PATTERN\_RANDOM}!MemoryTypes.h@{MemoryTypes.h}}\index{MemoryTypes.h@{MemoryTypes.h}!RAM\_PATTERN\_RANDOM@{RAM\_PATTERN\_RANDOM}}}\Hypertarget{_memory_types_8h_aed0a6af618528ae4df946b46f3db80b8a60c03ae6d146776b9341c691a30d7ea9}\label{_memory_types_8h_aed0a6af618528ae4df946b46f3db80b8a60c03ae6d146776b9341c691a30d7ea9} 
+RAM\+\_\+\+PATTERN\+\_\+\+RANDOM&Initialize with pseudo-\/random values. \\
+\hline
+
+\end{DoxyEnumFields}

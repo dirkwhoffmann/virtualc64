@@ -16,8 +16,8 @@
 \DoxyCodeLine{00012\ }
 \DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}DriveTypes.h"{}}}
-\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}C64Types.h"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_drive_types_8h}{DriveTypes.h}}"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_c64_types_8h}{C64Types.h}}"{}}}
 \DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_cmd_queue_types_8h}{CmdQueueTypes.h}}"{}}}
 \DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}SubComponent.h"{}}}
 \DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}CPU.h"{}}}
@@ -370,8 +370,8 @@
 \DoxyCodeLine{00366\ \ \ \ \ \textcolor{keywordtype}{void}\ autoConfigure();}
 \DoxyCodeLine{00367\ }
 \DoxyCodeLine{00368\ \ \ \ \ \textcolor{keywordtype}{bool}\ canConnect();}
-\DoxyCodeLine{00369\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasParCable()\ \{\ \textcolor{keywordflow}{return}\ config.parCable\ !=\ PAR\_CABLE\_NONE;\ \}}
-\DoxyCodeLine{00370\ \ \ \ \ ParCableType\ getParCableType()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ config.parCable;\ \}}
+\DoxyCodeLine{00369\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasParCable()\ \{\ \textcolor{keywordflow}{return}\ config.parCable\ !=\ \mbox{\hyperlink{_par_cable_types_8h_a494dcbce5bcb891dfa50c460ae94f7cba81945a06dbef11f06e247cc7b6531986}{PAR\_CABLE\_NONE}};\ \}}
+\DoxyCodeLine{00370\ \ \ \ \ \mbox{\hyperlink{_par_cable_types_8h_a494dcbce5bcb891dfa50c460ae94f7cb}{ParCableType}}\ getParCableType()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ config.parCable;\ \}}
 \DoxyCodeLine{00371\ }
 \DoxyCodeLine{00372\ }
 \DoxyCodeLine{00373\ \ \ \ \ \textcolor{comment}{//}}
@@ -462,7 +462,7 @@
 \DoxyCodeLine{00458\ \textcolor{comment}{\ \ \ \ \ */}}
 \DoxyCodeLine{00459\ \ \ \ \ \textcolor{keywordtype}{void}\ insertDisk(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&path,\ \textcolor{keywordtype}{bool}\ wp)\ \textcolor{keywordflow}{throws};}
 \DoxyCodeLine{00460\ \ \ \ \ \textcolor{keywordtype}{void}\ insertDisk(std::unique\_ptr<Disk>\ disk);}
-\DoxyCodeLine{00461\ \ \ \ \ \textcolor{keywordtype}{void}\ insertNewDisk(DOSType\ fstype,\ PETName<16>\ name);}
+\DoxyCodeLine{00461\ \ \ \ \ \textcolor{keywordtype}{void}\ insertNewDisk(\mbox{\hyperlink{_f_s_types_8h_aa499a0fc379c037c4be2ad9be44035e4}{DOSType}}\ fstype,\ PETName<16>\ name);}
 \DoxyCodeLine{00462\ \ \ \ \ \textcolor{keywordtype}{void}\ insertD64(\textcolor{keyword}{const}\ D64File\ \&d64,\ \textcolor{keywordtype}{bool}\ wp);}
 \DoxyCodeLine{00463\ \ \ \ \ \textcolor{keywordtype}{void}\ insertG64(\textcolor{keyword}{const}\ G64File\ \&g64,\ \textcolor{keywordtype}{bool}\ wp);}
 \DoxyCodeLine{00464\ \ \ \ \ \textcolor{keywordtype}{void}\ insertCollection(AnyCollection\ \&archive,\ \textcolor{keywordtype}{bool}\ wp)\ \textcolor{keywordflow}{throws};}

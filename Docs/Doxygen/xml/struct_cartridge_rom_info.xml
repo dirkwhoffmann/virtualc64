@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="295" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="295" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="296" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="296" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_cartridge_rom_info_1a673dd9f325efb3db14a11b1a5a317ee9" prot="public" static="no" mutable="no">
         <type>u16</type>
@@ -29,14 +29,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="296" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="296" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="297" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="297" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="293" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="294" bodyend="297"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="294" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="295" bodyend="298"/>
     <listofallmembers>
       <member refid="struct_cartridge_rom_info_1a673dd9f325efb3db14a11b1a5a317ee9" prot="public" virt="non-virtual"><scope>CartridgeRomInfo</scope><name>loadAddress</name></member>
       <member refid="struct_cartridge_rom_info_1ad7c5f3f38dc51489ab9aa82807cef884" prot="public" virt="non-virtual"><scope>CartridgeRomInfo</scope><name>size</name></member>

@@ -220,7 +220,7 @@ $(function(){initNavTree('_virtual_c64_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    i64 get(<a class="code hl_enumeration" href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8">Option</a> option, <span class="keywordtype">long</span> <span class="keywordtype">id</span>) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
 <div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    <span class="comment">// Configures the emulator to match a specific C64 model</span></div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    <span class="keywordtype">void</span> set(C64Model model);</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    <span class="keywordtype">void</span> set(<a class="code hl_enumeration" href="_c64_types_8h.html#a34fe42cc2e5fba851b026b25c4af9e03">C64Model</a> model);</div>
 <div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> </div>
 <div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    <span class="comment">// Sets an option</span></div>
 <div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    <span class="keywordtype">void</span> set(<a class="code hl_enumeration" href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8">Option</a> option, i64 value) <span class="keywordflow">throws</span>;</div>
@@ -291,8 +291,8 @@ $(function(){initNavTree('_virtual_c64_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>        MemInfo getInfo() <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> </div>
 <div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        <span class="comment">// Returns a string representations for a portion of memory</span></div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        <span class="keywordtype">string</span> memdump(u16 addr, isize num, <span class="keywordtype">bool</span> hex, isize pads, MemoryType src) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>        <span class="keywordtype">string</span> txtdump(u16 addr, isize num, MemoryType src) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        <span class="keywordtype">string</span> memdump(u16 addr, isize num, <span class="keywordtype">bool</span> hex, isize pads, <a class="code hl_enumeration" href="_memory_types_8h.html#adea0e9ad7389791d42ae1d396d68915a">MemoryType</a> src) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>        <span class="keywordtype">string</span> txtdump(u16 addr, isize num, <a class="code hl_enumeration" href="_memory_types_8h.html#adea0e9ad7389791d42ae1d396d68915a">MemoryType</a> src) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> </div>
 <div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>    } mem;</div>
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span> </div>
@@ -403,7 +403,7 @@ $(function(){initNavTree('_virtual_c64_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>        <span class="keywordtype">bool</span> pal() <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span> </div>
 <div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>        u32 getColor(isize nr) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>        u32 getColor(isize nr, <a class="code hl_enumeration" href="_v_i_c_i_i_types_8h.html#af59eb4c57176022b657e35f92a7d01c9">Palette</a> palette) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>        u32 getColor(isize nr, Palette palette) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span> </div>
 <div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>    } vicii;</div>
 <div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span> </div>
@@ -480,7 +480,7 @@ $(function(){initNavTree('_virtual_c64_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>        <span class="keywordtype">void</span> setDxDy(<span class="keywordtype">double</span> dx, <span class="keywordtype">double</span> dy);</div>
 <div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span> </div>
 <div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>        <span class="comment">// Triggers a gamepad event</span></div>
-<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>        <span class="keywordtype">void</span> trigger(GamePadAction event);</div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>        <span class="keywordtype">void</span> trigger(<a class="code hl_enumeration" href="_joystick_types_8h.html#ae2114e40c8dc40375c0d0a60904ca8e2">GamePadAction</a> event);</div>
 <div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>    };</div>
 <div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span> </div>
 <div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span> </div>
@@ -494,7 +494,7 @@ $(function(){initNavTree('_virtual_c64_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>        JoystickAPI(Emulator &amp;emu, Joystick&amp; joystick) : API(emu), joystick(joystick) { }</div>
 <div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span> </div>
 <div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>        <span class="comment">// Triggers a gamepad event</span></div>
-<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>        <span class="keywordtype">void</span> trigger(GamePadAction event);</div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>        <span class="keywordtype">void</span> trigger(<a class="code hl_enumeration" href="_joystick_types_8h.html#ae2114e40c8dc40375c0d0a60904ca8e2">GamePadAction</a> event);</div>
 <div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>    };</div>
 <div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span> </div>
 <div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span> </div>
@@ -614,7 +614,7 @@ $(function(){initNavTree('_virtual_c64_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00532" name="l00532"></a><span class="lineno">  532</span>        <span class="keyword">const</span> DriveConfig &amp;getConfig() <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00533" name="l00533"></a><span class="lineno">  533</span>        DriveInfo getInfo() <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00534" name="l00534"></a><span class="lineno">  534</span> </div>
-<div class="line"><a id="l00535" name="l00535"></a><span class="lineno">  535</span>        <span class="keywordtype">void</span> insertBlankDisk(DOSType fstype, PETName&lt;16&gt; name);</div>
+<div class="line"><a id="l00535" name="l00535"></a><span class="lineno">  535</span>        <span class="keywordtype">void</span> insertBlankDisk(<a class="code hl_enumeration" href="_f_s_types_8h.html#aa499a0fc379c037c4be2ad9be44035e4">DOSType</a> fstype, PETName&lt;16&gt; name);</div>
 <div class="line"><a id="l00536" name="l00536"></a><span class="lineno">  536</span>        <span class="keywordtype">void</span> insertD64(<span class="keyword">const</span> D64File &amp;d64, <span class="keywordtype">bool</span> wp);</div>
 <div class="line"><a id="l00537" name="l00537"></a><span class="lineno">  537</span>        <span class="keywordtype">void</span> insertG64(<span class="keyword">const</span> G64File &amp;g64, <span class="keywordtype">bool</span> wp);</div>
 <div class="line"><a id="l00538" name="l00538"></a><span class="lineno">  538</span>        <span class="keywordtype">void</span> insertCollection(AnyCollection &amp;archive, <span class="keywordtype">bool</span> wp) <span class="keywordflow">throws</span>;</div>
@@ -635,7 +635,7 @@ $(function(){initNavTree('_virtual_c64_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span>        <span class="keyword">const</span> <span class="keywordtype">char</span> *text();</div>
 <div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span>        isize cursorRel();</div>
 <div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span> </div>
-<div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span>        <span class="keywordtype">void</span> press(RetroShellKey key, <span class="keywordtype">bool</span> shift = <span class="keyword">false</span>);</div>
+<div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span>        <span class="keywordtype">void</span> press(<a class="code hl_enumeration" href="_retro_shell_types_8h.html#a266a24d8f1b5150281f89401b43752aa">RetroShellKey</a> key, <span class="keywordtype">bool</span> shift = <span class="keyword">false</span>);</div>
 <div class="line"><a id="l00557" name="l00557"></a><span class="lineno">  557</span>        <span class="keywordtype">void</span> press(<span class="keywordtype">char</span> c);</div>
 <div class="line"><a id="l00558" name="l00558"></a><span class="lineno">  558</span>        <span class="keywordtype">void</span> press(<span class="keyword">const</span> <span class="keywordtype">string</span> &amp;s);</div>
 <div class="line"><a id="l00559" name="l00559"></a><span class="lineno">  559</span> </div>
@@ -648,9 +648,13 @@ $(function(){initNavTree('_virtual_c64_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00566" name="l00566"></a><span class="lineno">  566</span>    } retroShell;</div>
 <div class="line"><a id="l00567" name="l00567"></a><span class="lineno">  567</span>};</div>
 </div>
+<div class="ttc" id="a_c64_types_8h_html_a34fe42cc2e5fba851b026b25c4af9e03"><div class="ttname"><a href="_c64_types_8h.html#a34fe42cc2e5fba851b026b25c4af9e03">C64_MODEL</a></div><div class="ttdeci">C64_MODEL</div><div class="ttdoc">C64 model.</div><div class="ttdef"><b>Definition</b> C64Types.h:26</div></div>
 <div class="ttc" id="a_cmd_queue_types_8h_html_a63ebdc688313e444b486514798e48df3"><div class="ttname"><a href="_cmd_queue_types_8h.html#a63ebdc688313e444b486514798e48df3">CMD_TYPE</a></div><div class="ttdeci">CMD_TYPE</div><div class="ttdoc">Emulator command.</div><div class="ttdef"><b>Definition</b> CmdQueueTypes.h:26</div></div>
+<div class="ttc" id="a_f_s_types_8h_html_aa499a0fc379c037c4be2ad9be44035e4"><div class="ttname"><a href="_f_s_types_8h.html#aa499a0fc379c037c4be2ad9be44035e4">DOS_TYPE</a></div><div class="ttdeci">DOS_TYPE</div><div class="ttdoc">File system type.</div><div class="ttdef"><b>Definition</b> FSTypes.h:25</div></div>
+<div class="ttc" id="a_joystick_types_8h_html_ae2114e40c8dc40375c0d0a60904ca8e2"><div class="ttname"><a href="_joystick_types_8h.html#ae2114e40c8dc40375c0d0a60904ca8e2">GAME_PAD_ACTION</a></div><div class="ttdeci">GAME_PAD_ACTION</div><div class="ttdoc">Gamepad / Joystick event.</div><div class="ttdef"><b>Definition</b> JoystickTypes.h:25</div></div>
+<div class="ttc" id="a_memory_types_8h_html_adea0e9ad7389791d42ae1d396d68915a"><div class="ttname"><a href="_memory_types_8h.html#adea0e9ad7389791d42ae1d396d68915a">M_TYPE</a></div><div class="ttdeci">M_TYPE</div><div class="ttdoc">Memory type.</div><div class="ttdef"><b>Definition</b> MemoryTypes.h:25</div></div>
 <div class="ttc" id="a_option_types_8h_html_a273e435dabd576e6dcff3f18024d1fa8"><div class="ttname"><a href="_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8">OPT</a></div><div class="ttdeci">OPT</div><div class="ttdoc">Configuration option.</div><div class="ttdef"><b>Definition</b> OptionTypes.h:25</div></div>
-<div class="ttc" id="a_v_i_c_i_i_types_8h_html_af59eb4c57176022b657e35f92a7d01c9"><div class="ttname"><a href="_v_i_c_i_i_types_8h.html#af59eb4c57176022b657e35f92a7d01c9">PALETTE</a></div><div class="ttdeci">PALETTE</div><div class="ttdoc">Color palette.</div><div class="ttdef"><b>Definition</b> VICIITypes.h:155</div></div>
+<div class="ttc" id="a_retro_shell_types_8h_html_a266a24d8f1b5150281f89401b43752aa"><div class="ttname"><a href="_retro_shell_types_8h.html#a266a24d8f1b5150281f89401b43752aa">RSKEY_KEY</a></div><div class="ttdeci">RSKEY_KEY</div><div class="ttdoc">RetroShell special key.</div><div class="ttdef"><b>Definition</b> RetroShellTypes.h:25</div></div>
 <div class="ttc" id="a_virtual_c64_types_8h_html"><div class="ttname"><a href="_virtual_c64_types_8h.html">VirtualC64Types.h</a></div></div>
 <div class="ttc" id="aclass_virtual_c64_html"><div class="ttname"><a href="class_virtual_c64.html">VirtualC64</a></div><div class="ttdoc">Public API.</div><div class="ttdef"><b>Definition</b> VirtualC64.h:28</div></div>
 <div class="ttc" id="aclass_virtual_c64_html_a161f20c6fa850cb631390fe28b58d79c"><div class="ttname"><a href="class_virtual_c64.html#a161f20c6fa850cb631390fe28b58d79c">VirtualC64::stepInto</a></div><div class="ttdeci">void stepInto()</div><div class="ttdoc">Steps a single instruction.</div><div class="ttdef"><b>Definition</b> VirtualC64.cpp:55</div></div>

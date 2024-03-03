@@ -9,6 +9,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -19,11 +20,12 @@
 // Enumerations
 //
 
+/// Parallel cable type
 enum_long(PAR_CABLE_TYPE)
 {
-    PAR_CABLE_NONE,
-    PAR_CABLE_STANDARD,
-    PAR_CABLE_DOLPHIN3
+    PAR_CABLE_NONE,         ///< No parallel cable attached
+    PAR_CABLE_STANDARD,     ///< Standard parallel cable
+    PAR_CABLE_DOLPHIN3      ///< DolphinDOS cable
 };
 typedef PAR_CABLE_TYPE ParCableType;
 

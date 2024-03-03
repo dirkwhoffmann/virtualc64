@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="406" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="406" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="407" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="407" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_p_port_1a37055989e010b3b38ce9e9a5fdf3c613" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -29,14 +29,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="407" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="407" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="408" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="408" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="404" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="405" bodyend="408"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" line="405" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" bodystart="406" bodyend="409"/>
     <listofallmembers>
       <member refid="struct_p_port_1ae3605041bd8e80f2170373225388a85d" prot="public" virt="non-virtual"><scope>PPort</scope><name>data</name></member>
       <member refid="struct_p_port_1a37055989e010b3b38ce9e9a5fdf3c613" prot="public" virt="non-virtual"><scope>PPort</scope><name>direction</name></member>

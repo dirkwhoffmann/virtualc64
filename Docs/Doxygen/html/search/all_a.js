@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['resume_0',['resume',['../classvc64_1_1_thread.html#a294d7de030baf69ae6f96f9f6bfc8ba6',1,'vc64::Thread']]],
-  ['resume_1',['Suspend / Resume',['../group__topic__state__model.html#autotoc_md3',1,'']]],
-  ['run_2',['run',['../class_virtual_c64.html#a468f440c88ff5f399e67364425a43556',1,'VirtualC64']]]
+  ['identifier_3a_20gpl_203_200_20or_20later_20or_20mpl_202_200_0',['SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0',['../_v_i_c_i_i_types_8h.html#autotoc_md7',1,'']]]
 ];

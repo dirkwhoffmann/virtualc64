@@ -151,7 +151,7 @@
       </node>
       <node id="37">
         <label>MsgQueueTypes.h</label>
-        <link refid="_msg_queue_types_8h_source"/>
+        <link refid="_msg_queue_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -245,7 +245,7 @@
       </node>
       <node id="59">
         <label>CartridgeTypes.h</label>
-        <link refid="_cartridge_types_8h_source"/>
+        <link refid="_cartridge_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -569,7 +569,7 @@
       </node>
       <node id="35">
         <label>C64Types.h</label>
-        <link refid="_c64_types_8h_source"/>
+        <link refid="_c64_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -589,7 +589,7 @@
       </node>
       <node id="116">
         <label>CIATypes.h</label>
-        <link refid="_c_i_a_types_8h_source"/>
+        <link refid="_c_i_a_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -705,7 +705,7 @@
       </node>
       <node id="44">
         <label>EmulatorTypes.h</label>
-        <link refid="_emulator_types_8h_source"/>
+        <link refid="_emulator_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -729,7 +729,7 @@
       </node>
       <node id="75">
         <label>ControlPortTypes.h</label>
-        <link refid="_control_port_types_8h_source"/>
+        <link refid="_control_port_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -749,7 +749,7 @@
       </node>
       <node id="52">
         <label>ExpansionPortTypes.h</label>
-        <link refid="_expansion_port_types_8h_source"/>
+        <link refid="_expansion_port_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -773,7 +773,7 @@
       </node>
       <node id="128">
         <label>PowerSupplyTypes.h</label>
-        <link refid="_power_supply_types_8h_source"/>
+        <link refid="_power_supply_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -789,7 +789,7 @@
       </node>
       <node id="83">
         <label>MemoryTypes.h</label>
-        <link refid="_memory_types_8h_source"/>
+        <link refid="_memory_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -847,7 +847,7 @@
       </node>
       <node id="97">
         <label>SIDTypes.h</label>
-        <link refid="_s_i_d_types_8h_source"/>
+        <link refid="_s_i_d_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -947,7 +947,7 @@
       </node>
       <node id="90">
         <label>BusTypes.h</label>
-        <link refid="_bus_types_8h_source"/>
+        <link refid="_bus_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -965,7 +965,7 @@
       </node>
       <node id="91">
         <label>DmaDebuggerTypes.h</label>
-        <link refid="_dma_debugger_types_8h_source"/>
+        <link refid="_dma_debugger_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1019,7 +1019,7 @@
       </node>
       <node id="89">
         <label>VICIITypes.h</label>
-        <link refid="_v_i_c_i_i_types_8h"/>
+        <link refid="_v_i_c_i_i_types_8h_source"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1065,7 +1065,7 @@
       </node>
       <node id="174">
         <label>FSTypes.h</label>
-        <link refid="_f_s_types_8h_source"/>
+        <link refid="_f_s_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1125,7 +1125,7 @@
       </node>
       <node id="63">
         <label>FileTypes.h</label>
-        <link refid="_file_types_8h_source"/>
+        <link refid="_file_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1243,7 +1243,7 @@
       </node>
       <node id="134">
         <label>RetroShellTypes.h</label>
-        <link refid="_retro_shell_types_8h_source"/>
+        <link refid="_retro_shell_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1279,7 +1279,7 @@
       </node>
       <node id="180">
         <label>DatasetteTypes.h</label>
-        <link refid="_datasette_types_8h_source"/>
+        <link refid="_datasette_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1361,7 +1361,7 @@
       </node>
       <node id="85">
         <label>DriveTypes.h</label>
-        <link refid="_drive_types_8h_source"/>
+        <link refid="_drive_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1387,7 +1387,7 @@
       </node>
       <node id="86">
         <label>ParCableTypes.h</label>
-        <link refid="_par_cable_types_8h_source"/>
+        <link refid="_par_cable_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1409,7 +1409,7 @@
       </node>
       <node id="54">
         <label>JoystickTypes.h</label>
-        <link refid="_joystick_types_8h_source"/>
+        <link refid="_joystick_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1469,7 +1469,7 @@
       </node>
       <node id="78">
         <label>MouseTypes.h</label>
-        <link refid="_mouse_types_8h_source"/>
+        <link refid="_mouse_types_8h"/>
         <childnode refid="8" relation="include">
         </childnode>
         <childnode refid="14" relation="include">
@@ -1719,16 +1719,16 @@
 <codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8acca721f169ee49c5a2492f6a10fee198" kindref="member">OPT_EMU_TIME_LAPSE</ref>,<sp/>100);</highlight></codeline>
 <codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a94e87f1a82ff557d344df10952de2d56" kindref="member">OPT_EMU_RUN_AHEAD</ref>,<sp/>0);</highlight></codeline>
 <codeline lineno="32"><highlight class="normal"></highlight></codeline>
-<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a8c7ea94a9a0456e9e148123b2e370558" kindref="member">OPT_POWER_GRID</ref>,<sp/>GRID_STABLE_50HZ);</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a8c7ea94a9a0456e9e148123b2e370558" kindref="member">OPT_POWER_GRID</ref>,<sp/><ref refid="_power_supply_types_8h_1a6ef147028afd9f017afd5afdc1b6ecafa4c84216faa8d38e146435a9e73ee6c61" kindref="member">GRID_STABLE_50HZ</ref>);</highlight></codeline>
 <codeline lineno="34"><highlight class="normal"></highlight></codeline>
 <codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a8bb0c2ecce66bfb081d124050f073eb6" kindref="member">OPT_CIA_REVISION</ref>,<sp/>MOS_6526);</highlight></codeline>
 <codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a6ce90fc1a6c346d244fc12f85bfff997" kindref="member">OPT_CIA_TIMER_B_BUG</ref>,<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="37"><highlight class="normal"></highlight></codeline>
-<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a097615e0e27fb679e172516082f1a5b6" kindref="member">OPT_VICII_REVISION</ref>,<sp/><ref refid="_v_i_c_i_i_types_8h_1aa6907eb49d9f65564eca99d8b6cd3c44a898cc57c38b191c5f894c31a9acbf565" kindref="member">VICII_PAL_8565</ref>);</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a097615e0e27fb679e172516082f1a5b6" kindref="member">OPT_VICII_REVISION</ref>,<sp/>VICII_PAL_8565);</highlight></codeline>
 <codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a23eefd98a66a2b07edc91b23845d3840" kindref="member">OPT_VICII_POWER_SAVE</ref>,<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8adef705eaa36b3e7cac49606c570b0382" kindref="member">OPT_VICII_GRAY_DOT_BUG</ref>,<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8ad48d89cb754f50ac322db496a3d19f88" kindref="member">OPT_GLUE_LOGIC</ref>,<sp/><ref refid="_v_i_c_i_i_types_8h_1a1b9e054b18647ae68a514badefcbdf1fab0a367ca69f132394f596e30f9dedc80" kindref="member">GLUE_LOGIC_DISCRETE</ref>);</highlight></codeline>
-<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a46240f17f79a3417e32ca8452fcd7bd8" kindref="member">OPT_VICII_PALETTE</ref>,<sp/><ref refid="_v_i_c_i_i_types_8h_1af59eb4c57176022b657e35f92a7d01c9a9b73e1e715b595c7f2dace6f95f1ad93" kindref="member">PALETTE_COLOR</ref>);</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8ad48d89cb754f50ac322db496a3d19f88" kindref="member">OPT_GLUE_LOGIC</ref>,<sp/>GLUE_LOGIC_DISCRETE);</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a46240f17f79a3417e32ca8452fcd7bd8" kindref="member">OPT_VICII_PALETTE</ref>,<sp/>PALETTE_COLOR);</highlight></codeline>
 <codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a8f39c8992c8dacc1fa43e2bcff8e0f5a" kindref="member">OPT_VICII_BRIGHTNESS</ref>,<sp/>50);</highlight></codeline>
 <codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a2cb14dcc324ff1e69aaf8a02363fb7ba" kindref="member">OPT_VICII_CONTRAST</ref>,<sp/>100);</highlight></codeline>
 <codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a5ea679a8076a9bbc9834f895726d8678" kindref="member">OPT_VICII_SATURATION</ref>,<sp/>50);</highlight></codeline>
@@ -1737,7 +1737,7 @@
 <codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8adb90bd2fb3bf6ff4edc7d871df89d9f6" kindref="member">OPT_VICII_SS_COLLISIONS</ref>,<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="49"><highlight class="normal"></highlight></codeline>
 <codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a9467ac523f93c435f9749a9052b8a83d" kindref="member">OPT_DMA_DEBUG_ENABLE</ref>,<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a3b1f2c9a9aac5b162262a90e6a6f7c7b" kindref="member">OPT_DMA_DEBUG_MODE</ref>,<sp/>DMA_DISPLAY_MODE_FG_LAYER);</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a3b1f2c9a9aac5b162262a90e6a6f7c7b" kindref="member">OPT_DMA_DEBUG_MODE</ref>,<sp/><ref refid="_dma_debugger_types_8h_1ae7fb354a0110238ce89d7875f10c79fba15f4629169710000a7018a3fe91b0c7b" kindref="member">DMA_DISPLAY_MODE_FG_LAYER</ref>);</highlight></codeline>
 <codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a5ade0d3c0ad955f9946d93c2ca92a727" kindref="member">OPT_DMA_DEBUG_OPACITY</ref>,<sp/>0x80);</highlight></codeline>
 <codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a68f1d78d426242ba34c275097a5dd67e" kindref="member">OPT_DMA_DEBUG_CHANNEL0</ref>,<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a43f016cc183cb0c0b4cdd475b9b04a83" kindref="member">OPT_DMA_DEBUG_CHANNEL1</ref>,<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">);</highlight></codeline>
@@ -1757,7 +1757,7 @@
 <codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8aeb16a666eaeb264a12ff01b176da0df7" kindref="member">OPT_SID_REVISION</ref>,<sp/>MOS_8580);</highlight></codeline>
 <codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8aed65076d638057295f5d61265785c1dd" kindref="member">OPT_SID_POWER_SAVE</ref>,<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8ab2aa30a09ccdf5853eab8370db849457" kindref="member">OPT_SID_FILTER</ref>,<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8aa38ab2b05fc95c33de88dacbbda10b17" kindref="member">OPT_SID_ENGINE</ref>,<sp/>SIDENGINE_RESID);</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8aa38ab2b05fc95c33de88dacbbda10b17" kindref="member">OPT_SID_ENGINE</ref>,<sp/><ref refid="_s_i_d_types_8h_1ae1ff2117fc8a0f10594f21dfa0a91270a24c610a8e2607514a816b36e4785b821" kindref="member">SIDENGINE_RESID</ref>);</highlight></codeline>
 <codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a4b3176c1ec01b1f7edaf762c305a60e8" kindref="member">OPT_SID_SAMPLING</ref>,<sp/>SAMPLING_INTERPOLATE);</highlight></codeline>
 <codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a0d4a63cac4ea650aeb0dad6460eba200" kindref="member">OPT_AUD_VOL_L</ref>,<sp/>50);</highlight></codeline>
 <codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8ab89ab84d669064b5cefd5447442644a9" kindref="member">OPT_AUD_VOL_R</ref>,<sp/>50);</highlight></codeline>
@@ -1771,13 +1771,13 @@
 <codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a39da3bda09931ccb967b4b3c45533c59" kindref="member">OPT_AUD_VOL</ref>,<sp/>{0,<sp/>1,<sp/>2,<sp/>3},<sp/>400);</highlight></codeline>
 <codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8aadc1bfe48758321f3ca5056415938727" kindref="member">OPT_AUD_PAN</ref>,<sp/>{0,<sp/>1,<sp/>2,<sp/>3},<sp/>0);</highlight></codeline>
 <codeline lineno="84"><highlight class="normal"></highlight></codeline>
-<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8ae0dc268b23eea94e380fd04fe0071afb" kindref="member">OPT_RAM_PATTERN</ref>,<sp/>RAM_PATTERN_VICE);</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8ae0dc268b23eea94e380fd04fe0071afb" kindref="member">OPT_RAM_PATTERN</ref>,<sp/><ref refid="_memory_types_8h_1aed0a6af618528ae4df946b46f3db80b8ae78df2cc15466657d31cd74f5b5468b3" kindref="member">RAM_PATTERN_VICE</ref>);</highlight></codeline>
 <codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8afdff745c618394723a7642317fbc0404" kindref="member">OPT_SAVE_ROMS</ref>,<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
 <codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a674e5364818dd4395d6a74935adfb7f8" kindref="member">OPT_DRV_AUTO_CONFIG</ref>,<sp/>{DRIVE8,<sp/>DRIVE9},<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a47b946fb087dc076855bad12b6064b48" kindref="member">OPT_DRV_TYPE</ref>,<sp/>{DRIVE8,<sp/>DRIVE9},<sp/>DRIVE_VC1541II);</highlight></codeline>
 <codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a83f3562d31b570ea41a3681fd4fdc703" kindref="member">OPT_DRV_RAM</ref>,<sp/>{DRIVE8,<sp/>DRIVE9},<sp/>DRVRAM_NONE);</highlight></codeline>
-<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a0250ed79d845c41e3c02b392a42a8857" kindref="member">OPT_DRV_PARCABLE</ref>,<sp/>{DRIVE8,<sp/>DRIVE9},<sp/>PAR_CABLE_NONE);</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a0250ed79d845c41e3c02b392a42a8857" kindref="member">OPT_DRV_PARCABLE</ref>,<sp/>{DRIVE8,<sp/>DRIVE9},<sp/><ref refid="_par_cable_types_8h_1a494dcbce5bcb891dfa50c460ae94f7cba81945a06dbef11f06e247cc7b6531986" kindref="member">PAR_CABLE_NONE</ref>);</highlight></codeline>
 <codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8aaa1666b3d0aca950e259601ec87d3efe" kindref="member">OPT_DRV_CONNECT</ref>,<sp/>DRIVE8,<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8aaa1666b3d0aca950e259601ec87d3efe" kindref="member">OPT_DRV_CONNECT</ref>,<sp/>DRIVE9,<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a7568dffe88a76c64cc124c3af1611fa4" kindref="member">OPT_DRV_POWER_SWITCH</ref>,<sp/>DRIVE8,<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">);</highlight></codeline>
@@ -1793,7 +1793,7 @@
 <codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a8a4a225b3133ade149bbc70644b9cf36" kindref="member">OPT_DRV_INSERT_VOL</ref>,<sp/>{DRIVE8,<sp/>DRIVE9},<sp/>50);</highlight></codeline>
 <codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a93cfeb08201706311ab61aedd1fb1be7" kindref="member">OPT_DRV_EJECT_VOL</ref>,<sp/>{DRIVE8,<sp/>DRIVE9},<sp/>50);</highlight></codeline>
 <codeline lineno="106"><highlight class="normal"></highlight></codeline>
-<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8adf48f07259725597ab9342f68e67ffeb" kindref="member">OPT_DAT_MODEL</ref>,<sp/>DATASETTE_C1530);</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8adf48f07259725597ab9342f68e67ffeb" kindref="member">OPT_DAT_MODEL</ref>,<sp/><ref refid="_datasette_types_8h_1a9ce0db5d2dda39ceff533153bd7fb206a1d73b547d30eb7c4a22c848f1c5b76d5" kindref="member">DATASETTE_C1530</ref>);</highlight></codeline>
 <codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8ab7392cd61342fb719ccd3a9857a20ece" kindref="member">OPT_DAT_CONNECT</ref>,<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="109"><highlight class="normal"></highlight></codeline>
 <codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a9aa2995e2060ff2e4a8d851aef4118c8" kindref="member">OPT_AUTOFIRE</ref>,<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">);</highlight></codeline>
@@ -1801,7 +1801,7 @@
 <codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a9b791917de5df9cc9d76ae58b0736271" kindref="member">OPT_AUTOFIRE_BULLETS</ref>,<sp/>3);</highlight></codeline>
 <codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8ae3fdac31c23133da2c70806b0669e49b" kindref="member">OPT_AUTOFIRE_DELAY</ref>,<sp/>5);</highlight></codeline>
 <codeline lineno="114"><highlight class="normal"></highlight></codeline>
-<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8ac11f0587ebf5940597e095b0ea5625a6" kindref="member">OPT_MOUSE_MODEL</ref>,<sp/>MOUSE_C1350);</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8ac11f0587ebf5940597e095b0ea5625a6" kindref="member">OPT_MOUSE_MODEL</ref>,<sp/><ref refid="_mouse_types_8h_1a3e5db2ad64d4fcd1484aead5939e79b4a044e3473c90f87f509cb889c2340a3af" kindref="member">MOUSE_C1350</ref>);</highlight></codeline>
 <codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a0f98538a031fc7b0099d1768c9faf528" kindref="member">OPT_MOUSE_SHAKE_DETECT</ref>,<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/>setFallback(<ref refid="_option_types_8h_1a273e435dabd576e6dcff3f18024d1fa8a2380d7bf1ef9c99b09025aaa5689c606" kindref="member">OPT_MOUSE_VELOCITY</ref>,<sp/>100);</highlight></codeline>
 <codeline lineno="118"><highlight class="normal"></highlight></codeline>

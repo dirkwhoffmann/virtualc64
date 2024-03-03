@@ -1,9 +1,14 @@
 var searchData=
 [
-  ['vicii_5fntsc_5f6567_0',['VICII_NTSC_6567',['../_v_i_c_i_i_types_8h.html#aa6907eb49d9f65564eca99d8b6cd3c44ab9bb6be4ede8b2ea0cc7f84aef15c0d3',1,'VICIITypes.h']]],
-  ['vicii_5fntsc_5f6567_5fr56a_1',['VICII_NTSC_6567_R56A',['../_v_i_c_i_i_types_8h.html#aa6907eb49d9f65564eca99d8b6cd3c44a448c631f7ce74b9f6d2acdd2c060a0e1',1,'VICIITypes.h']]],
-  ['vicii_5fntsc_5f8562_2',['VICII_NTSC_8562',['../_v_i_c_i_i_types_8h.html#aa6907eb49d9f65564eca99d8b6cd3c44a57afb637b596f3e0175e2c101da21c64',1,'VICIITypes.h']]],
-  ['vicii_5fpal_5f6569_5fr1_3',['VICII_PAL_6569_R1',['../_v_i_c_i_i_types_8h.html#aa6907eb49d9f65564eca99d8b6cd3c44ac7e437a81800809d00fac037aeafbcef',1,'VICIITypes.h']]],
-  ['vicii_5fpal_5f6569_5fr3_4',['VICII_PAL_6569_R3',['../_v_i_c_i_i_types_8h.html#aa6907eb49d9f65564eca99d8b6cd3c44adc3bee104de1d168495740b13aadb8e1',1,'VICIITypes.h']]],
-  ['vicii_5fpal_5f8565_5',['VICII_PAL_8565',['../_v_i_c_i_i_types_8h.html#aa6907eb49d9f65564eca99d8b6cd3c44a898cc57c38b191c5f894c31a9acbf565',1,'VICIITypes.h']]]
+  ['ram_5fpattern_5fccs_0',['RAM_PATTERN_CCS',['../_memory_types_8h.html#aed0a6af618528ae4df946b46f3db80b8a70909d838e7c51ad660c9a498ad34a5b',1,'MemoryTypes.h']]],
+  ['ram_5fpattern_5fones_1',['RAM_PATTERN_ONES',['../_memory_types_8h.html#aed0a6af618528ae4df946b46f3db80b8a4c184d4f1e7dfe0adb905cdf83d85b67',1,'MemoryTypes.h']]],
+  ['ram_5fpattern_5frandom_2',['RAM_PATTERN_RANDOM',['../_memory_types_8h.html#aed0a6af618528ae4df946b46f3db80b8a60c03ae6d146776b9341c691a30d7ea9',1,'MemoryTypes.h']]],
+  ['ram_5fpattern_5fvice_3',['RAM_PATTERN_VICE',['../_memory_types_8h.html#aed0a6af618528ae4df946b46f3db80b8ae78df2cc15466657d31cd74f5b5468b3',1,'MemoryTypes.h']]],
+  ['ram_5fpattern_5fzeroes_4',['RAM_PATTERN_ZEROES',['../_memory_types_8h.html#aed0a6af618528ae4df946b46f3db80b8acac1a72e6127c38ca6b9114441c819df',1,'MemoryTypes.h']]],
+  ['release_5ffire_5',['RELEASE_FIRE',['../_joystick_types_8h.html#ae2114e40c8dc40375c0d0a60904ca8e2a649492e69facc29a91a9207affbaa921',1,'JoystickTypes.h']]],
+  ['release_5fleft_6',['RELEASE_LEFT',['../_joystick_types_8h.html#ae2114e40c8dc40375c0d0a60904ca8e2a06954ff82c1bb18bd5bfb8451425c071',1,'JoystickTypes.h']]],
+  ['release_5fright_7',['RELEASE_RIGHT',['../_joystick_types_8h.html#ae2114e40c8dc40375c0d0a60904ca8e2a90882d19687c66d27f332a2e41aaab11',1,'JoystickTypes.h']]],
+  ['release_5fx_8',['RELEASE_X',['../_joystick_types_8h.html#ae2114e40c8dc40375c0d0a60904ca8e2aeffcd76f43a4f01425d2e07aa974f641',1,'JoystickTypes.h']]],
+  ['release_5fxy_9',['RELEASE_XY',['../_joystick_types_8h.html#ae2114e40c8dc40375c0d0a60904ca8e2af20328355c407a53e46d519f5c934230',1,'JoystickTypes.h']]],
+  ['release_5fy_10',['RELEASE_Y',['../_joystick_types_8h.html#ae2114e40c8dc40375c0d0a60904ca8e2aa970e92b15829ed3d58281f117ddc54f',1,'JoystickTypes.h']]]
 ];

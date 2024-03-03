@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="147" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="147" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="150" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="150" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_muxer_stats_1a53d6fc6a630f694f35e9bf534df61d25" prot="public" static="no" mutable="no">
         <type>u64</type>
@@ -29,7 +29,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="150" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="150" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="153" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="153" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_muxer_stats_1aa2d7123186e636cbb24a964c0b9de0db" prot="public" static="no" mutable="no">
         <type>u64</type>
@@ -43,14 +43,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="153" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="153" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="156" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="156" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="144" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="145" bodyend="154"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="147" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="148" bodyend="157"/>
     <listofallmembers>
       <member refid="struct_muxer_stats_1aa2d7123186e636cbb24a964c0b9de0db" prot="public" virt="non-virtual"><scope>MuxerStats</scope><name>bufferOverflows</name></member>
       <member refid="struct_muxer_stats_1a53d6fc6a630f694f35e9bf534df61d25" prot="public" virt="non-virtual"><scope>MuxerStats</scope><name>bufferUnderflows</name></member>

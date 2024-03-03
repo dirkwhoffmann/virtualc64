@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="302" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="302" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="304" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="304" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_event_slot_info_1a446541095a366ca73473cbfe661616ad" prot="public" static="no" mutable="no">
         <type>EventID</type>
@@ -29,7 +29,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="303" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="303" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="305" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="305" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_event_slot_info_1ad1561251127ceecc66f23a3c5bc1b9dd" prot="public" static="no" mutable="no">
         <type>const char *</type>
@@ -43,7 +43,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="304" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="304" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="306" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="306" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_event_slot_info_1ac286fd400d1a9816c8df877519810c98" prot="public" static="no" mutable="no">
         <type>Cycle</type>
@@ -57,7 +57,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="307" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="307" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="309" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="309" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_event_slot_info_1a149f87ecad15052c756343fc5bc62e2d" prot="public" static="no" mutable="no">
         <type>Cycle</type>
@@ -71,7 +71,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="308" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="308" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="310" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="310" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_event_slot_info_1a7ba7a69189c1d5e05d9c731e36f0fe1b" prot="public" static="no" mutable="no">
         <type>long</type>
@@ -85,7 +85,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="311" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="311" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="313" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="313" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_event_slot_info_1ab2290b1df202d9e4990ca1ab7c80f28f" prot="public" static="no" mutable="no">
         <type>long</type>
@@ -99,7 +99,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="314" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="314" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="316" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="316" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_event_slot_info_1a79b3717408939e78de2ebb7876d9dcd8" prot="public" static="no" mutable="no">
         <type>long</type>
@@ -113,14 +113,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="315" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="315" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="317" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="317" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="300" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="301" bodyend="316"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" line="302" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/C64Types.h" bodystart="303" bodyend="318"/>
     <listofallmembers>
       <member refid="struct_event_slot_info_1a446541095a366ca73473cbfe661616ad" prot="public" virt="non-virtual"><scope>EventSlotInfo</scope><name>eventId</name></member>
       <member refid="struct_event_slot_info_1ad1561251127ceecc66f23a3c5bc1b9dd" prot="public" virt="non-virtual"><scope>EventSlotInfo</scope><name>eventName</name></member>

@@ -9,6 +9,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -19,12 +20,13 @@
 // Enumerations
 //
 
+/// Cartridge mode
 enum_long(CRTMODE)
 {
-    CRTMODE_16K,
-    CRTMODE_8K,
-    CRTMODE_ULTIMAX,
-    CRTMODE_OFF
+    CRTMODE_16K,        //! 16KB cartridge
+    CRTMODE_8K,         //! 8KB cartridge
+    CRTMODE_ULTIMAX,    //! Ultimax cartridge
+    CRTMODE_OFF         //! No cartridge
 };
 typedef CRTMODE CRTMode;
 

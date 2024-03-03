@@ -128,7 +128,7 @@ $(function(){initNavTree('_msg_queue_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;MsgQueueTypes.h&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="_msg_queue_types_8h.html">MsgQueueTypes.h</a>&quot;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;CoreObject.h&quot;</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;Synchronizable.h&quot;</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;RingBuffer.h&quot;</span></div>
@@ -174,16 +174,18 @@ $(function(){initNavTree('_msg_queue_8h_source.html',''); initResizable(); });
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="comment">// Sends a message</span></div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keywordtype">void</span> put(<span class="keyword">const</span> Message &amp;msg);</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordtype">void</span> put(MsgType type, i64 payload = 0);</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordtype">void</span> put(MsgType type, CpuMsg payload);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keywordtype">void</span> put(MsgType type, DriveMsg payload);</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keywordtype">void</span> put(MsgType type, ScriptMsg payload);</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordtype">void</span> put(<a class="code hl_enumeration" href="_msg_queue_types_8h.html#a757e1f41b6bd90e8fac8d083ab7ff25b">MsgType</a> type, i64 payload = 0);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordtype">void</span> put(<a class="code hl_enumeration" href="_msg_queue_types_8h.html#a757e1f41b6bd90e8fac8d083ab7ff25b">MsgType</a> type, CpuMsg payload);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keywordtype">void</span> put(<a class="code hl_enumeration" href="_msg_queue_types_8h.html#a757e1f41b6bd90e8fac8d083ab7ff25b">MsgType</a> type, DriveMsg payload);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keywordtype">void</span> put(<a class="code hl_enumeration" href="_msg_queue_types_8h.html#a757e1f41b6bd90e8fac8d083ab7ff25b">MsgType</a> type, ScriptMsg payload);</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="comment">// Reads a message</span></div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keywordtype">bool</span> get(Message &amp;msg);</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>};</div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>}</div>
+<div class="ttc" id="a_msg_queue_types_8h_html"><div class="ttname"><a href="_msg_queue_types_8h.html">MsgQueueTypes.h</a></div></div>
+<div class="ttc" id="a_msg_queue_types_8h_html_a757e1f41b6bd90e8fac8d083ab7ff25b"><div class="ttname"><a href="_msg_queue_types_8h.html#a757e1f41b6bd90e8fac8d083ab7ff25b">MSG_TYPE</a></div><div class="ttdeci">MSG_TYPE</div><div class="ttdoc">! Emulator message</div><div class="ttdef"><b>Definition</b> MsgQueueTypes.h:25</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="339" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="339" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="340" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="340" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_emulator_info_1a56ec7ac40fb2dec5ec1b00e6feb4f10d" prot="public" static="no" mutable="no">
         <type>isize</type>
@@ -29,7 +29,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="340" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="340" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="341" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="341" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_emulator_info_1a68b225d8028d39209b8cd3378915ec1b" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -43,7 +43,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="341" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="341" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="342" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="342" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_emulator_info_1a9159973007d8c8791c1a87b369c05f95" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -57,7 +57,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="342" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="342" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="343" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="343" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_emulator_info_1a2a201fdd764bbe8b33a6e81cfd150865" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -71,7 +71,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="343" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="343" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="344" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="344" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_emulator_info_1ada8515907e489790779d082781bd59f3" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -85,7 +85,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="344" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="344" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="345" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="345" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_emulator_info_1a646356258c047f3e786c8d9d90add636" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -99,7 +99,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="345" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="345" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="346" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="346" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_emulator_info_1abc5ae52bc731102a6c94ce6bb94bd6e8" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -113,14 +113,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="346" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="346" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="347" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="347" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="337" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="338" bodyend="347"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" line="338" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/EmulatorTypes.h" bodystart="339" bodyend="348"/>
     <listofallmembers>
       <member refid="struct_emulator_info_1a9159973007d8c8791c1a87b369c05f95" prot="public" virt="non-virtual"><scope>EmulatorInfo</scope><name>paused</name></member>
       <member refid="struct_emulator_info_1a68b225d8028d39209b8cd3378915ec1b" prot="public" virt="non-virtual"><scope>EmulatorInfo</scope><name>powered</name></member>

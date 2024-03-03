@@ -1,6 +1,6 @@
 \doxysection{Msg\+Queue\+Types.\+h}
 \hypertarget{_msg_queue_types_8h_source}{}\label{_msg_queue_types_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h@{/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h}}
-
+\mbox{\hyperlink{_msg_queue_types_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
 \DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
@@ -13,243 +13,242 @@
 \DoxyCodeLine{00009\ \textcolor{comment}{//}}
 \DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
 \DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
-\DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Aliases.h"{}}}
-\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Reflection.h"{}}}
-\DoxyCodeLine{00017\ }
-\DoxyCodeLine{00018\ \textcolor{comment}{//}}
-\DoxyCodeLine{00019\ \textcolor{comment}{//\ Enumerations}}
-\DoxyCodeLine{00020\ \textcolor{comment}{//}}
-\DoxyCodeLine{00021\ }
-\DoxyCodeLine{00022\ enum\_long(MSG\_TYPE)}
-\DoxyCodeLine{00023\ \{}
-\DoxyCodeLine{00024\ \ \ \ \ MSG\_NONE\ =\ 0,}
-\DoxyCodeLine{00025\ }
-\DoxyCodeLine{00026\ \ \ \ \ \textcolor{comment}{//\ Emulator\ state}}
-\DoxyCodeLine{00027\ \ \ \ \ MSG\_CONFIG,}
-\DoxyCodeLine{00028\ \ \ \ \ MSG\_POWER,}
-\DoxyCodeLine{00029\ \ \ \ \ MSG\_RUN,}
-\DoxyCodeLine{00030\ \ \ \ \ MSG\_PAUSE,}
-\DoxyCodeLine{00031\ \ \ \ \ MSG\_STEP,}
-\DoxyCodeLine{00032\ \ \ \ \ MSG\_RESET,}
-\DoxyCodeLine{00033\ \ \ \ \ MSG\_SHUTDOWN,}
-\DoxyCodeLine{00034\ \ \ \ \ MSG\_ABORT,}
-\DoxyCodeLine{00035\ \ \ \ \ MSG\_WARP,}
-\DoxyCodeLine{00036\ \ \ \ \ MSG\_TRACK,}
-\DoxyCodeLine{00037\ \ \ \ \ MSG\_MUTE,}
-\DoxyCodeLine{00038\ }
-\DoxyCodeLine{00039\ \ \ \ \ \textcolor{comment}{//\ Retro\ shell}}
-\DoxyCodeLine{00040\ \ \ \ \ MSG\_CONSOLE\_CLOSE,}
-\DoxyCodeLine{00041\ \ \ \ \ MSG\_CONSOLE\_UPDATE,}
-\DoxyCodeLine{00042\ \ \ \ \ MSG\_CONSOLE\_DEBUGGER,}
-\DoxyCodeLine{00043\ \ \ \ \ MSG\_SCRIPT\_DONE,}
-\DoxyCodeLine{00044\ \ \ \ \ MSG\_SCRIPT\_ABORT,}
-\DoxyCodeLine{00045\ }
-\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//\ ROMs}}
-\DoxyCodeLine{00047\ \ \ \ \ MSG\_BASIC\_ROM\_LOADED,}
-\DoxyCodeLine{00048\ \ \ \ \ MSG\_CHAR\_ROM\_LOADED,}
-\DoxyCodeLine{00049\ \ \ \ \ MSG\_KERNAL\_ROM\_LOADED,}
-\DoxyCodeLine{00050\ \ \ \ \ MSG\_DRIVE\_ROM\_LOADED,}
-\DoxyCodeLine{00051\ \ \ \ \ MSG\_ROM\_MISSING,}
-\DoxyCodeLine{00052\ }
-\DoxyCodeLine{00053\ \ \ \ \ \textcolor{comment}{//\ CPU}}
-\DoxyCodeLine{00054\ \ \ \ \ MSG\_CPU\_JAMMED,}
-\DoxyCodeLine{00055\ \ \ \ \ MSG\_CPU\_JUMPED,}
-\DoxyCodeLine{00056\ \ \ \ \ MSG\_BREAKPOINT\_REACHED,}
-\DoxyCodeLine{00057\ \ \ \ \ MSG\_WATCHPOINT\_REACHED,}
-\DoxyCodeLine{00058\ }
-\DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//\ VIC}}
-\DoxyCodeLine{00060\ \ \ \ \ MSG\_PAL,}
-\DoxyCodeLine{00061\ \ \ \ \ MSG\_NTSC,}
-\DoxyCodeLine{00062\ }
-\DoxyCodeLine{00063\ \ \ \ \ \textcolor{comment}{//\ IEC\ Bus}}
-\DoxyCodeLine{00064\ \ \ \ \ MSG\_IEC\_BUS\_BUSY,}
-\DoxyCodeLine{00065\ \ \ \ \ MSG\_IEC\_BUS\_IDLE,}
-\DoxyCodeLine{00066\ \ \ \ \ }
-\DoxyCodeLine{00067\ \ \ \ \ \textcolor{comment}{//\ Floppy\ drives}}
-\DoxyCodeLine{00068\ \ \ \ \ MSG\_DRIVE\_CONNECT,}
-\DoxyCodeLine{00069\ \ \ \ \ MSG\_DRIVE\_DISCONNECT,}
-\DoxyCodeLine{00070\ \ \ \ \ MSG\_DRIVE\_POWER\_ON,}
-\DoxyCodeLine{00071\ \ \ \ \ MSG\_DRIVE\_POWER\_OFF,}
-\DoxyCodeLine{00072\ \ \ \ \ MSG\_DRIVE\_POWER\_SAVE\_ON,}
-\DoxyCodeLine{00073\ \ \ \ \ MSG\_DRIVE\_POWER\_SAVE\_OFF,}
-\DoxyCodeLine{00074\ \ \ \ \ MSG\_DRIVE\_READ,}
-\DoxyCodeLine{00075\ \ \ \ \ MSG\_DRIVE\_WRITE,}
-\DoxyCodeLine{00076\ \ \ \ \ MSG\_DRIVE\_LED\_ON,}
-\DoxyCodeLine{00077\ \ \ \ \ MSG\_DRIVE\_LED\_OFF,}
-\DoxyCodeLine{00078\ \ \ \ \ MSG\_DRIVE\_MOTOR\_ON,}
-\DoxyCodeLine{00079\ \ \ \ \ MSG\_DRIVE\_MOTOR\_OFF,}
-\DoxyCodeLine{00080\ \ \ \ \ MSG\_DRIVE\_STEP,}
-\DoxyCodeLine{00081\ \ \ \ \ MSG\_DISK\_INSERT,}
-\DoxyCodeLine{00082\ \ \ \ \ MSG\_DISK\_EJECT,}
-\DoxyCodeLine{00083\ \ \ \ \ MSG\_DISK\_SAVED,}
-\DoxyCodeLine{00084\ \ \ \ \ MSG\_DISK\_UNSAVED,}
-\DoxyCodeLine{00085\ \ \ \ \ MSG\_DISK\_PROTECT,}
-\DoxyCodeLine{00086\ \ \ \ \ MSG\_FILE\_FLASHED,}
-\DoxyCodeLine{00087\ }
-\DoxyCodeLine{00088\ \ \ \ \ \textcolor{comment}{//\ Peripherals\ (Datasette)}}
-\DoxyCodeLine{00089\ \ \ \ \ MSG\_VC1530\_CONNECT,}
-\DoxyCodeLine{00090\ \ \ \ \ MSG\_VC1530\_TAPE,}
-\DoxyCodeLine{00091\ \ \ \ \ MSG\_VC1530\_PLAY,}
-\DoxyCodeLine{00092\ \ \ \ \ MSG\_VC1530\_MOTOR,}
-\DoxyCodeLine{00093\ \ \ \ \ MSG\_VC1530\_COUNTER,}
-\DoxyCodeLine{00094\ }
-\DoxyCodeLine{00095\ \ \ \ \ \textcolor{comment}{//\ Peripherals\ (Expansion\ port)}}
-\DoxyCodeLine{00096\ \ \ \ \ MSG\_CRT\_ATTACHED,}
-\DoxyCodeLine{00097\ }
-\DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//\ Peripherals\ (Keyboard)}}
-\DoxyCodeLine{00099\ \ \ \ \ MSG\_KB\_AUTO\_PRESS,}
-\DoxyCodeLine{00100\ \ \ \ \ MSG\_KB\_AUTO\_RELEASE,}
-\DoxyCodeLine{00101\ \ \ \ \ }
-\DoxyCodeLine{00102\ \ \ \ \ \textcolor{comment}{//\ Peripherals\ (Mouse)}}
-\DoxyCodeLine{00103\ \ \ \ \ MSG\_SHAKING,}
-\DoxyCodeLine{00104\ \ \ \ \ }
-\DoxyCodeLine{00105\ \ \ \ \ \textcolor{comment}{//\ Snapshots}}
-\DoxyCodeLine{00106\ \ \ \ \ MSG\_AUTO\_SNAPSHOT\_TAKEN,}
-\DoxyCodeLine{00107\ \ \ \ \ MSG\_USER\_SNAPSHOT\_TAKEN,}
-\DoxyCodeLine{00108\ \ \ \ \ MSG\_SNAPSHOT\_RESTORED,}
-\DoxyCodeLine{00109\ \ \ \ \ }
-\DoxyCodeLine{00110\ \ \ \ \ \textcolor{comment}{//\ Screen\ recording}}
-\DoxyCodeLine{00111\ \ \ \ \ MSG\_RECORDING\_STARTED,}
-\DoxyCodeLine{00112\ \ \ \ \ MSG\_RECORDING\_STOPPED,}
-\DoxyCodeLine{00113\ \ \ \ \ MSG\_RECORDING\_ABORTED,}
-\DoxyCodeLine{00114\ }
-\DoxyCodeLine{00115\ \ \ \ \ \textcolor{comment}{//\ Debugging}}
-\DoxyCodeLine{00116\ \ \ \ \ MSG\_DMA\_DEBUG,}
-\DoxyCodeLine{00117\ }
-\DoxyCodeLine{00118\ \ \ \ \ \textcolor{comment}{//\ Scheduled\ alarms}}
-\DoxyCodeLine{00119\ \ \ \ \ MSG\_ALARM}
-\DoxyCodeLine{00120\ \};}
-\DoxyCodeLine{00121\ \textcolor{keyword}{typedef}\ MSG\_TYPE\ MsgType;}
-\DoxyCodeLine{00122\ }
-\DoxyCodeLine{00123\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
-\DoxyCodeLine{00124\ \textcolor{keyword}{struct\ }MsgTypeEnum\ :\ util::Reflection<MsgType,\ MsgType>\ \{}
-\DoxyCodeLine{00125\ \ \ \ \ }
-\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
-\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ MSG\_ALARM;}
-\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
-\DoxyCodeLine{00129\ }
-\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}MSG"{}};\ \}}
-\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(MsgType\ value)}
-\DoxyCodeLine{00132\ \ \ \ \ \{}
-\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
-\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_NONE:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}NONE"{}};}
-\DoxyCodeLine{00136\ }
-\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_CONFIG:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CONFIG"{}};}
-\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_POWER:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}POWER"{}};}
-\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_RUN:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RUN"{}};}
-\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_PAUSE:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PAUSE"{}};}
-\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_RESET:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RESET"{}};}
-\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_SHUTDOWN:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SHUTDOWN"{}};}
-\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_ABORT:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}ABORT"{}};}
-\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_WARP:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}WARP"{}};}
-\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_TRACK:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TRACK"{}};}
-\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_MUTE:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}MUTE"{}};}
-\DoxyCodeLine{00147\ }
-\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_CONSOLE\_CLOSE:\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CONSOLE\_CLOSE"{}};}
-\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_CONSOLE\_UPDATE:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CONSOLE\_UPDATE"{}};}
-\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_CONSOLE\_DEBUGGER:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CONSOLE\_DEBUGGER"{}};}
-\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_SCRIPT\_DONE:\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SCRIPT\_DONE"{}};}
-\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_SCRIPT\_ABORT:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SCRIPT\_ABORT"{}};}
-\DoxyCodeLine{00153\ }
-\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_BASIC\_ROM\_LOADED:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}BASIC\_ROM\_LOADED"{}};}
-\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_CHAR\_ROM\_LOADED:\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CHAR\_ROM\_LOADED"{}};}
-\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_KERNAL\_ROM\_LOADED:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}KERNAL\_ROM\_LOADED"{}};}
-\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_ROM\_LOADED:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_ROM\_LOADED"{}};}
-\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_ROM\_MISSING:\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}ROM\_MISSING"{}};}
-\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_CPU\_JAMMED:\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CPU\_JAMMED"{}};}
-\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_BREAKPOINT\_REACHED:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}BREAKPOINT\_REACHED"{}};}
-\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_WATCHPOINT\_REACHED:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}WATCHPOINT\_REACHED"{}};}
-\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_PAL:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PAL"{}};}
-\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_NTSC:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}NTSC"{}};}
-\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_IEC\_BUS\_BUSY:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}IEC\_BUS\_BUSY"{}};}
-\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_IEC\_BUS\_IDLE:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}IEC\_BUS\_IDLE"{}};}
-\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_CONNECT:\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_CONNECT"{}};}
-\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_DISCONNECT:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_DISCONNECT"{}};}
-\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_POWER\_ON:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_POWER\_ON"{}};}
-\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_POWER\_OFF:\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_POWER\_OFF"{}};}
-\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_POWER\_SAVE\_ON:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_POWER\_SAVE\_ON"{}};}
-\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_POWER\_SAVE\_OFF:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_POWER\_SAVE\_OFF"{}};}
-\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_READ:\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_READ"{}};}
-\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_WRITE:\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_WRITE"{}};}
-\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_LED\_ON:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_LED\_ON"{}};}
-\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_LED\_OFF:\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_LED\_OFF"{}};}
-\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_MOTOR\_ON:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_MOTOR\_ON"{}};}
-\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_MOTOR\_OFF:\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_MOTOR\_OFF"{}};}
-\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DRIVE\_STEP:\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_STEP"{}};}
-\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DISK\_INSERT:\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DISK\_INSERT"{}};}
-\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DISK\_EJECT:\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DISK\_EJECT"{}};}
-\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DISK\_SAVED:\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DISK\_SAVED"{}};}
-\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DISK\_UNSAVED:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DISK\_UNSAVED"{}};}
-\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DISK\_PROTECT:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DISK\_PROTECT"{}};}
-\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_FILE\_FLASHED:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}FILE\_FLASHED"{}};}
-\DoxyCodeLine{00189\ }
-\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_VC1530\_CONNECT:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VC1530\_CONNECT"{}};}
-\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_VC1530\_TAPE:\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VC1530\_TAPE"{}};}
-\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_VC1530\_PLAY:\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VC1530\_PLAY"{}};}
-\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_VC1530\_MOTOR:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VC1530\_MOTOR"{}};}
-\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_VC1530\_COUNTER:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VC1530\_COUNTER"{}};}
-\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_CRT\_ATTACHED:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CRT\_ATTACHED"{}};}
-\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_KB\_AUTO\_PRESS:\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}KB\_AUTO\_PRESS"{}};}
-\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_KB\_AUTO\_RELEASE:\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}KB\_AUTO\_RELEASE"{}};}
-\DoxyCodeLine{00200\ }
-\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_SHAKING:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SHAKING"{}};}
-\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_AUTO\_SNAPSHOT\_TAKEN:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}AUTO\_SNAPSHOT\_TAKEN"{}};}
-\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_USER\_SNAPSHOT\_TAKEN:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}USER\_SNAPSHOT\_TAKEN"{}};}
-\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_SNAPSHOT\_RESTORED:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SNAPSHOT\_RESTORED"{}};}
-\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_RECORDING\_STARTED:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RECORDING\_STARTED"{}};}
-\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_RECORDING\_STOPPED:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RECORDING\_STOPPED"{}};}
-\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_RECORDING\_ABORTED:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RECORDING\_ABORTED"{}};}
-\DoxyCodeLine{00210\ }
-\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_DMA\_DEBUG:\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DMA\_DEBUG"{}};}
-\DoxyCodeLine{00212\ }
-\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MSG\_ALARM:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}ALARM"{}};}
-\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
-\DoxyCodeLine{00216\ \ \ \ \ \}}
-\DoxyCodeLine{00217\ \};}
-\DoxyCodeLine{00218\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Aliases.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}Reflection.h"{}}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{comment}{//}}
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ Enumerations}}
+\DoxyCodeLine{00021\ \textcolor{comment}{//}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00024\ enum\_long(\mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25b}{MSG\_TYPE}})}
+\DoxyCodeLine{00025\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba40e71b65f54da2ea5d97c37e720346b1}{MSG\_NONE}}\ =\ 0,\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{comment}{//\ Emulator\ state}}
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baa76f18ac4fd6e013a62d7ac04fba4edf}{MSG\_CONFIG}},\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baec73dd1957fd94c8cde729186480fa5c}{MSG\_POWER}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bae868897e5cee1df30873d828256a4d77}{MSG\_RUN}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba1b44e026389fb3b26434f3d74b3b6e7e}{MSG\_PAUSE}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba86cdd34af78d2cbeb91299d3d9f2c360}{MSG\_STEP}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba66a2805e00d510437311c54dfcf010b6}{MSG\_RESET}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba621b8f7f84a5fe2cbb10c08ce2c58ff3}{MSG\_SHUTDOWN}},\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bab5a09c07a9ce6862250f18e81ed80d3f}{MSG\_ABORT}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba22374907c62cce9e112ec43cd6fb7b0e}{MSG\_WARP}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baffcad1d28fd3ec4302fa1fc157bc73aa}{MSG\_TRACK}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bace9f16f3e50f0d17c0a02191b82c0a2c}{MSG\_MUTE}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ Retro\ shell}}
+\DoxyCodeLine{00042\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba262afa148b59fd1f0843949cb3cae8cf}{MSG\_CONSOLE\_CLOSE}},\ \ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba3a4a8450bdeeb6864ea81a49d04557f4}{MSG\_CONSOLE\_UPDATE}},\ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba77a07987640c4e81b300be38becd2b5d}{MSG\_CONSOLE\_DEBUGGER}},\ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baa4d10009296b03ca20e5e0782de8bcbd}{MSG\_SCRIPT\_DONE}},\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bacfb923a604b38a3581f9df2e17f31a86}{MSG\_SCRIPT\_ABORT}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{comment}{//\ ROMs}}
+\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba2522aa8b55849618404362e794e66614}{MSG\_ROM\_MISSING}},\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba54eb386fc6dc685fbfcb1bcd6f1a0514}{MSG\_BASIC\_ROM\_LOADED}},\ \ \ }
+\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba49a97dc2eefc7e1a23cb479fd071532b}{MSG\_CHAR\_ROM\_LOADED}},\ \ \ \ }
+\DoxyCodeLine{00052\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba41c7e29f283e38f5207e447c82b28de3}{MSG\_KERNAL\_ROM\_LOADED}},\ \ }
+\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bad82084a3c105f29495e03e98b8192637}{MSG\_DRIVE\_ROM\_LOADED}},\ \ \ }
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{comment}{//\ CPU}}
+\DoxyCodeLine{00056\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba8c193db10f35e9453d0b41c238fc31a7}{MSG\_CPU\_JAMMED}},\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00057\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba8601eda9cfe0b03211b41a146cfa21a2}{MSG\_CPU\_JUMPED}},\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00058\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baa69769d77f682ba101215104460fe1b9}{MSG\_BREAKPOINT\_REACHED}},\ }
+\DoxyCodeLine{00059\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba09717b122df319863b8176e201167bda}{MSG\_WATCHPOINT\_REACHED}},\ }
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//\ VIC}}
+\DoxyCodeLine{00062\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bab7e30ed8c854a6ab53e757b6007d71bf}{MSG\_PAL}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00063\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baa0bb0c451712258f42ef5c26d9509918}{MSG\_NTSC}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//\ IEC\ Bus}}
+\DoxyCodeLine{00066\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bac623cc7b2383f7b19548f21076acb4ac}{MSG\_IEC\_BUS\_BUSY}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00067\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba77a7c08e806359e8fb74753b040bae4c}{MSG\_IEC\_BUS\_IDLE}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{comment}{//\ Floppy\ drives}}
+\DoxyCodeLine{00070\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baf613d4432782de9459706b8d3aa05933}{MSG\_DRIVE\_CONNECT}},\ \ \ \ \ \ }
+\DoxyCodeLine{00071\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bab303b79cc5c99d4c6532d895fca481f1}{MSG\_DRIVE\_DISCONNECT}},\ \ \ }
+\DoxyCodeLine{00072\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bab57a7a4eea6ce8e25030e16017fc0122}{MSG\_DRIVE\_POWER\_ON}},\ \ \ \ \ }
+\DoxyCodeLine{00073\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba53fd751f1e173f6c45ab2a7ddd433220}{MSG\_DRIVE\_POWER\_OFF}},\ \ \ \ }
+\DoxyCodeLine{00074\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bae98a227565064885e1a5389b88c04e18}{MSG\_DRIVE\_POWER\_SAVE\_ON}},\ \ \ \ }
+\DoxyCodeLine{00075\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba52562262a0e29ed1fc1938c52add6706}{MSG\_DRIVE\_POWER\_SAVE\_OFF}},\ \ \ }
+\DoxyCodeLine{00076\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba48b07144cb8afcc6b110410c7981cb53}{MSG\_DRIVE\_READ}},\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00077\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bae18265e2cbc5c26861d0eea81fbee6a9}{MSG\_DRIVE\_WRITE}},\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00078\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba22b40799c770ffdf3d25d7afa18e1a59}{MSG\_DRIVE\_LED\_ON}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00079\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baea180b57ba6610eccd18e11ead4dee8b}{MSG\_DRIVE\_LED\_OFF}},\ \ \ \ \ \ }
+\DoxyCodeLine{00080\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baba8fdd226c88062ec60620849a2e4296}{MSG\_DRIVE\_MOTOR\_ON}},\ \ \ \ \ }
+\DoxyCodeLine{00081\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bad2777aa5f678d740d959905fdda757f1}{MSG\_DRIVE\_MOTOR\_OFF}},\ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba92d63f973c2a5ba8d7b33b2f29044493}{MSG\_DRIVE\_STEP}},\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00083\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baabb1071ba56ef61e7368ab7f062693c0}{MSG\_DISK\_INSERT}},\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00084\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba9e8a5fa167cc5b5f06cade241c31b55c}{MSG\_DISK\_EJECT}},\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00085\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba2254429633d74f465c26f6f72ecf3a6d}{MSG\_DISK\_SAVED}},\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00086\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba472eadd62c4716bf158521a635a25153}{MSG\_DISK\_UNSAVED}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00087\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba184125ad0fdbe4f528c667312481b845}{MSG\_DISK\_PROTECT}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00088\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba96e0db358ce470edeaf8e950166d7a49}{MSG\_FILE\_FLASHED}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{comment}{//\ Peripherals\ (Datasette)}}
+\DoxyCodeLine{00091\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba63c9f8d5975faaf72f35296b778a97fe}{MSG\_VC1530\_CONNECT}},\ \ \ \ \ }
+\DoxyCodeLine{00092\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bac76626691016373c1316a76dd99d561e}{MSG\_VC1530\_TAPE}},\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00093\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba9061902c86cb3a76e532c4162b24a30f}{MSG\_VC1530\_PLAY}},\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00094\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba42f2cb3022cffead0b3df46d83278c43}{MSG\_VC1530\_MOTOR}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00095\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba5a3e8a30eb9567a51ef0be850c601964}{MSG\_VC1530\_COUNTER}},\ \ \ \ \ }
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{comment}{//\ Peripherals\ (Expansion\ port)}}
+\DoxyCodeLine{00098\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba5cf180e4d4b5f8e8f085f66e2a506ea3}{MSG\_CRT\_ATTACHED}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{comment}{//\ Peripherals\ (Keyboard)}}
+\DoxyCodeLine{00101\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba5f58705aebe08870b67400c6064200fc}{MSG\_KB\_AUTO\_PRESS}},\ \ \ \ \ \ }
+\DoxyCodeLine{00102\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baf29f487f3574e58367a2fc55f0a06c36}{MSG\_KB\_AUTO\_RELEASE}},\ \ \ \ }
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{comment}{//\ Peripherals\ (Mouse)}}
+\DoxyCodeLine{00105\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba8abf7e47fb0c036bbf491be50146319c}{MSG\_SHAKING}},\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{comment}{//\ Snapshots}}
+\DoxyCodeLine{00108\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bac2b3d245154652064c5c8c03fd5d20cd}{MSG\_AUTO\_SNAPSHOT\_TAKEN}},\ \ }
+\DoxyCodeLine{00109\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baefc990ae4f843de5b787d2c1e2943d1d}{MSG\_USER\_SNAPSHOT\_TAKEN}},\ \ }
+\DoxyCodeLine{00110\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba5d759e1721fc70f681ba9e99d1ac5791}{MSG\_SNAPSHOT\_RESTORED}},\ \ \ \ }
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{comment}{//\ Screen\ recording}}
+\DoxyCodeLine{00113\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba40515090334b8adcf080ab96216896f4}{MSG\_RECORDING\_STARTED}},\ \ }
+\DoxyCodeLine{00114\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba2b6f215428af049e25a379996d8bdaa0}{MSG\_RECORDING\_STOPPED}},\ \ }
+\DoxyCodeLine{00115\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bac3e694f804f4e02dc8b2803c2636f8b5}{MSG\_RECORDING\_ABORTED}},\ \ }
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{comment}{//\ Debugging}}
+\DoxyCodeLine{00118\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba652e19f4e085397b02f09e1734668ebb}{MSG\_DMA\_DEBUG}},\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{comment}{//\ Scheduled\ alarms}}
+\DoxyCodeLine{00121\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bafcde3912e1e5f1e8b0a48ebd9068934b}{MSG\_ALARM}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00122\ \};}
+\DoxyCodeLine{00123\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25b}{MSG\_TYPE}}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25b}{MsgType}};}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00126\ \textcolor{keyword}{struct\ }MsgTypeEnum\ :\ util::Reflection<MsgType,\ MsgType>\ \{}
+\DoxyCodeLine{00127\ \ \ \ \ }
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bafcde3912e1e5f1e8b0a48ebd9068934b}{MSG\_ALARM}};}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}MSG"{}};\ \}}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(\mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25b}{MsgType}}\ value)}
+\DoxyCodeLine{00134\ \ \ \ \ \{}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba40e71b65f54da2ea5d97c37e720346b1}{MSG\_NONE}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}NONE"{}};}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baa76f18ac4fd6e013a62d7ac04fba4edf}{MSG\_CONFIG}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CONFIG"{}};}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baec73dd1957fd94c8cde729186480fa5c}{MSG\_POWER}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}POWER"{}};}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bae868897e5cee1df30873d828256a4d77}{MSG\_RUN}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RUN"{}};}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba1b44e026389fb3b26434f3d74b3b6e7e}{MSG\_PAUSE}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PAUSE"{}};}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba66a2805e00d510437311c54dfcf010b6}{MSG\_RESET}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RESET"{}};}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba621b8f7f84a5fe2cbb10c08ce2c58ff3}{MSG\_SHUTDOWN}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SHUTDOWN"{}};}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bab5a09c07a9ce6862250f18e81ed80d3f}{MSG\_ABORT}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}ABORT"{}};}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba22374907c62cce9e112ec43cd6fb7b0e}{MSG\_WARP}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}WARP"{}};}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baffcad1d28fd3ec4302fa1fc157bc73aa}{MSG\_TRACK}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TRACK"{}};}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bace9f16f3e50f0d17c0a02191b82c0a2c}{MSG\_MUTE}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}MUTE"{}};}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba262afa148b59fd1f0843949cb3cae8cf}{MSG\_CONSOLE\_CLOSE}}:\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CONSOLE\_CLOSE"{}};}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba3a4a8450bdeeb6864ea81a49d04557f4}{MSG\_CONSOLE\_UPDATE}}:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CONSOLE\_UPDATE"{}};}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba77a07987640c4e81b300be38becd2b5d}{MSG\_CONSOLE\_DEBUGGER}}:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CONSOLE\_DEBUGGER"{}};}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baa4d10009296b03ca20e5e0782de8bcbd}{MSG\_SCRIPT\_DONE}}:\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SCRIPT\_DONE"{}};}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bacfb923a604b38a3581f9df2e17f31a86}{MSG\_SCRIPT\_ABORT}}:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SCRIPT\_ABORT"{}};}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba54eb386fc6dc685fbfcb1bcd6f1a0514}{MSG\_BASIC\_ROM\_LOADED}}:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}BASIC\_ROM\_LOADED"{}};}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba49a97dc2eefc7e1a23cb479fd071532b}{MSG\_CHAR\_ROM\_LOADED}}:\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CHAR\_ROM\_LOADED"{}};}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba41c7e29f283e38f5207e447c82b28de3}{MSG\_KERNAL\_ROM\_LOADED}}:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}KERNAL\_ROM\_LOADED"{}};}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bad82084a3c105f29495e03e98b8192637}{MSG\_DRIVE\_ROM\_LOADED}}:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_ROM\_LOADED"{}};}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba8c193db10f35e9453d0b41c238fc31a7}{MSG\_CPU\_JAMMED}}:\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CPU\_JAMMED"{}};}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baa69769d77f682ba101215104460fe1b9}{MSG\_BREAKPOINT\_REACHED}}:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}BREAKPOINT\_REACHED"{}};}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba09717b122df319863b8176e201167bda}{MSG\_WATCHPOINT\_REACHED}}:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}WATCHPOINT\_REACHED"{}};}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bab7e30ed8c854a6ab53e757b6007d71bf}{MSG\_PAL}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PAL"{}};}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baa0bb0c451712258f42ef5c26d9509918}{MSG\_NTSC}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}NTSC"{}};}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bac623cc7b2383f7b19548f21076acb4ac}{MSG\_IEC\_BUS\_BUSY}}:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}IEC\_BUS\_BUSY"{}};}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba77a7c08e806359e8fb74753b040bae4c}{MSG\_IEC\_BUS\_IDLE}}:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}IEC\_BUS\_IDLE"{}};}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baf613d4432782de9459706b8d3aa05933}{MSG\_DRIVE\_CONNECT}}:\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_CONNECT"{}};}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bab303b79cc5c99d4c6532d895fca481f1}{MSG\_DRIVE\_DISCONNECT}}:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_DISCONNECT"{}};}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bab57a7a4eea6ce8e25030e16017fc0122}{MSG\_DRIVE\_POWER\_ON}}:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_POWER\_ON"{}};}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba53fd751f1e173f6c45ab2a7ddd433220}{MSG\_DRIVE\_POWER\_OFF}}:\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_POWER\_OFF"{}};}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bae98a227565064885e1a5389b88c04e18}{MSG\_DRIVE\_POWER\_SAVE\_ON}}:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_POWER\_SAVE\_ON"{}};}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba52562262a0e29ed1fc1938c52add6706}{MSG\_DRIVE\_POWER\_SAVE\_OFF}}:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_POWER\_SAVE\_OFF"{}};}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba48b07144cb8afcc6b110410c7981cb53}{MSG\_DRIVE\_READ}}:\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_READ"{}};}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bae18265e2cbc5c26861d0eea81fbee6a9}{MSG\_DRIVE\_WRITE}}:\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_WRITE"{}};}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba22b40799c770ffdf3d25d7afa18e1a59}{MSG\_DRIVE\_LED\_ON}}:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_LED\_ON"{}};}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baea180b57ba6610eccd18e11ead4dee8b}{MSG\_DRIVE\_LED\_OFF}}:\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_LED\_OFF"{}};}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baba8fdd226c88062ec60620849a2e4296}{MSG\_DRIVE\_MOTOR\_ON}}:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_MOTOR\_ON"{}};}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bad2777aa5f678d740d959905fdda757f1}{MSG\_DRIVE\_MOTOR\_OFF}}:\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_MOTOR\_OFF"{}};}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba92d63f973c2a5ba8d7b33b2f29044493}{MSG\_DRIVE\_STEP}}:\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DRIVE\_STEP"{}};}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baabb1071ba56ef61e7368ab7f062693c0}{MSG\_DISK\_INSERT}}:\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DISK\_INSERT"{}};}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba9e8a5fa167cc5b5f06cade241c31b55c}{MSG\_DISK\_EJECT}}:\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DISK\_EJECT"{}};}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba2254429633d74f465c26f6f72ecf3a6d}{MSG\_DISK\_SAVED}}:\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DISK\_SAVED"{}};}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba472eadd62c4716bf158521a635a25153}{MSG\_DISK\_UNSAVED}}:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DISK\_UNSAVED"{}};}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba184125ad0fdbe4f528c667312481b845}{MSG\_DISK\_PROTECT}}:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DISK\_PROTECT"{}};}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba96e0db358ce470edeaf8e950166d7a49}{MSG\_FILE\_FLASHED}}:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}FILE\_FLASHED"{}};}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba63c9f8d5975faaf72f35296b778a97fe}{MSG\_VC1530\_CONNECT}}:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VC1530\_CONNECT"{}};}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bac76626691016373c1316a76dd99d561e}{MSG\_VC1530\_TAPE}}:\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VC1530\_TAPE"{}};}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba9061902c86cb3a76e532c4162b24a30f}{MSG\_VC1530\_PLAY}}:\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VC1530\_PLAY"{}};}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba42f2cb3022cffead0b3df46d83278c43}{MSG\_VC1530\_MOTOR}}:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VC1530\_MOTOR"{}};}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba5a3e8a30eb9567a51ef0be850c601964}{MSG\_VC1530\_COUNTER}}:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}VC1530\_COUNTER"{}};}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba5cf180e4d4b5f8e8f085f66e2a506ea3}{MSG\_CRT\_ATTACHED}}:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CRT\_ATTACHED"{}};}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba5f58705aebe08870b67400c6064200fc}{MSG\_KB\_AUTO\_PRESS}}:\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}KB\_AUTO\_PRESS"{}};}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baf29f487f3574e58367a2fc55f0a06c36}{MSG\_KB\_AUTO\_RELEASE}}:\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}KB\_AUTO\_RELEASE"{}};}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba8abf7e47fb0c036bbf491be50146319c}{MSG\_SHAKING}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SHAKING"{}};}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bac2b3d245154652064c5c8c03fd5d20cd}{MSG\_AUTO\_SNAPSHOT\_TAKEN}}:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}AUTO\_SNAPSHOT\_TAKEN"{}};}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25baefc990ae4f843de5b787d2c1e2943d1d}{MSG\_USER\_SNAPSHOT\_TAKEN}}:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}USER\_SNAPSHOT\_TAKEN"{}};}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba5d759e1721fc70f681ba9e99d1ac5791}{MSG\_SNAPSHOT\_RESTORED}}:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SNAPSHOT\_RESTORED"{}};}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba40515090334b8adcf080ab96216896f4}{MSG\_RECORDING\_STARTED}}:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RECORDING\_STARTED"{}};}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba2b6f215428af049e25a379996d8bdaa0}{MSG\_RECORDING\_STOPPED}}:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RECORDING\_STOPPED"{}};}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bac3e694f804f4e02dc8b2803c2636f8b5}{MSG\_RECORDING\_ABORTED}}:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}RECORDING\_ABORTED"{}};}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25ba652e19f4e085397b02f09e1734668ebb}{MSG\_DMA\_DEBUG}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DMA\_DEBUG"{}};}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25bafcde3912e1e5f1e8b0a48ebd9068934b}{MSG\_ALARM}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}ALARM"{}};}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00217\ \ \ \ \ \}}
+\DoxyCodeLine{00218\ \};}
+\DoxyCodeLine{00219\ \textcolor{preprocessor}{\#endif}}
 \DoxyCodeLine{00220\ }
-\DoxyCodeLine{00221\ \textcolor{comment}{//}}
-\DoxyCodeLine{00222\ \textcolor{comment}{//\ Structures}}
-\DoxyCodeLine{00223\ \textcolor{comment}{//}}
-\DoxyCodeLine{00224\ }
-\DoxyCodeLine{00225\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{\ u16\ pc;\ \}\ CpuMsg;}
-\DoxyCodeLine{00226\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{\ i16\ nr;\ i16\ value;\ i16\ volume;\ i16\ pan;\ \}\ DriveMsg;}
-\DoxyCodeLine{00227\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{\ isize\ line;\ i16\ delay;\ \}\ ScriptMsg;}
-\DoxyCodeLine{00228\ }
-\DoxyCodeLine{00229\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
-\DoxyCodeLine{00230\ \{}
-\DoxyCodeLine{00231\ \ \ \ \ \textcolor{comment}{//\ Header}}
-\DoxyCodeLine{00232\ \ \ \ \ MsgType\ type;}
-\DoxyCodeLine{00233\ }
-\DoxyCodeLine{00234\ \ \ \ \ \textcolor{comment}{//\ Payload}}
-\DoxyCodeLine{00235\ \ \ \ \ \textcolor{keyword}{union\ }\{}
-\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ i64\ value;}
-\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ CpuMsg\ cpu;}
-\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ DriveMsg\ drive;}
-\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ ScriptMsg\ script;}
-\DoxyCodeLine{00240\ \ \ \ \ \};}
-\DoxyCodeLine{00241\ \}}
-\DoxyCodeLine{00242\ Message;}
-\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00221\ }
+\DoxyCodeLine{00222\ \textcolor{comment}{//}}
+\DoxyCodeLine{00223\ \textcolor{comment}{//\ Structures}}
+\DoxyCodeLine{00224\ \textcolor{comment}{//}}
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00226\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{\ u16\ pc;\ \}\ CpuMsg;}
+\DoxyCodeLine{00227\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{\ i16\ nr;\ i16\ value;\ i16\ volume;\ i16\ pan;\ \}\ DriveMsg;}
+\DoxyCodeLine{00228\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{\ isize\ line;\ i16\ delay;\ \}\ ScriptMsg;}
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00230\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00231\ \{}
+\DoxyCodeLine{00232\ \ \ \ \ \textcolor{comment}{//\ Header}}
+\DoxyCodeLine{00233\ \ \ \ \ \mbox{\hyperlink{_msg_queue_types_8h_a757e1f41b6bd90e8fac8d083ab7ff25b}{MsgType}}\ type;}
+\DoxyCodeLine{00234\ }
+\DoxyCodeLine{00235\ \ \ \ \ \textcolor{comment}{//\ Payload}}
+\DoxyCodeLine{00236\ \ \ \ \ \textcolor{keyword}{union\ }\{}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ i64\ value;}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ CpuMsg\ cpu;}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ DriveMsg\ drive;}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ ScriptMsg\ script;}
+\DoxyCodeLine{00241\ \ \ \ \ \};}
+\DoxyCodeLine{00242\ \}}
+\DoxyCodeLine{00243\ Message;}
 \DoxyCodeLine{00244\ }
-\DoxyCodeLine{00245\ \textcolor{comment}{//}}
-\DoxyCodeLine{00246\ \textcolor{comment}{//\ Signatures}}
-\DoxyCodeLine{00247\ \textcolor{comment}{//}}
-\DoxyCodeLine{00248\ }
-\DoxyCodeLine{00249\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{void}\ Callback(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *,\ Message);}
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00246\ \textcolor{comment}{//}}
+\DoxyCodeLine{00247\ \textcolor{comment}{//\ Signatures}}
+\DoxyCodeLine{00248\ \textcolor{comment}{//}}
+\DoxyCodeLine{00249\ }
+\DoxyCodeLine{00250\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{void}\ Callback(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *,\ Message);}
 
 \end{DoxyCode}

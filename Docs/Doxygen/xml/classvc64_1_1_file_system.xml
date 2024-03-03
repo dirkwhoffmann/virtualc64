@@ -116,7 +116,7 @@
           <declname>type</declname>
         </param>
         <param>
-          <type>DOSType</type>
+          <type><ref refid="_f_s_types_8h_1aa499a0fc379c037c4be2ad9be44035e4" kindref="member">DOSType</ref></type>
           <declname>vType</declname>
         </param>
         <briefdescription>
@@ -274,7 +274,7 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.h" line="85" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/FileSystems/FileSystem.cpp" bodystart="209" bodyend="221"/>
       </memberdef>
       <memberdef kind="function" id="classvc64_1_1_file_system_1a16fbd91f71746e4bb44dfa605b9e26b7" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
-        <type>DOSType</type>
+        <type><ref refid="_f_s_types_8h_1aa499a0fc379c037c4be2ad9be44035e4" kindref="member">DOSType</ref></type>
         <definition>DOSType vc64::FileSystem::dos</definition>
         <argsstring>() const</argsstring>
         <name>dos</name>
@@ -1957,7 +1957,7 @@
           <declname>type</declname>
         </param>
         <param>
-          <type>DOSType</type>
+          <type><ref refid="_f_s_types_8h_1aa499a0fc379c037c4be2ad9be44035e4" kindref="member">DOSType</ref></type>
           <declname>vType</declname>
         </param>
         <briefdescription>

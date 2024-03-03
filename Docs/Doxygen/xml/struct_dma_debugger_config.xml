@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" line="60" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" bodystart="60" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" line="62" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" bodystart="62" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_dma_debugger_config_1aea50f29e45af712a999859ec4aaad751" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -29,7 +29,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" line="61" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" bodystart="61" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" line="63" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" bodystart="63" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_dma_debugger_config_1a9efde89ad08a03de4b43a94dab423de3" prot="public" static="no" mutable="no">
         <type>u32</type>
@@ -43,10 +43,10 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" line="62" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" bodystart="62" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" line="64" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" bodystart="64" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_dma_debugger_config_1a90a722197b75d1090104e60ccfed28ad" prot="public" static="no" mutable="no">
-        <type>DmaDisplayMode</type>
+        <type><ref refid="_dma_debugger_types_8h_1ae7fb354a0110238ce89d7875f10c79fb" kindref="member">DmaDisplayMode</ref></type>
         <definition>DmaDisplayMode DmaDebuggerConfig::dmaDisplayMode</definition>
         <argsstring></argsstring>
         <name>dmaDisplayMode</name>
@@ -57,7 +57,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" line="63" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" bodystart="63" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" line="65" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" bodystart="65" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_dma_debugger_config_1aee6cd5102f935d3160374e5ae2cf5bcd" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -71,7 +71,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" line="64" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" bodystart="64" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" line="66" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" bodystart="66" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_dma_debugger_config_1a08e5bfab9590b73c5d370455c0ddfd2c" prot="public" static="no" mutable="no">
         <type>u16</type>
@@ -85,7 +85,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" line="67" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" bodystart="67" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" line="69" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" bodystart="69" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_dma_debugger_config_1aec36517a8b4d49af14f4dd8a576cd914" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -99,14 +99,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" line="68" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" bodystart="68" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" line="70" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" bodystart="70" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" line="57" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" bodystart="58" bodyend="69"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" line="59" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/VICII/DmaDebuggerTypes.h" bodystart="60" bodyend="71"/>
     <listofallmembers>
       <member refid="struct_dma_debugger_config_1a08e5bfab9590b73c5d370455c0ddfd2c" prot="public" virt="non-virtual"><scope>DmaDebuggerConfig</scope><name>cutLayers</name></member>
       <member refid="struct_dma_debugger_config_1aec36517a8b4d49af14f4dd8a576cd914" prot="public" virt="non-virtual"><scope>DmaDebuggerConfig</scope><name>cutOpacity</name></member>

@@ -9,6 +9,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -19,9 +20,10 @@
 // Enumerations
 //
 
+/// Datasette model
 enum_long(DATASETTE_MODEL)
 {
-    DATASETTE_C1530
+    DATASETTE_C1530     ///< Standard datasette (Commodore)
 };
 typedef DATASETTE_MODEL DatasetteModel;
 

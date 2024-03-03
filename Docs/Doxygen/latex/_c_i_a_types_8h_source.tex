@@ -1,6 +1,6 @@
 \doxysection{CIATypes.\+h}
 \hypertarget{_c_i_a_types_8h_source}{}\label{_c_i_a_types_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h@{/Users/hoff/Retro/virtualc64/Emulator/Components/CIA/CIATypes.h}}
-
+\mbox{\hyperlink{_c_i_a_types_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
 \DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
@@ -13,151 +13,151 @@
 \DoxyCodeLine{00009\ \textcolor{comment}{//}}
 \DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
 \DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00012\ }
-\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
-\DoxyCodeLine{00014\ }
-\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}Aliases.h"{}}}
-\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Reflection.h"{}}}
-\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}TODTypes.h"{}}}
-\DoxyCodeLine{00018\ }
-\DoxyCodeLine{00019\ enum\_long(CIAREV)}
-\DoxyCodeLine{00020\ \{}
-\DoxyCodeLine{00021\ \ \ \ \ MOS\_6526,}
-\DoxyCodeLine{00022\ \ \ \ \ MOS\_8521}
-\DoxyCodeLine{00023\ \};}
-\DoxyCodeLine{00024\ \textcolor{keyword}{typedef}\ CIAREV\ CIARevision;}
-\DoxyCodeLine{00025\ }
-\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
-\DoxyCodeLine{00027\ \textcolor{keyword}{struct\ }CIARevisionEnum\ :\ util::Reflection<CIARevisionEnum,\ CIARevision>\ \{}
-\DoxyCodeLine{00028\ \ \ \ \ }
-\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
-\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ MOS\_8521;}
-\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
-\DoxyCodeLine{00032\ }
-\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};\ \}}
-\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(CIARevision\ value)}
-\DoxyCodeLine{00035\ \ \ \ \ \{}
-\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
-\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MOS\_6526:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}MOS\_6526"{}};}
-\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MOS\_8521:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}MOS\_8521"{}};}
-\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}"{}};}
-\DoxyCodeLine{00042\ \ \ \ \ \}}
-\DoxyCodeLine{00043\ \};}
-\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00045\ }
-\DoxyCodeLine{00046\ enum\_long(CIAREG)}
-\DoxyCodeLine{00047\ \{}
-\DoxyCodeLine{00048\ \ \ \ \ CIAREG\_PRA,}
-\DoxyCodeLine{00049\ \ \ \ \ CIAREG\_PRB,}
-\DoxyCodeLine{00050\ \ \ \ \ CIAREG\_DDRA,}
-\DoxyCodeLine{00051\ \ \ \ \ CIAREG\_DDRB,}
-\DoxyCodeLine{00052\ \ \ \ \ CIAREG\_TALO,}
-\DoxyCodeLine{00053\ \ \ \ \ CIAREG\_TAHI,}
-\DoxyCodeLine{00054\ \ \ \ \ CIAREG\_TBLO,}
-\DoxyCodeLine{00055\ \ \ \ \ CIAREG\_TBHI,}
-\DoxyCodeLine{00056\ \ \ \ \ CIAREG\_TODTHS,}
-\DoxyCodeLine{00057\ \ \ \ \ CIAREG\_TODSEC,}
-\DoxyCodeLine{00058\ \ \ \ \ CIAREG\_TODMIN,}
-\DoxyCodeLine{00059\ \ \ \ \ CIAREG\_TODHR,}
-\DoxyCodeLine{00060\ \ \ \ \ CIAREG\_SDR,}
-\DoxyCodeLine{00061\ \ \ \ \ CIAREG\_ICR,}
-\DoxyCodeLine{00062\ \ \ \ \ CIAREG\_CRA,}
-\DoxyCodeLine{00063\ \ \ \ \ CIAREG\_CRB}
-\DoxyCodeLine{00064\ \};}
-\DoxyCodeLine{00065\ \textcolor{keyword}{typedef}\ CIAREG\ CIAReg;}
-\DoxyCodeLine{00066\ }
-\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
-\DoxyCodeLine{00068\ \textcolor{keyword}{struct\ }CIARegEnum\ :\ util::Reflection<CIARegEnum,\ CIAReg>\ \{}
-\DoxyCodeLine{00069\ }
-\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
-\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ CIAREG\_CRB;}
-\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
-\DoxyCodeLine{00073\ \ \ \ \ }
-\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CIAREG"{}};\ \}}
-\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(CIAReg\ value)}
-\DoxyCodeLine{00076\ \ \ \ \ \{}
-\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
-\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_PRA:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PRA"{}};}
-\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_PRB:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PRB"{}};}
-\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_DDRA:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DDRA"{}};}
-\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_DDRB:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DDRB"{}};}
-\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_TALO:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TALO"{}};}
-\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_TAHI:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TAHI"{}};}
-\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_TBLO:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TBLO"{}};}
-\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_TBHI:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TBHI"{}};}
-\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_TODTHS:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TODTHS"{}};}
-\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_TODSEC:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TODSEC"{}};}
-\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_TODMIN:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TODMIN"{}};}
-\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_TODHR:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TODHR"{}};}
-\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_SDR:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SDR"{}};}
-\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_ICR:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}ICR"{}};}
-\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_CRA:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CRA"{}};}
-\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_CRB:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CRB"{}};}
-\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
-\DoxyCodeLine{00097\ \ \ \ \ \}}
-\DoxyCodeLine{00098\ \};}
-\DoxyCodeLine{00099\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00100\ }
-\DoxyCodeLine{00101\ }
-\DoxyCodeLine{00102\ \textcolor{comment}{//}}
-\DoxyCodeLine{00103\ \textcolor{comment}{//\ Structures}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Aliases.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}Reflection.h"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}TODTypes.h"{}}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00021\ enum\_long(\mbox{\hyperlink{_c_i_a_types_8h_ae9e8ff692b14e7f0e068e20a76769a87}{CIAREV}})}
+\DoxyCodeLine{00022\ \{}
+\DoxyCodeLine{00023\ \ \ \ \ MOS\_6526,}
+\DoxyCodeLine{00024\ \ \ \ \ MOS\_8521}
+\DoxyCodeLine{00025\ \};}
+\DoxyCodeLine{00026\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{_c_i_a_types_8h_ae9e8ff692b14e7f0e068e20a76769a87}{CIAREV}}\ \mbox{\hyperlink{_c_i_a_types_8h_ae9e8ff692b14e7f0e068e20a76769a87}{CIARevision}};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00029\ \textcolor{keyword}{struct\ }CIARevisionEnum\ :\ util::Reflection<CIARevisionEnum,\ CIARevision>\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ MOS\_8521;}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};\ \}}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(\mbox{\hyperlink{_c_i_a_types_8h_ae9e8ff692b14e7f0e068e20a76769a87}{CIARevision}}\ value)}
+\DoxyCodeLine{00037\ \ \ \ \ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MOS\_6526:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}MOS\_6526"{}};}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ MOS\_8521:\ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}MOS\_8521"{}};}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00044\ \ \ \ \ \}}
+\DoxyCodeLine{00045\ \};}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ enum\_long(CIAREG)}
+\DoxyCodeLine{00049\ \{}
+\DoxyCodeLine{00050\ \ \ \ \ CIAREG\_PRA,}
+\DoxyCodeLine{00051\ \ \ \ \ CIAREG\_PRB,}
+\DoxyCodeLine{00052\ \ \ \ \ CIAREG\_DDRA,}
+\DoxyCodeLine{00053\ \ \ \ \ CIAREG\_DDRB,}
+\DoxyCodeLine{00054\ \ \ \ \ CIAREG\_TALO,}
+\DoxyCodeLine{00055\ \ \ \ \ CIAREG\_TAHI,}
+\DoxyCodeLine{00056\ \ \ \ \ CIAREG\_TBLO,}
+\DoxyCodeLine{00057\ \ \ \ \ CIAREG\_TBHI,}
+\DoxyCodeLine{00058\ \ \ \ \ CIAREG\_TODTHS,}
+\DoxyCodeLine{00059\ \ \ \ \ CIAREG\_TODSEC,}
+\DoxyCodeLine{00060\ \ \ \ \ CIAREG\_TODMIN,}
+\DoxyCodeLine{00061\ \ \ \ \ CIAREG\_TODHR,}
+\DoxyCodeLine{00062\ \ \ \ \ CIAREG\_SDR,}
+\DoxyCodeLine{00063\ \ \ \ \ CIAREG\_ICR,}
+\DoxyCodeLine{00064\ \ \ \ \ CIAREG\_CRA,}
+\DoxyCodeLine{00065\ \ \ \ \ CIAREG\_CRB}
+\DoxyCodeLine{00066\ \};}
+\DoxyCodeLine{00067\ \textcolor{keyword}{typedef}\ CIAREG\ CIAReg;}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00070\ \textcolor{keyword}{struct\ }CIARegEnum\ :\ util::Reflection<CIARegEnum,\ CIAReg>\ \{}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ minVal\ =\ 0;}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{long}\ maxVal\ =\ CIAREG\_CRB;}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ isValid(\textcolor{keyword}{auto}\ value)\ \{\ \textcolor{keywordflow}{return}\ value\ >=\ minVal\ \&\&\ value\ <=\ maxVal;\ \}}
+\DoxyCodeLine{00075\ \ \ \ \ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *prefix()\ \{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CIAREG"{}};\ \}}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key(CIAReg\ value)}
+\DoxyCodeLine{00078\ \ \ \ \ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (value)\ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_PRA:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PRA"{}};}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_PRB:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}PRB"{}};}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_DDRA:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DDRA"{}};}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_DDRB:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}DDRB"{}};}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_TALO:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TALO"{}};}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_TAHI:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TAHI"{}};}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_TBLO:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TBLO"{}};}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_TBHI:\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TBHI"{}};}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_TODTHS:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TODTHS"{}};}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_TODSEC:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TODSEC"{}};}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_TODMIN:\ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TODMIN"{}};}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_TODHR:\ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}TODHR"{}};}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_SDR:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}SDR"{}};}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_ICR:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}ICR"{}};}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_CRA:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CRA"{}};}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ CIAREG\_CRB:\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}CRB"{}};}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00099\ \ \ \ \ \}}
+\DoxyCodeLine{00100\ \};}
+\DoxyCodeLine{00101\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ }
 \DoxyCodeLine{00104\ \textcolor{comment}{//}}
-\DoxyCodeLine{00105\ }
-\DoxyCodeLine{00106\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
-\DoxyCodeLine{00107\ \{}
-\DoxyCodeLine{00108\ \ \ \ \ CIARevision\ revision;}
-\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{bool}\ timerBBug;}
-\DoxyCodeLine{00110\ \}}
-\DoxyCodeLine{00111\ CIAConfig;}
-\DoxyCodeLine{00112\ }
-\DoxyCodeLine{00113\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
-\DoxyCodeLine{00114\ \{}
-\DoxyCodeLine{00115\ \ \ \ \ u8\ port;}
-\DoxyCodeLine{00116\ \ \ \ \ u8\ reg;}
-\DoxyCodeLine{00117\ \ \ \ \ u8\ dir;}
-\DoxyCodeLine{00118\ \}}
-\DoxyCodeLine{00119\ CIAPortInfo;}
-\DoxyCodeLine{00120\ }
-\DoxyCodeLine{00121\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
-\DoxyCodeLine{00122\ \{}
-\DoxyCodeLine{00123\ \ \ \ \ u16\ count;}
-\DoxyCodeLine{00124\ \ \ \ \ u16\ latch;}
-\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{bool}\ running;}
-\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordtype}{bool}\ toggle;}
-\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{bool}\ pbout;}
-\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordtype}{bool}\ oneShot;}
-\DoxyCodeLine{00129\ \}}
-\DoxyCodeLine{00130\ CIATimerInfo;}
-\DoxyCodeLine{00131\ }
-\DoxyCodeLine{00132\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
-\DoxyCodeLine{00133\ \{}
-\DoxyCodeLine{00134\ \ \ \ \ CIAPortInfo\ portA;}
-\DoxyCodeLine{00135\ \ \ \ \ CIAPortInfo\ portB;}
-\DoxyCodeLine{00136\ }
-\DoxyCodeLine{00137\ \ \ \ \ CIATimerInfo\ timerA;}
-\DoxyCodeLine{00138\ \ \ \ \ CIATimerInfo\ timerB;}
-\DoxyCodeLine{00139\ }
-\DoxyCodeLine{00140\ \ \ \ \ u8\ sdr;}
-\DoxyCodeLine{00141\ \ \ \ \ u8\ ssr;}
-\DoxyCodeLine{00142\ \ \ \ \ u8\ icr;}
-\DoxyCodeLine{00143\ \ \ \ \ u8\ imr;}
-\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keywordtype}{bool}\ intLine;}
-\DoxyCodeLine{00145\ \ \ \ \ }
-\DoxyCodeLine{00146\ \ \ \ \ TODInfo\ tod;}
-\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordtype}{bool}\ todIntEnable;\ \ \ \ }
-\DoxyCodeLine{00148\ \}}
-\DoxyCodeLine{00149\ CIAInfo;}
-\DoxyCodeLine{00150\ }
-\DoxyCodeLine{00151\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
-\DoxyCodeLine{00152\ \{}
-\DoxyCodeLine{00153\ \ \ \ \ Cycle\ idleSince;}
-\DoxyCodeLine{00154\ \ \ \ \ Cycle\ idleTotal;}
-\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordtype}{double}\ idlePercentage;}
-\DoxyCodeLine{00156\ \}}
-\DoxyCodeLine{00157\ CIAStats;}
+\DoxyCodeLine{00105\ \textcolor{comment}{//\ Structures}}
+\DoxyCodeLine{00106\ \textcolor{comment}{//}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00109\ \{}
+\DoxyCodeLine{00110\ \ \ \ \ \mbox{\hyperlink{_c_i_a_types_8h_ae9e8ff692b14e7f0e068e20a76769a87}{CIARevision}}\ revision;}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{bool}\ timerBBug;}
+\DoxyCodeLine{00112\ \}}
+\DoxyCodeLine{00113\ CIAConfig;}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00116\ \{}
+\DoxyCodeLine{00117\ \ \ \ \ u8\ port;}
+\DoxyCodeLine{00118\ \ \ \ \ u8\ reg;}
+\DoxyCodeLine{00119\ \ \ \ \ u8\ dir;}
+\DoxyCodeLine{00120\ \}}
+\DoxyCodeLine{00121\ CIAPortInfo;}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00124\ \{}
+\DoxyCodeLine{00125\ \ \ \ \ u16\ count;}
+\DoxyCodeLine{00126\ \ \ \ \ u16\ latch;}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{bool}\ running;}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordtype}{bool}\ toggle;}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordtype}{bool}\ pbout;}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{bool}\ oneShot;}
+\DoxyCodeLine{00131\ \}}
+\DoxyCodeLine{00132\ CIATimerInfo;}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00135\ \{}
+\DoxyCodeLine{00136\ \ \ \ \ CIAPortInfo\ portA;}
+\DoxyCodeLine{00137\ \ \ \ \ CIAPortInfo\ portB;}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ \ \ CIATimerInfo\ timerA;}
+\DoxyCodeLine{00140\ \ \ \ \ CIATimerInfo\ timerB;}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \ u8\ sdr;}
+\DoxyCodeLine{00143\ \ \ \ \ u8\ ssr;}
+\DoxyCodeLine{00144\ \ \ \ \ u8\ icr;}
+\DoxyCodeLine{00145\ \ \ \ \ u8\ imr;}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordtype}{bool}\ intLine;}
+\DoxyCodeLine{00147\ \ \ \ \ }
+\DoxyCodeLine{00148\ \ \ \ \ TODInfo\ tod;}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordtype}{bool}\ todIntEnable;\ \ \ \ }
+\DoxyCodeLine{00150\ \}}
+\DoxyCodeLine{00151\ CIAInfo;}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00154\ \{}
+\DoxyCodeLine{00155\ \ \ \ \ Cycle\ idleSince;}
+\DoxyCodeLine{00156\ \ \ \ \ Cycle\ idleTotal;}
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordtype}{double}\ idlePercentage;}
+\DoxyCodeLine{00158\ \}}
+\DoxyCodeLine{00159\ CIAStats;}
 
 \end{DoxyCode}

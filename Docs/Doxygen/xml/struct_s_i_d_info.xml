@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="177" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="177" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="180" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="180" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_s_i_d_info_1a1daef7fa5865cd17648317df3167142d" prot="public" static="no" mutable="no">
         <type>u16</type>
@@ -29,7 +29,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="178" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="178" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="181" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="181" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_s_i_d_info_1af2910b0f9b1885e59f573cde5e57118f" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -43,7 +43,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="179" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="179" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="182" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="182" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_s_i_d_info_1a039f0ac1817a921b5d4aa6b3749aea46" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -57,7 +57,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="180" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="180" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="183" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="183" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_s_i_d_info_1a5bd8522dd755b6e254a2e7de52e6744b" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -71,7 +71,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="181" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="181" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="184" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="184" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_s_i_d_info_1af3a8816ff709a0f33644eca1cecc6dfb" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -85,7 +85,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="182" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="182" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="185" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="185" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_s_i_d_info_1a2624ec198a922ba9d881b629c87a3f38" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -99,7 +99,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="183" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="183" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="186" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="186" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_s_i_d_info_1a2ae898e223c3532ffebef0dd846c0e84" prot="public" static="no" mutable="no">
         <type>u8</type>
@@ -113,14 +113,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="184" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="184" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="187" column="8" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="187" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="175" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="176" bodyend="185"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" line="178" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/SIDTypes.h" bodystart="179" bodyend="188"/>
     <listofallmembers>
       <member refid="struct_s_i_d_info_1a1daef7fa5865cd17648317df3167142d" prot="public" virt="non-virtual"><scope>SIDInfo</scope><name>filterCutoff</name></member>
       <member refid="struct_s_i_d_info_1af3a8816ff709a0f33644eca1cecc6dfb" prot="public" virt="non-virtual"><scope>SIDInfo</scope><name>filterEnableBits</name></member>

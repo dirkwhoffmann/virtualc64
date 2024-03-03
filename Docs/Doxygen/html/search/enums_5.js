@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['palette_0',['PALETTE',['../_v_i_c_i_i_types_8h.html#af59eb4c57176022b657e35f92a7d01c9',1,'VICIITypes.h']]]
+  ['opt_0',['OPT',['../_option_types_8h.html#a273e435dabd576e6dcff3f18024d1fa8',1,'OptionTypes.h']]]
 ];

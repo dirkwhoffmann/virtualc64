@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="283" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="283" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="284" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="284" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_cartridge_info_1a794e382f0b54c81b05321ff821ba5b39" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -29,7 +29,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="284" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="284" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="285" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="285" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_cartridge_info_1ac0a36b202a5ee04a43323c6455b2a6f1" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -43,7 +43,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="285" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="285" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="286" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="286" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_cartridge_info_1a70d18f40a1f11e5a9249a5c9a9b557fc" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -57,7 +57,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="286" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="286" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="287" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="287" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_cartridge_info_1a59347c3e5a3e6006ef738d5692175318" prot="public" static="no" mutable="no">
         <type>isize</type>
@@ -71,7 +71,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="287" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="287" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="288" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="288" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_cartridge_info_1a075438f9ff8926266dd56544fad800e4" prot="public" static="no" mutable="no">
         <type>isize</type>
@@ -85,7 +85,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="288" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="288" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="289" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="289" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="struct_cartridge_info_1a1d592d1975968c195c5e4cb8ccf3bf09" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -99,14 +99,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="289" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="289" bodyend="-1"/>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="290" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="290" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="281" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="282" bodyend="290"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" line="282" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Cartridges/CartridgeTypes.h" bodystart="283" bodyend="291"/>
     <listofallmembers>
       <member refid="struct_cartridge_info_1a70d18f40a1f11e5a9249a5c9a9b557fc" prot="public" virt="non-virtual"><scope>CartridgeInfo</scope><name>exromLineInCrtFile</name></member>
       <member refid="struct_cartridge_info_1ac0a36b202a5ee04a43323c6455b2a6f1" prot="public" virt="non-virtual"><scope>CartridgeInfo</scope><name>gameLineInCrtFile</name></member>
