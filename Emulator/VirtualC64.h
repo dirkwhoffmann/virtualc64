@@ -36,10 +36,12 @@ class VirtualC64 : vc64::Emulator {
 
 public:
 
-    /// Returns a version string for this release.
+    /** @brief  Returns a version string for this release.
+     */
     static string version();
 
-    /// Returns a build-number string for this release.
+    /** @brief  eturns a build-number string for this release.
+     */
     static string build();
 
 
@@ -52,144 +54,297 @@ public:
     VirtualC64();
     ~VirtualC64();
 
-    /// A reference to the user default storage.
+    /// @brief  A reference to the user default storage.
     static const Defaults &defaults;
 
-    ///
-    /// @name Analyzing
+    /// @name Analyzing the emulator
     /// @{
 
-    /// Returns the current configuration
+    /** @brief  Returns the component's current configuration.
+     */
     const EmulatorConfig &getConfig() const { return Emulator::getConfig(); }
 
-    /// Returns the current state
+    /** @brief  Returns the component's current state.
+     */
     const EmulatorInfo &getState() const { return Emulator::getState(); }
 
-    /// Returns some statistical information
+    /** @brief  Returns statistical information about the components.
+     */
     const EmulatorStats &getStats() const { return Emulator::getStats(); }
+
+    /// @}
+    /// @name Querying the emulator state
+    /// @{
+
+    /** @brief  Returns true iff the emulator if the emulator is powered on.
+     */
+    bool isPoweredOn() { return Emulator::isPoweredOn(); }
+
+    /** @brief  Returns true iff the emulator if the emulator is powered off.
+     */
+    bool isPoweredOff() { return Emulator::isPoweredOff(); }
+
+    /** @brief  Returns true iff the emulator is in paused state.
+     */
+    bool isPaused() { return Emulator::isPaused(); }
+
+    /** @brief  Returns true iff the emulator is running.
+     */
+    bool isRunning() { return Emulator::isRunning(); }
+
+    /** @brief  Returns true iff the emulator has been suspended.
+     */
+    bool isSuspended() { return Emulator::isSuspended(); }
+
+    /** @brief  Returns true iff the emulator has shut down.
+     */
+    bool isHalted() { return Emulator::isHalted(); }
+
+    /** @brief  Returns true iff warp mode is active.
+     */
+    bool isWarping() { return Emulator::isWarping(); }
+
+    /** @brief  Returns true iff the emulator runs in track mode.
+     */
+    bool isTracking() { return Emulator::isTracking(); }
 
 
     /// @}
     /// @name Controlling the emulator state
     /// @{
 
-    /// Switches the emulator on
+    /** @brief  Switches the emulator on
+     *
+     *  Powering on the emulator changes the interal state to #STATE\_PAUSED,
+     *  the same state that is entered when the user hits the pause button.
+     *  Calling this function on an already powered-on emulator has no effect.
+     *  */
     void powerOn() { Emulator::Thread::powerOn(); }
 
-    /// Switches the emulator off
+    /** @brief  Switches the emulator off
+     *
+     *  Powering off the emulator changes the interal state of #STATE\_OFF.
+     *  Calling this function on an already powered-off emulator has no effect.
+     */
     void powerOff() { Emulator::Thread::powerOff(); }
 
-    /// Starts emulation
+    /** @brief  Starts emulation
+     *
+     *  Running the emulator changes the internal state to #STATE\_RUNNING,
+     *  which is the normal operation state. Frames are computed at normal
+     *  pace, if warp mode is switched off, or as fast as possible, if warp
+     *  mode is switched on. If this function is called for a powere-off
+     *  emulator, an implicit call to powerOn() will be performed.
+     */
     void run() { Emulator::Thread::run(); }
 
-    /// Pauses emulation
+    /** @brief   Pauses emulation
+     *
+     * Pausing the emulator changes the interal state from #STATE\_RUNNING 
+     * to #STATE\_PAUSED after completing the curent frame. The emulator
+     * enteres a frozes state where no more frames are computed.
+     */
     void pause() { Emulator::Thread::pause(); }
 
-    /*! Terminates the emulator thread
-     *  This function puts the emulator into halt state and terminates the
-     *  emulator thread. Entering this state is part of the shutdown procedure.
+    /** @brief   Terminates the emulator thread
+     *
+     *  Halting the emulator changes the internal state to #STATE\_HALTED.
+     *  This state is part of the shutdown procedure and never entered during
+     *  normal operation.
      */
     void halt() { Emulator::Thread::halt(); }
 
-    /// Toggles between pause and running
+    /** @brief   Runs or pauses the emulator
+     *
+     *  The function calls pause() if the emulator is running, and run()
+     *  otherwise.
+     */
     void stopAndGo() { Emulator::stopAndGo(); }
 
-    /// Suspends the emulator thread
+    /** @brief   Suspends the emulator thread
+     *
+     *  See the \ref vc64::Suspendable "Suspendable" class for a detailes 
+     *  description of the suspend-resume machanism.
+     */
     void suspend() { Emulator::suspend(); }
 
-    /// Resumes the emulator thread
+    /** @brief   Suspends the emulator thread
+     *
+     *  See the \ref vc64::Suspendable "Suspendable" class for a detailes
+     *  description of the suspend-resume machanism.
+     */
     void resume() { Emulator::resume(); }
 
-    /// Returns true iff the emulator if the emulator is powered on
-    bool isPoweredOn() { return Emulator::isPoweredOn(); }
-
-    /// Returns true iff the emulator if the emulator is powered on
-    bool isPoweredOff() { return Emulator::isPoweredOff(); }
-
-    /// Returns true iff the emulator is in pause state
-    bool isPaused() { return Emulator::isPaused(); }
-
-    /// Returns true iff the emulator is running
-    bool isRunning() { return Emulator::isRunning(); }
-
-    /// Returns true iff the emulator has been suspended
-    bool isSuspended() { return Emulator::isSuspended(); }
-
-    /// Returns true iff the emulator has shut down
-    bool isHalted() { return Emulator::isHalted(); }
-
-    /// Returns true iff warp mode is active
-    bool isWarping() { return Emulator::isWarping(); }
-
-    /// Returns true iff the emulator runs in track mode
-    bool isTracking() { return Emulator::isTracking(); }
-
-    /// Enables warp mode
+    /** @brief  Enables warp mode.
+     */
     void warpOn(isize source = 0) { Emulator::warpOn(source); }
 
-    /// Disables warp mode
+    /** @brief  Disables warp mode.
+     */
     void warpOff(isize source = 0) { Emulator::warpOff(source); }
 
-    /// Enables track mode
+    /** @brief  Enables track mode.
+     */
     void trackOn(isize source = 0) { Emulator::trackOn(source); }
 
-    /// Disables track mode
+    /** @brief  Disables track mode.
+     */
     void trackOff(isize source = 0) { Emulator::trackOff(source); }
 
-    /// Steps a single instruction
+
+    /// @}
+    /// @name Single-stepping
+    /// @{
+
+    /** @brief  Steps a single instruction
+     *
+     *  If the emulator is paused, calling this functions steps the CPU for
+     *  a single instruction. Otherwise, calling this function
+     *  has no effect. The CPU debugger utilizes this function to implement single
+     *  stepping.
+     */
     void stepInto();
 
-    /// Steps to the next instruction
+    /** @brief  Steps over the current instruction
+     *
+     *  If the emulator is paused, calling this functions runs the emulator
+     *  until the instruction following the current
+     *  instruction has been reached. Otherwise, calling this function
+     *  has no effect. The CPU debugger utilizes this function to implement single
+     *  stepping.
+     *
+     *  stepOver() acts like stepInto() except for branching instructions.
+     *  For instance, if the current instruction is a `JSR` instruction, the
+     *  subroutine will be executed in a single chunk.
+     *
+     *  @note If the current instruction is a branch instruction which never
+     *  returns, the emulator will remain in running state. Calling this
+     *  function will then be equivalent to a calling run(), with the exception
+     *  of a small runtime overhead since the emulator will check after the
+     *  each instruction if the program counter has reached it's target
+     *  location.
+     */
     void stepOver();
 
-    /** Sends a wakeup signal to the emulator thread.
-     *  Some thread mode require the GUI to send a wakeup signal. Once this
-     *  signal is received, the next frame is computed.
+
+    /// @}
+    /// @name Synchronizing the emulator thread
+    /// @{
+
+    /** @brief  Sends a wakeup signal to the emulator thread.
+     *
+     *  To compute frames at the proper pace, the emulator core expects the GUI
+     *  to send a wakeup signal on each VSYNC pulse. Once this signal is
+     *  received, the emulator thread starts computing all missing frames. To
+     *  minimize jitter, the wakeup signal should be sent right after the
+     *  current texture has been handed over to the GPU.
      */
     void wakeUp() { vc64::Emulator::Thread::wakeUp(); }
 
 
     /// @}
-    /// @name Processing audio and video
+    /// @name Accessing video data
     /// @{
 
-    /** Returns a pointer to the most recent stable texture
+    /** @brief  Returns a pointer to the most recent stable texture
+      *
+      * The texture size vc64::TEX_WIDTH x vc64::TEX_HEIGHT texels.
+      * Each texel is 8 bit.
      */
     u32 *getTexture() const { return Emulator::getTexture(); }
 
     /** Returns a pointer to a noise pattern
      *
      *  The pattern resembles the white noise produced by older analog TVs when
-     *  TV signal was present. In the Mac app, this pattern is shown when the
-     *  emulator is powered off. The returned pattern is pseudo-random and
+     *  TV signal was present. The returned pattern is pseudo-random and
      *  changes with each call of this function.
+     *
+     *  @note The Mac app displays this pattern when the emulator is powered on.
+     *  After powering on, the emulator texture is displayed.
      */
     u32 *getNoise() const { return Emulator::getNoise(); }
 
 
-    //
-    // Configuring
-    //
+    /// @}
+    /// @name Configuring the emulator
+    /// @{
 
-    // Launches the emulator thread
+    /** @brief  Launches the emulator thread.
+     *
+     *  This function must be called in the initialization procedure of the
+     *  emulator. It launches the emulator thread and registers a callback
+     *  function to the message queue. The callback function is a message
+     *  receiver processing all incoming messages from the emulator.
+     *
+     *  @param  listener    An arbitrary pointer which will be passed to the
+     *  registered callback function as first argument. You can use the argument
+     *  to pass the address of an object into the callback function. Inside the
+     *  callback you can utilize the pointer to invoke a message processing
+     *  function on that object.
+     *  @param  func        The callback function.
+     */
     void launch(const void *listener, Callback *func);
 
-    // Queries an option
+    /** @brief  Queries a configuration option.
+     *
+     *  This is the main function to query a configuration option.
+     *
+     *  @param option   The option to query
+     *
+     *  @note Some options require an additional parameter to uniquely
+     *  determine the configured component. For those options, this function
+     *  must not be called.
+     */
     i64 get(Option option) const;
+
+    /** @brief  Queries a configuration option.
+     *
+     *  This is the main function to query a configuration option.
+     *
+     *  @param option   The option to query
+     *  @param id       The component to query
+     *
+     *  @note This function must only be called for those options that require
+     *  an additional parameter to uniquely determine the configured component.
+     */
     i64 get(Option option, long id) const;
 
-    // Configures the emulator to match a specific C64 model
+    /** Configures the emulator to match a specific C64 model
+     *
+     *  @param model    The C64 model to emulate
+     */
     void set(C64Model model);
 
-    // Sets an option
+    /** @brief  Configures a component.
+     *
+     *  This is the main function to set an configuration option.
+     *
+     *  @param option   The option to set
+     *
+     *  @note If this function is called for an options that applies to multiple
+     *  components, all components are configured with the specified value.
+     */
     void set(Option option, i64 value) throws;
+
+    /** @brief  Configures a component.
+     *
+     *  This is the main function to set an configuration option.
+     *
+     *  @param option   The option to set
+     *  @param id       The component to configure
+     *
+     *  @note This function must only be called for those options that require
+     *  an additional parameter to uniquely determine the configured component.
+     */
     void set(Option option, long id, i64 value) throws;
 
     
-    //
-    // Command queue
-    //
+    /// @}
+    /// @name Using the command queue
+    /// @{
 
+    /** @brief  Feeds a command into the command queue
+     */
     void put(const Cmd &cmd);
     void put(CmdType type, i64 payload = 0) { put(Cmd(type, payload)); }
     void put(CmdType type, KeyCmd payload)  { put(Cmd(type, payload)); }
@@ -197,18 +352,27 @@ public:
     void put(CmdType type, GamePadCmd payload)  { put(Cmd(type, payload)); }
     void put(CmdType type, TapeCmd payload)  { put(Cmd(type, payload)); }
     void put(CmdType type, AlarmCmd payload)  { put(Cmd(type, payload)); }
+    /// }
 
 
-    //
-    // C64
-    //
-
+    /** C64 API
+     */
     struct C64API : public API {
 
         using API::API;
 
-        // Performs a hard or soft reset
+        /** Performs a hard reset
+         *
+         *  A hard reset affects all components. The effect is similar to
+         *  switching power off and on.
+         */
         void hardReset();
+
+        /** Performs a hard reset
+         *
+         *  A hard reset affects all components. The effect is similar to
+         *  switching power off and on.
+         */
         void softReset();
 
         InspectionTarget getInspectionTarget() const;
@@ -237,19 +401,22 @@ public:
     } c64;
 
 
-    //
-    // Memory
-    //
-
+    /** Memory API
+     */
     struct MemoryAPI : API {
 
         using API::API;
 
-        // Returns the current configuration and state
+        /** @brief  Returns the component's current configuration.
+         */
         MemConfig getConfig() const;
+
+        /** @brief  Returns the component's current state.
+         */
         MemInfo getInfo() const;
 
-        // Returns a string representations for a portion of memory
+        /** @brief  Returns a string representations for a portion of memory.
+         */
         string memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const;
         string txtdump(u16 addr, isize num, MemoryType src) const;
 
@@ -393,24 +560,21 @@ public:
     } muxer;
 
 
-    //
-    // DMA Debugger
-    //
-
+    /** DMA Debugger API
+     */
     struct DmaDebuggerAPI : API {
 
         using API::API;
 
-        // Returns the current configuration
+        /** @brief  Returns the component's current configuration
+         */
         DmaDebuggerConfig getConfig() const;
 
     } dmaDebugger;
 
 
-    //
-    // Keyboard
-    //
-
+    /** Keyboard API
+     */
     struct KeyboardAPI : API {
 
         using API::API;
@@ -422,23 +586,57 @@ public:
     } keyboard;
 
 
-    //
-    // Mouse
-    //
-
+    /** Mouse API
+     */
     struct MouseAPI : API {
 
         Mouse &mouse;
         MouseAPI(Emulator &emu, Mouse& mouse) : API(emu), mouse(mouse) { }
 
+        /** Feeds a coordinate into the shake detector.
+         *
+         *  The shake detector keeps track of the transmitted coordinates and
+         *  scans for rapid movements caused by shaking the mouse.
+         *
+         *  @param x    Current horizontal mouse position.
+         *  @param y    Current vertical mouse position.
+         *  @return     true iff a shaking mouse has been detected.
+         */
         bool detectShakeXY(double x, double y);
+
+        /** Feeds a coordinate into the shake detector.
+         *
+         *  The shake detector keeps track of the transmitted coordinates and
+         *  scans for rapid movements caused by shaking the mouse.
+         *
+         *  @param dx   Current horizontal mouse position, relative to the
+         *              previous position.
+         *  @param dy   Current vertical mouse position, relative to the
+         *              previous position.
+         *  @return     true iff a shaking mouse has been detected.
+         */
         bool detectShakeDxDy(double dx, double dy);
 
-        // Emulates a mouse movement
+        /** Signals a mouse movement to the emulator.
+         *
+         *  @param x    Current horizontal mouse position.
+         *  @param y    Current vertical mouse position.
+         */
         void setXY(double x, double y);
+
+        /** Signals a mouse movement to the emulator.
+         *
+         *  @param dx   Current horizontal mouse position, relative to the
+         *              previous position.
+         *  @param dy   Current vertical mouse position, relative to the
+         *              previous position.
+         */
         void setDxDy(double dx, double dy);
 
-        // Triggers a gamepad event
+        /** Signals a mouse button to the emulator.
+         *
+         *  @param event The button event.
+         */
         void trigger(GamePadAction event);
     };
 

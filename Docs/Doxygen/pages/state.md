@@ -12,7 +12,7 @@ After lauching, the emulator runs as a single thread alongside the GUI. The thre
  - **Suspended:** The emulator is paused for a short period of time
  - **Halted:** The emulator is shutting down
  
- @image html state.pdf
+ @image html state.png
  
  The thread executes an infinite loop which periodically calls function vc64::Thread::execute. After each iteration, the thread is put to sleep to synchronize timing.
  

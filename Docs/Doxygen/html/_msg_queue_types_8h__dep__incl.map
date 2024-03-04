@@ -1,0 +1,18 @@
+<map id="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h" name="/Users/hoff/Retro/virtualc64/Emulator/Base/MsgQueueTypes.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="97,5,321,46"/>
+<area shape="rect" id="Node000002" href="$_msg_queue_8h_source.html" title=" " alt="" coords="49,94,239,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,60,161,95,156,92,183,57"/>
+<area shape="rect" id="Node000008" href="$_virtual_c64_types_8h.html" title=" " alt="" coords="224,183,413,223"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="231,58,309,181,304,184,227,60"/>
+<area shape="rect" id="Node000003" href="$_c64_8h_source.html" title=" " alt="" coords="5,183,200,223"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="130,150,114,183,109,181,126,148"/>
+<area shape="rect" id="Node000004" href="$_emulator_8h_source.html" title=" " alt="" coords="25,271,247,312"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="118,237,131,270,126,272,113,239"/>
+<area shape="rect" id="Node000005" href="$_virtual_c64_8h.html" title=" " alt="" coords="118,360,300,401"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="164,322,195,358,191,361,160,326"/>
+<area shape="rect" id="Node000006" href="$_headless_8h_source.html" title=" " alt="" coords="118,449,300,489"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="212,416,212,448,207,448,207,416"/>
+<area shape="rect" id="Node000007" href="$_headless_8cpp.html" title=" " alt="" coords="118,537,300,578"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="212,505,212,537,207,537,207,505"/>
+<area shape="poly" id="edge8_Node000008_Node000005" title=" " alt="" coords="304,238,261,313,227,361,222,358,256,311,299,236"/>
+</map>

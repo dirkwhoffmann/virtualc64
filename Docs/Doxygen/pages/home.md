@@ -1,5 +1,3 @@
-# Welcome
-
 Welcome to the official VirtualC64 documentation. Here you will find a detailed view of VirtualC64's public API. It summarizes the necesarry information for developers to incoorporate the emulation core in own projects. For more information about VirtualC64 plase visit the [official website](https://dirkwhoffmann.github.io/virtualc64/).
 
 \image html ad-vc.png width=400px

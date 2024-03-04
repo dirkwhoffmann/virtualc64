@@ -16,6 +16,7 @@
 
 namespace vc64 {
 
+/** Suspend-resume mechanism */
 class Suspendable {
 
 public:
@@ -23,7 +24,10 @@ public:
     Suspendable() { }
     virtual ~Suspendable() = default;
 
+    /** @brief  Suspends the thread */
     virtual void suspend() = 0;
+
+    /** @brief  Resumes the thread */
     virtual void resume() = 0;
 };
 

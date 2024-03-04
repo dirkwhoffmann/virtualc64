@@ -19,11 +19,30 @@
 
 namespace vc64 {
 
-/** User's defaults storage
+/** The user's defaults storage
  *
- *  The user's defaults storages saves all configuration settings that persist
- *  across launches of the application. In addition, it provides a default
- *  value for all configuration options.
+ *  The defaults storage manages all configuration settings that persist across
+ *  multiple application launches. It provides the following functionality:
+ *
+ *  - **Loading and saving the storage data**
+ *
+ *    You can persist the user's defaults storage in a file, a stream, or a
+ *    string stream.
+ *
+ *  - **Reading and writing key-value pairs**
+ *
+ *    The return value is read from the user's defaults storage for registered
+ *    keys. For unknown keys, an exception is thrown.
+ *
+ *  - **Registerung fallback values**
+ *
+ *    The fallback value is used for registered keys with no custom value set.
+ *
+ *    @note Setting a fallback value for an unknown key is permitted. In this
+ *    case, a new key is registered together with the provided default value.
+ *    The GUI utilizes this feature to register additional keys, such as keys
+ *    storing shader-relevant parameters that are irrelevant to the emulation
+ *    core.
  */
 class Defaults final : public CoreObject, public Dumpable {
 
@@ -53,8 +72,8 @@ private:
 
 
     ///
-    /// @name Loading and saving the key-value storage
     /// @{
+    /// @name Loading and saving the key-value storage
 
 public:
 
@@ -89,8 +108,8 @@ public:
 
 
     /// @}
-    /// @name Reading key-value pairs
     /// @{
+    /// @name Reading key-value pairs
 
 public:
 
@@ -130,8 +149,8 @@ public:
 
 
     /// @}
-    /// @name Writing key-value pairs
     /// @{
+    /// @name Writing key-value pairs
 
     /** @brief  Writes a key-value pair into the user storage.
      *  @param  key     The key, given as a string.
@@ -205,8 +224,8 @@ public:
 
 
     /// @}
-    /// @name Deleting key-value pairs
     /// @{
+    /// @name Deleting key-value pairs
 
     /** @brief  Deletes all key-value pairs.
      */
