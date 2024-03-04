@@ -570,6 +570,7 @@
 		50441A9F2B9495BE00102A4D /* header.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = header.html; sourceTree = "<group>"; };
 		50441AA02B9495BE00102A4D /* delete_me.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = delete_me.css; sourceTree = "<group>"; };
 		50441AA22B94CDE400102A4D /* headless.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = headless.md; sourceTree = "<group>"; };
+		50441AA32B9613DD00102A4D /* Media.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Media.h; sourceTree = "<group>"; };
 		5044A0392657A7A800C551C6 /* Recorder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Recorder.cpp; sourceTree = "<group>"; };
 		5044A03A2657A7A800C551C6 /* Recorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Recorder.h; sourceTree = "<group>"; };
 		5044C5D02931F94800F4A413 /* PeddleInit_cpp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleInit_cpp.h; sourceTree = "<group>"; };
@@ -1498,6 +1499,7 @@
 			isa = PBXGroup;
 			children = (
 				5078BEC8264D74AB00EDA161 /* CMakeLists.txt */,
+				50441AA32B9613DD00102A4D /* Media.h */,
 				50B1A61A25A20A8900201A2C /* FileTypes.h */,
 				5026118D259CACB60066E754 /* PETName.h */,
 				504C42CE24AF29AB00E69CAE /* AnyFile.h */,

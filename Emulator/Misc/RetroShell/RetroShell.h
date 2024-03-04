@@ -207,7 +207,7 @@ public:
 private:
 
     // Prints a textual description of an error in the console
-    void describe(const std::exception &exception, isize line = 0);
+    void describe(const std::exception &exception, isize line = 0, const string &cmd = "");
 
     // Prints help messages for a given command string
     void help(const string &command);

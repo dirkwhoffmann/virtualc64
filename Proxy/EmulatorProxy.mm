@@ -10,9 +10,7 @@
 #import "config.h"
 #import "EmulatorProxy.h"
 #import "VirtualC64.h"
-#import "C64Key.h"
 #import "VirtualC64-Swift.h"
-#import "Script.h"
 
 using namespace vc64;
 

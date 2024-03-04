@@ -13,7 +13,6 @@
 
 #include "config.h"
 #include "Headless.h"
-#include "Script.h"
 #include <filesystem>
 #include <chrono>
 
@@ -83,15 +82,10 @@ Headless::main(int argc, char *argv[])
     c64.launch(this, vc64::process);
 
     // Execute the script
-    barrier.lock();
     script.execute(c64);
+    barrier.lock();
 
-    while (!returnCode) {
-        
-        barrier.lock();
-    }
-
-    return *returnCode;
+    return returnCode;
 }
 
 #ifdef _WIN32
@@ -230,19 +224,19 @@ Headless::process(Message msg)
         case MSG_SCRIPT_DONE:
 
             returnCode = 0;
+            barrier.unlock();
             break;
 
         case MSG_SCRIPT_ABORT:
         case MSG_ABORT:
 
             returnCode = 1;
+            barrier.unlock();
             break;
             
         default:
             break;
     }
-
-    barrier.unlock();
 }
 
 }

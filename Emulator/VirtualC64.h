@@ -15,6 +15,7 @@
 
 #include "VirtualC64Types.h"
 #include "Emulator.h"
+#include "Media.h"
 
 /** Public API
  *

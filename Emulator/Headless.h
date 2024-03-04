@@ -15,21 +15,19 @@
 #include "VirtualC64.h"
 #include <map>
 
-using std::map;
-using std::vector;
-
 namespace vc64 {
 
 struct SyntaxError : public std::runtime_error {
     using runtime_error::runtime_error;
 };
 
+// The message listener
 void process(const void *listener, Message msg);
 
 class Headless {
 
     // Parsed command line arguments
-    map<string,string> keys;
+    std::map<string,string> keys;
 
     // The emulator instance
     VirtualC64 c64;
@@ -38,7 +36,7 @@ class Headless {
     util::Mutex barrier;
 
     // Return code
-    std::optional<int> returnCode;
+    int returnCode;
 
     
     //
@@ -80,11 +78,10 @@ static const char *testScript[] = {
 
     "# Self-test script for VirtualC64",
     "# ",
-    "# This script is executed in nightly-builts to check the integrity of ",
-    "# the compiled application. It runs several shell commands to check if ",
-    "# anything breaks.",
+    "# This script checks the integrity of application. It runs several shell",
+    "# commands to check if anything breaks.",
     "# ",
-    "# Dirk W. Hoffmann, 2023",
+    "# Dirk W. Hoffmann, 2024",
 
     "",
     "help",
@@ -92,26 +89,16 @@ static const char *testScript[] = {
     "joshua",       // Test a hidden command
     "try joshu",    // Catch an error with 'try'
 
-    /*
-     "",
-     "regression setup PAL",
-     "regression setup PAL_II",
-     "regression setup PAL_OLD",
-     "regression setup NTSC",
-     "regression setup NTSC_II",
-     "regression setup NTSC_OLD",
-     */
-
     "",
     "c64",
     "c64 defaults",
-    "c64 set warpboot 50",
-    "c64 set warpmode WARP_ALWAYS",
-    "c64 set warpmode WARP_AUTO",
-    "c64 set warpmode WARP_NEVER",
-    "c64 set vsync yes",
-    "c64 set timelapse 75",
-    "c64 set runahead 2",    
+    "c64 set WARP_BOOT 50",
+    "c64 set WARP_MODE WARP_ALWAYS",
+    "c64 set WARP_MODE WARP_AUTO",
+    "c64 set WARP_MODE WARP_NEVER",
+    "c64 set VSYNC yes",
+    "c64 set TIME_LAPSE 75",
+    "c64 set RUN_AHEAD 2",
     "c64 init PAL",
     "c64 init PAL_II",
     "c64 init PAL_OLD",
@@ -122,44 +109,44 @@ static const char *testScript[] = {
 
     "",
     "memory",
-    "memory set raminit VICE",
-    "memory set raminit CCS",
-    "memory set raminit ZEROES",
-    "memory set raminit ONES",
-    "memory set raminit RANDOM",
-    "memory set saveroms true",
-    "memory set saveroms false",
+    "memory set RAM_PATTERN VICE",
+    "memory set RAM_PATTERN CCS",
+    "memory set RAM_PATTERN ZEROES",
+    "memory set RAM_PATTERN ONES",
+    "memory set RAM_PATTERN RANDOM",
+    "memory set SAVE_ROMS true",
+    "memory set SAVE_ROMS false",
 
     "",
     "cia1",
-    "cia1 set revision MOS_6526",
-    "cia1 set revision MOS_8521",
-    "cia1 set timerbbug true",
-    "cia1 set timerbbug false",
+    "cia1 set CIA_REVISION MOS_6526",
+    "cia1 set CIA_REVISION MOS_8521",
+    "cia1 set TIMER_B_BUG true",
+    "cia1 set TIMER_B_BUG false",
 
     "",
     "cia2",
-    "cia2 set revision MOS_6526",
-    "cia2 set revision MOS_8521",
-    "cia2 set timerbbug true",
-    "cia2 set timerbbug false",
+    "cia2 set CIA_REVISION MOS_6526",
+    "cia2 set CIA_REVISION MOS_8521",
+    "cia2 set TIMER_B_BUG true",
+    "cia2 set TIMER_B_BUG false",
 
     "",
     "vicii",
-    "vicii set revision PAL_6569_R1",
-    "vicii set revision PAL_6569_R3",
-    "vicii set revision PAL_8565",
-    "vicii set revision NTSC_6567",
-    "vicii set revision NTSC_6567_R56A",
-    "vicii set revision NTSC_8562",
-    "vicii set graydotbug true",
-    "vicii set graydotbug false",
-    "vicii set gluelogic true",
-    "vicii set gluelogic false",
-    "vicii set sscollisions true",
-    "vicii set sscollisions false",
-    "vicii set sbcollisions true",
-    "vicii set sbcollisions false",
+    "vicii set VICII_REVISION PAL_6569_R1",
+    "vicii set VICII_REVISION PAL_6569_R3",
+    "vicii set VICII_REVISION PAL_8565",
+    "vicii set VICII_REVISION NTSC_6567",
+    "vicii set VICII_REVISION NTSC_6567_R56A",
+    "vicii set VICII_REVISION NTSC_8562",
+    "vicii set GRAY_DOT_BUG true",
+    "vicii set GRAY_DOT_BUG false",
+    "vicii set GLUE_LOGIC true",
+    "vicii set GLUE_LOGIC false",
+    "vicii set OPT_VICII_SS_COLLISIONS true",
+    "vicii set OPT_VICII_SS_COLLISIONS false",
+    "vicii set OPT_VICII_SB_COLLISIONS true",
+    "vicii set OPT_VICII_SB_COLLISIONS false",
 
     "dmadebugger open",
     "dmadebugger close",

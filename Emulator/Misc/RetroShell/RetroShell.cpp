@@ -485,7 +485,7 @@ RetroShell::exec(const string &command, isize line)
     } catch (std::exception &err) {
 
         // Print error message
-        describe(err, line);
+        describe(err, line, command);
 
         // Rethrow the exception if the command is not prefixed with 'try'
         if (command.rfind("try", 0)) throw;
@@ -536,9 +536,9 @@ RetroShell::abortScript()
 }
 
 void
-RetroShell::describe(const std::exception &e, isize line)
+RetroShell::describe(const std::exception &e, isize line, const string &cmd)
 {
-    if (line)  *this << "Line " << line << ": ";
+    if (line) *this << "Line " << line << ": " << cmd << '\n';
 
     if (auto err = dynamic_cast<const TooFewArgumentsError *>(&e)) {
 

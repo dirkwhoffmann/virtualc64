@@ -42,7 +42,7 @@ MsgQueue::put(const Message &msg)
         if (listener) {
 
             // Send the message immediately if a lister has been registered
-            callback(listener, msg); return;
+            callback(listener, msg);
 
         } else {
 
@@ -50,7 +50,7 @@ MsgQueue::put(const Message &msg)
             if (!queue.isFull()) {
                 queue.write(msg);
             } else {
-                warn("Message lost: %s [%llx]\n", MsgTypeEnum::key(msg.type), msg.value);
+                debug(MSG_DEBUG, "Message lost: %s [%llx]\n", MsgTypeEnum::key(msg.type), msg.value);
             }
         }
     }

@@ -155,13 +155,13 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_EMU_TIME_LAPSE:        return "TIME_LAPSE";
             case OPT_EMU_RUN_AHEAD:         return "RUN_AHEAD";
 
-            case OPT_VICII_REVISION:        return "VIC_REVISION";
+            case OPT_VICII_REVISION:        return "VICII_REVISION";
             case OPT_VICII_PALETTE:         return "PALETTE";
             case OPT_VICII_BRIGHTNESS:      return "BRIGHTNESS";
             case OPT_VICII_CONTRAST:        return "CONTRAST";
             case OPT_VICII_SATURATION:      return "SATURATION";
             case OPT_VICII_GRAY_DOT_BUG:    return "GRAY_DOT_BUG";
-            case OPT_VICII_POWER_SAVE:      return "VIC_POWER_SAVE";
+            case OPT_VICII_POWER_SAVE:      return "VICII_POWER_SAVE";
 
             case OPT_VICII_HIDE_SPRITES:    return "HIDE_SPRITES";
             case OPT_VICII_CUT_LAYERS:      return "CUT_LAYERS";
