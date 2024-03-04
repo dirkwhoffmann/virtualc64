@@ -344,7 +344,7 @@ public:
     /// @name Using the command queue
     /// @{
 
-    /** @brief  Feeds a command into the command queue
+    /** @brief  Feeds a command into the command queue.
      */
     void put(const Cmd &cmd);
     void put(CmdType type, i64 payload = 0) { put(Cmd(type, payload)); }
@@ -362,42 +362,115 @@ public:
 
         using API::API;
 
-        /** Performs a hard reset
+        /// @name Analyzing the emulator
+        /// @{
+
+        /** @brief  Returns the component's current state.
+         */
+        C64Info getInfo() const { return c64.getState(); }
+
+        /** @brief  Returns the current state of an event slot.
+         *
+         *  @param  nr      Number of the event slot.
+         */
+        EventSlotInfo getSlotInfo(isize nr) const { return c64.getSlotInfo(nr); }
+
+        /** @brief  Returns information about one of the installed Roms
+         *
+         *  @param  type    The ROM type
+         */
+        RomInfo getRomInfo(RomType type) const;
+
+
+        /// @}
+        /// @name Resetting the C64
+        /// @{
+
+        /** @brief  Performs a hard reset
          *
          *  A hard reset affects all components. The effect is similar to
          *  switching power off and on.
          */
         void hardReset();
 
-        /** Performs a hard reset
+        /** @brief  Performs a hard reset
          *
-         *  A hard reset affects all components. The effect is similar to
-         *  switching power off and on.
+         *  A soft reset emulates a real reset of the C64 which can be initiated
+         *  via the reset line on the expansion port.
          */
         void softReset();
 
+        /// @}
+        /// @name Managing the inspection target
+        /// @{
+
+        /** @brief  Returns the current inspection target.
+         *
+         *  If you open the inspector panel in the Mac app while the emulator
+         *  is running, you will see continuous updates of the emulator state.
+         *  The displayed information is recorded via the auto-inspection
+         *  mechanism. If auto-inspection is active, the emulator schedules an
+         *  inspect event which calls function recordState() on the inspection
+         *  target in constant intervals. The recorded information is later
+         *  picked up by the GUI.
+         *
+         *  If you change to a different panel in the inspector window, the
+         *  emulator will change the inspection target to only record the
+         *  information you're seeing in the currently open panel.
+         */
         InspectionTarget getInspectionTarget() const;
-        void setInspectionTarget(InspectionTarget target, Cycle trigger = 0);
+
+        /** @brief  Sets the current inspection target.
+         */
+        void setInspectionTarget(InspectionTarget target);
+
+        /** @brief  Removes the current inspection target.
+         */
         void removeInspectionTarget();
 
-        C64Info getInfo() const;
-        EventSlotInfo getSlotInfo(isize nr) const;
-
         void isReady();
+
+
+        /// @}
+        /// @name Handling snapshots
+        /// @{
 
         Snapshot *latestAutoSnapshot();
         Snapshot *latestUserSnapshot();
         void loadSnapshot(const Snapshot &snapshot);
 
-        RomInfo getRomInfo(RomType type) const;
+        /// @}
+        /// @name Handling media files
+        /// @{
+
+        /** @brief  Loads a ROM from a file
+         */
         void loadRom(const string &path);
+
+        /** @brief  Loads a ROM, provided by a RomFile object
+         */
         void loadRom(const RomFile &file);
+
+        /** @brief  Removes an installed ROM
+         */
         void deleteRom(RomType type);
+
+        /** @brief  Saves a ROM to disk
+         */
         void saveRom(RomType rom, const string &path);
 
+        /** @brief  Flashes a file into memory
+         */
         void flash(const AnyFile &file);
+
+        /** @brief  Flashes a file from a collection into memory
+         */
         void flash(const AnyCollection &file, isize item);
+
+        /** @brief  Flashes a file from a file system into memory
+         */
         void flash(const FileSystem &fs, isize item);
+        /// @}
 
     } c64;
 

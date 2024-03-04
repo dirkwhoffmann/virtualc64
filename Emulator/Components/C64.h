@@ -283,7 +283,7 @@ public:
 public:
 
     InspectionTarget getInspectionTarget() const;
-    void setInspectionTarget(InspectionTarget target, Cycle trigger = 0);
+    void setInspectionTarget(InspectionTarget target);
     void removeInspectionTarget() { setInspectionTarget(INSPECTION_NONE); }
 
     

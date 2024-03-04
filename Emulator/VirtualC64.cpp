@@ -147,9 +147,9 @@ VirtualC64::C64API::getInspectionTarget() const
 }
 
 void
-VirtualC64::C64API::setInspectionTarget(InspectionTarget target, Cycle trigger)
+VirtualC64::C64API::setInspectionTarget(InspectionTarget target)
 {
-    c64.setInspectionTarget(target, trigger);
+    c64.setInspectionTarget(target);
 }
 
 void
@@ -164,19 +164,7 @@ VirtualC64::C64API::getRomInfo(RomType type) const
     return c64.getRomInfo(type);
 }
 
-C64Info
-VirtualC64::C64API::getInfo() const
-{
-    return c64.getState();
-}
-
-EventSlotInfo
-VirtualC64::C64API::getSlotInfo(isize nr) const
-{
-    return c64.getSlotInfo(nr);
-}
-
-void 
+void
 VirtualC64::C64API::isReady()
 {
     c64.isReady();

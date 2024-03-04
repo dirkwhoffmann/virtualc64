@@ -332,7 +332,7 @@ C64::getInspectionTarget() const
 }
 
 void
-C64::setInspectionTarget(InspectionTarget target, Cycle trigger)
+C64::setInspectionTarget(InspectionTarget target)
 {
     EventID id;
 
@@ -354,8 +354,7 @@ C64::setInspectionTarget(InspectionTarget target, Cycle trigger)
                 fatalError;
         }
 
-        scheduleRel<SLOT_INS>(trigger, id);
-        if (trigger == 0) processINSEvent(id);
+        processINSEvent(id);
     }
 }
 

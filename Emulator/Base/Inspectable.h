@@ -51,6 +51,16 @@ public:
     void dump(Category category) const { dump(category, std::cout); }
 };
 
+/** Inspection interface
+ *
+ *  The purpose of the inspection interface is to provide functions for
+ *  recording portions of the emulator's current state and returning them to
+ *  the caller. All components record two different kinds of information:
+ *  State variables and statistical information. State variables comprise
+ *  important variables that are used internally by the component. Examples
+ *  of statistical information are the average CIA activity or the current fill
+ *  level of the audio buffer.
+ */
 template <typename T1, typename T2>
 class Inspectable : public Dumpable {
 
