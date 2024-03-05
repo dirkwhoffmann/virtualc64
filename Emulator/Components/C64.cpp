@@ -1848,4 +1848,22 @@ C64::setDebugVariable(DebugFlag flag, bool val)
 #endif
 }
 
+u32
+C64::random()
+{
+    return random(u32(cpu.clock));
+}
+
+u32
+C64::random(u32 seed)
+{
+    // Parameters for the Linear Congruential Generator (LCG)
+    u64 a = 1664525;
+    u64 c = 1013904223;
+    u64 m = 1LL << 32;
+
+    // Apply the LCG formula
+    return u32((a * seed + c) % m);
+}
+
 }

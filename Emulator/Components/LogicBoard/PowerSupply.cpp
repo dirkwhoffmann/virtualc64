@@ -80,7 +80,7 @@ PowerSupply::todTickDelay(u8 cra)
         case GRID_UNSTABLE_50HZ:
             
             delay = (cra & 0x80) ? frequency / 10 : frequency * 6/50;
-            jitter = (rand() % 1000) - 500;
+            jitter = (c64.random() % 1000) - 500;
             break;
 
         case GRID_STABLE_60HZ:
@@ -92,7 +92,7 @@ PowerSupply::todTickDelay(u8 cra)
         case GRID_UNSTABLE_60HZ:
             
             delay = (cra & 0x80) ? frequency * 5/60 : frequency / 10;
-            jitter = (rand() % 1000) - 500;
+            jitter = (c64.random() % 1000) - 500;
             break;
 
         default:

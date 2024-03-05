@@ -300,15 +300,15 @@ FastSID::peek(u16 addr)
             // This register allows the microprocessor to read the
             // upper 8 output bits of oscillator 3.
             // return (u8)(voice[2].doosc() >> 7);
-            return (u8)rand();
+            return (u8)c64.random();
 
         case 0x1C:
             
             // This register allows the microprocessor to read the
             // output of the voice 3 envelope generator.
             // return (u8)(voice[2].adsr >> 23);
-            return (u8)rand();
-            
+            return (u8)c64.random();
+
         default:
             
             return latchedDataBus;

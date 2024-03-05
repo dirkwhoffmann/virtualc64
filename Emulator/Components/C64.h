@@ -87,7 +87,7 @@ class C64 final : public CoreComponent, public Inspectable<C64Info, Void> {
     friend class Emulator;
 
 private:
-    
+
     // The current configuration
     C64Config config = {};
 
@@ -98,7 +98,7 @@ private:
     //
     // Sub components
     //
-    
+
 public:
 
     // Core components
@@ -115,14 +115,14 @@ public:
     ControlPort port2 = ControlPort(*this, PORT_2);
     ExpansionPort expansionport = ExpansionPort(*this);
     IEC iec = IEC(*this);
-    
+
     // Peripherals
     Keyboard keyboard = Keyboard(*this);
     Drive drive8 = Drive(DRIVE8, *this);
     Drive drive9 = Drive(DRIVE9, *this);
     ParCable parCable = ParCable(*this);
     Datasette datasette = Datasette(*this);
-    
+
     // Misc
     RetroShell retroShell = RetroShell(*this);
     RegressionTester regressionTester = RegressionTester(*this);
@@ -148,11 +148,11 @@ public:
     // Next trigger cycle
     Cycle nextTrigger = NEVER;
 
-    
+
     //
     // Emulator thread
     //
-    
+
 private:
 
     /* Run loop flags. This variable is checked at the end of each runloop
@@ -163,32 +163,32 @@ private:
      */
     RunLoopFlags flags = 0;
 
-    
+
     //
     // Storage
     //
-    
+
 private:
-    
+
     Snapshot *autoSnapshot = nullptr;
     Snapshot *userSnapshot = nullptr;
 
     typedef struct { Cycle trigger; i64 payload; } Alarm;
     std::vector<Alarm> alarms;
 
-    
+
     //
     // State
     //
-    
+
 public:
-    
+
     // The total number of frames drawn since power up
     u64 frame = 0;
-    
+
     // The currently drawn scanline (first scanline = 0)
     u16 scanline = 0;
-    
+
     // The currently executed scanline cycle (first cylce = 1)
     u8 rasterCycle = 1;
 
@@ -239,9 +239,9 @@ public:
     //
     // Methods
     //
-    
+
 public:
-    
+
     C64(class Emulator& ref);
     ~C64();
 
@@ -256,7 +256,7 @@ private:
 
     void initialize();
 
-    
+
     //
     // Configuring
     //
@@ -267,7 +267,7 @@ public:
 
     // Updates the clock frequency and all variables derived from it
     void updateClockFrequency();
-    
+
     // Indicates that the run-ahead instance needs an update
     void markAsDirty() { isDirty = true; }
 
@@ -279,18 +279,18 @@ public:
     //
     // Analyzing
     //
-    
+
 public:
 
     InspectionTarget getInspectionTarget() const;
     void setInspectionTarget(InspectionTarget target);
     void removeInspectionTarget() { setInspectionTarget(INSPECTION_NONE); }
 
-    
+
     //
     // Methods from CoreComponent
     //
-    
+
 public:
 
     C64& operator= (const C64& other) {
@@ -451,7 +451,7 @@ public:
      */
     void setFlag(u32 flags);
     void clearFlag(u32 flags);
-    
+
     // Convenience wrappers
     void signalBreakpoint() { setFlag(RL::BREAKPOINT); }
     void signalWatchpoint() { setFlag(RL::WATCHPOINT); }
@@ -465,10 +465,10 @@ private:
 
     // Invoked after executing the last cycle of a scanline
     void endScanline();
-    
+
     // Invoked after executing the last scanline of a frame
     void endFrame();
-    
+
 
     //
     // Managing commands and events
@@ -585,23 +585,23 @@ private:
     //
     // Handling snapshots
     //
-    
+
 public:
 
     // Returns the most recent snapshot or nullptr if none was taken
     Snapshot *latestAutoSnapshot();
     Snapshot *latestUserSnapshot();
-    
+
     // Loads the current state from a snapshot file
     void loadSnapshot(const Snapshot &snapshot) throws;
-    
-    
+
+
     //
     // Handling Roms
     //
-    
+
 public:
-    
+
     // Queries information about the installed ROMs
     RomInfo getRomInfo(RomType type) const;
 
@@ -611,44 +611,44 @@ public:
 
     // Returns a unique identifier for the installed ROMs
     RomIdentifier romIdentifier(RomType type) const;
-    
+
     // Returns printable titles for the installed ROMs
     const char *romTitle(RomType type) const;
-    
+
     // Returns printable sub titles for the installed ROMs
     const char *romSubTitle(u64 fnv) const;
     const char *romSubTitle(RomType type) const;
 
     // Returns printable revision strings or hash values for the installed ROMs
     const char *romRevision(RomType type) const;
-    
+
     // Checks if a certain Rom is present
     bool hasRom(RomType type) const;
     bool hasMega65Rom(RomType type) const;
 
 private:
-    
+
     // Returns a revision string if a Mega65 Rom is installed
     const char *mega65BasicRev() const;
     const char *mega65KernalRev() const;
 
 public:
-    
+
     // Installs a Rom
     void loadRom(const string &path) throws;
     void loadRom(const RomFile &file);
-    
+
     // Erases an installed Rom
     void deleteRom(RomType type);
-    
+
     // Saves a Rom to disk
     void saveRom(RomType rom, const string &path) throws;
 
-    
+
     //
     // Flashing files
     //
-    
+
     // Flashes a single file into memory
     void flash(const AnyFile &file) throws;
     void flash(const AnyCollection &file, isize item) throws;
@@ -676,7 +676,7 @@ private:
     // Schedules the next alarm event
     void scheduleNextAlarm();
 
-    
+
     //
     // Miscellaneous
     //
@@ -686,6 +686,12 @@ public:
     // Gets or sets an internal debug variable (only available in debug builds)
     static bool getDebugVariable(DebugFlag flag);
     static void setDebugVariable(DebugFlag flag, bool val);
+
+    // Translates the current clock cycle into pseudo-random number
+    u32 random();
+
+    // Translates x into a pseudo-random number
+    u32 random(u32 seed);
 };
 
 }

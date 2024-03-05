@@ -109,9 +109,11 @@ C64Memory::_reset(bool hard)
         eraseWithPattern(config.ramPattern);
         
         // Initialize color RAM with random numbers
-        srand(1000);
+        u32 seed = 0;
         for (isize i = 0; i < isizeof(colorRam); i++) {
-            colorRam[i] = (rand() & 0xFF);
+            
+            seed = c64.random(seed);
+            colorRam[i] = u8(seed);
         }
     }
 }
@@ -645,7 +647,7 @@ C64Memory::pokeIO(u16 addr, u8 value)
         case 0xA: // Color RAM
         case 0xB: // Color RAM
             
-            colorRam[addr - 0xD800] = (value & 0x0F) | (rand() & 0xF0);
+            colorRam[addr - 0xD800] = (value & 0x0F) | (c64.random() & 0xF0);
             return;
             
         case 0xC: // CIA 1
