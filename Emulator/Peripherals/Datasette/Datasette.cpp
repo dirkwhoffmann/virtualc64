@@ -80,7 +80,40 @@ Datasette::_dump(Category category, std::ostream& os) const
     }
 }
 
-void 
+Datasette& 
+Datasette::operator= (const Datasette& other) {
+
+    CLONE(head)
+    CLONE(counter.ticks)
+    CLONE(playKey)
+    CLONE(motor)
+    CLONE(nextRisingEdge)
+    CLONE(nextFallingEdge)
+
+    CLONE(type)
+
+    assert((pulses == nullptr) == (size == 0));
+    assert((other.pulses == nullptr) == (other.size == 0));
+
+    if (size != other.size) {
+
+        // Create a new pulse buffer
+        if (pulses) delete[] pulses;
+        pulses = nullptr;
+        if (other.size) pulses = new Pulse[other.size];
+        size = other.size;
+    }
+
+    assert((pulses == nullptr) == (size == 0));
+    assert(size == other.size);
+
+    // Clone the pulse buffer
+    for (isize i = 0; i < size; i++) pulses[i] = other.pulses[i];
+
+    return *this;
+}
+
+void
 Datasette::operator << (SerCounter &worker)
 {
     serialize(worker);

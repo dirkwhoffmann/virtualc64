@@ -105,19 +105,7 @@ public:
     const char *getDescription() const override { return "Datasette"; }
     void _dump(Category category, std::ostream& os) const override;
 
-    Datasette& operator= (const Datasette& other) {
-
-        CLONE(head)
-        CLONE(counter.ticks)
-        CLONE(playKey)
-        CLONE(motor)
-        CLONE(nextRisingEdge)
-        CLONE(nextFallingEdge)
-
-        CLONE(type)
-
-        return *this;
-    }
+    Datasette& operator= (const Datasette& other);
 
     template <class T>
     void serialize(T& worker)
