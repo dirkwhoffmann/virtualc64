@@ -925,7 +925,7 @@ VirtualC64::ExpansionPortAPI::attachCartridge(const string &path, bool reset)
 }
 
 void 
-VirtualC64::ExpansionPortAPI::attachCartridge(CRTFile *c, bool reset)
+VirtualC64::ExpansionPortAPI::attachCartridge(const CRTFile &c, bool reset)
 {
     expansionport.attachCartridge(c, reset);
     c64.markAsDirty();

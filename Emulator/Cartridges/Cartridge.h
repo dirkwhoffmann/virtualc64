@@ -140,7 +140,7 @@ public:
 
     // Factory methods
     static Cartridge *makeWithType(C64 &c64, CartridgeType type) throws;
-    static Cartridge *makeWithCRTFile(C64 &c64, CRTFile &file) throws;
+    static Cartridge *makeWithCRTFile(C64 &c64, const CRTFile &file) throws;
 
 
     //
@@ -179,8 +179,6 @@ protected:
 public:
 
     Cartridge& operator= (const Cartridge& other) {
-
-        printf("Cloning cartridge\n");
 
         cloneRomAndRam(other);
 

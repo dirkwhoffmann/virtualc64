@@ -308,21 +308,19 @@ ExpansionPort::attachGeoRam(isize kb)
 void
 ExpansionPort::attachCartridge(const string &path, bool reset)
 {
-    attachCartridge(new CRTFile(path), reset);
+    attachCartridge(CRTFile(path), reset);
 }
 
 void
-ExpansionPort::attachCartridge(CRTFile *file, bool reset)
+ExpansionPort::attachCartridge(const CRTFile &file, bool reset)
 {
-    assert(file);
-    
     // Only proceed if this cartridge is supported
-    if (!file->isSupported()) {
-        throw VC64Error(ERROR_CRT_UNSUPPORTED, file->cartridgeTypeName());
+    if (!file.isSupported()) {
+        throw VC64Error(ERROR_CRT_UNSUPPORTED, file.cartridgeTypeName());
     }
 
     // Create cartridge from cartridge file
-    Cartridge *cartridge = Cartridge::makeWithCRTFile(c64, *file);
+    Cartridge *cartridge = Cartridge::makeWithCRTFile(c64, file);
 
     // Attach cartridge to the expansion port
     {   SUSPENDED

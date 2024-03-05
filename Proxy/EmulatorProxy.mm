@@ -823,7 +823,7 @@ using namespace vc64;
  
 - (void)attachCartridge:(CRTFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex
 {
-    try { [self eport]->attachCartridge((CRTFile *)c->obj, reset); }
+    try { [self eport]->attachCartridge(*(CRTFile *)c->obj, reset); }
     catch (VC64Error &err) { [ex save:err]; }
 }
 

@@ -381,6 +381,19 @@ public:
          */
         RomInfo getRomInfo(RomType type) const;
 
+        /** @brief  Checks if the emulator is runnable.
+         *  The function checks if the necessary ROMs are installed to lauch the
+         *  emulator. On success, the functions returns. Otherwise, an exception
+         *  is thrown.
+         *
+         *  @throw  VC64Error (ERROR_ROM_BASIC_MISSING)
+         *  @throw  VC64Error (ERROR_ROM_CHAR_MISSING)
+         *  @throw  VC64Error (ERROR_ROM_KERNAL_MISSING)
+         *  @throw  VC64Error (ERROR_ROM_CHAR_MISSING)
+         *  @throw  VC64Error (ERROR_ROM_MEGA65_MISMATCH)
+         */
+        void isReady();
+
 
         /// @}
         /// @name Resetting the C64
@@ -427,8 +440,6 @@ public:
         /** @brief  Removes the current inspection target.
          */
         void removeInspectionTarget();
-
-        void isReady();
 
 
         /// @}
@@ -497,10 +508,8 @@ public:
     } mem;
 
 
-    //
-    // Guards
-    //
-
+    /** API for breakpoints and watchpoints
+     */
     struct GuardAPI : API {
 
         Guards &guards;
@@ -533,10 +542,8 @@ public:
     };
 
 
-    //
-    // CPU
-    //
-
+    /** CPU API
+     */
     struct CPUAPI : API {
 
         using API::API;
@@ -570,39 +577,65 @@ public:
     } cpu;
 
 
-    //
-    // CIAs
-    //
-
+    /** CIA API
+     */
     struct CIAAPI : API {
 
         CIA &cia;
         CIAAPI(Emulator &emu, CIA& cia) : API(emu), cia(cia) { }
 
+        /** @brief  Returns the component's current configuration.
+         */
         CIAConfig getConfig() const;
+
+        /** @brief  Returns the component's current state.
+         */
         CIAInfo getInfo() const;
+
+        /** @brief  Returns statistical information about the components.
+         */
         CIAStats getStats() const;
 
     } cia1, cia2;
 
 
-    //
-    // VICII
-    //
-
+    /** VICII API
+     */
     struct VICIIAPI : API {
 
         using API::API;
 
+        /** @brief  Returns the component's current configuration.
+         */
         VICIIConfig getConfig() const;
+
+        /** @brief  Returns the component's current state.
+         */
         VICIIInfo getInfo() const;
+
+        /** @brief  Returns information about a sprite.
+         *  @param  nr   Number of the sprite (0 .. 7)
+         */
         SpriteInfo getSpriteInfo(isize nr) const;
 
+        /** @brief  Returns the number of CPU cycles per rasterline.
+         */
         isize getCyclesPerLine() const;
+
+        /** @brief  Returns the number of rasterlines per frame.
+         */
         isize getLinesPerFrame() const;
+
+        /** @brief  Checks if the seleted VICII chip is a PAL revision.
+         */
         bool pal() const;
 
+        /** @brief  Returns the RGBA value of a color 
+         */
         u32 getColor(isize nr) const;
+
+        /** @brief  Returns the RGBA value of a color from a color palette.
+         */
         u32 getColor(isize nr, Palette palette) const;
 
     } vicii;
@@ -653,8 +686,18 @@ public:
 
         using API::API;
 
+        /** @brief  Checks if a key is currently pressed.
+         *  @param  key     The key to check.
+         */
         bool isPressed(C64Key key) const;
+
+        /** @brief  Uses the auto-typing daemon to type a string.
+         *  @param  text    The text to type.
+         */
         void autoType(const string &text);
+
+        /** @brief  Aborts any active auto-typing activity.
+         */
         void abortAutoTyping();
 
     } keyboard;
@@ -707,48 +750,51 @@ public:
          */
         void setDxDy(double dx, double dy);
 
-        /** Signals a mouse button to the emulator.
+        /** @brief  Signals a mouse button to the emulator.
          *
-         *  @param event The button event.
+         *  @param  event   The button event.
          */
         void trigger(GamePadAction event);
     };
 
 
-    //
-    // Joystick
-    //
-
+    /** Joystick API
+     */
     struct JoystickAPI : API {
 
         Joystick &joystick;
         JoystickAPI(Emulator &emu, Joystick& joystick) : API(emu), joystick(joystick) { }
 
-        // Triggers a gamepad event
+        /** @brief  Triggers a gamepad event
+         *  @param  event    The event to trigger.
+         */
         void trigger(GamePadAction event);
     };
 
 
-    //
-    // Datasette
-    //
-
+    /** Datasette API
+     */
     struct DatasetteAPI : API {
 
         using API::API;
 
         DatasetteInfo getInfo() const;
 
+        /** @brief  Inserts a tape.
+         *  @param  file    The tape to insert.
+         */
         void insertTape(TAPFile &file);
+
+        /** @brief  Ejects a tape.
+         *  This function has no effect if no tape is inserted.
+         */
         void ejectTape();
 
     } datasette;
 
 
-    //
-    // Control port
-    //
-
+    /** Control Port API
+     */
     struct ControlPortAPI : API {
 
         ControlPort &port;
@@ -761,10 +807,8 @@ public:
     } port1, port2;
 
 
-    //
-    // Recorder
-    //
-
+    /** Screen recorder API
+     */
     struct RecorderAPI : API {
 
         using API::API;
@@ -786,25 +830,43 @@ public:
     } recorder;
 
 
-    //
-    // Expansion port
-    //
-
+    /** Expansion port API
+     */
     struct ExpansionPortAPI : API {
 
         using API::API;
 
+        /// @{
+        /// @name Analyzing cartridges.
+
+        /** @brief  Returns the traits of the current cartridge.
+         */
         CartridgeTraits getTraits() const;
+
+        /** @brief  Returns the state of the current cartridge.
+         */
         CartridgeInfo getInfo() const;
+
+        /** @brief  Returns the state of one of the cartridge ROM packets.
+         *  @param  nr      Number of the ROM packet.
+         */
         CartridgeRomInfo getRomInfo(isize nr) const;
 
+        /// @}
+        /// @name Attaching and detaching cartridges.
+        /// @{
+
+        /** @brief  Attaches a cartridge to the expansion port.
+         */
         void attachCartridge(const string &path, bool reset = true);
-        void attachCartridge(CRTFile *c, bool reset = true);
+        void attachCartridge(const CRTFile &c, bool reset = true);
         void attachCartridge(Cartridge *c);
         void attachReu(isize capacity);
         void attachGeoRam(isize capacity);
         void attachIsepicCartridge();
         void detachCartridge();
+
+        /// @}
 
     } expansionport;
 

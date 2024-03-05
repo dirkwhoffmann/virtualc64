@@ -141,7 +141,7 @@ Cartridge::makeWithType(C64 &c64, CartridgeType type)
 }
 
 Cartridge *
-Cartridge::makeWithCRTFile(C64 &c64, CRTFile &file)
+Cartridge::makeWithCRTFile(C64 &c64, const CRTFile &file)
 {
     auto type = file.cartridgeType();
 

@@ -19,7 +19,7 @@
 namespace vc64 {
 
 //
-// VCError
+// VC64Error
 //
 
 /// Emulator exception
