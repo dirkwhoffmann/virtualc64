@@ -1106,7 +1106,7 @@ C64::processINSEvent(EventID id)
     }
 
     // Reschedule event
-    rescheduleRel<SLOT_INS>((Cycle)(inspectionInterval * PAL_CYCLES_PER_SECOND));
+    rescheduleRel<SLOT_INS>((Cycle)(inspectionInterval * PAL::PAL_CYCLES_PER_SECOND));
 }
 
 void

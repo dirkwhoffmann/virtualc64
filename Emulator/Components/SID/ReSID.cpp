@@ -25,7 +25,7 @@ ReSID::ReSID(C64 &ref, int n) : SubComponent(ref), nr(n)
 
     sid = new reSID::SID();
     sid->set_chip_model(reSID::MOS6581);
-    sid->set_sampling_parameters((double)PAL_CLOCK_FREQUENCY,
+    sid->set_sampling_parameters((double)PAL::PAL_CLOCK_FREQUENCY,
                                  reSID::SAMPLE_FAST,
                                  (double)sampleRate);
     sid->enable_filter(emulateFilter);
@@ -301,9 +301,9 @@ ReSID::executeCycles(isize numCycles, SampleStream &stream)
     short buf[2049];
     isize buflength = 2048;
     
-    if (numCycles > PAL_CYCLES_PER_SECOND) {
+    if (numCycles > PAL::PAL_CYCLES_PER_SECOND) {
         warn("Number of missing SID cycles is far too large\n");
-        numCycles = PAL_CYCLES_PER_SECOND;
+        numCycles = PAL::PAL_CYCLES_PER_SECOND;
     }
     
     // Let reSID compute sound samples

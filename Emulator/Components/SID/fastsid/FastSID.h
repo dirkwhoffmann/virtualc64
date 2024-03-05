@@ -65,7 +65,7 @@ private:
     SIDRevision model = MOS_6581;
     
     // Current CPU frequency
-    u32 cpuFrequency = PAL_CLOCK_FREQUENCY;
+    u32 cpuFrequency = PAL::PAL_CLOCK_FREQUENCY;
     
     // Sample rate (44.1 kHz per default)
     double sampleRate = 44100.0;

@@ -172,13 +172,13 @@ DmaDebugger::computeOverlay(u32 *emuTexture, u32 *dmaTexture)
 
         case DMA_DISPLAY_MODE_FG_LAYER:
 
-            for (isize y = 0; y < TEX_HEIGHT; y++) {
-                
-                u32 *emu = emuTexture + (y * TEX_WIDTH);
-                u32 *dma = dmaTexture + (y * TEX_WIDTH);
-                
-                for (isize x = 0; x < TEX_WIDTH; x++) {
-                    
+            for (isize y = 0; y < Texture::TEX_HEIGHT; y++) {
+
+                u32 *emu = emuTexture + (y * Texture::TEX_WIDTH);
+                u32 *dma = dmaTexture + (y * Texture::TEX_WIDTH);
+
+                for (isize x = 0; x < Texture::TEX_WIDTH; x++) {
+
                     if ((dma[x] & 0xFFFFFF) == 0) continue;
                     
                     GpuColor emuColor = emu[x];
@@ -191,13 +191,13 @@ DmaDebugger::computeOverlay(u32 *emuTexture, u32 *dmaTexture)
 
         case DMA_DISPLAY_MODE_BG_LAYER:
             
-            for (isize y = 0; y < TEX_HEIGHT; y++) {
-                
-                u32 *emu = emuTexture + (y * TEX_WIDTH);
-                u32 *dma = dmaTexture + (y * TEX_WIDTH);
-                
-                for (isize x = 0; x < TEX_WIDTH; x++) {
-                    
+            for (isize y = 0; y < Texture::TEX_HEIGHT; y++) {
+
+                u32 *emu = emuTexture + (y * Texture::TEX_WIDTH);
+                u32 *dma = dmaTexture + (y * Texture::TEX_WIDTH);
+
+                for (isize x = 0; x < Texture::TEX_WIDTH; x++) {
+
                     if ((dma[x] & 0xFFFFFF) != 0) {
                         emu[x] = dma[x];
                     } else {
@@ -211,13 +211,13 @@ DmaDebugger::computeOverlay(u32 *emuTexture, u32 *dmaTexture)
 
         case DMA_DISPLAY_MODE_ODD_EVEN_LAYERS:
             
-            for (isize y = 0; y < TEX_HEIGHT; y++) {
+            for (isize y = 0; y < Texture::TEX_HEIGHT; y++) {
 
-                u32 *emu = emuTexture + (y * TEX_WIDTH);
-                u32 *dma = dmaTexture + (y * TEX_WIDTH);
+                u32 *emu = emuTexture + (y * Texture::TEX_WIDTH);
+                u32 *dma = dmaTexture + (y * Texture::TEX_WIDTH);
 
-                for (isize x = 0; x < TEX_WIDTH; x++) {
-                    
+                for (isize x = 0; x < Texture::TEX_WIDTH; x++) {
+
                     GpuColor emuColor = emu[x];
                     GpuColor dmaColor = dma[x];
                     GpuColor mixColor = dmaColor.mix(emuColor, weight);
@@ -243,7 +243,7 @@ DmaDebugger::cutLayers()
     u32 *emuTexturePtr = vic.emuTexturePtr;
     u8 *zBuffer = vic.zBuffer;
     
-    for (isize i = 0; i < TEX_WIDTH; i++) {
+    for (isize i = 0; i < Texture::TEX_WIDTH; i++) {
         
         bool cut;
 

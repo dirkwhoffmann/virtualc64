@@ -945,7 +945,7 @@ public:
         void insertD64(const D64File &d64, bool wp);
 
         /** @brief  Inserts a disk from a G64 file.
-         *  @param  d64     A G64 file wrapper object.
+         *  @param  g64     A G64 file wrapper object.
          *  @param  wp      Write-protection status of the disk.
          */
         void insertG64(const G64File &g64, bool wp);

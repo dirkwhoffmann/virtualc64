@@ -19,7 +19,7 @@ namespace vc64 {
 util::Time
 Pulse::delay() const
 {
-    return util::Time((i64)cycles * 1000000000 / PAL_CLOCK_FREQUENCY);
+    return util::Time((i64)cycles * 1000000000 / PAL::PAL_CLOCK_FREQUENCY);
 }
 
 Datasette::~Datasette()

@@ -102,7 +102,7 @@ VICII::resetDmaTexture(isize nr)
     
     u32 *p = nr == 1 ? dmaTexture1 : dmaTexture2;
 
-    for (int i = 0; i < TEX_HEIGHT * TEX_WIDTH; i++) {
+    for (int i = 0; i < Texture::TEX_HEIGHT * Texture::TEX_WIDTH; i++) {
         p[i] = 0xFF000000;
     }
 }
@@ -111,13 +111,13 @@ void
 VICII::resetTexture(u32 *p)
 {
     // Determine the HBLANK / VBLANK area
-    long width = isPAL ? PAL_PIXELS : NTSC_PIXELS;
+    long width = isPAL ? PAL::PAL_PIXELS : NTSC::NTSC_PIXELS;
     long height = getLinesPerFrame();
     
-    for (int y = 0; y < TEX_HEIGHT; y++) {
-        for (int x = 0; x < TEX_WIDTH; x++) {
+    for (int y = 0; y < Texture::TEX_HEIGHT; y++) {
+        for (int x = 0; x < Texture::TEX_WIDTH; x++) {
 
-            int pos = y * TEX_WIDTH + x;
+            int pos = y * Texture::TEX_WIDTH + x;
 
             if (y < height && x < width) {
                 
@@ -538,10 +538,10 @@ VICII::getFrequency(VICIIRevision rev)
         case VICII_NTSC_6567:
         case VICII_NTSC_8562:
         case VICII_NTSC_6567_R56A:
-            return NTSC_CLOCK_FREQUENCY;
-            
+            return NTSC::NTSC_CLOCK_FREQUENCY;
+
         default:
-            return PAL_CLOCK_FREQUENCY;
+            return PAL::PAL_CLOCK_FREQUENCY;
     }
 }
 
@@ -1124,8 +1124,8 @@ VICII::beginScanline()
     verticalFrameFFsetCond = false;
 
     // Adjust the texture pointers
-    emuTexturePtr = emuTexture + line * TEX_WIDTH;
-    dmaTexturePtr = dmaTexture + line * TEX_WIDTH;
+    emuTexturePtr = emuTexture + line * Texture::TEX_WIDTH;
+    dmaTexturePtr = dmaTexture + line * Texture::TEX_WIDTH;
 
     // Determine if we're inside the VBLANK area
     vblank = isVBlankLine(line);
@@ -1153,7 +1153,7 @@ VICII::endScanline()
     dmaDebugger.cutLayers();
 
     // Prepare buffers for the next line
-    for (isize i = 0; i < TEX_WIDTH; i++) { zBuffer[i] = 0; }
+    for (isize i = 0; i < Texture::TEX_WIDTH; i++) { zBuffer[i] = 0; }
 }
 
 }

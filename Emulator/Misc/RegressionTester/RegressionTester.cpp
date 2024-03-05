@@ -95,7 +95,7 @@ RegressionTester::dumpTexture(C64 &c64, std::ostream& os)
             for (isize x = X1; x < X2; x++) {
 
                 if (y >= y1 && y < y2 && x >= x1 && x < x2) {
-                    cptr = (char *)(buffer + y * TEX_WIDTH + x);
+                    cptr = (char *)(buffer + y * Texture::TEX_WIDTH + x);
                 } else {
                     cptr = checkerboard(y, x);
                 }

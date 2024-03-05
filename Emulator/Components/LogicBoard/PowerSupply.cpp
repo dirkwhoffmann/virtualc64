@@ -67,8 +67,8 @@ Cycle
 PowerSupply::todTickDelay(u8 cra)
 {
     Cycle delay, jitter;
-    i64 frequency = vic.pal() ? PAL_CLOCK_FREQUENCY : NTSC_CLOCK_FREQUENCY;
-    
+    i64 frequency = vic.pal() ? PAL::PAL_CLOCK_FREQUENCY : NTSC::NTSC_CLOCK_FREQUENCY;
+
     switch (config.powerGrid) {
 
         case GRID_STABLE_50HZ:

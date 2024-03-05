@@ -32,19 +32,19 @@ Thumbnail::take(const C64 &c64, isize dx, isize dy)
     u32 *source = (u32 *)c64.vic.getTexture();
     u32 *target = screen;
 
-    isize xStart = FIRST_VISIBLE_PIXEL;
-    isize yStart = FIRST_VISIBLE_LINE;
+    isize xStart = PAL::FIRST_VISIBLE_PIXEL;
+    isize yStart = PAL::FIRST_VISIBLE_LINE;
 
-    width = VISIBLE_PIXELS;
+    width = PAL::VISIBLE_PIXELS;
     height = c64.vic.numVisibleLines();
 
-    source += xStart + yStart * TEX_WIDTH;
-    
+    source += xStart + yStart * Texture::TEX_WIDTH;
+
     for (isize y = 0; y < height; y++) {
         for (isize x = 0; x < width; x++) {
             target[x] = source[x * dx];
         }
-        source += TEX_WIDTH;
+        source += Texture::TEX_WIDTH;
         target += width;
     }
     
@@ -138,21 +138,21 @@ Snapshot::takeScreenshot(C64 &c64)
 {
     SnapshotHeader *header = (SnapshotHeader *)data;
     
-    header->screenshot.width = VISIBLE_PIXELS;
+    header->screenshot.width = PAL::VISIBLE_PIXELS;
     header->screenshot.height = c64.vic.numVisibleLines();
     
     u32 *source = (u32 *)c64.vic.getTexture();
     u32 *target = header->screenshot.screen;
 
-    isize xStart = FIRST_VISIBLE_PIXEL;
-    isize yStart = FIRST_VISIBLE_LINE;
-    source += xStart + yStart * TEX_WIDTH;
-    
+    isize xStart = PAL::FIRST_VISIBLE_PIXEL;
+    isize yStart = PAL::FIRST_VISIBLE_LINE;
+    source += xStart + yStart * Texture::TEX_WIDTH;
+
     for (isize i = 0; i < header->screenshot.height; i++) {
         
         std::memcpy(target, source, header->screenshot.width * 4);
         target += header->screenshot.width;
-        source += TEX_WIDTH;
+        source += Texture::TEX_WIDTH;
     }
 }
 
