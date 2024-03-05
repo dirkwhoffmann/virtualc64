@@ -859,11 +859,29 @@ public:
         /** @brief  Attaches a cartridge to the expansion port.
          */
         void attachCartridge(const string &path, bool reset = true);
+
+        /** @brief  Attaches a cartridge to the expansion port.
+         */
         void attachCartridge(const CRTFile &c, bool reset = true);
+
+        /** @brief  Attaches a cartridge to the expansion port.
+         */
         void attachCartridge(Cartridge *c);
+
+        /** @brief  Attaches a RAM Expansion Unit to the expansion port.
+         */
         void attachReu(isize capacity);
+
+        /** @brief  Attaches a GeoRAM module to the expansion port.
+         */
         void attachGeoRam(isize capacity);
+
+        /** @brief  Attaches an Isepic module to the expansion port.
+         */
         void attachIsepicCartridge();
+
+        /** @brief  Detaches the currently plugged in cartridge
+         */
         void detachCartridge();
 
         /// @}
@@ -897,6 +915,8 @@ public:
     // Drive
     //
 
+    /** Drive API
+     */
     struct DriveAPI : API {
 
         Drive &drive;
@@ -904,14 +924,46 @@ public:
 
         DiskAPI disk;
 
+        /** @brief  Returns the component's current configuration.
+         */
         const DriveConfig &getConfig() const;
+
+        /** @brief  Returns the component's current state.
+         */
         DriveInfo getInfo() const;
 
+        /** @brief  Inserts a new disk.
+         *  @param  fstype  The file system the disk should be formatted with.
+         *  @param  name    A PET string with the name of the new disk.
+         */
         void insertBlankDisk(DOSType fstype, PETName<16> name);
+
+        /** @brief  Inserts a disk from a D64 file.
+         *  @param  d64     A D64 file wrapper object.
+         *  @param  wp      Write-protection status of the disk.
+         */
         void insertD64(const D64File &d64, bool wp);
+
+        /** @brief  Inserts a disk from a G64 file.
+         *  @param  d64     A G64 file wrapper object.
+         *  @param  wp      Write-protection status of the disk.
+         */
         void insertG64(const G64File &g64, bool wp);
-        void insertCollection(AnyCollection &archive, bool wp) throws;
-        void insertFileSystem(const class FileSystem &device, bool wp);
+
+        /** @brief  Inserts a disk with the contents of a file collection.
+         *  @param  archive A file collection wrapper object.
+         *  @param  wp      Write-protection status of the disk.
+         *  @throw  VC64Error
+         */
+        void insertCollection(AnyCollection &archive, bool wp);
+
+        /** @brief  Inserts a disk created from a file system.
+         *  @param  fs      A file system wrapper object.
+         *  @param  wp      Write-protection status of the disk.
+         */
+        void insertFileSystem(const class FileSystem &fs, bool wp);
+
+        /** @brief  Ejects the current disk. */
         void ejectDisk();
 
     } drive8, drive9;
