@@ -18,7 +18,7 @@ namespace vc64 {
 
 SID::SID(C64 &ref, int n) : SubComponent(ref), nr(n)
 {
-    setClockFrequency(PAL::PAL_CLOCK_FREQUENCY);
+    setClockFrequency(PAL::CLOCK_FREQUENCY);
 }
 
 void

@@ -38,13 +38,13 @@ Thumbnail::take(const C64 &c64, isize dx, isize dy)
     width = PAL::VISIBLE_PIXELS;
     height = c64.vic.numVisibleLines();
 
-    source += xStart + yStart * Texture::TEX_WIDTH;
+    source += xStart + yStart * Texture::width;
 
     for (isize y = 0; y < height; y++) {
         for (isize x = 0; x < width; x++) {
             target[x] = source[x * dx];
         }
-        source += Texture::TEX_WIDTH;
+        source += Texture::width;
         target += width;
     }
     
@@ -146,13 +146,13 @@ Snapshot::takeScreenshot(C64 &c64)
 
     isize xStart = PAL::FIRST_VISIBLE_PIXEL;
     isize yStart = PAL::FIRST_VISIBLE_LINE;
-    source += xStart + yStart * Texture::TEX_WIDTH;
+    source += xStart + yStart * Texture::width;
 
     for (isize i = 0; i < header->screenshot.height; i++) {
         
         std::memcpy(target, source, header->screenshot.width * 4);
         target += header->screenshot.width;
-        source += Texture::TEX_WIDTH;
+        source += Texture::width;
     }
 }
 

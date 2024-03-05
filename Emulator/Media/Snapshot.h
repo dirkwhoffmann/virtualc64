@@ -25,7 +25,7 @@ struct Thumbnail {
     isize width, height;
     
     // Raw texture data
-    u32 screen[Texture::TEX_HEIGHT * Texture::TEX_WIDTH];
+    u32 screen[Texture::height * Texture::width];
     
     // Creation date and time
     time_t timestamp;

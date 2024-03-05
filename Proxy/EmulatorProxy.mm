@@ -2033,8 +2033,8 @@ using namespace vc64;
 
 @implementation Constants
 
-+ (NSInteger)texWidth { return Texture::TEX_WIDTH; }
-+ (NSInteger)texHeight { return Texture::TEX_HEIGHT; }
++ (NSInteger)texWidth { return Texture::width; }
++ (NSInteger)texHeight { return Texture::height; }
 
 @end
 

@@ -363,13 +363,13 @@ Recorder::recordVideo()
     
     isize width = sizeof(u32) * (cutout.x2 - cutout.x1);
     isize height = cutout.y2 - cutout.y1;
-    isize offset = cutout.y1 * Texture::TEX_WIDTH + cutout.x1;
+    isize offset = cutout.y1 * Texture::width + cutout.x1;
 
     u8 *data = new u8[width * height];
     u8 *src = (u8 *)(texture + offset);
     u8 *dst = data;
     
-    for (isize y = 0; y < height; y++, src += 4 * Texture::TEX_WIDTH, dst += width) {
+    for (isize y = 0; y < height; y++, src += 4 * Texture::width, dst += width) {
         std::memcpy(dst, src, width);
     }
     
