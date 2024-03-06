@@ -35,9 +35,9 @@ MsgQueue::setListener(const void *listener, Callback *callback)
 void
 MsgQueue::put(const Message &msg)
 {
-    if (!enabled) false;
+    if (enabled) {
 
-    {   SYNCHRONIZED
+        SYNCHRONIZED
 
         debug(MSG_DEBUG, "%s [%llx]\n", MsgTypeEnum::key(msg.type), msg.value);
 

@@ -22,6 +22,28 @@ SID::SID(C64 &ref, int n) : SubComponent(ref), nr(n)
 }
 
 void
+SID::_dump(Category category, std::ostream& os) const
+{
+    using namespace util;
+
+    if (category == Category::Config) {
+
+        dumpConfig(os);
+
+    } else {
+
+        switch (muxer.getConfig().engine) {
+
+            case SIDENGINE_RESID:   resid.dump(category, os); break;
+            case SIDENGINE_FASTSID: fastsid.dump(category, os); break;
+
+            default:
+                fatalError;
+        }
+    }
+}
+
+void
 SID::resetConfig()
 {
     Configurable::resetConfig(emulator.defaults, nr);

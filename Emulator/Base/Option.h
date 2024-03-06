@@ -68,6 +68,18 @@ public:
     virtual string argList() override { return "<value>"; }
 };
 
+class HexParser : public OptionParser {
+
+public:
+
+    using OptionParser::OptionParser;
+
+    virtual i64 parse(const string &s) override { arg = util::parseNum(s); return arg; }
+    virtual string asString() override;
+    virtual string keyList() override { return "<value>"; }
+    virtual string argList() override { return "<value>"; }
+};
+
 template <typename T>
 class EnumParser : public OptionParser {
 

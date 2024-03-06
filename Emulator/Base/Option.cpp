@@ -22,6 +22,7 @@
 #include "ParCableTypes.h"
 #include "PowerSupplyTypes.h"
 #include "MouseTypes.h"
+#include "IOUtils.h"
 
 namespace vc64 {
 
@@ -31,6 +32,7 @@ OptionParser::create(Option opt, i64 arg)
     auto enumParser = [&]<typename T>() { return std::unique_ptr<EnumParser<T>>(new EnumParser<T>(opt, arg)); };
     auto boolParser = [&]() { return std::unique_ptr<BoolParser>(new BoolParser(opt, arg)); };
     auto numParser  = [&](string unit = "") { return std::unique_ptr<NumParser>(new NumParser(opt, arg, unit)); };
+    auto hexParser  = [&](string unit = "") { return std::unique_ptr<HexParser>(new HexParser(opt, arg, unit)); };
 
     switch (opt) {
 
@@ -81,7 +83,7 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_CIA_TIMER_B_BUG:           return boolParser();
 
         case OPT_SID_ENABLE:                return numParser();
-        case OPT_SID_ADDRESS:               return numParser();
+        case OPT_SID_ADDRESS:               return hexParser();
 
         case OPT_SID_REVISION:              return enumParser.template operator()<SIDRevisionEnum>();
         case OPT_SID_FILTER:                return boolParser();
@@ -127,6 +129,16 @@ OptionParser::create(Option opt, i64 arg)
 
     }
     fatalError;
+}
+
+
+string
+HexParser::asString()
+{
+    std::stringstream ss;
+    ss << std::hex << "0x" << std::setw(4) << std::setfill('0') << arg << unit;
+
+    return ss.str();
 }
 
 }

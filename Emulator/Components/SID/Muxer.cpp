@@ -286,61 +286,6 @@ Muxer::_dump(Category category, std::ostream& os) const
     if (category == Category::Config) {
         
         dumpConfig(os);
-
-        /*
-        os << tab("Chip revision");
-        os << SIDRevisionEnum::key(config.revision) << std::endl;
-        os << tab("Power save mode");
-        os << bol(config.powerSave, "during warp", "never") << std::endl;
-        os << tab("Filter");
-        os << bol(config.filter) << std::endl;
-        os << tab("Engine");
-        os << SIDEngineEnum::key(config.engine) << std::endl;
-        os << tab("Sampling");
-        os << SamplingMethodEnum::key(config.sampling) << std::endl;
-        os << tab("Volume 1");
-        os << sid[0].config.vol << std::endl;
-        os << tab("Volume 2");
-        os << sid[1].config.vol << std::endl;
-        os << tab("Volume 3");
-        os << sid[2].config.vol << std::endl;
-        os << tab("Volume 4");
-        os << sid[3].config.vol << std::endl;
-        os << tab("Volume L");
-        os << config.volL << std::endl;
-        os << tab("Volume R");
-        os << config.volR << std::endl;
-
-        if (sid[1].config.enabled) {
-            os << tab("1st extra SID");
-            os << hex(sid[1].config.address) << std::endl;
-        }
-        if (sid[2].config.enabled) {
-            os << tab("2nd extra SID");
-            os << hex(sid[2].config.address) << std::endl;
-        }
-        if (sid[3].config.enabled) {
-            os << tab("3rd extra SID");
-            os << hex(sid[3].config.address) << std::endl;
-        }
-        */
-
-    } else {
-
-        _dump(category, os, 0);
-    }
-}
-
-void
-Muxer::_dump(Category category, std::ostream& os, isize nr) const
-{
-    switch (config.engine) {
-            
-        case SIDENGINE_RESID:   sid[nr].resid.dump(category, os); break;
-        case SIDENGINE_FASTSID: sid[nr].fastsid.dump(category, os); break;
-
-        default:
-            fatalError;
     }
 }
 
