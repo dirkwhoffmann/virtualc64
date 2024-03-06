@@ -35,6 +35,8 @@ MsgQueue::setListener(const void *listener, Callback *callback)
 void
 MsgQueue::put(const Message &msg)
 {
+    if (!enabled) false;
+
     {   SYNCHRONIZED
 
         debug(MSG_DEBUG, "%s [%llx]\n", MsgTypeEnum::key(msg.type), msg.value);
@@ -83,6 +85,8 @@ MsgQueue::put(MsgType type, ScriptMsg payload)
 bool
 MsgQueue::get(Message &msg)
 {
+    if (!enabled) return false;
+
     {   SYNCHRONIZED
 
         if (queue.isEmpty()) return false;

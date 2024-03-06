@@ -417,7 +417,7 @@ public:
         void softReset();
 
         /// @}
-        /// @name Managing the inspection target
+        /// @name Setting up auto-inspection
         /// @{
 
         /** @brief  Returns the current inspection target.

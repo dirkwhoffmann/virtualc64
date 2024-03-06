@@ -45,8 +45,11 @@ Emulator::launch(const void *listener, Callback *func)
     // Initialize the emulator if needed
     if (!isInitialized()) initialize();
 
-    // Add listener
+    // Connect the listener to the message queue of the main instance
     main.msgQueue.setListener(listener, func);
+
+    // Disable the message queue of the run-ahead instance
+    ahead.msgQueue.disable();
 
     // Launch the emulator thread
     Thread::launch();

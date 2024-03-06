@@ -30,16 +30,12 @@ class MsgQueue final : CoreObject, Synchronizable {
     // The registered callback function
     Callback *callback = nullptr;
 
+    // If disabled, no messages will be stored
+    bool enabled = true;
+
     
     //
-    // Constructing
-    //
-    
-    // using SubComponent::SubComponent;
-    
-    
-    //
-    // Methods from CoreObject
+    // Methods
     //
     
 private:
@@ -55,6 +51,9 @@ public:
     
     // Registers a listener together with it's callback function
     void setListener(const void *listener, Callback *func);
+
+    // Disables the message queue
+    void disable() { enabled = false; }
 
     // Sends a message
     void put(const Message &msg);
