@@ -1,0 +1,57 @@
+var namespacevc64 =
+[
+    [ "Arg", "namespacevc64_1_1_arg.html", null ],
+    [ "NTSC", "namespacevc64_1_1_n_t_s_c.html", [
+      [ "ASPECT_RATIO", "namespacevc64_1_1_n_t_s_c.html#a30b804c583bbe3c7a6a1863cc9b15561", null ],
+      [ "BORDER_CYCLES_LEFT", "namespacevc64_1_1_n_t_s_c.html#a8f29dc1d1d18895f869c2f450ce55f8b", null ],
+      [ "BORDER_CYCLES_RIGHT", "namespacevc64_1_1_n_t_s_c.html#a91978d67a0cb2116f3cc568a4a4909bc", null ],
+      [ "BORDER_PIXELS_LEFT", "namespacevc64_1_1_n_t_s_c.html#a08e0466acd50447455849b71586401f3", null ],
+      [ "BORDER_PIXELS_RIGHT", "namespacevc64_1_1_n_t_s_c.html#add6284452ab5e47d5276b08a8f6cf573", null ],
+      [ "CANVAS_CYCLES", "namespacevc64_1_1_n_t_s_c.html#a23cb04d3f00b410aa62c492b6e7e0ac6", null ],
+      [ "CANVAS_PIXELS", "namespacevc64_1_1_n_t_s_c.html#acbaa22dd6c769516622f6279da2cfd6f", null ],
+      [ "CLOCK_FREQUENCY", "namespacevc64_1_1_n_t_s_c.html#afbd8f6d5c5570f8839b623ea70a19e71", null ],
+      [ "CYCLES_PER_LINE", "namespacevc64_1_1_n_t_s_c.html#abc89786c59d0293ea9cd01940eb424c9", null ],
+      [ "CYCLES_PER_SECOND", "namespacevc64_1_1_n_t_s_c.html#a010feb045ae3cf6529ef34307de7c536", null ],
+      [ "FIRST_VISIBLE_LINE", "namespacevc64_1_1_n_t_s_c.html#a8dba6fead173f6af7a32b5ae3f1e6950", null ],
+      [ "FIRST_VISIBLE_PIXEL", "namespacevc64_1_1_n_t_s_c.html#a24ee83b4598e60303fa15089b08c1b61", null ],
+      [ "HBLANK_CYCLES_LEFT", "namespacevc64_1_1_n_t_s_c.html#ab25bc7b27610fde2811049cb4752e70c", null ],
+      [ "HBLANK_CYCLES_RIGHT", "namespacevc64_1_1_n_t_s_c.html#aebf2a4269fbd5d5d326dd5b8f1906013", null ],
+      [ "HBLANK_PIXELS_LEFT", "namespacevc64_1_1_n_t_s_c.html#ae2411329b277372c0967f04734615ddc", null ],
+      [ "HBLANK_PIXELS_RIGHT", "namespacevc64_1_1_n_t_s_c.html#a822c99fa2e54f6ca99664921536e9fbb", null ],
+      [ "LAST_VISIBLE_PIXEL", "namespacevc64_1_1_n_t_s_c.html#a54db6c734981862837b81337a176c93f", null ],
+      [ "PIXELS_PER_LINE", "namespacevc64_1_1_n_t_s_c.html#ae6d7be4114bbcbf7beaa3035e712b791", null ],
+      [ "VISIBLE_PIXELS", "namespacevc64_1_1_n_t_s_c.html#a8cb5325fc592f6ef71d817f595b4f158", null ]
+    ] ],
+    [ "PAL", "namespacevc64_1_1_p_a_l.html", [
+      [ "ASPECT_RATIO", "namespacevc64_1_1_p_a_l.html#a30b804c583bbe3c7a6a1863cc9b15561", null ],
+      [ "BORDER_CYCLES_LEFT", "namespacevc64_1_1_p_a_l.html#a8f29dc1d1d18895f869c2f450ce55f8b", null ],
+      [ "BORDER_CYCLES_RIGHT", "namespacevc64_1_1_p_a_l.html#a91978d67a0cb2116f3cc568a4a4909bc", null ],
+      [ "BORDER_PIXELS_LEFT", "namespacevc64_1_1_p_a_l.html#a08e0466acd50447455849b71586401f3", null ],
+      [ "BORDER_PIXELS_RIGHT", "namespacevc64_1_1_p_a_l.html#add6284452ab5e47d5276b08a8f6cf573", null ],
+      [ "CANVAS_CYCLES", "namespacevc64_1_1_p_a_l.html#a23cb04d3f00b410aa62c492b6e7e0ac6", null ],
+      [ "CANVAS_PIXELS", "namespacevc64_1_1_p_a_l.html#acbaa22dd6c769516622f6279da2cfd6f", null ],
+      [ "CLOCK_FREQUENCY", "namespacevc64_1_1_p_a_l.html#afbd8f6d5c5570f8839b623ea70a19e71", null ],
+      [ "CYCLES_PER_SECOND", "namespacevc64_1_1_p_a_l.html#a010feb045ae3cf6529ef34307de7c536", null ],
+      [ "FIRST_VISIBLE_LINE", "namespacevc64_1_1_p_a_l.html#a8dba6fead173f6af7a32b5ae3f1e6950", null ],
+      [ "FIRST_VISIBLE_PIXEL", "namespacevc64_1_1_p_a_l.html#a24ee83b4598e60303fa15089b08c1b61", null ],
+      [ "HBLANK_CYCLES_LEFT", "namespacevc64_1_1_p_a_l.html#ab25bc7b27610fde2811049cb4752e70c", null ],
+      [ "HBLANK_CYCLES_RIGHT", "namespacevc64_1_1_p_a_l.html#aebf2a4269fbd5d5d326dd5b8f1906013", null ],
+      [ "HBLANK_PIXELS_LEFT", "namespacevc64_1_1_p_a_l.html#ae2411329b277372c0967f04734615ddc", null ],
+      [ "HBLANK_PIXELS_RIGHT", "namespacevc64_1_1_p_a_l.html#a822c99fa2e54f6ca99664921536e9fbb", null ],
+      [ "LAST_VISIBLE_PIXEL", "namespacevc64_1_1_p_a_l.html#a54db6c734981862837b81337a176c93f", null ],
+      [ "PAL_CYCLES_PER_LINE", "namespacevc64_1_1_p_a_l.html#af2d08cb227a3e1be311b1fe96b573987", null ],
+      [ "PIXELS_PER_LINE", "namespacevc64_1_1_p_a_l.html#ae6d7be4114bbcbf7beaa3035e712b791", null ],
+      [ "VISIBLE_PIXELS", "namespacevc64_1_1_p_a_l.html#a8cb5325fc592f6ef71d817f595b4f158", null ]
+    ] ],
+    [ "Texture", "namespacevc64_1_1_texture.html", [
+      [ "height", "namespacevc64_1_1_texture.html#a23ade6825d2fb33f72a19e44662ede6d", null ],
+      [ "width", "namespacevc64_1_1_texture.html#a901e94586a3714d270d05434107c329f", null ]
+    ] ],
+    [ "CmdQueue", "classvc64_1_1_cmd_queue.html", null ],
+    [ "Defaults", "classvc64_1_1_defaults.html", "classvc64_1_1_defaults" ],
+    [ "Inspectable", "classvc64_1_1_inspectable.html", null ],
+    [ "Suspendable", "classvc64_1_1_suspendable.html", "classvc64_1_1_suspendable" ],
+    [ "Thread", "classvc64_1_1_thread.html", "classvc64_1_1_thread" ],
+    [ "VC64Error", "structvc64_1_1_v_c64_error.html", null ],
+    [ "StateChangeException", "namespacevc64.html#ad1ba133fd10f185a85b8ccadb58f75c0", null ]
+];

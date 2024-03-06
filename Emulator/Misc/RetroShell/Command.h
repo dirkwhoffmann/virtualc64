@@ -23,6 +23,8 @@ class RetroShell;
 
 typedef std::vector<string> Arguments;
 
+/** RetroShell argument types
+ */
 namespace Arg {
 
 static const std::string address    = "<address>";

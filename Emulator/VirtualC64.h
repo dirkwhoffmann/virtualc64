@@ -249,8 +249,9 @@ public:
 
     /** @brief  Returns a pointer to the most recent stable texture
       *
-      * The texture size vc64::TEX_WIDTH x vc64::TEX_HEIGHT texels.
-      * Each texel is 8 bit.
+      * The texture dimensions are given by constants vc64::Texture::width
+      * and vc64::Texture::height texels. Each texel is represented by a
+      * 32 bit color value.
      */
     u32 *getTexture() const { return Emulator::getTexture(); }
 
@@ -321,6 +322,7 @@ public:
      *  This is the main function to set an configuration option.
      *
      *  @param option   The option to set
+     *  @param value    The option's value
      *
      *  @note If this function is called for an options that applies to multiple
      *  components, all components are configured with the specified value.
@@ -333,6 +335,7 @@ public:
      *
      *  @param option   The option to set
      *  @param id       The component to configure
+     *  @param value    The option's value
      *
      *  @note This function must only be called for those options that require
      *  an additional parameter to uniquely determine the configured component.

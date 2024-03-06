@@ -1,0 +1,28 @@
+var _disk_types_8h =
+[
+    [ "DiskTypeEnum", "struct_disk_type_enum.html", "struct_disk_type_enum" ],
+    [ "CBMFileTypeEnum", "struct_c_b_m_file_type_enum.html", "struct_c_b_m_file_type_enum" ],
+    [ "DiskErrorCodeEnum", "struct_disk_error_code_enum.html", "struct_disk_error_code_enum" ],
+    [ "DiskData", "structvc64_1_1_disk_data.html", "structvc64_1_1_disk_data" ],
+    [ "DiskLength", "structvc64_1_1_disk_length.html", "structvc64_1_1_disk_length" ],
+    [ "TrackDefaults", "struct_track_defaults.html", "struct_track_defaults" ],
+    [ "CBMFileType", "_disk_types_8h.html#a0b870b3694b298392e99cf61c04d3764", null ],
+    [ "DiskErrorCode", "_disk_types_8h.html#a01e1e3668b3dfbc6a27622c9b4ecf880", null ],
+    [ "DiskType", "_disk_types_8h.html#a85692aa35fe8e2047fd80d728f24039b", null ],
+    [ "enum_long", "_disk_types_8h.html#a6c4fd4b1092c8bc96dcb4263cc3c4683", null ],
+    [ "enum_long", "_disk_types_8h.html#a1e3eb7d8e60435ac896e236c6bc14874", null ],
+    [ "enum_long", "_disk_types_8h.html#afac7780180a9527556480635937c869d", null ],
+    [ "isHalftrackNumber", "_disk_types_8h.html#aaa39f5f3b03d97aefc92349d3129ee94", null ],
+    [ "isSectorNumber", "_disk_types_8h.html#a7b7d9a0b176212de64c7b7d375fb9603", null ],
+    [ "isTrackNumber", "_disk_types_8h.html#a93ee997f3d36fd66d39d4fdd1487bc44", null ],
+    [ "averageBitsOnTrack", "_disk_types_8h.html#aa596d31da38a4a73828baefb4a162863", null ],
+    [ "averageBitTimeSpan", "_disk_types_8h.html#aa92035728196ad6fca53f31931731a5e", null ],
+    [ "averageBytesOnTrack", "_disk_types_8h.html#a4cf1f5aed062c3d61a970dd2fe5b6f3c", null ],
+    [ "dataBlockSize", "_disk_types_8h.html#a21b4d58db0aa42d86d69ddca7d84ce47", null ],
+    [ "headerBlockSize", "_disk_types_8h.html#a7adf6fa00ba24d5155c20f03a10c4adc", null ],
+    [ "highestHalftrack", "_disk_types_8h.html#a2c01c1943800ff38b5bfe8fdc498cbde", null ],
+    [ "highestSector", "_disk_types_8h.html#a027825cba24dc584b2c524109f5a284c", null ],
+    [ "highestTrack", "_disk_types_8h.html#af7b231d37229f34a1bfb3fc6ccab6d2a", null ],
+    [ "maxBitsOnTrack", "_disk_types_8h.html#a23925a09a3a1e8b70bfbbb54cfdcf371", null ],
+    [ "maxBytesOnTrack", "_disk_types_8h.html#a1a7ebdfdfcd731496a93bce6f6e8bcd5", null ]
+];

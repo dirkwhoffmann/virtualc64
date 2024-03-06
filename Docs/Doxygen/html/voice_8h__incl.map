@@ -1,0 +1,13 @@
+<map id="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.h" name="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/voice.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,188,61"/>
+<area shape="rect" id="Node000002" href="$resid-config_8h.html" title=" " alt="" coords="47,183,146,208"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="75,63,57,97,53,115,55,134,64,153,76,170,72,173,59,155,50,135,47,115,52,95,70,60"/>
+<area shape="rect" id="Node000004" href="$wave_8h.html" title=" " alt="" coords="65,109,128,135"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="99,61,99,93,94,93,94,61"/>
+<area shape="rect" id="Node000005" href="$envelope_8h.html" title=" " alt="" coords="152,109,236,135"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="129,59,171,96,167,100,125,63"/>
+<area shape="rect" id="Node000003" href="$siddefs_8h.html" title=" " alt="" coords="59,256,134,282"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="99,209,99,241,94,241,94,209"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="99,135,99,167,94,167,94,135"/>
+<area shape="poly" id="edge6_Node000005_Node000002" title=" " alt="" coords="179,137,126,176,123,171,176,133"/>
+</map>

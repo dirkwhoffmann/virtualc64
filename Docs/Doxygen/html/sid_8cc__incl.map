@@ -1,0 +1,33 @@
+<map id="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/sid.cc" name="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/sid.cc">
+<area shape="rect" id="Node000001" title=" " alt="" coords="250,5,433,61"/>
+<area shape="rect" id="Node000002" href="$resid_2sid_8h.html" title=" " alt="" coords="195,109,245,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="305,63,251,102,248,98,302,59"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="269,109,326,135"/>
+<area shape="poly" id="edge16_Node000001_Node000011" title=" " alt="" coords="330,62,313,96,308,94,325,60"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="350,109,421,135"/>
+<area shape="poly" id="edge17_Node000001_Node000012" title=" " alt="" coords="357,60,375,94,370,96,353,62"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="445,109,510,135"/>
+<area shape="poly" id="edge18_Node000001_Node000013" title=" " alt="" coords="386,59,447,98,444,103,383,64"/>
+<area shape="rect" id="Node000003" href="$resid-config_8h.html" title=" " alt="" coords="110,330,210,356"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="196,131,133,149,97,164,64,185,31,216,12,257,8,270,12,281,28,299,49,313,96,331,95,336,47,318,25,303,7,283,3,270,7,255,27,213,61,181,95,160,131,144,194,125"/>
+<area shape="rect" id="Node000005" href="$voice_8h.html" title=" " alt="" coords="75,183,138,208"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="202,137,140,176,138,172,199,133"/>
+<area shape="rect" id="Node000008" href="$filter_8h.html" title=" " alt="" coords="227,256,283,282"/>
+<area shape="poly" id="edge10_Node000002_Node000008" title=" " alt="" coords="226,134,251,240,246,242,220,136"/>
+<area shape="rect" id="Node000009" href="$extfilt_8h.html" title=" " alt="" coords="257,183,322,208"/>
+<area shape="poly" id="edge12_Node000002_Node000009" title=" " alt="" coords="233,133,269,170,265,173,230,137"/>
+<area shape="rect" id="Node000010" href="$pot_8h.html" title=" " alt="" coords="346,183,396,208"/>
+<area shape="poly" id="edge14_Node000002_Node000010" title=" " alt="" coords="246,133,332,173,330,178,244,137"/>
+<area shape="rect" id="Node000004" href="$siddefs_8h.html" title=" " alt="" coords="123,404,197,429"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="163,356,163,388,157,388,157,356"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="79,211,53,225,30,242,17,261,17,270,21,281,36,297,54,311,96,328,94,333,51,315,32,301,16,283,12,271,12,259,26,238,50,220,76,206"/>
+<area shape="rect" id="Node000006" href="$wave_8h.html" title=" " alt="" coords="31,256,94,282"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="102,210,81,244,76,241,97,207"/>
+<area shape="rect" id="Node000007" href="$envelope_8h.html" title=" " alt="" coords="118,256,202,282"/>
+<area shape="poly" id="edge8_Node000005_Node000007" title=" " alt="" coords="118,207,144,242,140,245,113,210"/>
+<area shape="poly" id="edge7_Node000006_Node000003" title=" " alt="" coords="81,280,133,319,130,323,78,285"/>
+<area shape="poly" id="edge9_Node000007_Node000003" title=" " alt="" coords="163,282,163,314,157,314,157,282"/>
+<area shape="poly" id="edge11_Node000008_Node000003" title=" " alt="" coords="240,285,190,323,187,318,237,280"/>
+<area shape="poly" id="edge13_Node000009_Node000003" title=" " alt="" coords="297,208,305,243,304,264,297,283,283,300,265,314,226,332,224,327,262,309,279,296,292,281,299,263,300,244,292,210"/>
+<area shape="poly" id="edge15_Node000010_Node000003" title=" " alt="" coords="369,210,350,246,335,266,318,284,273,311,226,329,224,324,271,307,314,280,331,263,345,243,364,207"/>
+</map>

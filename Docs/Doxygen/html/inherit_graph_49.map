@@ -1,0 +1,23 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,129,83,155"/>
+<area shape="rect" id="Node000001" href="$structutil_1_1_exception.html" title=" " alt="" coords="133,55,212,80"/>
+<area shape="poly" id="edge188_Node000000_Node000001" title=" " alt="" coords="79,119,147,79,150,83,82,124"/>
+<area shape="rect" id="Node000004" href="$structutil_1_1_parse_error.html" title=" " alt="" coords="131,203,214,228"/>
+<area shape="poly" id="edge191_Node000000_Node000004" title=" " alt="" coords="83,161,149,200,147,204,80,166"/>
+<area shape="rect" id="Node000002" href="$structvc64_1_1_script_interruption.html" title=" " alt="" coords="285,5,405,31"/>
+<area shape="poly" id="edge189_Node000001_Node000002" title=" " alt="" coords="226,49,297,29,298,34,228,55"/>
+<area shape="rect" id="Node000003" href="$structvc64_1_1_v_c64_error.html" title="Emulator exception." alt="" coords="304,55,386,80"/>
+<area shape="poly" id="edge190_Node000001_Node000003" title=" " alt="" coords="228,65,303,65,303,70,228,70"/>
+<area shape="rect" id="Node000005" href="$structutil_1_1_enum_parse_error.html" title=" " alt="" coords="286,104,403,130"/>
+<area shape="poly" id="edge192_Node000004_Node000005" title=" " alt="" coords="194,190,224,163,261,138,285,128,288,133,263,143,228,167,198,194"/>
+<area shape="rect" id="Node000006" href="$structutil_1_1_parse_bool_error.html" title=" " alt="" coords="290,153,399,179"/>
+<area shape="poly" id="edge193_Node000004_Node000006" title=" " alt="" coords="228,197,296,177,298,182,230,202"/>
+<area shape="rect" id="Node000007" href="$structutil_1_1_parse_num_error.html" title=" " alt="" coords="289,203,400,228"/>
+<area shape="poly" id="edge194_Node000004_Node000007" title=" " alt="" coords="229,213,289,213,289,218,229,218"/>
+<area shape="rect" id="Node000008" href="$structutil_1_1_parse_on_off_error.html" title=" " alt="" coords="286,252,404,278"/>
+<area shape="poly" id="edge195_Node000004_Node000008" title=" " alt="" coords="230,229,298,249,296,254,228,234"/>
+<area shape="rect" id="Node000009" href="$structvc64_1_1_too_few_arguments_error.html" title=" " alt="" coords="266,301,424,327"/>
+<area shape="poly" id="edge196_Node000004_Node000009" title=" " alt="" coords="198,237,228,264,263,288,288,298,285,303,261,293,224,268,194,241"/>
+<area shape="rect" id="Node000010" href="$structvc64_1_1_too_many_arguments_error.html" title=" " alt="" coords="262,351,427,376"/>
+<area shape="poly" id="edge197_Node000004_Node000010" title=" " alt="" coords="188,241,218,291,239,316,264,337,283,348,280,352,260,342,235,320,214,294,184,244"/>
+</map>

@@ -14,6 +14,7 @@
 
 #include "Types.h"
 #include "Exception.h"
+#include <functional>
 
 namespace util {
 

@@ -1,0 +1,11 @@
+<map id="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h" name="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleTypes.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="57,5,246,61"/>
+<area shape="rect" id="Node000002" href="$_types_8h.html" title=" " alt="" coords="118,109,185,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="154,61,154,93,149,93,149,61"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,183,95,208"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="136,137,81,175,78,171,133,133"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="119,183,184,208"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="154,135,154,167,149,167,149,135"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="208,183,282,208"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="169,133,219,171,215,175,166,137"/>
+</map>

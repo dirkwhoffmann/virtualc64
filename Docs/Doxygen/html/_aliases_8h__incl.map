@@ -1,0 +1,13 @@
+<map id="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h" name="/Users/hoff/Retro/virtualc64/Emulator/Base/Aliases.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="60,5,243,46"/>
+<area shape="rect" id="Node000002" href="$_macros_8h.html" title=" " alt="" coords="114,94,189,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="154,46,154,78,149,78,149,46"/>
+<area shape="rect" id="Node000003" href="$_types_8h.html" title=" " alt="" coords="118,168,185,193"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="154,120,154,152,149,152,149,120"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,241,95,267"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="136,196,81,234,78,230,133,192"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="119,241,184,267"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="154,194,154,226,149,226,149,194"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="208,241,282,267"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="169,192,219,230,215,234,166,196"/>
+</map>

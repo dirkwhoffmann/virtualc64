@@ -474,6 +474,9 @@ RetroShell::exec(const string &command, isize line)
 
     try {
 
+        // Print the command if it comes from a script
+        if (line) *this << command << '\n';
+
         // Call the interpreter
         interpreter.exec(command);
 

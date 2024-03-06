@@ -1,0 +1,26 @@
+var classvc64_1_1_mouse1351 =
+[
+    [ "Mouse1351", "classvc64_1_1_mouse1351.html#a752d761889966c26da1d979bfd7897ac", null ],
+    [ "_reset", "classvc64_1_1_mouse1351.html#a3a69761ec13333ab2929bcbcfc09fe8a", null ],
+    [ "executeX", "classvc64_1_1_mouse1351.html#a2c8317577c19c7795b0009aad7bd457d", null ],
+    [ "executeY", "classvc64_1_1_mouse1351.html#ace35f51974e0b34143cb7bbd5facf819", null ],
+    [ "getDescription", "classvc64_1_1_mouse1351.html#a1a54b3b5a547afdc835d48e88276684f", null ],
+    [ "mouseXBits", "classvc64_1_1_mouse1351.html#a8836203aee8c4e06ddc6a5aa368b88bd", null ],
+    [ "mouseYBits", "classvc64_1_1_mouse1351.html#a8d381ab92a2c3e32b1f6b7de15b6a645", null ],
+    [ "operator=", "classvc64_1_1_mouse1351.html#a639afd00232e2af99db8af1300516485", null ],
+    [ "readControlPort", "classvc64_1_1_mouse1351.html#a4ce632c981c4b47de6639245eec9560d", null ],
+    [ "readPotX", "classvc64_1_1_mouse1351.html#a08f9ddbde4bf5ab2f1e3c25521384d37", null ],
+    [ "readPotY", "classvc64_1_1_mouse1351.html#a050b6e7ba2d528f951c6bf762c14ec5f", null ],
+    [ "serialize", "classvc64_1_1_mouse1351.html#aa2de57e4f70f3304cdd199e6c52f885b", null ],
+    [ "SERIALIZERS", "classvc64_1_1_mouse1351.html#ae03bb49f72c85a5cf74ac98cbe7ae594", null ],
+    [ "setLeftMouseButton", "classvc64_1_1_mouse1351.html#a5a73e1c6b53dc97b235c58c9286ca134", null ],
+    [ "setRightMouseButton", "classvc64_1_1_mouse1351.html#ad1016b32d66a540556e7843069e74bc2", null ],
+    [ "dividerX", "classvc64_1_1_mouse1351.html#a65e0c3ecc1d7cd8b5b5cfd58b3fac625", null ],
+    [ "dividerY", "classvc64_1_1_mouse1351.html#a761e647201ae03dc0ebbc6445ececd46", null ],
+    [ "leftButton", "classvc64_1_1_mouse1351.html#a0926ac8503bafe3b3c453678119f2f89", null ],
+    [ "mouseX", "classvc64_1_1_mouse1351.html#a473534b12e82c0f9c349bdc453104f09", null ],
+    [ "mouseY", "classvc64_1_1_mouse1351.html#ad98db9e6b510a0fa9663dc5ca55d0abd", null ],
+    [ "rightButton", "classvc64_1_1_mouse1351.html#a634d49dee4850598415a5e650cd6f252", null ],
+    [ "shiftX", "classvc64_1_1_mouse1351.html#a462ec8120de076c290aafd9a3d4e74e0", null ],
+    [ "shiftY", "classvc64_1_1_mouse1351.html#af9738a14594494f615a0c2bffa7f6feb", null ]
+];

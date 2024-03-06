@@ -1,0 +1,20 @@
+<map id="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/CPUTypes.h" name="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/CPUTypes.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="71,5,259,61"/>
+<area shape="rect" id="Node000002" href="$_aliases_8h.html" title=" " alt="" coords="19,109,94,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="133,63,85,101,82,97,129,59"/>
+<area shape="rect" id="Node000008" href="$_reflection_8h.html" title=" " alt="" coords="119,109,210,135"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="167,61,167,93,162,93,162,61"/>
+<area shape="rect" id="Node000009" href="$_peddle_types_8h.html" title=" " alt="" coords="175,183,282,208"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="194,60,211,82,224,108,232,138,233,167,228,167,226,139,220,110,206,85,189,63"/>
+<area shape="rect" id="Node000003" href="$_macros_8h.html" title=" " alt="" coords="56,183,132,208"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="65,134,83,168,78,170,60,136"/>
+<area shape="rect" id="Node000004" href="$_types_8h.html" title=" " alt="" coords="118,256,185,282"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="106,207,134,242,130,246,101,210"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,330,95,356"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="136,285,81,323,78,318,133,280"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="119,330,184,356"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="154,282,154,314,149,314,149,282"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="208,330,282,356"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="169,280,219,318,215,323,166,285"/>
+<area shape="poly" id="edge9_Node000009_Node000004" title=" " alt="" coords="217,211,177,248,174,244,214,207"/>
+</map>

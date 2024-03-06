@@ -1,0 +1,25 @@
+var classvc64_1_1_star_dos =
+[
+    [ "_dump", "classvc64_1_1_star_dos.html#a3dfbbf62e1a3b5519e5d45b72311cb04", null ],
+    [ "Cartridge", "classvc64_1_1_star_dos.html#a350bb42a3d8246caa1b72bca78c3e830", null ],
+    [ "CARTRIDGE_SERIALIZERS", "classvc64_1_1_star_dos.html#a30cd4b69a39c03410127d0dd629ebf1b", null ],
+    [ "charge", "classvc64_1_1_star_dos.html#a31061818a5a2cf68539ca073374286d3", null ],
+    [ "clone", "classvc64_1_1_star_dos.html#a04c03710271469b93153e1cc550eb75b", null ],
+    [ "disableROML", "classvc64_1_1_star_dos.html#a36a1b9bdf8f39c81d2747eeaa0f549ec", null ],
+    [ "discharge", "classvc64_1_1_star_dos.html#afb1e3ff836e00836b3e086a6d5f67946", null ],
+    [ "enableROML", "classvc64_1_1_star_dos.html#aa4196c725e7700a79dbfd20ed82225e3", null ],
+    [ "getTraits", "classvc64_1_1_star_dos.html#a7a43b0ae32e4dbf712e4592fa16664fb", null ],
+    [ "operator=", "classvc64_1_1_star_dos.html#ac0c456a819027fbefc7a3971f2f1711e", null ],
+    [ "peekIO1", "classvc64_1_1_star_dos.html#af25f827f4012f049fe7886a8adc22cdd", null ],
+    [ "peekIO2", "classvc64_1_1_star_dos.html#a9341a8f56f91008a7bab848827495d5d", null ],
+    [ "pokeIO1", "classvc64_1_1_star_dos.html#a3b98e20ccf02290239c313abbecd2deb", null ],
+    [ "pokeIO2", "classvc64_1_1_star_dos.html#a019ed2a3fabb681483da2e9519cd11b3", null ],
+    [ "serialize", "classvc64_1_1_star_dos.html#aa2de57e4f70f3304cdd199e6c52f885b", null ],
+    [ "spypeekIO1", "classvc64_1_1_star_dos.html#aafa22349d58fb7400011540a62dbd253", null ],
+    [ "spypeekIO2", "classvc64_1_1_star_dos.html#ac3b5ffbfa105aab84407a13b54da6462", null ],
+    [ "updatePeekPokeLookupTables", "classvc64_1_1_star_dos.html#a7c35bee35a368a81905c60f28202566f", null ],
+    [ "updateVoltage", "classvc64_1_1_star_dos.html#af886926ba94cdd591f0c5a4c43aac91a", null ],
+    [ "latestVoltageUpdate", "classvc64_1_1_star_dos.html#afbad76cacf8079a1a0b860bf30fd5e98", null ],
+    [ "traits", "classvc64_1_1_star_dos.html#ab89afec0e4865cc45353bf61fbb338b5", null ],
+    [ "voltage", "classvc64_1_1_star_dos.html#ad357c30b645fbb7e07bef85a7b8e99a5", null ]
+];

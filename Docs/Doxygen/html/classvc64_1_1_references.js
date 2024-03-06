@@ -1,0 +1,27 @@
+var classvc64_1_1_references =
+[
+    [ "References", "classvc64_1_1_references.html#a231d09fab05a36b282fa1b2b433d5e3f", null ],
+    [ "c64", "classvc64_1_1_references.html#abd7331db193d1aa9194c50ef6808a380", null ],
+    [ "cia1", "classvc64_1_1_references.html#a7bcc99504f16c622d441f1a87ee05d58", null ],
+    [ "cia2", "classvc64_1_1_references.html#ab72a8a3027b8f2e53e881e11fd0209e1", null ],
+    [ "cpu", "classvc64_1_1_references.html#ae0b5ea67ec3aa9834cc876703d152e3e", null ],
+    [ "datasette", "classvc64_1_1_references.html#aafa797a28b90283f08807a1a6906b94c", null ],
+    [ "drive", "classvc64_1_1_references.html#a7822ad84a286a24b094cc4a79c2ce4ac", null ],
+    [ "drive8", "classvc64_1_1_references.html#a427939cb6fc3c49868850564f14a85ea", null ],
+    [ "drive9", "classvc64_1_1_references.html#ae3926c0ac8e54c820da1da9bc885753a", null ],
+    [ "expansionport", "classvc64_1_1_references.html#a6e5488565857b9ce55cfbed0d8b5e8d0", null ],
+    [ "host", "classvc64_1_1_references.html#a557575991d3eae18871c504219bf8353", null ],
+    [ "iec", "classvc64_1_1_references.html#ab96b3fb3a9305f479260b61a63574cac", null ],
+    [ "keyboard", "classvc64_1_1_references.html#a7a3f6927911e30f93bb8648f11ae8d79", null ],
+    [ "mem", "classvc64_1_1_references.html#ad13d12a67a5eae2eb3e6d3fec4fd741d", null ],
+    [ "msgQueue", "classvc64_1_1_references.html#ae4b8bfcd5684d475b735f0cd08fbb60a", null ],
+    [ "muxer", "classvc64_1_1_references.html#a6d0d1e24882d928906327ac0e539fba5", null ],
+    [ "oscillator", "classvc64_1_1_references.html#ad33c2e46821ef98a70ecb920e44f61e1", null ],
+    [ "parCable", "classvc64_1_1_references.html#a83f33faa51becfd5d64f2b40c7627339", null ],
+    [ "port1", "classvc64_1_1_references.html#a5b5c785d95e42a09f2c03422ae6b37dd", null ],
+    [ "port2", "classvc64_1_1_references.html#aa07ca02a3b67213260f57955448789ec", null ],
+    [ "recorder", "classvc64_1_1_references.html#a354fea79e9acdabf85bdb8df12303965", null ],
+    [ "regressionTester", "classvc64_1_1_references.html#aab3adc936767f0b214234bff009b36dd", null ],
+    [ "retroShell", "classvc64_1_1_references.html#a05bbc9641a7096dcc3054a92cecca95c", null ],
+    [ "vic", "classvc64_1_1_references.html#a5cadc0682c2cd493d35c08ac357ad3b9", null ]
+];

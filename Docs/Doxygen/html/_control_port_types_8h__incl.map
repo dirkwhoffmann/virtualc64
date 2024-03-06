@@ -1,0 +1,24 @@
+<map id="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ControlPortTypes.h" name="/Users/hoff/Retro/virtualc64/Emulator/Components/LogicBoard/ControlPortTypes.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="138,5,362,61"/>
+<area shape="rect" id="Node000002" href="$_aliases_8h_source.html" title=" " alt="" coords="159,109,234,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="236,63,214,97,210,94,231,60"/>
+<area shape="rect" id="Node000010" href="$_reflection_8h_source.html" title=" " alt="" coords="259,109,350,135"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="269,60,291,94,287,97,265,63"/>
+<area shape="rect" id="Node000003" href="$_macros_8h_source.html" title=" " alt="" coords="159,183,234,208"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="199,135,199,167,194,167,194,135"/>
+<area shape="rect" id="Node000004" href="$_types_8h_source.html" title=" " alt="" coords="200,256,268,282"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="205,207,223,241,218,244,200,210"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,330,95,356"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="204,285,96,326,94,322,202,280"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="119,330,184,356"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="222,285,178,322,175,318,218,281"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="207,330,261,356"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="237,282,237,314,231,314,231,282"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="285,330,346,356"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="250,281,292,318,289,322,246,285"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="370,330,437,356"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="264,280,361,321,359,326,262,285"/>
+<area shape="poly" id="edge10_Node000010_Node000004" title=" " alt="" coords="301,136,249,243,244,241,296,134"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="308,183,355,208"/>
+<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="312,134,324,167,319,169,307,136"/>
+</map>

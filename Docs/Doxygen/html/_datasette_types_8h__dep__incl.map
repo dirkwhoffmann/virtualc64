@@ -1,0 +1,18 @@
+<map id="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h" name="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Datasette/DatasetteTypes.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="107,5,314,61"/>
+<area shape="rect" id="Node000002" href="$_datasette_8h_source.html" title=" " alt="" coords="36,109,244,165"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,76,161,110,157,107,181,73"/>
+<area shape="rect" id="Node000008" href="$_virtual_c64_types_8h.html" title=" " alt="" coords="224,213,413,253"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="238,73,258,108,312,211,307,214,253,110,233,76"/>
+<area shape="rect" id="Node000003" href="$_c64_8h_source.html" title=" " alt="" coords="5,213,200,253"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="126,180,113,213,108,211,121,178"/>
+<area shape="rect" id="Node000004" href="$_emulator_8h_source.html" title=" " alt="" coords="25,301,247,342"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="118,267,131,300,126,302,113,269"/>
+<area shape="rect" id="Node000005" href="$_virtual_c64_8h.html" title=" " alt="" coords="118,390,300,431"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="164,352,195,388,191,391,160,356"/>
+<area shape="rect" id="Node000006" href="$_headless_8h_source.html" title=" " alt="" coords="118,479,300,519"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="212,446,212,478,207,478,207,446"/>
+<area shape="rect" id="Node000007" href="$_headless_8cpp.html" title=" " alt="" coords="118,567,300,608"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="212,535,212,567,207,567,207,535"/>
+<area shape="poly" id="edge8_Node000008_Node000005" title=" " alt="" coords="304,268,261,343,227,391,222,388,256,341,299,266"/>
+</map>

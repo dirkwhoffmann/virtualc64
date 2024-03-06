@@ -1,0 +1,22 @@
+<map id="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.cpp" name="/Users/hoff/Retro/virtualc64/Emulator/Utilities/Parser.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="20,5,211,46"/>
+<area shape="rect" id="Node000002" href="$config_8h.html" title=" " alt="" coords="36,94,104,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="106,48,87,82,82,79,102,45"/>
+<area shape="rect" id="Node000004" href="$_parser_8h.html" title=" " alt="" coords="127,94,197,120"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="129,45,149,79,145,82,125,48"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="36,168,104,193"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="73,120,73,152,67,152,67,120"/>
+<area shape="rect" id="Node000005" href="$_types_8h.html" title=" " alt="" coords="118,241,185,267"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="164,120,156,226,151,226,158,120"/>
+<area shape="rect" id="Node000009" href="$_exception_8h.html" title=" " alt="" coords="189,168,279,193"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="176,118,213,155,209,158,172,122"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="5,315,95,341"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="136,270,81,308,78,303,133,265"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="119,315,184,341"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="154,267,154,299,149,299,149,267"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="208,315,282,341"/>
+<area shape="poly" id="edge7_Node000005_Node000008" title=" " alt="" coords="169,265,219,303,215,308,166,270"/>
+<area shape="poly" id="edge9_Node000009_Node000005" title=" " alt="" coords="222,196,178,233,175,229,218,192"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="209,241,286,267"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="239,193,245,225,240,226,234,194"/>
+</map>

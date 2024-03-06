@@ -1,0 +1,27 @@
+var classvc64_1_1_p00_file =
+[
+    [ "P00File", "classvc64_1_1_p00_file.html#a637987e10ac2c59467de7f6e270ddc4a", null ],
+    [ "P00File", "classvc64_1_1_p00_file.html#a93351b30975e3270508f894d8d886b0f", null ],
+    [ "P00File", "classvc64_1_1_p00_file.html#a2806575392179c070f83f634701a83b7", null ],
+    [ "P00File", "classvc64_1_1_p00_file.html#a2cbc9c9009f4a1d9c7574f1feaeae158", null ],
+    [ "P00File", "classvc64_1_1_p00_file.html#a1765b88cdf4ea4c53471816f4b0c3c30", null ],
+    [ "collectionCount", "classvc64_1_1_p00_file.html#aecb0a01dd43bb3f80df15e6935b6e2d0", null ],
+    [ "collectionName", "classvc64_1_1_p00_file.html#ad572fa9f419e02e291ea0184ce567315", null ],
+    [ "getDescription", "classvc64_1_1_p00_file.html#a1a54b3b5a547afdc835d48e88276684f", null ],
+    [ "getName", "classvc64_1_1_p00_file.html#a9272aba63b4c98d3c07f850a4e97d442", null ],
+    [ "init", "classvc64_1_1_p00_file.html#a8c5cbe33f166d5aabd0d220309c38c38", null ],
+    [ "init", "classvc64_1_1_p00_file.html#a4b0844ad8281a65214b38af296d2d5ab", null ],
+    [ "init", "classvc64_1_1_p00_file.html#abd41b90057c72af955e309889812aba0", null ],
+    [ "init", "classvc64_1_1_p00_file.html#a4c0ba137083a29ad7caacff4177d9060", null ],
+    [ "init", "classvc64_1_1_p00_file.html#a6f83f33a90091ef7e8bef0e1604fbf3f", null ],
+    [ "init", "classvc64_1_1_p00_file.html#a014cafb31be6dea29fa75ede67b8cab1", null ],
+    [ "init", "classvc64_1_1_p00_file.html#aff60b1ce4f34c1de5626155b7b6977e2", null ],
+    [ "isCompatible", "classvc64_1_1_p00_file.html#aa4f5c8eac184eca86454444c40b960b9", null ],
+    [ "isCompatible", "classvc64_1_1_p00_file.html#a6ac84a9fc94867451e1541991d4812b2", null ],
+    [ "isCompatiblePath", "classvc64_1_1_p00_file.html#a8bc51cdbe51a97a462b00b78b6d9b2c8", null ],
+    [ "isCompatibleStream", "classvc64_1_1_p00_file.html#a5fbc7c995329833f7c5d687fd8179b13", null ],
+    [ "itemName", "classvc64_1_1_p00_file.html#a65a0f57664e9f292edee6cbf947db670", null ],
+    [ "itemSize", "classvc64_1_1_p00_file.html#aff3e1536d13ab8ce1565acd37c043d51", null ],
+    [ "readByte", "classvc64_1_1_p00_file.html#a9e16f429156bf5becd42b890130b8bce", null ],
+    [ "type", "classvc64_1_1_p00_file.html#a38acb1bdc6585e44519473cc295e522c", null ]
+];

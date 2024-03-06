@@ -1,0 +1,27 @@
+<map id="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/wave.cc" name="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/wave.cc">
+<area shape="rect" id="Node000001" title=" " alt="" coords="520,5,702,61"/>
+<area shape="rect" id="Node000002" href="$wave_8h.html" title=" " alt="" coords="23,109,87,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="520,47,331,72,102,111,101,106,331,67,519,42"/>
+<area shape="rect" id="Node000005" href="$dac_8h.html" title=" " alt="" coords="111,109,164,135"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="520,50,365,74,180,111,179,106,364,69,519,44"/>
+<area shape="rect" id="Node000006" href="$wave6581_____s_t_8h.html" title=" " alt="" coords="188,109,309,135"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="520,59,315,107,314,102,519,54"/>
+<area shape="rect" id="Node000007" href="$wave6581___p___t_8h.html" title=" " alt="" coords="332,109,453,135"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="543,64,438,105,436,100,541,59"/>
+<area shape="rect" id="Node000008" href="$wave6581___p_s___8h.html" title=" " alt="" coords="476,109,599,135"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="590,63,560,99,556,95,586,60"/>
+<area shape="rect" id="Node000009" href="$wave6581___p_s_t_8h.html" title=" " alt="" coords="623,109,746,135"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="636,60,666,95,662,99,632,63"/>
+<area shape="rect" id="Node000010" href="$wave8580_____s_t_8h.html" title=" " alt="" coords="770,109,890,135"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="681,59,786,100,784,105,679,64"/>
+<area shape="rect" id="Node000011" href="$wave8580___p___t_8h.html" title=" " alt="" coords="914,109,1034,135"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="703,54,908,102,907,107,702,59"/>
+<area shape="rect" id="Node000012" href="$wave8580___p_s___8h.html" title=" " alt="" coords="1057,109,1181,135"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="703,47,1043,105,1042,110,702,53"/>
+<area shape="rect" id="Node000013" href="$wave8580___p_s_t_8h.html" title=" " alt="" coords="1205,109,1327,135"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="703,43,1189,106,1189,111,702,48"/>
+<area shape="rect" id="Node000003" href="$resid-config_8h.html" title=" " alt="" coords="5,183,105,208"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="58,135,58,167,52,167,52,135"/>
+<area shape="rect" id="Node000004" href="$siddefs_8h.html" title=" " alt="" coords="18,256,92,282"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="58,209,58,241,52,241,52,209"/>
+</map>
