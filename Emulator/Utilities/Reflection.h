@@ -23,8 +23,15 @@ namespace util {
 
 template <class T, typename E> struct Reflection {
 
-    // Returns the shortened key as a C string
+    // Returns the key including the section prefix (if any)
     static const char *key(long nr) { return T::key((E)nr); }
+
+    // Returns the key without the section prefix (if any)
+    static const char *plainkey(long nr) {
+        auto *p = key(nr);
+        for (isize i = 0; p[i]; i++) if (p[i] == '.') return p + i + 1;
+        return p;
+    }
 
     // Collects all key / value pairs
     static std::map <string, E> pairs() {

@@ -74,7 +74,7 @@ Configurable::dumpConfig(std::ostream& os) const
 
     for (auto &opt: getOptions()) {
 
-        auto name = OptionEnum::key(opt);
+        auto name = OptionEnum::plainkey(opt);
         auto help = OptionEnum::help(opt);
         auto arg  = OptionParser::create(opt, getOption(opt))->asString();
 
