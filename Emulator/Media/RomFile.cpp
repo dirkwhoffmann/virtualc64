@@ -191,6 +191,7 @@ RomFile::isVC1541RomBuffer(const u8 *buf, isize len)
     return isRomBuffer(ROM_TYPE_VC1541, buf, len);
 }
 
+/*
 RomIdentifier
 RomFile::identifier(u64 fnv)
 {
@@ -264,7 +265,8 @@ RomFile::identifier(u64 fnv)
         default: return ROM_UNKNOWN;
     }
 }
-
+*/
+/*
 bool
 RomFile::isCommodoreRom(RomIdentifier rev)
 {
@@ -347,7 +349,9 @@ RomFile::isPatchedRom(RomIdentifier rev)
             return false;
     }
 }
+*/
 
+/*
 const char *
 RomFile::title(RomIdentifier rev)
 {
@@ -565,6 +569,7 @@ RomFile::revision(RomIdentifier rev)
         default:                      return "";
     }
 }
+*/
 
 void
 RomFile::finalizeRead()

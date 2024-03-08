@@ -117,6 +117,7 @@ enum_long(FILE_ERROR)
 };
 typedef FILE_ERROR FileError;
 
+/*
 enum_long(ROM_IDENTIFIER)
 {
     ROM_MISSING,
@@ -192,3 +193,4 @@ enum_long(ROM_IDENTIFIER)
     ROM_IDENTIFIER_COUNT
 };
 typedef ROM_IDENTIFIER RomIdentifier;
+*/

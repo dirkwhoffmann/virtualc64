@@ -264,23 +264,24 @@ Drive::setOption(Option option, i64 value)
 void
 Drive::autoConfigure()
 {
-    switch (RomFile::identifier(mem.romFNV64())) {
-            
-        case VC1541C_01:
-        case VC1541C_02:
-            
+    // switch (RomFile::identifier(mem.romFNV64())) {
+    switch (mem.romFNV64()) {
+
+        case 0x361A1EC48F04F5A4: // VC1541C_01
+        case 0xB938E2DA07F4FE40: // VC1541C_02
+
             debug(CNF_DEBUG, "autoConfigure: VC1541C\n");
             setOption(OPT_DRV_TYPE, DRIVE_VC1541C);
             setOption(OPT_DRV_RAM, DRVRAM_NONE);
             setOption(OPT_DRV_PARCABLE, PAR_CABLE_NONE);
             break;
             
-        case VC1541_II_1987:
-        case VC1541_II_NEWTRONIC:
-        case VC1541_II_RELOC_PATCH:
-        case VC1541_II_JIFFY:
-        case VC1541_II_JIFFY_V600:
-        case VC1541_64ER_V3:
+        case 0x44BBA0EAC5898597: // VC1541_II_1987
+        case 0xA1D36980A17C8756: // VC1541_II_NEWTRONIC
+        case 0x47CBA55F16FB3E09: // VC1541_II_RELOC_PATCH
+        case 0x8B2A523E29BED889: // VC1541_II_JIFFY
+        case 0xF7F4D931219DBB5D: // VC1541_II_JIFFY_V600
+        case 0xB4027D6D9D61378A: // VC1541_64ER_V3
 
             debug(CNF_DEBUG, "autoConfigure: VC1541 II\n");
             setOption(OPT_DRV_TYPE, DRIVE_VC1541II);
@@ -288,8 +289,8 @@ Drive::autoConfigure()
             setOption(OPT_DRV_PARCABLE, PAR_CABLE_NONE);
             break;
 
-        case VC1541_SPEEDDOS_PLUS:
-        case VC1541_SPEEDDOS_27:
+        case 0xC50EAFCBA50C4B63: // VC1541_SPEEDDOS_PLUS
+        case 0x92ADEBA1BCCD8D31: // VC1541_SPEEDDOS_27
 
             debug(CNF_DEBUG, "autoConfigure: VC1541 SpeedDOS\n");
             setOption(OPT_DRV_TYPE, DRIVE_VC1541II);
@@ -297,8 +298,8 @@ Drive::autoConfigure()
             setOption(OPT_DRV_PARCABLE, PAR_CABLE_STANDARD);
             break;
 
-        case VC1541_DOLPHIN_20:
-        case VC1541_DOLPHIN_20_SLVDR:
+        case 0x28CD4E47A40C41CA: // VC1541_DOLPHIN_20
+        case 0x1C1DDD64E02CAD32: // VC1541_DOLPHIN_20_SLVDR
 
             debug(CNF_DEBUG, "autoConfig: Dolphin DOS\n");
             setOption(OPT_DRV_TYPE, DRIVE_VC1541II);
@@ -306,8 +307,8 @@ Drive::autoConfigure()
             setOption(OPT_DRV_PARCABLE, PAR_CABLE_STANDARD);
             break;
 
-        case VC1541_DOLPHIN_30:
-        case VC1541_DOLPHIN_30_SLVDR:
+        case 0x09D8FBAB61E59FF0: // VC1541_DOLPHIN_30
+        case 0xF684F72388EE5364: // VC1541_DOLPHIN_30_SLVDR
 
             debug(CNF_DEBUG, "autoConfig: Dolphin DOS 3\n");
             setOption(OPT_DRV_TYPE, DRIVE_VC1541II);

@@ -36,11 +36,13 @@ public:
     // Class methods
     //
     
+    /*
     static RomTraits &traits(u16 crc);
     static RomTraits &basicTraits(u16 crc);
     static RomTraits &charTraits(u16 crc);
     static RomTraits &kernalTraits(u16 crc);
     static RomTraits &vC1541Traits(u16 crc);
+    */
 
     static bool isCompatible(const string &name);
     static bool isCompatible(std::istream &stream);
@@ -64,16 +66,16 @@ public:
     static bool isVC1541RomBuffer(const u8 *buf, isize len);
 
     // Translates a FNV1A checksum (64 bit) into a ROM identifier
-    static RomIdentifier identifier(u64 fnv);
+    // static RomIdentifier identifier(u64 fnv);
 
     // Classifies a ROM identifier by type
-    static bool isCommodoreRom(RomIdentifier rev);
-    static bool isPatchedRom(RomIdentifier rev);
+    // static bool isCommodoreRom(RomIdentifier rev);
+    // static bool isPatchedRom(RomIdentifier rev);
 
     // Translates a ROM indentifier into a textual description
-    static const char *title(RomIdentifier rev);
-    static const char *subTitle(RomIdentifier rev);
-    static const char *revision(RomIdentifier rev);
+    // static const char *title(RomIdentifier rev);
+    // static const char *subTitle(RomIdentifier rev);
+    // static const char *revision(RomIdentifier rev);
 
 
     //

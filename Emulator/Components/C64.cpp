@@ -1271,11 +1271,13 @@ C64::romFNV64(RomType type) const
     }
 }
 
+/*
 RomIdentifier
 C64::romIdentifier(RomType type) const
 {
     return RomFile::identifier(romFNV64(type));
 }
+*/
 
 const char *
 C64::romTitle(RomType type) const
@@ -1384,9 +1386,7 @@ C64::hasRom(RomType type) const
 
 bool
 C64::hasMega65Rom(RomType type) const
-{
-    RomIdentifier id;
-    
+{    
     switch (type) {
             
         case ROM_TYPE_BASIC:
@@ -1395,8 +1395,7 @@ C64::hasMega65Rom(RomType type) const
 
         case ROM_TYPE_CHAR:
 
-            id = romIdentifier(ROM_TYPE_CHAR);
-            return id == CHAR_MEGA65 || id == CHAR_PXLFONT_V23;
+            return getRomTraits(romFNV64(ROM_TYPE_CHAR)).vendor == ROM_VENDOR_MEGA65;
 
         case ROM_TYPE_KERNAL:
 

@@ -611,7 +611,7 @@ public:
     u64 romFNV64(RomType type) const;
 
     // Returns a unique identifier for the installed ROMs
-    RomIdentifier romIdentifier(RomType type) const;
+    // RomIdentifier romIdentifier(RomType type) const;
 
     // Returns printable titles for the installed ROMs
     const char *romTitle(RomType type) const;

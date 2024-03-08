@@ -75,6 +75,12 @@ static std::vector<RomTraits> roms = {
         .vendor     = MEGA65,
         .type       = CHAR
     },{
+        .fnv        = 0x564e103e962682dd,
+        .name       = "PXLfont",
+        .revision   = "V2.3",
+        .vendor     = MEGA65,
+        .type       = CHAR
+    },{
         .fnv        = 0x1130C1CE287876DD,
         .name       = "Atari 800 Font",
         .revision   = "",
@@ -137,12 +143,6 @@ static std::vector<RomTraits> roms = {
         .vendor     = OTHER,
         .type       = CHAR,
         .patched    = true
-    },{
-        .fnv        = 0x564e103e962682dd,
-        .name       = "PXLfont",
-        .revision   = "V2.3",
-        .vendor     = OTHER,
-        .type       = CHAR
     },
 
     //
