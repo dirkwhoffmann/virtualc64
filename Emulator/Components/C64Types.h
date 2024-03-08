@@ -192,37 +192,6 @@ enum_i8(EventID)
     INS_EVENT_COUNT
 };
 
-enum_long(ROM_TYPE)
-{
-    ROM_TYPE_BASIC,
-    ROM_TYPE_CHAR,
-    ROM_TYPE_KERNAL,
-    ROM_TYPE_VC1541
-};
-typedef ROM_TYPE RomType;
-
-#ifdef __cplusplus
-struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
-    
-    static constexpr long minVal = 0;
-    static constexpr long maxVal = ROM_TYPE_VC1541;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-
-    static const char *prefix() { return "ROM_TYPE"; }
-    static const char *key(RomType value)
-    {
-        switch (value) {
-                
-            case ROM_TYPE_BASIC:   return "BASIC";
-            case ROM_TYPE_CHAR:    return "CHAR";
-            case ROM_TYPE_KERNAL:  return "KERNAL";
-            case ROM_TYPE_VC1541:  return "VC1541";
-        }
-        return "???";
-    }
-};
-#endif
-
 enum_long(INSPECTION_TARGET)
 {
     INSPECTION_NONE,
@@ -277,6 +246,7 @@ C64Config;
 typedef struct
 {
     u32 crc32;
+    u64 fnv64;
 
     const char *title;
     const char *subtitle;

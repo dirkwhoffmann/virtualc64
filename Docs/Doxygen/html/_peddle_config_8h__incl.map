@@ -1,7 +1,0 @@
-<map id="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleConfig.h" name="/Users/hoff/Retro/virtualc64/Emulator/Components/CPU/Peddle/PeddleConfig.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,194,61"/>
-<area shape="rect" id="Node000002" href="$config_8h.html" title=" " alt="" coords="66,109,133,135"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,61,102,93,97,93,97,61"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="65,183,134,208"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="102,135,102,167,97,167,97,135"/>
-</map>

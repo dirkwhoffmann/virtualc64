@@ -98,6 +98,66 @@ struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
 };
 #endif
 
+enum_long(ROM_TYPE)
+{
+    ROM_TYPE_BASIC,
+    ROM_TYPE_CHAR,
+    ROM_TYPE_KERNAL,
+    ROM_TYPE_VC1541
+};
+typedef ROM_TYPE RomType;
+
+#ifdef __cplusplus
+struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
+
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = ROM_TYPE_VC1541;
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
+
+    static const char *prefix() { return "ROM_TYPE"; }
+    static const char *key(RomType value)
+    {
+        switch (value) {
+
+            case ROM_TYPE_BASIC:   return "BASIC";
+            case ROM_TYPE_CHAR:    return "CHAR";
+            case ROM_TYPE_KERNAL:  return "KERNAL";
+            case ROM_TYPE_VC1541:  return "VC1541";
+        }
+        return "???";
+    }
+};
+#endif
+
+enum_long(ROM_VENDOR)
+{
+    ROM_VENDOR_COMMODORE,
+    ROM_VENDOR_MEGA65,
+    ROM_VENDOR_OTHER
+};
+typedef ROM_VENDOR RomVendor;
+
+#ifdef __cplusplus
+struct RomVendorEnum : util::Reflection<RomVendorEnum, RomVendor> {
+
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = ROM_VENDOR_OTHER;
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
+
+    static const char *prefix() { return "ROM_VENDOR"; }
+    static const char *key(RomVendor value)
+    {
+        switch (value) {
+
+            case ROM_VENDOR_COMMODORE:  return "COMMODORE";
+            case ROM_VENDOR_MEGA65:     return "MEGA65";
+            case ROM_VENDOR_OTHER:      return "OTHER";
+        }
+        return "???";
+    }
+};
+#endif
+
 
 //
 // Structures
@@ -123,3 +183,15 @@ typedef struct
     MemoryType vicPeekSrc[16];
 }
 MemInfo;
+
+struct RomTraits {
+
+    u64 fnv;
+
+    const char *name;
+    const char *revision;
+
+    RomVendor vendor;
+    RomType type;
+    bool patched;
+};

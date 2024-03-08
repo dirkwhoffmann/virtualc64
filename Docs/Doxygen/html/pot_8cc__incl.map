@@ -1,9 +1,0 @@
-<map id="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/pot.cc" name="/Users/hoff/Retro/virtualc64/Emulator/Components/SID/resid/pot.cc">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,188,61"/>
-<area shape="rect" id="Node000002" href="$pot_8h.html" title=" " alt="" coords="71,109,122,135"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,61,99,93,94,93,94,61"/>
-<area shape="rect" id="Node000003" href="$resid-config_8h.html" title=" " alt="" coords="47,183,146,208"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="99,135,99,167,94,167,94,135"/>
-<area shape="rect" id="Node000004" href="$siddefs_8h.html" title=" " alt="" coords="59,256,134,282"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="99,209,99,241,94,241,94,209"/>
-</map>

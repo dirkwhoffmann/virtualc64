@@ -17,6 +17,26 @@
 
 namespace vc64 {
 
+/*
+RomTraits &
+RomFile::traits(u32 crc)
+{
+    switch (crc) {
+
+    }
+}
+
+RomTraits &
+RomFile::basicTraits(u32 crc)
+{
+    switch (crc) {
+
+        default:
+            return RomTraits {};
+    }
+}
+*/
+
 const RomSignature RomFile::signatures[] = {
 
     { ROM_TYPE_BASIC,  0x2000, 0x0000, { 0x94, 0xE3, 0x7B } }, // Commodore

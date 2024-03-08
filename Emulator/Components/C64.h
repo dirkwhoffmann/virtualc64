@@ -602,8 +602,9 @@ public:
 
 public:
 
-    // Queries information about the installed ROMs
-    RomInfo getRomInfo(RomType type) const;
+    // Queries ROM information
+    static RomTraits getRomTraits(u64 fnv);
+    RomInfo getRomInfo(RomType type) const; // DEPRECATED
 
     // Computes a Rom checksum
     u32 romCRC32(RomType type) const;
