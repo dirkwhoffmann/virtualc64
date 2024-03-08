@@ -377,12 +377,12 @@ Interpreter::initCommandShell(Command &root)
 
     root.add({"sid"}, "Sound Interface Device");
 
-    for (isize i = 1; i <= 4; i++) {
+    for (isize i = 0; i < 4; i++) {
 
         string nr = std::to_string(i);
 
         root.add({"sid", nr},
-                 "SID " + nr + (i == 1 ? " (primary SID)" : ""));
+                 "SID " + nr + (i == 0 ? " (primary SID)" : ""));
 
         root.add({"sid", nr, ""},
                  "Displays the current configuration",
@@ -393,7 +393,7 @@ Interpreter::initCommandShell(Command &root)
 
         root.add({"sid", nr, "set"}, "Configures the component");
 
-        for (auto &opt : muxer.getOptions()) {
+        for (auto &opt : muxer.sid[i].getOptions()) {
 
             root.add({"sid", nr, "set", OptionEnum::key(opt)},
                      {OptionParser::create(opt)->argList()},

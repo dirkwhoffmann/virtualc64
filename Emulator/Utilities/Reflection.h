@@ -43,46 +43,23 @@ template <class T, typename E> struct Reflection {
 
         string result;
 
-        for (auto &it : pairs()) {
+        for (auto i = T::minVal; i <= T::maxVal; i++) {
+            
+            if (T::isValid(i) && filter(i)) {
 
-            if (!filter(it.second)) continue;
-
-            if (result != "") result += delim;
-            result += it.first;
+                if (result != "") result += delim;
+                result += (key(i));
+            }
         }
 
         return result;
     }
 
-    // DEPRECATED
-    /*
-    static string keyList(std::function<bool(long)> filter = [](long){ return true; }, const string &delim = ", ") {
-
-        string result;
-
-        for (auto &it : pairs()) {
-
-            if (!filter(it.second)) continue;
-
-            if (result != "") result += delim;
-            result += it.first;
-        }
-
-        return result;
-    }
-    */
-
-    // Convinience wrapper
+    // Convenience wrapper
     static string argList(std::function<bool(E)> filter = [](E){ return true; }) {
 
         return "{ " + keyList(filter, " | ") + " }";
     }
-    /*
-    static string argList(std::function<bool(long)> filter = [](long){ return true; }) {
-
-        return "{ " + keyList(filter, " | ") + " }";
-    }
-    */
 };
 
 }

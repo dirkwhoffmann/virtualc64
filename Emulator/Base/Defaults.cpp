@@ -441,10 +441,6 @@ Defaults::setFallback(const string &key, const string &value)
 void
 Defaults::setFallback(Option option, const string &value)
 {
-    if (option == OPT_AUTOFIRE_BULLETS) {
-        printf("set BULLETS %s\n", value.c_str());
-    }
-
     setFallback(string(OptionEnum::key(option)), value);
 }
 
