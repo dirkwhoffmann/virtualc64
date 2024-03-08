@@ -144,96 +144,95 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
     {
         switch (value) {
 
-            case OPT_HOST_REFRESH_RATE:     return "HOST_REFRESH_RATE";
-            case OPT_HOST_SAMPLE_RATE:      return "HOST_SAMPLE_RATE";
-            case OPT_HOST_FRAMEBUF_WIDTH:   return "HOST_FRAMEBUF_WIDTH";
-            case OPT_HOST_FRAMEBUF_HEIGHT:  return "HOST_FRAMEBUF_HEIGHT";
+            case OPT_HOST_REFRESH_RATE:     return "HOST.REFRESH_RATE";
+            case OPT_HOST_SAMPLE_RATE:      return "HOST.SAMPLE_RATE";
+            case OPT_HOST_FRAMEBUF_WIDTH:   return "HOST.FRAMEBUF_WIDTH";
+            case OPT_HOST_FRAMEBUF_HEIGHT:  return "HOST.FRAMEBUF_HEIGHT";
 
-            case OPT_EMU_WARP_BOOT:         return "WARP_BOOT";
-            case OPT_EMU_WARP_MODE:         return "WARP_MODE";
-            case OPT_EMU_VSYNC:             return "VSYNC";
-            case OPT_EMU_TIME_LAPSE:        return "TIME_LAPSE";
-            case OPT_EMU_RUN_AHEAD:         return "RUN_AHEAD";
+            case OPT_EMU_WARP_BOOT:         return "EMU.WARP_BOOT";
+            case OPT_EMU_WARP_MODE:         return "EMU.WARP_MODE";
+            case OPT_EMU_VSYNC:             return "EMU.VSYNC";
+            case OPT_EMU_TIME_LAPSE:        return "EMU.TIME_LAPSE";
+            case OPT_EMU_RUN_AHEAD:         return "EMU.RUN_AHEAD";
 
             case OPT_VICII_REVISION:        return "VICII.REVISION";
-            case OPT_VICII_PALETTE:         return "PALETTE";
-            case OPT_VICII_BRIGHTNESS:      return "BRIGHTNESS";
-            case OPT_VICII_CONTRAST:        return "CONTRAST";
-            case OPT_VICII_SATURATION:      return "SATURATION";
-            case OPT_VICII_GRAY_DOT_BUG:    return "GRAY_DOT_BUG";
+            case OPT_VICII_PALETTE:         return "VICII.PALETTE";
+            case OPT_VICII_BRIGHTNESS:      return "VICII.BRIGHTNESS";
+            case OPT_VICII_CONTRAST:        return "VICII.CONTRAST";
+            case OPT_VICII_SATURATION:      return "VICII.SATURATION";
+            case OPT_VICII_GRAY_DOT_BUG:    return "VICII.GRAY_DOT_BUG";
             case OPT_VICII_POWER_SAVE:      return "VICII.POWER_SAVE";
+            case OPT_VICII_HIDE_SPRITES:    return "VICII.HIDE_SPRITES";
+            case OPT_VICII_CUT_LAYERS:      return "VICII.CUT_LAYERS";
+            case OPT_VICII_CUT_OPACITY:     return "VICII.CUT_OPACITY";
+            case OPT_VICII_SS_COLLISIONS:   return "VICII.SS_COLLISIONS";
+            case OPT_VICII_SB_COLLISIONS:   return "VICII.SB_COLLISIONS";
 
-            case OPT_VICII_HIDE_SPRITES:    return "HIDE_SPRITES";
-            case OPT_VICII_CUT_LAYERS:      return "CUT_LAYERS";
-            case OPT_VICII_CUT_OPACITY:     return "CUT_OPACITY";
-            case OPT_VICII_SS_COLLISIONS:   return "SS_COLLISIONS";
-            case OPT_VICII_SB_COLLISIONS:   return "SB_COLLISIONS";
-
-            case OPT_DMA_DEBUG_ENABLE:      return "DMA_DEBUG_ENABLE";
-            case OPT_DMA_DEBUG_MODE:        return "DMA_DEBUG_MODE";
-            case OPT_DMA_DEBUG_OPACITY:     return "DMA_DEBUG_OPACITY";
-            case OPT_DMA_DEBUG_CHANNEL0:    return "DMA_DEBUG_CHANNEL0";
-            case OPT_DMA_DEBUG_CHANNEL1:    return "DMA_DEBUG_CHANNEL1";
-            case OPT_DMA_DEBUG_CHANNEL2:    return "DMA_DEBUG_CHANNEL2";
-            case OPT_DMA_DEBUG_CHANNEL3:    return "DMA_DEBUG_CHANNEL3";
-            case OPT_DMA_DEBUG_CHANNEL4:    return "DMA_DEBUG_CHANNEL4";
-            case OPT_DMA_DEBUG_CHANNEL5:    return "DMA_DEBUG_CHANNEL5";
-            case OPT_DMA_DEBUG_COLOR0:      return "DMA_DEBUG_COLOR0";
-            case OPT_DMA_DEBUG_COLOR1:      return "DMA_DEBUG_COLOR1";
-            case OPT_DMA_DEBUG_COLOR2:      return "DMA_DEBUG_COLOR2";
-            case OPT_DMA_DEBUG_COLOR3:      return "DMA_DEBUG_COLOR3";
-            case OPT_DMA_DEBUG_COLOR4:      return "DMA_DEBUG_COLOR4";
-            case OPT_DMA_DEBUG_COLOR5:      return "DMA_DEBUG_COLOR5";
+            case OPT_DMA_DEBUG_ENABLE:      return "DMA_DEBUG.ENABLE";
+            case OPT_DMA_DEBUG_MODE:        return "DMA_DEBUG.MODE";
+            case OPT_DMA_DEBUG_OPACITY:     return "DMA_DEBUG.OPACITY";
+            case OPT_DMA_DEBUG_CHANNEL0:    return "DMA_DEBUG.CHANNEL0";
+            case OPT_DMA_DEBUG_CHANNEL1:    return "DMA_DEBUG.CHANNEL1";
+            case OPT_DMA_DEBUG_CHANNEL2:    return "DMA_DEBUG.CHANNEL2";
+            case OPT_DMA_DEBUG_CHANNEL3:    return "DMA_DEBUG.CHANNEL3";
+            case OPT_DMA_DEBUG_CHANNEL4:    return "DMA_DEBUG.CHANNEL4";
+            case OPT_DMA_DEBUG_CHANNEL5:    return "DMA_DEBUG.CHANNEL5";
+            case OPT_DMA_DEBUG_COLOR0:      return "DMA_DEBUG.COLOR0";
+            case OPT_DMA_DEBUG_COLOR1:      return "DMA_DEBUG.COLOR1";
+            case OPT_DMA_DEBUG_COLOR2:      return "DMA_DEBUG.COLOR2";
+            case OPT_DMA_DEBUG_COLOR3:      return "DMA_DEBUG.COLOR3";
+            case OPT_DMA_DEBUG_COLOR4:      return "DMA_DEBUG.COLOR4";
+            case OPT_DMA_DEBUG_COLOR5:      return "DMA_DEBUG.COLOR5";
 
             case OPT_POWER_GRID:            return "POWER_GRID";
-
             case OPT_GLUE_LOGIC:            return "GLUE_LOGIC";
 
-            case OPT_CIA_REVISION:          return "CIA_REVISION";
-            case OPT_CIA_TIMER_B_BUG:       return "TIMER_B_BUG";
+            case OPT_CIA_REVISION:          return "CIA.REVISION";
+            case OPT_CIA_TIMER_B_BUG:       return "CIA.TIMER_B_BUG";
 
-            case OPT_SID_ENABLE:            return "SID_ENABLE";
-            case OPT_SID_ADDRESS:           return "SID_ADDRESS";
-            case OPT_SID_REVISION:          return "SID_REVISION";
-            case OPT_SID_FILTER:            return "SID_FILTER";
-            case OPT_SID_POWER_SAVE:        return "SID_POWER_SAVE";
-            case OPT_SID_ENGINE:            return "SID_ENGINE";
-            case OPT_SID_SAMPLING:          return "SID_SAMPLING";
-            case OPT_AUD_PAN:               return "AUDPAN";
-            case OPT_AUD_VOL:               return "AUDVOL";
-            case OPT_AUD_VOL_L:             return "AUDVOLL";
-            case OPT_AUD_VOL_R:             return "AUDVOLR";
+            case OPT_SID_ENABLE:            return "SID.ENABLE";
+            case OPT_SID_ADDRESS:           return "SID.ADDRESS";
+            case OPT_SID_REVISION:          return "SID.REVISION";
+            case OPT_SID_FILTER:            return "SID.FILTER";
+            case OPT_SID_POWER_SAVE:        return "SID.POWER_SAVE";
+            case OPT_SID_ENGINE:            return "SID.ENGINE";
+            case OPT_SID_SAMPLING:          return "SID.SAMPLING";
+
+            case OPT_AUD_PAN:               return "AUD.AUDPAN";
+            case OPT_AUD_VOL:               return "AUD.VOL";
+            case OPT_AUD_VOL_L:             return "AUD.VOLL";
+            case OPT_AUD_VOL_R:             return "AUD.VOLR";
 
             case OPT_RAM_PATTERN:           return "RAM_PATTERN";
             case OPT_SAVE_ROMS:             return "SAVE_ROMS";
 
-            case OPT_DRV_AUTO_CONFIG:       return "DRV_AUTO_CONFIG";
-            case OPT_DRV_TYPE:              return "DRV_TYPE";
-            case OPT_DRV_RAM:               return "OPT_DRV_RAM";
-            case OPT_DRV_PARCABLE:          return "OPT_DRV_PARCABLE";
-            case OPT_DRV_CONNECT:           return "DRV_CONNECT";
-            case OPT_DRV_POWER_SWITCH:      return "DRV_POWER_SWITCH";
-            case OPT_DRV_POWER_SAVE:        return "DRV_POWER_SAVE";
-            case OPT_DRV_EJECT_DELAY:       return "DRV_EJECT_DELAY";
-            case OPT_DRV_SWAP_DELAY:        return "DRV_SWAP_DELAY";
-            case OPT_DRV_INSERT_DELAY:      return "DRV_INSERT_DELAY";
-            case OPT_DRV_PAN:               return "DRV_PAN";
-            case OPT_DRV_POWER_VOL:         return "DRV_POWER_VOL";
-            case OPT_DRV_STEP_VOL:          return "DRV_STEP_VOL";
-            case OPT_DRV_INSERT_VOL:        return "DRV_INSERT_VOL";
-            case OPT_DRV_EJECT_VOL:         return "DRV_EJECT_VOL";
+            case OPT_DRV_AUTO_CONFIG:       return "DRV.AUTO_CONFIG";
+            case OPT_DRV_TYPE:              return "DRV.TYPE";
+            case OPT_DRV_RAM:               return "DRV.RAM";
+            case OPT_DRV_PARCABLE:          return "DRV.PARCABLE";
+            case OPT_DRV_CONNECT:           return "DRV.CONNECT";
+            case OPT_DRV_POWER_SWITCH:      return "DRV.POWER_SWITCH";
+            case OPT_DRV_POWER_SAVE:        return "DRV.POWER_SAVE";
+            case OPT_DRV_EJECT_DELAY:       return "DRV.EJECT_DELAY";
+            case OPT_DRV_SWAP_DELAY:        return "DRV.SWAP_DELAY";
+            case OPT_DRV_INSERT_DELAY:      return "DRV.INSERT_DELAY";
+            case OPT_DRV_PAN:               return "DRV.PAN";
+            case OPT_DRV_POWER_VOL:         return "DRV.POWER_VOL";
+            case OPT_DRV_STEP_VOL:          return "DRV.STEP_VOL";
+            case OPT_DRV_INSERT_VOL:        return "DRV.INSERT_VOL";
+            case OPT_DRV_EJECT_VOL:         return "DRV.EJECT_VOL";
 
-            case OPT_DAT_MODEL:             return "DAT_MODEL";
-            case OPT_DAT_CONNECT:           return "DAT_CONNECT";
+            case OPT_DAT_MODEL:             return "DAT.MODEL";
+            case OPT_DAT_CONNECT:           return "DAT.CONNECT";
 
-            case OPT_MOUSE_MODEL:           return "MOUSE_MODEL";
-            case OPT_MOUSE_SHAKE_DETECT:    return "SHAKE_DETECTION";
-            case OPT_MOUSE_VELOCITY:        return "MOUSE_VELOCITY";
+            case OPT_MOUSE_MODEL:           return "MOUSE.MODEL";
+            case OPT_MOUSE_SHAKE_DETECT:    return "MOUSE.SHAKE_DETECTION";
+            case OPT_MOUSE_VELOCITY:        return "MOUSE.VELOCITY";
 
-            case OPT_AUTOFIRE:              return "AUTOFIRE";
-            case OPT_AUTOFIRE_BURSTS:       return "AUTOFIRE_BURSTS";
-            case OPT_AUTOFIRE_BULLETS:      return "AUTOFIRE_BULLETS";
-            case OPT_AUTOFIRE_DELAY:        return "AUTOFIRE_DELAY";
+            case OPT_AUTOFIRE:              return "AUTOFIRE.ENABLE";
+            case OPT_AUTOFIRE_BURSTS:       return "AUTOFIRE.BURSTS";
+            case OPT_AUTOFIRE_BULLETS:      return "AUTOFIRE.BULLETS";
+            case OPT_AUTOFIRE_DELAY:        return "AUTOFIRE.DELAY";
 
             case OPT_COUNT:                 return "???";
         }
