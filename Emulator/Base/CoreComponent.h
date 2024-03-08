@@ -140,6 +140,9 @@ private:
 public:
     
     bool isEmulatorThread() const;
+
+    void dumpDiff(std::ostream& ss) const;
+    void dumpDiff() const { dumpDiff(std::cout); }
 };
 
 }

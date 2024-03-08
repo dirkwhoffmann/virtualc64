@@ -345,9 +345,7 @@ class Inspector: DialogController {
                 stepOverButton.isEnabled = true
             }
         }
-        
-        // c64.inspect()
-        
+
         if let id = panel.selectedTabViewItem?.label {
 
             switch id {

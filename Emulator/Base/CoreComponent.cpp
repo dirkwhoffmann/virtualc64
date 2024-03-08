@@ -14,6 +14,7 @@
 #include "Emulator.h"
 #include "CoreComponent.h"
 #include "Checksum.h"
+#include "Option.h"
 
 namespace vc64 {
 
@@ -187,6 +188,38 @@ bool
 CoreComponent::isEmulatorThread() const
 {
     return emulator.isEmulatorThread();
+}
+
+void
+CoreComponent::dumpDiff(std::ostream& ss) const
+{
+    using namespace util;
+
+    bool first = true;
+
+    for (auto &opt: getOptions()) {
+
+        auto current = getOption(opt);
+        auto fallback = getFallback(opt);
+
+        if (current != fallback) {
+
+            if (first) {
+            
+                ss << std::endl << getDescription() << ":" << std::endl << std::endl;
+                first = false;
+            }
+
+            auto arg1 = OptionParser::create(opt, current)->asString();
+            auto arg2 = OptionParser::create(opt, fallback)->asString();
+            ss << tab(OptionEnum::key(opt)) << arg1 << " [" << arg2 << "]" << std::endl;
+        }
+    }
+
+    for (auto &sub: subComponents) {
+
+        sub->dumpDiff(ss);
+    }
 }
 
 }

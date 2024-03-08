@@ -79,7 +79,7 @@ Defaults::Defaults()
     setFallback(OPT_SID_ADDRESS, 1, 0xD420);
     setFallback(OPT_SID_ADDRESS, 2, 0xD440);
     setFallback(OPT_SID_ADDRESS, 3, 0xD460);
-    setFallback(OPT_AUD_VOL, {0, 1, 2, 3}, 400);
+    setFallback(OPT_AUD_VOL, {0, 1, 2, 3}, 100);
     setFallback(OPT_AUD_PAN, {0, 1, 2, 3}, 0);
 
     setFallback(OPT_RAM_PATTERN, RAM_PATTERN_VICE);
@@ -97,8 +97,8 @@ Defaults::Defaults()
     setFallback(OPT_DRV_EJECT_DELAY, {DRIVE8, DRIVE9}, 30);
     setFallback(OPT_DRV_SWAP_DELAY, {DRIVE8, DRIVE9}, 30);
     setFallback(OPT_DRV_INSERT_DELAY, {DRIVE8, DRIVE9}, 30);
-    setFallback(OPT_DRV_PAN, DRIVE8, 100);
-    setFallback(OPT_DRV_PAN, DRIVE9, 300);
+    setFallback(OPT_DRV_PAN, DRIVE8, 0);
+    setFallback(OPT_DRV_PAN, DRIVE9, 0);
     setFallback(OPT_DRV_POWER_VOL, {DRIVE8, DRIVE9}, 50);
     setFallback(OPT_DRV_STEP_VOL, {DRIVE8, DRIVE9}, 50);
     setFallback(OPT_DRV_INSERT_VOL, {DRIVE8, DRIVE9}, 50);
@@ -441,6 +441,10 @@ Defaults::setFallback(const string &key, const string &value)
 void
 Defaults::setFallback(Option option, const string &value)
 {
+    if (option == OPT_AUTOFIRE_BULLETS) {
+        printf("set BULLETS %s\n", value.c_str());
+    }
+
     setFallback(string(OptionEnum::key(option)), value);
 }
 

@@ -434,11 +434,6 @@ extension Keys {
         static let joyKeyMap2            = "Controls.JoyKeyMap2"
         static let disconnectJoyKeys     = "Controls.DisconnectKeys"
         
-        // Joysticks
-        static let autofire              = "Controls.Autofire"
-        static let autofireBullets       = "Controls.AutofireBullets"
-        static let autofireFrequency     = "Controls.AutofireFrequency"
-        
         // Mouse
         static let retainMouseKeyComb    = "Controls.RetainMouseKeyComb"
         static let retainMouseWithKeys   = "Controls.RetainMouseWithKeys"
@@ -482,11 +477,6 @@ extension DefaultsProxy {
         register(Keys.Con.joyKeyMap2, encodable: stdKeyMap2)
         register(Keys.Con.disconnectJoyKeys, true)
 
-        // Joysticks
-        register(Keys.Con.autofire, false)
-        register(Keys.Con.autofireBullets, 3)
-        register(Keys.Con.autofireFrequency, 2.5)
-
         // Mouse
         register(Keys.Con.retainMouseKeyComb, 0)
         register(Keys.Con.retainMouseWithKeys, true)
@@ -505,10 +495,6 @@ extension DefaultsProxy {
                      Keys.Con.joyKeyMap1,
                      Keys.Con.joyKeyMap2,
                      Keys.Con.disconnectJoyKeys,
-
-                     Keys.Con.autofire,
-                     Keys.Con.autofireBullets,
-                     Keys.Con.autofireFrequency,
 
                      Keys.Con.retainMouseKeyComb,
                      Keys.Con.retainMouseWithKeys,
@@ -534,10 +520,6 @@ extension Preferences {
         defaults.encode(Keys.Con.joyKeyMap2, keyMaps[2])
         defaults.set(Keys.Con.disconnectJoyKeys, disconnectJoyKeys)
 
-        defaults.set(Keys.Con.autofire, autofire)
-        defaults.set(Keys.Con.autofireBullets, autofireBullets)
-        defaults.set(Keys.Con.autofireFrequency, autofireFrequency)
-
         defaults.set(Keys.Con.retainMouseKeyComb, retainMouseKeyComb)
         defaults.set(Keys.Con.retainMouseWithKeys, retainMouseWithKeys)
         defaults.set(Keys.Con.retainMouseByClick, retainMouseByClick)
@@ -558,10 +540,6 @@ extension Preferences {
         defaults.decode(Keys.Con.joyKeyMap1, &keyMaps[1])
         defaults.decode(Keys.Con.joyKeyMap2, &keyMaps[2])
         disconnectJoyKeys = defaults.bool(Keys.Con.disconnectJoyKeys)
-
-        autofire = defaults.bool(Keys.Con.autofire)
-        autofireBullets = defaults.int(Keys.Con.autofireBullets)
-        autofireFrequency = defaults.int(Keys.Con.autofireFrequency)
 
         retainMouseKeyComb = defaults.int(Keys.Con.retainMouseKeyComb)
         retainMouseWithKeys = defaults.bool(Keys.Con.retainMouseWithKeys)
