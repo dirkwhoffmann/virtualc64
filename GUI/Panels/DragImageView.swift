@@ -27,9 +27,11 @@ class DragImageView: NSImageView, NSDraggingSource {
         isEditable = true
     }
 
+    /*
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
     }
+    */
 
     //
     // Dragging source

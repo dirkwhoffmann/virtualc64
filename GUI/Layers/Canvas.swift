@@ -304,7 +304,7 @@ class Canvas: Layer {
     
     func render(_ encoder: MTLRenderCommandEncoder, flat: Bool) {
         
-        flat ? render2D(encoder: encoder) : render3D(encoder: encoder)
+        if flat { render2D(encoder: encoder) } else { render3D(encoder: encoder) }
     }
     
     func render2D(encoder: MTLRenderCommandEncoder) {

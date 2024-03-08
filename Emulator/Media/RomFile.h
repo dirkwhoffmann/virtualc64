@@ -65,18 +65,6 @@ public:
     static bool isKernalRomBuffer(const u8 *buf, isize len);
     static bool isVC1541RomBuffer(const u8 *buf, isize len);
 
-    // Translates a FNV1A checksum (64 bit) into a ROM identifier
-    // static RomIdentifier identifier(u64 fnv);
-
-    // Classifies a ROM identifier by type
-    // static bool isCommodoreRom(RomIdentifier rev);
-    // static bool isPatchedRom(RomIdentifier rev);
-
-    // Translates a ROM indentifier into a textual description
-    // static const char *title(RomIdentifier rev);
-    // static const char *subTitle(RomIdentifier rev);
-    // static const char *revision(RomIdentifier rev);
-
 
     //
     // Initializing

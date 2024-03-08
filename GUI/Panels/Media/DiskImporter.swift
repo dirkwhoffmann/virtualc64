@@ -57,7 +57,7 @@ class DiskImporter: DialogController {
         showSheet()
     }
 
-    override func showSheet(completionHandler handler:(() -> Void)? = nil) {
+    override func showSheet(completionHandler handler: (() -> Void)? = nil) {
 
         switch file {
 

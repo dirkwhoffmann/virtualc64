@@ -185,38 +185,38 @@ class Monitor: DialogController {
 
     @IBAction func cutEnableAction(_ sender: NSButton!) {
 
-        sender.state == .on ? addLayer(0x1000) : removeLayer(0x1000)
+        if sender.state == .on { addLayer(0x1000) } else { removeLayer(0x1000) }
         refresh()
     }
     
     @IBAction func cutBorderAction(_ sender: NSButton!) {
     
-        sender.state == .on ? addLayer(0x800) : removeLayer(0x800)
+        if sender.state == .on { addLayer(0x800) } else { removeLayer(0x800) }
         refresh()
     }
 
     @IBAction func cutForegroundAction(_ sender: NSButton!) {
     
-        sender.state == .on ? addLayer(0x400) : removeLayer(0x400)
+        if sender.state == .on { addLayer(0x400) } else { removeLayer(0x400) }
         refresh()
     }
 
     @IBAction func cutBackgroundAction(_ sender: NSButton!) {
     
-        sender.state == .on ? addLayer(0x200) : removeLayer(0x200)
+        if sender.state == .on { addLayer(0x200) } else { removeLayer(0x200) }
         refresh()
     }
 
     @IBAction func cutSpritesAction(_ sender: NSButton!) {
     
-        sender.state == .on ? addLayer(0x100) : removeLayer(0x100)
+        if sender.state == .on { addLayer(0x100) } else { removeLayer(0x100) }
         refresh()
     }
 
     @IBAction func cutSingleSpriteAction(_ sender: NSButton!) {
     
         let sprite = sender.tag
-        sender.state == .on ? addLayer(1 << sprite) : removeLayer(1 << sprite)
+        if sender.state == .on { addLayer(1 << sprite) } else { removeLayer(1 << sprite) }
         refresh()
     }
 }

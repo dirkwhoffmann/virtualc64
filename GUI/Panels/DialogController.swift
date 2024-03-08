@@ -92,7 +92,7 @@ class DialogController: NSWindowController, DialogControllerDelegate {
         
     }
 
-    func showWindow(completionHandler handler:(() -> Void)? = nil) {
+    func showWindow(completionHandler handler: (() -> Void)? = nil) {
 
         register()
         if awake { sheetWillShow() }
@@ -101,7 +101,7 @@ class DialogController: NSWindowController, DialogControllerDelegate {
         sheetDidShow()
     }
 
-    func showSheet(completionHandler handler:(() -> Void)? = nil) {
+    func showSheet(completionHandler handler: (() -> Void)? = nil) {
         
         register()
         if awake { sheetWillShow() }

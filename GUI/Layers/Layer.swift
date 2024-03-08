@@ -45,11 +45,11 @@ class Layer: NSObject {
     // Opening and closing
     //
     
-    func open(delay: Double) { alpha.steps = Int(60 * delay); open(); }
-    func close(delay: Double) { alpha.steps = Int(60 * delay); close(); }
+    func open(delay: Double) { alpha.steps = Int(60 * delay); open() }
+    func close(delay: Double) { alpha.steps = Int(60 * delay); close() }
     func open() { alpha.target = 1.0 }
     func close() { alpha.target = 0.0 }
-    func toggle() { isVisible ? close() : open(); }
+    func toggle() { if isVisible { close() } else { open() } }
 
     //
     // Performing continuous tasks
@@ -63,7 +63,7 @@ class Layer: NSObject {
             alphaDidChange()
             
             if !alpha.animates {
-                isVisible ? layerDidOpen() : layerDidClose()
+                if isVisible { layerDidOpen() } else { layerDidClose() }
             }
         }
     }

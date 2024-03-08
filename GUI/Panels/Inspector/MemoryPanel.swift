@@ -152,18 +152,15 @@ extension Inspector {
             memTableView.selectRowIndexes([row], byExtendingSelection: false)
         }
     }
-    
+
     func jumpTo(type: [MemoryType]) {
 
-        for i in 0...15 {
-
-            if type.contains(bankType[i]!) {
-                jumpTo(bank: i)
-                return
-            }
+        for i in 0...15 where type.contains(bankType[i]!) {
+            jumpTo(bank: i)
+            return
         }
     }
-    
+
     func jumpTo(bank nr: Int) {
                 
         if nr >= 0 && nr <= 15 {

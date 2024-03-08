@@ -230,5 +230,6 @@ extension MacKey {
     struct Iso {
         static let hat        = MacKey(keyCode: 0x0A)
     }
-
 }
+
+// swiftlint:enable colon

@@ -76,44 +76,43 @@ class KeyboardController: NSObject {
             
         case kVK_Shift:
             leftShift = event.modifierFlags.contains(.shift) ? !leftShift : false
-            leftShift ? keyDown(with: MacKey.shift) : keyUp(with: MacKey.shift)
-            
+            if leftShift { keyDown(with: MacKey.shift) } else { keyUp(with: MacKey.shift) }
+
         case kVK_RightShift:
             rightShift = event.modifierFlags.contains(.shift) ? !rightShift : false
-            rightShift ? keyDown(with: MacKey.rightShift) : keyUp(with: MacKey.rightShift)
-            
+            if rightShift { keyDown(with: MacKey.rightShift) } else { keyUp(with: MacKey.rightShift) }
+
         case kVK_Control:
             leftControl = event.modifierFlags.contains(.control) ? !leftControl : false
-            leftControl ? keyDown(with: MacKey.control) : keyUp(with: MacKey.control)
-            
+            if leftControl { keyDown(with: MacKey.control) } else { keyUp(with: MacKey.control) }
+
         case kVK_RightControl:
             rightControl = event.modifierFlags.contains(.control) ? !rightControl : false
-            rightControl ? keyDown(with: MacKey.rightControl) : keyUp(with: MacKey.rightControl)
-            
+            if rightControl { keyDown(with: MacKey.rightControl) } else { keyUp(with: MacKey.rightControl) }
+
         case kVK_Option:
             leftOption = event.modifierFlags.contains(.option) ? !leftOption : false
-            leftOption ? keyDown(with: MacKey.option) : keyUp(with: MacKey.option)
-            
+            if leftOption { keyDown(with: MacKey.option) } else { keyUp(with: MacKey.option) }
+
         case kVK_RightOption:
             rightOption = event.modifierFlags.contains(.option) ? !rightOption : false
-            rightOption ? keyDown(with: MacKey.rightOption) : keyUp(with: MacKey.rightOption)
+            if rightOption { keyDown(with: MacKey.rightOption) } else { keyUp(with: MacKey.rightOption) }
 
         case kVK_Command where myAppDelegate.mapLeftCmdKey != nil:
             let key = myAppDelegate.mapLeftCmdKey!
             leftCommand = event.modifierFlags.contains(.command) ? !leftCommand : false
             myApp.disableCmdKey = leftCommand
-            leftCommand ? keyDown(with: key) : keyUp(with: key)
+            if leftCommand { keyDown(with: key) } else { keyUp(with: key) }
 
         case kVK_RightCommand where myAppDelegate.mapRightCmdKey != nil:
             let key = myAppDelegate.mapRightCmdKey!
             rightCommand = event.modifierFlags.contains(.command) ? !rightCommand : false
             myApp.disableCmdKey = rightCommand
-            rightCommand ? keyDown(with: key) : keyUp(with: key)
+            if rightCommand { keyDown(with: key) } else { keyUp(with: key) }
 
         case kVK_CapsLock where myAppDelegate.mapCapsLockWarp:
             capsLock = event.modifierFlags.contains(.capsLock)
-            capsLock ? capsLockDown() : capsLockUp()
-            // pref.warpMode = event.modifierFlags.contains(.capsLock) ? .on : .off
+            if capsLock { capsLockDown() } else { capsLockUp() }
 
         default:
             break

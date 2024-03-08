@@ -488,7 +488,7 @@ extension MyController {
             showAlert(.recorderAborted)
 
         case .DMA_DEBUG:
-            value != 0 ? renderer.zoomTextureOut() : renderer.zoomTextureIn()
+            if value != 0 { renderer.zoomTextureOut() } else { renderer.zoomTextureIn() }
 
         case .ALARM:
             debug(.events, "Received Alarm \(msg.value)")

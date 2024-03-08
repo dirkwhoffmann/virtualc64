@@ -1271,18 +1271,9 @@ C64::romFNV64(RomType type) const
     }
 }
 
-/*
-RomIdentifier
-C64::romIdentifier(RomType type) const
-{
-    return RomFile::identifier(romFNV64(type));
-}
-*/
-
 const char *
 C64::romTitle(RomType type) const
 {
-    // RomIdentifier rev = romIdentifier(type);
     auto traits = getRomTraits(romFNV64(type));
 
     switch (type) {
@@ -1322,7 +1313,6 @@ C64::romTitle(RomType type) const
 const char *
 C64::romSubTitle(u64 fnv) const
 {
-    // RomIdentifier rev = RomFile::identifier(fnv);
     auto traits = getRomTraits(fnv);
 
     if (traits.name) {
@@ -1386,7 +1376,7 @@ C64::hasRom(RomType type) const
 
 bool
 C64::hasMega65Rom(RomType type) const
-{    
+{
     switch (type) {
             
         case ROM_TYPE_BASIC:
