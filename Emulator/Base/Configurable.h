@@ -35,8 +35,11 @@ public:
     // Returns true iff a specific option is available
     bool isValidOption(Option opt) const;
 
-    // Gets a config options
+    // Gets a config option
     virtual i64 getOption(Option opt) const { return 0; }
+
+    // Gets the fallback for a config option
+    virtual i64 getFallback(Option opt) const { return 0; }
 
     // Sets a config option
     virtual void setOption(Option opt, i64 value) { }

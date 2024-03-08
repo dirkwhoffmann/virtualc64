@@ -213,6 +213,14 @@ Interpreter::initCommandShell(Command &root)
         emulator.set(parseEnum<C64ModelEnum>(argv[0]));
     });
 
+    /*
+    root.add({"c64", "diff"}, { C64ModelEnum::argList() },
+             "Reports deviations from the default configuration",
+             [this](Arguments& argv, long value) {
+
+    });
+    */
+
 
     //
     // Components (Memory)

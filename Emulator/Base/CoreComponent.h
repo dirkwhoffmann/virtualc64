@@ -77,7 +77,10 @@ public:
     void reset(bool hard);
     virtual void _reset(bool hard) { }
 
-    // Returns to the default options
+    // Returns the fallback value for a config option
+    i64 getFallback(Option opt) const override;
+
+    // Resets the current configuration
     virtual void resetConfig();
 
 
@@ -94,8 +97,8 @@ public:
     virtual bool isSuspended() const;
     virtual bool isHalted() const;
 
-    void suspend();
-    void resume();
+    void suspend() override;
+    void resume() override;
 
     // Throws an exception if the emulator is not ready to power on
     virtual void isReady() const throws;

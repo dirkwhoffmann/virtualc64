@@ -65,7 +65,13 @@ SID::getOption(Option option) const
     }
 }
 
-void 
+i64 
+SID::getFallback(Option opt) const
+{
+    return emulator.defaults.getFallback(opt, nr);
+}
+
+void
 SID::setOption(Option option, i64 value)
 {
     bool wasMuted = c64.muxer.isMuted();

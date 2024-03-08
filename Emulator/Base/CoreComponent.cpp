@@ -53,7 +53,13 @@ CoreComponent::reset(bool hard)
     }
 }
 
-void 
+i64 
+CoreComponent::getFallback(Option opt) const
+{
+    return emulator.defaults.get(opt);
+}
+
+void
 CoreComponent::resetConfig()
 {
     Configurable::resetConfig(emulator.defaults);

@@ -324,7 +324,6 @@ Defaults::getInt(const string &key) const
     try {
 
         result = i64(std::stoll(value));
-        debug(DEF_DEBUG, "get(%s) = %lld\n", key.c_str(), result);
 
     } catch (...) {
 
@@ -347,16 +346,43 @@ Defaults::get(Option option, isize nr) const
 }
 
 string
-Defaults::getFallback(const string &key) const
+Defaults::getFallbackString(const string &key) const
 {
-    if (!fallbacks.contains(key)) {
+    if (fallbacks.contains(key)) return fallbacks.at(key);
 
-        warn("Invalid key: %s\n", key.c_str());
-        assert(false);
-        throw VC64Error(ERROR_INVALID_KEY, key);
+    warn("Invalid key: %s\n", key.c_str());
+    assert(false);
+    throw VC64Error(ERROR_INVALID_KEY, key);
+}
+
+i64
+Defaults::getFallbackInt(const string &key) const
+{
+    auto value = getFallbackString(key);
+    i64 result = 0;
+
+    try {
+
+        result = i64(std::stoll(value));
+
+    } catch (...) {
+
+        warn("Can't parse value %s\n", key.c_str());
     }
 
-    return fallbacks.at(key);
+    return result;
+}
+
+i64
+Defaults::getFallback(Option option) const
+{
+    return getFallbackInt(string(OptionEnum::key(option)));
+}
+
+i64
+Defaults::getFallback(Option option, isize nr) const
+{
+    return getFallbackInt(string(OptionEnum::key(option)) + std::to_string(nr));
 }
 
 void

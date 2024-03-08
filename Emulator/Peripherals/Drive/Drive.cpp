@@ -128,6 +128,12 @@ Drive::getOption(Option option) const
     }
 }
 
+i64
+Drive::getFallback(Option opt) const
+{
+    return emulator.defaults.getFallback(opt, deviceNr);
+}
+
 void
 Drive::setOption(Option option, i64 value)
 {

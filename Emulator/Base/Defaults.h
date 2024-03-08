@@ -116,21 +116,21 @@ public:
     /** @brief  Queries a key-value pair.
      *  @param  key     The key.
      *  @result The value as a string.
-     *  @throw  VC64Error (#ERROR_INVALID_KEY)
+     *  @throw  VC64Error (#ERROR\_INVALID\_KEY)
      */
     string getString(const string &key) const;
 
     /** @brief  Queries a key-value pair.
      *  @param  key     The key.
      *  @result The value as an integer. 0 if the value cannot not be parsed.
-     *  @throw  VC64Error (#ERROR_INVALID_KEY)
+     *  @throw  VC64Error (#ERROR\_INVALID\_KEY)
      */
     i64 getInt(const string &key) const;
 
     /** @brief  Queries a key-value pair.
      *  @param  option  A config option whose name is used as the key.
      *  @result The value as an integer.
-     *  @throw  VC64Error (#ERROR_INVALID_KEY)
+     *  @throw  VC64Error (#ERROR\_INVALID\_KEY)
      */
     i64 get(Option option) const;
 
@@ -138,14 +138,38 @@ public:
      *  @param  option  A config option whose name is used as the prefix of the key.
      *  @param  nr      The key is parameterized by adding the value as suffix.
      *  @result The value as an integer.
-     *  @throw  VC64Error (#ERROR_INVALID_KEY)
+     *  @throw  VC64Error (#ERROR\_INVALID\_KEY)
      */
     i64 get(Option option, isize nr) const;
 
-    /** @brief  Reads the default value for a key from the fallback storage.
-     *  @throw  VC64Error (#ERROR_INVALID_KEY)
+    /** @brief  Queries a fallback key-value pair.
+     *  @param  key     The key.
+     *  @result The value as a string.
+     *  @throw  VC64Error (#ERROR\_INVALID\_KEY)
      */
-    string getFallback(const string &key) const;
+    string getFallbackString(const string &key) const;
+
+    /** @brief  Queries a fallback key-value pair.
+     *  @param  key     The key.
+     *  @result The value as an integer. 0 if the value cannot not be parsed.
+     *  @throw  VC64Error (#ERROR\_INVALID\_KEY)
+     */
+    i64 getFallbackInt(const string &key) const;
+
+    /** @brief  Queries a fallback key-value pair.
+     *  @param  option  A config option whose name is used as the key.
+     *  @result The value as an integer.
+     *  @throw  VC64Error (#ERROR\_INVALID\_KEY)
+     */
+    i64 getFallback(Option option) const;
+
+    /** @brief  Queries a fallback key-value pair.
+     *  @param  option  A config option whose name is used as the prefix of the key.
+     *  @param  nr      The key is parameterized by adding the value as suffix.
+     *  @result The value as an integer.
+     *  @throw  VC64Error (#ERROR\_INVALID\_KEY)
+     */
+    i64 getFallback(Option option, isize nr) const;
 
 
     /// @}
