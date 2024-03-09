@@ -283,8 +283,9 @@ extension MyController {
     func processMessage(_ msg: Message) {
 
         var value: Int { return Int(msg.value) }
-        var driveNr: Int { return Int(msg.drive.nr) }
+        var nr: Int { return Int(msg.drive.nr) }
         var halftrack: Int { return Int(msg.drive.value) }
+        var drive: DriveMsg { return msg.drive }
         var pc: Int { return Int(msg.cpu.pc) }
         var vol: Int { return Int(msg.drive.volume) }
         var pan: Int { return Int(msg.drive.pan) }
@@ -378,49 +379,39 @@ extension MyController {
 
         case .DRIVE_STEP:
             macAudio.playStepSound(volume: vol, pan: pan)
-            refreshStatusBarTracks(drive: driveNr)
+            refreshStatusBarTracks(drive: nr)
 
         case .DISK_INSERT:
             macAudio.playInsertSound(volume: vol, pan: pan)
-            refreshStatusBarDiskIcons(drive: driveNr)
+            refreshStatusBarDiskIcons(drive: nr)
             inspector?.fullRefresh()
 
         case .DISK_EJECT:
             macAudio.playEjectSound(volume: vol, pan: pan)
-            refreshStatusBarDiskIcons(drive: driveNr)
+            refreshStatusBarDiskIcons(drive: nr)
             inspector?.fullRefresh()
 
         case .FILE_FLASHED:
             break
 
-        case .DISK_PROTECT,
-                .DISK_SAVED,
-                .DISK_UNSAVED,
-                .DRIVE_LED_ON,
-                .DRIVE_LED_OFF:
-            refreshStatusBar()
-
-        case .IEC_BUS_BUSY,
-                .IEC_BUS_IDLE:
-            refreshStatusBar()
-
-        case .DRIVE_MOTOR_ON,
-                .DRIVE_MOTOR_OFF:
+        case .DISK_PROTECTED,
+                .DRIVE_LED,
+                .IEC_BUS_BUSY,
+                .IEC_BUS_IDLE,
+                .DRIVE_MOTOR:
             refreshStatusBar()
 
         case .DRIVE_CONNECT,
-                .DRIVE_DISCONNECT,
-                .DRIVE_POWER_OFF:
+                .DRIVE_POWER where drive.value == 0:
             hideOrShowDriveMenus()
             refreshStatusBar()
 
-        case .DRIVE_POWER_ON:
+        case .DRIVE_POWER where drive.value != 0:
             macAudio.playPowerSound(volume: vol, pan: pan)
             hideOrShowDriveMenus()
             refreshStatusBar()
 
-        case .DRIVE_POWER_SAVE_ON,
-                .DRIVE_POWER_SAVE_OFF:
+        case .DRIVE_POWER_SAVE:
             break
 
         case .VC1530_CONNECT:

@@ -196,7 +196,7 @@ Drive::setOption(Option option, i64 value)
                 config.connected = bool(value);
                 hardReset();
             }
-            msgQueue.put(value ? MSG_DRIVE_CONNECT : MSG_DRIVE_DISCONNECT, deviceNr);
+            msgQueue.put(MSG_DRIVE_CONNECT, DriveMsg { i16(deviceNr), i16(value), 0, 0 } );
             return;
         }
         case OPT_DRV_POWER_SWITCH:
@@ -206,7 +206,7 @@ Drive::setOption(Option option, i64 value)
                 config.switchedOn = bool(value);
                 hardReset();
             }
-            msgQueue.put(value ? MSG_DRIVE_POWER_ON : MSG_DRIVE_POWER_OFF, deviceNr);
+            msgQueue.put(MSG_DRIVE_POWER, DriveMsg { .nr = i16(deviceNr), .value = i16(value) } );
             return;
         }
         case OPT_DRV_POWER_SAVE:
@@ -648,18 +648,11 @@ Drive::rotateDisk()
 void
 Drive::setRedLED(bool b)
 {
-    if (!redLED && b) {
-        
-        redLED = true;
+    if (redLED != b) {
+
+        redLED = b;
         wakeUp();
-        msgQueue.put(MSG_DRIVE_LED_ON, deviceNr);
-        return;
-    }
-    if (redLED && !b) {
-        
-        redLED = false;
-        wakeUp();
-        msgQueue.put(MSG_DRIVE_LED_OFF, deviceNr);
+        msgQueue.put(MSG_DRIVE_LED, DriveMsg { .nr = i16(deviceNr), .value = b } );
         return;
     }
 }
@@ -667,11 +660,12 @@ Drive::setRedLED(bool b)
 void
 Drive::setRotating(bool b)
 {
-    if (spinning == b) return;
-    
-    spinning = b;
-    msgQueue.put(b ? MSG_DRIVE_MOTOR_ON : MSG_DRIVE_MOTOR_OFF, deviceNr);
-    iec.updateTransferStatus();
+    if (spinning != b) {
+
+        spinning = b;
+        msgQueue.put(MSG_DRIVE_MOTOR, DriveMsg { .nr = i16(deviceNr), .value = b } );
+        iec.updateTransferStatus();
+    }
 }
 
 void
@@ -680,7 +674,7 @@ Drive::wakeUp(isize awakeness)
     if (isIdle()) {
         
         trace(DRV_DEBUG, "Exiting power-safe mode\n");
-        msgQueue.put(MSG_DRIVE_POWER_SAVE_OFF, deviceNr);
+        msgQueue.put(MSG_DRIVE_POWER_SAVE, DriveMsg { .nr = i16(deviceNr), .value = 0 } );
         needsEmulation = true;
     }
 
@@ -761,7 +755,6 @@ void
 Drive::setModificationFlag(bool value)
 {
     if (hasDisk()) disk->setModified(value);
-    msgQueue.put(value ? MSG_DISK_UNSAVED : MSG_DISK_SAVED, deviceNr);
 }
 
 void
@@ -845,7 +838,7 @@ Drive::vsyncHandler()
 
             trace(DRV_DEBUG, "Entering power-save mode\n");
             needsEmulation = false;
-            msgQueue.put(MSG_DRIVE_POWER_SAVE_ON, deviceNr);
+            msgQueue.put(MSG_DRIVE_POWER_SAVE, DriveMsg { .nr = i16(deviceNr), .value = 1 } );
         }
     }
 }

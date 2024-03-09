@@ -46,10 +46,10 @@ enum_long(MSG_TYPE)
     MSG_SCRIPT_ABORT,       ///< The execution of a RetroShell ccript has been aborted
 
     // CPU
-    MSG_CPU_JAMMED,         ///< The CPU has halted due to an illegal instruction
-    MSG_CPU_JUMPED,         ///< The program counter has been modified manually
     MSG_BREAKPOINT_REACHED, ///< A breakpoint has been reached
     MSG_WATCHPOINT_REACHED, ///< A watchpoint has been reached
+    MSG_CPU_JUMPED,         ///< The program counter has been modified manually
+    MSG_CPU_JAMMED,         ///< The CPU has halted due to an illegal instruction
 
     // VIC
     MSG_PAL,                ///< The emulator runs in PAL mode now
@@ -60,24 +60,17 @@ enum_long(MSG_TYPE)
     MSG_IEC_BUS_IDLE,       ///< The IEC bus has returned to idle state
 
     // Floppy drives
-    MSG_DRIVE_CONNECT,      ///< A floppy drive has been connected
-    MSG_DRIVE_DISCONNECT,   ///< A floopy drive has been disconnected
-    MSG_DRIVE_POWER_ON,     ///< The emulator has been powered on
-    MSG_DRIVE_POWER_OFF,    ///< The emulator has been powered off
-    MSG_DRIVE_POWER_SAVE_ON,    ///< Fast paths have been enabled
-    MSG_DRIVE_POWER_SAVE_OFF,   ///< Fast paths have been disabled
+    MSG_DRIVE_CONNECT,      ///< A floppy drive has been connected or disconnected
+    MSG_DRIVE_POWER,        ///< The emulator has been powered on
+    MSG_DRIVE_POWER_SAVE,   ///< Fast paths have been enabled or disabled
     MSG_DRIVE_READ,         ///< The floopy drive has switched to read mode
     MSG_DRIVE_WRITE,        ///< The floppy drive has switched to write mode
-    MSG_DRIVE_LED_ON,       ///< The green drive LED has switched on
-    MSG_DRIVE_LED_OFF,      ///< The green drive LED has switched off
-    MSG_DRIVE_MOTOR_ON,     ///< The disk has started spinning
-    MSG_DRIVE_MOTOR_OFF,    ///< The disk has stopped spinning
+    MSG_DRIVE_LED,          ///< The green drive LED has switched on or off
+    MSG_DRIVE_MOTOR,        ///< The disk has started or stopped spinning
     MSG_DRIVE_STEP,         ///< The drive head has stepped
     MSG_DISK_INSERT,        ///< A disk has been inserted
     MSG_DISK_EJECT,         ///< A disk has been ejected
-    MSG_DISK_SAVED,         ///< The floppy drive contains a saved disk
-    MSG_DISK_UNSAVED,       ///< The floppy drive contains an unsaved disk
-    MSG_DISK_PROTECT,       ///< The write protection status has changed
+    MSG_DISK_PROTECTED,     ///< The write protection status has changed
     MSG_FILE_FLASHED,       ///< A file has been flashed into memory
 
     // Peripherals (Datasette)
@@ -146,10 +139,11 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_SCRIPT_DONE:           return "SCRIPT_DONE";
             case MSG_SCRIPT_ABORT:          return "SCRIPT_ABORT";
 
-            case MSG_CPU_JAMMED:            return "CPU_JAMMED";
             case MSG_BREAKPOINT_REACHED:    return "BREAKPOINT_REACHED";
             case MSG_WATCHPOINT_REACHED:    return "WATCHPOINT_REACHED";
-                
+            case MSG_CPU_JUMPED:            return "CPU_JUMPED";
+            case MSG_CPU_JAMMED:            return "CPU_JAMMED";
+
             case MSG_PAL:                   return "PAL";
             case MSG_NTSC:                  return "NTSC";
                 
@@ -157,23 +151,16 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_IEC_BUS_IDLE:          return "IEC_BUS_IDLE";
                 
             case MSG_DRIVE_CONNECT:         return "DRIVE_CONNECT";
-            case MSG_DRIVE_DISCONNECT:      return "DRIVE_DISCONNECT";
-            case MSG_DRIVE_POWER_ON:        return "DRIVE_POWER_ON";
-            case MSG_DRIVE_POWER_OFF:       return "DRIVE_POWER_OFF";
-            case MSG_DRIVE_POWER_SAVE_ON:   return "DRIVE_POWER_SAVE_ON";
-            case MSG_DRIVE_POWER_SAVE_OFF:  return "DRIVE_POWER_SAVE_OFF";
+            case MSG_DRIVE_POWER:           return "DRIVE_POWER";
+            case MSG_DRIVE_POWER_SAVE:      return "DRIVE_POWER_SAVE";
             case MSG_DRIVE_READ:            return "DRIVE_READ";
             case MSG_DRIVE_WRITE:           return "DRIVE_WRITE";
-            case MSG_DRIVE_LED_ON:          return "DRIVE_LED_ON";
-            case MSG_DRIVE_LED_OFF:         return "DRIVE_LED_OFF";
-            case MSG_DRIVE_MOTOR_ON:        return "DRIVE_MOTOR_ON";
-            case MSG_DRIVE_MOTOR_OFF:       return "DRIVE_MOTOR_OFF";
+            case MSG_DRIVE_LED:             return "DRIVE_LED";
+            case MSG_DRIVE_MOTOR:           return "DRIVE_MOTOR";
             case MSG_DRIVE_STEP:            return "DRIVE_STEP";
             case MSG_DISK_INSERT:           return "DISK_INSERT";
             case MSG_DISK_EJECT:            return "DISK_EJECT";
-            case MSG_DISK_SAVED:            return "DISK_SAVED";
-            case MSG_DISK_UNSAVED:          return "DISK_UNSAVED";
-            case MSG_DISK_PROTECT:          return "DISK_PROTECT";
+            case MSG_DISK_PROTECTED:        return "DISK_PROTECTED";
             case MSG_FILE_FLASHED:          return "FILE_FLASHED";
 
             case MSG_VC1530_CONNECT:        return "VC1530_CONNECT";
