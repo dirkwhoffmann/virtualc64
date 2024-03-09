@@ -26,7 +26,7 @@ debugflag MSG_DEBUG       = 0; // Message queue
 debugflag SNP_DEBUG       = 0; // Serializing (snapshots)
 
 // Run ahead
-debugflag RUA_DEBUG       = 1; // Run ahead
+debugflag RUA_DEBUG       = 0; // Run ahead
 debugflag RUA_ON_STEROIDS = 0; // Update the run-ahead instance in every frame
 
 // CPU

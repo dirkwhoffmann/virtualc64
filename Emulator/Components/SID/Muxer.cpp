@@ -569,6 +569,7 @@ Muxer::executeCycles(isize numCycles)
 
             // Run the primary SID (which is always enabled)
             numSamples = sid[0].resid.executeCycles(numCycles, sidStream[0]);
+            debug(SID_EXEC, "Generated %ld samples.\n", numSamples);
 
             // Run all other SIDS (if any)
             for (isize i = 1; i < 4; i++) {
@@ -786,19 +787,22 @@ void
 Muxer::copyStereo(float *target1, float *target2, isize n)
 {
     if (recorder.isRecording()) {
+
+        // Silence audio when the screen recorder is active
         for (isize i = 0; i < n; i++) target1[i] = target2[i] = 0.0;
-        return;
+
+    } else {
+
+        stream.lock();
+
+        // Check for a buffer underflow
+        if (stream.count() < n) handleBufferUnderflow();
+
+        // Copy sound samples
+        stream.copyStereo(target1, target2, n, volL, volR);
+
+        stream.unlock();
     }
-
-    stream.lock();
-    
-    // Check for a buffer underflow
-    if (stream.count() < n) handleBufferUnderflow();
-
-    // Copy sound samples
-    stream.copyStereo(target1, target2, n, volL, volR);
-    
-    stream.unlock();
 }
 
 void

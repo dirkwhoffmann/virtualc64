@@ -310,7 +310,7 @@ Recorder::prepare()
 {
     debug(REC_DEBUG, "Prepare\n");
     
-    /* Adjust the sampling rate while the recorder is running.
+    /* Adjust the sampling rate.
      *
      * Background: Both the PAL and NTSC versions of the C64 diverge from the
      * exact PAL and NTSC frame rates. The PAL C64 frame rate is 50.125 Hz,
@@ -320,16 +320,12 @@ Recorder::prepare()
      * stream for NTSC machines, we need to scale the sample frequency to make
      * SID produce the correct number of sound samples per frame (882 for PAL
      * and 735 for NTSC).
-     * Important: Due to scaling, we won't be able to make SID produce the exact
-     * number of required samples in each and every frame. It is important to
-     * apply a scaling factor that never makes SID produce less than the
-     * required amout which would result in a buffer underflow.
      */
     if (vic.pal()) {
-        muxer.setSampleRate(sampleRate * 50.125 / 50.0);
+        host.setOption(OPT_HOST_SAMPLE_RATE, i64(sampleRate * 50.125 / 50.0));
         samplesPerFrame = 882;
     } else {
-        muxer.setSampleRate(sampleRate * 59.827 / 60.0);
+        host.setOption(OPT_HOST_SAMPLE_RATE, i64(sampleRate * 59.827 / 60.0));
         samplesPerFrame = 735;
     }
     

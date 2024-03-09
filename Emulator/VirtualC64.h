@@ -644,33 +644,104 @@ public:
     } vicii;
 
 
-    //
-    // SID
-    //
-
+    /** SID Public API
+     */
     struct SIDAPI : API {
 
         using API::API;
 
+        /// @name Querying the component
+        /// @{
+
+        /** @brief  Returns the component's current configuration.
+         */
         MuxerConfig getConfig() const;
+
+        /** @brief  Returns the current state of a specific SID.
+         *  @param  nr      SID number (0 - 3). 0 is the primary SID.
+         */
         SIDInfo getInfo(isize nr) const;
+
+        /** @brief  Returns the current state of a specific voice.
+         *  @param  nr      SID number (0 - 3). 0 is the primary SID.
+         *  @param  voice   Voice nuber (0 - 3).
+         */
         VoiceInfo getVoiceInfo(isize nr, isize voice) const;
+
+        /** @brief  Returns statistical information about the components.
+         */
         MuxerStats getStats() const;
 
+        /// @}
+        /// @name Modulating the volume
+        /// @{
+
+        /** @brief  Ramps the volume up.
+         *  Starting from the current volume, the volume is slowly increased
+         *  until the target volume has been reached. Smooth modulation of the
+         *  volume helps to avoid cracks in the audio output.
+         */
         void rampUp();
+
+        /** @brief  Ramps the volume up.
+         *  Similar to rampUp() with a provides starting volume.
+         *  @param  from    The starting volume.
+         */
         void rampUp(float from);
+
+        /** @brief  Ramps the volume down.
+         *  Starting from the current volume, the volume is slowly decreased
+         *  until 0 has been reached. This function is used, for example, when
+         *  the user hits the pause button to avoid cracks in the audio output.
+         */
         void rampDown();
 
+        /// @}
+        /// @name Retrieving audio data
+        /// @{
+
+        /** @brief  Extracts a number of mono samples from the audio buffers
+         *  Internally, the muxer maintains two buffers, one for the left audio
+         *  channel, and one for the right audio channel. When this function
+         *  is used, both internal stream are added together and written to
+         *  to the provided destination buffer.
+         *  @param  buffer  Pointer to the destination buffer
+         *  @param  n       Number of sound samples to copy.
+         */
         void copyMono(float *buffer, isize n);
+
+        /** @brief  Extracts a number of stereo samples from the audio buffers.
+         *  @param  left    Pointer to the left channel's destination buffer.
+         *  @param  right   Pointer to the right channel's destination buffer.
+         *  @param  n       Number of sound samples to copy.
+         */
         void copyStereo(float *left, float *right, isize n);
+
+        /** @brief  Extracts a number of stereo samples from the audio buffers.
+         *  This function has to be used if a stereo stream is managed in a
+         *  single destination buffer. The samples of both channels will be
+         *  interleaved, that is, a sample for the left channel will be
+         *  followed by a sample of the right channel and vice versa.
+         *  @param  buffer  Pointer to the destinationleft buffer.
+         *  @param  n       Number of sound samples to copy.
+         */
         void copyInterleaved(float *buffer, isize n);
 
+        /// @}
+        /// @name Visualizing waveforms
+        /// @{
+
+        /** @brief  Draws a visual representation of the waveform.
+         *  The Mac app uses this function to visualize the contents of the
+         *  audio buffer in one of it's inspector panels. */
         float draw(u32 *buffer, isize width, isize height,
                    float maxAmp, u32 color, isize sid = -1) const;
+        /// @}
+
     } muxer;
 
 
-    /** DMA Debugger API
+    /** DMA Debugger Public API
      */
     struct DmaDebuggerAPI : API {
 
@@ -683,7 +754,7 @@ public:
     } dmaDebugger;
 
 
-    /** Keyboard API
+    /** Keyboard Public API
      */
     struct KeyboardAPI : API {
 
@@ -706,7 +777,7 @@ public:
     } keyboard;
 
 
-    /** Mouse API
+    /** Mouse Public API
      */
     struct MouseAPI : API {
 
@@ -761,7 +832,7 @@ public:
     };
 
 
-    /** Joystick API
+    /** Joystick Public API
      */
     struct JoystickAPI : API {
 
@@ -775,7 +846,7 @@ public:
     };
 
 
-    /** Datasette API
+    /** Datasette Public API
      */
     struct DatasetteAPI : API {
 
@@ -810,7 +881,7 @@ public:
     } port1, port2;
 
 
-    /** Screen recorder API
+    /** Screen Recorder Public API
      */
     struct RecorderAPI : API {
 
@@ -827,13 +898,21 @@ public:
         void startRecording(isize x1, isize y1, isize x2, isize y2,
                             isize bitRate,
                             isize aspectX, isize aspectY);
+
+        /** @brief  Interrupts a recording in progress.
+         */
         void stopRecording();
+
+        /** @brief  Exports the recorded video to a file.
+         *  @param  path    The export destination.
+         *  @return true on success.
+         */
         bool exportAs(const string &path);
 
     } recorder;
 
 
-    /** Expansion port API
+    /** Expansion Port Public API
      */
     struct ExpansionPortAPI : API {
 
@@ -918,7 +997,7 @@ public:
     // Drive
     //
 
-    /** Drive API
+    /** Drive Public API
      */
     struct DriveAPI : API {
 
@@ -966,32 +1045,84 @@ public:
          */
         void insertFileSystem(const class FileSystem &fs, bool wp);
 
-        /** @brief  Ejects the current disk. */
+        /** @brief  Ejects the current disk. 
+         */
         void ejectDisk();
 
     } drive8, drive9;
 
 
-    //
-    // RetroShell
-    //
-
+    /** RetroShell Public API
+     */
     struct RetroShellAPI : API {
 
         using API::API;
 
+        /// @name Querying the console
+        /// @{
+        ///
+        /** @brief  Returns a pointer to the text buffer.
+         *  The text buffer contains the complete contents of the console. It
+         *  will be expanded when new output is generated. When the buffer
+         *  grows too large, old contents is cropped.
+         */
         const char *text();
+
+        /** @brief  Returns the relative cursor position.
+         *  The returned value is relative to the end of the input line. A value
+         *  of 0 indicates that the cursor is at the rightmost position, that
+         *  is, one character after the last character of the input line. If the
+         *  cursor is at the front of the input line, the value matches the
+         *  length of the input line.
+         */
         isize cursorRel();
 
+        /// @}
+        /// @name Typing characters and strings
+        /// @{
+
+        /** @brief  Informs RetroShell that a key has been typed.
+         *  @param  key     The pressed key
+         *  @param  shift   Status of the shift key
+         */
         void press(RetroShellKey key, bool shift = false);
+
+        /** @brief  Informs RetroShell that a key has been typed.
+         *  @param  c       The pressed key
+         */
         void press(char c);
+
+        /** @brief  Informs RetroShell that multiple keys have been typed.
+         *  @param  s       The typed text
+         */
         void press(const string &s);
 
+        /// @}
+        /// @name Controlling the output stream
+        /// @{
+
+        /** @brief  Assign an additional output stream.
+         *  In addition to writing the RetroShell output into the text buffer,
+         *  RetroShell will write the output into the provides stream.
+         */
+        void setStream(std::ostream &os);
+
+        /// @}
+        /// @name Executing scripts
+        /// @{
+
+        /** @brief  Executes a script.
+         *  The script is executes asynchroneously. However, RetroShell will
+         *  send messages back to the GUI thread to inform about the execution
+         *  state. After the last script command has been executed,
+         *  MSG\_SCRIPT\_DONE is sent. If shell execution has been aborted due
+         *  to an error, MSG\_SCRIPT\_ABORT is sent.
+         */
         void execScript(std::stringstream &ss);
         void execScript(const std::ifstream &fs);
         void execScript(const string &contents);
 
-        void setStream(std::ostream &os);
+        /// @}
 
     } retroShell;
 };
