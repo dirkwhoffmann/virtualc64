@@ -107,14 +107,22 @@ Defaults::Defaults()
     setFallback(OPT_DAT_MODEL, DATASETTE_C1530);
     setFallback(OPT_DAT_CONNECT, true);
 
+    setFallback(OPT_MOUSE_MODEL, MOUSE_C1350);
+    setFallback(OPT_MOUSE_SHAKE_DETECT, true);
+    setFallback(OPT_MOUSE_VELOCITY, 100);
+
     setFallback(OPT_AUTOFIRE, false);
     setFallback(OPT_AUTOFIRE_BURSTS, false);
     setFallback(OPT_AUTOFIRE_BULLETS, 3);
     setFallback(OPT_AUTOFIRE_DELAY, 5);
 
-    setFallback(OPT_MOUSE_MODEL, MOUSE_C1350);
-    setFallback(OPT_MOUSE_SHAKE_DETECT, true);
-    setFallback(OPT_MOUSE_VELOCITY, 100);
+    setFallback(OPT_REC_ORIGIN_X, 0); // Change to a suitable value
+    setFallback(OPT_REC_ORIGIN_Y, 0); // Change to a suitable value
+    setFallback(OPT_REC_WIDTH, 0); // Change to a suitable value
+    setFallback(OPT_REC_HEIGHT, 0); // Change to a suitable value
+    setFallback(OPT_REC_BITRATE, 512);
+    setFallback(OPT_REC_ASPECT_X, 768);
+    setFallback(OPT_REC_ASPECT_Y, 702);
 
     setFallback("BASIC_PATH", "");
     setFallback("CHAR_PATH", "");

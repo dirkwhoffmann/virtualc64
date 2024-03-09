@@ -269,6 +269,16 @@ Emulator::get(Option option) const
 
             return main.datasette.getOption(option);
 
+        case OPT_REC_ORIGIN_X:
+        case OPT_REC_ORIGIN_Y:
+        case OPT_REC_WIDTH:
+        case OPT_REC_HEIGHT:
+        case OPT_REC_BITRATE:
+        case OPT_REC_ASPECT_X:
+        case OPT_REC_ASPECT_Y:
+
+            return main.recorder.getOption(option);
+
         default:
             fatalError;
     }
@@ -277,7 +287,7 @@ Emulator::get(Option option) const
 i64
 Emulator::get(Option option, isize id) const
 {
-    const Drive &drive = id == DRIVE8 ? main.drive8 : main.drive9;
+    // const Drive &drive = id == DRIVE8 ? main.drive8 : main.drive9;
 
     switch (option) {
 
@@ -308,7 +318,9 @@ Emulator::get(Option option, isize id) const
         case OPT_DRV_INSERT_VOL:
         case OPT_DRV_EJECT_VOL:
 
-            return drive.getOption(option);
+            if (id == DRIVE8) return main.drive8.getOption(option);
+            if (id == DRIVE9) return main.drive9.getOption(option);
+            fatalError;
 
         case OPT_MOUSE_MODEL:
         case OPT_MOUSE_SHAKE_DETECT:
@@ -598,6 +610,17 @@ Emulator::set(Option option, i64 value)
 
             main.port1.joystick.setOption(option, value);
             main.port2.joystick.setOption(option, value);
+            break;
+
+        case OPT_REC_ORIGIN_X:
+        case OPT_REC_ORIGIN_Y:
+        case OPT_REC_WIDTH:
+        case OPT_REC_HEIGHT:
+        case OPT_REC_BITRATE:
+        case OPT_REC_ASPECT_X:
+        case OPT_REC_ASPECT_Y:
+
+            main.recorder.setOption(option, value);
             break;
 
         default:

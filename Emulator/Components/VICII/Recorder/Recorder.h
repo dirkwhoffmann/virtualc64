@@ -12,6 +12,7 @@
 
 #pragma once
 
+#include "RecorderTypes.h"
 #include "SubComponent.h"
 #include "Chrono.h"
 #include "FFmpeg.h"
@@ -21,6 +22,21 @@ namespace vc64 {
 
 class Recorder final : public SubComponent, public Dumpable {
 
+    ConfigOptions options = {
+
+        OPT_REC_ORIGIN_X,
+        OPT_REC_ORIGIN_Y,
+        OPT_REC_WIDTH,
+        OPT_REC_HEIGHT,
+        OPT_REC_BITRATE,
+        OPT_REC_ASPECT_X,
+        OPT_REC_ASPECT_Y
+    };
+
+    // Current configuration
+    RecorderConfig config = { };
+
+    
     //
     // Handles
     //
@@ -66,36 +82,35 @@ class Recorder final : public SubComponent, public Dumpable {
     
     
     //
-    // Initializing
+    // Methods
     //
     
 public:
     
     Recorder(C64& ref);
 
-    
-    //
-    // Methods from CoreObject
-    //
-
-private:
-    
     const char *getDescription() const override { return "Recorder"; }
     void _dump(Category category, std::ostream& os) const override;
-    
-    
-    //
-    // Methods from CoreObject
-    //
-
-public:
 
     void _initialize() override;
 
     Recorder& operator= (const Recorder& other) { return *this; }
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 
-    
+
+
+    //
+    // Configuring
+    //
+
+public:
+
+    const RecorderConfig &getConfig() const { return config; }
+    const ConfigOptions &getOptions() const override { return options; }
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
+
+
     //
     // Querying locations and flags
     //

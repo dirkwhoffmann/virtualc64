@@ -128,6 +128,15 @@ enum_long(OPT)
     OPT_AUTOFIRE_BULLETS,       ///< Number of bullets per burst
     OPT_AUTOFIRE_DELAY,         ///< Delay between two shots [frames]
 
+    // Screen recorder
+    OPT_REC_ORIGIN_X,           ///< Horizontal start of the recorded texture area
+    OPT_REC_ORIGIN_Y,           ///< Vertical start of the recorded texture area
+    OPT_REC_WIDTH,              ///< Width of the recorded texture area
+    OPT_REC_HEIGHT,             ///< Width of the recorded texture area
+    OPT_REC_BITRATE,            ///< Bitrate parameter, passed to FFMPEG
+    OPT_REC_ASPECT_X,           ///< Numerator of the video's aspect ratio
+    OPT_REC_ASPECT_Y,           ///< Denumerator of the video's aspect ratio
+
     OPT_COUNT
 };
 typedef OPT Option;
@@ -233,6 +242,14 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_AUTOFIRE_BURSTS:       return "AUTOFIRE.BURSTS";
             case OPT_AUTOFIRE_BULLETS:      return "AUTOFIRE.BULLETS";
             case OPT_AUTOFIRE_DELAY:        return "AUTOFIRE.DELAY";
+
+            case OPT_REC_ORIGIN_X:          return "REC.ORIGINX";
+            case OPT_REC_ORIGIN_Y:          return "REC.ORIGINY";
+            case OPT_REC_WIDTH:             return "REC.WIDTH";
+            case OPT_REC_HEIGHT:            return "REC.HEIGHT";
+            case OPT_REC_BITRATE:           return "REC.BITRATE";
+            case OPT_REC_ASPECT_X:          return "REC.ASPECTX";
+            case OPT_REC_ASPECT_Y:          return "REC.ASPECTY";
 
             case OPT_COUNT:                 return "???";
         }

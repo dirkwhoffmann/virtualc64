@@ -984,6 +984,7 @@
 		50E2D9AA25991E4B009A986B /* AnyCollection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AnyCollection.cpp; sourceTree = "<group>"; };
 		50E2D9AB25991E4B009A986B /* AnyCollection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnyCollection.h; sourceTree = "<group>"; };
 		50E56AF629D48A0E00EBCE76 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50E5D66E2B9C9C97004113A9 /* RecorderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecorderTypes.h; sourceTree = "<group>"; };
 		50E5FFAF227964F20025C73D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		50E5FFB3227964FA0025C73D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		50E5FFB4227964FA0025C73D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MyDocument.xib; sourceTree = "<group>"; };
@@ -1968,6 +1969,7 @@
 				50CD3693281681D000E40BFC /* NamedPipe.cpp */,
 				50CD3697281681E700E40BFC /* FFmpeg.h */,
 				50CD3696281681E700E40BFC /* FFmpeg.cpp */,
+				50E5D66E2B9C9C97004113A9 /* RecorderTypes.h */,
 				5044A03A2657A7A800C551C6 /* Recorder.h */,
 				5044A0392657A7A800C551C6 /* Recorder.cpp */,
 			);

@@ -46,6 +46,69 @@ Recorder::_dump(Category category, std::ostream& os) const
     }
 }
 
+i64
+Recorder::getOption(Option option) const
+{
+    switch (option) {
+
+        case OPT_REC_ORIGIN_X:  return config.cutout.x;
+        case OPT_REC_ORIGIN_Y:  return config.cutout.y;
+        case OPT_REC_WIDTH:     return config.cutout.w;
+        case OPT_REC_HEIGHT:    return config.cutout.h;
+        case OPT_REC_BITRATE:   return config.bitRate;
+        case OPT_REC_ASPECT_X:  return config.aspectRatio.x;
+        case OPT_REC_ASPECT_Y:  return config.aspectRatio.y;
+
+        default:
+            fatalError;
+    }
+}
+
+void
+Recorder::setOption(Option option, i64 value)
+{
+    switch (option) {
+
+        case OPT_REC_ORIGIN_X:
+
+            config.cutout.x = isize(value);
+            return;
+
+        case OPT_REC_ORIGIN_Y:
+
+            config.cutout.y = isize(value);
+            return;
+
+        case OPT_REC_WIDTH:
+
+            config.cutout.w = isize(value);
+            return;
+
+        case OPT_REC_HEIGHT:
+
+            config.cutout.w = isize(value);
+            return;
+
+        case OPT_REC_BITRATE:
+
+            config.bitRate = isize(value);
+            return;
+
+        case OPT_REC_ASPECT_X:
+
+            config.aspectRatio.x = isize(value);
+            return;
+
+        case OPT_REC_ASPECT_Y:
+
+            config.aspectRatio.y = isize(value);
+            return;
+
+        default:
+            fatalError;
+    }
+}
+
 string
 Recorder::videoPipePath()
 {
