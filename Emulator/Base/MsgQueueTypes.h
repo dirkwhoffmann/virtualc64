@@ -45,13 +45,6 @@ enum_long(MSG_TYPE)
     MSG_SCRIPT_DONE,        ///< A RetroShell script has been successfully executed
     MSG_SCRIPT_ABORT,       ///< The execution of a RetroShell ccript has been aborted
 
-    // ROMs
-    MSG_ROM_MISSING,        ///< The emulator can't run due to a missing Rom
-    MSG_BASIC_ROM_LOADED,   ///< A valid Basis Rom has been installed
-    MSG_CHAR_ROM_LOADED,    ///< A valid Character has been installed
-    MSG_KERNAL_ROM_LOADED,  ///< A valid Kernal Rom has been installed
-    MSG_DRIVE_ROM_LOADED,   ///< A valid Drive Rom has been installed
-
     // CPU
     MSG_CPU_JAMMED,         ///< The CPU has halted due to an illegal instruction
     MSG_CPU_JUMPED,         ///< The program counter has been modified manually
@@ -152,11 +145,6 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_CONSOLE_DEBUGGER:      return "CONSOLE_DEBUGGER";
             case MSG_SCRIPT_DONE:           return "SCRIPT_DONE";
             case MSG_SCRIPT_ABORT:          return "SCRIPT_ABORT";
-
-            case MSG_BASIC_ROM_LOADED:      return "BASIC_ROM_LOADED";
-            case MSG_CHAR_ROM_LOADED:       return "CHAR_ROM_LOADED";
-            case MSG_KERNAL_ROM_LOADED:     return "KERNAL_ROM_LOADED";
-            case MSG_DRIVE_ROM_LOADED:      return "DRIVE_ROM_LOADED";
 
             case MSG_CPU_JAMMED:            return "CPU_JAMMED";
             case MSG_BREAKPOINT_REACHED:    return "BREAKPOINT_REACHED";

@@ -360,15 +360,6 @@ extension MyController {
                 .SCRIPT_ABORT:
             renderer.console.isDirty = true
 
-        case .BASIC_ROM_LOADED,
-                .CHAR_ROM_LOADED,
-                .KERNAL_ROM_LOADED,
-                .DRIVE_ROM_LOADED:
-            break
-
-        case .ROM_MISSING:
-            break
-
         case .BREAKPOINT_REACHED:
             inspector?.signalBreakPoint(pc: pc)
 
