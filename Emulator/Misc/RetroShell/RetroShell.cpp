@@ -242,7 +242,7 @@ RetroShell::printState()
         char str[256] = {};
         for (isize i = 0; i < 10; i++) {
 
-            addr += cpu.disassembler.disass(str, addr, "%a: %9b %i");
+            addr += cpu.disassembler.disass(str, "%p: %9b %f %i", addr);
             printf("%s\n", str);
         }
 

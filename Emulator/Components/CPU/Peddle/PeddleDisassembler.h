@@ -55,14 +55,18 @@ public:
 public:
 
     // Experimental
-    isize disass(char *dst, u16 addr, const char *fmt = "%i") const;
+    isize disass(char *dst, const char *fmt, u16 addr) const;
+    isize disass(char *dst, const char *fmt, const RecordedInstruction &instr) const;
+    isize disass(char *dst, u16 addr) const;
+    isize disass(char *dst, const RecordedInstruction &instr) const;
 
 private:
 
-    isize disassA(u16 addr, char *dst, isize tab) const;
-    isize disassB(u16 addr, char *dst, isize tab) const;
-    isize disassI(u16 addr, char *dst, isize tab) const;
-    // isize disassF(u16 addr, char *dst) const;
+    isize disass8(u8 value, char *dst, isize tab) const;
+    isize disass16(u16 value, char *dst, isize tab) const;
+    isize disassB(u8 byte1, u8 byte2, u8 byte3, char *dst, isize tab) const;
+    isize disassI(u16 addr, u8 byte1, u8 byte2, u8 byte3, char *dst, isize tab) const;
+    isize disassF(u8 flags, char *dst, isize tab) const;
 
 public:
 
