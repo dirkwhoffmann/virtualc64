@@ -269,11 +269,9 @@ Emulator::get(Option option) const
 
             return main.datasette.getOption(option);
 
-        case OPT_REC_ORIGIN_X:
-        case OPT_REC_ORIGIN_Y:
-        case OPT_REC_WIDTH:
-        case OPT_REC_HEIGHT:
-        case OPT_REC_BITRATE:
+        case OPT_REC_FRAME_RATE:
+        case OPT_REC_BIT_RATE:
+        case OPT_REC_SAMPLE_RATE:
         case OPT_REC_ASPECT_X:
         case OPT_REC_ASPECT_Y:
 
@@ -612,11 +610,9 @@ Emulator::set(Option option, i64 value)
             main.port2.joystick.setOption(option, value);
             break;
 
-        case OPT_REC_ORIGIN_X:
-        case OPT_REC_ORIGIN_Y:
-        case OPT_REC_WIDTH:
-        case OPT_REC_HEIGHT:
-        case OPT_REC_BITRATE:
+        case OPT_REC_FRAME_RATE:
+        case OPT_REC_BIT_RATE:
+        case OPT_REC_SAMPLE_RATE:
         case OPT_REC_ASPECT_X:
         case OPT_REC_ASPECT_Y:
 

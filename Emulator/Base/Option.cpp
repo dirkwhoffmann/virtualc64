@@ -127,11 +127,9 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_AUTOFIRE_BULLETS:          return numParser(" bullets");
         case OPT_AUTOFIRE_DELAY:            return numParser(" frames");
 
-        case OPT_REC_ORIGIN_X:              return numParser();
-        case OPT_REC_ORIGIN_Y:              return numParser();
-        case OPT_REC_WIDTH:                 return numParser(" px");
-        case OPT_REC_HEIGHT:                return numParser(" px");
-        case OPT_REC_BITRATE:               return numParser(" kBit");
+        case OPT_REC_FRAME_RATE:            return numParser(" fps");
+        case OPT_REC_BIT_RATE:              return numParser(" kBit");
+        case OPT_REC_SAMPLE_RATE:           return numParser(" Hz");
         case OPT_REC_ASPECT_X:              return numParser();
         case OPT_REC_ASPECT_Y:              return numParser();
     }

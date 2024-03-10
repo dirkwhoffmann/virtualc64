@@ -45,22 +45,26 @@ class Preferences {
         }
     }
     var captureSource = 0
+
     var bitRate = 512 {
         didSet {
-            if bitRate < 64 { bitRate = 64 }
-            if bitRate > 16384 { bitRate = 16384 }
+            for c64 in myAppDelegate.proxies {
+                c64.configure(.REC_BIT_RATE, value: bitRate)
+            }
         }
     }
     var aspectX = 768 {
         didSet {
-            if aspectX < 1 { aspectX = 1 }
-            if aspectX > 999 { aspectX = 999 }
+            for c64 in myAppDelegate.proxies {
+                c64.configure(.REC_ASPECT_X, value: bitRate)
+            }
         }
     }
     var aspectY = 702 {
         didSet {
-            if aspectY < 1 { aspectY = 1 }
-            if aspectY > 999 { aspectY = 999 }
+            for c64 in myAppDelegate.proxies {
+                c64.configure(.REC_ASPECT_Y, value: bitRate)
+            }
         }
     }
     

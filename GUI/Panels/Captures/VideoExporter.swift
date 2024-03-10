@@ -45,15 +45,16 @@ class VideoExporter: DialogController {
         if c64.recorder.export(as: path.absoluteString) {
                         
             let state = recorder.info
+            let config = recorder.config
 
             text.stringValue = "MPEG-4 Video Stream"
             icon.isHidden = false
             exportButton.isHidden = false
             sizeOnDisk.stringValue = path.fileSizeString
             duration.stringValue = String(format: "%.1f sec", state.duration)
-            frameRate.stringValue = "\(c64.recorder.frameRate) Hz"
-            bitRate.stringValue = "\(c64.recorder.bitRate) kHz"
-            sampleRate.stringValue = "\(c64.recorder.sampleRate) Hz"
+            frameRate.stringValue = "\(config.frameRate) Hz"
+            bitRate.stringValue = "\(config.bitRate) kHz"
+            sampleRate.stringValue = "\(config.sampleRate) Hz"
 
         } else {
             

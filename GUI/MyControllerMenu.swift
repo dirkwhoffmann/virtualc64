@@ -348,10 +348,7 @@ extension MyController: NSMenuItemValidation {
         }
 
         do {
-            try c64.recorder.startRecording(rect: rect,
-                                            rate: pref.bitRate,
-                                            ax: pref.aspectX,
-                                            ay: pref.aspectY)
+            try c64.recorder.startRecording(rect: rect)
         } catch {
 
             showAlert(.cantRecord, error: error)

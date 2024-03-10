@@ -26,12 +26,6 @@ typedef struct
     isize bitRate;
     isize sampleRate;
 
-    // Audio samples per frame (882 for PAL, 735 for NTSC)
-    isize samplesPerFrame;
-
-    // Recorded texture cutout
-    struct { isize x; isize y; isize w; isize h; } cutout;
-
     // Aspect ratio
     struct {isize x; isize y; } aspectRatio;
 }

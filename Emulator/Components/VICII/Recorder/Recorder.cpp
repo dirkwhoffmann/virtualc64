@@ -35,6 +35,11 @@ Recorder::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
+    if (category == Category::Config) {
+
+        dumpConfig(os);
+    }
+
     if (category == Category::State) {
 
         os << tab("FFmpeg path");
@@ -51,13 +56,11 @@ Recorder::getOption(Option option) const
 {
     switch (option) {
 
-        case OPT_REC_ORIGIN_X:  return config.cutout.x;
-        case OPT_REC_ORIGIN_Y:  return config.cutout.y;
-        case OPT_REC_WIDTH:     return config.cutout.w;
-        case OPT_REC_HEIGHT:    return config.cutout.h;
-        case OPT_REC_BITRATE:   return config.bitRate;
-        case OPT_REC_ASPECT_X:  return config.aspectRatio.x;
-        case OPT_REC_ASPECT_Y:  return config.aspectRatio.y;
+        case OPT_REC_FRAME_RATE:    return config.frameRate;
+        case OPT_REC_BIT_RATE:      return config.bitRate;
+        case OPT_REC_SAMPLE_RATE:   return config.sampleRate;
+        case OPT_REC_ASPECT_X:      return config.aspectRatio.x;
+        case OPT_REC_ASPECT_Y:      return config.aspectRatio.y;
 
         default:
             fatalError;
@@ -69,39 +72,31 @@ Recorder::setOption(Option option, i64 value)
 {
     switch (option) {
 
-        case OPT_REC_ORIGIN_X:
+        case OPT_REC_FRAME_RATE:
 
-            config.cutout.x = isize(value);
+            config.frameRate = isize(value);
             return;
 
-        case OPT_REC_ORIGIN_Y:
-
-            config.cutout.y = isize(value);
-            return;
-
-        case OPT_REC_WIDTH:
-
-            config.cutout.w = isize(value);
-            return;
-
-        case OPT_REC_HEIGHT:
-
-            config.cutout.w = isize(value);
-            return;
-
-        case OPT_REC_BITRATE:
+        case OPT_REC_BIT_RATE:
 
             config.bitRate = isize(value);
+            return;
+
+        case OPT_REC_SAMPLE_RATE:
+
+            config.sampleRate = isize(value);
             return;
 
         case OPT_REC_ASPECT_X:
 
             config.aspectRatio.x = isize(value);
+            printf("OPT_REC_ASPECT_X = %ld\n", config.aspectRatio.x);
             return;
 
         case OPT_REC_ASPECT_Y:
 
             config.aspectRatio.y = isize(value);
+            printf("OPT_REC_ASPECT_Y = %ld\n", config.aspectRatio.y);
             return;
 
         default:
@@ -149,14 +144,22 @@ Recorder::getDuration() const
 }
 
 void
-Recorder::startRecording(isize x1, isize y1, isize x2, isize y2,
-                         isize bitRate,
-                         isize aspectX, isize aspectY)
+Recorder::startRecording(isize x1, isize y1, isize x2, isize y2)
 {
     SYNCHRONIZED
 
-    debug(REC_DEBUG, "startRecording(%ld,%ld,%ld,%ld,%ld,%ld,%ld)\n",
-          x1, y1, x2, y2, bitRate, aspectX, aspectY);
+    /*
+    auto bitRate = config.bitRate;
+    auto aspectX = config.aspectRatio.x;
+    auto aspectY = config.aspectRatio.y;
+    */
+
+    // Override the frameRate by now (remove this later)
+    config.frameRate = vic.pal() ? 50 : 60;
+    samplesPerFrame = config.sampleRate / config.frameRate;
+
+    debug(REC_DEBUG, "startRecording(%ld,%ld,%ld,%ld)\n", x1, y1, x2, y2);
+    debug(REC_DEBUG, "%ld,%ld,%ld,\n", config.bitRate, config.aspectRatio.x, config.aspectRatio.y);
 
     // Print some debugging information if requested
     if (REC_DEBUG) dump(Category::State);
@@ -177,9 +180,6 @@ Recorder::startRecording(isize x1, isize y1, isize x2, isize y2,
 
     debug(REC_DEBUG, "Pipes created\n");
 
-    debug(REC_DEBUG, "startRecording(%ld,%ld,%ld,%ld,%ld,%ld,%ld)\n",
-          x1, y1, x2, y2, bitRate, aspectX, aspectY);
-
     // Make sure the screen dimensions are even
     if ((x2 - x1) % 2) x2--;
     if ((y2 - y1) % 2) y2--;
@@ -191,17 +191,6 @@ Recorder::startRecording(isize x1, isize y1, isize x2, isize y2,
     cutout.y2 = y2;
     debug(REC_DEBUG, "Recorded area: (%ld,%ld) - (%ld,%ld)\n", x1, y1, x2, y2);
 
-    // Set the bit rate, frame rate, and sample rate
-    this->bitRate = bitRate;
-    frameRate = vic.pal() ? 50 : 60;;
-    sampleRate = 44100;
-    samplesPerFrame = sampleRate / frameRate;
-
-    // Create temporary buffers
-    // debug(REC_DEBUG, "Creating buffers...\n");
-
-    // videoData.alloc((x2 - x1) * (y2 - y1));
-    // audioData.alloc(2 * samplesPerFrame);
 
     //
     // Assemble the command line arguments for the video encoder
@@ -219,7 +208,7 @@ Recorder::startRecording(isize x1, isize y1, isize x2, isize y2,
     cmd1 += " -f:v rawvideo -pixel_format rgba";
 
     // Frame rate
-    cmd1 += " -r " + std::to_string(frameRate);
+    cmd1 += " -r " + std::to_string(config.frameRate);
 
     // Frame size (width x height)
     cmd1 += " -s:v " + std::to_string(x2 - x1) + "x" + std::to_string(y2 - y1);
@@ -231,12 +220,13 @@ Recorder::startRecording(isize x1, isize y1, isize x2, isize y2,
     cmd1 += " -f mp4 -pix_fmt yuv420p";
 
     // Bit rate
-    cmd1 += " -b:v " + std::to_string(bitRate) + "k";
+    cmd1 += " -b:v " + std::to_string(config.bitRate) + "k";
 
     // Aspect ratio
     cmd1 += " -bsf:v ";
     cmd1 += "\"h264_metadata=sample_aspect_ratio=";
-    cmd1 += std::to_string(aspectX) + "/" + std::to_string(aspectY) + "\"";
+    cmd1 += std::to_string(config.aspectRatio.x) + "/";
+    cmd1 += std::to_string(config.aspectRatio.y) + "\"";
 
     // Output file
     cmd1 += " -y " + videoStreamPath();
@@ -255,7 +245,7 @@ Recorder::startRecording(isize x1, isize y1, isize x2, isize y2,
     cmd2 += " -f:a f32le -ac 2";
 
     // Sampling rate
-    cmd2 += " -sample_rate " + std::to_string(sampleRate);
+    cmd2 += " -sample_rate " + std::to_string(config.sampleRate);
 
     // Input source (named pipe)
     cmd2 += " -i " + audioPipePath();
@@ -394,10 +384,10 @@ Recorder::prepare()
      * and 735 for NTSC).
      */
     if (vic.pal()) {
-        host.setOption(OPT_HOST_SAMPLE_RATE, i64(sampleRate * 50.125 / 50.0));
+        host.setOption(OPT_HOST_SAMPLE_RATE, i64(config.sampleRate * 50.125 / 50.0));
         samplesPerFrame = 882;
     } else {
-        host.setOption(OPT_HOST_SAMPLE_RATE, i64(sampleRate * 59.827 / 60.0));
+        host.setOption(OPT_HOST_SAMPLE_RATE, i64(config.sampleRate * 59.827 / 60.0));
         samplesPerFrame = 735;
     }
     
@@ -411,20 +401,6 @@ Recorder::prepare()
     recStart = util::Time::now();
     msgQueue.put(MSG_RECORDING_STARTED);
 }
-
-/*
-void
-Recorder::record()
-{
-    assert(videoFFmpeg.isRunning());
-    assert(audioFFmpeg.isRunning());
-    assert(videoPipe.isOpen());
-    assert(audioPipe.isOpen());
-    
-    recordVideo();
-    recordAudio();
-}
-*/
 
 void
 Recorder::recordVideo()

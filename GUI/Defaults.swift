@@ -407,9 +407,6 @@ extension Preferences {
 
         ffmpegPath = defaults.string(Keys.Gen.ffmpegPath)
         captureSource = defaults.int(Keys.Gen.captureSource)
-        bitRate = defaults.int(Keys.Gen.bitRate)
-        aspectX = defaults.int(Keys.Gen.aspectX)
-        aspectY = defaults.int(Keys.Gen.aspectY)
 
         keepAspectRatio = defaults.bool(Keys.Gen.keepAspectRatio)
         exitOnEsc = defaults.bool(Keys.Gen.exitOnEsc)

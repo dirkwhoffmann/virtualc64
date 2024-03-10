@@ -116,11 +116,9 @@ Defaults::Defaults()
     setFallback(OPT_AUTOFIRE_BULLETS, 3);
     setFallback(OPT_AUTOFIRE_DELAY, 5);
 
-    setFallback(OPT_REC_ORIGIN_X, 0); // Change to a suitable value
-    setFallback(OPT_REC_ORIGIN_Y, 0); // Change to a suitable value
-    setFallback(OPT_REC_WIDTH, 0); // Change to a suitable value
-    setFallback(OPT_REC_HEIGHT, 0); // Change to a suitable value
-    setFallback(OPT_REC_BITRATE, 512);
+    setFallback(OPT_REC_FRAME_RATE, 50);
+    setFallback(OPT_REC_BIT_RATE, 512);
+    setFallback(OPT_REC_SAMPLE_RATE, 44100);
     setFallback(OPT_REC_ASPECT_X, 768);
     setFallback(OPT_REC_ASPECT_Y, 702);
 

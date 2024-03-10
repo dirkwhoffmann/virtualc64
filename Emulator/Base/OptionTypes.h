@@ -129,11 +129,9 @@ enum_long(OPT)
     OPT_AUTOFIRE_DELAY,         ///< Delay between two shots [frames]
 
     // Screen recorder
-    OPT_REC_ORIGIN_X,           ///< Horizontal start of the recorded texture area
-    OPT_REC_ORIGIN_Y,           ///< Vertical start of the recorded texture area
-    OPT_REC_WIDTH,              ///< Width of the recorded texture area
-    OPT_REC_HEIGHT,             ///< Width of the recorded texture area
-    OPT_REC_BITRATE,            ///< Bitrate parameter, passed to FFMPEG
+    OPT_REC_FRAME_RATE,         ///< Frame rate of the recorded video
+    OPT_REC_BIT_RATE,           ///< Bit rate of the recorded video
+    OPT_REC_SAMPLE_RATE,        ///< Audio sample rate of the recorded video
     OPT_REC_ASPECT_X,           ///< Numerator of the video's aspect ratio
     OPT_REC_ASPECT_Y,           ///< Denumerator of the video's aspect ratio
 
@@ -243,13 +241,11 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_AUTOFIRE_BULLETS:      return "AUTOFIRE.BULLETS";
             case OPT_AUTOFIRE_DELAY:        return "AUTOFIRE.DELAY";
 
-            case OPT_REC_ORIGIN_X:          return "REC.ORIGINX";
-            case OPT_REC_ORIGIN_Y:          return "REC.ORIGINY";
-            case OPT_REC_WIDTH:             return "REC.WIDTH";
-            case OPT_REC_HEIGHT:            return "REC.HEIGHT";
-            case OPT_REC_BITRATE:           return "REC.BITRATE";
-            case OPT_REC_ASPECT_X:          return "REC.ASPECTX";
-            case OPT_REC_ASPECT_Y:          return "REC.ASPECTY";
+            case OPT_REC_FRAME_RATE:        return "REC.FRAME_RATE";
+            case OPT_REC_BIT_RATE:          return "REC.BIT_RATE";
+            case OPT_REC_SAMPLE_RATE:       return "REC.SAMPLE_RATE";
+            case OPT_REC_ASPECT_X:          return "REC.ASPECT_X";
+            case OPT_REC_ASPECT_Y:          return "REC.ASPECT_Y";
 
             case OPT_COUNT:                 return "???";
         }
@@ -350,6 +346,12 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_AUTOFIRE_BURSTS:       return "Burst mode";
             case OPT_AUTOFIRE_BULLETS:      return "Number of bullets per burst";
             case OPT_AUTOFIRE_DELAY:        return "Autofire delay in frames";
+
+            case OPT_REC_FRAME_RATE:        return "Frame rate of the recorded video";
+            case OPT_REC_BIT_RATE:          return "Bit rate of the recorded video";
+            case OPT_REC_SAMPLE_RATE:       return "Audio sample rate of the recorded video";
+            case OPT_REC_ASPECT_X:          return "Numerator of the video's aspect ratio";
+            case OPT_REC_ASPECT_Y:          return "Denumerator of the video's aspect ratio";
 
             case OPT_COUNT:                 return "???";
         }

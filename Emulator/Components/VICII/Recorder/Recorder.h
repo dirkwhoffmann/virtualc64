@@ -24,11 +24,9 @@ class Recorder final : public SubComponent, public Inspectable<RecorderInfo, Voi
 
     ConfigOptions options = {
 
-        OPT_REC_ORIGIN_X,
-        OPT_REC_ORIGIN_Y,
-        OPT_REC_WIDTH,
-        OPT_REC_HEIGHT,
-        OPT_REC_BITRATE,
+        OPT_REC_FRAME_RATE,
+        OPT_REC_BIT_RATE,
+        OPT_REC_SAMPLE_RATE,
         OPT_REC_ASPECT_X,
         OPT_REC_ASPECT_Y
     };
@@ -64,11 +62,6 @@ class Recorder final : public SubComponent, public Inspectable<RecorderInfo, Voi
     //
     // Recording parameters
     //
-
-    // Frame rate, Bit rate, Sample rate
-    isize frameRate = 0;
-    isize bitRate = 0;
-    isize sampleRate = 0;
 
     // Sound samples per frame (882 for PAL, 735 for NTSC)
     isize samplesPerFrame = 0;
@@ -131,20 +124,13 @@ public:
     string videoStreamPath();
     string audioStreamPath();
 
-    //Returns the log level passed to FFmpef
+    // Returns the log level passed to FFmpef
     const string loglevel() { return REC_DEBUG ? "verbose" : "warning"; }
 
+private:
 
-    //
-    // Querying recording parameters
-    //
-
-public:
-
+    // Returns the length of the recorded video
     util::Time getDuration() const;
-    isize getFrameRate() const { return frameRate; }
-    isize getBitRate() const { return bitRate; }
-    isize getSampleRate() const { return sampleRate; }
 
 
     //
@@ -157,9 +143,7 @@ public:
     bool isRecording() const { return state != State::wait; }
 
     // Starts the screen recorder
-    void startRecording(isize x1, isize y1, isize x2, isize y2,
-                        isize bitRate,
-                        isize aspectX, isize aspectY) throws;
+    void startRecording(isize x1, isize y1, isize x2, isize y2);
 
     // Stops the screen recorder
     void stopRecording();
@@ -180,7 +164,6 @@ public:
 private:
     
     void prepare();
-    // void record();
     void recordVideo();
     void recordAudio();
     void finalize();

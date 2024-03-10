@@ -774,6 +774,12 @@ void VirtualC64::MouseAPI::trigger(GamePadAction event)
 // Recorder
 //
 
+const RecorderConfig &
+VirtualC64::RecorderAPI::getConfig() const
+{
+    return recorder.getConfig();
+}
+
 RecorderInfo
 VirtualC64::RecorderAPI::getState() const
 {
@@ -797,6 +803,7 @@ VirtualC64::RecorderAPI::available() const
     return FFmpeg::available();
 }
 
+/*
 util::Time
 VirtualC64::RecorderAPI::getDuration() const
 {
@@ -818,6 +825,7 @@ isize VirtualC64::RecorderAPI::getSampleRate() const
 {
     return recorder.getSampleRate();
 }
+*/
 
 bool
 VirtualC64::RecorderAPI::isRecording() const
@@ -826,11 +834,9 @@ VirtualC64::RecorderAPI::isRecording() const
 }
 
 void
-VirtualC64::RecorderAPI::startRecording(isize x1, isize y1, isize x2, isize y2,
-                                  isize bitRate,
-                                  isize aspectX, isize aspectY)
+VirtualC64::RecorderAPI::startRecording(isize x1, isize y1, isize x2, isize y2)
 {
-    recorder.startRecording(x1, y1, x2, y2, bitRate, aspectX, aspectY);
+    recorder.startRecording(x1, y1, x2, y2);
 }
 
 void 

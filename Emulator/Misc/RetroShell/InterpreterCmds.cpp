@@ -867,49 +867,12 @@ Interpreter::initCommandShell(Command &root)
         }
     }
 
+
     //
     // Peripherals (Parallel cable)
     //
 
     root.add({"parcable"},      "Parallel drive cable");
-
-
-    //
-    // Regression testing (hidden commands)
-    //
-
- 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //
-    // Joystick
-    //
-
-
-
-    //
-    // Mouse
-    //
-
-
-
-    //
-    // Parallel cable
-    //
 
     root.add({"parcable", ""},
              "Displays the current configuration",
@@ -917,6 +880,34 @@ Interpreter::initCommandShell(Command &root)
 
         retroShell.dump(parCable, Category::Config);
     });
+
+
+    //
+    // Miscellaneous (Recorder)
+    //
+
+    root.pushGroup("Miscellaneous");
+
+    root.add({"recorder"},       "Screen recorder");
+
+    root.add({"recorder", ""},
+             "Displays the current configuration",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(recorder, Category::Config);
+    });
+
+    for (auto &opt : recorder.getOptions()) {
+
+        root.add({"recorder", "set", OptionEnum::plainkey(opt)},
+                 {OptionParser::create(opt)->argList()},
+                 OptionEnum::help(opt),
+                 [this](Arguments& argv, long value) {
+
+            emulator.set(Option(HI_WORD(value)), LO_WORD(value), argv[0]);
+
+        });
+    }
 }
 
 }

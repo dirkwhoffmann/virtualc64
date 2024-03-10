@@ -889,6 +889,10 @@ public:
 
         using API::API;
 
+        /** @brief  Returns the component's configuration.
+         */
+        const RecorderConfig &getConfig() const;
+
         /** @brief  Returns the component's current state.
          */
         RecorderInfo getState() const;
@@ -896,14 +900,12 @@ public:
         const string getExecPath() const;
         void setExecPath(const string &path);
         bool available() const;
-        util::Time getDuration() const;
-        isize getFrameRate() const;
-        isize getBitRate() const;
-        isize getSampleRate() const;
+        // util::Time getDuration() const;
+        // [[deprecated]] isize getFrameRate() const;
+        // [[deprecated]] isize getBitRate() const;
+        // [[deprecated]] isize getSampleRate() const;
         bool isRecording() const;
-        void startRecording(isize x1, isize y1, isize x2, isize y2,
-                            isize bitRate,
-                            isize aspectX, isize aspectY);
+        void startRecording(isize x1, isize y1, isize x2, isize y2);
 
         /** @brief  Interrupts a recording in progress.
          */

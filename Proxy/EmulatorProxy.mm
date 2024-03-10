@@ -1134,6 +1134,11 @@ using namespace vc64;
     return (VirtualC64::RecorderAPI *)obj;
 }
 
+- (RecorderConfig)config
+{
+    return [self recorder]->getConfig();
+}
+
 - (RecorderInfo)info
 {
     return [self recorder]->getState();
@@ -1173,33 +1178,14 @@ using namespace vc64;
     return [self recorder]->isRecording();
 }
 
-- (NSInteger)frameRate
-{
-    return [self recorder]->getFrameRate();
-}
-
-- (NSInteger)bitRate
-{
-    return [self recorder]->getBitRate();
-}
-
-- (NSInteger)sampleRate
-{
-    return [self recorder]->getSampleRate();
-}
-
-- (void)startRecording:(NSRect)rect
-               bitRate:(NSInteger)rate
-               aspectX:(NSInteger)aspectX
-               aspectY:(NSInteger)aspectY
-             exception:(ExceptionWrapper *)ex
+- (void)startRecording:(NSRect)rect exception:(ExceptionWrapper *)ex
 {
     auto x1 = isize(rect.origin.x);
     auto y1 = isize(rect.origin.y);
     auto x2 = isize(x1 + (int)rect.size.width);
     auto y2 = isize(y1 + (int)rect.size.height);
 
-    try { return [self recorder]->startRecording(x1, y1, x2, y2, rate, aspectX, aspectY); }
+    try { return [self recorder]->startRecording(x1, y1, x2, y2); }
     catch (VC64Error &error) { [ex save:error]; }
 }
 
