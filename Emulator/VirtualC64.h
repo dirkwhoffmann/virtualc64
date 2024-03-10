@@ -905,8 +905,6 @@ public:
          */
         void setExecPath(const string &path);
 
-        bool available() const;
-
         /** @brief  Starts the recorder.
          *  @param  x1      Horizontal start coordinate of the recorded area
          *  @param  y1      Vertical start coordinate of the recorded area

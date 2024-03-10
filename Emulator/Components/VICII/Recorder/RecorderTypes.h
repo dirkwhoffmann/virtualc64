@@ -69,6 +69,9 @@ RecorderConfig;
 
 typedef struct
 {
+    // Indicates if FFmpeg is availabe
+    bool available;
+    
     // The current recorder state
     RecState state;
 

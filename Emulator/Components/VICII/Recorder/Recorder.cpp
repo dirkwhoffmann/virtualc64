@@ -44,10 +44,12 @@ Recorder::_dump(Category category, std::ostream& os) const
 
         os << tab("FFmpeg path");
         os << FFmpeg::getExecPath() << std::endl;
-        os << tab("Installed");
+        os << tab("Available");
         os << bol(FFmpeg::available()) << std::endl;
-        os << tab("Recording");
-        os << bol(isRecording()) << std::endl;
+        os << tab("Recorder state");
+        os << bol(RecStateEnum::plainkey(state)) << std::endl;
+        os << tab("Duration");
+        os << flt(getDuration().asSeconds()) << std::endl;
     }
 }
 
@@ -107,6 +109,7 @@ Recorder::recordState(RecorderInfo &result) const
 {
     {   SYNCHRONIZED
 
+        result.available = FFmpeg::available();
         result.state = state;
         result.duration = getDuration().asSeconds();
     }
@@ -146,12 +149,6 @@ void
 Recorder::startRecording(isize x1, isize y1, isize x2, isize y2)
 {
     SYNCHRONIZED
-
-    /*
-    auto bitRate = config.bitRate;
-    auto aspectX = config.aspectRatio.x;
-    auto aspectY = config.aspectRatio.y;
-    */
 
     // Override the frameRate by now (remove this later)
     config.frameRate = vic.pal() ? 50 : 60;

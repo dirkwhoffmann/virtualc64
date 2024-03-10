@@ -797,12 +797,6 @@ void VirtualC64::RecorderAPI::setExecPath(const string &path)
     FFmpeg::setExecPath(path);
 }
 
-bool
-VirtualC64::RecorderAPI::available() const
-{
-    return FFmpeg::available();
-}
-
 void
 VirtualC64::RecorderAPI::startRecording(isize x1, isize y1, isize x2, isize y2)
 {
