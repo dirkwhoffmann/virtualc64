@@ -90,13 +90,11 @@ Recorder::setOption(Option option, i64 value)
         case OPT_REC_ASPECT_X:
 
             config.aspectRatio.x = isize(value);
-            printf("OPT_REC_ASPECT_X = %ld\n", config.aspectRatio.x);
             return;
 
         case OPT_REC_ASPECT_Y:
 
             config.aspectRatio.y = isize(value);
-            printf("OPT_REC_ASPECT_Y = %ld\n", config.aspectRatio.y);
             return;
 
         default:
@@ -109,6 +107,7 @@ Recorder::recordState(RecorderInfo &result) const
 {
     {   SYNCHRONIZED
 
+        result.state = state;
         result.duration = getDuration().asSeconds();
     }
 }
@@ -294,7 +293,7 @@ Recorder::startRecording(isize x1, isize y1, isize x2, isize y2)
     }
 
     debug(REC_DEBUG, "Success\n");
-    state = State::prepare;
+    state = REC_STATE_PREPARE;
 }
 
 void
@@ -305,7 +304,7 @@ Recorder::stopRecording()
     {   SYNCHRONIZED
 
         if (isRecording()) {
-            state = State::finalize;
+            state = REC_STATE_FINALIZE;
         }
     }
 }
@@ -352,17 +351,17 @@ void
 Recorder::vsyncHandler()
 {
     // Quick-exit if the recorder is not active
-    if (state == State::wait) return;
-    
+    if (state == REC_STATE_WAIT) return;
+
     {   SYNCHRONIZED
         
         switch (state) {
                 
-            case State::wait: break;
-            case State::prepare: prepare(); break;
-            case State::record: recordVideo(); recordAudio(); break;
-            case State::finalize: finalize(); break;
-            case State::abort: abort(); break;
+            case REC_STATE_WAIT:     break;
+            case REC_STATE_PREPARE:  prepare(); break;
+            case REC_STATE_RECORD:   recordVideo(); recordAudio(); break;
+            case REC_STATE_FINALIZE: finalize(); break;
+            case REC_STATE_ABORT:    abort(); break;
         }
     }
 }
@@ -397,7 +396,7 @@ Recorder::prepare()
     muxer.stream.unlock();
 
     // Switch state and inform the GUI
-    state = State::record;
+    state = REC_STATE_RECORD;
     recStart = util::Time::now();
     msgQueue.put(MSG_RECORDING_STARTED);
 }
@@ -427,7 +426,7 @@ Recorder::recordVideo()
     isize written = videoPipe.write((u8 *)data, length);
 
     if (written != length || FORCE_RECORDING_ERROR) {
-        state = State::abort;
+        state = REC_STATE_ABORT;
     }
 }
 
@@ -453,7 +452,7 @@ Recorder::recordAudio()
         written += audioPipe.write((u8 *)&pair.right, sizeof(float));
 
         if (written != 2 * sizeof(float) || FORCE_RECORDING_ERROR) {
-            state = State::abort;
+            state = REC_STATE_ABORT;
         }
     }
     
@@ -472,35 +471,10 @@ Recorder::finalize()
     audioFFmpeg.join();
 
     // Switch state and inform the GUI
-    state = State::wait;
+    state = REC_STATE_WAIT;
     recStop = util::Time::now();
     msgQueue.put(MSG_RECORDING_STOPPED);
 }
-
-/*
- void
- Recorder::finalize()
- {
- recordCounter++;
-
- // Close pipes
- close(videoPipe);
- close(audioPipe);
- videoPipe = -1;
- audioPipe = -1;
-
- // Shut down encoders
- pclose(videoFFmpeg);
- pclose(audioFFmpeg);
- videoFFmpeg = nullptr;
- audioFFmpeg = nullptr;
-
- // Switch state and inform the GUI
- state = State::wait;
- recStop = util::Time::now();
- msgQueue.put(MSG_RECORDING_STOPPED);
- }
- */
 
 void
 Recorder::abort()

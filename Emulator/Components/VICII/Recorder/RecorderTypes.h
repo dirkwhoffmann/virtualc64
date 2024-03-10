@@ -14,6 +14,42 @@
 #pragma once
 
 #include "Aliases.h"
+#include "Reflection.h"
+
+/// Color palette
+enum_long(REC_STATE)
+{
+    REC_STATE_WAIT,                     ///< The recorder is ready
+    REC_STATE_PREPARE,                  ///< The recorder is preparing to record
+    REC_STATE_RECORD,                   ///< Recording in progress
+    REC_STATE_FINALIZE,                 ///< The recorder is finalizing the video
+    REC_STATE_ABORT                     ///< Recording has been aborted
+};
+typedef REC_STATE RecState;
+
+#ifdef __cplusplus
+struct RecStateEnum : util::Reflection<RecStateEnum, RecState> {
+
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = REC_STATE_ABORT;
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
+
+    static const char *prefix() { return "REC_STATE"; }
+    static const char *key(RecState value)
+    {
+        switch (value) {
+
+            case REC_STATE_WAIT:        return "REC_STATE.WAIT";
+            case REC_STATE_PREPARE:     return "REC_STATE.PREPARE";
+            case REC_STATE_RECORD:      return "REC_STATE.RECORD";
+            case REC_STATE_FINALIZE:    return "REC_STATE.FINALIZE";
+            case REC_STATE_ABORT:       return "REC_STATE.ABORT";
+        }
+        return "???";
+    }
+};
+#endif
+
 
 //
 // Structures
@@ -33,6 +69,9 @@ RecorderConfig;
 
 typedef struct
 {
+    // The current recorder state
+    RecState state;
+
     // Duration of the recorded Video
     double duration;
 }

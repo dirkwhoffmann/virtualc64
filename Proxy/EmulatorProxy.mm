@@ -1175,7 +1175,7 @@ using namespace vc64;
 
 - (BOOL)recording
 {
-    return [self recorder]->isRecording();
+    return [self recorder]->getState().state != REC_STATE_WAIT;
 }
 
 - (void)startRecording:(NSRect)rect exception:(ExceptionWrapper *)ex

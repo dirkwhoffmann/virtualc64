@@ -51,12 +51,9 @@ class Recorder final : public SubComponent, public Inspectable<RecorderInfo, Voi
     //
     // Recording status
     //
-    
-    // All possible recorder states
-    enum class State { wait, prepare, record, finalize, abort };
 
     // The current recorder state
-    State state = State::wait;
+    RecState state = REC_STATE_WAIT;
 
     
     //
@@ -140,7 +137,7 @@ private:
 public:
 
     // Checks whether the screen is currently recorded
-    bool isRecording() const { return state != State::wait; }
+    bool isRecording() const { return state != REC_STATE_WAIT; }
 
     // Starts the screen recorder
     void startRecording(isize x1, isize y1, isize x2, isize y2);

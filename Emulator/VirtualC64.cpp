@@ -803,36 +803,6 @@ VirtualC64::RecorderAPI::available() const
     return FFmpeg::available();
 }
 
-/*
-util::Time
-VirtualC64::RecorderAPI::getDuration() const
-{
-    return recorder.getDuration();
-}
-
-isize
-VirtualC64::RecorderAPI::getFrameRate() const
-{
-    return recorder.getFrameRate();
-}
-
-isize VirtualC64::RecorderAPI::getBitRate() const
-{
-    return recorder.getBitRate();
-}
-
-isize VirtualC64::RecorderAPI::getSampleRate() const
-{
-    return recorder.getSampleRate();
-}
-*/
-
-bool
-VirtualC64::RecorderAPI::isRecording() const
-{
-    return recorder.isRecording();
-}
-
 void
 VirtualC64::RecorderAPI::startRecording(isize x1, isize y1, isize x2, isize y2)
 {

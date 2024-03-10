@@ -897,14 +897,22 @@ public:
          */
         RecorderInfo getState() const;
 
+        /** @brief  Returns the path to the FFmpeg executable.
+         */
         const string getExecPath() const;
+
+        /** @brief  Sets the path to the FFmpeg executable.
+         */
         void setExecPath(const string &path);
+
         bool available() const;
-        // util::Time getDuration() const;
-        // [[deprecated]] isize getFrameRate() const;
-        // [[deprecated]] isize getBitRate() const;
-        // [[deprecated]] isize getSampleRate() const;
-        bool isRecording() const;
+
+        /** @brief  Starts the recorder.
+         *  @param  x1      Horizontal start coordinate of the recorded area
+         *  @param  y1      Vertical start coordinate of the recorded area
+         *  @param  x2      Horizontal end coordinate of the recorded area
+         *  @param  y2      Vertical stop coordinate of the recorded area
+         */
         void startRecording(isize x1, isize y1, isize x2, isize y2);
 
         /** @brief  Interrupts a recording in progress.
