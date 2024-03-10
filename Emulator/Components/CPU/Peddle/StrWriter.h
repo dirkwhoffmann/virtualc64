@@ -56,6 +56,9 @@ public:
         base = ptr = p;
     };
 
+    isize length() { return ptr - base; }
+    void fill(isize tab) { while (ptr < base + tab) *ptr++ = ' '; }
+
 private:
 
     isize decDigits(u64 value) { return value ? 1 + (isize)log10(value) : 1; }

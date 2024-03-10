@@ -48,6 +48,107 @@ Disassembler::setIndentation(int value)
 }
 
 isize
+Disassembler::disass(char *dst, u16 addr, const char *fmt) const
+{
+    bool ctrl = false;
+    isize tab = 0;
+
+    for (char c = fmt[0]; c != 0; c = (++fmt)[0]) {
+
+        if (!ctrl) {
+
+            if (c == '%') { ctrl = true; tab = 0; } else *dst++ = c;
+            continue;
+        }
+
+        if (c >= '0' && c <= '9') {
+
+            tab = 10 * tab + (c - '0');
+            continue;
+        }
+
+        switch (c) {
+
+            case 'a': dst += disassA(addr, dst, tab); break;
+            case 'b': dst += disassB(addr, dst, tab); break;
+            case 'i': dst += disassI(addr, dst, tab); break;
+
+            default:
+                fatalError;
+        }
+
+        ctrl = false;
+    }
+
+    return cpu.getLengthOfInstruction(cpu.readDasm(addr));
+}
+
+isize
+Disassembler::disassA(u16 addr, char *dst, isize tab) const
+{
+    StrWriter writer(dst, dataStyle);
+
+    writer << addr;
+    writer.fill(tab);
+
+    return writer.length();
+}
+
+isize
+Disassembler::disassB(u16 addr, char *dst, isize tab) const
+{
+    StrWriter writer(dst, dataStyle);
+
+    auto op = cpu.readDasm(addr);
+    auto count = cpu.getLengthOfInstruction(op);
+
+    writer << op;
+    if (count > 1) writer << ' ' << cpu.readDasm(addr + 1);
+    if (count > 2) writer << ' ' << cpu.readDasm(addr + 2);
+    writer.fill(tab);
+
+    return writer.length();
+}
+
+isize
+Disassembler::disassI(u16 addr, char *dst, isize tab) const
+{
+    StrWriter writer(dst, instrStyle);
+
+    auto byte1 = cpu.readDasm(addr);
+    auto byte2 = cpu.readDasm(addr + 1);
+    auto byte3 = cpu.readDasm(addr + 2);
+
+    // Write mnemonic
+    writer << Ins { byte1 };
+
+    // Write operand
+    switch (cpu.addressingMode[byte1]) {
+
+        case ADDR_IMMEDIATE:    writer << Tab{} << Imm  { byte2 }; break;
+        case ADDR_ZERO_PAGE:    writer << Tab{} << Zp   { byte2 }; break;
+        case ADDR_ZERO_PAGE_X:  writer << Tab{} << Zpx  { byte2 }; break;
+        case ADDR_ZERO_PAGE_Y:  writer << Tab{} << Zpy  { byte2 }; break;
+        case ADDR_ABSOLUTE:     writer << Tab{} << Abs  { LO_HI(byte2, byte3) }; break;
+        case ADDR_ABSOLUTE_X:   writer << Tab{} << Absx { LO_HI(byte2, byte3) }; break;
+        case ADDR_ABSOLUTE_Y:   writer << Tab{} << Absy { LO_HI(byte2, byte3) }; break;
+        case ADDR_DIRECT:       writer << Tab{} << Dir  { LO_HI(byte2, byte3) }; break;
+        case ADDR_INDIRECT:     writer << Tab{} << Ind  { LO_HI(byte2, byte3) }; break;
+        case ADDR_INDIRECT_X:   writer << Tab{} << Indx { byte2 }; break;
+        case ADDR_INDIRECT_Y:   writer << Tab{} << Indy { byte2 }; break;
+        case ADDR_RELATIVE:     writer << Tab{} << Rel  { (u16)(addr + 2 + (i8)byte2) }; break;
+
+        default:
+            break;
+    }
+
+    writer << Fin{};
+    writer.fill(tab);
+
+    return writer.length();
+}
+
+isize
 Disassembler::disassemble(char *str, u16 addr) const
 {
     return disassemble(str,

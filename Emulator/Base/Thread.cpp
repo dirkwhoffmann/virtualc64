@@ -397,7 +397,6 @@ void
 Thread::trackOn(isize source)
 {
     assert(source < 7);
-    assert(isEmulatorThread());
 
     if (!GET_BIT(track, source)) {
 
@@ -411,7 +410,6 @@ void
 Thread::trackOff(isize source)
 {
     assert(source < 7);
-    assert(isEmulatorThread());
 
     if (GET_BIT(track, source)) {
 

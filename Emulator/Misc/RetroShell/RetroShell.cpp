@@ -237,6 +237,15 @@ RetroShell::printState()
 
         updatePrompt();
 
+        // REMOVE ASAP
+        u16 addr = cpu.getPC0();
+        char str[256] = {};
+        for (isize i = 0; i < 10; i++) {
+
+            addr += cpu.disassembler.disass(str, addr, "%a: %9b %i");
+            printf("%s\n", str);
+        }
+
     } else {
 
         updatePrompt();

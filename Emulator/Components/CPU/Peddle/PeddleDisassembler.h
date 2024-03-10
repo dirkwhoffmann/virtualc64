@@ -54,6 +54,18 @@ public:
 
 public:
 
+    // Experimental
+    isize disass(char *dst, u16 addr, const char *fmt = "%i") const;
+
+private:
+
+    isize disassA(u16 addr, char *dst, isize tab) const;
+    isize disassB(u16 addr, char *dst, isize tab) const;
+    isize disassI(u16 addr, char *dst, isize tab) const;
+    // isize disassF(u16 addr, char *dst) const;
+
+public:
+
     // Disassembles an instruction
     isize disassemble(char *str, u16 addr) const;
     isize disassemble(char *str, u16 pc, u8 byte1, u8 byte2, u8 byte3) const;
