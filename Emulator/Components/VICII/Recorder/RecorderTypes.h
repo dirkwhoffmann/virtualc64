@@ -36,3 +36,10 @@ typedef struct
     struct {isize x; isize y; } aspectRatio;
 }
 RecorderConfig;
+
+typedef struct
+{
+    // Duration of the recorded Video
+    double duration;
+}
+RecorderInfo;

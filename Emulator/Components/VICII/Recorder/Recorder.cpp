@@ -109,6 +109,15 @@ Recorder::setOption(Option option, i64 value)
     }
 }
 
+void
+Recorder::recordState(RecorderInfo &result) const
+{
+    {   SYNCHRONIZED
+
+        result.duration = getDuration().asSeconds();
+    }
+}
+
 string
 Recorder::videoPipePath()
 {
@@ -361,7 +370,7 @@ Recorder::vsyncHandler()
                 
             case State::wait: break;
             case State::prepare: prepare(); break;
-            case State::record: record(); break;
+            case State::record: recordVideo(); recordAudio(); break;
             case State::finalize: finalize(); break;
             case State::abort: abort(); break;
         }
@@ -403,6 +412,7 @@ Recorder::prepare()
     msgQueue.put(MSG_RECORDING_STARTED);
 }
 
+/*
 void
 Recorder::record()
 {
@@ -414,10 +424,14 @@ Recorder::record()
     recordVideo();
     recordAudio();
 }
+*/
 
 void
 Recorder::recordVideo()
 {
+    assert(videoFFmpeg.isRunning());
+    assert(videoPipe.isOpen());
+
     u32 *texture = (u32 *)vic.getTexture();
     
     isize width = sizeof(u32) * (cutout.x2 - cutout.x1);
@@ -444,6 +458,9 @@ Recorder::recordVideo()
 void
 Recorder::recordAudio()
 {
+    assert(audioFFmpeg.isRunning());
+    assert(audioPipe.isOpen());
+
     if (muxer.stream.count() != samplesPerFrame) {
         
         trace(REC_DEBUG, "Samples: %ld\n", muxer.stream.count());

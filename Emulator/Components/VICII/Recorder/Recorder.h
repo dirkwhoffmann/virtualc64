@@ -20,7 +20,7 @@
 
 namespace vc64 {
 
-class Recorder final : public SubComponent, public Dumpable {
+class Recorder final : public SubComponent, public Inspectable<RecorderInfo, Void> {
 
     ConfigOptions options = {
 
@@ -98,7 +98,6 @@ public:
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 
 
-
     //
     // Configuring
     //
@@ -109,6 +108,15 @@ public:
     const ConfigOptions &getOptions() const override { return options; }
     i64 getOption(Option opt) const override;
     void setOption(Option opt, i64 value) override;
+
+
+    //
+    // Inspecting
+    //
+
+public:
+
+    void recordState(RecorderInfo &result) const override;
 
 
     //
@@ -172,7 +180,7 @@ public:
 private:
     
     void prepare();
-    void record();
+    // void record();
     void recordVideo();
     void recordAudio();
     void finalize();

@@ -583,11 +583,12 @@
 
 @interface RecorderProxy : Proxy { }
 
+@property (readonly) RecorderInfo info;
+
 @property NSString *path;
 - (NSString *)findFFmpeg:(NSInteger)nr;
 @property (readonly) BOOL hasFFmpeg;
 @property (readonly) BOOL recording;
-@property (readonly) double duration;
 @property (readonly) NSInteger frameRate;
 @property (readonly) NSInteger bitRate;
 @property (readonly) NSInteger sampleRate;

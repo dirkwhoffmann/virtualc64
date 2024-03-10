@@ -1134,6 +1134,11 @@ using namespace vc64;
     return (VirtualC64::RecorderAPI *)obj;
 }
 
+- (RecorderInfo)info
+{
+    return [self recorder]->getState();
+}
+
 - (NSString *)path
 {
     auto path = FFmpeg::getExecPath();
@@ -1166,11 +1171,6 @@ using namespace vc64;
 - (BOOL)recording
 {
     return [self recorder]->isRecording();
-}
-
-- (double)duration
-{
-    return [self recorder]->getDuration().asSeconds();
 }
 
 - (NSInteger)frameRate

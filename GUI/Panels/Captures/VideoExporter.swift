@@ -21,6 +21,7 @@ class VideoExporter: DialogController {
     @IBOutlet weak var icon: NSImageView!
 
     var panel: NSSavePanel!
+    var recorder: RecorderProxy { return c64.recorder }
 
     var name: String { return "virtualc64.mp4" }
     var tmp: URL { return URL(fileURLWithPath: NSTemporaryDirectory()) }
@@ -43,11 +44,13 @@ class VideoExporter: DialogController {
 
         if c64.recorder.export(as: path.absoluteString) {
                         
+            let state = recorder.info
+
             text.stringValue = "MPEG-4 Video Stream"
             icon.isHidden = false
             exportButton.isHidden = false
             sizeOnDisk.stringValue = path.fileSizeString
-            duration.stringValue = String(format: "%.1f sec", c64.recorder.duration)
+            duration.stringValue = String(format: "%.1f sec", state.duration)
             frameRate.stringValue = "\(c64.recorder.frameRate) Hz"
             bitRate.stringValue = "\(c64.recorder.bitRate) kHz"
             sampleRate.stringValue = "\(c64.recorder.sampleRate) Hz"

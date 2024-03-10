@@ -774,6 +774,12 @@ void VirtualC64::MouseAPI::trigger(GamePadAction event)
 // Recorder
 //
 
+RecorderInfo
+VirtualC64::RecorderAPI::getState() const
+{
+    return recorder.getState();
+}
+
 const string
 VirtualC64::RecorderAPI::getExecPath() const
 {

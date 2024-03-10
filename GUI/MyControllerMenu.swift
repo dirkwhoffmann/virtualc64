@@ -200,6 +200,7 @@ extension MyController: NSMenuItemValidation {
     @IBAction func preferencesAction(_ sender: Any!) {
         
         if myAppDelegate.prefController == nil {
+
             myAppDelegate.prefController =
             PreferencesController(with: self, nibName: "Preferences")
         }

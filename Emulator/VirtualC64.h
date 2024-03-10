@@ -852,6 +852,8 @@ public:
 
         using API::API;
 
+        /** @brief  Returns the component's current state.
+         */
         DatasetteInfo getInfo() const;
 
         /** @brief  Inserts a tape.
@@ -886,6 +888,10 @@ public:
     struct RecorderAPI : API {
 
         using API::API;
+
+        /** @brief  Returns the component's current state.
+         */
+        RecorderInfo getState() const;
 
         const string getExecPath() const;
         void setExecPath(const string &path);
