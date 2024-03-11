@@ -32,7 +32,7 @@ CPUInspector::_dump(Category category, std::ostream& os) const
             os << util::hex(guard->addr);
 
             if (!guard->enabled) os << " (Disabled)";
-            else if (guard->skip) os << " (Disabled for " << util::dec(guard->skip) << " hits)";
+            else if (guard->ignore) os << " (Disabled for " << util::dec(guard->ignore) << " hits)";
             os << std::endl;
         }
     };

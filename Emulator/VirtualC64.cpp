@@ -300,22 +300,28 @@ VirtualC64::GuardAPI::guardAt(u32 addr) const
     return guards.guardAtAddr(addr);
 }
 
-u32
-VirtualC64::GuardAPI::guardAddr(long nr) const
-{
-    return guards.guardAddr(nr);
-}
-
-bool 
+bool
 VirtualC64::GuardAPI::isEnabled(long nr) const
 {
     return guards.isEnabled(nr);
 }
 
-bool 
+bool
+VirtualC64::GuardAPI::isEnabledAt(u32 addr) const
+{
+    return guards.isEnabledAt(addr);
+}
+
+bool
 VirtualC64::GuardAPI::isDisabled(long nr) const
 {
     return guards.isDisabled(nr);
+}
+
+bool
+VirtualC64::GuardAPI::isDisabledAt(u32 addr) const
+{
+    return guards.isDisabledAt(addr);
 }
 
 bool
@@ -330,31 +336,7 @@ VirtualC64::GuardAPI::isSetAt(u32 addr) const
     return guards.isSetAt(addr);
 }
 
-bool 
-VirtualC64::GuardAPI::isSetAndEnabledAt(u32 addr) const
-{
-    return guards.isSetAndEnabledAt(addr);
-}
-
-bool 
-VirtualC64::GuardAPI::isSetAndDisabledAt(u32 addr) const
-{
-    return guards.isSetAndDisabledAt(addr);
-}
-
-bool 
-VirtualC64::GuardAPI::isSetAndConditionalAt(u32 addr) const
-{
-    return guards.isSetAndConditionalAt(addr);
-}
-
-void 
-VirtualC64::GuardAPI::setEnable(long nr, bool val)
-{
-    guards.setEnable(nr, val);
-}
-
-void 
+void
 VirtualC64::GuardAPI::enable(long nr)
 {
     guards.enable(nr);
@@ -366,13 +348,7 @@ VirtualC64::GuardAPI::disable(long nr)
     guards.disable(nr);
 }
 
-void 
-VirtualC64::GuardAPI::setEnableAt(u32 addr, bool val)
-{
-    guards.setEnableAt(addr, val);
-}
-
-void 
+void
 VirtualC64::GuardAPI::enableAt(u32 addr)
 {
     guards.enableAt(addr);
@@ -385,9 +361,9 @@ VirtualC64::GuardAPI::disableAt(u32 addr)
 }
 
 void 
-VirtualC64::GuardAPI::addAt(u32 addr, long skip)
+VirtualC64::GuardAPI::setAt(u32 addr, long skip)
 {
-    guards.addAt(addr, skip);
+    guards.setAt(addr, skip);
 }
 
 void 

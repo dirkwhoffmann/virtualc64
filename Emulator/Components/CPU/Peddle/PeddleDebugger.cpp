@@ -22,7 +22,7 @@ bool
 Guard::eval(u32 addr)
 {
     if (this->addr == addr && this->enabled) {
-        if (++hits > skip) {
+        if (++hits > ignore) {
             return true;
         }
     }
@@ -55,6 +55,7 @@ Guards::guardAtAddr(u32 addr) const
     return nullptr;
 }
 
+/*
 bool
 Guards::isSetAndEnabledAt(u32 addr) const
 {
@@ -76,11 +77,12 @@ Guards::isSetAndConditionalAt(u32 addr) const
 {
     Guard *guard = guardAtAddr(addr);
 
-    return guard != nullptr && guard->skip != 0;
+    return guard != nullptr && guard->ignore != 0;
 }
+*/
 
 void
-Guards::addAt(u32 addr, long skip)
+Guards::setAt(u32 addr, long skip)
 {
     if (isSetAt(addr)) return;
 
@@ -96,7 +98,7 @@ Guards::addAt(u32 addr, long skip)
     guards[count].addr = addr;
     guards[count].enabled = true;
     guards[count].hits = 0;
-    guards[count].skip = skip;
+    guards[count].ignore = skip;
     count++;
     setNeedsCheck(true);
 }
@@ -134,7 +136,29 @@ Guards::replace(long nr, u32 addr)
 bool
 Guards::isEnabled(long nr) const
 {
-    return nr < count ? guards[nr].enabled : false;
+    Guard *guard = guardWithNr(nr);
+    return guard != nullptr && guard->enabled;
+}
+
+bool
+Guards::isEnabledAt(u32 addr) const
+{
+    Guard *guard = guardAtAddr(addr);
+    return guard != nullptr && guard->enabled;
+}
+
+bool
+Guards::isDisabled(long nr) const
+{
+    Guard *guard = guardWithNr(nr);
+    return guard != nullptr && !guard->enabled;
+}
+
+bool
+Guards::isDisabledAt(u32 addr) const
+{
+    Guard *guard = guardAtAddr(addr);
+    return guard != nullptr && !guard->enabled;
 }
 
 void
@@ -148,6 +172,13 @@ Guards::setEnableAt(u32 addr, bool value)
 {
     Guard *guard = guardAtAddr(addr);
     if (guard) guard->enabled = value;
+}
+
+void
+Guards::ignore(long nr, long count)
+{
+    Guard *guard = guardWithNr(nr);
+    if (guard) guard->ignore = count;
 }
 
 bool

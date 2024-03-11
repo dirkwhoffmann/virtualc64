@@ -184,14 +184,14 @@ using namespace vc64;
     return (VirtualC64::GuardAPI *)obj;
 }
 
-- (NSInteger)count
+- (NSInteger)elements
 {
     return [self guards]->elements();
 }
 
 - (NSInteger)addr:(NSInteger)nr
 {
-    return [self guards]->guardAddr(nr);
+    return [self guards]->guardNr(nr)->addr;
 }
 
 - (BOOL)isEnabled:(NSInteger)nr
@@ -199,9 +199,19 @@ using namespace vc64;
     return [self guards]->isEnabled(nr);
 }
 
+- (BOOL)isEnabledAt:(NSInteger)addr
+{
+    return [self guards]->isEnabledAt(u32(addr));
+}
+
 - (BOOL)isDisabled:(NSInteger)nr
 {
     return [self guards]->isDisabled(nr);
+}
+
+- (BOOL)isDisabledAt:(NSInteger)addr
+{
+    return [self guards]->isDisabledAt(u32(addr));
 }
 
 - (void)enable:(NSInteger)nr
@@ -234,16 +244,6 @@ using namespace vc64;
     return [self guards]->isSetAt((u32)addr);
 }
 
-- (BOOL)isSetAndEnabledAt:(NSInteger)addr
-{
-    return [self guards]->isSetAndEnabledAt((u32)addr);
-}
-
-- (BOOL)isSetAndDisabledAt:(NSInteger)addr
-{
-    return [self guards]->isSetAndDisabledAt((u32)addr);
-}
-
 - (void)enableAt:(NSInteger)addr
 {
     [self guards]->enableAt((u32)addr);
@@ -254,14 +254,19 @@ using namespace vc64;
     [self guards]->disableAt((u32)addr);
 }
 
-- (void)addAt:(NSInteger)addr
+- (void)setAt:(NSInteger)addr
 {
-    [self guards]->addAt((u32)addr);
+    [self guards]->setAt((u32)addr);
 }
 
 - (void)removeAt:(NSInteger)addr
 {
     [self guards]->removeAt((u32)addr);
+}
+
+- (void)removeAll
+{
+    return [self guards]->removeAll();
 }
 
 @end

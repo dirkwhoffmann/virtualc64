@@ -231,7 +231,7 @@ CPU::setBreakpoint(u32 addr, isize ignores)
 {
     if (debugger.breakpoints.isSetAt(addr)) throw VC64Error(ERROR_BP_ALREADY_SET, addr);
 
-    debugger.breakpoints.addAt(addr, ignores);
+    debugger.breakpoints.setAt(addr, ignores);
     msgQueue.put(MSG_BREAKPOINT_UPDATED);
 }
 
@@ -273,7 +273,7 @@ CPU::setWatchpoint(u32 addr, isize ignores)
 {
     if (debugger.watchpoints.isSetAt(addr)) throw VC64Error(ERROR_WP_ALREADY_SET, addr);
 
-    debugger.watchpoints.addAt(addr, ignores);
+    debugger.watchpoints.setAt(addr, ignores);
     msgQueue.put(MSG_WATCHPOINT_UPDATED);
 }
 

@@ -521,42 +521,115 @@ public:
         /// @name Inspecting the guard list
         /// @{
 
+        /** @brief  Returns the number of guards in the guard list.
+         */
         long elements() const;
+
+        /** @brief  Returns a guard from the guard list.
+         *  @param  nr      Number of the guard.
+         *  @return A pointer to the guard or nullptr if the guard does not exist.
+         */
         Guard *guardNr(long nr) const;
+
+        /** @brief  Returns the guard set on a specific address.
+         *  @param  addr    Memory address.
+         *  @return A pointer to the guard or nullptr if the address is not guarded.
+         */
         Guard *guardAt(u32 addr) const;
 
         /// @}
         /// @name Adding or removing guards
         /// @{
 
-        bool isSet(long addr) const;
+        /** Checks whether the guard list contains a guard at a specific position.
+         *  @param  nr      A position in the guard list.
+         */
+        bool isSet(long nr) const;
+
+        /** Checks whether a guard is set on a specific memory location.
+         *  @param  addr    A memory location.
+         */
         bool isSetAt(u32 addr) const;
 
-        u32 guardAddr(long nr) const;
-        bool isEnabled(long nr) const;
-        bool isDisabled(long nr) const;
+        /** Sets a guard on a specific memory location.
+         *  @param  addr    A memory location.
+         *  @param  ignore  An optional ignore counter.
+         */
+        void setAt(u32 addr, long ignore = 0);
 
+        /** Replaces the observed address of a specific guard.
+         *  @param  nr      A position in the guard list.
+         *  @param  addr    The new memory location.
+         */
+        void replace(long nr, u32 addr);
 
+        /** Deletes a guard from the guard list.
+         *  @param  nr      A position in the guard list.
+         */
+        void remove(long nr);
 
-        bool isSetAndEnabledAt(u32 addr) const;
-        bool isSetAndDisabledAt(u32 addr) const;
-        bool isSetAndConditionalAt(u32 addr) const;
-
-        void setEnable(long nr, bool val);
-        void enable(long nr);
-        void disable(long nr);
-
-        void setEnableAt(u32 addr, bool val);
-        void enableAt(u32 addr);
-        void disableAt(u32 addr);
-
-        void addAt(u32 addr, long skip = 0);
+        /** Deletes a guard from the guard list.
+         *  @param  addr    Observed memory address of the guard to be removed.
+         */
         void removeAt(u32 addr);
 
-        void remove(long nr);
+        /** Deletes the entire guard list.
+         */
         void removeAll();
 
-        void replace(long nr, u32 addr);
+        /// @}
+        /// @name Enabling or disabling guards
+        /// @{
+
+        /** Checks if a guards is enabled.
+         *  @param  nr      A position in the guard list.
+         *  @return true if the guard list contains an enabled guard at the
+         *  provided location.
+         */
+        bool isEnabled(long nr) const;
+
+        /** Checks if a guards is enabled.
+         *  @param  addr    Observed memory address of the guard to check.
+         *  @return true if the provided memory location is observed by an
+         *  enabled guard.
+         */
+        bool isEnabledAt(u32 addr) const;
+
+        /** Checks if a guards is disabled.
+         *  @param  nr      A position in the guard list.
+         *  @return true if the guard list contains a disabled guard at the
+         *  provided location.
+         */
+        bool isDisabled(long nr) const;
+
+        /** Checks if a guards is disabled.
+         *  @param  addr    Observed memory address of the guard to check.
+         *  @return true if the provided memory location is observed by a
+         *  disabled guard.
+         */
+        bool isDisabledAt(u32 addr) const;
+        
+        /** Enables a guard
+         *  @param  nr      Position of the guard in the guard list.
+         */
+        void enable(long nr);
+
+        /** Enables a guard
+         *  @param  addr    Observed memory address of the guard to enable.
+         */
+        void enableAt(u32 addr);
+
+        /** Disables a guard
+         *  @param  nr      Position of the guard in the guard list.
+         */
+        void disable(long nr);
+
+        /** Disables a guard
+         *  @param  addr    Observed memory address of the guard to disable.
+         */
+        void disableAt(u32 addr);
+
+        /// @}
     };
 
 
@@ -576,7 +649,12 @@ public:
 
         CPUInfo getInfo() const;
         
+        /** @brief  Returns the number of instructions in the instruction log.
+         */
         isize loggedInstructions() const;
+
+        /** @brief  Empties the instruction log.
+         */
         void clearLog();
 
         /** Determines how the disassembler displays numbers

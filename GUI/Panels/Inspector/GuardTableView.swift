@@ -124,7 +124,7 @@ class BreakTableView: GuardTableView {
     
     override func cache() {
 
-        numRows = breakpoints.count
+        numRows = breakpoints.elements
 
         for i in 0 ..< numRows {
             disabledCache[i] = breakpoints.isDisabled(i)
@@ -175,7 +175,7 @@ class BreakTableView: GuardTableView {
         c64.suspend()
         
         if row == numRows {
-            breakpoints.add(at: addr)
+            breakpoints.setAt(addr)
         } else {
             assert(row < numRows)
             breakpoints.replace(row, addr: addr)
@@ -191,7 +191,7 @@ class WatchTableView: GuardTableView {
 
     override func cache() {
         
-        numRows = watchpoints.count
+        numRows = watchpoints.elements
 
         for i in 0 ..< numRows {
             disabledCache[i] = watchpoints.isDisabled(i)
@@ -230,7 +230,7 @@ class WatchTableView: GuardTableView {
         c64.suspend()
         
         if row == numRows {
-            watchpoints.add(at: addr)
+            watchpoints.setAt(addr)
         } else {
             assert(row < numRows)
             watchpoints.replace(row, addr: addr)
