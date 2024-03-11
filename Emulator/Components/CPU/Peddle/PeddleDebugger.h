@@ -231,6 +231,9 @@ public:
     u16 loggedPC0Abs(isize n) const;
 
     // Disassembles an item from the log buffer
+    isize disassRecorded(char *dst, const char *fmt, isize addr) const;
+
+    // DEPRECATED
     isize disassembleRecordedInstr(isize i, char *str) const;
     isize disassembleRecordedBytes(isize i, char *str) const;
     void disassembleRecordedFlags(isize i, char *str) const;

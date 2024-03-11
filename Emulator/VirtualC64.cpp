@@ -298,40 +298,18 @@ VirtualC64::CPUAPI::setNumberFormat(DasmNumberFormat instrFormat, DasmNumberForm
     return cpu.disassembler.setNumberFormat(instrFormat, dataFormat);
 }
 
-isize
-VirtualC64::CPUAPI::disassembleRecordedInstr(isize i, char *str) const
+isize 
+VirtualC64::CPUAPI::disassemble(char *dst, const char *fmt, u16 addr) const
 {
     assert(isUserThread());
-    return cpu.debugger.disassembleRecordedInstr(i, str);
+    return cpu.disassembler.disass(dst, fmt, addr);
 }
 
 isize
-VirtualC64::CPUAPI::disassembleRecordedBytes(isize i, char *str) const
+VirtualC64::CPUAPI::disassembleRecorded(char *dst, const char *fmt, isize nr) const
 {
     assert(isUserThread());
-    return cpu.debugger.disassembleRecordedBytes(i, str);
-}
-
-void
-VirtualC64::CPUAPI::disassembleRecordedFlags(isize i, char *str) const
-{
-    assert(isUserThread());
-    return cpu.debugger.disassembleRecordedFlags(i, str);
-}
-
-void
-VirtualC64::CPUAPI::disassembleRecordedPC(isize i, char *str) const
-{
-    assert(isUserThread());
-    return cpu.debugger.disassembleRecordedPC(i, str);
-
-}
-
-isize
-VirtualC64::CPUAPI::disassemble(char *str, u16 addr) const
-{
-    assert(isUserThread());
-    return cpu.disassembler.disassemble(str, addr);
+    return cpu.debugger.disassRecorded(dst, fmt, nr);
 }
 
 isize

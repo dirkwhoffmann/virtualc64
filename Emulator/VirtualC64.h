@@ -568,11 +568,10 @@ public:
         RecordedInstruction logEntryAbs(isize index) const;
         void clearLog();
         void setNumberFormat(DasmNumberFormat instrFormat, DasmNumberFormat dataFormat);
-        isize disassembleRecordedInstr(isize, char *) const;
-        isize disassembleRecordedBytes(isize, char *) const;
-        void disassembleRecordedFlags(isize, char *) const;
-        void disassembleRecordedPC(isize, char *) const;
-        isize disassemble(char *, u16 addr) const;
+
+        isize disassemble(char *dst, const char *fmt, u16 addr) const;
+        isize disassembleRecorded(char *dst, const char *fmt, isize nr) const;
+
         isize getLengthOfInstructionAt(u16 addr) const;
         void dumpBytes(char *, u16 addr, isize length) const;
         void dumpWord(char *, u16 addr) const;

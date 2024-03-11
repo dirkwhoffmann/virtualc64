@@ -70,11 +70,11 @@ private:
 
 public:
 
-    // Disassembles an instruction
+    // Disassembles an instruction (DEPRECATED)
     isize disassemble(char *str, u16 addr) const;
     isize disassemble(char *str, u16 pc, u8 byte1, u8 byte2, u8 byte3) const;
 
-    // Creates a textual representation for the status register
+    // Creates a textual representation for the status register (DEPRECATED)
     void disassembleFlags(char *str, u8 sr) const;
     void disassembleFlags(char *str) const;
 

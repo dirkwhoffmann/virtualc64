@@ -318,14 +318,8 @@
 - (void)setHex;
 - (void)setDec;
 
-- (NSString *)disassembleRecordedInstr:(NSInteger)i length:(NSInteger *)len;
-- (NSString *)disassembleRecordedBytes:(NSInteger)i;
-- (NSString *)disassembleRecordedFlags:(NSInteger)i;
-- (NSString *)disassembleRecordedPC:(NSInteger)i;
-
-- (NSString *)disassembleInstr:(NSInteger)addr length:(NSInteger *)len;
-- (NSString *)disassembleBytes:(NSInteger)addr;
-- (NSString *)disassembleAddr:(NSInteger)addr;
+- (NSString *)disassemble:(NSInteger)addr format:(NSString *)fmt length:(NSInteger *)len;
+- (NSString *)disassembleRecorded:(NSInteger)i format:(NSString *)fmt length:(NSInteger *)len;
 
 @end
 

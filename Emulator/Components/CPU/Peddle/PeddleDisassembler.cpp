@@ -61,7 +61,7 @@ Disassembler::disass(char *dst, const char *fmt, u16 addr) const
     return disass(dst, fmt, instr);
 }
 
-isize 
+isize
 Disassembler::disass(char *dst, const char *fmt, const RecordedInstruction &instr) const
 {
     bool ctrl = false;
@@ -129,6 +129,7 @@ Disassembler::disass(char *dst, const char *fmt, const RecordedInstruction &inst
 
         ctrl = false;
     }
+    *dst = 0;
 
     return cpu.getLengthOfInstruction(cpu.readDasm(instr.pc));
 }

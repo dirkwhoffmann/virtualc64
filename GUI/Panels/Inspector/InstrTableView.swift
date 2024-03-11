@@ -71,10 +71,10 @@ class InstrTableView: NSTableView {
             
             var length = 0
             addrInRow[i] = addr
-            addrStrInRow[i] = cpu.disassembleAddr(addr)
-            instrInRow[i] = cpu.disassembleInstr(addr, length: &length)
-            dataInRow[i] = cpu.disassembleBytes(addr)
-            
+            addrStrInRow[i] = cpu.disassemble(addr, format: "%p", length: &length)
+            instrInRow[i] = cpu.disassemble(addr, format: "%i", length: &length)
+            dataInRow[i] = cpu.disassemble(addr, format: "%b", length: &length)
+
             if breakpoints.isSetAndDisabled(at: addr) {
                 bpInRow[i] = BreakpointType.disabled
             } else if breakpoints.isSet(at: addr) {

@@ -359,62 +359,21 @@ using namespace vc64;
     [self cpu]->setNumberFormat(instrFormat, dataFormat);
 }
 
-- (NSString *)disassembleRecordedInstr:(NSInteger)i length:(NSInteger *)len
+- (NSString *)disassemble:(NSInteger)addr format:(NSString *)fmt length:(NSInteger *)len
 {
-    char result[32];
+    char result[128];
 
-    (void)[self cpu]->disassembleRecordedInstr(i, result);
-    return @(result);
-}
-
-- (NSString *)disassembleRecordedBytes:(NSInteger)i
-{
-    char result[16];
-
-    (void)[self cpu]->disassembleRecordedBytes(i, result);
-    return @(result);
-}
-
-- (NSString *)disassembleRecordedFlags:(NSInteger)i
-{
-    char result[16];
-
-    (void)[self cpu]->disassembleRecordedFlags(i, result);
-    return @(result);
-}
-
-- (NSString *)disassembleRecordedPC:(NSInteger)i
-{
-    char result[16];
-
-    (void)[self cpu]->disassembleRecordedPC(i, result);
-    return @(result);
-}
-
-- (NSString *)disassembleInstr:(NSInteger)addr length:(NSInteger *)len
-{
-    char result[32];
-
-    auto length = [self cpu]->disassemble(result, u16(addr));
-
+    auto length = [self cpu]->disassemble(result, [fmt UTF8String], u16(addr));
     *len = (NSInteger)length;
     return @(result);
 }
 
-- (NSString *)disassembleBytes:(NSInteger)addr
+- (NSString *)disassembleRecorded:(NSInteger)addr format:(NSString *)fmt length:(NSInteger *)len
 {
-    char result[32];
+    char result[128];
 
-    auto length = [self cpu]->getLengthOfInstructionAt(u16(addr));
-    [self cpu]->dumpBytes(result, u16(addr), length);
-    return @(result);
-}
-
-- (NSString *)disassembleAddr:(NSInteger)addr
-{
-    char result[32];
-
-    [self cpu]->dumpWord(result, u16(addr));
+    auto length = [self cpu]->disassembleRecorded(result, [fmt UTF8String], u16(addr));
+    *len = (NSInteger)length;
     return @(result);
 }
 
