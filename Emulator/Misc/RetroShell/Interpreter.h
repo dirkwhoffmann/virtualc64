@@ -100,21 +100,29 @@ private:
 
     // Parses an argument of a certain type
     bool isBool(const string &argv);
-    bool isOnOff(const string &argv);
-    long isNum(const string &argv);
     bool parseBool(const string  &argv);
     bool parseBool(const string  &argv, bool fallback);
+    bool parseBool(const Arguments &argv, long nr, long fallback);
+
+    bool isOnOff(const string &argv);
     bool parseOnOff(const string &argv);
     bool parseOnOff(const string &argv, bool fallback);
+    bool parseOnOff(const Arguments &argv, long nr, long fallback);
+
+    long isNum(const string &argv);
     long parseNum(const string &argv);
     long parseNum(const string &argv, long fallback);
     long parseNum(const Arguments &argv, long nr, long fallback);
+
     u16 parseAddr(const string &argv) { return (u16)parseNum(argv); }
     u16 parseAddr(const string &argv, long fallback) { return (u16)parseNum(argv, fallback); }
+    u16 parseAddr(const Arguments &argv, long nr, long fallback);
 
     // DEPRECATED
+    /*
     string parseSeq(const string &argv);
     string parseSeq(const string &argv, const string &fallback);
+     */
     template <typename T> long parseEnum(const string &argv) {
         return util::parseEnum<T>(argv);
     }

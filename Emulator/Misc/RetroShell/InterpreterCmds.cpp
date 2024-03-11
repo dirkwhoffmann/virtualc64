@@ -135,10 +135,10 @@ Interpreter::initCommandShell(Command &root)
              "Adjust the texture cutout",
              [this](Arguments& argv, long value) {
 
-        isize x1 = parseNum(argv[0], 0);
-        isize y1 = parseNum(argv[0], 1);
-        isize x2 = parseNum(argv[0], 2);
-        isize y2 = parseNum(argv[0], 3);
+        isize x1 = parseNum(argv[0]);
+        isize y1 = parseNum(argv[1]);
+        isize x2 = parseNum(argv[2]);
+        isize y2 = parseNum(argv[3]);
 
         regressionTester.x1 = x1;
         regressionTester.y1 = y1;

@@ -123,6 +123,12 @@ Interpreter::parseBool(const string &argv, bool fallback)
 }
 
 bool
+Interpreter::parseBool(const Arguments &argv, long nr, long fallback)
+{
+    return nr < long(argv.size()) ? parseBool(argv[nr]) : fallback;
+}
+
+bool
 Interpreter::parseOnOff(const string &argv) 
 {
     return util::parseOnOff(argv);
@@ -132,6 +138,12 @@ bool
 Interpreter::parseOnOff(const string &argv, bool fallback)
 {
     try { return parseOnOff(argv); } catch(...) { return fallback; }
+}
+
+bool
+Interpreter::parseOnOff(const Arguments &argv, long nr, long fallback)
+{
+    return nr < long(argv.size()) ? parseOnOff(argv[nr]) : fallback;
 }
 
 long
@@ -151,32 +163,6 @@ Interpreter::parseNum(const Arguments &argv, long nr, long fallback)
 {
     return nr < long(argv.size()) ? parseNum(argv[nr]) : fallback;
 }
-
-string
-Interpreter::parseSeq(const string &argv) 
-{
-    return util::parseSeq(argv);
-}
-
-string
-Interpreter::parseSeq(const string &argv, const string &fallback)
-{
-    try { return parseSeq(argv); } catch(...) { return fallback; }
-}
-
-/*
-template <typename T> long
-Interpreter::parseEnum(const string &argv) 
-{
-    return util::parseEnum<T>(argv);
-}
-
-template <typename T> long
-Interpreter::parseEnum(const string &argv, long fallback)
-{
-    try { return parseEnum<T>(argv); } catch(...) { return fallback; }
-}
-*/
 
 Command &
 Interpreter::getRoot()
