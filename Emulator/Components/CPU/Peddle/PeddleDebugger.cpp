@@ -56,14 +56,6 @@ Guards::guardAtAddr(u32 addr) const
 }
 
 bool
-Guards::isSetAt(u32 addr) const
-{
-    Guard *guard = guardAtAddr(addr);
-
-    return guard != nullptr;
-}
-
-bool
 Guards::isSetAndEnabledAt(u32 addr) const
 {
     Guard *guard = guardAtAddr(addr);

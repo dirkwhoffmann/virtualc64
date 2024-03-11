@@ -94,8 +94,6 @@ private:
     // Time stamp of the last write pointer alignment
     util::Time lastAlignment;
 
-public: // REMOVE ASAP
-    
     // Master volumes (fadable)
     Volume volL;
     Volume volR;

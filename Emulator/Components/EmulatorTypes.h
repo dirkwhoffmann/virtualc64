@@ -125,7 +125,7 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
                 // Emulator
             case FLAG_RUN_DEBUG:                return "RUN_DEBUG";
             case FLAG_TIM_DEBUG:                return "TIM_DEBUG";
-            case FLAG_WARP_DEBUG:               return "WARP_DEBU";
+            case FLAG_WARP_DEBUG:               return "WARP_DEBUG";
             case FLAG_CMD_DEBUG:                return "CMD_DEBUG";
             case FLAG_MSG_DEBUG:                return "MSG_DEBUG";
             case FLAG_SNP_DEBUG:                return "SNP_DEBUG";

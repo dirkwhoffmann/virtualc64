@@ -518,11 +518,26 @@ public:
         Guards &guards;
         GuardAPI(Emulator &emu, Guards& guards) : API(emu), guards(guards) { }
 
+        /// @name Inspecting the guard list
+        /// @{
+
         long elements() const;
+        Guard *guardNr(long nr) const;
+        Guard *guardAt(u32 addr) const;
+
+        /// @}
+        /// @name Adding or removing guards
+        /// @{
+
+        bool isSet(long addr) const;
+        bool isSetAt(u32 addr) const;
+
         u32 guardAddr(long nr) const;
         bool isEnabled(long nr) const;
         bool isDisabled(long nr) const;
-        bool isSetAt(u32 addr) const;
+
+
+
         bool isSetAndEnabledAt(u32 addr) const;
         bool isSetAndDisabledAt(u32 addr) const;
         bool isSetAndConditionalAt(u32 addr) const;
@@ -560,21 +575,29 @@ public:
         watchpoints(emu, emu.main.cpu.debugger.watchpoints) { }
 
         CPUInfo getInfo() const;
-        i64 clock() const;
-        u16 getPC0() const;
+        
         isize loggedInstructions() const;
-        u16 loggedPC0Rel(isize nr) const;
-        u16 loggedPC0Abs(isize nr) const;
-        RecordedInstruction logEntryAbs(isize index) const;
         void clearLog();
+
+        /** Determines how the disassembler displays numbers
+         *  @param  instrFormat Format for numbers inside instructions
+         *  @param  dataFormat  Format for printed data values
+         */
         void setNumberFormat(DasmNumberFormat instrFormat, DasmNumberFormat dataFormat);
 
+        /** Disassembles an instruction
+         *  @param  dst     Destination buffer
+         *  @param  fmt     String definining the output format
+         *  @param  addr    Address of the instruction to disassemble
+         */
         isize disassemble(char *dst, const char *fmt, u16 addr) const;
-        isize disassembleRecorded(char *dst, const char *fmt, isize nr) const;
 
-        isize getLengthOfInstructionAt(u16 addr) const;
-        void dumpBytes(char *, u16 addr, isize length) const;
-        void dumpWord(char *, u16 addr) const;
+        /** Disassembles an instruction from the record buffer
+         *  @param  dst     Destination buffer
+         *  @param  fmt     String definining the output format
+         *  @param  nr      Index of the instruction in the record buffer
+         */
+        isize disassembleRecorded(char *dst, const char *fmt, isize nr) const;
 
     } cpu;
 

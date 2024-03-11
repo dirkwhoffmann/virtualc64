@@ -273,8 +273,9 @@ extension MyController {
 
             activityBar.fillColor = color[index]
         }
+        let state = c64.cpu.info
 
-        speedometer.updateWith(cycle: c64.cpu.clock, gpuFrame: renderer.frames)
+        speedometer.updateWith(cycle: state.cycle, gpuFrame: renderer.frames)
 
         switch activityType.selectedTag() {
 

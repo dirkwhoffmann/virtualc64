@@ -22,6 +22,21 @@ CPUInspector::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
+    auto print = [&](const string &name, const Guards &guards) {
+
+        for (int i = 0; i < guards.elements(); i++) {
+
+            auto guard = guards.guardWithNr(i);
+
+            os << util::tab(name + " " + std::to_string(i));
+            os << util::hex(guard->addr);
+
+            if (!guard->enabled) os << " (Disabled)";
+            else if (guard->skip) os << " (Disabled for " << util::dec(guard->skip) << " hits)";
+            os << std::endl;
+        }
+    };
+
     if (category == Category::Registers) {
 
         os << tab("Instruction Address") << hex(cpu.reg.pc0) << std::endl;
@@ -89,6 +104,24 @@ CPUInspector::_dump(Category category, std::ostream& os) const
             os << dec(cpu.dischargeCycleBit6) << std::endl;
             os << tab("Bit 7 discharge cycle");
             os << dec(cpu.dischargeCycleBit7) << std::endl;
+        }
+    }
+
+    if (category == Category::Breakpoints) {
+
+        if (cpu.debugger.breakpoints.elements()) {
+            print("Breakpoint", cpu.debugger.breakpoints);
+        } else {
+            os << "No breakpoints set" << std::endl;
+        }
+    }
+
+    if (category == Category::Watchpoints) {
+
+        if (cpu.debugger.watchpoints.elements()) {
+            print("Watchpoint", cpu.debugger.watchpoints);
+        } else {
+            os << "No watchpoints set" << std::endl;
         }
     }
 }

@@ -46,7 +46,9 @@ enum_long(MSG_TYPE)
     MSG_SCRIPT_ABORT,       ///< The execution of a RetroShell ccript has been aborted
 
     // CPU
+    MSG_BREAKPOINT_UPDATED, ///< The breakpoint list has beed modified
     MSG_BREAKPOINT_REACHED, ///< A breakpoint has been reached
+    MSG_WATCHPOINT_UPDATED, ///< The watchpoint list has beed modified
     MSG_WATCHPOINT_REACHED, ///< A watchpoint has been reached
     MSG_CPU_JUMPED,         ///< The program counter has been modified manually
     MSG_CPU_JAMMED,         ///< The CPU has halted due to an illegal instruction
@@ -139,7 +141,9 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_SCRIPT_DONE:           return "SCRIPT_DONE";
             case MSG_SCRIPT_ABORT:          return "SCRIPT_ABORT";
 
+            case MSG_BREAKPOINT_UPDATED:    return "BREAKPOINT_UPDATED";
             case MSG_BREAKPOINT_REACHED:    return "BREAKPOINT_REACHED";
+            case MSG_WATCHPOINT_UPDATED:    return "WATCHPOINT_UPDATED";
             case MSG_WATCHPOINT_REACHED:    return "WATCHPOINT_REACHED";
             case MSG_CPU_JUMPED:            return "CPU_JUMPED";
             case MSG_CPU_JAMMED:            return "CPU_JAMMED";

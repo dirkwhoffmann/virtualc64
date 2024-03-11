@@ -99,79 +99,6 @@ void
 CPU::_dump(Category category, std::ostream& os) const
 {
     inspector._dump(category, os);
-    /*
-    using namespace util;
-
-    if (category == Category::Registers) {
-
-        os << tab("Instruction Address") << hex(reg.pc0) << std::endl;
-        os << tab("Program Counter") << hex(reg.pc) << std::endl;
-        os << tab("Accumulator") << hex(reg.a) << std::endl;
-        os << tab("X Register") << hex(reg.x) << std::endl;
-        os << tab("Y Register") << hex(reg.y) << std::endl;
-        os << tab("Stack Pointer") << hex(reg.sp) << std::endl;
-        os << tab("Flags");
-        os << (reg.sr.n ? "N" : "n");
-        os << (reg.sr.v ? "V" : "v");
-        os << (reg.sr.b ? "B" : "b");
-        os << (reg.sr.d ? "D" : "d");
-        os << (reg.sr.i ? "I" : "i");
-        os << (reg.sr.z ? "Z" : "z");
-        os << (reg.sr.c ? "C" : "c");
-        os << std::endl;
-    }
-    
-    if (category == Category::State) {
-
-        auto append = [&](const string &s1, const string &s2) {
-            return s1.empty() ? s2 : s1 + ", " + s2;
-        };
-
-        string str = "";
-        if (flags & CPU_LOG_INSTRUCTION) str = append(str, "LOG_INSTRUCTION");
-        if (flags & CPU_CHECK_BP) str = append(str, "CHECK_BP");
-        if (flags & CPU_CHECK_WP) str = append(str, "CHECK_WP");
-
-        os << tab("Clock");
-        os << dec(clock) << std::endl;
-        os << tab("Flags");
-        os << (str.empty() ? "-" : str) << std::endl;
-        os << tab("Next microinstruction");
-        os << dec(next) << std::endl;
-        os << tab("Rdy Line");
-        os << bol(rdyLine, "high", "low") << std::endl;
-        os << tab("Nmi Line");
-        os << hex(nmiLine) << std::endl;
-        os << tab("Edge detector");
-        os << hex(edgeDetector.current()) << std::endl;
-        os << tab("doNmi");
-        os << bol(doNmi) << std::endl;
-        os << tab("Irq Line");
-        os << hex(irqLine) << std::endl;
-        os << tab("Edge Detector");
-        os << hex(levelDetector.current()) << std::endl;
-        os << tab("doIrq");
-        os << bol(doIrq) << std::endl;
-        os << tab("IRQ Routine");
-        os << hex(HI_W_LO_W(readDasm(0xFFFF), readDasm(0xFFFE))) << std::endl;
-        os << tab("NMI Routine");
-        os << hex(HI_W_LO_W(readDasm(0xFFFB), readDasm(0xFFFA))) << std::endl;
-
-        if (hasProcessorPort()) {
-
-            os << tab("Processor port");
-            os << hex(reg.pport.data) << std::endl;
-            os << tab("Direction bits");
-            os << hex(reg.pport.direction) << std::endl;
-            os << tab("Bit 3 discharge cycle");
-            os << dec(dischargeCycleBit3) << std::endl;
-            os << tab("Bit 6 discharge cycle");
-            os << dec(dischargeCycleBit6) << std::endl;
-            os << tab("Bit 7 discharge cycle");
-            os << dec(dischargeCycleBit7) << std::endl;
-        }
-    }
-    */
 }
 
 void
@@ -297,6 +224,90 @@ CPU::jump(u16 addr)
 
         debugger.jump(addr);
     }
+}
+
+void
+CPU::setBreakpoint(u32 addr, isize ignores)
+{
+    if (debugger.breakpoints.isSetAt(addr)) throw VC64Error(ERROR_BP_ALREADY_SET, addr);
+
+    debugger.breakpoints.addAt(addr, ignores);
+    msgQueue.put(MSG_BREAKPOINT_UPDATED);
+}
+
+void
+CPU::deleteBreakpoint(isize nr)
+{
+    if (!debugger.breakpoints.guardWithNr(nr)) throw VC64Error(ERROR_BP_NOT_FOUND, nr);
+
+    debugger.breakpoints.remove(nr);
+    msgQueue.put(MSG_BREAKPOINT_UPDATED);
+}
+
+void
+CPU::enableBreakpoint(isize nr)
+{
+    if (!debugger.breakpoints.guardWithNr(nr)) throw VC64Error(ERROR_BP_NOT_FOUND, nr);
+
+    debugger.breakpoints.setEnable(nr, true);
+    msgQueue.put(MSG_BREAKPOINT_UPDATED);
+}
+
+void
+CPU::disableBreakpoint(isize nr)
+{
+    if (!debugger.breakpoints.guardWithNr(nr)) throw VC64Error(ERROR_BP_NOT_FOUND, nr);
+
+    debugger.breakpoints.setEnable(nr, false);
+    msgQueue.put(MSG_BREAKPOINT_UPDATED);
+}
+
+void
+CPU::toggleBreakpoint(isize nr)
+{
+    debugger.breakpoints.isEnabled(nr) ? disableBreakpoint(nr) : enableBreakpoint(nr);
+}
+
+void
+CPU::setWatchpoint(u32 addr, isize ignores)
+{
+    if (debugger.watchpoints.isSetAt(addr)) throw VC64Error(ERROR_WP_ALREADY_SET, addr);
+
+    debugger.watchpoints.addAt(addr, ignores);
+    msgQueue.put(MSG_WATCHPOINT_UPDATED);
+}
+
+void
+CPU::deleteWatchpoint(isize nr)
+{
+    if (!debugger.watchpoints.guardWithNr(nr)) throw VC64Error(ERROR_WP_NOT_FOUND, nr);
+
+    debugger.watchpoints.remove(nr);
+    msgQueue.put(MSG_WATCHPOINT_UPDATED);
+}
+
+void
+CPU::enableWatchpoint(isize nr)
+{
+    if (!debugger.watchpoints.guardWithNr(nr)) throw VC64Error(ERROR_WP_NOT_FOUND, nr);
+
+    debugger.watchpoints.setEnable(nr, true);
+    msgQueue.put(MSG_WATCHPOINT_UPDATED);
+}
+
+void
+CPU::disableWatchpoint(isize nr)
+{
+    if (!debugger.watchpoints.guardWithNr(nr)) throw VC64Error(ERROR_WP_NOT_FOUND, nr);
+
+    debugger.watchpoints.setEnable(nr, false);
+    msgQueue.put(MSG_WATCHPOINT_UPDATED);
+}
+
+void
+CPU::toggleWatchpoint(isize nr)
+{
+    debugger.watchpoints.isEnabled(nr) ? disableWatchpoint(nr) : enableWatchpoint(nr);
 }
 
 

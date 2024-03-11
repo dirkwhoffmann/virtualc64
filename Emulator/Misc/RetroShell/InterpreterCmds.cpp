@@ -153,6 +153,9 @@ Interpreter::initCommandShell(Command &root)
         regressionTester.dumpTexture(c64, argv.front());
     });
 
+    root.popGroup();
+
+
     //
     // Components
     //
@@ -164,6 +167,7 @@ Interpreter::initCommandShell(Command &root)
     //
 
     root.add({"c64"}, "Commodore 64");
+    root.pushGroup("");
 
     root.add({"c64", ""},
              "Display the current configuration",
@@ -221,6 +225,8 @@ Interpreter::initCommandShell(Command &root)
         c64.dumpDiff(ss);
         retroShell << ss << '\n';
     });
+    
+    root.popGroup();
 
 
     //
@@ -228,6 +234,7 @@ Interpreter::initCommandShell(Command &root)
     //
 
     root.add({"memory"}, "Ram and Rom");
+    root.pushGroup("");
 
     root.add({"memory", ""},
              "Displays the current configuration",
@@ -267,6 +274,7 @@ Interpreter::initCommandShell(Command &root)
         c64.flash(file, 0);
     });
 
+    root.popGroup();
 
     //
     // Components (CIA)
@@ -277,6 +285,7 @@ Interpreter::initCommandShell(Command &root)
         string cia = (i == 0) ? "cia1" : "cia2";
 
         root.add({cia}, "Complex Interface Adapter " + std::to_string(i));
+        root.pushGroup("");
 
         root.add({cia, ""},
                  "Displays the current configuration",
@@ -301,6 +310,8 @@ Interpreter::initCommandShell(Command &root)
 
             }, HI_W_LO_W(opt, i));
         }
+
+        root.popGroup();
     }
 
     //
@@ -308,6 +319,7 @@ Interpreter::initCommandShell(Command &root)
     //
 
     root.add({"vicii"}, "Video Interface Controller");
+    root.pushGroup("");
 
     root.add({"vicii", ""},
              "Displays the current configuration",
@@ -329,12 +341,15 @@ Interpreter::initCommandShell(Command &root)
         }, opt);
     }
 
+    root.popGroup();
+
 
     //
     // Components (DMA Debugger)
     //
 
     root.add({"dmadebugger"},   "DMA Debugger");
+    root.pushGroup("");
 
     root.add({"dmadebugger", ""},
              "Displays the current configuration",
@@ -370,12 +385,16 @@ Interpreter::initCommandShell(Command &root)
 
         }, opt);
     }
+    
+    root.popGroup();
+
 
     //
     // Components (SID)
     //
 
     root.add({"sid"}, "Sound Interface Device");
+    root.pushGroup("");
 
     for (isize i = 0; i < 4; i++) {
 
@@ -406,11 +425,15 @@ Interpreter::initCommandShell(Command &root)
         }
     }
 
+    root.popGroup();
+
+
     //
     // Components (Muxer)
     //
 
     root.add({"muxer"}, "Audio backend");
+    root.pushGroup("");
 
     root.add({"muxer", ""},
              "Displays the current configuration",
@@ -433,11 +456,15 @@ Interpreter::initCommandShell(Command &root)
         }, opt);
     }
 
+    root.popGroup();
+
+
     //
     // Components (Expansion port)
     //
 
     root.add({"expansion"}, "Expansion port");
+    root.pushGroup("");
 
     root.add({"expansion", "attach"},
              "Attaches a cartridge");
@@ -465,12 +492,15 @@ Interpreter::initCommandShell(Command &root)
         expansionport.attachGeoRam(parseNum(argv[0]));
     });
 
+    root.popGroup();
+
 
     //
     // Components (Power supply)
     //
 
     root.add({"powersupply"},   "Power supply");
+    root.pushGroup("");
 
     root.add({"powersupply", ""},
              "Displays the current configuration",
@@ -493,12 +523,15 @@ Interpreter::initCommandShell(Command &root)
         }, opt);
     }
 
+    root.popGroup();
+
 
     //
     // Components (Host)
     //
 
     root.add({"host"},          "Host computer");
+    root.pushGroup("");
 
     root.add({"host", ""},
              "Displays the current configuration",
@@ -520,6 +553,8 @@ Interpreter::initCommandShell(Command &root)
 
         }, opt);
     }
+    
+    root.popGroup();
 
 
     //
@@ -533,7 +568,9 @@ Interpreter::initCommandShell(Command &root)
     //
     // Peripherals (Keyboard)
     //
+
     root.add({"keyboard"},      "Keyboard");
+    root.pushGroup("");
 
     root.add({"keyboard", "press"}, { Arg::value },
              "Presses a key",
@@ -573,13 +610,17 @@ Interpreter::initCommandShell(Command &root)
         keyboard.autoType("run\n");
     });
 
+    root.popGroup();
+
+
     //
     // Peripherals (Mouse)
     //
 
-    root.pushGroup("");
     root.add({"mouse"}, "Mouse");
+    root.pushGroup("");
 
+    // root.pushGroup("");
     for (isize i = PORT_1; i <= PORT_2; i++) {
 
         string nr = (i == 1) ? "1" : "2";
@@ -610,6 +651,8 @@ Interpreter::initCommandShell(Command &root)
             }, HI_W_LO_W(opt, i));
         }
     }
+
+    root.popGroup();
 
 
     //
@@ -728,11 +771,15 @@ Interpreter::initCommandShell(Command &root)
         }, i);
     }
 
+    root.popGroup();
+
+
     //
     // Peripherals (Datasette)
     //
 
     root.add({"datasette"}, "Commodore tape drive");
+    root.pushGroup("");
 
     root.add({"datasette", ""},
              "Displays the current configuration",
@@ -783,6 +830,7 @@ Interpreter::initCommandShell(Command &root)
         }, opt);
     }
 
+    root.popGroup();
 
     //
     // Peripherals (Drives)
@@ -791,8 +839,9 @@ Interpreter::initCommandShell(Command &root)
     for (isize i = 0; i < 2; i++) {
 
         string drive = (i == 0) ? "drive8" : "drive9";
-
         root.add({drive}, "Floppy drive " + std::to_string(i + 8));
+        
+        root.pushGroup("");
 
         root.add({drive, ""},
                  "Displays the current configuration",
@@ -865,14 +914,16 @@ Interpreter::initCommandShell(Command &root)
 
             }, HI_W_LO_W(opt, i));
         }
-    }
 
+        root.popGroup();
+    }
 
     //
     // Peripherals (Parallel cable)
     //
 
     root.add({"parcable"},      "Parallel drive cable");
+    root.pushGroup("");
 
     root.add({"parcable", ""},
              "Displays the current configuration",
@@ -881,6 +932,7 @@ Interpreter::initCommandShell(Command &root)
         retroShell.dump(parCable, Category::Config);
     });
 
+    root.popGroup();
 
     //
     // Miscellaneous (Recorder)
@@ -889,6 +941,7 @@ Interpreter::initCommandShell(Command &root)
     root.pushGroup("Miscellaneous");
 
     root.add({"recorder"},       "Screen recorder");
+    root.pushGroup("");
 
     root.add({"recorder", ""},
              "Displays the current configuration",
@@ -908,6 +961,9 @@ Interpreter::initCommandShell(Command &root)
 
         });
     }
+
+    root.popGroup();
+    root.popGroup();
 }
 
 }

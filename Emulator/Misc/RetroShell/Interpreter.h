@@ -108,6 +108,7 @@ private:
     bool parseOnOff(const string &argv, bool fallback);
     long parseNum(const string &argv);
     long parseNum(const string &argv, long fallback);
+    long parseNum(const Arguments &argv, long nr, long fallback);
     u16 parseAddr(const string &argv) { return (u16)parseNum(argv); }
     u16 parseAddr(const string &argv, long fallback) { return (u16)parseNum(argv, fallback); }
 

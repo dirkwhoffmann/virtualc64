@@ -224,6 +224,11 @@ using namespace vc64;
     [self guards]->replace(nr, (u32)addr);
 }
 
+- (BOOL)isSet:(NSInteger)nr
+{
+    return [self guards]->isSet(nr);
+}
+
 - (BOOL)isSetAt:(NSInteger)addr
 {
     return [self guards]->isSetAt((u32)addr);
@@ -278,34 +283,9 @@ using namespace vc64;
     return [self cpu]->getInfo();
 }
 
-- (i64)clock
-{
-    return (i64)[self cpu]->clock();
-}
-
-- (u16)pc
-{
-    return [self cpu]->getPC0();
-}
-
 - (NSInteger)loggedInstructions
 {
     return [self cpu]->loggedInstructions();
-}
-
-- (NSInteger)loggedPCRel:(NSInteger)nr
-{
-    return [self cpu]->loggedPC0Rel((int)nr);
-}
-
-- (NSInteger)loggedPCAbs:(NSInteger)nr
-{
-    return [self cpu]->loggedPC0Abs((int)nr);
-}
-
-- (RecordedInstruction)getRecordedInstruction:(NSInteger)index
-{
-    return [self cpu]->logEntryAbs((int)index);
 }
 
 - (void)clearLog

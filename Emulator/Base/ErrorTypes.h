@@ -36,6 +36,12 @@ enum_long(ERROR_CODE)
     ERROR_INVALID_KEY,          ///< Invalid property key
     ERROR_SYNTAX,               ///< Syntax error
 
+    // CPU
+    ERROR_BP_NOT_FOUND,         ///< Breakpoint is not set
+    ERROR_BP_ALREADY_SET,       ///< Breakpoint is already set
+    ERROR_WP_NOT_FOUND,         ///< Watchpoint is not set
+    ERROR_WP_ALREADY_SET,       ///< Watchpoint is already set
+
     // Memory
     ERROR_OUT_OF_MEMORY,        ///< Out of memory
 
@@ -119,6 +125,11 @@ struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
 
             case ERROR_INVALID_KEY:             return "INVALID_KEY";
             case ERROR_SYNTAX:                  return "SYNTAX";
+
+            case ERROR_BP_NOT_FOUND:            return "BP_NOT_FOUND";
+            case ERROR_BP_ALREADY_SET:          return "BP_ALREADY_SET";
+            case ERROR_WP_NOT_FOUND:            return "WP_NOT_FOUND";
+            case ERROR_WP_ALREADY_SET:          return "WP_ALREADY_SET";
 
             case ERROR_OUT_OF_MEMORY:           return "OUT_OF_MEMORY";
 

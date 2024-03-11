@@ -208,16 +208,6 @@ public:
 
 
     //
-    // Analyzing
-    //
-    
-public:
-    
-    // Returns the result of the latest inspection
-    // CPUInfo getInfo() const { return CoreComponent::getInfo(info); }
-
-
-    //
     // Changing state
     //
 
@@ -234,6 +224,27 @@ public:
     bool getLoram() const { return readPort() & 0x1; }
     bool getHiram() const { return readPort() & 0x2; }
     bool getCharen() const { return readPort() & 0x4; }
+
+
+    //
+    // Debugging
+    //
+
+public:
+
+    // Manages the breakpoint list
+    void setBreakpoint(u32 addr, isize ignores = 0) throws;
+    void deleteBreakpoint(isize nr) throws;
+    void enableBreakpoint(isize nr) throws;
+    void disableBreakpoint(isize nr) throws;
+    void toggleBreakpoint(isize nr) throws;
+
+    // Manages the watchpoint list
+    void setWatchpoint(u32 addr, isize ignores = 0) throws;
+    void deleteWatchpoint(isize nr) throws;
+    void enableWatchpoint(isize nr) throws;
+    void disableWatchpoint(isize nr) throws;
+    void toggleWatchpoint(isize nr) throws;
 };
 
 }

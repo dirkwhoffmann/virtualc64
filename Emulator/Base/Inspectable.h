@@ -19,6 +19,7 @@ namespace vc64 {
 enum class Category
 {
     BankMap,
+    Breakpoints,
     Checksums,
     Config,
     Current,
@@ -36,6 +37,7 @@ enum class Category
     Stats,
     Summary,
     Tod,
+    Watchpoints
 };
 
 struct Void { };

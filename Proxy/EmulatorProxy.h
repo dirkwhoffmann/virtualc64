@@ -282,6 +282,10 @@
 
 @property (readonly) NSInteger count;
 - (NSInteger)addr:(NSInteger)nr;
+
+- (BOOL)isSet:(NSInteger)nr;
+- (BOOL)isSetAt:(NSInteger)addr;
+
 - (BOOL)isEnabled:(NSInteger)nr;
 - (BOOL)isDisabled:(NSInteger)nr;
 - (void)enable:(NSInteger)nr;
@@ -289,7 +293,6 @@
 - (void)remove:(NSInteger)nr;
 - (void)replace:(NSInteger)nr addr:(NSInteger)addr;
 
-- (BOOL)isSetAt:(NSInteger)addr;
 - (BOOL)isSetAndEnabledAt:(NSInteger)addr;
 - (BOOL)isSetAndDisabledAt:(NSInteger)addr;
 - (void)enableAt:(NSInteger)addr;
@@ -307,12 +310,8 @@
 @interface CPUProxy : CoreComponentProxy { }
 
 @property (readonly) CPUInfo info;
-@property (readonly) i64 clock;
-@property (readonly) u16 pc;
 
 - (NSInteger)loggedInstructions;
-- (NSInteger)loggedPCRel:(NSInteger)nr;
-- (NSInteger)loggedPCAbs:(NSInteger)nr;
 - (void)clearLog;
 
 - (void)setHex;

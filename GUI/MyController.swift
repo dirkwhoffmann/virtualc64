@@ -361,6 +361,10 @@ extension MyController {
                 .SCRIPT_ABORT:
             renderer.console.isDirty = true
 
+        case .BREAKPOINT_UPDATED, 
+                .WATCHPOINT_UPDATED:
+            inspector?.fullRefresh()
+
         case .BREAKPOINT_REACHED:
             inspector?.signalBreakPoint(pc: pc)
 

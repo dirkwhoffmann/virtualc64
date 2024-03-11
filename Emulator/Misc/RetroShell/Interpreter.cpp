@@ -146,6 +146,12 @@ Interpreter::parseNum(const string &argv, long fallback)
     try { return parseNum(argv); } catch(...) { return fallback; }
 }
 
+long 
+Interpreter::parseNum(const Arguments &argv, long nr, long fallback)
+{
+    return nr < long(argv.size()) ? parseNum(argv[nr]) : fallback;
+}
+
 string
 Interpreter::parseSeq(const string &argv) 
 {

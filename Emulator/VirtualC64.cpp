@@ -242,46 +242,11 @@ VirtualC64::CPUAPI::getInfo() const
     return cpu.getState();
 }
 
-i64
-VirtualC64::CPUAPI::clock() const
-{
-    assert(isUserThread());
-    return cpu.clock;
-}
-
-u16
-VirtualC64::CPUAPI::getPC0() const
-{
-    assert(isUserThread());
-    return cpu.getPC0();
-}
-
 isize
 VirtualC64::CPUAPI::loggedInstructions() const
 {
     assert(isUserThread());
     return cpu.debugger.loggedInstructions();
-}
-
-u16
-VirtualC64::CPUAPI::loggedPC0Rel(isize nr) const
-{
-    assert(isUserThread());
-    return cpu.debugger.loggedPC0Rel(nr);
-}
-
-u16
-VirtualC64::CPUAPI::loggedPC0Abs(isize nr) const
-{
-    assert(isUserThread());
-    return cpu.debugger.loggedPC0Abs(nr);
-}
-
-RecordedInstruction
-VirtualC64::CPUAPI::logEntryAbs(isize nr) const
-{
-    assert(isUserThread());
-    return cpu.debugger.logEntryAbs(nr);
 }
 
 void
@@ -312,27 +277,6 @@ VirtualC64::CPUAPI::disassembleRecorded(char *dst, const char *fmt, isize nr) co
     return cpu.debugger.disassRecorded(dst, fmt, nr);
 }
 
-isize
-VirtualC64::CPUAPI::getLengthOfInstructionAt(u16 addr) const
-{
-    assert(isUserThread());
-    return cpu.getLengthOfInstructionAt(addr);
-}
-
-void
-VirtualC64::CPUAPI::dumpBytes(char *str, u16 addr, isize length) const
-{
-    assert(isUserThread());
-    return cpu.disassembler.dumpBytes(str, addr, length);
-}
-
-void
-VirtualC64::CPUAPI::dumpWord(char *str, u16 addr) const
-{
-    assert(isUserThread());
-    return cpu.disassembler.dumpWord(str, addr);
-}
-
 
 //
 // Guards
@@ -344,7 +288,19 @@ VirtualC64::GuardAPI::elements() const
     return guards.elements();
 }
 
-u32 
+Guard *
+VirtualC64::GuardAPI::guardNr(long nr) const
+{
+    return guards.guardWithNr(nr);
+}
+
+Guard *
+VirtualC64::GuardAPI::guardAt(u32 addr) const
+{
+    return guards.guardAtAddr(addr);
+}
+
+u32
 VirtualC64::GuardAPI::guardAddr(long nr) const
 {
     return guards.guardAddr(nr);
@@ -362,7 +318,13 @@ VirtualC64::GuardAPI::isDisabled(long nr) const
     return guards.isDisabled(nr);
 }
 
-bool 
+bool
+VirtualC64::GuardAPI::isSet(long nr) const
+{
+    return guards.isSet(nr);
+}
+
+bool
 VirtualC64::GuardAPI::isSetAt(u32 addr) const
 {
     return guards.isSetAt(addr);

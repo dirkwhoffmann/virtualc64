@@ -84,7 +84,74 @@ Interpreter::initDebugShell(Command &root)
     });
     root.clone("n", {"next"});
 
+    root.add({"break"},     "Manage CPU breakpoints");
+    root.pushGroup("");
 
+    root.add({"break", ""},
+             "List all breakpoints",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(cpu, Category::Breakpoints);
+    });
+
+    root.add({"break", "at"}, { Arg::address }, { Arg::ignores },
+             "Set a breakpoint",
+             [this](Arguments& argv, long value) {
+
+        cpu.setBreakpoint(parseAddr(argv[0]), parseNum(argv, 1, 0));
+    });
+
+    root.add({"break", "delete"}, { Arg::nr },
+             "Delete breakpoints",
+             [this](Arguments& argv, long value) {
+
+        cpu.deleteBreakpoint(parseNum(argv[0]));
+    });
+
+    root.add({"break", "toggle"}, { Arg::nr },
+             "Enable or disable breakpoints",
+             [this](Arguments& argv, long value) {
+
+        cpu.toggleBreakpoint(parseNum(argv[0]));
+    });
+
+    root.popGroup();
+
+    root.add({"watch"},     "Manage CPU watchpoints");
+    
+    root.pushGroup("");
+
+    root.add({"watch", ""},
+             "List all watchpoints",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(cpu, Category::Watchpoints);
+    });
+
+    root.add({"watch", "at"}, { Arg::address }, { Arg::ignores },
+             "Set a watchpoint",
+             [this](Arguments& argv, long value) {
+
+        cpu.setWatchpoint(parseAddr(argv[0]), parseNum(argv, 1, 0));
+    });
+
+    root.add({"watch", "delete"}, { Arg::nr },
+             "Delete watchpoints",
+             [this](Arguments& argv, long value) {
+
+        cpu.deleteWatchpoint(parseNum(argv[0]));
+    });
+
+    root.add({"watch", "toggle"}, { Arg::nr },
+             "Enable or disable watchpoints",
+             [this](Arguments& argv, long value) {
+
+        cpu.toggleWatchpoint(parseNum(argv[0]));
+    });
+
+    root.popGroup();
+
+    
     //
     // Monitoring
     //

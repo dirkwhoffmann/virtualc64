@@ -76,7 +76,14 @@ public:
     
     u32 guardAddr(long nr) const { return nr < count ? guards[nr].addr : 0; }
     
-    bool isSetAt(u32 addr) const;
+
+    //
+    // Adding or removing guards
+    //
+
+    bool isSet(long nr) const { return guardWithNr(nr) != nullptr; }
+    bool isSetAt(u32 addr) const { return guardAtAddr(addr) != nullptr; }
+
     bool isSetAndEnabledAt(u32 addr) const;
     bool isSetAndDisabledAt(u32 addr) const;
     bool isSetAndConditionalAt(u32 addr) const;
