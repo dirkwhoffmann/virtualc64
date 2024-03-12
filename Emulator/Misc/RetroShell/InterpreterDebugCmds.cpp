@@ -185,6 +185,22 @@ Interpreter::initDebugShell(Command &root)
         retroShell << '\n' << ss << '\n';
     });
 
+    root.add({"w"}, { Arg::value }, { Arg::address },
+             std::pair<string, string>("w", "Write into memory"),
+             [this](Arguments& argv, long value) {
+
+        u16 addr = debugger.current;
+        if (argv.size() > 1) { addr = parseAddr(argv[1]); }
+        debugger.write(addr, u8(parseNum(argv[0])));
+    });
+
+    root.add({"c"}, { Arg::src, Arg::dst, Arg::count },
+             std::pair<string, string>("c", "Copy a chunk of memory"),
+             [this](Arguments& argv, long value) {
+
+        debugger.copy(u16(parseNum(argv[0])), u16(parseNum(argv[1])), parseNum(argv[2]));
+    });
+
     root.add({"f"}, { Arg::sequence }, { Arg::address },
              std::pair<string, string>("f", "Find a sequence in memory"),
              [this](Arguments& argv, long value) {

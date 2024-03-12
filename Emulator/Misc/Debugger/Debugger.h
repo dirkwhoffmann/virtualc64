@@ -78,7 +78,10 @@ public:
     u32 read(u32 addr, isize sz);
 
     // Writes a value into memory (multiple times)
-    void write(u32 addr, u32 val, isize sz, isize repeats = 1);
+    void write(u16 addr, u8 val, isize repeats = 1);
+
+    // Copies a chunk of memory
+    void copy(u16 src, u16 dst, isize cnt = 1);
 
 
     //

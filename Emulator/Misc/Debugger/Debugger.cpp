@@ -94,6 +94,8 @@ Debugger::ascDump(std::ostream& os, u16 addr, isize lines)
 isize
 Debugger::hexDump(std::ostream& os, u16 addr, isize lines)
 {
+    current = addr;
+
     for (isize i = 0; i < lines; i++) {
 
         current += dump(os, current,
@@ -107,6 +109,8 @@ Debugger::hexDump(std::ostream& os, u16 addr, isize lines)
 isize
 Debugger::memDump(std::ostream& os, u16 addr, isize lines)
 {
+    current = addr;
+
     for (isize i = 0; i < lines; i++) {
 
         current += dump(os, current,
@@ -140,6 +144,38 @@ Debugger::memSearch(const string &pattern, u16 addr)
     }
 
     return -1;
+}
+
+void
+Debugger::write(u16 addr, u8 val, isize repeats)
+{
+    {   SUSPENDED
+
+        for (isize i = 0; i < repeats && addr + i <= 0xFFFF; i++) {
+
+                    mem.poke(u16(addr + i), u8(val));
+        }
+
+        current = u16(addr + repeats);
+    }
+}
+
+void 
+Debugger::copy(u16 src, u16 dst, isize cnt)
+{
+    {   SUSPENDED
+        
+        if (src < dst) {
+
+            for (isize i = cnt - 1; i >= 0; i--)
+                mem.poke(u16(dst + i), mem.spypeek(u16(src + i)));
+
+        } else {
+
+            for (isize i = 0; i <= cnt - 1; i++)
+                mem.poke(u16(dst + i), mem.spypeek(u16(src + i)));
+        }
+    }
 }
 
 void
