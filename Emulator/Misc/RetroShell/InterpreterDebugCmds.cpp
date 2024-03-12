@@ -176,6 +176,15 @@ Interpreter::initDebugShell(Command &root)
         retroShell << '\n' << ss << '\n';
     });
 
+    root.add({"m"}, { }, { Arg::address },
+             std::pair<string, string>("m[.b|.w|.l]", "Dump memory"),
+             [this](Arguments& argv, long value) {
+
+        std::stringstream ss;
+        debugger.memDump(ss, parseAddr(argv, 0, debugger.current), 16);
+        retroShell << '\n' << ss << '\n';
+    });
+
     root.add({"i"},
              "Inspect a component");
 

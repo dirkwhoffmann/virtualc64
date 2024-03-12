@@ -100,7 +100,15 @@ Debugger::hexDump(std::ostream& os, u16 addr, isize lines)
 isize
 Debugger::memDump(std::ostream& os, u16 addr, isize lines)
 {
-    return 0;
+    for (isize i = 0; i < lines; i++) {
+
+        current += dump(os, current,
+                        "%p: "
+                        "%b %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b  "
+                        "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n");
+    }
+
+    return isize(current - addr);
 }
 
 void
