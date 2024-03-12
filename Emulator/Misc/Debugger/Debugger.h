@@ -66,19 +66,13 @@ public:
     isize dump(char *dst, u16 addr, const char *fmt) const;
     isize dump(std::ostream& os, u16 addr, const char *fmt) const;
 
-    /*
-    void ascDump(char *dst, u16 addr, isize bytes) const;
-    void hexDump(char *dst, u16 addr, isize bytes, isize sz = 1) const;
-    void memDump(char *dst, u16 addr, isize bytes, isize sz = 1) const;
-     */
-
     // Writes a memory dump into a stream
     isize ascDump(std::ostream& os, u16 addr, isize lines);
     isize hexDump(std::ostream& os, u16 addr, isize lines);
     isize memDump(std::ostream& os, u16 addr, isize lines);
 
     // Searches a number sequence in memory
-    i64 memSearch(const string &pattern, u32 addr, isize align);
+    isize memSearch(const string &pattern, u16 addr);
 
     // Reads a value from memory
     u32 read(u32 addr, isize sz);

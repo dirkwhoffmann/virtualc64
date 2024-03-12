@@ -177,12 +177,37 @@ Interpreter::initDebugShell(Command &root)
     });
 
     root.add({"m"}, { }, { Arg::address },
-             std::pair<string, string>("m[.b|.w|.l]", "Dump memory"),
+             std::pair<string, string>("m", "Dump memory"),
              [this](Arguments& argv, long value) {
 
         std::stringstream ss;
         debugger.memDump(ss, parseAddr(argv, 0, debugger.current), 16);
         retroShell << '\n' << ss << '\n';
+    });
+
+    root.add({"f"}, { Arg::sequence }, { Arg::address },
+             std::pair<string, string>("f", "Find a sequence in memory"),
+             [this](Arguments& argv, long value) {
+
+        {   SUSPENDED
+
+            auto pattern = parseSeq(argv[0]);
+            auto addr = parseAddr(argv, 1, debugger.current);
+            auto found = debugger.memSearch(pattern, addr);
+
+            if (found >= 0) {
+
+                std::stringstream ss;
+                debugger.memDump(ss, u16(found), 16);
+                retroShell << ss;
+
+            } else {
+
+                std::stringstream ss;
+                ss << "Not found";
+                retroShell << ss;
+            }
+        }
     });
 
     root.add({"i"},

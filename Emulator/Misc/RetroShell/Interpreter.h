@@ -118,11 +118,9 @@ private:
     u16 parseAddr(const string &argv, long fallback) { return (u16)parseNum(argv, fallback); }
     u16 parseAddr(const Arguments &argv, long nr, long fallback) { return (u16)parseNum(argv, nr, fallback); }
 
-    // DEPRECATED
-    /*
     string parseSeq(const string &argv);
     string parseSeq(const string &argv, const string &fallback);
-     */
+
     template <typename T> long parseEnum(const string &argv) {
         return util::parseEnum<T>(argv);
     }

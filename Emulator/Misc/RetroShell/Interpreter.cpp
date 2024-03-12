@@ -164,6 +164,18 @@ Interpreter::parseNum(const Arguments &argv, long nr, long fallback)
     return nr < long(argv.size()) ? parseNum(argv[nr]) : fallback;
 }
 
+string
+Interpreter::parseSeq(const string &argv)
+{
+    return util::parseSeq(argv);
+}
+
+string
+Interpreter::parseSeq(const string &argv, const string &fallback)
+{
+    try { return parseSeq(argv); } catch(...) { return fallback; }
+}
+
 Command &
 Interpreter::getRoot()
 {

@@ -94,7 +94,14 @@ Debugger::ascDump(std::ostream& os, u16 addr, isize lines)
 isize
 Debugger::hexDump(std::ostream& os, u16 addr, isize lines)
 {
-    return 0;
+    for (isize i = 0; i < lines; i++) {
+
+        current += dump(os, current,
+                        "%p: "
+                        "%b %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b\n");
+    }
+
+    return isize(current - addr);
 }
 
 isize
@@ -109,6 +116,30 @@ Debugger::memDump(std::ostream& os, u16 addr, isize lines)
     }
 
     return isize(current - addr);
+}
+
+isize
+Debugger::memSearch(const string &pattern, u16 addr)
+{
+    if (isize length = isize(pattern.length()); length > 0) {
+
+        for (isize i = addr; i < 0xFFFF; i++) {
+
+            for (isize j = 0;; j++) {
+
+                // Get a byte from memory
+                auto val = mem.spypeek(u16(i + j));
+
+                // Stop searching if we find a mismatch
+                if (val != u8(pattern[j])) break;
+
+                // Return true if all values have matched
+                if (j == length - 1) { current = u16(i); return i; }
+            }
+        }
+    }
+
+    return -1;
 }
 
 void
