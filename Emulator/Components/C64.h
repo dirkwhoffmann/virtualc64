@@ -22,6 +22,7 @@
 #include "Keyboard.h"
 #include "ControlPort.h"
 #include "C64Memory.h"
+#include "Debugger.h"
 #include "DriveMemory.h"
 #include "FlashRom.h"
 #include "VICII.h"
@@ -123,11 +124,14 @@ public:
     ParCable parCable = ParCable(*this);
     Datasette datasette = Datasette(*this);
 
+    // Gateway to the GUI
+    MsgQueue msgQueue = MsgQueue();
+
     // Misc
     RetroShell retroShell = RetroShell(*this);
+    Debugger debugger = Debugger(*this);
     RegressionTester regressionTester = RegressionTester(*this);
     Recorder recorder = Recorder(*this);
-    MsgQueue msgQueue = MsgQueue();
 
 
     //

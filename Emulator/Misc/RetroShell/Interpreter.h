@@ -116,7 +116,7 @@ private:
 
     u16 parseAddr(const string &argv) { return (u16)parseNum(argv); }
     u16 parseAddr(const string &argv, long fallback) { return (u16)parseNum(argv, fallback); }
-    u16 parseAddr(const Arguments &argv, long nr, long fallback);
+    u16 parseAddr(const Arguments &argv, long nr, long fallback) { return (u16)parseNum(argv, nr, fallback); }
 
     // DEPRECATED
     /*

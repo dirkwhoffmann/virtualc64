@@ -125,6 +125,19 @@ struct hex {
     std::ostream &operator()(std::ostream &os) const;
 };
 
+struct bin {
+
+    isize digits;
+    u64 value;
+
+    bin(isize d, u64 v) : digits(d), value(v) { };
+    bin(u64 v) : bin(64, v) { };
+    bin(u32 v) : bin(32, v) { };
+    bin(u16 v) : bin(16, v) { };
+    bin(u8 v) : bin(8, v) { };
+    std::ostream &operator()(std::ostream &os) const;
+};
+
 struct flt {
 
     double value;
@@ -157,10 +170,25 @@ struct bol {
     std::ostream &operator()(std::ostream &os) const;
 };
 
+struct str {
+
+    isize characters;
+    u64 value;
+
+    str(isize c, u64 v) : characters(c), value(v) { };
+    str(u64 v) : str(8, v) { };
+    str(u32 v) : str(4, v) { };
+    str(u16 v) : str(2, v) { };
+    str(u8 v) : str(1, v) { };
+    std::ostream &operator()(std::ostream &os) const;
+};
+
 inline std::ostream &operator <<(std::ostream &os, dec v) { return v(os); }
 inline std::ostream &operator <<(std::ostream &os, hex v) { return v(os); }
+inline std::ostream &operator <<(std::ostream &os, bin v) { return v(os); }
 inline std::ostream &operator <<(std::ostream &os, flt v) { return v(os); }
 inline std::ostream &operator <<(std::ostream &os, tab v) { return v(os); }
 inline std::ostream &operator <<(std::ostream &os, bol v) { return v(os); }
+inline std::ostream &operator <<(std::ostream &os, str v) { return v(os); }
 
 }

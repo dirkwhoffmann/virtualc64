@@ -163,7 +163,16 @@ Interpreter::initDebugShell(Command &root)
              [this](Arguments& argv, long value) {
 
         std::stringstream ss;
-        cpu.disassembler.disassembleRange(ss, parseAddr(argv[0], cpu.getPC0()), 16);
+        cpu.disassembler.disassembleRange(ss, parseAddr(argv, 0, cpu.getPC0()), 16);
+        retroShell << '\n' << ss << '\n';
+    });
+
+    root.add({"a"}, { }, { Arg::address },
+             "Dump memory in ASCII",
+             [this](Arguments& argv, long value) {
+
+        std::stringstream ss;
+        debugger.ascDump(ss, parseAddr(argv, 0, debugger.current), 16);
         retroShell << '\n' << ss << '\n';
     });
 

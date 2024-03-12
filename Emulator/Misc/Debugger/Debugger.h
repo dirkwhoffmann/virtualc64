@@ -1,0 +1,102 @@
+// -----------------------------------------------------------------------------
+// This file is part of VirtualC64
+//
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// This FILE is dual-licensed. You are free to choose between:
+//
+//     - The GNU General Public License v3 (or any later version)
+//     - The Mozilla Public License v2
+//
+// SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
+// -----------------------------------------------------------------------------
+
+#pragma once
+
+#include "DebuggerTypes.h"
+#include "SubComponent.h"
+
+namespace vc64 {
+
+class Debugger : public SubComponent {
+
+public:
+
+    // Last used address (current object location)
+    u16 current = 0;
+
+
+    //
+    // Methods
+    //
+
+public:
+
+    using SubComponent::SubComponent;
+    const char *getDescription() const override { return "Debugger"; }
+//     void _dump(Category category, std::ostream& os) const override { }
+
+    template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
+
+    //
+    // Controlling program execution
+    //
+
+public:
+
+    /*
+    // Pauses or continues the emulation
+    void stopAndGo();
+
+    // Executes one CPU instruction
+    void stepInto();
+
+    // Executes to the instruction below the current PC
+    void stepOver();
+
+    // Continues execution at the specified address
+    void jump(u32 addr);
+    */
+
+
+    //
+    // Managing memory
+    //
+
+    // Returns a memory dump in ASCII, hex, or both
+    isize dump(char *dst, u16 addr, const char *fmt) const;
+    isize dump(std::ostream& os, u16 addr, const char *fmt) const;
+
+    /*
+    void ascDump(char *dst, u16 addr, isize bytes) const;
+    void hexDump(char *dst, u16 addr, isize bytes, isize sz = 1) const;
+    void memDump(char *dst, u16 addr, isize bytes, isize sz = 1) const;
+     */
+
+    // Writes a memory dump into a stream
+    isize ascDump(std::ostream& os, u16 addr, isize lines);
+    isize hexDump(std::ostream& os, u16 addr, isize lines);
+    isize memDump(std::ostream& os, u16 addr, isize lines);
+
+    // Searches a number sequence in memory
+    i64 memSearch(const string &pattern, u32 addr, isize align);
+
+    // Reads a value from memory
+    u32 read(u32 addr, isize sz);
+
+    // Writes a value into memory (multiple times)
+    void write(u32 addr, u32 val, isize sz, isize repeats = 1);
+
+
+    //
+    // Displaying expressions
+    //
+
+    // Displays a value in different number formats (hex, dec, bin, alpha)
+    void convertNumeric(std::ostream& os, u8 value) const;
+    void convertNumeric(std::ostream& os, u16 value) const;
+    void convertNumeric(std::ostream& os, u32 value) const;
+    void convertNumeric(std::ostream& os, string value) const;
+};
+
+
+}

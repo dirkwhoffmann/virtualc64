@@ -19,30 +19,32 @@ namespace vc64 {
 
 class C64;
 class C64Memory;
-class DriveMemory;
 class CPU;
-class VICII;
 class CIA1;
 class CIA2;
-class Muxer;
-class SIDStream;
-class Keyboard;
 class ControlPort;
+class Datasette;
+class Debugger;
+class Drive;
+class DriveMemory;
 class ExpansionPort;
 class Host;
 class IEC;
-class Drive;
-class Datasette;
+class Keyboard;
 class Mouse;
 class Mouse1350;
 class Mouse1351;
-class NeosMouse;
 class MsgQueue;
+class Muxer;
+class NeosMouse;
 class PowerSupply;
 class ParCable;
 class Recorder;
 class RegressionTester;
 class RetroShell;
+class SIDStream;
+class VICII;
+
 class AnyFile;
 class AnyCollection;
 class TAPFile;
@@ -66,6 +68,7 @@ protected:
     ControlPort &port2;
     CPU &cpu;
     Datasette &datasette;
+    Debugger &debugger;
     Drive &drive8;
     Drive &drive9;
     ExpansionPort &expansionport;
@@ -105,6 +108,7 @@ protected:
     ControlPort &port2;
     CPU &cpu;
     Datasette &datasette;
+    Debugger &debugger;
     Drive &drive8;
     Drive &drive9;
     ExpansionPort &expansionport;
