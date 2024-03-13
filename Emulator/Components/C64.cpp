@@ -15,7 +15,6 @@
 #include "Checksum.h"
 #include "IOUtils.h"
 #include "RomDatabase.h"
-// #include "C64Memory.h"
 #include <algorithm>
 
 namespace vc64 {
@@ -1182,7 +1181,7 @@ C64::getRomTraits(u64 fnv)
     // Crawl through the Rom database
     for (auto &traits : roms) if (traits.fnv == fnv) return traits;
 
-    return RomTraits { .fnv = fnv, .name = "", .revision ="" };
+    return RomTraits { };
 }
 
 RomInfo
@@ -1237,6 +1236,54 @@ C64::getRomInfo(RomType type) const
     return result;
 }
 
+RomTraits 
+C64::getRomTraits(RomType type) const
+{
+    RomTraits result = getRomTraits(romFNV64(type));
+
+    if (!result.fnv) result.fnv = romFNV64(type);
+    if (!result.crc) result.crc = romCRC32(type);
+
+    if (hasMega65Rom(type)) {
+
+        result.title = "M.E.G.A. C64 OpenROM";
+        result.vendor = ROM_VENDOR_MEGA65;
+        result.patched = false;
+
+        switch (type) {
+
+            case ROM_TYPE_BASIC:
+
+                result.subtitle = "Free Basic Replacement";
+                result.revision =  mega65BasicRev();
+                break;
+
+            case ROM_TYPE_CHAR:
+
+                result.subtitle = "Free Charset Replacement";
+                break;
+
+            case ROM_TYPE_KERNAL:
+
+                result.subtitle = "Free Kernal Replacement";
+                result.revision = mega65KernalRev();
+                break;
+
+            default:
+                fatalError;
+        }
+
+    } else if (!result.fnv) {
+
+        result.title = "Unknown ROM";
+        result.subtitle = "";
+        result.revision = "";
+        result.vendor = ROM_VENDOR_OTHER;
+    }
+
+    return result;
+}
+
 u32
 C64::romCRC32(RomType type) const
 {
@@ -1282,27 +1329,27 @@ C64::romTitle(RomType type) const
 
             return
             hasMega65Rom(type) ?    "M.E.G.A. C64 OpenROM" :
-            !traits.name ?          "Unknown Basic Rom" :
+            !traits.title ?          "Unknown Basic Rom" :
             traits.patched ?        "Patched Basic Rom" : "Basic Rom";
 
         case ROM_TYPE_CHAR:
 
             return
             hasMega65Rom(type) ?    "M.E.G.A. C64 OpenROM" :
-            !traits.name ?          "Unknown Character Rom" :
+            !traits.title ?          "Unknown Character Rom" :
             traits.patched ?        "Patched Character Rom" : "Character Rom";
 
         case ROM_TYPE_KERNAL:
 
             return
             hasMega65Rom(type) ?    "M.E.G.A. C64 OpenROM" :
-            !traits.name ?          "Unknown Kernal Rom" :
+            !traits.title ?          "Unknown Kernal Rom" :
             traits.patched ?        "Patched Kernal Rom" : "Kernal Rom";
 
         case ROM_TYPE_VC1541:
 
             return
-            !traits.name ?          "Drive Firmware" :
+            !traits.title ?          "Drive Firmware" :
             traits.patched ?        "Patched Drive ROM" : "Floppy Drive ROM";
 
         default:
@@ -1315,9 +1362,9 @@ C64::romSubTitle(u64 fnv) const
 {
     auto traits = getRomTraits(fnv);
 
-    if (traits.name) {
+    if (traits.subtitle) {
 
-        return traits.name;
+        return traits.subtitle;
 
     } else {
 

@@ -164,6 +164,12 @@ VirtualC64::C64API::getRomInfo(RomType type) const
     return c64.getRomInfo(type);
 }
 
+RomTraits 
+VirtualC64::C64API::getRomTraits(RomType type) const
+{
+    return c64.getRomTraits(type);
+}
+
 void
 VirtualC64::C64API::isReady()
 {

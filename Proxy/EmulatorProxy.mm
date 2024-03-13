@@ -2331,42 +2331,32 @@ using namespace vc64;
     [self emu]->stepOver();
 }
 
+/*
 - (RomInfo)getRomInfo:(RomType)type
 {
     return [self emu]->c64.getRomInfo(type);
 }
-
-- (RomInfo)basicRom
-{
-    return [self emu]->c64.getRomInfo(ROM_TYPE_BASIC);
-}
-
-- (RomInfo)charRom
-{
-    return [self emu]->c64.getRomInfo(ROM_TYPE_CHAR);
-}
-
-- (RomInfo)kernalRom
-{
-    return [self emu]->c64.getRomInfo(ROM_TYPE_KERNAL);
-}
-
-- (RomInfo)vc1541Rom
-{
-    return [self emu]->c64.getRomInfo(ROM_TYPE_VC1541);
-}
-/*
-- (BOOL) hasRom:(RomType)type
-{
-    return [self emu]->c64.hasRom(type);
-}
-
-- (BOOL)hasMega65Rom:(RomType)type
-{
-    return [self emu]->c64.hasMega65Rom(type);
-}
 */
 
+- (RomTraits)basicRom
+{
+    return [self emu]->c64.getRomTraits(ROM_TYPE_BASIC);
+}
+
+- (RomTraits)charRom
+{
+    return [self emu]->c64.getRomTraits(ROM_TYPE_CHAR);
+}
+
+- (RomTraits)kernalRom
+{
+    return [self emu]->c64.getRomTraits(ROM_TYPE_KERNAL);
+}
+
+- (RomTraits)vc1541Rom
+{
+    return [self emu]->c64.getRomTraits(ROM_TYPE_VC1541);
+}
 - (BOOL) isRom:(RomType)type url:(NSURL *)url
 {
     return RomFile::isRomFile(type, [url fileSystemRepresentation]);

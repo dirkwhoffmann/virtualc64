@@ -18,24 +18,24 @@ extension ConfigurationController {
 
         let poweredOff         = c64.poweredOff
         
-        let hasBasic           = basicRom.crc32 != 0
-        let hasCommodoreBasic  = basicRom.isCommodoreRom
-        let hasMega65Basic     = basicRom.isMega65Rom
-        let hasPatchedBasic    = basicRom.isPatchedRom
+        let hasBasic           = basicRom.crc != 0
+        let hasCommodoreBasic  = basicRom.vendor == .COMMODORE
+        let hasMega65Basic     = basicRom.vendor == .MEGA65
+        let hasPatchedBasic    = basicRom.patched
 
-        let hasChar            = charRom.crc32 != 0
-        let hasCommodoreChar   = charRom.isCommodoreRom
-        let hasMega65Char      = charRom.isMega65Rom
-        let hasPatchedChar     = charRom.isPatchedRom
+        let hasChar            = charRom.crc != 0
+        let hasCommodoreChar   = charRom.vendor == .COMMODORE
+        let hasMega65Char      = charRom.vendor == .MEGA65
+        let hasPatchedChar     = charRom.patched
 
-        let hasKernal          = kernalRom.crc32 != 0
-        let hasCommodoreKernal = kernalRom.isCommodoreRom
-        let hasMega65Kernal    = kernalRom.isMega65Rom
-        let hasPatchedKernal   = kernalRom.isPatchedRom
+        let hasKernal          = kernalRom.crc != 0
+        let hasCommodoreKernal = kernalRom.vendor == .COMMODORE
+        let hasMega65Kernal    = kernalRom.vendor == .MEGA65
+        let hasPatchedKernal   = kernalRom.patched
 
-        let hasVC1541          = vc1541Rom.crc32 != 0
-        let hasCommodoreVC1541 = vc1541Rom.isCommodoreRom
-        let hasPatchedVC1541   = vc1541Rom.isPatchedRom
+        let hasVC1541          = vc1541Rom.crc != 0
+        let hasCommodoreVC1541 = vc1541Rom.vendor == .COMMODORE
+        let hasPatchedVC1541   = vc1541Rom.patched
 
         let romMissing = NSImage(named: "rom_missing")
         let romOrig    = NSImage(named: "rom_original")

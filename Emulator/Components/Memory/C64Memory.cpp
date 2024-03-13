@@ -216,17 +216,17 @@ C64Memory::_dump(Category category, std::ostream& os) const
 
         auto info = [&](const string &title, RomType type) {
 
-            auto crc32 = c64.romCRC32(type);
-            auto fnv64 = c64.romFNV64(type);
+            auto traits = c64.getRomTraits(type);
 
-            os << tab(title) << (crc32 ? "Installed" : "Not installed") << std::endl;
+            os << tab(title) << (traits.crc ? "Installed" : "Not installed") << std::endl;
 
-            if (crc32) {
+            if (traits.crc) {
 
-                os << tab("Title") << c64.romTitle(type) << std::endl;
-                os << tab("Subtitle") << c64.romSubTitle(type) << std::endl;
-                os << tab("Revision") << c64.romRevision(type) << std::endl;
-                os << tab("CRC32 / FNV64") << hex(crc32) << " / " << hex(fnv64) << std::endl;
+                os << tab("Title") << traits.title << std::endl;
+                os << tab("Subtitle") << traits.subtitle << std::endl;
+                os << tab("Revision") << traits.revision << std::endl;
+                os << tab("CRC32") << hex(traits.crc) << std::endl;
+                os << tab("FNV64") << hex(traits.fnv) << std::endl;
             }
         };
 

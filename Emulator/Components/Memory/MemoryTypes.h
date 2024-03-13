@@ -184,14 +184,17 @@ typedef struct
 }
 MemInfo;
 
-struct RomTraits {
+typedef struct {
 
     u64 fnv;
+    u32 crc;
 
-    const char *name;
+    const char *title;
+    const char *subtitle;
     const char *revision;
 
     RomVendor vendor;
     RomType type;
     bool patched;
-};
+}
+RomTraits;

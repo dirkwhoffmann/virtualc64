@@ -221,11 +221,11 @@
 - (void)stepInto;
 - (void)stepOver;
 
-- (RomInfo)getRomInfo:(RomType)type;
-@property (readonly) RomInfo basicRom;
-@property (readonly) RomInfo charRom;
-@property (readonly) RomInfo kernalRom;
-@property (readonly) RomInfo vc1541Rom;
+// - (RomInfo)getRomInfo:(RomType)type;
+@property (readonly) RomTraits basicRom;
+@property (readonly) RomTraits charRom;
+@property (readonly) RomTraits kernalRom;
+@property (readonly) RomTraits vc1541Rom;
 
 - (BOOL)isRom:(RomType)type url:(NSURL *)url;
 

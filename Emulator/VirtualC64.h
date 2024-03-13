@@ -382,7 +382,14 @@ public:
          *
          *  @param  type    The ROM type
          */
-        RomInfo getRomInfo(RomType type) const;
+        [[deprecated]] RomInfo getRomInfo(RomType type) const;
+
+        /** @brief  Returns information about one of the installed Roms
+         *
+         *  @param  type    The ROM type
+         */
+        RomTraits getRomTraits(RomType type) const;
+
 
         /** @brief  Checks if the emulator is runnable.
          *  The function checks if the necessary ROMs are installed to lauch the

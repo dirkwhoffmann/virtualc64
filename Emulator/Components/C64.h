@@ -608,21 +608,22 @@ public:
 
     // Queries ROM information
     static RomTraits getRomTraits(u64 fnv);
-    RomInfo getRomInfo(RomType type) const; // DEPRECATED
+    [[deprecated]] RomInfo getRomInfo(RomType type) const;
+    RomTraits getRomTraits(RomType type) const;
 
     // Computes a Rom checksum
     u32 romCRC32(RomType type) const;
     u64 romFNV64(RomType type) const;
 
     // Returns printable titles for the installed ROMs
-    const char *romTitle(RomType type) const;
+    [[deprecated]] const char *romTitle(RomType type) const;
 
     // Returns printable sub titles for the installed ROMs
-    const char *romSubTitle(u64 fnv) const;
-    const char *romSubTitle(RomType type) const;
+    [[deprecated]] const char *romSubTitle(u64 fnv) const;
+    [[deprecated]] const char *romSubTitle(RomType type) const;
 
     // Returns printable revision strings or hash values for the installed ROMs
-    const char *romRevision(RomType type) const;
+    [[deprecated]] const char *romRevision(RomType type) const;
 
     // Checks if a certain Rom is present
     bool hasRom(RomType type) const;
