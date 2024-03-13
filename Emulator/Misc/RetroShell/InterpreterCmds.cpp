@@ -935,7 +935,7 @@ Interpreter::initCommandShell(Command &root)
     root.popGroup();
 
     //
-    // Miscellaneous (Recorder)
+    // Miscellaneous
     //
 
     root.pushGroup("Miscellaneous");

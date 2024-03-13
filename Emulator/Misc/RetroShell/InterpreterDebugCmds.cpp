@@ -53,7 +53,7 @@ Interpreter::initDebugShell(Command &root)
         }
     }
 
-    
+
     //
     // Program execution
     //
@@ -118,7 +118,7 @@ Interpreter::initDebugShell(Command &root)
     root.popGroup();
 
     root.add({"watch"},     "Manage CPU watchpoints");
-    
+
     root.pushGroup("");
 
     root.add({"watch", ""},
@@ -151,7 +151,7 @@ Interpreter::initDebugShell(Command &root)
 
     root.popGroup();
 
-    
+
     //
     // Monitoring
     //
@@ -226,191 +226,147 @@ Interpreter::initDebugShell(Command &root)
         }
     });
 
+    root.add({"e"}, { Arg::address, Arg::count }, { Arg::value },
+             std::pair<string, string>("e", "Erase memory"),
+             [this](Arguments& argv, long value) {
+
+        {   SUSPENDED
+
+            auto addr = parseAddr(argv[0]);
+            auto cnt = parseNum(argv[1]);
+            auto val = u8(parseNum(argv, 2, 0));
+
+            debugger.write(addr, val, cnt);
+        }
+    });
+
     root.add({"i"},
              "Inspect a component");
 
     root.pushGroup("Components");
 
-    root.add({"i", "emulator"},      "Emulator");
-    root.add({"i", "c64"},           "C64");
+    root.add({"i", "thread"},       "Emulator thread");
 
-    root.popGroup();
+    root.pushGroup("");
 
-    root.pushGroup("Peripherals");
-
-    root.add({"i", "keyboard"},      "Keyboard");
-    root.add({"i", "mouse"},         "Mouse");
-    root.add({"i", "joystick"},      "Joystick");
-
-    root.popGroup();
-
-    root.pushGroup("Miscellaneous");
-
-    root.add({"i", "host"},          "Host machine");
-    root.add({"i", "server"},        "Remote server");
-
-    root.popGroup();
-
-    root.add({"r"},
-             "Show registers");
-
-    root.popGroup();
-/*
-
-    root.add({"disassemble"}, { }, { Arg::address },
-             "Runs disassembler",
-             [this](Arguments& argv, long value) {
-
-        std::stringstream ss;
-
-        auto addr = argv.empty() ? cpu.getPC0() : u16(parseNum(argv[0]));
-        cpu.disassembler.disassembleRange(ss, addr, 16);
-
-        retroShell << '\n' << ss << '\n';
-    });
-    */
-
-
-    root.pushGroup("Debugging components");
-
-    root.add({"thread"},        "The emulator thread");
-    root.add({"c64"},           "The virtual Commodore 64");
-    root.add({"cpu"},           "MOS 6810 CPU");
-    root.add({"memory"},        "Ram and Rom");
-    root.add({"cia1"},          "Complex Interface Adapter 1");
-    root.add({"cia2"},          "Complex Interface Adapter 2");
-    root.add({"vicii"},         "Video Interface Controller");
-    root.add({"sid"},           "Sound Interface Device");
-
-    root.pushGroup("Debugging ports");
-
-    root.add({"controlport1"},  "Control port 1");
-    root.add({"controlport2"},  "Control port 2");
-    root.add({"expansion"},     "Expansion port");
-
-    root.pushGroup("Debugging peripherals");
-
-    root.add({"keyboard"},      "Keyboard");
-    root.add({"mouse"},         "mouse");
-    root.add({"joystick"},      "Joystick");
-    root.add({"datasette"},     "Commodore tape drive");
-    root.add({"drive8"},        "Floppy drive 8");
-    root.add({"drive9"},        "Floppy drive 9");
-    root.add({"parcable"},      "Parallel drive cable");
-
-
-    //
-    // Thread
-    //
-
-    root.add({"thread", ""},
-             "Displays the thread state",
+    root.add({"i", "thread", ""},        "Displays the thread state",
              [this](Arguments& argv, long value) {
 
         retroShell.dump(emulator, Category::State);
     });
 
-    root.add({"thread", "runahead"},
-             "Inspects the run-ahead instance",
+    root.add({"i", "thread", "runahead"},    "Inspects the run-ahead instance",
              [this](Arguments& argv, long value) {
 
         retroShell.dump(emulator, Category::RunAhead);
     });
 
+    root.popGroup();
 
-    //
-    // C64
-    //
-
-    root.pushGroup("");
-
-    root.add({"c64"},
-             "Displays the component state");
-
-    root.add({"c64", ""},
-             "Inspects the internal state",
+    root.add({"i", "c64"},          "C64",
              [this](Arguments& argv, long value) {
 
         retroShell.dump(c64, { Category::Config, Category::State });
     });
 
-    root.add({"c64", "host"},
-             "Displays information about the host machine",
-             [this](Arguments& argv, long value) {
-
-        retroShell.dump(host, Category::State);
-    });
-
-    root.add({"c64", "checksums"},
-             "Displays checksum of various components",
-             [this](Arguments& argv, long value) {
-
-        retroShell.dump(c64, Category::Checksums);
-    });
-
-    root.add({"c64", "sizeof"},
-             "Displays static memory footprints of various components",
-             [this](Arguments& argv, long value) {
-
-        retroShell.dump(c64, Category::Sizeof);
-    });
-
-
-    //
-    // Memory
-    //
-
-    root.add({"memory", ""},
-             "Inspects the internal state",
+    root.add({"i", "memory"},       "Memory",
              [this](Arguments& argv, long value) {
 
         retroShell.dump(mem, { Category::Config, Category::State });
     });
 
-    root.add({"memory", "dump"}, { Arg::address },
-             "Generates a memory hexdump",
+    root.add({"i", "cia1"},         "CIA1",
              [this](Arguments& argv, long value) {
 
-        std::stringstream ss;
-        mem.memDump(ss, u16(parseNum(argv[0])));
-        retroShell << '\n' << ss << '\n';
+        retroShell.dump(cia1, { Category::Config, Category::State });
     });
 
-    root.add({"memory", "read"}, { Arg::address }, { MemoryTypeEnum::argList() },
-             "Reads a byte from memory",
+    root.add({"i", "cia2"},         "CIA2",
              [this](Arguments& argv, long value) {
 
-        auto addr = u16(parseNum(argv[0]));
-        MemoryType type = argv.size() == 1 ? mem.peekSrc[addr >> 12] : parseEnum <MemoryTypeEnum> (argv[0], 1);
-        auto byte = mem.peek(addr, type);
-
-        std::stringstream ss;
-        ss << util::hex(addr) << ": " << util::hex(byte);
-        ss << " (" << MemoryTypeEnum::key(type) << ")\n";
-        retroShell << ss;
+        retroShell.dump(cia2, { Category::Config, Category::State });
     });
 
-    root.add({"memory", "write"}, { Arg::address, Arg::value }, { MemoryTypeEnum::argList() },
-             "Writes a byte into memory",
+    root.add({"i", "vicii"},        "VICII",
              [this](Arguments& argv, long value) {
 
-        auto addr = u16(parseNum(argv[0]));
-        auto byte = u8(parseNum(argv[1]));
-        MemoryType type = argv.size() == 2 ? mem.pokeTarget[addr >> 12] : parseEnum <MemoryTypeEnum> (argv[2]);
-
-        mem.poke(addr, byte, type);
+        retroShell.dump(cia2, { Category::Config, Category::State });
     });
 
+    root.add({"i", "sid"},          "Primary SID",
+             [this](Arguments& argv, long value) {
 
-    //
-    // Drive
-    //
+        retroShell.dump(muxer.sid[0], { Category::Config, Category::State });
+    });
+
+    root.add({"i", "muxer"},        "Audio backend",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(muxer, { Category::Config, Category::State });
+    });
+
+    root.add({"i", "expansion"},    "Expansion port",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(expansionport, { Category::Config, Category::State });
+    });
+
+    root.popGroup();
+
+    root.pushGroup("Peripherals");
+
+    root.add({"i", "keyboard"},     "Keyboard",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(keyboard, { Category::Config, Category::State });
+    });
+
+    root.add({"i", "port1"},       "Control Port 1",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(port1, { Category::Config, Category::State });
+    });
+
+    root.add({"i", "port2"},       "Control Port 2",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(port2, { Category::Config, Category::State });
+    });
+
+    root.add({"i", "joystick1"},    "Joystick (port 1)",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(port1.joystick, { Category::Config, Category::State });
+    });
+
+    root.add({"i", "joystick2"},    "Joystick (port 2)",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(port2.joystick, { Category::Config, Category::State });
+    });
+
+    root.add({"i", "mouse1"},       "Mouse (port 1)",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(port1.mouse, { Category::Config, Category::State });
+    });
+
+    root.add({"i", "mouse2"},       "Mouse (port 2)",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(port2.mouse, { Category::Config, Category::State });
+    });
+
+    root.add({"i", "drive8"},       "Floppy Drive 8");
+    root.add({"i", "drive9"},       "Floppy Drive 9");
+
+    root.pushGroup("");
 
     for (isize i = 0; i < 2; i++) {
 
         string drive = (i == 0) ? "drive8" : "drive9";
 
-        root.add({drive, ""},
+        root.add({"i", drive, ""},
                  "Inspects the internal state",
                  [this](Arguments& argv, long value) {
 
@@ -418,7 +374,7 @@ Interpreter::initDebugShell(Command &root)
             retroShell.dump(drive, { Category::Config, Category::State });
         });
 
-        root.add({drive, "bankmap"},
+        root.add({"i", drive, "bankmap"},
                  "Displays the memory layout",
                  [this](Arguments& argv, long value) {
 
@@ -426,7 +382,7 @@ Interpreter::initDebugShell(Command &root)
             retroShell.dump(drive, Category::BankMap);
         });
 
-        root.add({drive, "disk"},
+        root.add({"i", drive, "disk"},
                  "Inspects the current disk",
                  [this](Arguments& argv, long value) {
 
@@ -434,7 +390,7 @@ Interpreter::initDebugShell(Command &root)
             retroShell.dump(drive, Category::Disk);
         });
 
-        root.add({drive, "layout"},
+        root.add({"i", drive, "layout"},
                  "Displays the disk layout",
                  [this](Arguments& argv, long value) {
 
@@ -443,189 +399,83 @@ Interpreter::initDebugShell(Command &root)
         });
     }
 
+    root.popGroup();
 
-    //
-    // Datasette
-    //
+    root.add({"i", "iec"},          "IEC bus",
+             [this](Arguments& argv, long value) {
 
+        retroShell.dump(iec, { Category::Config, Category::State });
+    });
 
-    root.add({"datasette", ""},
-             "Inspects the internal state",
+    root.add({"i", "datasette"},    "Datasette",
              [this](Arguments& argv, long value) {
 
         retroShell.dump(datasette, { Category::Config, Category::State });
     });
 
+    root.popGroup();
 
-    //
-    // CPU
-    //
+    root.pushGroup("Miscellaneous");
 
-    root.add({"cpu", ""},
-             "Inspects the internal state",
+    root.add({"i", "host"},         "Host computer",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(cpu, { Category::Config, Category::State });
+        retroShell.dump(host, { Category::Config, Category::State });
     });
 
+    root.popGroup();
 
-    //
-    // CIA
-    //
+    root.add({"r"},
+             "Show registers");
 
-    for (isize i = 0; i < 2; i++) {
-
-        string cia = (i == 0) ? "cia1" : "cia2";
-
-        root.add({cia, ""},
-                 "Displays the component state",
-                 [this](Arguments& argv, long value) {
-
-            if (value == 0) {
-                retroShell.dump(cia1, { Category::Config, Category::State });
-            } else {
-                retroShell.dump(cia2, { Category::Config, Category::State });
-            }
-
-        }, i);
-
-        root.add({cia, "registers"},
-                 "Displays the current register values",
-                 [this](Arguments& argv, long value) {
-
-            if (value == 0) {
-                retroShell.dump(cia1, Category::Registers);
-            } else {
-                retroShell.dump(cia2, Category::Registers);
-            }
-
-        }, i);
-
-        root.add({cia, "tod"},
-                 "Displays the state of the TOD clock",
-                 [this](Arguments& argv, long value) {
-
-            if (value == 0) {
-                retroShell.dump(cia1.tod, Category::State);
-            } else {
-                retroShell.dump(cia2.tod, Category::State);
-            }
-
-        }, i);
-    }
-
-
-    //
-    // VICII
-    //
-
-    root.add({"vicii", ""},
-             "Inspects the internal state",
+    root.add({"r", "cia1"},         "CIA1",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(vic, { Category::Config, Category::State });
+        retroShell.dump(cia1, Category::Registers);
     });
 
-    root.add({"vicii", "registers"},
-             "Dumps all VICII registers",
+    root.add({"r", "cia2"},         "CIA2",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(vic, Category::Registers);
+        retroShell.dump(cia2, Category::Registers);
     });
 
-
-    //
-    // SID
-    //
-
-    root.add({"sid", ""},
-             "Inspects the internal state",
+    root.add({"r", "vicii"},        "VICII",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(muxer, { Category::Config, Category::State });
+        retroShell.dump(cia2, Category::Registers);
     });
 
-
-    //
-    // Control port
-    //
-
-    for (isize i = 0; i < 2; i++) {
-
-        string port = (i == 0) ? "controlport1" : "controlport2";
-
-        root.add({port, ""},
-                 "Inspects the internal state",
-                 [this](Arguments& argv, long value) {
-
-            retroShell.dump(value == 0 ? port1 : port2, { Category::Config, Category::State });
-        });
-    }
-
-
-    //
-    // Expansion port
-    //
-
-    root.add({"expansion", ""},
-             "Inspects the internal state",
+    root.add({"r", "sid"},          "Primary SID",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(expansionport, { Category::Config, Category::State });
+        retroShell.dump(muxer.sid[0], Category::Registers);
     });
 
-    
+    root.popGroup();
+
+
     //
-    // Keyboard
+    // Miscellaneous (Recorder)
     //
 
-    root.add({"keyboard", ""},
-             "Inspects the internal state",
+    root.pushGroup("Miscellaneous");
+
+    root.add({"checksums"},
+             "Displays checksum of various components",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(keyboard, { Category::Config, Category::State });
+        retroShell.dump(c64, Category::Checksums);
     });
 
-
-    //
-    // Joystick
-    //
-
-    root.add({"joystick", ""},
-             "Inspects the internal state",
+    root.add({"sizeof"},
+             "Displays static memory footprints of various components",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(port1.joystick, { Category::Config, Category::State });
-        retroShell << '\n';
-        retroShell.dump(port2.joystick, { Category::Config, Category::State });
+        retroShell.dump(c64, Category::Sizeof);
     });
 
-
-    //
-    // Mouse
-    //
-
-    root.add({"mouse", ""},
-             "Inspects the internal state",
-             [this](Arguments& argv, long value) {
-
-        retroShell.dump(port1.mouse, { Category::Config, Category::State });
-        retroShell << '\n';
-        retroShell.dump(port2.mouse, { Category::Config, Category::State });
-    });
-
-
-    //
-    // Parallel cable
-    //
-
-    root.add({"parcable"},
-             "Inspects the internal state",
-             [this](Arguments& argv, long value) {
-
-        retroShell.dump(parCable, { Category::Config, Category::State });
-    });
+    root.popGroup();
 }
-
 
 }

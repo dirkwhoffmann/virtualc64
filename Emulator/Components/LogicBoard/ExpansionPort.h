@@ -91,7 +91,6 @@ public:
     const CartridgeTraits &getTraits() const;
     CartridgeInfo getInfo() const;
     CartridgeRomInfo getRomInfo(isize nr) const;
-
     CartridgeType getCartridgeType() const;
 
 
@@ -134,9 +133,6 @@ public:
     //
     // Attaching and detaching
     //
-    
-    // Returns true if a cartridge is attached to the expansion port
-    bool getCartridgeAttached() const { return cartridge != nullptr; }
 
     // Attaches a cartridge to the expansion port
     void attachCartridge(const string &path, bool reset = true) throws;
