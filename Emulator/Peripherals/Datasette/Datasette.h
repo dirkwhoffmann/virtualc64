@@ -173,7 +173,7 @@ public:
     isize getCounter() const { return (isize)counter.asSeconds(); }
 
     //Inserts a TAP archive as a virtual tape
-    void insertTape(TAPFile &file);
+    void insertTape(class TAPFile &file);
 
     // Ejects the tape (if any)
     void ejectTape();

@@ -16,8 +16,9 @@
 
 namespace vc64 {
 
-SubComponent::SubComponent(C64& ref) : CoreComponent(ref.emulator),
+SubComponent::SubComponent(C64& ref) : CoreComponent(ref.emulator), References(ref)
 
+/*
 c64(ref),
 cia1(ref.cia1),
 cia2(ref.cia2),
@@ -41,6 +42,7 @@ regressionTester(ref.regressionTester),
 retroShell(ref.retroShell),
 muxer(ref.muxer),
 vic(ref.vic)
+*/
 {
 };
 
@@ -68,8 +70,8 @@ iec(ref.iec),
 keyboard(ref.keyboard),
 mem(ref.mem),
 msgQueue(ref.msgQueue),
-oscillator(ref.supply),
 parCable(ref.parCable),
+powerSupply(ref.supply),
 recorder(ref.recorder),
 regressionTester(ref.regressionTester),
 retroShell(ref.retroShell),

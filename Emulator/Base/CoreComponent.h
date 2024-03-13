@@ -24,21 +24,7 @@
 
 namespace vc64 {
 
-/*
-struct NoCopy
-{
-    NoCopy() { };
-    NoCopy(NoCopy const&) = delete;
-};
-
-struct NoAssign
-{
-    NoAssign() { };
-    NoAssign& operator=(NoAssign const&) = delete;
-};
-*/
-
-class CoreComponent : 
+class CoreComponent :
 public CoreObject, public Serializable, public Suspendable, public Synchronizable, public Configurable {
 
 public:
@@ -143,6 +129,55 @@ public:
 
     void dumpDiff(std::ostream& ss) const;
     void dumpDiff() const { dumpDiff(std::cout); }
+};
+
+/* This class exposes references to all subcomponents of the C64. It's purpose
+ * is the simply access to components. E.g., VICII can be accessed via vicii
+ * instead of c64.vicii. */
+class References {
+
+protected:
+
+    class C64 &c64;
+    class CIA1 &cia1;
+    class CIA2 &cia2;
+    class ControlPort &port1;
+    class ControlPort &port2;
+    class CPU &cpu;
+    class Datasette &datasette;
+    class Debugger &debugger;
+    class Drive &drive8;
+    class Drive &drive9;
+    class ExpansionPort &expansionport;
+    class Host &host;
+    class IEC &iec;
+    class Keyboard &keyboard;
+    class C64Memory &mem;
+    class MsgQueue &msgQueue;
+    class ParCable &parCable;
+    class PowerSupply &powerSupply;
+    class Recorder &recorder;
+    class RegressionTester &regressionTester;
+    class RetroShell &retroShell;
+    class Muxer &muxer;
+    class VICII &vic;
+
+    Drive *drive[2] = { &drive8, &drive9 };
+
+public:
+
+    References(C64& ref);
+};
+
+/* Base class for all subcomponents of the C64.
+ */
+class SubComponent : public CoreComponent, public References {
+
+public:
+
+    SubComponent(C64& ref);
+
+    void prefix() const override;
 };
 
 }
