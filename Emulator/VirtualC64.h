@@ -382,12 +382,6 @@ public:
          *
          *  @param  type    The ROM type
          */
-        [[deprecated]] RomInfo getRomInfo(RomType type) const;
-
-        /** @brief  Returns information about one of the installed Roms
-         *
-         *  @param  type    The ROM type
-         */
         RomTraits getRomTraits(RomType type) const;
 
 
