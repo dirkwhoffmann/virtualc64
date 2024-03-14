@@ -1271,11 +1271,8 @@ using namespace vc64;
 
 + (instancetype)makeWithC64:(EmulatorProxy *)proxy
 {
-    [proxy suspend];
-    Snapshot *snapshot = new Snapshot(*(C64 *)proxy->obj);
-    [proxy resume];
-
-    return [self make:snapshot];
+    auto vc64 = (VirtualC64 *)proxy->obj;
+    return [self make:vc64->c64.takeSnapshot()];
 }
 
 - (NSImage *)previewImage

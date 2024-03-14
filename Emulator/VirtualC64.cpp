@@ -182,7 +182,16 @@ VirtualC64::C64API::latestUserSnapshot()
     return c64.latestUserSnapshot();
 }
 
-void 
+Snapshot *
+VirtualC64::C64API::takeSnapshot()
+{
+    {   SUSPENDED
+
+        return new Snapshot(emulator.main);
+    }
+}
+
+void
 VirtualC64::C64API::loadSnapshot(const Snapshot &snapshot)
 {
     c64.loadSnapshot(snapshot);

@@ -454,6 +454,8 @@ public:
         Snapshot *latestUserSnapshot();
         void loadSnapshot(const Snapshot &snapshot);
 
+        Snapshot *takeSnapshot();
+
         /// @}
         /// @name Handling media files
         /// @{
