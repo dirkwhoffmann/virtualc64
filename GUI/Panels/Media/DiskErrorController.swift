@@ -15,9 +15,16 @@ class DiskErrorController: NSWindowController {
     @IBOutlet weak var title: NSTextField!
     @IBOutlet weak var log: NSTableView!
 
+    var logbook: String?
+    var errors = [String]()
+
     override func awakeFromNib() {
 
-        let count = numberOfRows(in: log)
+        if let ht = parent.halftrack { logbook = analyzer?.getLogbook(ht) }
+        logbook?.enumerateLines { line, _ in self.errors.append(line) }
+
+        // let count = numberOfRows(in: log)
+        let count = errors.count
         if count == 1 {
             title.stringValue = "1 error has been found"
         } else {
@@ -39,11 +46,14 @@ extension DiskErrorController: NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         
+        return errors.count
+        /*
         if let ht = parent.halftrack {
             return analyzer?.numErrors(ht) ?? 0
         } else {
             return 0
         }
+        */
     }
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
@@ -55,7 +65,8 @@ extension DiskErrorController: NSTableViewDataSource {
             
         case "description":
             if let ht = parent.halftrack {
-                return analyzer?.errorMessage(ht, nr: row) ?? ""
+                // return analyzer?.errorMessage(ht, nr: row) ?? ""
+                return  analyzer?.getLogbook(ht) ?? ""
             } else {
                 return ""
             }

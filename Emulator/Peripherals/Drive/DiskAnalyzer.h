@@ -21,8 +21,6 @@ namespace vc64 {
 
 class DiskAnalyzer final : public CoreObject {
 
-    // friend class Disk;
-    
     // Lengths of all halftracks
     isize length[85];
     
@@ -32,6 +30,9 @@ class DiskAnalyzer final : public CoreObject {
     // Result of the analysis
     DiskInfo diskInfo = { };
     
+    // Error log (one for each halftrack)
+    string logbook[85];
+
     // Error log created by analyzeTrack
     std::vector<string> errorLog[85];
 
@@ -101,6 +102,9 @@ public:
     
     // Returns the layout of a certain track
     const SectorInfo &sectorLayout(Halftrack ht, Sector nr);
+    
+    // Returns the logbook for a certain track
+    const string &getLogbook(Halftrack ht) { return logbook[ht]; }
     
     // Returns the number of entries in the error log
     isize numErrors(Halftrack ht) { return isize(errorLog[ht].size()); }

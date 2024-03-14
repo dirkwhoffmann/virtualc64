@@ -526,11 +526,13 @@
 - (const char *)sectorHeaderBytesAsString:(Halftrack)ht sector:(Sector)s hex:(BOOL)hex;
 - (const char *)sectorDataBytesAsString:(Halftrack)ht sector:(Sector)s hex:(BOOL)hex;
 
+- (NSString *)getLogbook:(Halftrack)ht;
+/*
 - (NSInteger)numErrors:(Halftrack)ht;
 - (NSString *)errorMessage:(Halftrack)ht nr:(NSInteger)nr;
 - (NSInteger)firstErroneousBit:(Halftrack)ht nr:(NSInteger)nr;
 - (NSInteger)lastErroneousBit:(Halftrack)ht nr:(NSInteger)nr;
-
+*/
 @end
 
 

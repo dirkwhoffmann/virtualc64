@@ -262,6 +262,9 @@ DiskAnalyzer::log(Halftrack ht, isize begin, isize length, const char *fmt, ...)
     vsnprintf(buf, sizeof(buf), fmt, ap);
     va_end(ap);
 
+    // logbook[ht] += std::to_string(begin) + " - " + std::to_string(begin + length) + ": ";
+    logbook[ht] += string(buf) + "\n";
+
     errorLog[ht].push_back(string(buf));
     errorStartIndex[ht].push_back(begin);
     errorEndIndex[ht].push_back(begin + length);

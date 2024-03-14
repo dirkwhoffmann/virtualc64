@@ -102,7 +102,7 @@ class DiskInspector: DialogController {
 
         // Warn if this track contains errors
         if let ht = halftrack {
-            let trackIsValid = analyzer!.numErrors(ht) == 0
+            let trackIsValid = analyzer!.getLogbook(ht) == ""
             warningText.isHidden = trackIsValid
             warningButton.isHidden = trackIsValid
         }

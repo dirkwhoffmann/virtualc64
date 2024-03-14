@@ -852,6 +852,13 @@ using namespace vc64;
     return [self analyzer]->lengthOfHalftrack(ht);
 }
 
+- (NSString *)getLogbook:(Halftrack)ht
+{
+    string s = [self analyzer]->getLogbook(ht);
+    return [NSString stringWithUTF8String:s.c_str()];
+}
+
+/*
 - (NSInteger)numErrors:(Halftrack)ht
 {
     return [self analyzer]->numErrors(ht);
@@ -872,6 +879,7 @@ using namespace vc64;
 {
     return [self analyzer]->lastErroneousBit(ht, nr);
 }
+*/
 
 - (SectorInfo)sectorInfo:(Halftrack)ht sector:(Sector)s
 {
