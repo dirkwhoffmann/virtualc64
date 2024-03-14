@@ -19,31 +19,13 @@
 namespace vc64 {
 
 class ParCable final : public SubComponent, public Dumpable {
-    
-    //
-    // Initializing
-    //
-    
+        
 public:
     
     ParCable(C64 &ref);
-    
-    
-    //
-    // Methods from CoreObject
-    //
 
-private:
-    
     const char *getDescription() const override { return "ParCable"; }
     void _dump(Category category, std::ostream& os) const override;
-
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
 
     ParCable& operator= (const ParCable& other) { return *this; }
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);

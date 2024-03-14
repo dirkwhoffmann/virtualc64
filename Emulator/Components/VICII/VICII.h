@@ -599,12 +599,14 @@ public:
 
     
     //
-    // Initializing
+    // Methods
     //
     
 public:
 
     VICII(C64 &ref);
+
+    const char *getDescription() const override { return "VIC"; }
 
     void _initialize() override;
 
@@ -625,22 +627,9 @@ private:
     ViciiFunc getViciiFunc(u16 flags, isize cycle);
     template <u16 flags> ViciiFunc getViciiFunc(isize cycle);
 
-    
-    //
-    // Methods from CoreObject
-    //
-
-private:
-    
-    const char *getDescription() const override { return "VICII"; }
-    void _dump(Category category, std::ostream& os) const override;
-
-
-    //
-    // Methods from CoreComponent
-    //
-
 public:
+
+    void _dump(Category category, std::ostream& os) const override;
 
     void _trackOn() override;
     void _trackOff() override;

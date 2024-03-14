@@ -93,29 +93,14 @@ class Mouse final : public SubComponent, public Dumpable {
 
     
     //
-    // Initializing
+    // Methods
     //
     
 public:
     
     Mouse(C64 &ref, ControlPort& pref);
-    
-    
-    //
-    // Methods from CoreObject
-    //
-
-private:
-    
-    const char *getDescription() const override { return "Mouse"; }
+    const char *getDescription() const override;
     void _dump(Category category, std::ostream& os) const override;
-
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
 
     Mouse& operator= (const Mouse& other) {
 

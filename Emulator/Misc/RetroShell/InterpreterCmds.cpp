@@ -163,23 +163,25 @@ Interpreter::initCommandShell(Command &root)
     root.pushGroup("Components");
 
     //
-    // Components (Emulator)
+    // Components (C64)
     //
 
-    root.add({"c64"}, "Commodore 64");
+    auto cmd = util::lowercased(c64.getDescription());
+
+    root.add({cmd}, "Commodore 64");
     root.pushGroup("");
 
-    root.add({"c64", ""},
+    root.add({cmd, ""},
              "Display the current configuration",
              [this](Arguments& argv, long value) {
 
         retroShell.dump(emulator, Category::Config);
     });
 
-    root.add({"c64", "set"}, "Configure the component");
+    root.add({cmd, "set"}, "Configure the component");
     for (auto &opt : emulator.getOptions()) {
 
-        root.add({"c64", "set", OptionEnum::plainkey(opt)},
+        root.add({cmd, "set", OptionEnum::plainkey(opt)},
                  {OptionParser::create(opt)->argList()},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
@@ -189,35 +191,35 @@ Interpreter::initCommandShell(Command &root)
         }, opt);
     }
 
-    root.add({"c64", "defaults"},
+    root.add({cmd, "defaults"},
              "Display the user defaults storage",
              [this](Arguments& argv, long value) {
 
         retroShell.dump(emulator, Category::Defaults);
     });
 
-    root.add({"c64", "power"}, { Arg::onoff },
+    root.add({cmd, "power"}, { Arg::onoff },
              "Switch the C64 on or off",
              [this](Arguments& argv, long value) {
 
         parseOnOff(argv[0]) ? c64.emulator.run() : c64.emulator.powerOff();
     });
 
-    root.add({"c64", "reset"},
+    root.add({cmd, "reset"},
              "Perform a hard reset",
              [this](Arguments& argv, long value) {
 
         c64.hardReset();
     });
 
-    root.add({"c64", "init"}, { C64ModelEnum::argList() },
+    root.add({cmd, "init"}, { C64ModelEnum::argList() },
              "Initialize the emulator with factory defaults",
              [this](Arguments& argv, long value) {
 
         emulator.set(parseEnum<C64ModelEnum>(argv[0]));
     });
 
-    root.add({"c64", "diff"},
+    root.add({cmd, "diff"},
              "Reports all differences to the default configuration",
              [this](Arguments& argv, long value) {
 
@@ -233,20 +235,22 @@ Interpreter::initCommandShell(Command &root)
     // Components (Memory)
     //
 
-    root.add({"memory"}, "Ram and Rom");
+    cmd = util::lowercased(mem.getDescription());
+
+    root.add({cmd}, "Ram and Rom");
     root.pushGroup("");
 
-    root.add({"memory", ""},
+    root.add({cmd, ""},
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
         retroShell.dump(mem, Category::Config);
     });
 
-    root.add({"memory", "set"}, "Configures the component");
+    root.add({cmd, "set"}, "Configures the component");
     for (auto &opt : mem.getOptions()) {
 
-        root.add({"memory", "set", OptionEnum::plainkey(opt)},
+        root.add({cmd, "set", OptionEnum::plainkey(opt)},
                  {OptionParser::create(opt)->argList()},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
@@ -256,14 +260,14 @@ Interpreter::initCommandShell(Command &root)
         }, opt);
     }
 
-    root.add({"memory", "load"}, { Arg::path },
+    root.add({cmd, "load"}, { Arg::path },
              "Installs a Rom image",
              [this](Arguments& argv, long value) {
 
         c64.loadRom(argv.front());
     });
 
-    root.add({"memory", "flash"}, { Arg::path },
+    root.add({cmd, "flash"}, { Arg::path },
              "Flashes a file into memory",
              [this](Arguments& argv, long value) {
 
@@ -282,12 +286,14 @@ Interpreter::initCommandShell(Command &root)
 
     for (isize i = 0; i < 2; i++) {
 
-        string cia = (i == 0) ? "cia1" : "cia2";
+        string cmd = (i == 0) ?
+        util::lowercased(cia1.getDescription()) :
+        util::lowercased(cia2.getDescription());
 
-        root.add({cia}, "Complex Interface Adapter " + std::to_string(i));
+        root.add({cmd}, "Complex Interface Adapter " + std::to_string(i + 1));
         root.pushGroup("");
 
-        root.add({cia, ""},
+        root.add({cmd, ""},
                  "Displays the current configuration",
                  [this](Arguments& argv, long value) {
 
@@ -297,11 +303,11 @@ Interpreter::initCommandShell(Command &root)
 
         }, i);
 
-        root.add({cia, "set"}, "Configures the component");
+        root.add({cmd, "set"}, "Configures the component");
 
         for (auto &opt : cia1.getOptions()) {
 
-            root.add({cia, "set", OptionEnum::plainkey(opt)},
+            root.add({cmd, "set", OptionEnum::plainkey(opt)},
                      {OptionParser::create(opt)->argList()},
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
@@ -318,20 +324,22 @@ Interpreter::initCommandShell(Command &root)
     // Components (VICII)
     //
 
-    root.add({"vicii"}, "Video Interface Controller");
+    cmd = util::lowercased(vic.getDescription());
+
+    root.add({cmd}, "Video Interface Controller");
     root.pushGroup("");
 
-    root.add({"vicii", ""},
+    root.add({cmd, ""},
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
         retroShell.dump(vic, Category::Config);
     });
 
-    root.add({"vicii", "set"}, "Configures the component");
+    root.add({cmd, "set"}, "Configures the component");
     for (auto &opt : vic.getOptions()) {
 
-        root.add({"vicii", "set", OptionEnum::plainkey(opt)},
+        root.add({cmd, "set", OptionEnum::plainkey(opt)},
                  {OptionParser::create(opt)->argList()},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
@@ -348,35 +356,37 @@ Interpreter::initCommandShell(Command &root)
     // Components (DMA Debugger)
     //
 
-    root.add({"dmadebugger"},   "DMA Debugger");
+    cmd = util::lowercased(vic.dmaDebugger.getDescription());
+
+    root.add({cmd},   "DMA Debugger");
     root.pushGroup("");
 
-    root.add({"dmadebugger", ""},
+    root.add({cmd, ""},
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
         retroShell.dump(vic.dmaDebugger, Category::Config);
     });
 
-    root.add({"dmadebugger", "open"},
+    root.add({cmd, "open"},
              "Opens the DMA debugger",
              [this](Arguments& argv, long value) {
 
         configure(OPT_DMA_DEBUG_ENABLE, true);
     });
 
-    root.add({"dmadebugger", "close"},
+    root.add({cmd, "close"},
              "Closes the DMA debugger",
              [this](Arguments& argv, long value) {
 
         configure(OPT_DMA_DEBUG_ENABLE, false);
     });
 
-    root.add({"dmadebugger", "set"}, "Configures the component");
+    root.add({cmd, "set"}, "Configures the component");
 
     for (auto &opt : vic.dmaDebugger.getOptions()) {
 
-        root.add({"dmadebugger", "set", OptionEnum::plainkey(opt)},
+        root.add({cmd, "set", OptionEnum::plainkey(opt)},
                  {OptionParser::create(opt)->argList()},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
@@ -393,28 +403,27 @@ Interpreter::initCommandShell(Command &root)
     // Components (SID)
     //
 
-    root.add({"sid"}, "Sound Interface Device");
-    root.pushGroup("");
-
     for (isize i = 0; i < 4; i++) {
 
-        string nr = std::to_string(i);
+        string cmd = util::lowercased(muxer.sid[i].getDescription());
+        root.add({cmd},
+                 i == 0 ?
+                 "Primary Sound Interface Device" :
+                 "Auxiliary Sound Interface Device " + std::to_string(i));
 
-        root.add({"sid", nr},
-                 "SID " + nr + (i == 0 ? " (primary SID)" : ""));
-
-        root.add({"sid", nr, ""},
+        root.pushGroup("");
+        root.add({cmd, ""},
                  "Displays the current configuration",
                  [this](Arguments& argv, long value) {
 
             retroShell.dump(muxer.sid[value], Category::Config);
         }, i);
 
-        root.add({"sid", nr, "set"}, "Configures the component");
+        root.add({cmd, "set"}, "Configures the component");
 
         for (auto &opt : muxer.sid[i].getOptions()) {
 
-            root.add({"sid", nr, "set", OptionEnum::plainkey(opt)},
+            root.add({cmd, "set", OptionEnum::plainkey(opt)},
                      {OptionParser::create(opt)->argList()},
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
@@ -423,30 +432,32 @@ Interpreter::initCommandShell(Command &root)
 
             }, HI_W_LO_W(opt, i));
         }
-    }
 
-    root.popGroup();
+        root.popGroup();
+    }
 
 
     //
     // Components (Muxer)
     //
 
-    root.add({"muxer"}, "Audio backend");
+    cmd = util::lowercased(muxer.getDescription());
+
+    root.add({cmd}, "Audio backend");
     root.pushGroup("");
 
-    root.add({"muxer", ""},
+    root.add({cmd, ""},
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
         retroShell.dump(muxer, Category::Config);
     });
 
-    root.add({"muxer", "set"}, "Configures the component");
+    root.add({cmd, "set"}, "Configures the component");
 
     for (auto &opt : muxer.getOptions()) {
 
-        root.add({"muxer", "set", OptionEnum::plainkey(opt)},
+        root.add({cmd, "set", OptionEnum::plainkey(opt)},
                  {OptionParser::create(opt)->argList()},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
@@ -463,13 +474,15 @@ Interpreter::initCommandShell(Command &root)
     // Components (Expansion port)
     //
 
-    root.add({"expansion"}, "Expansion port");
+    cmd = util::lowercased(expansionport.getDescription());
+
+    root.add({cmd}, "Expansion port");
     root.pushGroup("");
 
-    root.add({"expansion", "attach"},
+    root.add({cmd, "attach"},
              "Attaches a cartridge");
 
-    root.add({"expansion", "attach", "cartridge"}, { Arg::path },
+    root.add({cmd, "attach", "cartridge"}, { Arg::path },
              "Attaches a cartridge from a CRT file",
              [this](Arguments& argv, long value) {
 
@@ -478,14 +491,14 @@ Interpreter::initCommandShell(Command &root)
         expansionport.attachCartridge(path);
     });
 
-    root.add({"expansion", "attach", "reu"}, { "<KB>" },
+    root.add({cmd, "attach", "reu"}, { "<KB>" },
              "Attaches a REU expansion cartridge",
              [this](Arguments& argv, long value) {
 
         expansionport.attachReu(parseNum(argv[0]));
     });
 
-    root.add({"expansion", "attach", "georam"}, { "<KB>" },
+    root.add({cmd, "attach", "georam"}, { "<KB>" },
              "Attaches a GeoRAM expansion cartridge",
              [this](Arguments& argv, long value) {
 
@@ -499,21 +512,23 @@ Interpreter::initCommandShell(Command &root)
     // Components (Power supply)
     //
 
-    root.add({"powersupply"},   "Power supply");
+    cmd = util::lowercased(powerSupply.getDescription());
+
+    root.add({cmd},   "Power supply");
     root.pushGroup("");
 
-    root.add({"powersupply", ""},
+    root.add({cmd, ""},
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
         retroShell.dump(powerSupply, Category::Config);
     });
 
-    root.add({"powersupply", "set"}, "Configures the component");
+    root.add({cmd, "set"}, "Configures the component");
 
     for (auto &opt : powerSupply.getOptions()) {
 
-        root.add({"powersupply", "set", OptionEnum::plainkey(opt)},
+        root.add({cmd, "set", OptionEnum::plainkey(opt)},
                  {OptionParser::create(opt)->argList()},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
@@ -530,21 +545,23 @@ Interpreter::initCommandShell(Command &root)
     // Components (Host)
     //
 
-    root.add({"host"},          "Host computer");
+    cmd = util::lowercased(host.getDescription());
+
+    root.add({cmd}, "Host computer");
     root.pushGroup("");
 
-    root.add({"host", ""},
+    root.add({cmd, ""},
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
         retroShell.dump(host, Category::Config);
     });
 
-    root.add({"host", "set"}, "Configures the component");
+    root.add({cmd, "set"}, "Configures the component");
 
     for (auto &opt : powerSupply.getOptions()) {
 
-        root.add({"host", "set", OptionEnum::plainkey(opt)},
+        root.add({cmd, "set", OptionEnum::plainkey(opt)},
                  {OptionParser::create(opt)->argList()},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
@@ -569,41 +586,43 @@ Interpreter::initCommandShell(Command &root)
     // Peripherals (Keyboard)
     //
 
-    root.add({"keyboard"},      "Keyboard");
+    cmd = util::lowercased(host.getDescription());
+
+    root.add({cmd}, "Keyboard");
     root.pushGroup("");
 
-    root.add({"keyboard", "press"}, { Arg::value },
+    root.add({cmd, "press"}, { Arg::value },
              "Presses a key",
              [this](Arguments& argv, long value) {
 
         keyboard.press(C64Key(parseNum(argv[0])));
     });
 
-    root.add({"keyboard", "release"}, { Arg::value },
+    root.add({cmd, "release"}, { Arg::value },
              "Presses a key",
              [this](Arguments& argv, long value) {
 
         keyboard.release(C64Key(parseNum(argv[0])));
     });
 
-    root.add({"keyboard", "type"},
+    root.add({cmd, "type"},
              "Types text on the keyboard");
 
-    root.add({"keyboard", "type", "text"}, { Arg::string },
+    root.add({cmd, "type", "text"}, { Arg::string },
              "Types arbitrary text",
              [this](Arguments& argv, long value) {
 
         keyboard.autoType(argv.front());
     });
 
-    root.add({"keyboard", "type", "load"},
+    root.add({cmd, "type", "load"},
              "Types \"LOAD\"*\",8,1",
              [this](Arguments& argv, long value) {
 
         keyboard.autoType("load \"*\",8,1\n");
     });
 
-    root.add({"keyboard", "type", "run"},
+    root.add({cmd, "type", "run"},
              "Types RUN",
              [this](Arguments& argv, long value) {
 
@@ -617,18 +636,16 @@ Interpreter::initCommandShell(Command &root)
     // Peripherals (Mouse)
     //
 
-    root.add({"mouse"}, "Mouse");
-    root.pushGroup("");
-
-    // root.pushGroup("");
     for (isize i = PORT_1; i <= PORT_2; i++) {
 
-        string nr = (i == 1) ? "1" : "2";
+        string cmd = i == PORT_1 ?
+        util::lowercased(c64.port1.mouse.getDescription()) :
+        util::lowercased(c64.port2.mouse.getDescription()) ;
 
-        root.add({"mouse", nr},
-                 "Mouse in port " + nr);
+        root.add({cmd}, "Mouse in port " + string(i == PORT_1 ? "1" : "2"));
+        root.pushGroup("");
 
-        root.add({"mouse", nr, ""},
+        root.add({cmd, ""},
                  "Displays the current configuration",
                  [this](Arguments& argv, long value) {
 
@@ -637,11 +654,11 @@ Interpreter::initCommandShell(Command &root)
 
         }, i);
 
-        root.add({"mouse", nr, "set"}, "Configures the component");
+        root.add({cmd, "set"}, "Configures the component");
 
         for (auto &opt : c64.port1.mouse.getOptions()) {
 
-            root.add({"mouse", nr, "set", OptionEnum::plainkey(opt)},
+            root.add({cmd, "set", OptionEnum::plainkey(opt)},
                      {OptionParser::create(opt)->argList()},
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
@@ -650,26 +667,24 @@ Interpreter::initCommandShell(Command &root)
 
             }, HI_W_LO_W(opt, i));
         }
+
+        root.popGroup();
     }
-
-    root.popGroup();
-
 
     //
     // Peripherals (Joystick)
     //
 
-    root.add({"joystick"}, "Joystick");
-    root.pushGroup("");
-
     for (isize i = PORT_1; i <= PORT_2; i++) {
 
-        string nr = (i == 1) ? "1" : "2";
+        string cmd = i == PORT_1 ?
+        util::lowercased(c64.port1.joystick.getDescription()) :
+        util::lowercased(c64.port2.joystick.getDescription()) ;
 
-        root.add({"joystick", nr},
-                 "Joystick in port " + nr);
+        root.add({cmd}, "Joystick in port " + string(i == PORT_1 ? "1" : "2"));
+        root.pushGroup("");
 
-        root.add({"joystick", nr, ""},
+        root.add({cmd, ""},
                  "Displays the current configuration",
                  [this](Arguments& argv, long value) {
 
@@ -678,11 +693,11 @@ Interpreter::initCommandShell(Command &root)
 
         }, i);
 
-        root.add({"joystick", nr, "set"}, "Configures the component");
+        root.add({cmd, "set"}, "Configures the component");
 
         for (auto &opt : c64.port1.joystick.getOptions()) {
 
-            root.add({"joystick", nr, "set", OptionEnum::plainkey(opt)},
+            root.add({cmd, "set", OptionEnum::plainkey(opt)},
                      {OptionParser::create(opt)->argList()},
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
@@ -692,7 +707,7 @@ Interpreter::initCommandShell(Command &root)
             }, HI_W_LO_W(opt, i));
         }
 
-        root.add({"joystick", nr, "press"},
+        root.add({cmd, "press"},
                  "Presses the joystick button",
                  [this](Arguments& argv, long value) {
 
@@ -701,7 +716,7 @@ Interpreter::initCommandShell(Command &root)
 
         }, i);
 
-        root.add({"joystick", nr, "unpress"},
+        root.add({cmd, "unpress"},
                  "Releases a joystick button",
                  [this](Arguments& argv, long value) {
 
@@ -710,10 +725,10 @@ Interpreter::initCommandShell(Command &root)
 
         }, i);
 
-        root.add({"joystick", nr, "pull"},
+        root.add({cmd, "pull"},
                  "Pulls the joystick");
 
-        root.add({"joystick", nr, "pull", "left"},
+        root.add({cmd, "pull", "left"},
                  "Pulls the joystick left",
                  [this](Arguments& argv, long value) {
 
@@ -722,7 +737,7 @@ Interpreter::initCommandShell(Command &root)
 
         }, i);
 
-        root.add({"joystick", nr, "pull", "right"},
+        root.add({cmd, "pull", "right"},
                  "Pulls the joystick right",
                  [this](Arguments& argv, long value) {
 
@@ -731,7 +746,7 @@ Interpreter::initCommandShell(Command &root)
 
         }, i);
 
-        root.add({"joystick", nr, "pull", "up"},
+        root.add({cmd, "pull", "up"},
                  "Pulls the joystick up",
                  [this](Arguments& argv, long value) {
 
@@ -740,7 +755,7 @@ Interpreter::initCommandShell(Command &root)
 
         }, i);
 
-        root.add({"joystick", nr, "pull", "down"},
+        root.add({cmd, "pull", "down"},
                  "Pulls the joystick down",
                  [this](Arguments& argv, long value) {
 
@@ -749,10 +764,10 @@ Interpreter::initCommandShell(Command &root)
 
         }, i);
 
-        root.add({"joystick", nr, "release"},
+        root.add({cmd, "release"},
                  "Release a joystick axis");
 
-        root.add({"joystick", nr, "release", "x"},
+        root.add({cmd, "release", "x"},
                  "Releases the x-axis",
                  [this](Arguments& argv, long value) {
 
@@ -761,7 +776,7 @@ Interpreter::initCommandShell(Command &root)
 
         }, i);
 
-        root.add({"joystick", nr, "release", "y"},
+        root.add({cmd, "release", "y"},
                  "Releases the y-axis",
                  [this](Arguments& argv, long value) {
 
@@ -769,58 +784,59 @@ Interpreter::initCommandShell(Command &root)
             port.joystick.trigger(RELEASE_Y);
 
         }, i);
+
+        root.popGroup();
     }
-
-    root.popGroup();
-
 
     //
     // Peripherals (Datasette)
     //
 
-    root.add({"datasette"}, "Commodore tape drive");
+    cmd = util::lowercased(datasette.getDescription());
+
+    root.add({cmd}, "Commodore tape drive");
     root.pushGroup("");
 
-    root.add({"datasette", ""},
+    root.add({cmd, ""},
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
         retroShell.dump(datasette, Category::Config);
     });
 
-    root.add({"datasette", "connect"},
+    root.add({cmd, "connect"},
              "Connects the datasette",
              [this](Arguments& argv, long value) {
 
         configure(OPT_DAT_CONNECT, true);
     });
 
-    root.add({"datasette", "disconnect"},
+    root.add({cmd, "disconnect"},
              "Disconnects the datasette",
              [this](Arguments& argv, long value) {
 
         configure(OPT_DAT_CONNECT, false);
     });
 
-    root.add({"datasette", "rewind"},
+    root.add({cmd, "rewind"},
              "Rewinds the tape",
              [this](Arguments& argv, long value) {
 
         datasette.rewind();
     });
 
-    root.add({"datasette", "rewind", "to"}, { Arg::value },
+    root.add({cmd, "rewind", "to"}, { Arg::value },
              "Rewinds the tape to a specific position",
              [this](Arguments& argv, long value) {
 
         datasette.rewind(parseNum(argv[0]));
     });
 
-    root.add({"datasette", "set"}, "Configures the component");
+    root.add({cmd, "set"}, "Configures the component");
 
     for (auto &opt : datasette.getOptions()) {
 
-        root.add({"datasette", "set", OptionEnum::plainkey(opt)},
+        root.add({cmd, "set", OptionEnum::plainkey(opt)},
                  {OptionParser::create(opt)->argList()},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
@@ -832,18 +848,22 @@ Interpreter::initCommandShell(Command &root)
 
     root.popGroup();
 
+
     //
     // Peripherals (Drives)
     //
 
     for (isize i = 0; i < 2; i++) {
 
-        string drive = (i == 0) ? "drive8" : "drive9";
-        root.add({drive}, "Floppy drive " + std::to_string(i + 8));
-        
+        string cmd = i == 0 ? 
+        util::lowercased(c64.drive8.getDescription()) :
+        util::lowercased(c64.drive9.getDescription()) ;
+
+        root.add({cmd}, "Floppy drive " + std::to_string(i + 8));
+
         root.pushGroup("");
 
-        root.add({drive, ""},
+        root.add({cmd, ""},
                  "Displays the current configuration",
                  [this](Arguments& argv, long value) {
 
@@ -852,7 +872,7 @@ Interpreter::initCommandShell(Command &root)
 
         }, i);
 
-        root.add({drive, "connect"},
+        root.add({cmd, "connect"},
                  "Connects the drive",
                  [this](Arguments& argv, long value) {
 
@@ -861,7 +881,7 @@ Interpreter::initCommandShell(Command &root)
 
         }, i);
 
-        root.add({drive, "disconnect"},
+        root.add({cmd, "disconnect"},
                  "Disconnects the drive",
                  [this](Arguments& argv, long value) {
 
@@ -870,7 +890,7 @@ Interpreter::initCommandShell(Command &root)
 
         }, i);
 
-        root.add({drive, "eject"},
+        root.add({cmd, "eject"},
                  "Ejects a floppy disk",
                  [this](Arguments& argv, long value) {
 
@@ -879,7 +899,7 @@ Interpreter::initCommandShell(Command &root)
 
         }, i);
 
-        root.add({drive, "insert"}, { Arg::path },
+        root.add({cmd, "insert"}, { Arg::path },
                  "Inserts a floppy disk",
                  [this](Arguments& argv, long value) {
 
@@ -891,7 +911,7 @@ Interpreter::initCommandShell(Command &root)
 
         }, i);
 
-        root.add({drive, "newdisk"}, { DOSTypeEnum::argList() },
+        root.add({cmd, "newdisk"}, { DOSTypeEnum::argList() },
                  "Inserts a new blank disk",
                  [this](Arguments& argv, long value) {
 
@@ -901,11 +921,11 @@ Interpreter::initCommandShell(Command &root)
 
         }, i);
 
-        root.add({drive, "set"}, "Configures the component");
+        root.add({cmd, "set"}, "Configures the component");
 
         for (auto &opt : drive8.getOptions()) {
 
-            root.add({drive, "set", OptionEnum::plainkey(opt)},
+            root.add({cmd, "set", OptionEnum::plainkey(opt)},
                      {OptionParser::create(opt)->argList()},
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
@@ -922,10 +942,12 @@ Interpreter::initCommandShell(Command &root)
     // Peripherals (Parallel cable)
     //
 
-    root.add({"parcable"},      "Parallel drive cable");
+    cmd = util::lowercased(c64.parCable.getDescription());
+
+    root.add({cmd},      "Parallel drive cable");
     root.pushGroup("");
 
-    root.add({"parcable", ""},
+    root.add({cmd, ""},
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 

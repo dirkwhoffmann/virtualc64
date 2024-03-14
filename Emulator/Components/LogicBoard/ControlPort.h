@@ -49,7 +49,7 @@ public:
 public:
 
     ControlPort(C64 &ref, isize id);
-    const char *getDescription() const override { return "ControlPort"; }
+    const char *getDescription() const override;
 
     ControlPort& operator= (const ControlPort& other) {
 

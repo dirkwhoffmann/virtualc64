@@ -24,9 +24,8 @@ Joystick::Joystick(C64& ref, ControlPort& pref) : SubComponent(ref), nr(pref.nr)
 const char *
 Joystick::getDescription() const
 {
-    return port.nr == PORT_1 ? "Joystick1" : "Joystick2";
+    return port.nr == PORT_1 ? "joystick1" : "joystick2";
 }
-
 
 void 
 Joystick::operator << (SerResetter &worker)

@@ -38,7 +38,7 @@ Drive::Drive(isize nr, C64 &ref) : SubComponent(ref), deviceNr(nr)
 const char *
 Drive::getDescription() const
 {
-    return deviceNr == DRIVE8 ? "Drive8" : "Drive9";
+    return deviceNr == DRIVE8 ? "drive8" : "drive9";
 }
 
 void
