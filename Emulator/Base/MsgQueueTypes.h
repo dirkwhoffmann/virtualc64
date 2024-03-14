@@ -73,6 +73,7 @@ enum_long(MSG_TYPE)
     MSG_DISK_INSERT,        ///< A disk has been inserted
     MSG_DISK_EJECT,         ///< A disk has been ejected
     MSG_DISK_PROTECTED,     ///< The write protection status has changed
+    MSG_DISK_MODIFIED,      ///< The disk needs saving
     MSG_FILE_FLASHED,       ///< A file has been flashed into memory
 
     // Peripherals (Datasette)
@@ -165,6 +166,7 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_DISK_INSERT:           return "DISK_INSERT";
             case MSG_DISK_EJECT:            return "DISK_EJECT";
             case MSG_DISK_PROTECTED:        return "DISK_PROTECTED";
+            case MSG_DISK_MODIFIED:         return "DISK_MODIFIED";
             case MSG_FILE_FLASHED:          return "FILE_FLASHED";
 
             case MSG_VC1530_CONNECT:        return "VC1530_CONNECT";

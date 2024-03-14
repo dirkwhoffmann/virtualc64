@@ -891,9 +891,13 @@ Emulator::missingFrames() const
 void
 Emulator::update()
 {
+    Cmd cmd;
+
+    auto drive = [&]() -> Drive& { return cmd.value == DRIVE9 ? main.drive9 : main.drive8; };
+    // auto port = [&]() -> ControlPort& { return cmd.value == PORT_2 ? main.port2 : main.port1; };
+
     shouldWarp() ? warpOn() : warpOff();
 
-    Cmd cmd;
     while (cmdQueue.poll(cmd)) {
 
         debug(CMD_DEBUG, "Command: %s\n", CmdTypeEnum::key(cmd.type));
@@ -921,13 +925,10 @@ Emulator::update()
                 break;
 
             case CMD_DSK_TOGGLE_WP:
+            case CMD_DSK_MODIFIED:
+            case CMD_DSK_UNMODIFIED:
 
-                switch (cmd.value) {
-
-                    case DRIVE8: main.drive8.processCommand(cmd); break;
-                    case DRIVE9: main.drive9.processCommand(cmd); break;
-                    default: fatalError;
-                }
+                drive().processCommand(cmd);
                 break;
 
             case CMD_MOUSE_MOVE_ABS:

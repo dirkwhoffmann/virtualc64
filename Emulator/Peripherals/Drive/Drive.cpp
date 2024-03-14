@@ -754,7 +754,27 @@ Drive::hasPartiallyRemovedDisk() const
 void
 Drive::setModificationFlag(bool value)
 {
-    if (hasDisk()) disk->setModified(value);
+    if (hasDisk() && value != disk->isModified()) {
+
+        disk->setModified(value);
+        msgQueue.put(MSG_DISK_MODIFIED);
+    }
+}
+
+void 
+Drive::setProtection(bool value)
+{
+    if (hasDisk() && value != disk->isWriteProtected()) {
+
+        disk->setWriteProtection(value);
+        msgQueue.put(MSG_DISK_PROTECTED);
+    }
+}
+
+void 
+Drive::toggleProtection()
+{
+    if (hasDisk()) setProtection(!disk->isWriteProtected());
 }
 
 void
@@ -848,7 +868,7 @@ Drive::processCommand(const Cmd &cmd)
 {
     switch (cmd.type) {
 
-        case CMD_DSK_TOGGLE_WP:     if (disk) disk->toggleWriteProtection(); break;
+        case CMD_DSK_TOGGLE_WP:     toggleProtection(); break;
         case CMD_DSK_MODIFIED:      markDiskAsModified(); break;
         case CMD_DSK_UNMODIFIED:    markDiskAsUnmodified(); break;
 

@@ -1101,10 +1101,14 @@ public:
     // Disk
     //
 
+    /** Disk Public API
+     */
     struct DiskAPI : API {
 
         Drive &drive;
         DiskAPI(Emulator &emu, Drive& drive) : API(emu), drive(drive) { }
+
+        Disk *get() { return drive.disk.get(); }
     };
 
 

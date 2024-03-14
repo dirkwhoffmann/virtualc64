@@ -399,6 +399,7 @@ extension MyController {
             break
 
         case .DISK_PROTECTED,
+                .DISK_MODIFIED,
                 .DRIVE_LED,
                 .IEC_BUS_BUSY,
                 .IEC_BUS_IDLE,

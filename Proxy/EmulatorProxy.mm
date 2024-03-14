@@ -1668,8 +1668,8 @@ using namespace vc64;
 
 + (instancetype)makeWithDisk:(DiskProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    Drive *drv = (Drive *)proxy->obj;
-    try { return [self make: new FileSystem(*drv->disk)]; }
+    auto *disk = [proxy disk]->get();
+    try { return [self make: new FileSystem(*disk)]; }
     catch (VC64Error &err) { [ex save:err]; return nil; }
 }
 

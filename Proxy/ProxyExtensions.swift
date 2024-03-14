@@ -263,9 +263,11 @@ public extension DriveProxy {
     static let ledGray = NSImage(named: "LEDgray")!
     static let ledGreen = NSImage(named: "LEDgreen")!
     static let ledRed = NSImage(named: "LEDred")!
-    static let diskSaved = NSImage(named: "diskTemplate")!
-    static let diskUnsaved = NSImage(named: "diskUnsavedTemplate")!
-        
+    static let diskProt = NSImage(named: "diskTemplate")!
+    static let diskProtGray = NSImage(named: "diskGrayTemplate")!
+    static let diskUnprot = NSImage(named: "diskWritableTemplate")!
+    static let diskUnprotGray = NSImage(named: "diskWritableGrayTemplate")!
+
     var greenLedImage: NSImage {        
         return config.switchedOn ? DriveProxy.ledGreen : DriveProxy.ledGray
     }
@@ -275,7 +277,11 @@ public extension DriveProxy {
     }
 
     var icon: NSImage {
-        return info.hasModifiedDisk ? DriveProxy.diskUnsaved : DriveProxy.diskSaved
+        if info.hasProtectedDisk {
+            return info.hasModifiedDisk ? DriveProxy.diskProtGray : DriveProxy.diskProt
+        } else {
+            return info.hasModifiedDisk ? DriveProxy.diskUnprotGray : DriveProxy.diskUnprot
+        }
     }
 }
 
