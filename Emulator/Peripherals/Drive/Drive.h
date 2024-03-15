@@ -86,9 +86,6 @@ class Drive final : public SubComponent, public Inspectable<DriveInfo, Void> {
         8125   // Density bits = 11: Carry pulse every 13/16 * 10^4 1/10 nsec
     };
 
-    // Number of this disk drive (DRIVE8 or DRIVE9)
-    isize deviceNr;
-
     // Current configuration
     DriveConfig config = { };
 
@@ -247,7 +244,7 @@ public:
     
 public:
     
-    Drive(isize nr, C64 &ref);
+    Drive(C64 &ref, isize id);
     const char *getDescription() const override;
     
     void _dump(Category category, std::ostream& os) const override;
@@ -388,11 +385,11 @@ public:
 public:
     
     // Returns the device number
-    isize getDeviceNr() const { return deviceNr; }
+    isize getDeviceNr() const { return id; }
 
     // Convenience wrappers
-    bool isDrive8() { return getDeviceNr() == DRIVE8; }
-    bool isDrive9() { return getDeviceNr() == DRIVE9; }
+    bool isDrive8() { return id == DRIVE8; }
+    bool isDrive9() { return id == DRIVE9; }
 
     // Returns true iff the red drive LED is on
     bool getRedLED() const { return redLED; };

@@ -17,6 +17,4 @@
 
 namespace vc64 {
 
-
-
 }

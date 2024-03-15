@@ -17,9 +17,9 @@
 
 namespace vc64 {
 
-Drive::Drive(isize nr, C64 &ref) : SubComponent(ref), deviceNr(nr)
+Drive::Drive(C64 &ref, isize id) : SubComponent(ref, id)
 {
-    assert(deviceNr == DRIVE8 || deviceNr == DRIVE9);
+    assert(id == DRIVE8 || id == DRIVE9);
 
     disk = std::make_unique<Disk>();
     
@@ -32,13 +32,13 @@ Drive::Drive(isize nr, C64 &ref) : SubComponent(ref), deviceNr(nr)
     };
 
     // Assign a unique ID to the CPU
-    cpu.setID(nr == DRIVE8 ? 1 : 2);
+    cpu.setID(id == DRIVE8 ? 1 : 2);
 }
 
 const char *
 Drive::getDescription() const
 {
-    return deviceNr == DRIVE8 ? "drive8" : "drive9";
+    return id == DRIVE8 ? "drive8" : "drive9";
 }
 
 void
@@ -64,8 +64,8 @@ Drive::getInfo() const
 {
     DriveInfo result;
 
-    result.id = deviceNr;
-    
+    result.id = id;
+
     result.hasDisk = hasDisk();
     result.hasUnprotectedDisk = hasUnprotectedDisk();
     result.hasProtectedDisk = hasProtectedDisk();
@@ -97,7 +97,7 @@ Drive::resetConfig()
 
         } else {
 
-            setOption(opt, defaults.get(opt, deviceNr));
+            setOption(opt, defaults.get(opt, id));
         }
     }
 }
@@ -131,7 +131,7 @@ Drive::getOption(Option option) const
 i64
 Drive::getFallback(Option opt) const
 {
-    return emulator.defaults.getFallback(opt, deviceNr);
+    return emulator.defaults.getFallback(opt, id);
 }
 
 void
@@ -196,7 +196,7 @@ Drive::setOption(Option option, i64 value)
                 config.connected = bool(value);
                 hardReset();
             }
-            msgQueue.put(MSG_DRIVE_CONNECT, DriveMsg { i16(deviceNr), i16(value), 0, 0 } );
+            msgQueue.put(MSG_DRIVE_CONNECT, DriveMsg { i16(id), i16(value), 0, 0 } );
             return;
         }
         case OPT_DRV_POWER_SWITCH:
@@ -206,7 +206,7 @@ Drive::setOption(Option option, i64 value)
                 config.switchedOn = bool(value);
                 hardReset();
             }
-            msgQueue.put(MSG_DRIVE_POWER, DriveMsg { .nr = i16(deviceNr), .value = i16(value) } );
+            msgQueue.put(MSG_DRIVE_POWER, DriveMsg { .nr = i16(id), .value = i16(value) } );
             return;
         }
         case OPT_DRV_POWER_SAVE:
@@ -652,7 +652,7 @@ Drive::setRedLED(bool b)
 
         redLED = b;
         wakeUp();
-        msgQueue.put(MSG_DRIVE_LED, DriveMsg { .nr = i16(deviceNr), .value = b } );
+        msgQueue.put(MSG_DRIVE_LED, DriveMsg { .nr = i16(id), .value = b } );
         return;
     }
 }
@@ -663,7 +663,7 @@ Drive::setRotating(bool b)
     if (spinning != b) {
 
         spinning = b;
-        msgQueue.put(MSG_DRIVE_MOTOR, DriveMsg { .nr = i16(deviceNr), .value = b } );
+        msgQueue.put(MSG_DRIVE_MOTOR, DriveMsg { .nr = i16(id), .value = b } );
         iec.updateTransferStatus();
     }
 }
@@ -674,7 +674,7 @@ Drive::wakeUp(isize awakeness)
     if (isIdle()) {
         
         trace(DRV_DEBUG, "Exiting power-safe mode\n");
-        msgQueue.put(MSG_DRIVE_POWER_SAVE, DriveMsg { .nr = i16(deviceNr), .value = 0 } );
+        msgQueue.put(MSG_DRIVE_POWER_SAVE, DriveMsg { .nr = i16(id), .value = 0 } );
         needsEmulation = true;
     }
 
@@ -705,7 +705,7 @@ Drive::moveHeadUp()
     }
 
     msgQueue.put(MSG_DRIVE_STEP, DriveMsg {
-        i16(deviceNr), i16(halftrack), config.stepVolume, config.pan
+        i16(id), i16(halftrack), config.stepVolume, config.pan
     });
 }
 
@@ -733,7 +733,7 @@ Drive::moveHeadDown()
     }
 
     msgQueue.put(MSG_DRIVE_STEP, DriveMsg {
-        i16(deviceNr), i16(halftrack), config.stepVolume, config.pan
+        i16(id), i16(halftrack), config.stepVolume, config.pan
     });
 }
 
@@ -858,7 +858,7 @@ Drive::vsyncHandler()
 
             trace(DRV_DEBUG, "Entering power-save mode\n");
             needsEmulation = false;
-            msgQueue.put(MSG_DRIVE_POWER_SAVE, DriveMsg { .nr = i16(deviceNr), .value = 1 } );
+            msgQueue.put(MSG_DRIVE_POWER_SAVE, DriveMsg { .nr = i16(id), .value = 1 } );
         }
     }
 }
@@ -930,7 +930,7 @@ Drive::processDiskChangeEvent(EventID id)
 
             // Inform the GUI
             msgQueue.put(MSG_DISK_EJECT, DriveMsg {
-                i16(deviceNr), i16(halftrack), config.stepVolume, config.pan
+                i16(id), i16(halftrack), config.stepVolume, config.pan
             });
 
             // Schedule the next transition
@@ -961,7 +961,7 @@ Drive::processDiskChangeEvent(EventID id)
 
             // Inform the GUI
             msgQueue.put(MSG_DISK_INSERT, DriveMsg {
-                i16(deviceNr), i16(halftrack), config.stepVolume, config.pan
+                i16(id), i16(halftrack), config.stepVolume, config.pan
             });
             break;
 

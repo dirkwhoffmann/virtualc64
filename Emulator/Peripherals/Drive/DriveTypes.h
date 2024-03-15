@@ -21,8 +21,8 @@
 // Constants
 //
 
-#define DRIVE8  0L
-#define DRIVE9  1L
+#define DRIVE8  0L  // TODO: DON'T USE PREPROCESSOR DIRECTIVE
+#define DRIVE9  1L  // TODO: DON'T USE PREPROCESSOR DIRECTIVE
 
 
 //

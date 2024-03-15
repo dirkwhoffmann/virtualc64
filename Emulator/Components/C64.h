@@ -119,8 +119,8 @@ public:
 
     // Peripherals
     Keyboard keyboard = Keyboard(*this);
-    Drive drive8 = Drive(DRIVE8, *this);
-    Drive drive9 = Drive(DRIVE9, *this);
+    Drive drive8 = Drive(*this, 0);
+    Drive drive9 = Drive(*this, 1);
     ParCable parCable = ParCable(*this);
     Datasette datasette = Datasette(*this);
 

@@ -45,10 +45,8 @@ vic(ref.vic)
 
 };
 
-SubComponent::SubComponent(C64& ref) : CoreComponent(ref.emulator), References(ref) 
-{
-
-};
+SubComponent::SubComponent(C64& ref) : CoreComponent(ref.emulator), References(ref) { };
+SubComponent::SubComponent(C64& ref, isize id) : CoreComponent(ref.emulator, id), References(ref) { };
 
 void
 SubComponent::prefix() const

@@ -32,6 +32,9 @@ public:
     // Reference to the emulator this instance belongs to
     class Emulator &emulator;
 
+    // Identifier (to distinguish floppy drives etc.)
+    const isize id;
+
     // Sub components
     std::vector<CoreComponent *> subComponents;
 
@@ -45,7 +48,8 @@ public:
     
 public:
 
-    CoreComponent(Emulator& ref) : emulator(ref) { }
+    CoreComponent(Emulator& ref) : emulator(ref), id(0) { }
+    CoreComponent(Emulator& ref, isize id) : emulator(ref), id(id) { }
 
     bool operator== (CoreComponent &other);
     bool operator!= (CoreComponent &other) { return !(other == *this); }
@@ -176,6 +180,7 @@ class SubComponent : public CoreComponent, public References {
 public:
 
     SubComponent(C64& ref);
+    SubComponent(C64& ref, isize id);
 
     void prefix() const override;
 };
