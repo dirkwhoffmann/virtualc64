@@ -164,7 +164,7 @@ class Configuration {
         didSet {
             
             // Try to connect the device (may disconnect the other device)
-            gamePadManager.connect(slot: gameDevice1, port: 1)
+            gamePadManager.connect(slot: gameDevice1, port: 0)
             gamePadManager.listDevices()
             
             // Avoid double mappings
@@ -180,7 +180,7 @@ class Configuration {
         didSet {
             
             // Try to connect the device (may disconnect the other device)
-            gamePadManager.connect(slot: gameDevice2, port: 2)
+            gamePadManager.connect(slot: gameDevice2, port: 1)
             gamePadManager.listDevices()
             
             // Avoid double mappings

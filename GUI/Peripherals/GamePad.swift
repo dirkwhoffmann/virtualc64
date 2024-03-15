@@ -43,7 +43,7 @@ class GamePad {
     var prefs: Preferences { return manager.parent.pref }
     var db: DeviceDatabase { return myAppDelegate.database }
     
-    // The control port this device is connected to (1, 2, or nil)
+    // The control port this device is connected to (0, 1, or nil)
     var port: Int?
 
     // Reference to the HID device
@@ -447,10 +447,10 @@ class GamePad {
 
         let c64 = manager.parent.c64!
 
-        if port == 1 || port == 2 {
+        if let id = port {
 
             for event in events {
-                c64.send(.JOY_EVENT, action: GamePadCmd(port: port!, action: event))
+                c64.send(.JOY_EVENT, action: GamePadCmd(port: id, action: event))
             }
         }
 
@@ -465,10 +465,10 @@ class GamePad {
 
         let c64 = manager.parent.c64!
 
-        if port == 1 || port == 2 {
+        if let id = port {
 
             for event in events {
-                c64.send(.MOUSE_EVENT, action: GamePadCmd(port: port!, action: event))
+                c64.send(.MOUSE_EVENT, action: GamePadCmd(port: id, action: event))
             }
         }
 
@@ -482,9 +482,9 @@ class GamePad {
         // Check for a shaking mouse
         c64.port1.mouse.detectShakeRel(delta)
 
-        if port == 1 || port == 2 {
+        if let id = port {
 
-            c64.send(.MOUSE_MOVE_REL, coord: CoordCmd(port: port!, x: delta.x, y: delta.y))
+            c64.send(.MOUSE_MOVE_REL, coord: CoordCmd(port: id, x: delta.x, y: delta.y))
         }
     }
 
@@ -520,12 +520,12 @@ class GamePad {
 
         let c64 = manager.parent.c64!
 
-        if port == 1 || port == 2 {
+        if let id = port {
 
             let type  = isMouse ? CmdType.MOUSE_EVENT : CmdType.JOY_EVENT
 
             for e in events {
-                c64.send(type, action: GamePadCmd(port: port!, action: e))
+                c64.send(type, action: GamePadCmd(port: id, action: e))
             }
         }
     }

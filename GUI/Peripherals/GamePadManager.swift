@@ -149,8 +149,8 @@ class GamePadManager {
     func connect(slot: Int, port: Int) {
         
         // Remove any existing binding to this port
-        for (_, pad) in gamePads where pad.port == port { pad.port = 0 }
-        
+        for (_, pad) in gamePads where pad.port == port { pad.port = nil }
+
         // Bind the new device
         gamePads[slot]?.port = port
     }

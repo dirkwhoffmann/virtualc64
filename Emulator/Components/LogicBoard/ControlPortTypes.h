@@ -20,8 +20,8 @@
 // Constants
 //
 
-#define PORT_1  1
-#define PORT_2  2
+#define PORT_1  0   // TODO: DON'T USE PREPROCESSOR CONSTANT
+#define PORT_2  1   // TODO: DON'T USE PREPROCESSOR CONSTANT
 
 
 //
