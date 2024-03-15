@@ -971,6 +971,8 @@ Interpreter::initCommandShell(Command &root)
         retroShell.dump(recorder, Category::Config);
     });
 
+    root.add({"recorder", "set"}, "Configures the component");
+
     for (auto &opt : recorder.getOptions()) {
 
         root.add({"recorder", "set", OptionEnum::plainkey(opt)},

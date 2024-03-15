@@ -20,7 +20,10 @@ namespace vc64 {
 
 RetroShell::RetroShell(C64& ref) : SubComponent(ref), interpreter(ref)
 {
+    subComponents = std::vector<CoreComponent *> {
 
+        &interpreter
+    };
 }
 
 void

@@ -18,6 +18,24 @@
 
 namespace vc64 {
 
+std::vector<CoreComponent *> 
+CoreComponent::collectComponents() const
+{
+    std::vector<CoreComponent *> result;
+    collectComponents(result);
+    return result;
+}
+
+void 
+CoreComponent::collectComponents(std::vector<CoreComponent *> &components) const
+{
+    for (auto c : subComponents) {
+
+        components.push_back(c);
+        c->collectComponents(components);
+    }
+}
+
 bool
 CoreComponent::operator== (CoreComponent &other)
 {

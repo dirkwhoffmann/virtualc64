@@ -26,6 +26,13 @@ class CPU final : public Peddle, public Inspectable<CPUInfo, Void> {
     friend class C64;
     friend class CPUInspector;
     
+    Descriptions descriptions = {{
+
+        .name           = "CPU",
+        .shellName      = "cpu",
+        .description    = "Central Processing Unit"
+    }};
+
     // Result of the latest inspection
     mutable CPUInfo info = { };
 
@@ -69,7 +76,8 @@ public:
     
     CPU(C64& ref);
     CPU(CPURevision cpuModel, C64& ref);
-
+    const Descriptions &getDescriptions() const override { return descriptions; }
+    
     bool isC64CPU() const { return cpuModel == MOS_6510; }
     bool isDriveCPU() const { return cpuModel == MOS_6502; }
 

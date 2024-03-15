@@ -32,8 +32,15 @@ struct ScriptInterruption: util::Exception {
     using Exception::Exception;
 };
 
-class Interpreter: SubComponent, public Dumpable
+class Interpreter: public SubComponent, public Dumpable
 {
+    Descriptions descriptions = {{
+
+        .name           = "Interpreter",
+        .shellName      = "",
+        .description    = "Command Interpreter"
+    }};
+
     enum class Shell { Command, Debug };
 
     // The currently active shell
@@ -53,9 +60,11 @@ class Interpreter: SubComponent, public Dumpable
 public:
     
     Interpreter(C64 &ref);
-
+    const Descriptions &getDescriptions() const override { return descriptions; }
+    
 private:
 
+    void _initialize() override;
     void initCommons(Command &root);
     void initCommandShell(Command &root);
     void initDebugShell(Command &root);

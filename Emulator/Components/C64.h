@@ -87,6 +87,13 @@ class C64 final : public CoreComponent, public Inspectable<C64Info, Void> {
 
     friend class Emulator;
 
+    Descriptions descriptions = {{
+
+        .name           = "C64",
+        .shellName      = "c64",
+        .description    = "Commodore 64"
+    }};
+
 private:
 
     // The current configuration
@@ -248,7 +255,8 @@ public:
 
     C64(class Emulator& ref);
     ~C64();
-
+    const Descriptions &getDescriptions() const override { return descriptions; }
+    
     void prefix() const override;
     const char *getDescription() const override { return "C64"; }
     void _dump(Category category, std::ostream& os) const override;

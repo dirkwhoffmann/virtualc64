@@ -65,9 +65,12 @@ public:
 
     virtual const Descriptions &getDescriptions() const { return descriptions; }
 
-    const char *name() { return getDescriptions().at(id).name; }
-    const char *shellName() { return getDescriptions().at(id).shellName; }
-    const char *description() { return getDescriptions().at(id).description; }
+    const char *name() { assert(getDescriptions().size() > id); return getDescriptions().at(id).name; }
+    const char *shellName() { assert(getDescriptions().size() > id); return getDescriptions().at(id).shellName; }
+    const char *description() { assert(getDescriptions().size() > id); return getDescriptions().at(id).description; }
+
+    std::vector<CoreComponent *> collectComponents() const;
+    void collectComponents(std::vector<CoreComponent *> &components) const;
 
     bool operator== (CoreComponent &other);
     bool operator!= (CoreComponent &other) { return !(other == *this); }

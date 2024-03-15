@@ -139,22 +139,6 @@ Command::clone(const string &alias, const std::vector<string> &tokens, const str
         param);
 }
 
-/*
-void registerSetCommand(const string &cmd, const ConfigOptions &options,
-                        std::function<void (Arguments&, long)> func = nullptr, long param = 0)
-{
-    root.add({cmd, "set"}, "Configures the component");
-
-    for (auto &option : options) {
-
-        root.add({cmd, "set", OptionEnum::key(option.first)}, { Arg::value },
-                 option.second,
-                 func,
-                 option.first);
-    }
-}
-*/
-
 const Command *
 Command::seek(const string& token) const
 {
