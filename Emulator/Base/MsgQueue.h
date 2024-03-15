@@ -40,7 +40,7 @@ class MsgQueue final : CoreObject, Synchronizable {
     
 private:
 
-    const char *getDescription() const override { return "MsgQueue"; }
+    const char *objectName() const override { return "MsgQueue"; }
 
 
     //

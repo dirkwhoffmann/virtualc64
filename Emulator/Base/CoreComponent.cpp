@@ -19,21 +19,21 @@
 namespace vc64 {
 
 const char *
-CoreComponent::name()
+CoreComponent::objectName() const
 {
     assert(isize(getDescriptions().size()) > id);
     return getDescriptions().at(id).name;
 }
 
 const char *
-CoreComponent::shellName()
+CoreComponent::shellName() const
 {
     assert(isize(getDescriptions().size()) > id);
     return getDescriptions().at(id).shellName;
 }
 
 const char *
-CoreComponent::description()
+CoreComponent::description() const
 {
     assert(isize(getDescriptions().size()) > id);
     return getDescriptions().at(id).description;
@@ -245,7 +245,7 @@ CoreComponent::dumpDiff(std::ostream& ss) const
 
             if (first) {
             
-                ss << std::endl << getDescription() << ":" << std::endl << std::endl;
+                ss << std::endl << objectName() << ":" << std::endl << std::endl;
                 first = false;
             }
 

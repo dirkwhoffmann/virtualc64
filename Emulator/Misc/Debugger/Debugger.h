@@ -40,7 +40,7 @@ public:
 
     using SubComponent::SubComponent;
     const Descriptions &getDescriptions() const override { return descriptions; }
-    const char *getDescription() const override { return "Debugger"; }
+    const char *objectName() const override { return "Debugger"; }
 //     void _dump(Category category, std::ostream& os) const override { }
 
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);

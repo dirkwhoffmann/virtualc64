@@ -57,7 +57,7 @@ public:
    
 private:
     
-    const char *getDescription() const override { return "DiskAnalyzer"; }
+    const char *objectName() const override { return "DiskAnalyzer"; }
 
 
     //

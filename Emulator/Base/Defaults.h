@@ -63,7 +63,7 @@ public:
 
     Defaults();
     Defaults(Defaults const&) = delete;
-    const char *getDescription() const override { return "Defaults"; }
+    const char *objectName() const override { return "Defaults"; }
     void operator=(Defaults const&) = delete;
 
 private:

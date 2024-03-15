@@ -22,7 +22,7 @@ CoreObject::verbose = true;
 void
 CoreObject::prefix() const
 {
-    fprintf(stderr, "%s: ", getDescription());
+    fprintf(stderr, "%s: ", objectName());
 }
 
 }

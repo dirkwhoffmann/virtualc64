@@ -43,7 +43,7 @@ public:
     // Methods from CoreObject
     //
     
-    const char *getDescription() const override { return "TAPFile"; }
+    const char *objectName() const override { return "TAPFile"; }
     
     
     //

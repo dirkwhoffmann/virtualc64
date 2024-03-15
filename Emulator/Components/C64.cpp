@@ -754,12 +754,12 @@ C64::_dump(Category category, std::ostream& os) const
 
         for (auto &c : subComponents) {
 
-            os << tab(c->name());
+            os << tab(c->objectName());
             os << hex(c->checksum()) << std::endl;
 
             for (auto &cc : c->subComponents) {
 
-                os << tab(cc->name());
+                os << tab(cc->objectName());
                 os << hex(cc->checksum()) << std::endl;
             }
         }

@@ -59,7 +59,7 @@ public:
     // Methods from CoreObject
     //
     
-    const char *getDescription() const override { return "CRTFile"; }
+    const char *objectName() const override { return "CRTFile"; }
 
 
     //

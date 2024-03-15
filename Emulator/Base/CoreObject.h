@@ -63,7 +63,7 @@ public:
     virtual ~CoreObject() = default;
     
     // Returns the name for this component (e.g., "CPU" or "VICII")
-    virtual const char *getDescription() const = 0;
+    virtual const char *objectName() const = 0;
     
     // Called by debug() and trace() to produce a detailed debug output
     virtual void prefix() const;
@@ -105,7 +105,7 @@ fprintf(stderr, "Warning: " format, ##__VA_ARGS__);
 
 #define debug(enable, format, ...) \
 if (enable) { if (verbose) { \
-fprintf(stderr, "%s:%d " format, getDescription(), __LINE__, ##__VA_ARGS__); }}
+fprintf(stderr, "%s:%d " format, objectName(), __LINE__, ##__VA_ARGS__); }}
 
 #define plain(enable, format, ...) \
 if (enable) { if (verbose) { \
@@ -114,7 +114,7 @@ fprintf(stderr, format, ##__VA_ARGS__); }}
 #define trace(enable, format, ...) \
 if (enable) { if (verbose) { \
 prefix(); \
-fprintf(stderr, "%s:%d " format, getDescription(), __LINE__, ##__VA_ARGS__); }}
+fprintf(stderr, "%s:%d " format, objectName(), __LINE__, ##__VA_ARGS__); }}
 
 #define xfiles(format, ...) \
 if (XFILES) { if (verbose) { \

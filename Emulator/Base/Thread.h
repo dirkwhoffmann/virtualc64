@@ -77,7 +77,7 @@ public:
     Thread();
     ~Thread();
     
-    const char *getDescription() const override { return "Thread"; }
+    const char *objectName() const override { return "Thread"; }
 
     // Checks the launch state
     bool isLaunched() const { return thread.joinable(); }

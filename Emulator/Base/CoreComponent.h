@@ -65,11 +65,9 @@ public:
 
     virtual const Descriptions &getDescriptions() const { return descriptions; }
 
-    virtual const char *getDescription() const override { return getDescriptions().at(id).name; };
-
-    const char *name();
-    const char *shellName();
-    const char *description();
+    const char *objectName() const override;
+    const char *shellName() const;
+    const char *description() const;
 
     std::vector<CoreComponent *> collectComponents() const;
     void collectComponents(std::vector<CoreComponent *> &components) const;

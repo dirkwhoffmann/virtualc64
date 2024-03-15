@@ -48,7 +48,7 @@ private:
     // Methods from CoreObject
     //
     
-    const char *getDescription() const override { return "PRGFile"; }
+    const char *objectName() const override { return "PRGFile"; }
     
     
     //

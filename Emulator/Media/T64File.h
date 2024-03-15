@@ -46,7 +46,7 @@ private:
     // Methods from CoreObject
     //
     
-    const char *getDescription() const override { return "T64File"; }
+    const char *objectName() const override { return "T64File"; }
 
     
     //

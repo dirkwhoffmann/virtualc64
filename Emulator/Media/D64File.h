@@ -58,7 +58,7 @@ private:
     
 public:
     
-    const char *getDescription() const override { return "D64File"; }
+    const char *objectName() const override { return "D64File"; }
 
 
     //

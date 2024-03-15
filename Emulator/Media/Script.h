@@ -45,7 +45,7 @@ public:
     // Methods from CoreObject
     //
 
-    const char *getDescription() const override { return "Script"; }
+    const char *objectName() const override { return "Script"; }
     
     
     //

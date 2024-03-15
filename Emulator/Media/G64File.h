@@ -50,7 +50,7 @@ private:
     
 public:
     
-    const char *getDescription() const override { return "G64File"; }
+    const char *objectName() const override { return "G64File"; }
 
     
     //

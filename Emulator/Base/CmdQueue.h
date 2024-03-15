@@ -36,7 +36,7 @@ class CmdQueue final : CoreObject, Synchronizable {
 
 private:
 
-    const char *getDescription() const override { return "CmdQueue"; }
+    const char *objectName() const override { return "CmdQueue"; }
 
 
     //

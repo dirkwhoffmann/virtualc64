@@ -66,7 +66,7 @@ private:
     
 public:
     
-    const char *getDescription() const override { return "FSVolume"; }
+    const char *objectName() const override { return "FSVolume"; }
 
     // Prints information about this volume
     void info();

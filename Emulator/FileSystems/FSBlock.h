@@ -49,7 +49,7 @@ public:
     
     FSBlock(FileSystem& _device, u32 _nr);
     virtual ~FSBlock() = default;
-    const char *getDescription() const override { return "FSBlock"; }
+    const char *objectName() const override { return "FSBlock"; }
 
     
     //

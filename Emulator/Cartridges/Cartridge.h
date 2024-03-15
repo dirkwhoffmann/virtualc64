@@ -173,7 +173,7 @@ public:
 
 protected:
 
-    const char *getDescription() const override { return getTraits().title; }
+    const char *objectName() const override { return getTraits().title; }
     void _dump(Category category, std::ostream& os) const override;
 
 

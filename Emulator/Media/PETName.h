@@ -82,7 +82,7 @@ public:
         pad = _pad;
     }
 
-    const char *getDescription() const override { return "PETName"; }
+    const char *objectName() const override { return "PETName"; }
     
     bool operator== (PETName &rhs)
     {

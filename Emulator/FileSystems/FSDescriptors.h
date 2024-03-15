@@ -53,7 +53,7 @@ struct FSDeviceDescriptor : CoreObject {
     // Creates a device descriptor from a D64 file
     FSDeviceDescriptor(const class D64File &d64);
 
-    const char *getDescription() const override { return "FSLayout"; }
+    const char *objectName() const override { return "FSLayout"; }
     
     
     //

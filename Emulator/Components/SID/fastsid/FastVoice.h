@@ -178,7 +178,7 @@ public:
     static void initWaveTables();
     void init(FastSID *owner, isize voiceNr, FastVoice *prevVoice);
 
-    const char *getDescription() const override { return "FastVoice"; }
+    const char *objectName() const override { return "FastVoice"; }
 
     FastVoice& operator= (const FastVoice& other) {
 

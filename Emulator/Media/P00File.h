@@ -44,7 +44,7 @@ private:
     // Methods from CoreObject
     //
 
-    const char *getDescription() const override { return "P00File"; }
+    const char *objectName() const override { return "P00File"; }
 
 
     //

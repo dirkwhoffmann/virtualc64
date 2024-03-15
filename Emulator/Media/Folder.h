@@ -50,7 +50,7 @@ private:
     
 public:
     
-    const char *getDescription() const override { return "Folder"; }
+    const char *objectName() const override { return "Folder"; }
     
     
     //
