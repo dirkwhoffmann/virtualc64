@@ -20,7 +20,14 @@ class PIA6821 : public SubComponent {
     
     friend class Drive;
     friend class ParCable;
-    
+
+    Descriptions descriptions = {{
+
+        .name           = "PIA",
+        .shellName      = "",
+        .description    = "PIA 6821"
+    }};
+
 protected:
     
     // Owner of this PIA
@@ -50,29 +57,16 @@ protected:
 
     
     //
-    // Initializing
+    // Methods
     //
     
 public:
     
     PIA6821(C64 &ref, Drive &drvref);
-    
-    
-    //
-    // Methods from CoreObject
-    //
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
-private:
-    
     const char *getDescription() const override { return "PIA"; }
     
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
-
     PIA6821& operator= (const PIA6821& other) {
 
         CLONE(pa)

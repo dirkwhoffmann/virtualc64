@@ -18,6 +18,13 @@ namespace vc64 {
 
 class NeosMouse final : public SubComponent {
     
+    Descriptions descriptions = {{
+
+        .name           = "NeosMouse",
+        .shellName      = "",
+        .description    = "Neos Mouse"
+    }};
+
     // Mouse position
     i64 mouseX;
     i64 mouseY;
@@ -59,7 +66,8 @@ class NeosMouse final : public SubComponent {
 public:
     
     NeosMouse(C64 &ref) : SubComponent(ref) { }
-    
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
     
     //
     // Methods from CoreObject

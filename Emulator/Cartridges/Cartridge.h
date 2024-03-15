@@ -21,6 +21,13 @@ namespace vc64 {
 
 class Cartridge : public SubComponent, public Dumpable {
 
+    Descriptions descriptions = {{
+
+        .name           = "Cartridge",
+        .shellName      = "",
+        .description    = "Cartridge"
+    }};
+
     CartridgeTraits traits = {
 
         .type       = CRT_NORMAL,
@@ -38,9 +45,6 @@ public:
     //
     // Cartridge configuration
     //
-
-public:
-
 
 private:
 
@@ -151,6 +155,7 @@ public:
 
     Cartridge(C64 &ref);
     ~Cartridge();
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
 
     /* Resets the Game and the Exrom line. The default implementation resets

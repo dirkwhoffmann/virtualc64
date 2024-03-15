@@ -49,6 +49,19 @@ public:
 
 class Mouse final : public SubComponent, public Dumpable {
     
+    Descriptions descriptions = {
+        {
+            .name           = "Mouse 1",
+            .shellName      = "mouse1",
+            .description    = "Mouse in Port 1"
+        },
+        {
+            .name           = "Mouse 2",
+            .shellName      = "mouse2",
+            .description    = "Mouse in Port 2"
+        }
+    };
+
     ConfigOptions options = {
 
         OPT_MOUSE_MODEL,
@@ -99,6 +112,7 @@ class Mouse final : public SubComponent, public Dumpable {
 public:
     
     Mouse(C64 &ref, ControlPort& pref);
+    const Descriptions &getDescriptions() const override { return descriptions; }
     const char *getDescription() const override;
     void _dump(Category category, std::ostream& os) const override;
 

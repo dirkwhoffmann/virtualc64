@@ -27,6 +27,14 @@ class VICII final : public SubComponent, public Inspectable<VICIIInfo, VICIIStat
     friend class C64Memory;
     friend class DmaDebugger;
     
+    Descriptions descriptions = {{
+
+        .name           = "VICII",
+        .shellName      = "vic",
+        .description    = "Video Interface Controller"
+    }};
+
+
     ConfigOptions options = {
         
         OPT_VICII_REVISION,
@@ -605,6 +613,7 @@ public:
 public:
 
     VICII(C64 &ref);
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
     const char *getDescription() const override { return "VIC"; }
 

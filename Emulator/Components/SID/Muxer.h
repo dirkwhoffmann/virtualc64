@@ -48,6 +48,13 @@ class Muxer final : public SubComponent, public Inspectable<SIDInfo, Void> {
 
     friend C64Memory;
 
+    Descriptions descriptions = {{
+
+        .name           = "Muxer",
+        .shellName      = "muxer",
+        .description    = "Audio Muxer"
+    }};
+
     ConfigOptions options = {
 
         OPT_SID_REVISION,
@@ -123,6 +130,8 @@ public:
 public:
 
     Muxer(C64 &ref);
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
     void clear();
 
     const char *getDescription() const override { return "Muxer"; }

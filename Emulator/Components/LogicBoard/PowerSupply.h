@@ -20,12 +20,19 @@ namespace vc64 {
 
 class PowerSupply final : public SubComponent, public Dumpable {
 
-    PowerSupplyConfig config = { };
+    Descriptions descriptions = {{
+
+        .name           = "PowerSupply",
+        .shellName      = "powersupply",
+        .description    = "Power Supply"
+    }};
 
     ConfigOptions options = {
 
         OPT_POWER_GRID
     };
+
+    PowerSupplyConfig config = { };
 
 
     //
@@ -35,6 +42,8 @@ class PowerSupply final : public SubComponent, public Dumpable {
 public:
     
     PowerSupply(C64& ref);
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
     const char *getDescription() const override { return "PowerSupply"; }
 
     PowerSupply& operator= (const PowerSupply& other) { return *this; }

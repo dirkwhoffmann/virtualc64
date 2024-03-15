@@ -24,7 +24,20 @@ class ControlPort final : public SubComponent, public Dumpable {
 
     friend class Mouse;
     friend class Joystick;
-    
+
+    Descriptions descriptions = {
+        {
+            .name           = "ControlPort 1",
+            .shellName      = "port1",
+            .description    = "Control Port 1"
+        },
+        {
+            .name           = "ControlPort 2",
+            .shellName      = "port2",
+            .description    = "Control Port 2"
+        }
+    };
+
     // The connected device
     ControlPortDevice device = CPDEVICE_NONE;
 
@@ -46,6 +59,8 @@ public:
 public:
 
     ControlPort(C64 &ref, isize id);
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
     const char *getDescription() const override;
 
     ControlPort& operator= (const ControlPort& other) {

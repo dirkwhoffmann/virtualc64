@@ -20,9 +20,17 @@ namespace vc64 {
 
 class ParCable final : public SubComponent, public Dumpable {
         
+    Descriptions descriptions = {{
+
+        .name           = "ParCable",
+        .shellName      = "",
+        .description    = "Parallel Drive Cable"
+    }};
+
 public:
     
     ParCable(C64 &ref);
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
     const char *getDescription() const override { return "ParCable"; }
     void _dump(Category category, std::ostream& os) const override;

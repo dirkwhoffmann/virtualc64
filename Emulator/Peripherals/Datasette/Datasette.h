@@ -37,6 +37,13 @@ public:
 
 class Datasette final : public SubComponent, public Inspectable<DatasetteInfo, Void> {
 
+    Descriptions descriptions = {{
+
+        .name           = "Datasette",
+        .shellName      = "datasette",
+        .description    = "Datasette"
+    }};
+
     ConfigOptions options = {
 
         OPT_DAT_MODEL,
@@ -98,7 +105,8 @@ public:
 
     Datasette(C64 &ref) : SubComponent(ref) { };
     ~Datasette();
-    
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
     void alloc(isize capacity);
     void dealloc();
 

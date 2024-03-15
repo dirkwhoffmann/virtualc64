@@ -22,6 +22,13 @@ namespace vc64 {
 
 class Recorder final : public SubComponent, public Inspectable<RecorderInfo, Void> {
 
+    Descriptions descriptions = {{
+
+        .name           = "Recorder",
+        .shellName      = "recorder",
+        .description    = "Screen Recorder"
+    }};
+
     ConfigOptions options = {
 
         OPT_REC_FRAME_RATE,
@@ -78,6 +85,7 @@ class Recorder final : public SubComponent, public Inspectable<RecorderInfo, Voi
 public:
     
     Recorder(C64& ref);
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
     const char *getDescription() const override { return "Recorder"; }
     void _dump(Category category, std::ostream& os) const override;

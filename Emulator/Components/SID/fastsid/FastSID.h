@@ -37,6 +37,13 @@ using namespace vc64;
 
 class FastSID final : public SubComponent, public Dumpable {
 
+    Descriptions descriptions = {{
+
+        .name           = "FastSID",
+        .shellName      = "",
+        .description    = "FastSID Backend"
+    }};
+
     //
     // Sub components
     //
@@ -98,32 +105,23 @@ private:
     
     
     //
-    // Initializing
+    // Methods
     //
     
 public:
         
 	FastSID(C64 &ref, isize id);
-    
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
 private:
     
     void init(double sampleRate, int cycles_per_sec);
     void initFilter(double sampleRate);
 
-    
-    //
-    // Methods from CoreObject
-    //
+public:
 
     const char *getDescription() const override { return "FastSID"; }
     void _dump(Category category, std::ostream& os) const override;
-
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
        
     FastSID& operator= (const FastSID& other) {
 

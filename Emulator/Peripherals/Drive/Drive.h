@@ -35,6 +35,19 @@ namespace vc64 {
 
 class Drive final : public SubComponent, public Inspectable<DriveInfo, Void> {
 
+    Descriptions descriptions = {
+        {
+            .name           = "Drive 8",
+            .shellName      = "drive8",
+            .description    = "First Floppy Drive"
+        },
+        {
+            .name           = "Drive 9",
+            .shellName      = "drive9",
+            .description    = "Second Floppy Drive"
+        }
+    };
+
     ConfigOptions options = {
 
         OPT_DRV_AUTO_CONFIG,
@@ -245,6 +258,7 @@ public:
 public:
     
     Drive(C64 &ref, isize id);
+    const Descriptions &getDescriptions() const override { return descriptions; }
     const char *getDescription() const override;
     
     void _dump(Category category, std::ostream& os) const override;

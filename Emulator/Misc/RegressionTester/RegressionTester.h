@@ -21,6 +21,13 @@ class C64;
 
 class RegressionTester : public SubComponent, public Dumpable {
 
+    Descriptions descriptions = {{
+
+        .name           = "RegressionTester",
+        .shellName      = "",
+        .description    = "Regression Tester"
+    }};
+
     // Pixel area ritten to the test image
     static constexpr isize X1 = 104;
     static constexpr isize Y1 = 17;
@@ -45,28 +52,16 @@ private:
 
     
     //
-    // Constructing
+    // Methods
     //
     
 public:
     
     using SubComponent::SubComponent;
-
-    //
-    // Methods from CoreObject
-    //
-
-private:
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
     const char *getDescription() const override { return "RegressionTester"; }
     void _dump(Category category, std::ostream& os) const override { }
-
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
 
     RegressionTester& operator= (const RegressionTester& other) { return *this; }
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);

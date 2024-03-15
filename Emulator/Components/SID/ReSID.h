@@ -35,6 +35,14 @@ namespace vc64 {
 
 class ReSID final : public SubComponent, public Inspectable<SIDInfo, Void> {
 
+    Descriptions descriptions = {{
+
+        .name           = "ReSID",
+        .shellName      = "",
+        .description    = "ReSID Backend"
+    }};
+
+
     // Entry point to the reSID backend
     reSID::SID *sid;
     
@@ -70,7 +78,9 @@ public:
     
     ReSID(C64 &ref, isize id);
     ~ReSID();
-    
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
     
     //
     // Methods from CoreObject

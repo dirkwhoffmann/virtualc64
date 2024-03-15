@@ -26,6 +26,13 @@ namespace vc64 {
  */
 class FlashRom final : public SubComponent, public Dumpable {
 
+    Descriptions descriptions = {{
+
+        .name           = "FlashRom",
+        .shellName      = "",
+        .description    = "Flash ROM"
+    }};
+
     // Number of sectors in this Flash Rom
     static const isize numSectors = 8;
 
@@ -66,6 +73,7 @@ public:
 
     FlashRom(C64 &ref);
     ~FlashRom();
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
 
     //

@@ -19,6 +19,13 @@ namespace vc64 {
 
 class DriveMemory final : public SubComponent, public Dumpable {
     
+    Descriptions descriptions = {{
+
+        .name           = "DriveMemory",
+        .shellName      = "",
+        .description    = "Drive Memory"
+    }};
+
     ConfigOptions options = {
 
         OPT_SAVE_ROMS
@@ -58,6 +65,7 @@ public:
 public:
     
     DriveMemory(C64 &ref, Drive &drive);
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
     const char *getDescription() const override { return "DriveMemory"; }
     void _dump(Category category, std::ostream& os) const override;

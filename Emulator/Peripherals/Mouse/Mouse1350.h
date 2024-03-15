@@ -18,6 +18,13 @@ namespace vc64 {
 
 class Mouse1350 final : public SubComponent {
     
+    Descriptions descriptions = {{
+
+        .name           = "Mouse1350",
+        .shellName      = "",
+        .description    = "Mouse 1350"
+    }};
+
 private:
     
     // Mouse position
@@ -47,7 +54,8 @@ private:
 public:
     
     Mouse1350(C64 &ref) : SubComponent(ref) { }
-    
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
     
     //
     // Methods from CoreObject

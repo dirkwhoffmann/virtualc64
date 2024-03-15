@@ -19,6 +19,19 @@ namespace vc64 {
 
 class Joystick final : public SubComponent, public Dumpable {
     
+    Descriptions descriptions = {
+        {
+            .name           = "Joystick 1",
+            .shellName      = "joystick1",
+            .description    = "Joystick in Port 1"
+        },
+        {
+            .name           = "Joystick 2",
+            .shellName      = "joystick2",
+            .description    = "Joystick in Port 2"
+        }
+    };
+
     ConfigOptions options = {
 
         OPT_AUTOFIRE,
@@ -50,6 +63,7 @@ class Joystick final : public SubComponent, public Dumpable {
 public:
     
     Joystick(C64 &ref, ControlPort& pref);
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
     const char *getDescription() const override;
     void _dump(Category category, std::ostream& os) const override;

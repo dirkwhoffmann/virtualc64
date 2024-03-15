@@ -22,6 +22,29 @@ class SID final : public SubComponent, public Dumpable
 {
     friend class Muxer;
 
+    Descriptions descriptions = {
+        {
+            .name           = "SID 1",
+            .shellName      = "sid",
+            .description    = "Primary Sound Interface Device"
+        },
+        {
+            .name           = "SID 2",
+            .shellName      = "sid2",
+            .description    = "First Auxiliary SID"
+        },
+        {
+            .name           = "SID 3",
+            .shellName      = "sid3",
+            .description    = "Second Auxiliary SID"
+        },
+        {
+            .name           = "SID 4",
+            .shellName      = "sid4",
+            .description    = "Third Auxiliary SID"
+        }
+    };
+
     ConfigOptions options = {
 
         OPT_SID_ENABLE,
@@ -53,6 +76,7 @@ public:
 public:
 
     SID(C64 &ref, isize id);
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
     const char *getDescription() const override;
     void _dump(Category category, std::ostream& os) const override;

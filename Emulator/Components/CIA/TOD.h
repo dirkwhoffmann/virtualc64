@@ -31,6 +31,13 @@ class TOD final : public SubComponent, public Inspectable<TODInfo, Void> {
     
     friend class CIA;
     
+    Descriptions descriptions = {{
+
+        .name           = "TOD",
+        .shellName      = "tod",
+        .description    = "Time-of-day Clock"
+    }};
+
 private:
     
     // Result of the latest inspection
@@ -73,29 +80,16 @@ private:
 
 
     //
-    // Initializing
+    // Methods
     //
     
 public:
     
     TOD(C64 &ref, CIA &cia);
-    
-    
-    //
-    // Methods from CoreObject
-    //
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
-private:
-    
     const char *getDescription() const override;
     void _dump(Category category, std::ostream& os) const override;
-
-    
-    //
-    // Methods from CoreComponent
-    //
-    
-public:
     
     TOD& operator= (const TOD& other) {
 

@@ -19,6 +19,13 @@ namespace vc64 {
 
 class Debugger : public SubComponent {
 
+    Descriptions descriptions = {{
+
+        .name           = "Debugger",
+        .shellName      = "",
+        .description    = "Debugger"
+    }};
+
 public:
 
     // Last used address (current object location)
@@ -32,6 +39,7 @@ public:
 public:
 
     using SubComponent::SubComponent;
+    const Descriptions &getDescriptions() const override { return descriptions; }
     const char *getDescription() const override { return "Debugger"; }
 //     void _dump(Category category, std::ostream& os) const override { }
 

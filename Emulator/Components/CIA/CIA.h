@@ -26,14 +26,14 @@ class CIA : public SubComponent, public Inspectable<CIAInfo, CIAStats> {
 
     Descriptions descriptions = {
         {
-            .name = "CIA1",
-            .shellName = "cia1",
-            .description = "Complex Interface Adapter 1"
+            .name           = "CIA 1",
+            .shellName      = "cia1",
+            .description    = "Complex Interface Adapter 1"
         },
         {
-            .name = "CIA2",
-            .shellName = "cia2",
-            .description = "Complex Interface Adapter 2"
+            .name           = "CIA 2",
+            .shellName      = "cia2",
+            .description    = "Complex Interface Adapter 2"
         }
     };
 
@@ -301,6 +301,8 @@ public:
 public:
     
     CIA(C64 &ref, isize id);
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
     bool isCIA1() const { return id == 0; }
     bool isCIA2() const { return id == 1; }
 

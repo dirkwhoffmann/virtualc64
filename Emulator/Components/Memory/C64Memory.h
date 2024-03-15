@@ -19,6 +19,13 @@ namespace vc64 {
 
 class C64Memory final : public SubComponent, public Inspectable<MemInfo, Void> {
 
+    Descriptions descriptions = {{
+
+        .name           = "C64Memory",
+        .shellName      = "memory",
+        .description    = "C64 Memory"
+    }};
+
     ConfigOptions options = {
 
         OPT_RAM_PATTERN,
@@ -74,6 +81,7 @@ public:
 public:
     
     C64Memory(C64 &ref);
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
     const char *getDescription() const override { return "memory"; }
     void _dump(Category category, std::ostream& os) const override;

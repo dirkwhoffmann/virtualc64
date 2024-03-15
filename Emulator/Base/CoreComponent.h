@@ -65,9 +65,9 @@ public:
 
     virtual const Descriptions &getDescriptions() const { return descriptions; }
 
-    const char *name() { return (getDescriptions().size() > usize(id) && getDescriptions().at(id).name) ? getDescriptions().at(id).name : "TODO"; }
-    const char *shellName() { return (getDescriptions().size() > usize(id) && getDescriptions().at(id).shellName) ? getDescriptions().at(id).shellName : "TODO"; }
-    const char *description() { return (getDescriptions().size() > usize(id) && getDescriptions().at(id).description) ? getDescriptions().at(id).description : "Some help text"; }
+    const char *name() { return getDescriptions().at(id).name; }
+    const char *shellName() { return getDescriptions().at(id).shellName; }
+    const char *description() { return getDescriptions().at(id).description; }
 
     bool operator== (CoreComponent &other);
     bool operator!= (CoreComponent &other) { return !(other == *this); }

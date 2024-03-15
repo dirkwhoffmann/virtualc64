@@ -18,6 +18,13 @@ namespace vc64 {
 
 class CartridgeRom final : public SubComponent {
 
+    Descriptions descriptions = {{
+
+        .name           = "CartridgeRom",
+        .shellName      = "",
+        .description    = "Cartridge ROM"
+    }};
+
     friend class Cartridge;
 
 protected:
@@ -47,6 +54,7 @@ public:
     CartridgeRom(C64 &ref);
     CartridgeRom(C64 &ref, u16 _size, u16 _loadAddress, const u8 *buffer = nullptr);
     ~CartridgeRom();
+    const Descriptions &getDescriptions() const override { return descriptions; }
     const char *getDescription() const override { return "CartridgeRom"; }
 
 

@@ -22,6 +22,13 @@ class DmaDebugger final : public SubComponent, public Dumpable {
 
     friend class VICII;
     
+    Descriptions descriptions = {{
+
+        .name           = "DmaDebugger",
+        .shellName      = "dmadebugger",
+        .description    = "Bus Monitor"
+    }};
+
     ConfigOptions options = {
 
         OPT_DMA_DEBUG_ENABLE,
@@ -58,7 +65,8 @@ class DmaDebugger final : public SubComponent, public Dumpable {
 public:
     
     DmaDebugger(C64 &ref);
-    
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
     
     //
     // Methods from CoreObject

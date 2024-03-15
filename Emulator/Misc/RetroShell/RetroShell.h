@@ -23,6 +23,13 @@ namespace vc64 {
 
 class RetroShell : public SubComponent, public Dumpable {
 
+    Descriptions descriptions = {{
+
+        .name           = "RetroShell",
+        .shellName      = "",
+        .description    = "Command Console"
+    }};
+
     friend class Interpreter;
     
     // The command interpreter (parses commands typed into the console window)
@@ -81,6 +88,7 @@ class RetroShell : public SubComponent, public Dumpable {
 public:
     
     RetroShell(C64& ref);
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
 
     //

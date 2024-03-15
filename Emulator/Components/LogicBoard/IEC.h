@@ -18,6 +18,13 @@ namespace vc64 {
 
 class IEC final : public SubComponent, public Dumpable {
 
+    Descriptions descriptions = {{
+
+        .name           = "IEC",
+        .shellName      = "iec",
+        .description    = "IEC Bus"
+    }};
+
 public:
     
     // Current values of the IEC bus lines
@@ -56,6 +63,7 @@ private:
 public:
 
     IEC(C64 &ref) : SubComponent(ref) { };
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
     const char *getDescription() const override { return "IEC"; }
     void _dump(Category category, std::ostream& os) const override;

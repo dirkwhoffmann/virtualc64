@@ -22,6 +22,13 @@ namespace vc64 {
 
 class Keyboard final : public SubComponent, public Dumpable {
 
+    Descriptions descriptions = {{
+
+        .name           = "Keyboard",
+        .shellName      = "keyboard",
+        .description    = "Keyboard"
+    }};
+
     // The keyboard matrix (indexed by row or by column)
     u8 kbMatrixRow[8] = { };
     u8 kbMatrixCol[8] = { };
@@ -44,7 +51,8 @@ class Keyboard final : public SubComponent, public Dumpable {
 public:
     
     Keyboard(C64 &ref) : SubComponent(ref) { }
-    
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
     
     //
     // Methods from CoreObject

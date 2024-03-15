@@ -18,7 +18,7 @@
 
 namespace vc64 {
 
-bool 
+bool
 CoreComponent::operator== (CoreComponent &other)
 {
     return checksum() == other.checksum();

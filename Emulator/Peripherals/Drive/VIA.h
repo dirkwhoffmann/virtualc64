@@ -58,6 +58,13 @@ namespace vc64 {
 
 class VIA6522 : public SubComponent, public Dumpable {
     
+    Descriptions descriptions = {{
+
+        .name           = "VIA",
+        .shellName      = "",
+        .description    = "VIA 6522"
+    }};
+
     friend class Drive;
     friend class ParCable;
     
@@ -220,6 +227,7 @@ protected:
 public:
     
     VIA6522(C64 &ref, Drive &drvref);
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
     virtual bool isVia1() const = 0;
 
