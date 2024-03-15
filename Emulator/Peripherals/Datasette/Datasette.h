@@ -110,7 +110,6 @@ public:
     void alloc(isize capacity);
     void dealloc();
 
-    const char *getDescription() const override { return "Datasette"; }
     void _dump(Category category, std::ostream& os) const override;
 
     Datasette& operator= (const Datasette& other);

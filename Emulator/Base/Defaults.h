@@ -63,11 +63,11 @@ public:
 
     Defaults();
     Defaults(Defaults const&) = delete;
+    const char *getDescription() const override { return "Defaults"; }
     void operator=(Defaults const&) = delete;
 
 private:
 
-    const char *getDescription() const override { return "Defaults"; }
     void _dump(Category category, std::ostream& os) const override;
 
 

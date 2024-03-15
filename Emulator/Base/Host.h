@@ -36,6 +36,13 @@ namespace vc64 {
  */
 class Host final : public CoreComponent, public Dumpable {
 
+    Descriptions descriptions = {{
+
+        .name           = "Host",
+        .shellName      = "host",
+        .description    = "Host Computer"
+    }};
+
     ConfigOptions options = {
 
         OPT_HOST_REFRESH_RATE,
@@ -55,8 +62,7 @@ class Host final : public CoreComponent, public Dumpable {
 public:
 
     using CoreComponent::CoreComponent;
-
-    const char *getDescription() const override { return "Host"; }
+    const Descriptions &getDescriptions() const override { return descriptions; }
     void _dump(Category category, std::ostream& os) const override;
 
     Host& operator= (const Host& other) {
