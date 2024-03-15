@@ -18,7 +18,7 @@
 
 namespace vc64 {
 
-Mouse::Mouse(C64 &ref, ControlPort& pref) : SubComponent(ref), port(pref)
+Mouse::Mouse(C64 &ref, ControlPort& pref) : SubComponent(ref, pref.id), port(pref)
 {
     subComponents = std::vector<CoreComponent *> {
         
@@ -31,7 +31,7 @@ Mouse::Mouse(C64 &ref, ControlPort& pref) : SubComponent(ref), port(pref)
 const char *
 Mouse::getDescription() const
 {
-    return port.id == PORT_1 ? "mouse1" : "mouse2";
+    return id == PORT_1 ? "mouse1" : "mouse2";
 }
 
 void Mouse::_reset(bool hard)
@@ -45,9 +45,9 @@ Mouse::getOption(Option option) const
 {
     switch (option) {
 
-        case OPT_MOUSE_MODEL:      return config.model;
-        case OPT_MOUSE_SHAKE_DETECT:  return config.shakeDetection;
-        case OPT_MOUSE_VELOCITY:   return config.velocity;
+        case OPT_MOUSE_MODEL:           return config.model;
+        case OPT_MOUSE_SHAKE_DETECT:    return config.shakeDetection;
+        case OPT_MOUSE_VELOCITY:        return config.velocity;
 
         default:
             fatalError;
