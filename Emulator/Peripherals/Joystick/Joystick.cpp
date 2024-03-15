@@ -17,14 +17,14 @@
 
 namespace vc64 {
 
-Joystick::Joystick(C64& ref, ControlPort& pref) : SubComponent(ref, pref.nr), port(pref)
+Joystick::Joystick(C64& ref, ControlPort& pref) : SubComponent(ref, pref.id), port(pref)
 {
 };
 
 const char *
 Joystick::getDescription() const
 {
-    return port.nr == PORT_1 ? "joystick1" : "joystick2";
+    return id == PORT_1 ? "joystick1" : "joystick2";
 }
 
 void 
@@ -102,7 +102,7 @@ Joystick::_dump(Category category, std::ostream& os) const
 
     if (category == Category::State) {
         
-        os << tab("Joystick nr") << dec(port.nr) << std::endl;
+        os << tab("Joystick nr") << dec(id) << std::endl;
         os << tab("Button") << bol(button) << std::endl;
         os << tab("X axis") << dec(axisX) << std::endl;
         os << tab("Y axis") << dec(axisY) << std::endl;
@@ -126,8 +126,8 @@ Joystick::getControlPort() const
 void
 Joystick::trigger(GamePadAction event)
 {
-    debug(JOY_DEBUG, "Port %ld: %s\n", port.nr, GamePadActionEnum::key(event));
-    
+    debug(JOY_DEBUG, "Port %ld: %s\n", id, GamePadActionEnum::key(event));
+
     switch (event) {
 
         case PULL_UP:    axisY = -1; break;

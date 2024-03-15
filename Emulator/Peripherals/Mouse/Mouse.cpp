@@ -104,7 +104,7 @@ Mouse::_dump(Category category, std::ostream& os) const
 
     if (category == Category::State) {
         
-        os << tab("Mouse nr") << dec(port.nr) << std::endl;
+        os << tab("Mouse nr") << dec(id) << std::endl;
         os << tab("targetX") << targetX << std::endl;
         os << tab("targetY") << targetY << std::endl;
     }

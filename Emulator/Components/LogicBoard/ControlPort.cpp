@@ -17,10 +17,10 @@
 
 namespace vc64 {
 
-ControlPort::ControlPort(C64 &ref, isize nr) : SubComponent(ref), nr(nr)
+ControlPort::ControlPort(C64 &ref, isize id) : SubComponent(ref, id)
 {
-    assert(nr == PORT_1 || nr == PORT_2);
-    
+    assert(id == PORT_1 || id == PORT_2);
+
     subComponents = std::vector<CoreComponent *> {
         
         &mouse,
@@ -31,7 +31,7 @@ ControlPort::ControlPort(C64 &ref, isize nr) : SubComponent(ref), nr(nr)
 const char *
 ControlPort::getDescription() const 
 {
-    return nr == PORT_1 ? "port1" : "port2";
+    return id == PORT_1 ? "port1" : "port2";
 }
 
 void
@@ -42,7 +42,7 @@ ControlPort::_dump(Category category, std::ostream& os) const
     if (category == Category::State) {
         
         os << tab("Port Nr");
-        os << dec(nr) << std::endl;
+        os << dec(id) << std::endl;
         os << tab("Detetected device");
         os << ControlPortDeviceEnum::key(device) << std::endl;
     }
