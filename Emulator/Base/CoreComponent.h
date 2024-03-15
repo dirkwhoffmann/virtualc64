@@ -24,10 +24,22 @@
 
 namespace vc64 {
 
+struct Description {
+
+    const char *name;
+    const char *shellName;
+    const char *description;
+};
+
+typedef std::vector<Description> Descriptions;
+
 class CoreComponent :
 public CoreObject, public Serializable, public Suspendable, public Synchronizable, public Configurable {
 
 public:
+
+    // Dummy description
+    constexpr static Descriptions descriptions = { };
 
     // Reference to the emulator this instance belongs to
     class Emulator &emulator;
@@ -50,6 +62,12 @@ public:
 
     CoreComponent(Emulator& ref) : emulator(ref), id(0) { }
     CoreComponent(Emulator& ref, isize id) : emulator(ref), id(id) { }
+
+    virtual const Descriptions &getDescriptions() const { return descriptions; }
+
+    const char *name() { return (getDescriptions().size() > usize(id) && getDescriptions().at(id).name) ? getDescriptions().at(id).name : "TODO"; }
+    const char *shellName() { return (getDescriptions().size() > usize(id) && getDescriptions().at(id).shellName) ? getDescriptions().at(id).shellName : "TODO"; }
+    const char *description() { return (getDescriptions().size() > usize(id) && getDescriptions().at(id).description) ? getDescriptions().at(id).description : "Some help text"; }
 
     bool operator== (CoreComponent &other);
     bool operator!= (CoreComponent &other) { return !(other == *this); }

@@ -24,6 +24,19 @@ class CIA : public SubComponent, public Inspectable<CIAInfo, CIAStats> {
     friend class TOD;
     friend class ParCable;
 
+    Descriptions descriptions = {
+        {
+            .name = "CIA1",
+            .shellName = "cia1",
+            .description = "Complex Interface Adapter 1"
+        },
+        {
+            .name = "CIA2",
+            .shellName = "cia2",
+            .description = "Complex Interface Adapter 2"
+        }
+    };
+
     ConfigOptions options = {
 
         OPT_CIA_REVISION,

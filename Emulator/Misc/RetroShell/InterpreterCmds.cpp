@@ -405,11 +405,10 @@ Interpreter::initCommandShell(Command &root)
 
     for (isize i = 0; i < 4; i++) {
 
-        string cmd = util::lowercased(muxer.sid[i].getDescription());
-        root.add({cmd},
-                 i == 0 ?
-                 "Primary Sound Interface Device" :
-                 "Auxiliary Sound Interface Device " + std::to_string(i));
+        auto &sid = muxer.sid[i];
+        string cmd = util::lowercased(sid.getDescription());
+
+        root.add({cmd}, sid.description());
 
         root.pushGroup("");
         root.add({cmd, ""},
