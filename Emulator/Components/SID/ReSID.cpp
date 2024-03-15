@@ -17,7 +17,7 @@
 
 namespace vc64 {
 
-ReSID::ReSID(C64 &ref, int n) : SubComponent(ref), nr(n)
+ReSID::ReSID(C64 &ref, isize id) : SubComponent(ref, id)
 {
     model = MOS_6581;
     emulateFilter = true;
@@ -89,7 +89,7 @@ ReSID::_dump(Category category, std::ostream& os) const
     if (category == Category::State) {
 
         os << tab("Chip");
-        os << "ReSID " << dec(nr) << std::endl;
+        os << "ReSID " << dec(id) << std::endl;
         os << tab("Model");
         os << SIDRevisionEnum::key(getRevision()) << std::endl;
         os << tab("Sampling rate");
@@ -316,7 +316,7 @@ ReSID::executeCycles(isize numCycles, SampleStream &stream)
     
     // Check for a buffer overflow
     if (unlikely(samples > stream.free())) {
-        warn("SID %d: SAMPLE BUFFER OVERFLOW", nr);
+        warn("SID %d: SAMPLE BUFFER OVERFLOW", id);
         stream.clear();
     }
     
@@ -329,7 +329,7 @@ ReSID::executeCycles(isize numCycles, SampleStream &stream)
 isize
 ReSID::executeCycles(isize numCycles)
 {
-    return executeCycles(numCycles, muxer.sidStream[nr]);
+    return executeCycles(numCycles, muxer.sidStream[id]);
 }
 
 }

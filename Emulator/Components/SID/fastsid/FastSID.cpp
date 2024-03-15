@@ -35,8 +35,8 @@
 
 #include <cmath>
 
-FastSID::FastSID(C64 &ref, int n) : SubComponent(ref), nr(n)
-{    
+FastSID::FastSID(C64 &ref, isize id) : SubComponent(ref, id)
+{
     subComponents = std::vector<CoreComponent *> {
         
         &voice[0],
@@ -172,7 +172,7 @@ FastSID::_dump(Category category, std::ostream& os) const
     if (category == Category::State) {
 
         os << tab("Chip");
-        os << "FastSID " << dec(nr) << std::endl;
+        os << "FastSID " << dec(id) << std::endl;
         os << tab("Model");
         os << SIDRevisionEnum::key(model) << std::endl;
         os << tab("Sampling rate");
@@ -408,7 +408,7 @@ FastSID::executeCycles(isize numCycles, SampleStream &stream)
     
     // Check for a buffer overflow
     if (unlikely(samples > stream.free())) {
-        warn("SID %d: SAMPLE BUFFER OVERFLOW", nr);
+        warn("SID %ld: SAMPLE BUFFER OVERFLOW", id);
         stream.clear();
     }
     
@@ -423,7 +423,7 @@ FastSID::executeCycles(isize numCycles, SampleStream &stream)
 isize
 FastSID::executeCycles(isize numCycles)
 {
-    return executeCycles(numCycles, muxer.sidStream[nr]);
+    return executeCycles(numCycles, muxer.sidStream[id]);
 }
 
 void

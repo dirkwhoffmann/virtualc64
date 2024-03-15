@@ -37,10 +37,6 @@ using namespace vc64;
 
 class FastSID final : public SubComponent, public Dumpable {
 
-    // Number of this SID (0 = primary SID)
-    int nr;
-
-    
     //
     // Sub components
     //
@@ -107,7 +103,7 @@ private:
     
 public:
         
-	FastSID(C64 &ref, int n);
+	FastSID(C64 &ref, isize id);
     
 private:
     

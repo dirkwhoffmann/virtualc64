@@ -29,9 +29,6 @@ class SID final : public SubComponent, public Dumpable
         OPT_AUD_VOL,
         OPT_AUD_PAN
     };
-    
-    // Number of this SID (0 = primary SID)
-    int nr;
 
     // Current configuration
     SIDConfig config = { };
@@ -45,8 +42,8 @@ class SID final : public SubComponent, public Dumpable
 public:
 
     // Backends
-    ReSID resid = ReSID(c64, nr);
-    FastSID fastsid = FastSID(c64, nr);
+    ReSID resid = ReSID(c64, id);
+    FastSID fastsid = FastSID(c64, id);
 
     
     //
@@ -55,7 +52,7 @@ public:
 
 public:
 
-    SID(C64 &ref, int n);
+    SID(C64 &ref, isize id);
 
     const char *getDescription() const override;
     void _dump(Category category, std::ostream& os) const override;

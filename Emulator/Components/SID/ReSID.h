@@ -35,9 +35,6 @@ namespace vc64 {
 
 class ReSID final : public SubComponent, public Inspectable<SIDInfo, Void> {
 
-    // Number of this SID (0 = primary SID)
-    int nr;
-
     // Entry point to the reSID backend
     reSID::SID *sid;
     
@@ -71,7 +68,7 @@ private:
     
 public:
     
-    ReSID(C64 &ref, int n);
+    ReSID(C64 &ref, isize id);
     ~ReSID();
     
     

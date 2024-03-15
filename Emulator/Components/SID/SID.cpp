@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-SID::SID(C64 &ref, int n) : SubComponent(ref), nr(n)
+SID::SID(C64 &ref, isize id) : SubComponent(ref, id)
 {
     setClockFrequency(PAL::CLOCK_FREQUENCY);
 }
@@ -24,8 +24,8 @@ SID::SID(C64 &ref, int n) : SubComponent(ref), nr(n)
 const char *
 SID::getDescription() const
 {
-    assert(nr >= 0 && nr <= 3);
-    return nr == 0 ? "sid" : nr == 1 ? "sid1" : nr == 2 ? "sid2" : "sid3";
+    assert(id >= 0 && id <= 3);
+    return id == 0 ? "sid" : id == 1 ? "sid1" : id == 2 ? "sid2" : "sid3";
 }
 
 void
@@ -53,7 +53,7 @@ SID::_dump(Category category, std::ostream& os) const
 void
 SID::resetConfig()
 {
-    Configurable::resetConfig(emulator.defaults, nr);
+    Configurable::resetConfig(emulator.defaults, id);
 }
 
 i64
@@ -75,7 +75,7 @@ SID::getOption(Option option) const
 i64 
 SID::getFallback(Option opt) const
 {
-    return emulator.defaults.getFallback(opt, nr);
+    return emulator.defaults.getFallback(opt, id);
 }
 
 void
@@ -87,7 +87,7 @@ SID::setOption(Option option, i64 value)
 
         case OPT_SID_ENABLE:
         {
-            if (nr == 0 && value == false) {
+            if (id == 0 && value == false) {
                 warn("SID 0 can't be disabled\n");
                 return;
             }
@@ -99,7 +99,7 @@ SID::setOption(Option option, i64 value)
             {   SUSPENDED
 
                 config.enabled = value;
-                c64.muxer.clearSampleBuffer(nr);
+                c64.muxer.clearSampleBuffer(id);
                 c64.muxer.hardReset();
             }
             return;
@@ -107,7 +107,7 @@ SID::setOption(Option option, i64 value)
 
         case OPT_SID_ADDRESS:
         {
-            if (nr == 0 && value != 0xD400) {
+            if (id == 0 && value != 0xD400) {
                 warn("SID 0 can't be remapped\n");
                 return;
             }
@@ -123,7 +123,7 @@ SID::setOption(Option option, i64 value)
             {   SUSPENDED
 
                 config.address = (u16)value;
-                muxer.clearSampleBuffer(nr);
+                muxer.clearSampleBuffer(id);
             }
             return;
         }
