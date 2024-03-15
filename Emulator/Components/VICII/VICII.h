@@ -615,8 +615,6 @@ public:
     VICII(C64 &ref);
     const Descriptions &getDescriptions() const override { return descriptions; }
 
-    const char *getDescription() const override { return "VIC"; }
-
     void _initialize() override;
 
     void initFuncTable(VICIIRevision revision);

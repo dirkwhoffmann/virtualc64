@@ -18,7 +18,28 @@
 
 namespace vc64 {
 
-std::vector<CoreComponent *> 
+const char *
+CoreComponent::name()
+{
+    assert(isize(getDescriptions().size()) > id);
+    return getDescriptions().at(id).name;
+}
+
+const char *
+CoreComponent::shellName()
+{
+    assert(isize(getDescriptions().size()) > id);
+    return getDescriptions().at(id).shellName;
+}
+
+const char *
+CoreComponent::description()
+{
+    assert(isize(getDescriptions().size()) > id);
+    return getDescriptions().at(id).description;
+}
+
+std::vector<CoreComponent *>
 CoreComponent::collectComponents() const
 {
     std::vector<CoreComponent *> result;

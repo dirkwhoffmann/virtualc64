@@ -258,7 +258,6 @@ public:
     const Descriptions &getDescriptions() const override { return descriptions; }
     
     void prefix() const override;
-    const char *getDescription() const override { return "C64"; }
     void _dump(Category category, std::ostream& os) const override;
 
     void hardReset();

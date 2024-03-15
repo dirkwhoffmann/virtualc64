@@ -65,9 +65,11 @@ public:
 
     virtual const Descriptions &getDescriptions() const { return descriptions; }
 
-    const char *name() { assert(getDescriptions().size() > id); return getDescriptions().at(id).name; }
-    const char *shellName() { assert(getDescriptions().size() > id); return getDescriptions().at(id).shellName; }
-    const char *description() { assert(getDescriptions().size() > id); return getDescriptions().at(id).description; }
+    virtual const char *getDescription() const override { return getDescriptions().at(id).name; };
+
+    const char *name();
+    const char *shellName();
+    const char *description();
 
     std::vector<CoreComponent *> collectComponents() const;
     void collectComponents(std::vector<CoreComponent *> &components) const;

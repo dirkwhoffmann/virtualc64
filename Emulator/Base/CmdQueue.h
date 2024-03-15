@@ -31,13 +31,7 @@ class CmdQueue final : CoreObject, Synchronizable {
     std::atomic<bool> empty = true;
 
     //
-    // Constructing
-    //
-
-
-
-    //
-    // Methods from CoreObject
+    // Methods
     //
 
 private:
