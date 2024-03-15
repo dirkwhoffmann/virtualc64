@@ -87,8 +87,6 @@ public:
     
     TOD(C64 &ref, CIA &cia);
     const Descriptions &getDescriptions() const override { return descriptions; }
-
-    const char *getDescription() const override;
     void _dump(Category category, std::ostream& os) const override;
     
     TOD& operator= (const TOD& other) {

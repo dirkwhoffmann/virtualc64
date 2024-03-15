@@ -168,7 +168,7 @@ class FastVoice final : public SubComponent {
     
     
     //
-    // Initializing
+    // Methods
     //
     
 public:
@@ -178,21 +178,7 @@ public:
     static void initWaveTables();
     void init(FastSID *owner, isize voiceNr, FastVoice *prevVoice);
 
-    
-    //
-    // Methods from CoreObject
-    //
-
-private:
-    
     const char *getDescription() const override { return "FastVoice"; }
-
-    
-    //
-    // Methods from CoreComponent
-    //
-    
-public:
 
     FastVoice& operator= (const FastVoice& other) {
 

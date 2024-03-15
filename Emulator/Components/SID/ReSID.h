@@ -71,7 +71,7 @@ private:
 
     
     //
-    // Initializing
+    // Methods
     //
     
 public:
@@ -80,22 +80,6 @@ public:
     ~ReSID();
 
     const Descriptions &getDescriptions() const override { return descriptions; }
-
-    
-    //
-    // Methods from CoreObject
-    //
-    
-private:
-    
-    const char *getDescription() const override { return "ReSID"; }
-
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
 
     ReSID& operator= (const ReSID& other) {
 

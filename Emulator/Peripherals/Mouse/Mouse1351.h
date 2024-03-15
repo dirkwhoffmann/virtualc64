@@ -42,29 +42,13 @@ class Mouse1351 final : public SubComponent {
     i64 shiftY = 31;
     
     //
-    // Initializing
+    // Methods
     //
     
 public:
 
     Mouse1351(C64 &ref) : SubComponent(ref) { }
     const Descriptions &getDescriptions() const override { return descriptions; }
-
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
-    
-    const char *getDescription() const override { return "Mouse1351"; }
-
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
 
     Mouse1351& operator= (const Mouse1351& other) { return *this; }
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);

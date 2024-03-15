@@ -66,8 +66,6 @@ public:
     
     DriveMemory(C64 &ref, Drive &drive);
     const Descriptions &getDescriptions() const override { return descriptions; }
-
-    const char *getDescription() const override { return "DriveMemory"; }
     void _dump(Category category, std::ostream& os) const override;
 
     DriveMemory& operator= (const DriveMemory& other) {

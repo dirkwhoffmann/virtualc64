@@ -105,7 +105,7 @@ public:
     
     
     //
-    // Initializing
+    // Methods
     //
     
 public:
@@ -129,21 +129,11 @@ private:
     void init(class AnyCollection &archive, bool wp) throws;
     void init(SerReader &reader) throws;
 
-    
-    //
-    // Methods from CoreObject
-    //
-
 private:
     
     const char *getDescription() const override { return "Disk"; }
     void _dump(Category category, std::ostream& os) const override;
 
-    
-    //
-    // Methods from CoreComponent
-    //
-    
 public:
 
     Disk& operator= (const Disk& other) {

@@ -558,7 +558,6 @@ public:
     
     VIA1(C64 &ref, Drive &drvref) : VIA6522(ref, drvref) { }
     ~VIA1() { }
-    const char *getDescription() const override { return "VIA1"; }
     bool isVia1() const override { return true; }
     
     u8 peekORA(bool handshake) override;
@@ -580,7 +579,6 @@ public:
     
     VIA2(C64 &ref, Drive &drvref) : VIA6522(ref, drvref) { }
     ~VIA2() { }
-    const char *getDescription() const override { return "VIA2"; }
     bool isVia1() const override { return false; }
 
     u8 portAexternal() const override;

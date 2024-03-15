@@ -65,8 +65,6 @@ public:
     PIA6821(C64 &ref, Drive &drvref);
     const Descriptions &getDescriptions() const override { return descriptions; }
 
-    const char *getDescription() const override { return "PIA"; }
-    
     PIA6821& operator= (const PIA6821& other) {
 
         CLONE(pa)
@@ -175,9 +173,7 @@ class PiaDolphin final : public PIA6821 {
 public:
 
     using PIA6821::PIA6821;
-    
-    const char *getDescription() const override { return "PiaDolphin"; }
-    
+        
 private:
 
     void ca2HasChangedTo(bool value) override;

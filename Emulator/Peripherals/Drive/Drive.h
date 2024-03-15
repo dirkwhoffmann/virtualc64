@@ -259,8 +259,6 @@ public:
     
     Drive(C64 &ref, isize id);
     const Descriptions &getDescriptions() const override { return descriptions; }
-    const char *getDescription() const override;
-    
     void _dump(Category category, std::ostream& os) const override;
 
     void _initialize() override;

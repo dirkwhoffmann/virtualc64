@@ -606,12 +606,7 @@ class CIA1 final : public CIA {
 public:
 
     CIA1(C64 &ref) : CIA(ref, 0) { };
-    /*
-    bool isCIA1() const override { return true; }
-    bool isCIA2() const override { return false; }
-    */
-    const char *getDescription() const override { return "CIA1"; }
-    
+
 private:
 
     void pullDownInterruptLine() override;
@@ -640,11 +635,6 @@ class CIA2 final : public CIA {
 public:
 
     CIA2(C64 &ref) : CIA(ref, 1) { };
-    /*
-    bool isCIA1() const override { return false; }
-    bool isCIA2() const override { return true; }
-    */
-    const char *getDescription() const override { return "CIA2"; }
 
 private:
 

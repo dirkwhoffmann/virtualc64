@@ -59,28 +59,14 @@ class DmaDebugger final : public SubComponent, public Dumpable {
 
     
     //
-    // Initializing
+    // Methods
     //
     
 public:
     
     DmaDebugger(C64 &ref);
     const Descriptions &getDescriptions() const override { return descriptions; }
-
-    
-    //
-    // Methods from CoreObject
-    //
-
-    const char *getDescription() const override { return "DmaDebugger"; }
     void _dump(Category category, std::ostream& os) const override;
-
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
        
     DmaDebugger& operator= (const DmaDebugger& other) {
 

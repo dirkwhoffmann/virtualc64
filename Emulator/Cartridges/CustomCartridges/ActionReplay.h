@@ -37,7 +37,6 @@ class ActionReplay3 final : public Cartridge {
 public:
 
     using Cartridge::Cartridge;
-    const char *getDescription() const override { return "AR3"; }
     CartridgeType getCartridgeType() const override { return CRT_ACTION_REPLAY3; }
 
 
@@ -156,7 +155,6 @@ class AtomicPower final : public ActionReplay {
 public:
 
     using ActionReplay::ActionReplay;
-    const char *getDescription() const override { return "AtomicPower"; }
     CartridgeType getCartridgeType() const override { return CRT_ATOMIC_POWER; }
 
     /* Indicates if special ROM / RAM config has to be used. In contrast to

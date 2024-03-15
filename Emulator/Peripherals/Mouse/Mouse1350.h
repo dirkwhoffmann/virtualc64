@@ -48,29 +48,13 @@ private:
     
     
     //
-    // Initializing
+    // Methods
     //
     
 public:
     
     Mouse1350(C64 &ref) : SubComponent(ref) { }
     const Descriptions &getDescriptions() const override { return descriptions; }
-
-    
-    //
-    // Methods from CoreObject
-    //
-
-private:
-    
-    const char *getDescription() const override { return "Mouse1350"; }
-    
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
 
     Mouse1350& operator= (const Mouse1350& other) { return *this; }
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);

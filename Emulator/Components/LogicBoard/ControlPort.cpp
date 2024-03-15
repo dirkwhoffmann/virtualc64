@@ -28,12 +28,6 @@ ControlPort::ControlPort(C64 &ref, isize id) : SubComponent(ref, id)
     };
 }
 
-const char *
-ControlPort::getDescription() const 
-{
-    return id == PORT_1 ? "port1" : "port2";
-}
-
 void
 ControlPort::_dump(Category category, std::ostream& os) const
 {

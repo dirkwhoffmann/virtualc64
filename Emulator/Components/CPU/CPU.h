@@ -69,7 +69,7 @@ public:
 
 
     //
-    // Initializing
+    // Methods
     //
     
 public:
@@ -83,23 +83,8 @@ public:
 
     void setID(isize id) { this->id = id; }
 
-    
-    //
-    // Methods from CoreObject
-    //
-
-private:
-
-    const char *getDescription() const override;
     void _dump(Category category, std::ostream& os) const override;
 
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
-    
     void _trackOn() override;
     void _trackOff() override;
     

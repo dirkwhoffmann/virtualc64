@@ -28,12 +28,6 @@ Mouse::Mouse(C64 &ref, ControlPort& pref) : SubComponent(ref, pref.id), port(pre
     };
 }
 
-const char *
-Mouse::getDescription() const
-{
-    return id == PORT_1 ? "mouse1" : "mouse2";
-}
-
 void Mouse::_reset(bool hard)
 {
     targetX = 0;

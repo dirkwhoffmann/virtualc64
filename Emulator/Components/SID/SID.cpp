@@ -21,13 +21,6 @@ SID::SID(C64 &ref, isize id) : SubComponent(ref, id)
     setClockFrequency(PAL::CLOCK_FREQUENCY);
 }
 
-const char *
-SID::getDescription() const
-{
-    assert(id >= 0 && id <= 3);
-    return id == 0 ? "sid" : id == 1 ? "sid1" : id == 2 ? "sid2" : "sid3";
-}
-
 void
 SID::_dump(Category category, std::ostream& os) const
 {

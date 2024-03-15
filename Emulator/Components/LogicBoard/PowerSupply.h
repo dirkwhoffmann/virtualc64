@@ -43,9 +43,6 @@ public:
     
     PowerSupply(C64& ref);
     const Descriptions &getDescriptions() const override { return descriptions; }
-
-    const char *getDescription() const override { return "PowerSupply"; }
-
     PowerSupply& operator= (const PowerSupply& other) { return *this; }
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 

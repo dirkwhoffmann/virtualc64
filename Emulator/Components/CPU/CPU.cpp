@@ -28,20 +28,6 @@ CPU::CPU(CPURevision cpuModel, C64& ref) : CPU(ref)
     setModel(cpuModel);
 }
 
-const char *
-CPU::getDescription() const
-{
-    switch (id) {
-
-        case 0: return "CPU";
-        case 1: return "CPU(8)";
-        case 2: return "CPU(9)";
-
-        default:
-            return "???";
-    }
-}
-
 void
 CPU::_reset(bool hard)
 {    

@@ -31,8 +31,6 @@ public:
     
     ParCable(C64 &ref);
     const Descriptions &getDescriptions() const override { return descriptions; }
-
-    const char *getDescription() const override { return "ParCable"; }
     void _dump(Category category, std::ostream& os) const override;
 
     ParCable& operator= (const ParCable& other) { return *this; }

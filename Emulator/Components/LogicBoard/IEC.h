@@ -64,8 +64,6 @@ public:
 
     IEC(C64 &ref) : SubComponent(ref) { };
     const Descriptions &getDescriptions() const override { return descriptions; }
-
-    const char *getDescription() const override { return "IEC"; }
     void _dump(Category category, std::ostream& os) const override;
 
     

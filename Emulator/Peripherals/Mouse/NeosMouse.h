@@ -60,29 +60,13 @@ class NeosMouse final : public SubComponent {
     
     
     //
-    // Initializing
+    // Methods
     //
     
 public:
     
     NeosMouse(C64 &ref) : SubComponent(ref) { }
     const Descriptions &getDescriptions() const override { return descriptions; }
-
-    
-    //
-    // Methods from CoreObject
-    //
-
-private:
-    
-    const char *getDescription() const override { return "NeosMouse"; }
-
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
 
     NeosMouse& operator= (const NeosMouse& other) { return *this; }
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);

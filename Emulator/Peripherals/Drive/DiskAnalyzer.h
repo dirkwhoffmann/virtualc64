@@ -47,19 +47,14 @@ class DiskAnalyzer final : public CoreObject {
 
 
     //
-    // Initializing
+    // Methods
     //
     
 public:
 
     DiskAnalyzer(const class Disk &disk);
     ~DiskAnalyzer();
-    
-    
-    //
-    // Methods from CoreObject
-    //
-
+   
 private:
     
     const char *getDescription() const override { return "DiskAnalyzer"; }

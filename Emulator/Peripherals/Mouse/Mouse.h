@@ -113,7 +113,6 @@ public:
     
     Mouse(C64 &ref, ControlPort& pref);
     const Descriptions &getDescriptions() const override { return descriptions; }
-    const char *getDescription() const override;
     void _dump(Category category, std::ostream& os) const override;
 
     Mouse& operator= (const Mouse& other) {

@@ -66,7 +66,7 @@ public:
 
 
     //
-    // Constructing and serializing
+    // Methods
     //
 
 public:
@@ -74,23 +74,7 @@ public:
     FlashRom(C64 &ref);
     ~FlashRom();
     const Descriptions &getDescriptions() const override { return descriptions; }
-
-
-    //
-    // Methods from CoreObject
-    //
-
-private:
-
-    const char *getDescription() const override { return "FlashRom"; }
     void _dump(Category category, std::ostream& os) const override;
-
-
-    //
-    // Methods from CoreComponent
-    //
-
-public:
 
     FlashRom& operator= (const FlashRom& other) {
 

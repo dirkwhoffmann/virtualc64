@@ -77,8 +77,6 @@ public:
 
     SID(C64 &ref, isize id);
     const Descriptions &getDescriptions() const override { return descriptions; }
-
-    const char *getDescription() const override;
     void _dump(Category category, std::ostream& os) const override;
 
     SID& operator= (const SID& other) {

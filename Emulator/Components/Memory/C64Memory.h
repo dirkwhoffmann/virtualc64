@@ -82,8 +82,6 @@ public:
     
     C64Memory(C64 &ref);
     const Descriptions &getDescriptions() const override { return descriptions; }
-
-    const char *getDescription() const override { return "memory"; }
     void _dump(Category category, std::ostream& os) const override;
 
     C64Memory& operator= (const C64Memory& other) {

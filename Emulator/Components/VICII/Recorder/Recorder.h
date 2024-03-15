@@ -86,8 +86,6 @@ public:
     
     Recorder(C64& ref);
     const Descriptions &getDescriptions() const override { return descriptions; }
-
-    const char *getDescription() const override { return "Recorder"; }
     void _dump(Category category, std::ostream& os) const override;
 
     void _initialize() override;

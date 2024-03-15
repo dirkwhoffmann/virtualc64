@@ -61,8 +61,6 @@ public:
     ControlPort(C64 &ref, isize id);
     const Descriptions &getDescriptions() const override { return descriptions; }
 
-    const char *getDescription() const override;
-
     ControlPort& operator= (const ControlPort& other) {
 
         CLONE(mouse)

@@ -35,12 +35,6 @@ Drive::Drive(C64 &ref, isize id) : SubComponent(ref, id)
     cpu.setID(id == DRIVE8 ? 1 : 2);
 }
 
-const char *
-Drive::getDescription() const
-{
-    return id == DRIVE8 ? "drive8" : "drive9";
-}
-
 void
 Drive::_initialize()
 {

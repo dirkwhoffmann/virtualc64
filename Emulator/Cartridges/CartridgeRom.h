@@ -55,7 +55,6 @@ public:
     CartridgeRom(C64 &ref, u16 _size, u16 _loadAddress, const u8 *buffer = nullptr);
     ~CartridgeRom();
     const Descriptions &getDescriptions() const override { return descriptions; }
-    const char *getDescription() const override { return "CartridgeRom"; }
 
 
     //

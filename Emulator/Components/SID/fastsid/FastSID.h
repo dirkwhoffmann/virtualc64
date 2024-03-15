@@ -120,7 +120,6 @@ private:
 
 public:
 
-    const char *getDescription() const override { return "FastSID"; }
     void _dump(Category category, std::ostream& os) const override;
        
     FastSID& operator= (const FastSID& other) {

@@ -45,30 +45,14 @@ class Keyboard final : public SubComponent, public Dumpable {
 
 
     //
-    // Initializing
+    // Methods
     //
     
 public:
     
     Keyboard(C64 &ref) : SubComponent(ref) { }
     const Descriptions &getDescriptions() const override { return descriptions; }
-
-    
-    //
-    // Methods from CoreObject
-    //
-    
-private:
-    
-    const char *getDescription() const override { return "Keyboard"; }
     void _dump(Category category, std::ostream& os) const override;
-
-    
-    //
-    // Methods from CoreComponent
-    //
-    
-public:
 
     Keyboard& operator= (const Keyboard& other) {
 
