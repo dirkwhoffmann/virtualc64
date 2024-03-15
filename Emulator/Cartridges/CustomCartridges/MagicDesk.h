@@ -24,7 +24,7 @@ class MagicDesk final : public Cartridge {
         .title      = "Magic Desk",
     };
 
-    virtual const CartridgeTraits &getTraits() const override { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
 
 public:
 

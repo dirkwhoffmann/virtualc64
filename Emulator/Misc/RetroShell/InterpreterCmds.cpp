@@ -166,9 +166,10 @@ Interpreter::initCommandShell(Command &root)
     // Components (C64)
     //
 
-    auto cmd = util::lowercased(c64.objectName());
+    auto cmd = c64.shellName();
+    auto description = c64.description();
+    root.add({cmd}, description);
 
-    root.add({cmd}, "Commodore 64");
     root.pushGroup("");
 
     root.add({cmd, ""},
@@ -235,9 +236,10 @@ Interpreter::initCommandShell(Command &root)
     // Components (Memory)
     //
 
-    cmd = util::lowercased(mem.objectName());
+    cmd = mem.shellName();
+    description = mem.description();
+    root.add({cmd}, description);
 
-    root.add({cmd}, "Ram and Rom");
     root.pushGroup("");
 
     root.add({cmd, ""},
@@ -286,11 +288,10 @@ Interpreter::initCommandShell(Command &root)
 
     for (isize i = 0; i < 2; i++) {
 
-        string cmd = (i == 0) ?
-        util::lowercased(cia1.objectName()) :
-        util::lowercased(cia2.objectName());
+        cmd = (i == 0) ? cia1.shellName() : cia2.shellName();
+        description = (i == 0) ? cia1.description() : cia2.description();
+        root.add({cmd}, description);
 
-        root.add({cmd}, "Complex Interface Adapter " + std::to_string(i + 1));
         root.pushGroup("");
 
         root.add({cmd, ""},
@@ -324,9 +325,10 @@ Interpreter::initCommandShell(Command &root)
     // Components (VICII)
     //
 
-    cmd = util::lowercased(vic.objectName());
+    cmd = vic.shellName();
+    description = vic.description();
+    root.add({cmd}, description);
 
-    root.add({cmd}, "Video Interface Controller");
     root.pushGroup("");
 
     root.add({cmd, ""},
@@ -356,9 +358,10 @@ Interpreter::initCommandShell(Command &root)
     // Components (DMA Debugger)
     //
 
-    cmd = util::lowercased(vic.dmaDebugger.objectName());
+    cmd = vic.dmaDebugger.shellName();
+    description = vic.dmaDebugger.description();
+    root.add({cmd}, description);
 
-    root.add({cmd},   "DMA Debugger");
     root.pushGroup("");
 
     root.add({cmd, ""},
@@ -406,9 +409,10 @@ Interpreter::initCommandShell(Command &root)
     for (isize i = 0; i < 4; i++) {
 
         auto &sid = muxer.sid[i];
-        string cmd = util::lowercased(sid.objectName());
 
-        root.add({cmd}, sid.description());
+        cmd = sid.shellName();
+        description = sid.description();
+        root.add({cmd}, description);
 
         root.pushGroup("");
         root.add({cmd, ""},
@@ -440,9 +444,10 @@ Interpreter::initCommandShell(Command &root)
     // Components (Muxer)
     //
 
-    cmd = util::lowercased(muxer.objectName());
+    cmd = muxer.shellName();
+    description = muxer.description();
+    root.add({cmd}, description);
 
-    root.add({cmd}, "Audio backend");
     root.pushGroup("");
 
     root.add({cmd, ""},
@@ -473,9 +478,10 @@ Interpreter::initCommandShell(Command &root)
     // Components (Expansion port)
     //
 
-    cmd = util::lowercased(expansionport.objectName());
+    cmd = expansionport.shellName();
+    description = expansionport.description();
+    root.add({cmd}, description);
 
-    root.add({cmd}, "Expansion port");
     root.pushGroup("");
 
     root.add({cmd, "attach"},
@@ -511,9 +517,10 @@ Interpreter::initCommandShell(Command &root)
     // Components (Power supply)
     //
 
-    cmd = util::lowercased(powerSupply.objectName());
+    cmd = powerSupply.shellName();
+    description = powerSupply.description();
+    root.add({cmd}, description);
 
-    root.add({cmd},   "Power supply");
     root.pushGroup("");
 
     root.add({cmd, ""},
@@ -544,9 +551,10 @@ Interpreter::initCommandShell(Command &root)
     // Components (Host)
     //
 
-    cmd = util::lowercased(host.objectName());
+    cmd = host.shellName();
+    description = host.description();
+    root.add({cmd}, description);
 
-    root.add({cmd}, "Host computer");
     root.pushGroup("");
 
     root.add({cmd, ""},
@@ -585,9 +593,10 @@ Interpreter::initCommandShell(Command &root)
     // Peripherals (Keyboard)
     //
 
-    cmd = util::lowercased(host.objectName());
+    cmd = keyboard.shellName();
+    description = keyboard.description();
+    root.add({cmd}, description);
 
-    root.add({cmd}, "Keyboard");
     root.pushGroup("");
 
     root.add({cmd, "press"}, { Arg::value },
@@ -637,11 +646,12 @@ Interpreter::initCommandShell(Command &root)
 
     for (isize i = PORT_1; i <= PORT_2; i++) {
 
-        string cmd = i == PORT_1 ?
-        util::lowercased(c64.port1.mouse.objectName()) :
-        util::lowercased(c64.port2.mouse.objectName()) ;
+        auto &mouse = i == PORT_1 ? c64.port1.mouse : c64.port2.mouse;
 
-        root.add({cmd}, "Mouse in port " + string(i == PORT_1 ? "1" : "2"));
+        cmd =mouse.shellName();
+        description = mouse.description();
+        root.add({cmd}, description);
+
         root.pushGroup("");
 
         root.add({cmd, ""},
@@ -676,11 +686,12 @@ Interpreter::initCommandShell(Command &root)
 
     for (isize i = PORT_1; i <= PORT_2; i++) {
 
-        string cmd = i == PORT_1 ?
-        util::lowercased(c64.port1.joystick.objectName()) :
-        util::lowercased(c64.port2.joystick.objectName()) ;
+        auto &joystick = i == PORT_1 ? c64.port1.joystick : c64.port2.joystick;
 
-        root.add({cmd}, "Joystick in port " + string(i == PORT_1 ? "1" : "2"));
+        cmd =joystick.shellName();
+        description = joystick.description();
+        root.add({cmd}, description);
+
         root.pushGroup("");
 
         root.add({cmd, ""},
@@ -791,9 +802,10 @@ Interpreter::initCommandShell(Command &root)
     // Peripherals (Datasette)
     //
 
-    cmd = util::lowercased(datasette.objectName());
+    cmd = datasette.shellName();
+    description = datasette.description();
+    root.add({cmd}, description);
 
-    root.add({cmd}, "Commodore tape drive");
     root.pushGroup("");
 
     root.add({cmd, ""},
@@ -854,11 +866,11 @@ Interpreter::initCommandShell(Command &root)
 
     for (isize i = 0; i < 2; i++) {
 
-        string cmd = i == 0 ? 
-        util::lowercased(c64.drive8.objectName()) :
-        util::lowercased(c64.drive9.objectName()) ;
+        auto &drive = i == 0 ? c64.drive8 : c64.drive9;
 
-        root.add({cmd}, "Floppy drive " + std::to_string(i + 8));
+        cmd = drive.shellName();
+        description = drive.description();
+        root.add({cmd}, description);
 
         root.pushGroup("");
 
@@ -941,9 +953,10 @@ Interpreter::initCommandShell(Command &root)
     // Peripherals (Parallel cable)
     //
 
-    cmd = util::lowercased(c64.parCable.objectName());
+    cmd = parCable.shellName();
+    description = parCable.description();
+    root.add({cmd}, description);
 
-    root.add({cmd},      "Parallel drive cable");
     root.pushGroup("");
 
     root.add({cmd, ""},

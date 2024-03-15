@@ -95,7 +95,7 @@ public:
     
 public:
 
-    const CartridgeTraits &getTraits() const;
+    const CartridgeTraits &getCartridgeTraits() const;
     CartridgeInfo getInfo() const;
     CartridgeRomInfo getRomInfo(isize nr) const;
     CartridgeType getCartridgeType() const;

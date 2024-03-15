@@ -36,7 +36,7 @@ class Expert final : public Cartridge {
         .switchRight    = "On"
     };
 
-    virtual const CartridgeTraits &getTraits() const override { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
 
     // Flipflop deciding whether the cartridge is enabled or disabled
     bool active = false;

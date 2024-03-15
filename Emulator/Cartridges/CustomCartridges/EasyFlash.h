@@ -27,7 +27,7 @@ class EasyFlash final : public Cartridge {
         .leds       = 1
     };
 
-    virtual const CartridgeTraits &getTraits() const override { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
 
     // Flash Rom mapping to ROML ($8000 - $9FFF)
     FlashRom flashRomL = FlashRom(c64);

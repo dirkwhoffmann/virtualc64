@@ -747,7 +747,7 @@ using namespace vc64;
 
 - (CartridgeTraits)traits
 {
-    return [self eport]->getTraits();
+    return [self eport]->getCartridgeTraits();
 }
 
 - (CartridgeInfo)info
@@ -762,7 +762,7 @@ using namespace vc64;
 
 - (BOOL)cartridgeAttached
 {
-    return [self eport]->getTraits().type != CRT_NONE;
+    return [self eport]->getCartridgeTraits().type != CRT_NONE;
 }
  
 - (void)attachCartridge:(CRTFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex

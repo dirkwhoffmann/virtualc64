@@ -24,7 +24,7 @@ class MikroAss final : public Cartridge {
         .title      = "Mikro Assembler",
     };
 
-    virtual const CartridgeTraits &getTraits() const override { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
 
 public:
 

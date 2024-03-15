@@ -1040,7 +1040,7 @@ public:
 
         /** @brief  Returns the traits of the current cartridge.
          */
-        CartridgeTraits getTraits() const;
+        CartridgeTraits getCartridgeTraits() const;
 
         /** @brief  Returns the state of the current cartridge.
          */

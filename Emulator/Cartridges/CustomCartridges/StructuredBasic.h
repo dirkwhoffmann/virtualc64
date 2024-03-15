@@ -24,7 +24,7 @@ class StructuredBasic final : public Cartridge {
         .title      = "Structured Basic",
     };
 
-    virtual const CartridgeTraits &getTraits() const override { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
 
 public:
 

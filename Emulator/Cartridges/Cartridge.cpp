@@ -170,7 +170,7 @@ Cartridge::Cartridge(C64 &ref) : SubComponent(ref)
     trace(CRT_DEBUG, "Creating cartridge at address %p...\n", (void *)this);
 
     // Allocate external memory (if any)
-    setRamCapacity(getTraits().memory);
+    setRamCapacity(getCartridgeTraits().memory);
 }
 
 Cartridge::~Cartridge()
@@ -260,7 +260,7 @@ void
 Cartridge:: operator << (SerResetter &worker)
 {
     // Reset external RAM
-    if (externalRam && !getTraits().battery) memset(externalRam, 0xFF, ramCapacity);
+    if (externalRam && !getCartridgeTraits().battery) memset(externalRam, 0xFF, ramCapacity);
 
     // Reset all chip packets
     for (isize i = 0; i < numPackets; i++) *packet[i] << worker;

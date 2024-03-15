@@ -24,7 +24,7 @@ class Mach5 final : public Cartridge {
         .title      = "Mach5",
     };
 
-    virtual const CartridgeTraits &getTraits() const override { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
 
 public:
 

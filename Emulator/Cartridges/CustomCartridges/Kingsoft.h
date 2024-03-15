@@ -24,7 +24,7 @@ class Kingsoft final : public Cartridge {
         .title      = "Kingsoft",
     };
 
-    virtual const CartridgeTraits &getTraits() const override { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
 
 public:
 

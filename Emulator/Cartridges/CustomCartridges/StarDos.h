@@ -24,7 +24,7 @@ class StarDos final : public Cartridge {
         .title      = "StarDOS",
     };
 
-    virtual const CartridgeTraits &getTraits() const override { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
 
     i64 voltage = 5000000;
     i64 latestVoltageUpdate = 0;

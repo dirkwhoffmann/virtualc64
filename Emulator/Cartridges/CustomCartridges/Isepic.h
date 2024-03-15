@@ -28,7 +28,7 @@ class Isepic final : public Cartridge {
         .switchRight    = "On"
     };
 
-    virtual const CartridgeTraits &getTraits() const override { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
 
     // Selected page inside the selected RAM bank
     isize page;

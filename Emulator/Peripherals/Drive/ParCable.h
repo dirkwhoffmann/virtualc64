@@ -23,7 +23,7 @@ class ParCable final : public SubComponent, public Dumpable {
     Descriptions descriptions = {{
 
         .name           = "ParCable",
-        .shellName      = "",
+        .shellName      = "parcable",
         .description    = "Parallel Drive Cable"
     }};
 

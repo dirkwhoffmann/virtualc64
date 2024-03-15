@@ -24,7 +24,7 @@ class WarpSpeed final : public Cartridge {
         .title      = "WarpSpeed",
     };
 
-    virtual const CartridgeTraits &getTraits() const override { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
 
 public:
     

@@ -36,7 +36,7 @@ class Cartridge : public SubComponent, public Dumpable {
 
 public:
 
-    virtual const CartridgeTraits &getTraits() const { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const { return traits; }
 
     // Maximum number of chip packets on a single cartridge
     static const isize MAX_PACKETS = 128;
@@ -173,7 +173,7 @@ public:
 
 protected:
 
-    const char *objectName() const override { return getTraits().title; }
+    const char *objectName() const override { return getCartridgeTraits().title; }
     void _dump(Category category, std::ostream& os) const override;
 
 
@@ -253,7 +253,7 @@ public:
     CartridgeRomInfo getRomInfo(isize nr) const;
 
     // Returns the cartridge type
-    virtual CartridgeType getCartridgeType() const { return getTraits().type; }
+    virtual CartridgeType getCartridgeType() const { return getCartridgeTraits().type; }
 
     // Checks whether this cartridge is supported by the emulator yet
     bool isSupported() const { return isSupportedType(getCartridgeType()); }
@@ -327,7 +327,7 @@ public:
     //
 
     // Returns the size of the on-board RAM in bytes
-    isize getRamCapacity() const { return getTraits().memory; }
+    isize getRamCapacity() const { return getCartridgeTraits().memory; }
 
     /* Assigns external RAM to this cartridge. This functions frees any
      * previously assigned RAM and allocates memory of the specified size. The

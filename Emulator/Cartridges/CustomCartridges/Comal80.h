@@ -24,7 +24,7 @@ class Comal80 final : public Cartridge {
         .title      = "Comal 80",
     };
 
-    virtual const CartridgeTraits &getTraits() const override { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
 
 public:
 

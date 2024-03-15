@@ -27,7 +27,7 @@ class KcsPower final : public Cartridge {
         .button1    = "Freeze",
     };
 
-    virtual const CartridgeTraits &getTraits() const override { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
 
 public:
 

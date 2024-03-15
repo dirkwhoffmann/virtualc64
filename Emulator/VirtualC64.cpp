@@ -801,9 +801,9 @@ VirtualC64::RetroShellAPI::setStream(std::ostream &os)
 //
 
 CartridgeTraits 
-VirtualC64::ExpansionPortAPI::getTraits() const
+VirtualC64::ExpansionPortAPI::getCartridgeTraits() const
 {
-    return expansionport.getTraits();
+    return expansionport.getCartridgeTraits();
 }
 
 CartridgeInfo

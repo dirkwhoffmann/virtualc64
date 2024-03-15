@@ -24,7 +24,7 @@ class Zaxxon final : public Cartridge {
         .title      = "Zaxxon",
     };
 
-    virtual const CartridgeTraits &getTraits() const override { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
 
 public:
 

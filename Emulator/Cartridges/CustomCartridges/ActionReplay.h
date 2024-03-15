@@ -32,7 +32,7 @@ class ActionReplay3 final : public Cartridge {
         .button2    = "Reset"
     };
 
-    virtual const CartridgeTraits &getTraits() const override { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
 
 public:
 
@@ -87,7 +87,7 @@ class ActionReplay : public Cartridge {
         .button2    = "Reset"
     };
 
-    virtual const CartridgeTraits &getTraits() const override { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
 
 public:
 
@@ -150,7 +150,7 @@ class AtomicPower final : public ActionReplay {
         .button2    = "Reset"
     };
 
-    virtual const CartridgeTraits &getTraits() const override { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
 
 public:
 

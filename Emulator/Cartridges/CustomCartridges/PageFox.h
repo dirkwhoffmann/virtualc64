@@ -26,7 +26,7 @@ class PageFox final : public Cartridge {
         .memory     = KB(32)
     };
 
-    virtual const CartridgeTraits &getTraits() const override { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
 
 
     /* The cartridge has a single control register which can be accessed in

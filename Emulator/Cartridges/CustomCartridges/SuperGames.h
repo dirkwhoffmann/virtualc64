@@ -24,7 +24,7 @@ class SuperGames final : public Cartridge {
         .title      = "Super Games",
     };
 
-    virtual const CartridgeTraits &getTraits() const override { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
 
     // Write protection latch
     bool protect = false;

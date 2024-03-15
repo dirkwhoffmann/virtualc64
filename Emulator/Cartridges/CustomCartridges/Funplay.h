@@ -24,7 +24,7 @@ class Funplay final : public Cartridge {
         .title      = "Fun Play",
     };
 
-    virtual const CartridgeTraits &getTraits() const override { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
 
 public:
 
