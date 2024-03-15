@@ -229,6 +229,47 @@ CoreComponent::isEmulatorThread() const
     return emulator.isEmulatorThread();
 }
 
+void CoreComponent::exportConfig(std::ostream& ss, bool diff) const
+{
+    bool first = true;
+
+    for (auto &opt: getOptions()) {
+
+        auto current = getOption(opt);
+        auto fallback = getFallback(opt);
+
+        if (!diff || current != fallback) {
+
+            if (first) {
+
+                ss << "# " << description() << std::endl << std::endl;
+                first = false;
+            }
+
+            auto arg1 = OptionParser::create(opt, current)->asPlainString();
+            string line = string(shellName()) + " set " + OptionEnum::plainkey(opt) + " " + arg1;
+
+            if (current != fallback) {
+
+                auto arg2 = OptionParser::create(opt, fallback)->asPlainString();
+                ss << std::setw(40) << std::left << line << " # " << arg2 << std::endl;
+
+            } else {
+
+                ss << line << std::endl;
+            }
+        }
+    }
+
+    if (!first) ss << std::endl;
+
+    for (auto &sub: subComponents) {
+
+        sub->exportConfig(ss, diff);
+    }
+}
+
+/*
 void
 CoreComponent::dumpDiff(std::ostream& ss) const
 {
@@ -260,5 +301,6 @@ CoreComponent::dumpDiff(std::ostream& ss) const
         sub->dumpDiff(ss);
     }
 }
+*/
 
 }

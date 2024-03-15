@@ -136,12 +136,11 @@ OptionParser::create(Option opt, i64 arg)
     fatalError;
 }
 
-
-string
-HexParser::asString()
+string 
+HexParser::asPlainString()
 {
     std::stringstream ss;
-    ss << std::hex << "0x" << std::setw(4) << std::setfill('0') << arg << unit;
+    ss << std::hex << "0x" << std::setw(4) << std::setfill('0') << arg;
 
     return ss.str();
 }

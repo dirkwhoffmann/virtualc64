@@ -152,8 +152,9 @@ public:
     
     bool isEmulatorThread() const;
 
-    void dumpDiff(std::ostream& ss) const;
-    void dumpDiff() const { dumpDiff(std::cout); }
+    // Experimental
+    void exportConfig(std::ostream& ss, bool diff = false) const;
+    void exportDiff(std::ostream& ss) const { exportConfig(ss, true); }
 };
 
 /* This class exposes references to all subcomponents of the C64. It's purpose

@@ -313,6 +313,38 @@ C64::updateClockFrequency()
     durationOfOneCycle = 10000000000 / vic.getFrequency();
 }
 
+void
+C64::exportConfig(const fs::path &path) const
+{
+    auto fs = std::ofstream(path, std::ofstream::binary);
+
+    if (!fs.is_open()) {
+        throw VC64Error(ERROR_FILE_CANT_WRITE);
+    }
+
+    exportConfig(fs);
+}
+
+void
+C64::exportConfig(std::ostream &stream) const
+{
+    stream << "# VirtualC64 " << C64::build() << "\n";
+    stream << "\n";
+    stream << "c64 power off\n";
+    stream << "\n";
+    CoreComponent::exportConfig(stream);
+    stream << "\n";
+    stream << "c64 run\n";
+}
+
+/*
+void
+C64::exportConfig(std::stringstream &stream) const
+{
+
+}
+*/
+
 InspectionTarget
 C64::getInspectionTarget() const
 {

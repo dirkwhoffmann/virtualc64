@@ -227,8 +227,70 @@ extension MyController: NSMenuItemValidation {
         try? c64.run()
     }
 
+    @IBAction func importConfigAction(_ sender: Any!) {
+
+        let defaults = EmulatorProxy.defaults!
+        let openPanel = NSOpenPanel()
+
+        // Power off the emulator if the user doesn't object
+        if !askToPowerOff() { return }
+
+        // Show file panel
+        openPanel.allowsMultipleSelection = false
+        openPanel.canChooseDirectories = true
+        openPanel.canCreateDirectories = false
+        openPanel.canChooseFiles = true
+        openPanel.prompt = "Import"
+        openPanel.allowedFileTypes = ["ini"]
+        openPanel.beginSheetModal(for: window!, completionHandler: { result in
+
+            if result == .OK, let url = openPanel.url {
+
+                do {
+                    // Power off
+                    self.c64.powerOff()
+
+                    // Execute the script
+                    // TODO
+
+                    // Power on
+                    try self.c64.run()
+
+                } catch {
+                    self.showAlert(.cantOpen(url: url), error: error, async: true)
+                }
+            }
+        })
+    }
+
+    @IBAction func exportConfigAction(_ sender: Any!) {
+
+        let defaults = EmulatorProxy.defaults!
+        let savePanel = NSSavePanel()
+
+        // Show file panel
+        savePanel.prompt = "Export"
+        savePanel.title = "Export"
+        savePanel.nameFieldLabel = "Export As:"
+        savePanel.nameFieldStringValue = "virtualc64.ini"
+        savePanel.canCreateDirectories = true
+        savePanel.beginSheetModal(for: window!, completionHandler: { result in
+
+            if result == .OK, let url = savePanel.url {
+
+                do {
+                    // Export settings
+                    // TODO: self.c64.exportConfig(url: url)
+
+                } catch {
+                    self.showAlert(.cantExport(url: url), error: error, async: true)
+                }
+            }
+        })
+    }
+
     //
-    // Action methods (File menu)
+    // Action methods (Machine menu)
     //
     
     func openConfigurator(tab: String = "") {

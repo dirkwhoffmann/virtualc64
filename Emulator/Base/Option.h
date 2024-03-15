@@ -39,6 +39,7 @@ public:
     virtual i64 parse(const string &arg) { return 0; }
 
     // Data providers
+    virtual string asPlainString() { return asString(); }
     virtual string asString() = 0;
     virtual string keyList() = 0;
     virtual string argList() = 0;
@@ -63,7 +64,8 @@ public:
     using OptionParser::OptionParser;
 
     virtual i64 parse(const string &s) override { arg = util::parseNum(s); return arg; }
-    virtual string asString() override { return std::to_string(arg) + unit; }
+    virtual string asPlainString() override { return std::to_string(arg); }
+    virtual string asString() override { return asPlainString() + unit; }
     virtual string keyList() override { return "<value>"; }
     virtual string argList() override { return "<value>"; }
 };
@@ -75,7 +77,8 @@ public:
     using OptionParser::OptionParser;
 
     virtual i64 parse(const string &s) override { arg = util::parseNum(s); return arg; }
-    virtual string asString() override;
+    virtual string asPlainString() override;
+    virtual string asString() override { return asPlainString() + unit; }
     virtual string keyList() override { return "<value>"; }
     virtual string argList() override { return "<value>"; }
 };
@@ -86,6 +89,7 @@ class EnumParser : public OptionParser {
     using OptionParser::OptionParser;
 
     virtual i64 parse(const string &s) override { return (arg = util::parseEnum<T>(s)); }
+    virtual string asPlainString() override { return T::plainkey(arg); }
     virtual string asString() override { return T::key(arg); }
     virtual string keyList() override { return T::keyList(); }
     virtual string argList() override { return T::argList(); }

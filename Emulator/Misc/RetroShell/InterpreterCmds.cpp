@@ -225,8 +225,10 @@ Interpreter::initCommandShell(Command &root)
              [this](Arguments& argv, long value) {
 
         std::stringstream ss;
-        c64.dumpDiff(ss);
+        c64.exportDiff(ss);
         retroShell << ss << '\n';
+
+        c64.exportConfig("/tmp/test.ini");
     });
     
     root.popGroup();
