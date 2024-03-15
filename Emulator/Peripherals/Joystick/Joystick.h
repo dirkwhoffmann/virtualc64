@@ -26,8 +26,6 @@ class Joystick final : public SubComponent, public Dumpable {
         OPT_AUTOFIRE_BULLETS,
         OPT_AUTOFIRE_DELAY
     };
-
-    const long nr;
     
     // Reference to the control port this device belongs to
     ControlPort &port;

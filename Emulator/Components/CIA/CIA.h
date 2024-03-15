@@ -287,9 +287,9 @@ public:
     
 public:
     
-    CIA(C64 &ref);
-    virtual bool isCIA1() const = 0;
-    virtual bool isCIA2() const = 0;
+    CIA(C64 &ref, isize id);
+    bool isCIA1() const { return id == 0; }
+    bool isCIA2() const { return id == 1; }
 
     
     //
@@ -590,9 +590,11 @@ class CIA1 final : public CIA {
 
 public:
 
-    CIA1(C64 &ref) : CIA(ref) { };
+    CIA1(C64 &ref) : CIA(ref, 0) { };
+    /*
     bool isCIA1() const override { return true; }
     bool isCIA2() const override { return false; }
+    */
     const char *getDescription() const override { return "CIA1"; }
     
 private:
@@ -622,9 +624,11 @@ class CIA2 final : public CIA {
     
 public:
 
-    CIA2(C64 &ref) : CIA(ref) { };
+    CIA2(C64 &ref) : CIA(ref, 1) { };
+    /*
     bool isCIA1() const override { return false; }
     bool isCIA2() const override { return true; }
+    */
     const char *getDescription() const override { return "CIA2"; }
 
 private:

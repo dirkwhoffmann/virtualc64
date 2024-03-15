@@ -17,7 +17,7 @@
 
 namespace vc64 {
 
-Joystick::Joystick(C64& ref, ControlPort& pref) : SubComponent(ref), nr(pref.nr), port(pref)
+Joystick::Joystick(C64& ref, ControlPort& pref) : SubComponent(ref, pref.nr), port(pref)
 {
 };
 
@@ -168,11 +168,11 @@ void
 Joystick::processEvent()
 {
     // Get the number of remaining bullets
-    auto shots = nr == PORT_1 ? c64.data[SLOT_AFI1] : c64.data[SLOT_AFI2];
+    auto shots = id == PORT_1 ? c64.data[SLOT_AFI1] : c64.data[SLOT_AFI2];
     assert(shots > 0);
 
     // Cancel the current event
-    nr == PORT_1 ? c64.cancel<SLOT_AFI1>() : c64.cancel<SLOT_AFI2>();
+    id == PORT_1 ? c64.cancel<SLOT_AFI1>() : c64.cancel<SLOT_AFI2>();
 
     // Fire and reload
     if (button) {
@@ -190,7 +190,7 @@ Joystick::processEvent()
 bool
 Joystick::isAutofiring()
 {
-    return nr == PORT_1 ? c64.isPending<SLOT_AFI1>() : c64.isPending<SLOT_AFI2>();
+    return id == PORT_1 ? c64.isPending<SLOT_AFI1>() : c64.isPending<SLOT_AFI2>();
 }
 
 void
@@ -202,7 +202,7 @@ Joystick::reload()
 void
 Joystick::reload(isize bullets)
 {
-    nr == PORT_1 ? reload <SLOT_AFI1> (bullets) : reload <SLOT_AFI2> (bullets);
+    id == PORT_1 ? reload <SLOT_AFI1> (bullets) : reload <SLOT_AFI2> (bullets);
 }
 
 template <long Slot> void
