@@ -15,7 +15,7 @@
 
 #include "ThreadTypes.hpp"
 #include "CoreComponent.h"
-#include "Chrono.h"
+#include "Chrono.hpp"
 #include "Wakeable.h"
 
 namespace vc64 {

@@ -15,7 +15,7 @@
 #include "C64.h"
 // #include "CIA.h"
 // #include "CPU.h"
-#include "IOUtils.h"
+#include "IOUtils.hpp"
 #include "PowerSupply.h"
 
 namespace vc64 {

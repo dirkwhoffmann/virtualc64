@@ -17,7 +17,7 @@
 #include "FSDirEntry.h"
 #include "D64File.h"
 #include "AnyCollection.h"
-#include "IOUtils.h"
+#include "IOUtils.hpp"
 #include <vector>
 
 namespace vc64 {

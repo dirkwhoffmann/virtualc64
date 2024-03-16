@@ -13,7 +13,7 @@
 #include "config.h"
 #include "Emulator.h"
 #include "CoreComponent.h"
-#include "Checksum.h"
+#include "Checksum.hpp"
 #include "Option.h"
 
 namespace vc64 {

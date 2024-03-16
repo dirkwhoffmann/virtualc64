@@ -12,8 +12,8 @@
 
 #include "config.h"
 #include "C64.h"
-#include "IOUtils.h"
-#include "Checksum.h"
+#include "IOUtils.hpp"
+#include "Checksum.hpp"
 
 #include <stdarg.h>
 

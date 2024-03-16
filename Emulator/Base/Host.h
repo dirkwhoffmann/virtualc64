@@ -13,7 +13,7 @@
 #pragma once
 
 #include "CoreComponent.h"
-#include "IOUtils.h"
+#include "IOUtils.hpp"
 
 typedef struct
 {

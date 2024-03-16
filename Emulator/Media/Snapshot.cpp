@@ -13,7 +13,7 @@
 #include "config.h"
 #include "Snapshot.h"
 #include "C64.h"
-#include "IOUtils.h"
+#include "IOUtils.hpp"
 
 namespace vc64 {
 

@@ -13,7 +13,7 @@
 #pragma once
 
 #include "Types.h"
-#include "Checksum.h"
+#include "Checksum.hpp"
 #include <bit>
 
 namespace util {

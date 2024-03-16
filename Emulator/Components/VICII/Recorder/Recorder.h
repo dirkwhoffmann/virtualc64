@@ -14,7 +14,7 @@
 
 #include "RecorderTypes.hpp"
 #include "SubComponent.h"
-#include "Chrono.h"
+#include "Chrono.hpp"
 #include "FFmpeg.h"
 #include "NamedPipe.h"
 

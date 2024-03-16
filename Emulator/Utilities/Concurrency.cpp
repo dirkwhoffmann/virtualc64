@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Concurrency.h"
+#include "Concurrency.hpp"
 
 namespace util {
 

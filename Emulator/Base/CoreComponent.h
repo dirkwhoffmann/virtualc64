@@ -17,7 +17,7 @@
 #include "Synchronizable.h"
 #include "Serializable.h"
 #include "Configurable.h"
-#include "Concurrency.h"
+#include "Concurrency.hpp"
 #include "Suspendable.h"
 #include "ThreadTypes.h"
 #include <vector>

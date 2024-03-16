@@ -16,7 +16,7 @@
 #include "CmdQueueTypes.hpp"
 #include "CoreObject.h"
 #include "Synchronizable.h"
-#include "RingBuffer.h"
+#include "RingBuffer.hpp"
 #include <atomic>
 
 namespace vc64 {

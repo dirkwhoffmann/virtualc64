@@ -13,8 +13,8 @@
 #include "config.h"
 #include "CRTFile.h"
 #include "Cartridge.h"
-#include "Checksum.h"
-#include "IOUtils.h"
+#include "Checksum.hpp"
+#include "IOUtils.hpp"
 
 namespace vc64 {
 

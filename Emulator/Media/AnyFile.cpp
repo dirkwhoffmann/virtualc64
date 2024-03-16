@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "AnyFile.h"
-#include "Checksum.h"
+#include "Checksum.hpp"
 #include "CRTFile.h"
 #include "D64File.h"
 #include "Folder.h"

@@ -18,7 +18,7 @@
 #include "Volume.h"
 #include "SIDStreams.h"
 #include "SID.h"
-#include "Chrono.h"
+#include "Chrono.hpp"
 
 namespace vc64 {
 

@@ -22,7 +22,7 @@
 #include "ParCableTypes.hpp"
 #include "PowerSupplyTypes.hpp"
 #include "MouseTypes.hpp"
-#include "IOUtils.h"
+#include "IOUtils.hpp"
 
 namespace vc64 {
 

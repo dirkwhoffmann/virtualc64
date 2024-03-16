@@ -13,7 +13,7 @@
 #include "config.h"
 #include "Configurable.h"
 #include "Option.h"
-#include "Parser.h"
+#include "Parser.hpp"
 #include "VICIITypes.hpp"
 #include "DatasetteTypes.hpp"
 #include "MemoryTypes.hpp"
@@ -23,7 +23,7 @@
 #include "ParCableTypes.hpp"
 #include "PowerSupplyTypes.hpp"
 #include "MouseTypes.hpp"
-#include "IOUtils.h"
+#include "IOUtils.hpp"
 #include <algorithm>
 
 namespace vc64 {

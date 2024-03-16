@@ -13,7 +13,7 @@
 #include "config.h"
 #include "Mouse.h"
 #include "Emulator.h"
-#include "IOUtils.h"
+#include "IOUtils.hpp"
 #include <cmath>
 
 namespace vc64 {

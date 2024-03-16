@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "OptionTypes.h"
+#include "OptionTypes.hpp"
 #include "Reflection.h"
 #include "Defaults.h"
 #include <algorithm>

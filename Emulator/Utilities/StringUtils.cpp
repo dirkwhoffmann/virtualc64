@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "StringUtils.h"
+#include "StringUtils.hpp"
 #include <sstream>
 
 namespace util {

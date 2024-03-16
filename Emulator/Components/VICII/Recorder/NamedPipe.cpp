@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "NamedPipe.h"
-#include "IOUtils.h"
+#include "IOUtils.hpp"
 #ifndef _WIN32
 #include <unistd.h>
 #endif

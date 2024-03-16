@@ -13,7 +13,7 @@
 #pragma once
 
 #include "Types.h"
-#include "StringUtils.h"
+#include "StringUtils.hpp"
 
 #include <fcntl.h>
 #include <filesystem>

@@ -13,7 +13,7 @@
 #include "config.h"
 #include "RetroShell.h"
 #include "VirtualC64.h"
-#include "Parser.h"
+#include "Parser.hpp"
 #include <sstream>
 
 namespace vc64 {

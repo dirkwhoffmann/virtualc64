@@ -16,7 +16,7 @@
 #include "CmdQueue.h"
 #include "C64Types.hpp"
 #include "C64Key.h"
-#include "Buffer.h"
+#include "Buffer.hpp"
 
 namespace vc64 {
 

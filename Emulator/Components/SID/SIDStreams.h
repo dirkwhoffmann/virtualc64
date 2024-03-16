@@ -12,8 +12,8 @@
 
 #pragma once
 
-#include "Concurrency.h"
-#include "RingBuffer.h"
+#include "Concurrency.hpp"
+#include "RingBuffer.hpp"
 #include "Volume.h"
 
 namespace vc64 {

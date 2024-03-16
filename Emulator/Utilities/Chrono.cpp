@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Chrono.h"
+#include "Chrono.hpp"
 #include <chrono>
 #include <thread>
 

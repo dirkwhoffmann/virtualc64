@@ -12,8 +12,8 @@
 
 #include "config.h"
 #include "Emulator.h"
-#include "Checksum.h"
-#include "IOUtils.h"
+#include "Checksum.hpp"
+#include "IOUtils.hpp"
 #include "RomDatabase.h"
 #include <algorithm>
 

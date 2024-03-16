@@ -13,7 +13,7 @@
 #include "config.h"
 #include "Debugger.h"
 #include "C64.h"
-#include "IOUtils.h"
+#include "IOUtils.hpp"
 
 namespace vc64 {
 

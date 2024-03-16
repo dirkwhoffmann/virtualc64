@@ -13,7 +13,7 @@
 #include "config.h"
 #include "C64Memory.h"
 #include "Emulator.h"
-#include "IOUtils.h"
+#include "IOUtils.hpp"
 
 #include <random>
 

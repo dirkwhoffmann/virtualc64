@@ -12,8 +12,8 @@
 
 #include "config.h"
 #include "C64.h"
-#include "IOUtils.h"
-#include "MemUtils.h"
+#include "IOUtils.hpp"
+#include "MemUtils.hpp"
 
 namespace vc64 {
 

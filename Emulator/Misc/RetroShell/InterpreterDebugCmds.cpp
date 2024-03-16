@@ -13,8 +13,8 @@
 #include "config.h"
 #include "RetroShell.h"
 #include "Emulator.h"
-#include "IOUtils.h"
-#include "Parser.h"
+#include "IOUtils.hpp"
+#include "Parser.hpp"
 
 #include <fstream>
 #include <sstream>

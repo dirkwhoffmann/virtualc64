@@ -11,9 +11,9 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Buffer.h"
-#include "IOUtils.h"
-#include "MemUtils.h"
+#include "Buffer.hpp"
+#include "IOUtils.hpp"
+#include "MemUtils.hpp"
 #include <fstream>
 
 namespace util {

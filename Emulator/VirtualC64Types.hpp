@@ -32,7 +32,7 @@
 #include "MemoryTypes.hpp"
 #include "MouseTypes.hpp"
 #include "MsgQueueTypes.hpp"
-#include "OptionTypes.h"
+#include "OptionTypes.hpp"
 #include "ParCableTypes.hpp"
 #include "PowerSupplyTypes.hpp"
 #include "RecorderTypes.hpp"

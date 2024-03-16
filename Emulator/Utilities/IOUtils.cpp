@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "Macros.h"
-#include "IOUtils.h"
+#include "IOUtils.hpp"
 #include <assert.h>
 #include <vector>
 #include <fstream>

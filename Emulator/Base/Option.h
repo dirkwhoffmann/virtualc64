@@ -13,8 +13,8 @@
 
 #pragma once
 
-#include "OptionTypes.h"
-#include "Parser.h"
+#include "OptionTypes.hpp"
+#include "Parser.hpp"
 
 namespace vc64 {
 

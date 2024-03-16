@@ -14,7 +14,7 @@
 
 #include "PowerSupplyTypes.hpp"
 #include "SubComponent.h"
-#include "Chrono.h"
+#include "Chrono.hpp"
 
 namespace vc64 {
 

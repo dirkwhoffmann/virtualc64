@@ -13,7 +13,7 @@
 #include "config.h"
 #include "Muxer.h"
 #include "Emulator.h"
-#include "IOUtils.h"
+#include "IOUtils.hpp"
 
 #include <algorithm>
 #include <cmath>

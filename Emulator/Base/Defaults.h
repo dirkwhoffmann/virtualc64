@@ -13,9 +13,9 @@
 #pragma once
 
 #include "CoreObject.h"
-#include "OptionTypes.h"
-#include "Concurrency.h"
-#include "IOUtils.h"
+#include "OptionTypes.hpp"
+#include "Concurrency.hpp"
+#include "IOUtils.hpp"
 
 namespace vc64 {
 

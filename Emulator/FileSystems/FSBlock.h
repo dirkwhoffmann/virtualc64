@@ -13,7 +13,7 @@
 #pragma once
 
 #include "FSTypes.hpp"
-#include "Buffer.h"
+#include "Buffer.hpp"
 #include "CoreObject.h"
 #include "PETName.h"
 

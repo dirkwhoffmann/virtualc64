@@ -12,8 +12,8 @@
 
 #pragma once
 
-#include "Types.h"
-#include "Exception.h"
+#include "Types.hpp"
+#include "Exception.hpp"
 #include <functional>
 
 namespace util {

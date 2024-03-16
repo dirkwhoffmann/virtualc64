@@ -11,9 +11,9 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "MemUtils.h"
+#include "MemUtils.hpp"
 #include "string.h"
-#include "IOUtils.h"
+#include "IOUtils.hpp"
 
 namespace util {
 

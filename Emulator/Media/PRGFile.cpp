@@ -13,7 +13,7 @@
 #include "config.h"
 #include "PRGFile.h"
 #include "FileSystem.h"
-#include "IOUtils.h"
+#include "IOUtils.hpp"
 
 namespace vc64 {
 

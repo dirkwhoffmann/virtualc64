@@ -15,8 +15,8 @@
 #ifdef __cplusplus
 
 #include "Macros.h"
-#include "MemUtils.h"
-#include "Buffer.h"
+#include "MemUtils.hpp"
+#include "Buffer.hpp"
 #include <vector>
 
 namespace vc64 {

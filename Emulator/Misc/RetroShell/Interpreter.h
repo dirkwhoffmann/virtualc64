@@ -14,9 +14,9 @@
 
 #include "SubComponent.h"
 #include "Command.h"
-#include "Exception.h"
+#include "Exception.hpp"
 #include "Error.h"
-#include "Parser.h"
+#include "Parser.hpp"
 
 namespace vc64 {
 

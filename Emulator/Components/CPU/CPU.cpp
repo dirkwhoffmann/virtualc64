@@ -14,7 +14,7 @@
 #include "PeddleConfig.h"
 #include "CPU.h"
 #include "Emulator.h"
-#include "IOUtils.h"
+#include "IOUtils.hpp"
 
 namespace vc64 {
 

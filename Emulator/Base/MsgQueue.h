@@ -15,7 +15,7 @@
 #include "MsgQueueTypes.hpp"
 #include "CoreObject.h"
 #include "Synchronizable.h"
-#include "RingBuffer.h"
+#include "RingBuffer.hpp"
 
 namespace vc64 {
 

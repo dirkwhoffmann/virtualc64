@@ -13,7 +13,7 @@
 #include "config.h"
 #include "RegressionTester.h"
 #include "Emulator.h"
-#include "IOUtils.h"
+#include "IOUtils.hpp"
 
 #include <fstream>
 

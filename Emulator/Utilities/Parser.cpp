@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Parser.h"
+#include "Parser.hpp"
 
 namespace util {
 

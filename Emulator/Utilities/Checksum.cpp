@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Checksum.h"
+#include "Checksum.hpp"
 #include "Macros.h"
 
 namespace util {

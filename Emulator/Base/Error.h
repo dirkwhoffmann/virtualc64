@@ -14,7 +14,7 @@
 #pragma once
 
 #include "ErrorTypes.hpp"
-#include "Exception.h"
+#include "Exception.hpp"
 
 namespace vc64 {
 

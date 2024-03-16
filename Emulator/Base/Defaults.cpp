@@ -13,7 +13,7 @@
 #include "config.h"
 #include "Defaults.h"
 #include "C64.h"
-#include "StringUtils.h"
+#include "StringUtils.hpp"
 
 namespace vc64 {
 
