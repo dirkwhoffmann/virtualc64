@@ -73,6 +73,7 @@ public:
         CLONE_ARRAY(ram)
         CLONE_ARRAY(rom)
         CLONE_ARRAY(usage)
+        CLONE(config);
 
         return *this;
     }
@@ -85,7 +86,9 @@ public:
         worker
 
         << ram
-        << usage;
+        << usage
+
+        << config.saveRoms;
     }
 
     void operator << (SerResetter &worker) override { serialize(worker); }

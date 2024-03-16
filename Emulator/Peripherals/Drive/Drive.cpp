@@ -404,7 +404,8 @@ void
 Drive::operator << (SerChecker &worker)
 {
     serialize(worker);
-    if (disk) disk->serialize(worker);
+
+    if (hasDisk()) disk->serialize(worker);
     if (diskToInsert) diskToInsert->serialize(worker);
 }
 
@@ -423,7 +424,6 @@ Drive::operator << (SerCounter &worker)
 void
 Drive::operator << (SerReader &worker)
 {
-    // Read own state
     serialize(worker);
 
     // Check if the snapshot includes a disk
@@ -440,7 +440,6 @@ Drive::operator << (SerReader &worker)
 void
 Drive::operator << (SerWriter &worker)
 {
-    // Write own state
     serialize(worker);
 
     // Indicate whether this drive has a disk is inserted

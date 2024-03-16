@@ -686,7 +686,11 @@ C64::load(const u8 *buffer)
 
     if (hash != checksum() || FORCE_SNAP_CORRUPTED) {
 
-        debug(SNP_DEBUG, "Corrupted snapshot detected\n");
+        if (SNP_DEBUG) {
+         
+            warn("Corrupted snapshot detected:\n");
+            dump(Category::Checksums);
+        }
         throw VC64Error(ERROR_SNAP_CORRUPTED);
     }
 
@@ -704,7 +708,11 @@ C64::save(u8 *buffer)
     count += Serializable::save(buffer);
 
     // Check integrity
-    debug(SNP_DEBUG, "Saved %ld bytes (expected %ld)\n", count, size());
+    if (SNP_DEBUG) {
+
+        msg("Saved %ld bytes (expected %ld)\n", count, size());
+        dump(Category::Checksums);
+    }
     assert(count == size());
 
     return count;

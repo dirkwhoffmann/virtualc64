@@ -24,6 +24,8 @@ Joystick::Joystick(C64& ref, ControlPort& pref) : SubComponent(ref, pref.id), po
 void 
 Joystick::operator << (SerResetter &worker)
 {
+    serialize(worker);
+    
     // Discard any active joystick movements
     button = false;
     axisX = 0;
@@ -33,6 +35,8 @@ Joystick::operator << (SerResetter &worker)
 void
 Joystick::operator << (SerReader &worker)
 {
+    serialize(worker);
+
     // Discard any active joystick movements
     button = false;
     axisX = 0;

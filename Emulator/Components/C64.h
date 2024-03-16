@@ -289,7 +289,6 @@ public:
     // Exports the current configuration to a script file
     void exportConfig(const fs::path &path) const;
     void exportConfig(std::ostream& stream) const;
-    // void exportConfig(std::stringstream &stream) const;
 
 
     //

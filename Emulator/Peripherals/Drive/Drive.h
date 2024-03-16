@@ -125,7 +125,7 @@ public:
     
     // A disk waiting to be inserted
     std::unique_ptr<Disk> diskToInsert;
-        
+
     
     //
     // Drive state
