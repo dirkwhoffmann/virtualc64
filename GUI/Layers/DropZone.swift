@@ -195,9 +195,14 @@ class DropZone: Layer {
 
                 switch type {
 
-                case .SNAPSHOT, .SCRIPT:
+                case .SNAPSHOT:
 
                     try mm.addMedia(url: url, allowedTypes: [type])
+
+                case .SCRIPT:
+
+                    try mm.addMedia(url: url, allowedTypes: [type])
+                    mm.console.open()
 
                 default:
 
