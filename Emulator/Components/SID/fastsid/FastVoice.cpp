@@ -29,7 +29,7 @@
  */
 
 #include "config.h"
-#include "FastSID.h"
+#include "FastSID.hpp"
 #include "waves.h"
 
 #include <algorithm>

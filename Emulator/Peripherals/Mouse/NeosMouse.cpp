@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "NeosMouse.h"
+#include "NeosMouse.hpp"
 #include "C64.hpp"
 
 #include <algorithm>

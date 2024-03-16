@@ -11,8 +11,8 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "DiskAnalyzer.h"
-#include "Disk.h"
+#include "DiskAnalyzer.hpp"
+#include "Disk.hpp"
 
 #include <stdarg.h>
 

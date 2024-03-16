@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "IEC.h"
+#include "IEC.hpp"
 #include "C64.hpp"
 
 namespace vc64 {

@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Mouse.h"
+#include "Mouse.hpp"
 #include "Emulator.hpp"
 #include "IOUtils.hpp"
 #include <cmath>

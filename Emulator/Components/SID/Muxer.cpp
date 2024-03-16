@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Muxer.h"
+#include "Muxer.hpp"
 #include "Emulator.hpp"
 #include "IOUtils.hpp"
 

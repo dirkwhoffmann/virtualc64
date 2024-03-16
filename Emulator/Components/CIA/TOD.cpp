@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "TOD.h"
+#include "TOD.hpp"
 #include "C64.hpp"
 #include "IOUtils.hpp"
 #include "PowerSupply.hpp"

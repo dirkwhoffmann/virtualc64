@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "DriveMemory.h"
+#include "DriveMemory.hpp"
 #include "Emulator.hpp"
 #include "Checksum.hpp"
 #include "IOUtils.hpp"

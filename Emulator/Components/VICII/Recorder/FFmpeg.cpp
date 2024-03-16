@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "FFmpeg.h"
+#include "FFmpeg.hpp"
 #include "IOUtils.hpp"
 
 namespace vc64 {

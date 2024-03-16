@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Drive.h"
+#include "Drive.hpp"
 #include "Emulator.hpp"
 #include "IOUtils.hpp"
 

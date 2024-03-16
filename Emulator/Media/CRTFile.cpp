@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "CRTFile.h"
-#include "Cartridge.h"
+#include "Cartridge.hpp"
 #include "Checksum.hpp"
 #include "IOUtils.hpp"
 

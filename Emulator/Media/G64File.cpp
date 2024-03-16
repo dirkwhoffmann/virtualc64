@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "G64File.h"
-#include "Disk.h"
+#include "Disk.hpp"
 #include "IOUtils.hpp"
 
 namespace vc64 {

@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "PeddleConfig.h"
-#include "CPU.h"
+#include "CPU.hpp"
 #include "Emulator.hpp"
 #include "IOUtils.hpp"
 

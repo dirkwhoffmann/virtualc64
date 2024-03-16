@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "CIA.h"
+#include "CIA.hpp"
 #include "Emulator.hpp"
 #include "IOUtils.hpp"
 

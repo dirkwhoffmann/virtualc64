@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "CartridgeRom.h"
+#include "CartridgeRom.hpp"
 
 namespace vc64 {
 

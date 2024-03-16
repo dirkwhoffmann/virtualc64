@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Recorder.h"
+#include "Recorder.hpp"
 #include "C64.hpp"
 #include "Host.hpp"
 

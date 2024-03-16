@@ -18,32 +18,32 @@
 
 // Sub components
 #include "ExpansionPort.hpp"
-#include "IEC.h"
-#include "Keyboard.h"
+#include "IEC.hpp"
+#include "Keyboard.hpp"
 #include "ControlPort.hpp"
-#include "C64Memory.h"
+#include "C64Memory.hpp"
 #include "Debugger.h"
-#include "DriveMemory.h"
-#include "FlashRom.h"
-#include "VICII.h"
-#include "Muxer.h"
-#include "TOD.h"
-#include "CIA.h"
-#include "CPU.h"
+#include "DriveMemory.hpp"
+#include "FlashRom.hpp"
+#include "VICII.hpp"
+#include "Muxer.hpp"
+#include "TOD.hpp"
+#include "CIA.hpp"
+#include "CPU.hpp"
 #include "PowerSupply.hpp"
-#include "Recorder.h"
+#include "Recorder.hpp"
 #include "RegressionTester.h"
 #include "RetroShell.h"
 
 // Cartridges
-#include "Cartridge.h"
+#include "Cartridge.hpp"
 #include "CustomCartridges.h"
 
 // Peripherals
-#include "Drive.h"
-#include "ParCable.h"
-#include "Datasette.h"
-#include "Mouse.h"
+#include "Drive.hpp"
+#include "ParCable.hpp"
+#include "Datasette.hpp"
+#include "Mouse.hpp"
 
 // Media files
 #include "Snapshot.h"

@@ -29,7 +29,7 @@
  */
 
 #include "config.h"
-#include "FastSID.h"
+#include "FastSID.hpp"
 #include "C64.hpp"
 #include "IOUtils.hpp"
 

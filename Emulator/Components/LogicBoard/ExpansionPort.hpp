@@ -15,7 +15,7 @@
 #include "ExpansionPortTypes.hpp"
 #include "CmdQueueTypes.hpp"
 #include "SubComponent.hpp"
-#include "Cartridge.h"
+#include "Cartridge.hpp"
 
 namespace vc64 {
 

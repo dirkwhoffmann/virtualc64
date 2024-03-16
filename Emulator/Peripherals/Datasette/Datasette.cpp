@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Datasette.h"
+#include "Datasette.hpp"
 #include "Emulator.hpp"
 
 namespace vc64 {

@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "VICII.h"
+#include "VICII.hpp"
 #include "Emulator.hpp"
 #include "IOUtils.hpp"
 

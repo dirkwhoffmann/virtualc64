@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "C64Key.h"
+#include "C64Key.hpp"
 
 namespace vc64 {
 

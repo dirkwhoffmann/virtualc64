@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Cartridge.h"
+#include "Cartridge.hpp"
 #include "C64.hpp"
 
 namespace vc64 {

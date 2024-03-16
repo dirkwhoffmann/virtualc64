@@ -11,9 +11,9 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "PIA.h"
-#include "ParCable.h"
-#include "Drive.h"
+#include "PIA.hpp"
+#include "ParCable.hpp"
+#include "Drive.hpp"
 
 namespace vc64 {
 

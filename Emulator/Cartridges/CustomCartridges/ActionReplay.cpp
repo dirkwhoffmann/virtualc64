@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "ActionReplay.h"
+#include "ActionReplay.hpp"
 #include "C64.hpp"
 
 //

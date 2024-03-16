@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "FlashRom.h"
+#include "FlashRom.hpp"
 #include "IOUtils.hpp"
 
 namespace vc64 {

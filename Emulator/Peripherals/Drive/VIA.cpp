@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "VIA.h"
+#include "VIA.hpp"
 #include "C64.hpp"
 #include "IOUtils.hpp"
 

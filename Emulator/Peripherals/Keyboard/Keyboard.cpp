@@ -11,9 +11,9 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Keyboard.h"
+#include "Keyboard.hpp"
 #include "C64.hpp"
-#include "C64Key.h"
+#include "C64Key.hpp"
 #include "IOUtils.hpp"
 
 void 

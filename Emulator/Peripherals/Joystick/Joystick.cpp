@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Joystick.h"
+#include "Joystick.hpp"
 #include "Emulator.hpp"
 #include "IOUtils.hpp"
 

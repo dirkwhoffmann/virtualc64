@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "NamedPipe.h"
+#include "NamedPipe.hpp"
 #include "IOUtils.hpp"
 #ifndef _WIN32
 #include <unistd.h>

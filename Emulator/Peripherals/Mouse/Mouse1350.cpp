@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Mouse1350.h"
+#include "Mouse1350.hpp"
 #include "C64.hpp"
 
 #include <cmath>

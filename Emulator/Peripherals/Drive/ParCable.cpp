@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "ParCable.h"
+#include "ParCable.hpp"
 #include "C64.hpp"
 #include "IOUtils.hpp"
 

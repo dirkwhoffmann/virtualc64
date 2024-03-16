@@ -11,8 +11,8 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "CPUInspector.h"
-#include "CPU.h"
+#include "CPUInspector.hpp"
+#include "CPU.hpp"
 #include "IOUtils.hpp"
 
 namespace vc64 {

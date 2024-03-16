@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "FileSystem.h"
-#include "Disk.h"
+#include "Disk.hpp"
 #include "IOUtils.hpp"
 #include "Folder.h"
 #include "PRGFile.h"

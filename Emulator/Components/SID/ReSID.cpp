@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "ReSID.h"
+#include "ReSID.hpp"
 #include "C64.hpp"
 #include "IOUtils.hpp"
 

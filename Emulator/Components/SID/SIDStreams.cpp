@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Muxer.h"
+#include "Muxer.hpp"
 
 namespace vc64 {
 

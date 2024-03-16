@@ -15,8 +15,8 @@
 #include "ControlPortTypes.hpp"
 #include "CmdQueueTypes.hpp"
 #include "SubComponent.hpp"
-#include "Joystick.h"
-#include "Mouse.h"
+#include "Joystick.hpp"
+#include "Mouse.hpp"
 
 namespace vc64 {
 

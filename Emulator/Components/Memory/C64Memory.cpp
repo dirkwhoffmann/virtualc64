@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "C64Memory.h"
+#include "C64Memory.hpp"
 #include "Emulator.hpp"
 #include "IOUtils.hpp"
 

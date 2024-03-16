@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "VICII.h"
+#include "VICII.hpp"
 #include "C64.hpp"
 
 #include <algorithm>

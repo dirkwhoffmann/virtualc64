@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "EasyFlash.h"
+#include "EasyFlash.hpp"
 #include "C64.hpp"
 
 namespace vc64 {
