@@ -13,7 +13,7 @@
 #pragma once
 
 #include "PowerSupplyTypes.hpp"
-#include "SubComponent.h"
+#include "SubComponent.hpp"
 #include "Chrono.hpp"
 
 namespace vc64 {

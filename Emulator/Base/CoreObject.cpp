@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "CoreObject.h"
+#include "CoreObject.hpp"
 #include <iostream>
 
 namespace vc64 {

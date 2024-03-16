@@ -11,8 +11,8 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Defaults.h"
-#include "C64.h"
+#include "Defaults.hpp"
+#include "C64.hpp"
 #include "StringUtils.hpp"
 
 namespace vc64 {

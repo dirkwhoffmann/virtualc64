@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Synchronizable.h"
+#include "Synchronizable.hpp"
 
 namespace vc64 {
 

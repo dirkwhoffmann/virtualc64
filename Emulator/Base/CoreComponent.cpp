@@ -11,10 +11,10 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Emulator.h"
-#include "CoreComponent.h"
+#include "Emulator.hpp"
+#include "CoreComponent.hpp"
 #include "Checksum.hpp"
-#include "Option.h"
+#include "Option.hpp"
 
 namespace vc64 {
 

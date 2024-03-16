@@ -14,7 +14,7 @@
 
 #include "FSTypes.hpp"
 #include "Buffer.hpp"
-#include "CoreObject.h"
+#include "CoreObject.hpp"
 #include "PETName.h"
 
 using util::Buffer;

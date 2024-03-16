@@ -14,8 +14,8 @@
 
 #include "DatasetteTypes.hpp"
 #include "C64Types.hpp"
-#include "CmdQueue.h"
-#include "SubComponent.h"
+#include "CmdQueue.hpp"
+#include "SubComponent.hpp"
 #include "Constants.hpp"
 #include "Chrono.hpp"
 

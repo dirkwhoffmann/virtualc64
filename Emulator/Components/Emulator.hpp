@@ -12,12 +12,12 @@
 
 #pragma once
 
-#include "C64.h"
-#include "Defaults.h"
+#include "C64.hpp"
+#include "Defaults.hpp"
 #include "EmulatorTypes.hpp"
-#include "Host.h"
-#include "Thread.h"
-#include "CmdQueue.h"
+#include "Host.hpp"
+#include "Thread.hpp"
+#include "CmdQueue.hpp"
 
 class VirtualC64;
 

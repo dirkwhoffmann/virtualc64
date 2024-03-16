@@ -12,8 +12,8 @@
 
 #pragma once
 
-#include "SubComponent.h"
-#include "CmdQueue.h"
+#include "SubComponent.hpp"
+#include "CmdQueue.hpp"
 #include "C64Types.hpp"
 #include "C64Key.h"
 #include "Buffer.hpp"

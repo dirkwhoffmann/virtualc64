@@ -12,9 +12,4 @@
 
 #pragma once
 
-#include "CoreComponent.h"
-#include "CPUTypes.h"
-
-namespace vc64 {
-
-}
+#include "CoreComponent.hpp"

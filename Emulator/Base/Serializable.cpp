@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Serializable.h"
+#include "Serializable.hpp"
 
 namespace vc64 {
 

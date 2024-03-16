@@ -14,8 +14,8 @@
 #pragma once
 
 #include "CmdQueueTypes.hpp"
-#include "CoreObject.h"
-#include "Synchronizable.h"
+#include "CoreObject.hpp"
+#include "Synchronizable.hpp"
 #include "RingBuffer.hpp"
 #include <atomic>
 

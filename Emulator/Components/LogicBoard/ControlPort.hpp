@@ -14,7 +14,7 @@
 
 #include "ControlPortTypes.hpp"
 #include "CmdQueueTypes.hpp"
-#include "SubComponent.h"
+#include "SubComponent.hpp"
 #include "Joystick.h"
 #include "Mouse.h"
 

@@ -13,7 +13,7 @@
 #pragma once
 
 #include "RetroShellTypes.hpp"
-#include "SubComponent.h"
+#include "SubComponent.hpp"
 #include "Interpreter.h"
 #include "TextStorage.h"
 #include <sstream>

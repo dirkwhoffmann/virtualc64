@@ -13,8 +13,8 @@
 #pragma once
 
 #include "OptionTypes.hpp"
-#include "Reflection.h"
-#include "Defaults.h"
+#include "Reflection.hpp"
+#include "Defaults.hpp"
 #include <algorithm>
 
 namespace vc64 {

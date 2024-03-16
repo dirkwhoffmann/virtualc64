@@ -13,7 +13,7 @@
 #include "config.h"
 #include "PeddleConfig.h"
 #include "CPU.h"
-#include "Emulator.h"
+#include "Emulator.hpp"
 #include "IOUtils.hpp"
 
 namespace vc64 {

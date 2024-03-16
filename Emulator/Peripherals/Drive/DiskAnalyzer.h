@@ -13,8 +13,8 @@
 #pragma once
 
 #include "DiskAnalyzerTypes.hpp"
-#include "DiskTypes.h"
-#include "CoreObject.h"
+#include "DiskTypes.hpp"
+#include "CoreObject.hpp"
 #include "IOUtils.hpp"
 
 namespace vc64 {

@@ -14,7 +14,7 @@
 #pragma once
 
 #include "VirtualC64Types.hpp"
-#include "Emulator.h"
+#include "Emulator.hpp"
 #include "Media.h"
 
 /** Public API

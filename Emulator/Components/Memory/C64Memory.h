@@ -13,7 +13,7 @@
 #pragma once
 
 #include "MemoryTypes.hpp"
-#include "SubComponent.h"
+#include "SubComponent.hpp"
 
 namespace vc64 {
 

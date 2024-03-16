@@ -13,7 +13,7 @@
 #pragma once
 
 #include "Macros.h"
-#include "Serializable.h"
+#include "Serializable.hpp"
 #include <algorithm>
 
 namespace vc64 {

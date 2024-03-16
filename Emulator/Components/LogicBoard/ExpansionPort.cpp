@@ -11,8 +11,8 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "ExpansionPort.h"
-#include "C64.h"
+#include "ExpansionPort.hpp"
+#include "C64.hpp"
 
 namespace vc64 {
 

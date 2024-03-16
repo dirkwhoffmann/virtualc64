@@ -29,7 +29,7 @@
 #pragma once
 
 #include "SIDTypes.hpp"
-#include "SubComponent.h"
+#include "SubComponent.hpp"
 
 using namespace vc64;
 

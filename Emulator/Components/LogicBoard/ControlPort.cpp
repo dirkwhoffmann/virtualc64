@@ -11,8 +11,8 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "ControlPort.h"
-#include "C64.h"
+#include "ControlPort.hpp"
+#include "C64.hpp"
 #include "IOUtils.hpp"
 
 namespace vc64 {

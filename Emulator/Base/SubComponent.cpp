@@ -11,8 +11,8 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "SubComponent.h"
-#include "Emulator.h"
+#include "SubComponent.hpp"
+#include "Emulator.hpp"
 
 namespace vc64 {
 

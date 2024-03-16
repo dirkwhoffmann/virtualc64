@@ -12,8 +12,8 @@
 
 #include "config.h"
 #include "Recorder.h"
-#include "C64.h"
-#include "Host.h"
+#include "C64.hpp"
+#include "Host.hpp"
 
 namespace vc64 {
 

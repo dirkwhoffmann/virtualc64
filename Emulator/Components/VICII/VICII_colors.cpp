@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "VICII.h"
-#include "C64.h"
+#include "C64.hpp"
 
 #include <algorithm>
 #include <cmath>

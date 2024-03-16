@@ -12,8 +12,8 @@
 
 #include "config.h"
 #include "Interpreter.h"
-#include "Emulator.h"
-#include "Option.h"
+#include "Emulator.hpp"
+#include "Option.hpp"
 
 namespace vc64 {
 

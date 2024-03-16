@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Colors.h"
+#include "Colors.hpp"
 
 namespace vc64 {
 

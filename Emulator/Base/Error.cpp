@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Error.h"
+#include "Error.hpp"
 
 namespace vc64 {
 

@@ -13,13 +13,13 @@
 #pragma once
 
 #include "EmulatorTypes.hpp"
-#include "CoreObject.h"
-#include "Synchronizable.h"
-#include "Serializable.h"
-#include "Configurable.h"
+#include "CoreObject.hpp"
+#include "Synchronizable.hpp"
+#include "Serializable.hpp"
+#include "Configurable.hpp"
 #include "Concurrency.hpp"
-#include "Suspendable.h"
-#include "ThreadTypes.h"
+#include "Suspendable.hpp"
+#include "ThreadTypes.hpp"
 #include <vector>
 
 namespace vc64 {

@@ -28,7 +28,7 @@
 
 #pragma once
 
-#include "SubComponent.h"
+#include "SubComponent.hpp"
 #include "FastVoice.h"
 #include "SIDStreams.h"
 #include "Constants.hpp"

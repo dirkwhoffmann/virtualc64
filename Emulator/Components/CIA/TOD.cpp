@@ -12,11 +12,9 @@
 
 #include "config.h"
 #include "TOD.h"
-#include "C64.h"
-// #include "CIA.h"
-// #include "CPU.h"
+#include "C64.hpp"
 #include "IOUtils.hpp"
-#include "PowerSupply.h"
+#include "PowerSupply.hpp"
 
 namespace vc64 {
 

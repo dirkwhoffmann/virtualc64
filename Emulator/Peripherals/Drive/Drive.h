@@ -15,7 +15,7 @@
 #include "DriveTypes.hpp"
 #include "C64Types.hpp"
 #include "CmdQueueTypes.hpp"
-#include "SubComponent.h"
+#include "SubComponent.hpp"
 #include "CPU.h"
 #include "Disk.h"
 #include "DiskAnalyzer.h"

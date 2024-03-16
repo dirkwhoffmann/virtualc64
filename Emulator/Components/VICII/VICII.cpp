@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "VICII.h"
-#include "Emulator.h"
+#include "Emulator.hpp"
 #include "IOUtils.hpp"
 
 namespace vc64 {

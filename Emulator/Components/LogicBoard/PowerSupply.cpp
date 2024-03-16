@@ -11,8 +11,8 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "PowerSupply.h"
-#include "Emulator.h"
+#include "PowerSupply.hpp"
+#include "Emulator.hpp"
 
 namespace vc64 {
 

@@ -11,8 +11,8 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Host.h"
-#include "Emulator.h"
+#include "Host.hpp"
+#include "Emulator.hpp"
 #include "IOUtils.hpp"
 
 namespace vc64 {

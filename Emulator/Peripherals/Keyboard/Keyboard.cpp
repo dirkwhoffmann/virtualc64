@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "Keyboard.h"
-#include "C64.h"
+#include "C64.hpp"
 #include "C64Key.h"
 #include "IOUtils.hpp"
 

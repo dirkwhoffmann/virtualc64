@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "Cartridge.h"
-#include "C64.h"
+#include "C64.hpp"
 
 namespace vc64 {
 

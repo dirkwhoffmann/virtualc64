@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "DmaDebugger.h"
-#include "Emulator.h"
+#include "Emulator.hpp"
 
 namespace vc64 {
 

@@ -13,7 +13,7 @@
 #pragma once
 
 #include "Aliases.h"
-#include "Reflection.h"
+#include "Reflection.hpp"
 
 #include "CPUTypes.h"
 

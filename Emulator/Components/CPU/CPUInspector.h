@@ -13,7 +13,7 @@
 #pragma once
 
 #include "CPUInspector.h"
-#include "CoreObject.h"
+#include "CoreObject.hpp"
 
 namespace vc64 {
 

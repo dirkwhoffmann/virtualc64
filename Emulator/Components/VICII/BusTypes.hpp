@@ -16,24 +16,26 @@
 #include "Aliases.h"
 #include "Reflection.hpp"
 
-#include "ThreadTypes.h"
+#include "BusTypes.h"
 
-struct EmulatorStateEnum : util::Reflection<EmulatorStateEnum, EmulatorState>
-{
+struct MemAccessEnum : util::Reflection<MemAccessEnum, MemAccess> {
+
     static constexpr long minVal = 0;
-    static constexpr long maxVal = STATE_HALTED;
-    static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
+    static constexpr long maxVal = MEMACCESS_S;
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
-    static const char *prefix() { return "STATE"; }
-    static const char *key(EmulatorState value)
+    static const char *prefix() { return "MEMACCESS"; }
+    static const char *key(MemAccess value)
     {
         switch (value) {
 
-            case STATE_OFF:          return "OFF";
-            case STATE_PAUSED:       return "PAUSED";
-            case STATE_RUNNING:      return "RUNNING";
-            case STATE_SUSPENDED:    return "SUSPENDED";
-            case STATE_HALTED:       return "HALTED";
+            case MEMACCESS_R:      return "R";
+            case MEMACCESS_I:      return "I";
+            case MEMACCESS_C:      return "C";
+            case MEMACCESS_G:      return "G";
+            case MEMACCESS_P:      return "P";
+            case MEMACCESS_S:      return "S";
+            case MEMACCESS_COUNT:  return "???";
         }
         return "???";
     }

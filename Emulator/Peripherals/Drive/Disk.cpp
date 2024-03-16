@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "C64.h"
+#include "C64.hpp"
 #include "IOUtils.hpp"
 #include "Checksum.hpp"
 

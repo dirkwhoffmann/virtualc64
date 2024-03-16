@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "ActionReplay.h"
-#include "C64.h"
+#include "C64.hpp"
 
 //
 // Action Replay (hardware revision 3)

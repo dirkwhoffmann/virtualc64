@@ -12,10 +12,10 @@
 
 #pragma once
 
-#include "SubComponent.h"
+#include "SubComponent.hpp"
 #include "Command.h"
 #include "Exception.hpp"
-#include "Error.h"
+#include "Error.hpp"
 #include "Parser.hpp"
 
 namespace vc64 {

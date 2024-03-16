@@ -13,7 +13,7 @@
 #pragma once
 
 #include "CartridgeTypes.hpp"
-#include "SubComponent.h"
+#include "SubComponent.hpp"
 #include "CartridgeRom.h"
 #include "CRTFile.h"
 

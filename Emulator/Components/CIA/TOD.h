@@ -13,7 +13,7 @@
 #pragma once
 
 #include "TODTypes.h"
-#include "SubComponent.h"
+#include "SubComponent.hpp"
 
 namespace vc64 {
 

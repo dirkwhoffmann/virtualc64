@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Inspectable.h"
+#include "Inspectable.hpp"
 
 namespace vc64 {
 

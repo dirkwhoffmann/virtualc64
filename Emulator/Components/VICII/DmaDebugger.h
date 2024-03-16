@@ -13,8 +13,8 @@
 #pragma once
 
 #include "DmaDebuggerTypes.hpp"
-#include "SubComponent.h"
-#include "Colors.h"
+#include "SubComponent.hpp"
+#include "Colors.hpp"
 
 namespace vc64 {
 

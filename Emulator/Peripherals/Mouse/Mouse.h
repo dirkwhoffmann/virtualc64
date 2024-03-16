@@ -14,7 +14,7 @@
 
 #include "MouseTypes.hpp"
 #include "JoystickTypes.hpp"
-#include "SubComponent.h"
+#include "SubComponent.hpp"
 #include "Chrono.hpp"
 #include "Mouse1350.h"
 #include "Mouse1351.h"

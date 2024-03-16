@@ -13,14 +13,14 @@
 #pragma once
 
 #include "C64Types.hpp"
-#include "MsgQueue.h"
-#include "Thread.h"
+#include "MsgQueue.hpp"
+#include "Thread.hpp"
 
 // Sub components
-#include "ExpansionPort.h"
+#include "ExpansionPort.hpp"
 #include "IEC.h"
 #include "Keyboard.h"
-#include "ControlPort.h"
+#include "ControlPort.hpp"
 #include "C64Memory.h"
 #include "Debugger.h"
 #include "DriveMemory.h"
@@ -30,7 +30,7 @@
 #include "TOD.h"
 #include "CIA.h"
 #include "CPU.h"
-#include "PowerSupply.h"
+#include "PowerSupply.hpp"
 #include "Recorder.h"
 #include "RegressionTester.h"
 #include "RetroShell.h"

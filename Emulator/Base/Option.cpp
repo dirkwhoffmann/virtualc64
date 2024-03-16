@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Option.h"
+#include "Option.hpp"
 #include "EmulatorTypes.hpp"
 #include "VICIITypes.hpp"
 #include "DatasetteTypes.hpp"

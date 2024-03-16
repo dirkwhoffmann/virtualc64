@@ -30,7 +30,7 @@
 
 #include "config.h"
 #include "FastSID.h"
-#include "C64.h"
+#include "C64.hpp"
 #include "IOUtils.hpp"
 
 #include <cmath>

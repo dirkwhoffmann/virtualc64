@@ -15,7 +15,7 @@
 // https://people.kth.se/~e93_msi/c64/expert.html
 
 #include "config.h"
-#include "C64.h"
+#include "C64.hpp"
 
 namespace vc64 {
 

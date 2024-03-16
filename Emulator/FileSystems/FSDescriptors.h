@@ -12,8 +12,8 @@
 
 #pragma once
 
-#include "CoreObject.h"
-#include "DiskTypes.h"
+#include "CoreObject.hpp"
+#include "DiskTypes.hpp"
 #include "FSTypes.hpp"
 
 namespace vc64 {

@@ -14,7 +14,7 @@
 
 #include "CPUTypes.hpp"
 #include "Peddle.h"
-#include "SubComponent.h"
+#include "SubComponent.hpp"
 #include "CPUInspector.h"
 
 using namespace vc64::peddle;

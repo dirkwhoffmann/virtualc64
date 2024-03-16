@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Emulator.h"
+#include "Emulator.hpp"
 #include <sstream>
 
 namespace vc64 {

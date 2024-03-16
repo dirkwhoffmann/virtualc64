@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "MsgQueue.h"
+#include "MsgQueue.hpp"
 
 namespace vc64 {
 

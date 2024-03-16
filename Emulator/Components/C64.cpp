@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Emulator.h"
+#include "Emulator.hpp"
 #include "Checksum.hpp"
 #include "IOUtils.hpp"
 #include "RomDatabase.h"

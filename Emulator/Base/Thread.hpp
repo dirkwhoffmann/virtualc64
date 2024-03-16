@@ -14,9 +14,9 @@
 #pragma once
 
 #include "ThreadTypes.hpp"
-#include "CoreComponent.h"
+#include "CoreComponent.hpp"
 #include "Chrono.hpp"
-#include "Wakeable.h"
+#include "Wakeable.hpp"
 
 namespace vc64 {
 

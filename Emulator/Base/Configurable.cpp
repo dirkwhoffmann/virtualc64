@@ -11,8 +11,8 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Configurable.h"
-#include "Option.h"
+#include "Configurable.hpp"
+#include "Option.hpp"
 #include "Parser.hpp"
 #include "VICIITypes.hpp"
 #include "DatasetteTypes.hpp"

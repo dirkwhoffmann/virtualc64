@@ -14,7 +14,7 @@
 
 #include "CIATypes.hpp"
 #include "C64Types.hpp"
-#include "SubComponent.h"
+#include "SubComponent.hpp"
 #include "TOD.h"
 
 namespace vc64 {

@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "Mouse1350.h"
-#include "C64.h"
+#include "C64.hpp"
 
 #include <cmath>
 

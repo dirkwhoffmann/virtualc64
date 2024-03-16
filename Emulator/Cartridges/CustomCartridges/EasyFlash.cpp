@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "EasyFlash.h"
-#include "C64.h"
+#include "C64.hpp"
 
 namespace vc64 {
 

@@ -14,7 +14,7 @@
 
 #include "ParCableTypes.h"
 #include "DriveTypes.h"
-#include "SubComponent.h"
+#include "SubComponent.hpp"
 
 namespace vc64 {
 

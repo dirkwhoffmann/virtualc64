@@ -12,8 +12,8 @@
 
 #pragma once
 
-#include "Error.h"
-#include "Inspectable.h"
+#include "Error.hpp"
+#include "Inspectable.hpp"
 
 namespace vc64 {
 

@@ -11,4 +11,4 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Suspendable.h"
+#include "Suspendable.hpp"

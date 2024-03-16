@@ -13,8 +13,8 @@
 #pragma once
 
 #include "MsgQueueTypes.hpp"
-#include "CoreObject.h"
-#include "Synchronizable.h"
+#include "CoreObject.hpp"
+#include "Synchronizable.hpp"
 #include "RingBuffer.hpp"
 
 namespace vc64 {

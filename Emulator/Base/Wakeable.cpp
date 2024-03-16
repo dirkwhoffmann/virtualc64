@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Wakeable.h"
+#include "Wakeable.hpp"
 
 namespace vc64 {
 

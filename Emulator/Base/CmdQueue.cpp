@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "CmdQueue.h"
+#include "CmdQueue.hpp"
 
 namespace vc64 {
 

@@ -11,9 +11,9 @@
 #include "PeddleTypes.h"
 #include "PeddleDisassembler.h"
 #include "PeddleDebugger.h"
-#include "SubComponent.h"
+#include "SubComponent.hpp"
 #include "PeddleUtils.h"
-#include "TimeDelayed.h"
+#include "TimeDelayed.hpp"
 
 using namespace vc64;
 

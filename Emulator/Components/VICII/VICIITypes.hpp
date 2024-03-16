@@ -14,9 +14,9 @@
 #pragma once
 
 #include "Aliases.h"
-#include "Reflection.h"
-#include "Serializable.h"
-#include "BusTypes.h"
+#include "Reflection.hpp"
+#include "Serializable.hpp"
+#include "BusTypes.hpp"
 #include "DmaDebuggerTypes.hpp"
 
 #include "VICIITypes.h"

@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "CoreObject.h"
+#include "CoreObject.hpp"
 #include "OptionTypes.hpp"
 #include "Concurrency.hpp"
 #include "IOUtils.hpp"

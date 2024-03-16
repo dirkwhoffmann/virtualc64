@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "NeosMouse.h"
-#include "C64.h"
+#include "C64.hpp"
 
 #include <algorithm>
 
