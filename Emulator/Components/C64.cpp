@@ -333,17 +333,8 @@ C64::exportConfig(std::ostream &stream) const
     stream << "c64 power off\n";
     stream << "\n";
     CoreComponent::exportConfig(stream);
-    stream << "\n";
-    stream << "c64 run\n";
+    stream << "c64 power on\n";
 }
-
-/*
-void
-C64::exportConfig(std::stringstream &stream) const
-{
-
-}
-*/
 
 InspectionTarget
 C64::getInspectionTarget() const

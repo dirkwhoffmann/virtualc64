@@ -246,18 +246,14 @@ void CoreComponent::exportConfig(std::ostream& ss, bool diff) const
                 first = false;
             }
 
-            auto arg1 = OptionParser::create(opt, current)->asPlainString();
-            string line = string(shellName()) + " set " + OptionEnum::plainkey(opt) + " " + arg1;
+            auto cmd = "try " + string(shellName());
+            auto currentStr = OptionParser::create(opt, current)->asPlainString();
+            auto fallbackStr = OptionParser::create(opt, fallback)->asPlainString();
 
-            if (current != fallback) {
+            string line = cmd + " set " + OptionEnum::plainkey(opt) + " " + currentStr;
+            string comment = diff ? fallbackStr : OptionEnum::help(opt);
 
-                auto arg2 = OptionParser::create(opt, fallback)->asPlainString();
-                ss << std::setw(40) << std::left << line << " # " << arg2 << std::endl;
-
-            } else {
-
-                ss << line << std::endl;
-            }
+            ss << std::setw(40) << std::left << line << " # " << comment << std::endl;
         }
     }
 

@@ -995,9 +995,9 @@ Interpreter::initCommandShell(Command &root)
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long value) {
 
-            emulator.set(Option(HI_WORD(value)), LO_WORD(value), argv[0]);
+            emulator.set(Option(value), argv[0]);
 
-        });
+        }, opt);
     }
 
     root.popGroup();

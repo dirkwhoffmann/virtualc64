@@ -468,9 +468,6 @@ RetroShell::exec()
 void
 RetroShell::exec(const string &command, isize line)
 {
-    // Skip comments
-    if (command[0] == '#') return;
-
     try {
 
         // Print the command if it comes from a script

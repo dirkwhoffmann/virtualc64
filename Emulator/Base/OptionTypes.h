@@ -336,7 +336,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_DRV_EJECT_VOL:         return "Disk ejection volume";
 
             case OPT_DAT_MODEL:             return "Datasette model";
-            case OPT_DAT_CONNECT:           return "Connected";
+            case OPT_DAT_CONNECT:           return "Datasette connected";
 
             case OPT_MOUSE_MODEL:           return "Mouse model";
             case OPT_MOUSE_SHAKE_DETECT:    return "Detect a shaked mouse";

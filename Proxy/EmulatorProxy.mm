@@ -2316,6 +2316,12 @@ using namespace vc64;
     [self emu]->set(model);
 }
 
+- (void)exportConfig:(NSURL *)url exception:(ExceptionWrapper *)ex
+{
+    try { [self emu]->exportConfig([url fileSystemRepresentation]); }
+    catch (VC64Error &error) { [ex save:error]; }
+}
+
 - (void)wakeUp
 {
     [self emu]->wakeUp();
@@ -2335,13 +2341,6 @@ using namespace vc64;
 {
     [self emu]->stepOver();
 }
-
-/*
-- (RomInfo)getRomInfo:(RomType)type
-{
-    return [self emu]->c64.getRomInfo(type);
-}
-*/
 
 - (RomTraits)basicRom
 {

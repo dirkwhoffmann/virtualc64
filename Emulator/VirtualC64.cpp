@@ -99,10 +99,22 @@ VirtualC64::set(Option option, i64 value) throws
 }
 
 void 
-VirtualC64::set(Option option, long id, i64 value) throws
+VirtualC64::set(Option option, long id, i64 value)
 {
     Emulator::set(option, id, value);
     main.markAsDirty();
+}
+
+void 
+VirtualC64::exportConfig(const fs::path &path) const
+{
+    main.exportConfig(path);
+}
+
+void 
+VirtualC64::exportConfig(std::ostream& stream) const
+{
+    main.exportConfig(stream);
 }
 
 void

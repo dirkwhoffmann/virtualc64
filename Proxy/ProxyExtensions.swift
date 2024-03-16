@@ -131,6 +131,13 @@ extension EmulatorProxy {
         if exception.errorCode != .OK { throw VC64Error(exception) }
     }
 
+    func exportConfig(url: URL) throws {
+
+        let exception = ExceptionWrapper()
+        exportConfig(url, exception: exception)
+        if exception.errorCode != .OK { throw VC64Error(exception) }
+    }
+
     func saveRom(_ type: RomType, url: URL) throws {
 
         let exception = ExceptionWrapper()

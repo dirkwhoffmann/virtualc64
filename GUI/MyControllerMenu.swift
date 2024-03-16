@@ -229,7 +229,6 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func importConfigAction(_ sender: Any!) {
 
-        let defaults = EmulatorProxy.defaults!
         let openPanel = NSOpenPanel()
 
         // Power off the emulator if the user doesn't object
@@ -247,15 +246,7 @@ extension MyController: NSMenuItemValidation {
             if result == .OK, let url = openPanel.url {
 
                 do {
-                    // Power off
-                    self.c64.powerOff()
-
-                    // Execute the script
-                    // TODO
-
-                    // Power on
-                    try self.c64.run()
-
+                    try self.mm.addMedia(url: url, allowedTypes: [.SCRIPT])
                 } catch {
                     self.showAlert(.cantOpen(url: url), error: error, async: true)
                 }
@@ -265,7 +256,6 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func exportConfigAction(_ sender: Any!) {
 
-        let defaults = EmulatorProxy.defaults!
         let savePanel = NSSavePanel()
 
         // Show file panel
@@ -279,9 +269,7 @@ extension MyController: NSMenuItemValidation {
             if result == .OK, let url = savePanel.url {
 
                 do {
-                    // Export settings
-                    // TODO: self.c64.exportConfig(url: url)
-
+                    try self.c64.exportConfig(url: url)
                 } catch {
                     self.showAlert(.cantExport(url: url), error: error, async: true)
                 }

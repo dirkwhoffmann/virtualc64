@@ -215,6 +215,8 @@
 - (BOOL)configure:(Option)opt drive:(NSInteger)id enable:(BOOL)val;
 - (void)configure:(C64Model)value;
 
+- (void)exportConfig:(NSURL *)url exception:(ExceptionWrapper *)ex;
+
 - (void)wakeUp;
 
 - (void)stopAndGo;

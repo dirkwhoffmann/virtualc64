@@ -44,6 +44,9 @@ Interpreter::split(const string& userInput)
 
         char c = userInput[i];
         
+        // Bail out if a comment begins
+        if (c == '#') break;
+
         // Check for escape mode
         if (c == '\\') { esc = true; continue; }
 

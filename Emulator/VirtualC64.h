@@ -340,9 +340,18 @@ public:
      *  @note This function must only be called for those options that require
      *  an additional parameter to uniquely determine the configured component.
      */
-    void set(Option option, long id, i64 value) throws;
+    void set(Option option, long id, i64 value);
 
     
+    /** @brief  Exports the current configuration.
+     *
+     *  The current configuration is exported in form of a RetroShell script.
+     *  Reading in the script at a later point will restore the configuration.
+     */
+    void exportConfig(const fs::path &path) const;
+    void exportConfig(std::ostream& stream) const;
+
+
     /// @}
     /// @name Using the command queue
     /// @{
