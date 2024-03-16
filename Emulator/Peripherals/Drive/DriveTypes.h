@@ -195,12 +195,6 @@ DriveConfig;
 
 typedef struct
 {
-    bool saveRoms;
-}
-DriveMemConfig;
-
-typedef struct
-{
     isize id;
     
     bool hasDisk;

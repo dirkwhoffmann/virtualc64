@@ -557,15 +557,10 @@ Emulator::set(Option option, i64 value)
             break;
 
         case OPT_RAM_PATTERN:
-
-            main.mem.setOption(option, value);
-            break;
-
         case OPT_SAVE_ROMS:
 
             main.mem.setOption(option, value);
-            main.drive8.mem.setOption(option, value);
-            main.drive9.mem.setOption(option, value);
+            main.mem.setOption(option, value);
             break;
 
         case OPT_DRV_AUTO_CONFIG:

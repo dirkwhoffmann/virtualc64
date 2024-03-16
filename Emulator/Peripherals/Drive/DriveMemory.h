@@ -26,14 +26,6 @@ class DriveMemory final : public SubComponent, public Dumpable {
         .description    = "Drive Memory"
     }};
 
-    ConfigOptions options = {
-
-        OPT_SAVE_ROMS
-    };
-
-    // Current configuration
-    DriveMemConfig config = { };
-
     // Reference to the connected disk drive
     class Drive &drive;
     
@@ -73,7 +65,6 @@ public:
         CLONE_ARRAY(ram)
         CLONE_ARRAY(rom)
         CLONE_ARRAY(usage)
-        CLONE(config);
 
         return *this;
     }
@@ -86,9 +77,7 @@ public:
         worker
 
         << ram
-        << usage
-
-        << config.saveRoms;
+        << usage;
     }
 
     void operator << (SerResetter &worker) override { serialize(worker); }
@@ -104,11 +93,10 @@ public:
     // Configuring
     //
 
-    const DriveMemConfig &getConfig() const { return config; }
-    const ConfigOptions &getOptions() const override { return options; }
+    /*
     i64 getOption(Option opt) const override;
     void setOption(Option opt, i64 value) override;
-
+    */
 
     //
     // Working with Roms

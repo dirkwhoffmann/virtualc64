@@ -36,48 +36,37 @@ void
 DriveMemory::operator << (SerCounter &worker)
 {
     serialize(worker);
-    if (config.saveRoms) worker << rom;
+
+    // Add the size of a boolean indicating whether ROM data is saved
+    worker.count += sizeof(bool);
+
+    // Add the ROM size
+    if (emulator.get(OPT_SAVE_ROMS)) worker << rom;
 }
 
 void
 DriveMemory::operator << (SerReader &worker)
 {
     serialize(worker);
-    if (config.saveRoms) worker << rom;
+
+    // Check if the snapshot includes ROM data
+    bool romInSnapshot; worker << romInSnapshot;
+
+    // If yes, load the ROM
+    if (romInSnapshot) worker << rom;
 }
 
 void
 DriveMemory::operator << (SerWriter &worker)
 {
     serialize(worker);
-    if (config.saveRoms) worker << rom;
-}
 
-i64
-DriveMemory::getOption(Option option) const
-{
-    switch (option) {
+    // Check if the snapshot should include ROM data
+    bool romInSnapshot = bool(emulator.get(OPT_SAVE_ROMS));
+    worker << romInSnapshot;
 
-        case OPT_SAVE_ROMS:     return config.saveRoms;
-
-        default:
-            fatalError;
-    }
-}
-
-void
-DriveMemory::setOption(Option option, i64 value)
-{
-    switch (option) {
-
-        case OPT_SAVE_ROMS:
-
-            config.saveRoms = value;
-            return;
-
-        default:
-            fatalError;
-    }
+    // If yes, save the ROM
+    if (romInSnapshot) worker << rom;
 }
 
 void
