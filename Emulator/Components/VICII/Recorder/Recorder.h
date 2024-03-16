@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "RecorderTypes.h"
+#include "RecorderTypes.hpp"
 #include "SubComponent.h"
 #include "Chrono.h"
 #include "FFmpeg.h"

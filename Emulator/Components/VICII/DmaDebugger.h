@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "DmaDebuggerTypes.h"
+#include "DmaDebuggerTypes.hpp"
 #include "SubComponent.h"
 #include "Colors.h"
 

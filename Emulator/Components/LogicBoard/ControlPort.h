@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "ControlPortTypes.h"
+#include "ControlPortTypes.hpp"
 #include "CmdQueueTypes.hpp"
 #include "SubComponent.h"
 #include "Joystick.h"

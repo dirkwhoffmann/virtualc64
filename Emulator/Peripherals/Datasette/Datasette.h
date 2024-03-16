@@ -12,11 +12,11 @@
 
 #pragma once
 
-#include "DatasetteTypes.h"
+#include "DatasetteTypes.hpp"
 #include "C64Types.hpp"
 #include "CmdQueue.h"
 #include "SubComponent.h"
-#include "Constants.h"
+#include "Constants.hpp"
 #include "Chrono.h"
 
 namespace vc64 {

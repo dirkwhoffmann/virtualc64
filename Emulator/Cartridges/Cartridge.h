@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "CartridgeTypes.h"
+#include "CartridgeTypes.hpp"
 #include "SubComponent.h"
 #include "CartridgeRom.h"
 #include "CRTFile.h"

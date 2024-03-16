@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "CartridgeTypes.h"
+#include "CartridgeTypes.hpp"
 #include "AnyFile.h"
 
 namespace vc64 {

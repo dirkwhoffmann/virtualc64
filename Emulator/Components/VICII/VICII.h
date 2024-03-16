@@ -12,12 +12,12 @@
 
 #pragma once
 
-#include "VICIITypes.h"
+#include "VICIITypes.hpp"
 #include "SubComponent.h"
 #include "Colors.h"
-#include "Constants.h"
+#include "Constants.hpp"
 #include "DmaDebugger.h"
-#include "MemoryTypes.h"
+#include "MemoryTypes.hpp"
 #include "TimeDelayed.h"
 
 namespace vc64 {

@@ -13,7 +13,7 @@
 #pragma once
 
 #include "SubComponent.h"
-#include "DriveTypes.h"
+#include "DriveTypes.hpp"
 
 namespace vc64 {
 

@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "RetroShellTypes.h"
+#include "RetroShellTypes.hpp"
 #include "SubComponent.h"
 #include "Interpreter.h"
 #include "TextStorage.h"

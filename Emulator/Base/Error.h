@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "ErrorTypes.h"
+#include "ErrorTypes.hpp"
 #include "Exception.h"
 
 namespace vc64 {

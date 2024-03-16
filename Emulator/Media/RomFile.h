@@ -14,7 +14,7 @@
 
 #include "AnyFile.h"
 #include "C64Types.hpp"
-#include "MemoryTypes.h"
+#include "MemoryTypes.hpp"
 
 namespace vc64 {
 

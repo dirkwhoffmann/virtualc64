@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "PowerSupplyTypes.h"
+#include "PowerSupplyTypes.hpp"
 #include "SubComponent.h"
 #include "Chrono.h"
 

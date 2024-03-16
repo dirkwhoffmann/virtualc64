@@ -13,7 +13,7 @@
 #pragma once
 
 #include "CoreObject.h"
-#include "FileTypes.h"
+#include "FileTypes.hpp"
 #include "PETName.h"
 
 #include <sstream>

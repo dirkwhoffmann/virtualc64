@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "SIDTypes.h"
+#include "SIDTypes.hpp"
 #include "SubComponent.h"
 #include "SIDStreams.h"
 #include "resid/sid.h"

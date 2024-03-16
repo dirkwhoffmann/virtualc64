@@ -13,7 +13,7 @@
 #pragma once
 
 #include "SubComponent.h"
-#include "CartridgeTypes.h"
+#include "CartridgeTypes.hpp"
 
 namespace vc64 {
 

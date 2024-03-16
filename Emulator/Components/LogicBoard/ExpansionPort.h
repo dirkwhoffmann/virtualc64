@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "ExpansionPortTypes.h"
+#include "ExpansionPortTypes.hpp"
 #include "CmdQueueTypes.hpp"
 #include "SubComponent.h"
 #include "Cartridge.h"

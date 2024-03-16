@@ -31,7 +31,7 @@
 #include "SubComponent.h"
 #include "FastVoice.h"
 #include "SIDStreams.h"
-#include "Constants.h"
+#include "Constants.hpp"
 
 using namespace vc64;
 

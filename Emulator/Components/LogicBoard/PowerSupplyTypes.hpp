@@ -1,0 +1,39 @@
+// -----------------------------------------------------------------------------
+// This file is part of VirtualC64
+//
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// This FILE is dual-licensed. You are free to choose between:
+//
+//     - The GNU General Public License v3 (or any later version)
+//     - The Mozilla Public License v2
+//
+// SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
+// -----------------------------------------------------------------------------
+/// @file
+
+#pragma once
+
+#include "Aliases.h"
+#include "Reflection.h"
+
+#include "PowerSupplyTypes.h"
+
+struct PowerGridEnum : util::Reflection<PowerGridEnum, PowerGrid> {
+
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = GRID_UNSTABLE_60HZ;
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
+
+    static const char *prefix() { return "GRID"; }
+    static const char *key(PowerGrid value)
+    {
+        switch (value) {
+
+            case GRID_STABLE_50HZ:    return "STABLE_50HZ";
+            case GRID_UNSTABLE_50HZ:  return "UNSTABLE_50HZ";
+            case GRID_STABLE_60HZ:    return "STABLE_60HZ";
+            case GRID_UNSTABLE_60HZ:  return "UNSTABLE_60HZ";
+        }
+        return "???";
+    }
+};

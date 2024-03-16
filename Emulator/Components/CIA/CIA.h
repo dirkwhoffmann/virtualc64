@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "CIATypes.h"
+#include "CIATypes.hpp"
 #include "C64Types.hpp"
 #include "SubComponent.h"
 #include "TOD.h"

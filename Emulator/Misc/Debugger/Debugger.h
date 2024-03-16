@@ -12,7 +12,6 @@
 
 #pragma once
 
-#include "DebuggerTypes.h"
 #include "SubComponent.h"
 
 namespace vc64 {

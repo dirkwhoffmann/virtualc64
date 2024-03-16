@@ -13,7 +13,7 @@
 #pragma once
 
 #include "Aliases.h"
-#include "FSTypes.h"
+#include "FSTypes.hpp"
 #include "PETName.h"
 
 namespace vc64 {

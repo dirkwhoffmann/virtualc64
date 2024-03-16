@@ -12,8 +12,8 @@
 
 #pragma once
 
-#include "MouseTypes.h"
-#include "JoystickTypes.h"
+#include "MouseTypes.hpp"
+#include "JoystickTypes.hpp"
 #include "SubComponent.h"
 #include "Chrono.h"
 #include "Mouse1350.h"

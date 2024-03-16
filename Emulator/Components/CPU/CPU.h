@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "CPUTypes.h"
+#include "CPUTypes.hpp"
 #include "Peddle.h"
 #include "SubComponent.h"
 #include "CPUInspector.h"

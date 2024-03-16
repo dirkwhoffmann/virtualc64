@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "MemoryTypes.h"
+#include "MemoryTypes.hpp"
 #include "SubComponent.h"
 
 namespace vc64 {

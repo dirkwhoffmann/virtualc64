@@ -13,8 +13,7 @@
 
 #pragma once
 
-#include "Aliases.h"
-#include "Reflection.h"
+#include "Types.h"
 
 //
 // Enumerations
@@ -29,25 +28,3 @@ enum_long(CRTMODE)
     CRTMODE_OFF         //! No cartridge
 };
 typedef CRTMODE CRTMode;
-
-#ifdef __cplusplus
-struct CRTModeEnum : util::Reflection<CRTModeEnum, CRTMode> {
-    
-	static constexpr long minVal = 0;
-    static constexpr long maxVal = CRTMODE_OFF;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
-    static const char *prefix() { return "CRTMODE"; }
-    static const char *key(CRTMode value)
-    {
-        switch (value) {
-                
-            case CRTMODE_16K:      return "16K";
-            case CRTMODE_8K:       return "8K";
-            case CRTMODE_ULTIMAX:  return "ULTIMAX";
-            case CRTMODE_OFF:      return "OFF";
-        }
-        return "???";
-    }
-};
-#endif

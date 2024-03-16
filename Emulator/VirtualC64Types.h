@@ -40,5 +40,3 @@
 #include "SIDTypes.h"
 #include "ThreadTypes.h"
 #include "VICIITypes.h"
-
-// #include "Constants.h"

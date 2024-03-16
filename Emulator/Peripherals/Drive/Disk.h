@@ -12,9 +12,9 @@
 
 #pragma once
 
-#include "DiskTypes.h"
-#include "DiskAnalyzerTypes.h"
-#include "FSTypes.h"
+#include "DiskTypes.hpp"
+#include "DiskAnalyzerTypes.hpp"
+#include "FSTypes.hpp"
 #include "SubComponent.h"
 #include "PETName.h"
 

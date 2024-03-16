@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "DiskAnalyzerTypes.h"
+#include "DiskAnalyzerTypes.hpp"
 #include "DiskTypes.h"
 #include "CoreObject.h"
 #include "IOUtils.h"

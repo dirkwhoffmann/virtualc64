@@ -36,24 +36,3 @@ enum_long(CPDEVICE)
     CPDEVICE_JOYSTICK   ///! Joystick
 };
 typedef CPDEVICE ControlPortDevice;
-
-#ifdef __cplusplus
-struct ControlPortDeviceEnum : util::Reflection<ControlPortDeviceEnum, ControlPortDevice> {
-    
-	static constexpr long minVal = 0;
-    static constexpr long maxVal = CPDEVICE_JOYSTICK;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
-    static const char *prefix() { return "CPDEVICE"; }
-    static const char *key(ControlPortDevice value)
-    {
-        switch (value) {
-                
-            case CPDEVICE_NONE:      return "NONE";
-            case CPDEVICE_MOUSE:     return "MOUSE";
-            case CPDEVICE_JOYSTICK:  return "JOYSTICK";
-        }
-        return "???";
-    }
-};
-#endif

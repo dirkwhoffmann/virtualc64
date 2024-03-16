@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "JoystickTypes.h"
+#include "JoystickTypes.hpp"
 #include "SubComponent.h"
 
 namespace vc64 {

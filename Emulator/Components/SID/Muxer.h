@@ -13,8 +13,8 @@
 #pragma once
 
 #include "SubComponent.h"
-#include "SIDTypes.h"
-#include "Constants.h"
+#include "SIDTypes.hpp"
+#include "Constants.hpp"
 #include "Volume.h"
 #include "SIDStreams.h"
 #include "SID.h"

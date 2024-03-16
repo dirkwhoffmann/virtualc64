@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "SIDTypes.h"
+#include "SIDTypes.hpp"
 #include "ReSID.h"
 #include "FastSID.h"
 

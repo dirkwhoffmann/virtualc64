@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "DriveTypes.h"
+#include "DriveTypes.hpp"
 #include "C64Types.hpp"
 #include "CmdQueueTypes.hpp"
 #include "SubComponent.h"

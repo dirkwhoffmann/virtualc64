@@ -846,7 +846,6 @@
 		509280D029312C00006E1966 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5092A5B0200BC4B70037754D /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
 		5093D6A824B19E9200BDF924 /* Serializable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Serializable.h; sourceTree = "<group>"; };
-		5095C8182BA08AEF00A83825 /* DebuggerTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DebuggerTypes.h; sourceTree = "<group>"; };
 		5095C81A2BA08B0A00A83825 /* Debugger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Debugger.cpp; sourceTree = "<group>"; };
 		5095C81B2BA08B0A00A83825 /* Debugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Debugger.h; sourceTree = "<group>"; };
 		5098C57A2658CF9800E05EFC /* VideoExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExporter.swift; sourceTree = "<group>"; };
@@ -867,7 +866,7 @@
 		50A22A242618723200C9FB1E /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
 		50A22A292618725200C9FB1E /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
 		50A22A2E2618845800C9FB1E /* TextureRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureRect.swift; sourceTree = "<group>"; };
-		50A2D7AE24AF944500671F38 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		50A2D7AE24AF944500671F38 /* Constants.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Constants.hpp; sourceTree = "<group>"; };
 		50A2D7B024AF94B400671F38 /* Aliases.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Aliases.h; sourceTree = "<group>"; };
 		50A519401B8DA230006771E2 /* drive_click.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = drive_click.aiff; sourceTree = "<group>"; };
 		50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = drive_snatch_uae.aiff; sourceTree = "<group>"; };
@@ -1014,6 +1013,29 @@
 		50F47A472BA5BAE6000C3CCA /* ThreadTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ThreadTypes.hpp; sourceTree = "<group>"; };
 		50F47A482BA5BAFC000C3CCA /* CmdQueueTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CmdQueueTypes.hpp; sourceTree = "<group>"; };
 		50F47A492BA5BB10000C3CCA /* MsgQueueTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MsgQueueTypes.hpp; sourceTree = "<group>"; };
+		50F47A4A2BA5C8DF000C3CCA /* PowerSupplyTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PowerSupplyTypes.hpp; sourceTree = "<group>"; };
+		50F47A4B2BA5C8EE000C3CCA /* ControlPortTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ControlPortTypes.hpp; sourceTree = "<group>"; };
+		50F47A4C2BA5C913000C3CCA /* ExpansionPortTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ExpansionPortTypes.hpp; sourceTree = "<group>"; };
+		50F47A4D2BA5CAD5000C3CCA /* CPUTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CPUTypes.hpp; sourceTree = "<group>"; };
+		50F47A4E2BA5CB41000C3CCA /* CIATypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CIATypes.hpp; sourceTree = "<group>"; };
+		50F47A4F2BA5CB9A000C3CCA /* TODTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TODTypes.hpp; sourceTree = "<group>"; };
+		50F47A502BA5CC08000C3CCA /* VICIITypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VICIITypes.hpp; sourceTree = "<group>"; };
+		50F47A512BA5CC14000C3CCA /* RecorderTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RecorderTypes.hpp; sourceTree = "<group>"; };
+		50F47A522BA5CCD6000C3CCA /* DmaDebuggerTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DmaDebuggerTypes.hpp; sourceTree = "<group>"; };
+		50F47A532BA5CDF6000C3CCA /* SIDTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SIDTypes.hpp; sourceTree = "<group>"; };
+		50F47A542BA5CEE0000C3CCA /* MemoryTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MemoryTypes.hpp; sourceTree = "<group>"; };
+		50F47A552BA5CF65000C3CCA /* DriveTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DriveTypes.hpp; sourceTree = "<group>"; };
+		50F47A562BA5CF73000C3CCA /* ParCableTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ParCableTypes.hpp; sourceTree = "<group>"; };
+		50F47A572BA5CF84000C3CCA /* DiskAnalyzerTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DiskAnalyzerTypes.hpp; sourceTree = "<group>"; };
+		50F47A582BA5CF8F000C3CCA /* DiskTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DiskTypes.hpp; sourceTree = "<group>"; };
+		50F47A592BA5D1FF000C3CCA /* DatasetteTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DatasetteTypes.hpp; sourceTree = "<group>"; };
+		50F47A5A2BA5D235000C3CCA /* JoystickTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = JoystickTypes.hpp; sourceTree = "<group>"; };
+		50F47A5B2BA5D2B7000C3CCA /* MouseTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MouseTypes.hpp; sourceTree = "<group>"; };
+		50F47A5C2BA5D333000C3CCA /* CartridgeTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CartridgeTypes.hpp; sourceTree = "<group>"; };
+		50F47A5D2BA5D3C2000C3CCA /* FSTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FSTypes.hpp; sourceTree = "<group>"; };
+		50F47A5E2BA5D4BB000C3CCA /* RetroShellTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RetroShellTypes.hpp; sourceTree = "<group>"; };
+		50F47A5F2BA5D505000C3CCA /* FileTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FileTypes.hpp; sourceTree = "<group>"; };
+		50F47A602BA5D586000C3CCA /* ErrorTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ErrorTypes.hpp; sourceTree = "<group>"; };
 		50F5B6A02959C44E000457A0 /* Host.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Host.cpp; sourceTree = "<group>"; };
 		50F5B6A12959C44E000457A0 /* Host.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Host.h; sourceTree = "<group>"; };
 		50F99563203AEC80004C4856 /* KeyViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyViewItem.xib; sourceTree = "<group>"; };
@@ -1131,6 +1153,7 @@
 			children = (
 				5007E1E026A70006000E7344 /* CMakeLists.txt */,
 				500333EC2620269D008445E4 /* JoystickTypes.h */,
+				50F47A5A2BA5D235000C3CCA /* JoystickTypes.hpp */,
 				5085D89C25B848940043B15C /* Joystick.h */,
 				5085D89B25B848940043B15C /* Joystick.cpp */,
 			);
@@ -1142,6 +1165,7 @@
 			children = (
 				5007E1E226A70030000E7344 /* CMakeLists.txt */,
 				50B1A61825A208D900201A2C /* MouseTypes.h */,
+				50F47A5B2BA5D2B7000C3CCA /* MouseTypes.hpp */,
 				504C430124AF29AB00E69CAE /* Mouse.h */,
 				504C42FC24AF29AB00E69CAE /* Mouse.cpp */,
 				504C42FA24AF29AB00E69CAE /* Mouse1350.h */,
@@ -1328,6 +1352,7 @@
 			children = (
 				5078BECC264D74DF00EDA161 /* CMakeLists.txt */,
 				50B7E2692813F8B000A405A3 /* RetroShellTypes.h */,
+				50F47A5E2BA5D4BB000C3CCA /* RetroShellTypes.hpp */,
 				5036E0AE261AEF000048E66A /* RetroShell.h */,
 				5036E0B3261AEF000048E66A /* RetroShell.cpp */,
 				50B7E26B2813F8C400A405A3 /* TextStorage.h */,
@@ -1432,6 +1457,7 @@
 			children = (
 				5078BEC4264D746C00EDA161 /* CMakeLists.txt */,
 				50B1A61925A209A200201A2C /* CartridgeTypes.h */,
+				50F47A5C2BA5D333000C3CCA /* CartridgeTypes.hpp */,
 				504C42C424AF29AB00E69CAE /* Cartridge.h */,
 				504C42C024AF29AB00E69CAE /* Cartridge.cpp */,
 				504C42C124AF29AB00E69CAE /* CartridgeRom.h */,
@@ -1514,6 +1540,7 @@
 				5078BEC8264D74AB00EDA161 /* CMakeLists.txt */,
 				50441AA32B9613DD00102A4D /* Media.h */,
 				50B1A61A25A20A8900201A2C /* FileTypes.h */,
+				50F47A5F2BA5D505000C3CCA /* FileTypes.hpp */,
 				5026118D259CACB60066E754 /* PETName.h */,
 				504C42CE24AF29AB00E69CAE /* AnyFile.h */,
 				504C42D624AF29AB00E69CAE /* AnyFile.cpp */,
@@ -1551,6 +1578,7 @@
 			children = (
 				5078BEBC264D740E00EDA161 /* CMakeLists.txt */,
 				50B1A61525A2028B00201A2C /* MemoryTypes.h */,
+				50F47A542BA5CEE0000C3CCA /* MemoryTypes.hpp */,
 				504C42E424AF29AB00E69CAE /* C64Memory.h */,
 				504C42E124AF29AB00E69CAE /* C64Memory.cpp */,
 			);
@@ -1562,6 +1590,7 @@
 			children = (
 				5078BEB0264D733100EDA161 /* CMakeLists.txt */,
 				5052A7BF25A0703D00E62EDD /* CPUTypes.h */,
+				50F47A4D2BA5CAD5000C3CCA /* CPUTypes.hpp */,
 				504C42E824AF29AB00E69CAE /* CPU.h */,
 				504C42E924AF29AB00E69CAE /* CPU.cpp */,
 				50BB3E8C2B7A1AC100B2D87B /* CPUInspector.h */,
@@ -1590,6 +1619,7 @@
 				5078BEB4264D735D00EDA161 /* CMakeLists.txt */,
 				50DBB3D3264115B4006F45E6 /* BusTypes.h */,
 				50DAABD824F0108A005D426F /* VICIITypes.h */,
+				50F47A502BA5CC08000C3CCA /* VICIITypes.hpp */,
 				504C430C24AF29AC00E69CAE /* VICII.h */,
 				504C430724AF29AC00E69CAE /* VICII.cpp */,
 				504C430524AF29AB00E69CAE /* VICII_draw.cpp */,
@@ -1600,6 +1630,7 @@
 				5003382A266F7F3C00D5456E /* VICII_table.cpp */,
 				504C430924AF29AC00E69CAE /* VICII_debug.cpp */,
 				50DBB3D22641107E006F45E6 /* DmaDebuggerTypes.h */,
+				50F47A522BA5CCD6000C3CCA /* DmaDebuggerTypes.hpp */,
 				50DBB3D02641101E006F45E6 /* DmaDebugger.h */,
 				50DBB3CF2641101E006F45E6 /* DmaDebugger.cpp */,
 				50CD36912816817500E40BFC /* Recorder */,
@@ -1612,6 +1643,7 @@
 			children = (
 				5078BEC0264D743E00EDA161 /* CMakeLists.txt */,
 				50B9F2822826C23100BDFE7B /* DatasetteTypes.h */,
+				50F47A592BA5D1FF000C3CCA /* DatasetteTypes.hpp */,
 				504C431024AF29AC00E69CAE /* Datasette.h */,
 				504C430F24AF29AC00E69CAE /* Datasette.cpp */,
 			);
@@ -1623,6 +1655,7 @@
 			children = (
 				5078BEB6264D738000EDA161 /* CMakeLists.txt */,
 				50E806C125A1F1C500F08732 /* SIDTypes.h */,
+				50F47A532BA5CDF6000C3CCA /* SIDTypes.hpp */,
 				50C9318D2589E41D00D8BB94 /* Volume.h */,
 				504C433224AF29AC00E69CAE /* Muxer.h */,
 				504C431224AF29AC00E69CAE /* Muxer.cpp */,
@@ -1692,6 +1725,7 @@
 			children = (
 				5078BEBE264D742500EDA161 /* CMakeLists.txt */,
 				50B1A61725A205D500201A2C /* DriveTypes.h */,
+				50F47A552BA5CF65000C3CCA /* DriveTypes.hpp */,
 				504C434C24AF29AC00E69CAE /* Drive.h */,
 				504C434D24AF29AC00E69CAE /* Drive.cpp */,
 				504C434F24AF29AC00E69CAE /* DriveMemory.h */,
@@ -1701,12 +1735,15 @@
 				50AF2F8126AFFE9A002DC43B /* PIA.h */,
 				50AF2F8026AFFE9A002DC43B /* PIA.cpp */,
 				5007E1E926A7029A000E7344 /* ParCableTypes.h */,
+				50F47A562BA5CF73000C3CCA /* ParCableTypes.hpp */,
 				5007E1E726A70170000E7344 /* ParCable.h */,
 				5007E1E626A70170000E7344 /* ParCable.cpp */,
 				504268AD24F12705006BB841 /* DiskTypes.h */,
+				50F47A582BA5CF8F000C3CCA /* DiskTypes.hpp */,
 				504C434E24AF29AC00E69CAE /* Disk.h */,
 				504C434824AF29AC00E69CAE /* Disk.cpp */,
 				50AB70772721B92D004ABB2B /* DiskAnalyzerTypes.h */,
+				50F47A572BA5CF84000C3CCA /* DiskAnalyzerTypes.hpp */,
 				50AB70752721B8EE004ABB2B /* DiskAnalyzer.h */,
 				50AB70742721B8EE004ABB2B /* DiskAnalyzer.cpp */,
 			);
@@ -1718,10 +1755,12 @@
 			children = (
 				5078BEB2264D734600EDA161 /* CMakeLists.txt */,
 				50E806BF25A1C93B00F08732 /* CIATypes.h */,
+				50F47A4E2BA5CB41000C3CCA /* CIATypes.hpp */,
 				504C435324AF29AC00E69CAE /* CIA.h */,
 				504C435824AF29AC00E69CAE /* CIA.cpp */,
 				50BE4B7124E81266008F39C9 /* CIARegs.cpp */,
 				509995C826F72F3B009B68F3 /* TODTypes.h */,
+				50F47A4F2BA5CB9A000C3CCA /* TODTypes.hpp */,
 				504C435424AF29AC00E69CAE /* TOD.h */,
 				504C435524AF29AC00E69CAE /* TOD.cpp */,
 			);
@@ -1830,6 +1869,7 @@
 			children = (
 				5078BECA264D74C800EDA161 /* CMakeLists.txt */,
 				50B1A61B25A20DFB00201A2C /* FSTypes.h */,
+				50F47A5D2BA5D3C2000C3CCA /* FSTypes.hpp */,
 				5080501A2587A16D004FE1F5 /* FSDescriptors.h */,
 				508050192587A16D004FE1F5 /* FSDescriptors.cpp */,
 				50A077F7258A18B9005ACF5B /* FileSystem.h */,
@@ -1845,7 +1885,6 @@
 		5095C8192BA08AF500A83825 /* Debugger */ = {
 			isa = PBXGroup;
 			children = (
-				5095C8182BA08AEF00A83825 /* DebuggerTypes.h */,
 				5095C81B2BA08B0A00A83825 /* Debugger.h */,
 				5095C81A2BA08B0A00A83825 /* Debugger.cpp */,
 			);
@@ -1869,11 +1908,12 @@
 			children = (
 				5078BEAC264D72C000EDA161 /* CMakeLists.txt */,
 				50A2D7B024AF94B400671F38 /* Aliases.h */,
-				50A2D7AE24AF944500671F38 /* Constants.h */,
+				50A2D7AE24AF944500671F38 /* Constants.hpp */,
 				50E17E242B8B26EB0029747D /* OptionTypes.h */,
 				50E17E232B8B26D70029747D /* Option.h */,
 				50E17E1F2B8B26AC0029747D /* Option.cpp */,
 				5055D5B226158849005D3DA6 /* ErrorTypes.h */,
+				50F47A602BA5D586000C3CCA /* ErrorTypes.hpp */,
 				500C7C43259FC09B00F5CC1F /* Error.h */,
 				5055D5B32615886E005D3DA6 /* Error.cpp */,
 				50F420C9250BA3460043DE56 /* Colors.h */,
@@ -1945,12 +1985,15 @@
 			children = (
 				5078BEAE264D731600EDA161 /* CMakeLists.txt */,
 				5078BEA5264D064600EDA161 /* PowerSupplyTypes.h */,
+				50F47A4A2BA5C8DF000C3CCA /* PowerSupplyTypes.hpp */,
 				50ACF4DA256EB43B003B5690 /* PowerSupply.h */,
 				50ACF4D9256EB43B003B5690 /* PowerSupply.cpp */,
 				50B1A61625A203B100201A2C /* ControlPortTypes.h */,
+				50F47A4B2BA5C8EE000C3CCA /* ControlPortTypes.hpp */,
 				504C434024AF29AC00E69CAE /* ControlPort.h */,
 				504C433E24AF29AC00E69CAE /* ControlPort.cpp */,
 				500333EB26202527008445E4 /* ExpansionPortTypes.h */,
+				50F47A4C2BA5C913000C3CCA /* ExpansionPortTypes.hpp */,
 				504C434324AF29AC00E69CAE /* ExpansionPort.h */,
 				504C434524AF29AC00E69CAE /* ExpansionPort.cpp */,
 				504C434624AF29AC00E69CAE /* IEC.h */,
@@ -1993,6 +2036,7 @@
 				50CD3697281681E700E40BFC /* FFmpeg.h */,
 				50CD3696281681E700E40BFC /* FFmpeg.cpp */,
 				50E5D66E2B9C9C97004113A9 /* RecorderTypes.h */,
+				50F47A512BA5CC14000C3CCA /* RecorderTypes.hpp */,
 				5044A03A2657A7A800C551C6 /* Recorder.h */,
 				5044A0392657A7A800C551C6 /* Recorder.cpp */,
 			);
