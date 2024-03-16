@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "C64Types.h"
+#include "C64Types.hpp"
 #include "MsgQueue.h"
 #include "Thread.h"
 

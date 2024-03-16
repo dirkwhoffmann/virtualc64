@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "MsgQueueTypes.h"
+#include "MsgQueueTypes.hpp"
 #include "CoreObject.h"
 #include "Synchronizable.h"
 #include "RingBuffer.h"

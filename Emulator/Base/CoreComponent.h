@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "EmulatorTypes.h"
+#include "EmulatorTypes.hpp"
 #include "CoreObject.h"
 #include "Synchronizable.h"
 #include "Serializable.h"

@@ -895,7 +895,6 @@
 		50AEEE7226305625001DED20 /* C64Key.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Key.h; sourceTree = "<group>"; };
 		50AF2F8026AFFE9A002DC43B /* PIA.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PIA.cpp; sourceTree = "<group>"; };
 		50AF2F8126AFFE9A002DC43B /* PIA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PIA.h; sourceTree = "<group>"; };
-		50AFE0D32616E93A00D71E75 /* CoreComponentTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreComponentTypes.h; sourceTree = "<group>"; };
 		50B165AD25B06A03009B576D /* TextureToolbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureToolbox.swift; sourceTree = "<group>"; };
 		50B171051EE6AB840019E8D4 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		50B1A61525A2028B00201A2C /* MemoryTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemoryTypes.h; sourceTree = "<group>"; };
@@ -1009,6 +1008,12 @@
 		50F2381D12DF505B00B1F275 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		50F420C8250BA3460043DE56 /* Colors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colors.cpp; sourceTree = "<group>"; };
 		50F420C9250BA3460043DE56 /* Colors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colors.h; sourceTree = "<group>"; };
+		50F47A442BA5B2C6000C3CCA /* C64Types.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = C64Types.hpp; sourceTree = "<group>"; };
+		50F47A452BA5B3CB000C3CCA /* VirtualC64Types.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VirtualC64Types.hpp; sourceTree = "<group>"; };
+		50F47A462BA5B4B8000C3CCA /* EmulatorTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EmulatorTypes.hpp; sourceTree = "<group>"; };
+		50F47A472BA5BAE6000C3CCA /* ThreadTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ThreadTypes.hpp; sourceTree = "<group>"; };
+		50F47A482BA5BAFC000C3CCA /* CmdQueueTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CmdQueueTypes.hpp; sourceTree = "<group>"; };
+		50F47A492BA5BB10000C3CCA /* MsgQueueTypes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MsgQueueTypes.hpp; sourceTree = "<group>"; };
 		50F5B6A02959C44E000457A0 /* Host.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Host.cpp; sourceTree = "<group>"; };
 		50F5B6A12959C44E000457A0 /* Host.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Host.h; sourceTree = "<group>"; };
 		50F99563203AEC80004C4856 /* KeyViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyViewItem.xib; sourceTree = "<group>"; };
@@ -1405,6 +1410,7 @@
 				504C42F824AF29AB00E69CAE /* config.h */,
 				5077AC672B5ACC5100EFAC85 /* config.cpp */,
 				50441A872B93CE2600102A4D /* VirtualC64Types.h */,
+				50F47A452BA5B3CB000C3CCA /* VirtualC64Types.hpp */,
 				506F30452B768DE30083EAEA /* VirtualC64.h */,
 				506F30462B7692180083EAEA /* VirtualC64.cpp */,
 				50726FBC2961CA5A0031F2F5 /* Headless.h */,
@@ -1887,18 +1893,20 @@
 				506F30402B74C1C70083EAEA /* Wakeable.cpp */,
 				504C42EC24AF29AB00E69CAE /* CoreObject.h */,
 				504C42ED24AF29AB00E69CAE /* CoreObject.cpp */,
-				50AFE0D32616E93A00D71E75 /* CoreComponentTypes.h */,
 				504C42F524AF29AB00E69CAE /* CoreComponent.h */,
 				504C42EE24AF29AB00E69CAE /* CoreComponent.cpp */,
 				500EA6C624B09037009AA7D7 /* SubComponent.h */,
 				500EA6C524B09037009AA7D7 /* SubComponent.cpp */,
 				50461BBF26B522A50019CEDF /* ThreadTypes.h */,
+				50F47A472BA5BAE6000C3CCA /* ThreadTypes.hpp */,
 				50461BBD26B522450019CEDF /* Thread.h */,
 				50461BBC26B522450019CEDF /* Thread.cpp */,
 				50BB3E972B7A429500B2D87B /* CmdQueueTypes.h */,
+				50F47A482BA5BAFC000C3CCA /* CmdQueueTypes.hpp */,
 				50BB3E942B7A426800B2D87B /* CmdQueue.h */,
 				50BB3E932B7A426800B2D87B /* CmdQueue.cpp */,
 				50E806C025A1DE9200F08732 /* MsgQueueTypes.h */,
+				50F47A492BA5BB10000C3CCA /* MsgQueueTypes.hpp */,
 				504C42F424AF29AB00E69CAE /* MsgQueue.h */,
 				504C42F124AF29AB00E69CAE /* MsgQueue.cpp */,
 				50CD369B2817D69000E40BFC /* Defaults.h */,
@@ -2004,9 +2012,11 @@
 			children = (
 				50E56AF629D48A0E00EBCE76 /* CMakeLists.txt */,
 				504268AC24F0F76F006BB841 /* C64Types.h */,
+				50F47A442BA5B2C6000C3CCA /* C64Types.hpp */,
 				504C42F624AF29AB00E69CAE /* C64.h */,
 				504C42F724AF29AB00E69CAE /* C64.cpp */,
 				506F30442B7578870083EAEA /* EmulatorTypes.h */,
+				50F47A462BA5B4B8000C3CCA /* EmulatorTypes.hpp */,
 				506F30392B729CE80083EAEA /* Emulator.h */,
 				506F30382B729CE80083EAEA /* Emulator.cpp */,
 				50ACF4DC256EB451003B5690 /* LogicBoard */,

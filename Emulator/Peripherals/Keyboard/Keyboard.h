@@ -14,7 +14,7 @@
 
 #include "SubComponent.h"
 #include "CmdQueue.h"
-#include "C64Types.h"
+#include "C64Types.hpp"
 #include "C64Key.h"
 #include "Buffer.h"
 

@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "CmdQueueTypes.h"
+#include "CmdQueueTypes.hpp"
 #include "CoreObject.h"
 #include "Synchronizable.h"
 #include "RingBuffer.h"

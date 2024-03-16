@@ -13,7 +13,7 @@
 #pragma once
 
 #include "AnyFile.h"
-#include "C64Types.h"
+#include "C64Types.hpp"
 #include "MemoryTypes.h"
 
 namespace vc64 {
