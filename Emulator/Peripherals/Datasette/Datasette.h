@@ -13,7 +13,7 @@
 #pragma once
 
 #include "DatasetteTypes.h"
-#include "C64Types.hpp"
+#include "C64Types.h"
 #include "CmdQueue.h"
 #include "SubComponent.h"
 #include "Constants.h"

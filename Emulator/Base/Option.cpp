@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "Option.h"
-#include "EmulatorTypes.hpp"
+#include "EmulatorTypes.h"
 #include "VICIITypes.h"
 #include "DatasetteTypes.h"
 #include "MemoryTypes.h"

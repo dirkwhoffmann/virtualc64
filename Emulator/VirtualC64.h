@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "VirtualC64Types.hpp"
+#include "VirtualC64Types.h"
 #include "Emulator.h"
 #include "Media.h"
 

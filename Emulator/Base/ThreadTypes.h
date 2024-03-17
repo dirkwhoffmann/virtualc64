@@ -14,6 +14,7 @@
 #pragma once
 
 #include "Aliases.h"
+#include "Reflection.h"
 
 /// Emulator state
 enum_long(EMULATOR_STATE)
@@ -25,3 +26,26 @@ enum_long(EMULATOR_STATE)
     STATE_HALTED        ///< Shut down
 };
 typedef EMULATOR_STATE EmulatorState;
+
+#ifdef __cplusplus
+struct EmulatorStateEnum : util::Reflection<EmulatorStateEnum, EmulatorState>
+{
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = STATE_HALTED;
+    static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
+
+    static const char *prefix() { return "STATE"; }
+    static const char *key(EmulatorState value)
+    {
+        switch (value) {
+
+            case STATE_OFF:          return "OFF";
+            case STATE_PAUSED:       return "PAUSED";
+            case STATE_RUNNING:      return "RUNNING";
+            case STATE_SUSPENDED:    return "SUSPENDED";
+            case STATE_HALTED:       return "HALTED";
+        }
+        return "???";
+    }
+};
+#endif

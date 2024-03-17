@@ -13,7 +13,7 @@
 #pragma once
 
 #include "ExpansionPortTypes.h"
-#include "CmdQueueTypes.hpp"
+#include "CmdQueueTypes.h"
 #include "SubComponent.h"
 #include "Cartridge.h"
 

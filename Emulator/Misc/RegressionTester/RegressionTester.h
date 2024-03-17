@@ -13,7 +13,7 @@
 #pragma once
 
 #include "SubComponent.h"
-#include "C64Types.hpp"
+#include "C64Types.h"
 
 namespace vc64 {
 

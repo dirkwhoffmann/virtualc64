@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "ThreadTypes.hpp"
+#include "ThreadTypes.h"
 #include "CoreComponent.h"
 #include "Chrono.h"
 #include "Wakeable.h"

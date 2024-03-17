@@ -13,8 +13,8 @@
 #pragma once
 
 #include "DriveTypes.h"
-#include "C64Types.hpp"
-#include "CmdQueueTypes.hpp"
+#include "C64Types.h"
+#include "CmdQueueTypes.h"
 #include "SubComponent.h"
 #include "CPU.h"
 #include "Disk.h"

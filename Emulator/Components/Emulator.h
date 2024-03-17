@@ -14,7 +14,7 @@
 
 #include "C64.h"
 #include "Defaults.h"
-#include "EmulatorTypes.hpp"
+#include "EmulatorTypes.h"
 #include "Host.h"
 #include "Thread.h"
 #include "CmdQueue.h"
