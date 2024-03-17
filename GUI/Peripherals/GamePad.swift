@@ -53,7 +53,7 @@ class GamePad {
     var locationID: String { return device?.locationID ?? "" }
     
     // Type of the managed device (joystick or mouse)
-    var type: ControlPortDevice
+    var type: vc64.ControlPortDevice
     var isMouse: Bool { return type == .MOUSE }
     var isJoystick: Bool { return type == .JOYSTICK }
 
@@ -95,8 +95,8 @@ class GamePad {
      * This information is utilized to determine whether a joystick event has
      * to be triggered.
      */
-    var oldEvents: [Int: [GamePadAction]] = [:]
-    
+    var oldEvents: [Int: [vc64.GamePadAction]] = [:]
+
     // Receivers for HID events
     let inputValueCallback: IOHIDValueCallback = {
         inContext, inResult, inSender, value in
@@ -107,8 +107,8 @@ class GamePad {
                                  value: value)
     }
     
-    init(manager: GamePadManager, device: IOHIDDevice? = nil, type: ControlPortDevice) {
-                
+    init(manager: GamePadManager, device: IOHIDDevice? = nil, type: vc64.ControlPortDevice) {
+
         self.manager = manager
         self.device = device
         self.type = type
@@ -160,7 +160,7 @@ class GamePad {
     //
 
     // Binds a key to a gamepad action
-    func bind(key: MacKey, action: GamePadAction) {
+    func bind(key: MacKey, action: vc64.GamePadAction) {
 
         guard let n = keyMap else { return }
         
@@ -171,8 +171,8 @@ class GamePad {
     }
 
     // Removes a key binding to the specified gampad action (if any)
-    func unbind(action: GamePadAction) {
-        
+    func unbind(action: vc64.GamePadAction) {
+
         guard let n = keyMap else { return }
         
         for (k, dir) in prefs.keyMaps[n] where dir == action.rawValue {
@@ -181,14 +181,14 @@ class GamePad {
      }
 
     // Translates a key press event to a list of gamepad actions
-    func keyDownEvents(_ macKey: MacKey) -> [GamePadAction] {
-        
+    func keyDownEvents(_ macKey: MacKey) -> [vc64.GamePadAction] {
+
         var macKey2 = macKey
         macKey2.carbonFlags = 0
         guard let n = keyMap, let direction = prefs.keyMaps[n][macKey2] else { return [] }
                     
-        switch GamePadAction(rawValue: direction) {
-            
+        switch vc64.GamePadAction(rawValue: direction) {
+
         case .PULL_UP:
             keyUp = true
             return [.PULL_UP]
@@ -220,16 +220,16 @@ class GamePad {
     }
         
     // Handles a key release event
-    func keyUpEvents(_ macKey: MacKey) -> [GamePadAction] {
-        
+    func keyUpEvents(_ macKey: MacKey) -> [vc64.GamePadAction] {
+
         var macKey2 = macKey
         macKey2.carbonFlags = 0
         guard let n = keyMap, let direction = prefs.keyMaps[n][macKey2] else { return [] }
                 
         debug(.events, "keyUpEvents \(direction)")
         
-        switch GamePadAction(rawValue: direction) {
-            
+        switch vc64.GamePadAction(rawValue: direction) {
+
         case .PULL_UP:
             keyUp = false
             return keyDown ? [.PULL_DOWN] : [.RELEASE_Y]
@@ -287,8 +287,8 @@ class GamePad {
         return nil // Dead zone
     }
     
-    func mapHAxis(value: IOHIDValue, element: IOHIDElement) -> [GamePadAction]? {
-    
+    func mapHAxis(value: IOHIDValue, element: IOHIDElement) -> [vc64.GamePadAction]? {
+
         if let v = mapAnalogAxis(value: value, element: element) {
             return v == 2 ? [.PULL_RIGHT] : v == -2 ? [.PULL_LEFT] : [.RELEASE_X]
         } else {
@@ -296,8 +296,8 @@ class GamePad {
         }
     }
     
-    func mapVAxis(value: IOHIDValue, element: IOHIDElement) -> [GamePadAction]? {
-    
+    func mapVAxis(value: IOHIDValue, element: IOHIDElement) -> [vc64.GamePadAction]? {
+
         if let v = mapAnalogAxis(value: value, element: element) {
             return v == 2 ? [.PULL_DOWN] : v == -2 ? [.PULL_UP] : [.RELEASE_Y]
         } else {
@@ -305,8 +305,8 @@ class GamePad {
         }
     }
 
-    func mapVAxisRev(value: IOHIDValue, element: IOHIDElement) -> [GamePadAction]? {
-    
+    func mapVAxisRev(value: IOHIDValue, element: IOHIDElement) -> [vc64.GamePadAction]? {
+
         if let v = mapAnalogAxis(value: value, element: element) {
             return v == 2 ? [.PULL_UP] : v == -2 ? [.PULL_DOWN] : [.RELEASE_Y]
         } else {
@@ -326,7 +326,7 @@ class GamePad {
                 
         debug(.hid, "usagePage = \(usagePage) usage = \(usage) value = \(intValue)")
         
-        var events: [GamePadAction]?
+        var events: [vc64.GamePadAction]?
         
         if usagePage == kHIDPage_Button {
 
@@ -443,14 +443,14 @@ class GamePad {
     //
     
     @discardableResult
-    func processJoystickEvents(events: [GamePadAction]) -> Bool {
+    func processJoystickEvents(events: [vc64.GamePadAction]) -> Bool {
 
         let c64 = manager.parent.c64!
 
         if let id = port {
 
             for event in events {
-                c64.send(.JOY_EVENT, action: GamePadCmd(port: id, action: event))
+                c64.send(.JOY_EVENT, action: vc64.GamePadCmd(port: id, action: event))
             }
         }
 
@@ -461,14 +461,14 @@ class GamePad {
     }
 
     @discardableResult
-    func processMouseEvents(events: [GamePadAction]) -> Bool {
+    func processMouseEvents(events: [vc64.GamePadAction]) -> Bool {
 
         let c64 = manager.parent.c64!
 
         if let id = port {
 
             for event in events {
-                c64.send(.MOUSE_EVENT, action: GamePadCmd(port: id, action: event))
+                c64.send(.MOUSE_EVENT, action: vc64.GamePadCmd(port: id, action: event))
             }
         }
 
@@ -484,7 +484,7 @@ class GamePad {
 
         if let id = port {
 
-            c64.send(.MOUSE_MOVE_REL, coord: CoordCmd(port: id, x: delta.x, y: delta.y))
+            c64.send(.MOUSE_MOVE_REL, coord: vc64.CoordCmd(port: id, x: delta.x, y: delta.y))
         }
     }
 
@@ -516,16 +516,16 @@ class GamePad {
         return true
     }
 
-    func processKeyboardEvent(events: [GamePadAction]) {
+    func processKeyboardEvent(events: [vc64.GamePadAction]) {
 
         let c64 = manager.parent.c64!
 
         if let id = port {
 
-            let type  = isMouse ? CmdType.MOUSE_EVENT : CmdType.JOY_EVENT
+            let type  = isMouse ? vc64.CmdType.MOUSE_EVENT : vc64.CmdType.JOY_EVENT
 
             for e in events {
-                c64.send(type, action: GamePadCmd(port: id, action: e))
+                c64.send(type, action: vc64.GamePadCmd(port: id, action: e))
             }
         }
     }

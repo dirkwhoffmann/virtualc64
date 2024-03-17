@@ -16,6 +16,8 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
+namespace vc64 {
+
 //
 // Enumerations
 //
@@ -226,3 +228,5 @@ Message;
 //
 
 typedef void Callback(const void *, Message);
+
+}

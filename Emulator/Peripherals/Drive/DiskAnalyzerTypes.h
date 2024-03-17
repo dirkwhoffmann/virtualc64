@@ -15,6 +15,8 @@
 #include "Aliases.h"
 #include "DiskTypes.h"
 
+namespace vc64 {
+
 typedef struct
 {
     isize headerBegin;
@@ -36,3 +38,5 @@ typedef struct
     TrackInfo trackInfo[85];
 }
 DiskInfo;
+
+}

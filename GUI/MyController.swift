@@ -8,7 +8,7 @@
 // -----------------------------------------------------------------------------
 
 protocol MessageReceiver {
-    func processMessage(_ msg: Message)
+    func processMessage(_ msg: vc64.Message)
 }
 
 class MyController: NSWindowController, MessageReceiver {
@@ -231,7 +231,7 @@ extension MyController {
         // Convert 'self' to a void pointer
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
         
-        c64.launch(myself) { (ptr, msg: Message) in
+        c64.launch(myself) { (ptr, msg: vc64.Message) in
 
             // Convert void pointer back to 'self'
             let myself = Unmanaged<MyController>.fromOpaque(ptr!).takeUnretainedValue()
@@ -281,12 +281,12 @@ extension MyController {
         }
     }
 
-    func processMessage(_ msg: Message) {
+    func processMessage(_ msg: vc64.Message) {
 
         var value: Int { return Int(msg.value) }
         var nr: Int { return Int(msg.drive.nr) }
         var halftrack: Int { return Int(msg.drive.value) }
-        var drive: DriveMsg { return msg.drive }
+        var drive: vc64.DriveMsg { return msg.drive }
         var pc: Int { return Int(msg.cpu.pc) }
         var vol: Int { return Int(msg.drive.volume) }
         var pan: Int { return Int(msg.drive.pan) }

@@ -31,7 +31,7 @@ class MemTableView: NSTableView {
         reloadData()
     }
     
-    var bankType: MemoryType {
+    var bankType: vc64.MemoryType {
         return inspector.bankType[inspector.displayedBank]!
     }
 }

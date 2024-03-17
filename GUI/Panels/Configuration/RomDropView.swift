@@ -65,7 +65,7 @@ class DropView: NSImageView {
 
 class RomDropView: DropView {
 
-    func performDrag(type: RomType, url: URL?) -> Bool {
+    func performDrag(type: vc64.RomType, url: URL?) -> Bool {
 
         guard let url = url?.unpacked else { return false }
 

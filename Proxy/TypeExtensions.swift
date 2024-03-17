@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-extension EventSlot: CustomStringConvertible {
+extension vc64.EventSlot: CustomStringConvertible {
 
     public var description: String {
 
@@ -38,13 +38,13 @@ extension EventSlot: CustomStringConvertible {
     }
 }
 
-extension FileType {
+extension vc64.FileType {
 
     init?(url: URL?) {
         self = url == nil ? .UNKNOWN : AnyFileProxy.type(of: url)
     }
 
-    static var all: [FileType] {
+    static var all: [vc64.FileType] {
         return [
             .SNAPSHOT, .SCRIPT,
             .CRT,
@@ -56,7 +56,7 @@ extension FileType {
         ]
     }
 
-    static var draggable: [FileType] {
+    static var draggable: [vc64.FileType] {
         return [
             .SNAPSHOT, .SCRIPT,
             .CRT, .T64, .PRG, .P00,
@@ -67,7 +67,7 @@ extension FileType {
     }
 }
 
-extension DOSType: CustomStringConvertible {
+extension vc64.DOSType: CustomStringConvertible {
 
     public var description: String {
         
@@ -81,7 +81,7 @@ extension DOSType: CustomStringConvertible {
     }
 }
 
-extension FSFileType: CustomStringConvertible {
+extension vc64.FSFileType: CustomStringConvertible {
 
     public var description: String {
         
@@ -98,8 +98,8 @@ extension FSFileType: CustomStringConvertible {
     }
 }
 
-extension FSBlockType: CustomStringConvertible {
-    
+extension vc64.FSBlockType: CustomStringConvertible {
+
     public var description: String {
         
         switch self {
@@ -114,8 +114,8 @@ extension FSBlockType: CustomStringConvertible {
     }
 }
 
-extension FSUsage: CustomStringConvertible {
-    
+extension vc64.FSUsage: CustomStringConvertible {
+
     public var description: String {
         
         switch self {
@@ -149,8 +149,8 @@ extension FSUsage: CustomStringConvertible {
     }
 }
 
-extension ErrorCode {
-    
+extension vc64.ErrorCode {
+
     func description(expected exp: Int = 0) -> String {
         
         switch self {
@@ -242,7 +242,7 @@ extension CartridgeType {
     }
 }
             
-extension TAPVersion {
+extension vc64.TAPVersion {
     
     var description: String {
         

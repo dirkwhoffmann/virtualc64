@@ -76,7 +76,7 @@ extension PreferencesController {
         devActivity2.isHidden = pad == nil
     }
 
-    func refreshDeviceEvents(events: [GamePadAction]) {
+    func refreshDeviceEvents(events: [vc64.GamePadAction]) {
             
         var activity = "", activity2 = ""
         

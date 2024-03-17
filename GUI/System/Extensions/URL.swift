@@ -279,7 +279,7 @@ extension URL {
         }
     }
     
-    var c64FileType: FileType {
+    var c64FileType: vc64.FileType {
         
         switch pathExtension.lowercased() {
         

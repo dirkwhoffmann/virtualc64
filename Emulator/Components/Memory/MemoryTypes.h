@@ -16,6 +16,8 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
+namespace vc64 {
+
 //
 // Enumerations
 //
@@ -37,16 +39,16 @@ enum_long(M_TYPE)
 typedef M_TYPE MemoryType;
 
 struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
-    
-	static constexpr long minVal = 1;
+
+    static constexpr long minVal = 1;
     static constexpr long maxVal = M_NONE;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return "M"; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case M_RAM:     return "RAM";
             case M_CHAR:    return "CHAR";
             case M_KERNAL:  return "KERNAL";
@@ -74,16 +76,16 @@ enum_long(RAM_PATTERN)
 typedef RAM_PATTERN RamPattern;
 
 struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
-    
+
     static constexpr long minVal = 0;
     static constexpr long maxVal = RAM_PATTERN_RANDOM;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return "RAM_PATTERN"; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case RAM_PATTERN_VICE:   return "VICE";
             case RAM_PATTERN_CCS:    return "CCS";
             case RAM_PATTERN_ZEROES: return "ZEROES";
@@ -170,7 +172,7 @@ typedef struct
     bool hiram;
     bool charen;
     u8   bankMap;
-    
+
     MemoryType peekSrc[16];
     MemoryType vicPeekSrc[16];
 }
@@ -190,3 +192,5 @@ typedef struct {
     bool patched;
 }
 RomTraits;
+
+}

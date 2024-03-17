@@ -16,6 +16,8 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
+namespace vc64 {
+
 //
 // Enumerations
 //
@@ -30,16 +32,16 @@ enum_long(MOUSE_MODEL)
 typedef MOUSE_MODEL MouseModel;
 
 struct MouseModelEnum : util::Reflection<MouseModelEnum, MouseModel> {
-    
-	static constexpr long minVal = 0;
+
+    static constexpr long minVal = 0;
     static constexpr long maxVal = MOUSE_NEOS;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return "MOUSE"; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case MOUSE_C1350:  return "C1350";
             case MOUSE_C1351:  return "C1351";
             case MOUSE_NEOS:   return "NEOS";
@@ -59,3 +61,5 @@ typedef struct
     isize velocity;
 }
 MouseConfig;
+
+}

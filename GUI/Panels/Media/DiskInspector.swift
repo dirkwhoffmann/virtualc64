@@ -48,12 +48,12 @@ class DiskInspector: DialogController {
 
     var selectedHalftrack = -1
     var halftrack: Halftrack? {
-        return isHalftrackNumber(selectedHalftrack) ? Halftrack(selectedHalftrack) : nil
+        return vc64.isHalftrackNumber(selectedHalftrack) ? Halftrack(selectedHalftrack) : nil
     }
 
     var selectedSector = -1
     var sector: Sector? {
-        return isSectorNumber(selectedSector) ? Sector(selectedSector) : nil
+        return vc64.isSectorNumber(selectedSector) ? Sector(selectedSector) : nil
     }
 
     var hex = true

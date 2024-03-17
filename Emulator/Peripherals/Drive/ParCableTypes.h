@@ -16,6 +16,8 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
+namespace vc64 {
+
 //
 // Enumerations
 //
@@ -30,16 +32,16 @@ enum_long(PAR_CABLE_TYPE)
 typedef PAR_CABLE_TYPE ParCableType;
 
 struct ParCableTypeEnum : util::Reflection<ParCableTypeEnum, ParCableType> {
-    
-	static constexpr long minVal = 0;
+
+    static constexpr long minVal = 0;
     static constexpr long maxVal = PAR_CABLE_DOLPHIN3;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return "PAR_CABLE"; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case PAR_CABLE_NONE:     return "PAR_CABLE_NONE";
             case PAR_CABLE_STANDARD: return "PAR_CABLE_STANDARD";
             case PAR_CABLE_DOLPHIN3: return "PAR_CABLE_DOLPHIN3";
@@ -47,3 +49,5 @@ struct ParCableTypeEnum : util::Reflection<ParCableTypeEnum, ParCableType> {
         return "???";
     }
 };
+
+}

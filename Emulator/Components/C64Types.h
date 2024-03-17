@@ -16,6 +16,8 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
+namespace vc64 {
+
 //
 // Enumerations
 //
@@ -158,7 +160,7 @@ enum_i8(EventID)
     MOT_START           = 1,
     MOT_STOP,
     MOT_EVENT_COUNT,
-    
+
     // Disk change
     DCH_INSERT          = 1,
     DCH_EJECT,
@@ -167,7 +169,7 @@ enum_i8(EventID)
     // Retro shell
     RSH_WAKEUP          = 1,
     RSH_EVENT_COUNT,
-    
+
     // Auto typing
     KEY_AUTO_TYPE       = 1,
     KEY_EVENT_COUNT,
@@ -291,4 +293,6 @@ constexpr u32 BREAKPOINT    = (1 << 3);
 constexpr u32 WATCHPOINT    = (1 << 4);
 constexpr u32 CPU_JAM       = (1 << 5);
 constexpr u32 SINGLE_STEP   = (1 << 6);
+}
+
 }

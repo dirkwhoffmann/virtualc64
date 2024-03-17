@@ -14,7 +14,7 @@ extension ConfigurationController {
         // Engine
         audEngine.selectItem(withTag: config.sidEngine)
         audFilter.state = config.sidFilter ? .on : .off
-        audSampling.isEnabled = config.sidEngine == SIDEngine.RESID.rawValue
+        audSampling.isEnabled = config.sidEngine == vc64.SIDEngine.RESID.rawValue
         audSampling.selectItem(withTag: config.sidSampling)
 
         // In

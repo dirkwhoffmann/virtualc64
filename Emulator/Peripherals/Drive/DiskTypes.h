@@ -16,6 +16,8 @@
 #include "Reflection.h"
 #include "Serializable.h"
 
+namespace vc64 {
+
 //
 // Constants
 //
@@ -64,13 +66,13 @@ static const isize maxBitsOnTrack = maxBytesOnTrack * 8;
  * The exact value depends on the speed zone and the disk rotation speed. We
  * assume a rotation speed of 300 rpm.
  */
- static const i64 averageBitTimeSpan[] =
+static const i64 averageBitTimeSpan[] =
 {
-     4 * 10000,        // 4 * 16/16 * 10^4 1/10 nsec
-     4 * 9375,         // 4 * 15/16 * 10^4 1/10 nsec
-     4 * 8750,         // 4 * 14/16 * 10^4 1/10 nsec
-     4 * 8125          // 4 * 13/16 * 10^4 1/10 nsec
- };
+    4 * 10000,        // 4 * 16/16 * 10^4 1/10 nsec
+    4 * 9375,         // 4 * 15/16 * 10^4 1/10 nsec
+    4 * 8750,         // 4 * 14/16 * 10^4 1/10 nsec
+    4 * 8125          // 4 * 13/16 * 10^4 1/10 nsec
+};
 
 /* Average number of bits stored on a single track. The values are based on a
  * drive with 300 rotations per minute which means that a full rotation lasts
@@ -115,8 +117,8 @@ enum_long(DISK_TYPE)
 typedef DISK_TYPE DiskType;
 
 struct DiskTypeEnum : util::Reflection<DiskTypeEnum, DiskType> {
-    
-	static constexpr long minVal = 0;
+
+    static constexpr long minVal = 0;
     static constexpr long maxVal = DISK_TYPE_DS_SD;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
@@ -124,7 +126,7 @@ struct DiskTypeEnum : util::Reflection<DiskTypeEnum, DiskType> {
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case DISK_TYPE_SS_SD:  return "SS_SD";
             case DISK_TYPE_DS_SD:  return "DS_SD";
         }
@@ -142,16 +144,16 @@ enum_long(CBM_FILE_TYPE)
 typedef CBM_FILE_TYPE CBMFileType;
 
 struct CBMFileTypeEnum : util::Reflection<CBMFileTypeEnum, CBMFileType> {
-    
+
     static constexpr long minVal = 0;
     static constexpr long maxVal = CBM_FILE_REL;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return "CBM"; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case CBM_FILE_PRG:    return "PRG";
             case CBM_FILE_SEQ:    return "SEQ";
             case CBM_FILE_USR:    return "USR";
@@ -179,16 +181,16 @@ enum_long(DISK_ERROR_CODE)
 typedef DISK_ERROR_CODE DiskErrorCode;
 
 struct DiskErrorCodeEnum : util::Reflection<DiskErrorCodeEnum, DiskErrorCode> {
-    
-	static constexpr long minVal = 0;
+
+    static constexpr long minVal = 0;
     static constexpr long maxVal = DRIVE_NOT_READY_ERRROR;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return ""; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case DISK_OK:                            return "DISK_OK";
             case HEADER_BLOCK_NOT_FOUND_ERROR:       return "HEADER_BLOCK_NOT_FOUND_ERROR";
             case NO_SYNC_SEQUENCE_ERROR:             return "NO_SYNC_SEQUENCE_ERROR";
@@ -217,9 +219,6 @@ struct DiskErrorCodeEnum : util::Reflection<DiskErrorCodeEnum, DiskErrorCode> {
  *    - data.halftack[i] points to the first byte of halftrack i
  *    - data.track[i] points to the first byte of track i
  */
-
-namespace vc64 {
-
 struct DiskData : public Serializable
 {
     union {
@@ -274,8 +273,6 @@ struct DiskLength : public Serializable
     } SERIALIZERS(serialize);
 };
 
-}
-
 // Disk parameters of a standard floppy disk
 typedef struct
 {
@@ -287,3 +284,5 @@ typedef struct
     double stagger;       // Relative position of first bit (from Hoxs64)
 }
 TrackDefaults;
+
+}

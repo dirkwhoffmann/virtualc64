@@ -460,7 +460,7 @@ class Configuration {
 
     func loadRomUserDefaults() {
 
-        func load(_ url: URL?, type: FileType) {
+        func load(_ url: URL?, type: vc64.FileType) {
 
             if url != nil {
                 if let file = try? RomFileProxy.make(with: url!) {
@@ -485,9 +485,9 @@ class Configuration {
 
         var url: URL?
 
-        func save(_ type: RomType) throws {
+        func save(_ type: vc64.RomType) throws {
 
-            if url == nil { throw VC64Error(ErrorCode.FILE_CANT_WRITE) }
+            if url == nil { throw VC64Error(vc64.ErrorCode.FILE_CANT_WRITE) }
             try? FileManager.default.removeItem(at: url!)
             try c64.saveRom(type, url: url!)
         }

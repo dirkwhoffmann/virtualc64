@@ -16,6 +16,8 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
+namespace vc64 {
+
 //
 // Enumerations
 //
@@ -41,16 +43,16 @@ enum_long(FILETYPE)
 typedef FILETYPE FileType;
 
 struct FileTypeEnum : util::Reflection<FileTypeEnum, FileType> {
-    
-	static constexpr long minVal = 0;
+
+    static constexpr long minVal = 0;
     static constexpr long maxVal = FILETYPE_VC1541_ROM;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return "FILETYPE"; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case FILETYPE_UNKNOWN:    return "UNKNOWN";
             case FILETYPE_SNAPSHOT:   return "SNAPSHOT";
             case FILETYPE_SCRIPT:     return "SCRIPT";
@@ -79,16 +81,16 @@ enum_long(TAP_VERSION)
 typedef TAP_VERSION TAPVersion;
 
 struct TAPVersionEnum : util::Reflection<TAPVersionEnum, TAPVersion> {
-    
-	static constexpr long minVal = 0;
+
+    static constexpr long minVal = 0;
     static constexpr long maxVal = TAP_VERSION_ADVANCED;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return "TAP_VERSION"; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case TAP_VERSION_ORIGINAL:  return "ORIGINAL";
             case TAP_VERSION_ADVANCED:  return "ADVANCED";
             default:                    return "???";
@@ -99,7 +101,7 @@ struct TAPVersionEnum : util::Reflection<TAPVersionEnum, TAPVersion> {
 enum_long(FILE_ERROR)
 {
     ERR_FILE_OK,
-    
+
     // General
     ERR_FILE_NOT_FOUND,
     ERR_INVALID_TYPE,
@@ -107,8 +109,10 @@ enum_long(FILE_ERROR)
     ERR_CANT_WRITE,
     ERR_OUT_OF_MEMORY,
     ERR_UNKNOWN,
-    
+
     // Snapshots
     ERR_UNSUPPORTED_SNAPSHOT
 };
 typedef FILE_ERROR FileError;
+
+}

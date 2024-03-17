@@ -16,6 +16,8 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
+namespace vc64 {
+
 //
 // Constants
 //
@@ -38,16 +40,16 @@ enum_long(CPDEVICE)
 typedef CPDEVICE ControlPortDevice;
 
 struct ControlPortDeviceEnum : util::Reflection<ControlPortDeviceEnum, ControlPortDevice> {
-    
-	static constexpr long minVal = 0;
+
+    static constexpr long minVal = 0;
     static constexpr long maxVal = CPDEVICE_JOYSTICK;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return "CPDEVICE"; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case CPDEVICE_NONE:      return "NONE";
             case CPDEVICE_MOUSE:     return "MOUSE";
             case CPDEVICE_JOYSTICK:  return "JOYSTICK";
@@ -55,3 +57,5 @@ struct ControlPortDeviceEnum : util::Reflection<ControlPortDeviceEnum, ControlPo
         return "???";
     }
 };
+
+}

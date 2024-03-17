@@ -89,7 +89,7 @@ class Inspector: DialogController {
     @IBOutlet weak var memLoram: NSButton!
     @IBOutlet weak var memSource: NSPopUpButton!
     
-    var bankType: [Int: MemoryType] = [:]
+    var bankType: [Int: vc64.MemoryType] = [:]
     var displayedBank = 0
     var layoutIsDirty = true
     var nextLayoutRefresh = 0
@@ -282,13 +282,13 @@ class Inspector: DialogController {
     @IBOutlet weak var evTableView: EventTableView!
 
     // Cached state of all C64 components
-    var cpuInfo: CPUInfo!
-    var ciaInfo: CIAInfo!
-    var ciaStats: CIAStats!
-    var memInfo: MemInfo!
-    var vicInfo: VICIIInfo!
-    var sprInfo: SpriteInfo!
-    var eventInfo: C64Info!
+    var cpuInfo: vc64.CPUInfo!
+    var ciaInfo: vc64.CIAInfo!
+    var ciaStats: vc64.CIAStats!
+    var memInfo: vc64.MemInfo!
+    var vicInfo: vc64.VICIIInfo!
+    var sprInfo: vc64.SpriteInfo!
+    var eventInfo: vc64.C64Info!
     var isRunning = true
     
     // Number format selection (hexadecimal or decimal)

@@ -16,6 +16,8 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
+namespace vc64 {
+
 //
 // Enumerations
 //
@@ -31,16 +33,16 @@ enum_long(CRTMODE)
 typedef CRTMODE CRTMode;
 
 struct CRTModeEnum : util::Reflection<CRTModeEnum, CRTMode> {
-    
-	static constexpr long minVal = 0;
+
+    static constexpr long minVal = 0;
     static constexpr long maxVal = CRTMODE_OFF;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return "CRTMODE"; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case CRTMODE_16K:      return "16K";
             case CRTMODE_8K:       return "8K";
             case CRTMODE_ULTIMAX:  return "ULTIMAX";
@@ -49,3 +51,5 @@ struct CRTModeEnum : util::Reflection<CRTModeEnum, CRTMode> {
         return "???";
     }
 };
+
+}

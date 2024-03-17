@@ -14,6 +14,7 @@
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
 
+using namespace vc64;
 
 //
 // Forward declarations

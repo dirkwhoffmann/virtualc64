@@ -44,7 +44,7 @@ public func warn(_ msg: String = "",
 
 class VC64Error: Error {
     
-    var errorCode: ErrorCode
+    var errorCode: vc64.ErrorCode
     var what: String
     
     init(_ exception: ExceptionWrapper) {
@@ -53,7 +53,7 @@ class VC64Error: Error {
         self.what = exception.what
     }
     
-    init(_ errorCode: ErrorCode, _ what: String = "") {
+    init(_ errorCode: vc64.ErrorCode, _ what: String = "") {
         
         self.errorCode = errorCode
         self.what = what

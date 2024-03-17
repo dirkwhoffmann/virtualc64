@@ -366,12 +366,12 @@ class KeyboardController: NSObject {
 
     func capsLockDown() {
 
-        parent.config.warpMode = WarpMode.ALWAYS.rawValue
+        parent.config.warpMode = vc64.WarpMode.ALWAYS.rawValue
     }
 
     func capsLockUp() {
 
-        parent.config.warpMode = WarpMode.NEVER.rawValue
+        parent.config.warpMode = vc64.WarpMode.NEVER.rawValue
     }
 
     func type(_ string: String) {

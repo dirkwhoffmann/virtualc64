@@ -16,6 +16,8 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
+namespace vc64 {
+
 /// Error condition
 enum_long(ERROR_CODE)
 {
@@ -70,11 +72,11 @@ enum_long(ERROR_CODE)
     // Recorder
     ERROR_REC_LAUNCH,           ///< Can't launch the screen recorder
 
-	// Snapshots
-	ERROR_SNAP_TOO_OLD,         ///< Snapshot was created with an older version
-	ERROR_SNAP_TOO_NEW,         ///< Snapshot was created with a later version
-	ERROR_SNAP_IS_BETA,         ///< Snapshot was created with a beta release
-	ERROR_SNAP_CORRUPTED,       ///< Snapshot data is corrupted
+    // Snapshots
+    ERROR_SNAP_TOO_OLD,         ///< Snapshot was created with an older version
+    ERROR_SNAP_TOO_NEW,         ///< Snapshot was created with a later version
+    ERROR_SNAP_IS_BETA,         ///< Snapshot was created with a beta release
+    ERROR_SNAP_CORRUPTED,       ///< Snapshot data is corrupted
 
     // Drives
     ERROR_DRV_UNCONNECTED,      ///< Floppy drive is not connected
@@ -101,16 +103,16 @@ enum_long(ERROR_CODE)
 typedef ERROR_CODE ErrorCode;
 
 struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
-    
+
     static constexpr long minVal = 0;
     static constexpr long maxVal = ERROR_FS_EXPECTED_MAX;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-        
+
     static const char *prefix() { return "ERROR"; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case ERROR_OK:                      return "OK";
             case ERROR_UNKNOWN:                 return "UNKNOWN";
 
@@ -156,16 +158,16 @@ struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
 
             case ERROR_SNAP_TOO_OLD:            return "SNAP_TOO_OLD";
             case ERROR_SNAP_TOO_NEW:            return "SNAP_TOO_NEW";
-			case ERROR_SNAP_IS_BETA:		    return "SNAP_IS_BETA";
-			case ERROR_SNAP_CORRUPTED:		    return "SNAP_CORRUPTED";
-				
+            case ERROR_SNAP_IS_BETA:		    return "SNAP_IS_BETA";
+            case ERROR_SNAP_CORRUPTED:		    return "SNAP_CORRUPTED";
+
             case ERROR_DRV_UNCONNECTED:         return "DRV_UNCONNECTED";
 
             case ERROR_CRT_UNKNOWN:             return "ERROR_CRT_UNKNOWN";
             case ERROR_CRT_UNSUPPORTED:         return "CRT_UNSUPPORTED";
             case ERROR_CRT_TOO_MANY_PACKETS:    return "CRT_TOO_MANY_PACKETS";
-			case ERROR_CRT_CORRUPTED_PACKET:    return "CRT_CORRUPTED_PACKET";
-                
+            case ERROR_CRT_CORRUPTED_PACKET:    return "CRT_CORRUPTED_PACKET";
+
             case ERROR_FS_UNSUPPORTED:          return "FS_UNSUPPORTED";
             case ERROR_FS_WRONG_CAPACITY:       return "FS_WRONG_CAPACITY";
             case ERROR_FS_CORRUPTED:            return "FS_CORRUPTED";
@@ -181,3 +183,5 @@ struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
         return "???";
     }
 };
+
+}

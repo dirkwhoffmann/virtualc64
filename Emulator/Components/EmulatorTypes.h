@@ -17,6 +17,7 @@
 #include "Reflection.h"
 #include "ThreadTypes.h"
 
+namespace vc64 {
 
 //
 // Enumerations
@@ -349,3 +350,5 @@ typedef struct
     double fps;
 }
 EmulatorStats;
+
+}

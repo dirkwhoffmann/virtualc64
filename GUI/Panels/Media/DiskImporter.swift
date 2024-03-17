@@ -31,7 +31,7 @@ class DiskImporter: DialogController {
     // Extracted file system
     var volume: FileSystemProxy?
 
-    var type: FileType!
+    var type: vc64.FileType!
     var writeProtect: Bool { return checkbox.state == .on }
     var autoRun: Bool { return checkbox.state == .on }
 
@@ -49,7 +49,7 @@ class DiskImporter: DialogController {
         debug(.lifetime)
 
         // Load media file
-        file = try mm.createFileProxy(from: url, allowedTypes: FileType.draggable)
+        file = try mm.createFileProxy(from: url, allowedTypes: vc64.FileType.draggable)
 
         // Remember the URL
         self.url = url
@@ -269,7 +269,7 @@ class DiskImporter: DialogController {
                 options.append(.remember)
 
                 try mm.addMedia(url: url,
-                            allowedTypes: FileType.draggable,
+                                allowedTypes: vc64.FileType.draggable,
                             drive: sender.tag,
                             options: options)
             }

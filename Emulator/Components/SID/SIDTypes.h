@@ -16,6 +16,8 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
+namespace vc64 {
+
 //
 // Enumerations
 //
@@ -30,16 +32,16 @@ enum_long(SIDREV)
 typedef SIDREV SIDRevision;
 
 struct SIDRevisionEnum : util::Reflection<SIDRevisionEnum, SIDRevision> {
-    
-	static constexpr long minVal = 0;
+
+    static constexpr long minVal = 0;
     static constexpr long maxVal = MOS_8580;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return nullptr; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case MOS_6581:      return "MOS_6581";
             case MOS_8580:      return "MOS_8580";
         }
@@ -56,16 +58,16 @@ enum_long(SIDENGINE)
 typedef SIDENGINE SIDEngine;
 
 struct SIDEngineEnum : util::Reflection<SIDEngineEnum, SIDEngine> {
-    
-	static constexpr long minVal = 0;
+
+    static constexpr long minVal = 0;
     static constexpr long maxVal = SIDENGINE_RESID;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return "SIDENGINE"; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case SIDENGINE_FASTSID:  return "FASTSID";
             case SIDENGINE_RESID:    return "RESID";
         }
@@ -84,16 +86,16 @@ enum_long(SAMPLING)
 typedef SAMPLING SamplingMethod;
 
 struct SamplingMethodEnum : util::Reflection<SamplingMethodEnum, SamplingMethod> {
-    
-	static constexpr long minVal = 0;
+
+    static constexpr long minVal = 0;
     static constexpr long maxVal = SAMPLING_RESAMPLE_FASTMEM;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return "SAMPLING"; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case SAMPLING_FAST:              return "FAST";
             case SAMPLING_INTERPOLATE:       return "INTERPOLATE";
             case SAMPLING_RESAMPLE:          return "RESAMPLE";
@@ -128,11 +130,11 @@ typedef struct
     SIDRevision revision;
     bool powerSave;
     bool filter;
-    
+
     // Emlation engine settings
     SIDEngine engine;
     SamplingMethod sampling;
-    
+
     // Master volume (left and right channel)
     i64 volL;
     i64 volR;
@@ -143,7 +145,7 @@ typedef struct
 {
     // Current ring buffer fill level
     double fillLevel;
-    
+
     // Number of buffer underflows since power up
     u64 bufferUnderflows;
 
@@ -182,3 +184,5 @@ typedef struct
     u8 potY;
 }
 SIDInfo;
+
+}

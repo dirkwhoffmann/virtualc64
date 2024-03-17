@@ -153,7 +153,7 @@ extension Inspector {
         }
     }
 
-    func jumpTo(type: [MemoryType]) {
+    func jumpTo(type: [vc64.MemoryType]) {
 
         for i in 0...15 where type.contains(bankType[i]!) {
             jumpTo(bank: i)

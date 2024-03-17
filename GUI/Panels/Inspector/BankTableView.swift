@@ -17,7 +17,7 @@ class BankTableView: NSTableView, NSTableViewDelegate {
     var bank = 0
 
     // Data caches
-    var bankCache: [Int: MemoryType] = [:]
+    var bankCache: [Int: vc64.MemoryType] = [:]
 
     override func awakeFromNib() {
 

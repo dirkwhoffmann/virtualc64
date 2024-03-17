@@ -16,6 +16,8 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
+namespace vc64 {
+
 //
 // Enumerations
 //
@@ -64,3 +66,5 @@ typedef struct
     isize counter;
 }
 DatasetteInfo;
+
+}

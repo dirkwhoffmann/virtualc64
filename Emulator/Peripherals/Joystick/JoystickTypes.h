@@ -16,6 +16,8 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
+namespace vc64 {
+
 //
 // Enumerations
 //
@@ -40,16 +42,16 @@ enum_long(GAME_PAD_ACTION)
 typedef GAME_PAD_ACTION GamePadAction;
 
 struct GamePadActionEnum : util::Reflection<GamePadActionEnum, GamePadAction> {
-    
+
     static long min() { return 0; }
     static long max() { return RELEASE_RIGHT; }
     static bool isValid(auto value) { return value >= min() && value <= max(); }
-    
+
     static const char *prefix() { return nullptr; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case PULL_UP:        return "PULL_UP";
             case PULL_DOWN:      return "PULL_DOWN";
             case PULL_LEFT:      return "PULL_LEFT";
@@ -80,3 +82,5 @@ typedef struct
     isize autofireDelay;
 }
 JoystickConfig;
+
+}

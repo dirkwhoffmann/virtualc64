@@ -163,7 +163,7 @@ extension MyAppDelegate {
     }
 
     // Callen when a HID device has been pulled
-    func devicePulled(events: [GamePadAction]) {
+    func devicePulled(events: [vc64.GamePadAction]) {
         prefController?.refreshDeviceEvents(events: events)
     }
 }

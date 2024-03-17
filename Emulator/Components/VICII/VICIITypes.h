@@ -20,6 +20,8 @@
 
 #include "DmaDebuggerTypes.h"
 
+namespace vc64 {
+
 //
 // Constants
 //
@@ -444,8 +446,6 @@ typedef struct
 }
 SpriteInfo;
     
-namespace vc64 {
-
 struct VICIIRegisters : Serializable
 {
     // Registers

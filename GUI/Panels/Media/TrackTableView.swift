@@ -34,7 +34,7 @@ class TrackTableView: NSTableView, NSTableViewDelegate {
     func cache() {
         
         if analyzer != nil {
-            numItems = Int(showHalftracks ? highestHalftrack : highestTrack)
+            numItems = Int(showHalftracks ? vc64.highestHalftrack : vc64.highestTrack)
         } else {
             numItems = 0
         }

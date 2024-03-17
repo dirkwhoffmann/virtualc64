@@ -17,6 +17,8 @@
 #include "Reflection.h"
 #include "ParCableTypes.h"
 
+namespace vc64 {
+
 //
 // Constants
 //
@@ -39,16 +41,16 @@ enum_long(DRIVE_TYPE)
 typedef DRIVE_TYPE DriveType;
 
 struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveType> {
-    
-	static constexpr long minVal = 0;
+
+    static constexpr long minVal = 0;
     static constexpr long maxVal = DRIVE_VC1541II;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return "DRIVE"; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case DRIVE_VC1541:    return "VC1541";
             case DRIVE_VC1541C:   return "VC1541C";
             case DRIVE_VC1541II:  return "VC1541II";
@@ -66,16 +68,16 @@ enum_long(DRVRAM)
 typedef DRVRAM DriveRam;
 
 struct DriveRamEnum : util::Reflection<DriveRamEnum, DriveRam> {
-    
-	static constexpr long minVal = 0;
+
+    static constexpr long minVal = 0;
     static constexpr long maxVal = DRVRAM_6000_7FFF;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return "DRVRAM"; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case DRVRAM_NONE:       return "DRVRAM_NONE";
             case DRVRAM_8000_9FFF:  return "DRVRAM_8000_9FFF";
             case DRVRAM_6000_7FFF:  return "DRVRAM_6000_7FFF";
@@ -97,16 +99,16 @@ enum_long(DRVMEM_TYPE)
 typedef DRVMEM_TYPE DrvMemType;
 
 struct DrvMemTypeEnum : util::Reflection<DrvMemTypeEnum, DrvMemType> {
-    
-	static constexpr long minVal = 0;
+
+    static constexpr long minVal = 0;
     static constexpr long maxVal = DRVMEM_PIA;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return "DRVMEM"; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case DRVMEM_NONE:       return "DRVMEM_NONE";
             case DRVMEM_RAM:        return "DRVMEM_RAM";
             case DRVMEM_EXP:        return "DRVMEM_EXP";
@@ -129,16 +131,16 @@ enum_long(DISK_INSERTION_STATUS)
 typedef DISK_INSERTION_STATUS InsertionStatus;
 
 struct InsertionStatusEnum : util::Reflection<InsertionStatusEnum, InsertionStatus> {
-    
-	static constexpr long minVal = 0;
+
+    static constexpr long minVal = 0;
     static constexpr long maxVal = DISK_PARTIALLY_EJECTED;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return "DISK"; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case DISK_FULLY_EJECTED:           return "FULLY_EJECTED";
             case DISK_PARTIALLY_INSERTED:      return "PARTIALLY_INSERTED";
             case DISK_FULLY_INSERTED:          return "FULLY_INSERTED";
@@ -157,7 +159,7 @@ typedef struct
 {
     // General
     bool autoConfig;
-    
+
     // Hardware
     DriveType type;
     DriveRam ram;
@@ -167,12 +169,12 @@ typedef struct
     // State
     bool connected;
     bool switchedOn;
-    
+
     // Disk handling delays
     isize ejectDelay;
     isize swapDelay;
     isize insertDelay;
-        
+
     // Drive sounds
     i16 pan;
     u8 powerVolume;
@@ -188,7 +190,7 @@ DriveConfig;
 typedef struct
 {
     isize id;
-    
+
     bool hasDisk;
     bool hasUnprotectedDisk;
     bool hasProtectedDisk;
@@ -205,3 +207,5 @@ typedef struct
     HeadPos offset;
 }
 DriveInfo;
+
+}

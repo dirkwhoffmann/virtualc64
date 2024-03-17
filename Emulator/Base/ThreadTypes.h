@@ -16,6 +16,8 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
+namespace vc64 {
+
 /// Emulator state
 enum_long(EMULATOR_STATE)
 {
@@ -47,3 +49,5 @@ struct EmulatorStateEnum : util::Reflection<EmulatorStateEnum, EmulatorState>
         return "???";
     }
 };
+
+}

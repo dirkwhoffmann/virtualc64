@@ -17,7 +17,7 @@ class DiskCreator: DialogController {
     @IBOutlet weak var nameLabel: NSTextField!
     @IBOutlet weak var nameField: NSTextField!
 
-    var dos: DOSType { return fileSystem.selectedTag() == 1 ? .CBM : .NODOS }
+    var dos: vc64.DOSType { return fileSystem.selectedTag() == 1 ? .CBM : .NODOS }
     var name: String { return nameField.stringValue }
 
     var nr = DRIVE8
@@ -39,7 +39,7 @@ class DiskCreator: DialogController {
         super.awakeFromNib()
 
         let type = c64.getConfig(.DRV_TYPE, drive: nr)
-        switch DriveType(rawValue: type) {
+        switch vc64.DriveType(rawValue: type) {
 
         case .VC1541, .VC1541C, .VC1541II:
             capacity.lastItem?.title = "5.25\" SD"

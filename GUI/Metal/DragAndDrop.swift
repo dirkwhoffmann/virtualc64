@@ -122,10 +122,10 @@ public extension MetalView {
         if dropUrl == nil { return false }
 
         // Only proceed if a file type can be derived
-        guard let type = FileType(url: dropUrl) else { return false }
+        guard let type = vc64.FileType(url: dropUrl) else { return false }
 
         // Only proceed if a draggable type is given
-        if !FileType.draggable.contains(type) { return false }
+        if !vc64.FileType.draggable.contains(type) { return false }
 
         // Check all drop zones
         var zone: Int?

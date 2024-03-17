@@ -17,6 +17,8 @@
 #include "JoystickTypes.h"
 #include "Reflection.h"
 
+namespace vc64 {
+
 //
 // Enumerations
 //
@@ -195,3 +197,5 @@ struct Cmd
     Cmd(CmdType type, const AlarmCmd &cmd) : type(type), alarm(cmd) { }
     Cmd(CmdType type, const ShellCmd &cmd) : type(type), shell(cmd) { }
 };
+
+}

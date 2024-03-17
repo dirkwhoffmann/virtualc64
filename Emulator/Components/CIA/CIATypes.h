@@ -17,6 +17,8 @@
 #include "Reflection.h"
 #include "TODTypes.h"
 
+namespace vc64 {
+
 /// Chip revision
 enum_long(CIAREV)
 {
@@ -26,8 +28,8 @@ enum_long(CIAREV)
 typedef CIAREV CIARevision;
 
 struct CIARevisionEnum : util::Reflection<CIARevisionEnum, CIARevision> {
-    
-	static constexpr long minVal = 0;
+
+    static constexpr long minVal = 0;
     static constexpr long maxVal = MOS_8521;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
@@ -35,7 +37,7 @@ struct CIARevisionEnum : util::Reflection<CIARevisionEnum, CIARevision> {
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case MOS_6526:      return "MOS_6526";
             case MOS_8521:      return "MOS_8521";
         }
@@ -66,15 +68,15 @@ typedef CIAREG CIAReg;
 
 struct CIARegEnum : util::Reflection<CIARegEnum, CIAReg> {
 
-	static constexpr long minVal = 0;
+    static constexpr long minVal = 0;
     static constexpr long maxVal = CIAREG_CRB;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return "CIAREG"; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case CIAREG_PRA:     return "PRA";
             case CIAREG_PRB:     return "PRB";
             case CIAREG_DDRA:    return "DDRA";
@@ -140,9 +142,9 @@ typedef struct
     u8 icr;
     u8 imr;
     bool intLine;
-    
+
     TODInfo tod;
-    bool todIntEnable;    
+    bool todIntEnable;
 }
 CIAInfo;
 
@@ -153,3 +155,5 @@ typedef struct
     double idlePercentage;
 }
 CIAStats;
+
+}

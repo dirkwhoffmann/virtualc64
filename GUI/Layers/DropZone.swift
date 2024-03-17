@@ -58,7 +58,7 @@ class DropZone: Layer {
         return NSImage(named: "dropZone\(zone)\(suffix)")!
     }
     
-    private func setType(_ type: FileType) {
+    private func setType(_ type: vc64.FileType) {
     
         let info8 = c64.drive8.info
         let config8 = c64.drive8.config
@@ -99,7 +99,7 @@ class DropZone: Layer {
         hideAll = !enabled[0] && !enabled[1] && !enabled[2] && !enabled[3] && !enabled[4]
     }
 
-    func open(type: FileType, delay: Double) {
+    func open(type: vc64.FileType, delay: Double) {
 
         setType(type)
         open(delay: delay)

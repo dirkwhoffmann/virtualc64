@@ -142,7 +142,7 @@ class MediaManager {
     // Loading media files
     //
 
-    func createFileProxy(from url: URL, allowedTypes: [FileType]) throws -> AnyFileProxy {
+    func createFileProxy(from url: URL, allowedTypes: [vc64.FileType]) throws -> AnyFileProxy {
 
         debug(.media, "Reading file \(url.lastPathComponent)")
 
@@ -206,7 +206,7 @@ class MediaManager {
     //
 
     func addMedia(url: URL,
-                  allowedTypes types: [FileType] = FileType.all,
+                  allowedTypes types: [vc64.FileType] = vc64.FileType.all,
                   drive id: Int = DRIVE8,
                   options: [Option] = [.remember]) throws {
 
@@ -412,7 +412,7 @@ class MediaManager {
             file = try P00FileProxy.make(with: fs)
 
         default:
-            throw VC64Error(ErrorCode.FILE_TYPE_MISMATCH)
+            throw VC64Error(vc64.ErrorCode.FILE_TYPE_MISMATCH)
         }
 
         try export(file: file!, to: url)

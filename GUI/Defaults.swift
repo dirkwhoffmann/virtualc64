@@ -97,10 +97,10 @@ extension DefaultsProxy {
     func register(_ key: String, _ val: Double) {
         register(key, value: "\(val)")
     }
-    func remove(_ option: Option, _ nr: Int) {
+    func remove(_ option: vc64.Option, _ nr: Int) {
         remove(option, nr: nr)
     }
-    func remove(_ option: Option, _ nr: [Int]) {
+    func remove(_ option: vc64.Option, _ nr: [Int]) {
         for n in nr { remove(option, nr: n) }
     }
     func set(_ key: String, _ val: String) {
@@ -121,28 +121,28 @@ extension DefaultsProxy {
     func set(_ key: String, _ val: Double) {
         setKey(key, value: "\(val)")
     }
-    func set(_ option: Option, _ val: Int) {
+    func set(_ option: vc64.Option, _ val: Int) {
         setOpt(option, value: val)
     }
-    func set(_ option: Option, _ val: Bool) {
+    func set(_ option: vc64.Option, _ val: Bool) {
         setOpt(option, value: val ? 1 : 0)
     }
-    func set(_ option: Option, _ nr: Int, _ val: Int) {
+    func set(_ option: vc64.Option, _ nr: Int, _ val: Int) {
         setOpt(option, nr: nr, value: val)
     }
-    func set(_ option: Option, _ nr: Int, _ val: Bool) {
+    func set(_ option: vc64.Option, _ nr: Int, _ val: Bool) {
         setOpt(option, nr: nr, value: val ? 1 : 0)
     }
-    func set(_ option: Option, _ nr: [Int], _ val: Int) {
+    func set(_ option: vc64.Option, _ nr: [Int], _ val: Int) {
         for n in nr { setOpt(option, nr: n, value: val) }
     }
-    func set(_ option: Option, _ nr: [Int], _ val: Bool) {
+    func set(_ option: vc64.Option, _ nr: [Int], _ val: Bool) {
         for n in nr { setOpt(option, nr: n, value: val ? 1 : 0) }
     }
-    func get(_ option: Option) -> Int {
+    func get(_ option: vc64.Option) -> Int {
         return getOpt(option)
     }
-    func get(_ option: Option, _ nr: Int) -> Int {
+    func get(_ option: vc64.Option, _ nr: Int) -> Int {
         return getOpt(option, nr: nr)
     }
     func string(_ key: String) -> String {
@@ -452,20 +452,20 @@ extension DefaultsProxy {
 
         let stdKeyMap1: [MacKey: Int] = [
 
-            MacKey(keyCode: kVK_LeftArrow): GamePadAction.PULL_LEFT.rawValue,
-            MacKey(keyCode: kVK_RightArrow): GamePadAction.PULL_RIGHT.rawValue,
-            MacKey(keyCode: kVK_UpArrow): GamePadAction.PULL_UP.rawValue,
-            MacKey(keyCode: kVK_DownArrow): GamePadAction.PULL_DOWN.rawValue,
-            MacKey(keyCode: kVK_Space): GamePadAction.PRESS_FIRE.rawValue
+            MacKey(keyCode: kVK_LeftArrow): vc64.GamePadAction.PULL_LEFT.rawValue,
+            MacKey(keyCode: kVK_RightArrow): vc64.GamePadAction.PULL_RIGHT.rawValue,
+            MacKey(keyCode: kVK_UpArrow): vc64.GamePadAction.PULL_UP.rawValue,
+            MacKey(keyCode: kVK_DownArrow): vc64.GamePadAction.PULL_DOWN.rawValue,
+            MacKey(keyCode: kVK_Space): vc64.GamePadAction.PRESS_FIRE.rawValue
         ]
 
         let stdKeyMap2 = [
 
-            MacKey(keyCode: kVK_ANSI_S): GamePadAction.PULL_LEFT.rawValue,
-            MacKey(keyCode: kVK_ANSI_D): GamePadAction.PULL_RIGHT.rawValue,
-            MacKey(keyCode: kVK_ANSI_E): GamePadAction.PULL_UP.rawValue,
-            MacKey(keyCode: kVK_ANSI_X): GamePadAction.PULL_DOWN.rawValue,
-            MacKey(keyCode: kVK_ANSI_C): GamePadAction.PRESS_FIRE.rawValue
+            MacKey(keyCode: kVK_ANSI_S): vc64.GamePadAction.PULL_LEFT.rawValue,
+            MacKey(keyCode: kVK_ANSI_D): vc64.GamePadAction.PULL_RIGHT.rawValue,
+            MacKey(keyCode: kVK_ANSI_E): vc64.GamePadAction.PULL_UP.rawValue,
+            MacKey(keyCode: kVK_ANSI_X): vc64.GamePadAction.PULL_DOWN.rawValue,
+            MacKey(keyCode: kVK_ANSI_C): vc64.GamePadAction.PRESS_FIRE.rawValue
         ]
 
         // Emulation keys
@@ -652,9 +652,10 @@ extension Preferences {
 
 extension Configuration {
 
+    /*
     func loadRomUserDefaultss() {
 
-        func load(_ url: URL?, type: VirtualC64.FileType) {
+        func load(_ url: URL?, type: vc64.FileType) {
 
             if url != nil {
                 if let file = try? RomFileProxy.make(with: url!) {
@@ -681,7 +682,7 @@ extension Configuration {
 
         func save(_ type: RomType) throws {
 
-            if url == nil { throw VC64Error(ErrorCode.FILE_CANT_WRITE) }
+            if url == nil { throw VC64Error(vc64.ErrorCode.FILE_CANT_WRITE) }
             try? FileManager.default.removeItem(at: url!)
             try c64.saveRom(type, url: url!)
         }
@@ -702,6 +703,7 @@ extension Configuration {
 
         c64.resume()
     }
+    */
 }
 
 //

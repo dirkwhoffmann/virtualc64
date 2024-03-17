@@ -16,6 +16,8 @@
 #include "Reflection.h"
 #include "PeddleTypes.h"
 
+namespace vc64 {
+
 //
 // Bit fields
 //
@@ -33,16 +35,16 @@
 //
 
 struct CPURevisionEnum : util::Reflection<CPURevisionEnum, vc64::peddle::CPURevision> {
-    
+
     static constexpr long minVal = 0;
     static constexpr long maxVal = vc64::peddle::MOS_8502;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return nullptr; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case vc64::peddle::MOS_6502:  return "MOS_6502";
             case vc64::peddle::MOS_6507:  return "MOS_6507";
             case vc64::peddle::MOS_6510:  return "MOS_6510";
@@ -71,8 +73,10 @@ typedef struct
     u8 irq;
     u8 nmi;
     bool rdy;
-    
+
     u8 processorPort;
     u8 processorPortDir;
 }
 CPUInfo;
+
+}
