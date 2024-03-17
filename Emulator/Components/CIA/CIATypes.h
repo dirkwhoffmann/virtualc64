@@ -25,7 +25,6 @@ enum_long(CIAREV)
 };
 typedef CIAREV CIARevision;
 
-#ifdef __cplusplus
 struct CIARevisionEnum : util::Reflection<CIARevisionEnum, CIARevision> {
     
 	static constexpr long minVal = 0;
@@ -43,7 +42,6 @@ struct CIARevisionEnum : util::Reflection<CIARevisionEnum, CIARevision> {
         return "";
     }
 };
-#endif
 
 enum_long(CIAREG)
 {
@@ -66,7 +64,6 @@ enum_long(CIAREG)
 };
 typedef CIAREG CIAReg;
 
-#ifdef __cplusplus
 struct CIARegEnum : util::Reflection<CIARegEnum, CIAReg> {
 
 	static constexpr long minVal = 0;
@@ -98,7 +95,6 @@ struct CIARegEnum : util::Reflection<CIARegEnum, CIAReg> {
         return "???";
     }
 };
-#endif
 
 
 //

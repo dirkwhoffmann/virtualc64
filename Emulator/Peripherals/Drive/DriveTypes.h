@@ -38,7 +38,6 @@ enum_long(DRIVE_TYPE)
 };
 typedef DRIVE_TYPE DriveType;
 
-#ifdef __cplusplus
 struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveType> {
     
 	static constexpr long minVal = 0;
@@ -57,7 +56,6 @@ struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveType> {
         return "???";
     }
 };
-#endif
 
 enum_long(DRVRAM)
 {
@@ -67,7 +65,6 @@ enum_long(DRVRAM)
 };
 typedef DRVRAM DriveRam;
 
-#ifdef __cplusplus
 struct DriveRamEnum : util::Reflection<DriveRamEnum, DriveRam> {
     
 	static constexpr long minVal = 0;
@@ -86,7 +83,6 @@ struct DriveRamEnum : util::Reflection<DriveRamEnum, DriveRam> {
         return "???";
     }
 };
-#endif
 
 enum_long(DRVMEM_TYPE)
 {
@@ -100,7 +96,6 @@ enum_long(DRVMEM_TYPE)
 };
 typedef DRVMEM_TYPE DrvMemType;
 
-#ifdef __cplusplus
 struct DrvMemTypeEnum : util::Reflection<DrvMemTypeEnum, DrvMemType> {
     
 	static constexpr long minVal = 0;
@@ -123,7 +118,6 @@ struct DrvMemTypeEnum : util::Reflection<DrvMemTypeEnum, DrvMemType> {
         return "???";
     }
 };
-#endif
 
 enum_long(DISK_INSERTION_STATUS)
 {
@@ -134,7 +128,6 @@ enum_long(DISK_INSERTION_STATUS)
 };
 typedef DISK_INSERTION_STATUS InsertionStatus;
 
-#ifdef __cplusplus
 struct InsertionStatusEnum : util::Reflection<InsertionStatusEnum, InsertionStatus> {
     
 	static constexpr long minVal = 0;
@@ -154,7 +147,6 @@ struct InsertionStatusEnum : util::Reflection<InsertionStatusEnum, InsertionStat
         return "???";
     }
 };
-#endif
 
 
 //

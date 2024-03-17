@@ -13,8 +13,6 @@
 ///
 #pragma once
 
-#ifdef __cplusplus
-
 #include "Aliases.h"
 
 /** VirtualC64 project namespace
@@ -112,6 +110,3 @@ static const long width                     = 520;
 }
 
 }
-#endif
-
-// \@}

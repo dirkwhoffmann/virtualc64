@@ -27,7 +27,6 @@ enum_long(DATASETTE_MODEL)
 };
 typedef DATASETTE_MODEL DatasetteModel;
 
-#ifdef __cplusplus
 struct DatasetteModelEnum : util::Reflection<DatasetteModelEnum, DatasetteModel> {
 
     static constexpr long minVal = 0;
@@ -44,8 +43,6 @@ struct DatasetteModelEnum : util::Reflection<DatasetteModelEnum, DatasetteModel>
         return "???";
     }
 };
-#endif
-
 
 //
 // Structures

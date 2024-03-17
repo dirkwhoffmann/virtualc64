@@ -100,7 +100,6 @@ enum_long(ERROR_CODE)
 };
 typedef ERROR_CODE ErrorCode;
 
-#ifdef __cplusplus
 struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
     
     static constexpr long minVal = 0;
@@ -182,4 +181,3 @@ struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
         return "???";
     }
 };
-#endif

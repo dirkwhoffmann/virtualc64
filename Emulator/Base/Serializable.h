@@ -12,8 +12,6 @@
 
 #pragma once
 
-#ifdef __cplusplus
-
 #include "config.h"
 #include "Macros.h"
 #include "MemUtils.h"
@@ -661,5 +659,3 @@ void operator << (SerWriter &worker) override { Cartridge::operator<<(worker); f
 
 #define CLONE(x) x = other.x;
 #define CLONE_ARRAY(x) std::copy(std::begin(other.x), std::end(other.x), std::begin(x));
-
-#endif

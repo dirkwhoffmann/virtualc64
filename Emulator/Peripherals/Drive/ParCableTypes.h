@@ -29,7 +29,6 @@ enum_long(PAR_CABLE_TYPE)
 };
 typedef PAR_CABLE_TYPE ParCableType;
 
-#ifdef __cplusplus
 struct ParCableTypeEnum : util::Reflection<ParCableTypeEnum, ParCableType> {
     
 	static constexpr long minVal = 0;
@@ -48,4 +47,3 @@ struct ParCableTypeEnum : util::Reflection<ParCableTypeEnum, ParCableType> {
         return "???";
     }
 };
-#endif

@@ -36,7 +36,6 @@ enum_long(M_TYPE)
 };
 typedef M_TYPE MemoryType;
 
-#ifdef __cplusplus
 struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
     
 	static constexpr long minVal = 1;
@@ -62,7 +61,6 @@ struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
         return "???";
     }
 };
-#endif
 
 /// Ram startup pattern
 enum_long(RAM_PATTERN)
@@ -75,7 +73,6 @@ enum_long(RAM_PATTERN)
 };
 typedef RAM_PATTERN RamPattern;
 
-#ifdef __cplusplus
 struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
     
     static constexpr long minVal = 0;
@@ -96,7 +93,6 @@ struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
         return "???";
     }
 };
-#endif
 
 enum_long(ROM_TYPE)
 {
@@ -107,7 +103,6 @@ enum_long(ROM_TYPE)
 };
 typedef ROM_TYPE RomType;
 
-#ifdef __cplusplus
 struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
 
     static constexpr long minVal = 0;
@@ -127,7 +122,6 @@ struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
         return "???";
     }
 };
-#endif
 
 enum_long(ROM_VENDOR)
 {
@@ -137,7 +131,6 @@ enum_long(ROM_VENDOR)
 };
 typedef ROM_VENDOR RomVendor;
 
-#ifdef __cplusplus
 struct RomVendorEnum : util::Reflection<RomVendorEnum, RomVendor> {
 
     static constexpr long minVal = 0;
@@ -156,7 +149,6 @@ struct RomVendorEnum : util::Reflection<RomVendorEnum, RomVendor> {
         return "???";
     }
 };
-#endif
 
 
 //

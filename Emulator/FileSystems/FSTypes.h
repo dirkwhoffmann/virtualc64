@@ -28,7 +28,6 @@ enum_long(DOS_TYPE)
 };
 typedef DOS_TYPE DOSType;
 
-#ifdef __cplusplus
 struct DOSTypeEnum : util::Reflection<DOSTypeEnum, DOSType> {
     
 	static constexpr long minVal = 0;
@@ -46,7 +45,6 @@ struct DOSTypeEnum : util::Reflection<DOSTypeEnum, DOSType> {
         return "???";
     }
 };
-#endif
 
 enum_long(FS_FILETYPE)
 {
@@ -58,7 +56,6 @@ enum_long(FS_FILETYPE)
 };
 typedef FS_FILETYPE FSFileType;
 
-#ifdef __cplusplus
 struct FSFileTypeEnum : util::Reflection<FSFileTypeEnum, FSFileType> {
     
 	static constexpr long minVal = 0;
@@ -79,7 +76,6 @@ struct FSFileTypeEnum : util::Reflection<FSFileTypeEnum, FSFileType> {
         return "???";
     }
 };
-#endif
 
 enum_long(FS_BLOCKTYPE)
 {
@@ -91,7 +87,6 @@ enum_long(FS_BLOCKTYPE)
 };
 typedef FS_BLOCKTYPE FSBlockType;
 
-#ifdef __cplusplus
 struct FSBlockTypeEnum : util::Reflection<FSBlockTypeEnum, FSBlockType> {
     
 	static constexpr long minVal = 0;
@@ -112,7 +107,6 @@ struct FSBlockTypeEnum : util::Reflection<FSBlockTypeEnum, FSBlockType> {
         return "???";
     }
 };
-#endif
 
 enum_long(FS_USAGE)
 {
@@ -141,7 +135,6 @@ enum_long(FS_USAGE)
 };
 typedef FS_USAGE FSUsage;
 
-#ifdef __cplusplus
 struct FSUsageEnum : util::Reflection<FSUsageEnum, FSUsage> {
     
 	static constexpr long minVal = 0;
@@ -151,8 +144,6 @@ struct FSUsageEnum : util::Reflection<FSUsageEnum, FSUsage> {
     static const char *prefix() { return "FS_USAGE"; }
     static const char *key(long value) { return "???"; }
 };
-#endif
-
 
 //
 // Structures

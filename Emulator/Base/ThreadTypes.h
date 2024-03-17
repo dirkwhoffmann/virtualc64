@@ -27,7 +27,6 @@ enum_long(EMULATOR_STATE)
 };
 typedef EMULATOR_STATE EmulatorState;
 
-#ifdef __cplusplus
 struct EmulatorStateEnum : util::Reflection<EmulatorStateEnum, EmulatorState>
 {
     static constexpr long minVal = 0;
@@ -48,4 +47,3 @@ struct EmulatorStateEnum : util::Reflection<EmulatorStateEnum, EmulatorState>
         return "???";
     }
 };
-#endif

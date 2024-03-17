@@ -9,15 +9,12 @@
 
 #include "Types.h"
 
-#ifdef __cplusplus
 namespace vc64::peddle {
-#endif
 
 //
 // Constants
 //
 
-#ifdef __cplusplus
 static constexpr isize LOG_BUFFER_CAPACITY = 256;
 
 static constexpr isize C_FLAG = 0x01;
@@ -27,7 +24,6 @@ static constexpr isize D_FLAG = 0x08;
 static constexpr isize B_FLAG = 0x10;
 static constexpr isize V_FLAG = 0x40;
 static constexpr isize N_FLAG = 0x80;
-#endif
 
 
 //
@@ -49,12 +45,10 @@ typedef u8 IntSource;
  *    These flags indicate whether the CPU should check for breakpoints,
  *    watchpoints, or catchpoints.
  */
-#ifdef __cplusplus
 static constexpr int CPU_LOG_INSTRUCTION    = (1 << 0);
 static constexpr int CPU_CHECK_BP           = (1 << 1);
 static constexpr int CPU_CHECK_WP           = (1 << 2);
 static constexpr int CPU_CHECK_CP           = (1 << 3);
-#endif
 
 
 //
@@ -466,6 +460,4 @@ typedef struct
 }
 DasmStyle;
 
-#ifdef __cplusplus
 }
-#endif

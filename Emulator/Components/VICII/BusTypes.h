@@ -28,7 +28,6 @@ enum_long(MEMACCESS)
 };
 typedef MEMACCESS MemAccess;
 
-#ifdef __cplusplus
 struct MemAccessEnum : util::Reflection<MemAccessEnum, MemAccess> {
     
 	static constexpr long minVal = 0;
@@ -51,4 +50,3 @@ struct MemAccessEnum : util::Reflection<MemAccessEnum, MemAccess> {
         return "???";
     }
 };
-#endif

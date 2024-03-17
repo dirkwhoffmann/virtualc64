@@ -27,7 +27,6 @@ enum_long(REC_STATE)
 };
 typedef REC_STATE RecState;
 
-#ifdef __cplusplus
 struct RecStateEnum : util::Reflection<RecStateEnum, RecState> {
 
     static constexpr long minVal = 0;
@@ -48,7 +47,6 @@ struct RecStateEnum : util::Reflection<RecStateEnum, RecState> {
         return "???";
     }
 };
-#endif
 
 
 //

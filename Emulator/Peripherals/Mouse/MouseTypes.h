@@ -29,7 +29,6 @@ enum_long(MOUSE_MODEL)
 };
 typedef MOUSE_MODEL MouseModel;
 
-#ifdef __cplusplus
 struct MouseModelEnum : util::Reflection<MouseModelEnum, MouseModel> {
     
 	static constexpr long minVal = 0;
@@ -48,8 +47,6 @@ struct MouseModelEnum : util::Reflection<MouseModelEnum, MouseModel> {
         return "???";
     }
 };
-#endif
-
 
 //
 // Structures

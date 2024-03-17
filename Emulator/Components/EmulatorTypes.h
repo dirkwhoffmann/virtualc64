@@ -107,7 +107,6 @@ enum_long(DEBUG_FLAG)
 };
 typedef DEBUG_FLAG DebugFlag;
 
-#ifdef __cplusplus
 struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
 {
     static constexpr long minVal = 0;
@@ -289,7 +288,6 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
         return "???";
     }
 };
-#endif
 
 enum_long(WARP_MODE)
 {
@@ -299,7 +297,6 @@ enum_long(WARP_MODE)
 };
 typedef WARP_MODE WarpMode;
 
-#ifdef __cplusplus
 struct WarpModeEnum : util::Reflection<WarpModeEnum, WarpMode>
 {
     static constexpr long minVal = 0;
@@ -318,7 +315,6 @@ struct WarpModeEnum : util::Reflection<WarpModeEnum, WarpMode>
         return "???";
     }
 };
-#endif
 
 //
 // Structures

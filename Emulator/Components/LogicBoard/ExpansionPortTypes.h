@@ -30,7 +30,6 @@ enum_long(CRTMODE)
 };
 typedef CRTMODE CRTMode;
 
-#ifdef __cplusplus
 struct CRTModeEnum : util::Reflection<CRTModeEnum, CRTMode> {
     
 	static constexpr long minVal = 0;
@@ -50,4 +49,3 @@ struct CRTModeEnum : util::Reflection<CRTModeEnum, CRTMode> {
         return "???";
     }
 };
-#endif

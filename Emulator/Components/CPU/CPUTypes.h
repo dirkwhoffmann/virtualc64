@@ -32,7 +32,6 @@
 // Enumerations
 //
 
-#ifdef __cplusplus
 struct CPURevisionEnum : util::Reflection<CPURevisionEnum, vc64::peddle::CPURevision> {
     
     static constexpr long minVal = 0;
@@ -52,7 +51,6 @@ struct CPURevisionEnum : util::Reflection<CPURevisionEnum, vc64::peddle::CPURevi
         return "???";
     }
 };
-#endif
 
 
 //

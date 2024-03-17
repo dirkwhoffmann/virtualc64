@@ -12,8 +12,6 @@
 
 #pragma once
 
-#ifdef __cplusplus
-
 #include "Types.h"
 #include <map>
 
@@ -70,5 +68,3 @@ template <class T, typename E> struct Reflection {
 };
 
 }
-
-#endif

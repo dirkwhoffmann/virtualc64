@@ -30,7 +30,6 @@ enum_long(GRID)
 };
 typedef GRID PowerGrid;
 
-#ifdef __cplusplus
 struct PowerGridEnum : util::Reflection<PowerGridEnum, PowerGrid> {
     
 	static constexpr long minVal = 0;
@@ -50,8 +49,6 @@ struct PowerGridEnum : util::Reflection<PowerGridEnum, PowerGrid> {
         return "???";
     }
 };
-#endif
-
 
 //
 // Structures

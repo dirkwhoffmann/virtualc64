@@ -107,7 +107,6 @@ enum_long(CRT_TYPE)
 };
 typedef CRT_TYPE CartridgeType;
 
-#ifdef __cplusplus
 struct CartridgeTypeEnum : util::Reflection<CartridgeTypeEnum, CartridgeType> {
     
 	static constexpr long minVal = 0;
@@ -202,7 +201,6 @@ struct CartridgeTypeEnum : util::Reflection<CartridgeTypeEnum, CartridgeType> {
         return "???";
     }
 };
-#endif
 
 enum_long(FLASH_STATE)
 {
@@ -222,7 +220,6 @@ enum_long(FLASH_STATE)
 };
 typedef FLASH_STATE FlashState;
 
-#ifdef __cplusplus
 struct FlashStateEnum : util::Reflection<FlashStateEnum, FlashState> {
     
 	static constexpr long minVal = 0;
@@ -251,8 +248,6 @@ struct FlashStateEnum : util::Reflection<FlashStateEnum, FlashState> {
         return "???";
     }
 };
-#endif
-
 
 //
 // Structures

@@ -14,10 +14,7 @@
 
 #include "Aliases.h"
 #include "Reflection.h"
-
-#ifdef __cplusplus
 #include "Serializable.h"
-#endif
 
 //
 // Constants
@@ -117,7 +114,6 @@ enum_long(DISK_TYPE)
 };
 typedef DISK_TYPE DiskType;
 
-#ifdef __cplusplus
 struct DiskTypeEnum : util::Reflection<DiskTypeEnum, DiskType> {
     
 	static constexpr long minVal = 0;
@@ -135,7 +131,6 @@ struct DiskTypeEnum : util::Reflection<DiskTypeEnum, DiskType> {
         return "???";
     }
 };
-#endif
 
 enum_long(CBM_FILE_TYPE)
 {
@@ -146,7 +141,6 @@ enum_long(CBM_FILE_TYPE)
 };
 typedef CBM_FILE_TYPE CBMFileType;
 
-#ifdef __cplusplus
 struct CBMFileTypeEnum : util::Reflection<CBMFileTypeEnum, CBMFileType> {
     
     static constexpr long minVal = 0;
@@ -166,7 +160,6 @@ struct CBMFileTypeEnum : util::Reflection<CBMFileTypeEnum, CBMFileType> {
         return "???";
     }
 };
-#endif
 
 enum_long(DISK_ERROR_CODE)
 {
@@ -185,7 +178,6 @@ enum_long(DISK_ERROR_CODE)
 };
 typedef DISK_ERROR_CODE DiskErrorCode;
 
-#ifdef __cplusplus
 struct DiskErrorCodeEnum : util::Reflection<DiskErrorCodeEnum, DiskErrorCode> {
     
 	static constexpr long minVal = 0;
@@ -213,7 +205,6 @@ struct DiskErrorCodeEnum : util::Reflection<DiskErrorCodeEnum, DiskErrorCode> {
         return "???";
     }
 };
-#endif
 
 
 //
@@ -226,8 +217,6 @@ struct DiskErrorCodeEnum : util::Reflection<DiskErrorCodeEnum, DiskErrorCode> {
  *    - data.halftack[i] points to the first byte of halftrack i
  *    - data.track[i] points to the first byte of track i
  */
-
-#ifdef __cplusplus
 
 namespace vc64 {
 
@@ -286,7 +275,6 @@ struct DiskLength : public Serializable
 };
 
 }
-#endif
 
 // Disk parameters of a standard floppy disk
 typedef struct

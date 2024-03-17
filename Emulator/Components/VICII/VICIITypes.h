@@ -98,7 +98,6 @@ enum_long(VICII_REV)
 };
 typedef VICII_REV VICIIRevision;
 
-#ifdef __cplusplus
 struct VICIIRevisionEnum : util::Reflection<VICIIRevisionEnum, VICIIRevision> {
     
 	static constexpr long minVal = 0;
@@ -120,7 +119,6 @@ struct VICIIRevisionEnum : util::Reflection<VICIIRevisionEnum, VICIIRevision> {
         return "???";
     }
 };
-#endif
 
 /// Glue logic implementation
 enum_long(GLUE_LOGIC)
@@ -130,7 +128,6 @@ enum_long(GLUE_LOGIC)
 };
 typedef GLUE_LOGIC GlueLogic;
 
-#ifdef __cplusplus
 struct GlueLogicEnum : util::Reflection<GlueLogicEnum, GlueLogic> {
     
 	static constexpr long minVal = 0;
@@ -148,7 +145,6 @@ struct GlueLogicEnum : util::Reflection<GlueLogicEnum, GlueLogic> {
         return "???";
     }
 };
-#endif
 
 /// Color palette
 enum_long(PALETTE)
@@ -162,7 +158,6 @@ enum_long(PALETTE)
 };
 typedef PALETTE Palette;
 
-#ifdef __cplusplus
 struct PaletteEnum : util::Reflection<PaletteEnum, Palette> {
     
 	static constexpr long minVal = 0;
@@ -184,7 +179,6 @@ struct PaletteEnum : util::Reflection<PaletteEnum, Palette> {
         return "???";
     }
 };
-#endif
 
 ///! C64 canvas size
 enum_long(SCREEN_GEOMETRY)
@@ -196,7 +190,6 @@ enum_long(SCREEN_GEOMETRY)
 };
 typedef SCREEN_GEOMETRY ScreenGeometry;
 
-#ifdef __cplusplus
 struct ScreenGeometryEnum : util::Reflection<ScreenGeometryEnum, ScreenGeometry> {
     
 	static constexpr long minVal = 1;
@@ -216,7 +209,6 @@ struct ScreenGeometryEnum : util::Reflection<ScreenGeometryEnum, ScreenGeometry>
         return "???";
     }
 };
-#endif
 
 ///! C64 display mode
 enum_long(DISPLAY_MODE)
@@ -232,7 +224,6 @@ enum_long(DISPLAY_MODE)
 };
 typedef DISPLAY_MODE DisplayMode;
 
-#ifdef __cplusplus
 struct DisplayModeEnum : util::Reflection<DisplayModeEnum, DisplayMode> {
     
     static constexpr long minVal = 0;
@@ -256,7 +247,6 @@ struct DisplayModeEnum : util::Reflection<DisplayModeEnum, DisplayMode> {
         return "???";
     }
 };
-#endif
 
 enum_long(COLSRC)
 {
@@ -272,7 +262,6 @@ enum_long(COLSRC)
 };
 typedef COLSRC ColorSource;
 
-#ifdef __cplusplus
 struct ColorSourceEnum : util::Reflection<ColorSourceEnum, ColorSource> {
     
 	static constexpr long minVal = 0;
@@ -297,7 +286,6 @@ struct ColorSourceEnum : util::Reflection<ColorSourceEnum, ColorSource> {
         return "???";
     }
 };
-#endif
 
 enum VICIIColors
 {
@@ -456,8 +444,6 @@ typedef struct
 }
 SpriteInfo;
     
-#ifdef __cplusplus
-
 namespace vc64 {
 
 struct VICIIRegisters : Serializable
@@ -542,4 +528,3 @@ struct SpriteSR : Serializable
 };
 
 }
-#endif

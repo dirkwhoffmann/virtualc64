@@ -40,7 +40,6 @@ enum_long(FILETYPE)
 };
 typedef FILETYPE FileType;
 
-#ifdef __cplusplus
 struct FileTypeEnum : util::Reflection<FileTypeEnum, FileType> {
     
 	static constexpr long minVal = 0;
@@ -71,7 +70,6 @@ struct FileTypeEnum : util::Reflection<FileTypeEnum, FileType> {
         return "???";
     }
 };
-#endif
 
 enum_long(TAP_VERSION)
 {
@@ -80,7 +78,6 @@ enum_long(TAP_VERSION)
 };
 typedef TAP_VERSION TAPVersion;
 
-#ifdef __cplusplus
 struct TAPVersionEnum : util::Reflection<TAPVersionEnum, TAPVersion> {
     
 	static constexpr long minVal = 0;
@@ -98,7 +95,6 @@ struct TAPVersionEnum : util::Reflection<TAPVersionEnum, TAPVersion> {
         }
     }
 };
-#endif
 
 enum_long(FILE_ERROR)
 {

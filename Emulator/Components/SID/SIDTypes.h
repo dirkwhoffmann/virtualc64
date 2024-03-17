@@ -29,7 +29,6 @@ enum_long(SIDREV)
 };
 typedef SIDREV SIDRevision;
 
-#ifdef __cplusplus
 struct SIDRevisionEnum : util::Reflection<SIDRevisionEnum, SIDRevision> {
     
 	static constexpr long minVal = 0;
@@ -47,7 +46,6 @@ struct SIDRevisionEnum : util::Reflection<SIDRevisionEnum, SIDRevision> {
         return "???";
     }
 };
-#endif
 
 /// SID backend
 enum_long(SIDENGINE)
@@ -57,7 +55,6 @@ enum_long(SIDENGINE)
 };
 typedef SIDENGINE SIDEngine;
 
-#ifdef __cplusplus
 struct SIDEngineEnum : util::Reflection<SIDEngineEnum, SIDEngine> {
     
 	static constexpr long minVal = 0;
@@ -75,7 +72,6 @@ struct SIDEngineEnum : util::Reflection<SIDEngineEnum, SIDEngine> {
         return "???";
     }
 };
-#endif
 
 enum_long(SAMPLING)
 {
@@ -87,7 +83,6 @@ enum_long(SAMPLING)
 };
 typedef SAMPLING SamplingMethod;
 
-#ifdef __cplusplus
 struct SamplingMethodEnum : util::Reflection<SamplingMethodEnum, SamplingMethod> {
     
 	static constexpr long minVal = 0;
@@ -107,7 +102,6 @@ struct SamplingMethodEnum : util::Reflection<SamplingMethodEnum, SamplingMethod>
         return "???";
     }
 };
-#endif
 
 
 //

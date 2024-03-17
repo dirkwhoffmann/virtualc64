@@ -32,7 +32,6 @@ enum_long(C64_MODEL)
 };
 typedef C64_MODEL C64Model;
 
-#ifdef __cplusplus
 struct C64ModelEnum : util::Reflection<C64ModelEnum, C64Model> {
 
     static constexpr long minVal = 0;
@@ -54,7 +53,6 @@ struct C64ModelEnum : util::Reflection<C64ModelEnum, C64Model> {
         return "???";
     }
 };
-#endif
 
 enum_long(SLOT)
 {
@@ -83,7 +81,6 @@ enum_long(SLOT)
 };
 typedef SLOT EventSlot;
 
-#ifdef __cplusplus
 struct EventSlotEnum : util::Reflection<EventSlotEnum, EventSlot>
 {
     static constexpr long minVal = 0;
@@ -115,7 +112,6 @@ struct EventSlotEnum : util::Reflection<EventSlotEnum, EventSlot>
         return "???";
     }
 };
-#endif
 
 enum_i8(EventID)
 {
@@ -205,7 +201,6 @@ enum_long(INSPECTION_TARGET)
 };
 typedef INSPECTION_TARGET InspectionTarget;
 
-#ifdef __cplusplus
 struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionTarget> {
 
     static constexpr long minVal = 0;
@@ -229,7 +224,6 @@ struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionT
         return "???";
     }
 };
-#endif
 
 //
 // Structures
@@ -286,7 +280,6 @@ typedef struct
 }
 EventSlotInfo;
 
-#ifdef __cplusplus
 typedef u32 RunLoopFlags;
 
 namespace RL {
@@ -299,4 +292,3 @@ constexpr u32 WATCHPOINT    = (1 << 4);
 constexpr u32 CPU_JAM       = (1 << 5);
 constexpr u32 SINGLE_STEP   = (1 << 6);
 }
-#endif
