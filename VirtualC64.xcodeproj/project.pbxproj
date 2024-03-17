@@ -668,7 +668,7 @@
 		504C42F524AF29AB00E69CAE /* CoreComponent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CoreComponent.hpp; sourceTree = "<group>"; };
 		504C42F624AF29AB00E69CAE /* C64.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = C64.hpp; sourceTree = "<group>"; };
 		504C42F724AF29AB00E69CAE /* C64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C64.cpp; sourceTree = "<group>"; };
-		504C42F824AF29AB00E69CAE /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		504C42F824AF29AB00E69CAE /* config.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = config.hpp; sourceTree = "<group>"; };
 		504C42FA24AF29AB00E69CAE /* Mouse1350.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Mouse1350.hpp; sourceTree = "<group>"; };
 		504C42FB24AF29AB00E69CAE /* NeosMouse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NeosMouse.hpp; sourceTree = "<group>"; };
 		504C42FC24AF29AB00E69CAE /* Mouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mouse.cpp; sourceTree = "<group>"; };
@@ -1436,7 +1436,7 @@
 			isa = PBXGroup;
 			children = (
 				5078BEAA264D70AC00EDA161 /* CMakeLists.txt */,
-				504C42F824AF29AB00E69CAE /* config.h */,
+				504C42F824AF29AB00E69CAE /* config.hpp */,
 				5077AC672B5ACC5100EFAC85 /* config.cpp */,
 				50441A872B93CE2600102A4D /* VirtualC64Types.h */,
 				50F47A452BA5B3CB000C3CCA /* VirtualC64Types.hpp */,

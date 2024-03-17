@@ -28,7 +28,7 @@
  *
  */
 
-#include "config.h"
+#include "config.hpp"
 #include "FastSID.hpp"
 #include "waves.h"
 
