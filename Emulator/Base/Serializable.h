@@ -14,6 +14,7 @@
 
 #ifdef __cplusplus
 
+#include "config.h"
 #include "Macros.h"
 #include "MemUtils.h"
 #include "Buffer.h"

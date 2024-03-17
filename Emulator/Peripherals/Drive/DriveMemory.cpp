@@ -375,7 +375,7 @@ DriveMemory::updateBankMap()
             break;
 
         default:
-            fatalError;
+            break;
     }
     
     // Map the PIA (Dolphin DOS 3) $5000 - $5FFF

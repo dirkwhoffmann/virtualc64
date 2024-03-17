@@ -12,6 +12,7 @@
 
 #pragma once
 
+#include "config.h"
 #include "Types.h"
 #include <utility>
 

@@ -36,6 +36,15 @@ class MyDocument: NSDocument {
 
         super.init()
 
+        /*
+        var a = vc64.Disk()
+        var wp = a.isWriteProtected()
+        Swift.print("wp = \(wp)")
+        a.toggleWriteProtection()
+        wp = a.isWriteProtected()
+        Swift.print("wp = \(wp)")
+        */
+
         // Check for Metal support
         if MTLCreateSystemDefaultDevice() == nil {
 
