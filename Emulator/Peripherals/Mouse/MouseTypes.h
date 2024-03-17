@@ -21,7 +21,7 @@
 //
 
 /// Mouse model
-new_enum_long(MOUSE_MODEL)
+enum_long(MOUSE_MODEL)
 {
     MOUSE_C1350,    ///< Joystick mouse (Commodore)
     MOUSE_C1351,    ///< Analog mouse (Commodore)

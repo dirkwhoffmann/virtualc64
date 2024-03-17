@@ -72,5 +72,5 @@ using std::optional;
 #define new_enum_generic(_name, _type) \
 enum __attribute__((enum_extensibility(open))) _name : _type
 
-#define new_enum_long(_name) new_enum_generic(_name, long)
+#define enum_long(_name) new_enum_generic(_name, long)
 #define enum_i8(_name) new_enum_generic(_name, i8)

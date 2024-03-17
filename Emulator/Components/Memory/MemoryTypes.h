@@ -21,7 +21,7 @@
 //
 
 /// Memory type
-new_enum_long(M_TYPE)
+enum_long(M_TYPE)
 {
     M_RAM = 1,      ///< Ram
     M_CHAR,         ///< Character Rom
@@ -65,7 +65,7 @@ struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
 #endif
 
 /// Ram startup pattern
-new_enum_long(RAM_PATTERN)
+enum_long(RAM_PATTERN)
 {
     RAM_PATTERN_VICE,       ///< Pattern used by the VICE emulator
     RAM_PATTERN_CCS,        ///< Pattern used by the CCS emulator
@@ -98,7 +98,7 @@ struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
 };
 #endif
 
-new_enum_long(ROM_TYPE)
+enum_long(ROM_TYPE)
 {
     ROM_TYPE_BASIC,
     ROM_TYPE_CHAR,
@@ -129,7 +129,7 @@ struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
 };
 #endif
 
-new_enum_long(ROM_VENDOR)
+enum_long(ROM_VENDOR)
 {
     ROM_VENDOR_COMMODORE,
     ROM_VENDOR_MEGA65,

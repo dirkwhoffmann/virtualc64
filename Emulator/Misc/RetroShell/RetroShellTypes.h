@@ -21,7 +21,7 @@
 //
 
 /// RetroShell special key
-new_enum_long(RSKEY_KEY)
+enum_long(RSKEY_KEY)
 {
 	RSKEY_UP,
 	RSKEY_DOWN,

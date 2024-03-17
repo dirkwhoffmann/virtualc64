@@ -21,7 +21,7 @@
 //
 
 /// Configuration option
-new_enum_long(OPT)
+enum_long(OPT)
 {
     // Host
     OPT_HOST_REFRESH_RATE,       ///< Refresh rate of the host display

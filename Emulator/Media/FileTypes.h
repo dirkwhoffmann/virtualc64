@@ -20,7 +20,7 @@
 // Enumerations
 //
 
-new_enum_long(FILETYPE)
+enum_long(FILETYPE)
 {
     FILETYPE_UNKNOWN = 0,
     FILETYPE_SNAPSHOT,
@@ -73,7 +73,7 @@ struct FileTypeEnum : util::Reflection<FileTypeEnum, FileType> {
 };
 #endif
 
-new_enum_long(TAP_VERSION)
+enum_long(TAP_VERSION)
 {
     TAP_VERSION_ORIGINAL,
     TAP_VERSION_ADVANCED
@@ -100,7 +100,7 @@ struct TAPVersionEnum : util::Reflection<TAPVersionEnum, TAPVersion> {
 };
 #endif
 
-new_enum_long(FILE_ERROR)
+enum_long(FILE_ERROR)
 {
     ERR_FILE_OK,
     

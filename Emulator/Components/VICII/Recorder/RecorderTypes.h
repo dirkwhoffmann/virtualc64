@@ -17,7 +17,7 @@
 #include "Reflection.h"
 
 /// Color palette
-new_enum_long(REC_STATE)
+enum_long(REC_STATE)
 {
     REC_STATE_WAIT,                     ///< The recorder is ready
     REC_STATE_PREPARE,                  ///< The recorder is preparing to record

@@ -20,7 +20,7 @@
 // Enumerations
 //
 
-new_enum_long(CRT_TYPE)
+enum_long(CRT_TYPE)
 {
     // Cartridges with a defined CRT ID (values must match)
     CRT_NORMAL             = 0,
@@ -204,7 +204,7 @@ struct CartridgeTypeEnum : util::Reflection<CartridgeTypeEnum, CartridgeType> {
 };
 #endif
 
-new_enum_long(FLASH_STATE)
+enum_long(FLASH_STATE)
 {
     FLASH_READ,
     FLASH_MAGIC_1,

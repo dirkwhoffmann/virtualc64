@@ -30,7 +30,7 @@
 //
 
 /// Drive model
-new_enum_long(DRIVE_TYPE)
+enum_long(DRIVE_TYPE)
 {
     DRIVE_VC1541,
     DRIVE_VC1541C,
@@ -59,7 +59,7 @@ struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveType> {
 };
 #endif
 
-new_enum_long(DRVRAM)
+enum_long(DRVRAM)
 {
     DRVRAM_NONE,
     DRVRAM_8000_9FFF,
@@ -88,7 +88,7 @@ struct DriveRamEnum : util::Reflection<DriveRamEnum, DriveRam> {
 };
 #endif
 
-new_enum_long(DRVMEM_TYPE)
+enum_long(DRVMEM_TYPE)
 {
     DRVMEM_NONE,      // Unmapped
     DRVMEM_RAM,
@@ -125,7 +125,7 @@ struct DrvMemTypeEnum : util::Reflection<DrvMemTypeEnum, DrvMemType> {
 };
 #endif
 
-new_enum_long(DISK_INSERTION_STATUS)
+enum_long(DISK_INSERTION_STATUS)
 {
     DISK_FULLY_EJECTED,
     DISK_PARTIALLY_INSERTED,

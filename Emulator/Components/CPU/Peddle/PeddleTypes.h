@@ -62,7 +62,7 @@ static constexpr int CPU_CHECK_CP           = (1 << 3);
 //
 
 /// CPU revision
-new_enum_long(CPUREV)
+enum_long(CPUREV)
 {
     MOS_6502,       ///< PET 2001, VC 20, Atari 800, Apple I/II, BBC Micro
     MOS_6507,       ///< Atari 2600
@@ -71,7 +71,7 @@ new_enum_long(CPUREV)
 };
 typedef CPUREV CPURevision;
 
-new_enum_long(ADDR_MODE)
+enum_long(ADDR_MODE)
 {
     ADDR_IMPLIED,
     ADDR_ACCUMULATOR,
@@ -90,7 +90,7 @@ new_enum_long(ADDR_MODE)
 };
 typedef ADDR_MODE AddressingMode;
 
-new_enum_long(MICRO_INSTRUCTION) {
+enum_long(MICRO_INSTRUCTION) {
 
     fetch,
 

@@ -22,7 +22,7 @@
 
 /// Chip revision
 // enum SIDREV : long
-new_enum_long(SIDREV)
+enum_long(SIDREV)
 {
     MOS_6581,
     MOS_8580
@@ -50,7 +50,7 @@ struct SIDRevisionEnum : util::Reflection<SIDRevisionEnum, SIDRevision> {
 #endif
 
 /// SID backend
-new_enum_long(SIDENGINE)
+enum_long(SIDENGINE)
 {
     SIDENGINE_FASTSID,  ///< Not recommended
     SIDENGINE_RESID     ///< Recommended
@@ -77,7 +77,7 @@ struct SIDEngineEnum : util::Reflection<SIDEngineEnum, SIDEngine> {
 };
 #endif
 
-new_enum_long(SAMPLING)
+enum_long(SAMPLING)
 {
     // Elements must appear in the same order as in resid::sampling_method
     SAMPLING_FAST,

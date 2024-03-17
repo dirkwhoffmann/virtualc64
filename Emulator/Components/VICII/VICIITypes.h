@@ -87,7 +87,7 @@ VICClrSprBgCollReg);
 //
 
 /// VICII chip revision
-new_enum_long(VICII_REV)
+enum_long(VICII_REV)
 {
     VICII_PAL_6569_R1,                  ///< Early C64 PAL models
     VICII_PAL_6569_R3,                  ///< Later C64 PAL models
@@ -123,7 +123,7 @@ struct VICIIRevisionEnum : util::Reflection<VICIIRevisionEnum, VICIIRevision> {
 #endif
 
 /// Glue logic implementation
-new_enum_long(GLUE_LOGIC)
+enum_long(GLUE_LOGIC)
 {
     GLUE_LOGIC_DISCRETE,                ///< Discrete logic
     GLUE_LOGIC_IC                       ///< Integrated Circuit (PLA)
@@ -151,7 +151,7 @@ struct GlueLogicEnum : util::Reflection<GlueLogicEnum, GlueLogic> {
 #endif
 
 /// Color palette
-new_enum_long(PALETTE)
+enum_long(PALETTE)
 {
     PALETTE_COLOR,                      ///< Standard C64 color palette
     PALETTE_BLACK_WHITE,                ///< Black and white monochrome palette
@@ -187,7 +187,7 @@ struct PaletteEnum : util::Reflection<PaletteEnum, Palette> {
 #endif
 
 ///! C64 canvas size
-new_enum_long(SCREEN_GEOMETRY)
+enum_long(SCREEN_GEOMETRY)
 {
     SCREEN_GEOMETRY_25_40 = 1,          ///< 25 rows x 40 columns
     SCREEN_GEOMETRY_25_38,              ///< 25 rows x 38 columns
@@ -219,7 +219,7 @@ struct ScreenGeometryEnum : util::Reflection<ScreenGeometryEnum, ScreenGeometry>
 #endif
 
 ///! C64 display mode
-new_enum_long(DISPLAY_MODE)
+enum_long(DISPLAY_MODE)
 {
     DISPLAY_MODE_STANDARD_TEXT,         ///< Standard Character Mode
     DISPLAY_MODE_MULTICOLOR_TEXT,       ///< Multicolor Character Mode
@@ -258,7 +258,7 @@ struct DisplayModeEnum : util::Reflection<DisplayModeEnum, DisplayMode> {
 };
 #endif
 
-new_enum_long(COLSRC)
+enum_long(COLSRC)
 {
     COLSRC_D021,     // Color comes from background color register
     COLSRC_D022,     // Color comes from first extended color register

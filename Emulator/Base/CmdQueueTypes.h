@@ -22,7 +22,7 @@
 //
 
 /// Emulator command
-new_enum_long(CMD_TYPE)
+enum_long(CMD_TYPE)
 {
     CMD_NONE = 0,               ///< None
 

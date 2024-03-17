@@ -21,7 +21,7 @@
 //
 
 /// Power grip characteristics
-new_enum_long(GRID)
+enum_long(GRID)
 {
     GRID_STABLE_50HZ,   ///< 50Hz constant
     GRID_UNSTABLE_50HZ, ///< 50Hz with jitter

@@ -17,7 +17,7 @@
 #include "Reflection.h"
 
 /// Error condition
-new_enum_long(ERROR_CODE)
+enum_long(ERROR_CODE)
 {
     ERROR_OK,                   ///< No error
     ERROR_UNKNOWN,              ///< Unclassified error condition

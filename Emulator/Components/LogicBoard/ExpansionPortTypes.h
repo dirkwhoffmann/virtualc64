@@ -21,7 +21,7 @@
 //
 
 /// Cartridge mode
-new_enum_long(CRTMODE)
+enum_long(CRTMODE)
 {
     CRTMODE_16K,        //! 16KB cartridge
     CRTMODE_8K,         //! 8KB cartridge

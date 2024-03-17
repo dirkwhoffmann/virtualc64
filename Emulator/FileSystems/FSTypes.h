@@ -21,7 +21,7 @@
 //
 
 /// File system type
-new_enum_long(DOS_TYPE)
+enum_long(DOS_TYPE)
 {
     DOS_TYPE_NODOS, ///< No file system
     DOS_TYPE_CBM    ///< C64 CBM file system
@@ -48,7 +48,7 @@ struct DOSTypeEnum : util::Reflection<DOSTypeEnum, DOSType> {
 };
 #endif
 
-new_enum_long(FS_FILETYPE)
+enum_long(FS_FILETYPE)
 {
     FS_FILETYPE_DEL,
     FS_FILETYPE_SEQ,
@@ -81,7 +81,7 @@ struct FSFileTypeEnum : util::Reflection<FSFileTypeEnum, FSFileType> {
 };
 #endif
 
-new_enum_long(FS_BLOCKTYPE)
+enum_long(FS_BLOCKTYPE)
 {
     FS_BLOCKTYPE_UNKNOWN,
     FS_BLOCKTYPE_EMPTY,
@@ -114,7 +114,7 @@ struct FSBlockTypeEnum : util::Reflection<FSBlockTypeEnum, FSBlockType> {
 };
 #endif
 
-new_enum_long(FS_USAGE)
+enum_long(FS_USAGE)
 {
     FS_USAGE_UNKNOWN,
     FS_USAGE_UNUSED,

@@ -21,7 +21,7 @@
 //
 
 /// Gamepad / Joystick event
-new_enum_long(GAME_PAD_ACTION)
+enum_long(GAME_PAD_ACTION)
 {
     PULL_UP,       ///< Pull the joystick up
     PULL_DOWN,     ///< Pull the joystick down

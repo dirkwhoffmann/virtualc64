@@ -22,7 +22,7 @@
 //
 
 /// DMA debugger display mode
-new_enum_long(DMA_DISPLAY_MODE)
+enum_long(DMA_DISPLAY_MODE)
 {
     DMA_DISPLAY_MODE_FG_LAYER,          ///< Modulate the foreground layer
     DMA_DISPLAY_MODE_BG_LAYER,          ///< Modulate the background layer

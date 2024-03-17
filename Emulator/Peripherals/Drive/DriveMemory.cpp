@@ -373,6 +373,9 @@ DriveMemory::updateBankMap()
         case DRVRAM_6000_7FFF:
             for (isize i = 24; i < 32; i++) usage[i] = DRVMEM_EXP;
             break;
+
+        default:
+            fatalError;
     }
     
     // Map the PIA (Dolphin DOS 3) $5000 - $5FFF

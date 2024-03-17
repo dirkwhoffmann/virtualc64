@@ -17,7 +17,7 @@
 #include "Reflection.h"
 
 /// Emulator state
-new_enum_long(EMULATOR_STATE)
+enum_long(EMULATOR_STATE)
 {
     STATE_OFF,          ///< Powered off
     STATE_PAUSED,       ///< Powered on, but currently paused

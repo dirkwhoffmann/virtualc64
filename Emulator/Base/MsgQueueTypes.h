@@ -21,7 +21,7 @@
 //
 
 ///! Emulator message
-new_enum_long(MSG_TYPE)
+enum_long(MSG_TYPE)
 {
     MSG_NONE = 0,           ///< Unclassified
 

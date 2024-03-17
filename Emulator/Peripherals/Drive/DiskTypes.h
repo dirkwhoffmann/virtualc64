@@ -110,7 +110,7 @@ static const isize dataBlockSize = 325 * 8;
 //
 
 /// Disk type
-new_enum_long(DISK_TYPE)
+enum_long(DISK_TYPE)
 {
     DISK_TYPE_SS_SD,   ///< Single-sided, single density (VC1541)
     DISK_TYPE_DS_SD    ///< Double-sided, single density (VC1571) (unsupported)
@@ -137,7 +137,7 @@ struct DiskTypeEnum : util::Reflection<DiskTypeEnum, DiskType> {
 };
 #endif
 
-new_enum_long(CBM_FILE_TYPE)
+enum_long(CBM_FILE_TYPE)
 {
     CBM_FILE_PRG,
     CBM_FILE_SEQ,
@@ -168,7 +168,7 @@ struct CBMFileTypeEnum : util::Reflection<CBMFileTypeEnum, CBMFileType> {
 };
 #endif
 
-new_enum_long(DISK_ERROR_CODE)
+enum_long(DISK_ERROR_CODE)
 {
     DISK_OK                            = 0x1,
     HEADER_BLOCK_NOT_FOUND_ERROR       = 0x2,

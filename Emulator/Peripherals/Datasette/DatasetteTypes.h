@@ -21,7 +21,7 @@
 //
 
 /// Datasette model
-new_enum_long(DATASETTE_MODEL)
+enum_long(DATASETTE_MODEL)
 {
     DATASETTE_C1530     ///< Standard datasette (Commodore)
 };

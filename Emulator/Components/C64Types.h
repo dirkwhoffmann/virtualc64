@@ -21,7 +21,7 @@
 //
 
 /// C64 model
-new_enum_long(C64_MODEL)
+enum_long(C64_MODEL)
 {
     C64_MODEL_PAL,      ///< C64 (PAL)
     C64_MODEL_PAL_II,   ///< C64 II (PAL)
@@ -56,7 +56,7 @@ struct C64ModelEnum : util::Reflection<C64ModelEnum, C64Model> {
 };
 #endif
 
-new_enum_long(SLOT)
+enum_long(SLOT)
 {
     // Primary slots
     SLOT_CIA1,                      // CIA 1 execution
@@ -191,7 +191,7 @@ enum_i8(EventID)
     INS_EVENT_COUNT
 };
 
-new_enum_long(INSPECTION_TARGET)
+enum_long(INSPECTION_TARGET)
 {
     INSPECTION_NONE,
     INSPECTION_C64,

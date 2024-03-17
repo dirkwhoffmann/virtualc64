@@ -52,7 +52,7 @@ class Canvas: Layer {
     var scanlineTexture: MTLTexture! = nil
     
     // Part of the texture that is currently visible
-    var textureRect = CGRect() { didSet { buildVertexBuffers() } }
+    var textureRect = CGRect.zero { didSet { buildVertexBuffers() } }
 
     //
     // Buffers and Uniforms

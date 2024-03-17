@@ -16,7 +16,7 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
-new_enum_long(MEMACCESS)
+enum_long(MEMACCESS)
 {
     MEMACCESS_R,     // Memory Refresh
     MEMACCESS_I,     // Idle read

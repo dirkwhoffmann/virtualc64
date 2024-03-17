@@ -21,7 +21,7 @@
 //
 
 /// Parallel cable type
-new_enum_long(PAR_CABLE_TYPE)
+enum_long(PAR_CABLE_TYPE)
 {
     PAR_CABLE_NONE,         ///< No parallel cable attached
     PAR_CABLE_STANDARD,     ///< Standard parallel cable

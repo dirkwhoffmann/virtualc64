@@ -29,7 +29,7 @@
 //
 
 /// Control port device
-new_enum_long(CPDEVICE)
+enum_long(CPDEVICE)
 {
     CPDEVICE_NONE,      ///! No device
     CPDEVICE_MOUSE,     ///! Mouse

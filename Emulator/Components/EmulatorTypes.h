@@ -22,7 +22,7 @@
 // Enumerations
 //
 
-new_enum_long(DEBUG_FLAG)
+enum_long(DEBUG_FLAG)
 {
     // General
     FLAG_XFILES,
@@ -291,7 +291,7 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
 };
 #endif
 
-new_enum_long(WARP_MODE)
+enum_long(WARP_MODE)
 {
     WARP_AUTO,
     WARP_NEVER,

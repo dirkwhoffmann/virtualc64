@@ -18,7 +18,7 @@
 #include "TODTypes.h"
 
 /// Chip revision
-new_enum_long(CIAREV)
+enum_long(CIAREV)
 {
     MOS_6526,
     MOS_8521
@@ -45,7 +45,7 @@ struct CIARevisionEnum : util::Reflection<CIARevisionEnum, CIARevision> {
 };
 #endif
 
-new_enum_long(CIAREG)
+enum_long(CIAREG)
 {
     CIAREG_PRA,
     CIAREG_PRB,
