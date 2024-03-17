@@ -2129,6 +2129,11 @@ using namespace vc64;
     [self emu]->powerOff();
 }
 
+- (void *)objptr
+{
+    return obj;
+}
+
 - (EmulatorInfo)info
 {
     return [self emu]->getState();

@@ -13,6 +13,8 @@
 #include "config.h"
 #include "VirtualC64.h"
 
+namespace vc64 {
+
 const Defaults &
 VirtualC64::defaults = Emulator::defaults;
 
@@ -78,7 +80,7 @@ VirtualC64::get(Option option) const
     return Emulator::get(option);
 }
 
-i64 
+i64
 VirtualC64::get(Option option, long id) const
 {
     return Emulator::get(option, id);
@@ -91,27 +93,27 @@ VirtualC64::set(C64Model model)
     main.markAsDirty();
 }
 
-void 
+void
 VirtualC64::set(Option option, i64 value) throws
 {
     Emulator::set(option, value);
     main.markAsDirty();
 }
 
-void 
+void
 VirtualC64::set(Option option, long id, i64 value)
 {
     Emulator::set(option, id, value);
     main.markAsDirty();
 }
 
-void 
+void
 VirtualC64::exportConfig(const fs::path &path) const
 {
     main.exportConfig(path);
 }
 
-void 
+void
 VirtualC64::exportConfig(std::ostream& stream) const
 {
     main.exportConfig(stream);
@@ -170,7 +172,7 @@ VirtualC64::C64API::removeInspectionTarget()
     c64.removeInspectionTarget();
 }
 
-RomTraits 
+RomTraits
 VirtualC64::C64API::getRomTraits(RomType type) const
 {
     return c64.getRomTraits(type);
@@ -284,7 +286,7 @@ VirtualC64::CPUAPI::setNumberFormat(DasmNumberFormat instrFormat, DasmNumberForm
     return cpu.disassembler.setNumberFormat(instrFormat, dataFormat);
 }
 
-isize 
+isize
 VirtualC64::CPUAPI::disassemble(char *dst, const char *fmt, u16 addr) const
 {
     assert(isUserThread());
@@ -303,7 +305,7 @@ VirtualC64::CPUAPI::disassembleRecorded(char *dst, const char *fmt, isize nr) co
 // Guards
 //
 
-long 
+long
 VirtualC64::GuardAPI::elements() const
 {
     return guards.elements();
@@ -363,7 +365,7 @@ VirtualC64::GuardAPI::enable(long nr)
     guards.enable(nr);
 }
 
-void 
+void
 VirtualC64::GuardAPI::disable(long nr)
 {
     guards.disable(nr);
@@ -375,37 +377,37 @@ VirtualC64::GuardAPI::enableAt(u32 addr)
     guards.enableAt(addr);
 }
 
-void 
+void
 VirtualC64::GuardAPI::disableAt(u32 addr)
 {
     guards.disableAt(addr);
 }
 
-void 
+void
 VirtualC64::GuardAPI::setAt(u32 addr, long skip)
 {
     guards.setAt(addr, skip);
 }
 
-void 
+void
 VirtualC64::GuardAPI::removeAt(u32 addr)
 {
     guards.removeAt(addr);
 }
 
-void 
+void
 VirtualC64::GuardAPI::remove(long nr)
 {
     guards.remove(nr);
 }
 
-void 
+void
 VirtualC64::GuardAPI::removeAll()
 {
     guards.removeAll();
 }
 
-void 
+void
 VirtualC64::GuardAPI::replace(long nr, u32 addr)
 {
     guards.replace(nr, addr);
@@ -597,7 +599,7 @@ VirtualC64::SIDAPI::copyInterleaved(float *buffer, isize n)
 
 float
 VirtualC64::SIDAPI::draw(u32 *buffer, isize width, isize height,
-                        float maxAmp, u32 color, isize sid) const
+                         float maxAmp, u32 color, isize sid) const
 {
     assert(isUserThread());
     return muxer.draw(buffer, width, height, maxAmp, color, sid);
@@ -620,7 +622,7 @@ VirtualC64::DmaDebuggerAPI::getConfig() const
 // Keyboard
 //
 
-bool VirtualC64::KeyboardAPI::isPressed(C64Key key) const 
+bool VirtualC64::KeyboardAPI::isPressed(C64Key key) const
 {
     return keyboard.isPressed(key);
 }
@@ -631,7 +633,7 @@ void VirtualC64::KeyboardAPI::autoType(const string &text)
     c64.markAsDirty();
 }
 
-void VirtualC64::KeyboardAPI::abortAutoTyping() 
+void VirtualC64::KeyboardAPI::abortAutoTyping()
 {
     keyboard.abortAutoTyping();
     c64.markAsDirty();
@@ -653,20 +655,20 @@ void VirtualC64::JoystickAPI::trigger(GamePadAction event)
 // Datasette
 //
 
-DatasetteInfo 
+DatasetteInfo
 VirtualC64::DatasetteAPI::getInfo() const
 {
     return datasette.getInfo();
 }
 
-void 
+void
 VirtualC64::DatasetteAPI::insertTape(TAPFile &file)
 {
     datasette.insertTape(file);
     c64.markAsDirty();
 }
 
-void 
+void
 VirtualC64::DatasetteAPI::ejectTape()
 {
     datasette.ejectTape();
@@ -740,13 +742,13 @@ VirtualC64::RecorderAPI::startRecording(isize x1, isize y1, isize x2, isize y2)
     recorder.startRecording(x1, y1, x2, y2);
 }
 
-void 
+void
 VirtualC64::RecorderAPI::stopRecording()
 {
     recorder.stopRecording();
 }
 
-bool 
+bool
 VirtualC64::RecorderAPI::exportAs(const string &path)
 {
     return recorder.exportAs(path);
@@ -768,22 +770,22 @@ VirtualC64::RetroShellAPI::cursorRel()
 void
 VirtualC64::RetroShellAPI::press(RetroShellKey key, bool shift)
 {
-    retroShell.press(key, shift); 
+    retroShell.press(key, shift);
 }
 
-void 
+void
 VirtualC64::RetroShellAPI::press(char c)
 {
     retroShell.press(c);
 }
 
-void 
+void
 VirtualC64::RetroShellAPI::press(const string &s)
 {
     retroShell.press(s);
 }
 
-void 
+void
 VirtualC64::RetroShellAPI::execScript(std::stringstream &ss)
 {
     retroShell.execScript(ss);
@@ -812,7 +814,7 @@ VirtualC64::RetroShellAPI::setStream(std::ostream &os)
 // Expansion port
 //
 
-CartridgeTraits 
+CartridgeTraits
 VirtualC64::ExpansionPortAPI::getCartridgeTraits() const
 {
     return expansionport.getCartridgeTraits();
@@ -824,7 +826,7 @@ VirtualC64::ExpansionPortAPI::getInfo() const
     return expansionport.getInfo();
 }
 
-CartridgeRomInfo 
+CartridgeRomInfo
 VirtualC64::ExpansionPortAPI::getRomInfo(isize nr) const
 {
     return expansionport.getRomInfo(nr);
@@ -837,42 +839,42 @@ VirtualC64::ExpansionPortAPI::attachCartridge(const string &path, bool reset)
     c64.markAsDirty();
 }
 
-void 
+void
 VirtualC64::ExpansionPortAPI::attachCartridge(const CRTFile &c, bool reset)
 {
     expansionport.attachCartridge(c, reset);
     c64.markAsDirty();
 }
 
-void 
+void
 VirtualC64::ExpansionPortAPI::attachCartridge(Cartridge *c)
 {
     expansionport.attachCartridge(c);
     c64.markAsDirty();
 }
 
-void 
+void
 VirtualC64::ExpansionPortAPI::attachReu(isize capacity)
 {
     expansionport.attachReu(capacity);
     c64.markAsDirty();
 }
 
-void 
+void
 VirtualC64::ExpansionPortAPI::attachGeoRam(isize capacity)
 {
     expansionport.attachGeoRam(capacity);
     c64.markAsDirty();
 }
 
-void 
+void
 VirtualC64::ExpansionPortAPI::attachIsepicCartridge()
 {
     expansionport.attachIsepicCartridge();
     c64.markAsDirty();
 }
 
-void 
+void
 VirtualC64::ExpansionPortAPI::detachCartridge()
 {
     expansionport.detachCartridge();
@@ -936,4 +938,6 @@ VirtualC64::DriveAPI::ejectDisk()
 {
     drive.ejectDisk();
     c64.markAsDirty();
+}
+
 }

@@ -14,9 +14,9 @@
 
 #include "AnyFile.h"
 
-class VirtualC64;
-
 namespace vc64 {
+
+class VirtualC64;
 
 class Script : public AnyFile {
     

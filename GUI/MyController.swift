@@ -20,7 +20,8 @@ class MyController: NSWindowController, MessageReceiver {
     
     // C64 proxy (bridge between the Swift frontend and the C++ backend)
     var c64: EmulatorProxy!
-
+    var v64: vc64.VirtualC64!
+    
     // Media manager (handles the import and export of media files)
     var mm: MediaManager { return mydocument.mm }
 

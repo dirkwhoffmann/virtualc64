@@ -16,6 +16,9 @@
 #include "VirtualC64Types.h"
 #include "Emulator.h"
 #include "Media.h"
+#include <swift/bridging>
+
+namespace vc64 {
 
 /** Public API
  *
@@ -54,6 +57,11 @@ public:
 
     VirtualC64();
     ~VirtualC64();
+
+    static VirtualC64 *make() { return new VirtualC64(); }
+
+    // Experimental (for new Swift API)
+    static VirtualC64 *make(void *p) { return (VirtualC64 *)p; }
 
     /// @brief  A reference to the user default storage.
     static const Defaults &defaults;
@@ -141,7 +149,7 @@ public:
 
     /** @brief   Pauses emulation
      *
-     * Pausing the emulator changes the interal state from #STATE\_RUNNING 
+     * Pausing the emulator changes the interal state from #STATE\_RUNNING
      * to #STATE\_PAUSED after completing the curent frame. The emulator
      * enteres a frozes state where no more frames are computed.
      */
@@ -164,7 +172,7 @@ public:
 
     /** @brief   Suspends the emulator thread
      *
-     *  See the \ref vc64::Suspendable "Suspendable" class for a detailes 
+     *  See the \ref vc64::Suspendable "Suspendable" class for a detailes
      *  description of the suspend-resume machanism.
      */
     void suspend() { Emulator::suspend(); }
@@ -248,10 +256,10 @@ public:
     /// @{
 
     /** @brief  Returns a pointer to the most recent stable texture
-      *
-      * The texture dimensions are given by constants vc64::Texture::width
-      * and vc64::Texture::height texels. Each texel is represented by a
-      * 32 bit color value.
+     *
+     * The texture dimensions are given by constants vc64::Texture::width
+     * and vc64::Texture::height texels. Each texel is represented by a
+     * 32 bit color value.
      */
     u32 *getTexture() const { return Emulator::getTexture(); }
 
@@ -342,7 +350,7 @@ public:
      */
     void set(Option option, long id, i64 value);
 
-    
+
     /** @brief  Exports the current configuration.
      *
      *  The current configuration is exported in form of a RetroShell script.
@@ -620,7 +628,7 @@ public:
          *  disabled guard.
          */
         bool isDisabledAt(u32 addr) const;
-        
+
         /** Enables a guard
          *  @param  nr      Position of the guard in the guard list.
          */
@@ -660,7 +668,7 @@ public:
         watchpoints(emu, emu.main.cpu.debugger.watchpoints) { }
 
         CPUInfo getInfo() const;
-        
+
         /** @brief  Returns the number of instructions in the instruction log.
          */
         isize loggedInstructions() const;
@@ -745,7 +753,7 @@ public:
          */
         bool pal() const;
 
-        /** @brief  Returns the RGBA value of a color 
+        /** @brief  Returns the RGBA value of a color
          */
         u32 getColor(isize nr) const;
 
@@ -1175,7 +1183,7 @@ public:
          */
         void insertFileSystem(const class FileSystem &fs, bool wp);
 
-        /** @brief  Ejects the current disk. 
+        /** @brief  Ejects the current disk.
          */
         void ejectDisk();
 
@@ -1255,4 +1263,7 @@ public:
         /// @}
 
     } retroShell;
-};
+
+} SWIFT_UNSAFE_REFERENCE;
+
+}

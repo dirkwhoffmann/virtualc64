@@ -428,17 +428,20 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func pauseAction(_ sender: Any!) {
         
-        if c64.running { c64.pause() }
+        // if c64.running { c64.pause() }
+        if v64.isRunning() { v64.pause() }
     }
 
     @IBAction func continueAction(_ sender: Any!) {
         
-        if c64.paused { try? c64.run() }
+        // if c64.paused { try? c64.run() }
+        if v64.isPaused() { v64.run() }
     }
 
     @IBAction func stopAndGoAction(_ sender: Any!) {
         
-        c64.stopAndGo()
+        // c64.stopAndGo()
+        v64.stopAndGo()
     }
     
     @IBAction func stepIntoAction(_ sender: Any!) {

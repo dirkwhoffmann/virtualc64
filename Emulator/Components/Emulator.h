@@ -19,14 +19,14 @@
 #include "Thread.h"
 #include "CmdQueue.h"
 
-class VirtualC64;
-
 namespace vc64 {
+
+class VirtualC64;
 
 class Emulator : public Thread, public Inspectable<EmulatorInfo, EmulatorStats>, public Configurable {
 
     friend class API;
-    friend class ::VirtualC64;
+    friend class VirtualC64;
 
     ConfigOptions options = {
 

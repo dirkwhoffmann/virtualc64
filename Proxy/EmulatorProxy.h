@@ -10,6 +10,7 @@
 #import "Aliases.h"
 #import "config.h"
 #import "VirtualC64Types.h"
+// #import "VirtualC64.h"
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
 
@@ -163,6 +164,7 @@
 
 - (void)launch:(const void *)listener function:(Callback *)func;
 
+@property (readonly) void *objptr;
 @property (readonly) EmulatorInfo info;
 @property (readonly) EmulatorStats stats;
 @property (readonly) C64Info eventInfo;
