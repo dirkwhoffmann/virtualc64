@@ -18,7 +18,7 @@
 #include "TODTypes.h"
 
 /// Chip revision
-enum_long(CIAREV)
+new_enum_long(CIAREV)
 {
     MOS_6526,
     MOS_8521
@@ -33,7 +33,7 @@ struct CIARevisionEnum : util::Reflection<CIARevisionEnum, CIARevision> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return nullptr; }
-    static const char *key(CIARevision value)
+    static const char *key(long value)
     {
         switch (value) {
                 
@@ -45,7 +45,7 @@ struct CIARevisionEnum : util::Reflection<CIARevisionEnum, CIARevision> {
 };
 #endif
 
-enum_long(CIAREG)
+new_enum_long(CIAREG)
 {
     CIAREG_PRA,
     CIAREG_PRB,
@@ -74,7 +74,7 @@ struct CIARegEnum : util::Reflection<CIARegEnum, CIAReg> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "CIAREG"; }
-    static const char *key(CIAReg value)
+    static const char *key(long value)
     {
         switch (value) {
                 

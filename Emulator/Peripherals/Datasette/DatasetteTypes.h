@@ -21,7 +21,7 @@
 //
 
 /// Datasette model
-enum_long(DATASETTE_MODEL)
+new_enum_long(DATASETTE_MODEL)
 {
     DATASETTE_C1530     ///< Standard datasette (Commodore)
 };
@@ -35,7 +35,7 @@ struct DatasetteModelEnum : util::Reflection<DatasetteModelEnum, DatasetteModel>
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "DATASETTE"; }
-    static const char *key(DatasetteModel value)
+    static const char *key(long value)
     {
         switch (value) {
 

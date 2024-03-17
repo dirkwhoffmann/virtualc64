@@ -10,7 +10,7 @@
 #import "config.h"
 #import "EmulatorProxy.h"
 #import "VirtualC64.h"
-#import "VirtualC64-Swift.h"
+// #import "VirtualC64-Swift.h"
 
 using namespace vc64;
 
@@ -35,7 +35,7 @@ using namespace vc64;
 
 - (void)save:(const VC64Error &)exception
 {
-    errorCode = exception.data;
+    errorCode = ErrorCode(exception.data);
     what = @(exception.what());
 }
 

@@ -21,7 +21,7 @@
 //
 
 /// Cartridge mode
-enum_long(CRTMODE)
+new_enum_long(CRTMODE)
 {
     CRTMODE_16K,        //! 16KB cartridge
     CRTMODE_8K,         //! 8KB cartridge
@@ -38,7 +38,7 @@ struct CRTModeEnum : util::Reflection<CRTModeEnum, CRTMode> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "CRTMODE"; }
-    static const char *key(CRTMode value)
+    static const char *key(long value)
     {
         switch (value) {
                 

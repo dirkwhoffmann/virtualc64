@@ -30,7 +30,7 @@
 //
 
 /// Drive model
-enum_long(DRIVE_TYPE)
+new_enum_long(DRIVE_TYPE)
 {
     DRIVE_VC1541,
     DRIVE_VC1541C,
@@ -46,7 +46,7 @@ struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveType> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "DRIVE"; }
-    static const char *key(DriveType value)
+    static const char *key(long value)
     {
         switch (value) {
                 
@@ -59,7 +59,7 @@ struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveType> {
 };
 #endif
 
-enum_long(DRVRAM)
+new_enum_long(DRVRAM)
 {
     DRVRAM_NONE,
     DRVRAM_8000_9FFF,
@@ -75,7 +75,7 @@ struct DriveRamEnum : util::Reflection<DriveRamEnum, DriveRam> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "DRVRAM"; }
-    static const char *key(DriveType value)
+    static const char *key(long value)
     {
         switch (value) {
                 
@@ -88,7 +88,7 @@ struct DriveRamEnum : util::Reflection<DriveRamEnum, DriveRam> {
 };
 #endif
 
-enum_long(DRVMEM_TYPE)
+new_enum_long(DRVMEM_TYPE)
 {
     DRVMEM_NONE,      // Unmapped
     DRVMEM_RAM,
@@ -108,7 +108,7 @@ struct DrvMemTypeEnum : util::Reflection<DrvMemTypeEnum, DrvMemType> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "DRVMEM"; }
-    static const char *key(DrvMemType value)
+    static const char *key(long value)
     {
         switch (value) {
                 
@@ -125,7 +125,7 @@ struct DrvMemTypeEnum : util::Reflection<DrvMemTypeEnum, DrvMemType> {
 };
 #endif
 
-enum_long(DISK_INSERTION_STATUS)
+new_enum_long(DISK_INSERTION_STATUS)
 {
     DISK_FULLY_EJECTED,
     DISK_PARTIALLY_INSERTED,
@@ -142,7 +142,7 @@ struct InsertionStatusEnum : util::Reflection<InsertionStatusEnum, InsertionStat
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "DISK"; }
-    static const char *key(InsertionStatus value)
+    static const char *key(long value)
     {
         switch (value) {
                 

@@ -21,7 +21,7 @@
 //
 
 /// Memory type
-enum_long(M_TYPE)
+new_enum_long(M_TYPE)
 {
     M_RAM = 1,      ///< Ram
     M_CHAR,         ///< Character Rom
@@ -44,7 +44,7 @@ struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "M"; }
-    static const char *key(MemoryType value)
+    static const char *key(long value)
     {
         switch (value) {
                 
@@ -65,7 +65,7 @@ struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
 #endif
 
 /// Ram startup pattern
-enum_long(RAM_PATTERN)
+new_enum_long(RAM_PATTERN)
 {
     RAM_PATTERN_VICE,       ///< Pattern used by the VICE emulator
     RAM_PATTERN_CCS,        ///< Pattern used by the CCS emulator
@@ -83,7 +83,7 @@ struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "RAM_PATTERN"; }
-    static const char *key(RamPattern value)
+    static const char *key(long value)
     {
         switch (value) {
                 
@@ -98,7 +98,7 @@ struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
 };
 #endif
 
-enum_long(ROM_TYPE)
+new_enum_long(ROM_TYPE)
 {
     ROM_TYPE_BASIC,
     ROM_TYPE_CHAR,
@@ -115,7 +115,7 @@ struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "ROM_TYPE"; }
-    static const char *key(RomType value)
+    static const char *key(long value)
     {
         switch (value) {
 
@@ -129,7 +129,7 @@ struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
 };
 #endif
 
-enum_long(ROM_VENDOR)
+new_enum_long(ROM_VENDOR)
 {
     ROM_VENDOR_COMMODORE,
     ROM_VENDOR_MEGA65,
@@ -145,7 +145,7 @@ struct RomVendorEnum : util::Reflection<RomVendorEnum, RomVendor> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "ROM_VENDOR"; }
-    static const char *key(RomVendor value)
+    static const char *key(long value)
     {
         switch (value) {
 

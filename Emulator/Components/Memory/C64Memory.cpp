@@ -793,7 +793,7 @@ C64Memory::memDump(std::ostream& os, u16 addr, isize numLines, bool hex)
         os << ": ";
         os << memdump(addr, count, hex);
         os << "  ";
-        os << txtdump(addr, count, hex);
+        os << txtdump(addr, count);
         os << std::endl;
 
         U16_INC(addr, count);

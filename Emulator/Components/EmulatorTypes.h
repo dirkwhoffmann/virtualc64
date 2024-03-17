@@ -22,7 +22,7 @@
 // Enumerations
 //
 
-enum_long(DEBUG_FLAG)
+new_enum_long(DEBUG_FLAG)
 {
     // General
     FLAG_XFILES,
@@ -115,7 +115,7 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
     static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
 
     static const char *prefix() { return "FLAG"; }
-    static const char *key(DebugFlag value)
+    static const char *key(long value)
     {
         switch (value) {
 
@@ -202,7 +202,7 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
         return "???";
     }
 
-    static const char *help(DebugFlag value)
+    static const char *help(long value)
     {
         switch (value) {
 
@@ -291,7 +291,7 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
 };
 #endif
 
-enum_long(WARP_MODE)
+new_enum_long(WARP_MODE)
 {
     WARP_AUTO,
     WARP_NEVER,
@@ -307,7 +307,7 @@ struct WarpModeEnum : util::Reflection<WarpModeEnum, WarpMode>
     static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
 
     static const char *prefix() { return "WARP"; }
-    static const char *key(WarpMode value)
+    static const char *key(long value)
     {
         switch (value) {
 

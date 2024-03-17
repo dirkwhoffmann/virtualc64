@@ -17,7 +17,7 @@
 #include "Reflection.h"
 
 /// Error condition
-enum_long(ERROR_CODE)
+new_enum_long(ERROR_CODE)
 {
     ERROR_OK,                   ///< No error
     ERROR_UNKNOWN,              ///< Unclassified error condition
@@ -108,7 +108,7 @@ struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
         
     static const char *prefix() { return "ERROR"; }
-    static const char *key(ErrorCode value)
+    static const char *key(long value)
     {
         switch (value) {
                 

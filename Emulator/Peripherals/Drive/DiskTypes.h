@@ -110,7 +110,7 @@ static const isize dataBlockSize = 325 * 8;
 //
 
 /// Disk type
-enum_long(DISK_TYPE)
+new_enum_long(DISK_TYPE)
 {
     DISK_TYPE_SS_SD,   ///< Single-sided, single density (VC1541)
     DISK_TYPE_DS_SD    ///< Double-sided, single density (VC1571) (unsupported)
@@ -125,7 +125,7 @@ struct DiskTypeEnum : util::Reflection<DiskTypeEnum, DiskType> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "DISK_TYPE"; }
-    static const char *key(DiskType value)
+    static const char *key(long value)
     {
         switch (value) {
                 
@@ -137,7 +137,7 @@ struct DiskTypeEnum : util::Reflection<DiskTypeEnum, DiskType> {
 };
 #endif
 
-enum_long(CBM_FILE_TYPE)
+new_enum_long(CBM_FILE_TYPE)
 {
     CBM_FILE_PRG,
     CBM_FILE_SEQ,
@@ -154,7 +154,7 @@ struct CBMFileTypeEnum : util::Reflection<CBMFileTypeEnum, CBMFileType> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "CBM"; }
-    static const char *key(CBMFileType value)
+    static const char *key(long value)
     {
         switch (value) {
                 
@@ -168,7 +168,7 @@ struct CBMFileTypeEnum : util::Reflection<CBMFileTypeEnum, CBMFileType> {
 };
 #endif
 
-enum_long(DISK_ERROR_CODE)
+new_enum_long(DISK_ERROR_CODE)
 {
     DISK_OK                            = 0x1,
     HEADER_BLOCK_NOT_FOUND_ERROR       = 0x2,
@@ -193,7 +193,7 @@ struct DiskErrorCodeEnum : util::Reflection<DiskErrorCodeEnum, DiskErrorCode> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return ""; }
-    static const char *key(DiskErrorCode value)
+    static const char *key(long value)
     {
         switch (value) {
                 

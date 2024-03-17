@@ -47,7 +47,7 @@ Interpreter::initDebugShell(Command &root)
                      DebugFlagEnum::help(i),
                      [this](Arguments& argv, long value) {
 
-                c64.setDebugVariable(value, util::parseBool(argv[0]));
+                c64.setDebugVariable(DebugFlag(value), util::parseBool(argv[0]));
 
             }, i);
         }

@@ -22,7 +22,7 @@
 //
 
 /// DMA debugger display mode
-enum_long(DMA_DISPLAY_MODE)
+new_enum_long(DMA_DISPLAY_MODE)
 {
     DMA_DISPLAY_MODE_FG_LAYER,          ///< Modulate the foreground layer
     DMA_DISPLAY_MODE_BG_LAYER,          ///< Modulate the background layer
@@ -38,7 +38,7 @@ struct DmaDisplayModeEnum : util::Reflection<DmaDisplayModeEnum, DmaDisplayMode>
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "DMA_DISPLAY_MODE"; }
-    static const char *key(DmaDisplayMode value)
+    static const char *key(long value)
     {
         switch (value) {
                 

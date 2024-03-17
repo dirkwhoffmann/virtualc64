@@ -20,7 +20,7 @@
 // Enumerations
 //
 
-enum_long(CRT_TYPE)
+new_enum_long(CRT_TYPE)
 {
     // Cartridges with a defined CRT ID (values must match)
     CRT_NORMAL             = 0,
@@ -115,7 +115,7 @@ struct CartridgeTypeEnum : util::Reflection<CartridgeTypeEnum, CartridgeType> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "CRT"; }
-    static const char *key(CartridgeType value)
+    static const char *key(long value)
     {
         switch (value) {
                 
@@ -204,7 +204,7 @@ struct CartridgeTypeEnum : util::Reflection<CartridgeTypeEnum, CartridgeType> {
 };
 #endif
 
-enum_long(FLASH_STATE)
+new_enum_long(FLASH_STATE)
 {
     FLASH_READ,
     FLASH_MAGIC_1,
@@ -230,7 +230,7 @@ struct FlashStateEnum : util::Reflection<FlashStateEnum, FlashState> {
 	static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "FLASH"; }
-    static const char *key(FlashState value)
+    static const char *key(long value)
     {
         switch (value) {
                 

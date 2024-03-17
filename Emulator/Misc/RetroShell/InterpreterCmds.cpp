@@ -105,7 +105,7 @@ Interpreter::initCommandShell(Command &root)
              "Initialize the test environment",
              [this](Arguments& argv, long value) {
 
-        auto model = parseEnum <C64ModelEnum> (argv[0]);
+        auto model = parseEnum <C64Model, C64ModelEnum> (argv[0]);
         regressionTester.prepare(c64, model);
 
         // Pause the script to give the C64 some time to boot
@@ -217,7 +217,7 @@ Interpreter::initCommandShell(Command &root)
              "Initialize the emulator with factory defaults",
              [this](Arguments& argv, long value) {
 
-        emulator.set(parseEnum<C64ModelEnum>(argv[0]));
+        emulator.set(parseEnum<C64Model, C64ModelEnum>(argv[0]));
     });
 
     root.add({cmd, "diff"},
@@ -928,7 +928,7 @@ Interpreter::initCommandShell(Command &root)
                  "Inserts a new blank disk",
                  [this](Arguments& argv, long value) {
 
-            auto type = util::parseEnum <DOSTypeEnum> (argv.front());
+            auto type = util::parseEnum <DOSType, DOSTypeEnum> (argv.front());
             auto &drive = value ? drive9 : drive8;
             drive.insertNewDisk(type, PETName<16>("NEW DISK"));
 

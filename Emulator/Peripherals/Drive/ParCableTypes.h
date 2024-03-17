@@ -21,7 +21,7 @@
 //
 
 /// Parallel cable type
-enum_long(PAR_CABLE_TYPE)
+new_enum_long(PAR_CABLE_TYPE)
 {
     PAR_CABLE_NONE,         ///< No parallel cable attached
     PAR_CABLE_STANDARD,     ///< Standard parallel cable
@@ -37,7 +37,7 @@ struct ParCableTypeEnum : util::Reflection<ParCableTypeEnum, ParCableType> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "PAR_CABLE"; }
-    static const char *key(ParCableType value)
+    static const char *key(long value)
     {
         switch (value) {
                 

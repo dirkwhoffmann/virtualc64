@@ -17,7 +17,7 @@
 #include "Reflection.h"
 
 /// Color palette
-enum_long(REC_STATE)
+new_enum_long(REC_STATE)
 {
     REC_STATE_WAIT,                     ///< The recorder is ready
     REC_STATE_PREPARE,                  ///< The recorder is preparing to record
@@ -35,7 +35,7 @@ struct RecStateEnum : util::Reflection<RecStateEnum, RecState> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "REC_STATE"; }
-    static const char *key(RecState value)
+    static const char *key(long value)
     {
         switch (value) {
 

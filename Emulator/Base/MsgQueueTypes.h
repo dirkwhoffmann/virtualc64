@@ -21,7 +21,7 @@
 //
 
 ///! Emulator message
-enum_long(MSG_TYPE)
+new_enum_long(MSG_TYPE)
 {
     MSG_NONE = 0,           ///< Unclassified
 
@@ -119,7 +119,7 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "MSG"; }
-    static const char *key(MsgType value)
+    static const char *key(long value)
     {
         switch (value) {
 

@@ -20,7 +20,7 @@
 // Enumerations
 //
 
-enum_long(FILETYPE)
+new_enum_long(FILETYPE)
 {
     FILETYPE_UNKNOWN = 0,
     FILETYPE_SNAPSHOT,
@@ -48,7 +48,7 @@ struct FileTypeEnum : util::Reflection<FileTypeEnum, FileType> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "FILETYPE"; }
-    static const char *key(FileType value)
+    static const char *key(long value)
     {
         switch (value) {
                 
@@ -73,7 +73,7 @@ struct FileTypeEnum : util::Reflection<FileTypeEnum, FileType> {
 };
 #endif
 
-enum_long(TAP_VERSION)
+new_enum_long(TAP_VERSION)
 {
     TAP_VERSION_ORIGINAL,
     TAP_VERSION_ADVANCED
@@ -88,7 +88,7 @@ struct TAPVersionEnum : util::Reflection<TAPVersionEnum, TAPVersion> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "TAP_VERSION"; }
-    static const char *key(TAPVersion value)
+    static const char *key(long value)
     {
         switch (value) {
                 
@@ -100,7 +100,7 @@ struct TAPVersionEnum : util::Reflection<TAPVersionEnum, TAPVersion> {
 };
 #endif
 
-enum_long(FILE_ERROR)
+new_enum_long(FILE_ERROR)
 {
     ERR_FILE_OK,
     

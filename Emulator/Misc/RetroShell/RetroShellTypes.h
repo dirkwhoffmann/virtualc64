@@ -21,7 +21,7 @@
 //
 
 /// RetroShell special key
-enum_long(RSKEY_KEY)
+new_enum_long(RSKEY_KEY)
 {
 	RSKEY_UP,
 	RSKEY_DOWN,
@@ -47,7 +47,7 @@ struct RetroShellKeyEnum : util::Reflection<RetroShellKeyEnum, RetroShellKey>
 	static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
 	
 	static const char *prefix() { return "RSKEY"; }
-	static const char *key(RetroShellKey value)
+	static const char *key(long value)
 	{
 		switch (value) {
 				

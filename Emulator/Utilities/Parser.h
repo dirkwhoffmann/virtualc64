@@ -59,6 +59,11 @@ template <typename Enum> long parseEnum(const string& key)
     return parsePartialEnum <Enum> (key, [](long){ return true; });
 }
 
+template <typename R, typename Enum> R parseEnum(const string& key)
+{
+    return (R)parseEnum <Enum> (key);
+}
+
 template <typename Enum> long parsePartialEnum(const string& key, std::function<bool(long)> accept)
 {
     string upper, prefix, suffix;
@@ -83,6 +88,11 @@ template <typename Enum> long parsePartialEnum(const string& key, std::function<
     }
 
     throw EnumParseError(key, Enum::keyList());
+}
+
+template <typename R, typename Enum> R parsePartialEnum(const string& key, std::function<bool(long)> accept)
+{
+    return (R)parsePartialEnum<Enum>(key, accept);
 }
 
 }

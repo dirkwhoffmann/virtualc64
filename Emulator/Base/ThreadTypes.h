@@ -17,7 +17,7 @@
 #include "Reflection.h"
 
 /// Emulator state
-enum_long(EMULATOR_STATE)
+new_enum_long(EMULATOR_STATE)
 {
     STATE_OFF,          ///< Powered off
     STATE_PAUSED,       ///< Powered on, but currently paused
@@ -35,7 +35,7 @@ struct EmulatorStateEnum : util::Reflection<EmulatorStateEnum, EmulatorState>
     static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
 
     static const char *prefix() { return "STATE"; }
-    static const char *key(EmulatorState value)
+    static const char *key(long value)
     {
         switch (value) {
 

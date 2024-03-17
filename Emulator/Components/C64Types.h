@@ -21,7 +21,7 @@
 //
 
 /// C64 model
-enum_long(C64_MODEL)
+new_enum_long(C64_MODEL)
 {
     C64_MODEL_PAL,      ///< C64 (PAL)
     C64_MODEL_PAL_II,   ///< C64 II (PAL)
@@ -40,7 +40,7 @@ struct C64ModelEnum : util::Reflection<C64ModelEnum, C64Model> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "C64_MODEL"; }
-    static const char *key(C64Model value)
+    static const char *key(long value)
     {
         switch (value) {
 
@@ -56,7 +56,7 @@ struct C64ModelEnum : util::Reflection<C64ModelEnum, C64Model> {
 };
 #endif
 
-enum_long(SLOT)
+new_enum_long(SLOT)
 {
     // Primary slots
     SLOT_CIA1,                      // CIA 1 execution
@@ -91,7 +91,7 @@ struct EventSlotEnum : util::Reflection<EventSlotEnum, EventSlot>
     static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
 
     static const char *prefix() { return "SLOT"; }
-    static const char *key(EventSlot value)
+    static const char *key(long value)
     {
         switch (value) {
 
@@ -191,7 +191,7 @@ enum_i8(EventID)
     INS_EVENT_COUNT
 };
 
-enum_long(INSPECTION_TARGET)
+new_enum_long(INSPECTION_TARGET)
 {
     INSPECTION_NONE,
     INSPECTION_C64,
@@ -213,7 +213,7 @@ struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionT
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "INSPECTION"; }
-    static const char *key(InspectionTarget value)
+    static const char *key(long value)
     {
         switch (value) {
 

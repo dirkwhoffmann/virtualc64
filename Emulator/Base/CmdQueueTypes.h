@@ -22,7 +22,7 @@
 //
 
 /// Emulator command
-enum_long(CMD_TYPE)
+new_enum_long(CMD_TYPE)
 {
     CMD_NONE = 0,               ///< None
 
@@ -80,7 +80,7 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "CMD"; }
-    static const char *key(CmdType value)
+    static const char *key(long value)
     {
         switch (value) {
 

@@ -21,7 +21,7 @@
 //
 
 /// Mouse model
-enum_long(MOUSE_MODEL)
+new_enum_long(MOUSE_MODEL)
 {
     MOUSE_C1350,    ///< Joystick mouse (Commodore)
     MOUSE_C1351,    ///< Analog mouse (Commodore)
@@ -37,7 +37,7 @@ struct MouseModelEnum : util::Reflection<MouseModelEnum, MouseModel> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "MOUSE"; }
-    static const char *key(MouseModel value)
+    static const char *key(long value)
     {
         switch (value) {
                 

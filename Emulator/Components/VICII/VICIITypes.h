@@ -87,7 +87,7 @@ VICClrSprBgCollReg);
 //
 
 /// VICII chip revision
-enum_long(VICII_REV)
+new_enum_long(VICII_REV)
 {
     VICII_PAL_6569_R1,                  ///< Early C64 PAL models
     VICII_PAL_6569_R3,                  ///< Later C64 PAL models
@@ -106,7 +106,7 @@ struct VICIIRevisionEnum : util::Reflection<VICIIRevisionEnum, VICIIRevision> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "VICII"; }
-    static const char *key(VICIIRevision value)
+    static const char *key(long value)
     {
         switch (value) {
                 
@@ -123,7 +123,7 @@ struct VICIIRevisionEnum : util::Reflection<VICIIRevisionEnum, VICIIRevision> {
 #endif
 
 /// Glue logic implementation
-enum_long(GLUE_LOGIC)
+new_enum_long(GLUE_LOGIC)
 {
     GLUE_LOGIC_DISCRETE,                ///< Discrete logic
     GLUE_LOGIC_IC                       ///< Integrated Circuit (PLA)
@@ -138,7 +138,7 @@ struct GlueLogicEnum : util::Reflection<GlueLogicEnum, GlueLogic> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "GLUE_LOGIC"; }
-    static const char *key(GlueLogic value)
+    static const char *key(long value)
     {
         switch (value) {
                 
@@ -151,7 +151,7 @@ struct GlueLogicEnum : util::Reflection<GlueLogicEnum, GlueLogic> {
 #endif
 
 /// Color palette
-enum_long(PALETTE)
+new_enum_long(PALETTE)
 {
     PALETTE_COLOR,                      ///< Standard C64 color palette
     PALETTE_BLACK_WHITE,                ///< Black and white monochrome palette
@@ -170,7 +170,7 @@ struct PaletteEnum : util::Reflection<PaletteEnum, Palette> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "PALETTE"; }
-    static const char *key(Palette value)
+    static const char *key(long value)
     {
         switch (value) {
                 
@@ -187,7 +187,7 @@ struct PaletteEnum : util::Reflection<PaletteEnum, Palette> {
 #endif
 
 ///! C64 canvas size
-enum_long(SCREEN_GEOMETRY)
+new_enum_long(SCREEN_GEOMETRY)
 {
     SCREEN_GEOMETRY_25_40 = 1,          ///< 25 rows x 40 columns
     SCREEN_GEOMETRY_25_38,              ///< 25 rows x 38 columns
@@ -204,7 +204,7 @@ struct ScreenGeometryEnum : util::Reflection<ScreenGeometryEnum, ScreenGeometry>
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "SCREEN_GEOMETRY"; }
-    static const char *key(ScreenGeometry value)
+    static const char *key(long value)
     {
         switch (value) {
                 
@@ -219,7 +219,7 @@ struct ScreenGeometryEnum : util::Reflection<ScreenGeometryEnum, ScreenGeometry>
 #endif
 
 ///! C64 display mode
-enum_long(DISPLAY_MODE)
+new_enum_long(DISPLAY_MODE)
 {
     DISPLAY_MODE_STANDARD_TEXT,         ///< Standard Character Mode
     DISPLAY_MODE_MULTICOLOR_TEXT,       ///< Multicolor Character Mode
@@ -240,7 +240,7 @@ struct DisplayModeEnum : util::Reflection<DisplayModeEnum, DisplayMode> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "DISPLAY_MODE"; }
-    static const char *key(DisplayMode value)
+    static const char *key(long value)
     {
         switch (value) {
                 
@@ -258,7 +258,7 @@ struct DisplayModeEnum : util::Reflection<DisplayModeEnum, DisplayMode> {
 };
 #endif
 
-enum_long(COLSRC)
+new_enum_long(COLSRC)
 {
     COLSRC_D021,     // Color comes from background color register
     COLSRC_D022,     // Color comes from first extended color register
@@ -280,7 +280,7 @@ struct ColorSourceEnum : util::Reflection<ColorSourceEnum, ColorSource> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "COLSRC"; }
-    static const char *key(Palette value)
+    static const char *key(long value)
     {
         switch (value) {
                 

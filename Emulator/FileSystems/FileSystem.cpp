@@ -998,7 +998,7 @@ FileSystem::getDisplayType(isize column)
     return cache[column];
 }
 
-FSBlockType
+isize
 FileSystem::diagnoseImageSlice(isize column)
 {
     static constexpr isize width = 1760;

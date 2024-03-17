@@ -21,7 +21,7 @@
 //
 
 /// File system type
-enum_long(DOS_TYPE)
+new_enum_long(DOS_TYPE)
 {
     DOS_TYPE_NODOS, ///< No file system
     DOS_TYPE_CBM    ///< C64 CBM file system
@@ -36,7 +36,7 @@ struct DOSTypeEnum : util::Reflection<DOSTypeEnum, DOSType> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "DOS_TYPE"; }
-    static const char *key(DOSType value)
+    static const char *key(long value)
     {
         switch (value) {
                 
@@ -48,7 +48,7 @@ struct DOSTypeEnum : util::Reflection<DOSTypeEnum, DOSType> {
 };
 #endif
 
-enum_long(FS_FILETYPE)
+new_enum_long(FS_FILETYPE)
 {
     FS_FILETYPE_DEL,
     FS_FILETYPE_SEQ,
@@ -66,7 +66,7 @@ struct FSFileTypeEnum : util::Reflection<FSFileTypeEnum, FSFileType> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "FS_FILETYPE"; }
-    static const char *key(FSFileType value)
+    static const char *key(long value)
     {
         switch (value) {
                 
@@ -81,7 +81,7 @@ struct FSFileTypeEnum : util::Reflection<FSFileTypeEnum, FSFileType> {
 };
 #endif
 
-enum_long(FS_BLOCKTYPE)
+new_enum_long(FS_BLOCKTYPE)
 {
     FS_BLOCKTYPE_UNKNOWN,
     FS_BLOCKTYPE_EMPTY,
@@ -99,7 +99,7 @@ struct FSBlockTypeEnum : util::Reflection<FSBlockTypeEnum, FSBlockType> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "FS_BLOCKTYPE"; }
-    static const char *key(FSBlockType value)
+    static const char *key(long value)
     {
         switch (value) {
                 
@@ -114,7 +114,7 @@ struct FSBlockTypeEnum : util::Reflection<FSBlockTypeEnum, FSBlockType> {
 };
 #endif
 
-enum_long(FS_USAGE)
+new_enum_long(FS_USAGE)
 {
     FS_USAGE_UNKNOWN,
     FS_USAGE_UNUSED,
@@ -149,7 +149,7 @@ struct FSUsageEnum : util::Reflection<FSUsageEnum, FSUsage> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "FS_USAGE"; }
-    static const char *key(FSUsage value) { return "???"; }
+    static const char *key(long value) { return "???"; }
 };
 #endif
 

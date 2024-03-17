@@ -21,7 +21,7 @@
 //
 
 /// Gamepad / Joystick event
-enum_long(GAME_PAD_ACTION)
+new_enum_long(GAME_PAD_ACTION)
 {
     PULL_UP,       ///< Pull the joystick up
     PULL_DOWN,     ///< Pull the joystick down
@@ -47,7 +47,7 @@ struct GamePadActionEnum : util::Reflection<GamePadActionEnum, GamePadAction> {
     static bool isValid(auto value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return nullptr; }
-    static const char *key(GamePadAction value)
+    static const char *key(long value)
     {
         switch (value) {
                 

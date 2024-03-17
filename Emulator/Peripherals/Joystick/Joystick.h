@@ -13,6 +13,7 @@
 #pragma once
 
 #include "JoystickTypes.h"
+#include "C64Types.h"
 #include "SubComponent.h"
 
 namespace vc64 {
@@ -137,7 +138,7 @@ private:
     // Reloads the auto-fire gun
     void reload();
     void reload(isize bullets);
-    template <long Slot> void reload(isize bullets);
+    template <EventSlot Slot> void reload(isize bullets);
 };
 
 }

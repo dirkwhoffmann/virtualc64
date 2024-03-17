@@ -40,7 +40,7 @@ struct CPURevisionEnum : util::Reflection<CPURevisionEnum, vc64::peddle::CPURevi
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return nullptr; }
-    static const char *key(vc64::peddle::CPURevision value)
+    static const char *key(long value)
     {
         switch (value) {
                 

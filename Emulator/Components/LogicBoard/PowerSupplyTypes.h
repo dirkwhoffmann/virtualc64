@@ -21,7 +21,7 @@
 //
 
 /// Power grip characteristics
-enum_long(GRID)
+new_enum_long(GRID)
 {
     GRID_STABLE_50HZ,   ///< 50Hz constant
     GRID_UNSTABLE_50HZ, ///< 50Hz with jitter
@@ -38,7 +38,7 @@ struct PowerGridEnum : util::Reflection<PowerGridEnum, PowerGrid> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "GRID"; }
-    static const char *key(PowerGrid value)
+    static const char *key(long value)
     {
         switch (value) {
                 

@@ -869,8 +869,8 @@ C64::record() const
 {
     Inspectable<C64Info, Void>::record();
 
-    for (EventSlot i = 0; i < SLOT_COUNT; i++) {
-            inspectSlot(i);
+    for (isize i = 0; i < SLOT_COUNT; i++) {
+            inspectSlot(EventSlot(i));
     }
 }
 
@@ -900,7 +900,7 @@ C64::getSlotInfo(isize nr) const
 
     {   SYNCHRONIZED
 
-        if (!autoInspect()) { inspectSlot(nr); }
+        if (!autoInspect()) { inspectSlot(EventSlot(nr)); }
         return slotInfo[nr];
     }
 }

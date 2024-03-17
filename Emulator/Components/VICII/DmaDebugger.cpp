@@ -87,12 +87,12 @@ DmaDebugger::setOption(Option option, i64 value)
         case OPT_DMA_DEBUG_CHANNEL4:    config.dmaChannel[4] = value; return;
         case OPT_DMA_DEBUG_CHANNEL5:    config.dmaChannel[5] = value; return;
 
-        case OPT_DMA_DEBUG_COLOR0:      setDmaDebugColor(0, GpuColor((u32)value)); return;
-        case OPT_DMA_DEBUG_COLOR1:      setDmaDebugColor(1, GpuColor((u32)value)); return;
-        case OPT_DMA_DEBUG_COLOR2:      setDmaDebugColor(2, GpuColor((u32)value)); return;
-        case OPT_DMA_DEBUG_COLOR3:      setDmaDebugColor(3, GpuColor((u32)value)); return;
-        case OPT_DMA_DEBUG_COLOR4:      setDmaDebugColor(4, GpuColor((u32)value)); return;
-        case OPT_DMA_DEBUG_COLOR5:      setDmaDebugColor(5, GpuColor((u32)value)); return;
+        case OPT_DMA_DEBUG_COLOR0:      setDmaDebugColor(MEMACCESS_R, GpuColor((u32)value)); return;
+        case OPT_DMA_DEBUG_COLOR1:      setDmaDebugColor(MEMACCESS_I, GpuColor((u32)value)); return;
+        case OPT_DMA_DEBUG_COLOR2:      setDmaDebugColor(MEMACCESS_C, GpuColor((u32)value)); return;
+        case OPT_DMA_DEBUG_COLOR3:      setDmaDebugColor(MEMACCESS_G, GpuColor((u32)value)); return;
+        case OPT_DMA_DEBUG_COLOR4:      setDmaDebugColor(MEMACCESS_P, GpuColor((u32)value)); return;
+        case OPT_DMA_DEBUG_COLOR5:      setDmaDebugColor(MEMACCESS_S, GpuColor((u32)value)); return;
 
         default:
             fatalError;

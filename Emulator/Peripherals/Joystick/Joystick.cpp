@@ -203,7 +203,7 @@ Joystick::reload(isize bullets)
     id == PORT_1 ? reload <SLOT_AFI1> (bullets) : reload <SLOT_AFI2> (bullets);
 }
 
-template <long Slot> void
+template <EventSlot Slot> void
 Joystick::reload(isize bullets)
 {
     if (bullets > 0 && config.autofire) {

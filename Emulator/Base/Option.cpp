@@ -132,8 +132,10 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_REC_SAMPLE_RATE:           return numParser(" Hz");
         case OPT_REC_ASPECT_X:              return numParser();
         case OPT_REC_ASPECT_Y:              return numParser();
+
+        default:
+            fatalError;
     }
-    fatalError;
 }
 
 string 

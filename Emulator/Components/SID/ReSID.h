@@ -55,7 +55,7 @@ private:
     reSID::SID::State st = { };
 
     // The emulated chip model
-    SIDRevision model = 0;
+    SIDRevision model = SIDRevision(0);
 
     // Clock frequency
     u32 clockFrequency = 0;
@@ -64,7 +64,7 @@ private:
     double sampleRate = 0;
 
     // Sampling method
-    SamplingMethod samplingMethod = 0;
+    SamplingMethod samplingMethod = SamplingMethod(0);
 
     // Switches filter emulation on or off
     bool emulateFilter = true;

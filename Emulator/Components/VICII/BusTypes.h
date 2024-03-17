@@ -16,7 +16,7 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
-enum_long(MEMACCESS)
+new_enum_long(MEMACCESS)
 {
     MEMACCESS_R,     // Memory Refresh
     MEMACCESS_I,     // Idle read
@@ -36,7 +36,7 @@ struct MemAccessEnum : util::Reflection<MemAccessEnum, MemAccess> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "MEMACCESS"; }
-    static const char *key(MemAccess value)
+    static const char *key(long value)
     {
         switch (value) {
                 

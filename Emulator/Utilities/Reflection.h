@@ -52,7 +52,7 @@ template <class T, typename E> struct Reflection {
 
         for (auto i = T::minVal; i <= T::maxVal; i++) {
             
-            if (T::isValid(i) && filter(i)) {
+            if (T::isValid(i) && filter(E(i))) {
 
                 if (result != "") result += delim;
                 result += (key(i));

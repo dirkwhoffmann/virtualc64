@@ -21,7 +21,7 @@
 //
 
 /// Configuration option
-enum_long(OPT)
+new_enum_long(OPT)
 {
     // Host
     OPT_HOST_REFRESH_RATE,       ///< Refresh rate of the host display
@@ -147,7 +147,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "OPT"; }
-    static const char *key(Option value)
+    static const char *key(long value)
     {
         switch (value) {
 
