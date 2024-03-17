@@ -10,7 +10,7 @@ Emulator.cpp
 
 add_subdirectory(CPU)
 add_subdirectory(CIA)
-add_subdirectory(LogicBoard)
+add_subdirectory(Ports)
 add_subdirectory(Memory)
 add_subdirectory(SID)
 add_subdirectory(VICII)
