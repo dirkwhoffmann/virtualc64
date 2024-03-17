@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "RetroShell.hpp"
-#include "VirtualC64.h"
+#include "VirtualC64.hpp"
 #include "Parser.hpp"
 #include <sstream>
 

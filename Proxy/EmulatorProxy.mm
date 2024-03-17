@@ -7,9 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#import "config.h"
 #import "EmulatorProxy.h"
-#import "VirtualC64.h"
+#import "VirtualC64.hpp"
 #import "VirtualC64-Swift.h"
 
 using namespace vc64;
@@ -2127,6 +2126,11 @@ using namespace vc64;
 - (void)powerOff
 {
     [self emu]->powerOff();
+}
+
++ (BOOL)isReleaseBuild
+{
+    return VirtualC64::isReleaseBuild();
 }
 
 - (EmulatorInfo)info

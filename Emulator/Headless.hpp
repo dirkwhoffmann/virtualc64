@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "VirtualC64.h"
+#include "VirtualC64.hpp"
 #include <map>
 
 namespace vc64 {

@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "VirtualC64.h"
+#include "VirtualC64.hpp"
 
 const Defaults &
 VirtualC64::defaults = Emulator::defaults;
@@ -26,6 +26,12 @@ string
 VirtualC64::build()
 {
     return C64::build();
+}
+
+bool
+VirtualC64::isReleaseBuild()
+{
+    return releaseBuild; 
 }
 
 VirtualC64::VirtualC64() :

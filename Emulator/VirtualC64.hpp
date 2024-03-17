@@ -41,9 +41,13 @@ public:
      */
     static string version();
 
-    /** @brief  eturns a build-number string for this release.
+    /** @brief  Returns a build-number string for this release.
      */
     static string build();
+
+    /** @brief  Returns true whether the app was compiled with release settings.
+     */
+    static bool isReleaseBuild();
 
 
     //

@@ -792,14 +792,14 @@
 		506F30402B74C1C70083EAEA /* Wakeable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Wakeable.cpp; sourceTree = "<group>"; };
 		506F30412B74C1C70083EAEA /* Wakeable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Wakeable.hpp; sourceTree = "<group>"; };
 		506F30442B7578870083EAEA /* EmulatorTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmulatorTypes.h; sourceTree = "<group>"; };
-		506F30452B768DE30083EAEA /* VirtualC64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtualC64.h; sourceTree = "<group>"; };
+		506F30452B768DE30083EAEA /* VirtualC64.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VirtualC64.hpp; sourceTree = "<group>"; };
 		506F30462B7692180083EAEA /* VirtualC64.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualC64.cpp; sourceTree = "<group>"; };
 		50726F2A295B61C50031F2F5 /* InterpreterDebugCmds.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = InterpreterDebugCmds.cpp; sourceTree = "<group>"; };
 		50726F2E295C27360031F2F5 /* EventPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPanel.swift; sourceTree = "<group>"; };
 		50726F30295C27470031F2F5 /* EventTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableView.swift; sourceTree = "<group>"; };
 		50726F362961C86B0031F2F5 /* VirtualC64Core */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = VirtualC64Core; sourceTree = BUILT_PRODUCTS_DIR; };
 		50726FBB2961CA5A0031F2F5 /* Headless.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Headless.cpp; sourceTree = "<group>"; };
-		50726FBC2961CA5A0031F2F5 /* Headless.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Headless.h; sourceTree = "<group>"; };
+		50726FBC2961CA5A0031F2F5 /* Headless.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Headless.hpp; sourceTree = "<group>"; };
 		50763276202989D300575110 /* DialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogController.swift; sourceTree = "<group>"; };
 		50769B8924BB1B87006FE743 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		5077AC672B5ACC5100EFAC85 /* config.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = config.cpp; sourceTree = "<group>"; };
@@ -1440,9 +1440,9 @@
 				5077AC672B5ACC5100EFAC85 /* config.cpp */,
 				50441A872B93CE2600102A4D /* VirtualC64Types.h */,
 				50F47A452BA5B3CB000C3CCA /* VirtualC64Types.hpp */,
-				506F30452B768DE30083EAEA /* VirtualC64.h */,
+				506F30452B768DE30083EAEA /* VirtualC64.hpp */,
 				506F30462B7692180083EAEA /* VirtualC64.cpp */,
-				50726FBC2961CA5A0031F2F5 /* Headless.h */,
+				50726FBC2961CA5A0031F2F5 /* Headless.hpp */,
 				50726FBB2961CA5A0031F2F5 /* Headless.cpp */,
 				500FAA62261376980062488E /* Utilities */,
 				50A2D7AF24AF945200671F38 /* Base */,

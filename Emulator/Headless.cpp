@@ -12,7 +12,7 @@
 /// @file
 
 #include "config.h"
-#include "Headless.h"
+#include "Headless.hpp"
 #include <filesystem>
 #include <chrono>
 

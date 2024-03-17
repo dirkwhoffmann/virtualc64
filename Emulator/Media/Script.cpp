@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "VirtualC64.h"
+#include "VirtualC64.hpp"
 #include "Script.hpp"
 #include "IOUtils.hpp"
 

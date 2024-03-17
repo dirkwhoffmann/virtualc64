@@ -16,6 +16,8 @@
 #include "Aliases.h"
 #include "Reflection.hpp"
 
+namespace vc64 {
+
 #include "CartridgeTypes.h"
 
 struct CartridgeTypeEnum : util::Reflection<CartridgeTypeEnum, CartridgeType> {
@@ -141,3 +143,5 @@ struct FlashStateEnum : util::Reflection<FlashStateEnum, FlashState> {
         return "???";
     }
 };
+
+}
