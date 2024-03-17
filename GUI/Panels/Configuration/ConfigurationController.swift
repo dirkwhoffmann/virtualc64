@@ -99,6 +99,9 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var perDrive9Ram: NSPopUpButton!
     @IBOutlet weak var perDrive9Cable: NSPopUpButton!
 
+    // Parallel cable
+    @IBOutlet weak var perParCableType: NSPopUpButton!
+
     // Datasette
     @IBOutlet weak var perDatasetteConnect: NSButton!
     @IBOutlet weak var perDatasetteModel: NSPopUpButton!
@@ -110,8 +113,16 @@ class ConfigurationController: DialogController {
     // Mouse
     @IBOutlet weak var perMouseModel: NSPopUpButton!
 
-    // Parallel cable
-    @IBOutlet weak var perParCableType: NSPopUpButton!
+    // Joystick
+    @IBOutlet weak var perAutofire: NSButton!
+    @IBOutlet weak var perAutofireText: NSTextField!
+    @IBOutlet weak var perAutofireFrequency: NSSlider!
+    @IBOutlet weak var perAutofireFrequencyText1: NSTextField!
+    @IBOutlet weak var perAutofireFrequencyText2: NSTextField!
+    @IBOutlet weak var perAutofireCease: NSButton!
+    @IBOutlet weak var perAutofireCeaseText: NSTextField!
+    @IBOutlet weak var perAutofireBullets: NSTextField!
+    @IBOutlet weak var perAutofireBulletsText: NSTextField!
 
     // Buttons
     @IBOutlet weak var perPowerButton: NSButton!
@@ -295,5 +306,28 @@ extension ConfigurationController: NSTabViewDelegate {
     func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
 
         refresh()
+    }
+}
+
+extension ConfigurationController: NSTextFieldDelegate {
+
+    func controlTextDidChange(_ obj: Notification) {
+
+        if let view = obj.object as? NSTextField {
+
+            let formatter = view.formatter as? NumberFormatter
+
+            switch view {
+
+            case perAutofireBullets:
+
+                if formatter?.number(from: view.stringValue) != nil {
+                    perAutofireBulletsAction(view)
+                }
+
+            default:
+                break
+            }
+        }
     }
 }

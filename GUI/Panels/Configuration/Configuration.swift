@@ -196,7 +196,27 @@ class Configuration {
         get { return c64.getConfig(.MOUSE_MODEL, id: 1) }
         set { c64.configure(.MOUSE_MODEL, value: newValue) }
     }
-    
+
+    var autofire: Bool {
+        get { return c64.getConfig(.AUTOFIRE, id: 1) != 0 }
+        set { c64.configure(.AUTOFIRE, enable: newValue) }
+    }
+
+    var autofireBursts: Bool {
+        get { return c64.getConfig(.AUTOFIRE_BURSTS, id: 1) != 0 }
+        set { c64.configure(.AUTOFIRE_BURSTS, enable: newValue) }
+    }
+
+    var autofireBullets: Int {
+        get { return c64.getConfig(.AUTOFIRE_BULLETS, id: 1) }
+        set { c64.configure(.AUTOFIRE_BULLETS, value: newValue) }
+    }
+
+    var autofireFrequency: Int {
+        get { return c64.getConfig(.AUTOFIRE_DELAY, id: 1) }
+        set { c64.configure(.AUTOFIRE_DELAY, value: newValue) }
+    }
+
     //
     // Performance
     //

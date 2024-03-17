@@ -54,16 +54,6 @@ extension PreferencesController {
         
         conDisconnectKeys.state = pref.disconnectJoyKeys ? .on : .off
         
-        // Joysticks
-        conAutofire.state = pref.autofire ? .on : .off
-        conAutofireCease.state = pref.autofireBursts ? .on : .off
-        conAutofireBullets.integerValue = pref.autofireBullets
-        conAutofireFrequency.integerValue = pref.autofireFrequency
-        conAutofireCease.isEnabled = conAutofire.state == .on
-        conAutofireCeaseText.textColor = conAutofire.state == .on ? .controlTextColor : .disabledControlTextColor
-        conAutofireBullets.isEnabled = conAutofire.state == .on
-        conAutofireFrequency.isEnabled = conAutofire.state == .on        
-
         // Mouse
         conRetainMouseKeyComb.selectItem(withTag: pref.retainMouseKeyComb)
         conRetainMouseKeyComb.isEnabled = pref.retainMouseWithKeys
@@ -135,30 +125,6 @@ extension PreferencesController {
         assert(sender.tag >= 0 && sender.tag <= 2)
         
         pref.keyMaps[sender.tag] = [:]
-        refresh()
-    }
-
-    @IBAction func conAutofireAction(_ sender: NSButton!) {
-        
-        pref.autofire = (sender.state == .on)
-        refresh()
-    }
-    
-    @IBAction func conAutofireCeaseAction(_ sender: NSButton!) {
-        
-        pref.autofireBursts = (sender.state == .on)
-        refresh()
-    }
-    
-    @IBAction func conAutofireBulletsAction(_ sender: NSTextField!) {
-        
-        pref.autofireBullets = sender.integerValue
-        refresh()
-    }
-    
-    @IBAction func conAutofireFrequencyAction(_ sender: NSSlider!) {
-        
-        pref.autofireFrequency = sender.integerValue
         refresh()
     }
             

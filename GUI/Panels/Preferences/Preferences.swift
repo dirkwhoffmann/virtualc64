@@ -86,6 +86,8 @@ class Preferences {
 
     // Joystick
     var disconnectJoyKeys = false
+
+    /*
     var autofire = false {
         didSet {
             for c64 in myAppDelegate.proxies {
@@ -114,6 +116,7 @@ class Preferences {
             }
         }
     }
+    */
     
     // Mouse
     var retainMouseKeyComb = 0
