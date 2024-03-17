@@ -14,8 +14,8 @@
 
 #include "RetroShellTypes.hpp"
 #include "SubComponent.hpp"
-#include "Interpreter.h"
-#include "TextStorage.h"
+#include "Interpreter.hpp"
+#include "TextStorage.hpp"
 #include <sstream>
 #include <fstream>
 

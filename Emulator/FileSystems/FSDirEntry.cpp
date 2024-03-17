@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "FSDirEntry.h"
+#include "FSDirEntry.hpp"
 #include "C64.hpp"
 #include "MemUtils.hpp"
 

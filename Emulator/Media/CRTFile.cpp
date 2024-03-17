@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "CRTFile.h"
+#include "CRTFile.hpp"
 #include "Cartridge.hpp"
 #include "Checksum.hpp"
 #include "IOUtils.hpp"

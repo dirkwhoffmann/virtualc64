@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "RetroShell.h"
+#include "RetroShell.hpp"
 #include "VirtualC64.h"
 #include "Parser.hpp"
 #include <sstream>

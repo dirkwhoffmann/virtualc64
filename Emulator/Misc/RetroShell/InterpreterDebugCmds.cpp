@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "RetroShell.h"
+#include "RetroShell.hpp"
 #include "Emulator.hpp"
 #include "IOUtils.hpp"
 #include "Parser.hpp"

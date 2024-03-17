@@ -11,8 +11,8 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "SID.h"
 #include "Emulator.hpp"
+#include "SID.h"
 
 namespace vc64 {
 

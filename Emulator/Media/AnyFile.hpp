@@ -14,7 +14,7 @@
 
 #include "CoreObject.hpp"
 #include "FileTypes.hpp"
-#include "PETName.h"
+#include "PETName.hpp"
 
 #include <sstream>
 #include <fstream>

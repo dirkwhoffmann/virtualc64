@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "TextStorage.h"
+#include "TextStorage.hpp"
 #include "C64.hpp"
 
 namespace vc64 {

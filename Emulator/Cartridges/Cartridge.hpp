@@ -15,7 +15,7 @@
 #include "CartridgeTypes.hpp"
 #include "SubComponent.hpp"
 #include "CartridgeRom.hpp"
-#include "CRTFile.h"
+#include "CRTFile.hpp"
 
 namespace vc64 {
 

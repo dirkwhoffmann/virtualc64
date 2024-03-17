@@ -13,7 +13,7 @@
 #pragma once
 
 #include "SubComponent.hpp"
-#include "Command.h"
+#include "Command.hpp"
 #include "Exception.hpp"
 #include "Error.hpp"
 #include "Parser.hpp"

@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Debugger.h"
+#include "Debugger.hpp"
 #include "C64.hpp"
 #include "IOUtils.hpp"
 

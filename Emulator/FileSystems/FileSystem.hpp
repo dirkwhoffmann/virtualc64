@@ -12,11 +12,11 @@
 
 #pragma once
 
-#include "FSDescriptors.h"
-#include "FSBlock.h"
-#include "FSDirEntry.h"
-#include "D64File.h"
-#include "AnyCollection.h"
+#include "FSDescriptors.hpp"
+#include "FSBlock.hpp"
+#include "FSDirEntry.hpp"
+#include "D64File.hpp"
+#include "AnyCollection.hpp"
 #include "IOUtils.hpp"
 #include <vector>
 

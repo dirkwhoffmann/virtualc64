@@ -16,7 +16,7 @@
 #include "DiskAnalyzerTypes.hpp"
 #include "FSTypes.hpp"
 #include "SubComponent.hpp"
-#include "PETName.h"
+#include "PETName.hpp"
 
 
 namespace vc64 {

@@ -11,13 +11,15 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "FileSystem.h"
+#include "FileSystem.hpp"
 #include "Disk.hpp"
 #include "IOUtils.hpp"
-#include "Folder.h"
+#include "Media.hpp"
+/*
 #include "PRGFile.h"
 #include "P00File.h"
 #include "T64File.h"
+*/
 
 #include <limits.h>
 #include <set>

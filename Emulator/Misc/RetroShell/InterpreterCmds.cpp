@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Interpreter.h"
+#include "Interpreter.hpp"
 #include "Emulator.hpp"
 #include "Option.hpp"
 

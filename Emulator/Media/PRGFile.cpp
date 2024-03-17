@@ -11,8 +11,8 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "PRGFile.h"
-#include "FileSystem.h"
+#include "PRGFile.hpp"
+#include "FileSystem.hpp"
 #include "IOUtils.hpp"
 
 namespace vc64 {

@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "AnyCollection.h"
+#include "AnyCollection.hpp"
 
 namespace vc64 {
 

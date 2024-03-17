@@ -12,19 +12,21 @@
 
 #pragma once
 
-#include "AnyCollection.h"
+#include "AnyFile.hpp"
+
+class VirtualC64;
 
 namespace vc64 {
 
-class PRGFile : public AnyCollection {
-
+class Script : public AnyFile {
+    
 public:
     
     //
     // Class methods
     //
     
-    static bool isCompatible(const string &name);
+    static bool isCompatible(const string &path);
     static bool isCompatible(std::istream &stream);
     
     
@@ -32,43 +34,37 @@ public:
     // Initializing
     //
     
-    PRGFile() : AnyCollection() { }
-    PRGFile(isize capacity) : AnyCollection(capacity) { }
-    PRGFile(const string &path) throws { init(path); }
-    PRGFile(const u8 *buf, isize len) throws { init(buf, len); }
-    PRGFile(class FileSystem &fs) throws { init(fs); }
+public:
     
-private:
-    
-    using AnyFile::init;
-    void init(FileSystem &fs) throws;
+    // Script();
+    Script(const string &path) throws { init(path); }
+    Script(const u8 *buf, isize len) throws { init(buf, len); }
     
     
     //
     // Methods from CoreObject
     //
-    
-    const char *objectName() const override { return "PRGFile"; }
+
+    const char *objectName() const override { return "Script"; }
     
     
     //
     // Methods from AnyFile
     //
-
+    
+public:
+    
     bool isCompatiblePath(const string &path) override { return isCompatible(path); }
     bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
-    FileType type() const override { return FILETYPE_PRG; }
+    FileType type() const override { return FILETYPE_SCRIPT; }
     
     
     //
-    // Methods from AnyCollection
+    // Processing
     //
-
-    PETName<16> collectionName() override;
-    isize collectionCount() const override;
-    PETName<16> itemName(isize nr) const override;
-    isize itemSize(isize nr) const override;
-    u8 readByte(isize nr, isize pos) const override;
+    
+    // Executes the script
+    void execute(VirtualC64 &c64);
 };
 
 }

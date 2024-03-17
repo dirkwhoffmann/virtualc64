@@ -12,71 +12,60 @@
 
 #pragma once
 
-#include "AnyFile.h"
+#include "AnyCollection.hpp"
 
 namespace vc64 {
 
-class G64File : public AnyFile {
+class P00File : public AnyCollection {
 
 public:
 
-    //
-    // Class methods
-    //
-
     static bool isCompatible(const string &name);
     static bool isCompatible(std::istream &stream);
-
+    
     
     //
     // Initializing
     //
     
-    G64File() { };
-    G64File(isize capacity);
-    G64File(const string &path) throws { init(path); }
-    G64File(const u8 *buf, isize len) throws { init(buf, len); }
-    G64File(class Disk &disk) throws { init(disk); }
-
+    P00File() : AnyCollection() { }
+    P00File(isize capacity) : AnyCollection(capacity) { }
+    P00File(const string &path) throws { init(path); }
+    P00File(const u8 *buf, isize len) throws { init(buf, len); }
+    P00File(class FileSystem &fs) throws { init(fs); }
+    
 private:
     
     using AnyFile::init;
-    void init(class Disk &disk) throws;
+    void init(FileSystem &fs) throws;
     
     
     //
     // Methods from CoreObject
     //
-    
-public:
-    
-    const char *objectName() const override { return "G64File"; }
 
-    
+    const char *objectName() const override { return "P00File"; }
+
+
     //
     // Methods from AnyFile
     //
     
     bool isCompatiblePath(const string &path) override { return isCompatible(path); }
     bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
-    FileType type() const override { return FILETYPE_G64; }
+    FileType type() const override { return FILETYPE_P00; }
+    PETName<16> getName() const override;
 
 
     //
-    // Reading data from a track
+    // Methods from AnyCollection
     //
 
-public:
-    
-    // Returns the size of a certain haltrack in bytes
-    isize getSizeOfHalftrack(Halftrack ht) const;
-
-    // Copies a certain track into a buffer
-    void copyHalftrack(Halftrack ht, u8 *buf) const;
-    
-private:
-    
-    isize getStartOfHalftrack(Halftrack ht) const;
+    PETName<16> collectionName() override;
+    isize collectionCount() const override;
+    PETName<16> itemName(isize nr) const override;
+    isize itemSize(isize nr) const override;
+    u8 readByte(isize nr, isize pos) const override;
 };
 
 }

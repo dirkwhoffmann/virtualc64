@@ -22,7 +22,7 @@
 #include "Keyboard.hpp"
 #include "ControlPort.hpp"
 #include "C64Memory.hpp"
-#include "Debugger.h"
+#include "Debugger.hpp"
 #include "DriveMemory.hpp"
 #include "FlashRom.hpp"
 #include "VICII.hpp"
@@ -32,12 +32,12 @@
 #include "CPU.hpp"
 #include "PowerSupply.hpp"
 #include "Recorder.hpp"
-#include "RegressionTester.h"
-#include "RetroShell.h"
+#include "RegressionTester.hpp"
+#include "RetroShell.hpp"
 
 // Cartridges
 #include "Cartridge.hpp"
-#include "CustomCartridges.h"
+#include "CustomCartridges.hpp"
 
 // Peripherals
 #include "Drive.hpp"
@@ -45,18 +45,9 @@
 #include "Datasette.hpp"
 #include "Mouse.hpp"
 
-// Media files
-#include "Snapshot.h"
-#include "T64File.h"
-#include "D64File.h"
-#include "G64File.h"
-#include "PRGFile.h"
-#include "Folder.h"
-#include "P00File.h"
-#include "RomFile.h"
-#include "TAPFile.h"
-#include "CRTFile.h"
-#include "FileSystem.h"
+// Files
+#include "Media.hpp"
+#include "FileSystem.hpp"
 
 namespace vc64 {
 

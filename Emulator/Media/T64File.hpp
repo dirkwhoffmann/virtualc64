@@ -12,56 +12,53 @@
 
 #pragma once
 
-#include "AnyCollection.h"
+#include "AnyCollection.hpp"
 
 namespace vc64 {
 
-class Folder : public AnyCollection {
-    
-    class FileSystem *fs = nullptr;
+class T64File : public AnyCollection {
 
 public:
 
-    static bool isCompatible(const string &path);
-    static bool isCompatible(std::istream &stream) { return false; }
-
+    static bool isCompatible(const string &name);
+    static bool isCompatible(std::istream &stream);
     
-    //
-    // Constructing
-    //
-    
-    // static Folder *makeWithFolder(const string &path) throws;
+    // static T64File *makeWithFileSystem(class FSDevice &fs);
 
     
     //
     // Initializing
     //
     
-    Folder(const string &path) throws { init(path); }
-
+    T64File() : AnyCollection() { }
+    T64File(isize capacity) : AnyCollection(capacity) { }
+    T64File(const string &path) throws { init(path); }
+    T64File(const u8 *buf, isize len) throws { init(buf, len); }
+    T64File(class FileSystem &fs) throws { init(fs); }
+    
 private:
     
-    void init(const string &path) throws;
-    
+    using AnyFile::init;
+    void init(FileSystem &fs) throws;
 
+    
     //
     // Methods from CoreObject
     //
     
-public:
-    
-    const char *objectName() const override { return "Folder"; }
-    
+    const char *objectName() const override { return "T64File"; }
+
     
     //
     // Methods from AnyFile
     //
-
+    
+    FileType type() const override { return FILETYPE_T64; }
+    PETName<16> getName() const override;
     bool isCompatiblePath(const string &path) override { return isCompatible(path); }
     bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
-    FileType type() const override { return FILETYPE_FOLDER; }
-    
-    
+    void finalizeRead() override;
+
     //
     // Methods from AnyCollection
     //
@@ -71,13 +68,21 @@ public:
     PETName<16> itemName(isize nr) const override;
     isize itemSize(isize nr) const override;
     u8 readByte(isize nr, isize pos) const override;
-    void copyItem(isize nr, u8 *buf, isize len, isize offset) const override;
+    
+private:
+
+    u16 memStart(isize nr) const;
+    u16 memEnd(isize nr) const;
+    
     
     //
-    // Accessing
+    // Scanning
     //
     
-    FileSystem *getFS() { return fs; }
+public:
+    
+    // Checks if the header contains information at the specified location
+    bool directoryItemIsPresent(isize n);
 };
 
 }

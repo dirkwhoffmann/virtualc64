@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Snapshot.h"
+#include "Snapshot.hpp"
 #include "C64.hpp"
 #include "IOUtils.hpp"
 

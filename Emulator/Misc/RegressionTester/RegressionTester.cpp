@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "RegressionTester.h"
+#include "RegressionTester.hpp"
 #include "Emulator.hpp"
 #include "IOUtils.hpp"
 

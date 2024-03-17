@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Command.h"
+#include "Command.hpp"
 #include <algorithm>
 #include <utility>
 

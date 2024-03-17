@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Folder.h"
+#include "Folder.hpp"
 #include "C64.hpp"
 
 namespace vc64 {

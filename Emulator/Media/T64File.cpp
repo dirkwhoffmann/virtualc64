@@ -11,8 +11,8 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "T64File.h"
-#include "FileSystem.h"
+#include "T64File.hpp"
+#include "FileSystem.hpp"
 #include "IOUtils.hpp"
 #include "Macros.h"
 

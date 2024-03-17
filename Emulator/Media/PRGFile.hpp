@@ -12,21 +12,18 @@
 
 #pragma once
 
-#include "AnyFile.h"
+#include "AnyCollection.hpp"
 
 namespace vc64 {
 
-class TAPFile : public AnyFile {
+class PRGFile : public AnyCollection {
 
-    // File pointer (used by read() and seek())
-    isize fp = -1;
-    
 public:
-
+    
     //
     // Class methods
     //
-
+    
     static bool isCompatible(const string &name);
     static bool isCompatible(std::istream &stream);
     
@@ -35,46 +32,43 @@ public:
     // Initializing
     //
     
-    TAPFile(const string &path) throws { init(path); }
-    TAPFile(const u8 *buf, isize len) throws { init(buf, len); }
-
+    PRGFile() : AnyCollection() { }
+    PRGFile(isize capacity) : AnyCollection(capacity) { }
+    PRGFile(const string &path) throws { init(path); }
+    PRGFile(const u8 *buf, isize len) throws { init(buf, len); }
+    PRGFile(class FileSystem &fs) throws { init(fs); }
+    
+private:
+    
+    using AnyFile::init;
+    void init(FileSystem &fs) throws;
+    
     
     //
     // Methods from CoreObject
     //
     
-    const char *objectName() const override { return "TAPFile"; }
+    const char *objectName() const override { return "PRGFile"; }
     
     
     //
     // Methods from AnyFile
     //
-    
+
     bool isCompatiblePath(const string &path) override { return isCompatible(path); }
     bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
-    FileType type() const override { return FILETYPE_TAP; }
-    PETName<16> getName() const override;
-    void finalizeRead() override;
-
+    FileType type() const override { return FILETYPE_PRG; }
+    
     
     //
-    // Reading
+    // Methods from AnyCollection
     //
-    
-    // Returns the TAP version (0 = standard layout, 1 = extended layout)
-    TAPVersion version() const { return (TAPVersion)data[0x000C]; }
-    
-    // Returns the position of the first pulse byte
-    isize headerSize() const;
-    
-    // Returns the number of stored pulses
-    isize numPulses();
 
-    // Sets the file pointer to a specific pulse
-    void seek(isize nr);
-    
-    // Reads the next pulse and advances the file pointer
-    isize read();
+    PETName<16> collectionName() override;
+    isize collectionCount() const override;
+    PETName<16> itemName(isize nr) const override;
+    isize itemSize(isize nr) const override;
+    u8 readByte(isize nr, isize pos) const override;
 };
 
 }

@@ -14,7 +14,7 @@
 #include "Emulator.hpp"
 #include "Checksum.hpp"
 #include "IOUtils.hpp"
-#include "RomDatabase.h"
+#include "RomDatabase.hpp"
 #include <algorithm>
 
 namespace vc64 {

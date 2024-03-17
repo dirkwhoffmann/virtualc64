@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "G64File.h"
+#include "G64File.hpp"
 #include "Disk.hpp"
 #include "IOUtils.hpp"
 

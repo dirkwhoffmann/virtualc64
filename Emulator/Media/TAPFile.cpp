@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "TAPFile.h"
+#include "TAPFile.hpp"
 #include "IOUtils.hpp"
 
 namespace vc64 {

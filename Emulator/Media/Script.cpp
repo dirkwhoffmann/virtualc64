@@ -11,8 +11,8 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Script.h"
 #include "VirtualC64.h"
+#include "Script.hpp"
 #include "IOUtils.hpp"
 
 #include <sstream>

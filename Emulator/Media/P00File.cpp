@@ -11,8 +11,8 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "P00File.h"
-#include "FileSystem.h"
+#include "P00File.hpp"
+#include "FileSystem.hpp"
 #include "IOUtils.hpp"
 
 namespace vc64 {

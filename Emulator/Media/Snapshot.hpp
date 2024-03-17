@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "AnyFile.h"
+#include "AnyFile.hpp"
 #include "Constants.hpp"
 
 namespace vc64 {

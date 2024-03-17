@@ -14,7 +14,7 @@
 
 #include "Aliases.h"
 #include "FSTypes.hpp"
-#include "PETName.h"
+#include "PETName.hpp"
 
 namespace vc64 {
 

@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "FSDescriptors.h"
+#include "FSDescriptors.hpp"
 #include "C64.hpp"
 
 namespace vc64 {

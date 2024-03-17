@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "RomFile.h"
+#include "RomFile.hpp"
 #include "C64.hpp"
 #include "IOUtils.hpp"
 
