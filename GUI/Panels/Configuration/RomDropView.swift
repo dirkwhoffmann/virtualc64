@@ -11,7 +11,7 @@ extension NSDraggingInfo {
 
     var url: URL? {
         let pasteBoard = draggingPasteboard
-        let types = [NSPasteboard.PasteboardType.compatibleFileURL]
+        let types = [NSPasteboard.PasteboardType.fileURL]
         if pasteBoard.availableType(from: types) != nil {
             return NSURL(from: pasteBoard) as URL?
         }
@@ -26,7 +26,7 @@ class DropView: NSImageView {
         
     override func awakeFromNib() {
 
-        registerForDraggedTypes([NSPasteboard.PasteboardType.compatibleFileURL])
+        registerForDraggedTypes([NSPasteboard.PasteboardType.fileURL])
     }
     
     func acceptDragSource(url: URL) -> Bool { return false }
