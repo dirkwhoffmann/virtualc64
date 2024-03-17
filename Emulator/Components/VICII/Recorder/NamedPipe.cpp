@@ -10,9 +10,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
-#include "NamedPipe.hpp"
-#include "IOUtils.hpp"
+#include "config.h"
+#include "NamedPipe.h"
+#include "IOUtils.h"
 #ifndef _WIN32
 #include <unistd.h>
 #endif

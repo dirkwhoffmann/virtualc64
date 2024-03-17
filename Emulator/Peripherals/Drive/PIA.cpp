@@ -10,10 +10,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
-#include "PIA.hpp"
-#include "ParCable.hpp"
-#include "Drive.hpp"
+#include "config.h"
+#include "PIA.h"
+#include "ParCable.h"
+#include "Drive.h"
 
 namespace vc64 {
 

@@ -10,20 +10,20 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
-#include "Configurable.hpp"
-#include "Option.hpp"
-#include "Parser.hpp"
-#include "VICIITypes.hpp"
-#include "DatasetteTypes.hpp"
-#include "MemoryTypes.hpp"
-#include "SIDTypes.hpp"
-#include "CIATypes.hpp"
-#include "DriveTypes.hpp"
-#include "ParCableTypes.hpp"
-#include "PowerSupplyTypes.hpp"
-#include "MouseTypes.hpp"
-#include "IOUtils.hpp"
+#include "config.h"
+#include "Configurable.h"
+#include "Option.h"
+#include "Parser.h"
+#include "VICIITypes.h"
+#include "DatasetteTypes.h"
+#include "MemoryTypes.h"
+#include "SIDTypes.h"
+#include "CIATypes.h"
+#include "DriveTypes.h"
+#include "ParCableTypes.h"
+#include "PowerSupplyTypes.h"
+#include "MouseTypes.h"
+#include "IOUtils.h"
 #include <algorithm>
 
 namespace vc64 {

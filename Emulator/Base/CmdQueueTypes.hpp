@@ -14,7 +14,7 @@
 #pragma once
 
 #include "Aliases.h"
-#include "Reflection.hpp"
+#include "Reflection.h"
 #include "JoystickTypes.h"
 
 #include "CmdQueueTypes.h"

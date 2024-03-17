@@ -10,11 +10,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
+#include "config.h"
 #include "PeddleConfig.h"
-#include "CPU.hpp"
-#include "Emulator.hpp"
-#include "IOUtils.hpp"
+#include "CPU.h"
+#include "Emulator.h"
+#include "IOUtils.h"
 
 namespace vc64 {
 

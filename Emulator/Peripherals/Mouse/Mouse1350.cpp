@@ -10,9 +10,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
-#include "Mouse1350.hpp"
-#include "C64.hpp"
+#include "config.h"
+#include "Mouse1350.h"
+#include "C64.h"
 
 #include <cmath>
 

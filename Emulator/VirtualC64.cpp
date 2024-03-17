@@ -10,8 +10,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
-#include "VirtualC64.hpp"
+#include "config.h"
+#include "VirtualC64.h"
 
 const Defaults &
 VirtualC64::defaults = Emulator::defaults;
@@ -26,12 +26,6 @@ string
 VirtualC64::build()
 {
     return C64::build();
-}
-
-bool
-VirtualC64::isReleaseBuild()
-{
-    return releaseBuild; 
 }
 
 VirtualC64::VirtualC64() :

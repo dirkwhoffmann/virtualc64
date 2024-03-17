@@ -11,8 +11,8 @@
 // -----------------------------------------------------------------------------
 /// @file
 
-#include "config.hpp"
-#include "Headless.hpp"
+#include "config.h"
+#include "Headless.h"
 #include <filesystem>
 #include <chrono>
 

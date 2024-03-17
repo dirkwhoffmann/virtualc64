@@ -10,7 +10,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
+#include "config.h"
 
 // General
 debugflag XFILES          = 0; // Report paranormal activity

@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "config.hpp"
+#include "config.h"
 
 /* Idle memory accesses
  *

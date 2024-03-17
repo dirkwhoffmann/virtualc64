@@ -14,6 +14,7 @@
 #pragma once
 
 #include "Aliases.h"
+#include "Reflection.h"
 
 //
 // Enumerations
@@ -27,6 +28,26 @@ enum_long(SIDREV)
 };
 typedef SIDREV SIDRevision;
 
+#ifdef __cplusplus
+struct SIDRevisionEnum : util::Reflection<SIDRevisionEnum, SIDRevision> {
+    
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = MOS_8580;
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
+    
+    static const char *prefix() { return nullptr; }
+    static const char *key(SIDRevision value)
+    {
+        switch (value) {
+                
+            case MOS_6581:      return "MOS_6581";
+            case MOS_8580:      return "MOS_8580";
+        }
+        return "???";
+    }
+};
+#endif
+
 /// SID backend
 enum_long(SIDENGINE)
 {
@@ -34,6 +55,26 @@ enum_long(SIDENGINE)
     SIDENGINE_RESID     ///< Recommended
 };
 typedef SIDENGINE SIDEngine;
+
+#ifdef __cplusplus
+struct SIDEngineEnum : util::Reflection<SIDEngineEnum, SIDEngine> {
+    
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = SIDENGINE_RESID;
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
+    
+    static const char *prefix() { return "SIDENGINE"; }
+    static const char *key(SIDEngine value)
+    {
+        switch (value) {
+                
+            case SIDENGINE_FASTSID:  return "FASTSID";
+            case SIDENGINE_RESID:    return "RESID";
+        }
+        return "???";
+    }
+};
+#endif
 
 enum_long(SAMPLING)
 {
@@ -44,6 +85,29 @@ enum_long(SAMPLING)
     SAMPLING_RESAMPLE_FASTMEM
 };
 typedef SAMPLING SamplingMethod;
+
+#ifdef __cplusplus
+struct SamplingMethodEnum : util::Reflection<SamplingMethodEnum, SamplingMethod> {
+    
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = SAMPLING_RESAMPLE_FASTMEM;
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
+    
+    static const char *prefix() { return "SAMPLING"; }
+    static const char *key(SamplingMethod value)
+    {
+        switch (value) {
+                
+            case SAMPLING_FAST:              return "FAST";
+            case SAMPLING_INTERPOLATE:       return "INTERPOLATE";
+            case SAMPLING_RESAMPLE:          return "RESAMPLE";
+            case SAMPLING_RESAMPLE_FASTMEM:  return "RESAMPLE_FASTMEM";
+        }
+        return "???";
+    }
+};
+#endif
+
 
 //
 // Structures

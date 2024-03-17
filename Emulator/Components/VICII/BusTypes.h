@@ -14,7 +14,7 @@
 #pragma once
 
 #include "Aliases.h"
-#include "Reflection.hpp"
+#include "Reflection.h"
 
 enum_long(MEMACCESS)
 {
@@ -27,3 +27,28 @@ enum_long(MEMACCESS)
     MEMACCESS_COUNT
 };
 typedef MEMACCESS MemAccess;
+
+#ifdef __cplusplus
+struct MemAccessEnum : util::Reflection<MemAccessEnum, MemAccess> {
+    
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = MEMACCESS_S;
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
+    
+    static const char *prefix() { return "MEMACCESS"; }
+    static const char *key(MemAccess value)
+    {
+        switch (value) {
+                
+            case MEMACCESS_R:      return "R";
+            case MEMACCESS_I:      return "I";
+            case MEMACCESS_C:      return "C";
+            case MEMACCESS_G:      return "G";
+            case MEMACCESS_P:      return "P";
+            case MEMACCESS_S:      return "S";
+            case MEMACCESS_COUNT:  return "???";
+        }
+        return "???";
+    }
+};
+#endif

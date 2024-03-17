@@ -10,10 +10,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
-#include "PRGFile.hpp"
-#include "FileSystem.hpp"
-#include "IOUtils.hpp"
+#include "config.h"
+#include "PRGFile.h"
+#include "FileSystem.h"
+#include "IOUtils.h"
 
 namespace vc64 {
 

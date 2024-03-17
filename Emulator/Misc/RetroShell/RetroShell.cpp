@@ -10,10 +10,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
-#include "RetroShell.hpp"
-#include "VirtualC64.hpp"
-#include "Parser.hpp"
+#include "config.h"
+#include "RetroShell.h"
+#include "VirtualC64.h"
+#include "Parser.h"
 #include <sstream>
 
 namespace vc64 {

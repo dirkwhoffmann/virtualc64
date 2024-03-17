@@ -10,10 +10,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
-#include "Buffer.hpp"
-#include "IOUtils.hpp"
-#include "MemUtils.hpp"
+#include "config.h"
+#include "Buffer.h"
+#include "IOUtils.h"
+#include "MemUtils.h"
 #include <fstream>
 
 namespace util {

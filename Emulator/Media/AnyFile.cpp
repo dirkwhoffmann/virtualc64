@@ -10,10 +10,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
-#include "Media.hpp"
-#include "Checksum.hpp"
-/*
+#include "config.h"
+#include "AnyFile.h"
+#include "Checksum.h"
 #include "CRTFile.h"
 #include "D64File.h"
 #include "Folder.h"
@@ -25,7 +24,6 @@
 #include "Snapshot.h"
 #include "T64File.h"
 #include "TAPFile.h"
-*/
 
 namespace vc64 {
 

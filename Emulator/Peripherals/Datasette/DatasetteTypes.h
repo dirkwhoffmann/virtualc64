@@ -14,7 +14,7 @@
 #pragma once
 
 #include "Aliases.h"
-#include "Reflection.hpp"
+#include "Reflection.h"
 
 //
 // Enumerations
@@ -26,6 +26,26 @@ enum_long(DATASETTE_MODEL)
     DATASETTE_C1530     ///< Standard datasette (Commodore)
 };
 typedef DATASETTE_MODEL DatasetteModel;
+
+#ifdef __cplusplus
+struct DatasetteModelEnum : util::Reflection<DatasetteModelEnum, DatasetteModel> {
+
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = DATASETTE_C1530;
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
+
+    static const char *prefix() { return "DATASETTE"; }
+    static const char *key(DatasetteModel value)
+    {
+        switch (value) {
+
+            case DATASETTE_C1530:  return "C1530";
+        }
+        return "???";
+    }
+};
+#endif
+
 
 //
 // Structures

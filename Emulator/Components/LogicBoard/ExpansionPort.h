@@ -1,0 +1,208 @@
+// -----------------------------------------------------------------------------
+// This file is part of VirtualC64
+//
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// This FILE is dual-licensed. You are free to choose between:
+//
+//     - The GNU General Public License v3 (or any later version)
+//     - The Mozilla Public License v2
+//
+// SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
+// -----------------------------------------------------------------------------
+
+#pragma once
+
+#include "ExpansionPortTypes.h"
+#include "CmdQueueTypes.hpp"
+#include "SubComponent.h"
+#include "Cartridge.h"
+
+namespace vc64 {
+
+/*
+ * For more information: http://www.c64-wiki.com/index.php/Cartridge
+ *
+ * "The cartridge system implemented in the C64 provides an easy way to
+ *  hook 8 or 16 kilobytes of ROM into the computer's address space:
+ *  This allows for applications and games up to 16 K, or BASIC expansions
+ *  up to 8 K in size and appearing to the CPU along with the built-in
+ *  BASIC ROM. In theory, such a cartridge need only contain the
+ *  ROM circuit without any extra support electronics."
+ *
+ *  Bank switching info: http://www.c64-wiki.com/index.php/Bankswitching
+ *                       http://www.harries.dk/files/C64MemoryMaps.pdf
+ *
+ *  As well read the Commodore 64 Programmers Reference Guide pages 260-267.
+ */
+
+class ExpansionPort final : public SubComponent, public Inspectable<CartridgeInfo, Void> {
+    
+    Descriptions descriptions = {{
+
+        .name           = "ExpansionPort",
+        .shellName      = "expansion",
+        .description    = "Expansion Port"
+    }};
+
+    // Attached cartridge or nullptr
+    std::unique_ptr<Cartridge> cartridge;
+    
+    // Type of the attached cartridge
+    CartridgeType crtType = CRT_NONE;
+    
+    // Values of the Game and the Exrom line (true if no cartridge is attached)
+    bool gameLine = 1;
+    bool exromLine = 1;
+    
+    
+    //
+    // Methods
+    //
+    
+public:
+    
+    ExpansionPort(C64 &ref) : SubComponent(ref) { };
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
+    void _dump(Category category, std::ostream& os) const override;
+
+    ExpansionPort& operator= (const ExpansionPort& other);
+
+    template <class T>
+    void serialize(T& worker)
+    {
+        if (isResetter(worker)) return;
+
+        worker
+
+        << crtType
+        << gameLine
+        << exromLine;
+    }
+    
+    void operator << (SerResetter &worker) override;
+    void operator << (SerChecker &worker) override;
+    void operator << (SerCounter &worker) override;
+    void operator << (SerReader &worker) override;
+    void operator << (SerWriter &worker) override;
+
+    void _reset(bool hard) override;
+
+
+    //
+    // Analyzing
+    //
+    
+public:
+
+    const CartridgeTraits &getCartridgeTraits() const;
+    CartridgeInfo getInfo() const;
+    CartridgeRomInfo getRomInfo(isize nr) const;
+    CartridgeType getCartridgeType() const;
+
+
+    //
+    // Accessing cartrige memory
+    //
+    
+public:
+    
+    u8 peek(u16 addr);
+    u8 spypeek(u16 addr) const;
+    u8 peekIO1(u16 addr);
+    u8 spypeekIO1(u16 addr) const;
+    u8 peekIO2(u16 addr);
+    u8 spypeekIO2(u16 addr) const;
+    
+    void poke(u16 addr, u8 value);
+    void pokeIO1(u16 addr, u8 value);
+    void pokeIO2(u16 addr, u8 value);
+    
+    
+    //
+    // Controlling the Game and Exrom lines
+    //
+    
+public:
+    
+    bool getGameLine() const { return gameLine; }
+    void setGameLine(bool value);
+    
+    bool getExromLine() const { return exromLine; }
+    void setExromLine(bool value);
+    
+    void setGameAndExrom(bool game, bool exrom);
+    
+    CRTMode getCartridgeMode() const;
+    void setCartridgeMode(CRTMode mode);
+
+    
+    //
+    // Attaching and detaching
+    //
+
+    // Attaches a cartridge to the expansion port
+    void attachCartridge(const string &path, bool reset = true) throws;
+    void attachCartridge(const CRTFile &file, bool reset = true) throws;
+    void attachCartridge(Cartridge *c);
+    void attachReu(isize capacity);
+    void attachGeoRam(isize capacity);
+    void attachIsepicCartridge();
+
+    // Removes a cartridge from the expansion port (if any)
+    void detachCartridge();
+
+
+    //
+    // Operating buttons, switches, and LEDs
+    //
+
+    // Presses a button (make sure to call releaseButton() afterwards)
+    void pressButton(isize nr);
+    
+    // Releases a button (make sure to call pressButton() before)
+    void releaseButton(isize nr);
+
+    // Puts the switch in the provided position
+    void setSwitch(isize pos) { if (cartridge) cartridge->setSwitch(pos); }
+    
+    // Switches the LED on or off
+    void setLED(bool value);
+    
+
+    //
+    // Processing commands
+    //
+
+public:
+
+    // Processes a cartridge command
+    void processCommand(const Cmd &cmd);
+
+
+    //
+    // Handling delegation calls
+    //
+    
+    /* Emulator thread callback. This function is invoked by the expansion port.
+     * Only a few cartridges such as EpyxFastLoader will do some action here.
+     */
+    void execute();
+    
+    /* Modifies the memory source lookup tables if required. This function is
+     * called in C64::updatePeekPokeLookupTables() to allow cartridges to
+     * manipulate the lookup tables after the default values have been set.
+     * Background: Some cartridges such as StarDos change the game and exrom
+     * line on-the-fly to achieve very special memory mappings. For most
+     * cartridges, this function does nothing.
+     */
+    void updatePeekPokeLookupTables();
+    
+    // Called when the C64 CPU is about to trigger an NMI
+    void nmiWillTrigger();
+
+    // Called after the C64 CPU has processed the NMI instruction
+    void nmiDidTrigger();
+};
+
+}

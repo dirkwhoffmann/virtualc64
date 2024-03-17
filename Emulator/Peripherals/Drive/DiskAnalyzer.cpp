@@ -10,9 +10,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
-#include "DiskAnalyzer.hpp"
-#include "Disk.hpp"
+#include "config.h"
+#include "DiskAnalyzer.h"
+#include "Disk.h"
 
 #include <stdarg.h>
 

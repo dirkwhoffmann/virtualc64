@@ -28,10 +28,10 @@
  *
  */
 
-#include "config.hpp"
-#include "FastSID.hpp"
-#include "C64.hpp"
-#include "IOUtils.hpp"
+#include "config.h"
+#include "FastSID.h"
+#include "C64.h"
+#include "IOUtils.h"
 
 #include <cmath>
 

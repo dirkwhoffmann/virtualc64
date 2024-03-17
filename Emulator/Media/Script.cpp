@@ -10,10 +10,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
-#include "VirtualC64.hpp"
-#include "Script.hpp"
-#include "IOUtils.hpp"
+#include "config.h"
+#include "Script.h"
+#include "VirtualC64.h"
+#include "IOUtils.h"
 
 #include <sstream>
 

@@ -10,16 +10,14 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
-#include "FileSystem.hpp"
-#include "Disk.hpp"
-#include "IOUtils.hpp"
-#include "Media.hpp"
-/*
+#include "config.h"
+#include "FileSystem.h"
+#include "Disk.h"
+#include "IOUtils.h"
+#include "Folder.h"
 #include "PRGFile.h"
 #include "P00File.h"
 #include "T64File.h"
-*/
 
 #include <limits.h>
 #include <set>

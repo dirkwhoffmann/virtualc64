@@ -10,11 +10,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
-#include "Keyboard.hpp"
-#include "C64.hpp"
-#include "C64Key.hpp"
-#include "IOUtils.hpp"
+#include "config.h"
+#include "Keyboard.h"
+#include "C64.h"
+#include "C64Key.h"
+#include "IOUtils.h"
 
 void 
 Keyboard::_reset(bool hard)

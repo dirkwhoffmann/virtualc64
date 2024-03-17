@@ -10,11 +10,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
-#include "Emulator.hpp"
-#include "Checksum.hpp"
-#include "IOUtils.hpp"
-#include "RomDatabase.hpp"
+#include "config.h"
+#include "Emulator.h"
+#include "Checksum.h"
+#include "IOUtils.h"
+#include "RomDatabase.h"
 #include <algorithm>
 
 namespace vc64 {

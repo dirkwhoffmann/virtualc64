@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #import "Aliases.h"
+#import "config.h"
 #import "VirtualC64Types.h"
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
@@ -161,8 +162,6 @@
 - (void)kill;
 
 - (void)launch:(const void *)listener function:(Callback *)func;
-
-+ (BOOL) isReleaseBuild;
 
 @property (readonly) EmulatorInfo info;
 @property (readonly) EmulatorStats stats;

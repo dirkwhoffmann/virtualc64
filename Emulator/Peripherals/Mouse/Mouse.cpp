@@ -10,10 +10,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
-#include "Mouse.hpp"
-#include "Emulator.hpp"
-#include "IOUtils.hpp"
+#include "config.h"
+#include "Mouse.h"
+#include "Emulator.h"
+#include "IOUtils.h"
 #include <cmath>
 
 namespace vc64 {

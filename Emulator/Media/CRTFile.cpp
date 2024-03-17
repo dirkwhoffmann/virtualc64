@@ -10,11 +10,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
-#include "CRTFile.hpp"
-#include "Cartridge.hpp"
-#include "Checksum.hpp"
-#include "IOUtils.hpp"
+#include "config.h"
+#include "CRTFile.h"
+#include "Cartridge.h"
+#include "Checksum.h"
+#include "IOUtils.h"
 
 namespace vc64 {
 

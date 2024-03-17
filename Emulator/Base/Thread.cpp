@@ -10,9 +10,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
-#include "Thread.hpp"
-#include "Chrono.hpp"
+#include "config.h"
+#include "Thread.h"
+#include "Chrono.h"
 #include <iostream>
 
 namespace vc64 {

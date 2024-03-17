@@ -10,9 +10,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
-#include "ActionReplay.hpp"
-#include "C64.hpp"
+#include "config.h"
+#include "ActionReplay.h"
+#include "C64.h"
 
 //
 // Action Replay (hardware revision 3)

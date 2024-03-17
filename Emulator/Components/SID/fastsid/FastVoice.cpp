@@ -28,8 +28,8 @@
  *
  */
 
-#include "config.hpp"
-#include "FastSID.hpp"
+#include "config.h"
+#include "FastSID.h"
 #include "waves.h"
 
 #include <algorithm>

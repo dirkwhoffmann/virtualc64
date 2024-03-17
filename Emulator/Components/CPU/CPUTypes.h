@@ -13,6 +13,7 @@
 #pragma once
 
 #include "Aliases.h"
+#include "Reflection.h"
 #include "PeddleTypes.h"
 
 //
@@ -25,6 +26,34 @@
 #define INTSRC_VIA2 0b00001000
 #define INTSRC_EXP  0b00010000
 #define INTSRC_KBD  0b00100000
+
+
+//
+// Enumerations
+//
+
+#ifdef __cplusplus
+struct CPURevisionEnum : util::Reflection<CPURevisionEnum, vc64::peddle::CPURevision> {
+    
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = vc64::peddle::MOS_8502;
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
+    
+    static const char *prefix() { return nullptr; }
+    static const char *key(vc64::peddle::CPURevision value)
+    {
+        switch (value) {
+                
+            case vc64::peddle::MOS_6502:  return "MOS_6502";
+            case vc64::peddle::MOS_6507:  return "MOS_6507";
+            case vc64::peddle::MOS_6510:  return "MOS_6510";
+            case vc64::peddle::MOS_8502:  return "MOS_8502";
+        }
+        return "???";
+    }
+};
+#endif
+
 
 //
 // Structures

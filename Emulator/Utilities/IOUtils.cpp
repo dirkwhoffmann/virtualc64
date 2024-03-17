@@ -10,9 +10,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
+#include "config.h"
 #include "Macros.h"
-#include "IOUtils.hpp"
+#include "IOUtils.h"
 #include <assert.h>
 #include <vector>
 #include <fstream>

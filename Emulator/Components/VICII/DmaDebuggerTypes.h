@@ -14,6 +14,7 @@
 #pragma once
 
 #include "Aliases.h"
+#include "Reflection.h"
 #include "BusTypes.h"
 
 //
@@ -28,6 +29,28 @@ enum_long(DMA_DISPLAY_MODE)
     DMA_DISPLAY_MODE_ODD_EVEN_LAYERS    ///< Modulate both layers
 };
 typedef DMA_DISPLAY_MODE DmaDisplayMode;
+
+#ifdef __cplusplus
+struct DmaDisplayModeEnum : util::Reflection<DmaDisplayModeEnum, DmaDisplayMode> {
+    
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = DMA_DISPLAY_MODE_ODD_EVEN_LAYERS;
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
+    
+    static const char *prefix() { return "DMA_DISPLAY_MODE"; }
+    static const char *key(DmaDisplayMode value)
+    {
+        switch (value) {
+                
+            case DMA_DISPLAY_MODE_FG_LAYER:         return "FG_LAYER";
+            case DMA_DISPLAY_MODE_BG_LAYER:         return "BG_LAYER";
+            case DMA_DISPLAY_MODE_ODD_EVEN_LAYERS:  return "ODD_EVEN_LAYERS";
+        }
+        return "???";
+    }
+};
+#endif
+
 
 //
 // Structures

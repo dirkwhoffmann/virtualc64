@@ -13,7 +13,8 @@
 
 #pragma once
 
-#include "Types.h"
+#include "Aliases.h"
+#include "Reflection.h"
 
 /// Color palette
 enum_long(REC_STATE)
@@ -25,6 +26,29 @@ enum_long(REC_STATE)
     REC_STATE_ABORT                     ///< Recording has been aborted
 };
 typedef REC_STATE RecState;
+
+#ifdef __cplusplus
+struct RecStateEnum : util::Reflection<RecStateEnum, RecState> {
+
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = REC_STATE_ABORT;
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
+
+    static const char *prefix() { return "REC_STATE"; }
+    static const char *key(RecState value)
+    {
+        switch (value) {
+
+            case REC_STATE_WAIT:        return "REC_STATE.WAIT";
+            case REC_STATE_PREPARE:     return "REC_STATE.PREPARE";
+            case REC_STATE_RECORD:      return "REC_STATE.RECORD";
+            case REC_STATE_FINALIZE:    return "REC_STATE.FINALIZE";
+            case REC_STATE_ABORT:       return "REC_STATE.ABORT";
+        }
+        return "???";
+    }
+};
+#endif
 
 
 //

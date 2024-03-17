@@ -14,7 +14,7 @@
 #pragma once
 
 #include "Aliases.h"
-#include "Reflection.hpp"
+#include "Reflection.h"
 
 //
 // Enumerations
@@ -28,6 +28,28 @@ enum_long(MOUSE_MODEL)
     MOUSE_NEOS      ///< Analog mouse (Neos)
 };
 typedef MOUSE_MODEL MouseModel;
+
+#ifdef __cplusplus
+struct MouseModelEnum : util::Reflection<MouseModelEnum, MouseModel> {
+    
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = MOUSE_NEOS;
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
+    
+    static const char *prefix() { return "MOUSE"; }
+    static const char *key(MouseModel value)
+    {
+        switch (value) {
+                
+            case MOUSE_C1350:  return "C1350";
+            case MOUSE_C1351:  return "C1351";
+            case MOUSE_NEOS:   return "NEOS";
+        }
+        return "???";
+    }
+};
+#endif
+
 
 //
 // Structures

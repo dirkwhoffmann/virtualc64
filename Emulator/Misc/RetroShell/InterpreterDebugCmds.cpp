@@ -10,11 +10,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.hpp"
-#include "RetroShell.hpp"
-#include "Emulator.hpp"
-#include "IOUtils.hpp"
-#include "Parser.hpp"
+#include "config.h"
+#include "RetroShell.h"
+#include "Emulator.h"
+#include "IOUtils.h"
+#include "Parser.h"
 
 #include <fstream>
 #include <sstream>
