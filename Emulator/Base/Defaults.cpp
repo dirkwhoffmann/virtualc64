@@ -65,6 +65,25 @@ Defaults::Defaults()
     setFallback(OPT_MON_BRIGHTNESS, 50);
     setFallback(OPT_MON_CONTRAST, 100);
     setFallback(OPT_MON_SATURATION, 50);
+    setFallback(OPT_MON_HCENTER, 0);
+    setFallback(OPT_MON_VCENTER, 0);
+    setFallback(OPT_MON_HZOOM, 0);
+    setFallback(OPT_MON_VZOOM, 46);
+    setFallback(OPT_MON_UPSCALER, UPSCALER_NONE);
+    setFallback(OPT_MON_BLUR, true);
+    setFallback(OPT_MON_BLUR_RADIUS, 0);
+    setFallback(OPT_MON_BLOOM, false);
+    setFallback(OPT_MON_BLOOM_RADIUS, 1000);
+    setFallback(OPT_MON_BLOOM_BRIGHTNESS, 400);
+    setFallback(OPT_MON_BLOOM_WEIGHT, 1210);
+    setFallback(OPT_MON_DOTMASK, DOTMASK_NONE);
+    setFallback(OPT_MON_DOTMASK_BRIGHTNESS, 700);
+    setFallback(OPT_MON_SCANLINES, SCANLINES_NONE);
+    setFallback(OPT_MON_SCANLINE_BRIGHTNESS, 550);
+    setFallback(OPT_MON_SCANLINE_WEIGHT, 110);
+    setFallback(OPT_MON_DISALIGNMENT, 0);
+    setFallback(OPT_MON_DISALIGNMENT_H, 1);
+    setFallback(OPT_MON_DISALIGNMENT_V, 1);
 
     setFallback(OPT_SID_REVISION, MOS_8580);
     setFallback(OPT_SID_POWER_SAVE, false);

@@ -238,6 +238,25 @@ Emulator::get(Option option) const
         case OPT_MON_BRIGHTNESS:
         case OPT_MON_CONTRAST:
         case OPT_MON_SATURATION:
+        case OPT_MON_HCENTER:
+        case OPT_MON_VCENTER:
+        case OPT_MON_HZOOM:
+        case OPT_MON_VZOOM:
+        case OPT_MON_UPSCALER:
+        case OPT_MON_BLUR:
+        case OPT_MON_BLUR_RADIUS:
+        case OPT_MON_BLOOM:
+        case OPT_MON_BLOOM_RADIUS:
+        case OPT_MON_BLOOM_BRIGHTNESS:
+        case OPT_MON_BLOOM_WEIGHT:
+        case OPT_MON_DOTMASK:
+        case OPT_MON_DOTMASK_BRIGHTNESS:
+        case OPT_MON_SCANLINES:
+        case OPT_MON_SCANLINE_BRIGHTNESS:
+        case OPT_MON_SCANLINE_WEIGHT:
+        case OPT_MON_DISALIGNMENT:
+        case OPT_MON_DISALIGNMENT_H:
+        case OPT_MON_DISALIGNMENT_V:
 
             return main.monitor.getOption(option);
 
@@ -504,7 +523,26 @@ Emulator::set(Option option, i64 value)
         case OPT_MON_BRIGHTNESS:
         case OPT_MON_CONTRAST:
         case OPT_MON_SATURATION:
-
+        case OPT_MON_HCENTER:
+        case OPT_MON_VCENTER:
+        case OPT_MON_HZOOM:
+        case OPT_MON_VZOOM:
+        case OPT_MON_UPSCALER:
+        case OPT_MON_BLUR:
+        case OPT_MON_BLUR_RADIUS:
+        case OPT_MON_BLOOM:
+        case OPT_MON_BLOOM_RADIUS:
+        case OPT_MON_BLOOM_BRIGHTNESS:
+        case OPT_MON_BLOOM_WEIGHT:
+        case OPT_MON_DOTMASK:
+        case OPT_MON_DOTMASK_BRIGHTNESS:
+        case OPT_MON_SCANLINES:
+        case OPT_MON_SCANLINE_BRIGHTNESS:
+        case OPT_MON_SCANLINE_WEIGHT:
+        case OPT_MON_DISALIGNMENT:
+        case OPT_MON_DISALIGNMENT_H:
+        case OPT_MON_DISALIGNMENT_V:
+            
             main.monitor.setOption(option, value);
             break;
 

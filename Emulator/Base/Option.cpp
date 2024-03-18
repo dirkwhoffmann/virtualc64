@@ -77,6 +77,25 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_MON_BRIGHTNESS:            return numParser("%");
         case OPT_MON_CONTRAST:              return numParser("%");
         case OPT_MON_SATURATION:            return numParser("%");
+        case OPT_MON_HCENTER:               return numParser();
+        case OPT_MON_VCENTER:               return numParser();
+        case OPT_MON_HZOOM:                 return numParser();
+        case OPT_MON_VZOOM:                 return numParser();
+        case OPT_MON_UPSCALER:              return enumParser.template operator()<UpscalerEnum>();
+        case OPT_MON_BLUR:                  return boolParser();
+        case OPT_MON_BLUR_RADIUS:           return numParser();
+        case OPT_MON_BLOOM:                 return boolParser();
+        case OPT_MON_BLOOM_RADIUS:          return numParser();
+        case OPT_MON_BLOOM_BRIGHTNESS:      return numParser();
+        case OPT_MON_BLOOM_WEIGHT:          return numParser();
+        case OPT_MON_DOTMASK:               return enumParser.template operator()<DotmaskEnum>();
+        case OPT_MON_DOTMASK_BRIGHTNESS:    return numParser();
+        case OPT_MON_SCANLINES:             return enumParser.template operator()<ScanlinesEnum>();
+        case OPT_MON_SCANLINE_BRIGHTNESS:   return numParser();
+        case OPT_MON_SCANLINE_WEIGHT:       return numParser();
+        case OPT_MON_DISALIGNMENT:          return boolParser();
+        case OPT_MON_DISALIGNMENT_H:        return numParser();
+        case OPT_MON_DISALIGNMENT_V:        return numParser();
 
         case OPT_POWER_GRID:                return enumParser.template operator()<PowerGridEnum>();
 

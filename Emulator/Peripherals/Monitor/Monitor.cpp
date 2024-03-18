@@ -21,10 +21,29 @@ Monitor::getOption(Option option) const
 {
     switch (option) {
 
-        case OPT_MON_PALETTE:         return config.palette;
-        case OPT_MON_BRIGHTNESS:      return config.brightness;
-        case OPT_MON_CONTRAST:        return config.contrast;
-        case OPT_MON_SATURATION:      return config.saturation;
+        case OPT_MON_PALETTE:               return config.palette;
+        case OPT_MON_BRIGHTNESS:            return config.brightness;
+        case OPT_MON_CONTRAST:              return config.contrast;
+        case OPT_MON_SATURATION:            return config.saturation;
+        case OPT_MON_HCENTER:               return config.hCenter;
+        case OPT_MON_VCENTER:               return config.vCenter;
+        case OPT_MON_HZOOM:                 return config.hZoom;
+        case OPT_MON_VZOOM:                 return config.vZoom;
+        case OPT_MON_UPSCALER:              return config.upscaler;
+        case OPT_MON_BLUR:                  return config.blur;
+        case OPT_MON_BLUR_RADIUS:           return config.blurRadius;
+        case OPT_MON_BLOOM:                 return config.bloom;
+        case OPT_MON_BLOOM_RADIUS:          return config.bloomRadius;
+        case OPT_MON_BLOOM_BRIGHTNESS:      return config.brightness;
+        case OPT_MON_BLOOM_WEIGHT:          return config.bloomWeight;
+        case OPT_MON_DOTMASK:               return config.dotmask;
+        case OPT_MON_DOTMASK_BRIGHTNESS:    return config.dotMaskBrightness;
+        case OPT_MON_SCANLINES:             return config.scanlines;
+        case OPT_MON_SCANLINE_BRIGHTNESS:   return config.scanlineBrightness;
+        case OPT_MON_SCANLINE_WEIGHT:       return config.scanlineWeight;
+        case OPT_MON_DISALIGNMENT:          return config.disalignment;
+        case OPT_MON_DISALIGNMENT_H:        return config.disalignmentH;
+        case OPT_MON_DISALIGNMENT_V:        return config.disalignmentV;
 
         default:
             fatalError;
@@ -74,6 +93,113 @@ Monitor::setOption(Option option, i64 value)
 
             config.saturation = isize(value);
             vic.updatePalette();
+            return;
+
+        case OPT_MON_HCENTER:
+
+            config.hCenter = isize(value);
+            return;
+
+        case OPT_MON_VCENTER:
+
+            config.vCenter = isize(value);
+            return;
+
+        case OPT_MON_HZOOM:
+
+            config.hZoom = isize(value);
+            return;
+
+        case OPT_MON_VZOOM:
+
+            config.vZoom = isize(value);
+            return;
+
+        case OPT_MON_UPSCALER:
+
+            if (!UpscalerEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, UpscalerEnum::keyList());
+            }
+
+            config.upscaler = Upscaler(value);
+            return;
+
+        case OPT_MON_BLUR:
+
+            config.blur = isize(value);
+            return;
+
+        case OPT_MON_BLUR_RADIUS:
+
+            config.blurRadius = isize(value);
+            return;
+
+        case OPT_MON_BLOOM:
+
+            config.bloom = isize(value);
+            return;
+
+        case OPT_MON_BLOOM_RADIUS:
+
+            config.blurRadius = isize(value);
+            return;
+
+        case OPT_MON_BLOOM_BRIGHTNESS:
+
+            config.brightness = isize(value);
+            return;
+
+        case OPT_MON_BLOOM_WEIGHT:
+
+            config.bloomWeight = isize(value);
+            return;
+
+        case OPT_MON_DOTMASK:
+
+            if (!DotmaskEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, DotmaskEnum::keyList());
+            }
+
+            config.dotmask = Dotmask(value);
+            return;
+
+        case OPT_MON_DOTMASK_BRIGHTNESS:
+
+            config.dotMaskBrightness = isize(value);
+            return;
+
+        case OPT_MON_SCANLINES:
+
+            if (!ScanlinesEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, ScanlinesEnum::keyList());
+            }
+
+            config.scanlines = Scanlines(value);
+            return;
+
+        case OPT_MON_SCANLINE_BRIGHTNESS:
+
+            config.scanlineBrightness = isize(value);
+            return;
+
+        case OPT_MON_SCANLINE_WEIGHT:
+
+            config.scanlineWeight = isize(value);
+            return;
+
+        case OPT_MON_DISALIGNMENT: 
+
+            config.disalignment = isize(value);
+            return;
+
+        case OPT_MON_DISALIGNMENT_H:
+
+            config.disalignmentH = isize(value);
+            return;
+
+        case OPT_MON_DISALIGNMENT_V:
+
+            config.disalignmentV = isize(value);
             return;
 
         default:

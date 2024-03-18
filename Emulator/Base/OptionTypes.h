@@ -70,6 +70,25 @@ enum_long(OPT)
     OPT_MON_BRIGHTNESS,         ///< Monitor brightness
     OPT_MON_CONTRAST,           ///< Monitor contrast
     OPT_MON_SATURATION,         ///< Monitor color saturation
+    OPT_MON_HCENTER,
+    OPT_MON_VCENTER,
+    OPT_MON_HZOOM,
+    OPT_MON_VZOOM,
+    OPT_MON_UPSCALER,
+    OPT_MON_BLUR,
+    OPT_MON_BLUR_RADIUS,
+    OPT_MON_BLOOM,
+    OPT_MON_BLOOM_RADIUS,
+    OPT_MON_BLOOM_BRIGHTNESS,
+    OPT_MON_BLOOM_WEIGHT,
+    OPT_MON_DOTMASK,
+    OPT_MON_DOTMASK_BRIGHTNESS,
+    OPT_MON_SCANLINES,
+    OPT_MON_SCANLINE_BRIGHTNESS,
+    OPT_MON_SCANLINE_WEIGHT,
+    OPT_MON_DISALIGNMENT,
+    OPT_MON_DISALIGNMENT_H,
+    OPT_MON_DISALIGNMENT_V,
 
     // Power supply
     OPT_POWER_GRID,             ///< Power-grid stability (affects TOD)
@@ -194,6 +213,25 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_MON_BRIGHTNESS:        return "MON.BRIGHTNESS";
             case OPT_MON_CONTRAST:          return "MON.CONTRAST";
             case OPT_MON_SATURATION:        return "MON.SATURATION";
+            case OPT_MON_HCENTER:           return "MON.HCENTER";
+            case OPT_MON_VCENTER:           return "MON.VCENTER";
+            case OPT_MON_HZOOM:             return "MON.HZOOM";
+            case OPT_MON_VZOOM:             return "MON.VZOOM";
+            case OPT_MON_UPSCALER:          return "MON.UPSCALER";
+            case OPT_MON_BLUR:              return "MON.BLUR";
+            case OPT_MON_BLUR_RADIUS:       return "MON.BLUR_RADIUS";
+            case OPT_MON_BLOOM:             return "MON.BLOOM";
+            case OPT_MON_BLOOM_RADIUS:      return "MON.BLOOM_RADIUS";
+            case OPT_MON_BLOOM_BRIGHTNESS:  return "MON.BLOOM_BRIGHTNESS";
+            case OPT_MON_BLOOM_WEIGHT:      return "MON.BLOOM_WEIGHT";
+            case OPT_MON_DOTMASK:           return "MON.DOTMASK";
+            case OPT_MON_DOTMASK_BRIGHTNESS:    return "MON.DOTMASK_BRIGHTNESS";
+            case OPT_MON_SCANLINES:             return "MON.SCANLINES";
+            case OPT_MON_SCANLINE_BRIGHTNESS:   return "MON.SCANLINE_BRIGHTNESS";
+            case OPT_MON_SCANLINE_WEIGHT:       return "MON.SCANLINE_WEIGHT";
+            case OPT_MON_DISALIGNMENT:      return "MON.DISALIGNMENT";
+            case OPT_MON_DISALIGNMENT_H:    return "MON.DISALIGNMENT_H";
+            case OPT_MON_DISALIGNMENT_V:    return "MON.DISALIGNMENT_V";
 
             case OPT_POWER_GRID:            return "POWER_GRID";
             case OPT_GLUE_LOGIC:            return "GLUE_LOGIC";
@@ -300,8 +338,27 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_MON_BRIGHTNESS:        return "Monitor brightness";
             case OPT_MON_CONTRAST:          return "Monitor contrast";
             case OPT_MON_SATURATION:        return "Monitor saturation";
+            case OPT_MON_HCENTER:           return "Horizontal center";
+            case OPT_MON_VCENTER:           return "Vertical center";
+            case OPT_MON_HZOOM:             return "Horizontal zoom";
+            case OPT_MON_VZOOM:             return "Vertical zoom";
+            case OPT_MON_UPSCALER:          return "Upscaler";
+            case OPT_MON_BLUR:              return "Blur";
+            case OPT_MON_BLUR_RADIUS:       return "Blur radius";
+            case OPT_MON_BLOOM:             return "Bloom";
+            case OPT_MON_BLOOM_RADIUS:      return "Bloom radius";
+            case OPT_MON_BLOOM_BRIGHTNESS:  return "Bloom brightness";
+            case OPT_MON_BLOOM_WEIGHT:      return "Bloom weight";
+            case OPT_MON_DOTMASK:           return "Dotmask";
+            case OPT_MON_DOTMASK_BRIGHTNESS:    return "Dotmask brightness";
+            case OPT_MON_SCANLINES:             return "Scanlines";
+            case OPT_MON_SCANLINE_BRIGHTNESS:   return "Scanline brightness";
+            case OPT_MON_SCANLINE_WEIGHT:       return "Scanline weight";
+            case OPT_MON_DISALIGNMENT:      return "Cathode rays disalignment";
+            case OPT_MON_DISALIGNMENT_H:    return "Horizontal cathode ray shift";
+            case OPT_MON_DISALIGNMENT_V:    return "Vertical cathode ray shift";
 
-            case OPT_POWER_GRID:            return "Power grip stability";
+            case OPT_POWER_GRID:            return "Power grid stability";
             case OPT_GLUE_LOGIC:            return "Glue-logic type";
 
             case OPT_CIA_REVISION:          return "Chip revision";

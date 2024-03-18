@@ -33,7 +33,26 @@ class Monitor final : public SubComponent, public Dumpable {
         OPT_MON_PALETTE,
         OPT_MON_BRIGHTNESS,
         OPT_MON_CONTRAST,
-        OPT_MON_SATURATION
+        OPT_MON_SATURATION,
+        OPT_MON_HCENTER,
+        OPT_MON_VCENTER,
+        OPT_MON_HZOOM,
+        OPT_MON_VZOOM,
+        OPT_MON_UPSCALER,
+        OPT_MON_BLUR,
+        OPT_MON_BLUR_RADIUS,
+        OPT_MON_BLOOM,
+        OPT_MON_BLOOM_RADIUS,
+        OPT_MON_BLOOM_BRIGHTNESS,
+        OPT_MON_BLOOM_WEIGHT,
+        OPT_MON_DOTMASK,
+        OPT_MON_DOTMASK_BRIGHTNESS,
+        OPT_MON_SCANLINES,
+        OPT_MON_SCANLINE_BRIGHTNESS,
+        OPT_MON_SCANLINE_WEIGHT,
+        OPT_MON_DISALIGNMENT,
+        OPT_MON_DISALIGNMENT_H,
+        OPT_MON_DISALIGNMENT_V
     };
 
     // Current configuration
