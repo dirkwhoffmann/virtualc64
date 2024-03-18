@@ -179,6 +179,7 @@ protected:
     class IEC &iec;
     class Keyboard &keyboard;
     class C64Memory &mem;
+    class Monitor &monitor;
     class MsgQueue &msgQueue;
     class ParCable &parCable;
     class PowerSupply &powerSupply;

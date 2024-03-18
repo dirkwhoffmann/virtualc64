@@ -40,10 +40,6 @@ enum_long(OPT)
 
     // VICII
     OPT_VICII_REVISION,         ///< Chip revision
-    OPT_VICII_PALETTE,          ///< Color palette
-    OPT_VICII_BRIGHTNESS,       ///< Monitor brightness
-    OPT_VICII_CONTRAST,         ///< Monitor contrast
-    OPT_VICII_SATURATION,       ///< Monitor color saturation
     OPT_VICII_GRAY_DOT_BUG,     ///< Emulate gray-dot bug
     OPT_VICII_POWER_SAVE,       ///< Enable fast-paths
     OPT_VICII_HIDE_SPRITES,     ///< Hide some sprites
@@ -68,6 +64,12 @@ enum_long(OPT)
     OPT_DMA_DEBUG_COLOR3,       ///< Color for channel 3
     OPT_DMA_DEBUG_COLOR4,       ///< Color for channel 4
     OPT_DMA_DEBUG_COLOR5,       ///< Color for channel 5
+
+    // Monitor
+    OPT_MON_PALETTE,            ///< Color palette
+    OPT_MON_BRIGHTNESS,         ///< Monitor brightness
+    OPT_MON_CONTRAST,           ///< Monitor contrast
+    OPT_MON_SATURATION,         ///< Monitor color saturation
 
     // Power supply
     OPT_POWER_GRID,             ///< Power-grid stability (affects TOD)
@@ -164,10 +166,6 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_EMU_RUN_AHEAD:         return "EMU.RUN_AHEAD";
 
             case OPT_VICII_REVISION:        return "VICII.REVISION";
-            case OPT_VICII_PALETTE:         return "VICII.PALETTE";
-            case OPT_VICII_BRIGHTNESS:      return "VICII.BRIGHTNESS";
-            case OPT_VICII_CONTRAST:        return "VICII.CONTRAST";
-            case OPT_VICII_SATURATION:      return "VICII.SATURATION";
             case OPT_VICII_GRAY_DOT_BUG:    return "VICII.GRAY_DOT_BUG";
             case OPT_VICII_POWER_SAVE:      return "VICII.POWER_SAVE";
             case OPT_VICII_HIDE_SPRITES:    return "VICII.HIDE_SPRITES";
@@ -191,6 +189,11 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_DMA_DEBUG_COLOR3:      return "DMA_DEBUG.COLOR3";
             case OPT_DMA_DEBUG_COLOR4:      return "DMA_DEBUG.COLOR4";
             case OPT_DMA_DEBUG_COLOR5:      return "DMA_DEBUG.COLOR5";
+
+            case OPT_MON_PALETTE:           return "MON.PALETTE";
+            case OPT_MON_BRIGHTNESS:        return "MON.BRIGHTNESS";
+            case OPT_MON_CONTRAST:          return "MON.CONTRAST";
+            case OPT_MON_SATURATION:        return "MON.SATURATION";
 
             case OPT_POWER_GRID:            return "POWER_GRID";
             case OPT_GLUE_LOGIC:            return "GLUE_LOGIC";
@@ -269,13 +272,8 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_EMU_RUN_AHEAD:         return "Run-ahead frames";
 
             case OPT_VICII_REVISION:        return "Chip revision";
-            case OPT_VICII_PALETTE:         return "Color palette";
-            case OPT_VICII_BRIGHTNESS:      return "Monitor brightness";
-            case OPT_VICII_CONTRAST:        return "Monitor contrast";
-            case OPT_VICII_SATURATION:      return "Monitor saturation";
             case OPT_VICII_GRAY_DOT_BUG:    return "Emulate gray-dot bug";
             case OPT_VICII_POWER_SAVE:      return "Take fast paths";
-
             case OPT_VICII_HIDE_SPRITES:    return "Hide sprites";
             case OPT_VICII_CUT_LAYERS:      return "Cut out graphics layers";
             case OPT_VICII_CUT_OPACITY:     return "Opacity";
@@ -298,8 +296,12 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_DMA_DEBUG_COLOR4:      return "Color of channel 4";
             case OPT_DMA_DEBUG_COLOR5:      return "Color of channel 5";
 
-            case OPT_POWER_GRID:            return "Power grip stability";
+            case OPT_MON_PALETTE:           return "Color palette";
+            case OPT_MON_BRIGHTNESS:        return "Monitor brightness";
+            case OPT_MON_CONTRAST:          return "Monitor contrast";
+            case OPT_MON_SATURATION:        return "Monitor saturation";
 
+            case OPT_POWER_GRID:            return "Power grip stability";
             case OPT_GLUE_LOGIC:            return "Glue-logic type";
 
             case OPT_CIA_REVISION:          return "Chip revision";

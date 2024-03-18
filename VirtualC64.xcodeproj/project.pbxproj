@@ -426,6 +426,8 @@
 		50E17E212B8B26AC0029747D /* Option.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E17E1F2B8B26AC0029747D /* Option.cpp */; };
 		50E17E222B8B26AC0029747D /* Option.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E17E1F2B8B26AC0029747D /* Option.cpp */; };
 		50E2D9AC25991E4B009A986B /* AnyCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E2D9AA25991E4B009A986B /* AnyCollection.cpp */; };
+		50E5BF732BA81E710004712B /* Monitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E5BF712BA81E710004712B /* Monitor.cpp */; };
+		50E5BF742BA81E710004712B /* Monitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E5BF712BA81E710004712B /* Monitor.cpp */; };
 		50E9B92D201F299500065A89 /* MyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92C201F299500065A89 /* MyController.swift */; };
 		50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92E201FA92C00065A89 /* Alerts.swift */; };
 		50EAFFEA24B2600D00024CD2 /* MyToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EAFFE924B2600D00024CD2 /* MyToolbar.swift */; };
@@ -988,6 +990,10 @@
 		50E2D9AA25991E4B009A986B /* AnyCollection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AnyCollection.cpp; sourceTree = "<group>"; };
 		50E2D9AB25991E4B009A986B /* AnyCollection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnyCollection.h; sourceTree = "<group>"; };
 		50E56AF629D48A0E00EBCE76 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50E5BF712BA81E710004712B /* Monitor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Monitor.cpp; sourceTree = "<group>"; };
+		50E5BF722BA81E710004712B /* Monitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Monitor.h; sourceTree = "<group>"; };
+		50E5BF762BA81EB30004712B /* MonitorTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MonitorTypes.h; sourceTree = "<group>"; };
+		50E5BF772BA81ECD0004712B /* CMakeLists */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists; sourceTree = "<group>"; };
 		50E5D66E2B9C9C97004113A9 /* RecorderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecorderTypes.h; sourceTree = "<group>"; };
 		50E5FFAF227964F20025C73D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		50E5FFB3227964FA0025C73D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -1573,6 +1579,7 @@
 				5007E1DD26A6FFDC000E7344 /* Joystick */,
 				5007E1DE26A6FFE7000E7344 /* Mouse */,
 				5007E1DF26A6FFF4000E7344 /* Keyboard */,
+				50E5BF752BA81E940004712B /* Monitor */,
 			);
 			path = Peripherals;
 			sourceTree = "<group>";
@@ -2017,6 +2024,17 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		50E5BF752BA81E940004712B /* Monitor */ = {
+			isa = PBXGroup;
+			children = (
+				50E5BF772BA81ECD0004712B /* CMakeLists */,
+				50E5BF762BA81EB30004712B /* MonitorTypes.h */,
+				50E5BF722BA81E710004712B /* Monitor.h */,
+				50E5BF712BA81E710004712B /* Monitor.cpp */,
+			);
+			path = Monitor;
+			sourceTree = "<group>";
+		};
 		50EF22302815922300440C4D /* RegressionTester */ = {
 			isa = PBXGroup;
 			children = (
@@ -2198,6 +2216,7 @@
 				50726F522961C9940031F2F5 /* ControlPort.cpp in Sources */,
 				50726F632961C9B30031F2F5 /* Recorder.cpp in Sources */,
 				50BB3E8E2B7A1AC100B2D87B /* CPUInspector.cpp in Sources */,
+				50E5BF742BA81E710004712B /* Monitor.cpp in Sources */,
 				50726F622961C9AC0031F2F5 /* VICII_table.cpp in Sources */,
 				50726F872961CA0D0031F2F5 /* MikroAss.cpp in Sources */,
 				50726F7D2961C9E80031F2F5 /* Joystick.cpp in Sources */,
@@ -2354,6 +2373,7 @@
 				5036E0BA261AEF000048E66A /* RetroShell.cpp in Sources */,
 				504C438724AF29AC00E69CAE /* C64.cpp in Sources */,
 				506A8A882B88D00200B95383 /* Configurable.cpp in Sources */,
+				50E5BF732BA81E710004712B /* Monitor.cpp in Sources */,
 				504C43A424AF29AC00E69CAE /* Keyboard.cpp in Sources */,
 				504C439924AF29AC00E69CAE /* filter.cc in Sources */,
 				504C439824AF29AC00E69CAE /* sid.cc in Sources */,

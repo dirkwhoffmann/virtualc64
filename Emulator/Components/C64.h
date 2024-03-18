@@ -44,6 +44,7 @@
 #include "ParCable.h"
 #include "Datasette.h"
 #include "Mouse.h"
+#include "Monitor.h"
 
 // Media files
 #include "Snapshot.h"
@@ -130,7 +131,8 @@ public:
     Drive drive9 = Drive(*this, 1);
     ParCable parCable = ParCable(*this);
     Datasette datasette = Datasette(*this);
-
+    Monitor monitor = Monitor(*this);
+    
     // Gateway to the GUI
     MsgQueue msgQueue = MsgQueue();
 

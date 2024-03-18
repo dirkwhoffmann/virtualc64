@@ -589,7 +589,41 @@ Interpreter::initCommandShell(Command &root)
 
     root.pushGroup("Peripherals");
 
-    root.add({"monitor"},       "C64 monitor");
+
+    //
+    // Peripherals (Monitor)
+    //
+
+    cmd = monitor.shellName();
+    description = monitor.description();
+    root.add({cmd}, description);
+
+    root.pushGroup("");
+
+    root.add({cmd, ""},
+             "Displays the current configuration",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(monitor, Category::Config);
+
+    });
+
+    root.add({cmd, "set"}, "Configures the component");
+
+    for (auto &opt : c64.monitor.getOptions()) {
+
+        root.add({cmd, "set", OptionEnum::plainkey(opt)},
+                 {OptionParser::create(opt)->argList()},
+                 OptionEnum::help(opt),
+                 [this](Arguments& argv, long value) {
+
+            emulator.set(Option(value), argv[0]);
+
+        }, opt);
+    }
+
+    root.popGroup();
+
 
     //
     // Peripherals (Keyboard)
@@ -650,7 +684,7 @@ Interpreter::initCommandShell(Command &root)
 
         auto &mouse = i == PORT_1 ? c64.port1.mouse : c64.port2.mouse;
 
-        cmd =mouse.shellName();
+        cmd = mouse.shellName();
         description = mouse.description();
         root.add({cmd}, description);
 

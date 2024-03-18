@@ -1,0 +1,105 @@
+// -----------------------------------------------------------------------------
+// This file is part of VirtualC64
+//
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// This FILE is dual-licensed. You are free to choose between:
+//
+//     - The GNU General Public License v3 (or any later version)
+//     - The Mozilla Public License v2
+//
+// SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
+// -----------------------------------------------------------------------------
+
+#pragma once
+
+#include "MonitorTypes.h"
+#include "C64Types.h"
+#include "SubComponent.h"
+
+namespace vc64 {
+
+class Monitor final : public SubComponent, public Dumpable {
+
+    Descriptions descriptions = {
+        {
+            .name           = "Monitor",
+            .shellName      = "monitor",
+            .description    = "Computer Monitor"
+        }
+    };
+
+    ConfigOptions options = {
+
+        OPT_MON_PALETTE,
+        OPT_MON_BRIGHTNESS,
+        OPT_MON_CONTRAST,
+        OPT_MON_SATURATION
+    };
+
+    // Current configuration
+    MonitorConfig config = { };
+
+
+    //
+    // Methods
+    //
+
+public:
+
+    Monitor(C64 &ref) : SubComponent(ref) { }
+    const Descriptions &getDescriptions() const override { return descriptions; }
+    void _dump(Category category, std::ostream& os) const override;
+
+    Monitor& operator= (const Monitor& other) {
+
+        CLONE(config)
+
+        return *this;
+    }
+
+    template <class T> void serialize(T& worker) {
+
+        if (isResetter(worker)) return;
+
+        worker
+
+        << config.palette
+        << config.brightness
+        << config.contrast
+        << config.saturation;
+
+    } SERIALIZERS(serialize);
+
+    /*
+    void operator << (SerChecker &worker) override { serialize(worker); }
+    void operator << (SerCounter &worker) override { serialize(worker); }
+    void operator << (SerResetter &worker) override;
+    void operator << (SerReader &worker) override;
+    void operator << (SerWriter &worker) override { serialize(worker); }
+    */
+
+
+    //
+    // Configuring
+    //
+
+public:
+
+    const MonitorConfig &getConfig() const { return config; }
+    const ConfigOptions &getOptions() const override { return options; }
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
+
+
+    //
+    // Computing color values
+    //
+
+public:
+
+    // Computes a C64 color in 32 bit big-endian RGBA format
+    u32 getColor(isize nr, Palette palette);
+    u32 getColor(isize nr) { return getColor(nr, config.palette); }
+};
+
+}

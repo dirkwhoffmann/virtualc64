@@ -377,20 +377,20 @@ class Configuration {
     //
 
     var palette: Int {
-        get { return c64.getConfig(.VICII_PALETTE) }
-        set { c64.configure(.VICII_PALETTE, value: newValue) }
+        get { return c64.getConfig(.MON_PALETTE) }
+        set { c64.configure(.MON_PALETTE, value: newValue) }
     }
     var brightness: Int {
-        get { return c64.getConfig(.VICII_BRIGHTNESS) }
-        set { c64.configure(.VICII_BRIGHTNESS, value: newValue) }
+        get { return c64.getConfig(.MON_BRIGHTNESS) }
+        set { c64.configure(.MON_BRIGHTNESS, value: newValue) }
     }
     var contrast: Int {
-        get { return c64.getConfig(.VICII_CONTRAST) }
-        set { c64.configure(.VICII_CONTRAST, value: newValue) }
+        get { return c64.getConfig(.MON_CONTRAST) }
+        set { c64.configure(.MON_CONTRAST, value: newValue) }
     }
     var saturation: Int {
-        get { c64.getConfig(.VICII_SATURATION) }
-        set { c64.configure(.VICII_SATURATION, value: newValue) }
+        get { c64.getConfig(.MON_SATURATION) }
+        set { c64.configure(.MON_SATURATION, value: newValue) }
     }
     var hCenter: Float = 0 {
         didSet { renderer.canvas.updateTextureRect() }

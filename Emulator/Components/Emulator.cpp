@@ -224,11 +224,6 @@ Emulator::get(Option option) const
         case OPT_VICII_SS_COLLISIONS:
         case OPT_VICII_SB_COLLISIONS:
 
-        case OPT_VICII_PALETTE:
-        case OPT_VICII_BRIGHTNESS:
-        case OPT_VICII_CONTRAST:
-        case OPT_VICII_SATURATION:
-
             return main.vic.getOption(option);
 
         case OPT_DMA_DEBUG_ENABLE:
@@ -238,6 +233,13 @@ Emulator::get(Option option) const
         case OPT_VICII_CUT_OPACITY:
 
             return main.vic.dmaDebugger.getOption(option);
+
+        case OPT_MON_PALETTE:
+        case OPT_MON_BRIGHTNESS:
+        case OPT_MON_CONTRAST:
+        case OPT_MON_SATURATION:
+
+            return main.monitor.getOption(option);
 
         case OPT_CIA_REVISION:
         case OPT_CIA_TIMER_B_BUG:
@@ -447,9 +449,9 @@ Emulator::set(Option option, i64 value)
     // The following options do not send a message to the GUI
     static std::vector<Option> quiet = {
 
-        OPT_VICII_BRIGHTNESS,
-        OPT_VICII_CONTRAST,
-        OPT_VICII_SATURATION,
+        OPT_MON_BRIGHTNESS,
+        OPT_MON_CONTRAST,
+        OPT_MON_SATURATION,
         OPT_VICII_CUT_OPACITY,
         OPT_DMA_DEBUG_OPACITY,
         OPT_MOUSE_VELOCITY,
@@ -488,10 +490,6 @@ Emulator::set(Option option, i64 value)
             break;
 
         case OPT_VICII_REVISION:
-        case OPT_VICII_PALETTE:
-        case OPT_VICII_BRIGHTNESS:
-        case OPT_VICII_CONTRAST:
-        case OPT_VICII_SATURATION:
         case OPT_VICII_GRAY_DOT_BUG:
         case OPT_VICII_POWER_SAVE:
         case OPT_VICII_HIDE_SPRITES:
@@ -500,6 +498,14 @@ Emulator::set(Option option, i64 value)
         case OPT_GLUE_LOGIC:
 
             main.vic.setOption(option, value);
+            break;
+
+        case OPT_MON_PALETTE:
+        case OPT_MON_BRIGHTNESS:
+        case OPT_MON_CONTRAST:
+        case OPT_MON_SATURATION:
+
+            main.monitor.setOption(option, value);
             break;
 
         case OPT_VICII_CUT_LAYERS:

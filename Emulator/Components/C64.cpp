@@ -203,6 +203,7 @@ C64::C64(class Emulator& ref) : CoreComponent(ref)
         &drive9,
         &parCable,
         &datasette,
+        &monitor,
         &retroShell,
         &regressionTester,
         &recorder

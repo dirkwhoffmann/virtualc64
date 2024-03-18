@@ -30,6 +30,7 @@
 #include "FSTypes.h"
 #include "JoystickTypes.h"
 #include "MemoryTypes.h"
+#include "MonitorTypes.h"
 #include "MouseTypes.h"
 #include "MsgQueueTypes.h"
 #include "OptionTypes.h"

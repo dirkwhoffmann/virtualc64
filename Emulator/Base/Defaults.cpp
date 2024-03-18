@@ -39,13 +39,11 @@ Defaults::Defaults()
     setFallback(OPT_VICII_POWER_SAVE, true);
     setFallback(OPT_VICII_GRAY_DOT_BUG, true);
     setFallback(OPT_GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
-    setFallback(OPT_VICII_PALETTE, PALETTE_COLOR);
-    setFallback(OPT_VICII_BRIGHTNESS, 50);
-    setFallback(OPT_VICII_CONTRAST, 100);
-    setFallback(OPT_VICII_SATURATION, 50);
     setFallback(OPT_VICII_HIDE_SPRITES, false);
     setFallback(OPT_VICII_SB_COLLISIONS, true);
     setFallback(OPT_VICII_SS_COLLISIONS, true);
+    setFallback(OPT_VICII_CUT_LAYERS, 0xFF);
+    setFallback(OPT_VICII_CUT_OPACITY, 0xFF);
 
     setFallback(OPT_DMA_DEBUG_ENABLE, false);
     setFallback(OPT_DMA_DEBUG_MODE, DMA_DISPLAY_MODE_FG_LAYER);
@@ -62,8 +60,11 @@ Defaults::Defaults()
     setFallback(OPT_DMA_DEBUG_COLOR3, GpuColor(0x00, 0xFF, 0xFF).abgr);
     setFallback(OPT_DMA_DEBUG_COLOR4, GpuColor(0x00, 0xFF, 0x00).abgr);
     setFallback(OPT_DMA_DEBUG_COLOR5, GpuColor(0x00, 0x80, 0xFF).abgr);
-    setFallback(OPT_VICII_CUT_LAYERS, 0xFF);
-    setFallback(OPT_VICII_CUT_OPACITY, 0xFF);
+
+    setFallback(OPT_MON_PALETTE, PALETTE_COLOR);
+    setFallback(OPT_MON_BRIGHTNESS, 50);
+    setFallback(OPT_MON_CONTRAST, 100);
+    setFallback(OPT_MON_SATURATION, 50);
 
     setFallback(OPT_SID_REVISION, MOS_8580);
     setFallback(OPT_SID_POWER_SAVE, false);

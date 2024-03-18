@@ -519,7 +519,7 @@ VirtualC64::VICIIAPI::getColor(isize nr) const
 u32
 VirtualC64::VICIIAPI::getColor(isize nr, Palette palette) const
 {
-    return vic.getColor(nr, palette);
+    return monitor.getColor(nr, palette);
 }
 
 //

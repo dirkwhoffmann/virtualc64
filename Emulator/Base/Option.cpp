@@ -16,6 +16,7 @@
 #include "VICIITypes.h"
 #include "DatasetteTypes.h"
 #include "MemoryTypes.h"
+#include "MonitorTypes.h"
 #include "SIDTypes.h"
 #include "CIATypes.h"
 #include "DriveTypes.h"
@@ -48,17 +49,12 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_HOST_FRAMEBUF_HEIGHT:      return numParser(" pixels");
 
         case OPT_VICII_REVISION:            return enumParser.template operator()<VICIIRevisionEnum>();
-        case OPT_VICII_PALETTE:             return enumParser.template operator()<PaletteEnum>();
-        case OPT_VICII_BRIGHTNESS:          return numParser("%");
-        case OPT_VICII_CONTRAST:            return numParser("%");
-        case OPT_VICII_SATURATION:          return numParser("%");
         case OPT_VICII_GRAY_DOT_BUG:        return boolParser();
         case OPT_VICII_POWER_SAVE:          return boolParser();
         case OPT_VICII_HIDE_SPRITES:        return boolParser();
         case OPT_VICII_SS_COLLISIONS:       return boolParser();
         case OPT_VICII_SB_COLLISIONS:       return boolParser();
         case OPT_GLUE_LOGIC:                return enumParser.template operator()<GlueLogicEnum>();
-
         case OPT_VICII_CUT_LAYERS:          return numParser();
         case OPT_VICII_CUT_OPACITY:         return numParser("%");
         case OPT_DMA_DEBUG_ENABLE:          return boolParser();
@@ -76,6 +72,11 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_DMA_DEBUG_COLOR3:          return numParser();
         case OPT_DMA_DEBUG_COLOR4:          return numParser();
         case OPT_DMA_DEBUG_COLOR5:          return numParser();
+
+        case OPT_MON_PALETTE:               return enumParser.template operator()<PaletteEnum>();
+        case OPT_MON_BRIGHTNESS:            return numParser("%");
+        case OPT_MON_CONTRAST:              return numParser("%");
+        case OPT_MON_SATURATION:            return numParser("%");
 
         case OPT_POWER_GRID:                return enumParser.template operator()<PowerGridEnum>();
 

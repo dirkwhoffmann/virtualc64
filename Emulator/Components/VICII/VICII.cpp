@@ -219,10 +219,6 @@ VICII::getOption(Option option) const
             
         case OPT_VICII_REVISION:        return config.awaiting;
         case OPT_VICII_POWER_SAVE:      return config.powerSave;
-        case OPT_VICII_PALETTE:         return config.palette;
-        case OPT_VICII_BRIGHTNESS:      return config.brightness;
-        case OPT_VICII_CONTRAST:        return config.contrast;
-        case OPT_VICII_SATURATION:      return config.saturation;
         case OPT_VICII_GRAY_DOT_BUG:    return config.grayDotBug;
         case OPT_GLUE_LOGIC:            return config.glueLogic;
         case OPT_VICII_HIDE_SPRITES:    return config.hideSprites;
@@ -257,46 +253,6 @@ VICII::setOption(Option option, i64 value)
             config.powerSave = bool(value);
             return;
             
-        case OPT_VICII_PALETTE:
-            
-            if (!PaletteEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, PaletteEnum::keyList());
-            }
-
-            config.palette = Palette(value);
-            updatePalette();
-            return;
-            
-        case OPT_VICII_BRIGHTNESS:
-            
-            if (config.brightness < 0 || config.brightness > 100) {
-                throw VC64Error(ERROR_OPT_INVARG, "Expected 0...100");
-            }
-
-            config.brightness = isize(value);
-            updatePalette();
-            return;
-            
-        case OPT_VICII_CONTRAST:
-
-            if (config.contrast < 0 || config.contrast > 100) {
-                throw VC64Error(ERROR_OPT_INVARG, "Expected 0...100");
-            }
-
-            config.contrast = isize(value);
-            updatePalette();
-            return;
-
-        case OPT_VICII_SATURATION:
-
-            if (config.saturation < 0 || config.saturation > 100) {
-                throw VC64Error(ERROR_OPT_INVARG, "Expected 0...100");
-            }
-
-            config.saturation = isize(value);
-            updatePalette();
-            return;
-
         case OPT_VICII_GRAY_DOT_BUG:
             
             config.grayDotBug = bool(value);

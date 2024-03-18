@@ -39,10 +39,6 @@ class VICII final : public SubComponent, public Inspectable<VICIIInfo, VICIIStat
         
         OPT_VICII_REVISION,
         OPT_VICII_POWER_SAVE,
-        OPT_VICII_PALETTE,
-        OPT_VICII_BRIGHTNESS,
-        OPT_VICII_CONTRAST,
-        OPT_VICII_SATURATION,
         OPT_VICII_GRAY_DOT_BUG,
         OPT_GLUE_LOGIC,
         OPT_VICII_HIDE_SPRITES,
@@ -908,13 +904,8 @@ public:
     
     // Returns a C64 color in 32 bit big endian RGBA format
     u32 getColor(isize nr) const { return rgbaTable[nr]; }
-    u32 getColor(isize nr, Palette palette);
 
-private:
-    
-    /* Updates the RGBA values for all sixteen C64 colors. The base palette is
-     * determined by the selected VICII model.
-     */
+    // Updates the RGBA values for all 16 C64 colors
     void updatePalette();
 
     

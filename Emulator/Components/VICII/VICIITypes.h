@@ -148,40 +148,6 @@ struct GlueLogicEnum : util::Reflection<GlueLogicEnum, GlueLogic> {
     }
 };
 
-/// Color palette
-enum_long(PALETTE)
-{
-    PALETTE_COLOR,                      ///< Standard C64 color palette
-    PALETTE_BLACK_WHITE,                ///< Black and white monochrome palette
-    PALETTE_PAPER_WHITE,                ///< Paper white monochrome palette
-    PALETTE_GREEN,                      ///< Green monochrome palette
-    PALETTE_AMBER,                      ///< Amber monochrome palette
-    PALETTE_SEPIA                       ///< Sepia monochrome palette
-};
-typedef PALETTE Palette;
-
-struct PaletteEnum : util::Reflection<PaletteEnum, Palette> {
-    
-	static constexpr long minVal = 0;
-    static constexpr long maxVal = PALETTE_SEPIA;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-
-    static const char *prefix() { return "PALETTE"; }
-    static const char *key(long value)
-    {
-        switch (value) {
-                
-            case PALETTE_COLOR:        return "COLOR";
-            case PALETTE_BLACK_WHITE:  return "BLACK_WHITE";
-            case PALETTE_PAPER_WHITE:  return "PAPER_WHITE";
-            case PALETTE_GREEN:        return "GREEN";
-            case PALETTE_AMBER:        return "AMBER";
-            case PALETTE_SEPIA:        return "SEPIA";
-        }
-        return "???";
-    }
-};
-
 ///! C64 canvas size
 enum_long(SCREEN_GEOMETRY)
 {
@@ -341,12 +307,6 @@ typedef struct
     bool powerSave;
     bool grayDotBug;
     GlueLogic glueLogic;
-    
-    // Colors
-    Palette palette;
-    isize brightness;
-    isize contrast;
-    isize saturation;
 
     // Sprites
     bool hideSprites;

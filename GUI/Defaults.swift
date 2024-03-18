@@ -1175,10 +1175,10 @@ extension DefaultsProxy {
 
         debug(.defaults)
 
-        remove(.VICII_PALETTE)
-        remove(.VICII_BRIGHTNESS)
-        remove(.VICII_CONTRAST)
-        remove(.VICII_SATURATION)
+        remove(.MON_PALETTE)
+        remove(.MON_BRIGHTNESS)
+        remove(.MON_CONTRAST)
+        remove(.MON_SATURATION)
     }
 
     func removeGeometryUserDefaults() {
@@ -1237,10 +1237,10 @@ extension Configuration {
 
         c64.suspend()
 
-        defaults.set(.VICII_PALETTE, palette)
-        defaults.set(.VICII_BRIGHTNESS, brightness)
-        defaults.set(.VICII_CONTRAST, contrast)
-        defaults.set(.VICII_SATURATION, saturation)
+        defaults.set(.MON_PALETTE, palette)
+        defaults.set(.MON_BRIGHTNESS, brightness)
+        defaults.set(.MON_CONTRAST, contrast)
+        defaults.set(.MON_SATURATION, saturation)
 
         defaults.save()
 
@@ -1310,10 +1310,10 @@ extension Configuration {
 
         c64.suspend()
 
-        palette = defaults.get(.VICII_PALETTE)
-        brightness = defaults.get(.VICII_BRIGHTNESS)
-        contrast = defaults.get(.VICII_CONTRAST)
-        saturation = defaults.get(.VICII_SATURATION)
+        palette = defaults.get(.MON_PALETTE)
+        brightness = defaults.get(.MON_BRIGHTNESS)
+        contrast = defaults.get(.MON_CONTRAST)
+        saturation = defaults.get(.MON_SATURATION)
 
         c64.resume()
     }
