@@ -75,7 +75,7 @@ CoreComponent::initialize()
 
     } catch (std::exception &e) {
 
-        fatal("Failed to initialize: %s\n", e.what());
+        warn("Initialization aborted: %s\n", e.what());
     }
 }
 

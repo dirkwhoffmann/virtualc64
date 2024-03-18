@@ -36,15 +36,15 @@ extension ConfigurationController {
 
         // Geometry
         vidZoom.selectItem(withTag: 0)
-        vidHZoom.floatValue = config.hZoom * 1000
-        vidVZoom.floatValue = config.vZoom * 1000
+        vidHZoom.integerValue = config.hZoom
+        vidVZoom.integerValue = config.vZoom
         vidHZoom.isEnabled = true
         vidVZoom.isEnabled = true
         vidHZoomLabel.textColor = .labelColor
         vidVZoomLabel.textColor = .labelColor
         vidCenter.selectItem(withTag: 0)
-        vidHCenter.floatValue = config.hCenter * 1000
-        vidVCenter.floatValue = config.vCenter * 1000
+        vidHCenter.integerValue = config.hCenter
+        vidVCenter.integerValue = config.vCenter
         vidHCenter.isEnabled = true
         vidVCenter.isEnabled = true
         vidHCenterLabel.textColor = .labelColor
@@ -260,25 +260,25 @@ extension ConfigurationController {
     
     @IBAction func vidHCenterAction(_ sender: NSSlider!) {
         
-        config.hCenter = sender.floatValue / 1000
+        config.hCenter = sender.integerValue
         refresh()
     }
     
     @IBAction func vidVCenterAction(_ sender: NSSlider!) {
         
-        config.vCenter = sender.floatValue / 1000
+        config.vCenter = sender.integerValue
         refresh()
     }
     
     @IBAction func vidHZoomAction(_ sender: NSSlider!) {
         
-        config.hZoom = sender.floatValue / 1000
+        config.hZoom = sender.integerValue
         refresh()
     }
     
     @IBAction func vidVZoomAction(_ sender: NSSlider!) {
         
-        config.vZoom = sender.floatValue / 1000
+        config.vZoom = sender.integerValue
         refresh()
     }
     

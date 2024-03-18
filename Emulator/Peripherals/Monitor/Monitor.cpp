@@ -34,7 +34,7 @@ Monitor::getOption(Option option) const
         case OPT_MON_BLUR_RADIUS:           return config.blurRadius;
         case OPT_MON_BLOOM:                 return config.bloom;
         case OPT_MON_BLOOM_RADIUS:          return config.bloomRadius;
-        case OPT_MON_BLOOM_BRIGHTNESS:      return config.brightness;
+        case OPT_MON_BLOOM_BRIGHTNESS:      return config.bloomBrightness;
         case OPT_MON_BLOOM_WEIGHT:          return config.bloomWeight;
         case OPT_MON_DOTMASK:               return config.dotmask;
         case OPT_MON_DOTMASK_BRIGHTNESS:    return config.dotMaskBrightness;
@@ -67,8 +67,8 @@ Monitor::setOption(Option option, i64 value)
 
         case OPT_MON_BRIGHTNESS:
 
-            if (config.brightness < 0 || config.brightness > 100) {
-                throw VC64Error(ERROR_OPT_INVARG, "Expected 0...100");
+            if (value < 0 || value > 100) {
+                throw VC64Error(ERROR_OPT_INVARG, "0...100");
             }
 
             config.brightness = isize(value);
@@ -77,8 +77,8 @@ Monitor::setOption(Option option, i64 value)
 
         case OPT_MON_CONTRAST:
 
-            if (config.contrast < 0 || config.contrast > 100) {
-                throw VC64Error(ERROR_OPT_INVARG, "Expected 0...100");
+            if (value < 0 || value > 100) {
+                throw VC64Error(ERROR_OPT_INVARG, "0...100");
             }
 
             config.contrast = isize(value);
@@ -87,8 +87,8 @@ Monitor::setOption(Option option, i64 value)
 
         case OPT_MON_SATURATION:
 
-            if (config.saturation < 0 || config.saturation > 100) {
-                throw VC64Error(ERROR_OPT_INVARG, "Expected 0...100");
+            if (value < 0 || value > 100) {
+                throw VC64Error(ERROR_OPT_INVARG, "0...100");
             }
 
             config.saturation = isize(value);
@@ -141,12 +141,12 @@ Monitor::setOption(Option option, i64 value)
 
         case OPT_MON_BLOOM_RADIUS:
 
-            config.blurRadius = isize(value);
+            config.bloomRadius = isize(value);
             return;
 
         case OPT_MON_BLOOM_BRIGHTNESS:
 
-            config.brightness = isize(value);
+            config.bloomBrightness = isize(value);
             return;
 
         case OPT_MON_BLOOM_WEIGHT:

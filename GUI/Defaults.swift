@@ -1084,10 +1084,12 @@ extension Keys {
     struct Vid {
 
         // Geometry
+        /*
         static let hCenter            = "Geometry.HCenter"
         static let vCenter            = "Geometry.VCenter"
         static let hZoom              = "Geometry.HZoom"
         static let vZoom              = "Geometry.VZoom"
+        */
 
         // Shaders
         static let upscaler           = "Shaders.Upscaler"
@@ -1132,11 +1134,13 @@ extension DefaultsProxy {
     func registerGeometryUserDefaults() {
 
         debug(.defaults)
-
+        // No GUI related keys in this category
+        /*
         register(Keys.Vid.hCenter, 0)
         register(Keys.Vid.vCenter, 0)
         register(Keys.Vid.hZoom, 0)
         register(Keys.Vid.vZoom, 0.046)
+        */
     }
 
     func registerShaderUserDefaults() {
@@ -1185,12 +1189,19 @@ extension DefaultsProxy {
 
         debug(.defaults)
 
+        remove(.MON_HCENTER)
+        remove(.MON_VCENTER)
+        remove(.MON_HZOOM)
+        remove(.MON_VZOOM)
+
+        /*
         let keys = [ Keys.Vid.hCenter,
                      Keys.Vid.vCenter,
                      Keys.Vid.hZoom,
                      Keys.Vid.vZoom ]
 
         for key in keys { removeKey(key) }
+        */
     }
 
     func removeShaderUserDefaults() {
@@ -1254,10 +1265,10 @@ extension Configuration {
 
         c64.suspend()
 
-        defaults.set(Keys.Vid.hCenter, hCenter)
-        defaults.set(Keys.Vid.vCenter, vCenter)
-        defaults.set(Keys.Vid.hZoom, hZoom)
-        defaults.set(Keys.Vid.vZoom, vZoom)
+        defaults.set(.MON_HCENTER, hCenter)
+        defaults.set(.MON_VCENTER, vCenter)
+        defaults.set(.MON_HZOOM, hZoom)
+        defaults.set(.MON_VZOOM, vZoom)
 
         defaults.save()
 
@@ -1325,10 +1336,10 @@ extension Configuration {
 
         c64.suspend()
 
-        hCenter = defaults.float(Keys.Vid.hCenter)
-        vCenter = defaults.float(Keys.Vid.vCenter)
-        hZoom = defaults.float(Keys.Vid.hZoom)
-        vZoom = defaults.float(Keys.Vid.vZoom)
+        hCenter = defaults.get(.MON_HCENTER)
+        vCenter = defaults.get(.MON_VCENTER)
+        hZoom = defaults.get(.MON_HZOOM)
+        vZoom = defaults.get(.MON_VZOOM)
 
         c64.resume()
     }

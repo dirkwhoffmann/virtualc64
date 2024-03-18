@@ -389,20 +389,36 @@ class Configuration {
         set { c64.configure(.MON_CONTRAST, value: newValue) }
     }
     var saturation: Int {
-        get { c64.getConfig(.MON_SATURATION) }
+        get { return c64.getConfig(.MON_SATURATION) }
         set { c64.configure(.MON_SATURATION, value: newValue) }
     }
-    var hCenter: Float = 0 {
-        didSet { renderer.canvas.updateTextureRect() }
+    var hCenter: Int {
+        get { return c64.getConfig(.MON_HCENTER) }
+        set {
+            c64.configure(.MON_HCENTER, value: newValue)
+            renderer.canvas.updateTextureRect()
+        }
     }
-    var vCenter: Float = 0 {
-        didSet { renderer.canvas.updateTextureRect() }
+    var vCenter: Int {
+        get { return c64.getConfig(.MON_VCENTER) }
+        set {
+            c64.configure(.MON_VCENTER, value: newValue)
+            renderer.canvas.updateTextureRect()
+        }
     }
-    var hZoom: Float = 0 {
-        didSet { renderer.canvas.updateTextureRect() }
+    var hZoom: Int {
+        get { return c64.getConfig(.MON_HZOOM) }
+        set {
+            c64.configure(.MON_HZOOM, value: newValue)
+            renderer.canvas.updateTextureRect()
+        }
     }
-    var vZoom: Float = 0 {
-        didSet { renderer.canvas.updateTextureRect() }
+    var vZoom: Int {
+        get { return c64.getConfig(.MON_VZOOM) }
+        set {
+            c64.configure(.MON_VZOOM, value: newValue)
+            renderer.canvas.updateTextureRect()
+        }
     }
     var upscaler: Int = 0 {
         didSet {
