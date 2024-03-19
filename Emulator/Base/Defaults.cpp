@@ -82,8 +82,8 @@ Defaults::Defaults()
     setFallback(OPT_MON_SCANLINE_BRIGHTNESS, 550);
     setFallback(OPT_MON_SCANLINE_WEIGHT, 110);
     setFallback(OPT_MON_DISALIGNMENT, 0);
-    setFallback(OPT_MON_DISALIGNMENT_H, 1);
-    setFallback(OPT_MON_DISALIGNMENT_V, 1);
+    setFallback(OPT_MON_DISALIGNMENT_H, 1000);
+    setFallback(OPT_MON_DISALIGNMENT_V, 1000);
 
     setFallback(OPT_SID_REVISION, MOS_8580);
     setFallback(OPT_SID_POWER_SAVE, false);

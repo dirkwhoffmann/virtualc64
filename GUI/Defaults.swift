@@ -291,9 +291,6 @@ struct Keys {
         // Screen captures
         static let ffmpegPath             = "General.ffmpegPath"
         static let captureSource          = "General.Source"
-        static let bitRate                = "General.BitRate"
-        static let aspectX                = "General.AspectX"
-        static let aspectY                = "General.AspectY"
 
         // Fullscreen
         static let keepAspectRatio        = "General.FullscreenKeepAspectRatio"
@@ -323,9 +320,6 @@ extension DefaultsProxy {
         // Captures
         register(Keys.Gen.ffmpegPath, "")
         register(Keys.Gen.captureSource, 0)
-        register(Keys.Gen.bitRate, 2048)
-        register(Keys.Gen.aspectX, 768)
-        register(Keys.Gen.aspectY, 702)
 
         // Fullscreen
         register(Keys.Gen.keepAspectRatio, false)
@@ -349,9 +343,6 @@ extension DefaultsProxy {
 
                      Keys.Gen.ffmpegPath,
                      Keys.Gen.captureSource,
-                     Keys.Gen.bitRate,
-                     Keys.Gen.aspectX,
-                     Keys.Gen.aspectY,
 
                      Keys.Gen.keepAspectRatio,
                      Keys.Gen.exitOnEsc,
@@ -380,9 +371,6 @@ extension Preferences {
 
         defaults.set(Keys.Gen.ffmpegPath, ffmpegPath)
         defaults.set(Keys.Gen.captureSource, captureSource)
-        defaults.set(Keys.Gen.bitRate, bitRate)
-        defaults.set(Keys.Gen.aspectX, aspectX)
-        defaults.set(Keys.Gen.aspectY, aspectY)
 
         defaults.set(Keys.Gen.keepAspectRatio, keepAspectRatio)
         defaults.set(Keys.Gen.exitOnEsc, exitOnEsc)
@@ -652,58 +640,6 @@ extension Preferences {
 
 extension Configuration {
 
-    /*
-    func loadRomUserDefaultss() {
-
-        func load(_ url: URL?, type: vc64.FileType) {
-
-            if url != nil {
-                if let file = try? RomFileProxy.make(with: url!) {
-                    if file.type == type { c64.loadRom(file) }
-                }
-            }
-        }
-
-        debug(.defaults)
-
-        c64.suspend()
-        load(UserDefaults.basicRomUrl, type: .BASIC_ROM)
-        load(UserDefaults.charRomUrl, type: .CHAR_ROM)
-        load(UserDefaults.kernalRomUrl, type: .KERNAL_ROM)
-        load(UserDefaults.vc1541RomUrl, type: .VC1541_ROM)
-        c64.resume()
-    }
-
-    func saveRomUserDefaultss() throws {
-
-        debug(.defaults)
-
-        var url: URL?
-
-        func save(_ type: RomType) throws {
-
-            if url == nil { throw VC64Error(vc64.ErrorCode.FILE_CANT_WRITE) }
-            try? FileManager.default.removeItem(at: url!)
-            try c64.saveRom(type, url: url!)
-        }
-
-        c64.suspend()
-
-        do {
-            url = UserDefaults.basicRomUrl;  try save(.BASIC)
-            url = UserDefaults.charRomUrl;   try save(.CHAR)
-            url = UserDefaults.kernalRomUrl; try save(.KERNAL)
-            url = UserDefaults.vc1541RomUrl; try save(.VC1541)
-
-        } catch {
-
-            c64.resume()
-            throw error
-        }
-
-        c64.resume()
-    }
-    */
 }
 
 //
@@ -1079,59 +1015,13 @@ extension Configuration {
 // User defaults (Video)
 //
 
-extension Keys {
-    
-    /*
-    struct Vid {
-
-        // Shaders
-        static let flicker            = "Shaders.Flicker"
-        static let flickerWeight      = "Shaders.FlickerWeight"
-        static let dotMask            = "Shaders.DotMask"
-        static let dotMaskBrightness  = "Shaders.DotMaskBrightness"
-        static let scanlines          = "Shaders.Scanlines"
-        static let scanlineBrightness = "Shaders.ScanlineBrightness"
-        static let scanlineWeight     = "Shaders.ScanlineWeight"
-        static let disalignment       = "Shaders.Disalignment"
-        static let disalignmentH      = "Shaders.DisalignmentH"
-        static let disalignmentV      = "Shaders.DisalignmentV"
-    }
-    */
-}
-
 extension DefaultsProxy {
 
     func registerVideoUserDefaults() {
 
         debug(.defaults)
         // No GUI related keys in this category
-
-        /*
-        registerColorUserDefaults()
-        registerGeometryUserDefaults()
-        registerShaderUserDefaults()
-        */
     }
-
-    /*
-    func registerColorUserDefaults() {
-
-        debug(.defaults)
-        // No GUI related keys in this category
-    }
-
-    func registerGeometryUserDefaults() {
-
-        debug(.defaults)
-        // No GUI related keys in this category
-    }
-
-    func registerShaderUserDefaults() {
-
-        debug(.defaults)
-        // No GUI related keys in this category
-    }
-    */
 
     func removeVideoUserDefaults() {
 
