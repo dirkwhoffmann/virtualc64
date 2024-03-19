@@ -36,7 +36,7 @@ class RessourceManager {
     
     // Shader galleries
     var upscalerGallery = [ComputeKernel?](repeating: nil, count: 3)
-    var bloomFilterGallery = [ComputeKernel?](repeating: nil, count: 3)
+    var bloomFilterGallery = [ComputeKernel?](repeating: nil, count: 2)
     var scanlineFilterGallery = [ComputeKernel?](repeating: nil, count: 3)
     
     // The currently selected shaders
@@ -191,7 +191,6 @@ class RessourceManager {
         // Build bloom filters
         bloomFilterGallery[0] = BypassFilter(device: device, library: library, cutout: uc)
         bloomFilterGallery[1] = SplitFilter(device: device, library: library, cutout: uc)
-        bloomFilterGallery[2] = SplitFilter(device: device, library: library, cutout: uc)
         bloomFilter = bloomFilterGallery[0]
         
         // Build scanline filters

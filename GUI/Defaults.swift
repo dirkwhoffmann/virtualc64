@@ -1096,9 +1096,6 @@ extension Keys {
         static let blur               = "Shaders.Blur"
         static let blurRadius         = "Shaders.BlurRadius"
         static let bloom              = "Shaders.Bloom"
-        static let bloomRadius        = "Shaders.BloonRadius"
-        static let bloomBrightness    = "Shaders.BloomBrightness"
-        static let bloomWeight        = "Shaders.BloomWeight"
         static let flicker            = "Shaders.Flicker"
         static let flickerWeight      = "Shaders.FlickerWeight"
         static let dotMask            = "Shaders.DotMask"
@@ -1149,9 +1146,11 @@ extension DefaultsProxy {
         register(Keys.Vid.blur, 1)
         register(Keys.Vid.blurRadius, 0)
         register(Keys.Vid.bloom, 0)
+        /*
         register(Keys.Vid.bloomRadius, 1.0)
         register(Keys.Vid.bloomBrightness, 0.4)
         register(Keys.Vid.bloomWeight, 1.21)
+        */
         register(Keys.Vid.dotMask, 0)
         register(Keys.Vid.dotMaskBrightness, 0.7)
         register(Keys.Vid.scanlines, 0)
@@ -1208,9 +1207,6 @@ extension DefaultsProxy {
                      Keys.Vid.blur,
                      Keys.Vid.blurRadius,
                      Keys.Vid.bloom,
-                     Keys.Vid.bloomRadius,
-                     Keys.Vid.bloomBrightness,
-                     Keys.Vid.bloomWeight,
                      Keys.Vid.dotMask,
                      Keys.Vid.dotMaskBrightness,
                      Keys.Vid.scanlines,
@@ -1280,9 +1276,6 @@ extension Configuration {
         defaults.set(Keys.Vid.blur, blur)
         defaults.set(Keys.Vid.blurRadius, blurRadius)
         defaults.set(Keys.Vid.bloom, bloom)
-        defaults.set(Keys.Vid.bloomRadius, bloomRadius)
-        defaults.set(Keys.Vid.bloomBrightness, bloomBrightness)
-        defaults.set(Keys.Vid.bloomWeight, bloomWeight)
         defaults.set(Keys.Vid.dotMask, dotMask)
         defaults.set(Keys.Vid.dotMaskBrightness, dotMaskBrightness)
         defaults.set(Keys.Vid.scanlines, scanlines)
@@ -1347,9 +1340,6 @@ extension Configuration {
         blur = defaults.int(Keys.Vid.blur)
         blurRadius = defaults.float(Keys.Vid.blurRadius)
         bloom = defaults.int(Keys.Vid.bloom)
-        bloomRadius = defaults.float(Keys.Vid.bloomRadius)
-        bloomBrightness = defaults.float(Keys.Vid.bloomBrightness)
-        bloomWeight = defaults.float(Keys.Vid.bloomWeight)
         dotMask = defaults.int(Keys.Vid.dotMask)
         dotMaskBrightness = defaults.float(Keys.Vid.dotMaskBrightness)
         scanlines = defaults.int(Keys.Vid.scanlines)

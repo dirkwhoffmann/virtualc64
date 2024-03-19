@@ -441,20 +441,35 @@ class Configuration {
     var blurRadius: Float = 0 {
         didSet { renderer.shaderOptions.blurRadius = blurRadius }
     }
-    var bloom: Int = 0 {
-        didSet {
-            renderer.shaderOptions.bloom = Int32(bloom)
-            if !ressourceManager.selectBloomFilter(bloom) { bloom = oldValue }
+    var bloom: Int {
+        get { return c64.getConfig(.MON_BLOOM) }
+        set {
+            if ressourceManager.selectBloomFilter(newValue) {
+                c64.configure(.MON_BLOOM, value: newValue)
+                renderer.shaderOptions.bloom = Int32(bloom)
+            }
         }
     }
-    var bloomRadius: Float = 0 {
-        didSet { renderer.shaderOptions.bloomRadius = bloomRadius }
+    var bloomRadius: Int {
+        get { return c64.getConfig(.MON_BLOOM_RADIUS) }
+        set { 
+            c64.configure(.MON_BLOOM_RADIUS, value: newValue)
+            renderer.shaderOptions.bloomRadius = Float(newValue) / 1000.0
+        }
     }
-    var bloomBrightness: Float = 0 {
-        didSet { renderer.shaderOptions.bloomBrightness = bloomBrightness }
+    var bloomBrightness: Int {
+        get { return c64.getConfig(.MON_BLOOM_BRIGHTNESS) }
+        set {
+            c64.configure(.MON_BLOOM_BRIGHTNESS, value: newValue)
+            renderer.shaderOptions.bloomBrightness = Float(newValue) / 1000.0
+        }
     }
-    var bloomWeight: Float = 0 {
-        didSet { renderer.shaderOptions.bloomWeight = bloomWeight }
+    var bloomWeight: Int {
+        get { print("bloomRadius = \(c64.getConfig(.MON_BLOOM_WEIGHT))"); return c64.getConfig(.MON_BLOOM_WEIGHT) }
+        set {
+            c64.configure(.MON_BLOOM_WEIGHT, value: newValue)
+            renderer.shaderOptions.bloomWeight = Float(newValue) / 1000.0
+        }
     }
     var dotMask: Int {
         get { return c64.getConfig(.MON_DOTMASK) }

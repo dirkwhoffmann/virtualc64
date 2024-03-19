@@ -59,11 +59,11 @@ extension ConfigurationController {
         vidBlurRadiusSlider.isEnabled = config.blur > 0
         
         vidBloomPopUp.selectItem(withTag: Int(config.bloom))
-        vidBloomRadiusSlider.floatValue = config.bloomRadius
+        vidBloomRadiusSlider.integerValue = config.bloomRadius
         vidBloomRadiusSlider.isEnabled = config.bloom > 0
-        vidBloomBrightnessSlider.floatValue = config.bloomBrightness
+        vidBloomBrightnessSlider.integerValue = config.bloomBrightness
         vidBloomBrightnessSlider.isEnabled = config.bloom > 0
-        vidBloomWeightSlider.floatValue = config.bloomWeight
+        vidBloomWeightSlider.integerValue = config.bloomWeight
         vidBloomWeightSlider.isEnabled = config.bloom > 0
         
         vidDotMaskPopUp.selectItem(withTag: Int(config.dotMask))
@@ -174,19 +174,19 @@ extension ConfigurationController {
     
     @IBAction func vidBloomRadiusAction(_ sender: NSSlider!) {
         
-        config.bloomRadius = sender.floatValue
+        config.bloomRadius = sender.integerValue
         refresh()
     }
 
     @IBAction func vidBloomBrightnessAction(_ sender: NSSlider!) {
         
-        config.bloomBrightness = sender.floatValue
+        config.bloomBrightness = sender.integerValue
         refresh()
     }
     
     @IBAction func vidBloomWeightAction(_ sender: NSSlider!) {
         
-        config.bloomWeight = sender.floatValue
+        config.bloomWeight = sender.integerValue
         refresh()
     }
     
