@@ -435,11 +435,19 @@ class Configuration {
         }
     }
     */
-    var blur: Int = 0 {
-        didSet { renderer.shaderOptions.blur = Int32(blur) }
+    var blur: Int {
+        get { return c64.getConfig(.MON_BLUR) }
+        set {
+            c64.configure(.MON_BLUR, value: newValue)
+            renderer.shaderOptions.blur = Int32(newValue)
+        }
     }
-    var blurRadius: Float = 0 {
-        didSet { renderer.shaderOptions.blurRadius = blurRadius }
+    var blurRadius: Int {
+        get { return c64.getConfig(.MON_BLUR_RADIUS) }
+        set {
+            c64.configure(.MON_BLUR_RADIUS, value: newValue)
+            renderer.shaderOptions.blurRadius = Float(newValue) / 1000.0
+        }
     }
     var bloom: Int {
         get { return c64.getConfig(.MON_BLOOM) }
@@ -465,7 +473,7 @@ class Configuration {
         }
     }
     var bloomWeight: Int {
-        get { print("bloomRadius = \(c64.getConfig(.MON_BLOOM_WEIGHT))"); return c64.getConfig(.MON_BLOOM_WEIGHT) }
+        get { return c64.getConfig(.MON_BLOOM_WEIGHT) }
         set {
             c64.configure(.MON_BLOOM_WEIGHT, value: newValue)
             renderer.shaderOptions.bloomWeight = Float(newValue) / 1000.0

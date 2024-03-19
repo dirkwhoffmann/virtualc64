@@ -55,7 +55,7 @@ extension ConfigurationController {
 
         // Effects
         vidBlurPopUp.selectItem(withTag: Int(config.blur))
-        vidBlurRadiusSlider.floatValue = config.blurRadius
+        vidBlurRadiusSlider.integerValue = config.blurRadius
         vidBlurRadiusSlider.isEnabled = config.blur > 0
         
         vidBloomPopUp.selectItem(withTag: Int(config.bloom))
@@ -162,7 +162,7 @@ extension ConfigurationController {
     
     @IBAction func vidBlurRadiusAction(_ sender: NSSlider!) {
         
-        config.blurRadius = sender.floatValue
+        config.blurRadius = sender.integerValue
         refresh()
     }
     
@@ -299,8 +299,6 @@ extension ConfigurationController {
             EmulatorProxy.defaults.removeColorUserDefaults()
             EmulatorProxy.defaults.removeShaderUserDefaults()
 
-            defaults.set(Keys.Vid.blur, 1)
-            defaults.set(Keys.Vid.bloom, 1)
             defaults.set(Keys.Vid.dotMask, 1)
             defaults.set(Keys.Vid.scanlines, 2)
 

@@ -63,7 +63,7 @@ extension Renderer {
         shaderOptions = ShaderOptions(
             
             blur: Int32(config.blur),
-            blurRadius: config.blurRadius,
+            blurRadius: Float(config.blurRadius) / 1000.0,
             bloom: Int32(config.bloom),
             bloomRadius: Float(config.bloomRadius) / 1000.0,
             bloomBrightness: Float(config.bloomBrightness) / 1000.0,

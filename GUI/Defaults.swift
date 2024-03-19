@@ -1083,19 +1083,7 @@ extension Keys {
     
     struct Vid {
 
-        // Geometry
-        /*
-        static let hCenter            = "Geometry.HCenter"
-        static let vCenter            = "Geometry.VCenter"
-        static let hZoom              = "Geometry.HZoom"
-        static let vZoom              = "Geometry.VZoom"
-        */
-
         // Shaders
-        static let upscaler           = "Shaders.Upscaler"
-        static let blur               = "Shaders.Blur"
-        static let blurRadius         = "Shaders.BlurRadius"
-        static let bloom              = "Shaders.Bloom"
         static let flicker            = "Shaders.Flicker"
         static let flickerWeight      = "Shaders.FlickerWeight"
         static let dotMask            = "Shaders.DotMask"
@@ -1130,27 +1118,12 @@ extension DefaultsProxy {
 
         debug(.defaults)
         // No GUI related keys in this category
-        /*
-        register(Keys.Vid.hCenter, 0)
-        register(Keys.Vid.vCenter, 0)
-        register(Keys.Vid.hZoom, 0)
-        register(Keys.Vid.vZoom, 0.046)
-        */
     }
 
     func registerShaderUserDefaults() {
 
         debug(.defaults)
 
-        register(Keys.Vid.upscaler, 0)
-        register(Keys.Vid.blur, 1)
-        register(Keys.Vid.blurRadius, 0)
-        register(Keys.Vid.bloom, 0)
-        /*
-        register(Keys.Vid.bloomRadius, 1.0)
-        register(Keys.Vid.bloomBrightness, 0.4)
-        register(Keys.Vid.bloomWeight, 1.21)
-        */
         register(Keys.Vid.dotMask, 0)
         register(Keys.Vid.dotMaskBrightness, 0.7)
         register(Keys.Vid.scanlines, 0)
@@ -1203,11 +1176,7 @@ extension DefaultsProxy {
 
         debug(.defaults)
 
-        let keys = [ Keys.Vid.upscaler,
-                     Keys.Vid.blur,
-                     Keys.Vid.blurRadius,
-                     Keys.Vid.bloom,
-                     Keys.Vid.dotMask,
+        let keys = [ Keys.Vid.dotMask,
                      Keys.Vid.dotMaskBrightness,
                      Keys.Vid.scanlines,
                      Keys.Vid.scanlineBrightness,
@@ -1272,10 +1241,6 @@ extension Configuration {
 
         c64.suspend()
 
-        defaults.set(Keys.Vid.upscaler, upscaler)
-        defaults.set(Keys.Vid.blur, blur)
-        defaults.set(Keys.Vid.blurRadius, blurRadius)
-        defaults.set(Keys.Vid.bloom, bloom)
         defaults.set(Keys.Vid.dotMask, dotMask)
         defaults.set(Keys.Vid.dotMaskBrightness, dotMaskBrightness)
         defaults.set(Keys.Vid.scanlines, scanlines)
@@ -1336,10 +1301,6 @@ extension Configuration {
 
         c64.suspend()
 
-        upscaler = defaults.int(Keys.Vid.upscaler)
-        blur = defaults.int(Keys.Vid.blur)
-        blurRadius = defaults.float(Keys.Vid.blurRadius)
-        bloom = defaults.int(Keys.Vid.bloom)
         dotMask = defaults.int(Keys.Vid.dotMask)
         dotMaskBrightness = defaults.float(Keys.Vid.dotMaskBrightness)
         scanlines = defaults.int(Keys.Vid.scanlines)

@@ -3058,7 +3058,7 @@ Gw
                                                             <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="64h-x0-mSk">
                                                                 <rect key="frame" x="149" y="34" width="120" height="15"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="5" doubleValue="1.5" tickMarkPosition="above" sliderType="linear" id="ERa-RL-eUz"/>
+                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="5000" doubleValue="1500" tickMarkPosition="above" sliderType="linear" id="ERa-RL-eUz"/>
                                                                 <connections>
                                                                     <action selector="vidBlurRadiusAction:" target="-2" id="J5K-yq-PiT"/>
                                                                 </connections>
