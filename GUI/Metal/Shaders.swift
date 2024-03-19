@@ -30,9 +30,7 @@ struct ShaderOptions: Codable {
     var blurRadius: Float
     
     var bloom: Int32
-    var bloomRadiusR: Float
-    var bloomRadiusG: Float
-    var bloomRadiusB: Float
+    var bloomRadius: Float
     var bloomBrightness: Float
     var bloomWeight: Float
     

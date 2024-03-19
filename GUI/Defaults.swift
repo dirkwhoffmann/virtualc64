@@ -1096,9 +1096,7 @@ extension Keys {
         static let blur               = "Shaders.Blur"
         static let blurRadius         = "Shaders.BlurRadius"
         static let bloom              = "Shaders.Bloom"
-        static let bloomRadiusR       = "Shaders.BloonRadiusR"
-        static let bloomRadiusG       = "Shaders.BloonRadiusG"
-        static let bloomRadiusB       = "Shaders.BloonRadiusB"
+        static let bloomRadius        = "Shaders.BloonRadius"
         static let bloomBrightness    = "Shaders.BloomBrightness"
         static let bloomWeight        = "Shaders.BloomWeight"
         static let flicker            = "Shaders.Flicker"
@@ -1151,9 +1149,7 @@ extension DefaultsProxy {
         register(Keys.Vid.blur, 1)
         register(Keys.Vid.blurRadius, 0)
         register(Keys.Vid.bloom, 0)
-        register(Keys.Vid.bloomRadiusR, 1.0)
-        register(Keys.Vid.bloomRadiusG, 1.0)
-        register(Keys.Vid.bloomRadiusB, 1.0)
+        register(Keys.Vid.bloomRadius, 1.0)
         register(Keys.Vid.bloomBrightness, 0.4)
         register(Keys.Vid.bloomWeight, 1.21)
         register(Keys.Vid.dotMask, 0)
@@ -1212,9 +1208,7 @@ extension DefaultsProxy {
                      Keys.Vid.blur,
                      Keys.Vid.blurRadius,
                      Keys.Vid.bloom,
-                     Keys.Vid.bloomRadiusR,
-                     Keys.Vid.bloomRadiusG,
-                     Keys.Vid.bloomRadiusB,
+                     Keys.Vid.bloomRadius,
                      Keys.Vid.bloomBrightness,
                      Keys.Vid.bloomWeight,
                      Keys.Vid.dotMask,
@@ -1286,9 +1280,7 @@ extension Configuration {
         defaults.set(Keys.Vid.blur, blur)
         defaults.set(Keys.Vid.blurRadius, blurRadius)
         defaults.set(Keys.Vid.bloom, bloom)
-        defaults.set(Keys.Vid.bloomRadiusR, bloomRadiusR)
-        defaults.set(Keys.Vid.bloomRadiusG, bloomRadiusG)
-        defaults.set(Keys.Vid.bloomRadiusB, bloomRadiusB)
+        defaults.set(Keys.Vid.bloomRadius, bloomRadius)
         defaults.set(Keys.Vid.bloomBrightness, bloomBrightness)
         defaults.set(Keys.Vid.bloomWeight, bloomWeight)
         defaults.set(Keys.Vid.dotMask, dotMask)
@@ -1355,9 +1347,7 @@ extension Configuration {
         blur = defaults.int(Keys.Vid.blur)
         blurRadius = defaults.float(Keys.Vid.blurRadius)
         bloom = defaults.int(Keys.Vid.bloom)
-        bloomRadiusR = defaults.float(Keys.Vid.bloomRadiusR)
-        bloomRadiusG = defaults.float(Keys.Vid.bloomRadiusG)
-        bloomRadiusB = defaults.float(Keys.Vid.bloomRadiusB)
+        bloomRadius = defaults.float(Keys.Vid.bloomRadius)
         bloomBrightness = defaults.float(Keys.Vid.bloomBrightness)
         bloomWeight = defaults.float(Keys.Vid.bloomWeight)
         dotMask = defaults.int(Keys.Vid.dotMask)

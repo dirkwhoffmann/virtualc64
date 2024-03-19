@@ -246,9 +246,9 @@ class Canvas: Layer {
                               options: &renderer.shaderOptions,
                               length: MemoryLayout<ShaderOptions>.stride)
             
-            applyGauss(&bloomTextureR, radius: renderer.shaderOptions.bloomRadiusR)
-            applyGauss(&bloomTextureG, radius: renderer.shaderOptions.bloomRadiusG)
-            applyGauss(&bloomTextureB, radius: renderer.shaderOptions.bloomRadiusB)
+            applyGauss(&bloomTextureR, radius: renderer.shaderOptions.bloomRadius)
+            applyGauss(&bloomTextureG, radius: renderer.shaderOptions.bloomRadius)
+            applyGauss(&bloomTextureB, radius: renderer.shaderOptions.bloomRadius)
         }
         
         // Compute the upscaled texture

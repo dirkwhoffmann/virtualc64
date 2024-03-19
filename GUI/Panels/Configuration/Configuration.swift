@@ -420,11 +420,21 @@ class Configuration {
             renderer.canvas.updateTextureRect()
         }
     }
+    var upscaler: Int {
+        get { return c64.getConfig(.MON_UPSCALER) }
+        set {
+            if ressourceManager.selectUpscaler(newValue) {
+                c64.configure(.MON_UPSCALER, value: newValue)
+            }
+        }
+    }
+    /*
     var upscaler: Int = 0 {
         didSet {
             if !ressourceManager.selectUpscaler(upscaler) { upscaler = oldValue }
         }
     }
+    */
     var blur: Int = 0 {
         didSet { renderer.shaderOptions.blur = Int32(blur) }
     }
@@ -437,14 +447,8 @@ class Configuration {
             if !ressourceManager.selectBloomFilter(bloom) { bloom = oldValue }
         }
     }
-    var bloomRadiusR: Float = 0 {
-        didSet { renderer.shaderOptions.bloomRadiusR = bloomRadiusR }
-    }
-    var bloomRadiusG: Float = 0 {
-        didSet { renderer.shaderOptions.bloomRadiusG = bloomRadiusG }
-    }
-    var bloomRadiusB: Float = 0 {
-        didSet { renderer.shaderOptions.bloomRadiusB = bloomRadiusB }
+    var bloomRadius: Float = 0 {
+        didSet { renderer.shaderOptions.bloomRadius = bloomRadius }
     }
     var bloomBrightness: Float = 0 {
         didSet { renderer.shaderOptions.bloomBrightness = bloomBrightness }
@@ -452,6 +456,17 @@ class Configuration {
     var bloomWeight: Float = 0 {
         didSet { renderer.shaderOptions.bloomWeight = bloomWeight }
     }
+    var dotMask: Int {
+        get { return c64.getConfig(.MON_DOTMASK) }
+        set {
+            renderer.shaderOptions.dotMask = Int32(newValue)
+            ressourceManager.buildDotMasks()
+            if !ressourceManager.selectDotMask(newValue) {
+                c64.configure(.MON_DOTMASK, value: newValue)
+            }
+        }
+    }
+    /*
     var dotMask: Int = 0 {
         didSet {
             renderer.shaderOptions.dotMask = Int32(dotMask)
@@ -459,6 +474,7 @@ class Configuration {
             if !ressourceManager.selectDotMask(dotMask) { dotMask = oldValue }
         }
     }
+    */
     var dotMaskBrightness: Float = 0 {
         didSet {
             renderer.shaderOptions.dotMaskBrightness = dotMaskBrightness
