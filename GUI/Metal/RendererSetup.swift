@@ -69,13 +69,13 @@ extension Renderer {
             bloomBrightness: Float(config.bloomBrightness) / 1000.0,
             bloomWeight: Float(config.bloomWeight) / 1000.0,
             dotMask: Int32(config.dotMask),
-            dotMaskBrightness: config.dotMaskBrightness,
+            dotMaskBrightness: Float(config.dotMaskBrightness) / 1000.0,
             scanlines: Int32(config.scanlines),
-            scanlineBrightness: config.scanlineBrightness,
-            scanlineWeight: config.scanlineWeight,
+            scanlineBrightness: Float(config.scanlineBrightness) / 1000.0,
+            scanlineWeight: Float(config.scanlineWeight) / 1000.0,
             disalignment: Int32(config.disalignment),
-            disalignmentH: config.disalignmentH,
-            disalignmentV: config.disalignmentV
+            disalignmentH: Float(config.disalignmentH) / 1000000.0,
+            disalignmentV: Float(config.disalignmentV) / 1000000.0
         )
         
         ressourceManager = RessourceManager(view: view, device: device, renderer: self)

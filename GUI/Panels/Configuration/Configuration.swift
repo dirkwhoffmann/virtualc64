@@ -428,13 +428,6 @@ class Configuration {
             }
         }
     }
-    /*
-    var upscaler: Int = 0 {
-        didSet {
-            if !ressourceManager.selectUpscaler(upscaler) { upscaler = oldValue }
-        }
-    }
-    */
     var blur: Int {
         get { return c64.getConfig(.MON_BLUR) }
         set {
@@ -484,49 +477,64 @@ class Configuration {
         set {
             renderer.shaderOptions.dotMask = Int32(newValue)
             ressourceManager.buildDotMasks()
-            if !ressourceManager.selectDotMask(newValue) {
+            if ressourceManager.selectDotMask(newValue) {
                 c64.configure(.MON_DOTMASK, value: newValue)
             }
         }
     }
-    /*
-    var dotMask: Int = 0 {
-        didSet {
-            renderer.shaderOptions.dotMask = Int32(dotMask)
-            ressourceManager.buildDotMasks()
-            if !ressourceManager.selectDotMask(dotMask) { dotMask = oldValue }
-        }
-    }
-    */
-    var dotMaskBrightness: Float = 0 {
-        didSet {
-            renderer.shaderOptions.dotMaskBrightness = dotMaskBrightness
+    var dotMaskBrightness: Int {
+        get { return c64.getConfig(.MON_DOTMASK_BRIGHTNESS) }
+        set {
+            c64.configure(.MON_DOTMASK_BRIGHTNESS, value: newValue)
+            renderer.shaderOptions.dotMaskBrightness = Float(newValue) / 1000.0
             ressourceManager.buildDotMasks()
             ressourceManager.selectDotMask(dotMask)
         }
     }
-    var scanlines: Int = 0 {
-        didSet {
-            renderer.shaderOptions.scanlines = Int32(scanlines)
-            if !ressourceManager.selectScanlineFilter(scanlines) { scanlines = oldValue }
+    var scanlines: Int {
+        get { return c64.getConfig(.MON_SCANLINES) }
+        set {
+            renderer.shaderOptions.scanlines = Int32(newValue)
+            if !ressourceManager.selectScanlineFilter(newValue) {
+                c64.configure(.MON_SCANLINES, value: newValue)
+            }
         }
     }
-    var scanlineBrightness: Float = 0 {
-        didSet { renderer.shaderOptions.scanlineBrightness = scanlineBrightness }
+    var scanlineBrightness: Int {
+        get { return c64.getConfig(.MON_SCANLINE_BRIGHTNESS) }
+        set {
+            c64.configure(.MON_SCANLINE_BRIGHTNESS, value: newValue)
+            renderer.shaderOptions.scanlineBrightness = Float(newValue) / 1000.0
+        }
     }
-    var scanlineWeight: Float = 0 {
-        didSet { renderer.shaderOptions.scanlineWeight = scanlineWeight }
+    var scanlineWeight: Int {
+        get { return c64.getConfig(.MON_SCANLINE_WEIGHT) }
+        set {
+            c64.configure(.MON_SCANLINE_WEIGHT, value: newValue)
+            renderer.shaderOptions.scanlineWeight = Float(newValue) / 1000.0
+        }
     }
-    var disalignment: Int = 0 {
-        didSet { renderer.shaderOptions.disalignment = Int32(disalignment) }
+    var disalignment: Int {
+        get { return c64.getConfig(.MON_DISALIGNMENT) }
+        set {
+            c64.configure(.MON_DISALIGNMENT, value: newValue)
+            renderer.shaderOptions.disalignment = Int32(newValue)
+        }
     }
-    var disalignmentH: Float = 0 {
-        didSet { renderer.shaderOptions.disalignmentH = disalignmentH }
+    var disalignmentH: Int {
+        get { return c64.getConfig(.MON_DISALIGNMENT_H) }
+        set {
+            c64.configure(.MON_DISALIGNMENT_H, value: newValue)
+            renderer.shaderOptions.disalignmentH = Float(newValue) / 1000000.0
+        }
     }
-    var disalignmentV: Float = 0 {
-        didSet { renderer.shaderOptions.disalignmentV = disalignmentV }
+    var disalignmentV: Int {
+        get { return c64.getConfig(.MON_DISALIGNMENT_V) }
+        set {
+            c64.configure(.MON_DISALIGNMENT_V, value: newValue)
+            renderer.shaderOptions.disalignmentV = Float(newValue) / 1000000.0
+        }
     }
-    
     init(with controller: MyController) { parent = controller }
 
     //

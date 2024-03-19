@@ -2988,12 +2988,12 @@ Gw
                                                             <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nIa-kK-410">
                                                                 <rect key="frame" x="158" y="165" width="120" height="15"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="above" sliderType="linear" id="d3i-cS-Bbb"/>
+                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1000" doubleValue="500" tickMarkPosition="above" sliderType="linear" id="d3i-cS-Bbb"/>
                                                             </slider>
                                                             <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="91k-67-6iN">
                                                                 <rect key="frame" x="158" y="190" width="120" height="15"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1" doubleValue="0.12" tickMarkPosition="above" sliderType="linear" id="M0h-Lh-MdB"/>
+                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1000" doubleValue="120" tickMarkPosition="above" sliderType="linear" id="M0h-Lh-MdB"/>
                                                                 <connections>
                                                                     <action selector="vidScanlineBrightnessAction:" target="-2" id="HhA-6U-YHL"/>
                                                                 </connections>
@@ -3105,7 +3105,7 @@ Gw
                                                             <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7xe-s2-Fir">
                                                                 <rect key="frame" x="149" y="98" width="120" height="15"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1" doubleValue="0.69999999999999996" tickMarkPosition="above" sliderType="linear" id="NFb-w3-Cvz"/>
+                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1000" doubleValue="700" tickMarkPosition="above" sliderType="linear" id="NFb-w3-Cvz"/>
                                                                 <connections>
                                                                     <action selector="vidDotMaskBrightnessAction:" target="-2" id="sBa-MX-iCX"/>
                                                                 </connections>
@@ -3190,7 +3190,7 @@ Gw
                                                             <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KkN-hN-xfa">
                                                                 <rect key="frame" x="439" y="201" width="120" height="15"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="-0.0040000000000000001" maxValue="0.0040000000000000001" doubleValue="0.002" tickMarkPosition="above" sliderType="linear" id="LLv-BX-2wL"/>
+                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="-4000" maxValue="4000" doubleValue="2000" tickMarkPosition="above" sliderType="linear" id="LLv-BX-2wL"/>
                                                                 <connections>
                                                                     <action selector="vidDisalignmentVAction:" target="-2" id="tUp-HI-lBz"/>
                                                                 </connections>
@@ -3198,7 +3198,7 @@ Gw
                                                             <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F6O-Zb-pow">
                                                                 <rect key="frame" x="439" y="226" width="120" height="15"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="-0.0040000000000000001" maxValue="0.0040000000000000001" doubleValue="0.002" tickMarkPosition="above" sliderType="linear" id="EOd-8a-Dd3"/>
+                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="-4000" maxValue="4000" doubleValue="2000" tickMarkPosition="above" sliderType="linear" id="EOd-8a-Dd3"/>
                                                                 <connections>
                                                                     <action selector="vidDisalignmentHAction:" target="-2" id="jmN-Wb-HeM"/>
                                                                 </connections>

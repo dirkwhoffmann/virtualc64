@@ -70,19 +70,19 @@ extension ConfigurationController {
         for i in 0 ... 4 {
             vidDotMaskPopUp.item(at: i)?.image = renderer.ressourceManager.dotmaskImages[i]
         }
-        vidDotMaskBrightnessSlider.floatValue = config.dotMaskBrightness
+        vidDotMaskBrightnessSlider.integerValue = config.dotMaskBrightness
         vidDotMaskBrightnessSlider.isEnabled = config.dotMask > 0
         
         vidScanlinesPopUp.selectItem(withTag: Int(config.scanlines))
-        vidScanlineBrightnessSlider.floatValue = config.scanlineBrightness
+        vidScanlineBrightnessSlider.integerValue = config.scanlineBrightness
         vidScanlineBrightnessSlider.isEnabled = config.scanlines > 0
-        vidScanlineWeightSlider.floatValue = config.scanlineWeight
+        vidScanlineWeightSlider.integerValue = config.scanlineWeight
         vidScanlineWeightSlider.isEnabled = config.scanlines == 2
         
         vidMisalignmentPopUp.selectItem(withTag: Int(config.disalignment))
-        vidMisalignmentXSlider.floatValue = config.disalignmentH
+        vidMisalignmentXSlider.integerValue = config.disalignmentH
         vidMisalignmentXSlider.isEnabled = config.disalignment > 0
-        vidMisalignmentYSlider.floatValue = config.disalignmentV
+        vidMisalignmentYSlider.integerValue = config.disalignmentV
         vidMisalignmentYSlider.isEnabled = config.disalignment > 0
 
         // Button
@@ -198,7 +198,7 @@ extension ConfigurationController {
     
     @IBAction func vidDotMaskBrightnessAction(_ sender: NSSlider!) {
         
-        config.dotMaskBrightness = sender.floatValue
+        config.dotMaskBrightness = sender.integerValue
         refresh()
     }
     
@@ -210,13 +210,13 @@ extension ConfigurationController {
     
     @IBAction func vidScanlineBrightnessAction(_ sender: NSSlider!) {
         
-        config.scanlineBrightness = sender.floatValue
+        config.scanlineBrightness = sender.integerValue
         refresh()
     }
     
     @IBAction func vidScanlineWeightAction(_ sender: NSSlider!) {
         
-        config.scanlineWeight = sender.floatValue
+        config.scanlineWeight = sender.integerValue
         refresh()
     }
     
@@ -228,13 +228,13 @@ extension ConfigurationController {
     
     @IBAction func vidDisalignmentHAction(_ sender: NSSlider!) {
         
-        config.disalignmentH = sender.floatValue
+        config.disalignmentH = sender.integerValue
         refresh()
     }
     
     @IBAction func vidDisalignmentVAction(_ sender: NSSlider!) {
         
-        config.disalignmentV = sender.floatValue
+        config.disalignmentV = sender.integerValue
         refresh()
     }
     
@@ -299,8 +299,8 @@ extension ConfigurationController {
             EmulatorProxy.defaults.removeColorUserDefaults()
             EmulatorProxy.defaults.removeShaderUserDefaults()
 
-            defaults.set(Keys.Vid.dotMask, 1)
-            defaults.set(Keys.Vid.scanlines, 2)
+            defaults.set(.MON_DOTMASK, 1)
+            defaults.set(.MON_SCANLINES, 2)
 
         default:
             fatalError()

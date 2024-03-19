@@ -1081,6 +1081,7 @@ extension Configuration {
 
 extension Keys {
     
+    /*
     struct Vid {
 
         // Shaders
@@ -1095,6 +1096,7 @@ extension Keys {
         static let disalignmentH      = "Shaders.DisalignmentH"
         static let disalignmentV      = "Shaders.DisalignmentV"
     }
+    */
 }
 
 extension DefaultsProxy {
@@ -1102,12 +1104,16 @@ extension DefaultsProxy {
     func registerVideoUserDefaults() {
 
         debug(.defaults)
+        // No GUI related keys in this category
 
+        /*
         registerColorUserDefaults()
         registerGeometryUserDefaults()
         registerShaderUserDefaults()
+        */
     }
 
+    /*
     func registerColorUserDefaults() {
 
         debug(.defaults)
@@ -1123,16 +1129,9 @@ extension DefaultsProxy {
     func registerShaderUserDefaults() {
 
         debug(.defaults)
-
-        register(Keys.Vid.dotMask, 0)
-        register(Keys.Vid.dotMaskBrightness, 0.7)
-        register(Keys.Vid.scanlines, 0)
-        register(Keys.Vid.scanlineBrightness, 0.55)
-        register(Keys.Vid.scanlineWeight, 0.11)
-        register(Keys.Vid.disalignment, 0)
-        register(Keys.Vid.disalignmentH, 0.001)
-        register(Keys.Vid.disalignmentV, 0.001)
+        // No GUI related keys in this category
     }
+    */
 
     func removeVideoUserDefaults() {
 
@@ -1161,31 +1160,27 @@ extension DefaultsProxy {
         remove(.MON_VCENTER)
         remove(.MON_HZOOM)
         remove(.MON_VZOOM)
-
-        /*
-        let keys = [ Keys.Vid.hCenter,
-                     Keys.Vid.vCenter,
-                     Keys.Vid.hZoom,
-                     Keys.Vid.vZoom ]
-
-        for key in keys { removeKey(key) }
-        */
     }
 
     func removeShaderUserDefaults() {
 
         debug(.defaults)
 
-        let keys = [ Keys.Vid.dotMask,
-                     Keys.Vid.dotMaskBrightness,
-                     Keys.Vid.scanlines,
-                     Keys.Vid.scanlineBrightness,
-                     Keys.Vid.scanlineWeight,
-                     Keys.Vid.disalignment,
-                     Keys.Vid.disalignmentH,
-                     Keys.Vid.disalignmentV ]
-
-        for key in keys { removeKey(key) }
+        remove(.MON_UPSCALER)
+        remove(.MON_BLUR)
+        remove(.MON_BLUR_RADIUS)
+        remove(.MON_BLOOM)
+        remove(.MON_BLOOM_RADIUS)
+        remove(.MON_BLOOM_BRIGHTNESS)
+        remove(.MON_BLOOM_WEIGHT)
+        remove(.MON_DOTMASK)
+        remove(.MON_DOTMASK_BRIGHTNESS)
+        remove(.MON_SCANLINES)
+        remove(.MON_SCANLINE_BRIGHTNESS)
+        remove(.MON_SCANLINE_WEIGHT)
+        remove(.MON_DISALIGNMENT)
+        remove(.MON_DISALIGNMENT_H)
+        remove(.MON_DISALIGNMENT_V)
     }
 }
 
@@ -1241,14 +1236,21 @@ extension Configuration {
 
         c64.suspend()
 
-        defaults.set(Keys.Vid.dotMask, dotMask)
-        defaults.set(Keys.Vid.dotMaskBrightness, dotMaskBrightness)
-        defaults.set(Keys.Vid.scanlines, scanlines)
-        defaults.set(Keys.Vid.scanlineBrightness, scanlineBrightness)
-        defaults.set(Keys.Vid.scanlineWeight, scanlineWeight)
-        defaults.set(Keys.Vid.disalignment, disalignment)
-        defaults.set(Keys.Vid.disalignmentH, disalignmentH)
-        defaults.set(Keys.Vid.disalignmentV, disalignmentV)
+        defaults.set(.MON_UPSCALER, upscaler)
+        defaults.set(.MON_BLUR, blur)
+        defaults.set(.MON_BLUR_RADIUS, blurRadius)
+        defaults.set(.MON_BLOOM, bloom)
+        defaults.set(.MON_BLOOM_RADIUS, bloomRadius)
+        defaults.set(.MON_BLOOM_BRIGHTNESS, bloomBrightness)
+        defaults.set(.MON_BLOOM_WEIGHT, bloomWeight)
+        defaults.set(.MON_DOTMASK, dotMask)
+        defaults.set(.MON_DOTMASK_BRIGHTNESS, dotMaskBrightness)
+        defaults.set(.MON_SCANLINES, scanlines)
+        defaults.set(.MON_SCANLINE_BRIGHTNESS, scanlineBrightness)
+        defaults.set(.MON_SCANLINE_WEIGHT, scanlineWeight)
+        defaults.set(.MON_DISALIGNMENT, disalignment)
+        defaults.set(.MON_DISALIGNMENT_H, disalignmentH)
+        defaults.set(.MON_DISALIGNMENT_V, disalignmentV)
 
         defaults.save()
 
@@ -1301,14 +1303,21 @@ extension Configuration {
 
         c64.suspend()
 
-        dotMask = defaults.int(Keys.Vid.dotMask)
-        dotMaskBrightness = defaults.float(Keys.Vid.dotMaskBrightness)
-        scanlines = defaults.int(Keys.Vid.scanlines)
-        scanlineBrightness = defaults.float(Keys.Vid.scanlineBrightness)
-        scanlineWeight = defaults.float(Keys.Vid.scanlineWeight)
-        disalignment = defaults.int(Keys.Vid.disalignment)
-        disalignmentH = defaults.float(Keys.Vid.disalignmentH)
-        disalignmentV = defaults.float(Keys.Vid.disalignmentV)
+        upscaler = defaults.get(.MON_UPSCALER)
+        blur = defaults.get(.MON_BLUR)
+        blurRadius = defaults.get(.MON_BLUR_RADIUS)
+        bloom = defaults.get(.MON_BLOOM)
+        bloomRadius = defaults.get(.MON_BLOOM_RADIUS)
+        bloomBrightness = defaults.get(.MON_BLOOM_BRIGHTNESS)
+        bloomWeight = defaults.get(.MON_BLOOM_WEIGHT)
+        dotMask = defaults.get(.MON_DOTMASK)
+        dotMaskBrightness = defaults.get(.MON_DOTMASK_BRIGHTNESS)
+        scanlines = defaults.get(.MON_SCANLINES)
+        scanlineBrightness = defaults.get(.MON_SCANLINE_BRIGHTNESS)
+        scanlineWeight = defaults.get(.MON_SCANLINE_WEIGHT)
+        disalignment = defaults.get(.MON_DISALIGNMENT)
+        disalignmentH = defaults.get(.MON_DISALIGNMENT_H)
+        disalignmentV = defaults.get(.MON_DISALIGNMENT_V)
 
         c64.resume()
     }
