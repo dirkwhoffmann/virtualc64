@@ -1966,12 +1966,14 @@ using namespace vc64;
 // Constants
 //
 
+/*
 @implementation Constants
 
 + (NSInteger)texWidth { return Texture::width; }
 + (NSInteger)texHeight { return Texture::height; }
 
 @end
+*/
 
 
 //

@@ -428,6 +428,7 @@
 		50E2D9AC25991E4B009A986B /* AnyCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E2D9AA25991E4B009A986B /* AnyCollection.cpp */; };
 		50E5BF732BA81E710004712B /* Monitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E5BF712BA81E710004712B /* Monitor.cpp */; };
 		50E5BF742BA81E710004712B /* Monitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E5BF712BA81E710004712B /* Monitor.cpp */; };
+		50E5BF792BAB00770004712B /* SwiftProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E5BF782BAB00770004712B /* SwiftProxy.swift */; };
 		50E9B92D201F299500065A89 /* MyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92C201F299500065A89 /* MyController.swift */; };
 		50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92E201FA92C00065A89 /* Alerts.swift */; };
 		50EAFFEA24B2600D00024CD2 /* MyToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EAFFE924B2600D00024CD2 /* MyToolbar.swift */; };
@@ -994,6 +995,7 @@
 		50E5BF722BA81E710004712B /* Monitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Monitor.h; sourceTree = "<group>"; };
 		50E5BF762BA81EB30004712B /* MonitorTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MonitorTypes.h; sourceTree = "<group>"; };
 		50E5BF772BA81ECD0004712B /* CMakeLists */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists; sourceTree = "<group>"; };
+		50E5BF782BAB00770004712B /* SwiftProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftProxy.swift; sourceTree = "<group>"; };
 		50E5D66E2B9C9C97004113A9 /* RecorderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecorderTypes.h; sourceTree = "<group>"; };
 		50E5FFAF227964F20025C73D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		50E5FFB3227964FA0025C73D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -1790,6 +1792,7 @@
 				50176C7A0A6F7357009E80BD /* EmulatorProxy.mm */,
 				50F062E2258DE564009A6B21 /* TypeExtensions.swift */,
 				50D3091F24C625B200B92563 /* ProxyExtensions.swift */,
+				50E5BF782BAB00770004712B /* SwiftProxy.swift */,
 			);
 			path = Proxy;
 			sourceTree = "<group>";
@@ -2429,6 +2432,7 @@
 				5003382B266F7F3C00D5456E /* VICII_table.cpp in Sources */,
 				504C438324AF29AC00E69CAE /* CoreComponent.cpp in Sources */,
 				50E9B92D201F299500065A89 /* MyController.swift in Sources */,
+				50E5BF792BAB00770004712B /* SwiftProxy.swift in Sources */,
 				50DBB44B2025CE5700489271 /* Utils.swift in Sources */,
 				504C436F24AF29AC00E69CAE /* Comal80.cpp in Sources */,
 				50E2D9AC25991E4B009A986B /* AnyCollection.cpp in Sources */,

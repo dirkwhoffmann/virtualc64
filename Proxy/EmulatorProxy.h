@@ -99,6 +99,7 @@ using namespace vc64;
 // Constants
 //
 
+/*
 @interface Constants : NSObject {
 
 }
@@ -107,7 +108,7 @@ using namespace vc64;
 @property (readonly, class) NSInteger texHeight;
 
 @end
-
+*/
 
 //
 // C64

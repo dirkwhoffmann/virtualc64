@@ -215,8 +215,8 @@ class Canvas: Layer {
         prevBuffer = buffer
 
         // Update the GPU texture
-        let w = Constants.texWidth
-        let h = Constants.texHeight
+        let w = SwiftProxy.Constants.Texture.Width
+        let h = SwiftProxy.Constants.Texture.Height
         emulatorTexture.replace(w: w, h: h, buffer: buffer)
     }
     
