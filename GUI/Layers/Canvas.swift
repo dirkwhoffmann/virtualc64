@@ -200,13 +200,13 @@ class Canvas: Layer {
             let w = TextureSize.original.width
             let h = TextureSize.original.height
             if !controller.inBackground || !controller.pref.pauseInBackground {
-                emulatorTexture.replace(w: w, h: h, buffer: c64.noise)
+                emulatorTexture.replace(w: w, h: h, buffer: v64.getNoise())
             }
             return
         }
         
         // Get a pointer to most recent texture
-        let buffer = c64.texture
+        let buffer = v64.getTexture()
         precondition(buffer != nil)
 
         // Only proceed if the emulator delivers a new texture

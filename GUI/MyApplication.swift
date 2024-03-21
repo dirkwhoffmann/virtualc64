@@ -125,7 +125,10 @@ extension MyAppDelegate {
     var proxies: [EmulatorProxy] {
         return documents.map({ $0.c64 })
     }
-    
+    var swiftProxies: [SwiftProxy] {
+        return documents.map({ $0.v64 })
+    }
+
     func windowDidBecomeMain(_ window: NSWindow) {
         
         for c in controllers {

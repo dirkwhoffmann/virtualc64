@@ -337,7 +337,8 @@ public:
      *  @note If this function is called for an options that applies to multiple
      *  components, all components are configured with the specified value.
      */
-    void set(Option option, i64 value) throws;
+    void set(Option option, i64 value);
+    void set(Option option, i64 value, VC64Error &error) noexcept;
 
     /** @brief  Configures a component.
      *
@@ -351,6 +352,7 @@ public:
      *  an additional parameter to uniquely determine the configured component.
      */
     void set(Option option, long id, i64 value);
+    void set(Option option, long id, i64 value, VC64Error &error) noexcept;
 
 
     /** @brief  Exports the current configuration.
@@ -358,8 +360,10 @@ public:
      *  The current configuration is exported in form of a RetroShell script.
      *  Reading in the script at a later point will restore the configuration.
      */
+    void exportConfig(const string &path) const;
     void exportConfig(const fs::path &path) const;
     void exportConfig(std::ostream& stream) const;
+    void exportConfig(const string &path, VC64Error &error) const;
 
 
     /// @}

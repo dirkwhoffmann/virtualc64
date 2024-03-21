@@ -96,21 +96,6 @@ using namespace vc64;
 @end
 
 //
-// Constants
-//
-
-/*
-@interface Constants : NSObject {
-
-}
-
-@property (readonly, class) NSInteger texWidth;
-@property (readonly, class) NSInteger texHeight;
-
-@end
-*/
-
-//
 // C64
 //
 
@@ -171,9 +156,6 @@ using namespace vc64;
 
 @property BOOL trackMode;
 
-@property (readonly) u32 *texture;
-@property (readonly) u32 *noise;
-
 @property InspectionTarget inspectionTarget;
 - (void) removeInspectionTarget;
 
@@ -187,9 +169,6 @@ using namespace vc64;
 - (void)pause;
 - (void)halt;
 
-- (void)suspend;
-- (void)resume;
-
 - (void)requestAutoSnapshot;
 - (void)requestUserSnapshot;
 
@@ -199,7 +178,7 @@ using namespace vc64;
 - (NSInteger)getConfig:(Option)opt;
 - (NSInteger)getConfig:(Option)opt id:(NSInteger)id;
 - (NSInteger)getConfig:(Option)opt drive:(NSInteger)id;
-- (BOOL)configure:(Option)opt value:(NSInteger)val;
+// - (BOOL)configure:(Option)opt value:(NSInteger)val;
 - (BOOL)configure:(Option)opt enable:(BOOL)val;
 - (BOOL)configure:(Option)opt id:(NSInteger)id value:(NSInteger)val;
 - (BOOL)configure:(Option)opt id:(NSInteger)id enable:(BOOL)val;

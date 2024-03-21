@@ -92,13 +92,12 @@ class SwiftProxy: SwiftAPI {
 
     func wakeUp() { core.wakeUp() }
 
-
     //
     // Accessing video data
     //
-    func getTexture() -> UnsafeMutablePointer<u32> { return core.getTexture() }
-    func getNoise() -> UnsafeMutablePointer<u32> { return core.getNoise() }
 
+    func getTexture() -> UnsafeMutablePointer<u32>? { return core.getTexture() }
+    func getNoise() -> UnsafeMutablePointer<u32>? { return core.getNoise() }
 
     //
     // Configuring the emulator
@@ -120,14 +119,31 @@ class SwiftProxy: SwiftAPI {
             DispatchQueue.main.async { myself.delegate(msg) }
         }
     }
-}
 
-extension vc64.VirtualC64 {
-    /*
-     private mutating func getConfigCopy() -> vc64.EmulatorConfig {
-     return
-     }
-     */
+    func get(option: vc64.Option) -> Int64 { return core.get(option) }
+    func get(option: vc64.Option, id: Int) -> Int64 { return core.get(option, id) }
+    func set(model: vc64.C64Model) { core.set(model) }
+
+    func set(option: vc64.Option, value: Int64) throws {
+
+        var error = vc64.VC64Error()
+        core.set(option, value, &error)
+        if error.data != 0 { throw VC64Error(error) }
+    }
+
+    func set(option: vc64.Option, id: Int, value: Int64) throws {
+
+        var error = vc64.VC64Error()
+        core.set(option, id, value, &error)
+        if error.data != 0 { throw VC64Error(error) }
+    }
+
+    func exportConfig(path: String) throws {
+
+        var error = vc64.VC64Error()
+        core.exportConfig(std.string(path), &error)
+        if error.data != 0 { throw VC64Error(error) }
+    }
 }
 
 //

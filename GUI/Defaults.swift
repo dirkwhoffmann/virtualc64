@@ -683,7 +683,7 @@ extension Configuration {
         debug(.defaults)
         let defaults = EmulatorProxy.defaults!
 
-        c64.suspend()
+        v64.suspend()
 
         defaults.set(.VICII_REVISION, vicRevision)
         defaults.set(.VICII_GRAY_DOT_BUG, vicGrayDotBug)
@@ -707,7 +707,7 @@ extension Configuration {
 
         defaults.save()
 
-        c64.resume()
+        v64.resume()
     }
 
     func applyHardwareUserDefaults() {
@@ -715,7 +715,7 @@ extension Configuration {
         debug(.defaults)
         let defaults = EmulatorProxy.defaults!
 
-        c64.suspend()
+        v64.suspend()
 
         vicRevision = defaults.get(.VICII_REVISION)
         vicGrayDotBug = defaults.get(.VICII_GRAY_DOT_BUG) != 0
@@ -737,7 +737,7 @@ extension Configuration {
 
         ramPattern = defaults.get(.RAM_PATTERN)
 
-        c64.resume()
+        v64.resume()
     }
 }
 
@@ -787,7 +787,7 @@ extension Configuration {
         debug(.defaults)
         let defaults = EmulatorProxy.defaults!
 
-        c64.suspend()
+        v64.suspend()
 
         defaults.set(.DRV_CONNECT, DRIVE8, drive8Connected)
         defaults.set(.DRV_TYPE, DRIVE8, drive8Type)
@@ -808,7 +808,7 @@ extension Configuration {
 
         defaults.save()
 
-        c64.resume()
+        v64.resume()
     }
 
     func applyPeripheralsUserDefaults() {
@@ -816,7 +816,7 @@ extension Configuration {
         debug(.defaults)
         let defaults = EmulatorProxy.defaults!
 
-        c64.suspend()
+        v64.suspend()
 
         drive8Connected = defaults.get(.DRV_CONNECT, DRIVE8) != 0
         drive8Type = defaults.get(.DRV_TYPE, DRIVE8)
@@ -835,7 +835,7 @@ extension Configuration {
 
         mouseModel = defaults.get(.MOUSE_MODEL)
 
-        c64.resume()
+        v64.resume()
     }
 }
 
@@ -876,7 +876,7 @@ extension Configuration {
         debug(.defaults)
         let defaults = EmulatorProxy.defaults!
 
-        c64.suspend()
+        v64.suspend()
 
         defaults.set(.DRV_POWER_SAVE, DRIVE8, drive8PowerSave)
         defaults.set(.DRV_POWER_SAVE, DRIVE9, drive9PowerSave)
@@ -892,7 +892,7 @@ extension Configuration {
 
         defaults.save()
 
-        c64.resume()
+        v64.resume()
     }
 
     func applyPerformanceUserDefaults() {
@@ -900,7 +900,7 @@ extension Configuration {
         debug(.defaults)
         let defaults = EmulatorProxy.defaults!
 
-        c64.suspend()
+        v64.suspend()
 
         drive8PowerSave = defaults.get(.DRV_POWER_SAVE, DRIVE8) != 0
         drive9PowerSave = defaults.get(.DRV_POWER_SAVE, DRIVE9) != 0
@@ -914,7 +914,7 @@ extension Configuration {
         timeLapse = defaults.get(.EMU_TIME_LAPSE)
         runAhead = defaults.get(.EMU_RUN_AHEAD)
 
-        c64.resume()
+        v64.resume()
     }
 }
 
@@ -955,7 +955,7 @@ extension Configuration {
         debug(.defaults)
         let defaults = EmulatorProxy.defaults!
 
-        c64.suspend()
+        v64.suspend()
 
         defaults.set(.AUD_VOL, 0, vol0)
         defaults.set(.AUD_VOL, 1, vol1)
@@ -976,7 +976,7 @@ extension Configuration {
         defaults.set(.SID_FILTER, sidFilter)
         defaults.save()
 
-        c64.resume()
+        v64.resume()
     }
 
     func applyAudioUserDefaults() {
@@ -984,7 +984,7 @@ extension Configuration {
         debug(.defaults)
         let defaults = EmulatorProxy.defaults!
 
-        c64.suspend()
+        v64.suspend()
 
         vol0 = defaults.get(.AUD_VOL, 0)
         vol1 = defaults.get(.AUD_VOL, 1)
@@ -1007,7 +1007,7 @@ extension Configuration {
         ejectVolume = defaults.get(.DRV_EJECT_VOL, DRIVE8)
         sidFilter = defaults.get(.SID_FILTER) != 0
 
-        c64.resume()
+        v64.resume()
     }
 }
 
@@ -1090,7 +1090,7 @@ extension Configuration {
         debug(.defaults)
         let defaults = EmulatorProxy.defaults!
 
-        c64.suspend()
+        v64.suspend()
 
         defaults.set(.MON_PALETTE, palette)
         defaults.set(.MON_BRIGHTNESS, brightness)
@@ -1099,7 +1099,7 @@ extension Configuration {
 
         defaults.save()
 
-        c64.resume()
+        v64.resume()
     }
 
     func saveGeometryUserDefaults() {
@@ -1107,7 +1107,7 @@ extension Configuration {
         debug(.defaults)
         let defaults = EmulatorProxy.defaults!
 
-        c64.suspend()
+        v64.suspend()
 
         defaults.set(.MON_HCENTER, hCenter)
         defaults.set(.MON_VCENTER, vCenter)
@@ -1116,7 +1116,7 @@ extension Configuration {
 
         defaults.save()
 
-        c64.resume()
+        v64.resume()
     }
 
     func saveShaderUserDefaults() {
@@ -1124,7 +1124,7 @@ extension Configuration {
         debug(.defaults)
         let defaults = EmulatorProxy.defaults!
 
-        c64.suspend()
+        v64.suspend()
 
         defaults.set(.MON_UPSCALER, upscaler)
         defaults.set(.MON_BLUR, blur)
@@ -1144,7 +1144,7 @@ extension Configuration {
 
         defaults.save()
 
-        c64.resume()
+        v64.resume()
     }
 
     func applyVideoUserDefaults() {
@@ -1161,14 +1161,14 @@ extension Configuration {
         debug(.defaults)
         let defaults = EmulatorProxy.defaults!
 
-        c64.suspend()
+        v64.suspend()
 
         palette = defaults.get(.MON_PALETTE)
         brightness = defaults.get(.MON_BRIGHTNESS)
         contrast = defaults.get(.MON_CONTRAST)
         saturation = defaults.get(.MON_SATURATION)
 
-        c64.resume()
+        v64.resume()
     }
 
     func applyGeometryUserDefaults() {
@@ -1176,14 +1176,14 @@ extension Configuration {
         debug(.defaults)
         let defaults = EmulatorProxy.defaults!
 
-        c64.suspend()
+        v64.suspend()
 
         hCenter = defaults.get(.MON_HCENTER)
         vCenter = defaults.get(.MON_VCENTER)
         hZoom = defaults.get(.MON_HZOOM)
         vZoom = defaults.get(.MON_VZOOM)
 
-        c64.resume()
+        v64.resume()
     }
 
     func applyShaderUserDefaults() {
@@ -1191,7 +1191,7 @@ extension Configuration {
         debug(.defaults)
         let defaults = EmulatorProxy.defaults!
 
-        c64.suspend()
+        v64.suspend()
 
         upscaler = defaults.get(.MON_UPSCALER)
         blur = defaults.get(.MON_BLUR)
@@ -1209,6 +1209,6 @@ extension Configuration {
         disalignmentH = defaults.get(.MON_DISALIGNMENT_H)
         disalignmentV = defaults.get(.MON_DISALIGNMENT_V)
 
-        c64.resume()
+        v64.resume()
     }
 }

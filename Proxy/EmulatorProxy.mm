@@ -2206,26 +2206,6 @@ using namespace vc64;
     [self emu]->halt();
 }
 
-- (void)suspend
-{
-    [self emu]->suspend();
-}
-
-- (void)resume
-{
-    [self emu]->resume();
-}
-
-- (u32 *)texture
-{
-    return [self emu]->getTexture();
-}
-
-- (u32 *)noise
-{
-    return [self emu]->getNoise();
-}
-
 - (void)requestAutoSnapshot
 {
     [self emu]->put(CMD_SNAPSHOT_AUTO);
@@ -2263,6 +2243,7 @@ using namespace vc64;
     return [self emu]->get(opt, (long)id);
 }
 
+/*
 - (BOOL)configure:(Option)opt value:(NSInteger)val
 {
     try {
@@ -2272,6 +2253,7 @@ using namespace vc64;
         return false;
     }
 }
+*/
 
 - (BOOL)configure:(Option)opt enable:(BOOL)val
 {
@@ -2330,7 +2312,7 @@ using namespace vc64;
 
 - (void)exportConfig:(NSURL *)url exception:(ExceptionWrapper *)ex
 {
-    try { [self emu]->exportConfig([url fileSystemRepresentation]); }
+    try { [self emu]->exportConfig(std::string([url fileSystemRepresentation])); }
     catch (VC64Error &error) { [ex save:error]; }
 }
 
