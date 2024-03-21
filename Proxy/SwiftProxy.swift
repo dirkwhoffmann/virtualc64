@@ -42,27 +42,6 @@ class SwiftProxy: SwiftAPI {
     static var build: String { return String(vc64.VirtualC64.build()) }
 
     //
-    // Initializing
-    //
-
-    func launch(delegate: @escaping (vc64.Message) -> Void) {
-
-        self.delegate = delegate
-
-        // Convert 'self' to a void pointer
-        let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
-
-        core.launch(myself) { (ptr, msg: vc64.Message) in
-
-            // Convert void pointer back to 'self'
-            let myself = Unmanaged<SwiftProxy>.fromOpaque(ptr!).takeUnretainedValue()
-
-            // Process message in the main thread
-            DispatchQueue.main.async { myself.delegate(msg) }
-        }
-    }
-
-    //
     // Analyzing the emulator
     //
 
@@ -82,6 +61,65 @@ class SwiftProxy: SwiftAPI {
     var isHalted: Bool { return core.isHalted(); }
     var isWarping: Bool { return core.isWarping(); }
     var isTracking: Bool { return core.isTracking(); }
+
+    //
+    // Controlling the emulator state
+    //
+
+    func powerOn() { core.powerOn() }
+    func powerOff() { core.powerOff() }
+    func run() { core.run() }
+    func pause() { core.pause() }
+    func halt() { core.halt() }
+    func stopAndGo() { core.stopAndGo() }
+    func suspend() { core.suspendThread() }
+    func resume() { core.resumeThread() }
+    func warpOn(source: Int = 0) { core.warpOn(source) }
+    func warpOff(source: Int = 0) { core.warpOff(source) }
+    func trackOn(source: Int = 0) { core.trackOn(source) }
+    func trackOff(source: Int = 0) { core.trackOff(source) }
+
+    //
+    // Single-stepping
+    //
+
+    func stepInto() { core.stepInto() }
+    func stepOver() { core.stepOver() }
+
+    //
+    // Synchronizing the emulator thread
+    //
+
+    func wakeUp() { core.wakeUp() }
+
+
+    //
+    // Accessing video data
+    //
+    func getTexture() -> UnsafeMutablePointer<u32> { return core.getTexture() }
+    func getNoise() -> UnsafeMutablePointer<u32> { return core.getNoise() }
+
+
+    //
+    // Configuring the emulator
+    //
+
+    func launch(delegate: @escaping (vc64.Message) -> Void) {
+
+        self.delegate = delegate
+
+        // Convert 'self' to a void pointer
+        let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
+
+        core.launch(myself) { (ptr, msg: vc64.Message) in
+
+            // Convert void pointer back to 'self'
+            let myself = Unmanaged<SwiftProxy>.fromOpaque(ptr!).takeUnretainedValue()
+
+            // Process message in the main thread
+            DispatchQueue.main.async { myself.delegate(msg) }
+        }
+    }
 }
 
 extension vc64.VirtualC64 {

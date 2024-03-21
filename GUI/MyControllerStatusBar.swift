@@ -13,11 +13,11 @@ extension MyController {
 
         if vc64.WarpMode(rawValue: config.warpMode) == .AUTO {
 
-            return NSImage(named: c64.info.warping ? "hourglass3Template" : "hourglass1Template")
+            return NSImage(named: v64.state.warping ? "hourglass3Template" : "hourglass1Template")
 
         } else {
 
-            return NSImage(named: c64.info.warping ? "warpOnTemplate" : "warpOffTemplate")
+            return NSImage(named: v64.state.warping ? "warpOnTemplate" : "warpOffTemplate")
         }
     }
 
@@ -53,7 +53,7 @@ extension MyController {
 
         let dsstate = c64.datasette.info
         
-        let c64state = c64.info
+        let c64state = v64.state
         let running = c64state.running
         let tracking = c64state.tracking
         let warping = c64state.warping
@@ -287,14 +287,14 @@ extension MyController {
             setColor(color: [.systemRed, .systemYellow, .systemGreen, .systemYellow, .systemRed])
 
         case 1:
-            let fps = c64.stats.fps
+            let fps = v64.stats.fps
             activityBar.maxValue = 120
             activityBar.doubleValue = fps
             activityInfo.stringValue = String(format: "%d Hz", Int(fps))
             setColor(color: [.systemRed, .systemYellow, .systemGreen, .systemYellow, .systemRed])
 
         case 2:
-            let cpu = Int(c64.stats.cpuLoad * 100)
+            let cpu = Int(v64.stats.cpuLoad * 100)
             activityBar.maxValue = 100
             activityBar.integerValue = cpu
             activityInfo.stringValue = String(format: "%d%% CPU", cpu)

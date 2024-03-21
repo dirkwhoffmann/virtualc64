@@ -176,6 +176,7 @@ public:
      *  description of the suspend-resume machanism.
      */
     void suspend() { Emulator::suspend(); }
+    void suspendThread() { suspend(); }
 
     /** @brief   Suspends the emulator thread
      *
@@ -183,6 +184,7 @@ public:
      *  description of the suspend-resume machanism.
      */
     void resume() { Emulator::resume(); }
+    void resumeThread() { resume(); }
 
     /** @brief  Enables warp mode.
      */
@@ -261,7 +263,7 @@ public:
      * and vc64::Texture::height texels. Each texel is represented by a
      * 32 bit color value.
      */
-    u32 *getTexture() const { return Emulator::getTexture(); }
+    u32 *getTexture() const SWIFT_RETURNS_INDEPENDENT_VALUE { return Emulator::getTexture(); }
 
     /** Returns a pointer to a noise pattern
      *
@@ -272,7 +274,7 @@ public:
      *  @note The Mac app displays this pattern when the emulator is powered on.
      *  After powering on, the emulator texture is displayed.
      */
-    u32 *getNoise() const { return Emulator::getNoise(); }
+    u32 *getNoise() const SWIFT_RETURNS_INDEPENDENT_VALUE { return Emulator::getNoise(); }
 
 
     /// @}

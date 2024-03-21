@@ -2138,6 +2138,7 @@ using namespace vc64;
     return obj;
 }
 
+/*
 - (EmulatorInfo)info
 {
     return [self emu]->getState();
@@ -2147,7 +2148,7 @@ using namespace vc64;
 {
     return [self emu]->getStats();
 }
-
+*/
 /*
 - (BOOL)poweredOn
 {
