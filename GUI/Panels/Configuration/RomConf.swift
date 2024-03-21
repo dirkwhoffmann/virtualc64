@@ -16,7 +16,7 @@ extension ConfigurationController {
         let kernalRom = c64.kernalRom
         let vc1541Rom = c64.vc1541Rom
 
-        let poweredOff         = c64.poweredOff
+        let poweredOff         = v64.isPoweredOff
         
         let hasBasic           = basicRom.crc != 0
         let hasCommodoreBasic  = basicRom.vendor == .COMMODORE

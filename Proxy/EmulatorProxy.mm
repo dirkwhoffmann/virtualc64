@@ -2100,10 +2100,12 @@ using namespace vc64;
     return [self emu]->c64.getSlotInfo(slot);
 }
 
+/*
 - (void)launch:(const void *)listener function:(Callback *)func
 {
     [self emu]->launch(listener, func);
 }
+*/
 
 - (void)hardReset
 {
@@ -2146,6 +2148,7 @@ using namespace vc64;
     return [self emu]->getStats();
 }
 
+/*
 - (BOOL)poweredOn
 {
     return [self emu]->isPoweredOn();
@@ -2185,6 +2188,7 @@ using namespace vc64;
 {
     return [self emu]->isTracking();
 }
+*/
 
 - (void)run:(ExceptionWrapper *)e
 {

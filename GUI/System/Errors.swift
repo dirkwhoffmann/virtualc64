@@ -353,7 +353,7 @@ extension MyDocument {
 
     func askToPowerOff() -> Bool {
 
-        if c64.poweredOn {
+        if v64.isPoweredOn {
 
             let alert = NSAlert()
 

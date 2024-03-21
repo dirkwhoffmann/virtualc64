@@ -239,7 +239,7 @@ class ConfigurationController: DialogController {
     var bootable: Bool {
         
         do { try c64.isReady() } catch { return false }
-        return c64.poweredOff
+        return v64.isPoweredOff
     }
 
     // The tab to open first

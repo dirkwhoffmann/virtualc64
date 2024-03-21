@@ -9,35 +9,41 @@
 
 // swiftlint:disable nesting
 
-class SwiftProxy {
+class SwiftAPI {
 
     // References to the emulator core
     var core: vc64.VirtualC64!
 
-    // Message receiver
-    private var delegate: ((vc64.Message) -> Void)!
-
     init(with core: vc64.VirtualC64) {
 
-        debug(.lifetime, "Creating Swift Proxy")
         self.core = core
     }
 }
 
-//
-// Constants
-//
+class SwiftProxy: SwiftAPI {
 
-extension SwiftProxy {
+    // Message receiver
+    private var delegate: ((vc64.Message) -> Void)!
 
-    struct Constants {
+    // Sub-proxies
+    let c64: SwiftC64Proxy
 
-        struct Texture {
+    override init(with core: vc64.VirtualC64) {
 
-            static var Width: Int { return vc64.Texture.width }
-            static var Height: Int { return vc64.Texture.height }
-        }
+        c64 = .init(with: core)
+        super.init(with: core)
     }
+
+    //
+    // Static methods
+    //
+
+    static var version: String { return String(vc64.VirtualC64.version()) }
+    static var build: String { return String(vc64.VirtualC64.build()) }
+
+    //
+    // Initializing
+    //
 
     func launch(delegate: @escaping (vc64.Message) -> Void) {
 
@@ -54,7 +60,66 @@ extension SwiftProxy {
             // Process message in the main thread
             DispatchQueue.main.async { myself.delegate(msg) }
         }
+    }
 
+    //
+    // Analyzing the emulator
+    //
+
+    var config: vc64.EmulatorConfig { return core.getConfig().pointee }
+    var state: vc64.EmulatorInfo { return core.getState().pointee }
+    var stats: vc64.EmulatorStats { return core.getStats().pointee }
+
+    //
+    // Querying the emulator state
+    //
+
+    var isPoweredOn: Bool { return core.isPoweredOn(); }
+    var isPoweredOff: Bool { return core.isPoweredOff(); }
+    var isPaused: Bool { return core.isPaused(); }
+    var isRunning: Bool { return core.isRunning(); }
+    var isSuspended: Bool { return core.isSuspended(); }
+    var isHalted: Bool { return core.isHalted(); }
+    var isWarping: Bool { return core.isWarping(); }
+    var isTracking: Bool { return core.isTracking(); }
+}
+
+extension vc64.VirtualC64 {
+    /*
+     private mutating func getConfigCopy() -> vc64.EmulatorConfig {
+     return
+     }
+     */
+}
+
+//
+// Constants
+//
+
+extension SwiftProxy {
+
+    struct Constants {
+
+        struct Texture {
+
+            static var Width: Int { return vc64.Texture.width }
+            static var Height: Int { return vc64.Texture.height }
+        }
+    }
+}
+
+//
+// C64
+//
+
+class SwiftC64Proxy: SwiftAPI {
+
+    func hardReset() {
+        core.c64.hardReset()
+    }
+
+    func softReset() {
+        core.c64.softReset()
     }
 }
 

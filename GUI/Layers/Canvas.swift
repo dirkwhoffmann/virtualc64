@@ -195,7 +195,7 @@ class Canvas: Layer {
         precondition(scanlineTexture != nil)
         precondition(emulatorTexture != nil)
 
-        if c64.poweredOff {
+        if v64.isPoweredOff {
 
             let w = TextureSize.original.width
             let h = TextureSize.original.height
@@ -289,7 +289,7 @@ class Canvas: Layer {
         }
         
         // Setup uniforms
-        fragmentUniforms.alpha = c64.paused ? 0.5 : alpha.current
+        fragmentUniforms.alpha = v64.isPaused ? 0.5 : alpha.current
         fragmentUniforms.white = renderer.white.current
         fragmentUniforms.dotMaskHeight = Int32(ressourceManager.dotMask.height)
         fragmentUniforms.dotMaskWidth = Int32(ressourceManager.dotMask.width)

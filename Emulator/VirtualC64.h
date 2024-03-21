@@ -71,15 +71,15 @@ public:
 
     /** @brief  Returns the component's current configuration.
      */
-    const EmulatorConfig &getConfig() const { return Emulator::getConfig(); }
+    const EmulatorConfig &getConfig() const SWIFT_RETURNS_INDEPENDENT_VALUE { return Emulator::getConfig(); }
 
     /** @brief  Returns the component's current state.
      */
-    const EmulatorInfo &getState() const { return Emulator::getState(); }
+    const EmulatorInfo &getState() const SWIFT_RETURNS_INDEPENDENT_VALUE { return Emulator::getState(); }
 
     /** @brief  Returns statistical information about the components.
      */
-    const EmulatorStats &getStats() const { return Emulator::getStats(); }
+    const EmulatorStats &getStats() const SWIFT_RETURNS_INDEPENDENT_VALUE { return Emulator::getStats(); }
 
     /// @}
     /// @name Querying the emulator state
@@ -1264,6 +1264,6 @@ public:
 
     } retroShell;
 
-} SWIFT_UNSAFE_REFERENCE;
+} SWIFT_IMMORTAL_REFERENCE;
 
 }

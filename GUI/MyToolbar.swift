@@ -10,6 +10,7 @@
 class MyToolbar: NSToolbar {
     
     var c64: EmulatorProxy { parent.c64 }
+    var v64: SwiftProxy { parent.v64 }
 
     @IBOutlet weak var parent: MyController!
     @IBOutlet weak var controlPort1: NSPopUpButton!
@@ -35,7 +36,7 @@ class MyToolbar: NSToolbar {
     
     func updateToolbar() {
         
-        if c64.poweredOn {
+        if v64.isPoweredOn {
             controlsSegCtrl.setEnabled(true, forSegment: 0) // Pause
             controlsSegCtrl.setEnabled(true, forSegment: 1) // Reset
             controlsSegCtrl.setToolTip("Power off", forSegment: 2) // Power
@@ -44,7 +45,7 @@ class MyToolbar: NSToolbar {
             controlsSegCtrl.setEnabled(false, forSegment: 1) // Reset
             controlsSegCtrl.setToolTip("Power on", forSegment: 2) // Power
         }
-        if c64.running {
+        if v64.isRunning {
             controlsSegCtrl.setToolTip("Pause", forSegment: 0)
             controlsSegCtrl.setImage(NSImage(named: "pauseTemplate"), forSegment: 0)
         } else {

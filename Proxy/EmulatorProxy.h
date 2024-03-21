@@ -164,7 +164,7 @@ using namespace vc64;
 - (void)dealloc;
 - (void)kill;
 
-- (void)launch:(const void *)listener function:(Callback *)func;
+// - (void)launch:(const void *)listener function:(Callback *)func;
 
 @property (readonly) void *objptr;
 @property (readonly) EmulatorInfo info;
@@ -172,6 +172,7 @@ using namespace vc64;
 @property (readonly) C64Info eventInfo;
 - (EventSlotInfo)getEventSlotInfo:(NSInteger)slot;
 
+/*
 @property (readonly) BOOL poweredOn;
 @property (readonly) BOOL poweredOff;
 @property (readonly) BOOL paused;
@@ -180,6 +181,7 @@ using namespace vc64;
 @property (readonly) BOOL halted;
 @property (readonly) BOOL warping;
 @property (readonly) BOOL tracking;
+*/
 
 @property BOOL trackMode;
 
