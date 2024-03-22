@@ -224,7 +224,7 @@ extension MyController: NSMenuItemValidation {
         pref.applyUserDefaults()
 
         // Relaunch the emulator
-        try? c64.run()
+        try? v64.run()
     }
 
     @IBAction func importConfigAction(_ sender: Any!) {
@@ -428,51 +428,51 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func pauseAction(_ sender: Any!) {
         
-        if v64.isRunning { c64.pause() }
+        if v64.isRunning { v64.pause() }
     }
 
     @IBAction func continueAction(_ sender: Any!) {
         
-        if v64.isPaused { try? c64.run() }
+        if v64.isPaused { try? v64.run() }
     }
 
     @IBAction func stopAndGoAction(_ sender: Any!) {
         
-        c64.stopAndGo()
+        v64.stopAndGo()
     }
     
     @IBAction func stepIntoAction(_ sender: Any!) {
 
-        c64.stepInto()
+        v64.stepInto()
     }
     
     @IBAction func stepOverAction(_ sender: Any!) {
         
-        c64.stepOver()
+        v64.stepOver()
     }
     
     @IBAction func resetAction(_ sender: Any!) {
 
         renderer.rotateLeft()
-        c64.hardReset()
-        try? c64.run()
+        v64.c64.hardReset()
+        try? v64.run()
     }
 
     @IBAction func softResetAction(_ sender: Any!) {
 
-        c64.softReset()
+        v64.c64.softReset()
     }
 
     @IBAction func powerAction(_ sender: Any!) {
 
         if v64.isPoweredOn {
 
-            c64.powerOff()
+            v64.powerOff()
 
         } else {
 
             do {
-                try c64.run()
+                try v64.run()
             } catch {
                 showAlert(.cantRun, error: error)
             }
@@ -933,7 +933,7 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func detachCartridgeAction(_ sender: Any!) {
         c64.expansionport.detachCartridge()
-        c64.hardReset()
+        v64.c64.hardReset()
     }
 
     @IBAction func attachReuDummyAction(_ sender: Any!) {

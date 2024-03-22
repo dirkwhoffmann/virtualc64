@@ -19,7 +19,7 @@ extension MyController: NSWindowDelegate {
         myAppDelegate.windowDidBecomeMain(window)
         
         // Restart the emulator if it was paused when the window lost focus
-        if pref.pauseInBackground && pauseInBackgroundSavedState { try? c64.run() }
+        if pref.pauseInBackground && pauseInBackgroundSavedState { try? v64.run() }
 
         // Register to receive mouse movement events
         window.acceptsMouseMovedEvents = true
@@ -38,8 +38,8 @@ extension MyController: NSWindowDelegate {
         // Stop the emulator if it is supposed to pause in background
         if c64 != nil {
             pauseInBackgroundSavedState = v64.isRunning
-            if pref.pauseInBackground { c64.pause() }
-        }        
+            if pref.pauseInBackground { v64.pause() }
+        }
     }
     
     func windowDidResize(_ notification: Notification) {
@@ -81,7 +81,7 @@ extension MyController: NSWindowDelegate {
         gamePadManager.shutDown()
         
         debug(.shutdown, "Shutting down the emulator...")
-        c64.halt()
+        v64.halt()
     }
     
     func shutDown() {

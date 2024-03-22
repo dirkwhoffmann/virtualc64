@@ -238,7 +238,7 @@ class ConfigurationController: DialogController {
     
     var bootable: Bool {
         
-        do { try c64.isReady() } catch { return false }
+        do { try v64.c64.isReady() } catch { return false }
         return v64.isPoweredOff
     }
 
@@ -283,7 +283,7 @@ class ConfigurationController: DialogController {
     
     @IBAction func unlockAction(_ sender: Any!) {
                 
-        c64.powerOff()
+        v64.powerOff()
         refresh()
     }
     
@@ -295,7 +295,7 @@ class ConfigurationController: DialogController {
     @IBAction func powerAction(_ sender: Any!) {
         
         hideSheet()
-        try? c64.run()
+        try? v64.run()
     }
 }
 

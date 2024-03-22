@@ -115,7 +115,7 @@ class Monitor: DialogController {
     
     @IBAction func busDebugAction(_ sender: NSButton!) {
 
-        c64.configure(.DMA_DEBUG_ENABLE, enable: sender.state == .on)
+        v64.configure(.DMA_DEBUG_ENABLE, value: sender.state == .on)
         refresh()
     }
 

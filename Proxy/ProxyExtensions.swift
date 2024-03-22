@@ -171,6 +171,7 @@ extension MakeWithFolder {
 
 extension EmulatorProxy {
 
+    /*
     func isReady() throws {
         
         let exception = ExceptionWrapper()
@@ -191,6 +192,7 @@ extension EmulatorProxy {
         run(exception)
         if exception.errorCode != .OK { throw VC64Error(exception) }
     }
+    */
 
     func exportConfig(url: URL) throws {
 

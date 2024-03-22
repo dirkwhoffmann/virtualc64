@@ -66,9 +66,19 @@ class SwiftProxy: SwiftAPI {
     // Controlling the emulator state
     //
 
-    func powerOn() { core.powerOn() }
+    func powerOn() throws {
+
+        var error = vc64.VC64Error()
+        core.powerOn(&error)
+        if error.data != 0 { throw VC64Error(error) }
+    }
     func powerOff() { core.powerOff() }
-    func run() { core.run() }
+    func run() throws {
+
+        var error = vc64.VC64Error()
+        core.run(&error)
+        if error.data != 0 { throw VC64Error(error) }
+    }
     func pause() { core.pause() }
     func halt() { core.halt() }
     func stopAndGo() { core.stopAndGo() }
@@ -144,6 +154,13 @@ class SwiftProxy: SwiftAPI {
         core.exportConfig(std.string(path), &error)
         if error.data != 0 { throw VC64Error(error) }
     }
+
+    func exportConfig(url: URL) throws {
+
+        var error = vc64.VC64Error()
+        core.exportConfig(std.string(url.absoluteString), &error)
+        if error.data != 0 { throw VC64Error(error) }
+    }
 }
 
 //
@@ -167,6 +184,13 @@ extension SwiftProxy {
 //
 
 class SwiftC64Proxy: SwiftAPI {
+
+    func isReady() throws {
+
+        var error = vc64.VC64Error()
+        core.c64.isReady(&error)
+        if error.data != 0 { throw VC64Error(error) }
+    }
 
     func hardReset() {
         core.c64.hardReset()

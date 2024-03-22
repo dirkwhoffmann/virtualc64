@@ -129,6 +129,7 @@ public:
      *  Calling this function on an already powered-on emulator has no effect.
      *  */
     void powerOn() { Emulator::Thread::powerOn(); }
+    void powerOn(VC64Error &error) noexcept;
 
     /** @brief  Switches the emulator off
      *
@@ -146,6 +147,7 @@ public:
      *  emulator, an implicit call to powerOn() will be performed.
      */
     void run() { Emulator::Thread::run(); }
+    void run(VC64Error &error) noexcept;
 
     /** @brief   Pauses emulation
      *
@@ -214,7 +216,7 @@ public:
      *  has no effect. The CPU debugger utilizes this function to implement single
      *  stepping.
      */
-    void stepInto();
+    void stepInto() { Emulator::stepInto(); }
 
     /** @brief  Steps over the current instruction
      *
@@ -235,7 +237,7 @@ public:
      *  each instruction if the program counter has reached it's target
      *  location.
      */
-    void stepOver();
+    void stepOver() { Emulator::stepOver(); }
 
 
     /// @}
@@ -419,7 +421,8 @@ public:
          *  @throw  VC64Error (ERROR_ROM_CHAR_MISSING)
          *  @throw  VC64Error (ERROR_ROM_MEGA65_MISMATCH)
          */
-        void isReady();
+        void isReady() { c64.isReady(); }
+        void isReady(VC64Error &error) noexcept;
 
 
         /// @}

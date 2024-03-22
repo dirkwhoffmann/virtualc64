@@ -185,10 +185,10 @@ extension MyController {
 
         do {
             // Let the C64 throw an exception if it is not ready to power on
-            try c64.isReady()
-            
+            try v64.c64.isReady()
+
             // Start emulation
-            try c64.run()
+            try v64.run()
 
         } catch {
             

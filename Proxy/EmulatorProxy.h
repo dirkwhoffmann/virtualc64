@@ -159,32 +159,24 @@ using namespace vc64;
 @property InspectionTarget inspectionTarget;
 - (void) removeInspectionTarget;
 
+/*
 - (void)hardReset;
 - (void)softReset;
-
+*/
+/*
 - (void)isReady:(ExceptionWrapper *)ex;
 - (void)powerOn:(ExceptionWrapper *)ex;
 - (void)powerOff;
 - (void)run:(ExceptionWrapper *)ex;
 - (void)pause;
 - (void)halt;
+*/
 
 - (void)requestAutoSnapshot;
 - (void)requestUserSnapshot;
 
 @property (readonly) SnapshotProxy *latestAutoSnapshot;
 @property (readonly) SnapshotProxy *latestUserSnapshot;
-
-- (NSInteger)getConfig:(Option)opt;
-- (NSInteger)getConfig:(Option)opt id:(NSInteger)id;
-- (NSInteger)getConfig:(Option)opt drive:(NSInteger)id;
-// - (BOOL)configure:(Option)opt value:(NSInteger)val;
-- (BOOL)configure:(Option)opt enable:(BOOL)val;
-- (BOOL)configure:(Option)opt id:(NSInteger)id value:(NSInteger)val;
-- (BOOL)configure:(Option)opt id:(NSInteger)id enable:(BOOL)val;
-- (BOOL)configure:(Option)opt drive:(NSInteger)id value:(NSInteger)val;
-- (BOOL)configure:(Option)opt drive:(NSInteger)id enable:(BOOL)val;
-- (void)configure:(C64Model)value;
 
 - (void)exportConfig:(NSURL *)url exception:(ExceptionWrapper *)ex;
 

@@ -2105,7 +2105,6 @@ using namespace vc64;
 {
     [self emu]->launch(listener, func);
 }
-*/
 
 - (void)hardReset
 {
@@ -2132,6 +2131,7 @@ using namespace vc64;
 {
     [self emu]->powerOff();
 }
+*/
 
 - (void *)objptr
 {
@@ -2190,7 +2190,7 @@ using namespace vc64;
     return [self emu]->isTracking();
 }
 */
-
+/*
 - (void)run:(ExceptionWrapper *)e
 {
     [self emu]->run();
@@ -2205,6 +2205,7 @@ using namespace vc64;
 {
     [self emu]->halt();
 }
+*/
 
 - (void)requestAutoSnapshot
 {
@@ -2226,88 +2227,6 @@ using namespace vc64;
 {
     Snapshot *snapshot = [self emu]->c64.latestUserSnapshot();
     return [SnapshotProxy make:snapshot];
-}
-
-- (NSInteger)getConfig:(Option)opt
-{
-    return [self emu]->get(opt);
-}
-
-- (NSInteger)getConfig:(Option)opt id:(NSInteger)id
-{
-    return [self emu]->get(opt, id);
-}
-
-- (NSInteger)getConfig:(Option)opt drive:(NSInteger)id
-{
-    return [self emu]->get(opt, (long)id);
-}
-
-/*
-- (BOOL)configure:(Option)opt value:(NSInteger)val
-{
-    try {
-        [self emu]->set(opt, val);
-        return true;
-    } catch (VC64Error &exception) {
-        return false;
-    }
-}
-*/
-
-- (BOOL)configure:(Option)opt enable:(BOOL)val
-{
-    try {
-        [self emu]->set(opt, val ? 1 : 0);
-        return true;
-    } catch (VC64Error &exception) {
-        return false;
-    }
-}
-
-- (BOOL)configure:(Option)opt id:(NSInteger)id value:(NSInteger)val
-{
-    try {
-        [self emu]->set(opt, id, val);
-        return true;
-    } catch (VC64Error &exception) {
-        return false;
-    }
-}
-
-- (BOOL)configure:(Option)opt id:(NSInteger)id enable:(BOOL)val
-{
-    try {
-        [self emu]->set(opt, id, val ? 1 : 0);
-        return true;
-    } catch (VC64Error &exception) {
-        return false;
-    }
-}
-
-- (BOOL)configure:(Option)opt drive:(NSInteger)id value:(NSInteger)val
-{
-    try {
-        [self emu]->set(opt, (long)id, val);
-        return true;
-    } catch (VC64Error &exception) {
-        return false;
-    }
-}
-
-- (BOOL)configure:(Option)opt drive:(NSInteger)id enable:(BOOL)val
-{
-    try {
-        [self emu]->set(opt, (long)id, val ? 1 : 0);
-        return true;
-    } catch (VC64Error &exception) {
-        return false;
-    }
-}
-
-- (void)configure:(C64Model)model
-{
-    [self emu]->set(model);
 }
 
 - (void)exportConfig:(NSURL *)url exception:(ExceptionWrapper *)ex

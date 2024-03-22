@@ -57,6 +57,19 @@ VirtualC64::~VirtualC64()
 }
 
 void
+VirtualC64::powerOn(VC64Error &error) noexcept
+{
+    try { powerOn(); } catch (VC64Error &exc) { error = exc; }
+}
+
+void
+VirtualC64::run(VC64Error &error) noexcept
+{
+    try { run(); } catch (VC64Error &exc) { error = exc; }
+}
+
+/*
+void
 VirtualC64::stepInto()
 {
     Emulator::stepInto();
@@ -67,6 +80,7 @@ VirtualC64::stepOver()
 {
     Emulator::stepOver();
 }
+*/
 
 void
 VirtualC64::launch(const void *listener, Callback *func)
@@ -203,10 +217,12 @@ VirtualC64::C64API::getRomTraits(RomType type) const
 }
 
 void
-VirtualC64::C64API::isReady()
+VirtualC64::C64API::isReady(VC64Error &error) noexcept
 {
-    c64.isReady();
+    try { c64.isReady(); } catch (VC64Error &exc) { error = exc; }
 }
+
+void isReady(VC64Error &error) noexcept;
 
 Snapshot *
 VirtualC64::C64API::latestAutoSnapshot()

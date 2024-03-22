@@ -379,7 +379,7 @@ extension MyDocument {
             alert.addButton(withTitle: "Cancel")
 
             if alert.runSheet(for: windowForSheet!) == .alertFirstButtonReturn {
-                c64.powerOff()
+                v64.powerOff()
             } else {
                 return false
             }
