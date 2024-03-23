@@ -19,7 +19,7 @@ namespace util {
 
 struct Exception : public std::exception {
     
-    i64 data = 0;
+    i64 data;
     string description;
     
     Exception(i64 d, const string &s) : data(d), description(s) { }

@@ -11,7 +11,7 @@ extension MyController: NSMenuItemValidation {
     
     open func validateMenuItem(_ item: NSMenuItem) -> Bool {
 
-        let info = v64.state
+        let info = c64.info
         let powered = info.powered
         let running = info.running
         var recording: Bool { return c64.recorder.recording }
@@ -224,7 +224,7 @@ extension MyController: NSMenuItemValidation {
         pref.applyUserDefaults()
 
         // Relaunch the emulator
-        try? v64.run()
+        try? c64.run()
     }
 
     @IBAction func importConfigAction(_ sender: Any!) {
@@ -428,51 +428,51 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func pauseAction(_ sender: Any!) {
         
-        if v64.isRunning { v64.pause() }
+        if c64.running { c64.pause() }
     }
 
     @IBAction func continueAction(_ sender: Any!) {
         
-        if v64.isPaused { try? v64.run() }
+        if c64.paused { try? c64.run() }
     }
 
     @IBAction func stopAndGoAction(_ sender: Any!) {
         
-        v64.stopAndGo()
+        c64.stopAndGo()
     }
     
     @IBAction func stepIntoAction(_ sender: Any!) {
 
-        v64.stepInto()
+        c64.stepInto()
     }
     
     @IBAction func stepOverAction(_ sender: Any!) {
         
-        v64.stepOver()
+        c64.stepOver()
     }
     
     @IBAction func resetAction(_ sender: Any!) {
 
         renderer.rotateLeft()
-        v64.c64.hardReset()
-        try? v64.run()
+        c64.hardReset()
+        try? c64.run()
     }
 
     @IBAction func softResetAction(_ sender: Any!) {
 
-        v64.c64.softReset()
+        c64.softReset()
     }
 
     @IBAction func powerAction(_ sender: Any!) {
 
-        if v64.isPoweredOn {
+        if c64.poweredOn {
 
-            v64.powerOff()
+            c64.powerOff()
 
         } else {
 
             do {
-                try v64.run()
+                try c64.run()
             } catch {
                 showAlert(.cantRun, error: error)
             }
@@ -933,7 +933,7 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func detachCartridgeAction(_ sender: Any!) {
         c64.expansionport.detachCartridge()
-        v64.c64.hardReset()
+        c64.hardReset()
     }
 
     @IBAction func attachReuDummyAction(_ sender: Any!) {

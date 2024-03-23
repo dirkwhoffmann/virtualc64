@@ -118,7 +118,7 @@ extension ConfigurationController {
 
     @IBAction func comPresetAction(_ sender: NSPopUpButton!) {
         
-        v64.suspend()
+        c64.suspend()
 
         // Revert to standard settings
         EmulatorProxy.defaults.removePerformanceUserDefaults()
@@ -151,7 +151,7 @@ extension ConfigurationController {
             break
         }
 
-        v64.resume()
+        c64.resume()
         refresh()
     }
     

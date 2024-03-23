@@ -195,18 +195,18 @@ class Canvas: Layer {
         precondition(scanlineTexture != nil)
         precondition(emulatorTexture != nil)
 
-        if v64.isPoweredOff {
+        if c64.poweredOff {
 
             let w = TextureSize.original.width
             let h = TextureSize.original.height
             if !controller.inBackground || !controller.pref.pauseInBackground {
-                emulatorTexture.replace(w: w, h: h, buffer: v64.getNoise())
+                emulatorTexture.replace(w: w, h: h, buffer: c64.noise)
             }
             return
         }
         
         // Get a pointer to most recent texture
-        let buffer = v64.getTexture()
+        let buffer = c64.texture
         precondition(buffer != nil)
 
         // Only proceed if the emulator delivers a new texture
@@ -215,8 +215,8 @@ class Canvas: Layer {
         prevBuffer = buffer
 
         // Update the GPU texture
-        let w = SwiftProxy.Constants.Texture.Width
-        let h = SwiftProxy.Constants.Texture.Height
+        let w = Constants.texWidth
+        let h = Constants.texHeight
         emulatorTexture.replace(w: w, h: h, buffer: buffer)
     }
     
@@ -289,7 +289,7 @@ class Canvas: Layer {
         }
         
         // Setup uniforms
-        fragmentUniforms.alpha = v64.isPaused ? 0.5 : alpha.current
+        fragmentUniforms.alpha = c64.paused ? 0.5 : alpha.current
         fragmentUniforms.white = renderer.white.current
         fragmentUniforms.dotMaskHeight = Int32(ressourceManager.dotMask.height)
         fragmentUniforms.dotMaskWidth = Int32(ressourceManager.dotMask.width)

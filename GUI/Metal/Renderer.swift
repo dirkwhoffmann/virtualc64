@@ -26,7 +26,6 @@ class Renderer: NSObject, MTKViewDelegate {
     var prefs: Preferences { return parent.pref }
     var config: Configuration { return parent.config }
     var c64: EmulatorProxy { return parent.c64 }
-    var v64: SwiftProxy { return parent.v64 }
 
     // Number of drawn frames since power up
     var frames: Int64 = 0
@@ -209,7 +208,7 @@ class Renderer: NSObject, MTKViewDelegate {
                 if [50, 60, 100, 120, 200, 240].contains(newfps) {
 
                     fps = newfps
-                    v64.configure(.HOST_REFRESH_RATE, value: Int(fps))
+                    c64.configure(.HOST_REFRESH_RATE, value: Int(fps))
                     debug(.vsync, "New GPU frame rate: \(fps)")
                 }
             }
@@ -222,8 +221,8 @@ class Renderer: NSObject, MTKViewDelegate {
 
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
 
-        v64.configure(.HOST_FRAMEBUF_WIDTH, value: Int(size.width))
-        v64.configure(.HOST_FRAMEBUF_HEIGHT, value: Int(size.height))
+        c64.configure(.HOST_FRAMEBUF_WIDTH, value: Int(size.width))
+        c64.configure(.HOST_FRAMEBUF_HEIGHT, value: Int(size.height))
         reshape(withSize: size)
     }
     

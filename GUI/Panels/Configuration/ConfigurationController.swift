@@ -238,8 +238,8 @@ class ConfigurationController: DialogController {
     
     var bootable: Bool {
         
-        do { try v64.c64.isReady() } catch { return false }
-        return v64.isPoweredOff
+        do { try c64.isReady() } catch { return false }
+        return c64.poweredOff
     }
 
     // The tab to open first
@@ -283,7 +283,7 @@ class ConfigurationController: DialogController {
     
     @IBAction func unlockAction(_ sender: Any!) {
                 
-        v64.powerOff()
+        c64.powerOff()
         refresh()
     }
     
@@ -295,7 +295,7 @@ class ConfigurationController: DialogController {
     @IBAction func powerAction(_ sender: Any!) {
         
         hideSheet()
-        try? v64.run()
+        try? c64.run()
     }
 }
 

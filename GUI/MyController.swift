@@ -20,7 +20,7 @@ class MyController: NSWindowController, MessageReceiver {
     
     // C64 proxy (bridge between the Swift frontend and the C++ backend)
     var c64: EmulatorProxy!
-    var v64: SwiftProxy!
+    var v64: vc64.VirtualC64!
     
     // Media manager (handles the import and export of media files)
     var mm: MediaManager { return mydocument.mm }
@@ -177,7 +177,7 @@ extension MyController {
         configureWindow()
 
         // Launch the emulator
-        v64.launch(delegate: processMessage(_:))
+        launch()
 
         // Apply all GUI related user defaults
         pref.applyUserDefaults()
@@ -185,10 +185,10 @@ extension MyController {
 
         do {
             // Let the C64 throw an exception if it is not ready to power on
-            try v64.c64.isReady()
-
+            try c64.isReady()
+            
             // Start emulation
-            try v64.run()
+            try c64.run()
 
         } catch {
             
@@ -224,6 +224,21 @@ extension MyController {
         
         // Enable fullscreen mode
         window?.collectionBehavior = .fullScreenPrimary
+    }
+    
+    func launch() {
+
+        // Convert 'self' to a void pointer
+        let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
+        
+        c64.launch(myself) { (ptr, msg: vc64.Message) in
+
+            // Convert void pointer back to 'self'
+            let myself = Unmanaged<MyController>.fromOpaque(ptr!).takeUnretainedValue()
+
+            // Process message in the main thread
+            DispatchQueue.main.async { myself.processMessage(msg) }
+        }
     }
     
     //

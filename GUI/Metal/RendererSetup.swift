@@ -11,11 +11,9 @@ import simd
 
 struct TextureSize {
     
-    static let texw = SwiftProxy.Constants.Texture.Width
-    static let texh = SwiftProxy.Constants.Texture.Height
     static let background = MTLSizeMake(512, 512, 0)
-    static let original = MTLSizeMake(texw, texh, 0)
-    static let upscaled = MTLSizeMake(4 * texw, 4 * texh, 0)
+    static let original = MTLSizeMake(Constants.texWidth, Constants.texHeight, 0)
+    static let upscaled = MTLSizeMake(4 * Constants.texWidth, 4 * Constants.texHeight, 0)
 }
 
 extension Renderer {

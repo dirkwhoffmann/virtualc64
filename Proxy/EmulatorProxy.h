@@ -96,6 +96,20 @@ using namespace vc64;
 @end
 
 //
+// Constants
+//
+
+@interface Constants : NSObject {
+
+}
+
+@property (readonly, class) NSInteger texWidth;
+@property (readonly, class) NSInteger texHeight;
+
+@end
+
+
+//
 // C64
 //
 
@@ -149,34 +163,60 @@ using namespace vc64;
 - (void)dealloc;
 - (void)kill;
 
-@property (readonly) void *objptr;
+- (void)launch:(const void *)listener function:(Callback *)func;
 
+@property (readonly) void *objptr;
+@property (readonly) EmulatorInfo info;
+@property (readonly) EmulatorStats stats;
 @property (readonly) C64Info eventInfo;
 - (EventSlotInfo)getEventSlotInfo:(NSInteger)slot;
 
+@property (readonly) BOOL poweredOn;
+@property (readonly) BOOL poweredOff;
+@property (readonly) BOOL paused;
+@property (readonly) BOOL running;
+@property (readonly) BOOL suspended;
+@property (readonly) BOOL halted;
+@property (readonly) BOOL warping;
+@property (readonly) BOOL tracking;
+
 @property BOOL trackMode;
+
+@property (readonly) u32 *texture;
+@property (readonly) u32 *noise;
 
 @property InspectionTarget inspectionTarget;
 - (void) removeInspectionTarget;
 
-/*
 - (void)hardReset;
 - (void)softReset;
-*/
-/*
+
 - (void)isReady:(ExceptionWrapper *)ex;
 - (void)powerOn:(ExceptionWrapper *)ex;
 - (void)powerOff;
 - (void)run:(ExceptionWrapper *)ex;
 - (void)pause;
 - (void)halt;
-*/
+
+- (void)suspend;
+- (void)resume;
 
 - (void)requestAutoSnapshot;
 - (void)requestUserSnapshot;
 
 @property (readonly) SnapshotProxy *latestAutoSnapshot;
 @property (readonly) SnapshotProxy *latestUserSnapshot;
+
+- (NSInteger)getConfig:(Option)opt;
+- (NSInteger)getConfig:(Option)opt id:(NSInteger)id;
+- (NSInteger)getConfig:(Option)opt drive:(NSInteger)id;
+- (BOOL)configure:(Option)opt value:(NSInteger)val;
+- (BOOL)configure:(Option)opt enable:(BOOL)val;
+- (BOOL)configure:(Option)opt id:(NSInteger)id value:(NSInteger)val;
+- (BOOL)configure:(Option)opt id:(NSInteger)id enable:(BOOL)val;
+- (BOOL)configure:(Option)opt drive:(NSInteger)id value:(NSInteger)val;
+- (BOOL)configure:(Option)opt drive:(NSInteger)id enable:(BOOL)val;
+- (void)configure:(C64Model)value;
 
 - (void)exportConfig:(NSURL *)url exception:(ExceptionWrapper *)ex;
 

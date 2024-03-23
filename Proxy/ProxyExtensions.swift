@@ -7,67 +7,6 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-extension SwiftProxy {
-
-    func getConfig(_ option: vc64.Option) -> Int {
-
-        return Int(get(option: option))
-    }
-
-    func getConfig(_ option: vc64.Option, id: Int) -> Int {
-
-        return Int(get(option: option, id: id))
-    }
-
-    func getConfig(_ option: vc64.Option, drive: Int) -> Int {
-
-        return Int(get(option: option, id: drive))
-    }
-
-    @discardableResult
-    func configure(_ option: vc64.Option, value: Int) -> Bool {
-
-        do { try set(option: option, value: Int64(value)) } catch { return false }
-        return true
-    }
-
-    @discardableResult
-    func configure(_ option: vc64.Option, value: Bool) -> Bool {
-
-        do { try set(option: option, value: value ? 1 : 0) } catch { return false }
-        return true
-    }
-
-    @discardableResult
-    func configure(_ option: vc64.Option, id: Int, value: Int) -> Bool {
-
-        do { try set(option: option, id: id, value: Int64(value)) } catch { return false }
-        return true
-    }
-
-    @discardableResult
-    func configure(_ option: vc64.Option, id: Int, value: Bool) -> Bool {
-
-        do { try set(option: option, id: id, value: value ? 1 : 0) } catch { return false }
-        return true
-    }
-
-    @discardableResult
-    func configure(_ option: vc64.Option, drive: Int, value: Int) -> Bool {
-
-        do { try set(option: option, id: drive, value: Int64(value)) } catch { return false }
-        return true
-    }
-
-    @discardableResult
-    func configure(_ option: vc64.Option, drive: Int, enable: Bool) -> Bool {
-
-        do { try set(option: option, id: drive, value: enable ? 1 : 0) } catch { return false }
-        return true
-    }
-
-}
-
 //
 // Factory extensions
 //
@@ -171,7 +110,6 @@ extension MakeWithFolder {
 
 extension EmulatorProxy {
 
-    /*
     func isReady() throws {
         
         let exception = ExceptionWrapper()
@@ -192,7 +130,6 @@ extension EmulatorProxy {
         run(exception)
         if exception.errorCode != .OK { throw VC64Error(exception) }
     }
-    */
 
     func exportConfig(url: URL) throws {
 

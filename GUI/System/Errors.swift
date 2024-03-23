@@ -58,20 +58,6 @@ class VC64Error: Error {
         self.errorCode = errorCode
         self.what = what
     }
-
-    /*
-    init(_ errorCode: i64, _ what: String = "") {
-
-        self.errorCode = vc64.ErrorCode(rawValue: Int(errorCode))!
-        self.what = what
-    }
-    */
-
-    init(_ error: vc64.VC64Error) {
-
-        self.errorCode = vc64.ErrorCode(rawValue: Int(error.data))!
-        self.what = String(error.description)
-    }
 }
 
 extension NSError {
@@ -367,7 +353,7 @@ extension MyDocument {
 
     func askToPowerOff() -> Bool {
 
-        if v64.isPoweredOn {
+        if c64.poweredOn {
 
             let alert = NSAlert()
 
@@ -379,7 +365,7 @@ extension MyDocument {
             alert.addButton(withTitle: "Cancel")
 
             if alert.runSheet(for: windowForSheet!) == .alertFirstButtonReturn {
-                v64.powerOff()
+                c64.powerOff()
             } else {
                 return false
             }

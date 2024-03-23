@@ -24,7 +24,7 @@ class MyDocument: NSDocument {
     var c64: EmulatorProxy!
 
     // Gateway to the core emulator
-    var v64: SwiftProxy!
+    var v64: vc64.VirtualC64!
 
     // Snapshot storage
     private(set) var snapshots = ManagedArray<SnapshotProxy>(capacity: 32)
@@ -69,7 +69,7 @@ class MyDocument: NSDocument {
 
         // Create an emulator instance
         c64 = EmulatorProxy()
-        v64 = SwiftProxy(with: vc64.VirtualC64.make(c64.objptr))
+        v64 = vc64.VirtualC64.make(c64.objptr)
     }
 
     override open func makeWindowControllers() {

@@ -14,7 +14,6 @@ public class MacAudio: NSObject {
     var parent: MyController!
     var audiounit: AUAudioUnit!
     var c64: EmulatorProxy!
-    var v64: SwiftProxy { return parent.v64 }
 
     var prefs: Preferences { return parent.pref }
     
@@ -68,7 +67,7 @@ public class MacAudio: NSObject {
         }
 
         // Inform the emulator about the sample rate
-        v64.configure(.HOST_SAMPLE_RATE, value: Int(sampleRate))
+        c64.configure(.HOST_SAMPLE_RATE, value: Int(sampleRate))
 
         // Register render callback
         if stereo {

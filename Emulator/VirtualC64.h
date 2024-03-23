@@ -71,15 +71,15 @@ public:
 
     /** @brief  Returns the component's current configuration.
      */
-    const EmulatorConfig &getConfig() const SWIFT_RETURNS_INDEPENDENT_VALUE { return Emulator::getConfig(); }
+    const EmulatorConfig &getConfig() const { return Emulator::getConfig(); }
 
     /** @brief  Returns the component's current state.
      */
-    const EmulatorInfo &getState() const SWIFT_RETURNS_INDEPENDENT_VALUE { return Emulator::getState(); }
+    const EmulatorInfo &getState() const { return Emulator::getState(); }
 
     /** @brief  Returns statistical information about the components.
      */
-    const EmulatorStats &getStats() const SWIFT_RETURNS_INDEPENDENT_VALUE { return Emulator::getStats(); }
+    const EmulatorStats &getStats() const { return Emulator::getStats(); }
 
     /// @}
     /// @name Querying the emulator state
@@ -129,7 +129,6 @@ public:
      *  Calling this function on an already powered-on emulator has no effect.
      *  */
     void powerOn() { Emulator::Thread::powerOn(); }
-    void powerOn(VC64Error &error) noexcept;
 
     /** @brief  Switches the emulator off
      *
@@ -147,7 +146,6 @@ public:
      *  emulator, an implicit call to powerOn() will be performed.
      */
     void run() { Emulator::Thread::run(); }
-    void run(VC64Error &error) noexcept;
 
     /** @brief   Pauses emulation
      *
@@ -178,7 +176,6 @@ public:
      *  description of the suspend-resume machanism.
      */
     void suspend() { Emulator::suspend(); }
-    void suspendThread() { suspend(); }
 
     /** @brief   Suspends the emulator thread
      *
@@ -186,7 +183,6 @@ public:
      *  description of the suspend-resume machanism.
      */
     void resume() { Emulator::resume(); }
-    void resumeThread() { resume(); }
 
     /** @brief  Enables warp mode.
      */
@@ -216,7 +212,7 @@ public:
      *  has no effect. The CPU debugger utilizes this function to implement single
      *  stepping.
      */
-    void stepInto() { Emulator::stepInto(); }
+    void stepInto();
 
     /** @brief  Steps over the current instruction
      *
@@ -237,7 +233,7 @@ public:
      *  each instruction if the program counter has reached it's target
      *  location.
      */
-    void stepOver() { Emulator::stepOver(); }
+    void stepOver();
 
 
     /// @}
@@ -265,7 +261,7 @@ public:
      * and vc64::Texture::height texels. Each texel is represented by a
      * 32 bit color value.
      */
-    u32 *getTexture() const SWIFT_RETURNS_INDEPENDENT_VALUE { return Emulator::getTexture(); }
+    u32 *getTexture() const { return Emulator::getTexture(); }
 
     /** Returns a pointer to a noise pattern
      *
@@ -276,7 +272,7 @@ public:
      *  @note The Mac app displays this pattern when the emulator is powered on.
      *  After powering on, the emulator texture is displayed.
      */
-    u32 *getNoise() const SWIFT_RETURNS_INDEPENDENT_VALUE { return Emulator::getNoise(); }
+    u32 *getNoise() const { return Emulator::getNoise(); }
 
 
     /// @}
@@ -339,8 +335,7 @@ public:
      *  @note If this function is called for an options that applies to multiple
      *  components, all components are configured with the specified value.
      */
-    void set(Option option, i64 value);
-    void set(Option option, i64 value, VC64Error &error) noexcept;
+    void set(Option option, i64 value) throws;
 
     /** @brief  Configures a component.
      *
@@ -354,7 +349,6 @@ public:
      *  an additional parameter to uniquely determine the configured component.
      */
     void set(Option option, long id, i64 value);
-    void set(Option option, long id, i64 value, VC64Error &error) noexcept;
 
 
     /** @brief  Exports the current configuration.
@@ -362,10 +356,8 @@ public:
      *  The current configuration is exported in form of a RetroShell script.
      *  Reading in the script at a later point will restore the configuration.
      */
-    void exportConfig(const string &path) const;
     void exportConfig(const fs::path &path) const;
     void exportConfig(std::ostream& stream) const;
-    void exportConfig(const string &path, VC64Error &error) const;
 
 
     /// @}
@@ -421,8 +413,7 @@ public:
          *  @throw  VC64Error (ERROR_ROM_CHAR_MISSING)
          *  @throw  VC64Error (ERROR_ROM_MEGA65_MISMATCH)
          */
-        void isReady() { c64.isReady(); }
-        void isReady(VC64Error &error) noexcept;
+        void isReady();
 
 
         /// @}
@@ -1273,6 +1264,6 @@ public:
 
     } retroShell;
 
-} SWIFT_IMMORTAL_REFERENCE;
+} SWIFT_UNSAFE_REFERENCE;
 
 }

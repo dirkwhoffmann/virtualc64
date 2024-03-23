@@ -11,7 +11,6 @@ class GuardTableView: NSTableView {
 
     @IBOutlet weak var inspector: Inspector!
     var c64: EmulatorProxy { return inspector.parent.c64 }
-    var v64: SwiftProxy { return inspector.parent.v64 }
     var breakpoints: GuardsProxy { return c64.breakpoints }
     var watchpoints: GuardsProxy { return c64.watchpoints }
 
@@ -135,8 +134,8 @@ class BreakTableView: GuardTableView {
 
     override func click(row: Int, col: Int) {
         
-        v64.suspend()
-
+        c64.suspend()
+        
         if col == 0 {
             
             // Enable / Disable
@@ -165,7 +164,7 @@ class BreakTableView: GuardTableView {
             inspector.fullRefresh()
         }
         
-        v64.resume()
+        c64.resume()
     }
 
     override func edit(row: Int, addr: Int) {
@@ -173,8 +172,8 @@ class BreakTableView: GuardTableView {
         // Abort if a breakpoint is already set
         if breakpoints.isSet(at: addr) { NSSound.beep(); return }
         
-        v64.suspend()
-
+        c64.suspend()
+        
         if row == numRows {
             breakpoints.setAt(addr)
         } else {
@@ -184,7 +183,7 @@ class BreakTableView: GuardTableView {
         
         inspector.cpuInstrView.jumpTo(addr: addr)
         
-        v64.resume()
+        c64.resume()
     }
 }
 
@@ -228,8 +227,8 @@ class WatchTableView: GuardTableView {
         // Abort if a watchpoint is already set
         if watchpoints.isSet(at: addr) { NSSound.beep(); return }
         
-        v64.suspend()
-
+        c64.suspend()
+        
         if row == numRows {
             watchpoints.setAt(addr)
         } else {
@@ -237,6 +236,6 @@ class WatchTableView: GuardTableView {
             watchpoints.replace(row, addr: addr)
         }
         
-        v64.resume()
+        c64.resume()
     }
 }

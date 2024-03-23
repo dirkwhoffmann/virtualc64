@@ -57,19 +57,6 @@ VirtualC64::~VirtualC64()
 }
 
 void
-VirtualC64::powerOn(VC64Error &error) noexcept
-{
-    try { powerOn(); } catch (VC64Error &exc) { error = exc; }
-}
-
-void
-VirtualC64::run(VC64Error &error) noexcept
-{
-    try { run(); } catch (VC64Error &exc) { error = exc; }
-}
-
-/*
-void
 VirtualC64::stepInto()
 {
     Emulator::stepInto();
@@ -80,7 +67,6 @@ VirtualC64::stepOver()
 {
     Emulator::stepOver();
 }
-*/
 
 void
 VirtualC64::launch(const void *listener, Callback *func)
@@ -108,16 +94,10 @@ VirtualC64::set(C64Model model)
 }
 
 void
-VirtualC64::set(Option option, i64 value)
+VirtualC64::set(Option option, i64 value) throws
 {
     Emulator::set(option, value);
     main.markAsDirty();
-}
-
-void 
-VirtualC64::set(Option option, i64 value, VC64Error &error) noexcept
-{
-    try { set(option, value); } catch (VC64Error &exc) { error = exc; }
 }
 
 void
@@ -125,18 +105,6 @@ VirtualC64::set(Option option, long id, i64 value)
 {
     Emulator::set(option, id, value);
     main.markAsDirty();
-}
-
-void 
-VirtualC64::set(Option option, long id, i64 value, VC64Error &error) noexcept
-{
-    try { set(option, id, value); } catch (VC64Error &exc) { error = exc; }
-}
-
-void
-VirtualC64::exportConfig(const string &path) const
-{
-    exportConfig(fs::path(path));
 }
 
 void
@@ -149,12 +117,6 @@ void
 VirtualC64::exportConfig(std::ostream& stream) const
 {
     main.exportConfig(stream);
-}
-
-void 
-VirtualC64::exportConfig(const string &path, VC64Error &error) const
-{
-    try { exportConfig(path); } catch (VC64Error &exc) { error = exc; }
 }
 
 void
@@ -217,12 +179,10 @@ VirtualC64::C64API::getRomTraits(RomType type) const
 }
 
 void
-VirtualC64::C64API::isReady(VC64Error &error) noexcept
+VirtualC64::C64API::isReady()
 {
-    try { c64.isReady(); } catch (VC64Error &exc) { error = exc; }
+    c64.isReady();
 }
-
-void isReady(VC64Error &error) noexcept;
 
 Snapshot *
 VirtualC64::C64API::latestAutoSnapshot()

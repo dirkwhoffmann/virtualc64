@@ -149,7 +149,7 @@ extension PreferencesController {
 
     @IBAction func kbPresetAction(_ sender: NSPopUpButton!) {
         
-        v64.suspend()
+        c64.suspend()
 
         // Revert to standard settings
         EmulatorProxy.defaults.removeKeyboardUserDefaults()
@@ -157,7 +157,7 @@ extension PreferencesController {
         // Update the configuration
         pref.applyKeyboardUserDefaults()
 
-        v64.resume()
+        c64.resume()
         refresh()
     }
 }
