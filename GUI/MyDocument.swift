@@ -20,11 +20,8 @@ class MyDocument: NSDocument {
     // The media manager for this document
     var mm: MediaManager!
 
-    // Gateway to the core emulator (old path via ObjC)
-    var c64: EmulatorProxy!
-
     // Gateway to the core emulator
-    var v64: vc64.VirtualC64!
+    var c64: EmulatorProxy!
 
     // Snapshot storage
     private(set) var snapshots = ManagedArray<SnapshotProxy>(capacity: 32)
@@ -38,17 +35,6 @@ class MyDocument: NSDocument {
         debug(.lifetime)
 
         super.init()
-
-        /* REMOVE ASAP
-        var ccc = vc64.VirtualC64.make()!
-        var test = ccc.cia1.getConfig()
-        var value = test.timerBBug
-        Swift.print("TimerB bug = \(value)")
-        ccc.set(.CIA_TIMER_B_BUG, 1)
-        test = ccc.cia1.getConfig()
-        value = test.timerBBug
-        Swift.print("TimerB bug = \(value)")
-        */
         
         // Check for Metal support
         if MTLCreateSystemDefaultDevice() == nil {
@@ -69,7 +55,6 @@ class MyDocument: NSDocument {
 
         // Create an emulator instance
         c64 = EmulatorProxy()
-        v64 = vc64.VirtualC64.make(c64.objptr)
     }
 
     override open func makeWindowControllers() {
@@ -79,7 +64,6 @@ class MyDocument: NSDocument {
         // Create the window controller
         let controller = MyController(windowNibName: "MyDocument")
         controller.c64 = c64
-        controller.v64 = v64
         self.addWindowController(controller)
     }
 

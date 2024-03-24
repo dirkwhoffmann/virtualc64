@@ -7,18 +7,12 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#import "Aliases.h"
 #import "config.h"
 #import "VirtualC64Types.h"
-// #import "VirtualC64.h"
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
 
 using namespace vc64;
-
-//
-// Forward declarations
-//
 
 @class AnyFileProxy;
 @class AnyCollectionProxy;
@@ -56,7 +50,6 @@ using namespace vc64;
 @class TAPFileProxy;
 @class VICIIProxy;
 
-
 //
 // Exception wrapper
 //
@@ -72,14 +65,13 @@ using namespace vc64;
 
 @end
 
-
 //
 // Base proxies
 //
 
 @interface Proxy : NSObject {
     
-    // Reference to the wrapped C++ object
+    // Reference to the wrapped C++ instance
     @public void *obj;
 }
 @end
@@ -91,6 +83,7 @@ using namespace vc64;
 
 @interface SubComponentProxy : Proxy {
 
+    // Reference to the emulator instance
     @public void *emu;
 }
 @end
@@ -107,7 +100,6 @@ using namespace vc64;
 @property (readonly, class) NSInteger texHeight;
 
 @end
-
 
 //
 // C64
@@ -314,7 +306,7 @@ using namespace vc64;
 // CPU
 //
 
-@interface CPUProxy : CoreComponentProxy { }
+@interface CPUProxy : SubComponentProxy { }
 
 @property (readonly) CPUInfo info;
 
@@ -334,7 +326,7 @@ using namespace vc64;
 // CIA
 //
 
-@interface CIAProxy : CoreComponentProxy { }
+@interface CIAProxy : SubComponentProxy { }
 
 @property (readonly) CIAConfig config;
 @property (readonly) CIAInfo info;
@@ -347,7 +339,7 @@ using namespace vc64;
 // Memory
 //
 
-@interface MemoryProxy : CoreComponentProxy { }
+@interface MemoryProxy : SubComponentProxy { }
 
 @property (readonly) MemConfig config;
 @property (readonly) MemInfo info;
@@ -363,7 +355,7 @@ using namespace vc64;
 //
 
 
-@interface VICIIProxy : CoreComponentProxy { }
+@interface VICIIProxy : SubComponentProxy { }
 
 @property (readonly) NSInteger hPixels;
 @property (readonly) NSInteger vPixels;
@@ -383,7 +375,7 @@ using namespace vc64;
 // DmaDebugger
 //
 
-@interface DmaDebuggerProxy : CoreComponentProxy { }
+@interface DmaDebuggerProxy : SubComponentProxy { }
 
 - (DmaDebuggerConfig)getConfig;
 
@@ -394,7 +386,7 @@ using namespace vc64;
 // SID
 //
 
-@interface SIDProxy : CoreComponentProxy { }
+@interface SIDProxy : SubComponentProxy { }
 
 - (SIDInfo)getInfo:(NSInteger)nr;
 - (VoiceInfo)getVoiceInfo:(NSInteger)nr voice:(NSInteger)voice;
@@ -440,8 +432,8 @@ using namespace vc64;
 // ControlPort
 //
 
-@interface ControlPortProxy : CoreComponentProxy {
-    
+@interface ControlPortProxy : SubComponentProxy {
+
     JoystickProxy *joystick;
     MouseProxy *mouse;
 }
@@ -476,7 +468,7 @@ using namespace vc64;
 // IEC bus
 //
 
-@interface IECProxy : CoreComponentProxy { }
+@interface IECProxy : SubComponentProxy { }
 
 @end
 
@@ -508,7 +500,7 @@ using namespace vc64;
 // Disk
 //
 
-@interface DiskProxy : CoreComponentProxy { }
+@interface DiskProxy : SubComponentProxy { }
 
 @end
 
@@ -562,7 +554,7 @@ using namespace vc64;
 // Mouse
 //
 
-@interface MouseProxy : CoreComponentProxy { }
+@interface MouseProxy : SubComponentProxy { }
 
 - (BOOL)detectShakeAbs:(NSPoint)pos;
 - (BOOL)detectShakeRel:(NSPoint)pos;
@@ -574,7 +566,7 @@ using namespace vc64;
 // Joystick
 //
 
-@interface JoystickProxy : CoreComponentProxy { }
+@interface JoystickProxy : SubComponentProxy { }
 
 @end
 
@@ -583,7 +575,7 @@ using namespace vc64;
 // Recorder
 //
 
-@interface RecorderProxy : Proxy { }
+@interface RecorderProxy : SubComponentProxy { }
 
 @property (readonly) RecorderConfig config;
 @property (readonly) RecorderInfo info;
@@ -605,7 +597,7 @@ using namespace vc64;
 // RetroShell
 //
 
-@interface RetroShellProxy : Proxy { }
+@interface RetroShellProxy : SubComponentProxy { }
 
 @property (readonly) NSInteger cursorRel;
 

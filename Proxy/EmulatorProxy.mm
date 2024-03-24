@@ -2010,23 +2010,23 @@ using namespace vc64;
 
     // Create sub proxys
     breakpoints = [[GuardsProxy alloc] initWith:&emu->cpu.breakpoints];
-    cia1 = [[CIAProxy alloc] initWith:&emu->cia1];
-    cia2 = [[CIAProxy alloc] initWith:&emu->cia2];
-    cpu = [[CPUProxy alloc] initWith:&emu->cpu];
+    cia1 = [[CIAProxy alloc] initWith:&emu->cia1 emu:emu];
+    cia2 = [[CIAProxy alloc] initWith:&emu->cia2 emu:emu];
+    cpu = [[CPUProxy alloc] initWith:&emu->cpu emu:emu];
     datasette = [[DatasetteProxy alloc] initWith:&emu->datasette emu:emu];
     dmaDebugger = [[DmaDebuggerProxy alloc] initWith:&emu->dmaDebugger];
     drive8 = [[DriveProxy alloc] initWithVC1541:&emu->drive8 emu:emu];
     drive9 = [[DriveProxy alloc] initWithVC1541:&emu->drive9 emu:emu];
     expansionport = [[ExpansionPortProxy alloc] initWith:&emu->expansionport emu:emu];
-    iec = [[IECProxy alloc] initWith:&emu->iec];
+    iec = [[IECProxy alloc] initWith:&emu->iec emu:emu];
     keyboard = [[KeyboardProxy alloc] initWith:&emu->keyboard emu:emu];
-    mem = [[MemoryProxy alloc] initWith:&emu->mem];
-    port1 = [[ControlPortProxy alloc] initWith:&emu->port1];
-    port2 = [[ControlPortProxy alloc] initWith:&emu->port2];
-    recorder = [[RecorderProxy alloc] initWith:&emu->recorder];
-    retroShell = [[RetroShellProxy alloc] initWith:&emu->retroShell];
-    sid = [[SIDProxy alloc] initWith:&emu->muxer];
-    vic = [[VICIIProxy alloc] initWith:&emu->vicii];
+    mem = [[MemoryProxy alloc] initWith:&emu->mem emu:emu];
+    port1 = [[ControlPortProxy alloc] initWith:&emu->port1 emu:emu];
+    port2 = [[ControlPortProxy alloc] initWith:&emu->port2 emu:emu];
+    recorder = [[RecorderProxy alloc] initWith:&emu->recorder emu:emu];
+    retroShell = [[RetroShellProxy alloc] initWith:&emu->retroShell emu:emu];
+    sid = [[SIDProxy alloc] initWith:&emu->muxer emu:emu];
+    vic = [[VICIIProxy alloc] initWith:&emu->vicii emu:emu];
     watchpoints = [[GuardsProxy alloc] initWith:&emu->cpu.watchpoints];
 
     return self;
