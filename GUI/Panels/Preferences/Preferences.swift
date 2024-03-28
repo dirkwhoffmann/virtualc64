@@ -86,37 +86,6 @@ class Preferences {
 
     // Joystick
     var disconnectJoyKeys = false
-
-    /*
-    var autofire = false {
-        didSet {
-            for c64 in myAppDelegate.proxies {
-                c64.configure(.AUTOFIRE, enable: autofire)
-            }
-        }
-    }
-    var autofireBursts = false {
-        didSet {
-            for c64 in myAppDelegate.proxies {
-                c64.configure(.AUTOFIRE_BURSTS, enable: autofireBursts)
-            }
-        }
-    }
-    var autofireBullets = 0 {
-        didSet {
-            for c64 in myAppDelegate.proxies {
-                c64.configure(.AUTOFIRE_BULLETS, value: autofireBullets)
-            }
-        }
-    }
-    var autofireFrequency = 5 {
-        didSet {
-            for c64 in myAppDelegate.proxies {
-                c64.configure(.AUTOFIRE_DELAY, value: autofireFrequency)
-            }
-        }
-    }
-    */
     
     // Mouse
     var retainMouseKeyComb = 0

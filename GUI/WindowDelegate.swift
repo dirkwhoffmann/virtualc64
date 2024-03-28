@@ -19,7 +19,7 @@ extension MyController: NSWindowDelegate {
         myAppDelegate.windowDidBecomeMain(window)
         
         // Restart the emulator if it was paused when the window lost focus
-        if pref.pauseInBackground && pauseInBackgroundSavedState { try? c64.run() }
+        if pref.pauseInBackground && pauseInBackgroundSavedState { try? emu.run() }
 
         // Register to receive mouse movement events
         window.acceptsMouseMovedEvents = true
@@ -36,9 +36,9 @@ extension MyController: NSWindowDelegate {
         inBackground = true
 
         // Stop the emulator if it is supposed to pause in background
-        if c64 != nil {
-            pauseInBackgroundSavedState = c64.running
-            if pref.pauseInBackground { c64.pause() }
+        if emu != nil {
+            pauseInBackgroundSavedState = emu.running
+            if pref.pauseInBackground { emu.pause() }
         }        
     }
     
@@ -69,9 +69,9 @@ extension MyController: NSWindowDelegate {
         snapshotTimer = nil
 
         debug(.shutdown, "Closing auxiliary windows...")
-        inspector?.c64 = nil
+        inspector?.emu = nil
         inspector?.close()
-        monitor?.c64 = nil
+        monitor?.emu = nil
         monitor?.close()
                         
         debug(.shutdown, "Shutting down the audio backend...")
@@ -81,15 +81,15 @@ extension MyController: NSWindowDelegate {
         gamePadManager.shutDown()
         
         debug(.shutdown, "Shutting down the emulator...")
-        c64.halt()
+        emu.halt()
     }
     
     func shutDown() {
         
         debug(.shutdown, "Removing proxy...")
         
-        c64.kill()
-        c64 = nil
+        emu.kill()
+        emu = nil
     }
     
     public func windowWillEnterFullScreen(_ notification: Notification) {

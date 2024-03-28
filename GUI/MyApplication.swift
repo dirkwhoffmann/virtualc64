@@ -123,7 +123,7 @@ extension MyAppDelegate {
         return documents.compactMap({ $0.windowForSheet?.windowController as? MyController })
     }
     var proxies: [EmulatorProxy] {
-        return documents.map({ $0.c64 })
+        return documents.map({ $0.emu })
     }
     
     func windowDidBecomeMain(_ window: NSWindow) {
@@ -135,7 +135,7 @@ extension MyAppDelegate {
                 // Start playback
                 if !c.macAudio!.isRunning {
                     c.macAudio!.startPlayback()
-                    if !c.c64.info.warping { c.c64.sid.rampUpFromZero() }
+                    if !c.emu.info.warping { c.emu.sid.rampUpFromZero() }
                 }
                 
                 // Update the visibility of all drive menus
@@ -146,7 +146,7 @@ extension MyAppDelegate {
                 // Stop playback
                 if c.macAudio!.isRunning {
                     c.macAudio!.stopPlayback()
-                    c.c64.sid.rampDown()
+                    c.emu.sid.rampDown()
                 }
             }
         }

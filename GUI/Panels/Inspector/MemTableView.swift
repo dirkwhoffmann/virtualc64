@@ -11,8 +11,8 @@ class MemTableView: NSTableView {
     
     @IBOutlet weak var inspector: Inspector!
 
-    var c64: EmulatorProxy { return inspector.parent.c64 }
-    var mem: MemoryProxy { return c64.mem }
+    var emu: EmulatorProxy { return inspector.parent.emu }
+    var mem: MemoryProxy { return emu.mem }
         
     override func awakeFromNib() {
         

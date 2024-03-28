@@ -11,7 +11,7 @@ extension Inspector {
     
     private func cacheCPU() {
 
-        cpuInfo = c64.cpu.info
+        cpuInfo = emu.cpu.info
     }
 
     func refreshCPU(count: Int = 0, full: Bool = false) {
@@ -20,7 +20,7 @@ extension Inspector {
         
         if full {
 
-            if hex { c64.cpu.setHex() } else { c64.cpu.setDec() }
+            if hex { emu.cpu.setHex() } else { emu.cpu.setDec() }
             cpuPc.assignFormatter(fmt16)
             cpuSp.assignFormatter(fmt8)
             cpuA.assignFormatter(fmt8)
@@ -65,7 +65,7 @@ extension Inspector {
     
     @IBAction func cpuClearTraceBufferAction(_ sender: NSButton!) {
 
-        c64.cpu.clearLog()
+        emu.cpu.clearLog()
         refreshCPU(full: true)
     }
     

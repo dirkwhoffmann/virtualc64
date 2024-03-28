@@ -66,7 +66,7 @@ class DiskInspector: DialogController {
 
         debug(.lifetime)
 
-        drive = nr == DRIVE8 ? c64.drive8 : c64.drive9
+        drive = nr == DRIVE8 ? emu.drive8 : emu.drive9
         showWindow()
     }
 

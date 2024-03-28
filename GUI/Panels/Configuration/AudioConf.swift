@@ -152,7 +152,7 @@ extension ConfigurationController {
     
     @IBAction func audPresetAction(_ sender: NSPopUpButton!) {
                 
-        c64.suspend()
+        emu.suspend()
 
         // Revert to standard settings
         EmulatorProxy.defaults.removeAudioUserDefaults()
@@ -183,7 +183,7 @@ extension ConfigurationController {
             fatalError()
         }
 
-        c64.resume()
+        emu.resume()
         refresh()
     }
     

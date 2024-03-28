@@ -9,7 +9,7 @@
 
 class VirtualKeyboardController: DialogController {
 
-    var keyboard: KeyboardProxy { return c64.keyboard }
+    var keyboard: KeyboardProxy { return emu.keyboard }
     
     @IBOutlet weak var caseSelector: NSSegmentedControl!
 
@@ -92,7 +92,7 @@ class VirtualKeyboardController: DialogController {
         
         for nr in 0 ... 65 {
                         
-            if c64.keyboard.isPressed(nr) {
+            if emu.keyboard.isPressed(nr) {
                 keyView[nr]!.image = pressedKeyImage[nr]
             } else {
                 keyView[nr]!.image = keyImage[nr]
@@ -116,20 +116,20 @@ class VirtualKeyboardController: DialogController {
         if autoClose {
 
             if nr == 34 /* SHIFT LOCK */ {
-                c64.keyboard.toggleKey(nr)
+                emu.keyboard.toggleKey(nr)
             } else {
-                c64.keyboard.pressKey(nr)
-                c64.keyboard.releaseAll(withDelay: 0.25)
+                emu.keyboard.pressKey(nr)
+                emu.keyboard.releaseAll(withDelay: 0.25)
             }
             cancelAction(self)
 
         } else {
 
             if nr == 34 /* SHIFT LOCK */ {
-                c64.keyboard.toggleKey(nr)
+                emu.keyboard.toggleKey(nr)
             } else {
-                c64.keyboard.pressKey(nr)
-                c64.keyboard.releaseKey(nr, delay: 0.25)
+                emu.keyboard.pressKey(nr)
+                emu.keyboard.releaseKey(nr, delay: 0.25)
             }
             refresh()
         }
@@ -137,7 +137,7 @@ class VirtualKeyboardController: DialogController {
     
     func holdKey(nr: Int) {
         
-        c64.keyboard.toggleKey(nr)
+        emu.keyboard.toggleKey(nr)
         refresh()
     }
     

@@ -38,7 +38,7 @@ protocol DialogControllerDelegate: AnyObject {
 class DialogController: NSWindowController, DialogControllerDelegate {
     
     var parent: MyController!
-    var c64: EmulatorProxy!
+    var emu: EmulatorProxy!
     var mm: MediaManager { return parent.mydocument.mm }
 
     // List of open windows or sheets (to make ARC happy)
@@ -52,7 +52,7 @@ class DialogController: NSWindowController, DialogControllerDelegate {
         self.init(windowNibName: nibName)
 
         parent = controller
-        c64 = parent.c64
+        emu = parent.emu
     }
 
     func register() {

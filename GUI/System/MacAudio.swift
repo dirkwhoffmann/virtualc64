@@ -13,7 +13,7 @@ public class MacAudio: NSObject {
 
     var parent: MyController!
     var audiounit: AUAudioUnit!
-    var c64: EmulatorProxy!
+    var emu: EmulatorProxy!
 
     var prefs: Preferences { return parent.pref }
     
@@ -34,7 +34,7 @@ public class MacAudio: NSObject {
 
         self.init()
         parent = controller
-        c64 = controller.c64
+        emu = controller.emu
         
         // Setup component description for AudioUnit
         let compDesc = AudioComponentDescription(
@@ -67,7 +67,7 @@ public class MacAudio: NSObject {
         }
 
         // Inform the emulator about the sample rate
-        c64.configure(.HOST_SAMPLE_RATE, value: Int(sampleRate))
+        emu.configure(.HOST_SAMPLE_RATE, value: Int(sampleRate))
 
         // Register render callback
         if stereo {
@@ -107,7 +107,7 @@ public class MacAudio: NSObject {
         debug(.shutdown, "Removing proxy...")
 
         stopPlayback()
-        c64 = nil
+        emu = nil
     }
     
     private func renderMono(inputDataList: UnsafeMutablePointer<AudioBufferList>,
@@ -117,7 +117,7 @@ public class MacAudio: NSObject {
         assert(bufferList.count == 1)
         
         let ptr = bufferList[0].mData!.assumingMemoryBound(to: Float.self)
-        c64.sid.copyMono(ptr, size: Int(frameCount))
+        emu.sid.copyMono(ptr, size: Int(frameCount))
     }
     
     private func renderStereo(inputDataList: UnsafeMutablePointer<AudioBufferList>,
@@ -128,7 +128,7 @@ public class MacAudio: NSObject {
         
         let ptr1 = bufferList[0].mData!.assumingMemoryBound(to: Float.self)
         let ptr2 = bufferList[1].mData!.assumingMemoryBound(to: Float.self)
-        c64.sid.copyStereo(ptr1, buffer2: ptr2, size: Int(frameCount))
+        emu.sid.copyStereo(ptr1, buffer2: ptr2, size: Int(frameCount))
     }
     
     // Connects SID to the audio backend

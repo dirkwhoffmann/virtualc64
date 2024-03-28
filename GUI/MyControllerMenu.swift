@@ -11,13 +11,13 @@ extension MyController: NSMenuItemValidation {
     
     open func validateMenuItem(_ item: NSMenuItem) -> Bool {
 
-        let info = c64.info
+        let info = emu.info
         let powered = info.powered
         let running = info.running
-        var recording: Bool { return c64.recorder.recording }
+        var recording: Bool { return emu.recorder.recording }
         
         var driveID: Int { return item.tag }
-        var drive: DriveProxy { return c64.drive(driveID) }
+        var drive: DriveProxy { return emu.drive(driveID) }
         
         func validateURLlist(_ list: [URL], image: NSImage) -> Bool {
             
@@ -69,7 +69,7 @@ extension MyController: NSMenuItemValidation {
             item.state = myAppDelegate.mapCapsLockWarp ? .on : .off
             return true
         case #selector(MyController.shiftLockAction(_:)):
-            item.state = c64.keyboard.isPressed(.shiftLock) ? .on : .off
+            item.state = emu.keyboard.isPressed(.shiftLock) ? .on : .off
             return true
             
         // Drive menu
@@ -83,10 +83,10 @@ extension MyController: NSMenuItemValidation {
             return drive.info.hasDisk
 
         case #selector(MyController.exportRecentDiskDummyAction8(_:)):
-            return c64.drive8.info.hasDisk
+            return emu.drive8.info.hasDisk
 
         case #selector(MyController.exportRecentDiskDummyAction9(_:)):
-            return c64.drive9.info.hasDisk
+            return emu.drive9.info.hasDisk
 
         case #selector(MyController.exportRecentDiskAction(_:)):
             return validateURLlist(mm.exportedFloppyDisks[driveID], image: smallDisk)
@@ -104,79 +104,79 @@ extension MyController: NSMenuItemValidation {
             return validateURLlist(MediaManager.insertedTapes, image: smallTape)
             
         case #selector(MyController.ejectTapeAction(_:)):
-            return c64.datasette.info.hasTape
+            return emu.datasette.info.hasTape
 
         case #selector(MyController.playOrStopAction(_:)):
-            item.title = c64.datasette.info.playKey ? "Press Stop Key" : "Press Play On Tape"
-            return c64.datasette.info.hasTape
+            item.title = emu.datasette.info.playKey ? "Press Stop Key" : "Press Play On Tape"
+            return emu.datasette.info.hasTape
 
         case #selector(MyController.rewindAction(_:)):
-            return c64.datasette.info.hasTape
+            return emu.datasette.info.hasTape
 
         // Cartridge menu
         case #selector(MyController.attachRecentCartridgeAction(_:)):
             return validateURLlist(MediaManager.attachedCartridges, image: smallCart)
 
         case #selector(MyController.attachReuDummyAction(_:)):
-            item.state = (c64.expansionport.traits.type == .REU) ? .on : .off
+            item.state = (emu.expansionport.traits.type == .REU) ? .on : .off
 
         case #selector(MyController.attachReuAction(_:)):
-            item.state = (c64.expansionport.traits.type == .REU &&
-                          c64.expansionport.traits.memory == item.tag * 1024) ? .on : .off
+            item.state = (emu.expansionport.traits.type == .REU &&
+                          emu.expansionport.traits.memory == item.tag * 1024) ? .on : .off
 
         case #selector(MyController.attachGeoRamDummyAction(_:)):
-            item.state = (c64.expansionport.traits.type == .GEO_RAM) ? .on : .off
+            item.state = (emu.expansionport.traits.type == .GEO_RAM) ? .on : .off
 
         case #selector(MyController.attachGeoRamAction(_:)):
-            item.state = (c64.expansionport.traits.type == .GEO_RAM &&
-                          c64.expansionport.traits.memory == item.tag * 1024) ? .on : .off
+            item.state = (emu.expansionport.traits.type == .GEO_RAM &&
+                          emu.expansionport.traits.memory == item.tag * 1024) ? .on : .off
 
         case #selector(MyController.attachIsepicAction(_:)):
-            item.state = (c64.expansionport.traits.type == .ISEPIC) ? .on : .off
+            item.state = (emu.expansionport.traits.type == .ISEPIC) ? .on : .off
 
         case #selector(MyController.detachCartridgeAction(_:)):
-            return c64.expansionport.cartridgeAttached()
+            return emu.expansionport.cartridgeAttached()
 
         case #selector(MyController.inspectCartridgeAction(_:)):
-            return c64.expansionport.cartridgeAttached()
+            return emu.expansionport.cartridgeAttached()
 
         case #selector(MyController.pressButtonDummyAction(_:)):
-            return c64.expansionport.traits.buttons > 0
+            return emu.expansionport.traits.buttons > 0
 
         case #selector(MyController.pressCartridgeButton1Action(_:)):
-            let title = String(charptr: c64.expansionport.traits.button1)
+            let title = String(charptr: emu.expansionport.traits.button1)
             item.title = title ?? ""
             item.isHidden = title == nil
             return title != nil
 
         case #selector(MyController.pressCartridgeButton2Action(_:)):
-            let title = String(charptr: c64.expansionport.traits.button2)
+            let title = String(charptr: emu.expansionport.traits.button2)
             item.title = title ?? ""
             item.isHidden = title == nil
             return title != nil
 
         case #selector(MyController.setSwitchDummyAction(_:)):
-            return c64.expansionport.traits.switches > 0
+            return emu.expansionport.traits.switches > 0
             
         case #selector(MyController.setSwitchNeutralAction(_:)):
-            let title = String(charptr: c64.expansionport.traits.switchNeutral)
+            let title = String(charptr: emu.expansionport.traits.switchNeutral)
             item.title = title ?? ""
             item.isHidden = title == nil
-            item.state = c64.expansionport.info.switchPos == 0 ? .on : .off
+            item.state = emu.expansionport.info.switchPos == 0 ? .on : .off
             return title != nil
             
         case #selector(MyController.setSwitchLeftAction(_:)):
-            let title = String(charptr: c64.expansionport.traits.switchLeft)
+            let title = String(charptr: emu.expansionport.traits.switchLeft)
             item.title = title ?? ""
             item.isHidden = title == nil
-            item.state = c64.expansionport.info.switchPos < 0 ? .on : .off
+            item.state = emu.expansionport.info.switchPos < 0 ? .on : .off
             return title != nil
             
         case #selector(MyController.setSwitchRightAction(_:)):
-            let title = String(charptr: c64.expansionport.traits.switchRight)
+            let title = String(charptr: emu.expansionport.traits.switchRight)
             item.title = title ?? ""
             item.isHidden = title == nil
-            item.state = c64.expansionport.info.switchPos > 0 ? .on : .off
+            item.state = emu.expansionport.info.switchPos > 0 ? .on : .off
             return title != nil
 
         default:
@@ -224,7 +224,7 @@ extension MyController: NSMenuItemValidation {
         pref.applyUserDefaults()
 
         // Relaunch the emulator
-        try? c64.run()
+        try? emu.run()
     }
 
     @IBAction func importConfigAction(_ sender: Any!) {
@@ -269,7 +269,7 @@ extension MyController: NSMenuItemValidation {
             if result == .OK, let url = savePanel.url {
 
                 do {
-                    try self.c64.exportConfig(url: url)
+                    try self.emu.exportConfig(url: url)
                 } catch {
                     self.showAlert(.cantExport(url: url), error: error, async: true)
                 }
@@ -321,7 +321,7 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func takeSnapshotAction(_ sender: Any!) {
         
-        c64.c64.requestUserSnapshot()
+        emu.c64.requestUserSnapshot()
     }
     
     @IBAction func restoreSnapshotAction(_ sender: Any!) {
@@ -373,14 +373,14 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func captureScreenAction(_ sender: Any!) {
 
-        if c64.recorder.recording {
+        if emu.recorder.recording {
             
-            c64.recorder.stopRecording()
+            emu.recorder.stopRecording()
             exportVideoAction(self)
             return
         }
 
-        if !c64.recorder.hasFFmpeg {
+        if !emu.recorder.hasFFmpeg {
 
             if pref.ffmpegPath != "" {
                 showAlert(.noFFmpegFound(exec: pref.ffmpegPath))
@@ -398,7 +398,7 @@ extension MyController: NSMenuItemValidation {
         }
 
         do {
-            try c64.recorder.startRecording(rect: rect)
+            try emu.recorder.startRecording(rect: rect)
         } catch {
 
             showAlert(.cantRecord, error: error)
@@ -428,51 +428,51 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func pauseAction(_ sender: Any!) {
         
-        if c64.running { c64.pause() }
+        if emu.running { emu.pause() }
     }
 
     @IBAction func continueAction(_ sender: Any!) {
         
-        if c64.paused { try? c64.run() }
+        if emu.paused { try? emu.run() }
     }
 
     @IBAction func stopAndGoAction(_ sender: Any!) {
         
-        if c64.running { c64.pause() } else { try? c64.run() }
+        if emu.running { emu.pause() } else { try? emu.run() }
     }
     
     @IBAction func stepIntoAction(_ sender: Any!) {
 
-        c64.stepInto()
+        emu.stepInto()
     }
     
     @IBAction func stepOverAction(_ sender: Any!) {
         
-        c64.stepOver()
+        emu.stepOver()
     }
     
     @IBAction func resetAction(_ sender: Any!) {
 
         renderer.rotateLeft()
-        c64.c64.hardReset()
-        try? c64.run()
+        emu.c64.hardReset()
+        try? emu.run()
     }
 
     @IBAction func softResetAction(_ sender: Any!) {
 
-        c64.c64.softReset()
+        emu.c64.softReset()
     }
 
     @IBAction func powerAction(_ sender: Any!) {
 
-        if c64.poweredOn {
+        if emu.poweredOn {
 
-            c64.powerOff()
+            emu.powerOff()
 
         } else {
 
             do {
-                try c64.run()
+                try emu.run()
             } catch {
                 showAlert(.cantRun, error: error)
             }
@@ -481,7 +481,7 @@ extension MyController: NSMenuItemValidation {
      
     @IBAction func brkAction(_ sender: Any!) {
 
-        c64.send(.CPU_BRK)
+        emu.send(.CPU_BRK)
     }
 
     //
@@ -544,7 +544,7 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func clearKeyboardMatrixAction(_ sender: Any!) {
         
-        c64.keyboard.releaseAll()
+        emu.keyboard.releaseAll()
     }
 
     // -----------------------------------------------------------------
@@ -638,7 +638,7 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func newDiskAction(_ sender: NSMenuItem!) {
 
-        let drive = c64.drive(sender)
+        let drive = emu.drive(sender)
 
         // Ask the user if a modified hard drive should be detached
         if !proceedWithUnsavedFloppyDisk(drive: drive) { return }
@@ -652,7 +652,7 @@ extension MyController: NSMenuItemValidation {
     @IBAction func insertDiskAction(_ sender: NSMenuItem!) {
         
         let id = sender.tag
-        let drive = c64.drive(sender)
+        let drive = emu.drive(sender)
 
         // Ask user to continue if the current disk contains modified data
         if !proceedWithUnsavedFloppyDisk(drive: drive) { return }
@@ -750,7 +750,7 @@ extension MyController: NSMenuItemValidation {
 
     func ejectDiskAction(drive nr: Int) {
 
-        let drive = c64.drive(nr)
+        let drive = emu.drive(nr)
 
         if proceedWithUnsavedFloppyDisk(drive: drive) {
 
@@ -815,7 +815,7 @@ extension MyController: NSMenuItemValidation {
     func writeProtectAction(drive nr: Int) {
 
         precondition(nr == DRIVE8 || nr == DRIVE9)
-        c64.send(.DSK_TOGGLE_WP, value: nr)
+        emu.send(.DSK_TOGGLE_WP, value: nr)
     }
 
     @IBAction func drivePowerAction(_ sender: NSMenuItem!) {
@@ -875,21 +875,21 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func ejectTapeAction(_ sender: Any!) {
 
-        c64.datasette.ejectTape()
+        emu.datasette.ejectTape()
     }
     
     @IBAction func playOrStopAction(_ sender: Any!) {
 
-        if c64.datasette.info.playKey {
-            c64.datasette.pressStop()
+        if emu.datasette.info.playKey {
+            emu.datasette.pressStop()
         } else {
-            c64.datasette.pressPlay()
+            emu.datasette.pressPlay()
         }
     }
     
     @IBAction func rewindAction(_ sender: Any!) {
 
-        c64.datasette.rewind()
+        emu.datasette.rewind()
     }
 
     //
@@ -932,8 +932,8 @@ extension MyController: NSMenuItemValidation {
     }
 
     @IBAction func detachCartridgeAction(_ sender: Any!) {
-        c64.expansionport.detachCartridge()
-        c64.c64.hardReset()
+        emu.expansionport.detachCartridge()
+        emu.c64.hardReset()
     }
 
     @IBAction func attachReuDummyAction(_ sender: Any!) {
@@ -943,7 +943,7 @@ extension MyController: NSMenuItemValidation {
     @IBAction func attachReuAction(_ sender: NSMenuItem!) {
 
         let capacity = sender.tag
-        c64.expansionport.attachReuCartridge(capacity)
+        emu.expansionport.attachReuCartridge(capacity)
     }
 
     @IBAction func attachGeoRamDummyAction(_ sender: Any!) {
@@ -953,28 +953,28 @@ extension MyController: NSMenuItemValidation {
     @IBAction func attachGeoRamAction(_ sender: NSMenuItem!) {
 
         let capacity = sender.tag
-        c64.expansionport.attachGeoRamCartridge(capacity)
+        emu.expansionport.attachGeoRamCartridge(capacity)
     }
 
     @IBAction func attachIsepicAction(_ sender: Any!) {
-        c64.expansionport.attachIsepicCartridge()
+        emu.expansionport.attachIsepicCartridge()
     }
 
     @IBAction func pressCartridgeButton1Action(_ sender: NSButton!) {
         
-        c64.send(.CRT_BUTTON_PRESS, value: 1)
+        emu.send(.CRT_BUTTON_PRESS, value: 1)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.c64.send(.CRT_BUTTON_RELEASE, value: 1)
+            self.emu.send(.CRT_BUTTON_RELEASE, value: 1)
         }
     }
 
     @IBAction func pressCartridgeButton2Action(_ sender: NSButton!) {
         
-        c64.send(.CRT_BUTTON_PRESS, value: 2)
+        emu.send(.CRT_BUTTON_PRESS, value: 2)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.c64.send(.CRT_BUTTON_RELEASE, value: 2)
+            self.emu.send(.CRT_BUTTON_RELEASE, value: 2)
         }
     }
     
@@ -984,17 +984,17 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func setSwitchNeutralAction(_ sender: Any!) {
         
-        c64.send(.CRT_SWITCH_NEUTRAL)
+        emu.send(.CRT_SWITCH_NEUTRAL)
     }
 
     @IBAction func setSwitchLeftAction(_ sender: Any!) {
         
-        c64.send(.CRT_SWITCH_LEFT)
+        emu.send(.CRT_SWITCH_LEFT)
     }
 
     @IBAction func setSwitchRightAction(_ sender: Any!) {
         
-        c64.send(.CRT_SWITCH_RIGHT)
+        emu.send(.CRT_SWITCH_RIGHT)
     }
 
     @IBAction func setSwitchDummyAction(_ sender: Any!) {
@@ -1004,7 +1004,7 @@ extension MyController: NSMenuItemValidation {
     @IBAction  func inspectCartridgeAction(_ sender: Any!) {
 
         let panel = CartridgeInspector(with: self, nibName: "CartridgeInspector")
-        panel?.show(expansionPort: c64.expansionport)
+        panel?.show(expansionPort: emu.expansionport)
     }
 
     //

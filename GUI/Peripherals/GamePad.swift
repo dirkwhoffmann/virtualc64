@@ -445,7 +445,7 @@ class GamePad {
     @discardableResult
     func processJoystickEvents(events: [vc64.GamePadAction]) -> Bool {
 
-        let c64 = manager.parent.c64!
+        let c64 = manager.parent.emu!
 
         if let id = port {
 
@@ -463,7 +463,7 @@ class GamePad {
     @discardableResult
     func processMouseEvents(events: [vc64.GamePadAction]) -> Bool {
 
-        let c64 = manager.parent.c64!
+        let c64 = manager.parent.emu!
 
         if let id = port {
 
@@ -477,7 +477,7 @@ class GamePad {
     
     func processMouseEvents(delta: NSPoint) {
         
-        let c64 = manager.parent.c64!
+        let c64 = manager.parent.emu!
 
         // Check for a shaking mouse
         c64.port1.mouse.detectShakeRel(delta)
@@ -518,7 +518,7 @@ class GamePad {
 
     func processKeyboardEvent(events: [vc64.GamePadAction]) {
 
-        let c64 = manager.parent.c64!
+        let c64 = manager.parent.emu!
 
         if let id = port {
 

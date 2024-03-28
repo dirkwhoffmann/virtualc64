@@ -21,7 +21,7 @@ class VideoExporter: DialogController {
     @IBOutlet weak var icon: NSImageView!
 
     var panel: NSSavePanel!
-    var recorder: RecorderProxy { return c64.recorder }
+    var recorder: RecorderProxy { return emu.recorder }
 
     var name: String { return "virtualc64.mp4" }
     var tmp: URL { return URL(fileURLWithPath: NSTemporaryDirectory()) }
@@ -42,7 +42,7 @@ class VideoExporter: DialogController {
             self.text.isHidden = false
         }
 
-        if c64.recorder.export(as: path.absoluteString) {
+        if emu.recorder.export(as: path.absoluteString) {
                         
             let state = recorder.info
             let config = recorder.config

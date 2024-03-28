@@ -308,7 +308,7 @@ class Inspector: DialogController {
     override func showWindow(_ sender: Any?) {
 
         super.showWindow(self)
-        c64.trackOn()
+        emu.trackOn()
         updateInspectionTarget()
     }
         
@@ -320,7 +320,7 @@ class Inspector: DialogController {
     func continuousRefresh() {
         
         if isRunning { refresh(count: refreshCnt) }
-        isRunning = c64.running
+        isRunning = emu.running
         refreshCnt += 1
     }
     
@@ -330,7 +330,7 @@ class Inspector: DialogController {
         
         if full {
             
-            if c64.running {
+            if emu.running {
                 
                 stopAndGoButton.image = NSImage(named: "pauseTemplate")
                 stopAndGoButton.toolTip = "Pause"
@@ -445,17 +445,17 @@ class Inspector: DialogController {
 
     @IBAction func stopAndGoAction(_ sender: NSButton!) {
 
-        if c64.running { c64.pause() } else { try? c64.run() }
+        if emu.running { emu.pause() } else { try? emu.run() }
     }
     
     @IBAction func stepIntoAction(_ sender: NSButton!) {
 
-        c64.stepInto()
+        emu.stepInto()
     }
     
     @IBAction func stepOverAction(_ sender: NSButton!) {
 
-        c64.stepOver()
+        emu.stepOver()
     }
     
     @IBAction func hexAction(_ sender: NSButtonCell!) {
@@ -476,8 +476,8 @@ extension Inspector {
     override func windowWillClose(_ notification: Notification) {
                 
         // Leave debug mode
-        c64?.trackOff()
-        c64?.c64.inspectionTarget = .NONE
+        emu?.trackOff()
+        emu?.c64.inspectionTarget = .NONE
     }
 }
 
@@ -489,12 +489,12 @@ extension Inspector: NSTabViewDelegate {
                     
             switch id {
                 
-            case "CPU":     c64.c64.inspectionTarget = .CPU
-            case "Memory":  c64.c64.inspectionTarget = .MEM
-            case "CIA":     c64.c64.inspectionTarget = .CIA
-            case "VICII":   c64.c64.inspectionTarget = .VICII
-            case "SID":     c64.c64.inspectionTarget = .SID
-            case "Events":  c64.c64.inspectionTarget = .C64
+            case "CPU":     emu.c64.inspectionTarget = .CPU
+            case "Memory":  emu.c64.inspectionTarget = .MEM
+            case "CIA":     emu.c64.inspectionTarget = .CIA
+            case "VICII":   emu.c64.inspectionTarget = .VICII
+            case "SID":     emu.c64.inspectionTarget = .SID
+            case "Events":  emu.c64.inspectionTarget = .C64
 
             default:
                 break

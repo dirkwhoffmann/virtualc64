@@ -23,7 +23,7 @@ class MediaManager {
 
     // References to other objects
     var document: MyDocument!
-    var c64: EmulatorProxy { return document.c64 }
+    var emu: EmulatorProxy { return document.emu }
     var controller: MyController { return document.parent }
 
     // Computed references
@@ -241,7 +241,7 @@ class MediaManager {
         if options.contains(.flash) {
             try flashMedia(proxy: file, options: options)
         } else {
-            try addMedia(proxy: file, drive: c64.drive(id), options: options)
+            try addMedia(proxy: file, drive: emu.drive(id), options: options)
         }
     }
 
@@ -258,7 +258,7 @@ class MediaManager {
         case let proxy as SnapshotProxy:
 
             debug(.media, "Snapshot")
-            try c64.flash(proxy)
+            try emu.flash(proxy)
 
         case let proxy as ScriptProxy:
 
@@ -268,16 +268,16 @@ class MediaManager {
         case let proxy as CRTFileProxy:
 
             debug(.media, "CRT")
-            try c64.expansionport.attachCartridge(proxy, reset: true)
+            try emu.expansionport.attachCartridge(proxy, reset: true)
 
         case let proxy as TAPFileProxy:
 
             debug(.media, "TAP")
-            c64.datasette.insertTape(proxy)
+            emu.datasette.insertTape(proxy)
 
             if options.contains(.autostart) {
                 controller.keyboard.type("LOAD\n")
-                c64.datasette.pressPlay()
+                emu.datasette.pressPlay()
             }
 
         case let proxy as D64FileProxy:
@@ -314,7 +314,7 @@ class MediaManager {
         case let proxy as SnapshotProxy:
 
             debug(.media, "Snapshot")
-            try c64.flash(proxy)
+            try emu.flash(proxy)
 
         case let proxy as ScriptProxy:
 
@@ -324,16 +324,16 @@ class MediaManager {
         case let proxy as CRTFileProxy:
 
             debug(.media, "CRT")
-            try c64.expansionport.attachCartridge(proxy, reset: true)
+            try emu.expansionport.attachCartridge(proxy, reset: true)
 
         case let proxy as TAPFileProxy:
 
             debug(.media, "TAP")
-            c64.datasette.insertTape(proxy)
+            emu.datasette.insertTape(proxy)
 
             if options.contains(.autostart) {
                 controller.keyboard.type("load\n")
-                c64.datasette.pressPlay()
+                emu.datasette.pressPlay()
             }
 
         case let proxy as AnyCollectionProxy:
@@ -341,7 +341,7 @@ class MediaManager {
             debug(.media, "AnyCollection")
             if let volume = try? FileSystemProxy.make(with: proxy) {
 
-                try? c64.flash(volume, item: 0)
+                try? emu.flash(volume, item: 0)
                 controller.keyboard.type("run\n")
                 controller.renderer.rotateLeft()
             }
@@ -359,10 +359,10 @@ class MediaManager {
 
         debug(.media, "drive: \(id) to: \(url)")
 
-        let drive = c64.drive(id)
+        let drive = emu.drive(id)
         try export(disk: drive.disk, to: url)
 
-        c64.send(.DSK_MODIFIED, value: id)
+        emu.send(.DSK_MODIFIED, value: id)
     }
 
     func export(disk: DiskProxy, to url: URL) throws {

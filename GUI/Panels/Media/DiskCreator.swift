@@ -22,7 +22,7 @@ class DiskCreator: DialogController {
 
     var nr = DRIVE8
     var diskType: String!
-    var drive: DriveProxy? { c64.drive(nr) }
+    var drive: DriveProxy? { emu.drive(nr) }
 
     //
     // Starting up
@@ -38,7 +38,7 @@ class DiskCreator: DialogController {
 
         super.awakeFromNib()
 
-        let type = c64.getConfig(.DRV_TYPE, drive: nr)
+        let type = emu.getConfig(.DRV_TYPE, drive: nr)
         switch vc64.DriveType(rawValue: type) {
 
         case .VC1541, .VC1541C, .VC1541II:

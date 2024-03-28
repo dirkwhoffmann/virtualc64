@@ -187,7 +187,7 @@ class Canvas: Layer {
         updateTexture()
 
         // Let the emulator compute the next frame
-        c64.wakeUp()
+        emu.wakeUp()
     }
     
     func updateTexture() {
@@ -195,18 +195,18 @@ class Canvas: Layer {
         precondition(scanlineTexture != nil)
         precondition(emulatorTexture != nil)
 
-        if c64.poweredOff {
+        if emu.poweredOff {
 
             let w = TextureSize.original.width
             let h = TextureSize.original.height
             if !controller.inBackground || !controller.pref.pauseInBackground {
-                emulatorTexture.replace(w: w, h: h, buffer: c64.noise)
+                emulatorTexture.replace(w: w, h: h, buffer: emu.noise)
             }
             return
         }
         
         // Get a pointer to most recent texture
-        let buffer = c64.texture
+        let buffer = emu.texture
         precondition(buffer != nil)
 
         // Only proceed if the emulator delivers a new texture
@@ -289,7 +289,7 @@ class Canvas: Layer {
         }
         
         // Setup uniforms
-        fragmentUniforms.alpha = c64.paused ? 0.5 : alpha.current
+        fragmentUniforms.alpha = emu.paused ? 0.5 : alpha.current
         fragmentUniforms.white = renderer.white.current
         fragmentUniforms.dotMaskHeight = Int32(ressourceManager.dotMask.height)
         fragmentUniforms.dotMaskWidth = Int32(ressourceManager.dotMask.width)

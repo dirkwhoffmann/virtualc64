@@ -11,12 +11,12 @@ extension ConfigurationController {
 
     func refreshRomTab() {
         
-        let basicRom = c64.c64.basicRom
-        let charRom = c64.c64.charRom
-        let kernalRom = c64.c64.kernalRom
-        let vc1541Rom = c64.c64.vc1541Rom
+        let basicRom = emu.c64.basicRom
+        let charRom = emu.c64.charRom
+        let kernalRom = emu.c64.kernalRom
+        let vc1541Rom = emu.c64.vc1541Rom
 
-        let poweredOff         = c64.poweredOff
+        let poweredOff         = emu.poweredOff
         
         let hasBasic           = basicRom.crc != 0
         let hasCommodoreBasic  = basicRom.vendor == .COMMODORE
@@ -122,29 +122,29 @@ extension ConfigurationController {
     
     @IBAction func romDeleteBasicAction(_ sender: Any!) {
 
-        c64.powerOff()
-        c64.deleteRom(.BASIC)
+        emu.powerOff()
+        emu.deleteRom(.BASIC)
         refresh()
     }
     
     @IBAction func romDeleteCharAction(_ sender: Any!) {
 
-        c64.powerOff()
-        c64.deleteRom(.CHAR)
+        emu.powerOff()
+        emu.deleteRom(.CHAR)
         refresh()
     }
     
     @IBAction func romDeleteKernalAction(_ sender: Any!) {
 
-        c64.powerOff()
-        c64.deleteRom(.KERNAL)
+        emu.powerOff()
+        emu.deleteRom(.KERNAL)
         refresh()
     }
     
     @IBAction func romDeleteVC1541Action(_ sender: Any!) {
 
-        c64.powerOff()
-        c64.deleteRom(.VC1541)
+        emu.powerOff()
+        emu.deleteRom(.VC1541)
         refresh()
     }
         
@@ -155,13 +155,13 @@ extension ConfigurationController {
         let k = NSData(data: NSDataAsset(name: "kernal_generic")!.data)
 
         if let rom = try? RomFileProxy.makeWith(buffer: b.bytes, length: b.length) {
-            c64.loadRom(rom)
+            emu.loadRom(rom)
         }
         if let rom = try? RomFileProxy.makeWith(buffer: c.bytes, length: c.length) {
-            c64.loadRom(rom)
+            emu.loadRom(rom)
         }
         if let rom = try? RomFileProxy.makeWith(buffer: k.bytes, length: k.length) {
-            c64.loadRom(rom)
+            emu.loadRom(rom)
         }
         
         refresh()

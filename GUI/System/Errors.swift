@@ -347,13 +347,13 @@ extension MyDocument {
 
     func proceedWithUnsavedFloppyDisks() -> Bool {
 
-        let drives = [c64.drive8!, c64.drive9!]
+        let drives = [emu.drive8!, emu.drive9!]
         return proceedWithUnsavedFloppyDisks(drives: drives)
     }
 
     func askToPowerOff() -> Bool {
 
-        if c64.poweredOn {
+        if emu.poweredOn {
 
             let alert = NSAlert()
 
@@ -365,7 +365,7 @@ extension MyDocument {
             alert.addButton(withTitle: "Cancel")
 
             if alert.runSheet(for: windowForSheet!) == .alertFirstButtonReturn {
-                c64.powerOff()
+                emu.powerOff()
             } else {
                 return false
             }

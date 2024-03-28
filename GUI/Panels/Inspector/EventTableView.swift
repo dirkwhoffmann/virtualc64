@@ -11,7 +11,7 @@ class EventTableView: NSTableView {
 
     @IBOutlet weak var inspector: Inspector!
 
-    var c64: EmulatorProxy { return inspector.c64 }
+    var emu: EmulatorProxy { return inspector.emu }
 
     var slotInfo = [vc64.EventSlotInfo?](repeating: nil, count: vc64.EventSlot._COUNT.rawValue)
 
@@ -24,7 +24,7 @@ class EventTableView: NSTableView {
 
     private func cache() {
         for row in 0 ..< vc64.EventSlot._COUNT.rawValue {
-            slotInfo[row] = c64.c64.getEventSlotInfo(row)
+            slotInfo[row] = emu.c64.getEventSlotInfo(row)
         }
     }
 
@@ -109,7 +109,7 @@ extension EventTableView: NSTableViewDelegate {
 
         if let cell = cell as? NSTextFieldCell {
             if tableColumn?.identifier.rawValue != "slot" {
-                if c64.c64.getEventSlotInfo(row).trigger == INT64_MAX {
+                if emu.c64.getEventSlotInfo(row).trigger == INT64_MAX {
                     cell.textColor = .secondaryLabelColor
                     return
                 }

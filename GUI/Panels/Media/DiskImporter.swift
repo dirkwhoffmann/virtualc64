@@ -254,7 +254,7 @@ class DiskImporter: DialogController {
             case is FolderProxy:
 
                 debug(.media, "Inserting file system (wp: \(writeProtect))")
-                let drive = sender.tag == 0 ? c64.drive8! : c64.drive9!
+                let drive = sender.tag == 0 ? emu.drive8! : emu.drive9!
                 drive.insertFileSystem(volume!, protected: writeProtect)
 
             default:
@@ -311,7 +311,7 @@ class DiskImporter: DialogController {
 
         debug(.media, "flashAction: \(sender.selectedTag())")
 
-        try? parent.c64.flash(volume!, item: sender.selectedTag())
+        try? parent.emu.flash(volume!, item: sender.selectedTag())
         parent.keyboard.type("run\n")
         parent.renderer.rotateLeft()
         hideSheet()

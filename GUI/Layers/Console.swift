@@ -48,11 +48,11 @@ class Console: Layer {
 
 		if isDirty {
 			
-			if let text = c64.retroShell.getText() {
+			if let text = emu.retroShell.getText() {
 				
 				let cursorColor = NSColor(r: 255, g: 255, b: 255, a: 128)
 				let monoFont = NSFont.monospaced(ofSize: 14, weight: .medium)
-				let cpos = c64.retroShell.cursorRel - 1
+				let cpos = emu.retroShell.cursorRel - 1
 				
 				let attr = [
 					NSAttributedString.Key.foregroundColor: NSColor.white,
@@ -113,25 +113,25 @@ class Console: Layer {
 
         switch macKey.keyCode {
 
-        case kVK_ANSI_A where ctrl: c64.retroShell.pressSpecialKey(.HOME)
-        case kVK_ANSI_E where ctrl: c64.retroShell.pressSpecialKey(.END)
-        case kVK_ANSI_K where ctrl: c64.retroShell.pressSpecialKey(.CUT)
-        case kVK_UpArrow: c64.retroShell.pressSpecialKey(.UP)
-        case kVK_DownArrow: c64.retroShell.pressSpecialKey(.DOWN)
-        case kVK_LeftArrow: c64.retroShell.pressSpecialKey(.LEFT)
-        case kVK_RightArrow: c64.retroShell.pressSpecialKey(.RIGHT)
-        case kVK_Home: c64.retroShell.pressSpecialKey(.HOME)
-        case kVK_End: c64.retroShell.pressSpecialKey(.END)
-        case kVK_Delete: c64.retroShell.pressSpecialKey(.BACKSPACE)
-        case kVK_ForwardDelete: c64.retroShell.pressSpecialKey(.DEL)
-        case kVK_Return: c64.retroShell.pressSpecialKey(shift ? .SHIFT_RETURN : .RETURN)
-        case kVK_Tab: c64.retroShell.pressSpecialKey(.TAB)
+        case kVK_ANSI_A where ctrl: emu.retroShell.pressSpecialKey(.HOME)
+        case kVK_ANSI_E where ctrl: emu.retroShell.pressSpecialKey(.END)
+        case kVK_ANSI_K where ctrl: emu.retroShell.pressSpecialKey(.CUT)
+        case kVK_UpArrow: emu.retroShell.pressSpecialKey(.UP)
+        case kVK_DownArrow: emu.retroShell.pressSpecialKey(.DOWN)
+        case kVK_LeftArrow: emu.retroShell.pressSpecialKey(.LEFT)
+        case kVK_RightArrow: emu.retroShell.pressSpecialKey(.RIGHT)
+        case kVK_Home: emu.retroShell.pressSpecialKey(.HOME)
+        case kVK_End: emu.retroShell.pressSpecialKey(.END)
+        case kVK_Delete: emu.retroShell.pressSpecialKey(.BACKSPACE)
+        case kVK_ForwardDelete: emu.retroShell.pressSpecialKey(.DEL)
+        case kVK_Return: emu.retroShell.pressSpecialKey(shift ? .SHIFT_RETURN : .RETURN)
+        case kVK_Tab: emu.retroShell.pressSpecialKey(.TAB)
         case kVK_Escape: close()
 
         default:
 
             if let c = event.characters?.utf8CString.first {
-                c64.retroShell.pressKey(c)
+                emu.retroShell.pressKey(c)
             }
         }
 
@@ -145,7 +145,7 @@ class Console: Layer {
     func runScript(script: ScriptProxy) {
         
         // open()
-        script.execute(c64)
+        script.execute(emu)
         isDirty = true
     }
 }

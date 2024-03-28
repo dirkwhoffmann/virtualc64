@@ -151,7 +151,7 @@ extension ConfigurationController {
 
     @IBAction func hwPresetAction(_ sender: NSPopUpButton!) {
 
-        c64.suspend()
+        emu.suspend()
 
         // Revert to standard settings
         EmulatorProxy.defaults.removePeripheralsUserDefaults()
@@ -220,7 +220,7 @@ extension ConfigurationController {
             fatalError()
         }
 
-        c64.resume()
+        emu.resume()
         refresh()
     }
 

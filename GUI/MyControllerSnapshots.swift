@@ -32,13 +32,13 @@ extension MyController {
     
     @objc func snapshotTimerFunc() {
         
-        if pref.autoSnapshots { c64.c64.requestAutoSnapshot() }
+        if pref.autoSnapshots { emu.c64.requestAutoSnapshot() }
     }
     
     func restoreSnapshot(item: Int) throws {
         
         if let snapshot = mydocument.snapshots.element(at: item) {
-            try c64.flash(snapshot)
+            try emu.flash(snapshot)
         }
     }
     

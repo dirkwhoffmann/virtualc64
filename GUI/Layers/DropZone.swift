@@ -60,17 +60,17 @@ class DropZone: Layer {
     
     private func setType(_ type: vc64.FileType) {
     
-        let info8 = c64.drive8.info
-        let config8 = c64.drive8.config
+        let info8 = emu.drive8.info
+        let config8 = emu.drive8.config
 
-        let info9 = c64.drive9.info
-        let config9 = c64.drive9.config
+        let info9 = emu.drive9.info
+        let config9 = emu.drive9.config
 
         inUse[0] = info8.hasDisk
         inUse[1] = info9.hasDisk
         inUse[2] = false
-        inUse[3] = c64.expansionport.cartridgeAttached()
-        inUse[4] = c64.datasette.info.hasTape
+        inUse[3] = emu.expansionport.cartridgeAttached()
+        inUse[4] = emu.datasette.info.hasTape
 
         switch type {
 

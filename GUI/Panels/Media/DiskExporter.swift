@@ -47,7 +47,7 @@ class DiskExporter: DialogController {
 
     func showSheet(diskDrive nr: Int) {
 
-        drive = c64.drive(nr)
+        drive = emu.drive(nr)
 
         // Get the disk from the specified drive
         disk = drive?.disk
@@ -249,7 +249,7 @@ class DiskExporter: DialogController {
                 fatalError()
             }
 
-            c64.send(.DSK_UNMODIFIED, value: drive.info.id)
+            emu.send(.DSK_UNMODIFIED, value: drive.info.id)
             if rememberUrl {
                 mm.noteNewRecentlyExportedDiskURL(url, drive: drive.info.id)
             }

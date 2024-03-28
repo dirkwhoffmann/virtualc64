@@ -44,7 +44,7 @@ extension Inspector {
         }
         
         // First voice
-        var vinfo = c64.sid.getVoiceInfo(selectedSID, voice: 0)
+        var vinfo = emu.sid.getVoiceInfo(selectedSID, voice: 0)
         refresh(waveform: vinfo.waveform, waveformPopup: sidWaveform1)
         sidPulseWidth1.isHidden = (vinfo.waveform & 0x40 == 0)
         sidPulseWidthText1.isHidden = (vinfo.waveform & 0x40 == 0)
@@ -61,7 +61,7 @@ extension Inspector {
         sidRingBit1.intValue = vinfo.ringMod ? 1 : 0
         
         // Second voice
-        vinfo = c64.sid.getVoiceInfo(selectedSID, voice: 1)
+        vinfo = emu.sid.getVoiceInfo(selectedSID, voice: 1)
         refresh(waveform: vinfo.waveform, waveformPopup: sidWaveform2)
         sidPulseWidth2.isHidden = (vinfo.waveform & 0x40 == 0)
         sidPulseWidthText2.isHidden = (vinfo.waveform & 0x40 == 0)
@@ -78,7 +78,7 @@ extension Inspector {
         sidRingBit2.intValue = vinfo.ringMod ? 1 : 0
         
         // Third voice
-        vinfo = c64.sid.getVoiceInfo(selectedSID, voice: 2)
+        vinfo = emu.sid.getVoiceInfo(selectedSID, voice: 2)
         refresh(waveform: vinfo.waveform, waveformPopup: sidWaveform3)
         sidPulseWidth3.isHidden = (vinfo.waveform & 0x40 == 0)
         sidPulseWidthText3.isHidden = (vinfo.waveform & 0x40 == 0)
@@ -95,7 +95,7 @@ extension Inspector {
         sidRingBit3.intValue = vinfo.ringMod ? 1 : 0
         
         // Volume and potentiometers
-        let info = c64.sid.getInfo(selectedSID)
+        let info = emu.sid.getInfo(selectedSID)
         sidVolume.intValue = Int32(info.volume)
         sidPotX.intValue = Int32(info.potX)
         sidPotY.intValue = Int32(info.potY)
@@ -113,7 +113,7 @@ extension Inspector {
         sidFilter3.intValue = (info.filterEnableBits & 0x04) != 0 ? 1 : 0
         
         // Audio buffer
-        let stats = c64.sid.stats
+        let stats = emu.sid.stats
         let fillLevel = Int32(stats.fillLevel * 100)
         sidAudioBufferLevel.intValue = fillLevel
         sidAudioBufferLevelText.stringValue = "\(fillLevel) %"

@@ -22,7 +22,7 @@ struct MemColors {
 
 extension Inspector {
     
-    var mem: MemoryProxy { return c64.mem }
+    var mem: MemoryProxy { return emu.mem }
         
     private func updateBankMap() {
     
@@ -92,7 +92,7 @@ extension Inspector {
     private func cacheMemory() {
         
         let oldBankMap = memInfo?.bankMap
-        memInfo = c64.mem.info
+        memInfo = emu.mem.info
         if oldBankMap != memInfo.bankMap { layoutIsDirty = true }
     }
     

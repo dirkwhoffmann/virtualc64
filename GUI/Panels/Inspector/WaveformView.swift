@@ -13,7 +13,7 @@ class WaveformView: NSImageView {
 
     @IBOutlet weak var inspector: Inspector!
 
-    var sid: SIDProxy { return inspector.c64.sid }
+    var sid: SIDProxy { return inspector.emu.sid }
 
     // Waveform size
     var size: NSSize!

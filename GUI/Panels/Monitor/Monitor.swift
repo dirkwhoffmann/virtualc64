@@ -57,7 +57,7 @@ class Monitor: DialogController {
     
     func refresh() {
                 
-        let dma = c64.dmaDebugger.getConfig()
+        let dma = emu.dmaDebugger.getConfig()
         
         // DMA debugger
         busDebug.state = dma.dmaDebug ? .on : .off
@@ -115,7 +115,7 @@ class Monitor: DialogController {
     
     @IBAction func busDebugAction(_ sender: NSButton!) {
 
-        c64.configure(.DMA_DEBUG_ENABLE, enable: sender.state == .on)
+        emu.configure(.DMA_DEBUG_ENABLE, enable: sender.state == .on)
         refresh()
     }
 
@@ -127,12 +127,12 @@ class Monitor: DialogController {
         let bgr = (b << 16) | (g << 8) | (r << 0)
         
         switch sender.tag {
-        case 0:  c64.configure(.DMA_DEBUG_COLOR0, value: bgr)
-        case 1:  c64.configure(.DMA_DEBUG_COLOR1, value: bgr)
-        case 2:  c64.configure(.DMA_DEBUG_COLOR2, value: bgr)
-        case 3:  c64.configure(.DMA_DEBUG_COLOR3, value: bgr)
-        case 4:  c64.configure(.DMA_DEBUG_COLOR4, value: bgr)
-        case 5:  c64.configure(.DMA_DEBUG_COLOR5, value: bgr)
+        case 0:  emu.configure(.DMA_DEBUG_COLOR0, value: bgr)
+        case 1:  emu.configure(.DMA_DEBUG_COLOR1, value: bgr)
+        case 2:  emu.configure(.DMA_DEBUG_COLOR2, value: bgr)
+        case 3:  emu.configure(.DMA_DEBUG_COLOR3, value: bgr)
+        case 4:  emu.configure(.DMA_DEBUG_COLOR4, value: bgr)
+        case 5:  emu.configure(.DMA_DEBUG_COLOR5, value: bgr)
         default: break
         }
         refresh()
@@ -141,12 +141,12 @@ class Monitor: DialogController {
     @IBAction func busChannelAction(_ sender: NSButton!) {
 
         switch sender.tag {
-        case 0:  c64.configure(.DMA_DEBUG_CHANNEL0, enable: sender.state == .on)
-        case 1:  c64.configure(.DMA_DEBUG_CHANNEL1, enable: sender.state == .on)
-        case 2:  c64.configure(.DMA_DEBUG_CHANNEL2, enable: sender.state == .on)
-        case 3:  c64.configure(.DMA_DEBUG_CHANNEL3, enable: sender.state == .on)
-        case 4:  c64.configure(.DMA_DEBUG_CHANNEL4, enable: sender.state == .on)
-        case 5:  c64.configure(.DMA_DEBUG_CHANNEL5, enable: sender.state == .on)
+        case 0:  emu.configure(.DMA_DEBUG_CHANNEL0, enable: sender.state == .on)
+        case 1:  emu.configure(.DMA_DEBUG_CHANNEL1, enable: sender.state == .on)
+        case 2:  emu.configure(.DMA_DEBUG_CHANNEL2, enable: sender.state == .on)
+        case 3:  emu.configure(.DMA_DEBUG_CHANNEL3, enable: sender.state == .on)
+        case 4:  emu.configure(.DMA_DEBUG_CHANNEL4, enable: sender.state == .on)
+        case 5:  emu.configure(.DMA_DEBUG_CHANNEL5, enable: sender.state == .on)
         default: break
         }
         refresh()
@@ -154,13 +154,13 @@ class Monitor: DialogController {
 
     @IBAction func busDisplayModeAction(_ sender: NSPopUpButton!) {
         
-        c64.configure(.DMA_DEBUG_MODE, value: sender.selectedTag())
+        emu.configure(.DMA_DEBUG_MODE, value: sender.selectedTag())
         refresh()
     }
     
     @IBAction func busOpacityAction(_ sender: NSSlider!) {
         
-        c64.configure(.DMA_DEBUG_OPACITY, value: sender.integerValue)
+        emu.configure(.DMA_DEBUG_OPACITY, value: sender.integerValue)
         refresh()
     }
     

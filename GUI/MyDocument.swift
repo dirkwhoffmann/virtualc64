@@ -21,7 +21,7 @@ class MyDocument: NSDocument {
     var mm: MediaManager!
 
     // Gateway to the core emulator
-    var c64: EmulatorProxy!
+    var emu: EmulatorProxy!
 
     // Snapshot storage
     private(set) var snapshots = ManagedArray<SnapshotProxy>(capacity: 32)
@@ -54,7 +54,7 @@ class MyDocument: NSDocument {
         EmulatorProxy.defaults.load()
 
         // Create an emulator instance
-        c64 = EmulatorProxy()
+        emu = EmulatorProxy()
     }
 
     override open func makeWindowControllers() {
@@ -63,7 +63,7 @@ class MyDocument: NSDocument {
 
         // Create the window controller
         let controller = MyController(windowNibName: "MyDocument")
-        controller.c64 = c64
+        controller.emu = emu
         self.addWindowController(controller)
     }
 
@@ -108,7 +108,7 @@ class MyDocument: NSDocument {
 
         if typeName == "VC64" {
 
-            if let snapshot = SnapshotProxy.make(withC64: c64) {
+            if let snapshot = SnapshotProxy.make(withC64: emu) {
 
                 do {
                     try snapshot.writeToFile(url: url)

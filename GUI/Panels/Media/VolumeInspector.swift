@@ -144,7 +144,7 @@ class VolumeInspector: DialogController {
 
     func show(diskDrive nr: Int) throws {
 
-        let drive = c64.drive(nr)
+        let drive = emu.drive(nr)
         vol = try FileSystemProxy.make(withDisk: drive.disk)
 
         showWindow()

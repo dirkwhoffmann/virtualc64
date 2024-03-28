@@ -11,9 +11,9 @@ class InstrTableView: NSTableView {
     
     @IBOutlet weak var inspector: Inspector!
     
-    var c64: EmulatorProxy { return inspector.parent.c64 }
-    var cpu: CPUProxy { return c64.cpu }
-    var breakpoints: GuardsProxy { return c64.breakpoints }
+    var emu: EmulatorProxy { return inspector.parent.emu }
+    var cpu: CPUProxy { return emu.cpu }
+    var breakpoints: GuardsProxy { return emu.breakpoints }
 
     enum BreakpointType {
         

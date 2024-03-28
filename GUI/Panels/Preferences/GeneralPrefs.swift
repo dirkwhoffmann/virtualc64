@@ -17,7 +17,7 @@ extension PreferencesController {
             genFFmpegPath.tag = 1
 
             for i in 0...5 {
-                if let path = c64.recorder.findFFmpeg(i) {
+                if let path = emu.recorder.findFFmpeg(i) {
                     genFFmpegPath.addItem(withObjectValue: path)
                 } else {
                     break
@@ -35,8 +35,8 @@ extension PreferencesController {
         genScreenshotTargetPopup.selectItem(withTag: pref.screenshotTargetIntValue)
         
         // Screen captures
-        let hasFFmpeg = c64.recorder.hasFFmpeg
-        genFFmpegPath.stringValue = c64.recorder.path
+        let hasFFmpeg = emu.recorder.hasFFmpeg
+        genFFmpegPath.stringValue = emu.recorder.path
         genFFmpegPath.textColor = hasFFmpeg ? .textColor : .warningColor
         genSource.selectItem(withTag: pref.captureSource)
         genBitRate.stringValue = "\(pref.bitRate)"
@@ -179,7 +179,7 @@ extension PreferencesController {
         
         pref.closeWithoutAsking = (sender.state == .on)
         for c in myAppDelegate.controllers {
-            c.needsSaving = c.c64.running
+            c.needsSaving = c.emu.running
         }
         refresh()
     }

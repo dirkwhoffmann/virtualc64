@@ -18,8 +18,8 @@ class MyController: NSWindowController, MessageReceiver {
     // Reference to the connected document
     var mydocument: MyDocument!
     
-    // C64 proxy (bridge between the Swift frontend and the C++ backend)
-    var c64: EmulatorProxy!
+    // Emulator proxy (bridge between the Swift frontend and the C++ backend)
+    var emu: EmulatorProxy!
     
     // Media manager (handles the import and export of media files)
     var mm: MediaManager { return mydocument.mm }
@@ -184,10 +184,10 @@ extension MyController {
 
         do {
             // Let the C64 throw an exception if it is not ready to power on
-            try c64.isReady()
+            try emu.isReady()
             
             // Start emulation
-            try c64.run()
+            try emu.run()
 
         } catch {
             
@@ -230,7 +230,7 @@ extension MyController {
         // Convert 'self' to a void pointer
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
         
-        c64.launch(myself) { (ptr, msg: vc64.Message) in
+        emu.launch(myself) { (ptr, msg: vc64.Message) in
 
             // Convert void pointer back to 'self'
             let myself = Unmanaged<MyController>.fromOpaque(ptr!).takeUnretainedValue()
@@ -252,8 +252,8 @@ extension MyController {
             if inspector?.window?.isVisible == true { inspector!.continuousRefresh() }
 
             // Update the cartridge LED
-            if c64.expansionport.traits.leds > 0 {
-                let led = c64.expansionport.info.led ? 1 : 0
+            if emu.expansionport.traits.leds > 0 {
+                let led = emu.expansionport.info.led ? 1 : 0
                 if crtIcon.tag != led {
                     crtIcon.tag = led
                     crtIcon.image = NSImage(named: led == 1 ? "crtLedOnTemplate" : "crtTemplate")
@@ -291,7 +291,7 @@ extension MyController {
         var pan: Int { return Int(msg.drive.pan) }
 
         // Only proceed if the proxy object is still alive
-        if c64 == nil { return }
+        if emu == nil { return }
 
         switch msg.type {
 
@@ -450,10 +450,10 @@ extension MyController {
             }
 
         case .AUTO_SNAPSHOT_TAKEN:
-            mydocument.snapshots.append(c64.c64.latestAutoSnapshot)
+            mydocument.snapshots.append(emu.c64.latestAutoSnapshot)
 
         case .USER_SNAPSHOT_TAKEN:
-            mydocument.snapshots.append(c64.c64.latestUserSnapshot)
+            mydocument.snapshots.append(emu.c64.latestUserSnapshot)
             renderer.flash()
 
         case .SNAPSHOT_RESTORED:

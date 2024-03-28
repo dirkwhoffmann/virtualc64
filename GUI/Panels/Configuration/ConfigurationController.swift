@@ -238,8 +238,8 @@ class ConfigurationController: DialogController {
     
     var bootable: Bool {
         
-        do { try c64.isReady() } catch { return false }
-        return c64.poweredOff
+        do { try emu.isReady() } catch { return false }
+        return emu.poweredOff
     }
 
     // The tab to open first
@@ -283,7 +283,7 @@ class ConfigurationController: DialogController {
     
     @IBAction func unlockAction(_ sender: Any!) {
                 
-        c64.powerOff()
+        emu.powerOff()
         refresh()
     }
     
@@ -295,7 +295,7 @@ class ConfigurationController: DialogController {
     @IBAction func powerAction(_ sender: Any!) {
         
         hideSheet()
-        try? c64.run()
+        try? emu.run()
     }
 }
 

@@ -13,8 +13,8 @@ extension Inspector {
 
     private func cacheVIC() {
 
-        vicInfo = c64.vic.info
-        sprInfo = c64.vic.getSpriteInfo(selectedSprite)
+        vicInfo = emu.vic.info
+        sprInfo = emu.vic.getSpriteInfo(selectedSprite)
     }
     
     func refreshVIC(count: Int = 0, full: Bool = false) {
@@ -65,11 +65,11 @@ extension Inspector {
         vicVFlop.state = vicInfo.frameFF.vertical ? .on : .off
         vicHFlop.state = vicInfo.frameFF.main ? .on : .off
         vicDisplayMode.selectItem(withTag: Int(vicInfo.displayMode.rawValue))
-        vicBorderColor.color = c64.vic.color(Int(vicInfo.borderColor))
-        vicBgColor0.color = c64.vic.color(Int(vicInfo.bgColor0))
-        vicBgColor1.color = c64.vic.color(Int(vicInfo.bgColor1))
-        vicBgColor2.color = c64.vic.color(Int(vicInfo.bgColor2))
-        vicBgColor3.color = c64.vic.color(Int(vicInfo.bgColor3))
+        vicBorderColor.color = emu.vic.color(Int(vicInfo.borderColor))
+        vicBgColor0.color = emu.vic.color(Int(vicInfo.bgColor0))
+        vicBgColor1.color = emu.vic.color(Int(vicInfo.bgColor1))
+        vicBgColor2.color = emu.vic.color(Int(vicInfo.bgColor2))
+        vicBgColor3.color = emu.vic.color(Int(vicInfo.bgColor3))
         vicMemSelect.integerValue = Int(vicInfo.memSelect)
         vicUltimax.state = vicInfo.ultimax ? .on : .off
         vicMemoryBankAddr.selectItem(withTag: Int(vicInfo.memoryBankAddr))
@@ -101,9 +101,9 @@ extension Inspector {
         sprMulticolor.state = sprInfo.multicolor ? .on : .off
         sprSSCollision.state = sprInfo.ssCollision ? .on : .off
         sprSBCollision.state = sprInfo.sbCollision ? .on : .off
-        sprColor.color = c64.vic.color(Int(sprInfo.color))
-        sprExtra1.color = c64.vic.color(Int(sprInfo.extraColor1))
-        sprExtra2.color = c64.vic.color(Int(sprInfo.extraColor2))
+        sprColor.color = emu.vic.color(Int(sprInfo.color))
+        sprExtra1.color = emu.vic.color(Int(sprInfo.extraColor1))
+        sprExtra2.color = emu.vic.color(Int(sprInfo.extraColor2))
     }
     
     @IBAction func selectSpriteAction(_ sender: Any!) {

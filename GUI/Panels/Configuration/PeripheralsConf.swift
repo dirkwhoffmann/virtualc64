@@ -188,7 +188,7 @@ extension ConfigurationController {
 
     @IBAction func perPresetAction(_ sender: NSPopUpButton!) {
 
-        c64.suspend()
+        emu.suspend()
 
         // Revert to standard settings
         EmulatorProxy.defaults.removePeripheralsUserDefaults()
@@ -196,7 +196,7 @@ extension ConfigurationController {
         // Update the configuration
         config.applyPeripheralsUserDefaults()
 
-        c64.resume()
+        emu.resume()
         refresh()
     }
 

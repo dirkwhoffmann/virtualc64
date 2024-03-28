@@ -13,11 +13,11 @@ extension MyController {
 
         if vc64.WarpMode(rawValue: config.warpMode) == .AUTO {
 
-            return NSImage(named: c64.info.warping ? "hourglass3Template" : "hourglass1Template")
+            return NSImage(named: emu.info.warping ? "hourglass3Template" : "hourglass1Template")
 
         } else {
 
-            return NSImage(named: c64.info.warping ? "warpOnTemplate" : "warpOffTemplate")
+            return NSImage(named: emu.info.warping ? "warpOnTemplate" : "warpOffTemplate")
         }
     }
 
@@ -39,9 +39,9 @@ extension MyController {
 
     var cartridgeSwitch: NSImage? {
         
-        if c64.expansionport.traits.switches > 0 {
+        if emu.expansionport.traits.switches > 0 {
 
-            let pos = c64.expansionport.info.switchPos
+            let pos = emu.expansionport.info.switchPos
             if pos < 0 { return NSImage(named: "crtSwitchLeftTemplate") }
             if pos == 0 { return NSImage(named: "crtSwitchNeutralTemplate") }
             if pos > 0 { return NSImage(named: "crtSwitchRightTemplate") }
@@ -51,21 +51,21 @@ extension MyController {
     
     public func refreshStatusBar() {
 
-        let dsstate = c64.datasette.info
+        let dsstate = emu.datasette.info
         
-        let c64state = c64.info
+        let c64state = emu.info
         let running = c64state.running
         let tracking = c64state.tracking
         let warping = c64state.warping
 
-        let config8 = c64.drive8.config
-        let config9 = c64.drive9.config
+        let config8 = emu.drive8.config
+        let config9 = emu.drive9.config
         let connected8 = config8.connected
         let connected9 = config9.connected
         let on8 = config8.switchedOn
         let on9 = config9.switchedOn
 
-        let hasCrt = c64.expansionport.cartridgeAttached()
+        let hasCrt = emu.expansionport.cartridgeAttached()
 
         // Floppy drives
         refreshStatusBarDriveItems(drive: DRIVE8)
@@ -122,13 +122,13 @@ extension MyController {
 
         case DRIVE8:
 
-            greenLED8.image = c64.drive8.greenLedImage
-            redLED8.image = c64.drive8.redLedImage
+            greenLED8.image = emu.drive8.greenLedImage
+            redLED8.image = emu.drive8.redLedImage
 
         case DRIVE9:
 
-            greenLED9.image = c64.drive9.greenLedImage
-            redLED9.image = c64.drive9.redLedImage
+            greenLED9.image = emu.drive9.greenLedImage
+            redLED9.image = emu.drive9.redLedImage
 
         default:
             fatalError()
@@ -141,13 +141,13 @@ extension MyController {
 
         case DRIVE8:
             
-            let info = c64.drive8.info
+            let info = emu.drive8.info
             trackNumber8.integerValue = Int((info.halftrack + 1) / 2)
             trackNumber8.textColor = info.writing ? .red : .secondaryLabelColor
 
         case DRIVE9:
 
-            let info = c64.drive9.info
+            let info = emu.drive9.info
             trackNumber9.integerValue = Int((info.halftrack + 1) / 2)
             trackNumber9.textColor = info.writing ? .red : .secondaryLabelColor
 
@@ -162,16 +162,16 @@ extension MyController {
 
         case DRIVE8:
 
-            let info = c64.drive8.info
-            let config = c64.drive8.config
-            diskIcon8.image = c64.drive8.icon
+            let info = emu.drive8.info
+            let config = emu.drive8.config
+            diskIcon8.image = emu.drive8.icon
             diskIcon8.isHidden = !config.connected || !info.hasDisk || !statusBar
 
         case DRIVE9:
 
-            let info = c64.drive9.info
-            let config = c64.drive9.config
-            diskIcon9.image = c64.drive9.icon
+            let info = emu.drive9.info
+            let config = emu.drive9.config
+            diskIcon9.image = emu.drive9.icon
             diskIcon9.isHidden = !config.connected || !info.hasDisk || !statusBar
 
         default:
@@ -191,7 +191,7 @@ extension MyController {
 
         case DRIVE8:
 
-            if c64.drive8.info.spinning {
+            if emu.drive8.info.spinning {
                 spinning8.startAnimation(self)
                 spinning8.isHidden = !statusBar
             } else {
@@ -201,7 +201,7 @@ extension MyController {
 
         case DRIVE9:
 
-            if c64.drive9.info.spinning {
+            if emu.drive9.info.spinning {
                 spinning9.startAnimation(self)
                 spinning9.isHidden = !statusBar
             } else {
@@ -216,7 +216,7 @@ extension MyController {
 
     func refreshStatusBarDatasette() {
 
-        let dsstate = c64.datasette.info
+        let dsstate = emu.datasette.info
 
         if dsstate.motor && dsstate.playKey {
             tapeProgress.startAnimation(self)
@@ -273,7 +273,7 @@ extension MyController {
 
             activityBar.fillColor = color[index]
         }
-        let state = c64.cpu.info
+        let state = emu.cpu.info
 
         speedometer.updateWith(cycle: state.cycle, gpuFrame: renderer.frames)
 
@@ -287,14 +287,14 @@ extension MyController {
             setColor(color: [.systemRed, .systemYellow, .systemGreen, .systemYellow, .systemRed])
 
         case 1:
-            let fps = c64.stats.fps
+            let fps = emu.stats.fps
             activityBar.maxValue = 120
             activityBar.doubleValue = fps
             activityInfo.stringValue = String(format: "%d Hz", Int(fps))
             setColor(color: [.systemRed, .systemYellow, .systemGreen, .systemYellow, .systemRed])
 
         case 2:
-            let cpu = Int(c64.stats.cpuLoad * 100)
+            let cpu = Int(emu.stats.cpuLoad * 100)
             activityBar.maxValue = 100
             activityBar.integerValue = cpu
             activityInfo.stringValue = String(format: "%d%% CPU", cpu)
@@ -308,7 +308,7 @@ extension MyController {
             setColor(color: [.systemRed, .systemYellow, .systemGreen, .systemYellow, .systemRed])
 
         case 4:
-            let fill = c64.sid.stats.fillLevel * 100.0
+            let fill = emu.sid.stats.fillLevel * 100.0
             activityBar.maxValue = 100
             activityBar.doubleValue = fill
             activityInfo.stringValue = String(format: "Fill level %d%%", Int(fill))
