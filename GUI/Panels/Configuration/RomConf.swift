@@ -11,10 +11,10 @@ extension ConfigurationController {
 
     func refreshRomTab() {
         
-        let basicRom = c64.basicRom
-        let charRom = c64.charRom
-        let kernalRom = c64.kernalRom
-        let vc1541Rom = c64.vc1541Rom
+        let basicRom = c64.c64.basicRom
+        let charRom = c64.c64.charRom
+        let kernalRom = c64.c64.kernalRom
+        let vc1541Rom = c64.c64.vc1541Rom
 
         let poweredOff         = c64.poweredOff
         

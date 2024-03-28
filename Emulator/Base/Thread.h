@@ -171,7 +171,6 @@ public:
     void powerOff();
     void run() throws;
     void pause();
-    void stopAndGo();
     void halt();
 
     void warpOn(isize source = 0);

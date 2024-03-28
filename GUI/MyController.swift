@@ -450,10 +450,10 @@ extension MyController {
             }
 
         case .AUTO_SNAPSHOT_TAKEN:
-            mydocument.snapshots.append(c64.latestAutoSnapshot)
+            mydocument.snapshots.append(c64.c64.latestAutoSnapshot)
 
         case .USER_SNAPSHOT_TAKEN:
-            mydocument.snapshots.append(c64.latestUserSnapshot)
+            mydocument.snapshots.append(c64.c64.latestUserSnapshot)
             renderer.flash()
 
         case .SNAPSHOT_RESTORED:

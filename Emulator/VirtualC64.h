@@ -58,11 +58,6 @@ public:
     VirtualC64();
     ~VirtualC64();
 
-    // static VirtualC64 *make() { return new VirtualC64(); }
-
-    // Experimental (for new Swift API)
-    // static VirtualC64 *make(void *p) { return (VirtualC64 *)p; }
-
     /// @brief  A reference to the user default storage.
     static const Defaults &defaults;
 
@@ -117,6 +112,19 @@ public:
      */
     bool isTracking() { return Emulator::isTracking(); }
 
+    /** @brief  Checks if the emulator is runnable.
+     *  The function checks if the necessary ROMs are installed to lauch the
+     *  emulator. On success, the functions returns. Otherwise, an exception
+     *  is thrown.
+     *
+     *  @throw  VC64Error (ERROR_ROM_BASIC_MISSING)
+     *  @throw  VC64Error (ERROR_ROM_CHAR_MISSING)
+     *  @throw  VC64Error (ERROR_ROM_KERNAL_MISSING)
+     *  @throw  VC64Error (ERROR_ROM_CHAR_MISSING)
+     *  @throw  VC64Error (ERROR_ROM_MEGA65_MISMATCH)
+     */
+    void isReady() { return Emulator::isReady(); }
+
 
     /// @}
     /// @name Controlling the emulator state
@@ -162,13 +170,6 @@ public:
      *  normal operation.
      */
     void halt() { Emulator::Thread::halt(); }
-
-    /** @brief   Runs or pauses the emulator
-     *
-     *  The function calls pause() if the emulator is running, and run()
-     *  otherwise.
-     */
-    void stopAndGo() { Emulator::stopAndGo(); }
 
     /** @brief   Suspends the emulator thread
      *
@@ -400,21 +401,6 @@ public:
          *  @param  type    The ROM type
          */
         RomTraits getRomTraits(RomType type) const;
-
-
-        /** @brief  Checks if the emulator is runnable.
-         *  The function checks if the necessary ROMs are installed to lauch the
-         *  emulator. On success, the functions returns. Otherwise, an exception
-         *  is thrown.
-         *
-         *  @throw  VC64Error (ERROR_ROM_BASIC_MISSING)
-         *  @throw  VC64Error (ERROR_ROM_CHAR_MISSING)
-         *  @throw  VC64Error (ERROR_ROM_KERNAL_MISSING)
-         *  @throw  VC64Error (ERROR_ROM_CHAR_MISSING)
-         *  @throw  VC64Error (ERROR_ROM_MEGA65_MISMATCH)
-         */
-        void isReady();
-
 
         /// @}
         /// @name Resetting the C64

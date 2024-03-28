@@ -32,7 +32,7 @@ extension MyController {
     
     @objc func snapshotTimerFunc() {
         
-        if pref.autoSnapshots { c64.requestAutoSnapshot() }
+        if pref.autoSnapshots { c64.c64.requestAutoSnapshot() }
     }
     
     func restoreSnapshot(item: Int) throws {

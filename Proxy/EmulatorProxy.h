@@ -17,6 +17,7 @@ using namespace vc64;
 @class AnyFileProxy;
 @class AnyCollectionProxy;
 @class EmulatorProxy;
+@class C64Proxy;
 @class CIAProxy;
 @class Constants;
 @class ControlPortProxy;
@@ -97,7 +98,7 @@ using namespace vc64;
 @end
 
 //
-// C64
+// Emulator
 //
 
 @interface EmulatorProxy : Proxy {
@@ -127,6 +128,7 @@ using namespace vc64;
 
 @property (class, readonly, strong) DefaultsProxy *defaults;
 
+@property (readonly, strong) C64Proxy *c64;
 @property (readonly, strong) CIAProxy *cia1;
 @property (readonly, strong) CIAProxy *cia2;
 @property (readonly, strong) ControlPortProxy *port1;
@@ -153,12 +155,9 @@ using namespace vc64;
 @property (class, readonly) NSString *build;
 @property (class, readonly) NSString *version;
 
-- (void)launch:(const void *)listener function:(Callback *)func;
-
+@property (readonly) EmulatorConfig config;
 @property (readonly) EmulatorInfo info;
 @property (readonly) EmulatorStats stats;
-@property (readonly) C64Info eventInfo;
-- (EventSlotInfo)getEventSlotInfo:(NSInteger)slot;
 
 @property (readonly) BOOL poweredOn;
 @property (readonly) BOOL poweredOff;
@@ -168,33 +167,33 @@ using namespace vc64;
 @property (readonly) BOOL halted;
 @property (readonly) BOOL warping;
 @property (readonly) BOOL tracking;
-
-@property BOOL trackMode;
-
-@property (readonly) u32 *texture;
-@property (readonly) u32 *noise;
-
-@property InspectionTarget inspectionTarget;
-- (void) removeInspectionTarget;
-
-- (void)hardReset;
-- (void)softReset;
-
 - (void)isReady:(ExceptionWrapper *)ex;
+
 - (void)powerOn:(ExceptionWrapper *)ex;
 - (void)powerOff;
 - (void)run:(ExceptionWrapper *)ex;
 - (void)pause;
 - (void)halt;
-
 - (void)suspend;
 - (void)resume;
+- (void)warpOn;
+- (void)warpOn:(NSInteger)source;
+- (void)warpOff;
+- (void)warpOff:(NSInteger)source;
+- (void)trackOn;
+- (void)trackOn:(NSInteger)source;
+- (void)trackOff;
+- (void)trackOff:(NSInteger)source;
 
-- (void)requestAutoSnapshot;
-- (void)requestUserSnapshot;
+- (void)stepInto;
+- (void)stepOver;
 
-@property (readonly) SnapshotProxy *latestAutoSnapshot;
-@property (readonly) SnapshotProxy *latestUserSnapshot;
+- (void)wakeUp;
+
+@property (readonly) u32 *texture;
+@property (readonly) u32 *noise;
+
+- (void)launch:(const void *)listener function:(Callback *)func;
 
 - (NSInteger)getConfig:(Option)opt;
 - (NSInteger)getConfig:(Option)opt id:(NSInteger)id;
@@ -209,17 +208,18 @@ using namespace vc64;
 
 - (void)exportConfig:(NSURL *)url exception:(ExceptionWrapper *)ex;
 
-- (void)wakeUp;
+- (void)send:(CmdType)cmd;
+- (void)send:(CmdType)type value:(NSInteger)value;
+- (void)send:(CmdType)type key:(KeyCmd)cmd;
+- (void)send:(CmdType)type coord:(CoordCmd)cmd;
+- (void)send:(CmdType)type action:(GamePadCmd)cmd;
 
-- (void)stopAndGo;
-- (void)stepInto;
-- (void)stepOver;
 
-// - (RomInfo)getRomInfo:(RomType)type;
-@property (readonly) RomTraits basicRom;
-@property (readonly) RomTraits charRom;
-@property (readonly) RomTraits kernalRom;
-@property (readonly) RomTraits vc1541Rom;
+
+
+
+
+
 
 - (BOOL)isRom:(RomType)type url:(NSURL *)url;
 
@@ -230,12 +230,6 @@ using namespace vc64;
 
 - (void)flash:(AnyFileProxy *)container exception:(ExceptionWrapper *)ex;
 - (void)flash:(FileSystemProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex;
-
-- (void)send:(CmdType)cmd;
-- (void)send:(CmdType)type value:(NSInteger)value;
-- (void)send:(CmdType)type key:(KeyCmd)cmd;
-- (void)send:(CmdType)type coord:(CoordCmd)cmd;
-- (void)send:(CmdType)type action:(GamePadCmd)cmd;
 
 @end
 
@@ -298,6 +292,34 @@ using namespace vc64;
 
 @end
 
+//
+// C64
+//
+
+@interface C64Proxy : SubComponentProxy { }
+
+@property (readonly) C64Info info;
+- (EventSlotInfo)getEventSlotInfo:(NSInteger)slot;
+
+- (RomTraits)getRomTraits:(RomType)type;
+@property (readonly) RomTraits basicRom;
+@property (readonly) RomTraits charRom;
+@property (readonly) RomTraits kernalRom;
+@property (readonly) RomTraits vc1541Rom;
+
+- (void)hardReset;
+- (void)softReset;
+
+@property InspectionTarget inspectionTarget;
+- (void) removeInspectionTarget;
+
+- (void)requestAutoSnapshot;
+- (void)requestUserSnapshot;
+
+@property (readonly) SnapshotProxy *latestAutoSnapshot;
+@property (readonly) SnapshotProxy *latestUserSnapshot;
+
+@end
 
 //
 // CPU
@@ -521,12 +543,7 @@ using namespace vc64;
 - (const char *)sectorDataBytesAsString:(Halftrack)ht sector:(Sector)s hex:(BOOL)hex;
 
 - (NSString *)getLogbook:(Halftrack)ht;
-/*
-- (NSInteger)numErrors:(Halftrack)ht;
-- (NSString *)errorMessage:(Halftrack)ht nr:(NSInteger)nr;
-- (NSInteger)firstErroneousBit:(Halftrack)ht nr:(NSInteger)nr;
-- (NSInteger)lastErroneousBit:(Halftrack)ht nr:(NSInteger)nr;
-*/
+
 @end
 
 

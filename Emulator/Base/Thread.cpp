@@ -350,12 +350,6 @@ Thread::pause()
     }
 }
 
-void 
-Thread::stopAndGo()
-{
-    isRunning() ? pause() : run();
-}
-
 void
 Thread::halt()
 {
@@ -400,6 +394,8 @@ Thread::trackOn(isize source)
 
     if (!GET_BIT(track, source)) {
 
+        SUSPENDED
+
         auto old = track;
         SET_BIT(track, source);
         if (!!old != !!track) _trackOn();
@@ -412,6 +408,8 @@ Thread::trackOff(isize source)
     assert(source < 7);
 
     if (GET_BIT(track, source)) {
+
+        SUSPENDED
 
         auto old = track;
         CLR_BIT(track, source);

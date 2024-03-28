@@ -178,12 +178,6 @@ VirtualC64::C64API::getRomTraits(RomType type) const
     return c64.getRomTraits(type);
 }
 
-void
-VirtualC64::C64API::isReady()
-{
-    c64.isReady();
-}
-
 Snapshot *
 VirtualC64::C64API::latestAutoSnapshot()
 {

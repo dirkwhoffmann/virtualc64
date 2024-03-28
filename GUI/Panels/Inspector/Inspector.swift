@@ -308,7 +308,7 @@ class Inspector: DialogController {
     override func showWindow(_ sender: Any?) {
 
         super.showWindow(self)
-        c64.trackMode = true
+        c64.trackOn()
         updateInspectionTarget()
     }
         
@@ -445,7 +445,7 @@ class Inspector: DialogController {
 
     @IBAction func stopAndGoAction(_ sender: NSButton!) {
 
-        c64.stopAndGo()
+        if c64.running { c64.pause() } else { try? c64.run() }
     }
     
     @IBAction func stepIntoAction(_ sender: NSButton!) {
@@ -476,8 +476,8 @@ extension Inspector {
     override func windowWillClose(_ notification: Notification) {
                 
         // Leave debug mode
-        c64?.trackMode = false
-        c64?.inspectionTarget = .NONE
+        c64?.trackOff()
+        c64?.c64.inspectionTarget = .NONE
     }
 }
 
@@ -489,12 +489,12 @@ extension Inspector: NSTabViewDelegate {
                     
             switch id {
                 
-            case "CPU":     c64.inspectionTarget = .CPU
-            case "Memory":  c64.inspectionTarget = .MEM
-            case "CIA":     c64.inspectionTarget = .CIA
-            case "VICII":   c64.inspectionTarget = .VICII
-            case "SID":     c64.inspectionTarget = .SID
-            case "Events":  c64.inspectionTarget = .C64
+            case "CPU":     c64.c64.inspectionTarget = .CPU
+            case "Memory":  c64.c64.inspectionTarget = .MEM
+            case "CIA":     c64.c64.inspectionTarget = .CIA
+            case "VICII":   c64.c64.inspectionTarget = .VICII
+            case "SID":     c64.c64.inspectionTarget = .SID
+            case "Events":  c64.c64.inspectionTarget = .C64
 
             default:
                 break

@@ -321,7 +321,7 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func takeSnapshotAction(_ sender: Any!) {
         
-        c64.requestUserSnapshot()
+        c64.c64.requestUserSnapshot()
     }
     
     @IBAction func restoreSnapshotAction(_ sender: Any!) {
@@ -438,7 +438,7 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func stopAndGoAction(_ sender: Any!) {
         
-        c64.stopAndGo()
+        if c64.running { c64.pause() } else { try? c64.run() }
     }
     
     @IBAction func stepIntoAction(_ sender: Any!) {
@@ -454,13 +454,13 @@ extension MyController: NSMenuItemValidation {
     @IBAction func resetAction(_ sender: Any!) {
 
         renderer.rotateLeft()
-        c64.hardReset()
+        c64.c64.hardReset()
         try? c64.run()
     }
 
     @IBAction func softResetAction(_ sender: Any!) {
 
-        c64.softReset()
+        c64.c64.softReset()
     }
 
     @IBAction func powerAction(_ sender: Any!) {
@@ -933,7 +933,7 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func detachCartridgeAction(_ sender: Any!) {
         c64.expansionport.detachCartridge()
-        c64.hardReset()
+        c64.c64.hardReset()
     }
 
     @IBAction func attachReuDummyAction(_ sender: Any!) {

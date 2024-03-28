@@ -10,7 +10,6 @@
 #import "config.h"
 #import "EmulatorProxy.h"
 #import "VirtualC64.h"
-// #import "VirtualC64-Swift.h"
 
 using namespace vc64;
 
@@ -1971,12 +1970,108 @@ using namespace vc64;
 
 
 //
+// C64 proxy
+//
+
+@implementation C64Proxy
+
+- (VirtualC64::C64API *)c64
+{
+    return (VirtualC64::C64API *)obj;
+}
+
+- (C64Info)info
+{
+    return [self c64]->getInfo();
+}
+
+- (EventSlotInfo)getEventSlotInfo:(NSInteger)slot
+{
+    return [self c64]->getSlotInfo(slot);
+}
+
+- (RomTraits)getRomTraits:(RomType)type
+{
+    return [self c64]->getRomTraits(type);
+}
+
+- (RomTraits)basicRom
+{
+    return [self getRomTraits:ROM_TYPE_BASIC];
+}
+
+- (RomTraits)charRom
+{
+    return [self getRomTraits:ROM_TYPE_CHAR];
+}
+
+- (RomTraits)kernalRom
+{
+    return [self getRomTraits:ROM_TYPE_KERNAL];
+}
+
+- (RomTraits)vc1541Rom
+{
+    return [self getRomTraits:ROM_TYPE_VC1541];
+}
+
+- (void)hardReset
+{
+    [self c64]->hardReset();
+}
+
+- (void)softReset
+{
+    [self c64]->softReset();
+}
+
+- (InspectionTarget)inspectionTarget
+{
+    return [self c64]->getInspectionTarget();
+}
+
+- (void)setInspectionTarget:(InspectionTarget)target
+{
+    [self c64]->setInspectionTarget(target);
+}
+
+- (void) removeInspectionTarget
+{
+    [self c64]->removeInspectionTarget();
+}
+
+- (void)requestAutoSnapshot
+{
+    [self c64]->emulator.put(CMD_SNAPSHOT_AUTO);
+}
+
+- (void)requestUserSnapshot
+{
+    [self c64]->emulator.put(CMD_SNAPSHOT_USER);
+}
+
+- (SnapshotProxy *)latestAutoSnapshot
+{
+    Snapshot *snapshot = [self c64]->latestAutoSnapshot();
+    return [SnapshotProxy make:snapshot];
+}
+
+- (SnapshotProxy *)latestUserSnapshot
+{
+    Snapshot *snapshot = [self c64]->latestUserSnapshot();
+    return [SnapshotProxy make:snapshot];
+}
+
+@end
+
+//
 // Emulator
 //
 
 @implementation EmulatorProxy
 
 @synthesize breakpoints;
+@synthesize c64;
 @synthesize cia1;
 @synthesize cia2;
 @synthesize cpu;
@@ -2006,6 +2101,7 @@ using namespace vc64;
 
     // Create sub proxys
     breakpoints = [[GuardsProxy alloc] initWith:&emu->cpu.breakpoints];
+    c64 = [[C64Proxy alloc] initWith:&emu->c64 emu:emu];
     cia1 = [[CIAProxy alloc] initWith:&emu->cia1 emu:emu];
     cia2 = [[CIAProxy alloc] initWith:&emu->cia2 emu:emu];
     cpu = [[CPUProxy alloc] initWith:&emu->cpu emu:emu];
@@ -2070,64 +2166,21 @@ using namespace vc64;
     return [self emu]->isTracking();
 }
 
-- (void)setTrackMode:(BOOL)value
-{
-    if (value) {
-        [self emu]->trackOn();
-    } else {
-        [self emu]->trackOff();
-    }
-}
-
-- (InspectionTarget)inspectionTarget
-{
-    return [self emu]->c64.getInspectionTarget();
-}
-
-- (void)setInspectionTarget:(InspectionTarget)target
-{
-    [self emu]->c64.setInspectionTarget(target);
-}
-
-- (void) removeInspectionTarget
-{
-    [self emu]->c64.removeInspectionTarget();
-}
-
-- (C64Info)eventInfo
-{
-    return [self emu]->c64.getInfo();
-}
-
-- (EventSlotInfo)getEventSlotInfo:(NSInteger)slot
-{
-    return [self emu]->c64.getSlotInfo(slot);
-}
-
 - (void)launch:(const void *)listener function:(Callback *)func
 {
     [self emu]->launch(listener, func);
 }
 
-- (void)hardReset
-{
-    [self emu]->c64.hardReset();
-}
-
-- (void)softReset
-{
-    [self emu]->c64.softReset();
-}
-
 - (void)isReady:(ExceptionWrapper *)ex
 {
-    try { [self emu]->c64.isReady(); }
+    try { [self emu]->isReady(); }
     catch (VC64Error &error) { [ex save:error]; }
 }
 
 - (void)powerOn:(ExceptionWrapper *)ex
 {
-    [self emu]->powerOn();
+    try { [self emu]->powerOn(); }
+    catch (VC64Error &error) { [ex save:error]; }
 }
 
 - (void)powerOff
@@ -2135,9 +2188,9 @@ using namespace vc64;
     [self emu]->powerOff();
 }
 
-- (void *)objptr
+- (EmulatorConfig)config
 {
-    return obj;
+    return [self emu]->getConfig();
 }
 
 - (EmulatorInfo)info
@@ -2215,6 +2268,46 @@ using namespace vc64;
     [self emu]->resume();
 }
 
+- (void)warpOn
+{
+    [self emu]->warpOn();
+}
+
+- (void)warpOn:(NSInteger)source
+{
+    [self emu]->warpOn(source);
+}
+
+- (void)warpOff
+{
+    [self emu]->warpOff();
+}
+
+- (void)warpOff:(NSInteger)source
+{
+    [self emu]->warpOff(source);
+}
+
+- (void)trackOn
+{
+    [self emu]->trackOn();
+}
+
+- (void)trackOn:(NSInteger)source
+{
+    [self emu]->trackOn(source);
+}
+
+- (void)trackOff
+{
+    [self emu]->trackOff();
+}
+
+- (void)trackOff:(NSInteger)source
+{
+    [self emu]->trackOff(source);
+}
+
 - (u32 *)texture
 {
     return [self emu]->getTexture();
@@ -2223,28 +2316,6 @@ using namespace vc64;
 - (u32 *)noise
 {
     return [self emu]->getNoise();
-}
-
-- (void)requestAutoSnapshot
-{
-    [self emu]->put(CMD_SNAPSHOT_AUTO);
-}
-
-- (void)requestUserSnapshot
-{
-    [self emu]->put(CMD_SNAPSHOT_USER);
-}
-
-- (SnapshotProxy *)latestAutoSnapshot
-{
-    Snapshot *snapshot = [self emu]->c64.latestAutoSnapshot();
-    return [SnapshotProxy make:snapshot];
-}
-
-- (SnapshotProxy *)latestUserSnapshot
-{
-    Snapshot *snapshot = [self emu]->c64.latestUserSnapshot();
-    return [SnapshotProxy make:snapshot];
 }
 
 - (NSInteger)getConfig:(Option)opt
@@ -2338,11 +2409,6 @@ using namespace vc64;
     [self emu]->wakeUp();
 }
 
-- (void)stopAndGo
-{
-    [self emu]->stopAndGo();
-}
-
 - (void)stepInto
 {
     [self emu]->stepInto();
@@ -2353,25 +2419,6 @@ using namespace vc64;
     [self emu]->stepOver();
 }
 
-- (RomTraits)basicRom
-{
-    return [self emu]->c64.getRomTraits(ROM_TYPE_BASIC);
-}
-
-- (RomTraits)charRom
-{
-    return [self emu]->c64.getRomTraits(ROM_TYPE_CHAR);
-}
-
-- (RomTraits)kernalRom
-{
-    return [self emu]->c64.getRomTraits(ROM_TYPE_KERNAL);
-}
-
-- (RomTraits)vc1541Rom
-{
-    return [self emu]->c64.getRomTraits(ROM_TYPE_VC1541);
-}
 - (BOOL) isRom:(RomType)type url:(NSURL *)url
 {
     return RomFile::isRomFile(type, [url fileSystemRepresentation]);
