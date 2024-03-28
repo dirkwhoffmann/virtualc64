@@ -58,10 +58,10 @@ public:
     VirtualC64();
     ~VirtualC64();
 
-    static VirtualC64 *make() { return new VirtualC64(); }
+    // static VirtualC64 *make() { return new VirtualC64(); }
 
     // Experimental (for new Swift API)
-    static VirtualC64 *make(void *p) { return (VirtualC64 *)p; }
+    // static VirtualC64 *make(void *p) { return (VirtualC64 *)p; }
 
     /// @brief  A reference to the user default storage.
     static const Defaults &defaults;

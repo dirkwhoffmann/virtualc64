@@ -63,12 +63,8 @@ using namespace vc64;
 
 
 //
-// CoreComponent proxy
+// SubComponentProxy proxy
 //
-
-@implementation CoreComponentProxy
-
-@end
 
 @implementation SubComponentProxy
 
@@ -2052,6 +2048,16 @@ using namespace vc64;
     assert([self emu] != NULL);
     delete [self emu];
     obj = NULL;
+}
+
++ (NSString *)build
+{
+    return @(VirtualC64::build().c_str());
+}
+
++ (NSString *)version
+{
+    return @(VirtualC64::version().c_str());
 }
 
 - (BOOL)releaseBuild

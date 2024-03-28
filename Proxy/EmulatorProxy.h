@@ -76,11 +76,6 @@ using namespace vc64;
 }
 @end
 
-@interface CoreComponentProxy : Proxy {
-    
-}
-@end
-
 @interface SubComponentProxy : Proxy {
 
     // Reference to the emulator instance
@@ -96,8 +91,8 @@ using namespace vc64;
 
 }
 
-@property (readonly, class) NSInteger texWidth;
-@property (readonly, class) NSInteger texHeight;
+@property (class, readonly) NSInteger texWidth;
+@property (class, readonly) NSInteger texHeight;
 
 @end
 
@@ -105,7 +100,7 @@ using namespace vc64;
 // C64
 //
 
-@interface EmulatorProxy : CoreComponentProxy {
+@interface EmulatorProxy : Proxy {
         
     CIAProxy *cia1;
     CIAProxy *cia2;
@@ -130,6 +125,8 @@ using namespace vc64;
     VICIIProxy *vic;
 }
 
+@property (class, readonly, strong) DefaultsProxy *defaults;
+
 @property (readonly, strong) CIAProxy *cia1;
 @property (readonly, strong) CIAProxy *cia2;
 @property (readonly, strong) ControlPortProxy *port1;
@@ -150,14 +147,14 @@ using namespace vc64;
 @property (readonly, strong) SIDProxy *sid;
 @property (readonly, strong) VICIIProxy *vic;
 
-@property (class, readonly, strong) DefaultsProxy *defaults;
-
 - (void)dealloc;
 - (void)kill;
 
+@property (class, readonly) NSString *build;
+@property (class, readonly) NSString *version;
+
 - (void)launch:(const void *)listener function:(Callback *)func;
 
-@property (readonly) void *objptr;
 @property (readonly) EmulatorInfo info;
 @property (readonly) EmulatorStats stats;
 @property (readonly) C64Info eventInfo;
