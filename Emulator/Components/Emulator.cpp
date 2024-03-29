@@ -866,8 +866,8 @@ Emulator::_dump(Category category, std::ostream& os) const
 
     if (category == Category::State) {
 
-        os << tab("Emulator state");
-        os << EmulatorStateEnum::key(state) << std::endl;
+        os << tab("Execution state");
+        os << ExecStateEnum::key(state) << std::endl;
         os << tab("Power");
         os << bol(isPoweredOn()) << std::endl;
         os << tab("Running");

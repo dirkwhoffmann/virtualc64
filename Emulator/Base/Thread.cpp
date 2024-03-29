@@ -75,7 +75,7 @@ Thread::execute()
         } catch (StateChangeException &exc) {
 
             // Interruption
-            switchState((EmulatorState)exc.data);
+            switchState((ExecState)exc.data);
         }
         loadClock.stop();
 
@@ -154,7 +154,7 @@ Thread::runLoop()
 }
 
 void
-Thread::switchState(EmulatorState newState)
+Thread::switchState(ExecState newState)
 {
     assert(isEmulatorThread());
 
@@ -162,12 +162,12 @@ Thread::switchState(EmulatorState newState)
         
         assert(false);
         fatal("Invalid state transition: %s -> %s\n",
-              EmulatorStateEnum::key(state), EmulatorStateEnum::key(newState));
+              ExecStateEnum::key(state), ExecStateEnum::key(newState));
     };
 
     debug(RUN_DEBUG,
           "switchState: %s -> %s\n",
-          EmulatorStateEnum::key(state), EmulatorStateEnum::key(newState));
+          ExecStateEnum::key(state), ExecStateEnum::key(newState));
 
     while (state != newState) {
 
@@ -237,7 +237,7 @@ Thread::switchState(EmulatorState newState)
         }
     }
 
-    debug(RUN_DEBUG, "switchState: %s\n", EmulatorStateEnum::key(state));
+    debug(RUN_DEBUG, "switchState: %s\n", ExecStateEnum::key(state));
 
     /*
 
@@ -418,7 +418,7 @@ Thread::trackOff(isize source)
 }
 
 void
-Thread::changeStateTo(EmulatorState requestedState)
+Thread::changeStateTo(ExecState requestedState)
 {
     assertLaunched();
 

@@ -167,8 +167,8 @@ using namespace vc64;
 @property (readonly) BOOL halted;
 @property (readonly) BOOL warping;
 @property (readonly) BOOL tracking;
-- (void)isReady:(ExceptionWrapper *)ex;
 
+- (void)isReady:(ExceptionWrapper *)ex;
 - (void)powerOn:(ExceptionWrapper *)ex;
 - (void)powerOff;
 - (void)run:(ExceptionWrapper *)ex;
@@ -195,24 +195,24 @@ using namespace vc64;
 
 - (void)launch:(const void *)listener function:(Callback *)func;
 
-- (NSInteger)getConfig:(Option)opt;
-- (NSInteger)getConfig:(Option)opt id:(NSInteger)id;
-- (NSInteger)getConfig:(Option)opt drive:(NSInteger)id;
-- (BOOL)configure:(Option)opt value:(NSInteger)val;
-- (BOOL)configure:(Option)opt enable:(BOOL)val;
-- (BOOL)configure:(Option)opt id:(NSInteger)id value:(NSInteger)val;
-- (BOOL)configure:(Option)opt id:(NSInteger)id enable:(BOOL)val;
-- (BOOL)configure:(Option)opt drive:(NSInteger)id value:(NSInteger)val;
-- (BOOL)configure:(Option)opt drive:(NSInteger)id enable:(BOOL)val;
-- (void)configure:(C64Model)value;
+- (NSInteger)get:(Option)opt;
+- (NSInteger)get:(Option)opt id:(NSInteger)id;
+- (NSInteger)get:(Option)opt drive:(NSInteger)id;
+- (BOOL)set:(Option)opt value:(NSInteger)val;
+- (BOOL)set:(Option)opt enable:(BOOL)val;
+- (BOOL)set:(Option)opt id:(NSInteger)id value:(NSInteger)val;
+- (BOOL)set:(Option)opt id:(NSInteger)id enable:(BOOL)val;
+- (BOOL)set:(Option)opt drive:(NSInteger)id value:(NSInteger)val;
+- (BOOL)set:(Option)opt drive:(NSInteger)id enable:(BOOL)val;
+- (void)set:(C64Model)value;
 
 - (void)exportConfig:(NSURL *)url exception:(ExceptionWrapper *)ex;
 
-- (void)send:(CmdType)cmd;
-- (void)send:(CmdType)type value:(NSInteger)value;
-- (void)send:(CmdType)type key:(KeyCmd)cmd;
-- (void)send:(CmdType)type coord:(CoordCmd)cmd;
-- (void)send:(CmdType)type action:(GamePadCmd)cmd;
+- (void)put:(CmdType)cmd;
+- (void)put:(CmdType)type value:(NSInteger)value;
+- (void)put:(CmdType)type key:(KeyCmd)cmd;
+- (void)put:(CmdType)type coord:(CoordCmd)cmd;
+- (void)put:(CmdType)type action:(GamePadCmd)cmd;
 
 
 

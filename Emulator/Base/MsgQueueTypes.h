@@ -27,7 +27,7 @@ enum_long(MSG_TYPE)
 {
     MSG_NONE = 0,           ///< Unclassified
 
-    // Emulator state
+    // Execution state
     MSG_CONFIG,             ///< The configuration has changed
     MSG_POWER,              ///< The emulator has been powered on or off
     MSG_RUN,                ///< The emulator has entered STATE_RUNNING

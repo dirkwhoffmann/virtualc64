@@ -362,7 +362,7 @@ class MediaManager {
         let drive = emu.drive(id)
         try export(disk: drive.disk, to: url)
 
-        emu.send(.DSK_MODIFIED, value: id)
+        emu.put(.DSK_MODIFIED, value: id)
     }
 
     func export(disk: DiskProxy, to url: URL) throws {

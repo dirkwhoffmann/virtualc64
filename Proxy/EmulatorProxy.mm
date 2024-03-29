@@ -2318,22 +2318,22 @@ using namespace vc64;
     return [self emu]->getNoise();
 }
 
-- (NSInteger)getConfig:(Option)opt
+- (NSInteger)get:(Option)opt
 {
     return [self emu]->get(opt);
 }
 
-- (NSInteger)getConfig:(Option)opt id:(NSInteger)id
+- (NSInteger)get:(Option)opt id:(NSInteger)id
 {
     return [self emu]->get(opt, id);
 }
 
-- (NSInteger)getConfig:(Option)opt drive:(NSInteger)id
+- (NSInteger)get:(Option)opt drive:(NSInteger)id
 {
     return [self emu]->get(opt, (long)id);
 }
 
-- (BOOL)configure:(Option)opt value:(NSInteger)val
+- (BOOL)set:(Option)opt value:(NSInteger)val
 {
     try {
         [self emu]->set(opt, val);
@@ -2343,7 +2343,7 @@ using namespace vc64;
     }
 }
 
-- (BOOL)configure:(Option)opt enable:(BOOL)val
+- (BOOL)set:(Option)opt enable:(BOOL)val
 {
     try {
         [self emu]->set(opt, val ? 1 : 0);
@@ -2353,7 +2353,7 @@ using namespace vc64;
     }
 }
 
-- (BOOL)configure:(Option)opt id:(NSInteger)id value:(NSInteger)val
+- (BOOL)set:(Option)opt id:(NSInteger)id value:(NSInteger)val
 {
     try {
         [self emu]->set(opt, id, val);
@@ -2363,7 +2363,7 @@ using namespace vc64;
     }
 }
 
-- (BOOL)configure:(Option)opt id:(NSInteger)id enable:(BOOL)val
+- (BOOL)set:(Option)opt id:(NSInteger)id enable:(BOOL)val
 {
     try {
         [self emu]->set(opt, id, val ? 1 : 0);
@@ -2373,7 +2373,7 @@ using namespace vc64;
     }
 }
 
-- (BOOL)configure:(Option)opt drive:(NSInteger)id value:(NSInteger)val
+- (BOOL)set:(Option)opt drive:(NSInteger)id value:(NSInteger)val
 {
     try {
         [self emu]->set(opt, (long)id, val);
@@ -2383,7 +2383,7 @@ using namespace vc64;
     }
 }
 
-- (BOOL)configure:(Option)opt drive:(NSInteger)id enable:(BOOL)val
+- (BOOL)set:(Option)opt drive:(NSInteger)id enable:(BOOL)val
 {
     try {
         [self emu]->set(opt, (long)id, val ? 1 : 0);
@@ -2393,7 +2393,7 @@ using namespace vc64;
     }
 }
 
-- (void)configure:(C64Model)model
+- (void)set:(C64Model)model
 {
     [self emu]->set(model);
 }
@@ -2458,27 +2458,27 @@ using namespace vc64;
     catch (VC64Error &error) { [ex save:error]; }
 }
 
-- (void)send:(CmdType)type
+- (void)put:(CmdType)type
 {
     [self emu]->put(type, 0);
 }
 
-- (void)send:(CmdType)type value:(NSInteger)value
+- (void)put:(CmdType)type value:(NSInteger)value
 {
     [self emu]->put(type, value);
 }
 
-- (void)send:(CmdType)type key:(KeyCmd)cmd
+- (void)put:(CmdType)type key:(KeyCmd)cmd
 {
     [self emu]->put(type, cmd);
 }
 
-- (void)send:(CmdType)type coord:(CoordCmd)cmd
+- (void)put:(CmdType)type coord:(CoordCmd)cmd
 {
     [self emu]->put(type, cmd);
 }
 
-- (void)send:(CmdType)type action:(GamePadCmd)cmd
+- (void)put:(CmdType)type action:(GamePadCmd)cmd
 {
     [self emu]->put(type, cmd);
 }

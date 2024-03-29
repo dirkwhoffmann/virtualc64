@@ -450,7 +450,7 @@ class GamePad {
         if let id = port {
 
             for event in events {
-                c64.send(.JOY_EVENT, action: vc64.GamePadCmd(port: id, action: event))
+                c64.put(.JOY_EVENT, action: vc64.GamePadCmd(port: id, action: event))
             }
         }
 
@@ -468,7 +468,7 @@ class GamePad {
         if let id = port {
 
             for event in events {
-                c64.send(.MOUSE_EVENT, action: vc64.GamePadCmd(port: id, action: event))
+                c64.put(.MOUSE_EVENT, action: vc64.GamePadCmd(port: id, action: event))
             }
         }
 
@@ -484,7 +484,7 @@ class GamePad {
 
         if let id = port {
 
-            c64.send(.MOUSE_MOVE_REL, coord: vc64.CoordCmd(port: id, x: delta.x, y: delta.y))
+            c64.put(.MOUSE_MOVE_REL, coord: vc64.CoordCmd(port: id, x: delta.x, y: delta.y))
         }
     }
 
@@ -525,7 +525,7 @@ class GamePad {
             let type  = isMouse ? vc64.CmdType.MOUSE_EVENT : vc64.CmdType.JOY_EVENT
 
             for e in events {
-                c64.send(type, action: vc64.GamePadCmd(port: id, action: e))
+                c64.put(type, action: vc64.GamePadCmd(port: id, action: e))
             }
         }
     }

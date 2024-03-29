@@ -333,7 +333,7 @@ EmulatorConfig;
 
 typedef struct
 {
-    EmulatorState state;
+    ExecState state;
     isize refreshRate;
     bool powered;
     bool paused;

@@ -24,7 +24,7 @@ enum_long(ERROR_CODE)
     ERROR_OK,                   ///< No error
     ERROR_UNKNOWN,              ///< Unclassified error condition
 
-    // Emulator state
+    // Execution state
     ERROR_POWERED_OFF,          ///< The emulator is powered off
     ERROR_POWERED_ON,           ///< The emulator is powered on
     ERROR_RUNNING,              ///< The emulator is running

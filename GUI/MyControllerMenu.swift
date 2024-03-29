@@ -481,7 +481,7 @@ extension MyController: NSMenuItemValidation {
      
     @IBAction func brkAction(_ sender: Any!) {
 
-        emu.send(.CPU_BRK)
+        emu.put(.CPU_BRK)
     }
 
     //
@@ -815,7 +815,7 @@ extension MyController: NSMenuItemValidation {
     func writeProtectAction(drive nr: Int) {
 
         precondition(nr == DRIVE8 || nr == DRIVE9)
-        emu.send(.DSK_TOGGLE_WP, value: nr)
+        emu.put(.DSK_TOGGLE_WP, value: nr)
     }
 
     @IBAction func drivePowerAction(_ sender: NSMenuItem!) {
@@ -962,19 +962,19 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func pressCartridgeButton1Action(_ sender: NSButton!) {
         
-        emu.send(.CRT_BUTTON_PRESS, value: 1)
+        emu.put(.CRT_BUTTON_PRESS, value: 1)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.emu.send(.CRT_BUTTON_RELEASE, value: 1)
+            self.emu.put(.CRT_BUTTON_RELEASE, value: 1)
         }
     }
 
     @IBAction func pressCartridgeButton2Action(_ sender: NSButton!) {
         
-        emu.send(.CRT_BUTTON_PRESS, value: 2)
+        emu.put(.CRT_BUTTON_PRESS, value: 2)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.emu.send(.CRT_BUTTON_RELEASE, value: 2)
+            self.emu.put(.CRT_BUTTON_RELEASE, value: 2)
         }
     }
     
@@ -984,17 +984,17 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func setSwitchNeutralAction(_ sender: Any!) {
         
-        emu.send(.CRT_SWITCH_NEUTRAL)
+        emu.put(.CRT_SWITCH_NEUTRAL)
     }
 
     @IBAction func setSwitchLeftAction(_ sender: Any!) {
         
-        emu.send(.CRT_SWITCH_LEFT)
+        emu.put(.CRT_SWITCH_LEFT)
     }
 
     @IBAction func setSwitchRightAction(_ sender: Any!) {
         
-        emu.send(.CRT_SWITCH_RIGHT)
+        emu.put(.CRT_SWITCH_RIGHT)
     }
 
     @IBAction func setSwitchDummyAction(_ sender: Any!) {

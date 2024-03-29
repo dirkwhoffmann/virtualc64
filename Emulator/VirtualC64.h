@@ -23,7 +23,7 @@ namespace vc64 {
 /** Public API
  *
  * This class declares the emulator's public API. It consists of functions
- * controlling the emulator state, such as running or pausing the emulator, as
+ * controlling the execution state, such as running or pausing the emulator, as
  * well as functions configuring the various components. The class contains
  * separate sub-APIs for the subcomponents of the emulator. For example, a
  * VICII API provides additional functions that interact directly with the
@@ -453,11 +453,36 @@ public:
         /// @name Handling snapshots
         /// @{
 
-        Snapshot *latestAutoSnapshot();
-        Snapshot *latestUserSnapshot();
+        /** @brief  Takes a snapshot
+         *  @return A pointer to the created Snapshot object. 
+         *  @note   The function transfers the ownership to the caller.
+         */
+        Snapshot *takeSnapshot();
+
+        /** @brief  Loads a snapshot into the emulator.
+         *  @param  snapshot    Reference to a snapshot.
+         */
         void loadSnapshot(const Snapshot &snapshot);
 
-        Snapshot *takeSnapshot();
+        /** @brief  Requests the emulator to take a snapshot.
+         *  In contrast to takeSnapshot, this function works asynchroneously.
+         *  The emulator will wait until the current frame is completed.
+         *  Afterwards, it takes a snapshot and informs the GUI by sending a
+         *  message. This functionality is utilized for handling the
+         *  auto-snapshot feature, as it does not suspend the emulator thread.
+         */
+        void requestAutoSnapshot() { c64.requestAutoSnapshot(); }
+        void requestUserSnapshot() { c64.requestUserSnapshot(); }
+
+        /** @brief  Returns the most recently taken snapshot.
+         *  After a snapshot has been requested and a message received by the
+         *  emulator, the GUI can obtain a pointer to the snapshot by calling
+         *  this function.
+         *  @note  The function transfers the ownership to the caller.
+         */
+        Snapshot *latestAutoSnapshot();
+        Snapshot *latestUserSnapshot();
+
 
         /// @}
         /// @name Handling media files

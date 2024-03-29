@@ -208,7 +208,7 @@ class Renderer: NSObject, MTKViewDelegate {
                 if [50, 60, 100, 120, 200, 240].contains(newfps) {
 
                     fps = newfps
-                    emu.configure(.HOST_REFRESH_RATE, value: Int(fps))
+                    emu.set(.HOST_REFRESH_RATE, value: Int(fps))
                     debug(.vsync, "New GPU frame rate: \(fps)")
                 }
             }
@@ -221,8 +221,8 @@ class Renderer: NSObject, MTKViewDelegate {
 
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
 
-        emu.configure(.HOST_FRAMEBUF_WIDTH, value: Int(size.width))
-        emu.configure(.HOST_FRAMEBUF_HEIGHT, value: Int(size.height))
+        emu.set(.HOST_FRAMEBUF_WIDTH, value: Int(size.width))
+        emu.set(.HOST_FRAMEBUF_HEIGHT, value: Int(size.height))
         reshape(withSize: size)
     }
     

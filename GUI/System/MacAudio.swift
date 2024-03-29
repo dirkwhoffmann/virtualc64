@@ -67,7 +67,7 @@ public class MacAudio: NSObject {
         }
 
         // Inform the emulator about the sample rate
-        emu.configure(.HOST_SAMPLE_RATE, value: Int(sampleRate))
+        emu.set(.HOST_SAMPLE_RATE, value: Int(sampleRate))
 
         // Register render callback
         if stereo {

@@ -49,21 +49,21 @@ class Preferences {
     var bitRate = 512 {
         didSet {
             for c64 in myAppDelegate.proxies {
-                c64.configure(.REC_BIT_RATE, value: bitRate)
+                c64.set(.REC_BIT_RATE, value: bitRate)
             }
         }
     }
     var aspectX = 768 {
         didSet {
             for c64 in myAppDelegate.proxies {
-                c64.configure(.REC_ASPECT_X, value: bitRate)
+                c64.set(.REC_ASPECT_X, value: bitRate)
             }
         }
     }
     var aspectY = 702 {
         didSet {
             for c64 in myAppDelegate.proxies {
-                c64.configure(.REC_ASPECT_Y, value: bitRate)
+                c64.set(.REC_ASPECT_Y, value: bitRate)
             }
         }
     }
@@ -86,7 +86,7 @@ class Preferences {
 
     // Joystick
     var disconnectJoyKeys = false
-    
+
     // Mouse
     var retainMouseKeyComb = 0
     var retainMouseWithKeys = false

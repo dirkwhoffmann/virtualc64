@@ -29,7 +29,7 @@ typedef util::Exception StateChangeException;
 
 /** Implements the emulator's state model.
  *  This class is one of the base classes of the Emulator class and provides
- *  the basic functionality to manage the emulator state. It provides functions
+ *  the basic functionality to manage the execution state. It provides functions
  *  to launch the emulator thread, to query it's current state, and to switch
  *  to another state. */
 class Thread : public CoreObject, public Suspendable, Wakeable {
@@ -40,8 +40,8 @@ protected:
     std::thread thread;
     
     // The current thread state and a change request
-    EmulatorState state = STATE_OFF;
-    EmulatorState newState = STATE_OFF;
+    ExecState state = STATE_OFF;
+    ExecState newState = STATE_OFF;
     std::atomic_flag stateChangeRequest {};
 
     // Warp and track state
@@ -101,7 +101,7 @@ public:
     bool isEmulatorThread() const { return std::this_thread::get_id() == thread.get_id(); }
 
     // Performs a state change
-    void switchState(EmulatorState newState);
+    void switchState(ExecState newState);
 
 private:
 
@@ -192,7 +192,7 @@ public:
 private:
 
     // Initiates a state change
-    void changeStateTo(EmulatorState requestedState);
+    void changeStateTo(ExecState requestedState);
 
 private:
 

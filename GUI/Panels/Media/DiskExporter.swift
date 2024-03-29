@@ -249,7 +249,7 @@ class DiskExporter: DialogController {
                 fatalError()
             }
 
-            emu.send(.DSK_UNMODIFIED, value: drive.info.id)
+            emu.put(.DSK_UNMODIFIED, value: drive.info.id)
             if rememberUrl {
                 mm.noteNewRecentlyExportedDiskURL(url, drive: drive.info.id)
             }

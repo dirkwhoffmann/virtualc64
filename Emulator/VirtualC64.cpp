@@ -179,6 +179,33 @@ VirtualC64::C64API::getRomTraits(RomType type) const
 }
 
 Snapshot *
+VirtualC64::C64API::takeSnapshot()
+{
+    return c64.takeSnapshot();
+}
+
+void
+VirtualC64::C64API::loadSnapshot(const Snapshot &snapshot)
+{
+    c64.loadSnapshot(snapshot);
+    c64.markAsDirty();
+}
+
+/*
+void
+VirtualC64::C64API::requestAutoSnapshot()
+{
+    c64.requestAutoSnapshot();
+}
+
+void
+VirtualC64::C64API::requestUserSnapshot()
+{
+    c64.requestUserSnapshot();
+}
+*/
+
+Snapshot *
 VirtualC64::C64API::latestAutoSnapshot()
 {
     return c64.latestAutoSnapshot();
@@ -190,58 +217,50 @@ VirtualC64::C64API::latestUserSnapshot()
     return c64.latestUserSnapshot();
 }
 
-Snapshot *
-VirtualC64::C64API::takeSnapshot()
-{
-    {   SUSPENDED
-
-        return new Snapshot(emulator.main);
-    }
-}
-
-void
-VirtualC64::C64API::loadSnapshot(const Snapshot &snapshot)
-{
-    c64.loadSnapshot(snapshot);
-}
-
-void VirtualC64::C64API::loadRom(const string &path)
+void 
+VirtualC64::C64API::loadRom(const string &path)
 {
     c64.loadRom(path);
     c64.markAsDirty();
 }
 
-void VirtualC64::C64API::loadRom(const RomFile &file)
+void 
+VirtualC64::C64API::loadRom(const RomFile &file)
 {
     c64.loadRom(file);
     c64.markAsDirty();
 }
 
-void VirtualC64::C64API::deleteRom(RomType type)
+void 
+VirtualC64::C64API::deleteRom(RomType type)
 {
     c64.deleteRom(type);
     c64.markAsDirty();
 }
 
-void VirtualC64::C64API::saveRom(RomType rom, const string &path)
+void 
+VirtualC64::C64API::saveRom(RomType rom, const string &path)
 {
     c64.saveRom(rom, path);
     c64.markAsDirty();
 }
 
-void VirtualC64::C64API::flash(const AnyFile &file)
+void 
+VirtualC64::C64API::flash(const AnyFile &file)
 {
     c64.flash(file);
     c64.markAsDirty();
 }
 
-void VirtualC64::C64API::flash(const AnyCollection &file, isize item)
+void 
+VirtualC64::C64API::flash(const AnyCollection &file, isize item)
 {
     c64.flash(file, item);
     c64.markAsDirty();
 }
 
-void VirtualC64::C64API::flash(const FileSystem &fs, isize item)
+void 
+VirtualC64::C64API::flash(const FileSystem &fs, isize item)
 {
     c64.flash(fs, item);
     c64.markAsDirty();

@@ -18,8 +18,8 @@
 
 namespace vc64 {
 
-/// Emulator state
-enum_long(EMULATOR_STATE)
+/// Execution state
+enum_long(EXEC_STATE)
 {
     STATE_OFF,          ///< Powered off
     STATE_PAUSED,       ///< Powered on, but currently paused
@@ -27,9 +27,9 @@ enum_long(EMULATOR_STATE)
     STATE_SUSPENDED,    ///< Shortly paused for an internal state change
     STATE_HALTED        ///< Shut down
 };
-typedef EMULATOR_STATE EmulatorState;
+typedef EXEC_STATE ExecState;
 
-struct EmulatorStateEnum : util::Reflection<EmulatorStateEnum, EmulatorState>
+struct ExecStateEnum : util::Reflection<ExecStateEnum, ExecState>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = STATE_HALTED;

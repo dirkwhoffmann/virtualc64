@@ -27,63 +27,63 @@ class Configuration {
     //
     
     var vicRevision: Int {
-        get { return emu.getConfig(.VICII_REVISION) }
-        set { emu.configure(.VICII_REVISION, value: newValue) }
+        get { return emu.get(.VICII_REVISION) }
+        set { emu.set(.VICII_REVISION, value: newValue) }
     }
 
     var vicGrayDotBug: Bool {
-        get { return emu.getConfig(.VICII_GRAY_DOT_BUG) != 0 }
-        set { emu.configure(.VICII_GRAY_DOT_BUG, enable: newValue) }
+        get { return emu.get(.VICII_GRAY_DOT_BUG) != 0 }
+        set { emu.set(.VICII_GRAY_DOT_BUG, enable: newValue) }
     }
     
     var vicHideSprites: Bool {
-        get { return emu.getConfig(.VICII_HIDE_SPRITES) != 0 }
-        set { emu.configure(.VICII_HIDE_SPRITES, enable: newValue) }
+        get { return emu.get(.VICII_HIDE_SPRITES) != 0 }
+        set { emu.set(.VICII_HIDE_SPRITES, enable: newValue) }
     }
         
     var vicCutLayers: Int {
-        get { return emu.getConfig(.VICII_CUT_LAYERS) }
-        set { emu.configure(.VICII_CUT_LAYERS, value: newValue) }
+        get { return emu.get(.VICII_CUT_LAYERS) }
+        set { emu.set(.VICII_CUT_LAYERS, value: newValue) }
     }
     
     var vicCutOpacity: Int {
-        get { return emu.getConfig(.VICII_CUT_OPACITY) }
-        set { emu.configure(.VICII_CUT_OPACITY, value: newValue) }
+        get { return emu.get(.VICII_CUT_OPACITY) }
+        set { emu.set(.VICII_CUT_OPACITY, value: newValue) }
     }
         
     var ciaRevision: Int {
-        get { return emu.getConfig(.CIA_REVISION) }
-        set { emu.configure(.CIA_REVISION, value: newValue) }
+        get { return emu.get(.CIA_REVISION) }
+        set { emu.set(.CIA_REVISION, value: newValue) }
     }
     
     var ciaTimerBBug: Bool {
-        get { return emu.getConfig(.CIA_TIMER_B_BUG) != 0}
-        set { emu.configure(.CIA_TIMER_B_BUG, enable: newValue) }
+        get { return emu.get(.CIA_TIMER_B_BUG) != 0}
+        set { emu.set(.CIA_TIMER_B_BUG, enable: newValue) }
     }
     
     var sidRevision: Int {
-        get { return emu.getConfig(.SID_REVISION) }
-        set { emu.configure(.SID_REVISION, value: newValue) }
+        get { return emu.get(.SID_REVISION) }
+        set { emu.set(.SID_REVISION, value: newValue) }
     }
     
     var sidFilter: Bool {
-        get { return emu.getConfig(.SID_FILTER) != 0 }
-        set { emu.configure(.SID_FILTER, enable: newValue) }
+        get { return emu.get(.SID_FILTER) != 0 }
+        set { emu.set(.SID_FILTER, enable: newValue) }
     }
     
     var glueLogic: Int {
-        get { return emu.getConfig(.GLUE_LOGIC) }
-        set { emu.configure(.GLUE_LOGIC, value: newValue) }
+        get { return emu.get(.GLUE_LOGIC) }
+        set { emu.set(.GLUE_LOGIC, value: newValue) }
     }
 
     var powerGrid: Int {
-        get { return emu.getConfig(.POWER_GRID) }
-        set { emu.configure(.POWER_GRID, value: newValue) }
+        get { return emu.get(.POWER_GRID) }
+        set { emu.set(.POWER_GRID, value: newValue) }
     }
 
     var ramPattern: Int {
-        get { return emu.getConfig(.RAM_PATTERN) }
-        set { emu.configure(.RAM_PATTERN, value: newValue) }
+        get { return emu.get(.RAM_PATTERN) }
+        set { emu.set(.RAM_PATTERN, value: newValue) }
     }
     
     //
@@ -91,73 +91,73 @@ class Configuration {
     //
     
     var drive8Connected: Bool {
-        get { return emu.getConfig(.DRV_CONNECT, drive: DRIVE8) != 0 }
-        set { emu.configure(.DRV_CONNECT, drive: DRIVE8, enable: newValue ) }
+        get { return emu.get(.DRV_CONNECT, drive: DRIVE8) != 0 }
+        set { emu.set(.DRV_CONNECT, drive: DRIVE8, enable: newValue ) }
     }
     
     var drive9Connected: Bool {
-        get { return emu.getConfig(.DRV_CONNECT, drive: DRIVE9) != 0 }
-        set { emu.configure(.DRV_CONNECT, drive: DRIVE9, enable: newValue ) }
+        get { return emu.get(.DRV_CONNECT, drive: DRIVE9) != 0 }
+        set { emu.set(.DRV_CONNECT, drive: DRIVE9, enable: newValue ) }
     }
 
     var drive8AutoConf: Bool {
-        get { return emu.getConfig(.DRV_AUTO_CONFIG, drive: DRIVE8) != 0 }
-        set { emu.configure(.DRV_AUTO_CONFIG, drive: DRIVE8, enable: newValue ) }
+        get { return emu.get(.DRV_AUTO_CONFIG, drive: DRIVE8) != 0 }
+        set { emu.set(.DRV_AUTO_CONFIG, drive: DRIVE8, enable: newValue ) }
     }
     
     var drive9AutoConf: Bool {
-        get { return emu.getConfig(.DRV_AUTO_CONFIG, drive: DRIVE9) != 0}
-        set { emu.configure(.DRV_AUTO_CONFIG, drive: DRIVE9, enable: newValue ) }
+        get { return emu.get(.DRV_AUTO_CONFIG, drive: DRIVE9) != 0}
+        set { emu.set(.DRV_AUTO_CONFIG, drive: DRIVE9, enable: newValue ) }
     }
     
     var drive8Type: Int {
-        get { return emu.getConfig(.DRV_TYPE, drive: DRIVE8) }
-        set { emu.configure(.DRV_TYPE, drive: DRIVE8, value: newValue )}
+        get { return emu.get(.DRV_TYPE, drive: DRIVE8) }
+        set { emu.set(.DRV_TYPE, drive: DRIVE8, value: newValue )}
     }
     
     var drive9Type: Int {
-        get { return emu.getConfig(.DRV_TYPE, drive: DRIVE9) }
-        set { emu.configure(.DRV_TYPE, drive: DRIVE9, value: newValue )}
+        get { return emu.get(.DRV_TYPE, drive: DRIVE9) }
+        set { emu.set(.DRV_TYPE, drive: DRIVE9, value: newValue )}
     }
 
     var drive8Ram: Int {
-        get { return emu.getConfig(.DRV_RAM, drive: DRIVE8) }
-        set { emu.configure(.DRV_RAM, drive: DRIVE8, value: newValue )}
+        get { return emu.get(.DRV_RAM, drive: DRIVE8) }
+        set { emu.set(.DRV_RAM, drive: DRIVE8, value: newValue )}
     }
 
     var drive9Ram: Int {
-        get { return emu.getConfig(.DRV_RAM, drive: DRIVE9) }
-        set { emu.configure(.DRV_RAM, drive: DRIVE9, value: newValue )}
+        get { return emu.get(.DRV_RAM, drive: DRIVE9) }
+        set { emu.set(.DRV_RAM, drive: DRIVE9, value: newValue )}
     }
 
     var drive8ParCable: Int {
-        get { return emu.getConfig(.DRV_PARCABLE, drive: DRIVE8) }
-        set { emu.configure(.DRV_PARCABLE, drive: DRIVE8, value: newValue ) }
+        get { return emu.get(.DRV_PARCABLE, drive: DRIVE8) }
+        set { emu.set(.DRV_PARCABLE, drive: DRIVE8, value: newValue ) }
     }
 
     var drive9ParCable: Int {
-        get { return emu.getConfig(.DRV_PARCABLE, drive: DRIVE9) }
-        set { emu.configure(.DRV_PARCABLE, drive: DRIVE9, value: newValue ) }
+        get { return emu.get(.DRV_PARCABLE, drive: DRIVE9) }
+        set { emu.set(.DRV_PARCABLE, drive: DRIVE9, value: newValue ) }
     }
     
     var drive8PowerSwitch: Bool {
-        get { return emu.getConfig(.DRV_POWER_SWITCH, drive: DRIVE8) != 0 }
-        set { emu.configure(.DRV_POWER_SWITCH, drive: DRIVE8, enable: newValue )}
+        get { return emu.get(.DRV_POWER_SWITCH, drive: DRIVE8) != 0 }
+        set { emu.set(.DRV_POWER_SWITCH, drive: DRIVE8, enable: newValue )}
     }
     
     var drive9PowerSwitch: Bool {
-        get { return emu.getConfig(.DRV_POWER_SWITCH, drive: DRIVE9) != 0 }
-        set { emu.configure(.DRV_POWER_SWITCH, drive: DRIVE9, enable: newValue )}
+        get { return emu.get(.DRV_POWER_SWITCH, drive: DRIVE9) != 0 }
+        set { emu.set(.DRV_POWER_SWITCH, drive: DRIVE9, enable: newValue )}
     }
 
     var datasetteConnected: Bool {
-        get { return emu.getConfig(.DAT_CONNECT) != 0 }
-        set { emu.configure(.DAT_CONNECT, enable: newValue ) }
+        get { return emu.get(.DAT_CONNECT) != 0 }
+        set { emu.set(.DAT_CONNECT, enable: newValue ) }
     }
 
     var datasetteModel: Int {
-        get { return emu.getConfig(.DAT_MODEL) }
-        set { emu.configure(.DAT_MODEL, value: newValue )}
+        get { return emu.get(.DAT_MODEL) }
+        set { emu.set(.DAT_MODEL, value: newValue )}
     }
 
     var gameDevice1 = -1 {
@@ -193,28 +193,28 @@ class Configuration {
     }
     
     var mouseModel: Int {
-        get { return emu.getConfig(.MOUSE_MODEL, id: 1) }
-        set { emu.configure(.MOUSE_MODEL, value: newValue) }
+        get { return emu.get(.MOUSE_MODEL, id: 1) }
+        set { emu.set(.MOUSE_MODEL, value: newValue) }
     }
 
     var autofire: Bool {
-        get { return emu.getConfig(.AUTOFIRE, id: 1) != 0 }
-        set { emu.configure(.AUTOFIRE, enable: newValue) }
+        get { return emu.get(.AUTOFIRE, id: 1) != 0 }
+        set { emu.set(.AUTOFIRE, enable: newValue) }
     }
 
     var autofireBursts: Bool {
-        get { return emu.getConfig(.AUTOFIRE_BURSTS, id: 1) != 0 }
-        set { emu.configure(.AUTOFIRE_BURSTS, enable: newValue) }
+        get { return emu.get(.AUTOFIRE_BURSTS, id: 1) != 0 }
+        set { emu.set(.AUTOFIRE_BURSTS, enable: newValue) }
     }
 
     var autofireBullets: Int {
-        get { return emu.getConfig(.AUTOFIRE_BULLETS, id: 1) }
-        set { emu.configure(.AUTOFIRE_BULLETS, value: newValue) }
+        get { return emu.get(.AUTOFIRE_BULLETS, id: 1) }
+        set { emu.set(.AUTOFIRE_BULLETS, value: newValue) }
     }
 
     var autofireFrequency: Int {
-        get { return emu.getConfig(.AUTOFIRE_DELAY, id: 1) }
-        set { emu.configure(.AUTOFIRE_DELAY, value: newValue) }
+        get { return emu.get(.AUTOFIRE_DELAY, id: 1) }
+        set { emu.set(.AUTOFIRE_DELAY, value: newValue) }
     }
 
     //
@@ -222,57 +222,57 @@ class Configuration {
     //
 
     var drive8PowerSave: Bool {
-        get { return emu.getConfig(.DRV_POWER_SAVE, drive: DRIVE8) != 0 }
-        set { emu.configure(.DRV_POWER_SAVE, drive: DRIVE8, enable: newValue) }
+        get { return emu.get(.DRV_POWER_SAVE, drive: DRIVE8) != 0 }
+        set { emu.set(.DRV_POWER_SAVE, drive: DRIVE8, enable: newValue) }
     }
 
     var drive9PowerSave: Bool {
-        get { return emu.getConfig(.DRV_POWER_SAVE, drive: DRIVE9) != 0 }
-        set { emu.configure(.DRV_POWER_SAVE, drive: DRIVE9, enable: newValue) }
+        get { return emu.get(.DRV_POWER_SAVE, drive: DRIVE9) != 0 }
+        set { emu.set(.DRV_POWER_SAVE, drive: DRIVE9, enable: newValue) }
     }
 
     var viciiPowerSave: Bool {
-        get { return emu.getConfig(.VICII_POWER_SAVE) != 0 }
-        set { emu.configure(.VICII_POWER_SAVE, enable: newValue) }
+        get { return emu.get(.VICII_POWER_SAVE) != 0 }
+        set { emu.set(.VICII_POWER_SAVE, enable: newValue) }
     }
 
     var sidPowerSave: Bool {
-        get { return emu.getConfig(.SID_POWER_SAVE) != 0 }
-        set { emu.configure(.SID_POWER_SAVE, enable: newValue) }
+        get { return emu.get(.SID_POWER_SAVE) != 0 }
+        set { emu.set(.SID_POWER_SAVE, enable: newValue) }
     }
 
     var ssCollisions: Bool {
-        get { return emu.getConfig(.VICII_SS_COLLISIONS) != 0 }
-        set { emu.configure(.VICII_SS_COLLISIONS, enable: newValue) }
+        get { return emu.get(.VICII_SS_COLLISIONS) != 0 }
+        set { emu.set(.VICII_SS_COLLISIONS, enable: newValue) }
     }
 
     var sbCollisions: Bool {
-        get { return emu.getConfig(.VICII_SB_COLLISIONS) != 0 }
-        set { emu.configure(.VICII_SB_COLLISIONS, enable: newValue) }
+        get { return emu.get(.VICII_SB_COLLISIONS) != 0 }
+        set { emu.set(.VICII_SB_COLLISIONS, enable: newValue) }
     }
 
     var warpMode: Int {
-        get { return emu.getConfig(.EMU_WARP_MODE) }
-        set { emu.configure(.EMU_WARP_MODE, value: newValue) }
+        get { return emu.get(.EMU_WARP_MODE) }
+        set { emu.set(.EMU_WARP_MODE, value: newValue) }
     }
 
     var warpBoot: Int {
-        get { return emu.getConfig(.EMU_WARP_BOOT) }
-        set { emu.configure(.EMU_WARP_BOOT, value: newValue) }
+        get { return emu.get(.EMU_WARP_BOOT) }
+        set { emu.set(.EMU_WARP_BOOT, value: newValue) }
     }
 
     var vsync: Bool {
-        get { return emu.getConfig(.EMU_VSYNC) != 0 }
-        set { emu.configure(.EMU_VSYNC, enable: newValue) }
+        get { return emu.get(.EMU_VSYNC) != 0 }
+        set { emu.set(.EMU_VSYNC, enable: newValue) }
     }
     var timeLapse: Int {
-        get { return emu.getConfig(.EMU_TIME_LAPSE) }
-        set { emu.configure(.EMU_TIME_LAPSE, value: newValue) }
+        get { return emu.get(.EMU_TIME_LAPSE) }
+        set { emu.set(.EMU_TIME_LAPSE, value: newValue) }
     }
 
     var runAhead: Int {
-        get { return emu.getConfig(.EMU_RUN_AHEAD) }
-        set { emu.configure(.EMU_RUN_AHEAD, value: newValue) }
+        get { return emu.get(.EMU_RUN_AHEAD) }
+        set { emu.set(.EMU_RUN_AHEAD, value: newValue) }
     }
 
     //
@@ -280,96 +280,96 @@ class Configuration {
     //
     
     var sidEnable1: Bool {
-        get { return emu.getConfig(.SID_ENABLE, id: 1) != 0 }
-        set { emu.configure(.SID_ENABLE, id: 1, enable: newValue) }
+        get { return emu.get(.SID_ENABLE, id: 1) != 0 }
+        set { emu.set(.SID_ENABLE, id: 1, enable: newValue) }
     }
     var sidEnable2: Bool {
-        get { return emu.getConfig(.SID_ENABLE, id: 2) != 0 }
-        set { emu.configure(.SID_ENABLE, id: 2, enable: newValue) }
+        get { return emu.get(.SID_ENABLE, id: 2) != 0 }
+        set { emu.set(.SID_ENABLE, id: 2, enable: newValue) }
     }
     var sidEnable3: Bool {
-        get { return emu.getConfig(.SID_ENABLE, id: 3) != 0 }
-        set { emu.configure(.SID_ENABLE, id: 3, enable: newValue) }
+        get { return emu.get(.SID_ENABLE, id: 3) != 0 }
+        set { emu.set(.SID_ENABLE, id: 3, enable: newValue) }
     }
     var sidAddress1: Int {
-        get { return emu.getConfig(.SID_ADDRESS, id: 1) }
-        set { emu.configure(.SID_ADDRESS, id: 1, value: newValue) }
+        get { return emu.get(.SID_ADDRESS, id: 1) }
+        set { emu.set(.SID_ADDRESS, id: 1, value: newValue) }
     }
     var sidAddress2: Int {
-        get { return emu.getConfig(.SID_ADDRESS, id: 2) }
-        set { emu.configure(.SID_ADDRESS, id: 2, value: newValue) }
+        get { return emu.get(.SID_ADDRESS, id: 2) }
+        set { emu.set(.SID_ADDRESS, id: 2, value: newValue) }
     }
     var sidAddress3: Int {
-        get { return emu.getConfig(.SID_ADDRESS, id: 3) }
-        set { emu.configure(.SID_ADDRESS, id: 3, value: newValue) }
+        get { return emu.get(.SID_ADDRESS, id: 3) }
+        set { emu.set(.SID_ADDRESS, id: 3, value: newValue) }
     }
     var sidEngine: Int {
-        get { return emu.getConfig(.SID_ENGINE) }
-        set { emu.configure(.SID_ENGINE, value: newValue) }
+        get { return emu.get(.SID_ENGINE) }
+        set { emu.set(.SID_ENGINE, value: newValue) }
     }
     var sidSampling: Int {
-        get { return emu.getConfig(.SID_SAMPLING) }
-        set { emu.configure(.SID_SAMPLING, value: newValue) }
+        get { return emu.get(.SID_SAMPLING) }
+        set { emu.set(.SID_SAMPLING, value: newValue) }
     }
     var vol0: Int {
-        get { return emu.getConfig(.AUD_VOL, id: 0) }
-        set { emu.configure(.AUD_VOL, id: 0, value: newValue) }
+        get { return emu.get(.AUD_VOL, id: 0) }
+        set { emu.set(.AUD_VOL, id: 0, value: newValue) }
     }
     var vol1: Int {
-        get { return emu.getConfig(.AUD_VOL, id: 1) }
-        set { emu.configure(.AUD_VOL, id: 1, value: newValue) }
+        get { return emu.get(.AUD_VOL, id: 1) }
+        set { emu.set(.AUD_VOL, id: 1, value: newValue) }
     }
     var vol2: Int {
-        get { return emu.getConfig(.AUD_VOL, id: 2) }
-        set { emu.configure(.AUD_VOL, id: 2, value: newValue) }
+        get { return emu.get(.AUD_VOL, id: 2) }
+        set { emu.set(.AUD_VOL, id: 2, value: newValue) }
     }
     var vol3: Int {
-        get { return emu.getConfig(.AUD_VOL, id: 3) }
-        set { emu.configure(.AUD_VOL, id: 3, value: newValue) }
+        get { return emu.get(.AUD_VOL, id: 3) }
+        set { emu.set(.AUD_VOL, id: 3, value: newValue) }
     }
     var pan0: Int {
-        get { return emu.getConfig(.AUD_PAN, id: 0) }
-        set { emu.configure(.AUD_PAN, id: 0, value: newValue) }
+        get { return emu.get(.AUD_PAN, id: 0) }
+        set { emu.set(.AUD_PAN, id: 0, value: newValue) }
     }
     var pan1: Int {
-        get { return emu.getConfig(.AUD_PAN, id: 1) }
-        set { emu.configure(.AUD_PAN, id: 1, value: newValue) }
+        get { return emu.get(.AUD_PAN, id: 1) }
+        set { emu.set(.AUD_PAN, id: 1, value: newValue) }
     }
     var pan2: Int {
-        get { return emu.getConfig(.AUD_PAN, id: 2) }
-        set { emu.configure(.AUD_PAN, id: 2, value: newValue) }
+        get { return emu.get(.AUD_PAN, id: 2) }
+        set { emu.set(.AUD_PAN, id: 2, value: newValue) }
     }
     var pan3: Int {
-        get { return emu.getConfig(.AUD_PAN, id: 3) }
-        set { emu.configure(.AUD_PAN, id: 3, value: newValue) }
+        get { return emu.get(.AUD_PAN, id: 3) }
+        set { emu.set(.AUD_PAN, id: 3, value: newValue) }
     }
     var volL: Int {
-        get { return emu.getConfig(.AUD_VOL_L) }
-        set { emu.configure(.AUD_VOL_L, value: newValue) }
+        get { return emu.get(.AUD_VOL_L) }
+        set { emu.set(.AUD_VOL_L, value: newValue) }
     }
     var volR: Int {
-        get { return emu.getConfig(.AUD_VOL_R) }
-        set { emu.configure(.AUD_VOL_R, value: newValue) }
+        get { return emu.get(.AUD_VOL_R) }
+        set { emu.set(.AUD_VOL_R, value: newValue) }
     }
     var stepVolume: Int {
-        get { return emu.getConfig(.DRV_STEP_VOL, drive: DRIVE8) }
-        set { emu.configure(.DRV_STEP_VOL, value: newValue) }
+        get { return emu.get(.DRV_STEP_VOL, drive: DRIVE8) }
+        set { emu.set(.DRV_STEP_VOL, value: newValue) }
     }
     var insertVolume: Int {
-        get { return emu.getConfig(.DRV_INSERT_VOL, drive: DRIVE8) }
-        set { emu.configure(.DRV_INSERT_VOL, value: newValue) }
+        get { return emu.get(.DRV_INSERT_VOL, drive: DRIVE8) }
+        set { emu.set(.DRV_INSERT_VOL, value: newValue) }
     }
     var ejectVolume: Int {
-        get { return emu.getConfig(.DRV_EJECT_VOL, drive: DRIVE8) }
-        set { emu.configure(.DRV_EJECT_VOL, value: newValue) }
+        get { return emu.get(.DRV_EJECT_VOL, drive: DRIVE8) }
+        set { emu.set(.DRV_EJECT_VOL, value: newValue) }
     }
     var drive8Pan: Int {
-        get { return emu.getConfig(.DRV_PAN, drive: DRIVE8) }
-        set { emu.configure(.DRV_PAN, drive: DRIVE8, value: newValue) }
+        get { return emu.get(.DRV_PAN, drive: DRIVE8) }
+        set { emu.set(.DRV_PAN, drive: DRIVE8, value: newValue) }
     }
     var drive9Pan: Int {
-        get { return emu.getConfig(.DRV_PAN, drive: DRIVE9) }
-        set { emu.configure(.DRV_PAN, drive: DRIVE9, value: newValue) }
+        get { return emu.get(.DRV_PAN, drive: DRIVE9) }
+        set { emu.set(.DRV_PAN, drive: DRIVE9, value: newValue) }
     }
 
     //
@@ -377,161 +377,161 @@ class Configuration {
     //
 
     var palette: Int {
-        get { return emu.getConfig(.MON_PALETTE) }
-        set { emu.configure(.MON_PALETTE, value: newValue) }
+        get { return emu.get(.MON_PALETTE) }
+        set { emu.set(.MON_PALETTE, value: newValue) }
     }
     var brightness: Int {
-        get { return emu.getConfig(.MON_BRIGHTNESS) }
-        set { emu.configure(.MON_BRIGHTNESS, value: newValue) }
+        get { return emu.get(.MON_BRIGHTNESS) }
+        set { emu.set(.MON_BRIGHTNESS, value: newValue) }
     }
     var contrast: Int {
-        get { return emu.getConfig(.MON_CONTRAST) }
-        set { emu.configure(.MON_CONTRAST, value: newValue) }
+        get { return emu.get(.MON_CONTRAST) }
+        set { emu.set(.MON_CONTRAST, value: newValue) }
     }
     var saturation: Int {
-        get { return emu.getConfig(.MON_SATURATION) }
-        set { emu.configure(.MON_SATURATION, value: newValue) }
+        get { return emu.get(.MON_SATURATION) }
+        set { emu.set(.MON_SATURATION, value: newValue) }
     }
     var hCenter: Int {
-        get { return emu.getConfig(.MON_HCENTER) }
+        get { return emu.get(.MON_HCENTER) }
         set {
-            emu.configure(.MON_HCENTER, value: newValue)
+            emu.set(.MON_HCENTER, value: newValue)
             renderer.canvas.updateTextureRect()
         }
     }
     var vCenter: Int {
-        get { return emu.getConfig(.MON_VCENTER) }
+        get { return emu.get(.MON_VCENTER) }
         set {
-            emu.configure(.MON_VCENTER, value: newValue)
+            emu.set(.MON_VCENTER, value: newValue)
             renderer.canvas.updateTextureRect()
         }
     }
     var hZoom: Int {
-        get { return emu.getConfig(.MON_HZOOM) }
+        get { return emu.get(.MON_HZOOM) }
         set {
-            emu.configure(.MON_HZOOM, value: newValue)
+            emu.set(.MON_HZOOM, value: newValue)
             renderer.canvas.updateTextureRect()
         }
     }
     var vZoom: Int {
-        get { return emu.getConfig(.MON_VZOOM) }
+        get { return emu.get(.MON_VZOOM) }
         set {
-            emu.configure(.MON_VZOOM, value: newValue)
+            emu.set(.MON_VZOOM, value: newValue)
             renderer.canvas.updateTextureRect()
         }
     }
     var upscaler: Int {
-        get { return emu.getConfig(.MON_UPSCALER) }
+        get { return emu.get(.MON_UPSCALER) }
         set {
             if ressourceManager.selectUpscaler(newValue) {
-                emu.configure(.MON_UPSCALER, value: newValue)
+                emu.set(.MON_UPSCALER, value: newValue)
             }
         }
     }
     var blur: Int {
-        get { return emu.getConfig(.MON_BLUR) }
+        get { return emu.get(.MON_BLUR) }
         set {
-            emu.configure(.MON_BLUR, value: newValue)
+            emu.set(.MON_BLUR, value: newValue)
             renderer.shaderOptions.blur = Int32(newValue)
         }
     }
     var blurRadius: Int {
-        get { return emu.getConfig(.MON_BLUR_RADIUS) }
+        get { return emu.get(.MON_BLUR_RADIUS) }
         set {
-            emu.configure(.MON_BLUR_RADIUS, value: newValue)
+            emu.set(.MON_BLUR_RADIUS, value: newValue)
             renderer.shaderOptions.blurRadius = Float(newValue) / 1000.0
         }
     }
     var bloom: Int {
-        get { return emu.getConfig(.MON_BLOOM) }
+        get { return emu.get(.MON_BLOOM) }
         set {
             if ressourceManager.selectBloomFilter(newValue) {
-                emu.configure(.MON_BLOOM, value: newValue)
+                emu.set(.MON_BLOOM, value: newValue)
                 renderer.shaderOptions.bloom = Int32(bloom)
             }
         }
     }
     var bloomRadius: Int {
-        get { return emu.getConfig(.MON_BLOOM_RADIUS) }
+        get { return emu.get(.MON_BLOOM_RADIUS) }
         set { 
-            emu.configure(.MON_BLOOM_RADIUS, value: newValue)
+            emu.set(.MON_BLOOM_RADIUS, value: newValue)
             renderer.shaderOptions.bloomRadius = Float(newValue) / 1000.0
         }
     }
     var bloomBrightness: Int {
-        get { return emu.getConfig(.MON_BLOOM_BRIGHTNESS) }
+        get { return emu.get(.MON_BLOOM_BRIGHTNESS) }
         set {
-            emu.configure(.MON_BLOOM_BRIGHTNESS, value: newValue)
+            emu.set(.MON_BLOOM_BRIGHTNESS, value: newValue)
             renderer.shaderOptions.bloomBrightness = Float(newValue) / 1000.0
         }
     }
     var bloomWeight: Int {
-        get { return emu.getConfig(.MON_BLOOM_WEIGHT) }
+        get { return emu.get(.MON_BLOOM_WEIGHT) }
         set {
-            emu.configure(.MON_BLOOM_WEIGHT, value: newValue)
+            emu.set(.MON_BLOOM_WEIGHT, value: newValue)
             renderer.shaderOptions.bloomWeight = Float(newValue) / 1000.0
         }
     }
     var dotMask: Int {
-        get { return emu.getConfig(.MON_DOTMASK) }
+        get { return emu.get(.MON_DOTMASK) }
         set {
             renderer.shaderOptions.dotMask = Int32(newValue)
             ressourceManager.buildDotMasks()
             if ressourceManager.selectDotMask(newValue) {
-                emu.configure(.MON_DOTMASK, value: newValue)
+                emu.set(.MON_DOTMASK, value: newValue)
             }
         }
     }
     var dotMaskBrightness: Int {
-        get { return emu.getConfig(.MON_DOTMASK_BRIGHTNESS) }
+        get { return emu.get(.MON_DOTMASK_BRIGHTNESS) }
         set {
-            emu.configure(.MON_DOTMASK_BRIGHTNESS, value: newValue)
+            emu.set(.MON_DOTMASK_BRIGHTNESS, value: newValue)
             renderer.shaderOptions.dotMaskBrightness = Float(newValue) / 1000.0
             ressourceManager.buildDotMasks()
             ressourceManager.selectDotMask(dotMask)
         }
     }
     var scanlines: Int {
-        get { return emu.getConfig(.MON_SCANLINES) }
+        get { return emu.get(.MON_SCANLINES) }
         set {
             renderer.shaderOptions.scanlines = Int32(newValue)
             if !ressourceManager.selectScanlineFilter(newValue) {
-                emu.configure(.MON_SCANLINES, value: newValue)
+                emu.set(.MON_SCANLINES, value: newValue)
             }
         }
     }
     var scanlineBrightness: Int {
-        get { return emu.getConfig(.MON_SCANLINE_BRIGHTNESS) }
+        get { return emu.get(.MON_SCANLINE_BRIGHTNESS) }
         set {
-            emu.configure(.MON_SCANLINE_BRIGHTNESS, value: newValue)
+            emu.set(.MON_SCANLINE_BRIGHTNESS, value: newValue)
             renderer.shaderOptions.scanlineBrightness = Float(newValue) / 1000.0
         }
     }
     var scanlineWeight: Int {
-        get { return emu.getConfig(.MON_SCANLINE_WEIGHT) }
+        get { return emu.get(.MON_SCANLINE_WEIGHT) }
         set {
-            emu.configure(.MON_SCANLINE_WEIGHT, value: newValue)
+            emu.set(.MON_SCANLINE_WEIGHT, value: newValue)
             renderer.shaderOptions.scanlineWeight = Float(newValue) / 1000.0
         }
     }
     var disalignment: Int {
-        get { return emu.getConfig(.MON_DISALIGNMENT) }
+        get { return emu.get(.MON_DISALIGNMENT) }
         set {
-            emu.configure(.MON_DISALIGNMENT, value: newValue)
+            emu.set(.MON_DISALIGNMENT, value: newValue)
             renderer.shaderOptions.disalignment = Int32(newValue)
         }
     }
     var disalignmentH: Int {
-        get { return emu.getConfig(.MON_DISALIGNMENT_H) }
+        get { return emu.get(.MON_DISALIGNMENT_H) }
         set {
-            emu.configure(.MON_DISALIGNMENT_H, value: newValue)
+            emu.set(.MON_DISALIGNMENT_H, value: newValue)
             renderer.shaderOptions.disalignmentH = Float(newValue) / 1000000.0
         }
     }
     var disalignmentV: Int {
-        get { return emu.getConfig(.MON_DISALIGNMENT_V) }
+        get { return emu.get(.MON_DISALIGNMENT_V) }
         set {
-            emu.configure(.MON_DISALIGNMENT_V, value: newValue)
+            emu.set(.MON_DISALIGNMENT_V, value: newValue)
             renderer.shaderOptions.disalignmentV = Float(newValue) / 1000000.0
         }
     }

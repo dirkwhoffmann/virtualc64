@@ -1151,19 +1151,12 @@ C64::clearFlag(u32 flag)
 }
 
 Snapshot *
-C64::latestAutoSnapshot()
+C64::takeSnapshot()
 {
-    Snapshot *result = autoSnapshot;
-    autoSnapshot = nullptr;
-    return result;
-}
+    {   SUSPENDED
 
-Snapshot *
-C64::latestUserSnapshot()
-{
-    Snapshot *result = userSnapshot;
-    userSnapshot = nullptr;
-    return result;
+        return new Snapshot(*this);
+    }
 }
 
 void
@@ -1197,6 +1190,34 @@ C64::loadSnapshot(const Snapshot &snapshot)
 
     // Inform the GUI
     msgQueue.put(MSG_SNAPSHOT_RESTORED);
+}
+
+void 
+C64::requestAutoSnapshot()
+{
+    emulator.put(CMD_SNAPSHOT_AUTO);
+}
+
+void 
+C64::requestUserSnapshot()
+{
+    emulator.put(CMD_SNAPSHOT_USER);
+}
+
+Snapshot *
+C64::latestAutoSnapshot()
+{
+    Snapshot *result = autoSnapshot;
+    autoSnapshot = nullptr;
+    return result;
+}
+
+Snapshot *
+C64::latestUserSnapshot()
+{
+    Snapshot *result = userSnapshot;
+    userSnapshot = nullptr;
+    return result;
 }
 
 RomTraits
