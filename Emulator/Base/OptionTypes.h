@@ -123,6 +123,7 @@ enum_long(OPT)
     OPT_DRV_AUTO_CONFIG,        ///< Auto-configure drives based on the Drive Rom
     OPT_DRV_TYPE,               ///< Drive model
     OPT_DRV_RAM,                ///< Drive Ram
+    OPT_DRV_SAVE_ROMS,          ///< Save Roms in snapshots
     OPT_DRV_PARCABLE,           ///< Parallel cable type
     OPT_DRV_CONNECT,            ///< Connection status
     OPT_DRV_POWER_SWITCH,       ///< Power switch (on/off)
@@ -258,6 +259,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_DRV_AUTO_CONFIG:       return "DRV.AUTO_CONFIG";
             case OPT_DRV_TYPE:              return "DRV.TYPE";
             case OPT_DRV_RAM:               return "DRV.RAM";
+            case OPT_DRV_SAVE_ROMS:         return "DRV.SAVE_ROMS";
             case OPT_DRV_PARCABLE:          return "DRV.PARCABLE";
             case OPT_DRV_CONNECT:           return "DRV.CONNECT";
             case OPT_DRV_POWER_SWITCH:      return "DRV.POWER_SWITCH";
@@ -382,6 +384,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_DRV_AUTO_CONFIG:       return "Auto-configure drives";
             case OPT_DRV_TYPE:              return "Drive model";
             case OPT_DRV_RAM:               return "Drive RAM";
+            case OPT_DRV_SAVE_ROMS:         return "Save Drive ROMs in snapshots";
             case OPT_DRV_PARCABLE:          return "Parallel cable";
             case OPT_DRV_CONNECT:           return "Connected";
             case OPT_DRV_POWER_SWITCH:      return "Power switch";

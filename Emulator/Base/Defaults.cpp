@@ -108,6 +108,7 @@ Defaults::Defaults()
     setFallback(OPT_DRV_AUTO_CONFIG, {DRIVE8, DRIVE9}, true);
     setFallback(OPT_DRV_TYPE, {DRIVE8, DRIVE9}, DRIVE_VC1541II);
     setFallback(OPT_DRV_RAM, {DRIVE8, DRIVE9}, DRVRAM_NONE);
+    setFallback(OPT_DRV_SAVE_ROMS, {DRIVE8, DRIVE9}, true);
     setFallback(OPT_DRV_PARCABLE, {DRIVE8, DRIVE9}, PAR_CABLE_NONE);
     setFallback(OPT_DRV_CONNECT, DRIVE8, true);
     setFallback(OPT_DRV_CONNECT, DRIVE9, false);

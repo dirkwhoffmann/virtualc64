@@ -34,7 +34,7 @@ Datasette::alloc(isize capacity)
     
     if (capacity) {
         pulses = new (std::nothrow) Pulse[capacity];
-        size = capacity;
+        numPulses = capacity;
     }
 }
 
@@ -44,7 +44,7 @@ Datasette::dealloc()
     if (pulses) {
         delete[] pulses;
         pulses = nullptr;
-        size = 0;
+        numPulses = 0;
     }
 }
 
@@ -63,7 +63,7 @@ Datasette::_dump(Category category, std::ostream& os) const
         os << tab("TAP type");
         os << dec(type) << std::endl;
         os << tab("Pulse count");
-        os << dec(size) << std::endl;
+        os << dec(numPulses) << std::endl;
 
         os << std::endl;
 
@@ -92,23 +92,23 @@ Datasette::operator= (const Datasette& other) {
 
     CLONE(type)
 
-    assert((pulses == nullptr) == (size == 0));
-    assert((other.pulses == nullptr) == (other.size == 0));
+    assert((pulses == nullptr) == (numPulses == 0));
+    assert((other.pulses == nullptr) == (other.numPulses == 0));
 
-    if (size != other.size) {
+    if (numPulses != other.numPulses) {
 
         // Create a new pulse buffer
         if (pulses) delete[] pulses;
         pulses = nullptr;
-        if (other.size) pulses = new Pulse[other.size];
-        size = other.size;
+        if (other.numPulses) pulses = new Pulse[other.numPulses];
+        numPulses = other.numPulses;
     }
 
-    assert((pulses == nullptr) == (size == 0));
-    assert(size == other.size);
+    assert((pulses == nullptr) == (numPulses == 0));
+    assert(numPulses == other.numPulses);
 
     // Clone the pulse buffer
-    for (isize i = 0; i < size; i++) pulses[i] = other.pulses[i];
+    for (isize i = 0; i < numPulses; i++) pulses[i] = other.pulses[i];
 
     return *this;
 }
@@ -118,8 +118,8 @@ Datasette::operator << (SerCounter &worker)
 {
     serialize(worker);
 
-    worker << size;
-    for (isize i = 0; i < size; i++) worker << pulses[i].cycles;
+    worker << numPulses;
+    for (isize i = 0; i < numPulses; i++) worker << pulses[i].cycles;
 }
 
 void 
@@ -131,16 +131,16 @@ Datasette::operator << (SerReader &worker)
     dealloc();
 
     // Load size
-    worker << size;
+    worker << numPulses;
 
     // Make sure a corrupted value won't steal all memory
-    if (size > 0x8FFFF) { size = 0; }
+    if (numPulses > 0x8FFFF) { numPulses = 0; }
 
     // Create a new pulse buffer
-    alloc(size);
+    alloc(numPulses);
 
     // Load pulses from buffer
-    for (isize i = 0; i < size; i++) worker << pulses[i].cycles;
+    for (isize i = 0; i < numPulses; i++) worker << pulses[i].cycles;
 }
 
 void 
@@ -149,10 +149,10 @@ Datasette::operator << (SerWriter &worker)
     serialize(worker);
 
     // Save size
-    worker << size;
+    worker << numPulses;
 
     // Save pulses to buffer
-    for (isize i = 0; i < size; i++) worker << pulses[i].cycles;
+    for (isize i = 0; i < numPulses; i++) worker << pulses[i].cycles;
 }
 
 i64
@@ -214,7 +214,7 @@ Datasette::tapeDuration(isize pos)
 {
     util::Time result;
     
-    for (isize i = 0; i < pos && i < size; i++) {
+    for (isize i = 0; i < pos && i < numPulses; i++) {
         result += pulses[i].delay();
     }
     
@@ -279,7 +279,7 @@ Datasette::rewind(isize seconds)
     head = 0;
     
     // Fast forward to the requested position
-    while (counter.asMilliseconds() < 1000 * seconds && head + 1 < size) {
+    while (counter.asMilliseconds() < 1000 * seconds && head + 1 < numPulses) {
         advanceHead();
     }
     
@@ -292,7 +292,7 @@ Datasette::rewind(isize seconds)
 void
 Datasette::advanceHead()
 {
-    assert(head < size);
+    assert(head < numPulses);
     
     i64 old = (i64)counter.asSeconds();
 
@@ -435,7 +435,7 @@ Datasette::processDatEvent(EventID event, i64 cycles)
 
             cia1.triggerFallingEdgeOnFlagPin();
 
-            if (head < size) {
+            if (head < numPulses) {
 
                 schedulePulse(head);
                 advanceHead();
@@ -482,7 +482,7 @@ Datasette::scheduleNextDatEvent()
 void
 Datasette::schedulePulse(isize nr)
 {
-    assert(nr < size);
+    assert(nr < numPulses);
     
     // The VC1530 uses square waves with a 50% duty cycle
     nextRisingEdge = pulses[nr].cycles / 2;

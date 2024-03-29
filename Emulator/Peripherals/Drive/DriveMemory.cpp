@@ -36,37 +36,18 @@ void
 DriveMemory::operator << (SerCounter &worker)
 {
     serialize(worker);
-
-    // Add the size of a boolean indicating whether ROM data is saved
-    worker.count += sizeof(bool);
-
-    // Add the ROM size
-    if (emulator.get(OPT_SAVE_ROMS)) worker << rom;
 }
 
 void
 DriveMemory::operator << (SerReader &worker)
 {
     serialize(worker);
-
-    // Check if the snapshot includes ROM data
-    bool romInSnapshot; worker << romInSnapshot;
-
-    // If yes, load the ROM
-    if (romInSnapshot) worker << rom;
 }
 
 void
 DriveMemory::operator << (SerWriter &worker)
 {
     serialize(worker);
-
-    // Check if the snapshot should include ROM data
-    bool romInSnapshot = bool(emulator.get(OPT_SAVE_ROMS));
-    worker << romInSnapshot;
-
-    // If yes, save the ROM
-    if (romInSnapshot) worker << rom;
 }
 
 void

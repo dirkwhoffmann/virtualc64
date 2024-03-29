@@ -122,6 +122,7 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_DRV_AUTO_CONFIG:           return boolParser();
         case OPT_DRV_TYPE:                  return enumParser.template operator()<DriveTypeEnum>();
         case OPT_DRV_RAM:                   return enumParser.template operator()<DriveRamEnum>();
+        case OPT_DRV_SAVE_ROMS:             return boolParser();
         case OPT_DRV_PARCABLE:              return enumParser.template operator()<ParCableTypeEnum>();
         case OPT_DRV_CONNECT:               return boolParser();
         case OPT_DRV_POWER_SWITCH:          return boolParser();

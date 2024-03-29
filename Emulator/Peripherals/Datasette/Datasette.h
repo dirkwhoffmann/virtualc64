@@ -71,7 +71,7 @@ class Datasette final : public SubComponent, public Inspectable<DatasetteInfo, V
     Pulse *pulses = nullptr;
     
     // Number of pulses stored in the pulse buffer
-    isize size = 0;
+    isize numPulses = 0;
 
 
     //
@@ -168,13 +168,13 @@ public:
 public:
     
     // Returns true if a tape is inserted
-    bool hasTape() const { return size != 0; }
+    bool hasTape() const { return numPulses != 0; }
 
     // Returns the duration from the tape start and the specified position
     util::Time tapeDuration(isize pos);
 
     // Returns the duration of the entire tape
-    util::Time tapeDuration() { return tapeDuration(size); }
+    util::Time tapeDuration() { return tapeDuration(numPulses); }
 
     // Returns the current tape counter in (truncated) seconds
     isize getCounter() const { return (isize)counter.asSeconds(); }

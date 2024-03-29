@@ -85,7 +85,34 @@ public:
         << config.palette
         << config.brightness
         << config.contrast
-        << config.saturation;
+        << config.saturation
+
+        << config.hCenter
+        << config.vCenter
+        << config.hZoom
+        << config.vZoom
+
+        << config.upscaler
+
+        << config.blur
+        << config.blurRadius
+
+        << config.bloom
+        << config.bloomRadius
+        << config.bloomBrightness
+        << config.bloomWeight
+
+        << config.dotmask
+        << config.dotMaskBrightness
+
+        << config.scanlines
+        << config.scanlineBrightness
+        << config.scanlineWeight
+
+        << config.disalignment
+        << config.disalignmentH
+        << config.disalignmentV;
+
 
     } SERIALIZERS(serialize);
 

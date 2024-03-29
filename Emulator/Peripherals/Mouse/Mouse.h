@@ -19,7 +19,6 @@
 #include "Mouse1350.h"
 #include "Mouse1351.h"
 #include "NeosMouse.h"
-// #include <swift/bridging>
 
 namespace vc64 {
 

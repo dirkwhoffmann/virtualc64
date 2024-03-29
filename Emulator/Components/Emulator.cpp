@@ -325,6 +325,7 @@ Emulator::get(Option option, isize id) const
         case OPT_DRV_AUTO_CONFIG:
         case OPT_DRV_TYPE:
         case OPT_DRV_RAM:
+        case OPT_DRV_SAVE_ROMS:
         case OPT_DRV_PARCABLE:
         case OPT_DRV_POWER_SAVE:
         case OPT_DRV_POWER_SWITCH:
@@ -610,6 +611,7 @@ Emulator::set(Option option, i64 value)
         case OPT_DRV_AUTO_CONFIG:
         case OPT_DRV_TYPE:
         case OPT_DRV_RAM:
+        case OPT_DRV_SAVE_ROMS:
         case OPT_DRV_PARCABLE:
         case OPT_DRV_CONNECT:
         case OPT_DRV_POWER_SWITCH:
@@ -751,6 +753,7 @@ Emulator::set(Option option, isize id, i64 value)
         case OPT_DRV_AUTO_CONFIG:
         case OPT_DRV_TYPE:
         case OPT_DRV_RAM:
+        case OPT_DRV_SAVE_ROMS:
         case OPT_DRV_PARCABLE:
         case OPT_DRV_CONNECT:
         case OPT_DRV_POWER_SWITCH:

@@ -153,7 +153,7 @@ public:
     Cycle trigger[SLOT_COUNT] = { };
 
     // The event identifier
-    EventID id[SLOT_COUNT] = { };
+    EventID eventid[SLOT_COUNT] = { };
 
     // An optional data value
     i64 data[SLOT_COUNT] = { };
@@ -333,7 +333,7 @@ public:
         CLONE(recorder)
 
         CLONE_ARRAY(trigger)
-        CLONE_ARRAY(id)
+        CLONE_ARRAY(eventid)
         CLONE_ARRAY(data)
         CLONE(nextTrigger)
         CLONE(frame)
@@ -367,12 +367,13 @@ public:
         << drive9
         << parCable
         << datasette
+        << monitor
         << retroShell
         << regressionTester
         << recorder
 
         << trigger
-        << id
+        << eventid
         << data
         << nextTrigger
         << frame
@@ -500,10 +501,10 @@ public:
     void processEvents(Cycle cycle);
 
     // Returns true iff the specified slot contains any event
-    template<EventSlot s> bool hasEvent() const { return this->id[s] != (EventID)0; }
+    template<EventSlot s> bool hasEvent() const { return this->eventid[s] != (EventID)0; }
 
     // Returns true iff the specified slot contains a specific event
-    template<EventSlot s> bool hasEvent(EventID id) const { return this->id[s] == id; }
+    template<EventSlot s> bool hasEvent(EventID id) const { return this->eventid[s] == id; }
 
     // Returns true iff the specified slot contains a pending event
     template<EventSlot s> bool isPending() const { return this->trigger[s] != NEVER; }
@@ -515,7 +516,7 @@ public:
     template<EventSlot s> void scheduleAbs(Cycle cycle, EventID id)
     {
         this->trigger[s] = cycle;
-        this->id[s] = id;
+        this->eventid[s] = id;
 
         if (cycle < nextTrigger) nextTrigger = cycle;
 
@@ -588,7 +589,7 @@ public:
 
     template<EventSlot s> void cancel()
     {
-        id[s] = (EventID)0;
+        eventid[s] = (EventID)0;
         data[s] = 0;
         trigger[s] = NEVER;
     }

@@ -53,6 +53,7 @@ class Drive final : public SubComponent, public Inspectable<DriveInfo, Void> {
         OPT_DRV_AUTO_CONFIG,
         OPT_DRV_TYPE,
         OPT_DRV_RAM,
+        OPT_DRV_SAVE_ROMS,
         OPT_DRV_PARCABLE,
         OPT_DRV_CONNECT,
         OPT_DRV_POWER_SWITCH,

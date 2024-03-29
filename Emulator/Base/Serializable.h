@@ -212,7 +212,7 @@ public:
     template <class E, class = std::enable_if_t<std::is_enum<E>{}>>
     SerCounter& operator<<(E &v)
     {
-        count += sizeof(E);
+        count += sizeof(long);
         return *this;
     }
 

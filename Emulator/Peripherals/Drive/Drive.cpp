@@ -104,6 +104,7 @@ Drive::getOption(Option option) const
         case OPT_DRV_AUTO_CONFIG:   return (i64)config.autoConfig;
         case OPT_DRV_TYPE:          return (i64)config.type;
         case OPT_DRV_RAM:           return (i64)config.ram;
+        case OPT_DRV_SAVE_ROMS:     return (i64)config.saveRoms;
         case OPT_DRV_PARCABLE:      return (i64)config.parCable;
         case OPT_DRV_CONNECT:       return (i64)config.connected;
         case OPT_DRV_POWER_SWITCH:  return (i64)config.switchedOn;
@@ -166,6 +167,11 @@ Drive::setOption(Option option, i64 value)
             }
             return;
         }
+        case OPT_DRV_SAVE_ROMS:
+
+            config.saveRoms = bool(value);
+            return;
+
         case OPT_DRV_PARCABLE:
         {
             if (!ParCableTypeEnum::isValid(value)) {
@@ -419,6 +425,9 @@ Drive::operator << (SerCounter &worker)
 
     // Add the disk size
     if (hasDisk()) disk->serialize(worker);
+
+    // Add the ROM size
+    if (config.saveRoms) worker << mem.rom;
 }
 
 void
@@ -435,6 +444,9 @@ Drive::operator << (SerReader &worker)
     } else {
         disk = nullptr;
     }
+
+    // Load the ROM if it is contained in the snapshot
+    if (config.saveRoms) worker << mem.rom;
 }
 
 void
@@ -447,6 +459,9 @@ Drive::operator << (SerWriter &worker)
 
     // If yes, write the disk
     if (hasDisk()) disk->serialize(worker);
+
+    // Save the ROM if applicable
+    if (config.saveRoms) worker << mem.rom;
 }
 
 void

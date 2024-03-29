@@ -279,7 +279,7 @@ C64::initialize()
 void
 C64::operator << (SerResetter &worker)
 {
-    auto insEvent = id[SLOT_INS];
+    auto insEvent = eventid[SLOT_INS];
 
     // Reset all items
     serialize(worker);
@@ -288,7 +288,7 @@ C64::operator << (SerResetter &worker)
     for (isize i = 0; i < SLOT_COUNT; i++) {
 
         trigger[i] = NEVER;
-        id[i] = (EventID)0;
+        eventid[i] = (EventID)0;
         data[i] = 0;
     }
 
@@ -340,7 +340,7 @@ C64::exportConfig(std::ostream &stream) const
 InspectionTarget
 C64::getInspectionTarget() const
 {
-    switch(id[SLOT_INS]) {
+    switch(eventid[SLOT_INS]) {
 
         case EVENT_NONE:  return INSPECTION_NONE;
         case INS_C64:     return INSPECTION_C64;
@@ -696,6 +696,9 @@ C64::save(u8 *buffer)
     isize count = 8;
     write64(buffer, checksum());
 
+    auto removeasap = size();
+    debug(true, "size = %ld\n", removeasap);
+
     // Save internal state
     count += Serializable::save(buffer);
 
@@ -787,12 +790,14 @@ C64::_dump(Category category, std::ostream& os) const
         for (auto &c : subComponents) {
 
             os << tab(c->objectName());
-            os << hex(c->checksum()) << std::endl;
+            os << hex(c->checksum())  << "  " << dec(c->size()) << " bytes";
+            os << std::endl;
 
             for (auto &cc : c->subComponents) {
 
                 os << tab(cc->objectName());
-                os << hex(cc->checksum()) << std::endl;
+                os << hex(cc->checksum()) << "  " << dec(cc->size()) << " bytes";
+                os << std::endl;
             }
         }
     }
@@ -915,7 +920,7 @@ C64::inspectSlot(EventSlot nr) const
     auto cycle = trigger[nr];
 
     info.slot = nr;
-    info.eventId = id[nr];
+    info.eventId = eventid[nr];
     info.trigger = cycle;
     info.triggerRel = cycle - cpu.clock;
 
@@ -931,7 +936,7 @@ C64::inspectSlot(EventSlot nr) const
     info.vpos = long(diff / vic.getCyclesPerLine());
     info.hpos = long(diff % vic.getCyclesPerLine());
 
-    info.eventName = eventName((EventSlot)nr, id[nr]);
+    info.eventName = eventName((EventSlot)nr, eventid[nr]);
 }
 
 void
@@ -1034,10 +1039,10 @@ C64::processEvents(Cycle cycle)
     //
 
     if (isDue<SLOT_CIA1>(cycle)) {
-        cia1.serviceEvent(id[SLOT_CIA1]);
+        cia1.serviceEvent(eventid[SLOT_CIA1]);
     }
     if (isDue<SLOT_CIA2>(cycle)) {
-        cia2.serviceEvent(id[SLOT_CIA2]);
+        cia2.serviceEvent(eventid[SLOT_CIA2]);
     }
 
     if (isDue<SLOT_SEC>(cycle)) {
@@ -1051,7 +1056,7 @@ C64::processEvents(Cycle cycle)
         }
 
         if (isDue<SLOT_DAT>(cycle)) {
-            datasette.processDatEvent(id[SLOT_DAT], data[SLOT_DAT]);
+            datasette.processDatEvent(eventid[SLOT_DAT], data[SLOT_DAT]);
         }
 
         if (isDue<SLOT_TER>(cycle)) {
@@ -1067,26 +1072,26 @@ C64::processEvents(Cycle cycle)
                 port2.joystick.processEvent();
             }
             if (isDue<SLOT_MOT>(cycle)) {
-                datasette.processMotEvent(id[SLOT_MOT]);
+                datasette.processMotEvent(eventid[SLOT_MOT]);
             }
             if (isDue<SLOT_DC8>(cycle)) {
-                drive8.processDiskChangeEvent(id[SLOT_DC8]);
+                drive8.processDiskChangeEvent(eventid[SLOT_DC8]);
             }
             if (isDue<SLOT_DC9>(cycle)) {
-                drive9.processDiskChangeEvent(id[SLOT_DC9]);
+                drive9.processDiskChangeEvent(eventid[SLOT_DC9]);
             }
             if (isDue<SLOT_RSH>(cycle)) {
                 retroShell.serviceEvent();
             }
             if (isDue<SLOT_KEY>(cycle)) {
-                keyboard.processKeyEvent(id[SLOT_KEY]);
+                keyboard.processKeyEvent(eventid[SLOT_KEY]);
             }
             if (isDue<SLOT_ALA>(cycle)) {
                 processAlarmEvent();
             }
             if (isDue<SLOT_INS>(cycle)) {
 
-                processINSEvent(id[SLOT_INS]);
+                processINSEvent(eventid[SLOT_INS]);
             }
 
             // Determine the next trigger cycle for all tertiary slots
