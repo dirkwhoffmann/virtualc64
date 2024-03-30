@@ -138,11 +138,13 @@ Emulator::getOption(Option opt) const
 {
     switch (opt) {
 
-        case OPT_EMU_WARP_BOOT:     return config.warpBoot;
-        case OPT_EMU_WARP_MODE:     return config.warpMode;
-        case OPT_EMU_VSYNC:         return config.vsync;
-        case OPT_EMU_TIME_LAPSE:    return config.timeLapse;
-        case OPT_EMU_RUN_AHEAD:     return config.runAhead;
+        case OPT_EMU_WARP_BOOT:         return config.warpBoot;
+        case OPT_EMU_WARP_MODE:         return config.warpMode;
+        case OPT_EMU_VSYNC:             return config.vsync;
+        case OPT_EMU_TIME_LAPSE:        return config.timeLapse;
+        case OPT_EMU_SNAPSHOTS:         return config.snapshots;
+        case OPT_EMU_SNAPSHOT_DELAY:    return config.snapshotDelay;
+        case OPT_EMU_RUN_AHEAD:         return config.runAhead;
 
         default:
             fatalError;
@@ -182,6 +184,22 @@ Emulator::setOption(Option opt, i64 value)
             config.timeLapse = isize(value);
             return;
 
+        case OPT_EMU_SNAPSHOTS:
+
+            config.snapshots = bool(value);
+            main.scheduleNextSNPEvent();
+            return;
+
+        case OPT_EMU_SNAPSHOT_DELAY:
+
+            if (value < 10 || value > 3600) {
+                throw VC64Error(ERROR_OPT_INVARG, "10...3600");
+            }
+
+            config.snapshotDelay = isize(value);
+            main.scheduleNextSNPEvent();
+            return;
+
         case OPT_EMU_RUN_AHEAD:
 
             if (value < 0 || value > 12) {
@@ -205,6 +223,8 @@ Emulator::get(Option option) const
         case OPT_EMU_WARP_MODE:
         case OPT_EMU_VSYNC:
         case OPT_EMU_TIME_LAPSE:
+        case OPT_EMU_SNAPSHOTS:
+        case OPT_EMU_SNAPSHOT_DELAY:
         case OPT_EMU_RUN_AHEAD:
 
             return getOption(option);
@@ -496,6 +516,8 @@ Emulator::set(Option option, i64 value)
         case OPT_EMU_WARP_BOOT:
         case OPT_EMU_VSYNC:
         case OPT_EMU_TIME_LAPSE:
+        case OPT_EMU_SNAPSHOTS:
+        case OPT_EMU_SNAPSHOT_DELAY:
         case OPT_EMU_RUN_AHEAD:
 
             setOption(option, value);

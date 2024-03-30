@@ -28,6 +28,8 @@ Defaults::Defaults()
     setFallback(OPT_EMU_WARP_MODE, WARP_NEVER);
     setFallback(OPT_EMU_VSYNC, false);
     setFallback(OPT_EMU_TIME_LAPSE, 100);
+    setFallback(OPT_EMU_SNAPSHOTS, false);
+    setFallback(OPT_EMU_SNAPSHOT_DELAY, 10);
     setFallback(OPT_EMU_RUN_AHEAD, 0);
 
     setFallback(OPT_POWER_GRID, GRID_STABLE_50HZ);

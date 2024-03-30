@@ -131,6 +131,16 @@ C64::eventName(EventSlot slot, EventID id)
             }
             break;
 
+        case SLOT_SNP:
+
+            switch (id) {
+
+                case EVENT_NONE:        return "none";
+                case SNP_TAKE:          return "SNP_TAKE";
+                default:                return "*** INVALID ***";
+            }
+            break;
+
         case SLOT_RSH:
 
             switch (id) {
@@ -182,7 +192,7 @@ C64::eventName(EventSlot slot, EventID id)
     }
 }
 
-C64::C64(class Emulator& ref) : CoreComponent(ref)
+C64::C64(class Emulator& ref, isize id) : CoreComponent(ref, id)
 {
     trace(RUN_DEBUG, "Creating virtual C64\n");
 
@@ -296,6 +306,7 @@ C64::operator << (SerResetter &worker)
     scheduleAbs<SLOT_CIA1>(cpu.clock, CIA_EXECUTE);
     scheduleAbs<SLOT_CIA2>(cpu.clock, CIA_EXECUTE);
     if (insEvent) scheduleRel <SLOT_INS> (0, insEvent);
+    scheduleNextSNPEvent();
 
     flags = 0;
     rasterCycle = 1;
@@ -1080,6 +1091,9 @@ C64::processEvents(Cycle cycle)
             if (isDue<SLOT_DC9>(cycle)) {
                 drive9.processDiskChangeEvent(eventid[SLOT_DC9]);
             }
+            if (isDue<SLOT_SNP>(cycle)) {
+                processSNPEvent(eventid[SLOT_SNP]);
+            }
             if (isDue<SLOT_RSH>(cycle)) {
                 retroShell.serviceEvent();
             }
@@ -1132,7 +1146,7 @@ C64::processINSEvent(EventID id)
         // case INS_EVENTS:    c64.record(); break;
 
         default:
-            fatalError;
+            break; // fatalError;
     }
 
     // Reschedule event
@@ -1223,6 +1237,34 @@ C64::latestUserSnapshot()
     Snapshot *result = userSnapshot;
     userSnapshot = nullptr;
     return result;
+}
+
+void 
+C64::processSNPEvent(EventID eventId)
+{
+    // Check for the main instance (ignore the run-ahead instance)
+    if (id == 0) {
+
+        // Take snapshot and hand it over to GUI
+        autoSnapshot = new Snapshot(*this);
+        msgQueue.put( Message { .type = MSG_AUTO_SNAPSHOT_TAKEN, .snapshot = autoSnapshot } );
+    }
+
+    // Schedule the next event
+    scheduleNextSNPEvent();
+}
+
+void 
+C64::scheduleNextSNPEvent()
+{
+    auto snapshots = emulator.get(OPT_EMU_SNAPSHOTS);
+    auto delay = emulator.get(OPT_EMU_SNAPSHOT_DELAY);
+
+    if (snapshots) {
+        scheduleRel<SLOT_SNP>(SEC(double(delay)), SNP_TAKE);
+    } else {
+        cancel<SLOT_SNP>();
+    }
 }
 
 RomTraits

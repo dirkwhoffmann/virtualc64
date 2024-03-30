@@ -26,6 +26,7 @@ extension vc64.EventSlot: CustomStringConvertible {
         case ._MOT:     return "Datasette Motor"
         case ._DC8:     return "Disk Change Drive 8"
         case ._DC9:     return "Disk Change Drive 9"
+        case ._SNP:     return "Snapshots"
         case ._RSH:     return "Retro Shell"
         case ._KEY:     return "Auto Typing"
         case ._ALA:     return "Alarms"

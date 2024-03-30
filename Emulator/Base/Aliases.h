@@ -35,9 +35,9 @@ typedef isize HeadPos;
 //
 
 // Converts a time span to an (approximate) cycle count
-#define USEC(delay)           (Cycle)((delay) * 1)
-#define MSEC(delay)           (Cycle)((delay) * 1000)
-#define SEC(delay)            (Cycle)((delay) * 1000000)
+#define USEC(delay)           (Cycle)((delay) * 1LL)
+#define MSEC(delay)           (Cycle)((delay) * 1000LL)
+#define SEC(delay)            (Cycle)((delay) * 1000000LL)
 
 // Converts kilo and mega bytes to bytes
 #define KB(x) ((x) << 10)

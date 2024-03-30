@@ -41,6 +41,8 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_EMU_WARP_BOOT:             return numParser(" sec");
         case OPT_EMU_VSYNC:                 return boolParser();
         case OPT_EMU_TIME_LAPSE:            return numParser("%");
+        case OPT_EMU_SNAPSHOTS:             return boolParser();
+        case OPT_EMU_SNAPSHOT_DELAY:        return numParser(" sec");
         case OPT_EMU_RUN_AHEAD:             return numParser(" frames");
 
         case OPT_HOST_SAMPLE_RATE:          return numParser(" Hz");

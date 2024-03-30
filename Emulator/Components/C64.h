@@ -88,12 +88,18 @@ class C64 final : public CoreComponent, public Inspectable<C64Info, Void> {
 
     friend class Emulator;
 
-    Descriptions descriptions = {{
-
-        .name           = "C64",
-        .shellName      = "c64",
-        .description    = "Commodore 64"
-    }};
+    Descriptions descriptions = {
+        {
+            .name           = "C64",
+            .shellName      = "c64",
+            .description    = "Commodore 64"
+        },
+        {
+            .name           = "C64[run-ahead]",
+            .shellName      = "",
+            .description    = "Commodore 64"
+        }
+    };
 
 private:
 
@@ -255,7 +261,7 @@ public:
 
 public:
 
-    C64(class Emulator& ref);
+    C64(class Emulator& ref, isize id);
     ~C64();
     const Descriptions &getDescriptions() const override { return descriptions; }
     
@@ -619,6 +625,14 @@ public:
     // Returns the most recent snapshot or nullptr if none was taken
     Snapshot *latestAutoSnapshot();
     Snapshot *latestUserSnapshot();
+
+private:
+
+    // Services a snapshot event
+    void processSNPEvent(EventID id);
+
+    // Schedules the next snapshot event
+    void scheduleNextSNPEvent();
 
 
     //

@@ -34,16 +34,18 @@ class Emulator : public Thread, public Inspectable<EmulatorInfo, EmulatorStats>,
         OPT_EMU_WARP_MODE,
         OPT_EMU_VSYNC,
         OPT_EMU_TIME_LAPSE,
+        OPT_EMU_SNAPSHOTS,
+        OPT_EMU_SNAPSHOT_DELAY,
         OPT_EMU_RUN_AHEAD
     };
     
     EmulatorConfig config = { };
 
     // The virtual C64
-    C64 main = C64(*this);
+    C64 main = C64(*this, 0);
 
     // The run-ahead instance
-    C64 ahead = C64(*this);
+    C64 ahead = C64(*this, 1);
 
 public:
 

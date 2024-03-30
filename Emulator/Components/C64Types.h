@@ -74,6 +74,7 @@ enum_long(SLOT)
     SLOT_MOT,                       // Datasette motor
     SLOT_DC8,                       // Disk change (Drive 8)
     SLOT_DC9,                       // Disk change (Drive 9)
+    SLOT_SNP,                       // Snapshots
     SLOT_RSH,                       // Retro Shell
     SLOT_KEY,                       // Auto-typing
     SLOT_ALA,                       // Alarms (set by the GUI)
@@ -104,6 +105,7 @@ struct EventSlotEnum : util::Reflection<EventSlotEnum, EventSlot>
 
             case SLOT_DC8:      return "DC8";
             case SLOT_DC9:      return "DC9";
+            case SLOT_SNP:      return "SNP";
             case SLOT_RSH:      return "RSH";
             case SLOT_KEY:      return "KEY";
             case SLOT_ALA:      return "ALA";
@@ -165,6 +167,10 @@ enum_i8(EventID)
     DCH_INSERT          = 1,
     DCH_EJECT,
     DCH_EVENT_COUNT,
+
+    // Snapshots
+    SNP_TAKE             = 1,
+    SNP_EVENT_COUNT,
 
     // Retro shell
     RSH_WAKEUP          = 1,

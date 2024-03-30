@@ -327,6 +327,8 @@ typedef struct
     WarpMode warpMode;
     bool vsync;
     isize timeLapse;
+    bool snapshots;
+    isize snapshotDelay;
     isize runAhead;
 }
 EmulatorConfig;
