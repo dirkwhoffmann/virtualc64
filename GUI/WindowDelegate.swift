@@ -64,9 +64,11 @@ extension MyController: NSWindowDelegate {
         debug(.shutdown, "Stopping renderer...")
         renderer.halt()
 
+        /*
         debug(.shutdown, "Stopping timers...")
         snapshotTimer?.invalidate()
         snapshotTimer = nil
+        */
 
         debug(.shutdown, "Closing auxiliary windows...")
         inspector?.emu = nil

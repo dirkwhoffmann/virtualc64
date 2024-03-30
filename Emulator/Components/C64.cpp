@@ -1015,18 +1015,6 @@ C64::process(const Cmd &cmd)
             }
             break;
 
-        case CMD_SNAPSHOT_AUTO:
-
-            autoSnapshot = new Snapshot(*this);
-            msgQueue.put( Message { .type = MSG_AUTO_SNAPSHOT_TAKEN, .snapshot = autoSnapshot } );
-            break;
-
-        case CMD_SNAPSHOT_USER:
-
-            userSnapshot = new Snapshot(*this);
-            msgQueue.put(MSG_USER_SNAPSHOT_TAKEN);
-            break;
-
         case CMD_ALARM_ABS:
 
             setAlarmAbs(cmd.alarm.cycle, cmd.alarm.value);
@@ -1211,35 +1199,7 @@ C64::loadSnapshot(const Snapshot &snapshot)
     msgQueue.put(MSG_SNAPSHOT_RESTORED);
 }
 
-void 
-C64::requestAutoSnapshot()
-{
-    emulator.put(CMD_SNAPSHOT_AUTO);
-}
-
-void 
-C64::requestUserSnapshot()
-{
-    emulator.put(CMD_SNAPSHOT_USER);
-}
-
-Snapshot *
-C64::latestAutoSnapshot()
-{
-    Snapshot *result = autoSnapshot;
-    autoSnapshot = nullptr;
-    return result;
-}
-
-Snapshot *
-C64::latestUserSnapshot()
-{
-    Snapshot *result = userSnapshot;
-    userSnapshot = nullptr;
-    return result;
-}
-
-void 
+void
 C64::processSNPEvent(EventID eventId)
 {
     // Check for the main instance (ignore the run-ahead instance)
@@ -1247,7 +1207,7 @@ C64::processSNPEvent(EventID eventId)
 
         // Take snapshot and hand it over to GUI
         autoSnapshot = new Snapshot(*this);
-        msgQueue.put( Message { .type = MSG_AUTO_SNAPSHOT_TAKEN, .snapshot = autoSnapshot } );
+        msgQueue.put( Message { .type = MSG_SNAPSHOT_TAKEN, .snapshot = autoSnapshot } );
     }
 
     // Schedule the next event

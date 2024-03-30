@@ -96,9 +96,8 @@ enum_long(MSG_TYPE)
     MSG_SHAKING,            ///< A shaking mouse has been detected
 
     // Snapshots
-    MSG_AUTO_SNAPSHOT_TAKEN,  ///< A snapshot has been taken (auto snapshot)
-    MSG_USER_SNAPSHOT_TAKEN,  ///< A snapshot has been taken (user snapshot)
-    MSG_SNAPSHOT_RESTORED,    ///< A snapshot has been restored
+    MSG_SNAPSHOT_TAKEN,     ///< A snapshot has been taken (see OPT_SNAPSHOTS)
+    MSG_SNAPSHOT_RESTORED,  ///< A snapshot has been restored
 
     // Screen recording
     MSG_RECORDING_STARTED,  ///< The screen recorder has started
@@ -183,8 +182,7 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
 
             case MSG_SHAKING:               return "SHAKING";
 
-            case MSG_AUTO_SNAPSHOT_TAKEN:   return "AUTO_SNAPSHOT_TAKEN";
-            case MSG_USER_SNAPSHOT_TAKEN:   return "USER_SNAPSHOT_TAKEN";
+            case MSG_SNAPSHOT_TAKEN:        return "SNAPSHOT_TAKEN";
             case MSG_SNAPSHOT_RESTORED:     return "SNAPSHOT_RESTORED";
 
             case MSG_RECORDING_STARTED:     return "RECORDING_STARTED";

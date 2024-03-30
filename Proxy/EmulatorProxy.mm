@@ -2040,31 +2040,9 @@ using namespace vc64;
     [self c64]->removeInspectionTarget();
 }
 
-- (void)requestAutoSnapshot
-{
-    [self c64]->emulator.put(CMD_SNAPSHOT_AUTO);
-}
-
-- (void)requestUserSnapshot
-{
-    [self c64]->emulator.put(CMD_SNAPSHOT_USER);
-}
-
 - (SnapshotProxy *)takeSnapshot
 {
     Snapshot *snapshot = [self c64]->takeSnapshot();
-    return [SnapshotProxy make:snapshot];
-}
-
-- (SnapshotProxy *)latestAutoSnapshot
-{
-    Snapshot *snapshot = [self c64]->latestAutoSnapshot();
-    return [SnapshotProxy make:snapshot];
-}
-
-- (SnapshotProxy *)latestUserSnapshot
-{
-    Snapshot *snapshot = [self c64]->latestUserSnapshot();
     return [SnapshotProxy make:snapshot];
 }
 

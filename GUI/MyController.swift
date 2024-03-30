@@ -55,7 +55,7 @@ class MyController: NSWindowController, MessageReceiver {
     var virtualKeyboard: VirtualKeyboardController?
 
     // Snapshot timers
-    var snapshotTimer: Timer?
+    // var snapshotTimer: Timer?
     
     // Speedometer to measure clock frequence and frames per second
     var speedometer: Speedometer!
@@ -449,15 +449,8 @@ extension MyController {
                 metal.releaseMouse()
             }
 
-        case .AUTO_SNAPSHOT_TAKEN:
-            print("AUTO_SNAPSHOT_TAKEN")
-            // let proxy = SnapshotProxy.init(msg.snapshot)
+        case .SNAPSHOT_TAKEN:
             mydocument.snapshots.append(SnapshotProxy.init(msg.snapshot))
-            // mydocument.snapshots.append(emu.c64.latestAutoSnapshot)
-
-        case .USER_SNAPSHOT_TAKEN:
-            mydocument.snapshots.append(emu.c64.latestUserSnapshot)
-            renderer.flash()
 
         case .SNAPSHOT_RESTORED:
             renderer.rotateRight()

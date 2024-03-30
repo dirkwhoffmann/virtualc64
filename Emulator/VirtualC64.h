@@ -464,25 +464,6 @@ public:
          */
         void loadSnapshot(const Snapshot &snapshot);
 
-        /** @brief  Requests the emulator to take a snapshot.
-         *  In contrast to takeSnapshot, this function works asynchroneously.
-         *  The emulator will wait until the current frame is completed.
-         *  Afterwards, it takes a snapshot and informs the GUI by sending a
-         *  message. This functionality is utilized for handling the
-         *  auto-snapshot feature, as it does not suspend the emulator thread.
-         */
-        void requestAutoSnapshot() { c64.requestAutoSnapshot(); }
-        void requestUserSnapshot() { c64.requestUserSnapshot(); }
-
-        /** @brief  Returns the most recently taken snapshot.
-         *  After a snapshot has been requested and a message received by the
-         *  emulator, the GUI can obtain a pointer to the snapshot by calling
-         *  this function.
-         *  @note  The function transfers the ownership to the caller.
-         */
-        Snapshot *latestAutoSnapshot();
-        Snapshot *latestUserSnapshot();
-
 
         /// @}
         /// @name Handling media files

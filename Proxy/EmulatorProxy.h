@@ -316,12 +316,7 @@ using namespace vc64;
 @property InspectionTarget inspectionTarget;
 - (void) removeInspectionTarget;
 
-- (void)requestAutoSnapshot;
-- (void)requestUserSnapshot;
-
 - (SnapshotProxy *) takeSnapshot;
-@property (readonly) SnapshotProxy *latestAutoSnapshot;
-@property (readonly) SnapshotProxy *latestUserSnapshot;
 
 @end
 

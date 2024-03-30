@@ -10,7 +10,8 @@
 // import Foundation
 
 extension MyController {
-                
+         
+    /*
     func stopSnapshotTimer() {
         
         snapshotTimer?.invalidate()
@@ -34,7 +35,8 @@ extension MyController {
         
         if pref.autoSnapshots { emu.c64.requestAutoSnapshot() }
     }
-    
+    */
+
     func restoreSnapshot(item: Int) throws {
         
         if let snapshot = mydocument.snapshots.element(at: item) {

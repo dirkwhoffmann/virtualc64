@@ -618,6 +618,7 @@ public:
     // Loads the current state from a snapshot file
     void loadSnapshot(const Snapshot &snapshot) throws;
 
+    /*
     // Requests a snapshot
     void requestAutoSnapshot();
     void requestUserSnapshot();
@@ -625,6 +626,7 @@ public:
     // Returns the most recent snapshot or nullptr if none was taken
     Snapshot *latestAutoSnapshot();
     Snapshot *latestUserSnapshot();
+    */
 
 private:
 

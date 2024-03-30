@@ -22,10 +22,20 @@ class Preferences {
 
     // Snapshots
     var autoSnapshots = false {
-        didSet { for c in myAppDelegate.controllers { c.validateSnapshotTimer() } }
+        // didSet { for c in myAppDelegate.controllers { c.validateSnapshotTimer() } }
+        didSet {
+            for c64 in myAppDelegate.proxies {
+                c64.set(.EMU_SNAPSHOTS, enable: autoSnapshots)
+            }
+        }
     }
     var snapshotInterval = 0 {
-        didSet { for c in myAppDelegate.controllers { c.validateSnapshotTimer() } }
+        // didSet { for c in myAppDelegate.controllers { c.validateSnapshotTimer() } }
+        didSet {
+            for c64 in myAppDelegate.proxies {
+                c64.set(.EMU_SNAPSHOT_DELAY, value: snapshotInterval)
+            }
+        }
     }
 
     // Screenshots
@@ -56,14 +66,14 @@ class Preferences {
     var aspectX = 768 {
         didSet {
             for c64 in myAppDelegate.proxies {
-                c64.set(.REC_ASPECT_X, value: bitRate)
+                c64.set(.REC_ASPECT_X, value: aspectX)
             }
         }
     }
     var aspectY = 702 {
         didSet {
             for c64 in myAppDelegate.proxies {
-                c64.set(.REC_ASPECT_Y, value: bitRate)
+                c64.set(.REC_ASPECT_Y, value: aspectY)
             }
         }
     }

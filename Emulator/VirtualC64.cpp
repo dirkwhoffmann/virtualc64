@@ -203,7 +203,6 @@ VirtualC64::C64API::requestUserSnapshot()
 {
     c64.requestUserSnapshot();
 }
-*/
 
 Snapshot *
 VirtualC64::C64API::latestAutoSnapshot()
@@ -216,8 +215,9 @@ VirtualC64::C64API::latestUserSnapshot()
 {
     return c64.latestUserSnapshot();
 }
+*/
 
-void 
+void
 VirtualC64::C64API::loadRom(const string &path)
 {
     c64.loadRom(path);

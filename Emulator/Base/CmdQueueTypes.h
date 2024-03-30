@@ -29,8 +29,6 @@ enum_long(CMD_TYPE)
     CMD_NONE = 0,               ///< None
 
     // C64
-    CMD_SNAPSHOT_AUTO,          ///< Take a snapshot (emulator triggered)
-    CMD_SNAPSHOT_USER,          ///< Take a snapshot (user triggered)
     CMD_ALARM_ABS,              ///< Schedule an alarm (absolute cycle)
     CMD_ALARM_REL,              ///< Schedule an alarm (relative cycle)
 
@@ -87,8 +85,6 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
 
             case CMD_NONE:                  return "NONE";
 
-            case CMD_SNAPSHOT_AUTO:         return "SNAPSHOT_AUTO";
-            case CMD_SNAPSHOT_USER:         return "SNAPSHOT_USER";
             case CMD_ALARM_ABS:             return "ALARM_ABS";
             case CMD_ALARM_REL:             return "ALARM_REL";
 

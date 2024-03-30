@@ -27,6 +27,9 @@ class SnapshotViewer: DialogController {
     var lastItem: Int { return numItems - 1 }
     var empty: Bool { return numItems == 0 }
     
+    // Remembers the auto-snapshot setting
+    var takeSnapshots = false
+
     override func windowWillLoad() {
    
     }
@@ -35,7 +38,11 @@ class SnapshotViewer: DialogController {
 
         now = Date()
         
-        parent.stopSnapshotTimer()
+        // Don't let the emulator take snapshots while the dialog is open
+        takeSnapshots = parent.emu.get(.EMU_SNAPSHOTS) != 0
+        parent.emu.set(.EMU_SNAPSHOTS, enable: false)
+
+        // parent.stopSnapshotTimer()
         updateLabels()
         
         self.carousel.type = iCarouselType.timeMachine
@@ -191,8 +198,9 @@ class SnapshotViewer: DialogController {
                                 
         hideSheet()
 
-        parent.validateSnapshotTimer()
-        
+        parent.emu.set(.EMU_SNAPSHOTS, enable: takeSnapshots)
+        // parent.validateSnapshotTimer()
+
         // Hide some controls
         let items: [NSView] = [
             

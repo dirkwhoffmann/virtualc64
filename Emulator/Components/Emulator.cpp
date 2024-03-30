@@ -972,8 +972,6 @@ Emulator::update()
                 
             case CMD_CPU_BRK:
             case CMD_CPU_NMI:
-            case CMD_SNAPSHOT_AUTO:
-            case CMD_SNAPSHOT_USER: 
             case CMD_ALARM_ABS:
             case CMD_ALARM_REL:
                 
