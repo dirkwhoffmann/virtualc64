@@ -321,7 +321,9 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func takeSnapshotAction(_ sender: Any!) {
         
-        emu.c64.requestUserSnapshot()
+        mydocument.snapshots.append(emu.c64.takeSnapshot())
+        renderer.flash()
+
     }
     
     @IBAction func restoreSnapshotAction(_ sender: Any!) {

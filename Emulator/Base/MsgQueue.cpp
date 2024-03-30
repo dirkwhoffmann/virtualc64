@@ -82,6 +82,14 @@ MsgQueue::put(MsgType type, ScriptMsg payload)
     put( Message { .type = type, .script = payload } );
 }
 
+/*
+void
+MsgQueue::put(MsgType type, Snapshot *payload)
+{
+    put( Message { .type = type, .snapshot = payload } );
+}
+*/
+
 bool
 MsgQueue::get(Message &msg)
 {

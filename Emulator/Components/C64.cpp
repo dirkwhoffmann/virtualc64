@@ -1007,7 +1007,7 @@ C64::process(const Cmd &cmd)
         case CMD_SNAPSHOT_AUTO:
 
             autoSnapshot = new Snapshot(*this);
-            msgQueue.put(MSG_AUTO_SNAPSHOT_TAKEN);
+            msgQueue.put( Message { .type = MSG_AUTO_SNAPSHOT_TAKEN, .snapshot = autoSnapshot } );
             break;
 
         case CMD_SNAPSHOT_USER:

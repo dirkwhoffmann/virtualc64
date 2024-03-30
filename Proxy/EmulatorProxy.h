@@ -75,6 +75,9 @@ using namespace vc64;
     // Reference to the wrapped C++ instance
     @public void *obj;
 }
+
+- (instancetype) initWith:(void *)ref;
+
 @end
 
 @interface SubComponentProxy : Proxy {
@@ -316,6 +319,7 @@ using namespace vc64;
 - (void)requestAutoSnapshot;
 - (void)requestUserSnapshot;
 
+- (SnapshotProxy *) takeSnapshot;
 @property (readonly) SnapshotProxy *latestAutoSnapshot;
 @property (readonly) SnapshotProxy *latestUserSnapshot;
 

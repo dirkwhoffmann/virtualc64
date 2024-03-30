@@ -450,7 +450,10 @@ extension MyController {
             }
 
         case .AUTO_SNAPSHOT_TAKEN:
-            mydocument.snapshots.append(emu.c64.latestAutoSnapshot)
+            print("AUTO_SNAPSHOT_TAKEN")
+            // let proxy = SnapshotProxy.init(msg.snapshot)
+            mydocument.snapshots.append(SnapshotProxy.init(msg.snapshot))
+            // mydocument.snapshots.append(emu.c64.latestAutoSnapshot)
 
         case .USER_SNAPSHOT_TAKEN:
             mydocument.snapshots.append(emu.c64.latestUserSnapshot)
