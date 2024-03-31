@@ -58,7 +58,7 @@ Drive::getInfo() const
 {
     DriveInfo result;
 
-    result.id = id;
+    result.id = objid;
 
     result.hasDisk = hasDisk();
     result.hasUnprotectedDisk = hasUnprotectedDisk();
@@ -91,7 +91,7 @@ Drive::resetConfig()
 
         } else {
 
-            setOption(opt, defaults.get(opt, id));
+            setOption(opt, defaults.get(opt, objid));
         }
     }
 }
@@ -126,7 +126,7 @@ Drive::getOption(Option option) const
 i64
 Drive::getFallback(Option opt) const
 {
-    return emulator.defaults.getFallback(opt, id);
+    return emulator.defaults.getFallback(opt, objid);
 }
 
 void
@@ -196,7 +196,7 @@ Drive::setOption(Option option, i64 value)
                 config.connected = bool(value);
                 hardReset();
             }
-            msgQueue.put(MSG_DRIVE_CONNECT, DriveMsg { i16(id), i16(value), 0, 0 } );
+            msgQueue.put(MSG_DRIVE_CONNECT, DriveMsg { i16(objid), i16(value), 0, 0 } );
             return;
         }
         case OPT_DRV_POWER_SWITCH:
@@ -206,7 +206,7 @@ Drive::setOption(Option option, i64 value)
                 config.switchedOn = bool(value);
                 hardReset();
             }
-            msgQueue.put(MSG_DRIVE_POWER, DriveMsg { .nr = i16(id), .value = i16(value) } );
+            msgQueue.put(MSG_DRIVE_POWER, DriveMsg { .nr = i16(objid), .value = i16(value) } );
             return;
         }
         case OPT_DRV_POWER_SAVE:
@@ -660,7 +660,7 @@ Drive::setRedLED(bool b)
 
         redLED = b;
         wakeUp();
-        msgQueue.put(MSG_DRIVE_LED, DriveMsg { .nr = i16(id), .value = b } );
+        msgQueue.put(MSG_DRIVE_LED, DriveMsg { .nr = i16(objid), .value = b } );
         return;
     }
 }
@@ -671,7 +671,7 @@ Drive::setRotating(bool b)
     if (spinning != b) {
 
         spinning = b;
-        msgQueue.put(MSG_DRIVE_MOTOR, DriveMsg { .nr = i16(id), .value = b } );
+        msgQueue.put(MSG_DRIVE_MOTOR, DriveMsg { .nr = i16(objid), .value = b } );
         iec.updateTransferStatus();
     }
 }
@@ -682,7 +682,7 @@ Drive::wakeUp(isize awakeness)
     if (isIdle()) {
         
         trace(DRV_DEBUG, "Exiting power-safe mode\n");
-        msgQueue.put(MSG_DRIVE_POWER_SAVE, DriveMsg { .nr = i16(id), .value = 0 } );
+        msgQueue.put(MSG_DRIVE_POWER_SAVE, DriveMsg { .nr = i16(objid), .value = 0 } );
         needsEmulation = true;
     }
 
@@ -713,7 +713,7 @@ Drive::moveHeadUp()
     }
 
     msgQueue.put(MSG_DRIVE_STEP, DriveMsg {
-        i16(id), i16(halftrack), config.stepVolume, config.pan
+        i16(objid), i16(halftrack), config.stepVolume, config.pan
     });
 }
 
@@ -741,7 +741,7 @@ Drive::moveHeadDown()
     }
 
     msgQueue.put(MSG_DRIVE_STEP, DriveMsg {
-        i16(id), i16(halftrack), config.stepVolume, config.pan
+        i16(objid), i16(halftrack), config.stepVolume, config.pan
     });
 }
 
@@ -866,7 +866,7 @@ Drive::vsyncHandler()
 
             trace(DRV_DEBUG, "Entering power-save mode\n");
             needsEmulation = false;
-            msgQueue.put(MSG_DRIVE_POWER_SAVE, DriveMsg { .nr = i16(id), .value = 1 } );
+            msgQueue.put(MSG_DRIVE_POWER_SAVE, DriveMsg { .nr = i16(objid), .value = 1 } );
         }
     }
 }

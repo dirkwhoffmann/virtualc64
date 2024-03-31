@@ -44,8 +44,8 @@ public:
     // Reference to the emulator this instance belongs to
     class Emulator &emulator;
 
-    // Identifier (to distinguish floppy drives etc.)
-    const isize id;
+    // Object identifier (to distinguish instances of the same component)
+    const isize objid;
 
     // Sub components
     std::vector<CoreComponent *> subComponents;
@@ -60,8 +60,8 @@ public:
     
 public:
 
-    CoreComponent(Emulator& ref) : emulator(ref), id(0) { }
-    CoreComponent(Emulator& ref, isize id) : emulator(ref), id(id) { }
+    CoreComponent(Emulator& ref) : emulator(ref), objid(0) { }
+    CoreComponent(Emulator& ref, isize id) : emulator(ref), objid(id) { }
 
     virtual const Descriptions &getDescriptions() const { return descriptions; }
 

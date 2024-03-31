@@ -34,9 +34,83 @@ class VICII final : public SubComponent, public Inspectable<VICIIInfo, VICIIStat
         .description    = "Video Interface Controller"
     }};
 
+    static constexpr VICIITraits traits[6] = {
+        {
+            // VICII_PAL_6569_R1
+            .pal            = true,
+            .frequency      = PAL::CLOCK_FREQUENCY,
+            .fps            = PAL::CLOCK_FREQUENCY / (312.0 * 63.0),
+            .linesPerFrame  = 312,
+            .cyclesPerLine  = 63,
+            .cyclesPerFrame = 312 * 63,
+            .visibleLines   = 284,
+            .grayCodeBug    = false,
+            .delayedLpIrqs  = true
+        },
+        {
+            // VICII_PAL_6569_R3
+            .pal            = true,
+            .frequency      = PAL::CLOCK_FREQUENCY,
+            .fps            = PAL::CLOCK_FREQUENCY / (312.0 * 63.0),
+            .linesPerFrame  = 312,
+            .cyclesPerLine  = 63,
+            .cyclesPerFrame = 312 * 63,
+            .visibleLines   = 284,
+            .grayCodeBug    = false,
+            .delayedLpIrqs  = false
+        },
+        {
+            // VICII_PAL_8565
+            .pal            = true,
+            .frequency      = PAL::CLOCK_FREQUENCY,
+            .fps            = PAL::CLOCK_FREQUENCY / (312.0 * 63.0),
+            .linesPerFrame  = 312,
+            .cyclesPerLine  = 63,
+            .cyclesPerFrame = 312 * 63,
+            .visibleLines   = 284,
+            .grayCodeBug    = true,
+            .delayedLpIrqs  = false
+        },
+        {
+            // VICII_NTSC_6567_R56A
+            .pal            = false,
+            .frequency      = NTSC::CLOCK_FREQUENCY,
+            .fps            = NTSC::CLOCK_FREQUENCY / (262.0 * 64.0),
+            .linesPerFrame  = 262,
+            .cyclesPerLine  = 64,
+            .cyclesPerFrame = 262 * 64,
+            .visibleLines   = 234,
+            .grayCodeBug    = false,
+            .delayedLpIrqs  = true
+        },
+        {
+            // VICII_NTSC_6567
+            .pal            = true,
+            .frequency      = NTSC::CLOCK_FREQUENCY,
+            .fps            = NTSC::CLOCK_FREQUENCY / (263.0 * 65.0),
+            .linesPerFrame  = 263,
+            .cyclesPerLine  = 65,
+            .cyclesPerFrame = 263 * 65,
+            .visibleLines   = 235,
+            .grayCodeBug    = false,
+            .delayedLpIrqs  = false
+        },
+        {
+            // VICII_NTSC_8562
+            .pal            = false,
+            .frequency      = NTSC::CLOCK_FREQUENCY,
+            .fps            = NTSC::CLOCK_FREQUENCY / (263.0 * 65.0),
+            .linesPerFrame  = 263,
+            .cyclesPerLine  = 65,
+            .cyclesPerFrame = 263 * 65,
+            .visibleLines   = 235,
+            .grayCodeBug    = true,
+            .delayedLpIrqs  = false
+        }
+    };
 
     ConfigOptions options = {
-        
+
         OPT_VICII_REVISION,
         OPT_VICII_POWER_SAVE,
         OPT_VICII_GRAY_DOT_BUG,
@@ -45,16 +119,12 @@ class VICII final : public SubComponent, public Inspectable<VICIIInfo, VICIIStat
         OPT_VICII_SS_COLLISIONS,
         OPT_VICII_SB_COLLISIONS
     };
-    
+
     // Current configuration
     VICIIConfig config = { };
 
     // Result of the latest inspection
-    // mutable VICIIInfo info = { };
     mutable SpriteInfo spriteInfo[8] = { };
-    
-    // Statistics
-    // VICIIStats stats = { };
 
     // Chip properties (derived from config.revision)
     bool isPAL;

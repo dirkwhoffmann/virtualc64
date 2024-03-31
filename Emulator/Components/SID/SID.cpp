@@ -46,7 +46,7 @@ SID::_dump(Category category, std::ostream& os) const
 void
 SID::resetConfig()
 {
-    Configurable::resetConfig(emulator.defaults, id);
+    Configurable::resetConfig(emulator.defaults, objid);
 }
 
 i64
@@ -68,7 +68,7 @@ SID::getOption(Option option) const
 i64 
 SID::getFallback(Option opt) const
 {
-    return emulator.defaults.getFallback(opt, id);
+    return emulator.defaults.getFallback(opt, objid);
 }
 
 void
@@ -80,7 +80,7 @@ SID::setOption(Option option, i64 value)
 
         case OPT_SID_ENABLE:
         {
-            if (id == 0 && value == false) {
+            if (objid == 0 && value == false) {
                 warn("SID 0 can't be disabled\n");
                 return;
             }
@@ -92,7 +92,7 @@ SID::setOption(Option option, i64 value)
             {   SUSPENDED
 
                 config.enabled = value;
-                c64.muxer.clearSampleBuffer(id);
+                c64.muxer.clearSampleBuffer(objid);
                 c64.muxer.hardReset();
             }
             return;
@@ -100,7 +100,7 @@ SID::setOption(Option option, i64 value)
 
         case OPT_SID_ADDRESS:
         {
-            if (id == 0 && value != 0xD400) {
+            if (objid == 0 && value != 0xD400) {
                 warn("SID 0 can't be remapped\n");
                 return;
             }
@@ -116,7 +116,7 @@ SID::setOption(Option option, i64 value)
             {   SUSPENDED
 
                 config.address = (u16)value;
-                muxer.clearSampleBuffer(id);
+                muxer.clearSampleBuffer(objid);
             }
             return;
         }

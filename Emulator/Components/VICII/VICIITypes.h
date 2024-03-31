@@ -301,6 +301,25 @@ enum VICIIColorRegs
 
 typedef struct
 {
+    // Video standard
+    bool pal;
+    double fps;
+    isize frequency;
+
+    // Picture layout
+    isize linesPerFrame;
+    isize cyclesPerLine;
+    isize cyclesPerFrame;
+    isize visibleLines;
+
+    // Chip properties
+    bool grayCodeBug;
+    bool delayedLpIrqs;
+}
+VICIITraits;
+
+typedef struct
+{
     // Silicon
     VICIIRevision revision;
     VICIIRevision awaiting;
@@ -383,9 +402,6 @@ typedef struct
     u8 latchedLPY;
     bool lpLine;
     bool lpIrqHasOccurred;
-    
-    // Debugging
-    
 }
 VICIIInfo;
 

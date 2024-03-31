@@ -469,99 +469,130 @@ VICII::_trackOff()
 bool
 VICII::delayedLightPenIrqs(VICIIRevision rev)
 {
-    return rev & (VICII_PAL_6569_R1 | VICII_NTSC_6567_R56A);
+    bool result = rev & (VICII_PAL_6569_R1 | VICII_NTSC_6567_R56A);
+    assert(result == traits[rev].delayedLpIrqs);
+    return result;
 }
 
 double
 VICII::getFps(VICIIRevision rev)
 {
-    return (double)getFrequency(rev) / (double)getCyclesPerFrame(rev);
+    double result = (double)getFrequency(rev) / (double)getCyclesPerFrame(rev);
+    assert(result == traits[rev].fps);
+    return result;
 }
-
-/*
-i64
-VICII::getFrameDelay(VICIIRevision rev)
-{
-    return i64(1000000000 / getFps(rev));
-}
-*/
 
 isize
 VICII::getFrequency(VICIIRevision rev)
 {
+    isize result;
+
     switch (rev) {
             
         case VICII_NTSC_6567:
         case VICII_NTSC_8562:
         case VICII_NTSC_6567_R56A:
-            return NTSC::CLOCK_FREQUENCY;
+            result = NTSC::CLOCK_FREQUENCY;
+            break;
 
         default:
-            return PAL::CLOCK_FREQUENCY;
+            result = PAL::CLOCK_FREQUENCY;
+            break;
     }
+
+    assert(result == traits[rev].frequency);
+    return result;
 }
 
 isize
 VICII::getCyclesPerLine(VICIIRevision rev)
 {
+    isize result;
+
     switch (rev) {
             
         case VICII_NTSC_6567_R56A:
-            return 64;
-            
+            result = 64;
+            break;
+
         case VICII_NTSC_6567:
         case VICII_NTSC_8562:
-            return 65;
-            
+            result = 65;
+            break;
+
         default:
-            return 63;
+            result = 63;
+            break;
     }
+
+    assert(result == traits[rev].cyclesPerLine);
+    return result;
 }
 
 isize
 VICII::getLinesPerFrame(VICIIRevision rev)
 {
+    isize result;
+
     switch (rev) {
             
         case VICII_NTSC_6567_R56A:
-            return 262;
-            
+            result = 262;
+            break;
+
         case VICII_NTSC_6567:
         case VICII_NTSC_8562:
-            return 263;
-            
+            result = 263;
+            break;
+
         default:
-            return 312;
+            result = 312;
+            break;
     }
+
+    assert(result == traits[rev].linesPerFrame);
+    return result;
 }
 
 isize
 VICII::getCyclesPerFrame(VICIIRevision rev)
 {
-    return getLinesPerFrame(rev) * getCyclesPerLine(rev);
+    isize result = getLinesPerFrame(rev) * getCyclesPerLine(rev);
+    assert(result == traits[rev].cyclesPerFrame);
+    return result;
 }
 
 isize
 VICII::numVisibleLines(VICIIRevision rev)
 {
+    isize result;
+
     switch (rev) {
             
         case VICII_NTSC_6567_R56A:
-            return 234;
-            
+            result = 234;
+            break;
+
         case VICII_NTSC_6567:
         case VICII_NTSC_8562:
-            return 235;
-            
+            result = 235;
+            break;
+
         default:
-            return 284;
+            result = 284;
+            break;
     }
+
+    assert(result == traits[rev].visibleLines);
+    return result;
 }
 
 bool
 VICII::hasGrayCodeBug(VICIIRevision rev)
 {
-    return rev == VICII_PAL_8565 || rev == VICII_NTSC_8562;
+    bool result = (rev == VICII_PAL_8565 || rev == VICII_NTSC_8562);
+    assert(result == traits[rev].grayCodeBug);
+    return result;
 }
 
 bool

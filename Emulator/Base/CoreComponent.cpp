@@ -21,22 +21,22 @@ namespace vc64 {
 const char *
 CoreComponent::objectName() const
 {
-    assert(isize(getDescriptions().size()) > id);
-    return getDescriptions().at(id).name;
+    assert(isize(getDescriptions().size()) > objid);
+    return getDescriptions().at(objid).name;
 }
 
 const char *
 CoreComponent::shellName() const
 {
-    assert(isize(getDescriptions().size()) > id);
-    return getDescriptions().at(id).shellName;
+    assert(isize(getDescriptions().size()) > objid);
+    return getDescriptions().at(objid).shellName;
 }
 
 const char *
 CoreComponent::description() const
 {
-    assert(isize(getDescriptions().size()) > id);
-    return getDescriptions().at(id).description;
+    assert(isize(getDescriptions().size()) > objid);
+    return getDescriptions().at(objid).description;
 }
 
 std::vector<CoreComponent *>

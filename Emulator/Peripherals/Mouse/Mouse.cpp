@@ -18,7 +18,7 @@
 
 namespace vc64 {
 
-Mouse::Mouse(C64 &ref, ControlPort& pref) : SubComponent(ref, pref.id), port(pref)
+Mouse::Mouse(C64 &ref, ControlPort& pref) : SubComponent(ref, pref.objid), port(pref)
 {
     subComponents = std::vector<CoreComponent *> {
         
@@ -98,7 +98,7 @@ Mouse::_dump(Category category, std::ostream& os) const
 
     if (category == Category::State) {
         
-        os << tab("Mouse nr") << dec(id) << std::endl;
+        os << tab("Mouse nr") << dec(objid) << std::endl;
         os << tab("targetX") << targetX << std::endl;
         os << tab("targetY") << targetY << std::endl;
     }

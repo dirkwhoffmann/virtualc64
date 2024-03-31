@@ -398,11 +398,11 @@ public:
 public:
     
     // Returns the device number
-    isize getDeviceNr() const { return id; }
+    isize getDeviceNr() const { return objid; }
 
     // Convenience wrappers
-    bool isDrive8() { return id == DRIVE8; }
-    bool isDrive9() { return id == DRIVE9; }
+    bool isDrive8() { return objid == DRIVE8; }
+    bool isDrive9() { return objid == DRIVE9; }
 
     // Returns true iff the red drive LED is on
     bool getRedLED() const { return redLED; };

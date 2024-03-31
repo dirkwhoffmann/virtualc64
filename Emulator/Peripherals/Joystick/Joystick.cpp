@@ -17,7 +17,7 @@
 
 namespace vc64 {
 
-Joystick::Joystick(C64& ref, ControlPort& pref) : SubComponent(ref, pref.id), port(pref)
+Joystick::Joystick(C64& ref, ControlPort& pref) : SubComponent(ref, pref.objid), port(pref)
 {
 };
 
@@ -100,7 +100,7 @@ Joystick::_dump(Category category, std::ostream& os) const
 
     if (category == Category::State) {
         
-        os << tab("Joystick nr") << dec(id) << std::endl;
+        os << tab("Joystick nr") << dec(objid) << std::endl;
         os << tab("Button") << bol(button) << std::endl;
         os << tab("X axis") << dec(axisX) << std::endl;
         os << tab("Y axis") << dec(axisY) << std::endl;
@@ -124,7 +124,7 @@ Joystick::getControlPort() const
 void
 Joystick::trigger(GamePadAction event)
 {
-    debug(JOY_DEBUG, "Port %ld: %s\n", id, GamePadActionEnum::key(event));
+    debug(JOY_DEBUG, "Port %ld: %s\n", objid, GamePadActionEnum::key(event));
 
     switch (event) {
 
@@ -166,11 +166,11 @@ void
 Joystick::processEvent()
 {
     // Get the number of remaining bullets
-    auto shots = id == PORT_1 ? c64.data[SLOT_AFI1] : c64.data[SLOT_AFI2];
+    auto shots = objid == PORT_1 ? c64.data[SLOT_AFI1] : c64.data[SLOT_AFI2];
     assert(shots > 0);
 
     // Cancel the current event
-    id == PORT_1 ? c64.cancel<SLOT_AFI1>() : c64.cancel<SLOT_AFI2>();
+    objid == PORT_1 ? c64.cancel<SLOT_AFI1>() : c64.cancel<SLOT_AFI2>();
 
     // Fire and reload
     if (button) {
@@ -188,7 +188,7 @@ Joystick::processEvent()
 bool
 Joystick::isAutofiring()
 {
-    return id == PORT_1 ? c64.isPending<SLOT_AFI1>() : c64.isPending<SLOT_AFI2>();
+    return objid == PORT_1 ? c64.isPending<SLOT_AFI1>() : c64.isPending<SLOT_AFI2>();
 }
 
 void
@@ -200,7 +200,7 @@ Joystick::reload()
 void
 Joystick::reload(isize bullets)
 {
-    id == PORT_1 ? reload <SLOT_AFI1> (bullets) : reload <SLOT_AFI2> (bullets);
+    objid == PORT_1 ? reload <SLOT_AFI1> (bullets) : reload <SLOT_AFI2> (bullets);
 }
 
 template <EventSlot Slot> void

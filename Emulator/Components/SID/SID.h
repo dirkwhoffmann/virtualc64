@@ -65,8 +65,8 @@ class SID final : public SubComponent, public Dumpable
 public:
 
     // Backends
-    ReSID resid = ReSID(c64, id);
-    FastSID fastsid = FastSID(c64, id);
+    ReSID resid = ReSID(c64, objid);
+    FastSID fastsid = FastSID(c64, objid);
 
     
     //

@@ -172,7 +172,7 @@ FastSID::_dump(Category category, std::ostream& os) const
     if (category == Category::State) {
 
         os << tab("Chip");
-        os << "FastSID " << dec(id) << std::endl;
+        os << "FastSID " << dec(objid) << std::endl;
         os << tab("Model");
         os << SIDRevisionEnum::key(model) << std::endl;
         os << tab("Sampling rate");
@@ -408,7 +408,7 @@ FastSID::executeCycles(isize numCycles, SampleStream &stream)
     
     // Check for a buffer overflow
     if (unlikely(samples > stream.free())) {
-        warn("SID %ld: SAMPLE BUFFER OVERFLOW", id);
+        warn("SID %ld: SAMPLE BUFFER OVERFLOW", objid);
         stream.clear();
     }
     
@@ -423,7 +423,7 @@ FastSID::executeCycles(isize numCycles, SampleStream &stream)
 isize
 FastSID::executeCycles(isize numCycles)
 {
-    return executeCycles(numCycles, muxer.sidStream[id]);
+    return executeCycles(numCycles, muxer.sidStream[objid]);
 }
 
 void

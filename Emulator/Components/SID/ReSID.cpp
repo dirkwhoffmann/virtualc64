@@ -89,7 +89,7 @@ ReSID::_dump(Category category, std::ostream& os) const
     if (category == Category::State) {
 
         os << tab("Chip");
-        os << "ReSID " << dec(id) << std::endl;
+        os << "ReSID " << dec(objid) << std::endl;
         os << tab("Model");
         os << SIDRevisionEnum::key(getRevision()) << std::endl;
         os << tab("Sampling rate");
@@ -316,7 +316,7 @@ ReSID::executeCycles(isize numCycles, SampleStream &stream)
     
     // Check for a buffer overflow
     if (unlikely(samples > stream.free())) {
-        warn("SID %d: SAMPLE BUFFER OVERFLOW", id);
+        warn("SID %d: SAMPLE BUFFER OVERFLOW", objid);
         stream.clear();
     }
     
@@ -329,7 +329,7 @@ ReSID::executeCycles(isize numCycles, SampleStream &stream)
 isize
 ReSID::executeCycles(isize numCycles)
 {
-    return executeCycles(numCycles, muxer.sidStream[id]);
+    return executeCycles(numCycles, muxer.sidStream[objid]);
 }
 
 }

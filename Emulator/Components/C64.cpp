@@ -1203,7 +1203,7 @@ void
 C64::processSNPEvent(EventID eventId)
 {
     // Check for the main instance (ignore the run-ahead instance)
-    if (id == 0) {
+    if (objid == 0) {
 
         // Take snapshot and hand it over to GUI
         autoSnapshot = new Snapshot(*this);

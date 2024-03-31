@@ -303,8 +303,8 @@ public:
     CIA(C64 &ref, isize id);
     const Descriptions &getDescriptions() const override { return descriptions; }
 
-    bool isCIA1() const { return id == 0; }
-    bool isCIA2() const { return id == 1; }
+    bool isCIA1() const { return objid == 0; }
+    bool isCIA2() const { return objid == 1; }
 
     
     //

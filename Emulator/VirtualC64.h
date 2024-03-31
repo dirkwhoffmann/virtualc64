@@ -454,22 +454,30 @@ public:
         /// @{
 
         /** @brief  Takes a snapshot
-         *  @return A pointer to the created Snapshot object. 
-         *  @note   The function transfers the ownership to the caller.
+         *
+         *  @return A pointer to the created Snapshot object.
+         *
+         *  @note   The function transfers the ownership to the caller. It is
+         *          the responsibility of the caller to free the object.
          */
         Snapshot *takeSnapshot();
 
         /** @brief  Loads a snapshot into the emulator.
+         *
          *  @param  snapshot    Reference to a snapshot.
          */
         void loadSnapshot(const Snapshot &snapshot);
 
 
         /// @}
-        /// @name Handling media files
+        /// @name Handling ROMs
         /// @{
 
         /** @brief  Loads a ROM from a file
+         *          The ROM type is determined automatically.
+         *
+         *  @throw  VC64Error (ERROR_ROM_BASIC_MISSING)
+         *          VC64Error (ERROR_FILE_TYPE_MISMATCH)
          */
         void loadRom(const string &path);
 
@@ -478,12 +486,20 @@ public:
         void loadRom(const RomFile &file);
 
         /** @brief  Removes an installed ROM
+         *          The ROM contents is overwritten with zeroes.
          */
         void deleteRom(RomType type);
 
         /** @brief  Saves a ROM to disk
+         *
+         *  @throw  VC64Error (ERROR_FILE_CANT_WRITE)
          */
         void saveRom(RomType rom, const string &path);
+
+
+        /// @}
+        /// @name Handling media files
+        /// @{
 
         /** @brief  Flashes a file into memory
          */
@@ -654,38 +670,45 @@ public:
         GuardAPI breakpoints;
         GuardAPI watchpoints;
 
-        CPUAPI(Emulator &emu) :
-        API(emu),
+        CPUAPI(Emulator &emu) : API(emu),
         breakpoints(emu, emu.main.cpu.debugger.breakpoints),
         watchpoints(emu, emu.main.cpu.debugger.watchpoints) { }
 
+        /** @brief  Returns the component's current state.
+         */
         CPUInfo getInfo() const;
 
-        /** @brief  Returns the number of instructions in the instruction log.
+        /** @brief  Returns the number of instructions in the record buffer.
+         *  @note   The record buffer is only filled in track mode. To save
+         *          computation time, the GUI enables track mode when the CPU
+         *          inspector is opened and disables track mode when it is
+         *          closed.
          */
         isize loggedInstructions() const;
 
-        /** @brief  Empties the instruction log.
+        /** @brief  Empties the record buffer.
          */
         void clearLog();
 
-        /** Determines how the disassembler displays numbers
+        /** Determines how the disassembler displays numbers.
          *  @param  instrFormat Format for numbers inside instructions
          *  @param  dataFormat  Format for printed data values
          */
         void setNumberFormat(DasmNumberFormat instrFormat, DasmNumberFormat dataFormat);
 
-        /** Disassembles an instruction
+        /** Disassembles an instruction.
          *  @param  dst     Destination buffer
          *  @param  fmt     String definining the output format
          *  @param  addr    Address of the instruction to disassemble
+         *  @return Length of the disassembled instruction in bytes.
          */
         isize disassemble(char *dst, const char *fmt, u16 addr) const;
 
-        /** Disassembles an instruction from the record buffer
+        /** Disassembles an instruction from the record buffer.
          *  @param  dst     Destination buffer
          *  @param  fmt     String definining the output format
          *  @param  nr      Index of the instruction in the record buffer
+         *  @return Length of the disassembled instruction in bytes.
          */
         isize disassembleRecorded(char *dst, const char *fmt, isize nr) const;
 

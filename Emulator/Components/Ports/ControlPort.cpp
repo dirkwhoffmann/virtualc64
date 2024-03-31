@@ -36,7 +36,7 @@ ControlPort::_dump(Category category, std::ostream& os) const
     if (category == Category::State) {
         
         os << tab("Port Nr");
-        os << dec(id) << std::endl;
+        os << dec(objid) << std::endl;
         os << tab("Detetected device");
         os << ControlPortDeviceEnum::key(device) << std::endl;
     }
