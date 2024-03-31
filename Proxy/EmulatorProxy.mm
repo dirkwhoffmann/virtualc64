@@ -434,14 +434,9 @@ using namespace vc64;
     return (VirtualC64::VICIIAPI *)obj;
 }
 
-- (NSInteger)hPixels
+- (VICIITraits)traits
 {
-    return [self vicii]->getCyclesPerLine() * 8;
-}
-
-- (NSInteger)vPixels
-{
-    return [self vicii]->getLinesPerFrame();
+    return [self vicii]->getTraits();
 }
 
 - (VICIIConfig)config
@@ -452,11 +447,6 @@ using namespace vc64;
 - (VICIIInfo)info 
 {
     return [self vicii]->getInfo();
-}
-
-- (BOOL)isPAL
-{
-    return [self vicii]->pal();
 }
 
 - (SpriteInfo)getSpriteInfo:(NSInteger)sprite
@@ -643,13 +633,6 @@ using namespace vc64;
 {
     [self emu]->put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)nr });
 }
-
-/*
-- (void)pressKeyAtRow:(NSInteger)row col:(NSInteger)col
-{
-    [self emu]->put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)C64Key(row, col).nr, .delay = 0.0 });
-}
-*/
 
 - (void)releaseKey:(NSInteger)nr
 {

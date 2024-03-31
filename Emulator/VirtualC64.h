@@ -16,7 +16,6 @@
 #include "VirtualC64Types.h"
 #include "Emulator.h"
 #include "Media.h"
-#include <swift/bridging>
 
 namespace vc64 {
 
@@ -743,6 +742,10 @@ public:
 
         using API::API;
 
+        /** @brief  Provides details about the currently selected VICII revision.
+         */
+        const VICIITraits &getTraits() const;
+
         /** @brief  Returns the component's current configuration.
          */
         VICIIConfig getConfig() const;
@@ -755,18 +758,6 @@ public:
          *  @param  nr   Number of the sprite (0 .. 7)
          */
         SpriteInfo getSpriteInfo(isize nr) const;
-
-        /** @brief  Returns the number of CPU cycles per rasterline.
-         */
-        isize getCyclesPerLine() const;
-
-        /** @brief  Returns the number of rasterlines per frame.
-         */
-        isize getLinesPerFrame() const;
-
-        /** @brief  Checks if the seleted VICII chip is a PAL revision.
-         */
-        bool pal() const;
 
         /** @brief  Returns the RGBA value of a color
          */
@@ -1279,6 +1270,6 @@ public:
 
     } retroShell;
 
-} SWIFT_UNSAFE_REFERENCE;
+};
 
 }

@@ -487,6 +487,12 @@ VirtualC64::CIAAPI::getStats() const
 // VICII
 //
 
+const VICIITraits &
+VirtualC64::VICIIAPI::getTraits() const
+{
+    return vic.getTraits();
+}
+
 VICIIConfig
 VirtualC64::VICIIAPI::getConfig() const
 {
@@ -503,24 +509,6 @@ SpriteInfo
 VirtualC64::VICIIAPI::getSpriteInfo(isize nr) const
 {
     return vic.getSpriteInfo(nr);
-}
-
-isize
-VirtualC64::VICIIAPI::getCyclesPerLine() const
-{
-    return vic.getCyclesPerLine();
-}
-
-isize
-VirtualC64::VICIIAPI::getLinesPerFrame() const
-{
-    return vic.getLinesPerFrame();
-}
-
-bool
-VirtualC64::VICIIAPI::pal() const
-{
-    return vic.pal();
 }
 
 u32

@@ -375,14 +375,11 @@ using namespace vc64;
 
 @interface VICIIProxy : SubComponentProxy { }
 
-@property (readonly) NSInteger hPixels;
-@property (readonly) NSInteger vPixels;
-
+@property (readonly) VICIITraits traits;
 @property (readonly) VICIIConfig config;
 @property (readonly) VICIIInfo info;
 - (SpriteInfo)getSpriteInfo:(NSInteger)sprite;
 
-- (BOOL)isPAL;
 - (NSColor *)color:(NSInteger)nr;
 - (UInt32)rgbaColor:(NSInteger)nr palette:(Palette)palette;
 
@@ -431,7 +428,6 @@ using namespace vc64;
 @interface KeyboardProxy : SubComponentProxy { }
 
 - (BOOL)isPressed:(NSInteger)nr;
-
 - (void)pressKey:(NSInteger)nr;
 - (void)releaseKey:(NSInteger)nr;
 - (void)releaseKey:(NSInteger)nr delay:(double)delay;

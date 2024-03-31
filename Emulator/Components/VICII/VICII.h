@@ -918,6 +918,9 @@ private:
     
 public:
     
+    // Returns properties about the currently selected VICII revision
+    const VICIITraits &getTraits() const { return traits[config.revision]; }
+
     // Returns true if a PAL or an NTSC chip is plugged in
     bool pal() const { return isPAL; }
     bool ntsc() const { return isNTSC; }
