@@ -13,7 +13,7 @@ extension Inspector {
 
     private func cacheVIC() {
 
-        vicInfo = emu.vic.info
+        vicInfo = emu.paused ? emu.vic.info : emu.vic.cachedInfo
         sprInfo = emu.vic.getSpriteInfo(selectedSprite)
     }
     

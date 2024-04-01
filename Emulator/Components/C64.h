@@ -414,8 +414,7 @@ public:
 public:
 
     virtual void record() const override;
-    bool autoInspect() const override;
-    void recordState(C64Info &result) const override;
+    void cacheInfo(C64Info &result) const override;
 
     EventSlotInfo getSlotInfo(isize nr) const;
 
@@ -528,9 +527,8 @@ public:
 
         if constexpr (isTertiarySlot(s)) {
             if (cycle < trigger[SLOT_TER]) trigger[SLOT_TER] = cycle;
-            if (cycle < trigger[SLOT_SEC]) trigger[SLOT_SEC] = cycle;
         }
-        if constexpr (isSecondarySlot(s)) {
+        if constexpr (isSecondarySlot(s) || isTertiarySlot(s)) {
             if (cycle < trigger[SLOT_SEC]) trigger[SLOT_SEC] = cycle;
         }
     }
@@ -549,7 +547,7 @@ public:
         if constexpr (isTertiarySlot(s)) {
             if (cycle < trigger[SLOT_TER]) trigger[SLOT_TER] = cycle;
         }
-        if constexpr (isSecondarySlot(s)) {
+        if constexpr (isSecondarySlot(s) || isTertiarySlot(s)) {
             if (cycle < trigger[SLOT_SEC]) trigger[SLOT_SEC] = cycle;
         }
     }
@@ -617,16 +615,6 @@ public:
 
     // Loads the current state from a snapshot file
     void loadSnapshot(const Snapshot &snapshot) throws;
-
-    /*
-    // Requests a snapshot
-    void requestAutoSnapshot();
-    void requestUserSnapshot();
-
-    // Returns the most recent snapshot or nullptr if none was taken
-    Snapshot *latestAutoSnapshot();
-    Snapshot *latestUserSnapshot();
-    */
 
 private:
 

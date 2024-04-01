@@ -105,7 +105,7 @@ Recorder::setOption(Option option, i64 value)
 }
 
 void
-Recorder::recordState(RecorderInfo &result) const
+Recorder::cacheInfo(RecorderInfo &result) const
 {
     {   SYNCHRONIZED
 

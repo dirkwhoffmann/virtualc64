@@ -75,14 +75,8 @@ CIA::setOption(Option option, i64 value)
     }
 }
 
-bool 
-CIA::autoInspect() const
-{
-    return c64.getInspectionTarget() == INSPECTION_CIA && isRunning();
-}
-
 void
-CIA::recordState(CIAInfo &result) const
+CIA::cacheInfo(CIAInfo &result) const
 {
     {   SYNCHRONIZED
 
@@ -119,7 +113,7 @@ CIA::recordState(CIAInfo &result) const
     }
 }
 void
-CIA::recordStats(CIAStats &result) const
+CIA::cacheStats(CIAStats &result) const
 {
     {   SYNCHRONIZED
 

@@ -58,10 +58,9 @@ public:
  *  The purpose of the inspection interface is to provide functions for
  *  recording portions of the emulator's current state and returning them to
  *  the caller. All components record two different kinds of information:
- *  State variables and statistical information. State variables comprise
- *  important variables that are used internally by the component. Examples
- *  of statistical information are the average CIA activity or the current fill
- *  level of the audio buffer.
+ *  Infos and statistics. Infos comprise the values of important variables that
+ *  are used internally by the component. Examples of statistical information
+ *  are the average CIA activity or the current fill level of the audio buffer.
  */
 template <typename T1, typename T2>
 class Inspectable : public Dumpable {
@@ -78,28 +77,36 @@ public:
 
     T1 &getInfo() const {
 
-        if (!autoInspect()) recordState(info);
+        cacheInfo(info);
+        return info;
+    }
+
+    T1 &getCachedInfo() const {
+
         return info;
     }
 
     T2 &getStats() const {
 
-        if (!autoInspect()) recordStats(stats);
+        cacheStats(stats);
+        return stats;
+    }
+
+    T2 &getCachedStats() const {
+
         return stats;
     }
 
     virtual void record() const {
 
-        recordState(info);
-        recordStats(stats);
+        cacheInfo(info);
+        cacheStats(stats);
     }
 
 private:
 
-    virtual bool autoInspect() const { return false; }
-
-    virtual void recordState(T1 &result) const { };
-    virtual void recordStats(T2 &result) const { };
+    virtual void cacheInfo(T1 &result) const { };
+    virtual void cacheStats(T2 &result) const { };
 };
 
 }

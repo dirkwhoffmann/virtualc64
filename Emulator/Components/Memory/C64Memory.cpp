@@ -176,14 +176,8 @@ C64Memory::setOption(Option option, i64 value)
     }
 }
 
-bool
-C64Memory::autoInspect() const
-{
-    return c64.getInspectionTarget() == INSPECTION_MEM && isRunning();
-}
-
 void
-C64Memory::recordState(MemInfo &result) const
+C64Memory::cacheInfo(MemInfo &result) const
 {
     {   SYNCHRONIZED
         

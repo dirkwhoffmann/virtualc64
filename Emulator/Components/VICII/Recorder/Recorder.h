@@ -112,7 +112,7 @@ public:
 
 public:
 
-    void recordState(RecorderInfo &result) const override;
+    void cacheInfo(RecorderInfo &result) const override;
 
 
     //

@@ -70,6 +70,7 @@ public:
     /** @brief  Returns the component's current state.
      */
     const EmulatorInfo &getInfo() const { return Emulator::getInfo(); }
+    const EmulatorInfo &getCachedInfo() const { return Emulator::getCachedInfo(); }
 
     /** @brief  Returns statistical information about the components.
      */
@@ -388,6 +389,7 @@ public:
         /** @brief  Returns the component's current state.
          */
         C64Info getInfo() const { return c64.getInfo(); }
+        C64Info getCachedInfo() const { return c64.getCachedInfo(); }
 
         /** @brief  Returns the current state of an event slot.
          *
@@ -429,7 +431,7 @@ public:
          *  is running, you will see continuous updates of the emulator state.
          *  The displayed information is recorded via the auto-inspection
          *  mechanism. If auto-inspection is active, the emulator schedules an
-         *  inspect event which calls function recordState() on the inspection
+         *  inspect event which calls function cacheInfo() on the inspection
          *  target in constant intervals. The recorded information is later
          *  picked up by the GUI.
          *
@@ -529,6 +531,7 @@ public:
         /** @brief  Returns the component's current state.
          */
         MemInfo getInfo() const;
+        MemInfo getCachedInfo() const;
 
         /** @brief  Returns a string representations for a portion of memory.
          */
@@ -676,6 +679,7 @@ public:
         /** @brief  Returns the component's current state.
          */
         CPUInfo getInfo() const;
+        CPUInfo getCachedInfo() const;
 
         /** @brief  Returns the number of instructions in the record buffer.
          *  @note   The record buffer is only filled in track mode. To save
@@ -728,6 +732,7 @@ public:
         /** @brief  Returns the component's current state.
          */
         CIAInfo getInfo() const;
+        CIAInfo getCachedInfo() const;
 
         /** @brief  Returns statistical information about the components.
          */
@@ -753,6 +758,7 @@ public:
         /** @brief  Returns the component's current state.
          */
         VICIIInfo getInfo() const;
+        VICIIInfo getCachedInfo() const;
 
         /** @brief  Returns information about a sprite.
          *  @param  nr   Number of the sprite (0 .. 7)
@@ -787,12 +793,14 @@ public:
          *  @param  nr      SID number (0 - 3). 0 is the primary SID.
          */
         SIDInfo getInfo(isize nr) const;
+        SIDInfo getCachedInfo(isize nr) const;
 
         /** @brief  Returns the current state of a specific voice.
          *  @param  nr      SID number (0 - 3). 0 is the primary SID.
          *  @param  voice   Voice nuber (0 - 3).
          */
         VoiceInfo getVoiceInfo(isize nr, isize voice) const;
+        VoiceInfo getCachedVoiceInfo(isize nr, isize voice) const;
 
         /** @brief  Returns statistical information about the components.
          */
@@ -981,6 +989,7 @@ public:
         /** @brief  Returns the component's current state.
          */
         DatasetteInfo getInfo() const;
+        DatasetteInfo getCachedInfo() const;
 
         /** @brief  Inserts a tape.
          *  @param  file    The tape to insert.
@@ -1022,6 +1031,7 @@ public:
         /** @brief  Returns the component's current state.
          */
         RecorderInfo getInfo() const;
+        RecorderInfo getCachedInfo() const;
 
         /** @brief  Returns the path to the FFmpeg executable.
          */
@@ -1068,6 +1078,7 @@ public:
         /** @brief  Returns the state of the current cartridge.
          */
         CartridgeInfo getInfo() const;
+        CartridgeInfo getCachedInfo() const;
 
         /** @brief  Returns the state of one of the cartridge ROM packets.
          *  @param  nr      Number of the ROM packet.
@@ -1157,6 +1168,7 @@ public:
         /** @brief  Returns the component's current state.
          */
         DriveInfo getInfo() const;
+        DriveInfo getCachedInfo() const;
 
         /** @brief  Inserts a new disk.
          *  @param  fstype  The file system the disk should be formatted with.

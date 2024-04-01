@@ -11,7 +11,7 @@ extension Inspector {
     
     private func cacheCPU() {
 
-        cpuInfo = emu.cpu.info
+        cpuInfo = emu.paused ? emu.cpu.info : emu.cpu.cachedInfo
     }
 
     func refreshCPU(count: Int = 0, full: Bool = false) {

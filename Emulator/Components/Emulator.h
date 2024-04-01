@@ -103,8 +103,8 @@ public:
 
 public:
 
-    void recordState(EmulatorInfo &result) const override;
-    void recordStats(EmulatorStats &result) const override;
+    void cacheInfo(EmulatorInfo &result) const override;
+    void cacheStats(EmulatorStats &result) const override;
 
 
     //

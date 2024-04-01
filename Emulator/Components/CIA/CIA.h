@@ -418,9 +418,8 @@ public:
 
 public:
     
-    bool autoInspect() const override;
-    void recordState(CIAInfo &result) const override;
-    void recordStats(CIAStats &result) const override;
+    void cacheInfo(CIAInfo &result) const override;
+    void cacheStats(CIAStats &result) const override;
 
 
     //

@@ -145,8 +145,7 @@ public:
 
 public:
 
-    bool autoInspect() const override;
-    void recordState(MemInfo &result) const override;
+    void cacheInfo(MemInfo &result) const override;
 
 
     //

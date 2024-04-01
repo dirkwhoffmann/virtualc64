@@ -48,7 +48,6 @@ class GamePadManager {
                                         IOOptionBits(kIOHIDOptionsTypeNone))
         
         // Add default devices
-        print("Creating gamePad[0]")
         gamePads[0] = GamePad(manager: self, type: .MOUSE)
         gamePads[0]!.name = "Mouse"
         gamePads[0]!.setIcon(name: "devMouseTemplate")

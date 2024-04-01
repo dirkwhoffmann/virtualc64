@@ -212,7 +212,9 @@ public:
 public:
     
     SIDInfo getInfo(isize nr);
+    SIDInfo getCachedInfo(isize nr) { return getInfo(nr); }
     VoiceInfo getVoiceInfo(isize nr, isize voice);
+    VoiceInfo getCachedVoiceInfo(isize nr, isize voice) { return getVoiceInfo(nr, voice); }
     CoreComponent &getSID(isize nr);
     MuxerStats getStats();
     

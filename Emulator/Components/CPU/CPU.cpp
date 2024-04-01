@@ -40,14 +40,8 @@ CPU::_reset(bool hard)
     assert(edgeDetector.isClear());
 }
 
-bool 
-CPU::autoInspect() const
-{
-    return c64.getInspectionTarget() == INSPECTION_CPU && isRunning();
-}
-
 void 
-CPU::recordState(CPUInfo &result) const
+CPU::cacheInfo(CPUInfo &result) const
 {
     result.cycle = clock;
 

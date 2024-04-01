@@ -278,6 +278,13 @@ VirtualC64::CPUAPI::getInfo() const
     return cpu.getInfo();
 }
 
+CPUInfo
+VirtualC64::CPUAPI::getCachedInfo() const
+{
+    assert(isUserThread());
+    return cpu.getCachedInfo();
+}
+
 isize
 VirtualC64::CPUAPI::loggedInstructions() const
 {
@@ -435,14 +442,21 @@ MemConfig
 VirtualC64::MemoryAPI::getConfig() const
 {
     assert(isUserThread());
-    return emulator.main.mem.getConfig();
+    return mem.getConfig();
 }
 
 MemInfo
 VirtualC64::MemoryAPI::getInfo() const
 {
     assert(isUserThread());
-    return emulator.main.mem.getInfo();
+    return mem.getInfo();
+}
+
+MemInfo
+VirtualC64::MemoryAPI::getCachedInfo() const
+{
+    assert(isUserThread());
+    return mem.getCachedInfo();
 }
 
 string
@@ -476,6 +490,12 @@ VirtualC64::CIAAPI::getInfo() const
     return cia.getInfo();
 }
 
+CIAInfo
+VirtualC64::CIAAPI::getCachedInfo() const
+{
+    return cia.getCachedInfo();
+}
+
 CIAStats
 VirtualC64::CIAAPI::getStats() const
 {
@@ -503,6 +523,12 @@ VICIIInfo
 VirtualC64::VICIIAPI::getInfo() const
 {
     return vic.getInfo();
+}
+
+VICIIInfo
+VirtualC64::VICIIAPI::getCachedInfo() const
+{
+    return vic.getCachedInfo();
 }
 
 SpriteInfo
@@ -541,6 +567,13 @@ VirtualC64::SIDAPI::getInfo(isize nr) const
     return muxer.getInfo(nr);
 }
 
+SIDInfo
+VirtualC64::SIDAPI::getCachedInfo(isize nr) const
+{
+    assert(isUserThread());
+    return muxer.getCachedInfo(nr);
+}
+
 VoiceInfo
 VirtualC64::SIDAPI::getVoiceInfo(isize nr, isize voice) const
 {
@@ -548,6 +581,12 @@ VirtualC64::SIDAPI::getVoiceInfo(isize nr, isize voice) const
     return muxer.getVoiceInfo(nr, voice);
 }
 
+VoiceInfo
+VirtualC64::SIDAPI::getCachedVoiceInfo(isize nr, isize voice) const
+{
+    assert(isUserThread());
+    return muxer.getCachedVoiceInfo(nr, voice);
+}
 
 MuxerStats
 VirtualC64::SIDAPI::getStats() const
@@ -662,6 +701,12 @@ VirtualC64::DatasetteAPI::getInfo() const
     return datasette.getInfo();
 }
 
+DatasetteInfo
+VirtualC64::DatasetteAPI::getCachedInfo() const
+{
+    return datasette.getCachedInfo();
+}
+
 void
 VirtualC64::DatasetteAPI::insertTape(TAPFile &file)
 {
@@ -724,6 +769,12 @@ RecorderInfo
 VirtualC64::RecorderAPI::getInfo() const
 {
     return recorder.getInfo();
+}
+
+RecorderInfo
+VirtualC64::RecorderAPI::getCachedInfo() const
+{
+    return recorder.getCachedInfo();
 }
 
 const string
@@ -827,6 +878,12 @@ VirtualC64::ExpansionPortAPI::getInfo() const
     return expansionport.getInfo();
 }
 
+CartridgeInfo
+VirtualC64::ExpansionPortAPI::getCachedInfo() const
+{
+    return expansionport.getCachedInfo();
+}
+
 CartridgeRomInfo
 VirtualC64::ExpansionPortAPI::getRomInfo(isize nr) const
 {
@@ -897,6 +954,12 @@ DriveInfo
 VirtualC64::DriveAPI::getInfo() const
 {
     return drive.getInfo();
+}
+
+DriveInfo
+VirtualC64::DriveAPI::getCachedInfo() const
+{
+    return drive.getCachedInfo();
 }
 
 void

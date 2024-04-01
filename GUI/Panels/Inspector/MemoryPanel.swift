@@ -92,7 +92,7 @@ extension Inspector {
     private func cacheMemory() {
         
         let oldBankMap = memInfo?.bankMap
-        memInfo = emu.mem.info
+        memInfo = emu.paused ? emu.mem.info : emu.mem.cachedInfo
         if oldBankMap != memInfo.bankMap { layoutIsDirty = true }
     }
     

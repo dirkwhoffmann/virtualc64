@@ -890,14 +890,8 @@ C64::record() const
     }
 }
 
-bool 
-C64::autoInspect() const
-{
-    return getInspectionTarget() == INSPECTION_C64 && isRunning();
-}
-
 void
-C64::recordState(C64Info &result) const
+C64::cacheInfo(C64Info &result) const
 {
     SYNCHRONIZED
 
@@ -916,7 +910,7 @@ C64::getSlotInfo(isize nr) const
 
     {   SYNCHRONIZED
 
-        if (!autoInspect()) { inspectSlot(EventSlot(nr)); }
+        inspectSlot(EventSlot(nr));
         return slotInfo[nr];
     }
 }
@@ -1091,7 +1085,6 @@ C64::processEvents(Cycle cycle)
                 processAlarmEvent();
             }
             if (isDue<SLOT_INS>(cycle)) {
-
                 processINSEvent(eventid[SLOT_INS]);
             }
 
@@ -1122,6 +1115,7 @@ C64::processEvents(Cycle cycle)
 void
 C64::processINSEvent(EventID id)
 {
+    // trace(true, "processINSEvent %d\n", id);
     switch (id) {
 
         case INS_C64:       record(); break;
@@ -1133,11 +1127,11 @@ C64::processINSEvent(EventID id)
         // case INS_EVENTS:    c64.record(); break;
 
         default:
-            break; // fatalError;
+            fatalError;
     }
 
     // Reschedule event
-    rescheduleRel<SLOT_INS>((Cycle)(inspectionInterval * PAL::CYCLES_PER_SECOND));
+    scheduleRel<SLOT_INS>((Cycle)(inspectionInterval * PAL::CYCLES_PER_SECOND), id);
 }
 
 void

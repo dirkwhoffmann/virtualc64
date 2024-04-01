@@ -24,14 +24,8 @@ TOD::TOD(C64 &ref, CIA &ciaref) : SubComponent(ref), cia(ciaref)
 {
 }
 
-bool 
-TOD::autoInspect() const
-{
-    return c64.getInspectionTarget() == INSPECTION_CIA && isRunning();
-}
-
 void 
-TOD::recordState(TODInfo &info) const
+TOD::cacheInfo(TODInfo &info) const
 {
     {   SYNCHRONIZED
         

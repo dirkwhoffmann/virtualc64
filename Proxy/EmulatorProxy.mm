@@ -283,6 +283,11 @@ using namespace vc64;
     return [self cpu]->getInfo();
 }
 
+- (CPUInfo)cachedInfo
+{
+    return [self cpu]->getCachedInfo();
+}
+
 - (NSInteger)loggedInstructions
 {
     return [self cpu]->loggedInstructions();
@@ -381,6 +386,11 @@ using namespace vc64;
     return [self mem]->getInfo();
 }
 
+- (MemInfo)cachedInfo
+{
+    return [self mem]->getCachedInfo();
+}
+
 - (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src
 {
     return @([self mem]->memdump((u16)addr, num, hex, hex ? 2 : 1, src).c_str());
@@ -415,6 +425,11 @@ using namespace vc64;
     return [self cia]->getInfo();
 }
 
+- (CIAInfo)cachedInfo
+{
+    return [self cia]->getCachedInfo();
+}
+
 - (CIAStats)stats
 {
     return [self cia]->getStats();
@@ -447,6 +462,11 @@ using namespace vc64;
 - (VICIIInfo)info 
 {
     return [self vicii]->getInfo();
+}
+
+- (VICIIInfo)cachedInfo
+{
+    return [self vicii]->getCachedInfo();
 }
 
 - (SpriteInfo)getSpriteInfo:(NSInteger)sprite
@@ -598,13 +618,6 @@ using namespace vc64;
     return (VirtualC64::IECAPI *)obj;
 }
 
-/*
-- (BOOL)transferring
-{
-    return [self iec]->isTransferring();
-}
-*/
-
 @end
 
 
@@ -730,6 +743,11 @@ using namespace vc64;
 - (CartridgeInfo)info
 {
     return [self eport]->getInfo();
+}
+
+- (CartridgeInfo)cachedInfo
+{
+    return [self eport]->getCachedInfo();
 }
 
 - (CartridgeRomInfo)getRomInfo:(NSInteger)nr
@@ -915,13 +933,6 @@ using namespace vc64;
     return [self drive]->getInfo().hasDisk ? disk : NULL;
 }
 
-/*
-- (NSInteger)id
-{
-    return [self drive]->getDeviceNr();
-}
-*/
-
 - (DriveConfig)config
 {
     return [self drive]->getConfig();
@@ -930,6 +941,11 @@ using namespace vc64;
 - (DriveInfo)info
 {
     return [self drive]->getInfo();
+}
+
+- (DriveInfo)cachedInfo
+{
+    return [self drive]->getCachedInfo();
 }
 
 - (void)insertD64:(D64FileProxy *)proxy protected:(BOOL)wp
@@ -984,6 +1000,11 @@ using namespace vc64;
 - (DatasetteInfo)info
 {
     return [self datasette]->getInfo();
+}
+
+- (DatasetteInfo)cachedInfo
+{
+    return [self datasette]->getCachedInfo();
 }
 
 - (void)pressPlay
@@ -1071,6 +1092,11 @@ using namespace vc64;
 - (RecorderInfo)info
 {
     return [self recorder]->getInfo();
+}
+
+- (RecorderInfo)cachedInfo
+{
+    return [self recorder]->getCachedInfo();
 }
 
 - (NSString *)path
@@ -1967,6 +1993,11 @@ using namespace vc64;
     return [self c64]->getInfo();
 }
 
+- (C64Info)cachedInfo
+{
+    return [self c64]->getCachedInfo();
+}
+
 - (EventSlotInfo)getEventSlotInfo:(NSInteger)slot
 {
     return [self c64]->getSlotInfo(slot);
@@ -2162,6 +2193,11 @@ using namespace vc64;
 - (EmulatorInfo)info
 {
     return [self emu]->getInfo();
+}
+
+- (EmulatorInfo)cachedInfo
+{
+    return [self emu]->getCachedInfo();
 }
 
 - (EmulatorStats)stats

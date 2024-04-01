@@ -126,8 +126,7 @@ public:
 
 public:
 
-    bool autoInspect() const override;
-    void recordState(TODInfo &result) const override;
+    void cacheInfo(TODInfo &result) const override;
 
 
     //

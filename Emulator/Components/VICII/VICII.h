@@ -883,9 +883,8 @@ public:
 
 private:
 
-    bool autoInspect() const override;
-    void recordState(VICIIInfo &result) const override;
-    void recordStats(VICIIStats &result) const override;
+    void cacheInfo(VICIIInfo &result) const override;
+    void cacheStats(VICIIStats &result) const override;
     void clearStats();
 
 public:

@@ -98,7 +98,7 @@ Emulator::stepOver()
 }
 
 void
-Emulator::recordState(EmulatorInfo &result) const
+Emulator::cacheInfo(EmulatorInfo &result) const
 {
     result.state = state;
     result.refreshRate = isize(refreshRate());
@@ -111,7 +111,7 @@ Emulator::recordState(EmulatorInfo &result) const
 }
 
 void
-Emulator::recordStats(EmulatorStats &result) const
+Emulator::cacheStats(EmulatorStats &result) const
 {
     result.cpuLoad = cpuLoad;
     result.fps = fps;    

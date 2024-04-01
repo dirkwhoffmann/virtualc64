@@ -172,8 +172,7 @@ public:
 
 public:
 
-    bool autoInspect() const override;
-    void recordState(CPUInfo &result) const override;
+    void cacheInfo(CPUInfo &result) const override;
 
 
     //

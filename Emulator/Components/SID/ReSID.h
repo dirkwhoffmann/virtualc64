@@ -143,8 +143,7 @@ public:
 public:
 
     virtual void record() const override;
-    bool autoInspect() const override;
-    void recordState(SIDInfo &result) const override;
+    void cacheInfo(SIDInfo &result) const override;
 
     VoiceInfo getVoiceInfo(isize nr) const;
 

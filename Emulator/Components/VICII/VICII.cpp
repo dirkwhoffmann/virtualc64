@@ -133,14 +133,8 @@ VICII::resetTexture(u32 *p)
     }
 }
 
-bool
-VICII::autoInspect() const
-{
-    return c64.getInspectionTarget() == INSPECTION_VICII && isRunning();
-}
-
 void
-VICII::recordState(VICIIInfo &result) const
+VICII::cacheInfo(VICIIInfo &result) const
 {
     {   SYNCHRONIZED
 
@@ -207,7 +201,7 @@ VICII::recordState(VICIIInfo &result) const
 }
 
 void 
-VICII::recordStats(VICIIStats &result) const
+VICII::cacheStats(VICIIStats &result) const
 {
 
 }

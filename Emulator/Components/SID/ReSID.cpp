@@ -145,14 +145,8 @@ ReSID::record() const
     */
 }
 
-bool
-ReSID::autoInspect() const
-{
-    return c64.getInspectionTarget() == INSPECTION_SID && isRunning();
-}
-
 void
-ReSID::recordState(SIDInfo &info) const
+ReSID::cacheInfo(SIDInfo &info) const
 {
     {   SYNCHRONIZED
 

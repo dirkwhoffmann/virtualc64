@@ -160,6 +160,7 @@ using namespace vc64;
 
 @property (readonly) EmulatorConfig config;
 @property (readonly) EmulatorInfo info;
+@property (readonly) EmulatorInfo cachedInfo;
 @property (readonly) EmulatorStats stats;
 
 @property (readonly) BOOL poweredOn;
@@ -302,6 +303,7 @@ using namespace vc64;
 @interface C64Proxy : SubComponentProxy { }
 
 @property (readonly) C64Info info;
+@property (readonly) C64Info cachedInfo;
 - (EventSlotInfo)getEventSlotInfo:(NSInteger)slot;
 
 - (RomTraits)getRomTraits:(RomType)type;
@@ -327,6 +329,7 @@ using namespace vc64;
 @interface CPUProxy : SubComponentProxy { }
 
 @property (readonly) CPUInfo info;
+@property (readonly) CPUInfo cachedInfo;
 
 - (NSInteger)loggedInstructions;
 - (void)clearLog;
@@ -348,6 +351,7 @@ using namespace vc64;
 
 @property (readonly) CIAConfig config;
 @property (readonly) CIAInfo info;
+@property (readonly) CIAInfo cachedInfo;
 @property (readonly) CIAStats stats;
 
 @end
@@ -361,6 +365,7 @@ using namespace vc64;
 
 @property (readonly) MemConfig config;
 @property (readonly) MemInfo info;
+@property (readonly) MemInfo cachedInfo;
 
 - (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src;
 - (NSString *)txtdump:(NSInteger)addr num:(NSInteger)num src:(MemoryType)src;
@@ -378,6 +383,7 @@ using namespace vc64;
 @property (readonly) VICIITraits traits;
 @property (readonly) VICIIConfig config;
 @property (readonly) VICIIInfo info;
+@property (readonly) VICIIInfo cachedInfo;
 - (SpriteInfo)getSpriteInfo:(NSInteger)sprite;
 
 - (NSColor *)color:(NSInteger)nr;
@@ -466,6 +472,7 @@ using namespace vc64;
 
 @property (readonly) CartridgeTraits traits;
 @property (readonly) CartridgeInfo info;
+@property (readonly) CartridgeInfo cachedInfo;
 - (CartridgeRomInfo)getRomInfo:(NSInteger)nr;
 
 - (BOOL)cartridgeAttached;
@@ -499,6 +506,7 @@ using namespace vc64;
 @property (readonly) DiskProxy *disk;
 @property (readonly) DriveConfig config;
 @property (readonly) DriveInfo info;
+@property (readonly) DriveInfo cachedInfo;
 
 - (void)insertBlankDisk:(DOSType)fstype name:(NSString *)name;
 - (void)insertD64:(D64FileProxy *)proxy protected:(BOOL)wp;
@@ -549,6 +557,7 @@ using namespace vc64;
 @interface DatasetteProxy : SubComponentProxy { }
 
 @property (readonly) DatasetteInfo info;
+@property (readonly) DatasetteInfo cachedInfo;
 
 - (void)pressPlay;
 - (void)pressStop;
@@ -588,6 +597,7 @@ using namespace vc64;
 
 @property (readonly) RecorderConfig config;
 @property (readonly) RecorderInfo info;
+@property (readonly) RecorderInfo cachedInfo;
 
 @property NSString *path;
 - (NSString *)findFFmpeg:(NSInteger)nr;
