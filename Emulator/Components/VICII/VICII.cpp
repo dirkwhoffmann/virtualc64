@@ -469,7 +469,7 @@ VICII::_trackOff()
 bool
 VICII::delayedLightPenIrqs(VICIIRevision rev)
 {
-    bool result = rev & (VICII_PAL_6569_R1 | VICII_NTSC_6567_R56A);
+    bool result = (rev == VICII_PAL_6569_R1 || rev == VICII_NTSC_6567_R56A);
     assert(result == traits[rev].delayedLpIrqs);
     return result;
 }

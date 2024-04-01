@@ -707,8 +707,7 @@ C64::save(u8 *buffer)
     isize count = 8;
     write64(buffer, checksum());
 
-    auto removeasap = size();
-    debug(true, "size = %ld\n", removeasap);
+ 
 
     // Save internal state
     count += Serializable::save(buffer);

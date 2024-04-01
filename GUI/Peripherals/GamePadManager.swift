@@ -48,6 +48,7 @@ class GamePadManager {
                                         IOOptionBits(kIOHIDOptionsTypeNone))
         
         // Add default devices
+        print("Creating gamePad[0]")
         gamePads[0] = GamePad(manager: self, type: .MOUSE)
         gamePads[0]!.name = "Mouse"
         gamePads[0]!.setIcon(name: "devMouseTemplate")
@@ -105,8 +106,10 @@ class GamePadManager {
         IOHIDManagerScheduleWithRunLoop(hidManager, CFRunLoopGetCurrent(), CFRunLoopMode.defaultMode.rawValue)
         IOHIDManagerOpen(hidManager, IOOptionBits(kIOHIDOptionsTypeNone))
     }
-    
+
     func shutDown() {
+        
+        print("GamePadManager: shutdown")
         
         debug(.shutdown)
         
@@ -122,6 +125,7 @@ class GamePadManager {
     
     deinit {
         
+        print("GamePadManager: deinit")
         debug(.shutdown)
     }
     

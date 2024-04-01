@@ -7,6 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+import UniformTypeIdentifiers
+
 extension MyController: NSMenuItemValidation {
     
     open func validateMenuItem(_ item: NSMenuItem) -> Bool {
@@ -227,6 +229,7 @@ extension MyController: NSMenuItemValidation {
         try? emu.run()
     }
 
+    /*
     @IBAction func importConfigAction(_ sender: Any!) {
 
         let openPanel = NSOpenPanel()
@@ -253,6 +256,7 @@ extension MyController: NSMenuItemValidation {
             }
         })
     }
+    */
 
     @IBAction func exportConfigAction(_ sender: Any!) {
 
@@ -665,16 +669,20 @@ extension MyController: NSMenuItemValidation {
         openPanel.canCreateDirectories = false
         openPanel.canChooseFiles = true
         openPanel.prompt = "Insert"
-        openPanel.allowedFileTypes = ["t64", "prg", "p00", "d64", "g64", "zip", "gz"]
+//        openPanel.allowedFileTypes = ["t64", "prg", "p00", "d64", "g64", "zip", "gz"]
+        openPanel.allowedContentTypes = [ .t64, .prg, .p00, .d64, .g64, .zip, .gzip ]
         openPanel.beginSheetModal(for: window!, completionHandler: { result in
 
             if result == .OK, let url = openPanel.url {
+
+                print("url = \(url)")
 
                 do {
                     try self.mm.addMedia(url: url,
                                          allowedTypes: [ .D64, .T64, .PRG, .P00, .G64 ],
                                          drive: id,
                                          options: [.force])
+
                 } catch {
                     self.showAlert(.cantInsert, error: error, async: true)
                 }
@@ -849,7 +857,8 @@ extension MyController: NSMenuItemValidation {
         openPanel.canCreateDirectories = false
         openPanel.canChooseFiles = true
         openPanel.prompt = "Insert"
-        openPanel.allowedFileTypes = ["tap", "zip", "gz"]
+        // openPanel.allowedFileTypes = ["tap", "zip", "gz"]
+        openPanel.allowedContentTypes = [.tap, .zip, .gzip]
         openPanel.beginSheetModal(for: window!, completionHandler: { result in
             if result == .OK, let url = openPanel.url {
                 self.insertTapeAction(from: url)
@@ -906,7 +915,8 @@ extension MyController: NSMenuItemValidation {
         openPanel.canCreateDirectories = false
         openPanel.canChooseFiles = true
         openPanel.prompt = "Attach"
-        openPanel.allowedFileTypes = ["crt", "zip", "gz"]
+        // openPanel.allowedFileTypes = ["crt", "zip", "gz"]
+        openPanel.allowedContentTypes = [.crt, .zip, .gzip]
         openPanel.beginSheetModal(for: window!, completionHandler: { result in
             if result == .OK, let url = openPanel.url {
 

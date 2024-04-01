@@ -7,6 +7,20 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+import UniformTypeIdentifiers
+
+extension UTType {
+
+    static let vc64 = UTType("de.dirkwhoffmann.retro.vc64")!
+    static let d64 = UTType("de.dirkwhoffmann.retro.d64")!
+    static let g64 = UTType("de.dirkwhoffmann.retro.g64")!
+    static let t64 = UTType("de.dirkwhoffmann.retro.t64")!
+    static let prg = UTType("de.dirkwhoffmann.retro.prg")!
+    static let p00 = UTType("de.dirkwhoffmann.retro.p00")!
+    static let crt = UTType("de.dirkwhoffmann.retro.crt")!
+    static let tap = UTType("de.dirkwhoffmann.retro.tap")!
+}
+
 class MyDocument: NSDocument {
 
     var pref: Preferences { return myAppDelegate.pref }

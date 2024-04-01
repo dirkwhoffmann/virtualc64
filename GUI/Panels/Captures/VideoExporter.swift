@@ -71,8 +71,9 @@ class VideoExporter: DialogController {
         
         // Create save panel
         panel = NSSavePanel()
-        panel.allowedFileTypes = ["mp4"]
-        
+        // panel.allowedFileTypes = ["mp4"]
+        panel.allowedContentTypes = [.mpeg4Movie]
+
         // Run panel as sheet
         if let win = window {
 

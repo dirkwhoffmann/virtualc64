@@ -79,18 +79,7 @@ class GamePad {
     var lScheme = 0
     var rScheme = 0
     var hScheme = 0
-    
-    // Cotroller specific mapping parameters (set in updateMappingScheme())
-    /*
-    var lxAxis = kHIDUsage_GD_X
-    var lyAxis = kHIDUsage_GD_Y
-    var rxAxis = kHIDUsage_GD_Z
-    var ryAxis = kHIDUsage_GD_Rz
-    var hShift = 0
-    var pressActions: [Int: [GamePadAction]] = [:]
-    var releaseActions: [Int: [GamePadAction]] = [:]
-    */
-    
+
     /* Rescued information from the latest invocation of the action function.
      * This information is utilized to determine whether a joystick event has
      * to be triggered.

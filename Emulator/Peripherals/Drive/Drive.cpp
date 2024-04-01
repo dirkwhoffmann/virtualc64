@@ -938,7 +938,7 @@ Drive::processDiskChangeEvent(EventID id)
 
             // Inform the GUI
             msgQueue.put(MSG_DISK_EJECT, DriveMsg {
-                i16(id), i16(halftrack), config.stepVolume, config.pan
+                i16(objid), i16(halftrack), config.stepVolume, config.pan
             });
 
             // Schedule the next transition
@@ -969,7 +969,7 @@ Drive::processDiskChangeEvent(EventID id)
 
             // Inform the GUI
             msgQueue.put(MSG_DISK_INSERT, DriveMsg {
-                i16(id), i16(halftrack), config.stepVolume, config.pan
+                i16(objid), i16(halftrack), config.stepVolume, config.pan
             });
             break;
 

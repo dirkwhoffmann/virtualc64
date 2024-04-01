@@ -687,12 +687,11 @@ using namespace vc64;
 @synthesize mouse;
 @synthesize joystick;
 
-- (instancetype) initWith:(void *)ref
+- (instancetype) initWith:(void *)ref emu:(VirtualC64 *)emuref
 {
-    if (self = [super init]) {
-        
-        VirtualC64::ControlPortAPI *port = (VirtualC64::ControlPortAPI *)ref;
-        obj = ref;
+    if (self = [super initWith:ref emu:emuref]) {
+
+        VirtualC64::ControlPortAPI *port = (VirtualC64::ControlPortAPI *)obj;
         joystick = [[JoystickProxy alloc] initWith:&port->joystick];
         mouse = [[MouseProxy alloc] initWith:&port->mouse];
     }
