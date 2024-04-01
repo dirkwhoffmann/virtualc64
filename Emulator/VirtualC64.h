@@ -69,7 +69,7 @@ public:
 
     /** @brief  Returns the component's current state.
      */
-    const EmulatorInfo &getState() const { return Emulator::getState(); }
+    const EmulatorInfo &getInfo() const { return Emulator::getInfo(); }
 
     /** @brief  Returns statistical information about the components.
      */
@@ -387,7 +387,7 @@ public:
 
         /** @brief  Returns the component's current state.
          */
-        C64Info getInfo() const { return c64.getState(); }
+        C64Info getInfo() const { return c64.getInfo(); }
 
         /** @brief  Returns the current state of an event slot.
          *
@@ -1021,7 +1021,7 @@ public:
 
         /** @brief  Returns the component's current state.
          */
-        RecorderInfo getState() const;
+        RecorderInfo getInfo() const;
 
         /** @brief  Returns the path to the FFmpeg executable.
          */

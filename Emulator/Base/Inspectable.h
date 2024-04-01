@@ -76,7 +76,7 @@ public:
     Inspectable() { }
     virtual ~Inspectable() = default;
 
-    T1 &getState() const {
+    T1 &getInfo() const {
 
         if (!autoInspect()) recordState(info);
         return info;

@@ -275,7 +275,7 @@ CPUInfo
 VirtualC64::CPUAPI::getInfo() const
 {
     assert(isUserThread());
-    return cpu.getState();
+    return cpu.getInfo();
 }
 
 isize
@@ -442,7 +442,7 @@ MemInfo
 VirtualC64::MemoryAPI::getInfo() const
 {
     assert(isUserThread());
-    return emulator.main.mem.getState();
+    return emulator.main.mem.getInfo();
 }
 
 string
@@ -473,7 +473,7 @@ VirtualC64::CIAAPI::getConfig() const
 CIAInfo
 VirtualC64::CIAAPI::getInfo() const
 {
-    return cia.getState();
+    return cia.getInfo();
 }
 
 CIAStats
@@ -502,7 +502,7 @@ VirtualC64::VICIIAPI::getConfig() const
 VICIIInfo
 VirtualC64::VICIIAPI::getInfo() const
 {
-    return vic.getState();
+    return vic.getInfo();
 }
 
 SpriteInfo
@@ -721,9 +721,9 @@ VirtualC64::RecorderAPI::getConfig() const
 }
 
 RecorderInfo
-VirtualC64::RecorderAPI::getState() const
+VirtualC64::RecorderAPI::getInfo() const
 {
-    return recorder.getState();
+    return recorder.getInfo();
 }
 
 const string

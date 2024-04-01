@@ -311,7 +311,7 @@ Muxer::getInfo(isize nr)
     
     switch (config.engine) {
             
-        case SIDENGINE_RESID:   info = sid[nr].resid.getState(); break;
+        case SIDENGINE_RESID:   info = sid[nr].resid.getInfo(); break;
         case SIDENGINE_FASTSID: info = sid[nr].fastsid.getInfo(); break;
 
         default:

@@ -1070,7 +1070,7 @@ using namespace vc64;
 
 - (RecorderInfo)info
 {
-    return [self recorder]->getState();
+    return [self recorder]->getInfo();
 }
 
 - (NSString *)path
@@ -1104,7 +1104,7 @@ using namespace vc64;
 
 - (BOOL)recording
 {
-    return [self recorder]->getState().state != REC_STATE_WAIT;
+    return [self recorder]->getInfo().state != REC_STATE_WAIT;
 }
 
 - (void)startRecording:(NSRect)rect exception:(ExceptionWrapper *)ex
@@ -2161,7 +2161,7 @@ using namespace vc64;
 
 - (EmulatorInfo)info
 {
-    return [self emu]->getState();
+    return [self emu]->getInfo();
 }
 
 - (EmulatorStats)stats
