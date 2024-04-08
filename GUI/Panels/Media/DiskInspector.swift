@@ -53,6 +53,7 @@ class DiskInspector: DialogController {
 
     var selectedSector = -1
     var sector: Sector? {
+        print("selectedSector = \(selectedSector)")
         return vc64.isSectorNumber(selectedSector) ? Sector(selectedSector) : nil
     }
 
@@ -122,7 +123,7 @@ class DiskInspector: DialogController {
         sectorTableView.refresh()
         diskDataView.refresh()
 
-        // Grey out more some choices
+        // Grey out some more choices
         sectorPopup.item(at: 0)!.isEnabled = sectorTableView.numberOfRows > 0
     }
 

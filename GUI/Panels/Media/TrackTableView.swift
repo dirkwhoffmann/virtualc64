@@ -87,7 +87,7 @@ extension TrackTableView: NSTableViewDataSource {
     
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
 
-        inspector.setSelectedSector(-1)
+        // inspector.setSelectedSector(-1)
 
         if showHalftracks {
             inspector.setSelectedHalftrack(row + 1)

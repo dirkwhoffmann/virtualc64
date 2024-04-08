@@ -54,21 +54,18 @@ class SectorTableView: NSTableView, NSTableViewDelegate {
     
     func refresh() {
 
-        // Update cached data if neccessary
         if isDirty { cache() }
         
-        // Unselect all items if no sector is selected
-        selectRowIndexes([], byExtendingSelection: false)
-
         reloadData()
+        scrollToRow()
     }
 
     func scrollToRow() {
 
         if sector >= 0 {
 
-            selectRowIndexes([sector], byExtendingSelection: false)
             scrollRowToVisible(sector)
+            selectRowIndexes([sector], byExtendingSelection: false)
         }
     }
 }
