@@ -46,15 +46,19 @@ class DiskInspector: DialogController {
     var showGcr: Bool { return formatPopup.selectedTag() == 0 }
     var showBytes: Bool { return formatPopup.selectedTag() == 1 }
 
-    var selectedHalftrack = -1
     var halftrack: Halftrack? {
-        return vc64.isHalftrackNumber(selectedHalftrack) ? Halftrack(selectedHalftrack) : nil
+        didSet {
+            if let ht = halftrack, !vc64.isHalftrackNumber(ht) {
+                halftrack = nil
+            }
+        }
     }
-
-    var selectedSector = -1
     var sector: Sector? {
-        print("selectedSector = \(selectedSector)")
-        return vc64.isSectorNumber(selectedSector) ? Sector(selectedSector) : nil
+        didSet {
+            if let s = sector, !vc64.isSectorNumber(s) {
+                sector = nil
+            }
+        }
     }
 
     var hex = true
@@ -97,13 +101,13 @@ class DiskInspector: DialogController {
     func refresh() {
 
         if analyzer == nil {
-            selectedHalftrack = -1
-            selectedSector = -1
+            halftrack = -1
+            sector = nil
         }
 
         // Warn if this track contains errors
-        if let ht = halftrack {
-            let trackIsValid = analyzer!.getLogbook(ht) == ""
+        if halftrack != nil {
+            let trackIsValid = analyzer!.getLogbook(halftrack!) == ""
             warningText.isHidden = trackIsValid
             warningButton.isHidden = trackIsValid
         }
@@ -146,18 +150,18 @@ class DiskInspector: DialogController {
 
     func setSelectedHalftrack(_ nr: Int) {
 
-        if selectedHalftrack != nr {
+        if halftrack != nr {
 
-            selectedHalftrack = nr
+            halftrack = nr
             refresh()
         }
     }
 
     func setSelectedSector(_ nr: Int) {
 
-        if selectedSector != nr {
+        if sector != nr {
 
-            selectedSector = nr
+            sector = nr
             refresh()
         }
     }

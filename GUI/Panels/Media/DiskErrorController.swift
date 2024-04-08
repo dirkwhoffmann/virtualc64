@@ -65,7 +65,6 @@ extension DiskErrorController: NSTableViewDataSource {
             
         case "description":
             if let ht = parent.halftrack {
-                // return analyzer?.errorMessage(ht, nr: row) ?? ""
                 return  analyzer?.getLogbook(ht) ?? ""
             } else {
                 return ""

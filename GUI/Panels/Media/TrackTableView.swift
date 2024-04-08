@@ -11,7 +11,7 @@ class TrackTableView: NSTableView, NSTableViewDelegate {
     
     @IBOutlet weak var inspector: DiskInspector!
    
-    var halftrack: Int { return inspector.selectedHalftrack }
+    var halftrack: Int? { return inspector.halftrack }
     var analyzer: DiskAnalyzerProxy? { return inspector.analyzer }
 
     // Number of items in the table view (0 if no disk is present)
@@ -46,7 +46,7 @@ class TrackTableView: NSTableView, NSTableViewDelegate {
         cache()
 
         // Select the correct row
-        let rows: IndexSet = halftrack <= 0 ? [] : [Int(halftrack) - 1]
+        let rows: IndexSet = halftrack == nil ? [] : [Int(halftrack!) - 1]
         selectRowIndexes(rows, byExtendingSelection: false)
 
         reloadData()
@@ -54,9 +54,9 @@ class TrackTableView: NSTableView, NSTableViewDelegate {
     
     func scrollToRow() {
         
-        if halftrack > 0 {
+        if let ht = halftrack {
 
-            let row = showHalftracks ? halftrack - 1 : halftrack / 2
+            let row = showHalftracks ? ht - 1 : ht / 2
             selectRowIndexes([row], byExtendingSelection: false)
             scrollRowToVisible(row)
         }
