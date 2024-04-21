@@ -125,7 +125,7 @@ class VolumeInspector: DialogController {
                 r = Int(ciColor.red * CGFloat(255 - 2*y))
                 g = Int(ciColor.green * CGFloat(255 - 2*y))
                 b = Int(ciColor.blue * CGFloat(255 - 2*y))
-                a = Int(ciColor.alpha)
+                a = Int(ciColor.alpha * CGFloat(255))
 
                 let abgr = UInt32(r | g << 8 | b << 16 | a << 24)
                 ptr[y*width + x] = abgr
