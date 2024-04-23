@@ -350,6 +350,7 @@ typedef struct
 {
     double cpuLoad;
     double fps;
+    isize resyncs;
 }
 EmulatorStats;
 

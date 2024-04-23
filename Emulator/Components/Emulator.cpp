@@ -114,7 +114,9 @@ void
 Emulator::cacheStats(EmulatorStats &result) const
 {
     result.cpuLoad = cpuLoad;
-    result.fps = fps;    
+    result.fps = fps;
+    result.resyncs = resyncs;
+
 }
 
 void
@@ -881,6 +883,8 @@ Emulator::_dump(Category category, std::ostream& os) const
 
         os << "Run-ahead instance:" << std::endl << std::endl;
 
+        os << tab("Clone nr");
+        os << dec(clones) << std::endl;
         os << tab("Frame");
         os << dec(ahead.frame) << std::endl;
         os << tab("Beam");
@@ -1075,6 +1079,8 @@ void
 Emulator::recreateRunAheadInstance()
 {
     debug(RUA_DEBUG, "%lld: Recomputing the run-ahead instance\n", main.frame);
+
+    clones++;
 
     // Recreate the runahead instance from scratch
     ahead = main; main.isDirty = false;

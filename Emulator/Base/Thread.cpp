@@ -238,69 +238,6 @@ Thread::switchState(ExecState newState)
     }
 
     debug(RUN_DEBUG, "switchState: %s\n", ExecStateEnum::key(state));
-
-    /*
-
-    if (state == STATE_OFF && newState == STATE_PAUSED) {
-
-        state = STATE_PAUSED;
-        _powerOn();
-
-    } else if (state == STATE_OFF && newState == STATE_RUNNING) {
-
-        state = STATE_PAUSED;
-        _powerOn();
-
-        state = STATE_RUNNING;
-        _run();
-
-    } else if (state == STATE_PAUSED && newState == STATE_OFF) {
-
-        state = STATE_OFF;
-        _powerOff();
-
-    } else if (state == STATE_PAUSED && newState == STATE_RUNNING) {
-
-        state = STATE_RUNNING;
-        _run();
-
-    } else if ((state == STATE_RUNNING && newState == STATE_OFF) ||
-               (state == STATE_SUSPENDED && newState == STATE_OFF)) {
-
-        state = STATE_PAUSED;
-        _pause();
-
-        state = STATE_OFF;
-        _powerOff();
-
-    } else if ((state == STATE_RUNNING && newState == STATE_PAUSED) ||
-               (state == STATE_SUSPENDED && newState == STATE_PAUSED)) {
-
-        state = STATE_PAUSED;
-        _pause();
-
-    } else if (state == STATE_RUNNING && newState == STATE_SUSPENDED) {
-
-        state = STATE_SUSPENDED;
-
-    } else if (state == STATE_SUSPENDED && newState == STATE_RUNNING) {
-
-        state = STATE_RUNNING;
-
-    } else if (newState == STATE_HALTED) {
-
-        state = STATE_HALTED;
-        _halt();
-
-    } else {
-
-        // Invalid state transition
-        warn("Invalid state transition: %s -> %s\n",
-             EmulatorStateEnum::key(state), EmulatorStateEnum::key(newState));
-
-        fatalError;
-    }
-    */
 }
 
 void

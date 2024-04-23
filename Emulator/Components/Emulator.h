@@ -47,6 +47,9 @@ class Emulator : public Thread, public Inspectable<EmulatorInfo, EmulatorStats>,
     // The run-ahead instance
     C64 ahead = C64(*this, 1);
 
+    // Keeps trach of the number of recreated run-ahead instances
+    isize clones = 0;
+
 public:
 
     // Storage for external events

@@ -60,9 +60,10 @@ protected:
     util::Clock nonstopClock;
     util::Clock loadClock;
 
-    // Statistical information (CPU load, frames per second)
+    // Statistical information (CPU load, frames per second, thread resyncs)
     double cpuLoad = 0.0;
     double fps = 0.0;
+    isize resyncs = 0;
 
     // Debug clocks
     util::Clock wakeupClock;
