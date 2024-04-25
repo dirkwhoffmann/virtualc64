@@ -350,6 +350,10 @@
 		50A194882BDA5D4D0046849E /* VICIIInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194862BDA5D4D0046849E /* VICIIInfo.cpp */; };
 		50A1948A2BDA5EED0046849E /* VICIIConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194892BDA5EED0046849E /* VICIIConfig.cpp */; };
 		50A1948B2BDA5EED0046849E /* VICIIConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194892BDA5EED0046849E /* VICIIConfig.cpp */; };
+		50A1948D2BDA6F490046849E /* EmulatorConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1948C2BDA6F490046849E /* EmulatorConfig.cpp */; };
+		50A1948E2BDA6F490046849E /* EmulatorConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1948C2BDA6F490046849E /* EmulatorConfig.cpp */; };
+		50A194902BDA6FC40046849E /* EmulatorInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1948F2BDA6FC40046849E /* EmulatorInfo.cpp */; };
+		50A194912BDA6FC40046849E /* EmulatorInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1948F2BDA6FC40046849E /* EmulatorInfo.cpp */; };
 		50A22A1D261871E600C9FB1E /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A1C261871E600C9FB1E /* Layer.swift */; };
 		50A22A202618720100C9FB1E /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A1F2618720100C9FB1E /* SplashScreen.swift */; };
 		50A22A252618723200C9FB1E /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A242618723200C9FB1E /* Canvas.swift */; };
@@ -871,6 +875,8 @@
 		50A194832BDA5CD40046849E /* TODInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TODInfo.cpp; sourceTree = "<group>"; };
 		50A194862BDA5D4D0046849E /* VICIIInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICIIInfo.cpp; sourceTree = "<group>"; };
 		50A194892BDA5EED0046849E /* VICIIConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICIIConfig.cpp; sourceTree = "<group>"; };
+		50A1948C2BDA6F490046849E /* EmulatorConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EmulatorConfig.cpp; sourceTree = "<group>"; };
+		50A1948F2BDA6FC40046849E /* EmulatorInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EmulatorInfo.cpp; sourceTree = "<group>"; };
 		50A22A1C261871E600C9FB1E /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
 		50A22A1F2618720100C9FB1E /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		50A22A242618723200C9FB1E /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
@@ -2020,6 +2026,8 @@
 				506F30442B7578870083EAEA /* EmulatorTypes.h */,
 				506F30392B729CE80083EAEA /* Emulator.h */,
 				506F30382B729CE80083EAEA /* Emulator.cpp */,
+				50A1948C2BDA6F490046849E /* EmulatorConfig.cpp */,
+				50A1948F2BDA6FC40046849E /* EmulatorInfo.cpp */,
 				50ACF4DC256EB451003B5690 /* Ports */,
 				504C42E524AF29AB00E69CAE /* CPU */,
 				504C435224AF29AC00E69CAE /* CIA */,
@@ -2295,10 +2303,12 @@
 				50726FB82961CA290031F2F5 /* InterpreterCmds.cpp in Sources */,
 				50726F832961C9ED0031F2F5 /* Keyboard.cpp in Sources */,
 				50BB3E962B7A426800B2D87B /* CmdQueue.cpp in Sources */,
+				50A194912BDA6FC40046849E /* EmulatorInfo.cpp in Sources */,
 				50726F742961C9D10031F2F5 /* C64Memory.cpp in Sources */,
 				50726FA42961CA1C0031F2F5 /* T64File.cpp in Sources */,
 				50726F882961CA0D0031F2F5 /* Comal80.cpp in Sources */,
 				506A8A8D2B89DAF800B95383 /* SID.cpp in Sources */,
+				50A1948E2BDA6F490046849E /* EmulatorConfig.cpp in Sources */,
 				50726F5D2961C9AC0031F2F5 /* VICII.cpp in Sources */,
 				50726F652961C9B30031F2F5 /* NamedPipe.cpp in Sources */,
 				50726F8C2961CA0D0031F2F5 /* Reu.cpp in Sources */,
@@ -2369,6 +2379,7 @@
 			files = (
 				50E17E212B8B26AC0029747D /* Option.cpp in Sources */,
 				50B9F2812826392400BDFE7B /* MediaManager.swift in Sources */,
+				50A194902BDA6FC40046849E /* EmulatorInfo.cpp in Sources */,
 				504C438A24AF29AC00E69CAE /* Mouse1350.cpp in Sources */,
 				50AD303C28141F0B00D9A7A6 /* Buffer.cpp in Sources */,
 				504C436824AF29AC00E69CAE /* ActionReplay.cpp in Sources */,
@@ -2616,6 +2627,7 @@
 				504C435D24AF29AC00E69CAE /* EasyFlash.cpp in Sources */,
 				504C435A24AF29AC00E69CAE /* WarpSpeed.cpp in Sources */,
 				5058A924281D10C600C223C9 /* DiskCreator.swift in Sources */,
+				50A1948D2BDA6F490046849E /* EmulatorConfig.cpp in Sources */,
 				50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */,
 				50D3092424C7152700B92563 /* Inspector.swift in Sources */,
 				504C438C24AF29AC00E69CAE /* VICIIDraw.cpp in Sources */,
