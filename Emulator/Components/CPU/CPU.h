@@ -15,7 +15,6 @@
 #include "CPUTypes.h"
 #include "Peddle.h"
 #include "SubComponent.h"
-#include "CPUInspector.h"
 
 using namespace vc64::peddle;
 
@@ -24,8 +23,7 @@ namespace vc64 {
 class CPU final : public Peddle, public Inspectable<CPUInfo, Void> {
 
     friend class C64;
-    friend class CPUInspector;
-    
+
     Descriptions descriptions = {{
 
         .name           = "CPU",
@@ -37,8 +35,6 @@ class CPU final : public Peddle, public Inspectable<CPUInfo, Void> {
     mutable CPUInfo info = { };
 
 public:
-
-    CPUInspector inspector = CPUInspector(*this);
 
     /* Processor port
      *

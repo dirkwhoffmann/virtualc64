@@ -370,8 +370,6 @@
 		50B7E26C2813F8C400A405A3 /* TextStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B7E26A2813F8C400A405A3 /* TextStorage.cpp */; };
 		50B929F221C2B5C90039E8F2 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */; };
 		50B9F2812826392400BDFE7B /* MediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B9F2802826392400BDFE7B /* MediaManager.swift */; };
-		50BB3E8D2B7A1AC100B2D87B /* CPUInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E8B2B7A1AC100B2D87B /* CPUInspector.cpp */; };
-		50BB3E8E2B7A1AC100B2D87B /* CPUInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E8B2B7A1AC100B2D87B /* CPUInspector.cpp */; };
 		50BB3E912B7A232800B2D87B /* Inspectable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E8F2B7A232800B2D87B /* Inspectable.cpp */; };
 		50BB3E922B7A232800B2D87B /* Inspectable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E8F2B7A232800B2D87B /* Inspectable.cpp */; };
 		50BB3E952B7A426800B2D87B /* CmdQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E932B7A426800B2D87B /* CmdQueue.cpp */; };
@@ -919,8 +917,6 @@
 		50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
 		50B9F2802826392400BDFE7B /* MediaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaManager.swift; sourceTree = "<group>"; };
 		50B9F2822826C23100BDFE7B /* DatasetteTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DatasetteTypes.h; sourceTree = "<group>"; };
-		50BB3E8B2B7A1AC100B2D87B /* CPUInspector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CPUInspector.cpp; sourceTree = "<group>"; };
-		50BB3E8C2B7A1AC100B2D87B /* CPUInspector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPUInspector.h; sourceTree = "<group>"; };
 		50BB3E8F2B7A232800B2D87B /* Inspectable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Inspectable.cpp; sourceTree = "<group>"; };
 		50BB3E902B7A232800B2D87B /* Inspectable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Inspectable.h; sourceTree = "<group>"; };
 		50BB3E932B7A426800B2D87B /* CmdQueue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CmdQueue.cpp; sourceTree = "<group>"; };
@@ -1563,8 +1559,6 @@
 				5052A7BF25A0703D00E62EDD /* CPUTypes.h */,
 				504C42E824AF29AB00E69CAE /* CPU.h */,
 				504C42E924AF29AB00E69CAE /* CPU.cpp */,
-				50BB3E8C2B7A1AC100B2D87B /* CPUInspector.h */,
-				50BB3E8B2B7A1AC100B2D87B /* CPUInspector.cpp */,
 				50AA48B5292F8F350084401D /* Peddle */,
 			);
 			path = CPU;
@@ -2215,7 +2209,6 @@
 				50726F432961C97B0031F2F5 /* Checksum.cpp in Sources */,
 				50726F522961C9940031F2F5 /* ControlPort.cpp in Sources */,
 				50726F632961C9B30031F2F5 /* Recorder.cpp in Sources */,
-				50BB3E8E2B7A1AC100B2D87B /* CPUInspector.cpp in Sources */,
 				50E5BF742BA81E710004712B /* Monitor.cpp in Sources */,
 				50726F622961C9AC0031F2F5 /* VICII_table.cpp in Sources */,
 				50726F872961CA0D0031F2F5 /* MikroAss.cpp in Sources */,
@@ -2543,7 +2536,6 @@
 				504C436424AF29AC00E69CAE /* Expert.cpp in Sources */,
 				504C436724AF29AC00E69CAE /* MagicDesk.cpp in Sources */,
 				50033829266E47B400D5456E /* CompatibilityConf.swift in Sources */,
-				50BB3E8D2B7A1AC100B2D87B /* CPUInspector.cpp in Sources */,
 				50B485FD24FA1D3200844133 /* iCarousel.m in Sources */,
 				50BE4B7024E7FC21008F39C9 /* MTLDevice.swift in Sources */,
 				5055D5B726158ABC005D3DA6 /* Checksum.cpp in Sources */,
