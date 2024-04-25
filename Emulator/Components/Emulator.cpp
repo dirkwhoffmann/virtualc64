@@ -234,6 +234,12 @@ Emulator::update()
                 main.retroShell.exec();
                 break;
 
+            case CMD_FOCUS:
+
+                // printf("CMD_FOCUS: %ld\n", cmd.value);
+                host.focus = bool(cmd.value);
+                break;
+
             default:
                 fatal("Unhandled command: %s\n", CmdTypeEnum::key(cmd.type));
         }

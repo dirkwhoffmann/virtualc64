@@ -68,14 +68,17 @@ enum_long(CMD_TYPE)
     CMD_CRT_SWITCH_RIGHT,       ///< Pull the cartridge switch right
 
     // RetroShell
-    CMD_RSH_EXECUTE             ///< Execute a script command
+    CMD_RSH_EXECUTE,            ///< Execute a script command
+
+    // Host machine
+    CMD_FOCUS                   ///< The emulator windows got or lost focus
 };
 typedef CMD_TYPE CmdType;
 
 struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = CMD_RSH_EXECUTE;
+    static constexpr long maxVal = CMD_FOCUS;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "CMD"; }
@@ -117,6 +120,9 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
             case CMD_CRT_SWITCH_RIGHT:      return "CRT_SWITCH_RIGHT";
 
             case CMD_RSH_EXECUTE:           return "RSH_EXECUTE";
+
+            case CMD_FOCUS:                 return "FOCUS";
+
         }
         return "???";
     }

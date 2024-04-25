@@ -132,6 +132,8 @@ extension MyAppDelegate {
             
             if c.window == window {
                 
+                c.emu.put(.FOCUS, value: 1)
+
                 // Start playback
                 if !c.macAudio!.isRunning {
                     c.macAudio!.startPlayback()
@@ -143,6 +145,8 @@ extension MyAppDelegate {
                 
             } else {
                 
+                c.emu.put(.FOCUS, value: 0)
+
                 // Stop playback
                 if c.macAudio!.isRunning {
                     c.macAudio!.stopPlayback()
