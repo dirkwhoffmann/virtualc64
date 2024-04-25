@@ -348,6 +348,12 @@
 		50A1947F2BDA597A0046849E /* CIAConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1947D2BDA597A0046849E /* CIAConfig.cpp */; };
 		50A194812BDA59C90046849E /* CIAInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194802BDA59C90046849E /* CIAInfo.cpp */; };
 		50A194822BDA59C90046849E /* CIAInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194802BDA59C90046849E /* CIAInfo.cpp */; };
+		50A194842BDA5CD40046849E /* TODInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194832BDA5CD40046849E /* TODInfo.cpp */; };
+		50A194852BDA5CD40046849E /* TODInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194832BDA5CD40046849E /* TODInfo.cpp */; };
+		50A194872BDA5D4D0046849E /* VICIIInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194862BDA5D4D0046849E /* VICIIInfo.cpp */; };
+		50A194882BDA5D4D0046849E /* VICIIInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194862BDA5D4D0046849E /* VICIIInfo.cpp */; };
+		50A1948A2BDA5EED0046849E /* VICIIConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194892BDA5EED0046849E /* VICIIConfig.cpp */; };
+		50A1948B2BDA5EED0046849E /* VICIIConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194892BDA5EED0046849E /* VICIIConfig.cpp */; };
 		50A22A1D261871E600C9FB1E /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A1C261871E600C9FB1E /* Layer.swift */; };
 		50A22A202618720100C9FB1E /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A1F2618720100C9FB1E /* SplashScreen.swift */; };
 		50A22A252618723200C9FB1E /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A242618723200C9FB1E /* Canvas.swift */; };
@@ -868,6 +874,9 @@
 		50A0E0240A8F332A0067714C /* System.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = System.framework; path = /System/Library/Frameworks/System.framework; sourceTree = "<absolute>"; };
 		50A1947D2BDA597A0046849E /* CIAConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CIAConfig.cpp; sourceTree = "<group>"; };
 		50A194802BDA59C90046849E /* CIAInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CIAInfo.cpp; sourceTree = "<group>"; };
+		50A194832BDA5CD40046849E /* TODInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TODInfo.cpp; sourceTree = "<group>"; };
+		50A194862BDA5D4D0046849E /* VICIIInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICIIInfo.cpp; sourceTree = "<group>"; };
+		50A194892BDA5EED0046849E /* VICIIConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICIIConfig.cpp; sourceTree = "<group>"; };
 		50A22A1C261871E600C9FB1E /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
 		50A22A1F2618720100C9FB1E /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		50A22A242618723200C9FB1E /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
@@ -1592,6 +1601,8 @@
 				50DAABD824F0108A005D426F /* VICIITypes.h */,
 				504C430C24AF29AC00E69CAE /* VICII.h */,
 				504C430724AF29AC00E69CAE /* VICII.cpp */,
+				50A194862BDA5D4D0046849E /* VICIIInfo.cpp */,
+				50A194892BDA5EED0046849E /* VICIIConfig.cpp */,
 				504C430524AF29AB00E69CAE /* VICII_draw.cpp */,
 				50891C002652380A0004AC1B /* VICII_sprites.cpp */,
 				504C430824AF29AC00E69CAE /* VICII_colors.cpp */,
@@ -1726,6 +1737,7 @@
 				509995C826F72F3B009B68F3 /* TODTypes.h */,
 				504C435424AF29AC00E69CAE /* TOD.h */,
 				504C435524AF29AC00E69CAE /* TOD.cpp */,
+				50A194832BDA5CD40046849E /* TODInfo.cpp */,
 			);
 			path = CIA;
 			sourceTree = "<group>";
@@ -2236,6 +2248,7 @@
 				50726F612961C9AC0031F2F5 /* VICII_sprites.cpp in Sources */,
 				50726FB72961CA290031F2F5 /* InterpreterDebugCmds.cpp in Sources */,
 				500C1C762965D11000071AF3 /* StrWriter.cpp in Sources */,
+				50A1948B2BDA5EED0046849E /* VICIIConfig.cpp in Sources */,
 				50726F842961C9F10031F2F5 /* Cartridge.cpp in Sources */,
 				506F30482B7692180083EAEA /* VirtualC64.cpp in Sources */,
 				50A194822BDA59C90046849E /* CIAInfo.cpp in Sources */,
@@ -2255,6 +2268,7 @@
 				50726F5F2961C9AC0031F2F5 /* VICII_memory.cpp in Sources */,
 				50726F7F2961C9E80031F2F5 /* Mouse1350.cpp in Sources */,
 				50726FAF2961CA1C0031F2F5 /* Script.cpp in Sources */,
+				50A194882BDA5D4D0046849E /* VICIIInfo.cpp in Sources */,
 				50726F4C2961C9940031F2F5 /* Colors.cpp in Sources */,
 				50726F602961C9AC0031F2F5 /* VICII_draw.cpp in Sources */,
 				50726FA52961CA1C0031F2F5 /* AnyCollection.cpp in Sources */,
@@ -2350,6 +2364,7 @@
 				50726F6B2961C9C60031F2F5 /* extfilt.cc in Sources */,
 				50726F9C2961CA0D0031F2F5 /* Kcs.cpp in Sources */,
 				506F30432B74C1C70083EAEA /* Wakeable.cpp in Sources */,
+				50A194852BDA5CD40046849E /* TODInfo.cpp in Sources */,
 				50726F562961C99A0031F2F5 /* PeddleUtils.cpp in Sources */,
 				50FFB54E2B8262BA00042771 /* Serializable.cpp in Sources */,
 				50726FA82961CA1C0031F2F5 /* PRGFile.cpp in Sources */,
@@ -2378,6 +2393,7 @@
 				506A8A882B88D00200B95383 /* Configurable.cpp in Sources */,
 				50E5BF732BA81E710004712B /* Monitor.cpp in Sources */,
 				504C43A424AF29AC00E69CAE /* Keyboard.cpp in Sources */,
+				50A1948A2BDA5EED0046849E /* VICIIConfig.cpp in Sources */,
 				504C439924AF29AC00E69CAE /* filter.cc in Sources */,
 				504C439824AF29AC00E69CAE /* sid.cc in Sources */,
 				50769B8A24BB1B87006FE743 /* Configuration.swift in Sources */,
@@ -2565,6 +2581,7 @@
 				504C437224AF29AC00E69CAE /* FlashRom.cpp in Sources */,
 				50DBB3D12641101E006F45E6 /* DmaDebugger.cpp in Sources */,
 				504C43A024AF29AC00E69CAE /* FastVoice.cpp in Sources */,
+				50A194872BDA5D4D0046849E /* VICIIInfo.cpp in Sources */,
 				50BE4B7224E81266008F39C9 /* CIARegs.cpp in Sources */,
 				50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */,
 				504C439324AF29AC00E69CAE /* Datasette.cpp in Sources */,
@@ -2601,6 +2618,7 @@
 				508081E925110FFE0084B060 /* Dinamic.cpp in Sources */,
 				50BE4B5E24E7F864008F39C9 /* DispatchTime.swift in Sources */,
 				50EAFFEA24B2600D00024CD2 /* MyToolbar.swift in Sources */,
+				50A194842BDA5CD40046849E /* TODInfo.cpp in Sources */,
 				504C438E24AF29AC00E69CAE /* VICII_colors.cpp in Sources */,
 				5018BFB124B48DC400551848 /* Renderer.swift in Sources */,
 				504C436124AF29AC00E69CAE /* SimonsBasic.cpp in Sources */,

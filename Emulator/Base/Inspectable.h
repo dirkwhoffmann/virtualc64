@@ -97,6 +97,11 @@ public:
         return stats;
     }
 
+    virtual void clearStats() {
+
+        memset(&stats, 0, sizeof(stats));
+    }
+
     virtual void record() const {
 
         cacheInfo(info);

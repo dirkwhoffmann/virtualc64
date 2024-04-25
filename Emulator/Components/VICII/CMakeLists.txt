@@ -3,6 +3,9 @@ target_include_directories(vc64Core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_sources(vc64Core PRIVATE
 
 VICII.cpp
+VICIIInfo.cpp
+VICIIConfig.cpp
+
 VICII_draw.cpp
 VICII_sprites.cpp
 VICII_colors.cpp

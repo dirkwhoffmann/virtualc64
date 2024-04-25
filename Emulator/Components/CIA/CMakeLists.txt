@@ -7,5 +7,6 @@ CIAConfig.cpp
 CPUInfo.cpp
 CIARegs.cpp
 TOD.cpp
+TODInfo.cpp
 
 )

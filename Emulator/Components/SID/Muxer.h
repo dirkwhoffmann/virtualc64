@@ -225,10 +225,6 @@ public:
     double getSampleRate() const;
     void setSampleRate(double rate);
 
-private:
-    
-    void clearStats();
-
 
     //
     // Controlling the volume

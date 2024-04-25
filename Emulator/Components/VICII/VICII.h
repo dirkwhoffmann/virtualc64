@@ -885,7 +885,7 @@ private:
 
     void cacheInfo(VICIIInfo &result) const override;
     void cacheStats(VICIIStats &result) const override;
-    void clearStats();
+    void clearStats() override;
 
 public:
 

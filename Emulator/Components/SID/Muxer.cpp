@@ -296,12 +296,6 @@ Muxer::getStats()
     return stats;
 }
 
-void
-Muxer::clearStats()
-{
-    memset(&stats, 0, sizeof(stats));
-}
-
 SIDInfo
 Muxer::getInfo(isize nr)
 {

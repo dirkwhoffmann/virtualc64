@@ -22,48 +22,13 @@ TOD::TOD(C64 &ref, CIA &ciaref) : SubComponent(ref), cia(ciaref)
 {
 }
 
-void 
-TOD::cacheInfo(TODInfo &info) const
-{
-    {   SYNCHRONIZED
-        
-        info.time = tod;
-        info.latch = latch;
-        info.alarm = alarm;
-    }
-}
+
 
 void
 TOD::_reset(bool hard)
 {    
     tod.hour = 1;
     stopped = true;
-}
-
-void
-TOD::_dump(Category category, std::ostream& os) const
-{
-    using namespace util;
-    
-    if (category == Category::State) {
-        
-        os << tab("Time of Day");
-        os << hex(tod.hour)   << ":" << hex(tod.min)     << ":";
-        os << hex(tod.sec)    << ":" << hex(tod.tenth)   << std::endl;
-        
-        os << tab("Alarm");
-        os << hex(alarm.hour) << ":" << hex(alarm.min)   << ":";
-        os << hex(alarm.sec)  << ":" << hex(alarm.tenth) << std::endl;
-
-        os << tab("Latch");
-        os << hex(latch.hour) << ":" << hex(latch.min)   << ":";
-        os << hex(latch.sec)  << ":" << hex(latch.tenth) << std::endl;
-
-        os << tab("Frozen");
-        os << bol(frozen) << std::endl;
-        os << tab("Stopped");
-        os << bol(stopped) << std::endl;
-    }
 }
 
 void
