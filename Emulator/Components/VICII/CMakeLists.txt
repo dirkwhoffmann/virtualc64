@@ -5,14 +5,11 @@ target_sources(vc64Core PRIVATE
 VICII.cpp
 VICIIInfo.cpp
 VICIIConfig.cpp
-
-VICII_draw.cpp
-VICII_sprites.cpp
-VICII_colors.cpp
-VICII_memory.cpp
-VICII_cycles.cpp
-VICII_table.cpp
-VICII_debug.cpp
+VICIIDraw.cpp
+VICIISprites.cpp
+VICIIMemory.cpp
+VICIICycles.cpp
+VICIITable.cpp
 DmaDebugger.cpp
 
 )

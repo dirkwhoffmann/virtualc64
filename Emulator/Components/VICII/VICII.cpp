@@ -371,6 +371,14 @@ VICII::getNoise() const
     return noise + offset;
 }
 
+void
+VICII::updatePalette()
+{
+    for (isize i = 0; i < 16; i++) {
+        rgbaTable[i] = monitor.getColor(i);
+    }
+}
+
 u16
 VICII::scanline() const
 {
@@ -875,6 +883,19 @@ VICII::endScanline()
 
     // Prepare buffers for the next line
     for (isize i = 0; i < Texture::width; i++) { zBuffer[i] = 0; }
+}
+
+ScreenGeometry
+VICII::getScreenGeometry(void) const
+{
+    unsigned rows = GET_BIT(reg.current.ctrl1, 3) ? 25 : 24;
+    unsigned cols = GET_BIT(reg.current.ctrl2, 3) ? 40 : 38;
+
+    if (cols == 40) {
+        return rows == 25 ? SCREEN_GEOMETRY_25_40 : SCREEN_GEOMETRY_24_40;
+    } else {
+        return rows == 25 ? SCREEN_GEOMETRY_25_38 : SCREEN_GEOMETRY_24_38;
+    }
 }
 
 }

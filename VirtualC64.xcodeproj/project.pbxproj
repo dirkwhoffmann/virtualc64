@@ -14,7 +14,7 @@
 		5002FA8121C2654B00DA4BBC /* ControlsPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002FA8021C2654B00DA4BBC /* ControlsPrefs.swift */; };
 		5002FA8321C2655800DA4BBC /* KeyboardPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */; };
 		50033829266E47B400D5456E /* CompatibilityConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50033828266E47B400D5456E /* CompatibilityConf.swift */; };
-		5003382B266F7F3C00D5456E /* VICII_table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5003382A266F7F3C00D5456E /* VICII_table.cpp */; };
+		5003382B266F7F3C00D5456E /* VICIITable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5003382A266F7F3C00D5456E /* VICIITable.cpp */; };
 		5007E1E826A70170000E7344 /* ParCable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5007E1E626A70170000E7344 /* ParCable.cpp */; };
 		5009CF3324C0B8EF00F674FF /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5009CF3224C0B8EF00F674FF /* Preferences.swift */; };
 		500C1C752965D10F00071AF3 /* StrWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 501C46BD2965C54200C4B27B /* StrWriter.cpp */; };
@@ -110,11 +110,9 @@
 		504C438924AF29AC00E69CAE /* NeosMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42FD24AF29AB00E69CAE /* NeosMouse.cpp */; };
 		504C438A24AF29AC00E69CAE /* Mouse1350.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42FE24AF29AB00E69CAE /* Mouse1350.cpp */; };
 		504C438B24AF29AC00E69CAE /* Mouse1351.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42FF24AF29AB00E69CAE /* Mouse1351.cpp */; };
-		504C438C24AF29AC00E69CAE /* VICII_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430524AF29AB00E69CAE /* VICII_draw.cpp */; };
+		504C438C24AF29AC00E69CAE /* VICIIDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430524AF29AB00E69CAE /* VICIIDraw.cpp */; };
 		504C438D24AF29AC00E69CAE /* VICII.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430724AF29AC00E69CAE /* VICII.cpp */; };
-		504C438E24AF29AC00E69CAE /* VICII_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430824AF29AC00E69CAE /* VICII_colors.cpp */; };
-		504C438F24AF29AC00E69CAE /* VICII_debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430924AF29AC00E69CAE /* VICII_debug.cpp */; };
-		504C439124AF29AC00E69CAE /* VICII_memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430B24AF29AC00E69CAE /* VICII_memory.cpp */; };
+		504C439124AF29AC00E69CAE /* VICIIMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430B24AF29AC00E69CAE /* VICIIMemory.cpp */; };
 		504C439324AF29AC00E69CAE /* Datasette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430F24AF29AC00E69CAE /* Datasette.cpp */; };
 		504C439424AF29AC00E69CAE /* Muxer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C431224AF29AC00E69CAE /* Muxer.cpp */; };
 		504C439524AF29AC00E69CAE /* envelope.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431724AF29AC00E69CAE /* envelope.cc */; };
@@ -216,14 +214,12 @@
 		50726F582961C9A10031F2F5 /* CIARegs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B7124E81266008F39C9 /* CIARegs.cpp */; };
 		50726F592961C9A10031F2F5 /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C435524AF29AC00E69CAE /* TOD.cpp */; };
 		50726F5A2961C9AC0031F2F5 /* DmaDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB3CF2641101E006F45E6 /* DmaDebugger.cpp */; };
-		50726F5B2961C9AC0031F2F5 /* VICII_cycles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D20B742508F6D70088E8F2 /* VICII_cycles.cpp */; };
-		50726F5C2961C9AC0031F2F5 /* VICII_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430824AF29AC00E69CAE /* VICII_colors.cpp */; };
+		50726F5B2961C9AC0031F2F5 /* VICIICycles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D20B742508F6D70088E8F2 /* VICIICycles.cpp */; };
 		50726F5D2961C9AC0031F2F5 /* VICII.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430724AF29AC00E69CAE /* VICII.cpp */; };
-		50726F5E2961C9AC0031F2F5 /* VICII_debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430924AF29AC00E69CAE /* VICII_debug.cpp */; };
-		50726F5F2961C9AC0031F2F5 /* VICII_memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430B24AF29AC00E69CAE /* VICII_memory.cpp */; };
-		50726F602961C9AC0031F2F5 /* VICII_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430524AF29AB00E69CAE /* VICII_draw.cpp */; };
-		50726F612961C9AC0031F2F5 /* VICII_sprites.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50891C002652380A0004AC1B /* VICII_sprites.cpp */; };
-		50726F622961C9AC0031F2F5 /* VICII_table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5003382A266F7F3C00D5456E /* VICII_table.cpp */; };
+		50726F5F2961C9AC0031F2F5 /* VICIIMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430B24AF29AC00E69CAE /* VICIIMemory.cpp */; };
+		50726F602961C9AC0031F2F5 /* VICIIDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430524AF29AB00E69CAE /* VICIIDraw.cpp */; };
+		50726F612961C9AC0031F2F5 /* VICIISprites.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50891C002652380A0004AC1B /* VICIISprites.cpp */; };
+		50726F622961C9AC0031F2F5 /* VICIITable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5003382A266F7F3C00D5456E /* VICIITable.cpp */; };
 		50726F632961C9B30031F2F5 /* Recorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5044A0392657A7A800C551C6 /* Recorder.cpp */; };
 		50726F642961C9B30031F2F5 /* FFmpeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD3696281681E700E40BFC /* FFmpeg.cpp */; };
 		50726F652961C9B30031F2F5 /* NamedPipe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD3693281681D000E40BFC /* NamedPipe.cpp */; };
@@ -330,7 +326,7 @@
 		508081EC2511206D0084B060 /* StructuredBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508081EA2511206D0084B060 /* StructuredBasic.cpp */; };
 		5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* MacAudio.swift */; };
 		5085D89D25B848940043B15C /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5085D89B25B848940043B15C /* Joystick.cpp */; };
-		50891C012652380A0004AC1B /* VICII_sprites.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50891C002652380A0004AC1B /* VICII_sprites.cpp */; };
+		50891C012652380A0004AC1B /* VICIISprites.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50891C002652380A0004AC1B /* VICIISprites.cpp */; };
 		509280CF2930A1B6006E1966 /* PeddleUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509280CD2930A1B6006E1966 /* PeddleUtils.cpp */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		5095C81C2BA09DE800A83825 /* Debugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5095C81A2BA08B0A00A83825 /* Debugger.cpp */; };
@@ -411,7 +407,7 @@
 		50CD3698281681E800E40BFC /* FFmpeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD3696281681E700E40BFC /* FFmpeg.cpp */; };
 		50CD369C2817D69000E40BFC /* Defaults.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD369A2817D69000E40BFC /* Defaults.cpp */; };
 		50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */; };
-		50D20B752508F6D70088E8F2 /* VICII_cycles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D20B742508F6D70088E8F2 /* VICII_cycles.cpp */; };
+		50D20B752508F6D70088E8F2 /* VICIICycles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D20B742508F6D70088E8F2 /* VICIICycles.cpp */; };
 		50D2A69E210F20CB00F13D43 /* VirtualKeyboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */; };
 		50D2A6A0210F20F700F13D43 /* VirtualKeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */; };
 		50D3091E24C5CE1A00B92563 /* MyControllerStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3091D24C5CE1A00B92563 /* MyControllerStatusBar.swift */; };
@@ -494,7 +490,7 @@
 		500333EB26202527008445E4 /* ExpansionPortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExpansionPortTypes.h; sourceTree = "<group>"; };
 		500333EC2620269D008445E4 /* JoystickTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JoystickTypes.h; sourceTree = "<group>"; };
 		50033828266E47B400D5456E /* CompatibilityConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompatibilityConf.swift; sourceTree = "<group>"; };
-		5003382A266F7F3C00D5456E /* VICII_table.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_table.cpp; sourceTree = "<group>"; };
+		5003382A266F7F3C00D5456E /* VICIITable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICIITable.cpp; sourceTree = "<group>"; };
 		5007E1E026A70006000E7344 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5007E1E226A70030000E7344 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5007E1E426A70042000E7344 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -687,11 +683,9 @@
 		504C42FF24AF29AB00E69CAE /* Mouse1351.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mouse1351.cpp; sourceTree = "<group>"; };
 		504C430124AF29AB00E69CAE /* Mouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mouse.h; sourceTree = "<group>"; };
 		504C430224AF29AB00E69CAE /* Mouse1351.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mouse1351.h; sourceTree = "<group>"; };
-		504C430524AF29AB00E69CAE /* VICII_draw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_draw.cpp; sourceTree = "<group>"; };
+		504C430524AF29AB00E69CAE /* VICIIDraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICIIDraw.cpp; sourceTree = "<group>"; };
 		504C430724AF29AC00E69CAE /* VICII.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII.cpp; sourceTree = "<group>"; };
-		504C430824AF29AC00E69CAE /* VICII_colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_colors.cpp; sourceTree = "<group>"; };
-		504C430924AF29AC00E69CAE /* VICII_debug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_debug.cpp; sourceTree = "<group>"; };
-		504C430B24AF29AC00E69CAE /* VICII_memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_memory.cpp; sourceTree = "<group>"; };
+		504C430B24AF29AC00E69CAE /* VICIIMemory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICIIMemory.cpp; sourceTree = "<group>"; };
 		504C430C24AF29AC00E69CAE /* VICII.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VICII.h; sourceTree = "<group>"; };
 		504C430F24AF29AC00E69CAE /* Datasette.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Datasette.cpp; sourceTree = "<group>"; };
 		504C431024AF29AC00E69CAE /* Datasette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Datasette.h; sourceTree = "<group>"; };
@@ -850,7 +844,7 @@
 		5081AB621EF29E6400D6F616 /* MacAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacAudio.swift; sourceTree = "<group>"; };
 		5085D89B25B848940043B15C /* Joystick.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Joystick.cpp; sourceTree = "<group>"; };
 		5085D89C25B848940043B15C /* Joystick.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Joystick.h; sourceTree = "<group>"; };
-		50891C002652380A0004AC1B /* VICII_sprites.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_sprites.cpp; sourceTree = "<group>"; };
+		50891C002652380A0004AC1B /* VICIISprites.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICIISprites.cpp; sourceTree = "<group>"; };
 		509280CD2930A1B6006E1966 /* PeddleUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PeddleUtils.cpp; sourceTree = "<group>"; };
 		509280CE2930A1B6006E1966 /* PeddleUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleUtils.h; sourceTree = "<group>"; };
 		509280D029312C00006E1966 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -970,7 +964,7 @@
 		50CD369A2817D69000E40BFC /* Defaults.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Defaults.cpp; sourceTree = "<group>"; };
 		50CD369B2817D69000E40BFC /* Defaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Defaults.h; sourceTree = "<group>"; };
 		50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerMenu.swift; sourceTree = "<group>"; };
-		50D20B742508F6D70088E8F2 /* VICII_cycles.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_cycles.cpp; sourceTree = "<group>"; };
+		50D20B742508F6D70088E8F2 /* VICIICycles.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICIICycles.cpp; sourceTree = "<group>"; };
 		50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VirtualKeyboard.xib; sourceTree = "<group>"; };
 		50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualKeyboardController.swift; sourceTree = "<group>"; };
 		50D3091D24C5CE1A00B92563 /* MyControllerStatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerStatusBar.swift; sourceTree = "<group>"; };
@@ -1603,13 +1597,11 @@
 				504C430724AF29AC00E69CAE /* VICII.cpp */,
 				50A194862BDA5D4D0046849E /* VICIIInfo.cpp */,
 				50A194892BDA5EED0046849E /* VICIIConfig.cpp */,
-				504C430524AF29AB00E69CAE /* VICII_draw.cpp */,
-				50891C002652380A0004AC1B /* VICII_sprites.cpp */,
-				504C430824AF29AC00E69CAE /* VICII_colors.cpp */,
-				504C430B24AF29AC00E69CAE /* VICII_memory.cpp */,
-				50D20B742508F6D70088E8F2 /* VICII_cycles.cpp */,
-				5003382A266F7F3C00D5456E /* VICII_table.cpp */,
-				504C430924AF29AC00E69CAE /* VICII_debug.cpp */,
+				504C430524AF29AB00E69CAE /* VICIIDraw.cpp */,
+				50891C002652380A0004AC1B /* VICIISprites.cpp */,
+				504C430B24AF29AC00E69CAE /* VICIIMemory.cpp */,
+				50D20B742508F6D70088E8F2 /* VICIICycles.cpp */,
+				5003382A266F7F3C00D5456E /* VICIITable.cpp */,
 				50DBB3D22641107E006F45E6 /* DmaDebuggerTypes.h */,
 				50DBB3D02641101E006F45E6 /* DmaDebugger.h */,
 				50DBB3CF2641101E006F45E6 /* DmaDebugger.cpp */,
@@ -2230,7 +2222,7 @@
 				50726F522961C9940031F2F5 /* ControlPort.cpp in Sources */,
 				50726F632961C9B30031F2F5 /* Recorder.cpp in Sources */,
 				50E5BF742BA81E710004712B /* Monitor.cpp in Sources */,
-				50726F622961C9AC0031F2F5 /* VICII_table.cpp in Sources */,
+				50726F622961C9AC0031F2F5 /* VICIITable.cpp in Sources */,
 				50726F872961CA0D0031F2F5 /* MikroAss.cpp in Sources */,
 				50726F7D2961C9E80031F2F5 /* Joystick.cpp in Sources */,
 				50726F8F2961CA0D0031F2F5 /* Ocean.cpp in Sources */,
@@ -2245,7 +2237,7 @@
 				50726F912961CA0D0031F2F5 /* PageFox.cpp in Sources */,
 				50726FAA2961CA1C0031F2F5 /* Snapshot.cpp in Sources */,
 				50726F552961C99A0031F2F5 /* Peddle.cpp in Sources */,
-				50726F612961C9AC0031F2F5 /* VICII_sprites.cpp in Sources */,
+				50726F612961C9AC0031F2F5 /* VICIISprites.cpp in Sources */,
 				50726FB72961CA290031F2F5 /* InterpreterDebugCmds.cpp in Sources */,
 				500C1C762965D11000071AF3 /* StrWriter.cpp in Sources */,
 				50A1948B2BDA5EED0046849E /* VICIIConfig.cpp in Sources */,
@@ -2254,7 +2246,6 @@
 				50A194822BDA59C90046849E /* CIAInfo.cpp in Sources */,
 				50726F542961C99A0031F2F5 /* PeddleDebugger.cpp in Sources */,
 				50726F462961C9940031F2F5 /* Error.cpp in Sources */,
-				50726F5C2961C9AC0031F2F5 /* VICII_colors.cpp in Sources */,
 				50726F452961C97B0031F2F5 /* Buffer.cpp in Sources */,
 				50726F4B2961C9940031F2F5 /* Thread.cpp in Sources */,
 				50726FA02961CA0D0031F2F5 /* Rex.cpp in Sources */,
@@ -2265,12 +2256,12 @@
 				50726F3F2961C97B0031F2F5 /* StringUtils.cpp in Sources */,
 				50726F682961C9B80031F2F5 /* ReSID.cpp in Sources */,
 				50726FBD2961CA5A0031F2F5 /* Headless.cpp in Sources */,
-				50726F5F2961C9AC0031F2F5 /* VICII_memory.cpp in Sources */,
+				50726F5F2961C9AC0031F2F5 /* VICIIMemory.cpp in Sources */,
 				50726F7F2961C9E80031F2F5 /* Mouse1350.cpp in Sources */,
 				50726FAF2961CA1C0031F2F5 /* Script.cpp in Sources */,
 				50A194882BDA5D4D0046849E /* VICIIInfo.cpp in Sources */,
 				50726F4C2961C9940031F2F5 /* Colors.cpp in Sources */,
-				50726F602961C9AC0031F2F5 /* VICII_draw.cpp in Sources */,
+				50726F602961C9AC0031F2F5 /* VICIIDraw.cpp in Sources */,
 				50726FA52961CA1C0031F2F5 /* AnyCollection.cpp in Sources */,
 				50726F532961C9940031F2F5 /* IEC.cpp in Sources */,
 				50726F8D2961CA0D0031F2F5 /* ActionReplay.cpp in Sources */,
@@ -2309,7 +2300,6 @@
 				50726F882961CA0D0031F2F5 /* Comal80.cpp in Sources */,
 				506A8A8D2B89DAF800B95383 /* SID.cpp in Sources */,
 				50726F5D2961C9AC0031F2F5 /* VICII.cpp in Sources */,
-				50726F5E2961C9AC0031F2F5 /* VICII_debug.cpp in Sources */,
 				50726F652961C9B30031F2F5 /* NamedPipe.cpp in Sources */,
 				50726F8C2961CA0D0031F2F5 /* Reu.cpp in Sources */,
 				50726F722961C9CC0031F2F5 /* FastSID.cpp in Sources */,
@@ -2322,7 +2312,7 @@
 				50726F712961C9C60031F2F5 /* voice.cc in Sources */,
 				50A1947F2BDA597A0046849E /* CIAConfig.cpp in Sources */,
 				50726F812961C9E80031F2F5 /* NeosMouse.cpp in Sources */,
-				50726F5B2961C9AC0031F2F5 /* VICII_cycles.cpp in Sources */,
+				50726F5B2961C9AC0031F2F5 /* VICIICycles.cpp in Sources */,
 				50726FA62961CA1C0031F2F5 /* G64File.cpp in Sources */,
 				50726F6E2961C9C60031F2F5 /* dac.cc in Sources */,
 				50726F662961C9B80031F2F5 /* Muxer.cpp in Sources */,
@@ -2445,7 +2435,7 @@
 				500EA6C724B09037009AA7D7 /* SubComponent.cpp in Sources */,
 				50157EEB28256035000E9DDD /* Config.swift in Sources */,
 				501B80C325B1702500C90284 /* MyDocumentController.swift in Sources */,
-				5003382B266F7F3C00D5456E /* VICII_table.cpp in Sources */,
+				5003382B266F7F3C00D5456E /* VICIITable.cpp in Sources */,
 				504C438324AF29AC00E69CAE /* CoreComponent.cpp in Sources */,
 				50E9B92D201F299500065A89 /* MyController.swift in Sources */,
 				50DBB44B2025CE5700489271 /* Utils.swift in Sources */,
@@ -2465,9 +2455,9 @@
 				50BB3E952B7A426800B2D87B /* CmdQueue.cpp in Sources */,
 				50FF1FCB26BAB3DA0061E5CE /* DropZone.swift in Sources */,
 				5018AF66202EDD2000B4C886 /* Defaults.swift in Sources */,
-				50D20B752508F6D70088E8F2 /* VICII_cycles.cpp in Sources */,
+				50D20B752508F6D70088E8F2 /* VICIICycles.cpp in Sources */,
 				504C436A24AF29AC00E69CAE /* FreezeFrame.cpp in Sources */,
-				504C439124AF29AC00E69CAE /* VICII_memory.cpp in Sources */,
+				504C439124AF29AC00E69CAE /* VICIIMemory.cpp in Sources */,
 				50FF818F1F88D9100004548A /* GamePad.swift in Sources */,
 				505184DE24F23484002C6124 /* MyControllerSnapshots.swift in Sources */,
 				504C438024AF29AC00E69CAE /* CPU.cpp in Sources */,
@@ -2501,7 +2491,7 @@
 				504C43AB24AF29AC00E69CAE /* CIA.cpp in Sources */,
 				5058A922281D10B100C223C9 /* VolumeInspector.swift in Sources */,
 				504C436024AF29AC00E69CAE /* Mach5.cpp in Sources */,
-				50891C012652380A0004AC1B /* VICII_sprites.cpp in Sources */,
+				50891C012652380A0004AC1B /* VICIISprites.cpp in Sources */,
 				50DF719425021FCA00953E2E /* Keycap.swift in Sources */,
 				504C43A724AF29AC00E69CAE /* VIA.cpp in Sources */,
 				503C1DD324FCD1BF00D91141 /* SnapshotViewer.swift in Sources */,
@@ -2541,7 +2531,6 @@
 				504C436E24AF29AC00E69CAE /* Epyx.cpp in Sources */,
 				505F8FE72580BD780066ACE4 /* AudioConf.swift in Sources */,
 				504C43A924AF29AC00E69CAE /* Drive.cpp in Sources */,
-				504C438F24AF29AC00E69CAE /* VICII_debug.cpp in Sources */,
 				505F8FE92582435E0066ACE4 /* PeripheralsConf.swift in Sources */,
 				50AF2F8226AFFE9A002DC43B /* PIA.cpp in Sources */,
 				50CD3695281681D000E40BFC /* NamedPipe.cpp in Sources */,
@@ -2619,7 +2608,6 @@
 				50BE4B5E24E7F864008F39C9 /* DispatchTime.swift in Sources */,
 				50EAFFEA24B2600D00024CD2 /* MyToolbar.swift in Sources */,
 				50A194842BDA5CD40046849E /* TODInfo.cpp in Sources */,
-				504C438E24AF29AC00E69CAE /* VICII_colors.cpp in Sources */,
 				5018BFB124B48DC400551848 /* Renderer.swift in Sources */,
 				504C436124AF29AC00E69CAE /* SimonsBasic.cpp in Sources */,
 				504C438824AF29AC00E69CAE /* Mouse.cpp in Sources */,
@@ -2630,7 +2618,7 @@
 				5058A924281D10C600C223C9 /* DiskCreator.swift in Sources */,
 				50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */,
 				50D3092424C7152700B92563 /* Inspector.swift in Sources */,
-				504C438C24AF29AC00E69CAE /* VICII_draw.cpp in Sources */,
+				504C438C24AF29AC00E69CAE /* VICIIDraw.cpp in Sources */,
 				50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */,
 				50BE4B6C24E7FB9E008F39C9 /* CGImage.swift in Sources */,
 				504C436924AF29AC00E69CAE /* Zaxxon.cpp in Sources */,
