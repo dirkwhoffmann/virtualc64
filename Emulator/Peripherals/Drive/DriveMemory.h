@@ -90,15 +90,6 @@ public:
 
 
     //
-    // Configuring
-    //
-
-    /*
-    i64 getOption(Option opt) const override;
-    void setOption(Option opt, i64 value) override;
-    */
-
-    //
     // Working with Roms
     //
     

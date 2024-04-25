@@ -5,6 +5,8 @@ target_sources(vc64Core PRIVATE
 Muxer.cpp
 ReSID.cpp
 SID.cpp
+SIDConfig.cpp
+SIDInfo.cpp
 SIDStreams.cpp
 
 )
