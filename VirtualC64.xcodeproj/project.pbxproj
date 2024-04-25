@@ -344,6 +344,10 @@
 		50A0B48D24C1CAEB00FF0B0B /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50A0B48C24C1CAEB00FF0B0B /* Preferences.xib */; };
 		50A0E0210A8F33120067714C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A0E0200A8F33120067714C /* IOKit.framework */; };
 		50A0E0250A8F332A0067714C /* System.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A0E0240A8F332A0067714C /* System.framework */; };
+		50A1947E2BDA597A0046849E /* CIAConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1947D2BDA597A0046849E /* CIAConfig.cpp */; };
+		50A1947F2BDA597A0046849E /* CIAConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1947D2BDA597A0046849E /* CIAConfig.cpp */; };
+		50A194812BDA59C90046849E /* CIAInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194802BDA59C90046849E /* CIAInfo.cpp */; };
+		50A194822BDA59C90046849E /* CIAInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194802BDA59C90046849E /* CIAInfo.cpp */; };
 		50A22A1D261871E600C9FB1E /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A1C261871E600C9FB1E /* Layer.swift */; };
 		50A22A202618720100C9FB1E /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A1F2618720100C9FB1E /* SplashScreen.swift */; };
 		50A22A252618723200C9FB1E /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A242618723200C9FB1E /* Canvas.swift */; };
@@ -862,6 +866,8 @@
 		50A0B48C24C1CAEB00FF0B0B /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		50A0E0200A8F33120067714C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		50A0E0240A8F332A0067714C /* System.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = System.framework; path = /System/Library/Frameworks/System.framework; sourceTree = "<absolute>"; };
+		50A1947D2BDA597A0046849E /* CIAConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CIAConfig.cpp; sourceTree = "<group>"; };
+		50A194802BDA59C90046849E /* CIAInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CIAInfo.cpp; sourceTree = "<group>"; };
 		50A22A1C261871E600C9FB1E /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
 		50A22A1F2618720100C9FB1E /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		50A22A242618723200C9FB1E /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
@@ -1714,6 +1720,8 @@
 				50E806BF25A1C93B00F08732 /* CIATypes.h */,
 				504C435324AF29AC00E69CAE /* CIA.h */,
 				504C435824AF29AC00E69CAE /* CIA.cpp */,
+				50A1947D2BDA597A0046849E /* CIAConfig.cpp */,
+				50A194802BDA59C90046849E /* CIAInfo.cpp */,
 				50BE4B7124E81266008F39C9 /* CIARegs.cpp */,
 				509995C826F72F3B009B68F3 /* TODTypes.h */,
 				504C435424AF29AC00E69CAE /* TOD.h */,
@@ -2230,6 +2238,7 @@
 				500C1C762965D11000071AF3 /* StrWriter.cpp in Sources */,
 				50726F842961C9F10031F2F5 /* Cartridge.cpp in Sources */,
 				506F30482B7692180083EAEA /* VirtualC64.cpp in Sources */,
+				50A194822BDA59C90046849E /* CIAInfo.cpp in Sources */,
 				50726F542961C99A0031F2F5 /* PeddleDebugger.cpp in Sources */,
 				50726F462961C9940031F2F5 /* Error.cpp in Sources */,
 				50726F5C2961C9AC0031F2F5 /* VICII_colors.cpp in Sources */,
@@ -2297,6 +2306,7 @@
 				50BB3E922B7A232800B2D87B /* Inspectable.cpp in Sources */,
 				50726FB32961CA230031F2F5 /* FileSystem.cpp in Sources */,
 				50726F712961C9C60031F2F5 /* voice.cc in Sources */,
+				50A1947F2BDA597A0046849E /* CIAConfig.cpp in Sources */,
 				50726F812961C9E80031F2F5 /* NeosMouse.cpp in Sources */,
 				50726F5B2961C9AC0031F2F5 /* VICII_cycles.cpp in Sources */,
 				50726FA62961CA1C0031F2F5 /* G64File.cpp in Sources */,
@@ -2486,6 +2496,7 @@
 				504C435C24AF29AC00E69CAE /* Westermann.cpp in Sources */,
 				504C439524AF29AC00E69CAE /* envelope.cc in Sources */,
 				50B7E26C2813F8C400A405A3 /* TextStorage.cpp in Sources */,
+				50A194812BDA59C90046849E /* CIAInfo.cpp in Sources */,
 				50CD3698281681E800E40BFC /* FFmpeg.cpp in Sources */,
 				504C437324AF29AC00E69CAE /* RomFile.cpp in Sources */,
 				504C437E24AF29AC00E69CAE /* TAPFile.cpp in Sources */,
@@ -2499,6 +2510,7 @@
 				504C435E24AF29AC00E69CAE /* FinalIII.cpp in Sources */,
 				50A22A2F2618845800C9FB1E /* TextureRect.swift in Sources */,
 				506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */,
+				50A1947E2BDA597A0046849E /* CIAConfig.cpp in Sources */,
 				505D492821C155DD00A7C575 /* RomConf.swift in Sources */,
 				50BE4B5A24E7F81B008F39C9 /* NSColor.swift in Sources */,
 				50BE4B5524E7F77F008F39C9 /* URL.swift in Sources */,

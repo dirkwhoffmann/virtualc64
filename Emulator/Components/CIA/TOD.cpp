@@ -13,8 +13,6 @@
 #include "config.h"
 #include "TOD.h"
 #include "C64.h"
-// #include "CIA.h"
-// #include "CPU.h"
 #include "IOUtils.h"
 #include "PowerSupply.h"
 
@@ -71,6 +69,11 @@ TOD::_dump(Category category, std::ostream& os) const
 void
 TOD::increment()
 {
+    auto incBCD = [&](u8 x) {
+
+        return ((x & 0xF) == 9) ? u8((x & 0xF0) + 0x10) : u8((x & 0xF0) + ((x + 1) & 0xF));
+    };
+
     // Check if a tenth of a second has passed
     if (stopped || cpu.clock < nextTodTrigger) return;
     
