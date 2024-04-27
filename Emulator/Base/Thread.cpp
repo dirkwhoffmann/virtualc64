@@ -290,8 +290,11 @@ Thread::pause()
 void
 Thread::halt()
 {
-    changeStateTo(STATE_HALTED);
-    join();
+    if (state != STATE_HALTED) {
+        
+        changeStateTo(STATE_HALTED);
+        join();
+    }
 }
 
 void

@@ -144,7 +144,7 @@ struct SortedArray : public Array<T, capacity>
 template <class T, isize capacity> struct RingBuffer
 {
     // Element storage
-    T *elements = new T[capacity];
+    T *elements = new T[capacity]();
 
     // Read and write pointers
     isize r, w;

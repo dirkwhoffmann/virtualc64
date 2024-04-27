@@ -11,12 +11,12 @@ import AVFoundation
 
 public class MacAudio: NSObject {
 
-    var parent: MyController!
+    // var parent: MyController!
     var audiounit: AUAudioUnit!
-    var emu: EmulatorProxy!
+    var emu: EmulatorProxy?
 
-    var prefs: Preferences { return parent.pref }
-    
+    var sampleRate = 0.0
+
     // Indicates if the this emulator instance owns the audio unit
     var isRunning = false
     
@@ -26,15 +26,15 @@ public class MacAudio: NSObject {
     override init() {
         
         super.init()
-    }
-    
-    convenience init?(with controller: MyController) {
+    // }
+
+    // convenience init?(with controller: MyController) {
 
         debug(.lifetime, "Initializing audio interface")
 
-        self.init()
-        parent = controller
-        emu = controller.emu
+        // self.init()
+        // parent = controller
+        // emu = controller.emu
         
         // Setup component description for AudioUnit
         let compDesc = AudioComponentDescription(
@@ -54,7 +54,8 @@ public class MacAudio: NSObject {
         // Query AudioUnit
         let hardwareFormat = audiounit.outputBusses[0].format
         let channels = hardwareFormat.channelCount
-        let sampleRate = hardwareFormat.sampleRate
+        sampleRate = hardwareFormat.sampleRate
+        print("MacAudio: sampleRate = \(sampleRate)")
         let stereo = (channels > 1)
         
         // Make input bus compatible with output bus
@@ -67,7 +68,7 @@ public class MacAudio: NSObject {
         }
 
         // Inform the emulator about the sample rate
-        emu.set(.HOST_SAMPLE_RATE, value: Int(sampleRate))
+        emu?.set(.HOST_SAMPLE_RATE, value: Int(sampleRate))
 
         // Register render callback
         if stereo {
@@ -98,8 +99,10 @@ public class MacAudio: NSObject {
         do { try audiounit.allocateRenderResources() } catch {
 
             warn("Failed to allocate RenderResources")
-            return nil
+            return
         }
+
+        startPlayback()
     }
     
     func shutDown() {
@@ -117,7 +120,12 @@ public class MacAudio: NSObject {
         assert(bufferList.count == 1)
         
         let ptr = bufferList[0].mData!.assumingMemoryBound(to: Float.self)
-        emu.sid.copyMono(ptr, size: Int(frameCount))
+
+        if emu == nil {
+            memset(ptr, 0, Int(frameCount))
+        } else {
+            emu!.sid.copyMono(ptr, size: Int(frameCount))
+        }
     }
     
     private func renderStereo(inputDataList: UnsafeMutablePointer<AudioBufferList>,
@@ -128,7 +136,13 @@ public class MacAudio: NSObject {
         
         let ptr1 = bufferList[0].mData!.assumingMemoryBound(to: Float.self)
         let ptr2 = bufferList[1].mData!.assumingMemoryBound(to: Float.self)
-        emu.sid.copyStereo(ptr1, buffer2: ptr2, size: Int(frameCount))
+
+        if emu == nil {
+            memset(ptr1, 0, Int(frameCount))
+            memset(ptr2, 0, Int(frameCount))
+        } else {
+            emu!.sid.copyStereo(ptr1, buffer2: ptr2, size: Int(frameCount))
+        }
     }
     
     // Connects SID to the audio backend

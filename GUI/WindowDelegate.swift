@@ -75,10 +75,7 @@ extension MyController: NSWindowDelegate {
         inspector?.close()
         monitor?.emu = nil
         monitor?.close()
-                        
-        debug(.shutdown, "Shutting down the audio backend...")
-        macAudio.shutDown()
-        
+                                
         debug(.shutdown, "Disconnecting gaming devices...")
         gamePadManager.shutDown()
         

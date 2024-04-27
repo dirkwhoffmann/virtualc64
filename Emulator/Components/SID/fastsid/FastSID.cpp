@@ -401,9 +401,9 @@ FastSID::executeCycles(isize numCycles, SampleStream &stream)
     computedSamples = shouldHave;
     
     // Do some consistency checking
-    if (samples > buflength) {
+    if (samples >= buflength) {
         warn("Number of missing sound samples exceeds buffer size\n");
-        samples = buflength;
+        samples = buflength - 1;
     }
     
     // Check for a buffer overflow

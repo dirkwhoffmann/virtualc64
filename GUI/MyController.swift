@@ -39,9 +39,6 @@ class MyController: NSWindowController, MessageReceiver {
 
     // The current emulator configuration
     var config: Configuration!
-
-    // Audio Engine
-    var macAudio: MacAudio!
     
     // Game pad manager
     var gamePadManager: GamePadManager!
@@ -152,7 +149,7 @@ extension MyController {
 
         mydocument = document as? MyDocument
         config = Configuration(with: self)
-        macAudio = MacAudio(with: self)
+        // macAudio = MacAudio(with: self)
     }
 
     override open func windowDidLoad() {
@@ -382,16 +379,16 @@ extension MyController {
             renderer.canvas.updateTextureRect()
 
         case .DRIVE_STEP:
-            macAudio.playStepSound(volume: vol, pan: pan)
+            myApp.macAudio.playStepSound(volume: vol, pan: pan)
             refreshStatusBarTracks(drive: nr)
 
         case .DISK_INSERT:
-            macAudio.playInsertSound(volume: vol, pan: pan)
+            myApp.macAudio.playInsertSound(volume: vol, pan: pan)
             refreshStatusBarDiskIcons(drive: nr)
             inspector?.fullRefresh()
 
         case .DISK_EJECT:
-            macAudio.playEjectSound(volume: vol, pan: pan)
+            myApp.macAudio.playEjectSound(volume: vol, pan: pan)
             refreshStatusBarDiskIcons(drive: nr)
             inspector?.fullRefresh()
 
@@ -412,7 +409,7 @@ extension MyController {
             refreshStatusBar()
 
         case .DRIVE_POWER where drive.value != 0:
-            macAudio.playPowerSound(volume: vol, pan: pan)
+            myApp.macAudio.playPowerSound(volume: vol, pan: pan)
             hideOrShowDriveMenus()
             refreshStatusBar()
 
