@@ -156,10 +156,10 @@ public:
      *   combination does not make sense.
      */
     typedef void (VICII::*ViciiFunc)(void);
-    ViciiFunc functable[6][8][66] = { };
+    ViciiFunc functable[6][8][66] = {};
 
     // Function pointers currently in use
-    ViciiFunc vicfunc[66];
+    ViciiFunc vicfunc[66] = {};
 
 
     //

@@ -218,13 +218,6 @@ using namespace vc64;
 - (void)put:(CmdType)type coord:(CoordCmd)cmd;
 - (void)put:(CmdType)type action:(GamePadCmd)cmd;
 
-
-
-
-
-
-
-
 - (BOOL)isRom:(RomType)type url:(NSURL *)url;
 
 - (void)loadRom:(NSURL *)url exception:(ExceptionWrapper *)ex;
