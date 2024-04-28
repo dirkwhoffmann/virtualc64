@@ -141,7 +141,7 @@ extension MyAppDelegate {
                 c.emu.put(.FOCUS, value: 1)
 
                 print("Assigning emu to macAudio")
-                myApp.macAudio.emu = c.emu
+                myApp.macAudio.switchSource(c.emu)
                 // Start playback
                 /*
                 if !c.macAudio!.isRunning {

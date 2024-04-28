@@ -11,10 +11,19 @@ import AVFoundation
 
 public class MacAudio: NSObject {
 
-    // var parent: MyController!
-    var audiounit: AUAudioUnit!
-    var emu: EmulatorProxy?
+    // Current audio source
+    private var emu: EmulatorProxy?
 
+    // New audio source
+    private var newEmu: EmulatorProxy?
+
+    // Switch delay
+    private var switchDelay = 0
+
+    // Gateway to the host's audio unit
+    var audiounit: AUAudioUnit!
+
+    // Sample rate of the host's audio unit
     var sampleRate = 0.0
 
     // Indicates if the this emulator instance owns the audio unit
@@ -110,12 +119,22 @@ public class MacAudio: NSObject {
         debug(.shutdown, "Removing proxy...")
 
         stopPlayback()
+
         emu = nil
+        newEmu = nil
     }
     
+    func switchSource(_ newSource: EmulatorProxy) {
+
+        newEmu = newSource
+        switchDelay = 20
+    }
+
     private func renderMono(inputDataList: UnsafeMutablePointer<AudioBufferList>,
                             frameCount: UInt32) {
         
+        updateSource()
+
         let bufferList = UnsafeMutableAudioBufferListPointer(inputDataList)
         assert(bufferList.count == 1)
         
@@ -131,6 +150,8 @@ public class MacAudio: NSObject {
     private func renderStereo(inputDataList: UnsafeMutablePointer<AudioBufferList>,
                               frameCount: UInt32) {
         
+        updateSource()
+
         let bufferList = UnsafeMutableAudioBufferListPointer(inputDataList)
         assert(bufferList.count > 1)
         
@@ -145,6 +166,23 @@ public class MacAudio: NSObject {
         }
     }
     
+    private func updateSource() {
+
+        if emu != newEmu {
+
+            if switchDelay > 0 {
+
+                print("Switch countdown \(switchDelay)")
+                switchDelay -= 1
+
+            } else {
+
+                print("Switching source")
+                emu = newEmu
+            }
+        }
+    }
+
     // Connects SID to the audio backend
     @discardableResult
     func startPlayback() -> Bool {

@@ -264,10 +264,6 @@ Muxer::_pause()
 void
 Muxer::_warpOn()
 {
-    /* Warping has the unavoidable drawback that audio playback gets out of
-     * sync. To cope with it, we ramp down the volume when warping is switched
-     * on and fade in smoothly when it is switched off.
-     */
     rampDown();
 }
 
@@ -353,6 +349,17 @@ Muxer::rampUp()
 {
     trace(AUDBUF_DEBUG, "rampUp()\n");
 
+    if (emulator.isPaused()) {
+
+        trace(AUDBUF_DEBUG, "rampUp canceled (emulator pauses)\n");
+        return;
+    }
+    if (emulator.isWarping()) {
+
+        trace(AUDBUF_DEBUG, "rampUp canceled (emulator warps)\n");
+        return;
+    }
+
     const isize steps = 20000;
     volL.fadeIn(steps);
     volR.fadeIn(steps);
@@ -365,8 +372,8 @@ Muxer::rampUp(float from)
 {
     trace(AUDBUF_DEBUG, "rampUp(%f)\n", from);
 
-    volL.current = 0;
-    volR.current = 0;
+    volL.current = from;
+    volR.current = from;
 
     rampUp();
 }

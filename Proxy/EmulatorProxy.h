@@ -411,7 +411,7 @@ using namespace vc64;
 - (void)copyInterleaved:(float *)target size:(NSInteger)n;
 
 - (void)rampUp;
-- (void)rampUpFromZero;
+// - (void)rampUpFromZero;
 - (void)rampDown;
 
 - (float)drawWaveform:(u32 *)buffer w:(NSInteger)w h:(NSInteger)h scale:(float)s color:(u32)c source:(NSInteger)source;

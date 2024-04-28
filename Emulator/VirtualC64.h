@@ -821,7 +821,7 @@ public:
          *  Similar to rampUp() with a provides starting volume.
          *  @param  from    The starting volume.
          */
-        void rampUp(float from);
+        // void rampUp(float from);
 
         /** @brief  Ramps the volume down.
          *  Starting from the current volume, the volume is slowly decreased
