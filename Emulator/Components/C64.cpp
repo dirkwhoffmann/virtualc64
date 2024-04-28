@@ -1693,6 +1693,7 @@ C64::getDebugVariable(DebugFlag flag)
         case FLAG_SID_EXEC:         return SID_EXEC;
         case FLAG_SIDREG_DEBUG:     return SIDREG_DEBUG;
         case FLAG_AUDBUF_DEBUG:     return AUDBUF_DEBUG;
+        case FLAG_AUDVOL_DEBUG:     return AUDVOL_DEBUG;
 
         case FLAG_VIA_DEBUG:        return VIA_DEBUG;
         case FLAG_PIA_DEBUG:        return PIA_DEBUG;
@@ -1780,6 +1781,7 @@ C64::setDebugVariable(DebugFlag flag, bool val)
         case FLAG_SID_EXEC:         SID_EXEC        = val; break;
         case FLAG_SIDREG_DEBUG:     SIDREG_DEBUG    = val; break;
         case FLAG_AUDBUF_DEBUG:     AUDBUF_DEBUG    = val; break;
+        case FLAG_AUDVOL_DEBUG:     AUDVOL_DEBUG    = val; break;
 
         case FLAG_VIA_DEBUG:        VIA_DEBUG       = val; break;
         case FLAG_PIA_DEBUG:        PIA_DEBUG       = val; break;

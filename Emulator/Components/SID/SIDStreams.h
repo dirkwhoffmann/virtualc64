@@ -22,11 +22,12 @@ typedef util::RingBuffer<short, 2048> SampleStream;
 
 typedef struct { float left; float right; } SamplePair;
 
-class StereoStream final : public util::RingBuffer < SamplePair, 12288 > {
-    
+class StereoStream final : CoreObject, public util::RingBuffer < SamplePair, 12288 > {
+
     // Mutex for synchronizing read / write accesses
     util::ReentrantMutex mutex;
 
+    const char *objectName() const override { return "StereoStream"; }
 
     //
     // Synchronizing access

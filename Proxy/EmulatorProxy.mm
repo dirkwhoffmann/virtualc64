@@ -570,13 +570,6 @@ using namespace vc64;
     [self bridge]->rampUp();
 }
 
-/*
-- (void)rampUpFromZero
-{
-    [self bridge]->rampUp(0);
-}
-*/
-
 - (void)rampDown
 {
     [self bridge]->rampDown();

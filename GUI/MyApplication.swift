@@ -140,15 +140,8 @@ extension MyAppDelegate {
                 
                 c.emu.put(.FOCUS, value: 1)
 
-                print("Assigning emu to macAudio")
+                // Switch the audio source
                 myApp.macAudio.switchSource(c.emu)
-                // Start playback
-                /*
-                if !c.macAudio!.isRunning {
-                    c.macAudio!.startPlayback()
-                    if !c.emu.info.warping { c.emu.sid.rampUpFromZero() }
-                }
-                */
 
                 // Update the visibility of all drive menus
                 c.hideOrShowDriveMenus()
@@ -156,14 +149,6 @@ extension MyAppDelegate {
             } else {
                 
                 c.emu.put(.FOCUS, value: 0)
-
-                // Stop playback
-                /*
-                if c.macAudio!.isRunning {
-                    c.macAudio!.stopPlayback()
-                    c.emu.sid.rampDown()
-                }
-                */
             }
         }
     }

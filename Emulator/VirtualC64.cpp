@@ -602,15 +602,6 @@ VirtualC64::SIDAPI::rampUp()
     muxer.rampUp();
 }
 
-/*
-void
-VirtualC64::SIDAPI::rampUp(float from)
-{
-    assert(isUserThread());
-    muxer.rampUp(from);
-}
-*/
-
 void
 VirtualC64::SIDAPI::rampDown()
 {

@@ -132,6 +132,7 @@ extern debugflag SID_DEBUG;
 extern debugflag SID_EXEC;
 extern debugflag SIDREG_DEBUG;
 extern debugflag AUDBUF_DEBUG;
+extern debugflag AUDVOL_DEBUG;
 
 // Drive
 extern debugflag VIA_DEBUG;

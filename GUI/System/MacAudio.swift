@@ -35,15 +35,8 @@ public class MacAudio: NSObject {
     override init() {
         
         super.init()
-    // }
-
-    // convenience init?(with controller: MyController) {
 
         debug(.lifetime, "Initializing audio interface")
-
-        // self.init()
-        // parent = controller
-        // emu = controller.emu
         
         // Setup component description for AudioUnit
         let compDesc = AudioComponentDescription(
@@ -126,8 +119,17 @@ public class MacAudio: NSObject {
     
     func switchSource(_ newSource: EmulatorProxy) {
 
-        newEmu = newSource
-        switchDelay = 20
+        if (emu != newSource) {
+
+            // Fade out volume
+            emu?.sid.rampDown()
+
+            // Remember the new audio source
+            newEmu = newSource
+
+            // Schedule the assignment of the new audio source
+            switchDelay = 20
+        }
     }
 
     private func renderMono(inputDataList: UnsafeMutablePointer<AudioBufferList>,
@@ -172,13 +174,15 @@ public class MacAudio: NSObject {
 
             if switchDelay > 0 {
 
-                print("Switch countdown \(switchDelay)")
+                
+                debug(.audio, "Switch countdown \(switchDelay)")
                 switchDelay -= 1
 
             } else {
 
-                print("Switching source")
+                debug(.audio, "Switching source")
                 emu = newEmu
+                emu?.sid.rampUp()
             }
         }
     }

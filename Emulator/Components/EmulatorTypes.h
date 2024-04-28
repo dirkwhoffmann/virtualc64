@@ -66,6 +66,7 @@ enum_long(DEBUG_FLAG)
     FLAG_SID_EXEC,
     FLAG_SIDREG_DEBUG,
     FLAG_AUDBUF_DEBUG,
+    FLAG_AUDVOL_DEBUG,
 
     // Drive
     FLAG_VIA_DEBUG,
@@ -159,6 +160,7 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
             case FLAG_SID_EXEC:                 return "SID_EXEC";
             case FLAG_SIDREG_DEBUG:             return "SIDREG_DEBUG";
             case FLAG_AUDBUF_DEBUG:             return "AUDBUF_DEBUG";
+            case FLAG_AUDVOL_DEBUG:             return "AUDVOL_DEBUG";
 
                 // Drive
             case FLAG_VIA_DEBUG:                return "VIA_DEBUG";

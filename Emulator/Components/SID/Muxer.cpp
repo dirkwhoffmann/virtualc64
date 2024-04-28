@@ -248,10 +248,9 @@ Muxer::operator << (SerReader &worker)
 void
 Muxer::_run()
 {
-    if (volL.current == 0.0) {
-        debug(AUDBUF_DEBUG, "Ramping up from 0\n");
-        clear();
-    }
+    // Wipe out existing audio samples
+    if (volL.current == 0.0) clear();
+
     rampUp();
 }
 
@@ -347,16 +346,16 @@ Muxer::getSID(isize nr)
 void
 Muxer::rampUp()
 {
-    trace(AUDBUF_DEBUG, "rampUp()\n");
+    trace(AUDVOL_DEBUG, "rampUp()\n");
 
     if (emulator.isPaused()) {
 
-        trace(AUDBUF_DEBUG, "rampUp canceled (emulator pauses)\n");
+        trace(AUDVOL_DEBUG, "rampUp canceled (emulator pauses)\n");
         return;
     }
     if (emulator.isWarping()) {
 
-        trace(AUDBUF_DEBUG, "rampUp canceled (emulator warps)\n");
+        trace(AUDVOL_DEBUG, "rampUp canceled (emulator warps)\n");
         return;
     }
 
@@ -367,21 +366,23 @@ Muxer::rampUp()
     ignoreNextUnderOrOverflow();
 }
 
-void 
+/*
+void
 Muxer::rampUp(float from)
 {
-    trace(AUDBUF_DEBUG, "rampUp(%f)\n", from);
+    trace(AUDVOL_DEBUG, "rampUp(%f)\n", from);
 
     volL.current = from;
     volR.current = from;
 
     rampUp();
 }
+*/
 
 void
 Muxer::rampDown()
 {
-    trace(AUDBUF_DEBUG, "rampDown()\n");
+    trace(AUDVOL_DEBUG, "rampDown()\n");
 
     const isize steps = 2000;
     volL.fadeOut(steps);

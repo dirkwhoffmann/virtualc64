@@ -29,6 +29,9 @@ StereoStream::copyMono(float *buffer, isize n, Volume &volL, Volume &volR)
     
     if (volL.isFading()) {
         
+        debug(AUDVOL_DEBUG, "L: %f R: %f (-> %f %f)\n",
+              volL.current, volR.current, volL.target, volR.target);
+        
         for (isize i = 0; i < n; i++, volL.shift()) {
             
             SamplePair pair = read();
@@ -51,10 +54,10 @@ StereoStream::copyStereo(float *left, float *right, isize n, Volume &volL, Volum
     // The caller has to ensure that no buffer underflows occurs
     assert(count() >= n);
 
-    // printf("isFading: %d\n", volume.isFading());
-    // printf("cur: %f target: %f delta: %f\n", volume.current, volume.target[0], volume.delta[0]);
-    
     if (volL.isFading() || volR.isFading()) {
+
+        debug(AUDVOL_DEBUG, "L: %f R: %f (-> %f %f)\n",
+              volL.current, volR.current, volL.target, volR.target);
 
         for (isize i = 0; i < n; i++, volL.shift(), volR.shift()) {
             

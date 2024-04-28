@@ -32,15 +32,6 @@ CmdQueue::put(const Cmd &cmd)
     }
 }
 
-/*
-void
-CmdQueue::put(CmdType type, KeyCmd payload)
-{
-    // put( Cmd { .type = type, .key = payload } );
-    put(Cmd(type, payload));
-}
-*/
-
 bool
 CmdQueue::poll(Cmd &cmd)
 {
