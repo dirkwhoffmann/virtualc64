@@ -424,6 +424,22 @@
 				</array>
 			</dict>
 		</dict>
+		<dict>
+			<key>UTTypeDescription</key>
+			<string>RetroShell script</string>
+			<key>UTTypeIcons</key>
+			<dict/>
+			<key>UTTypeIdentifier</key>
+			<string>de.dirkwhoffmann.retro.ini</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ini</string>
+					<string>INI</string>
+				</array>
+			</dict>
+		</dict>
 	</array>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
@@ -607,6 +623,26 @@
 				<array>
 					<string>tap</string>
 					<string>TAP</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>RetroShell script</string>
+			<key>UTTypeIcons</key>
+			<dict/>
+			<key>UTTypeIdentifier</key>
+			<string>de.dirkwhoffmann.retro.ini</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ini</string>
+					<string>INI</string>
 				</array>
 			</dict>
 		</dict>

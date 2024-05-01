@@ -229,7 +229,6 @@ extension MyController: NSMenuItemValidation {
         try? emu.run()
     }
 
-    /*
     @IBAction func importConfigAction(_ sender: Any!) {
 
         let openPanel = NSOpenPanel()
@@ -243,7 +242,7 @@ extension MyController: NSMenuItemValidation {
         openPanel.canCreateDirectories = false
         openPanel.canChooseFiles = true
         openPanel.prompt = "Import"
-        openPanel.allowedFileTypes = ["ini"]
+        openPanel.allowedContentTypes = [.ini]
         openPanel.beginSheetModal(for: window!, completionHandler: { result in
 
             if result == .OK, let url = openPanel.url {
@@ -256,7 +255,6 @@ extension MyController: NSMenuItemValidation {
             }
         })
     }
-    */
 
     @IBAction func exportConfigAction(_ sender: Any!) {
 

@@ -12,6 +12,7 @@ import UniformTypeIdentifiers
 extension UTType {
 
     static let vc64 = UTType("de.dirkwhoffmann.retro.vc64")!
+    static let ini = UTType("de.dirkwhoffmann.retro.ini")!
     static let d64 = UTType("de.dirkwhoffmann.retro.d64")!
     static let g64 = UTType("de.dirkwhoffmann.retro.g64")!
     static let t64 = UTType("de.dirkwhoffmann.retro.t64")!

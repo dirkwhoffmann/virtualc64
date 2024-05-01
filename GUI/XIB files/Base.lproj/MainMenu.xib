@@ -139,13 +139,13 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="f6W-1J-YBf"/>
-                            <menuItem title="Import Configuration..." id="wOE-dg-0WH">
+                            <menuItem title="Import Script..." id="wOE-dg-0WH">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="importConfigAction:" target="-1" id="dBf-W1-X97"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Export Configuration..." id="kqX-GG-E6Q">
+                            <menuItem title="Export Configuration Script..." id="kqX-GG-E6Q">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="exportConfigAction:" target="-1" id="jX3-Pt-TIs"/>
