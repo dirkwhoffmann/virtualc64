@@ -57,7 +57,6 @@ public class MacAudio: NSObject {
         let hardwareFormat = audiounit.outputBusses[0].format
         let channels = hardwareFormat.channelCount
         sampleRate = hardwareFormat.sampleRate
-        print("MacAudio: sampleRate = \(sampleRate)")
         let stereo = (channels > 1)
         
         // Make input bus compatible with output bus
@@ -119,7 +118,7 @@ public class MacAudio: NSObject {
     
     func switchSource(_ newSource: EmulatorProxy) {
 
-        if (emu != newSource) {
+        if emu != newSource {
 
             // Fade out volume
             emu?.sid.rampDown()
@@ -174,7 +173,6 @@ public class MacAudio: NSObject {
 
             if switchDelay > 0 {
 
-                
                 debug(.audio, "Switch countdown \(switchDelay)")
                 switchDelay -= 1
 
