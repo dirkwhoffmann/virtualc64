@@ -29,22 +29,21 @@ Thumbnail::makeWithC64(const C64 &c64, isize dx, isize dy)
 void
 Thumbnail::take(const C64 &c64, isize dx, isize dy)
 {
-    u32 *source = (u32 *)c64.vic.getTexture();
-    u32 *target = screen;
-
     isize xStart = PAL::FIRST_VISIBLE_PIXEL;
     isize yStart = PAL::FIRST_VISIBLE_LINE;
 
-    width = PAL::VISIBLE_PIXELS;
-    height = c64.vic.numVisibleLines();
+    width = PAL::VISIBLE_PIXELS / dx;
+    height = c64.vic.numVisibleLines() / dy;
 
+    u32 *target = screen;
+    u32 *source = (u32 *)c64.vic.getTexture();
     source += xStart + yStart * Texture::width;
 
     for (isize y = 0; y < height; y++) {
         for (isize x = 0; x < width; x++) {
             target[x] = source[x * dx];
         }
-        source += Texture::width;
+        source += Texture::width * dy;
         target += width;
     }
     
@@ -60,6 +59,7 @@ Snapshot::isCompatible(const string &path)
 bool
 Snapshot::isCompatible(std::istream &stream)
 {
+    if (util::streamLength(stream) < 0x15) return false;
     return util::matchingStreamHeader(stream, "VC64");
 }
 
@@ -128,32 +128,13 @@ Snapshot::isTooNew() const
 bool
 Snapshot::isBeta() const
 {
-    auto header = getHeader();
-
-    return header->beta != 0;
+    return getHeader()->beta != 0;
 }
 
 void
 Snapshot::takeScreenshot(C64 &c64)
 {
-    SnapshotHeader *header = (SnapshotHeader *)data;
-    
-    header->screenshot.width = PAL::VISIBLE_PIXELS;
-    header->screenshot.height = c64.vic.numVisibleLines();
-    
-    u32 *source = (u32 *)c64.vic.getTexture();
-    u32 *target = header->screenshot.screen;
-
-    isize xStart = PAL::FIRST_VISIBLE_PIXEL;
-    isize yStart = PAL::FIRST_VISIBLE_LINE;
-    source += xStart + yStart * Texture::width;
-
-    for (isize i = 0; i < header->screenshot.height; i++) {
-        
-        std::memcpy(target, source, header->screenshot.width * 4);
-        target += header->screenshot.width;
-        source += Texture::width;
-    }
+    ((SnapshotHeader *)data)->screenshot.take(c64);
 }
 
 }

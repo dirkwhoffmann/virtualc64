@@ -42,7 +42,6 @@ class SnapshotViewer: DialogController {
         takeSnapshots = parent.emu.get(.EMU_SNAPSHOTS) != 0
         parent.emu.set(.EMU_SNAPSHOTS, enable: false)
 
-        // parent.stopSnapshotTimer()
         updateLabels()
         
         self.carousel.type = iCarouselType.timeMachine
@@ -199,7 +198,6 @@ class SnapshotViewer: DialogController {
         hideSheet()
 
         parent.emu.set(.EMU_SNAPSHOTS, enable: takeSnapshots)
-        // parent.validateSnapshotTimer()
 
         // Hide some controls
         let items: [NSView] = [
