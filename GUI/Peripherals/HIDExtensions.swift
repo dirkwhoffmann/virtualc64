@@ -49,6 +49,7 @@ extension IOHIDDevice {
     var vendorID: String { return property(key: kIOHIDVendorIDKey) ?? "" }
     var productID: String { return property(key: kIOHIDProductIDKey) ?? "" }
     var locationID: String { return property(key: kIOHIDLocationIDKey) ?? "" }
+    var manufacturerKey: String { return property(key: kIOHIDManufacturerKey) ?? "" }
     var usageKey: String { return property(key: kIOHIDPrimaryUsageKey) ?? "" }
     var builtInKey: String { return property(key: kIOHIDBuiltInKey) ?? "" }
     var transportKey: String { return property(key: kIOHIDTransportKey) ?? "" }
@@ -94,6 +95,7 @@ extension IOHIDDevice {
          * as external.
          */
         
+        let apple = manufacturerKey.hasPrefix("Apple")
         let bluetooth = transportKey.hasPrefix("Bluetooth")
         let spi = transportKey.hasPrefix("SPI")
         let builtIn = builtInKey == "1"
@@ -101,8 +103,8 @@ extension IOHIDDevice {
         // Classify all SPI connected devices as internal
         if spi { return true }
 
-        // For mice, evaluate the BuiltIn key
-        if isMouse { return builtIn }
+        // For mice, evaluate the builtIn key and the manufacturer key
+        if isMouse { return builtIn || apple }
 
         // For other device types, consider each Bluetooth device as external
         if bluetooth { return false }

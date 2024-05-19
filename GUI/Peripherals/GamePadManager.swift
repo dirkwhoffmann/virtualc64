@@ -108,8 +108,8 @@ class GamePadManager {
 
     func shutDown() {
         
-        print("GamePadManager: shutdown")
-        
+        debug(.hid, "GamePadManager: shutdown")
+
         debug(.shutdown)
         
         // Terminate communication with all connected HID devices
@@ -124,7 +124,7 @@ class GamePadManager {
     
     deinit {
         
-        print("GamePadManager: deinit")
+        debug(.hid, "GamePadManager: deinit")
         debug(.shutdown)
     }
     
@@ -179,7 +179,7 @@ class GamePadManager {
         lock.lock(); defer { lock.unlock() }
 
         debug(.hid)
-        // device.listProperties()
+        device.listProperties()
 
         // Ignore internal devices
         if device.isInternalDevice { return }
