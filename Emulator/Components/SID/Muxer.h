@@ -282,6 +282,9 @@ public:
     // Prepares for a new frame
     void beginFrame();
 
+    // Finishes the current frame
+    void endFrame();
+
     /* Executes SID until a certain cycle is reached. The function returns the
      * number of produced sound samples (not yet).
      */

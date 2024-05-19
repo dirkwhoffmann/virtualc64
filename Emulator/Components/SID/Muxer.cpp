@@ -488,20 +488,35 @@ Muxer::poke(u16 addr, u8 value)
 
     // Write the register
     sid[sidNr].poke(addr, value);
-
-    /*
-    addr &= 0x1F;
-    
-    // Keep both SID implementations up to date
-    sid[sidNr].resid.poke(addr, value);
-    sid[sidNr].fastsid.poke(addr, value);
-    */
 }
 
 void 
 Muxer::beginFrame()
 {
     setSampleRate(host.getOption(OPT_HOST_SAMPLE_RATE)); 
+}
+
+void 
+Muxer::endFrame()
+{
+    // Execute remaining SID cycles
+    muxer.executeUntil(cpu.clock);
+
+    auto s0 = sidStream[0].count();
+    auto s1 = sidStream[1].count();
+    auto s2 = sidStream[2].count();
+    auto s3 = sidStream[3].count();
+
+    auto numSamples = s0;
+    if (s1) numSamples = std::min(numSamples, s1);
+    if (s2) numSamples = std::min(numSamples, s2);
+    if (s3) numSamples = std::min(numSamples, s3);
+
+    if (isEnabled(1) || isEnabled(2) || isEnabled(3)) {
+        mixMultiSID(numSamples);
+    } else {
+        mixSingleSID(numSamples);
+    }
 }
 
 void
@@ -568,13 +583,6 @@ Muxer::executeCycles(isize numCycles)
 
         default:
             fatalError;
-    }
-    
-    // Produce the final stereo stream
-    if (isEnabled(1) || isEnabled(2) || isEnabled(3)) {
-        mixMultiSID(numSamples);
-    } else {
-        mixSingleSID(numSamples);
     }
 
     return numCycles;

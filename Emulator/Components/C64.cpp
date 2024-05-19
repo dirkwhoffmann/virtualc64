@@ -974,10 +974,8 @@ C64::endFrame()
     frame++;
     
     vic.endFrame();
+    muxer.endFrame();
 
-    // Execute remaining SID cycles
-    muxer.executeUntil(cpu.clock);
-    
     // Execute other components
     iec.execute();
     expansionport.execute();
