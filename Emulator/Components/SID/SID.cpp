@@ -63,15 +63,26 @@ SID::poke(u16 addr, u8 value)
 void 
 SID::executeUntil(Cycle targetCycle, SampleStream &stream)
 {
-    // Compute the number of missing cycles
-    Cycle missing = targetCycle - clock;
+    if (!muxer.powerSave()) {
 
-    // Make sure to run for at least one cycle to make pipelined writes work
-    if (missing < 1) missing = 1;
+        // Compute the number of missing cycles
+        Cycle missing = targetCycle - clock;
 
-    // Compute the missing samples
-    auto numSamples = resid.executeCycles(missing, stream);
-    debug(SID_EXEC, "%ld: target: %lld missing: %lld generated: %ld", objid, targetCycle, missing, numSamples);
+        // Check if SID is in sync with the CPU
+        if (missing < -1000 || missing > 1000000) {
+
+            warn("Resyncing SID %ld (%lld cycles off)\n", objid, missing);
+
+        } else {
+
+            // Make sure to run for at least one cycle to make pipelined writes worke
+            if (missing < 1) missing = 1;
+
+            // Compute the missing samples
+            auto numSamples = resid.executeCycles(missing, stream);
+            debug(SID_EXEC, "%ld: target: %lld missing: %lld generated: %ld", objid, targetCycle, missing, numSamples);
+        }
+    }
 
     clock = targetCycle;
 }

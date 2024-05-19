@@ -290,7 +290,10 @@ public:
     void executeUntil(Cycle targetCycle);
 
     // Executes SID for a certain number of CPU cycles
-    isize executeCycles(isize numCycles);
+    // isize executeCycles(isize numCycles);
+
+    // Indicates if sample synthesis should be skipped
+    bool powerSave() const;
 
 private:
     

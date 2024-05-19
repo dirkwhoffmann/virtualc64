@@ -403,11 +403,11 @@ Muxer::mappedSID(u16 addr) const
 u8 
 Muxer::peek(u16 addr)
 {
-    // Get SIDs up to date
-    executeUntil(cpu.clock);
-
     // Select the target SID
     isize sidNr = mappedSID(addr);
+
+    // Get the target SID up to date
+    sid[sidNr].executeUntil(cpu.clock, sidStream[sidNr]);
 
     addr &= 0x1F;
 
@@ -479,12 +479,12 @@ void
 Muxer::poke(u16 addr, u8 value)
 {
     trace(SIDREG_DEBUG, "poke(%x,%x)\n", addr, value);
-    
-    // Get SID up to date
-    executeUntil(cpu.clock);
 
     // Select the target SID
     isize sidNr = mappedSID(addr);
+
+    // Get the target SID up to date
+    sid[sidNr].executeUntil(cpu.clock, sidStream[sidNr]);
 
     // Write the register
     sid[sidNr].poke(addr, value);
@@ -499,7 +499,7 @@ Muxer::beginFrame()
 void 
 Muxer::endFrame()
 {
-    // Execute remaining SID cycles
+    // Execute all remaining SID cycles
     muxer.executeUntil(cpu.clock);
 
     auto s0 = sidStream[0].count();
@@ -526,11 +526,11 @@ Muxer::executeUntil(Cycle targetCycle)
     if (isEnabled(1)) sid[1].executeUntil(targetCycle, sidStream[1]);
     if (isEnabled(2)) sid[2].executeUntil(targetCycle, sidStream[2]);
     if (isEnabled(3)) sid[3].executeUntil(targetCycle, sidStream[3]);
+}
 
-#if 0
-    assert(targetCycle >= cycles);
-
-    // Skip sample synthesis in power-safe mode
+bool
+Muxer::powerSave() const
+{
     if (volL.current == 0 && volR.current == 0 && config.powerSave) {
 
         /* https://sourceforge.net/p/vice-emu/bugs/1374/
@@ -539,60 +539,10 @@ Muxer::executeUntil(Cycle targetCycle)
          * skip sample synthesis if SAMPLE_FAST and MOS8580 are selected both.
          * As a workaround, we ignore the power-saving setting in this case.
          */
-        if (config.revision != MOS_8580 || config.sampling != SAMPLING_FAST) {
-
-            cycles = targetCycle;
-            return;
-        }
+        return config.revision != MOS_8580 || config.sampling != SAMPLING_FAST;
     }
 
-    isize missingCycles  = isize(targetCycle - cycles);
-    isize consumedCycles = executeCycles(missingCycles);
-
-    cycles += consumedCycles;
-
-    debug(SID_EXEC,
-          "target: %lld missing: %ld consumed: %ld reached: %lld still missing: %lld\n",
-          targetCycle, missingCycles, consumedCycles, cycles, targetCycle - cycles);
-#endif
-}
-
-isize
-Muxer::executeCycles(isize numCycles)
-{
-    isize numSamples;
-    
-    // Run reSID for at least one cycle to make pipelined writes work
-    if (numCycles == 0) {
-        
-        numCycles = 1;
-        debug(SID_EXEC, "Running SIDs for an extra cycle\n");
-    }
-    
-    switch (config.engine) {
-            
-        case SIDENGINE_RESID:
-
-            // Run the primary SID (which is always enabled)
-            numSamples = sid[0].resid.executeCycles(numCycles, sidStream[0]);
-            debug(SID_EXEC, "Generated %ld samples.\n", numSamples);
-
-            // Run all other SIDS (if any)
-            for (isize i = 1; i < 4; i++) {
-
-                if (isEnabled(i)) {
-
-                    isize numSamples2 = sid[i].resid.executeCycles(numCycles, sidStream[i]);
-                    numSamples = std::min(numSamples, numSamples2);
-                }
-            }
-            break;
-
-        default:
-            fatalError;
-    }
-
-    return numCycles;
+    return false;
 }
 
 void
