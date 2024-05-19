@@ -289,8 +289,8 @@ ReSID::poke(u16 addr, u8 value)
 isize
 ReSID::executeCycles(isize numCycles, SampleStream &stream)
 {
-    short buf[2049];
-    isize buflength = 2048;
+    short buf[2048];
+    isize buflength = 2047;
     
     if (numCycles > PAL::CYCLES_PER_SECOND) {
         warn("Number of missing SID cycles is far too large\n");
@@ -300,7 +300,7 @@ ReSID::executeCycles(isize numCycles, SampleStream &stream)
     // Let reSID compute sound samples
     isize samples = 0;
     reSID::cycle_count cycles = (reSID::cycle_count)numCycles;
-    while (cycles) {
+    while (cycles && samples < buflength) {
         int resid = sid->clock(cycles, buf + samples, int(buflength) - int(samples));
         samples += (isize)resid;
     }
