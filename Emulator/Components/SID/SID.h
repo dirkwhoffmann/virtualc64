@@ -56,6 +56,9 @@ class SID final : public SubComponent, public Dumpable
     // Current configuration
     SIDConfig config = { };
 
+    // Mirrored SID register contents (for spypeek)
+    u8 sidreg[32];
+
     // Channel volume
     float vol = 0.0;
 
@@ -124,6 +127,18 @@ public:
     i64 getOption(Option opt) const override;
     i64 getFallback(Option opt) const override;
     void setOption(Option opt, i64 value) override;
+
+
+    //
+    // Accessing register
+    //
+
+
+    // Reads the real value of a SID register (used by the debugger only)
+    u8 spypeek(u16 addr) const;
+
+    // Writes a SID register
+    void poke(u16 addr, u8 value);
 
 
     //

@@ -21,6 +21,20 @@ SID::SID(C64 &ref, isize id) : SubComponent(ref, id)
     setClockFrequency(PAL::CLOCK_FREQUENCY);
 }
 
+u8 
+SID::spypeek(u16 addr) const
+{
+    return sidreg[addr & 0x1F];
+}
+
+void
+SID::poke(u16 addr, u8 value)
+{
+    sidreg[addr & 0x1F] = value;
+    resid.poke(addr & 0x1F, value);
+    fastsid.poke(addr & 0x1F, value);
+}
+
 u32
 SID::getClockFrequency() const
 {

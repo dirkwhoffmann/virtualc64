@@ -449,15 +449,12 @@ Muxer::spypeek(u16 addr) const
     addr &= 0x1F;
 
     if (sidNr == 0) {
+
         if (addr == 0x19) { return port1.readPotX() & port2.readPotX(); }
         if (addr == 0x1A) { return port1.readPotY() & port2.readPotY(); }
     }
 
-    /* Currently, only FastSID allows us to peek into the SID registers
-     * without causing side effects. Hence, we get the return value from there,
-     * regardless of the selected SID engine.
-     */
-    return sid[sidNr].fastsid.spypeek(addr);
+    return sid[sidNr].spypeek(addr); 
 }
 
 u8
@@ -493,11 +490,16 @@ Muxer::poke(u16 addr, u8 value)
     // Select the target SID
     isize sidNr = mappedSID(addr);
 
+    // Write the register
+    sid[sidNr].poke(addr, value);
+
+    /*
     addr &= 0x1F;
     
     // Keep both SID implementations up to date
     sid[sidNr].resid.poke(addr, value);
     sid[sidNr].fastsid.poke(addr, value);
+    */
 }
 
 void 
