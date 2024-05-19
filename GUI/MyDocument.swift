@@ -124,7 +124,7 @@ class MyDocument: NSDocument {
 
         debug(.media)
 
-        if typeName == "VC64" {
+        if typeName == UTType.vc64.identifier {
 
             if let snapshot = SnapshotProxy.make(withC64: emu) {
 

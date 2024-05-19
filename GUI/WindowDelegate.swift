@@ -64,11 +64,8 @@ extension MyController: NSWindowDelegate {
         debug(.shutdown, "Stopping renderer...")
         renderer.halt()
 
-        /*
-        debug(.shutdown, "Stopping timers...")
-        snapshotTimer?.invalidate()
-        snapshotTimer = nil
-        */
+        debug(.shutdown, "Stopping audio...")
+        myApp.macAudio.shutDown()
 
         debug(.shutdown, "Closing auxiliary windows...")
         inspector?.emu = nil

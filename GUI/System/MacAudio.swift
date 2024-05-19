@@ -108,10 +108,9 @@ public class MacAudio: NSObject {
     
     func shutDown() {
         
-        debug(.shutdown, "Removing proxy...")
+        debug(.shutdown)
 
         stopPlayback()
-
         emu = nil
         newEmu = nil
     }
