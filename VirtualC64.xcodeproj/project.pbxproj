@@ -125,8 +125,6 @@
 		504C439C24AF29AC00E69CAE /* wave.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432D24AF29AC00E69CAE /* wave.cc */; settings = {COMPILER_FLAGS = "-w"; }; };
 		504C439D24AF29AC00E69CAE /* version.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432F24AF29AC00E69CAE /* version.cc */; };
 		504C439E24AF29AC00E69CAE /* ReSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433124AF29AC00E69CAE /* ReSID.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
-		504C439F24AF29AC00E69CAE /* FastSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433524AF29AC00E69CAE /* FastSID.cpp */; };
-		504C43A024AF29AC00E69CAE /* FastVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433824AF29AC00E69CAE /* FastVoice.cpp */; };
 		504C43A124AF29AC00E69CAE /* IEC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433C24AF29AC00E69CAE /* IEC.cpp */; };
 		504C43A224AF29AC00E69CAE /* ControlPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433E24AF29AC00E69CAE /* ControlPort.cpp */; };
 		504C43A424AF29AC00E69CAE /* Keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434424AF29AC00E69CAE /* Keyboard.cpp */; };
@@ -235,8 +233,6 @@
 		50726F6F2961C9C60031F2F5 /* wave.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432D24AF29AC00E69CAE /* wave.cc */; settings = {COMPILER_FLAGS = "-w"; }; };
 		50726F702961C9C60031F2F5 /* pot.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431824AF29AC00E69CAE /* pot.cc */; settings = {COMPILER_FLAGS = "-w"; }; };
 		50726F712961C9C60031F2F5 /* voice.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431C24AF29AC00E69CAE /* voice.cc */; settings = {COMPILER_FLAGS = "-w"; }; };
-		50726F722961C9CC0031F2F5 /* FastSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433524AF29AC00E69CAE /* FastSID.cpp */; };
-		50726F732961C9CC0031F2F5 /* FastVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433824AF29AC00E69CAE /* FastVoice.cpp */; };
 		50726F742961C9D10031F2F5 /* C64Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42E124AF29AB00E69CAE /* C64Memory.cpp */; };
 		50726F752961C9DC0031F2F5 /* DriveMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434B24AF29AC00E69CAE /* DriveMemory.cpp */; };
 		50726F762961C9DC0031F2F5 /* VIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434A24AF29AC00E69CAE /* VIA.cpp */; };
@@ -735,11 +731,6 @@
 		504C433124AF29AC00E69CAE /* ReSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReSID.cpp; sourceTree = "<group>"; };
 		504C433224AF29AC00E69CAE /* Muxer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Muxer.h; sourceTree = "<group>"; };
 		504C433324AF29AC00E69CAE /* ReSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReSID.h; sourceTree = "<group>"; };
-		504C433524AF29AC00E69CAE /* FastSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastSID.cpp; sourceTree = "<group>"; };
-		504C433624AF29AC00E69CAE /* waves.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = waves.h; sourceTree = "<group>"; };
-		504C433724AF29AC00E69CAE /* FastSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastSID.h; sourceTree = "<group>"; };
-		504C433824AF29AC00E69CAE /* FastVoice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FastVoice.cpp; sourceTree = "<group>"; };
-		504C433924AF29AC00E69CAE /* FastVoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastVoice.h; sourceTree = "<group>"; };
 		504C433C24AF29AC00E69CAE /* IEC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IEC.cpp; sourceTree = "<group>"; };
 		504C433E24AF29AC00E69CAE /* ControlPort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ControlPort.cpp; sourceTree = "<group>"; };
 		504C434024AF29AC00E69CAE /* ControlPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlPort.h; sourceTree = "<group>"; };
@@ -832,7 +823,6 @@
 		5078BEB4264D735D00EDA161 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5078BEB6264D738000EDA161 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5078BEB8264D73D500EDA161 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		5078BEBA264D73F600EDA161 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5078BEBC264D740E00EDA161 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5078BEBE264D742500EDA161 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5078BEC0264D743E00EDA161 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -1662,7 +1652,6 @@
 				504C433324AF29AC00E69CAE /* ReSID.h */,
 				504C433124AF29AC00E69CAE /* ReSID.cpp */,
 				504C431324AF29AC00E69CAE /* resid */,
-				504C433424AF29AC00E69CAE /* fastsid */,
 			);
 			path = SID;
 			sourceTree = "<group>";
@@ -1701,19 +1690,6 @@
 				504C432F24AF29AC00E69CAE /* version.cc */,
 			);
 			path = resid;
-			sourceTree = "<group>";
-		};
-		504C433424AF29AC00E69CAE /* fastsid */ = {
-			isa = PBXGroup;
-			children = (
-				5078BEBA264D73F600EDA161 /* CMakeLists.txt */,
-				504C433724AF29AC00E69CAE /* FastSID.h */,
-				504C433524AF29AC00E69CAE /* FastSID.cpp */,
-				504C433924AF29AC00E69CAE /* FastVoice.h */,
-				504C433824AF29AC00E69CAE /* FastVoice.cpp */,
-				504C433624AF29AC00E69CAE /* waves.h */,
-			);
-			path = fastsid;
 			sourceTree = "<group>";
 		};
 		504C434724AF29AC00E69CAE /* Drive */ = {
@@ -2306,7 +2282,6 @@
 				50726F992961CA0D0031F2F5 /* MagicDesk.cpp in Sources */,
 				50726F442961C97B0031F2F5 /* MemUtils.cpp in Sources */,
 				50726F9B2961CA0D0031F2F5 /* Mach5.cpp in Sources */,
-				50726F732961C9CC0031F2F5 /* FastVoice.cpp in Sources */,
 				50726FB22961CA230031F2F5 /* FSDescriptors.cpp in Sources */,
 				50726F3E2961C97B0031F2F5 /* Chrono.cpp in Sources */,
 				5077AC692B5ACC5100EFAC85 /* config.cpp in Sources */,
@@ -2336,7 +2311,6 @@
 				50726F5D2961C9AC0031F2F5 /* VICII.cpp in Sources */,
 				50726F652961C9B30031F2F5 /* NamedPipe.cpp in Sources */,
 				50726F8C2961CA0D0031F2F5 /* Reu.cpp in Sources */,
-				50726F722961C9CC0031F2F5 /* FastSID.cpp in Sources */,
 				50726F422961C97B0031F2F5 /* Concurrency.cpp in Sources */,
 				50726F492961C9940031F2F5 /* MsgQueue.cpp in Sources */,
 				50726F862961C9F10031F2F5 /* FlashRom.cpp in Sources */,
@@ -2596,7 +2570,6 @@
 				50B485FD24FA1D3200844133 /* iCarousel.m in Sources */,
 				50BE4B7024E7FC21008F39C9 /* MTLDevice.swift in Sources */,
 				5055D5B726158ABC005D3DA6 /* Checksum.cpp in Sources */,
-				504C439F24AF29AC00E69CAE /* FastSID.cpp in Sources */,
 				50AA48B2292F8EC30084401D /* Peddle.cpp in Sources */,
 				50ACF4DB256EB43B003B5690 /* PowerSupply.cpp in Sources */,
 				504C43A624AF29AC00E69CAE /* Disk.cpp in Sources */,
@@ -2609,7 +2582,6 @@
 				5098C57F2658E1F400E05EFC /* DragImageView.swift in Sources */,
 				504C437224AF29AC00E69CAE /* FlashRom.cpp in Sources */,
 				50DBB3D12641101E006F45E6 /* DmaDebugger.cpp in Sources */,
-				504C43A024AF29AC00E69CAE /* FastVoice.cpp in Sources */,
 				50A194872BDA5D4D0046849E /* VICIIInfo.cpp in Sources */,
 				50BE4B7224E81266008F39C9 /* CIARegs.cpp in Sources */,
 				50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */,

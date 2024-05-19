@@ -12,4 +12,3 @@ SIDStreams.cpp
 )
 
 add_subdirectory(resid)
-add_subdirectory(fastsid)

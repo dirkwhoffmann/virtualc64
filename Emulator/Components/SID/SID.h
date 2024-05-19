@@ -14,7 +14,6 @@
 
 #include "SIDTypes.h"
 #include "ReSID.h"
-#include "FastSID.h"
 
 namespace vc64 {
 

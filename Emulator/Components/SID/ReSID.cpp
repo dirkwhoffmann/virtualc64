@@ -81,11 +81,8 @@ ReSID::_dump(Category category, std::ostream& os) const
     reSID::SID::State state = sid->read_state();
     u8 *reg = (u8 *)state.sid_register;
     u8 ft = reg[0x18] & 0x70;
-    string fts =
-    ft == FASTSID_LOW_PASS ? "LOW_PASS" :
-    ft == FASTSID_HIGH_PASS ? "HIGH_PASS" :
-    ft == FASTSID_BAND_PASS ? "BAND_PASS" : "???";
-    
+    string fts = ft == 0x10 ? "LOW_PASS" : ft == 0x20 ? "BAND_PASS" : ft == 0x40 ? "HIGH_PASS" : "???";
+
     if (category == Category::State) {
 
         os << tab("Chip");
