@@ -115,6 +115,13 @@ public class MacAudio: NSObject {
         newEmu = nil
     }
     
+    func disconnect(_ emu: EmulatorProxy) {
+
+        debug(.shutdown)
+
+        if self.emu == emu { self.emu = nil }
+    }
+
     func switchSource(_ newSource: EmulatorProxy) {
 
         if emu != newSource {

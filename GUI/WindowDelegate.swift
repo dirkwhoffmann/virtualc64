@@ -11,6 +11,8 @@ extension MyController: NSWindowDelegate {
         
     public func windowDidBecomeMain(_ notification: Notification) {
 
+        debug(.lifetime)
+
         guard let window = notification.object as? NSWindow else { return }
 
         inBackground = false
@@ -61,29 +63,31 @@ extension MyController: NSWindowDelegate {
         
         debug(.lifetime)
         
-        debug(.shutdown, "Stopping renderer...")
+        debug(.shutdown, "Stop renderer...")
         renderer.halt()
 
-        debug(.shutdown, "Stopping audio...")
-        myApp.macAudio.shutDown()
+        debug(.shutdown, "Disconnect from the audio backend...")
+        myApp.macAudio.disconnect(emu)
 
-        debug(.shutdown, "Closing auxiliary windows...")
+        debug(.shutdown, "Close the inspector panel...")
         inspector?.emu = nil
         inspector?.close()
+
+        debug(.shutdown, "Close the monitor panel...")
         monitor?.emu = nil
         monitor?.close()
                                 
-        debug(.shutdown, "Disconnecting gaming devices...")
+        debug(.shutdown, "Disconnect gaming devices...")
         gamePadManager.shutDown()
         
-        debug(.shutdown, "Shutting down the emulator...")
+        debug(.shutdown, "Shut down the emulator...")
         emu.halt()
     }
     
     func shutDown() {
         
-        debug(.shutdown, "Removing proxy...")
-        
+        debug(.shutdown, "Remove proxy...")
+
         emu.kill()
         emu = nil
     }
