@@ -301,7 +301,6 @@ Muxer::getInfo(isize nr)
     switch (config.engine) {
             
         case SIDENGINE_RESID:   info = sid[nr].resid.getInfo(); break;
-        case SIDENGINE_FASTSID: info = sid[nr].fastsid.getInfo(); break;
 
         default:
             fatalError;
@@ -321,7 +320,6 @@ Muxer::getVoiceInfo(isize nr, isize voice)
     switch (config.engine) {
             
         case SIDENGINE_RESID:   return sid[nr].resid.getVoiceInfo(voice);
-        case SIDENGINE_FASTSID: return sid[nr].fastsid.getVoiceInfo(voice);
 
         default:
             fatalError;
@@ -336,7 +334,6 @@ Muxer::getSID(isize nr)
     switch (config.engine) {
             
         case SIDENGINE_RESID:   return sid[nr].resid;
-        case SIDENGINE_FASTSID: return sid[nr].fastsid;
 
         default:
             fatalError;
@@ -433,7 +430,6 @@ Muxer::peek(u16 addr)
     switch (config.engine) {
             
         case SIDENGINE_RESID:   return sid[sidNr].resid.peek(addr);
-        case SIDENGINE_FASTSID: return sid[sidNr].fastsid.peek(addr);
 
         default:
             fatalError;
@@ -454,7 +450,7 @@ Muxer::spypeek(u16 addr) const
         if (addr == 0x1A) { return port1.readPotY() & port2.readPotY(); }
     }
 
-    return sid[sidNr].spypeek(addr); 
+    return sid[sidNr].spypeek(addr);
 }
 
 u8
@@ -553,22 +549,6 @@ Muxer::executeCycles(isize numCycles)
     
     switch (config.engine) {
             
-        case SIDENGINE_FASTSID:
-
-            // Run the primary SID (which is always enabled)
-            numSamples = sid[0].fastsid.executeCycles(numCycles, sidStream[0]);
-
-            // Run all other SIDS (if any)
-            for (isize i = 1; i < 4; i++) {
-
-                if (isEnabled(i)) {
-
-                    isize numSamples2 = sid[i].fastsid.executeCycles(numCycles, sidStream[i]);
-                    numSamples = std::min(numSamples, numSamples2);
-                }
-            }
-            break;
-
         case SIDENGINE_RESID:
 
             // Run the primary SID (which is always enabled)

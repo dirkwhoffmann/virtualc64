@@ -31,14 +31,13 @@ void
 SID::poke(u16 addr, u8 value)
 {
     sidreg[addr & 0x1F] = value;
+    
     resid.poke(addr & 0x1F, value);
-    fastsid.poke(addr & 0x1F, value);
 }
 
 u32
 SID::getClockFrequency() const
 {
-    assert(resid.getClockFrequency() == fastsid.getClockFrequency());
     return resid.getClockFrequency();
 }
 
@@ -46,13 +45,11 @@ void
 SID::setClockFrequency(u32 frequency)
 {
     resid.setClockFrequency(frequency);
-    fastsid.setClockFrequency(frequency);
 }
 
 SIDRevision 
 SID::getRevision() const
 {
-    assert(resid.getRevision() == fastsid.getRevision());
     return resid.getRevision();
 }
 
@@ -60,13 +57,11 @@ void
 SID::setRevision(SIDRevision revision)
 {
     resid.setRevision(revision);
-    fastsid.setRevision(revision);
 }
 
 double 
 SID::getSampleRate() const
 {
-    assert(resid.getSampleRate() == fastsid.getSampleRate());
     return resid.getSampleRate();
 }
 
@@ -74,14 +69,12 @@ void
 SID::setSampleRate(double rate)
 {
     resid.setSampleRate(rate);
-    fastsid.setSampleRate(rate);
 }
 
 
 bool 
 SID::getAudioFilter() const
 {
-    assert(resid.getAudioFilter() == fastsid.getAudioFilter());
     return resid.getAudioFilter();
 }
 
@@ -89,19 +82,16 @@ void
 SID::setAudioFilter(bool enable)
 {
     resid.setAudioFilter(enable);
-    fastsid.setAudioFilter(enable);
 }
 
 SamplingMethod 
 SID::getSamplingMethod() const
 {
-    // Not available for FastSID
     return resid.getSamplingMethod();
 }
 void 
 SID::setSamplingMethod(SamplingMethod method)
 {
-    // Not available for FastSID
     resid.setSamplingMethod(method);
 }
 

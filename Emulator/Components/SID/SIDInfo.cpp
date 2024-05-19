@@ -30,7 +30,6 @@ SID::_dump(Category category, std::ostream& os) const
         switch (muxer.getConfig().engine) {
 
             case SIDENGINE_RESID:   resid.dump(category, os); break;
-            case SIDENGINE_FASTSID: fastsid.dump(category, os); break;
 
             default:
                 fatalError;

@@ -52,8 +52,7 @@ struct SIDRevisionEnum : util::Reflection<SIDRevisionEnum, SIDRevision> {
 /// SID backend
 enum_long(SIDENGINE)
 {
-    SIDENGINE_FASTSID,  ///< Not recommended
-    SIDENGINE_RESID     ///< Recommended
+    SIDENGINE_RESID
 };
 typedef SIDENGINE SIDEngine;
 
@@ -68,7 +67,6 @@ struct SIDEngineEnum : util::Reflection<SIDEngineEnum, SIDEngine> {
     {
         switch (value) {
 
-            case SIDENGINE_FASTSID:  return "FASTSID";
             case SIDENGINE_RESID:    return "RESID";
         }
         return "???";

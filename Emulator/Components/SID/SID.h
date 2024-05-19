@@ -69,9 +69,8 @@ public:
 
     // Backends
     ReSID resid = ReSID(c64, objid);
-    FastSID fastsid = FastSID(c64, objid);
 
-    
+
     //
     // Methods
     //
@@ -85,8 +84,6 @@ public:
     SID& operator= (const SID& other) {
 
         CLONE(resid)
-        CLONE(fastsid)
-
         CLONE(config)
 
         return *this;
@@ -98,8 +95,8 @@ public:
     {
         worker
 
-        << resid
-        << fastsid;
+        << sidreg
+        << resid;
 
         if (isResetter(worker)) return;
 
