@@ -293,10 +293,13 @@ Interpreter::initDebugShell(Command &root)
         retroShell.dump(cia2, { Category::Config, Category::State });
     });
 
-    root.add({"i", "sid"},          "Primary SID",
+    root.add({"i", "sid"}, { }, { Arg::value }, "Primary SID",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(muxer.sid[0], { Category::Config, Category::State });
+        isize nr = parseNum(argv, 0, 0);
+        if (nr < 0 || nr > 3) throw VC64Error(ERROR_OPT_INVARG, "0 ... 3");
+
+        retroShell.dump(muxer.sid[nr], { Category::Config, Category::State });
     });
 
     root.add({"i", "muxer"},        "Audio backend",

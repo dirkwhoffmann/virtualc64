@@ -522,8 +522,14 @@ Muxer::endFrame()
 void
 Muxer::executeUntil(Cycle targetCycle)
 {
+    sid[0].executeUntil(targetCycle, sidStream[0]);
+    if (isEnabled(1)) sid[1].executeUntil(targetCycle, sidStream[1]);
+    if (isEnabled(2)) sid[2].executeUntil(targetCycle, sidStream[2]);
+    if (isEnabled(3)) sid[3].executeUntil(targetCycle, sidStream[3]);
+
+#if 0
     assert(targetCycle >= cycles);
-    
+
     // Skip sample synthesis in power-safe mode
     if (volL.current == 0 && volR.current == 0 && config.powerSave) {
 
@@ -539,15 +545,16 @@ Muxer::executeUntil(Cycle targetCycle)
             return;
         }
     }
-    
+
     isize missingCycles  = isize(targetCycle - cycles);
     isize consumedCycles = executeCycles(missingCycles);
 
     cycles += consumedCycles;
-    
+
     debug(SID_EXEC,
           "target: %lld missing: %ld consumed: %ld reached: %lld still missing: %lld\n",
           targetCycle, missingCycles, consumedCycles, cycles, targetCycle - cycles);
+#endif
 }
 
 isize
@@ -630,9 +637,7 @@ Muxer::mixMultiSID(isize numSamples)
     stream.lock();
     
     // Check for buffer overflow
-    if (stream.free() < numSamples) {
-        handleBufferOverflow();
-    }
+    if (stream.free() < numSamples) handleBufferOverflow();
     
     debug(SID_EXEC, "vol0: %f pan0: %f volL: %f volR: %f\n",
           sid[0].vol, sid[0].pan, volL.current, volR.current);

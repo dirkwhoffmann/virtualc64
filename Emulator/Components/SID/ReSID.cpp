@@ -78,15 +78,26 @@ ReSID::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
+    auto filter = [&](u8 bits) {
+
+        switch (bits & 0x70) {
+
+            case 0x00: return "NONE";
+            case 0x10: return "LOW_PASS";
+            case 0x20: return "BAND_PASS";
+            case 0x40: return "HIGH_PASS";
+            default:   return "INVALID";
+        }
+    };
+
     reSID::SID::State state = sid->read_state();
     u8 *reg = (u8 *)state.sid_register;
     u8 ft = reg[0x18] & 0x70;
-    string fts = ft == 0x10 ? "LOW_PASS" : ft == 0x20 ? "BAND_PASS" : ft == 0x40 ? "HIGH_PASS" : "???";
 
     if (category == Category::State) {
 
-        os << tab("Chip");
-        os << "ReSID " << dec(objid) << std::endl;
+        os << tab("Engine");
+        os << "ReSID" << dec(objid) << std::endl;
         os << tab("Model");
         os << SIDRevisionEnum::key(getRevision()) << std::endl;
         os << tab("Sampling rate");
@@ -98,20 +109,23 @@ ReSID::_dump(Category category, std::ostream& os) const
         os << tab("Volume");
         os << dec((u8)(reg[0x18] & 0xF)) << std::endl;
         os << tab("Filter type");
-        os << fts << std::endl;
+        os << filter(reg[0x18]) << std::endl;
         os << tab("Filter cut off");
         os << dec((u16)(reg[0x16] << 3 | (reg[0x15] & 0x07))) << std::endl;
         os << tab("Filter resonance");
         os << dec((u8)(reg[0x17] >> 4)) << std::endl;
         os << tab("Filter enable bits");
-        os << hex((u8)(reg[0x17] & 0x0F));
+        os << hex((u8)(reg[0x17] & 0x0F)) << std::endl;
 
-        for (isize i = 0, col = 0, row = 0; i <= 0x1C; i++, row = i / 4, col = i % 4) {
+        os << std::endl;
+        for (isize i = 0; i <= 0x1C; i++) {
 
-            if (col == 0 && row != 0) os << std::endl;
-            if (col != 0) os << "  ";
+            isize row = i / 4;
+            isize col = i % 4;
 
+            if (col == 0) row == 0 ? os << tab("Registers") : os << tab("");
             os << hex((u8)i) << ": " << hex(reg[i]);
+            col == 3 ? os << std::endl : os << "  ";
         }
     }
 }
@@ -291,7 +305,7 @@ ReSID::executeCycles(isize numCycles, SampleStream &stream)
 {
     short buf[2048];
     isize buflength = 2047;
-    
+
     if (numCycles > PAL::CYCLES_PER_SECOND) {
         warn("Number of missing SID cycles is far too large\n");
         numCycles = PAL::CYCLES_PER_SECOND;

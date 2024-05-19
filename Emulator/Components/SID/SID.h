@@ -58,6 +58,9 @@ class SID final : public SubComponent, public Dumpable
     // Mirrored SID register contents (for spypeek)
     u8 sidreg[32];
 
+    // This SID has been executed up to this cycle
+    Cycle clock = 0;
+
     // Channel volume
     float vol = 0.0;
 
@@ -84,6 +87,7 @@ public:
 
         CLONE(resid)
         CLONE(config)
+        CLONE(clock)
 
         return *this;
     }
@@ -95,6 +99,7 @@ public:
         worker
 
         << sidreg
+        << clock
         << resid;
 
         if (isResetter(worker)) return;
@@ -126,15 +131,26 @@ public:
 
 
     //
-    // Accessing register
+    // Accessing
     //
 
+public:
 
     // Reads the real value of a SID register (used by the debugger only)
     u8 spypeek(u16 addr) const;
 
     // Writes a SID register
     void poke(u16 addr, u8 value);
+
+
+    //
+    // Computing audio samples
+    //
+
+    /* Executes SID until a certain cycle is reached. The function returns the
+     * number of produced sound samples (not yet).
+     */
+    void executeUntil(Cycle targetCycle, SampleStream &stream);
 
 
     //

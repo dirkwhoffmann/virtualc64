@@ -21,7 +21,32 @@ SID::SID(C64 &ref, isize id) : SubComponent(ref, id)
     setClockFrequency(PAL::CLOCK_FREQUENCY);
 }
 
-u8 
+void
+SID::_dump(Category category, std::ostream& os) const
+{
+    using namespace util;
+
+    if (category == Category::Config) {
+
+        dumpConfig(os);
+    }
+
+    if (category == Category::State) {
+
+        os << tab("Chip");
+        os << dec(objid) << std::endl;
+        os << tab("Clock");
+        os << dec(clock) << std::endl;
+        os << tab("Volume");
+        os << flt(vol) << std::endl;
+        os << tab("Pan");
+        os << flt(pan) << std::endl;
+        
+        resid.dump(category, os);
+    }
+}
+
+u8
 SID::spypeek(u16 addr) const
 {
     return sidreg[addr & 0x1F];
@@ -33,6 +58,22 @@ SID::poke(u16 addr, u8 value)
     sidreg[addr & 0x1F] = value;
     
     resid.poke(addr & 0x1F, value);
+}
+
+void 
+SID::executeUntil(Cycle targetCycle, SampleStream &stream)
+{
+    // Compute the number of missing cycles
+    Cycle missing = targetCycle - clock;
+
+    // Make sure to run for at least one cycle to make pipelined writes work
+    if (missing < 1) missing = 1;
+
+    // Compute the missing samples
+    auto numSamples = resid.executeCycles(missing, stream);
+    debug(SID_EXEC, "%ld: target: %lld missing: %lld generated: %ld", objid, targetCycle, missing, numSamples);
+
+    clock = targetCycle;
 }
 
 u32

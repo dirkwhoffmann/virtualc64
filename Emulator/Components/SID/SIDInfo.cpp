@@ -13,28 +13,3 @@
 #include "config.h"
 #include "SID.h"
 #include "Emulator.h"
-
-namespace vc64 {
-
-void
-SID::_dump(Category category, std::ostream& os) const
-{
-    using namespace util;
-
-    if (category == Category::Config) {
-
-        dumpConfig(os);
-
-    } else {
-
-        switch (muxer.getConfig().engine) {
-
-            case SIDENGINE_RESID:   resid.dump(category, os); break;
-
-            default:
-                fatalError;
-        }
-    }
-}
-
-}
