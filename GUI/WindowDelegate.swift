@@ -82,14 +82,18 @@ extension MyController: NSWindowDelegate {
         
         debug(.shutdown, "Shut down the emulator...")
         emu.halt()
+
+        debug(.shutdown, "Done")
     }
-    
+
     func shutDown() {
         
         debug(.shutdown, "Remove proxy...")
 
         emu.kill()
         emu = nil
+
+        debug(.shutdown, "Done")
     }
     
     public func windowWillEnterFullScreen(_ notification: Notification) {

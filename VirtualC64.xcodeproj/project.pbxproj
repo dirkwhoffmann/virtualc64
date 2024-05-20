@@ -392,6 +392,8 @@
 		50BB3E962B7A426800B2D87B /* CmdQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E932B7A426800B2D87B /* CmdQueue.cpp */; };
 		50BB3E9A2B7A50F600B2D87B /* Synchronizable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E982B7A50F600B2D87B /* Synchronizable.cpp */; };
 		50BB3E9B2B7A50F600B2D87B /* Synchronizable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E982B7A50F600B2D87B /* Synchronizable.cpp */; };
+		50BDF9792BFB9873005AE047 /* SIDBridgeConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BDF9782BFB9873005AE047 /* SIDBridgeConfig.cpp */; };
+		50BDF97A2BFB9873005AE047 /* SIDBridgeConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BDF9782BFB9873005AE047 /* SIDBridgeConfig.cpp */; };
 		50BE4B5524E7F77F008F39C9 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5424E7F77F008F39C9 /* URL.swift */; };
 		50BE4B5824E7F80C008F39C9 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5724E7F80C008F39C9 /* FileManager.swift */; };
 		50BE4B5A24E7F81B008F39C9 /* NSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5924E7F81B008F39C9 /* NSColor.swift */; };
@@ -944,6 +946,7 @@
 		50BB3E972B7A429500B2D87B /* CmdQueueTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CmdQueueTypes.h; sourceTree = "<group>"; };
 		50BB3E982B7A50F600B2D87B /* Synchronizable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Synchronizable.cpp; sourceTree = "<group>"; };
 		50BB3E992B7A50F600B2D87B /* Synchronizable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Synchronizable.h; sourceTree = "<group>"; };
+		50BDF9782BFB9873005AE047 /* SIDBridgeConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SIDBridgeConfig.cpp; sourceTree = "<group>"; };
 		50BE4B5424E7F77F008F39C9 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		50BE4B5724E7F80C008F39C9 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		50BE4B5924E7F81B008F39C9 /* NSColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColor.swift; sourceTree = "<group>"; };
@@ -1643,6 +1646,7 @@
 				50C9318D2589E41D00D8BB94 /* Volume.h */,
 				504C433224AF29AC00E69CAE /* SIDBridge.h */,
 				504C431224AF29AC00E69CAE /* SIDBridge.cpp */,
+				50BDF9782BFB9873005AE047 /* SIDBridgeConfig.cpp */,
 				506A8A8B2B89DAF800B95383 /* SID.h */,
 				506A8A8A2B89DAF800B95383 /* SID.cpp */,
 				50A194982BDA82720046849E /* SIDConfig.cpp */,
@@ -2240,6 +2244,7 @@
 				50726FB92961CA290031F2F5 /* TextStorage.cpp in Sources */,
 				50A1949A2BDA82720046849E /* SIDConfig.cpp in Sources */,
 				50726F672961C9B80031F2F5 /* AudioPort.cpp in Sources */,
+				50BDF97A2BFB9873005AE047 /* SIDBridgeConfig.cpp in Sources */,
 				50726F912961CA0D0031F2F5 /* PageFox.cpp in Sources */,
 				50726FAA2961CA1C0031F2F5 /* Snapshot.cpp in Sources */,
 				50726F552961C99A0031F2F5 /* Peddle.cpp in Sources */,
@@ -2625,6 +2630,7 @@
 				504C438824AF29AC00E69CAE /* Mouse.cpp in Sources */,
 				504C438524AF29AC00E69CAE /* MsgQueue.cpp in Sources */,
 				50FBB62D28294C29001366F9 /* WaveformView.swift in Sources */,
+				50BDF9792BFB9873005AE047 /* SIDBridgeConfig.cpp in Sources */,
 				504C435D24AF29AC00E69CAE /* EasyFlash.cpp in Sources */,
 				504C435A24AF29AC00E69CAE /* WarpSpeed.cpp in Sources */,
 				5058A924281D10C600C223C9 /* DiskCreator.swift in Sources */,

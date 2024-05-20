@@ -17,86 +17,84 @@
 namespace vc64 {
 
 void
-AudioPort::connectMuxer(class SIDBridge *muxer)
+AudioPort::connectDataSource(class SIDBridge *bridge)
 {
-    if (this->muxer != muxer) {
+    if (dataSource != bridge) {
 
-        debug(true, "Connecting data source: %p\n", (void *)muxer);
+        debug(true, "Connecting data source: %p\n", (void *)bridge);
 
         lock();
-        disconnectMuxer(this->muxer);
-        this->muxer = muxer;
+        disconnectDataSource();
+        dataSource = bridge;
         fadeIn();
         unlock();
     }
 }
 
 void
-AudioPort::disconnectMuxer()
+AudioPort::disconnectDataSource()
 {
-    if (this->muxer) {
+    if (dataSource) {
 
-        debug(true, "Disconnecting data source: %p\n", (void *)muxer);
+        debug(true, "Disconnecting data source: %p\n", (void *)dataSource);
         
         lock();
         fadeOut();
-        this->muxer = nullptr;
+        dataSource = nullptr;
         unlock();
     }
 }
 
 void
-AudioPort::disconnectMuxer(class SIDBridge *muxer)
+AudioPort::disconnectDataSource(class SIDBridge *bridge)
 {
-    if (this->muxer == muxer) disconnectMuxer();
+    if (dataSource == bridge) disconnectDataSource();
 }
 
 void 
-AudioPort::reset(SIDBridge *muxer, bool hard)
+AudioPort::reset(SIDBridge *bridge, bool hard)
 {
-    if (this->muxer == muxer) {
+    if (dataSource == bridge) {
 
         lock();
-        wipeOut();
+        this->clear(SamplePair{0,0});
         alignWritePtr();
         unlock();
     }
 }
 
 void
-AudioPort::run(SIDBridge *muxer)
+AudioPort::run(SIDBridge *bridge)
 {
-    if (this->muxer == muxer) fadeIn();
+    if (dataSource == bridge) fadeIn();
 }
 
 void 
-AudioPort::pause(SIDBridge *muxer)
+AudioPort::pause(SIDBridge *bridge)
 {
-    if (this->muxer == muxer) fadeOut();
+    if (dataSource == bridge) fadeOut();
 }
 
 void 
-AudioPort::warpOn(SIDBridge *muxer)
+AudioPort::warpOn(SIDBridge *bridge)
 {
-    if (this->muxer == muxer) fadeOut();
+    if (dataSource == bridge) fadeOut();
 }
 
 void 
-AudioPort::warpOff(SIDBridge *muxer)
+AudioPort::warpOff(SIDBridge *bridge)
 {
-    if (this->muxer == muxer) fadeIn();
+    if (dataSource == bridge) fadeIn();
 }
 
 void 
-AudioPort::focus(SIDBridge *muxer)
+AudioPort::focus(SIDBridge *bridge)
 {
-    // if (this->muxer == muxer) fadeIn();
 }
 
 void 
-AudioPort::unfocus(SIDBridge *muxer)
+AudioPort::unfocus(SIDBridge *bridge)
 {
-    // if (this->muxer == muxer) fadeOut();
 }
 
 void
@@ -115,7 +113,8 @@ AudioPort::handleBufferUnderflow()
 
     trace(AUDBUF_DEBUG, "BUFFER UNDERFLOW (r: %ld w: %ld)\n", r, w);
 
-    // Reset the write pointer
+    // Wipe out the buffer and reset the write pointer
+    clear(SamplePair{0,0});
     alignWritePtr();
 
     // Determine the elapsed seconds since the last pointer adjustment
@@ -125,7 +124,7 @@ AudioPort::handleBufferUnderflow()
     // Check for condition (1)
     if (elapsedTime.asSeconds() > 10.0) {
 
-        if (muxer) muxer->stats.bufferUnderflows++;
+        if (dataSource) dataSource->stats.bufferUnderflows++;
         warn("Last underflow: %f seconds ago\n", elapsedTime.asSeconds());
     }
 }
@@ -150,7 +149,7 @@ AudioPort::handleBufferOverflow()
     // Check for condition (1)
     if (elapsedTime.asSeconds() > 10.0) {
 
-        if (muxer) muxer->stats.bufferOverflows++;
+        if (dataSource) dataSource->stats.bufferOverflows++;
         warn("Last overflow: %f seconds ago\n", elapsedTime.asSeconds());
     }
 }
@@ -162,7 +161,7 @@ AudioPort::updateVolume()
 
     // TODO: Set the master volume
 
-    bool muted = muxer->isPaused() || muxer->emulator.isWarping();
+    bool muted = dataSource->isPaused() || dataSource->emulator.isWarping();
     if (muted) { fadeOut(); } else { fadeIn(); }
 }
 
@@ -171,8 +170,8 @@ AudioPort::fadeIn()
 {
     debug(AUDVOL_DEBUG, "Fading in...\n");
 
-    volL.fadeIn(10000); // TODO: Get master volume from Muxer
-    volR.fadeIn(10000);
+    volL.fadeIn();
+    volR.fadeIn();
 }
 
 void 
@@ -206,8 +205,21 @@ AudioPort::generateSamples(SIDBridge *bridge)
 {
     lock();
 
-    if (this->muxer == bridge) {
+    if (this->dataSource == bridge) {
 
+        // Adjust the master volume
+        if (volL.maximum != bridge->volL) {
+
+            volL.maximum = bridge->volL;
+            if (!volL.isFadingOut()) volL.fadeIn();
+        }
+        if (volR.maximum != bridge->volR) {
+
+            volR.maximum = bridge->volR;
+            if (!volR.isFadingOut()) volR.fadeIn();
+        }
+
+        // Check how many samples can be generated
         auto s0 = bridge->sidStream[0].count();
         auto s1 = bridge->sidStream[1].count();
         auto s2 = bridge->sidStream[2].count();
@@ -218,6 +230,7 @@ AudioPort::generateSamples(SIDBridge *bridge)
         if (s2) numSamples = std::min(numSamples, s2);
         if (s3) numSamples = std::min(numSamples, s3);
 
+        // Generate the samples
         if (bridge->isEnabled(1) || bridge->isEnabled(2) || bridge->isEnabled(3)) {
             mixMultiSID(numSamples);
         } else {
@@ -239,8 +252,8 @@ AudioPort::generateSamples(SIDBridge *bridge)
 void
 AudioPort::mixSingleSID(isize numSamples)
 {
-    auto vol0 = muxer->sid[0].vol; 
-    auto pan0 = muxer->sid[0].pan;
+    auto vol0 = dataSource->sid[0].vol; 
+    auto pan0 = dataSource->sid[0].pan;
 
     debug(SID_EXEC, "vol0: %f pan0: %f volL: %f volR: %f\n", 
           vol0, pan0, volL.current, volR.current);
@@ -252,18 +265,15 @@ AudioPort::mixSingleSID(isize numSamples)
     for (isize i = 0; i < numSamples; i++) {
 
         // Read SID sample from ring buffer
-        float ch0 = (float)muxer->sidStream[0].read() * vol0;
+        float ch0 = (float)dataSource->sidStream[0].read() * vol0;
 
         // Compute left and right channel output
         float l = ch0 * (1 - pan0);
         float r = ch0 * pan0;
 
         // Apply master volume
-        if (volL.isFading() || volR.isFading()) {
-
-            volL.shift();
-            volR.shift();
-        }
+        volL.shift();
+        volR.shift();
         l *= volL.current;
         r *= volR.current;
 
@@ -278,10 +288,10 @@ AudioPort::mixSingleSID(isize numSamples)
 void
 AudioPort::mixMultiSID(isize numSamples)
 {
-    auto vol0 = muxer->sid[0].vol; auto pan0 = muxer->sid[0].pan;
-    auto vol1 = muxer->sid[1].vol; auto pan1 = muxer->sid[1].pan;
-    auto vol2 = muxer->sid[2].vol; auto pan2 = muxer->sid[2].pan;
-    auto vol3 = muxer->sid[3].vol; auto pan3 = muxer->sid[3].pan;
+    auto vol0 = dataSource->sid[0].vol; auto pan0 = dataSource->sid[0].pan;
+    auto vol1 = dataSource->sid[1].vol; auto pan1 = dataSource->sid[1].pan;
+    auto vol2 = dataSource->sid[2].vol; auto pan2 = dataSource->sid[2].pan;
+    auto vol3 = dataSource->sid[3].vol; auto pan3 = dataSource->sid[3].pan;
 
     debug(SID_EXEC, "vol0: %f pan0: %f vol1: %f pan1: %f volL: %f volR: %f\n",
           vol0, pan0, vol1, pan1, volL.current, volR.current);
@@ -294,16 +304,18 @@ AudioPort::mixMultiSID(isize numSamples)
 
         float ch0, ch1, ch2, ch3, l, r;
 
-        ch0 = (float)muxer->sidStream[0].read()  * vol0;
-        ch1 = (float)muxer->sidStream[1].read(0) * vol1;
-        ch2 = (float)muxer->sidStream[2].read(0) * vol2;
-        ch3 = (float)muxer->sidStream[3].read(0) * vol3;
+        ch0 = (float)dataSource->sidStream[0].read()  * vol0;
+        ch1 = (float)dataSource->sidStream[1].read(0) * vol1;
+        ch2 = (float)dataSource->sidStream[2].read(0) * vol2;
+        ch3 = (float)dataSource->sidStream[3].read(0) * vol3;
 
         // Compute left and right channel output
         l = ch0 * (1 - pan0) + ch1 * (1 - pan1) + ch2 * (1 - pan2) + ch3 * (1 - pan3);
         r = ch0 * pan0 + ch1 * pan1 + ch2 * pan2 + ch3 * pan3;
 
         // Apply master volume
+        volL.shift();
+        volR.shift();
         l *= volL.current;
         r *= volR.current;
 
@@ -372,6 +384,7 @@ AudioPort::copyStereo(float *left, float *right, isize n)
 
     } else {
 
+        printf("Underflow: cnt = %ld\n", cnt); 
         // Copy all we have and stepwise lower the volume to minimize cracks
         for (isize i = 0; i < cnt; i++) {
 

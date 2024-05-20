@@ -26,10 +26,10 @@ template <typename T> struct AudioVolume : Serializable {
     // Current volume
     T current = 1.0;
 
-    // Value of 'current' if no fading takes place
-    T normal = 1.0;
+    // Maximum volume
+    T maximum = 1.0;
 
-    // Target value and delta step
+    // Fading parameters
     T target = 1.0;
     T delta = 1.0;
 
@@ -41,7 +41,7 @@ template <typename T> struct AudioVolume : Serializable {
     AudioVolume<T>& operator= (const AudioVolume<T>& other) {
 
         CLONE(current)
-        CLONE(normal)
+        CLONE(maximum)
         CLONE(target)
         CLONE(delta)
 
@@ -53,7 +53,7 @@ template <typename T> struct AudioVolume : Serializable {
     {
         worker
 
-        << normal
+        << maximum
         << target
         << delta;
 
@@ -65,27 +65,23 @@ template <typename T> struct AudioVolume : Serializable {
 
     } SERIALIZERS(serialize);
 
-    // Setter and getter
-    T get() const { return current; }
-    void set(T value) { current = normal = target = value; }
-    
-    // Returns true if the volume is currently fading in or out
+    // Checks whether the volume is currently fading
     bool isFading() const { return current != target; }
+    bool isFadingIn() const { return isFading() && target != 0; }
+    bool isFadingOut() const { return isFading() && target == 0; }
 
-    // Initiates a fading effect
-    void fadeIn(isize steps) {
-        
-        target = normal;
-        target = normal;
-        delta  = normal / steps;
-        delta  = normal / steps;
+    // Fades in to the maximum volume
+    void fadeIn(isize steps = 10000) {
+
+        target = maximum;
+        delta  = std::abs(current - maximum) / steps;
     }
-    void fadeOut(isize steps) {
-        
+
+    // Fades out to zero
+    void fadeOut(isize steps = 10000) {
+
         target = 0;
-        target = 0;
-        delta  = normal / steps;
-        delta  = normal / steps;
+        delta  = std::abs(current - maximum) / steps;
     }
 
     // Shifts the current volume towards the target volume

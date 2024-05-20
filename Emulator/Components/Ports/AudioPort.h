@@ -28,7 +28,7 @@ class AudioPort final : CoreObject, public util::RingBuffer < SamplePair, 12288 
     util::ReentrantMutex mutex;
 
     // The data source
-    SIDBridge *muxer = nullptr;
+    SIDBridge *dataSource = nullptr;
 
     // Time stamp of the last write pointer alignment
     util::Time lastAlignment;
@@ -45,23 +45,20 @@ class AudioPort final : CoreObject, public util::RingBuffer < SamplePair, 12288 
 public:
 
     // Assign a data source
-    void connectMuxer(SIDBridge *muxer);
+    void connectDataSource(SIDBridge *bridge);
 
     // Remove a data source
-    void disconnectMuxer();
-    void disconnectMuxer(SIDBridge *muxer);
-
-    // Check if the provided Muxer is the active data source
-    bool isActive(SIDBridge *muxer) const { return this->muxer == muxer; }
+    void disconnectDataSource();
+    void disconnectDataSource(SIDBridge *bridge);
 
     // Delegation methods
-    void reset(SIDBridge *muxer, bool hard);
-    void run(SIDBridge *muxer);
-    void pause(SIDBridge *muxer);
-    void warpOn(SIDBridge *muxer);
-    void warpOff(SIDBridge *muxer);
-    void focus(SIDBridge *muxer);
-    void unfocus(SIDBridge *muxer);
+    void reset(SIDBridge *bridge, bool hard);
+    void run(SIDBridge *bridge);
+    void pause(SIDBridge *bridge);
+    void warpOn(SIDBridge *bridge);
+    void warpOff(SIDBridge *bridge);
+    void focus(SIDBridge *bridge);
+    void unfocus(SIDBridge *bridge);
 
 
     //
@@ -75,8 +72,8 @@ public:
     void unlock() { mutex.unlock(); }
 
     // Initializes the ring buffer with zeroes
-    void wipeOut() { this->clear(SamplePair {0,0} ); }
-    
+    // void wipeOut() { this->clear(SamplePair {0,0} ); }
+
     // Adds a sample to the ring buffer
     // void add(float l, float r) { this->write(SamplePair {l,r} ); }
 

@@ -130,8 +130,6 @@ public:
     SIDBridge& operator= (const SIDBridge& other) {
 
         CLONE_ARRAY(sid)
-
-        // CLONE(cpuFrequency)
         CLONE(config)
 
         return *this;

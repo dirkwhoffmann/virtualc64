@@ -121,7 +121,7 @@ public class MacAudio: NSObject {
         let ptr = bufferList[0].mData!.assumingMemoryBound(to: Float.self)
 
         if emu == nil {
-            memset(ptr, 0, Int(frameCount))
+            memset(ptr, 0, 4 * Int(frameCount))
         } else {
             emu!.sid.copyMono(ptr, size: Int(frameCount))
         }
@@ -137,8 +137,8 @@ public class MacAudio: NSObject {
         let ptr2 = bufferList[1].mData!.assumingMemoryBound(to: Float.self)
 
         if emu == nil {
-            memset(ptr1, 0, Int(frameCount))
-            memset(ptr2, 0, Int(frameCount))
+            memset(ptr1, 0, 4 * Int(frameCount))
+            memset(ptr2, 0, 4 * Int(frameCount))
         } else {
             emu!.sid.copyStereo(ptr1, buffer2: ptr2, size: Int(frameCount))
         }
