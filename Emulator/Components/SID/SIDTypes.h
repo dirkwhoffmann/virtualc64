@@ -115,6 +115,16 @@ struct SamplingMethodEnum : util::Reflection<SamplingMethodEnum, SamplingMethod>
 // Structures
 //
 
+typedef struct {
+
+    // Audio sample of the left stereo channel
+    float left;
+
+    // Audio sample of the right stereo channel
+    float right;
+}
+SamplePair;
+
 typedef struct
 {
     // Indicates if this SID is plugged in

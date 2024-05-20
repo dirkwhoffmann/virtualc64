@@ -18,16 +18,14 @@
 
 namespace vc64 {
 
-typedef struct { float left; float right; } SamplePair;
-
-class StereoStream final : CoreObject, public util::RingBuffer < SamplePair, 12288 > {
+class AudioPort final : CoreObject, public util::RingBuffer < SamplePair, 12288 > {
 
     const char *objectName() const override { return "StereoStream"; }
 
     // Mutex for synchronizing read / write accesses
     util::ReentrantMutex mutex;
 
-    // The active data source
+    // The data source
     class Muxer *muxer = nullptr;
 
     // Time stamp of the last write pointer alignment
@@ -46,7 +44,7 @@ class StereoStream final : CoreObject, public util::RingBuffer < SamplePair, 122
     //
 
 public:
-    
+
     AudioBufferStats getStats();
 
 
@@ -64,6 +62,7 @@ public:
 
     // Check if the provided Muxer is the active data source
     bool isActive(class Muxer *muxer) const { return this->muxer == muxer; }
+
 
     //
     // Managing the ring buffer
@@ -98,7 +97,18 @@ public:
 
 
     //
-    // Copying data
+    // Generating audio samples
+    //
+
+    // Generates samples from the audio source with a single active SID
+    void mixSingleSID(isize numSamples);
+
+    // Generates samples from the audio source with multiple active SIDs
+    void mixMultiSID(isize numSamples);
+
+
+    //
+    // Reading audio samples
     //
     
     /* Copies n audio samples into a memory buffer. These functions mark the

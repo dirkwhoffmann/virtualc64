@@ -14,7 +14,7 @@
 
 #include "SIDTypes.h"
 #include "SubComponent.h"
-#include "SIDStreams.h"
+#include "AudioPort.h"
 #include "resid/sid.h"
 
 namespace vc64 {

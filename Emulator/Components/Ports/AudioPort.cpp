@@ -16,14 +16,14 @@
 namespace vc64 {
 
 AudioBufferStats
-StereoStream::getStats()
+AudioPort::getStats()
 {
     stats.fillLevel = fillLevel();
     return stats;
 }
 
 void
-StereoStream::connectMuxer(class Muxer *muxer)
+AudioPort::connectMuxer(class Muxer *muxer)
 {
     if (this->muxer != muxer) {
 
@@ -35,7 +35,7 @@ StereoStream::connectMuxer(class Muxer *muxer)
 }
 
 void 
-StereoStream::disconnectMuxer(class Muxer *muxer)
+AudioPort::disconnectMuxer(class Muxer *muxer)
 {
     if (this->muxer && this->muxer == muxer) {
 
@@ -46,13 +46,13 @@ StereoStream::disconnectMuxer(class Muxer *muxer)
 }
 
 void
-StereoStream::alignWritePtr()
+AudioPort::alignWritePtr()
 {
     this->align(this->cap() / 2);
 }
 
 void
-StereoStream::handleBufferUnderflow()
+AudioPort::handleBufferUnderflow()
 {
     // There are two common scenarios in which buffer underflows occur:
     //
@@ -77,7 +77,7 @@ StereoStream::handleBufferUnderflow()
 }
 
 void
-StereoStream::handleBufferOverflow()
+AudioPort::handleBufferOverflow()
 {
     // There are two common scenarios in which buffer overflows occur:
     //
@@ -102,7 +102,89 @@ StereoStream::handleBufferOverflow()
 }
 
 void
-StereoStream::copyMono(float *buffer, isize n)
+AudioPort::mixSingleSID(isize numSamples)
+{
+    lock();
+
+    auto vol0 = muxer->sid[0].vol; 
+    auto pan0 = muxer->sid[0].pan;
+
+    debug(SID_EXEC, "vol0: %f pan0: %f volL: %f volR: %f\n", 
+          vol0, pan0, volL.current, volR.current);
+
+    // Check for buffer overflow
+    if (free() < numSamples) handleBufferOverflow();
+
+    // Convert sound samples to floating point values and write into ringbuffer
+    for (isize i = 0; i < numSamples; i++) {
+
+        // Read SID sample from ring buffer
+        float ch0 = (float)muxer->sidStream[0].read() * vol0;
+
+        // Compute left and right channel output
+        float l = ch0 * (1 - pan0);
+        float r = ch0 * pan0;
+
+        // Apply master volume
+        l *= volL.current;
+        r *= volR.current;
+
+        // Apply ear protection
+        assert(abs(l) < 1.0);
+        assert(abs(r) < 1.0);
+
+        write(SamplePair { l, r } );
+    }
+
+    unlock();
+}
+
+void
+AudioPort::mixMultiSID(isize numSamples)
+{
+    lock();
+
+    auto vol0 = muxer->sid[0].vol; auto pan0 = muxer->sid[0].pan;
+    auto vol1 = muxer->sid[1].vol; auto pan1 = muxer->sid[1].pan;
+    auto vol2 = muxer->sid[2].vol; auto pan2 = muxer->sid[2].pan;
+    auto vol3 = muxer->sid[3].vol; auto pan3 = muxer->sid[3].pan;
+
+    debug(SID_EXEC, "vol0: %f pan0: %f vol1: %f pan1: %f volL: %f volR: %f\n",
+          vol0, pan0, vol1, pan1, volL.current, volR.current);
+
+    // Check for buffer overflow
+    if (free() < numSamples) handleBufferOverflow();
+
+    // Convert sound samples to floating point values and write into ringbuffer
+    for (isize i = 0; i < numSamples; i++) {
+
+        float ch0, ch1, ch2, ch3, l, r;
+
+        ch0 = (float)muxer->sidStream[0].read()  * vol0;
+        ch1 = (float)muxer->sidStream[1].read(0) * vol1;
+        ch2 = (float)muxer->sidStream[2].read(0) * vol2;
+        ch3 = (float)muxer->sidStream[3].read(0) * vol3;
+
+        // Compute left and right channel output
+        l = ch0 * (1 - pan0) + ch1 * (1 - pan1) + ch2 * (1 - pan2) + ch3 * (1 - pan3);
+        r = ch0 * pan0 + ch1 * pan1 + ch2 * pan2 + ch3 * pan3;
+
+        // Apply master volume
+        l *= volL.current;
+        r *= volR.current;
+
+        // Apply ear protection
+        assert(abs(l) < 1.0);
+        assert(abs(r) < 1.0);
+
+        write(SamplePair { l, r } );
+    }
+
+    unlock();
+}
+
+void
+AudioPort::copyMono(float *buffer, isize n)
 {
     lock();
 
@@ -138,7 +220,7 @@ StereoStream::copyMono(float *buffer, isize n)
 }
 
 void
-StereoStream::copyStereo(float *left, float *right, isize n)
+AudioPort::copyStereo(float *left, float *right, isize n)
 {
     lock();
 
@@ -176,7 +258,7 @@ StereoStream::copyStereo(float *left, float *right, isize n)
 }
 
 void
-StereoStream::copyInterleaved(float *buffer, isize n)
+AudioPort::copyInterleaved(float *buffer, isize n)
 {
     lock();
 

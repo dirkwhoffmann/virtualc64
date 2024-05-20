@@ -20,7 +20,7 @@
 
 namespace vc64 {
 
-StereoStream Muxer::stream;
+AudioPort Muxer::stream;
 
 Muxer::Muxer(C64 &ref) : SubComponent(ref)
 {
@@ -370,19 +370,6 @@ Muxer::rampUp()
     ignoreNextUnderOrOverflow();
 }
 
-/*
-void
-Muxer::rampUp(float from)
-{
-    trace(AUDVOL_DEBUG, "rampUp(%f)\n", from);
-
-    volL.current = from;
-    volR.current = from;
-
-    rampUp();
-}
-*/
-
 void
 Muxer::rampDown()
 {
@@ -509,22 +496,31 @@ Muxer::endFrame()
     // Execute all remaining SID cycles
     muxer.executeUntil(cpu.clock);
 
-    if (!stream.isActive(this)) return;
+    if (stream.isActive(this)) {
 
-    auto s0 = sidStream[0].count();
-    auto s1 = sidStream[1].count();
-    auto s2 = sidStream[2].count();
-    auto s3 = sidStream[3].count();
+        auto s0 = sidStream[0].count();
+        auto s1 = sidStream[1].count();
+        auto s2 = sidStream[2].count();
+        auto s3 = sidStream[3].count();
 
-    auto numSamples = s0;
-    if (s1) numSamples = std::min(numSamples, s1);
-    if (s2) numSamples = std::min(numSamples, s2);
-    if (s3) numSamples = std::min(numSamples, s3);
+        auto numSamples = s0;
+        if (s1) numSamples = std::min(numSamples, s1);
+        if (s2) numSamples = std::min(numSamples, s2);
+        if (s3) numSamples = std::min(numSamples, s3);
 
-    if (isEnabled(1) || isEnabled(2) || isEnabled(3)) {
-        mixMultiSID(numSamples);
+        if (isEnabled(1) || isEnabled(2) || isEnabled(3)) {
+            stream.mixMultiSID(numSamples);
+        } else {
+            stream.mixSingleSID(numSamples);
+        }
+
     } else {
-        mixSingleSID(numSamples);
+
+        // Trash all generated samples
+        sidStream[0].clear();
+        sidStream[1].clear();
+        sidStream[2].clear();
+        sidStream[3].clear();
     }
 }
 
@@ -555,86 +551,6 @@ Muxer::powerSave() const
 }
 
 void
-Muxer::mixSingleSID(isize numSamples)
-{    
-    stream.lock();
-    
-    // Check for buffer overflow
-    if (stream.free() < numSamples) {
-        handleBufferOverflow();
-    }
-    
-    debug(SID_EXEC, "vol0: %f pan0: %f volL: %f volR: %f\n",
-          sid[0].vol, sid[0].pan, volL.current, volR.current);
-
-    // Convert sound samples to floating point values and write into ringbuffer
-    for (isize i = 0; i < numSamples; i++) {
-        
-        // Read SID sample from ring buffer
-        float ch0 = (float)sidStream[0].read() * sid[0].vol;
-
-        // Compute left and right channel output
-        float l = ch0 * (1 - sid[0].pan);
-        float r = ch0 * sid[0].pan;
-
-        // Apply master volume
-        l *= volL.current;
-        r *= volR.current;
-        
-        // Apply ear protection
-        assert(abs(l) < 1.0);
-        assert(abs(r) < 1.0);
-        
-        stream.write(SamplePair { l, r } );
-    }
-    stream.unlock();
-}
-
-void
-Muxer::mixMultiSID(isize numSamples)
-{
-    stream.lock();
-    
-    // Check for buffer overflow
-    if (stream.free() < numSamples) handleBufferOverflow();
-    
-    debug(SID_EXEC, "vol0: %f pan0: %f volL: %f volR: %f\n",
-          sid[0].vol, sid[0].pan, volL.current, volR.current);
-
-    // Convert sound samples to floating point values and write into ringbuffer
-    for (isize i = 0; i < numSamples; i++) {
-        
-        float ch0, ch1, ch2, ch3, l, r;
-        
-        ch0 = (float)sidStream[0].read()  * sid[0].vol;
-        ch1 = (float)sidStream[1].read(0) * sid[1].vol;
-        ch2 = (float)sidStream[2].read(0) * sid[2].vol;
-        ch3 = (float)sidStream[3].read(0) * sid[3].vol;
-
-        // Compute left channel output
-        l =
-        ch0 * (1 - sid[0].pan) + ch1 * (1 - sid[1].pan) +
-        ch2 * (1 - sid[2].pan) + ch3 * (1 - sid[3].pan);
-
-        // Compute right channel output
-        r =
-        ch0 * sid[0].pan + ch1 * sid[1].pan +
-        ch2 * sid[2].pan + ch3 * sid[0].pan;
-
-        // Apply master volume
-        l *= volL.current;
-        r *= volR.current;
-        
-        // Apply ear protection
-        assert(abs(l) < 1.0);
-        assert(abs(r) < 1.0);
-        
-        stream.write(SamplePair { l, r } );
-    }
-    stream.unlock();
-}
-
-void
 Muxer::clearSampleBuffers()
 {
     for (int i = 0; i < 4; i++) clearSampleBuffer(i);
@@ -655,160 +571,9 @@ Muxer::ringbufferData(isize offset, float *left, float *right)
 }
 
 void
-Muxer::handleBufferUnderflow()
-{
-    // There are two common scenarios in which buffer underflows occur:
-    //
-    // (1) The consumer runs slightly faster than the producer.
-    // (2) The producer is halted or not startet yet.
-    
-    trace(AUDBUF_DEBUG, "BUFFER UNDERFLOW (r: %ld w: %ld)\n", stream.r, stream.w);
-
-    // Reset the write pointer
-    stream.alignWritePtr();
-    
-    // Determine the elapsed seconds since the last pointer adjustment
-    auto elapsedTime = util::Time::now() - lastAlignment;
-    lastAlignment = util::Time::now();
-    
-    // Adjust the sample rate, if condition (1) holds
-    if (elapsedTime.asSeconds() > 10.0) {
-
-        stats.bufferUnderflows++;
-        
-        // Increase the sample rate based on what we've measured
-        /*
-        isize offPerSecond = (isize)(stream.count() / elapsedTime.asSeconds());
-        setSampleRate(getSampleRate() + offPerSecond);
-        */
-    }
-}
-
-void
-Muxer::handleBufferOverflow()
-{
-    // There are two common scenarios in which buffer overflows occur:
-    //
-    // (1) The consumer runs slightly slower than the producer
-    // (2) The consumer is halted or not startet yet
-    
-    trace(AUDBUF_DEBUG, "BUFFER OVERFLOW (r: %ld w: %ld)\n", stream.r, stream.w);
-
-    // Reset the write pointer
-    stream.alignWritePtr();
-    
-    // Determine the number of elapsed seconds since the last adjustment
-    auto elapsedTime = util::Time::now() - lastAlignment;
-    lastAlignment = util::Time::now();
-    trace(AUDBUF_DEBUG, "elapsedTime: %f\n", elapsedTime.asSeconds());
-    
-    // Adjust the sample rate, if condition (1) holds
-    if (elapsedTime.asSeconds() > 10.0) {
-        
-        stats.bufferOverflows++;
-        
-        // Decrease the sample rate based on what we've measured
-        /*
-        isize offPerSecond = (isize)(stream.count() / elapsedTime.asSeconds());
-        double newSampleRate = getSampleRate() - offPerSecond;
-
-        trace(AUDBUF_DEBUG, "Changing sample rate to %f\n", newSampleRate);
-        setSampleRate(newSampleRate);
-        */
-    }
-}
-
-void
 Muxer::ignoreNextUnderOrOverflow()
 {
     lastAlignment = util::Time::now();
-}
-
-void
-Muxer::copyMono(float *target, isize n)
-{
-    stream.copyMono(target, n);
-    /*
-    if (recorder.isRecording()) {
-
-        // Silence audio when the screen recorder is active
-        for (isize i = 0; i < n; i++) target[i] = 0.0;
-        return;
-    }
-    
-    stream.lock();
-
-    if (stream.isActive(this)) {
-
-        // Check for a buffer underflow
-        if (stream.count() < n) handleBufferUnderflow();
-
-        // Copy sound samples
-        stream.copyMono(target, n, volL, volR);
-    }
-    stream.unlock();
-    */
-}
-
-void
-Muxer::copyStereo(float *target1, float *target2, isize n)
-{
-    stream.copyStereo(target1, target2, n);
-
-    /*
-    if (recorder.isRecording()) {
-
-        // Silence audio when the screen recorder is active
-        for (isize i = 0; i < n; i++) target1[i] = target2[i] = 0.0;
-        return;
-    }
-
-    stream.lock();
-
-    if (true) { // stream.isActive(this)) {
-
-        // printf("%p: Copying %ld samples\n", (void *)this, n);
-
-        // Check for a buffer underflow
-        if (stream.count() < n) handleBufferUnderflow();
-
-        // Copy sound samples
-        stream.copyStereo(target1, target2, n, volL, volR);
-
-    } else {
-
-        printf("%p: Not active\n", (void *)this);
-    }
-
-    stream.unlock();
-    */
-}
-
-void
-Muxer::copyInterleaved(float *target, isize n)
-{
-    stream.copyInterleaved(target, n);
-
-    /*
-    if (recorder.isRecording()) {
-
-        // Silence audio when the screen recorder is active
-        for (isize i = 0; i < n; i++) target[i] = 0.0;
-        return;
-    }
-
-    stream.lock();
-
-    if (stream.isActive(this)) {
-
-        // Check for a buffer underflow
-        if (stream.count() < n) handleBufferUnderflow();
-
-        // Read sound samples
-        stream.copyInterleaved(target, n, volL, volR);
-    }
-    stream.unlock();
-    */
 }
 
 float

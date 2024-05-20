@@ -16,7 +16,7 @@
 #include "SIDTypes.h"
 #include "Constants.h"
 #include "Volume.h"
-#include "SIDStreams.h"
+#include "AudioPort.h"
 #include "SID.h"
 #include "Chrono.h"
 
@@ -31,11 +31,11 @@ namespace vc64 {
  *          |   --------       |                              |
  *          |                  |                              |
  *          |   --------  vol  |             --------------   |
- *   SID 1 --->| Buffer |----->|          ->| StereoStream |-----> Speaker
+ *   SID 1 --->| Buffer |----->|          ->|  AudioPort  |-----> Speaker
  *          |   --------       |   pan   |   --------------   |
  *          |                  |-------->|                    |
  *          |   --------  vol  |  l vol  |   --------------
- *   SID 2 --->| Buffer |----->|  r vol   ->| StereoStream |-----> Recorder
+ *   SID 2 --->| Buffer |----->|  r vol   ->|  AudioPort  |-----> Recorder
  *          |   --------       |             --------------   |
  *          |                  |                              |
  *          |   --------  vol  |                              |
@@ -120,7 +120,7 @@ public:
     /* The mixed stereo stream. This stream contains the final audio stream
      * ready to be handed over to the audio device of the host OS.
      */
-    static StereoStream stream;
+    static AudioPort stream;
 
     
     //
@@ -267,13 +267,13 @@ public:
      * audio device of the host machine needs sound samples than SID hasn't
      * produced, yet.
      */
-    void handleBufferUnderflow();
-    
+    // void handleBufferUnderflow();
+
     /* Handles a buffer overflow condition. A buffer overflow occurs when SID
      * is producing more samples than the audio device of the host machine is
      * able to consume.
      */
-    void handleBufferOverflow();
+    // void handleBufferOverflow();
     
     // Signals to ignore the next underflow or overflow condition.
     void ignoreNextUnderOrOverflow();
@@ -294,23 +294,6 @@ public:
 
     // Indicates if sample synthesis should be skipped
     bool powerSave() const;
-
-private:
-    
-    // Called by executeCycles to produce the final stereo stream
-    void mixSingleSID(isize numSamples);
-    void mixMultiSID(isize numSamples);
-
-    
-    //
-    // Copying data from the ring buffer
-    //
-    
-public:
-    
-    void copyMono(float *buffer, isize n);
-    void copyStereo(float *left, float *right, isize n);
-    void copyInterleaved(float *buffer, isize n);
 
     
     //

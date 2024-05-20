@@ -613,21 +613,21 @@ void
 VirtualC64::SIDAPI::copyMono(float *buffer, isize n)
 {
     assert(isUserThread());
-    muxer.copyMono(buffer, n);
+    muxer.stream.copyMono(buffer, n);
 }
 
 void
 VirtualC64::SIDAPI::copyStereo(float *left, float *right, isize n)
 {
     assert(isUserThread());
-    muxer.copyStereo(left, right, n);
+    muxer.stream.copyStereo(left, right, n);
 }
 
 void
 VirtualC64::SIDAPI::copyInterleaved(float *buffer, isize n)
 {
     assert(isUserThread());
-    muxer.copyInterleaved(buffer, n);
+    muxer.stream.copyInterleaved(buffer, n);
 }
 
 float
