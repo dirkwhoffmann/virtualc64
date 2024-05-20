@@ -204,7 +204,7 @@ C64::C64(class Emulator& ref, isize id) : CoreComponent(ref, id)
         &cpu,
         &cia1, &cia2,
         &vic,
-        &muxer,
+        &sidBridge,
         &supply,
         &port1,
         &port2,
@@ -323,7 +323,7 @@ C64::updateClockFrequency()
     auto nativeFrequency = vic.getFrequency();
     auto chosenFrequency = nativeFrequency * chosenFps / nativeFps;
 
-    muxer.setClockFrequency((u32)chosenFrequency);
+    sidBridge.setClockFrequency((u32)chosenFrequency);
     durationOfOneCycle = 10000000000 / vic.getFrequency();
 }
 
@@ -851,7 +851,7 @@ C64::_dump(Category category, std::ostream& os) const
         os << dec(sizeof(CIA)) << " Bytes" << std::endl;
         os << tab("VICII");
         os << dec(sizeof(VICII)) << " Bytes" << std::endl;
-        os << tab("Muxer");
+        os << tab("SIDBridge");
         os << dec(sizeof(SIDBridge)) << " Bytes" << std::endl;
         os << tab("Power supply");
         os << dec(sizeof(PowerSupply)) << " Bytes" << std::endl;
@@ -976,7 +976,7 @@ C64::endFrame()
     frame++;
     
     vic.endFrame();
-    muxer.endFrame();
+    sidBridge.endFrame();
 
     // Execute other components
     iec.execute();
@@ -1123,7 +1123,7 @@ C64::processINSEvent(EventID id)
         case INS_MEM:       mem.record(); break;
         case INS_CIA:       cia1.record(); cia2.record(); break;
         case INS_VICII:     vic.record(); break;
-        case INS_SID:       muxer.record(); break;
+        case INS_SID:       sidBridge.record(); break;
         // case INS_EVENTS:    c64.record(); break;
 
         default:

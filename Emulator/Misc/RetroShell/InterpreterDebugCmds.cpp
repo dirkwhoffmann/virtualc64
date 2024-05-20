@@ -299,13 +299,13 @@ Interpreter::initDebugShell(Command &root)
         isize nr = parseNum(argv, 0, 0);
         if (nr < 0 || nr > 3) throw VC64Error(ERROR_OPT_INVARG, "0 ... 3");
 
-        retroShell.dump(muxer.sid[nr], { Category::Config, Category::State });
+        retroShell.dump(sidBridge.sid[nr], { Category::Config, Category::State });
     });
 
-    root.add({"i", "muxer"},        "Audio backend",
+    root.add({"i", "sidbridge"},    "Audio backend",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(muxer, { Category::Config, Category::State });
+        retroShell.dump(sidBridge, { Category::Config, Category::State });
     });
 
     root.add({"i", "expansion"},    "Expansion port",
@@ -452,7 +452,7 @@ Interpreter::initDebugShell(Command &root)
     root.add({"r", "sid"},          "Primary SID",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(muxer.sid[0], Category::Registers);
+        retroShell.dump(sidBridge.sid[0], Category::Registers);
     });
 
     root.popGroup();

@@ -154,17 +154,6 @@ AudioPort::handleBufferOverflow()
     }
 }
 
-void 
-AudioPort::updateVolume()
-{
-    debug(AUDVOL_DEBUG, "updateVolume()\n");
-
-    // TODO: Set the master volume
-
-    bool muted = dataSource->isPaused() || dataSource->emulator.isWarping();
-    if (muted) { fadeOut(); } else { fadeIn(); }
-}
-
 void
 AudioPort::fadeIn()
 {
@@ -211,12 +200,12 @@ AudioPort::generateSamples(SIDBridge *bridge)
         if (volL.maximum != bridge->volL) {
 
             volL.maximum = bridge->volL;
-            if (!volL.isFadingOut()) volL.fadeIn();
+            if (!volL.isFadingOut()) volL.target = volL.maximum;
         }
         if (volR.maximum != bridge->volR) {
 
             volR.maximum = bridge->volR;
-            if (!volR.isFadingOut()) volR.fadeIn();
+            if (!volR.isFadingOut()) volR.target = volR.maximum;
         }
 
         // Check how many samples can be generated

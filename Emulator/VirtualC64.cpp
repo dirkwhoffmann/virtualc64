@@ -37,7 +37,7 @@ cpu(*this),
 cia1(*this, main.cia1),
 cia2(*this, main.cia2),
 vicii(*this),
-muxer(*this),
+sidBridge(*this),
 dmaDebugger(*this),
 keyboard(*this),
 datasette(*this),
@@ -557,42 +557,42 @@ SIDBridgeConfig
 VirtualC64::SIDAPI::getConfig() const
 {
     assert(isUserThread());
-    return muxer.getConfig();
+    return sidBridge.getConfig();
 }
 
 SIDInfo
 VirtualC64::SIDAPI::getInfo(isize nr) const
 {
     assert(isUserThread());
-    return muxer.getInfo(nr);
+    return sidBridge.getInfo(nr);
 }
 
 SIDInfo
 VirtualC64::SIDAPI::getCachedInfo(isize nr) const
 {
     assert(isUserThread());
-    return muxer.getCachedInfo(nr);
+    return sidBridge.getCachedInfo(nr);
 }
 
 VoiceInfo
 VirtualC64::SIDAPI::getVoiceInfo(isize nr, isize voice) const
 {
     assert(isUserThread());
-    return muxer.getVoiceInfo(nr, voice);
+    return sidBridge.getVoiceInfo(nr, voice);
 }
 
 VoiceInfo
 VirtualC64::SIDAPI::getCachedVoiceInfo(isize nr, isize voice) const
 {
     assert(isUserThread());
-    return muxer.getCachedVoiceInfo(nr, voice);
+    return sidBridge.getCachedVoiceInfo(nr, voice);
 }
 
 SIDBridgeStats
 VirtualC64::SIDAPI::getStats() const
 {
     assert(isUserThread());
-    return muxer.getStats();
+    return sidBridge.getStats();
 }
 
 void
@@ -621,7 +621,7 @@ VirtualC64::SIDAPI::draw(u32 *buffer, isize width, isize height,
                          float maxAmp, u32 color, isize sid) const
 {
     assert(isUserThread());
-    return muxer.draw(buffer, width, height, maxAmp, color, sid);
+    return sidBridge.draw(buffer, width, height, maxAmp, color, sid);
 }
 
 

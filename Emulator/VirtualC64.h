@@ -811,24 +811,23 @@ public:
         /// @name Retrieving audio data
         /// @{
 
-        /** @brief  Extracts a number of mono samples from the audio buffers
-         *  Internally, the muxer maintains two buffers, one for the left audio
-         *  channel, and one for the right audio channel. When this function
-         *  is used, both internal stream are added together and written to
-         *  to the provided destination buffer.
+        /** @brief  Extracts a number of mono samples from the audio buffer
+         *  Internally, the audio port maintains a ringbuffer storing stereo
+         *  audio samples. When this function is used, both internal stream are
+         *  added together and written to to the destination buffer.
          *  @param  buffer  Pointer to the destination buffer
          *  @param  n       Number of sound samples to copy.
          */
         void copyMono(float *buffer, isize n);
 
-        /** @brief  Extracts a number of stereo samples from the audio buffers.
+        /** @brief  Extracts a number of stereo samples from the audio buffer.
          *  @param  left    Pointer to the left channel's destination buffer.
          *  @param  right   Pointer to the right channel's destination buffer.
          *  @param  n       Number of sound samples to copy.
          */
         void copyStereo(float *left, float *right, isize n);
 
-        /** @brief  Extracts a number of stereo samples from the audio buffers.
+        /** @brief  Extracts a number of stereo samples from the audio buffer.
          *  This function has to be used if a stereo stream is managed in a
          *  single destination buffer. The samples of both channels will be
          *  interleaved, that is, a sample for the left channel will be
@@ -849,7 +848,7 @@ public:
                    float maxAmp, u32 color, isize sid = -1) const;
         /// @}
 
-    } muxer;
+    } sidBridge;
 
 
     /** DMA Debugger Public API

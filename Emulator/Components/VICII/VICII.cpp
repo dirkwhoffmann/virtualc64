@@ -846,7 +846,7 @@ VICII::beginScanline()
     if (line == 0) {
 
         beginFrame();
-        muxer.beginFrame();
+        sidBridge.beginFrame();
     }
 
     // Reset some variables

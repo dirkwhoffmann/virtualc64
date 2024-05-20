@@ -410,7 +410,7 @@ Interpreter::initCommandShell(Command &root)
 
     for (isize i = 0; i < 4; i++) {
 
-        auto &sid = muxer.sid[i];
+        auto &sid = sidBridge.sid[i];
 
         cmd = sid.shellName();
         description = sid.description();
@@ -421,12 +421,12 @@ Interpreter::initCommandShell(Command &root)
                  "Displays the current configuration",
                  [this](Arguments& argv, long value) {
 
-            retroShell.dump(muxer.sid[value], Category::Config);
+            retroShell.dump(sidBridge.sid[value], Category::Config);
         }, i);
 
         root.add({cmd, "set"}, "Configures the component");
 
-        for (auto &opt : muxer.sid[i].getOptions()) {
+        for (auto &opt : sidBridge.sid[i].getOptions()) {
 
             root.add({cmd, "set", OptionEnum::plainkey(opt)},
                      {OptionParser::create(opt)->argList()},
@@ -446,8 +446,8 @@ Interpreter::initCommandShell(Command &root)
     // Components (SIDBridge)
     //
 
-    cmd = muxer.shellName();
-    description = muxer.description();
+    cmd = sidBridge.shellName();
+    description = sidBridge.description();
     root.add({cmd}, description);
 
     root.pushGroup("");
@@ -456,12 +456,12 @@ Interpreter::initCommandShell(Command &root)
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(muxer, Category::Config);
+        retroShell.dump(sidBridge, Category::Config);
     });
 
     root.add({cmd, "set"}, "Configures the component");
 
-    for (auto &opt : muxer.getOptions()) {
+    for (auto &opt : sidBridge.getOptions()) {
 
         root.add({cmd, "set", OptionEnum::plainkey(opt)},
                  {OptionParser::create(opt)->argList()},

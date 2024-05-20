@@ -122,7 +122,7 @@ public:
     CIA1 cia1 = CIA1(*this);
     CIA2 cia2 = CIA2(*this);
     VICII vic = VICII(*this);
-    SIDBridge muxer = SIDBridge(*this);
+    SIDBridge sidBridge = SIDBridge(*this);
 
     // Logic board
     static AudioPort audioPort;
@@ -324,7 +324,7 @@ public:
         CLONE(cia1)
         CLONE(cia2)
         CLONE(vic)
-        CLONE(muxer)
+        CLONE(sidBridge)
         CLONE(supply)
         CLONE(port1)
         CLONE(port2)
@@ -363,7 +363,7 @@ public:
         << cia1
         << cia2
         << vic
-        << muxer
+        << sidBridge
         << supply
         << port1
         << port2

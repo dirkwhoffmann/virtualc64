@@ -41,7 +41,7 @@ powerSupply(ref.supply),
 recorder(ref.recorder),
 regressionTester(ref.regressionTester),
 retroShell(ref.retroShell),
-muxer(ref.muxer),
+sidBridge(ref.sidBridge),
 vic(ref.vic)
 {
 

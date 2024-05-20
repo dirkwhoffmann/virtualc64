@@ -187,7 +187,7 @@ Emulator::get(Option option) const
         case OPT_AUD_VOL_L:
         case OPT_AUD_VOL_R:
 
-            return main.muxer.getOption(option);
+            return main.sidBridge.getOption(option);
 
         case OPT_RAM_PATTERN:
         case OPT_SAVE_ROMS:
@@ -224,10 +224,10 @@ Emulator::get(Option option, isize id) const
         case OPT_AUD_PAN:
         case OPT_AUD_VOL:
 
-            if (id == 0) return main.muxer.sid[0].getOption(option);
-            if (id == 1) return main.muxer.sid[1].getOption(option);
-            if (id == 2) return main.muxer.sid[2].getOption(option);
-            if (id == 3) return main.muxer.sid[3].getOption(option);
+            if (id == 0) return main.sidBridge.sid[0].getOption(option);
+            if (id == 1) return main.sidBridge.sid[1].getOption(option);
+            if (id == 2) return main.sidBridge.sid[2].getOption(option);
+            if (id == 3) return main.sidBridge.sid[3].getOption(option);
             fatalError;
 
         case OPT_DRV_CONNECT:
@@ -494,10 +494,10 @@ Emulator::set(Option option, i64 value)
         case OPT_SID_ENABLE:
         case OPT_SID_ADDRESS:
 
-            main.muxer.sid[0].setOption(option, value);
-            main.muxer.sid[1].setOption(option, value);
-            main.muxer.sid[2].setOption(option, value);
-            main.muxer.sid[3].setOption(option, value);
+            main.sidBridge.sid[0].setOption(option, value);
+            main.sidBridge.sid[1].setOption(option, value);
+            main.sidBridge.sid[2].setOption(option, value);
+            main.sidBridge.sid[3].setOption(option, value);
 
         case OPT_SID_REVISION:
         case OPT_SID_FILTER:
@@ -509,7 +509,7 @@ Emulator::set(Option option, i64 value)
         case OPT_AUD_VOL_L:
         case OPT_AUD_VOL_R:
 
-            main.muxer.setOption(option, value);
+            main.sidBridge.setOption(option, value);
             break;
 
         case OPT_RAM_PATTERN:
@@ -650,7 +650,7 @@ Emulator::set(Option option, isize id, i64 value)
         case OPT_AUD_VOL_L:
         case OPT_AUD_VOL_R:
 
-            main.muxer.setOption(option, value);
+            main.sidBridge.setOption(option, value);
             break;
 
         case OPT_SID_ENABLE:
@@ -658,7 +658,7 @@ Emulator::set(Option option, isize id, i64 value)
         case OPT_AUD_PAN:
         case OPT_AUD_VOL:
 
-            main.muxer.sid[id].setOption(option, value);
+            main.sidBridge.sid[id].setOption(option, value);
             break;
 
         case OPT_DRV_AUTO_CONFIG:

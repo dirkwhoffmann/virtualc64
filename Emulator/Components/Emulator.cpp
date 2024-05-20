@@ -65,7 +65,7 @@ Emulator::initialize()
     ahead.initialize();
 
     // Register the audio sample provider
-    C64::audioPort.connectDataSource(&main.muxer);
+    C64::audioPort.connectDataSource(&main.sidBridge);
 
     // Perform a hard reset
     main.hardReset();
@@ -241,8 +241,8 @@ Emulator::update()
 
                 debug(true, "CMD_FOCUS: %lld\n", cmd.value);
                 host.focus = bool(cmd.value);
-                if (cmd.value == 0) C64::audioPort.disconnectDataSource(&main.muxer);
-                if (cmd.value == 1) C64::audioPort.connectDataSource(&main.muxer);
+                if (cmd.value == 0) C64::audioPort.disconnectDataSource(&main.sidBridge);
+                if (cmd.value == 1) C64::audioPort.connectDataSource(&main.sidBridge);
                 break;
 
             default:

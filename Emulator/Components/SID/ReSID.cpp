@@ -334,7 +334,7 @@ ReSID::executeCycles(isize numCycles, SampleStream &stream)
 isize
 ReSID::executeCycles(isize numCycles)
 {
-    return executeCycles(numCycles, muxer.sidStream[objid]);
+    return executeCycles(numCycles, sidBridge.sidStream[objid]);
 }
 
 }

@@ -309,7 +309,7 @@ void
 SIDBridge::endFrame()
 {
     // Execute all remaining SID cycles
-    muxer.executeUntil(cpu.clock);
+    sidBridge.executeUntil(cpu.clock);
 
     // Generate sound sampes
     audioPort.generateSamples(this);

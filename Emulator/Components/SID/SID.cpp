@@ -63,7 +63,7 @@ SID::poke(u16 addr, u8 value)
 void 
 SID::executeUntil(Cycle targetCycle, SampleStream &stream)
 {
-    if (!muxer.powerSave()) {
+    if (!sidBridge.powerSave()) {
 
         // Compute the number of missing cycles
         Cycle missing = targetCycle - clock;

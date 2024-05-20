@@ -97,14 +97,6 @@ public:
     // Modulating the volume
     //
 
-    /* Updates the master volume. This function is called when the data provider
-     * changes state. E.g., when the data provider instance pauses or enters
-     * warp mode, audio needs to fade out. Similarly, when the data provider
-     * starts running or exits warp mode, audio needs to fade in again. The
-     * audio volume is modulated in small steps to avoid cracks.
-     */
-    void updateVolume();
-
     void fadeIn();
     void fadeOut();
 

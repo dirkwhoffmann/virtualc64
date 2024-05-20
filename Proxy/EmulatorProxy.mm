@@ -2099,7 +2099,7 @@ using namespace vc64;
     port2 = [[ControlPortProxy alloc] initWith:&emu->port2 emu:emu];
     recorder = [[RecorderProxy alloc] initWith:&emu->recorder emu:emu];
     retroShell = [[RetroShellProxy alloc] initWith:&emu->retroShell emu:emu];
-    sid = [[SIDProxy alloc] initWith:&emu->muxer emu:emu];
+    sid = [[SIDProxy alloc] initWith:&emu->sidBridge emu:emu];
     vic = [[VICIIProxy alloc] initWith:&emu->vicii emu:emu];
     watchpoints = [[GuardsProxy alloc] initWith:&emu->cpu.watchpoints];
 

@@ -214,21 +214,6 @@ public:
     // Reads a audio sample pair without moving the read pointer
     void ringbufferData(isize offset, float *left, float *right);
 
-    /* Handles a buffer underflow condition. A buffer underflow occurs when the
-     * audio device of the host machine needs sound samples than SID hasn't
-     * produced, yet.
-     */
-    // void handleBufferUnderflow();
-
-    /* Handles a buffer overflow condition. A buffer overflow occurs when SID
-     * is producing more samples than the audio device of the host machine is
-     * able to consume.
-     */
-    // void handleBufferOverflow();
-    
-    // Signals to ignore the next underflow or overflow condition.
-    // void ignoreNextUnderOrOverflow();
-
     // Prepares for a new frame
     void beginFrame();
 
@@ -239,9 +224,6 @@ public:
      * number of produced sound samples (not yet).
      */
     void executeUntil(Cycle targetCycle);
-
-    // Executes SID for a certain number of CPU cycles
-    // isize executeCycles(isize numCycles);
 
     // Indicates if sample synthesis should be skipped
     bool powerSave() const;

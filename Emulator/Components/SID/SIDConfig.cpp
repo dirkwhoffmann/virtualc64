@@ -47,7 +47,7 @@ SID::getFallback(Option opt) const
 void
 SID::setOption(Option option, i64 value)
 {
-    bool wasMuted = c64.muxer.isMuted();
+    bool wasMuted = c64.sidBridge.isMuted();
 
     switch (option) {
 
@@ -65,8 +65,8 @@ SID::setOption(Option option, i64 value)
             {   SUSPENDED
 
                 config.enabled = value;
-                c64.muxer.clearSampleBuffer(objid);
-                c64.muxer.hardReset();
+                c64.sidBridge.clearSampleBuffer(objid);
+                c64.sidBridge.hardReset();
             }
             return;
         }
@@ -89,7 +89,7 @@ SID::setOption(Option option, i64 value)
             {   SUSPENDED
 
                 config.address = (u16)value;
-                muxer.clearSampleBuffer(objid);
+                sidBridge.clearSampleBuffer(objid);
             }
             return;
         }
@@ -99,8 +99,8 @@ SID::setOption(Option option, i64 value)
             vol = powf((float)config.vol / 100, 1.4f) * 0.000025f;
             if (emscripten) vol *= 0.15f;
 
-            if (wasMuted != muxer.isMuted()) {
-                msgQueue.put(MSG_MUTE, muxer.isMuted());
+            if (wasMuted != sidBridge.isMuted()) {
+                msgQueue.put(MSG_MUTE, sidBridge.isMuted());
             }
 
             return;
