@@ -190,14 +190,15 @@ SIDBridge::getClockFrequency()
 void
 SIDBridge::setClockFrequency(u32 frequency)
 {
-    trace(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
+    if (getClockFrequency() != frequency) {
+        
+        trace(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
 
-    cpuFrequency = frequency;
-
-    sid[0].setClockFrequency(frequency);
-    sid[1].setClockFrequency(frequency);
-    sid[2].setClockFrequency(frequency);
-    sid[3].setClockFrequency(frequency);
+        sid[0].setClockFrequency(frequency);
+        sid[1].setClockFrequency(frequency);
+        sid[2].setClockFrequency(frequency);
+        sid[3].setClockFrequency(frequency);
+    }
 }
 
 double
@@ -213,11 +214,10 @@ SIDBridge::getSampleRate() const
 void
 SIDBridge::setSampleRate(double rate)
 {
-    if (sampleRate != rate) {
+    if (getSampleRate() != rate) {
 
         trace(SID_DEBUG, "Setting sample rate to %f\n", rate);
 
-        sampleRate = rate;
         sid[0].setSampleRate(rate);
         sid[1].setSampleRate(rate);
         sid[2].setSampleRate(rate);
@@ -438,32 +438,8 @@ SIDBridge::endFrame()
     // Execute all remaining SID cycles
     muxer.executeUntil(cpu.clock);
 
-    if (audioPort.isActive(this)) {
-
-        auto s0 = sidStream[0].count();
-        auto s1 = sidStream[1].count();
-        auto s2 = sidStream[2].count();
-        auto s3 = sidStream[3].count();
-
-        auto numSamples = s0;
-        if (s1) numSamples = std::min(numSamples, s1);
-        if (s2) numSamples = std::min(numSamples, s2);
-        if (s3) numSamples = std::min(numSamples, s3);
-
-        if (isEnabled(1) || isEnabled(2) || isEnabled(3)) {
-            audioPort.mixMultiSID(numSamples);
-        } else {
-            audioPort.mixSingleSID(numSamples);
-        }
-
-    } else {
-
-        // Trash all generated samples
-        sidStream[0].clear();
-        sidStream[1].clear();
-        sidStream[2].clear();
-        sidStream[3].clear();
-    }
+    // Generate sound sampes
+    audioPort.generateSamples(this);
 }
 
 void
@@ -513,14 +489,6 @@ SIDBridge::ringbufferData(isize offset, float *left, float *right)
     *left = pair.left;
     *right = pair.right;
 }
-
-/*
-void
-Muxer::ignoreNextUnderOrOverflow()
-{
-    lastAlignment = util::Time::now();
-}
-*/
 
 float
 SIDBridge::draw(u32 *buffer, isize width, isize height,

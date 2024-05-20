@@ -89,15 +89,9 @@ public:
     };
 
 private:
-    
-    // CPU cycle at the last call to executeUntil()
-    Cycle cycles = 0;
-    
-    // Current CPU frequency
-    u32 cpuFrequency = PAL::CLOCK_FREQUENCY;
-    
+
     // Sample rate (44.1 kHz per default)
-    double sampleRate = 0;
+    // double sampleRate = 0;
 
     // Master volumes
     float volL;
@@ -137,8 +131,7 @@ public:
 
         CLONE_ARRAY(sid)
 
-        CLONE(cycles)
-        CLONE(cpuFrequency)
+        // CLONE(cpuFrequency)
         CLONE(config)
 
         return *this;
@@ -151,17 +144,9 @@ public:
         
         << sid;
 
-        if (isSoftResetter(worker)) return;
-
-        worker
-
-        << cycles;
-
         if (isResetter(worker)) return;
 
         worker
-
-        << cpuFrequency
 
         << config.revision
         << config.filter

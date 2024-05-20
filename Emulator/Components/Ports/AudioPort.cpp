@@ -201,11 +201,44 @@ AudioPort::fadeOut()
     }
 }
 
-void
-AudioPort::mixSingleSID(isize numSamples)
+void 
+AudioPort::generateSamples(SIDBridge *bridge)
 {
     lock();
 
+    if (this->muxer == bridge) {
+
+        auto s0 = bridge->sidStream[0].count();
+        auto s1 = bridge->sidStream[1].count();
+        auto s2 = bridge->sidStream[2].count();
+        auto s3 = bridge->sidStream[3].count();
+
+        auto numSamples = s0;
+        if (s1) numSamples = std::min(numSamples, s1);
+        if (s2) numSamples = std::min(numSamples, s2);
+        if (s3) numSamples = std::min(numSamples, s3);
+
+        if (bridge->isEnabled(1) || bridge->isEnabled(2) || bridge->isEnabled(3)) {
+            mixMultiSID(numSamples);
+        } else {
+            mixSingleSID(numSamples);
+        }
+
+    } else {
+
+        // Discard all generated samples
+        bridge->sidStream[0].clear();
+        bridge->sidStream[1].clear();
+        bridge->sidStream[2].clear();
+        bridge->sidStream[3].clear();
+    }
+
+    unlock();
+}
+
+void
+AudioPort::mixSingleSID(isize numSamples)
+{
     auto vol0 = muxer->sid[0].vol; 
     auto pan0 = muxer->sid[0].pan;
 
@@ -240,15 +273,11 @@ AudioPort::mixSingleSID(isize numSamples)
 
         write(SamplePair { l, r } );
     }
-
-    unlock();
 }
 
 void
 AudioPort::mixMultiSID(isize numSamples)
 {
-    lock();
-
     auto vol0 = muxer->sid[0].vol; auto pan0 = muxer->sid[0].pan;
     auto vol1 = muxer->sid[1].vol; auto pan1 = muxer->sid[1].pan;
     auto vol2 = muxer->sid[2].vol; auto pan2 = muxer->sid[2].pan;
@@ -284,8 +313,6 @@ AudioPort::mixMultiSID(isize numSamples)
 
         write(SamplePair { l, r } );
     }
-
-    unlock();
 }
 
 void
@@ -293,18 +320,33 @@ AudioPort::copyMono(float *buffer, isize n)
 {
     lock();
 
+    auto cnt = count();
+
     // Check for buffer underflows
-    if (count() < n) {
+    if (cnt >= count()) {
 
-        unlock();
+        // We have enough samples. Copy over the requested number
+        for (isize i = 0; i < n; i++) {
+
+            SamplePair pair = read();
+            *buffer++ = pair.left + pair.right;
+        }
+
+    } else {
+
+        // Copy all we have and stepwise lower the volume to minimize cracks
+        for (isize i = 0; i < cnt; i++) {
+
+            SamplePair pair = read();
+            *buffer++ = (pair.left + pair.right) * float(cnt - i) / float(cnt);
+        }
+        assert(isEmpty());
+
+        // Fill the rest with zeroes
+        for (isize i = cnt; i < n; i++) *buffer++ = 0;
+
+        // Realign the ring buffer
         handleBufferUnderflow();
-        return;  // TODO: THROW EXCEPTION
-    }
-
-    for (isize i = 0; i < n; i++) {
-
-        SamplePair pair = read();
-        *buffer++ = (pair.left + pair.right) * volL.current;
     }
 
     unlock();
@@ -315,19 +357,35 @@ AudioPort::copyStereo(float *left, float *right, isize n)
 {
     lock();
 
+    auto cnt = count();
+
     // Check for buffer underflows
-    if (count() < n) {
+    if (cnt >= n) {
 
-        unlock();
+        // We have enough samples. Copy over the requested number
+        for (isize i = 0; i < n; i++) {
+
+            SamplePair pair = read();
+            *left++ = pair.left;
+            *right++ = pair.right;
+        }
+
+    } else {
+
+        // Copy all we have and stepwise lower the volume to minimize cracks
+        for (isize i = 0; i < cnt; i++) {
+
+            SamplePair pair = read();
+            *left++ = pair.left * float(cnt - i) / float(cnt);
+            *right++ = pair.right * float(cnt - i) / float(cnt);
+        }
+        assert(isEmpty());
+
+        // Fill the rest with zeroes
+        for (isize i = cnt; i < n; i++) *left++ = *right++ = 0;
+
+        // Realign the ring buffer
         handleBufferUnderflow();
-        return;  // TODO: THROW EXCEPTION
-    }
-
-    for (isize i = 0; i < n; i++) {
-
-        SamplePair pair = read();
-        *left++ = pair.left * volL.current;
-        *right++ = pair.right * volR.current;
     }
 
     unlock();
@@ -338,19 +396,35 @@ AudioPort::copyInterleaved(float *buffer, isize n)
 {
     lock();
 
+    auto cnt = count();
+
     // Check for buffer underflows
-    if (count() < n) {
+    if (cnt >= n) {
 
-        unlock();
+        // We have enough samples. Copy over the requested number
+        for (isize i = 0; i < n; i++) {
+
+            SamplePair pair = read();
+            *buffer++ = pair.left;
+            *buffer++ = pair.right;
+        }
+
+    } else {
+
+        // Copy all we have and stepwise lower the volume to minimize cracks
+        for (isize i = 0; i < cnt; i++) {
+
+            SamplePair pair = read();
+            *buffer++ = pair.left * float(cnt - i) / float(cnt);
+            *buffer++ = pair.right * float(cnt - i) / float(cnt);
+        }
+        assert(isEmpty());
+
+        // Fill the rest with zeroes
+        for (isize i = cnt; i < n; i++) { *buffer++ = 0; *buffer++ = 0; }
+
+        // Realign the ring buffer
         handleBufferUnderflow();
-        return;  // TODO: THROW EXCEPTION
-    }
-
-    for (isize i = 0; i < n; i++) {
-
-        SamplePair pair = read();
-        *buffer++ = pair.left * volL.current;
-        *buffer++ = pair.right * volR.current;
     }
 
     unlock();

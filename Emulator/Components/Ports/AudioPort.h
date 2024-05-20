@@ -116,6 +116,13 @@ public:
     // Generating audio samples
     //
 
+public:
+
+    // Generates samples
+    void generateSamples(SIDBridge *bridge);
+
+private:
+
     // Generates samples from the audio source with a single active SID
     void mixSingleSID(isize numSamples);
 
@@ -126,6 +133,8 @@ public:
     //
     // Reading audio samples
     //
+    
+public:
     
     /* Copies n audio samples into a memory buffer. These functions mark the
      * final step in the audio pipeline. They are used to copy the generated
