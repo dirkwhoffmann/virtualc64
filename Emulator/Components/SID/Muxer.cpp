@@ -20,8 +20,6 @@
 
 namespace vc64 {
 
-AudioPort Muxer::stream;
-
 Muxer::Muxer(C64 &ref) : SubComponent(ref)
 {
     subComponents = std::vector<CoreComponent *> {
@@ -46,10 +44,10 @@ Muxer::clear()
     debug(AUDBUF_DEBUG, "clear()\n");
     
     // Wipe out the ringbuffer
-    stream.lock();
-    stream.wipeOut();
-    stream.alignWritePtr();
-    stream.unlock();
+    audioPort.lock();
+    audioPort.wipeOut();
+    audioPort.alignWritePtr();
+    audioPort.unlock();
 }
 
 i64
@@ -289,7 +287,7 @@ Muxer::_dump(Category category, std::ostream& os) const
 MuxerStats
 Muxer::getStats()
 {
-    auto streamStats = stream.getStats();
+    auto streamStats = audioPort.getStats();
 
     stats.fillLevel = streamStats.fillLevel;
     stats.bufferUnderflows = streamStats.bufferUnderflows;
@@ -496,7 +494,7 @@ Muxer::endFrame()
     // Execute all remaining SID cycles
     muxer.executeUntil(cpu.clock);
 
-    if (stream.isActive(this)) {
+    if (audioPort.isActive(this)) {
 
         auto s0 = sidStream[0].count();
         auto s1 = sidStream[1].count();
@@ -509,9 +507,9 @@ Muxer::endFrame()
         if (s3) numSamples = std::min(numSamples, s3);
 
         if (isEnabled(1) || isEnabled(2) || isEnabled(3)) {
-            stream.mixMultiSID(numSamples);
+            audioPort.mixMultiSID(numSamples);
         } else {
-            stream.mixSingleSID(numSamples);
+            audioPort.mixSingleSID(numSamples);
         }
 
     } else {
@@ -565,7 +563,7 @@ Muxer::clearSampleBuffer(long nr)
 void
 Muxer::ringbufferData(isize offset, float *left, float *right)
 {
-    const SamplePair &pair = stream.current((int)offset);
+    const SamplePair &pair = audioPort.current((int)offset);
     *left = pair.left;
     *right = pair.right;
 }
@@ -601,11 +599,11 @@ Muxer::draw(u32 *buffer, isize width, isize height,
 
         default:
 
-            dw = stream.cap() / float(width);
+            dw = audioPort.cap() / float(width);
 
             for (isize w = 0; w < width; w++) {
 
-                auto sample = stream.current(isize(w * dw));
+                auto sample = audioPort.current(isize(w * dw));
                 samples[w][0] = abs(sample.left);
                 samples[w][1] = abs(sample.right);
             }

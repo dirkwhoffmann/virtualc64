@@ -18,6 +18,7 @@ namespace vc64 {
 
 References::References(C64& ref) :
 
+audioPort(ref.audioPort),
 c64(ref),
 cia1(ref.cia1),
 cia2(ref.cia2),

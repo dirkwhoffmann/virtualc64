@@ -19,6 +19,8 @@
 
 namespace vc64 {
 
+AudioPort C64::audioPort;
+
 string
 C64::version()
 {

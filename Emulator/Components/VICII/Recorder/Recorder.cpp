@@ -388,9 +388,9 @@ Recorder::prepare()
     }
     
     // Start with a nearly empty buffer
-    muxer.stream.lock();
-    while (muxer.stream.count() > 1) muxer.stream.read();
-    muxer.stream.unlock();
+    audioPort.lock();
+    while (audioPort.count() > 1) audioPort.read();
+    audioPort.unlock();
 
     // Switch state and inform the GUI
     state = REC_STATE_RECORD;
@@ -433,10 +433,10 @@ Recorder::recordAudio()
     assert(audioFFmpeg.isRunning());
     assert(audioPipe.isOpen());
 
-    if (muxer.stream.count() != samplesPerFrame) {
-        
-        trace(REC_DEBUG, "Samples: %ld\n", muxer.stream.count());
-        assert(muxer.stream.count() >= samplesPerFrame);
+    if (audioPort.count() != samplesPerFrame) {
+
+        trace(REC_DEBUG, "Samples: %ld\n", audioPort.count());
+        assert(audioPort.count() >= samplesPerFrame);
     }
     
     // Feed the audio pipe
@@ -444,7 +444,7 @@ Recorder::recordAudio()
 
         isize written = 0;
 
-        SamplePair pair = muxer.stream.read();
+        SamplePair pair = audioPort.read();
         written += audioPipe.write((u8 *)&pair.left, sizeof(float));
         written += audioPipe.write((u8 *)&pair.right, sizeof(float));
 
@@ -453,7 +453,7 @@ Recorder::recordAudio()
         }
     }
     
-    muxer.stream.clear();
+    audioPort.clear();
 }
 
 void

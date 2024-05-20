@@ -65,7 +65,7 @@ Emulator::initialize()
     ahead.initialize();
 
     // Register the audio sample provider
-    Muxer::stream.connectMuxer(&main.muxer);
+    C64::audioPort.connectMuxer(&main.muxer);
 
     // Perform a hard reset
     main.hardReset();
@@ -241,8 +241,8 @@ Emulator::update()
 
                 debug(true, "CMD_FOCUS: %lld\n", cmd.value);
                 host.focus = bool(cmd.value);
-                if (cmd.value == 0) Muxer::stream.disconnectMuxer(&main.muxer);
-                if (cmd.value == 1) Muxer::stream.connectMuxer(&main.muxer);
+                if (cmd.value == 0) C64::audioPort.disconnectMuxer(&main.muxer);
+                if (cmd.value == 1) C64::audioPort.connectMuxer(&main.muxer);
                 break;
 
             default:

@@ -164,6 +164,7 @@ class References {
 
 protected:
 
+    class AudioPort &audioPort;
     class C64 &c64;
     class CIA1 &cia1;
     class CIA2 &cia2;
