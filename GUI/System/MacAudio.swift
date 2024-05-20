@@ -12,13 +12,7 @@ import AVFoundation
 public class MacAudio: NSObject {
 
     // Current audio source
-    private var emu: EmulatorProxy?
-
-    // New audio source
-    private var newEmu: EmulatorProxy?
-
-    // Switch delay
-    private var switchDelay = 0
+    var emu: EmulatorProxy?
 
     // Gateway to the host's audio unit
     var audiounit: AUAudioUnit!
@@ -68,9 +62,6 @@ public class MacAudio: NSObject {
             return
         }
 
-        // Inform the emulator about the sample rate
-        emu?.set(.HOST_SAMPLE_RATE, value: Int(sampleRate))
-
         // Register render callback
         if stereo {
             audiounit.outputProvider = { (
@@ -112,7 +103,6 @@ public class MacAudio: NSObject {
 
         stopPlayback()
         emu = nil
-        newEmu = nil
     }
     
     func disconnect(_ emu: EmulatorProxy) {
@@ -122,25 +112,8 @@ public class MacAudio: NSObject {
         if self.emu == emu { self.emu = nil }
     }
 
-    func switchSource(_ newSource: EmulatorProxy) {
-
-        if emu != newSource {
-
-            // Fade out volume
-            emu?.sid.rampDown()
-
-            // Remember the new audio source
-            newEmu = newSource
-
-            // Schedule the assignment of the new audio source
-            switchDelay = 20
-        }
-    }
-
     private func renderMono(inputDataList: UnsafeMutablePointer<AudioBufferList>,
                             frameCount: UInt32) {
-        
-        updateSource()
 
         let bufferList = UnsafeMutableAudioBufferListPointer(inputDataList)
         assert(bufferList.count == 1)
@@ -156,8 +129,6 @@ public class MacAudio: NSObject {
     
     private func renderStereo(inputDataList: UnsafeMutablePointer<AudioBufferList>,
                               frameCount: UInt32) {
-        
-        updateSource()
 
         let bufferList = UnsafeMutableAudioBufferListPointer(inputDataList)
         assert(bufferList.count > 1)
@@ -170,24 +141,6 @@ public class MacAudio: NSObject {
             memset(ptr2, 0, Int(frameCount))
         } else {
             emu!.sid.copyStereo(ptr1, buffer2: ptr2, size: Int(frameCount))
-        }
-    }
-    
-    private func updateSource() {
-
-        if emu != newEmu {
-
-            if switchDelay > 0 {
-
-                debug(.audio, "Switch countdown \(switchDelay)")
-                switchDelay -= 1
-
-            } else {
-
-                debug(.audio, "Switching source")
-                emu = newEmu
-                emu?.sid.rampUp()
-            }
         }
     }
 

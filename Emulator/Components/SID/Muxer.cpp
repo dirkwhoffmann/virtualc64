@@ -20,6 +20,8 @@
 
 namespace vc64 {
 
+StereoStream Muxer::stream;
+
 Muxer::Muxer(C64 &ref) : SubComponent(ref)
 {
     subComponents = std::vector<CoreComponent *> {
@@ -287,7 +289,12 @@ Muxer::_dump(Category category, std::ostream& os) const
 MuxerStats
 Muxer::getStats()
 {
-    stats.fillLevel = stream.fillLevel();
+    auto streamStats = stream.getStats();
+
+    stats.fillLevel = streamStats.fillLevel;
+    stats.bufferUnderflows = streamStats.bufferUnderflows;
+    stats.bufferOverflows = streamStats.bufferOverflows;
+
     return stats;
 }
 
@@ -501,6 +508,8 @@ Muxer::endFrame()
 {
     // Execute all remaining SID cycles
     muxer.executeUntil(cpu.clock);
+
+    if (!stream.isActive(this)) return;
 
     auto s0 = sidStream[0].count();
     auto s1 = sidStream[1].count();
@@ -718,33 +727,47 @@ Muxer::ignoreNextUnderOrOverflow()
 void
 Muxer::copyMono(float *target, isize n)
 {
+    stream.copyMono(target, n);
+    /*
     if (recorder.isRecording()) {
+
+        // Silence audio when the screen recorder is active
         for (isize i = 0; i < n; i++) target[i] = 0.0;
         return;
     }
     
     stream.lock();
-    
-    // Check for a buffer underflow
-    if (stream.count() < n) handleBufferUnderflow();
 
-    // Copy sound samples
-    stream.copyMono(target, n, volL, volR);
-    
+    if (stream.isActive(this)) {
+
+        // Check for a buffer underflow
+        if (stream.count() < n) handleBufferUnderflow();
+
+        // Copy sound samples
+        stream.copyMono(target, n, volL, volR);
+    }
     stream.unlock();
+    */
 }
 
 void
 Muxer::copyStereo(float *target1, float *target2, isize n)
 {
+    stream.copyStereo(target1, target2, n);
+
+    /*
     if (recorder.isRecording()) {
 
         // Silence audio when the screen recorder is active
         for (isize i = 0; i < n; i++) target1[i] = target2[i] = 0.0;
+        return;
+    }
 
-    } else {
+    stream.lock();
 
-        stream.lock();
+    if (true) { // stream.isActive(this)) {
+
+        // printf("%p: Copying %ld samples\n", (void *)this, n);
 
         // Check for a buffer underflow
         if (stream.count() < n) handleBufferUnderflow();
@@ -752,27 +775,40 @@ Muxer::copyStereo(float *target1, float *target2, isize n)
         // Copy sound samples
         stream.copyStereo(target1, target2, n, volL, volR);
 
-        stream.unlock();
+    } else {
+
+        printf("%p: Not active\n", (void *)this);
     }
+
+    stream.unlock();
+    */
 }
 
 void
 Muxer::copyInterleaved(float *target, isize n)
 {
+    stream.copyInterleaved(target, n);
+
+    /*
     if (recorder.isRecording()) {
+
+        // Silence audio when the screen recorder is active
         for (isize i = 0; i < n; i++) target[i] = 0.0;
         return;
     }
 
     stream.lock();
-    
-    // Check for a buffer underflow
-    if (stream.count() < n) handleBufferUnderflow();
 
-    // Read sound samples
-    stream.copyInterleaved(target, n, volL, volR);
-    
+    if (stream.isActive(this)) {
+
+        // Check for a buffer underflow
+        if (stream.count() < n) handleBufferUnderflow();
+
+        // Read sound samples
+        stream.copyInterleaved(target, n, volL, volR);
+    }
     stream.unlock();
+    */
 }
 
 float

@@ -15,15 +15,22 @@
 
 #include "Aliases.h"
 #include "Reflection.h"
+#include "RingBuffer.h"
 
 namespace vc64 {
+
+//
+// Aliases
+//
+
+typedef util::RingBuffer<short, 2048> SampleStream;
+
 
 //
 // Enumerations
 //
 
 /// Chip revision
-// enum SIDREV : long
 enum_long(SIDREV)
 {
     MOS_6581,
@@ -139,6 +146,7 @@ typedef struct
 }
 MuxerConfig;
 
+// DEPRECATED
 typedef struct
 {
     // Current ring buffer fill level
@@ -151,6 +159,19 @@ typedef struct
     u64 bufferOverflows;
 }
 MuxerStats;
+
+typedef struct
+{
+    // Current ring buffer fill level
+    double fillLevel;
+
+    // Number of buffer underflows since power up
+    u64 bufferUnderflows;
+
+    // Number of buffer overflows since power up
+    u64 bufferOverflows;
+}
+AudioBufferStats;
 
 typedef struct
 {

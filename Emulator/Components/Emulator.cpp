@@ -64,6 +64,9 @@ Emulator::initialize()
     main.initialize();
     ahead.initialize();
 
+    // Register the audio sample provider
+    Muxer::stream.connectMuxer(&main.muxer);
+
     // Perform a hard reset
     main.hardReset();
     ahead.hardReset();
@@ -236,8 +239,10 @@ Emulator::update()
 
             case CMD_FOCUS:
 
-                // printf("CMD_FOCUS: %ld\n", cmd.value);
+                debug(true, "CMD_FOCUS: %lld\n", cmd.value);
                 host.focus = bool(cmd.value);
+                if (cmd.value == 0) Muxer::stream.disconnectMuxer(&main.muxer);
+                if (cmd.value == 1) Muxer::stream.connectMuxer(&main.muxer);
                 break;
 
             default:

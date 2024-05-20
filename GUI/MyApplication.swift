@@ -141,7 +141,7 @@ extension MyAppDelegate {
                 c.emu.put(.FOCUS, value: 1)
 
                 // Switch the audio source
-                myApp.macAudio.switchSource(c.emu)
+                // myApp.macAudio.switchSource(c.emu)
 
                 // Update the visibility of all drive menus
                 c.hideOrShowDriveMenus()

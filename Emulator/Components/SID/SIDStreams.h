@@ -13,24 +13,60 @@
 #pragma once
 
 #include "Concurrency.h"
-#include "RingBuffer.h"
+#include "SIDTypes.h"
 #include "Volume.h"
 
 namespace vc64 {
-
-typedef util::RingBuffer<short, 2048> SampleStream;
 
 typedef struct { float left; float right; } SamplePair;
 
 class StereoStream final : CoreObject, public util::RingBuffer < SamplePair, 12288 > {
 
+    const char *objectName() const override { return "StereoStream"; }
+
     // Mutex for synchronizing read / write accesses
     util::ReentrantMutex mutex;
 
-    const char *objectName() const override { return "StereoStream"; }
+    // The active data source
+    class Muxer *muxer = nullptr;
+
+    // Time stamp of the last write pointer alignment
+    util::Time lastAlignment;
+
+    // Master volumes (fadable)
+    Volume volL;
+    Volume volR;
+    
+    // Statistics
+    AudioBufferStats stats = { };
+
 
     //
-    // Synchronizing access
+    // Inspecting
+    //
+
+public:
+    
+    AudioBufferStats getStats();
+
+
+    //
+    // Managing the data source
+    //
+
+public:
+
+    // Assign a data source
+    void connectMuxer(class Muxer *muxer);
+
+    // Remove a data source
+    void disconnectMuxer(class Muxer *muxer);
+
+    // Check if the provided Muxer is the active data source
+    bool isActive(class Muxer *muxer) const { return this->muxer == muxer; }
+
+    //
+    // Managing the ring buffer
     //
 
 public:
@@ -48,7 +84,19 @@ public:
     // Puts the write pointer somewhat ahead of the read pointer
     void alignWritePtr();
 
-    
+    /* Handles a buffer underflow condition. A buffer underflow occurs when the
+     * audio device of the host machine needs sound samples than SID hasn't
+     * produced, yet.
+     */
+    void handleBufferUnderflow();
+
+    /* Handles a buffer overflow condition. A buffer overflow occurs when SID
+     * is producing more samples than the audio device of the host machine is
+     * able to consume.
+     */
+    void handleBufferOverflow();
+
+
     //
     // Copying data
     //
@@ -57,9 +105,9 @@ public:
      * final step in the audio pipeline. They are used to copy the generated
      * sound samples into the buffers of the native sound device.
      */
-    void copyMono(float *buffer, isize n, Volume &volL, Volume &volR);
-    void copyStereo(float *left, float *right, isize n, Volume &volL, Volume &volR);
-    void copyInterleaved(float *buffer, isize n, Volume &volL, Volume &volR);
+    void copyMono(float *buffer, isize n);
+    void copyStereo(float *left, float *right, isize n);
+    void copyInterleaved(float *buffer, isize n);
 };
 
 }
