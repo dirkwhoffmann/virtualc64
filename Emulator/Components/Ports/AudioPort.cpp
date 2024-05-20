@@ -168,8 +168,8 @@ AudioPort::fadeOut()
 {
     debug(AUDVOL_DEBUG, "Fading out (%ld samples)...\n", count());
 
-    volL.current = volL.target = 0;
-    volR.current = volR.target = 0;
+    volL.set(0.0);
+    volR.set(0.0);
 
     float scale = 1.0f;
     float delta = 1.0f / count();
@@ -196,17 +196,9 @@ AudioPort::generateSamples(SIDBridge *bridge)
 
     if (this->dataSource == bridge) {
 
-        // Adjust the master volume
-        if (volL.maximum != bridge->volL) {
-
-            volL.maximum = bridge->volL;
-            if (!volL.isFadingOut()) volL.target = volL.maximum;
-        }
-        if (volR.maximum != bridge->volR) {
-
-            volR.maximum = bridge->volR;
-            if (!volR.isFadingOut()) volR.target = volR.maximum;
-        }
+        // Get the master volume
+        volL.maximum = bridge->volL;
+        volR.maximum = bridge->volR;
 
         // Check how many samples can be generated
         auto s0 = bridge->sidStream[0].count();
@@ -241,36 +233,64 @@ AudioPort::generateSamples(SIDBridge *bridge)
 void
 AudioPort::mixSingleSID(isize numSamples)
 {
-    auto vol0 = dataSource->sid[0].vol; 
+    auto vol0 = dataSource->sid[0].vol;
     auto pan0 = dataSource->sid[0].pan;
 
-    debug(SID_EXEC, "vol0: %f pan0: %f volL: %f volR: %f\n", 
+    debug(SID_EXEC, "vol0: %f pan0: %f volL: %f volR: %f\n",
           vol0, pan0, volL.current, volR.current);
 
     // Check for buffer overflow
     if (free() < numSamples) handleBufferOverflow();
 
     // Convert sound samples to floating point values and write into ringbuffer
-    for (isize i = 0; i < numSamples; i++) {
+    if (volL.isFading() || volR.isFading()) {
 
-        // Read SID sample from ring buffer
-        float ch0 = (float)dataSource->sidStream[0].read() * vol0;
+        for (isize i = 0; i < numSamples; i++) {
 
-        // Compute left and right channel output
-        float l = ch0 * (1 - pan0);
-        float r = ch0 * pan0;
+            // Read SID sample from ring buffer
+            float ch0 = (float)dataSource->sidStream[0].read() * vol0;
 
-        // Apply master volume
-        volL.shift();
-        volR.shift();
-        l *= volL.current;
-        r *= volR.current;
+            // Compute left and right channel output
+            float l = ch0 * (1 - pan0);
+            float r = ch0 * pan0;
 
-        // Apply ear protection
-        assert(abs(l) < 1.0);
-        assert(abs(r) < 1.0);
+            // Apply master volume
+            volL.shift();
+            volR.shift();
+            l *= volL.current;
+            r *= volR.current;
 
-        write(SamplePair { l, r } );
+            // Apply ear protection
+            assert(abs(l) < 1.0);
+            assert(abs(r) < 1.0);
+
+            write(SamplePair { l, r } );
+        }
+
+    } else {
+
+        auto currentL = volL.current;
+        auto currentR = volR.current;
+
+        for (isize i = 0; i < numSamples; i++) {
+
+            // Read SID sample from ring buffer
+            float ch0 = (float)dataSource->sidStream[0].read() * vol0;
+
+            // Compute left and right channel output
+            float l = ch0 * (1 - pan0);
+            float r = ch0 * pan0;
+
+            // Apply master volume
+            l *= currentL;
+            r *= currentR;
+
+            // Apply ear protection
+            assert(abs(l) < 1.0);
+            assert(abs(r) < 1.0);
+
+            write(SamplePair { l, r } );
+        }
     }
 }
 

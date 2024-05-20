@@ -29,9 +29,8 @@ template <typename T> struct AudioVolume : Serializable {
     // Maximum volume
     T maximum = 1.0;
 
-    // Fading parameters
-    T target = 1.0;
-    T delta = 1.0;
+    // Fading direction and speed
+    T delta = .0001;
 
 
     //
@@ -42,7 +41,6 @@ template <typename T> struct AudioVolume : Serializable {
 
         CLONE(current)
         CLONE(maximum)
-        CLONE(target)
         CLONE(delta)
 
         return *this;
@@ -54,7 +52,6 @@ template <typename T> struct AudioVolume : Serializable {
         worker
 
         << maximum
-        << target
         << delta;
 
         if (isChecker(worker)) return;
@@ -66,36 +63,32 @@ template <typename T> struct AudioVolume : Serializable {
     } SERIALIZERS(serialize);
 
     // Checks whether the volume is currently fading
-    bool isFading() const { return current != target; }
-    bool isFadingIn() const { return isFading() && target != 0; }
-    bool isFadingOut() const { return isFading() && target == 0; }
+    bool isFadingIn() const { return delta > 0 &&  current != maximum; }
+    bool isFadingOut() const { return delta < 0 && current != 0; }
+    bool isFading() const { return isFadingIn() || isFadingOut(); }
+
+    // Sets the volume to a fixed value
+    void set(float value) { current = value; delta = 0.0; }
 
     // Fades in to the maximum volume
-    void fadeIn(isize steps = 10000) {
-
-        target = maximum;
-        delta  = std::abs(current - maximum) / steps;
-    }
+    void fadeIn(isize steps = 10000) { delta  = maximum / steps; }
 
     // Fades out to zero
-    void fadeOut(isize steps = 10000) {
-
-        target = 0;
-        delta  = std::abs(current - maximum) / steps;
-    }
+    void fadeOut(isize steps = 10000) { delta  = -maximum / steps; }
 
     // Shifts the current volume towards the target volume
     void shift() {
         
-        if (current == target) return;
-        
-        if (current < target) {
-            if ((current += delta) < target) return;
-        } else {
-            if ((current -= delta) > target) return;
+        if (delta < 0 && current != 0) {
+
+            if ((current += delta) > 0) return;
+            current = 0;
         }
-        
-        current = target;
+        if (delta > 0 && current != maximum) {
+            
+            if ((current += delta) < maximum) return;
+            current = maximum;
+        }
     }
 };
 
