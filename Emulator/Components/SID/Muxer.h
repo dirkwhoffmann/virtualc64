@@ -117,11 +117,6 @@ public:
      */
     SampleStream sidStream[4];
 
-    /* The mixed stereo stream. This stream contains the final audio stream
-     * ready to be handed over to the audio device of the host OS.
-     */
-    // static AudioPort stream;
-
     
     //
     // Methods

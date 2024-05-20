@@ -58,6 +58,7 @@ public:
     void connectMuxer(class Muxer *muxer);
 
     // Remove a data source
+    void disconnectMuxer();
     void disconnectMuxer(class Muxer *muxer);
 
     // Check if the provided Muxer is the active data source
@@ -78,7 +79,7 @@ public:
     void wipeOut() { this->clear(SamplePair {0,0} ); }
     
     // Adds a sample to the ring buffer
-    void add(float l, float r) { this->write(SamplePair {l,r} ); }
+    // void add(float l, float r) { this->write(SamplePair {l,r} ); }
 
     // Puts the write pointer somewhat ahead of the read pointer
     void alignWritePtr();
@@ -94,6 +95,14 @@ public:
      * able to consume.
      */
     void handleBufferOverflow();
+
+
+    //
+    // Modulating the volume
+    //
+
+    void fadeIn();
+    void fadeOut();
 
 
     //

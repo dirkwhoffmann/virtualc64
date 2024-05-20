@@ -31,18 +31,26 @@ AudioPort::connectMuxer(class Muxer *muxer)
 
         disconnectMuxer(this->muxer);
         this->muxer = muxer;
+        fadeIn();
     }
 }
 
-void 
-AudioPort::disconnectMuxer(class Muxer *muxer)
+void
+AudioPort::disconnectMuxer()
 {
-    if (this->muxer && this->muxer == muxer) {
+    if (this->muxer) {
 
         debug(true, "Disconnecting data source: %p\n", (void *)muxer);
-
+        
+        fadeOut();
         this->muxer = nullptr;
     }
+}
+
+void
+AudioPort::disconnectMuxer(class Muxer *muxer)
+{
+    if (this->muxer == muxer) disconnectMuxer();
 }
 
 void
@@ -102,6 +110,36 @@ AudioPort::handleBufferOverflow()
 }
 
 void
+AudioPort::fadeIn()
+{
+    debug(AUDVOL_DEBUG, "Fading in...\n");
+
+    volL.fadeIn(10000); // TODO: Get master volume from Muxer
+    volR.fadeIn(10000);
+}
+
+void 
+AudioPort::fadeOut()
+{
+    debug(AUDVOL_DEBUG, "Fading out (%ld samples)...\n", count());
+
+    volL.current = volL.target = 0;
+    volR.current = volR.target = 0;
+
+    float scale = 1.0f;
+    float delta = 1.0f / count();
+
+    for (isize i = begin(); i != end(); i = next(i)) {
+
+        scale -= delta;
+        assert(scale >= -0.1 && scale < 1.0);
+
+        elements[i].left = elements[i].left * scale;
+        elements[i].right = elements[i].right * scale;
+    }
+}
+
+void
 AudioPort::mixSingleSID(isize numSamples)
 {
     lock();
@@ -126,6 +164,11 @@ AudioPort::mixSingleSID(isize numSamples)
         float r = ch0 * pan0;
 
         // Apply master volume
+        if (volL.isFading() || volR.isFading()) {
+
+            volL.shift();
+            volR.shift();
+        }
         l *= volL.current;
         r *= volR.current;
 
@@ -196,24 +239,10 @@ AudioPort::copyMono(float *buffer, isize n)
         return;  // TODO: THROW EXCEPTION
     }
 
-    if (false) { // }(volL.isFading()) {
+    for (isize i = 0; i < n; i++) {
 
-        debug(AUDVOL_DEBUG, "L: %f R: %f (-> %f %f)\n",
-              volL.current, volR.current, volL.target, volR.target);
-        
-        for (isize i = 0; i < n; i++, volL.shift()) {
-            
-            SamplePair pair = read();
-            *buffer++ = (pair.left + pair.right) * volL.current;
-        }
-
-    } else {
-        
-        for (isize i = 0; i < n; i++) {
-
-            SamplePair pair = read();
-            *buffer++ = (pair.left + pair.right) * volL.current;
-        }
+        SamplePair pair = read();
+        *buffer++ = (pair.left + pair.right) * volL.current;
     }
 
     unlock();
@@ -232,26 +261,11 @@ AudioPort::copyStereo(float *left, float *right, isize n)
         return;  // TODO: THROW EXCEPTION
     }
 
-    if (false) { // }(volL.isFading() || volR.isFading()) {
+    for (isize i = 0; i < n; i++) {
 
-        debug(AUDVOL_DEBUG, "L: %f R: %f (-> %f %f)\n",
-              volL.current, volR.current, volL.target, volR.target);
-
-        for (isize i = 0; i < n; i++, volL.shift(), volR.shift()) {
-            
-            SamplePair pair = read();
-            *left++ = pair.left * volL.current;
-            *right++ = pair.right * volR.current;
-        }
-
-    } else {
-        
-        for (isize i = 0; i < n; i++) {
-
-            SamplePair pair = read();
-            *left++ = pair.left * volL.current;
-            *right++ = pair.right * volR.current;
-        }
+        SamplePair pair = read();
+        *left++ = pair.left * volL.current;
+        *right++ = pair.right * volR.current;
     }
 
     unlock();
@@ -270,24 +284,14 @@ AudioPort::copyInterleaved(float *buffer, isize n)
         return;  // TODO: THROW EXCEPTION
     }
 
-    if (false) { // (volL.isFading()) {
+    for (isize i = 0; i < n; i++) {
 
-        for (isize i = 0; i < n; i++, volL.shift()) {
-            
-            SamplePair pair = read();
-            *buffer++ = pair.left * volL.current;
-            *buffer++ = pair.right * volR.current;
-        }
-
-    } else {
-        
-        for (isize i = 0; i < n; i++) {
-
-            SamplePair pair = read();
-            *buffer++ = pair.left * volL.current;
-            *buffer++ = pair.right * volR.current;
-        }
+        SamplePair pair = read();
+        *buffer++ = pair.left * volL.current;
+        *buffer++ = pair.right * volR.current;
     }
+
+    unlock();
 }
 
 }

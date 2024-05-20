@@ -53,7 +53,7 @@ debugflag SID_DEBUG       = 0; // Sound Interface Device
 debugflag SID_EXEC        = 0; // Sound Interface Device (Execution)
 debugflag SIDREG_DEBUG    = 0; // Sound Interface Device (Registers)
 debugflag AUDBUF_DEBUG    = 0; // Audio buffers
-debugflag AUDVOL_DEBUG    = 0; // Audio volume
+debugflag AUDVOL_DEBUG    = 1; // Audio volume
 
 // Drive
 debugflag VIA_DEBUG       = 0; // Versatile Interface Adapter
