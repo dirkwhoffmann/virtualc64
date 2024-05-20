@@ -12,22 +12,22 @@
 
 #pragma once
 
-#include "Concurrency.h"
 #include "SIDTypes.h"
+#include "Concurrency.h"
 #include "Volume.h"
 
 namespace vc64 {
 
 class SIDBridge;
 
-class AudioPort final : CoreObject, public util::RingBuffer < SamplePair, 12288 > {
+class AudioPort final : CoreObject, public util::RingBuffer <SamplePair, 12288> {
 
     const char *objectName() const override { return "StereoStream"; }
 
     // Mutex for synchronizing read / write accesses
     util::ReentrantMutex mutex;
 
-    // The data source
+    // The audio sample provider
     SIDBridge *dataSource = nullptr;
 
     // Time stamp of the last write pointer alignment
@@ -44,10 +44,10 @@ class AudioPort final : CoreObject, public util::RingBuffer < SamplePair, 12288 
 
 public:
 
-    // Assign a data source
+    // Assigns a data source
     void connectDataSource(SIDBridge *bridge);
 
-    // Remove a data source
+    // Removes a data source
     void disconnectDataSource();
     void disconnectDataSource(SIDBridge *bridge);
 
@@ -57,8 +57,6 @@ public:
     void pause(SIDBridge *bridge);
     void warpOn(SIDBridge *bridge);
     void warpOff(SIDBridge *bridge);
-    void focus(SIDBridge *bridge);
-    void unfocus(SIDBridge *bridge);
 
 
     //
@@ -70,12 +68,6 @@ public:
     // Locks or unlocks the mutex
     void lock() { mutex.lock(); }
     void unlock() { mutex.unlock(); }
-
-    // Initializes the ring buffer with zeroes
-    // void wipeOut() { this->clear(SamplePair {0,0} ); }
-
-    // Adds a sample to the ring buffer
-    // void add(float l, float r) { this->write(SamplePair {l,r} ); }
 
     // Puts the write pointer somewhat ahead of the read pointer
     void alignWritePtr();
@@ -94,14 +86,6 @@ public:
 
 
     //
-    // Modulating the volume
-    //
-
-    void fadeIn();
-    void fadeOut();
-
-
-    //
     // Generating audio samples
     //
 
@@ -109,6 +93,12 @@ public:
 
     // Generates samples
     void generateSamples(SIDBridge *bridge);
+
+    // Rescale new sound samples such that their volume steadily increases
+    void fadeIn();
+
+    // Rescale the existing samples in the buffer to gradually fade out
+    void fadeOut();
 
 private:
 

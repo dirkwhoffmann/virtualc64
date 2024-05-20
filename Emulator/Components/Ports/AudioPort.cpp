@@ -87,16 +87,6 @@ AudioPort::warpOff(SIDBridge *bridge)
     if (dataSource == bridge) fadeIn();
 }
 
-void 
-AudioPort::focus(SIDBridge *bridge)
-{
-}
-
-void 
-AudioPort::unfocus(SIDBridge *bridge)
-{
-}
-
 void
 AudioPort::alignWritePtr()
 {
@@ -154,41 +144,6 @@ AudioPort::handleBufferOverflow()
     }
 }
 
-void
-AudioPort::fadeIn()
-{
-    debug(AUDVOL_DEBUG, "Fading in...\n");
-
-    volL.fadeIn();
-    volR.fadeIn();
-}
-
-void 
-AudioPort::fadeOut()
-{
-    debug(AUDVOL_DEBUG, "Fading out (%ld samples)...\n", count());
-
-    volL.set(0.0);
-    volR.set(0.0);
-
-    float scale = 1.0f;
-    float delta = 1.0f / count();
-
-    for (isize i = begin(); i != end(); i = next(i)) {
-
-        scale -= delta;
-        assert(scale >= -0.1 && scale < 1.0);
-
-        elements[i].left *= scale;
-        elements[i].right *= scale;
-    }
-
-    for (isize i = end(); i != begin(); i = next(i)) {
-        
-        elements[i] = SamplePair { 0, 0 };
-    }
-}
-
 void 
 AudioPort::generateSamples(SIDBridge *bridge)
 {
@@ -228,6 +183,41 @@ AudioPort::generateSamples(SIDBridge *bridge)
     }
 
     unlock();
+}
+
+void
+AudioPort::fadeIn()
+{
+    debug(AUDVOL_DEBUG, "Fading in...\n");
+
+    volL.fadeIn();
+    volR.fadeIn();
+}
+
+void
+AudioPort::fadeOut()
+{
+    debug(AUDVOL_DEBUG, "Fading out (%ld samples)...\n", count());
+
+    volL.set(0.0);
+    volR.set(0.0);
+
+    float scale = 1.0f;
+    float delta = 1.0f / count();
+
+    for (isize i = begin(); i != end(); i = next(i)) {
+
+        scale -= delta;
+        assert(scale >= -0.1 && scale < 1.0);
+
+        elements[i].left *= scale;
+        elements[i].right *= scale;
+    }
+
+    for (isize i = end(); i != begin(); i = next(i)) {
+
+        elements[i] = SamplePair { 0, 0 };
+    }
 }
 
 void

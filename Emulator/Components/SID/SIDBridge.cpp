@@ -130,6 +130,20 @@ SIDBridge::_warpOff()
     audioPort.warpOff(this);
 }
 
+void 
+SIDBridge::_focus()
+{
+    // debug(true, "_focus()\n");
+    audioPort.connectDataSource(this);
+}
+
+void 
+SIDBridge::_unfocus()
+{
+    // debug(true, "_unfocus()\n");
+    audioPort.disconnectDataSource(this);
+}
+
 void
 SIDBridge::_dump(Category category, std::ostream& os) const
 {

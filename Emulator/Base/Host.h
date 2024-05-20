@@ -54,11 +54,6 @@ class Host final : public CoreComponent, public Dumpable {
     // Current configuration
     HostConfig config = { };
 
-public:
-    
-    // Indicates whether the emulator window is active
-    bool focus = true;
-
 
     //
     // Methods

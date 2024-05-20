@@ -223,7 +223,21 @@ CoreComponent::trackOff()
     _trackOff();
 }
 
-bool 
+void
+CoreComponent::focus()
+{
+    for (auto c : subComponents) { c->focus(); }
+    _focus();
+}
+
+void
+CoreComponent::unfocus()
+{
+    for (auto c : subComponents) { c->unfocus(); }
+    _unfocus();
+}
+
+bool
 CoreComponent::isEmulatorThread() const
 {
     return emulator.isEmulatorThread();

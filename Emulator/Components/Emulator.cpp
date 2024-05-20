@@ -239,10 +239,7 @@ Emulator::update()
 
             case CMD_FOCUS:
 
-                debug(true, "CMD_FOCUS: %lld\n", cmd.value);
-                host.focus = bool(cmd.value);
-                if (cmd.value == 0) C64::audioPort.disconnectDataSource(&main.sidBridge);
-                if (cmd.value == 1) C64::audioPort.connectDataSource(&main.sidBridge);
+                cmd.value ? main.focus() : main.unfocus();
                 break;
 
             default:

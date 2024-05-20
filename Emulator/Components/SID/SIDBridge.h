@@ -90,9 +90,6 @@ public:
 
 private:
 
-    // Sample rate (44.1 kHz per default)
-    // double sampleRate = 0;
-
     // Master volumes
     float volL;
     float volR;
@@ -126,7 +123,9 @@ public:
     void _pause() override;
     void _warpOn() override;
     void _warpOff() override;
-    
+    void _focus() override;
+    void _unfocus() override;
+
     SIDBridge& operator= (const SIDBridge& other) {
 
         CLONE_ARRAY(sid)

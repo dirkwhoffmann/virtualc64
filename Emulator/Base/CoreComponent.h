@@ -125,7 +125,9 @@ protected:
     void warpOff();
     void trackOn();
     void trackOff();
-    
+    void focus();
+    void unfocus();
+
     void powerOnOff(bool value) { value ? powerOn() : powerOff(); }
     void warpOnOff(bool value) { value ? warpOn() : warpOff(); }
     void trackOnOff(bool value) { value ? trackOn() : trackOff(); }
@@ -142,6 +144,8 @@ private:
     virtual void _warpOff() { }
     virtual void _trackOn() { }
     virtual void _trackOff() { }
+    virtual void _focus() { }
+    virtual void _unfocus() { }
 
 
     //

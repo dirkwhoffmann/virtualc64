@@ -30,7 +30,7 @@ template <typename T> struct AudioVolume : Serializable {
     T maximum = 1.0;
 
     // Fading direction and speed
-    T delta = .0001;
+    T delta = .0001f;
 
 
     //
@@ -62,7 +62,7 @@ template <typename T> struct AudioVolume : Serializable {
 
     } SERIALIZERS(serialize);
 
-    // Checks whether the volume is currently fading
+    // Checks whether the volume is currently modulated
     bool isFadingIn() const { return delta > 0 &&  current != maximum; }
     bool isFadingOut() const { return delta < 0 && current != 0; }
     bool isFading() const { return isFadingIn() || isFadingOut(); }
