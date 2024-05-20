@@ -553,7 +553,7 @@ VirtualC64::VICIIAPI::getColor(isize nr, Palette palette) const
 // SID
 //
 
-MuxerConfig
+SIDBridgeConfig
 VirtualC64::SIDAPI::getConfig() const
 {
     assert(isUserThread());
@@ -588,7 +588,7 @@ VirtualC64::SIDAPI::getCachedVoiceInfo(isize nr, isize voice) const
     return muxer.getCachedVoiceInfo(nr, voice);
 }
 
-MuxerStats
+SIDBridgeStats
 VirtualC64::SIDAPI::getStats() const
 {
     assert(isUserThread());

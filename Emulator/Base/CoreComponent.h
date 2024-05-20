@@ -187,7 +187,7 @@ protected:
     class Recorder &recorder;
     class RegressionTester &regressionTester;
     class RetroShell &retroShell;
-    class Muxer &muxer;
+    class SIDBridge &muxer;
     class VICII &vic;
 
     Drive *drive[2] = { &drive8, &drive9 };

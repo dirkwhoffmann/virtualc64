@@ -545,7 +545,7 @@ using namespace vc64;
     return [self bridge]->getVoiceInfo((unsigned)nr, (unsigned)voice);
 }
 
-- (MuxerStats)stats
+- (SIDBridgeStats)stats
 {
     return [self bridge]->getStats();
 }

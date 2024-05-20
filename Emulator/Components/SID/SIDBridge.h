@@ -24,7 +24,7 @@ namespace vc64 {
 
 /* Architecture of the audio pipeline
  *
- *           Mux class
+ *           SidBridge
  *           -------------------------------------------------
  *          |   --------  vol                                 |
  *   SID 0 --->| Buffer |----->                               |
@@ -44,15 +44,16 @@ namespace vc64 {
  *           -------------------------------------------------
  */
 
-class Muxer final : public SubComponent, public Inspectable<SIDInfo, Void> {
+class SIDBridge final : public SubComponent, public Inspectable<SIDInfo, Void> {
 
     friend C64Memory;
-
+    friend AudioPort;
+    
     Descriptions descriptions = {{
 
-        .name           = "Muxer",
-        .shellName      = "muxer",
-        .description    = "Audio Muxer"
+        .name           = "SIDBridge",
+        .shellName      = "SIDBridge",
+        .description    = "SID Bridge"
     }};
 
     ConfigOptions options = {
@@ -67,10 +68,10 @@ class Muxer final : public SubComponent, public Inspectable<SIDInfo, Void> {
     };
     
     // Current configuration
-    MuxerConfig config = { };
+    SIDBridgeConfig config = { };
     
     // Statistics
-    MuxerStats stats = { };
+    SIDBridgeStats stats = { };
 
     
     //
@@ -121,10 +122,8 @@ public:
     
 public:
 
-    Muxer(C64 &ref);
+    SIDBridge(C64 &ref);
     const Descriptions &getDescriptions() const override { return descriptions; }
-
-    void clear();
 
     void _dump(Category category, std::ostream& os) const override;
     void _dump(Category category, std::ostream& os, isize nr) const;
@@ -134,7 +133,7 @@ public:
     void _warpOn() override;
     void _warpOff() override;
     
-    Muxer& operator= (const Muxer& other) {
+    SIDBridge& operator= (const SIDBridge& other) {
 
         CLONE_ARRAY(sid)
 
@@ -185,7 +184,7 @@ public:
     // Configuring
     //
 
-    const MuxerConfig &getConfig() const { return config; }
+    const SIDBridgeConfig &getConfig() const { return config; }
     const ConfigOptions &getOptions() const override { return options; }
     i64 getOption(Option opt) const override;
     void setOption(Option opt, i64 value) override;
@@ -202,7 +201,7 @@ public:
     VoiceInfo getVoiceInfo(isize nr, isize voice);
     VoiceInfo getCachedVoiceInfo(isize nr, isize voice) { return getVoiceInfo(nr, voice); }
     CoreComponent &getSID(isize nr);
-    MuxerStats getStats();
+    SIDBridgeStats getStats();
     
     bool isEnabled(isize nr) const { return sid[nr].config.enabled; }
     bool isMuted() const;

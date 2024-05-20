@@ -114,7 +114,7 @@
 		504C438D24AF29AC00E69CAE /* VICII.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430724AF29AC00E69CAE /* VICII.cpp */; };
 		504C439124AF29AC00E69CAE /* VICIIMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430B24AF29AC00E69CAE /* VICIIMemory.cpp */; };
 		504C439324AF29AC00E69CAE /* Datasette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430F24AF29AC00E69CAE /* Datasette.cpp */; };
-		504C439424AF29AC00E69CAE /* Muxer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C431224AF29AC00E69CAE /* Muxer.cpp */; };
+		504C439424AF29AC00E69CAE /* SIDBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C431224AF29AC00E69CAE /* SIDBridge.cpp */; };
 		504C439524AF29AC00E69CAE /* envelope.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431724AF29AC00E69CAE /* envelope.cc */; };
 		504C439624AF29AC00E69CAE /* pot.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431824AF29AC00E69CAE /* pot.cc */; };
 		504C439724AF29AC00E69CAE /* voice.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431C24AF29AC00E69CAE /* voice.cc */; };
@@ -221,7 +221,7 @@
 		50726F632961C9B30031F2F5 /* Recorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5044A0392657A7A800C551C6 /* Recorder.cpp */; };
 		50726F642961C9B30031F2F5 /* FFmpeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD3696281681E700E40BFC /* FFmpeg.cpp */; };
 		50726F652961C9B30031F2F5 /* NamedPipe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD3693281681D000E40BFC /* NamedPipe.cpp */; };
-		50726F662961C9B80031F2F5 /* Muxer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C431224AF29AC00E69CAE /* Muxer.cpp */; };
+		50726F662961C9B80031F2F5 /* SIDBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C431224AF29AC00E69CAE /* SIDBridge.cpp */; };
 		50726F672961C9B80031F2F5 /* AudioPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50549B47257D288E006FE39C /* AudioPort.cpp */; };
 		50726F682961C9B80031F2F5 /* ReSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433124AF29AC00E69CAE /* ReSID.cpp */; };
 		50726F692961C9C60031F2F5 /* version.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432F24AF29AC00E69CAE /* version.cc */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -699,7 +699,7 @@
 		504C430C24AF29AC00E69CAE /* VICII.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VICII.h; sourceTree = "<group>"; };
 		504C430F24AF29AC00E69CAE /* Datasette.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Datasette.cpp; sourceTree = "<group>"; };
 		504C431024AF29AC00E69CAE /* Datasette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Datasette.h; sourceTree = "<group>"; };
-		504C431224AF29AC00E69CAE /* Muxer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Muxer.cpp; sourceTree = "<group>"; };
+		504C431224AF29AC00E69CAE /* SIDBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SIDBridge.cpp; sourceTree = "<group>"; };
 		504C431424AF29AC00E69CAE /* siddefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = siddefs.h; sourceTree = "<group>"; };
 		504C431524AF29AC00E69CAE /* dac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dac.h; sourceTree = "<group>"; };
 		504C431624AF29AC00E69CAE /* extfilt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = extfilt.h; sourceTree = "<group>"; };
@@ -729,7 +729,7 @@
 		504C432E24AF29AC00E69CAE /* wave6581_PS_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wave6581_PS_.h; sourceTree = "<group>"; };
 		504C432F24AF29AC00E69CAE /* version.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = version.cc; sourceTree = "<group>"; };
 		504C433124AF29AC00E69CAE /* ReSID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReSID.cpp; sourceTree = "<group>"; };
-		504C433224AF29AC00E69CAE /* Muxer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Muxer.h; sourceTree = "<group>"; };
+		504C433224AF29AC00E69CAE /* SIDBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIDBridge.h; sourceTree = "<group>"; };
 		504C433324AF29AC00E69CAE /* ReSID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReSID.h; sourceTree = "<group>"; };
 		504C433C24AF29AC00E69CAE /* IEC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IEC.cpp; sourceTree = "<group>"; };
 		504C433E24AF29AC00E69CAE /* ControlPort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ControlPort.cpp; sourceTree = "<group>"; };
@@ -1641,8 +1641,8 @@
 				5078BEB6264D738000EDA161 /* CMakeLists.txt */,
 				50E806C125A1F1C500F08732 /* SIDTypes.h */,
 				50C9318D2589E41D00D8BB94 /* Volume.h */,
-				504C433224AF29AC00E69CAE /* Muxer.h */,
-				504C431224AF29AC00E69CAE /* Muxer.cpp */,
+				504C433224AF29AC00E69CAE /* SIDBridge.h */,
+				504C431224AF29AC00E69CAE /* SIDBridge.cpp */,
 				506A8A8B2B89DAF800B95383 /* SID.h */,
 				506A8A8A2B89DAF800B95383 /* SID.cpp */,
 				50A194982BDA82720046849E /* SIDConfig.cpp */,
@@ -2323,7 +2323,7 @@
 				50726F5B2961C9AC0031F2F5 /* VICIICycles.cpp in Sources */,
 				50726FA62961CA1C0031F2F5 /* G64File.cpp in Sources */,
 				50726F6E2961C9C60031F2F5 /* dac.cc in Sources */,
-				50726F662961C9B80031F2F5 /* Muxer.cpp in Sources */,
+				50726F662961C9B80031F2F5 /* SIDBridge.cpp in Sources */,
 				50726F892961CA0D0031F2F5 /* SuperGames.cpp in Sources */,
 				50726FB02961CA230031F2F5 /* FSBlock.cpp in Sources */,
 				50726F8E2961CA0D0031F2F5 /* FreezeFrame.cpp in Sources */,
@@ -2409,7 +2409,7 @@
 				500E34172615C40D006A38DA /* Parser.cpp in Sources */,
 				504C438924AF29AC00E69CAE /* NeosMouse.cpp in Sources */,
 				504C435924AF29AC00E69CAE /* Ocean.cpp in Sources */,
-				504C439424AF29AC00E69CAE /* Muxer.cpp in Sources */,
+				504C439424AF29AC00E69CAE /* SIDBridge.cpp in Sources */,
 				506A724A21C0341900DA0AC3 /* ConfigurationController.swift in Sources */,
 				50D2A6A0210F20F700F13D43 /* VirtualKeyboardController.swift in Sources */,
 				504C439E24AF29AC00E69CAE /* ReSID.cpp in Sources */,

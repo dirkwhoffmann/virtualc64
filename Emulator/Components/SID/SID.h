@@ -19,7 +19,7 @@ namespace vc64 {
 
 class SID final : public SubComponent, public Dumpable
 {
-    friend class Muxer;
+    friend class SIDBridge;
     friend class AudioPort;
 
     Descriptions descriptions = {

@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Muxer.h"
+#include "SIDBridge.h"
 #include "Emulator.h"
 #include "IOUtils.h"
 
@@ -20,7 +20,7 @@
 
 namespace vc64 {
 
-Muxer::Muxer(C64 &ref) : SubComponent(ref)
+SIDBridge::SIDBridge(C64 &ref) : SubComponent(ref)
 {
     subComponents = std::vector<CoreComponent *> {
 
@@ -32,26 +32,14 @@ Muxer::Muxer(C64 &ref) : SubComponent(ref)
 }
 
 void
-Muxer::_reset(bool hard)
+SIDBridge::_reset(bool hard)
 {
     if (hard) clearStats();
-    clear();
-}
-
-void
-Muxer::clear()
-{
-    debug(AUDBUF_DEBUG, "clear()\n");
-    
-    // Wipe out the ringbuffer
-    audioPort.lock();
-    audioPort.wipeOut();
-    audioPort.alignWritePtr();
-    audioPort.unlock();
+    audioPort.reset(this, hard);
 }
 
 i64
-Muxer::getOption(Option option) const
+SIDBridge::getOption(Option option) const
 {
     switch (option) {
             
@@ -82,7 +70,7 @@ Muxer::getOption(Option option) const
 }
 
 void
-Muxer::setOption(Option option, i64 value)
+SIDBridge::setOption(Option option, i64 value)
 {
     bool wasMuted = isMuted();
 
@@ -178,7 +166,7 @@ Muxer::setOption(Option option, i64 value)
 }
 
 bool
-Muxer::isMuted() const
+SIDBridge::isMuted() const
 {
     if (config.volL == 0 && config.volR == 0) return true;
     
@@ -190,7 +178,7 @@ Muxer::isMuted() const
 }
 
 u32
-Muxer::getClockFrequency()
+SIDBridge::getClockFrequency()
 {
     assert(sid[0].getClockFrequency() == sid[1].getClockFrequency());
     assert(sid[0].getClockFrequency() == sid[2].getClockFrequency());
@@ -200,7 +188,7 @@ Muxer::getClockFrequency()
 }
 
 void
-Muxer::setClockFrequency(u32 frequency)
+SIDBridge::setClockFrequency(u32 frequency)
 {
     trace(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
 
@@ -213,7 +201,7 @@ Muxer::setClockFrequency(u32 frequency)
 }
 
 double
-Muxer::getSampleRate() const
+SIDBridge::getSampleRate() const
 {
     assert(sid[0].getSampleRate() == sid[1].getSampleRate());
     assert(sid[0].getSampleRate() == sid[2].getSampleRate());
@@ -223,7 +211,7 @@ Muxer::getSampleRate() const
 }
 
 void
-Muxer::setSampleRate(double rate)
+SIDBridge::setSampleRate(double rate)
 {
     if (sampleRate != rate) {
 
@@ -238,7 +226,7 @@ Muxer::setSampleRate(double rate)
 }
 
 void 
-Muxer::operator << (SerReader &worker)
+SIDBridge::operator << (SerReader &worker)
 {
     serialize(worker);
 
@@ -246,31 +234,31 @@ Muxer::operator << (SerReader &worker)
 }
 
 void
-Muxer::_run()
+SIDBridge::_run()
 {
-    audioPort.updateVolume();
+    audioPort.run(this);
 }
 
 void
-Muxer::_pause()
+SIDBridge::_pause()
 {
-    audioPort.updateVolume();
+    audioPort.pause(this);
 }
 
 void
-Muxer::_warpOn()
+SIDBridge::_warpOn()
 {
-    audioPort.updateVolume();
+    audioPort.warpOn(this);
 }
 
 void
-Muxer::_warpOff()
+SIDBridge::_warpOff()
 {
-    audioPort.updateVolume();
+    audioPort.warpOff(this);
 }
 
 void
-Muxer::_dump(Category category, std::ostream& os) const
+SIDBridge::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
@@ -280,20 +268,15 @@ Muxer::_dump(Category category, std::ostream& os) const
     }
 }
 
-MuxerStats
-Muxer::getStats()
+SIDBridgeStats
+SIDBridge::getStats()
 {
-    auto streamStats = audioPort.getStats();
-
-    stats.fillLevel = streamStats.fillLevel;
-    stats.bufferUnderflows = streamStats.bufferUnderflows;
-    stats.bufferOverflows = streamStats.bufferOverflows;
-
+    stats.fillLevel = audioPort.fillLevel();
     return stats;
 }
 
 SIDInfo
-Muxer::getInfo(isize nr)
+SIDBridge::getInfo(isize nr)
 {
     assert(nr < 4);
     
@@ -314,7 +297,7 @@ Muxer::getInfo(isize nr)
 }
 
 VoiceInfo
-Muxer::getVoiceInfo(isize nr, isize voice)
+SIDBridge::getVoiceInfo(isize nr, isize voice)
 {
     assert(nr >= 0 && nr <= 3);
 
@@ -328,7 +311,7 @@ Muxer::getVoiceInfo(isize nr, isize voice)
 }
 
 CoreComponent &
-Muxer::getSID(isize nr)
+SIDBridge::getSID(isize nr)
 {
     assert(nr >= 0 && nr <= 3);
     
@@ -342,7 +325,7 @@ Muxer::getSID(isize nr)
 }
 
 isize
-Muxer::mappedSID(u16 addr) const
+SIDBridge::mappedSID(u16 addr) const
 {
     addr &= 0xFFE0;
     
@@ -354,7 +337,7 @@ Muxer::mappedSID(u16 addr) const
 }
 
 u8 
-Muxer::peek(u16 addr)
+SIDBridge::peek(u16 addr)
 {
     // Select the target SID
     isize sidNr = mappedSID(addr);
@@ -390,7 +373,7 @@ Muxer::peek(u16 addr)
 }
 
 u8
-Muxer::spypeek(u16 addr) const
+SIDBridge::spypeek(u16 addr) const
 {
     // Select the target SID
     isize sidNr = mappedSID(addr);
@@ -407,7 +390,7 @@ Muxer::spypeek(u16 addr) const
 }
 
 u8
-Muxer::readPotX() const
+SIDBridge::readPotX() const
 {
     u8 result = 0xFF;
 
@@ -418,7 +401,7 @@ Muxer::readPotX() const
 }
 
 u8
-Muxer::readPotY() const
+SIDBridge::readPotY() const
 {
     u8 result = 0xFF;
 
@@ -429,7 +412,7 @@ Muxer::readPotY() const
 }
 
 void 
-Muxer::poke(u16 addr, u8 value)
+SIDBridge::poke(u16 addr, u8 value)
 {
     trace(SIDREG_DEBUG, "poke(%x,%x)\n", addr, value);
 
@@ -444,13 +427,13 @@ Muxer::poke(u16 addr, u8 value)
 }
 
 void 
-Muxer::beginFrame()
+SIDBridge::beginFrame()
 {
     setSampleRate(host.getOption(OPT_HOST_SAMPLE_RATE)); 
 }
 
 void 
-Muxer::endFrame()
+SIDBridge::endFrame()
 {
     // Execute all remaining SID cycles
     muxer.executeUntil(cpu.clock);
@@ -484,7 +467,7 @@ Muxer::endFrame()
 }
 
 void
-Muxer::executeUntil(Cycle targetCycle)
+SIDBridge::executeUntil(Cycle targetCycle)
 {
     sid[0].executeUntil(targetCycle, sidStream[0]);
     if (isEnabled(1)) sid[1].executeUntil(targetCycle, sidStream[1]);
@@ -493,7 +476,7 @@ Muxer::executeUntil(Cycle targetCycle)
 }
 
 bool
-Muxer::powerSave() const
+SIDBridge::powerSave() const
 {
 #if 0
     if (volL.current == 0 && volR.current == 0 && config.powerSave) {
@@ -512,19 +495,19 @@ Muxer::powerSave() const
 }
 
 void
-Muxer::clearSampleBuffers()
+SIDBridge::clearSampleBuffers()
 {
     for (int i = 0; i < 4; i++) clearSampleBuffer(i);
 }
 
 void
-Muxer::clearSampleBuffer(long nr)
+SIDBridge::clearSampleBuffer(long nr)
 {
     sidStream[nr].clear(0);
 }
 
 void
-Muxer::ringbufferData(isize offset, float *left, float *right)
+SIDBridge::ringbufferData(isize offset, float *left, float *right)
 {
     const SamplePair &pair = audioPort.current((int)offset);
     *left = pair.left;
@@ -540,7 +523,7 @@ Muxer::ignoreNextUnderOrOverflow()
 */
 
 float
-Muxer::draw(u32 *buffer, isize width, isize height,
+SIDBridge::draw(u32 *buffer, isize width, isize height,
             float maxAmp, u32 color, isize sid) const
 {
     auto samples = new float[width][2];

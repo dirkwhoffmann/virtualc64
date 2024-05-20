@@ -404,7 +404,7 @@ using namespace vc64;
 
 - (SIDInfo)getInfo:(NSInteger)nr;
 - (VoiceInfo)getVoiceInfo:(NSInteger)nr voice:(NSInteger)voice;
-@property (readonly) MuxerStats stats;
+@property (readonly) SIDBridgeStats stats;
 
 - (void)copyMono:(float *)target size:(NSInteger)n;
 - (void)copyStereo:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;

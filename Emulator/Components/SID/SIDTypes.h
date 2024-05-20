@@ -154,21 +154,7 @@ typedef struct
     i64 volL;
     i64 volR;
 }
-MuxerConfig;
-
-// DEPRECATED
-typedef struct
-{
-    // Current ring buffer fill level
-    double fillLevel;
-
-    // Number of buffer underflows since power up
-    u64 bufferUnderflows;
-
-    // Number of buffer overflows since power up
-    u64 bufferOverflows;
-}
-MuxerStats;
+SIDBridgeConfig;
 
 typedef struct
 {
@@ -181,7 +167,7 @@ typedef struct
     // Number of buffer overflows since power up
     u64 bufferOverflows;
 }
-AudioBufferStats;
+SIDBridgeStats;
 
 typedef struct
 {

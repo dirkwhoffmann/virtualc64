@@ -852,7 +852,7 @@ C64::_dump(Category category, std::ostream& os) const
         os << tab("VICII");
         os << dec(sizeof(VICII)) << " Bytes" << std::endl;
         os << tab("Muxer");
-        os << dec(sizeof(Muxer)) << " Bytes" << std::endl;
+        os << dec(sizeof(SIDBridge)) << " Bytes" << std::endl;
         os << tab("Power supply");
         os << dec(sizeof(PowerSupply)) << " Bytes" << std::endl;
         os << tab("Control port");

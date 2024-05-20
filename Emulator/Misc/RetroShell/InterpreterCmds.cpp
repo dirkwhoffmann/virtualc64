@@ -443,7 +443,7 @@ Interpreter::initCommandShell(Command &root)
 
 
     //
-    // Components (Muxer)
+    // Components (SIDBridge)
     //
 
     cmd = muxer.shellName();

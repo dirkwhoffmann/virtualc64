@@ -18,6 +18,8 @@
 
 namespace vc64 {
 
+class SIDBridge;
+
 class AudioPort final : CoreObject, public util::RingBuffer < SamplePair, 12288 > {
 
     const char *objectName() const override { return "StereoStream"; }
@@ -26,7 +28,7 @@ class AudioPort final : CoreObject, public util::RingBuffer < SamplePair, 12288 
     util::ReentrantMutex mutex;
 
     // The data source
-    class Muxer *muxer = nullptr;
+    SIDBridge *muxer = nullptr;
 
     // Time stamp of the last write pointer alignment
     util::Time lastAlignment;
@@ -35,18 +37,6 @@ class AudioPort final : CoreObject, public util::RingBuffer < SamplePair, 12288 
     Volume volL;
     Volume volR;
     
-    // Statistics
-    AudioBufferStats stats = { };
-
-
-    //
-    // Inspecting
-    //
-
-public:
-
-    AudioBufferStats getStats();
-
 
     //
     // Managing the data source
@@ -55,14 +45,23 @@ public:
 public:
 
     // Assign a data source
-    void connectMuxer(class Muxer *muxer);
+    void connectMuxer(SIDBridge *muxer);
 
     // Remove a data source
     void disconnectMuxer();
-    void disconnectMuxer(class Muxer *muxer);
+    void disconnectMuxer(SIDBridge *muxer);
 
     // Check if the provided Muxer is the active data source
-    bool isActive(class Muxer *muxer) const { return this->muxer == muxer; }
+    bool isActive(SIDBridge *muxer) const { return this->muxer == muxer; }
+
+    // Delegation methods
+    void reset(SIDBridge *muxer, bool hard);
+    void run(SIDBridge *muxer);
+    void pause(SIDBridge *muxer);
+    void warpOn(SIDBridge *muxer);
+    void warpOff(SIDBridge *muxer);
+    void focus(SIDBridge *muxer);
+    void unfocus(SIDBridge *muxer);
 
 
     //

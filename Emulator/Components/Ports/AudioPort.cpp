@@ -11,28 +11,23 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Muxer.h"
+#include "SIDBridge.h"
 #include "Emulator.h"
 
 namespace vc64 {
 
-AudioBufferStats
-AudioPort::getStats()
-{
-    stats.fillLevel = fillLevel();
-    return stats;
-}
-
 void
-AudioPort::connectMuxer(class Muxer *muxer)
+AudioPort::connectMuxer(class SIDBridge *muxer)
 {
     if (this->muxer != muxer) {
 
         debug(true, "Connecting data source: %p\n", (void *)muxer);
 
+        lock();
         disconnectMuxer(this->muxer);
         this->muxer = muxer;
         fadeIn();
+        unlock();
     }
 }
 
@@ -43,15 +38,65 @@ AudioPort::disconnectMuxer()
 
         debug(true, "Disconnecting data source: %p\n", (void *)muxer);
         
+        lock();
         fadeOut();
         this->muxer = nullptr;
+        unlock();
     }
 }
 
 void
-AudioPort::disconnectMuxer(class Muxer *muxer)
+AudioPort::disconnectMuxer(class SIDBridge *muxer)
 {
     if (this->muxer == muxer) disconnectMuxer();
+}
+
+void 
+AudioPort::reset(SIDBridge *muxer, bool hard)
+{
+    if (this->muxer == muxer) {
+
+        lock();
+        wipeOut();
+        alignWritePtr();
+        unlock();
+    }
+}
+
+void
+AudioPort::run(SIDBridge *muxer)
+{
+    if (this->muxer == muxer) fadeIn();
+}
+
+void 
+AudioPort::pause(SIDBridge *muxer)
+{
+    if (this->muxer == muxer) fadeOut();
+}
+
+void 
+AudioPort::warpOn(SIDBridge *muxer)
+{
+    if (this->muxer == muxer) fadeOut();
+}
+
+void 
+AudioPort::warpOff(SIDBridge *muxer)
+{
+    if (this->muxer == muxer) fadeIn();
+}
+
+void 
+AudioPort::focus(SIDBridge *muxer)
+{
+    // if (this->muxer == muxer) fadeIn();
+}
+
+void 
+AudioPort::unfocus(SIDBridge *muxer)
+{
+    // if (this->muxer == muxer) fadeOut();
 }
 
 void
@@ -80,7 +125,7 @@ AudioPort::handleBufferUnderflow()
     // Check for condition (1)
     if (elapsedTime.asSeconds() > 10.0) {
 
-        stats.bufferUnderflows++;
+        if (muxer) muxer->stats.bufferUnderflows++;
         warn("Last underflow: %f seconds ago\n", elapsedTime.asSeconds());
     }
 }
@@ -105,7 +150,7 @@ AudioPort::handleBufferOverflow()
     // Check for condition (1)
     if (elapsedTime.asSeconds() > 10.0) {
 
-        stats.bufferOverflows++;
+        if (muxer) muxer->stats.bufferOverflows++;
         warn("Last overflow: %f seconds ago\n", elapsedTime.asSeconds());
     }
 }
