@@ -155,8 +155,8 @@ Muxer::setOption(Option option, i64 value)
         case OPT_AUD_VOL_L:
             
             config.volL = std::clamp(value, 0LL, 100LL);
-            volL.set(powf((float)config.volL / 50, 1.4f));
-            
+            volL = powf((float)config.volL / 50, 1.4f);
+
             if (wasMuted != isMuted()) {
                 msgQueue.put(MSG_MUTE, isMuted());
             }
@@ -165,7 +165,7 @@ Muxer::setOption(Option option, i64 value)
         case OPT_AUD_VOL_R:
 
             config.volR = std::clamp(value, 0LL, 100LL);
-            volR.set(powf((float)config.volR / 50, 1.4f));
+            volR = powf((float)config.volR / 50, 1.4f);
 
             if (wasMuted != isMuted()) {
                 msgQueue.put(MSG_MUTE, isMuted());
@@ -248,29 +248,25 @@ Muxer::operator << (SerReader &worker)
 void
 Muxer::_run()
 {
-    // Wipe out existing audio samples
-    if (volL.current == 0.0) clear();
-
-    rampUp();
+    audioPort.updateVolume();
 }
 
 void
 Muxer::_pause()
 {
-    rampDown();
+    audioPort.updateVolume();
 }
 
 void
 Muxer::_warpOn()
 {
-    rampDown();
+    audioPort.updateVolume();
 }
 
 void
 Muxer::_warpOff()
 {
-    rampUp();
-    clear();
+    audioPort.updateVolume();
 }
 
 void
@@ -343,41 +339,6 @@ Muxer::getSID(isize nr)
         default:
             fatalError;
     }
-}
-
-void
-Muxer::rampUp()
-{
-    trace(AUDVOL_DEBUG, "rampUp()\n");
-
-    if (emulator.isPaused()) {
-
-        trace(AUDVOL_DEBUG, "rampUp canceled (emulator pauses)\n");
-        return;
-    }
-    if (emulator.isWarping()) {
-
-        trace(AUDVOL_DEBUG, "rampUp canceled (emulator warps)\n");
-        return;
-    }
-
-    const isize steps = 20000;
-    volL.fadeIn(steps);
-    volR.fadeIn(steps);
-    
-    ignoreNextUnderOrOverflow();
-}
-
-void
-Muxer::rampDown()
-{
-    trace(AUDVOL_DEBUG, "rampDown()\n");
-
-    const isize steps = 2000;
-    volL.fadeOut(steps);
-    volR.fadeOut(steps);
-    
-    ignoreNextUnderOrOverflow();
 }
 
 isize
@@ -534,6 +495,7 @@ Muxer::executeUntil(Cycle targetCycle)
 bool
 Muxer::powerSave() const
 {
+#if 0
     if (volL.current == 0 && volR.current == 0 && config.powerSave) {
 
         /* https://sourceforge.net/p/vice-emu/bugs/1374/
@@ -544,6 +506,7 @@ Muxer::powerSave() const
          */
         return config.revision != MOS_8580 || config.sampling != SAMPLING_FAST;
     }
+#endif
 
     return false;
 }
@@ -568,11 +531,13 @@ Muxer::ringbufferData(isize offset, float *left, float *right)
     *right = pair.right;
 }
 
+/*
 void
 Muxer::ignoreNextUnderOrOverflow()
 {
     lastAlignment = util::Time::now();
 }
+*/
 
 float
 Muxer::draw(u32 *buffer, isize width, isize height,

@@ -12,6 +12,7 @@
 
 #include "config.h"
 #include "Muxer.h"
+#include "Emulator.h"
 
 namespace vc64 {
 
@@ -109,6 +110,17 @@ AudioPort::handleBufferOverflow()
     }
 }
 
+void 
+AudioPort::updateVolume()
+{
+    debug(AUDVOL_DEBUG, "updateVolume()\n");
+
+    // TODO: Set the master volume
+
+    bool muted = muxer->isPaused() || muxer->emulator.isWarping();
+    if (muted) { fadeOut(); } else { fadeIn(); }
+}
+
 void
 AudioPort::fadeIn()
 {
@@ -134,8 +146,13 @@ AudioPort::fadeOut()
         scale -= delta;
         assert(scale >= -0.1 && scale < 1.0);
 
-        elements[i].left = elements[i].left * scale;
-        elements[i].right = elements[i].right * scale;
+        elements[i].left *= scale;
+        elements[i].right *= scale;
+    }
+
+    for (isize i = end(); i != begin(); i = next(i)) {
+        
+        elements[i] = SamplePair { 0, 0 };
     }
 }
 

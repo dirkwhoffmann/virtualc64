@@ -410,10 +410,6 @@ using namespace vc64;
 - (void)copyStereo:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;
 - (void)copyInterleaved:(float *)target size:(NSInteger)n;
 
-- (void)rampUp;
-// - (void)rampUpFromZero;
-- (void)rampDown;
-
 - (float)drawWaveform:(u32 *)buffer w:(NSInteger)w h:(NSInteger)h scale:(float)s color:(u32)c source:(NSInteger)source;
 - (float)drawWaveform:(u32 *)buffer size:(NSSize)size scale:(float)s color:(u32)c source:(NSInteger)source;
 

@@ -806,29 +806,6 @@ public:
          */
         MuxerStats getStats() const;
 
-        /// @}
-        /// @name Modulating the volume
-        /// @{
-
-        /** @brief  Ramps the volume up.
-         *  Starting from the current volume, the volume is slowly increased
-         *  until the target volume has been reached. Smooth modulation of the
-         *  volume helps to avoid cracks in the audio output.
-         */
-        void rampUp();
-
-        /** @brief  Ramps the volume up.
-         *  Similar to rampUp() with a provides starting volume.
-         *  @param  from    The starting volume.
-         */
-        // void rampUp(float from);
-
-        /** @brief  Ramps the volume down.
-         *  Starting from the current volume, the volume is slowly decreased
-         *  until 0 has been reached. This function is used, for example, when
-         *  the user hits the pause button to avoid cracks in the audio output.
-         */
-        void rampDown();
 
         /// @}
         /// @name Retrieving audio data

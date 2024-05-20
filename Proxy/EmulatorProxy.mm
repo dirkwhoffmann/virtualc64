@@ -565,16 +565,6 @@ using namespace vc64;
     [self bridge]->copyInterleaved(target, n);
 }
 
-- (void)rampUp
-{
-    [self bridge]->rampUp();
-}
-
-- (void)rampDown
-{
-    [self bridge]->rampDown();
-}
-
 - (float)drawWaveform:(u32 *)buffer
                     w:(NSInteger)w
                     h:(NSInteger)h

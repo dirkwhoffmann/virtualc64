@@ -98,12 +98,9 @@ private:
     // Sample rate (44.1 kHz per default)
     double sampleRate = 0;
 
-    // Time stamp of the last write pointer alignment
-    util::Time lastAlignment;
-
-    // Master volumes (fadable)
-    Volume volL;
-    Volume volR;
+    // Master volumes
+    float volL;
+    float volR;
 
 public:
 
@@ -142,11 +139,7 @@ public:
         CLONE_ARRAY(sid)
 
         CLONE(cycles)
-
         CLONE(cpuFrequency)
-        CLONE(volL)
-        CLONE(volR)
-
         CLONE(config)
 
         return *this;
@@ -170,8 +163,6 @@ public:
         worker
 
         << cpuFrequency
-        << volL
-        << volR
 
         << config.revision
         << config.filter
@@ -222,23 +213,6 @@ public:
 
 
     //
-    // Controlling the volume
-    //
-    
-public:
-
-    /* Starts to ramp up the volume. This function configures variables volume
-     * and targetVolume to simulate a smooth audio fade in.
-     */
-    void rampUp();
-
-    /* Starts to ramp down the volume. This function configures variables
-     * volume and targetVolume to simulate a quick audio fade out.
-     */
-    void rampDown();
-
-    
-    //
     // Managing the four sample buffers
     //
     
@@ -271,7 +245,7 @@ public:
     // void handleBufferOverflow();
     
     // Signals to ignore the next underflow or overflow condition.
-    void ignoreNextUnderOrOverflow();
+    // void ignoreNextUnderOrOverflow();
 
     // Prepares for a new frame
     void beginFrame();

@@ -596,20 +596,6 @@ VirtualC64::SIDAPI::getStats() const
 }
 
 void
-VirtualC64::SIDAPI::rampUp()
-{
-    assert(isUserThread());
-    muxer.rampUp();
-}
-
-void
-VirtualC64::SIDAPI::rampDown()
-{
-    assert(isUserThread());
-    muxer.rampDown();
-}
-
-void
 VirtualC64::SIDAPI::copyMono(float *buffer, isize n)
 {
     assert(isUserThread());
