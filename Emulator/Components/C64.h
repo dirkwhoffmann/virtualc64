@@ -125,7 +125,7 @@ public:
     SIDBridge sidBridge = SIDBridge(*this);
 
     // Logic board
-    AudioPort audioPort;
+    AudioPort audioPort = AudioPort(*this);
     PowerSupply supply = PowerSupply(*this);
     ControlPort port1 = ControlPort(*this, PORT_1);
     ControlPort port2 = ControlPort(*this, PORT_2);

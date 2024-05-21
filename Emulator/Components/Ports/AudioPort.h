@@ -20,9 +20,14 @@ namespace vc64 {
 
 class SIDBridge;
 
-class AudioPort final : CoreObject, public util::RingBuffer <SamplePair, 12288> {
+class AudioPort final : public SubComponent, public Dumpable, public util::RingBuffer <SamplePair, 12288> {
 
-    const char *objectName() const override { return "StereoStream"; }
+    Descriptions descriptions = {{
+
+        .name           = "AudioPort",
+        .shellName      = "AudioPort",
+        .description    = "Audio Port"
+    }};
 
     // Set to true to disconnect from Mac audio (used by the recorder)
     bool muted = false;
@@ -39,7 +44,48 @@ class AudioPort final : CoreObject, public util::RingBuffer <SamplePair, 12288> 
     // Master volumes (fadable)
     Volume volL;
     Volume volR;
-    
+
+
+    //
+    // Methods
+    //
+
+public:
+
+    AudioPort(C64 &ref) : SubComponent(ref) { };
+    const Descriptions &getDescriptions() const override { return descriptions; }
+    void _dump(Category category, std::ostream& os) const override;
+
+
+    //
+    // Methods from CoreComponent
+    //
+
+public:
+
+    AudioPort& operator= (const AudioPort& other) {
+
+        CLONE(muted)
+        CLONE(lastAlignment)
+        CLONE(volL)
+        CLONE(volR)
+
+        return *this;
+    }
+
+    template <class T>
+    void serialize(T& worker)
+    {
+        worker
+
+        << muted
+        << volL
+        << volR;
+
+    } SERIALIZERS(serialize);
+
+    void _reset(bool hard) override;
+
 
     //
     // Managing the data source

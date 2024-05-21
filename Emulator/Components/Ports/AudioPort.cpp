@@ -17,6 +17,22 @@
 namespace vc64 {
 
 void
+AudioPort::_dump(Category category, std::ostream& os) const
+{
+    using namespace util;
+
+    if (category == Category::State) {
+
+    }
+}
+
+void
+AudioPort::_reset(bool hard)
+{
+
+}
+
+void
 AudioPort::connectDataSource(class SIDBridge *bridge)
 {
     if (dataSource != bridge) {
