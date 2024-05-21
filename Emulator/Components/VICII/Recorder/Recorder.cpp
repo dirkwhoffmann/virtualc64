@@ -387,9 +387,10 @@ Recorder::prepare()
         samplesPerFrame = 735;
     }
     
-    // Start with a nearly empty buffer
+    // Start with a nearly empty buffer and disconnect from the native audio backend
     audioPort.lock();
-    while (audioPort.count() > 1) audioPort.read();
+    while (audioPort.count() > 1) (void)audioPort.read();
+    audioPort.mute();
     audioPort.unlock();
 
     // Switch state and inform the GUI
@@ -435,7 +436,7 @@ Recorder::recordAudio()
 
     if (audioPort.count() != samplesPerFrame) {
 
-        trace(REC_DEBUG, "Samples: %ld\n", audioPort.count());
+        // trace(REC_DEBUG, "Samples: %ld (expected: %ld)\n", audioPort.count(), samplesPerFrame);
         assert(audioPort.count() >= samplesPerFrame);
     }
     
@@ -459,6 +460,11 @@ Recorder::recordAudio()
 void
 Recorder::finalize()
 {
+    // Reconnect to the Mac audio backend
+    audioPort.lock();
+    audioPort.unmute();
+    audioPort.unlock();
+
     // Close pipes
     videoPipe.close();
     audioPipe.close();

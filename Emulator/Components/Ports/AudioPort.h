@@ -24,6 +24,9 @@ class AudioPort final : CoreObject, public util::RingBuffer <SamplePair, 12288> 
 
     const char *objectName() const override { return "StereoStream"; }
 
+    // Set to true to disconnect from Mac audio (used by the recorder)
+    bool muted = false;
+
     // Mutex for synchronizing read / write accesses
     util::ReentrantMutex mutex;
 
@@ -99,6 +102,12 @@ public:
 
     // Rescale the existing samples in the buffer to gradually fade out
     void fadeOut();
+
+    // Disconnect from the Mac audio backend
+    void mute() { muted = true; }
+
+    // Connect to the Mac audio backend
+    void unmute() { muted = false; }
 
 private:
 
