@@ -393,7 +393,6 @@ AudioPort::copyStereo(float *left, float *right, isize n)
 
         } else {
 
-            printf("Underflow: cnt = %ld\n", cnt);
             // Copy all we have and stepwise lower the volume to minimize cracks
             for (isize i = 0; i < cnt; i++) {
 

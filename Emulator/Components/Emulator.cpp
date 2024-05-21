@@ -65,7 +65,7 @@ Emulator::initialize()
     ahead.initialize();
 
     // Register the audio sample provider
-    C64::audioPort.connectDataSource(&main.sidBridge);
+    main.audioPort.connectDataSource(&main.sidBridge);
 
     // Perform a hard reset
     main.hardReset();

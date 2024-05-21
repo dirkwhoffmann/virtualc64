@@ -62,24 +62,28 @@ extension MyController: NSWindowDelegate {
     public func windowWillClose(_ notification: Notification) {
         
         debug(.lifetime)
-        
-        debug(.shutdown, "Stop renderer...")
-        renderer.halt()
 
-        debug(.shutdown, "Disconnect from the audio backend...")
-        myApp.macAudio.disconnect(emu)
+        debug(.shutdown, "Let audio fade out...")
+        // TODO
+        usleep(250000)
 
-        debug(.shutdown, "Close the inspector panel...")
+        debug(.shutdown, "Disconnect and close inspector...")
         inspector?.emu = nil
         inspector?.close()
 
-        debug(.shutdown, "Close the monitor panel...")
+        debug(.shutdown, "Disconnect and close monitor...")
         monitor?.emu = nil
         monitor?.close()
-                                
+
+        debug(.shutdown, "Stop renderer...")
+        renderer.halt()
+
         debug(.shutdown, "Disconnect gaming devices...")
         gamePadManager.shutDown()
         
+        debug(.shutdown, "Shut down audio...")
+        macAudio.shutDown()
+
         debug(.shutdown, "Shut down the emulator...")
         emu.halt()
 

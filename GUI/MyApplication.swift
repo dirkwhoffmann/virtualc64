@@ -12,9 +12,6 @@ import Cocoa
 @objc(MyApplication)
 class MyApplication: NSApplication {
 
-    // Audio Engine
-    var macAudio = MacAudio()
-
     /* Set this variable to true to take away the control of the Command key
      * from the application. This becomes necessary once the command key
      * is meant to be operate the C64 and not the Mac. If control is not taken
@@ -102,12 +99,21 @@ class MyApplication: NSApplication {
                                                       reason: "Running VirtualC64")
     }
     
+    public func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+
+        debug(.shutdown, "Delay a bit to let audio fade out...")
+        usleep(250000)
+        debug(.shutdown, "OK...")
+
+        return .terminateNow
+    }
+
     public func applicationWillTerminate(_ aNotification: Notification) {
         
         debug(.lifetime)
 
-        debug(.shutdown, "Shutting down the audio backend...")
-        myApp.macAudio.shutDown()
+        // debug(.shutdown, "Shut down audio...")
+        // macAudio.shutDown()
 
         ProcessInfo.processInfo.endActivity(token)
     }
@@ -139,11 +145,6 @@ extension MyAppDelegate {
             if c.window == window {
                 
                 c.emu.put(.FOCUS, value: 1)
-
-                // Switch the audio source
-                // myApp.macAudio.switchSource(c.emu)
-
-                // Update the visibility of all drive menus
                 c.hideOrShowDriveMenus()
                 
             } else {

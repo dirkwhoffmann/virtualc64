@@ -70,12 +70,6 @@ class MyDocument: NSDocument {
 
         // Create an emulator instance
         emu = EmulatorProxy()
-
-        // Pass some host parameters to the emulator
-        emu.set(.HOST_SAMPLE_RATE, value: Int(myApp.macAudio.sampleRate))
-        
-        // Register as audio sample provider
-        myApp.macAudio.emu = emu
     }
 
     override open func makeWindowControllers() {

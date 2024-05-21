@@ -141,7 +141,7 @@ void
 SIDBridge::_unfocus()
 {
     // debug(true, "_unfocus()\n");
-    audioPort.disconnectDataSource(this);
+    // audioPort.disconnectDataSource(this);
 }
 
 void
