@@ -322,7 +322,10 @@ C64::updateClockFrequency()
     auto nativeFrequency = vic.getFrequency();
     auto chosenFrequency = nativeFrequency * chosenFps / nativeFps;
 
-    sidBridge.setClockFrequency((u32)chosenFrequency);
+    sidBridge.sid[0].setClockFrequency((u32)chosenFrequency);
+    sidBridge.sid[1].setClockFrequency((u32)chosenFrequency);
+    sidBridge.sid[2].setClockFrequency((u32)chosenFrequency);
+    sidBridge.sid[3].setClockFrequency((u32)chosenFrequency);
     durationOfOneCycle = 10000000000 / vic.getFrequency();
 }
 

@@ -43,87 +43,12 @@ SIDBridge::isMuted() const
     sid[3].config.vol == 0;
 }
 
-u32
-SIDBridge::getClockFrequency()
-{
-    assert(sid[0].getClockFrequency() == sid[1].getClockFrequency());
-    assert(sid[0].getClockFrequency() == sid[2].getClockFrequency());
-    assert(sid[0].getClockFrequency() == sid[3].getClockFrequency());
-
-    return sid[0].getClockFrequency();
-}
-
 void
-SIDBridge::setClockFrequency(u32 frequency)
-{
-    if (getClockFrequency() != frequency) {
-        
-        trace(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
-
-        sid[0].setClockFrequency(frequency);
-        sid[1].setClockFrequency(frequency);
-        sid[2].setClockFrequency(frequency);
-        sid[3].setClockFrequency(frequency);
-    }
-}
-
-double
-SIDBridge::getSampleRate() const
-{
-    assert(sid[0].getSampleRate() == sid[1].getSampleRate());
-    assert(sid[0].getSampleRate() == sid[2].getSampleRate());
-    assert(sid[0].getSampleRate() == sid[3].getSampleRate());
-
-    return sid[0].getSampleRate();
-}
-
-void
-SIDBridge::setSampleRate(double rate)
-{
-    trace(SID_DEBUG, "Setting sample rate to %f\n", rate);
-
-    sid[0].setSampleRate(rate);
-    sid[1].setSampleRate(rate);
-    sid[2].setSampleRate(rate);
-    sid[3].setSampleRate(rate);
-}
-
-void 
 SIDBridge::operator << (SerReader &worker)
 {
     serialize(worker);
 
     for (isize i = 0; i < 4; i++) sidStream[i].clear(0);
-}
-
-void
-SIDBridge::_run()
-{
-}
-
-void
-SIDBridge::_pause()
-{
-}
-
-void
-SIDBridge::_warpOn()
-{
-}
-
-void
-SIDBridge::_warpOff()
-{
-}
-
-void 
-SIDBridge::_focus()
-{
-}
-
-void 
-SIDBridge::_unfocus()
-{
 }
 
 void
@@ -143,43 +68,6 @@ SIDBridge::getStats()
     stats.fillLevel = audioPort.fillLevel();
     return stats;
 }
-/*
-SIDInfo
-SIDBridge::getInfo(isize nr)
-{
-    assert(nr < 4);
-    
-    SIDInfo info = { };
-    
-    switch (config.engine) {
-            
-        case SIDENGINE_RESID:   info = sid[nr].resid.getInfo(); break;
-
-        default:
-            fatalError;
-    }
-    
-    info.potX = port1.mouse.readPotX() & port2.mouse.readPotX();
-    info.potY = port1.mouse.readPotY() & port2.mouse.readPotY();
-    
-    return info;
-}
-*/
-/*
-VoiceInfo
-SIDBridge::getVoiceInfo(isize nr, isize voice)
-{
-    assert(nr >= 0 && nr <= 3);
-
-    switch (config.engine) {
-            
-        case SIDENGINE_RESID:   return sid[nr].resid.getVoiceInfo(voice);
-
-        default:
-            fatalError;
-    }
-}
-*/
 
 CoreComponent &
 SIDBridge::getSID(isize nr)

@@ -116,13 +116,6 @@ public:
     void _dump(Category category, std::ostream& os) const override;
     void _dump(Category category, std::ostream& os, isize nr) const;
 
-    void _run() override;
-    void _pause() override;
-    void _warpOn() override;
-    void _warpOff() override;
-    void _focus() override;
-    void _unfocus() override;
-
     SIDBridge& operator= (const SIDBridge& other) {
 
         CLONE_ARRAY(sid)
@@ -169,21 +162,12 @@ public:
     //
 
 public:
-    
-    /*
-    SIDInfo getInfo(isize nr);
-    SIDInfo getCachedInfo(isize nr) { return getInfo(nr); }
-    */
 
     CoreComponent &getSID(isize nr);
     SIDBridgeStats getStats();
     
     bool isEnabled(isize nr) const { return sid[nr].config.enabled; }
     bool isMuted() const;
-    u32 getClockFrequency();
-    void setClockFrequency(u32 frequency);
-    double getSampleRate() const;
-    void setSampleRate(double rate);
 
 
     //
