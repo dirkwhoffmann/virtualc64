@@ -43,9 +43,6 @@ public util::RingBuffer <SamplePair, 12288> {
     // Current configuration
     AudioPortConfig config = { };
 
-    // Set to true to disconnect from Mac audio (used by the recorder)
-    bool muted = false;
-
     // Mutex for synchronizing read / write accesses
     util::ReentrantMutex mutex;
 
@@ -76,20 +73,15 @@ public:
 
     AudioPort& operator= (const AudioPort& other) {
 
-        CLONE(muted)
         CLONE(lastAlignment)
         CLONE(config)
-        
+
         return *this;
     }
 
     template <class T>
     void serialize(T& worker)
     {
-        worker
-
-        << muted;
-
         if (isResetter(worker)) return;
 
         worker
@@ -149,17 +141,16 @@ public:
     // Generates samples
     void generateSamples();
 
-    // Rescale new sound samples such that their volume steadily increases
-    void fadeIn();
-
-    // Rescale the existing samples in the buffer to gradually fade out
+    // Rescale the existing samples to gradually fade out (to avoid cracks)
     void fadeOut();
 
-    // Disconnect from the Mac audio backend
-    void mute() { muted = true; }
+    // Gradually decrease the volume to zero
+    void mute() { volL.mute(); volR.mute(); }
+    void mute(isize steps) { volL.mute(steps); volR.mute(steps); }
 
-    // Connect to the Mac audio backend
-    void unmute() { muted = false; }
+    // Gradually inrease the volume to max
+    void unmute() { volL.unmute(); volR.unmute(); }
+    void unmute(isize steps) { volL.unmute(steps); volR.unmute(steps); }
 
 private:
 

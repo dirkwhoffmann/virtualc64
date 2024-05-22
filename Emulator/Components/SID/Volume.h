@@ -70,11 +70,25 @@ template <typename T> struct AudioVolume : Serializable {
     // Sets the volume to a fixed value
     void set(float value) { current = value; delta = 0.0; }
 
-    // Fades in to the maximum volume
-    void fadeIn(isize steps = 10000) { delta  = maximum / steps; }
+    // Gradually decrease the volume to zero
+    void mute(isize steps = 10000) {
 
-    // Fades out to zero
-    void fadeOut(isize steps = 10000) { delta  = -maximum / steps; }
+        if (steps == 0) {
+            current = delta = 0;
+        } else {
+            delta = -maximum / steps;
+        }
+    }
+
+    // Gradually increase the volume to max
+    void unmute(isize steps = 10000) {
+
+        if (steps == 0) {
+            current = maximum; delta = 0;
+        } else {
+            delta = maximum / steps;
+        }
+    }
 
     // Shifts the current volume towards the target volume
     void shift() {

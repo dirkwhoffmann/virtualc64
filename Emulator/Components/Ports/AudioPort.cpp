@@ -38,37 +38,39 @@ AudioPort::_reset(bool hard)
 void
 AudioPort::_run()
 {
-    fadeIn();
+    unmute(10000);
 }
 
 void
 AudioPort::_pause()
 {
     fadeOut();
+    mute(0);
 }
 
 void
 AudioPort::_warpOn()
 {
     fadeOut();
+    mute(0);
 }
 
 void
 AudioPort::_warpOff()
 {
-    fadeIn();
+    unmute(10000);
 }
 
 void
 AudioPort::_focus()
 {
-
+    unmute(100000);
 }
 
 void
 AudioPort::_unfocus()
 {
-
+    mute(100000);
 }
 
 void
@@ -155,15 +157,6 @@ AudioPort::generateSamples()
 }
 
 void
-AudioPort::fadeIn()
-{
-    debug(AUDVOL_DEBUG, "Fading in...\n");
-
-    volL.fadeIn();
-    volR.fadeIn();
-}
-
-void
 AudioPort::fadeOut()
 {
     debug(AUDVOL_DEBUG, "Fading out (%ld samples)...\n", count());
@@ -174,6 +167,7 @@ AudioPort::fadeOut()
     float scale = 1.0f;
     float delta = 1.0f / count();
 
+    // Rescale the existing samples
     for (isize i = begin(); i != end(); i = next(i)) {
 
         scale -= delta;
@@ -183,6 +177,7 @@ AudioPort::fadeOut()
         elements[i].right *= scale;
     }
 
+    // Wipe out the rest of the buffer
     for (isize i = end(); i != begin(); i = next(i)) {
 
         elements[i] = SamplePair { 0, 0 };
@@ -204,6 +199,7 @@ AudioPort::mixSingleSID(isize numSamples)
     // Convert sound samples to floating point values and write into ringbuffer
     if (volL.isFading() || volR.isFading()) {
 
+        printf("Fading %f %f\n", volL.current, volR.current);
         for (isize i = 0; i < numSamples; i++) {
 
             // Read SID sample from ring buffer
@@ -300,7 +296,7 @@ AudioPort::copyMono(float *buffer, isize n)
 {
     lock();
 
-    if (!muted) {
+    if (!recorder.isRecording()) {
 
         auto cnt = count();
 
@@ -345,7 +341,7 @@ AudioPort::copyStereo(float *left, float *right, isize n)
 {
     lock();
 
-    if (!muted) {
+    if (!recorder.isRecording()) {
 
         auto cnt = count();
 
@@ -392,7 +388,7 @@ AudioPort::copyInterleaved(float *buffer, isize n)
 {
     lock();
 
-    if (!muted) {
+    if (!recorder.isRecording()) {
 
         auto cnt = count();
 
