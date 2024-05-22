@@ -13,6 +13,8 @@ extension Inspector {
 
     func refreshSID(count: Int = 0, full: Bool = false) {
         
+        let info = emu.sid.getInfo(selectedSID)
+
         if full {
 
             sidFrequency1.assignFormatter(fmt16)
@@ -44,7 +46,7 @@ extension Inspector {
         }
         
         // First voice
-        var vinfo = emu.sid.getVoiceInfo(selectedSID, voice: 0)
+        var vinfo = info.voice.0
         refresh(waveform: vinfo.waveform, waveformPopup: sidWaveform1)
         sidPulseWidth1.isHidden = (vinfo.waveform & 0x40 == 0)
         sidPulseWidthText1.isHidden = (vinfo.waveform & 0x40 == 0)
@@ -61,7 +63,7 @@ extension Inspector {
         sidRingBit1.intValue = vinfo.ringMod ? 1 : 0
         
         // Second voice
-        vinfo = emu.sid.getVoiceInfo(selectedSID, voice: 1)
+        vinfo = info.voice.1
         refresh(waveform: vinfo.waveform, waveformPopup: sidWaveform2)
         sidPulseWidth2.isHidden = (vinfo.waveform & 0x40 == 0)
         sidPulseWidthText2.isHidden = (vinfo.waveform & 0x40 == 0)
@@ -78,7 +80,7 @@ extension Inspector {
         sidRingBit2.intValue = vinfo.ringMod ? 1 : 0
         
         // Third voice
-        vinfo = emu.sid.getVoiceInfo(selectedSID, voice: 2)
+        vinfo = info.voice.2
         refresh(waveform: vinfo.waveform, waveformPopup: sidWaveform3)
         sidPulseWidth3.isHidden = (vinfo.waveform & 0x40 == 0)
         sidPulseWidthText3.isHidden = (vinfo.waveform & 0x40 == 0)
@@ -95,7 +97,6 @@ extension Inspector {
         sidRingBit3.intValue = vinfo.ringMod ? 1 : 0
         
         // Volume and potentiometers
-        let info = emu.sid.getInfo(selectedSID)
         sidVolume.intValue = Int32(info.volume)
         sidPotX.intValue = Int32(info.potX)
         sidPotY.intValue = Int32(info.potY)

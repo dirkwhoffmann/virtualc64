@@ -189,12 +189,6 @@ ReSID::cacheInfo(SIDInfo &info) const
     }
 }
 
-VoiceInfo 
-ReSID::getVoiceInfo(isize nr) const
-{
-    return voiceInfo[nr];
-}
-
 SIDRevision
 ReSID::getRevision() const
 {
@@ -222,13 +216,16 @@ ReSID::setRevision(SIDRevision revision)
 void
 ReSID::setSampleRate(double value)
 {
-    sampleRate = value;
+    if (sampleRate != value) {
 
-    sid->set_sampling_parameters((double)clockFrequency,
-                                 (reSID::sampling_method)samplingMethod,
-                                 sampleRate);
-    
-    trace(SID_DEBUG, "Setting sample rate to %f samples per second\n", sampleRate);
+        sampleRate = value;
+
+        sid->set_sampling_parameters((double)clockFrequency,
+                                     (reSID::sampling_method)samplingMethod,
+                                     sampleRate);
+
+        trace(SID_DEBUG, "Setting sample rate to %f samples per second\n", sampleRate);
+    }
 }
 
 void 
@@ -236,14 +233,17 @@ ReSID::setAudioFilter(bool value)
 {
     assert(!isRunning());
 
-    emulateFilter = value;
+    if (emulateFilter != value) {
 
-    {   SUSPENDED
+        emulateFilter = value;
 
-        sid->enable_filter(value);
+        {   SUSPENDED
+
+            sid->enable_filter(value);
+        }
+
+        trace(SID_DEBUG, "%s audio filter emulation.\n", value ? "Enabling" : "Disabling");
     }
-    
-    trace(SID_DEBUG, "%s audio filter emulation.\n", value ? "Enabling" : "Disabling");
 }
 
 SamplingMethod
@@ -258,33 +258,36 @@ ReSID::setSamplingMethod(SamplingMethod value)
 {
     assert(!isRunning());
     
-    switch(value) {
-        case SAMPLING_FAST:
-            trace(SID_DEBUG, "Using sampling method SAMPLE_FAST.\n");
-            break;
-        case SAMPLING_INTERPOLATE:
-            trace(SID_DEBUG, "Using sampling method SAMPLE_INTERPOLATE.\n");
-            break;
-        case SAMPLING_RESAMPLE:
-            trace(SID_DEBUG, "Using sampling method SAMPLE_RESAMPLE.\n");
-            break;
-        case SAMPLING_RESAMPLE_FASTMEM:
-            warn("SAMPLE_RESAMPLE_FASTMEM not supported. Using SAMPLE_INTERPOLATE.\n");
-            value = SAMPLING_INTERPOLATE;
-            break;
-        default:
-            warn("Unknown sampling method: %ld\n", value);
+    if (samplingMethod != value) {
+        
+        switch(value) {
+            case SAMPLING_FAST:
+                trace(SID_DEBUG, "Using sampling method SAMPLE_FAST.\n");
+                break;
+            case SAMPLING_INTERPOLATE:
+                trace(SID_DEBUG, "Using sampling method SAMPLE_INTERPOLATE.\n");
+                break;
+            case SAMPLING_RESAMPLE:
+                trace(SID_DEBUG, "Using sampling method SAMPLE_RESAMPLE.\n");
+                break;
+            case SAMPLING_RESAMPLE_FASTMEM:
+                warn("SAMPLE_RESAMPLE_FASTMEM not supported. Using SAMPLE_INTERPOLATE.\n");
+                value = SAMPLING_INTERPOLATE;
+                break;
+            default:
+                warn("Unknown sampling method: %ld\n", value);
+        }
+
+        samplingMethod = value;
+
+        {   SUSPENDED
+
+            sid->set_sampling_parameters((double)clockFrequency,
+                                         (reSID::sampling_method)samplingMethod,
+                                         (double)sampleRate);
+        }
     }
 
-    samplingMethod = value;
-
-    {   SUSPENDED
-
-        sid->set_sampling_parameters((double)clockFrequency,
-                                     (reSID::sampling_method)samplingMethod,
-                                     (double)sampleRate);
-    }
-    
     assert((SamplingMethod)sid->sampling == samplingMethod);
 }
 

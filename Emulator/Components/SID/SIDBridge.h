@@ -44,7 +44,7 @@ namespace vc64 {
  *           -------------------------------------------------
  */
 
-class SIDBridge final : public SubComponent, public Inspectable<SIDInfo, Void> {
+class SIDBridge final : public SubComponent, public Dumpable {
 
     friend C64Memory;
     friend AudioPort;
@@ -153,8 +153,6 @@ public:
     void operator << (SerReader &worker) override;
     void operator << (SerWriter &worker) override { serialize(worker); }
 
-    void _reset(bool hard) override;
-
 
     //
     // Configuring
@@ -172,10 +170,11 @@ public:
 
 public:
     
+    /*
     SIDInfo getInfo(isize nr);
     SIDInfo getCachedInfo(isize nr) { return getInfo(nr); }
-    VoiceInfo getVoiceInfo(isize nr, isize voice);
-    VoiceInfo getCachedVoiceInfo(isize nr, isize voice) { return getVoiceInfo(nr, voice); }
+    */
+
     CoreComponent &getSID(isize nr);
     SIDBridgeStats getStats();
     

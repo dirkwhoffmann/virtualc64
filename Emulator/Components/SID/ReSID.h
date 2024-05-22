@@ -35,6 +35,8 @@ namespace vc64 {
 
 class ReSID final : public SubComponent, public Inspectable<SIDInfo, Void> {
 
+    friend class SID;
+    
     Descriptions descriptions = {{
 
         .name           = "ReSID",
@@ -145,7 +147,7 @@ public:
     virtual void record() const override;
     void cacheInfo(SIDInfo &result) const override;
 
-    VoiceInfo getVoiceInfo(isize nr) const;
+    // VoiceInfo getVoiceInfo(isize nr) const;
 
 
     //

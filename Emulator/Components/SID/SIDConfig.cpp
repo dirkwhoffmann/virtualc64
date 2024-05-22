@@ -17,6 +17,42 @@
 namespace vc64 {
 
 void
+SID::cacheInfo(SIDInfo &info) const
+{
+    {   SYNCHRONIZED
+
+        reSID::SID::State state = resid.sid->read_state();
+        u8 *reg = (u8 *)state.sid_register;
+
+        info.volume = reg[0x18] & 0xF;
+        info.filterModeBits = reg[0x18] & 0xF0;
+        info.filterType = reg[0x18] & 0x70;
+        info.filterCutoff = u16(reg[0x16] << 3 | (reg[0x15] & 0x07));
+        info.filterResonance = reg[0x17] >> 4;
+        info.filterEnableBits = reg[0x17] & 0x0F;
+
+        info.potX = port1.mouse.readPotX() & port2.mouse.readPotX();
+        info.potY = port1.mouse.readPotY() & port2.mouse.readPotY();
+        
+        for (isize i = 0; i < 3; i++, reg += 7) {
+
+            for (isize j = 0; j < 7; j++) info.voice[i].reg[j] = reg[j];
+            info.voice[i].frequency = HI_LO(reg[0x1], reg[0x0]);
+            info.voice[i].pulseWidth = u16((reg[0x3] & 0xF) << 8 | reg[0x02]);
+            info.voice[i].waveform = reg[0x4] & 0xF0;
+            info.voice[i].ringMod = (reg[0x4] & 0x4) != 0;
+            info.voice[i].hardSync = (reg[0x4] & 0x2) != 0;
+            info.voice[i].gateBit = (reg[0x4] & 0x1) != 0;
+            info.voice[i].testBit = (reg[0x4] & 0x8) != 0;
+            info.voice[i].attackRate = reg[0x5] >> 4;
+            info.voice[i].decayRate = reg[0x5] & 0xF;
+            info.voice[i].sustainRate = reg[0x6] >> 4;
+            info.voice[i].releaseRate = reg[0x6] & 0xF;
+        }
+    }
+}
+
+void
 SID::resetConfig()
 {
     Configurable::resetConfig(emulator.defaults, objid);

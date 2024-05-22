@@ -30,8 +30,16 @@ void
 AudioPort::_reset(bool hard)
 {
     lock();
+
+    // Wipe out the buffer contents
     this->clear(SamplePair{0,0});
+
+    // Realign the write pointer
     alignWritePtr();
+
+    // Clear statistics
+    if (hard) clearStats();
+
     unlock();
 }
 

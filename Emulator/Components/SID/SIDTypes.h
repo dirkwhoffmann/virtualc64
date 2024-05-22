@@ -201,6 +201,8 @@ typedef struct
     u8 filterEnableBits;
     u8 potX;
     u8 potY;
+
+    VoiceInfo voice[3];
 }
 SIDInfo;
 

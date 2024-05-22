@@ -31,12 +31,6 @@ SIDBridge::SIDBridge(C64 &ref) : SubComponent(ref)
     };
 }
 
-void
-SIDBridge::_reset(bool hard)
-{
-    if (hard) clearStats();
-}
-
 bool
 SIDBridge::isMuted() const
 {
@@ -86,15 +80,12 @@ SIDBridge::getSampleRate() const
 void
 SIDBridge::setSampleRate(double rate)
 {
-    if (getSampleRate() != rate) {
+    trace(SID_DEBUG, "Setting sample rate to %f\n", rate);
 
-        trace(SID_DEBUG, "Setting sample rate to %f\n", rate);
-
-        sid[0].setSampleRate(rate);
-        sid[1].setSampleRate(rate);
-        sid[2].setSampleRate(rate);
-        sid[3].setSampleRate(rate);
-    }
+    sid[0].setSampleRate(rate);
+    sid[1].setSampleRate(rate);
+    sid[2].setSampleRate(rate);
+    sid[3].setSampleRate(rate);
 }
 
 void 
@@ -152,7 +143,7 @@ SIDBridge::getStats()
     stats.fillLevel = audioPort.fillLevel();
     return stats;
 }
-
+/*
 SIDInfo
 SIDBridge::getInfo(isize nr)
 {
@@ -173,7 +164,8 @@ SIDBridge::getInfo(isize nr)
     
     return info;
 }
-
+*/
+/*
 VoiceInfo
 SIDBridge::getVoiceInfo(isize nr, isize voice)
 {
@@ -187,6 +179,7 @@ SIDBridge::getVoiceInfo(isize nr, isize voice)
             fatalError;
     }
 }
+*/
 
 CoreComponent &
 SIDBridge::getSID(isize nr)
@@ -307,7 +300,10 @@ SIDBridge::poke(u16 addr, u8 value)
 void 
 SIDBridge::beginFrame()
 {
-    setSampleRate(host.getOption(OPT_HOST_SAMPLE_RATE)); 
+    sid[0].setSampleRate(host.getOption(OPT_HOST_SAMPLE_RATE)); 
+    sid[1].setSampleRate(host.getOption(OPT_HOST_SAMPLE_RATE));
+    sid[2].setSampleRate(host.getOption(OPT_HOST_SAMPLE_RATE));
+    sid[3].setSampleRate(host.getOption(OPT_HOST_SAMPLE_RATE));
 }
 
 void 

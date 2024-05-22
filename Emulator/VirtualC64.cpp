@@ -563,17 +563,22 @@ VirtualC64::SIDAPI::getConfig() const
 SIDInfo
 VirtualC64::SIDAPI::getInfo(isize nr) const
 {
+    assert(nr < 3);
+
     assert(isUserThread());
-    return sidBridge.getInfo(nr);
+    return sidBridge.sid[nr].getInfo();
 }
 
 SIDInfo
 VirtualC64::SIDAPI::getCachedInfo(isize nr) const
 {
+    assert(nr < 3);
+
     assert(isUserThread());
-    return sidBridge.getCachedInfo(nr);
+    return sidBridge.sid[nr].getCachedInfo();
 }
 
+/*
 VoiceInfo
 VirtualC64::SIDAPI::getVoiceInfo(isize nr, isize voice) const
 {
@@ -587,6 +592,7 @@ VirtualC64::SIDAPI::getCachedVoiceInfo(isize nr, isize voice) const
     assert(isUserThread());
     return sidBridge.getCachedVoiceInfo(nr, voice);
 }
+*/
 
 SIDBridgeStats
 VirtualC64::SIDAPI::getStats() const

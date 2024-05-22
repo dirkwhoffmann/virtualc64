@@ -799,8 +799,8 @@ public:
          *  @param  nr      SID number (0 - 3). 0 is the primary SID.
          *  @param  voice   Voice nuber (0 - 3).
          */
-        VoiceInfo getVoiceInfo(isize nr, isize voice) const;
-        VoiceInfo getCachedVoiceInfo(isize nr, isize voice) const;
+        // VoiceInfo getVoiceInfo(isize nr, isize voice) const;
+        // VoiceInfo getCachedVoiceInfo(isize nr, isize voice) const;
 
         /** @brief  Returns statistical information about the components.
          */

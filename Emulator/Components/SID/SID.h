@@ -17,7 +17,7 @@
 
 namespace vc64 {
 
-class SID final : public SubComponent, public Dumpable
+class SID final : public SubComponent, public Inspectable<SIDInfo, Void>
 {
     friend class SIDBridge;
     friend class AudioPort;
@@ -124,6 +124,15 @@ public:
 
 
     //
+    // Methods from Inspectable
+    //
+
+public:
+
+    void cacheInfo(SIDInfo &result) const override;
+
+
+    //
     // Configuring
     //
 
@@ -136,7 +145,7 @@ public:
     i64 getFallback(Option opt) const override;
     void setOption(Option opt, i64 value) override;
 
-
+    
     //
     // Accessing
     //
