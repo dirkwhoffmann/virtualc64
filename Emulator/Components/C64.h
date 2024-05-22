@@ -325,6 +325,7 @@ public:
         CLONE(cia2)
         CLONE(vic)
         CLONE(sidBridge)
+        CLONE(audioPort)
         CLONE(supply)
         CLONE(port1)
         CLONE(port2)
@@ -364,6 +365,7 @@ public:
         << cia2
         << vic
         << sidBridge
+        << audioPort
         << supply
         << port1
         << port2

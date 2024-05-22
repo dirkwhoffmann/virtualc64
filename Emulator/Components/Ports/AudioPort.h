@@ -12,7 +12,9 @@
 
 #pragma once
 
+#include "AudioPortTypes.h"
 #include "SIDTypes.h"
+#include "SubComponent.h"
 #include "Concurrency.h"
 #include "Volume.h"
 
@@ -20,7 +22,10 @@ namespace vc64 {
 
 class SIDBridge;
 
-class AudioPort final : public SubComponent, public Dumpable, public util::RingBuffer <SamplePair, 12288> {
+class AudioPort final :
+public SubComponent,
+public Inspectable<AudioPortInfo, AudioPortStats>,
+public util::RingBuffer <SamplePair, 12288> {
 
     Descriptions descriptions = {{
 
@@ -29,14 +34,20 @@ class AudioPort final : public SubComponent, public Dumpable, public util::RingB
         .description    = "Audio Port"
     }};
 
+    ConfigOptions options = {
+
+        OPT_AUD_VOL_L,
+        OPT_AUD_VOL_R
+    };
+
+    // Current configuration
+    AudioPortConfig config = { };
+
     // Set to true to disconnect from Mac audio (used by the recorder)
     bool muted = false;
 
     // Mutex for synchronizing read / write accesses
     util::ReentrantMutex mutex;
-
-    // The audio sample provider
-    SIDBridge *dataSource = nullptr;
 
     // Time stamp of the last write pointer alignment
     util::Time lastAlignment;
@@ -56,20 +67,19 @@ public:
     const Descriptions &getDescriptions() const override { return descriptions; }
     void _dump(Category category, std::ostream& os) const override;
 
-
-    //
-    // Methods from CoreComponent
-    //
-
-public:
+    void _run() override;
+    void _pause() override;
+    void _warpOn() override;
+    void _warpOff() override;
+    void _focus() override;
+    void _unfocus() override;
 
     AudioPort& operator= (const AudioPort& other) {
 
         CLONE(muted)
         CLONE(lastAlignment)
-        CLONE(volL)
-        CLONE(volR)
-
+        CLONE(config)
+        
         return *this;
     }
 
@@ -78,9 +88,14 @@ public:
     {
         worker
 
-        << muted
-        << volL
-        << volR;
+        << muted;
+
+        if (isResetter(worker)) return;
+
+        worker
+
+        << config.volL
+        << config.volR;
 
     } SERIALIZERS(serialize);
 
@@ -88,24 +103,15 @@ public:
 
 
     //
-    // Managing the data source
+    // Configuring
     //
 
 public:
 
-    // Assigns a data source
-    void connectDataSource(SIDBridge *bridge);
-
-    // Removes a data source
-    void disconnectDataSource();
-    void disconnectDataSource(SIDBridge *bridge);
-
-    // Delegation methods
-    void reset(SIDBridge *bridge, bool hard);
-    void run(SIDBridge *bridge);
-    void pause(SIDBridge *bridge);
-    void warpOn(SIDBridge *bridge);
-    void warpOff(SIDBridge *bridge);
+    const AudioPortConfig &getConfig() const { return config; }
+    const ConfigOptions &getOptions() const override { return options; }
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
 
 
     //
@@ -141,7 +147,7 @@ public:
 public:
 
     // Generates samples
-    void generateSamples(SIDBridge *bridge);
+    void generateSamples();
 
     // Rescale new sound samples such that their volume steadily increases
     void fadeIn();

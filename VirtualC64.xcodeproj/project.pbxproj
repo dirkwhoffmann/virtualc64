@@ -385,6 +385,8 @@
 		50B7566C2617703100CE1865 /* RessourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B7566B2617703100CE1865 /* RessourceManager.swift */; };
 		50B7E26C2813F8C400A405A3 /* TextStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B7E26A2813F8C400A405A3 /* TextStorage.cpp */; };
 		50B929F221C2B5C90039E8F2 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */; };
+		50B98B4A2BFDF5FC00FA1EC6 /* AudioPortConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B98B492BFDF5FC00FA1EC6 /* AudioPortConfig.cpp */; };
+		50B98B4B2BFDF5FC00FA1EC6 /* AudioPortConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B98B492BFDF5FC00FA1EC6 /* AudioPortConfig.cpp */; };
 		50B9F2812826392400BDFE7B /* MediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B9F2802826392400BDFE7B /* MediaManager.swift */; };
 		50BB3E912B7A232800B2D87B /* Inspectable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E8F2B7A232800B2D87B /* Inspectable.cpp */; };
 		50BB3E922B7A232800B2D87B /* Inspectable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E8F2B7A232800B2D87B /* Inspectable.cpp */; };
@@ -937,6 +939,8 @@
 		50B7E26A2813F8C400A405A3 /* TextStorage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TextStorage.cpp; sourceTree = "<group>"; };
 		50B7E26B2813F8C400A405A3 /* TextStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextStorage.h; sourceTree = "<group>"; };
 		50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
+		50B98B482BFDC67E00FA1EC6 /* AudioPortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioPortTypes.h; sourceTree = "<group>"; };
+		50B98B492BFDF5FC00FA1EC6 /* AudioPortConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AudioPortConfig.cpp; sourceTree = "<group>"; };
 		50B9F2802826392400BDFE7B /* MediaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaManager.swift; sourceTree = "<group>"; };
 		50B9F2822826C23100BDFE7B /* DatasetteTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DatasetteTypes.h; sourceTree = "<group>"; };
 		50BB3E8F2B7A232800B2D87B /* Inspectable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Inspectable.cpp; sourceTree = "<group>"; };
@@ -1962,8 +1966,10 @@
 				504C434524AF29AC00E69CAE /* ExpansionPort.cpp */,
 				504C434624AF29AC00E69CAE /* IEC.h */,
 				504C433C24AF29AC00E69CAE /* IEC.cpp */,
+				50B98B482BFDC67E00FA1EC6 /* AudioPortTypes.h */,
 				50549B48257D288E006FE39C /* AudioPort.h */,
 				50549B47257D288E006FE39C /* AudioPort.cpp */,
+				50B98B492BFDF5FC00FA1EC6 /* AudioPortConfig.cpp */,
 			);
 			path = Ports;
 			sourceTree = "<group>";
@@ -2330,6 +2336,7 @@
 				50726F6E2961C9C60031F2F5 /* dac.cc in Sources */,
 				50726F662961C9B80031F2F5 /* SIDBridge.cpp in Sources */,
 				50726F892961CA0D0031F2F5 /* SuperGames.cpp in Sources */,
+				50B98B4B2BFDF5FC00FA1EC6 /* AudioPortConfig.cpp in Sources */,
 				50726FB02961CA230031F2F5 /* FSBlock.cpp in Sources */,
 				50726F8E2961CA0D0031F2F5 /* FreezeFrame.cpp in Sources */,
 				50726FA32961CA1C0031F2F5 /* RomFile.cpp in Sources */,
@@ -2530,6 +2537,7 @@
 				50CCC30A256FAC870052619A /* Concurrency.cpp in Sources */,
 				5002FA7F21C2653600DA4BBC /* GeneralPrefs.swift in Sources */,
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,
+				50B98B4A2BFDF5FC00FA1EC6 /* AudioPortConfig.cpp in Sources */,
 				504C435E24AF29AC00E69CAE /* FinalIII.cpp in Sources */,
 				50A22A2F2618845800C9FB1E /* TextureRect.swift in Sources */,
 				506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */,

@@ -35,7 +35,6 @@ void
 SIDBridge::_reset(bool hard)
 {
     if (hard) clearStats();
-    audioPort.reset(this, hard);
 }
 
 bool
@@ -109,39 +108,31 @@ SIDBridge::operator << (SerReader &worker)
 void
 SIDBridge::_run()
 {
-    audioPort.run(this);
 }
 
 void
 SIDBridge::_pause()
 {
-    audioPort.pause(this);
 }
 
 void
 SIDBridge::_warpOn()
 {
-    audioPort.warpOn(this);
 }
 
 void
 SIDBridge::_warpOff()
 {
-    audioPort.warpOff(this);
 }
 
 void 
 SIDBridge::_focus()
 {
-    // debug(true, "_focus()\n");
-    audioPort.connectDataSource(this);
 }
 
 void 
 SIDBridge::_unfocus()
 {
-    // debug(true, "_unfocus()\n");
-    // audioPort.disconnectDataSource(this);
 }
 
 void
@@ -326,7 +317,7 @@ SIDBridge::endFrame()
     sidBridge.executeUntil(cpu.clock);
 
     // Generate sound sampes
-    audioPort.generateSamples(this);
+    audioPort.generateSamples();
 }
 
 void

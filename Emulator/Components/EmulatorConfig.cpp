@@ -184,10 +184,13 @@ Emulator::get(Option option) const
         case OPT_SID_FILTER:
         case OPT_SID_ENGINE:
         case OPT_SID_SAMPLING:
+
+            return main.sidBridge.getOption(option);
+
         case OPT_AUD_VOL_L:
         case OPT_AUD_VOL_R:
 
-            return main.sidBridge.getOption(option);
+            return main.audioPort.getOption(option);
 
         case OPT_RAM_PATTERN:
         case OPT_SAVE_ROMS:
@@ -506,10 +509,14 @@ Emulator::set(Option option, i64 value)
         case OPT_SID_ENGINE:
         case OPT_AUD_PAN:
         case OPT_AUD_VOL:
+
+            main.sidBridge.setOption(option, value);
+            break;
+
         case OPT_AUD_VOL_L:
         case OPT_AUD_VOL_R:
 
-            main.sidBridge.setOption(option, value);
+            main.audioPort.setOption(option, value);
             break;
 
         case OPT_RAM_PATTERN:
@@ -647,10 +654,14 @@ Emulator::set(Option option, isize id, i64 value)
         case OPT_SID_POWER_SAVE:
         case OPT_SID_ENGINE:
         case OPT_SID_SAMPLING:
+
+            main.sidBridge.setOption(option, value);
+            break;
+
         case OPT_AUD_VOL_L:
         case OPT_AUD_VOL_R:
 
-            main.sidBridge.setOption(option, value);
+            main.audioPort.setOption(option, value);
             break;
 
         case OPT_SID_ENABLE:

@@ -197,12 +197,13 @@ C64::C64(class Emulator& ref, isize id) : CoreComponent(ref, id)
     trace(RUN_DEBUG, "Creating virtual C64\n");
 
     subComponents = std::vector<CoreComponent *> {
-        
+
         &mem,
         &cpu,
         &cia1, &cia2,
         &vic,
         &sidBridge,
+        &audioPort,
         &supply,
         &port1,
         &port2,

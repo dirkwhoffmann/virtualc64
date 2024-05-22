@@ -64,9 +64,6 @@ Emulator::initialize()
     main.initialize();
     ahead.initialize();
 
-    // Register the audio sample provider
-    main.audioPort.connectDataSource(&main.sidBridge);
-
     // Perform a hard reset
     main.hardReset();
     ahead.hardReset();

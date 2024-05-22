@@ -113,9 +113,9 @@ enum_long(OPT)
 
     // Audio backend
     OPT_AUD_PAN,                ///< Pan
-    OPT_AUD_VOL,                ///< Master volume
-    OPT_AUD_VOL_L,              ///< Left channel volume
-    OPT_AUD_VOL_R,              ///< Right channel volume
+    OPT_AUD_VOL,                ///< Channel volume
+    OPT_AUD_VOL_L,              ///< Master volume (left channel)
+    OPT_AUD_VOL_R,              ///< Master volume (right channel)
 
     // Memory
     OPT_RAM_PATTERN,            ///< Ram initialization pattern
