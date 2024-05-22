@@ -133,6 +133,13 @@ typedef struct
     // Location of the SID registers in memory
     u16 address;
 
+    // Hardware settings
+    SIDRevision revision;
+    bool filter;
+
+    // Emlation engine settings
+    SamplingMethod sampling;
+
     // Channel volumes and pan factors
     i64 vol;
     i64 pan;
@@ -142,13 +149,10 @@ SIDConfig;
 typedef struct
 {
     // Hardware settings
-    SIDRevision revision;
     bool powerSave;
-    bool filter;
 
     // Emlation engine settings
     SIDEngine engine;
-    SamplingMethod sampling;
 
     // Master volume (left and right channel)
     i64 volL;

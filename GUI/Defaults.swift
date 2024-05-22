@@ -723,8 +723,8 @@ extension Configuration {
         ciaRevision = defaults.get(.CIA_REVISION)
         ciaTimerBBug = defaults.get(.CIA_TIMER_B_BUG) != 0
 
-        sidRevision = defaults.get(.SID_REVISION)
-        sidFilter = defaults.get(.SID_FILTER) != 0
+        sidRevision = defaults.get(.SID_REVISION, 0)
+        sidFilter = defaults.get(.SID_FILTER, 0) != 0
         sidEnable1 = defaults.get(.SID_ENABLE, 1) != 0
         sidEnable2 = defaults.get(.SID_ENABLE, 2) != 0
         sidEnable3 = defaults.get(.SID_ENABLE, 3) != 0
@@ -1001,11 +1001,11 @@ extension Configuration {
 
         volL = defaults.get(.AUD_VOL_L)
         volR = defaults.get(.AUD_VOL_R)
-        sidSampling = defaults.get(.SID_SAMPLING)
+        sidSampling = defaults.get(.SID_SAMPLING, 0)
         stepVolume = defaults.get(.DRV_STEP_VOL, DRIVE8)
         insertVolume = defaults.get(.DRV_INSERT_VOL, DRIVE8)
         ejectVolume = defaults.get(.DRV_EJECT_VOL, DRIVE8)
-        sidFilter = defaults.get(.SID_FILTER) != 0
+        sidFilter = defaults.get(.SID_FILTER, 0) != 0
 
         emu.resume()
     }

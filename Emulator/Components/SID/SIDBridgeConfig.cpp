@@ -21,20 +21,11 @@ SIDBridge::getOption(Option option) const
 {
     switch (option) {
 
-        case OPT_SID_REVISION:
-            return config.revision;
-
         case OPT_SID_POWER_SAVE:
             return config.powerSave;
 
-        case OPT_SID_FILTER:
-            return config.filter;
-
         case OPT_SID_ENGINE:
             return config.engine;
-
-        case OPT_SID_SAMPLING:
-            return config.sampling;
 
         case OPT_AUD_VOL_L:
             return config.volL;
@@ -62,34 +53,7 @@ SIDBridge::setOption(Option option, i64 value)
             }
             return;
         }
-        case OPT_SID_REVISION:
-        {
-            if (!SIDRevisionEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, SIDRevisionEnum::keyList());
-            }
 
-            {   SUSPENDED
-
-                config.revision = SIDRevision(value);
-                sid[0].setRevision(SIDRevision(value));
-                sid[1].setRevision(SIDRevision(value));
-                sid[2].setRevision(SIDRevision(value));
-                sid[3].setRevision(SIDRevision(value));
-            }
-            return;
-        }
-        case OPT_SID_FILTER:
-        {
-            {   SUSPENDED
-
-                config.filter = bool(value);
-                sid[0].setAudioFilter(bool(value));
-                sid[1].setAudioFilter(bool(value));
-                sid[2].setAudioFilter(bool(value));
-                sid[3].setAudioFilter(bool(value));
-            }
-            return;
-        }
         case OPT_SID_ENGINE:
         {
             if (!SIDEngineEnum::isValid(value)) {
@@ -102,24 +66,9 @@ SIDBridge::setOption(Option option, i64 value)
             }
             return;
         }
-        case OPT_SID_SAMPLING:
-        {
-            if (!SamplingMethodEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, SamplingMethodEnum::keyList());
-            }
 
-            {   SUSPENDED
-
-                config.sampling = SamplingMethod(value);
-                sid[0].setSamplingMethod(SamplingMethod(value));
-                sid[1].setSamplingMethod(SamplingMethod(value));
-                sid[2].setSamplingMethod(SamplingMethod(value));
-                sid[3].setSamplingMethod(SamplingMethod(value));
-            }
-            return;
-        }
         case OPT_AUD_VOL_L:
-
+        {
             config.volL = std::clamp(value, 0LL, 100LL);
             volL = powf((float)config.volL / 50, 1.4f);
 
@@ -127,9 +76,10 @@ SIDBridge::setOption(Option option, i64 value)
                 msgQueue.put(MSG_MUTE, isMuted());
             }
             return;
+        }
 
         case OPT_AUD_VOL_R:
-
+        {
             config.volR = std::clamp(value, 0LL, 100LL);
             volR = powf((float)config.volR / 50, 1.4f);
 
@@ -137,7 +87,8 @@ SIDBridge::setOption(Option option, i64 value)
                 msgQueue.put(MSG_MUTE, isMuted());
             }
             return;
-
+        }
+            
         default:
             fatalError;
     }

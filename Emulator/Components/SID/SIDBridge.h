@@ -58,11 +58,8 @@ class SIDBridge final : public SubComponent, public Inspectable<SIDInfo, Void> {
 
     ConfigOptions options = {
 
-        OPT_SID_REVISION,
         OPT_SID_POWER_SAVE,
-        OPT_SID_FILTER,
         OPT_SID_ENGINE,
-        OPT_SID_SAMPLING,
         OPT_AUD_VOL_L,
         OPT_AUD_VOL_R
     };
@@ -145,10 +142,7 @@ public:
 
         worker
 
-        << config.revision
-        << config.filter
         << config.engine
-        << config.sampling
         << config.volL
         << config.volR;
     }

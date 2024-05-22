@@ -87,11 +87,8 @@ Defaults::Defaults()
     setFallback(OPT_MON_DISALIGNMENT_H, 1000);
     setFallback(OPT_MON_DISALIGNMENT_V, 1000);
 
-    setFallback(OPT_SID_REVISION, MOS_8580);
     setFallback(OPT_SID_POWER_SAVE, false);
-    setFallback(OPT_SID_FILTER, false);
     setFallback(OPT_SID_ENGINE, SIDENGINE_RESID);
-    setFallback(OPT_SID_SAMPLING, SAMPLING_INTERPOLATE);
     setFallback(OPT_AUD_VOL_L, 50);
     setFallback(OPT_AUD_VOL_R, 50);
 
@@ -101,6 +98,9 @@ Defaults::Defaults()
     setFallback(OPT_SID_ADDRESS, 1, 0xD420);
     setFallback(OPT_SID_ADDRESS, 2, 0xD440);
     setFallback(OPT_SID_ADDRESS, 3, 0xD460);
+    setFallback(OPT_SID_REVISION, {0, 1, 2, 3}, MOS_8580);
+    setFallback(OPT_SID_FILTER, {0, 1, 2, 3}, false);
+    setFallback(OPT_SID_SAMPLING, {0, 1, 2, 3}, SAMPLING_INTERPOLATE);
     setFallback(OPT_AUD_VOL, {0, 1, 2, 3}, 100);
     setFallback(OPT_AUD_PAN, {0, 1, 2, 3}, 0);
 

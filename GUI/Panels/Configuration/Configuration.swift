@@ -67,7 +67,7 @@ class Configuration {
     }
     
     var sidFilter: Bool {
-        get { return emu.get(.SID_FILTER) != 0 }
+        get { return emu.get(.SID_FILTER, id: 0) != 0 }
         set { emu.set(.SID_FILTER, enable: newValue) }
     }
     
@@ -308,7 +308,7 @@ class Configuration {
         set { emu.set(.SID_ENGINE, value: newValue) }
     }
     var sidSampling: Int {
-        get { return emu.get(.SID_SAMPLING) }
+        get { return emu.get(.SID_SAMPLING, id: 0) }
         set { emu.set(.SID_SAMPLING, value: newValue) }
     }
     var vol0: Int {

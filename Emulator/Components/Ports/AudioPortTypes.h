@@ -27,6 +27,7 @@ typedef struct
     i64 volL;
     i64 volR;
 }
+
 AudioPortConfig;
 
 typedef struct

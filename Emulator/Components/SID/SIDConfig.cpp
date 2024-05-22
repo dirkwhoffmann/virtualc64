@@ -28,10 +28,13 @@ SID::getOption(Option option) const
 
     switch (option) {
 
-        case OPT_SID_ENABLE:     return config.enabled;
-        case OPT_SID_ADDRESS:    return config.address;
-        case OPT_AUD_VOL:        return config.vol;
-        case OPT_AUD_PAN:        return config.pan;
+        case OPT_SID_ENABLE:    return config.enabled;
+        case OPT_SID_ADDRESS:   return config.address;
+        case OPT_SID_REVISION:  return config.revision;
+        case OPT_SID_FILTER:    return config.filter;
+        case OPT_SID_SAMPLING:  return config.sampling;
+        case OPT_AUD_VOL:       return config.vol;
+        case OPT_AUD_PAN:       return config.pan;
 
         default:
             fatalError;
@@ -93,8 +96,47 @@ SID::setOption(Option option, i64 value)
             }
             return;
         }
-        case OPT_AUD_VOL:
 
+        case OPT_SID_REVISION:
+        {
+            if (!SIDRevisionEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, SIDRevisionEnum::keyList());
+            }
+
+            {   SUSPENDED
+
+                config.revision = SIDRevision(value);
+                setRevision(SIDRevision(value));
+            }
+            return;
+        }
+
+        case OPT_SID_FILTER:
+        {
+            {   SUSPENDED
+
+                config.filter = bool(value);
+                setAudioFilter(bool(value));
+            }
+            return;
+        }
+
+        case OPT_SID_SAMPLING:
+        {
+            if (!SamplingMethodEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, SamplingMethodEnum::keyList());
+            }
+
+            {   SUSPENDED
+
+                config.sampling = SamplingMethod(value);
+                setSamplingMethod(SamplingMethod(value));
+            }
+            return;
+        }
+
+        case OPT_AUD_VOL:
+        {
             config.vol = std::clamp(value, 0LL, 100LL);
             vol = powf((float)config.vol / 100, 1.4f) * 0.000025f;
             if (emscripten) vol *= 0.15f;
@@ -102,14 +144,15 @@ SID::setOption(Option option, i64 value)
             if (wasMuted != sidBridge.isMuted()) {
                 msgQueue.put(MSG_MUTE, sidBridge.isMuted());
             }
-
             return;
+        }
 
         case OPT_AUD_PAN:
-
+        {
             config.pan = value;
             pan = float(0.5 * (sin(config.pan * M_PI / 200.0) + 1));
             return;
+        }
 
         default:
             fatalError;

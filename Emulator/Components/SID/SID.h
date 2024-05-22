@@ -49,6 +49,9 @@ class SID final : public SubComponent, public Dumpable
 
         OPT_SID_ENABLE,
         OPT_SID_ADDRESS,
+        OPT_SID_REVISION,
+        OPT_SID_FILTER,
+        OPT_SID_SAMPLING,
         OPT_AUD_VOL,
         OPT_AUD_PAN
     };
@@ -109,6 +112,9 @@ public:
 
         << config.enabled
         << config.address
+        << config.revision
+        << config.filter
+        << config.sampling
         << config.vol
         << config.pan;
 
