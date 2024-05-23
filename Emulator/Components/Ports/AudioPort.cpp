@@ -219,20 +219,6 @@ AudioPort::fadeOut()
     }
 }
 
-/*
-bool
-AudioPort::zeroVolume() const
-{
-    if (zeroMasterVolume()) return true;
-
-    return
-    (!sidBridge.isEnabled(0) || vol[0] == 0.0) &&
-    (!sidBridge.isEnabled(1) || vol[1] == 0.0) &&
-    (!sidBridge.isEnabled(2) || vol[2] == 0.0) &&
-    (!sidBridge.isEnabled(3) || vol[3] == 0.0);
-}
-*/
-
 template <bool fading> void
 AudioPort::mixSingleSID(isize numSamples)
 {
