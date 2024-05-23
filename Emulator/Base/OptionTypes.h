@@ -107,9 +107,9 @@ enum_long(OPT)
     OPT_SID_ADDRESS,            ///< Mapping address in memory
     OPT_SID_REVISION,           ///< Chip revision
     OPT_SID_FILTER,             ///< Enable or disables the audio filter
-    OPT_SID_POWER_SAVE,         ///< Enable fast-paths
     OPT_SID_ENGINE,             ///< SID backend (e.g., reSID)
     OPT_SID_SAMPLING,           ///< Audio sampling mode
+    OPT_SID_POWER_SAVE,         ///< Enable fast-paths
 
     // Audio backend
     OPT_AUD_VOL0,               ///< Channel 0 volume
@@ -254,9 +254,9 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_SID_ADDRESS:           return "SID.ADDRESS";
             case OPT_SID_REVISION:          return "SID.REVISION";
             case OPT_SID_FILTER:            return "SID.FILTER";
-            case OPT_SID_POWER_SAVE:        return "SID.POWER_SAVE";
             case OPT_SID_ENGINE:            return "SID.ENGINE";
             case OPT_SID_SAMPLING:          return "SID.SAMPLING";
+            case OPT_SID_POWER_SAVE:        return "SID.POWER_SAVE";
 
             case OPT_AUD_VOL0:              return "AUD.VOL0";
             case OPT_AUD_VOL1:              return "AUD.VOL1";
@@ -388,9 +388,9 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_SID_ADDRESS:           return "Memory location";
             case OPT_SID_REVISION:          return "Chip revision";
             case OPT_SID_FILTER:            return "Use filter";
-            case OPT_SID_POWER_SAVE:        return "Take fast paths";
             case OPT_SID_ENGINE:            return "SID backend";
             case OPT_SID_SAMPLING:          return "Audio sampling rate";
+            case OPT_SID_POWER_SAVE:        return "Take fast paths";
             case OPT_AUD_VOL0:              return "Channel 0 volume";
             case OPT_AUD_VOL1:              return "Channel 1 volume";
             case OPT_AUD_VOL2:              return "Channel 2 volume";

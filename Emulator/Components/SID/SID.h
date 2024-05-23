@@ -53,6 +53,7 @@ class SID final : public SubComponent, public Inspectable<SIDInfo, Void>
         OPT_SID_FILTER,
         OPT_SID_ENGINE,
         OPT_SID_SAMPLING,
+        OPT_SID_POWER_SAVE
     };
 
     // Current configuration
@@ -136,7 +137,9 @@ public:
     i64 getFallback(Option opt) const override;
     void setOption(Option opt, i64 value) override;
 
-    
+    bool isEnabled(isize nr) const { return config.enabled; }
+
+
     //
     // Accessing
     //
@@ -162,7 +165,10 @@ public:
      */
     void executeUntil(Cycle targetCycle, SampleStream &stream);
 
+    // Indicates if sample synthesis should be skipped
+    bool powerSave() const;
 
+    
     //
     // Bridge functions
     //

@@ -553,12 +553,14 @@ VirtualC64::VICIIAPI::getColor(isize nr, Palette palette) const
 // SID
 //
 
+/*
 SIDBridgeConfig
 VirtualC64::SIDAPI::getConfig() const
 {
     assert(isUserThread());
     return sidBridge.getConfig();
 }
+*/
 
 SIDInfo
 VirtualC64::SIDAPI::getInfo(isize nr) const
@@ -594,11 +596,11 @@ VirtualC64::SIDAPI::getCachedVoiceInfo(isize nr, isize voice) const
 }
 */
 
-SIDBridgeStats
+AudioPortStats
 VirtualC64::SIDAPI::getStats() const
 {
     assert(isUserThread());
-    return sidBridge.getStats();
+    return audioPort.getStats();
 }
 
 void

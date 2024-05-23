@@ -540,14 +540,7 @@ using namespace vc64;
     return [self bridge]->getInfo((unsigned)nr);
 }
 
-/*
-- (VoiceInfo)getVoiceInfo:(NSInteger)nr voice:(NSInteger)voice
-{
-    return [self bridge]->getVoiceInfo((unsigned)nr, (unsigned)voice);
-}
-*/
-
-- (SIDBridgeStats)stats
+- (AudioPortStats)stats
 {
     return [self bridge]->getStats();
 }

@@ -179,10 +179,6 @@ Emulator::get(Option option) const
 
             return main.supply.getOption(option);
 
-        case OPT_SID_POWER_SAVE:
-
-            return main.sidBridge.getOption(option);
-
         case OPT_AUD_VOL0:
         case OPT_AUD_VOL1:
         case OPT_AUD_VOL2:
@@ -222,8 +218,6 @@ Emulator::get(Option option) const
 i64
 Emulator::get(Option option, isize id) const
 {
-    // const Drive &drive = id == DRIVE8 ? main.drive8 : main.drive9;
-
     switch (option) {
 
         case OPT_SID_ENABLE:
@@ -232,6 +226,7 @@ Emulator::get(Option option, isize id) const
         case OPT_SID_FILTER:
         case OPT_SID_ENGINE:
         case OPT_SID_SAMPLING:
+        case OPT_SID_POWER_SAVE:
 
             if (id == 0) return main.sidBridge.sid[0].getOption(option);
             if (id == 1) return main.sidBridge.sid[1].getOption(option);
@@ -512,16 +507,12 @@ Emulator::set(Option option, i64 value)
         case OPT_SID_FILTER:
         case OPT_SID_ENGINE:
         case OPT_SID_SAMPLING:
+        case OPT_SID_POWER_SAVE:
 
             main.sidBridge.sid[0].setOption(option, value);
             main.sidBridge.sid[1].setOption(option, value);
             main.sidBridge.sid[2].setOption(option, value);
             main.sidBridge.sid[3].setOption(option, value);
-            break;
-            
-        case OPT_SID_POWER_SAVE:
-
-            main.sidBridge.setOption(option, value);
             break;
 
         case OPT_AUD_VOL0:
@@ -674,11 +665,6 @@ Emulator::set(Option option, isize id, i64 value)
             }
             break;
 
-        case OPT_SID_POWER_SAVE:
-
-            main.sidBridge.setOption(option, value);
-            break;
-
         case OPT_AUD_VOL0:
         case OPT_AUD_VOL1:
         case OPT_AUD_VOL2:
@@ -699,6 +685,7 @@ Emulator::set(Option option, isize id, i64 value)
         case OPT_SID_FILTER:
         case OPT_SID_ENGINE:
         case OPT_SID_SAMPLING:
+        case OPT_SID_POWER_SAVE:
 
             main.sidBridge.sid[id].setOption(option, value);
             break;

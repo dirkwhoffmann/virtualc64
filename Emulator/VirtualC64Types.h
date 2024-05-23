@@ -13,6 +13,7 @@
 
 #pragma once
 
+#include "AudioPortTypes.h"
 #include "C64Types.h"
 #include "CartridgeTypes.h"
 #include "CIATypes.h"

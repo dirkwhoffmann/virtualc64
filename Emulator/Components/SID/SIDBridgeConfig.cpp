@@ -16,38 +16,4 @@
 
 namespace vc64 {
 
-i64
-SIDBridge::getOption(Option option) const
-{
-    switch (option) {
-
-        case OPT_SID_POWER_SAVE:
-            return config.powerSave;
-
-        default:
-            fatalError;
-    }
-}
-
-void
-SIDBridge::setOption(Option option, i64 value)
-{
-    // bool wasMuted = isMuted();
-
-    switch (option) {
-
-        case OPT_SID_POWER_SAVE:
-        {
-            {   SUSPENDED
-
-                config.powerSave = bool(value);
-            }
-            return;
-        }
-
-        default:
-            fatalError;
-    }
-}
-
 }

@@ -787,7 +787,7 @@ public:
 
         /** @brief  Returns the component's current configuration.
          */
-        SIDBridgeConfig getConfig() const;
+        // SIDBridgeConfig getConfig() const;
 
         /** @brief  Returns the current state of a specific SID.
          *  @param  nr      SID number (0 - 3). 0 is the primary SID.
@@ -804,7 +804,7 @@ public:
 
         /** @brief  Returns statistical information about the components.
          */
-        SIDBridgeStats getStats() const;
+        AudioPortStats getStats() const;
 
 
         /// @}

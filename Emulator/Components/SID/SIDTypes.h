@@ -140,28 +140,12 @@ typedef struct
     // Emlation engine settings
     SIDEngine engine;
     SamplingMethod sampling;
+
+    // Performance
+    bool powerSave;
+
 }
 SIDConfig;
-
-typedef struct
-{
-    // Hardware settings
-    bool powerSave;
-}
-SIDBridgeConfig;
-
-typedef struct
-{
-    // Current ring buffer fill level
-    double fillLevel;
-
-    // Number of buffer underflows since power up
-    u64 bufferUnderflows;
-
-    // Number of buffer overflows since power up
-    u64 bufferOverflows;
-}
-SIDBridgeStats;
 
 typedef struct
 {

@@ -70,6 +70,7 @@ SID::getOption(Option option) const
         case OPT_SID_FILTER:    return config.filter;
         case OPT_SID_ENGINE:    return config.engine;
         case OPT_SID_SAMPLING:  return config.sampling;
+        case OPT_SID_POWER_SAVE:    return config.powerSave;
 
         default:
             fatalError;
@@ -85,7 +86,7 @@ SID::getFallback(Option opt) const
 void
 SID::setOption(Option option, i64 value)
 {
-    bool wasMuted = c64.sidBridge.isMuted();
+    // bool wasMuted = c64.sidBridge.isMuted();
 
     switch (option) {
 
@@ -179,6 +180,15 @@ SID::setOption(Option option, i64 value)
 
                 config.sampling = SamplingMethod(value);
                 setSamplingMethod(SamplingMethod(value));
+            }
+            return;
+        }
+
+        case OPT_SID_POWER_SAVE:
+        {
+            {   SUSPENDED
+
+                config.powerSave = bool(value);
             }
             return;
         }

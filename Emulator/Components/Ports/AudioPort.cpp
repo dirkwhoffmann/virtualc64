@@ -219,10 +219,10 @@ AudioPort::fadeOut()
     }
 }
 
-bool 
+bool
 AudioPort::zeroVolume() const
 {
-    if (volL.current == 0.0 && volR.current == 0.0) return true;
+    if (zeroMasterVolume()) return true;
 
     return
     (!sidBridge.isEnabled(0) || vol[0] == 0.0) &&

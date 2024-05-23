@@ -237,7 +237,7 @@ class Configuration {
     }
 
     var sidPowerSave: Bool {
-        get { return emu.get(.SID_POWER_SAVE) != 0 }
+        get { return emu.get(.SID_POWER_SAVE, id: 0) != 0 }
         set { emu.set(.SID_POWER_SAVE, enable: newValue) }
     }
 

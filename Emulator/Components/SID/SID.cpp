@@ -77,7 +77,7 @@ SID::poke(u16 addr, u8 value)
 void 
 SID::executeUntil(Cycle targetCycle, SampleStream &stream)
 {
-    if (!sidBridge.powerSave()) {
+    if (!powerSave()) {
 
         // Compute the number of missing cycles
         Cycle missing = targetCycle - clock;
@@ -96,9 +96,29 @@ SID::executeUntil(Cycle targetCycle, SampleStream &stream)
             auto numSamples = resid.executeCycles(missing, stream);
             debug(SID_EXEC, "%ld: target: %lld missing: %lld generated: %ld", objid, targetCycle, missing, numSamples);
         }
+    } else {
+
+        trace(true, "Power safe mode\n");
     }
 
     clock = targetCycle;
+}
+
+bool
+SID::powerSave() const
+{
+    if (emulator.isWarping() && config.powerSave) {
+
+        /* https://sourceforge.net/p/vice-emu/bugs/1374/
+         *
+         * Due to a bug in reSID, pending register writes are dropped if we
+         * skip sample synthesis if SAMPLE_FAST and MOS8580 are selected both.
+         * As a workaround, we ignore the power-saving setting in this case.
+         */
+        return config.revision != MOS_8580 || config.sampling != SAMPLING_FAST;
+    }
+
+    return false;
 }
 
 u32

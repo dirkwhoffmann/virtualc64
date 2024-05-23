@@ -169,6 +169,7 @@ public:
     void unmute(isize steps) { volL.unmute(steps); volR.unmute(steps); }
 
     // Checks whether the volume settings result in a zeroed-out audio stream
+    bool zeroMasterVolume() const { return volL.current == 0.0 && volR.current == 0.0; }
     bool zeroVolume() const;
 
 private:

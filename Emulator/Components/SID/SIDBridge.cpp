@@ -66,12 +66,14 @@ SIDBridge::_dump(Category category, std::ostream& os) const
     }
 }
 
+/*
 SIDBridgeStats
 SIDBridge::getStats()
 {
     stats.fillLevel = audioPort.fillLevel();
     return stats;
 }
+*/
 
 CoreComponent &
 SIDBridge::getSID(isize nr)
@@ -202,25 +204,6 @@ SIDBridge::executeUntil(Cycle targetCycle)
     if (isEnabled(1)) sid[1].executeUntil(targetCycle, sidStream[1]);
     if (isEnabled(2)) sid[2].executeUntil(targetCycle, sidStream[2]);
     if (isEnabled(3)) sid[3].executeUntil(targetCycle, sidStream[3]);
-}
-
-bool
-SIDBridge::powerSave() const
-{
-#if 0
-    if (volL.current == 0 && volR.current == 0 && config.powerSave) {
-
-        /* https://sourceforge.net/p/vice-emu/bugs/1374/
-         *
-         * Due to a bug in reSID, pending register writes are dropped if we
-         * skip sample synthesis if SAMPLE_FAST and MOS8580 are selected both.
-         * As a workaround, we ignore the power-saving setting in this case.
-         */
-        return config.revision != MOS_8580 || config.sampling != SAMPLING_FAST;
-    }
-#endif
-
-    return false;
 }
 
 void

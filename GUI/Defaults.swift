@@ -904,7 +904,7 @@ extension Configuration {
 
         drive8PowerSave = defaults.get(.DRV_POWER_SAVE, DRIVE8) != 0
         drive9PowerSave = defaults.get(.DRV_POWER_SAVE, DRIVE9) != 0
-        sidPowerSave = defaults.get(.SID_POWER_SAVE) != 0
+        sidPowerSave = defaults.get(.SID_POWER_SAVE, 0) != 0
         viciiPowerSave = defaults.get(.VICII_POWER_SAVE) != 0
         ssCollisions = defaults.get(.VICII_SS_COLLISIONS) != 0
         sbCollisions = defaults.get(.VICII_SB_COLLISIONS) != 0

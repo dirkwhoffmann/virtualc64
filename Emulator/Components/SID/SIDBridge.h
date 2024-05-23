@@ -56,17 +56,6 @@ class SIDBridge final : public SubComponent, public Dumpable {
         .description    = "SID Bridge"
     }};
 
-    ConfigOptions options = {
-
-        OPT_SID_POWER_SAVE
-    };
-    
-    // Current configuration
-    SIDBridgeConfig config = { };
-    
-    // Statistics
-    SIDBridgeStats stats = { };
-
     
     //
     // Sub components
@@ -110,7 +99,6 @@ public:
     SIDBridge& operator= (const SIDBridge& other) {
 
         CLONE_ARRAY(sid)
-        CLONE(config)
 
         return *this;
     }
@@ -121,12 +109,6 @@ public:
         worker
         
         << sid;
-
-        if (isResetter(worker)) return;
-
-        worker
-
-        << config.powerSave;
     }
     
     void operator << (SerResetter &worker) override { serialize(worker); }
@@ -137,24 +119,13 @@ public:
 
 
     //
-    // Configuring
-    //
-
-    const SIDBridgeConfig &getConfig() const { return config; }
-    const ConfigOptions &getOptions() const override { return options; }
-    i64 getOption(Option opt) const override;
-    void setOption(Option opt, i64 value) override;
-
-
-    //
     // Inspecting
     //
 
 public:
 
     CoreComponent &getSID(isize nr);
-    SIDBridgeStats getStats();
-    
+
     bool isEnabled(isize nr) const { return sid[nr].config.enabled; }
     bool isMuted() const;
 
@@ -189,9 +160,6 @@ public:
      * number of produced sound samples (not yet).
      */
     void executeUntil(Cycle targetCycle);
-
-    // Indicates if sample synthesis should be skipped
-    bool powerSave() const;
 
     
     //
