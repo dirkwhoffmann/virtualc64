@@ -160,21 +160,24 @@ public:
     // Rescale the existing samples to gradually fade out (to avoid cracks)
     void fadeOut();
 
-    // Gradually decrease the volume to zero
+    // Gradually decrease the master volume to zero
     void mute() { volL.mute(); volR.mute(); }
     void mute(isize steps) { volL.mute(steps); volR.mute(steps); }
 
-    // Gradually inrease the volume to max
+    // Gradually inrease the master volume to max
     void unmute() { volL.unmute(); volR.unmute(); }
     void unmute(isize steps) { volL.unmute(steps); volR.unmute(steps); }
+
+    // Checks whether the volume settings result in a zeroed-out audio stream
+    bool zeroVolume() const;
 
 private:
 
     // Generates samples from the audio source with a single active SID
-    void mixSingleSID(isize numSamples);
+    template <bool fading> void mixSingleSID(isize numSamples);
 
     // Generates samples from the audio source with multiple active SIDs
-    void mixMultiSID(isize numSamples);
+    template <bool fading> void mixMultiSID(isize numSamples);
 
 
     //

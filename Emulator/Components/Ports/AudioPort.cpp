@@ -180,10 +180,12 @@ AudioPort::generateSamples()
     if (s3) numSamples = std::min(numSamples, s3);
 
     // Generate the samples
+    bool fading = volL.isFading() || volR.isFading();
+
     if (sidBridge.isEnabled(1) || sidBridge.isEnabled(2) || sidBridge.isEnabled(3)) {
-        mixMultiSID(numSamples);
+        fading ? mixMultiSID<true>(numSamples) : mixMultiSID<false>(numSamples);
     } else {
-        mixSingleSID(numSamples);
+        fading ? mixSingleSID<true>(numSamples) : mixSingleSID<false>(numSamples);
     }
 
     unlock();
@@ -217,49 +219,41 @@ AudioPort::fadeOut()
     }
 }
 
-void
+bool 
+AudioPort::zeroVolume() const
+{
+    if (volL.current == 0.0 && volR.current == 0.0) return true;
+
+    return
+    (!sidBridge.isEnabled(0) || vol[0] == 0.0) &&
+    (!sidBridge.isEnabled(1) || vol[1] == 0.0) &&
+    (!sidBridge.isEnabled(2) || vol[2] == 0.0) &&
+    (!sidBridge.isEnabled(3) || vol[3] == 0.0);
+}
+
+template <bool fading> void
 AudioPort::mixSingleSID(isize numSamples)
 {
     auto vol0 = vol[0];
     auto pan0 = pan[0];
+    auto curL = volL.current;
+    auto curR = volR.current;
 
-    debug(SID_EXEC, "vol0: %f pan0: %f volL: %f volR: %f\n",
-          vol0, pan0, volL.current, volR.current);
+    // Print some debug info
+    debug(SID_EXEC, "volL: %f volR: %f vol0: %f pan0: %f\n", curL, curR, vol0, pan0);
 
     // Check for buffer overflow
     if (free() < numSamples) handleBufferOverflow();
 
-    // Convert sound samples to floating point values and write into ringbuffer
-    if (volL.isFading() || volR.isFading()) {
+    if (!fading && (curL + curR == 0.0 || vol0 == 0.0)) {
 
-        printf("Fading %f %f\n", volL.current, volR.current);
-        for (isize i = 0; i < numSamples; i++) {
-
-            // Read SID sample from ring buffer
-            float ch0 = (float)sidBridge.sidStream[0].read() * vol0;
-
-            // Compute left and right channel output
-            float l = ch0 * (1 - pan0);
-            float r = ch0 * pan0;
-
-            // Apply master volume
-            volL.shift();
-            volR.shift();
-            l *= volL.current;
-            r *= volR.current;
-
-            // Apply ear protection
-            assert(abs(l) < 1.0);
-            assert(abs(r) < 1.0);
-
-            write(SamplePair { l, r } );
-        }
+        // Fast path: All samples are zero
+        for (isize i = 0; i < numSamples; i++) (void)sidBridge.sidStream[0].read();
+        for (isize i = 0; i < numSamples; i++) write(SamplePair { 0, 0 } );
 
     } else {
 
-        auto currentL = volL.current;
-        auto currentR = volR.current;
-
+        // Slow path: There is something to hear
         for (isize i = 0; i < numSamples; i++) {
 
             // Read SID sample from ring buffer
@@ -269,11 +263,15 @@ AudioPort::mixSingleSID(isize numSamples)
             float l = ch0 * (1 - pan0);
             float r = ch0 * pan0;
 
-            // Apply master volume
-            l *= currentL;
-            r *= currentR;
+            // Modulate the master volume
+            if constexpr (fading) { volL.shift(); curL = volL.current; }
+            if constexpr (fading) { volR.shift(); curR = volR.current; }
 
-            // Apply ear protection
+            // Apply master volume
+            l *= curL;
+            r *= curR;
+
+            // Prevent hearing loss
             assert(abs(l) < 1.0);
             assert(abs(r) < 1.0);
 
@@ -282,45 +280,62 @@ AudioPort::mixSingleSID(isize numSamples)
     }
 }
 
-void
+template <bool fading> void
 AudioPort::mixMultiSID(isize numSamples)
 {
     auto vol0 = vol[0]; auto pan0 = pan[0];
     auto vol1 = vol[1]; auto pan1 = pan[1];
     auto vol2 = vol[2]; auto pan2 = pan[2];
     auto vol3 = vol[3]; auto pan3 = pan[3];
+    auto curL = volL.current;
+    auto curR = volR.current;
 
-    debug(SID_EXEC, "vol0: %f pan0: %f vol1: %f pan1: %f volL: %f volR: %f\n",
-          vol0, pan0, vol1, pan1, volL.current, volR.current);
+    // Print some debug info
+    debug(SID_EXEC, "volL: %f volR: %f\n", curL, curR);
+    debug(SID_EXEC, "vol0: %f vol1: %f vol2: %f vol3: %f\n", vol0, vol1, vol2, vol3);
 
     // Check for buffer overflow
     if (free() < numSamples) handleBufferOverflow();
 
-    // Convert sound samples to floating point values and write into ringbuffer
-    for (isize i = 0; i < numSamples; i++) {
+    if (!fading && (curL + curR == 0.0 || vol0 + vol1 + vol2 + vol3 == 0.0)) {
 
-        float ch0, ch1, ch2, ch3, l, r;
+        // Fast path: All samples are zero
+        for (isize i = 0; i < numSamples; i++) (void)sidBridge.sidStream[0].read();
+        for (isize i = 0; i < numSamples; i++) (void)sidBridge.sidStream[1].read(0);
+        for (isize i = 0; i < numSamples; i++) (void)sidBridge.sidStream[2].read(0);
+        for (isize i = 0; i < numSamples; i++) (void)sidBridge.sidStream[3].read(0);
+        for (isize i = 0; i < numSamples; i++) write(SamplePair { 0, 0 } );
 
-        ch0 = (float)sidBridge.sidStream[0].read()  * vol0;
-        ch1 = (float)sidBridge.sidStream[1].read(0) * vol1;
-        ch2 = (float)sidBridge.sidStream[2].read(0) * vol2;
-        ch3 = (float)sidBridge.sidStream[3].read(0) * vol3;
+    } else {
 
-        // Compute left and right channel output
-        l = ch0 * (1 - pan0) + ch1 * (1 - pan1) + ch2 * (1 - pan2) + ch3 * (1 - pan3);
-        r = ch0 * pan0 + ch1 * pan1 + ch2 * pan2 + ch3 * pan3;
+        // Slow path: There is something to hear
+        for (isize i = 0; i < numSamples; i++) {
 
-        // Apply master volume
-        volL.shift();
-        volR.shift();
-        l *= volL.current;
-        r *= volR.current;
+            float ch0, ch1, ch2, ch3, l, r;
 
-        // Apply ear protection
-        assert(abs(l) < 1.0);
-        assert(abs(r) < 1.0);
+            ch0 = (float)sidBridge.sidStream[0].read()  * vol0;
+            ch1 = (float)sidBridge.sidStream[1].read(0) * vol1;
+            ch2 = (float)sidBridge.sidStream[2].read(0) * vol2;
+            ch3 = (float)sidBridge.sidStream[3].read(0) * vol3;
 
-        write(SamplePair { l, r } );
+            // Compute left and right channel output
+            l = ch0 * (1 - pan0) + ch1 * (1 - pan1) + ch2 * (1 - pan2) + ch3 * (1 - pan3);
+            r = ch0 * pan0 + ch1 * pan1 + ch2 * pan2 + ch3 * pan3;
+
+            // Modulate the master volume
+            if constexpr (fading) { volL.shift(); curL = volL.current; }
+            if constexpr (fading) { volR.shift(); curR = volR.current; }
+
+            // Apply master volume
+            l *= curL;
+            r *= curR;
+
+            // Prevent hearing loss
+            assert(abs(l) < 1.0);
+            assert(abs(r) < 1.0);
+
+            write(SamplePair { l, r } );
+        }
     }
 }
 
