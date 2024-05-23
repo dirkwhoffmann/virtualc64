@@ -68,6 +68,7 @@ SID::getOption(Option option) const
         case OPT_SID_ADDRESS:   return config.address;
         case OPT_SID_REVISION:  return config.revision;
         case OPT_SID_FILTER:    return config.filter;
+        case OPT_SID_ENGINE:    return config.engine;
         case OPT_SID_SAMPLING:  return config.sampling;
         case OPT_AUD_VOL:       return config.vol;
         case OPT_AUD_PAN:       return config.pan;
@@ -153,6 +154,19 @@ SID::setOption(Option option, i64 value)
 
                 config.filter = bool(value);
                 setAudioFilter(bool(value));
+            }
+            return;
+        }
+
+        case OPT_SID_ENGINE:
+        {
+            if (!SIDEngineEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, SIDEngineEnum::keyList());
+            }
+
+            {   SUSPENDED
+
+                config.engine = SIDEngine(value);
             }
             return;
         }

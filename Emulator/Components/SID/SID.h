@@ -51,6 +51,7 @@ class SID final : public SubComponent, public Inspectable<SIDInfo, Void>
         OPT_SID_ADDRESS,
         OPT_SID_REVISION,
         OPT_SID_FILTER,
+        OPT_SID_ENGINE,
         OPT_SID_SAMPLING,
         OPT_AUD_VOL,
         OPT_AUD_PAN
@@ -154,6 +155,9 @@ public:
 
     // Reads the real value of a SID register (used by the debugger only)
     u8 spypeek(u16 addr) const;
+
+    // Reads a SID register
+    u8 peek(u16 addr);
 
     // Writes a SID register
     void poke(u16 addr, u8 value);

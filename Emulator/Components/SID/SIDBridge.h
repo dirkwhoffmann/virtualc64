@@ -58,10 +58,7 @@ class SIDBridge final : public SubComponent, public Dumpable {
 
     ConfigOptions options = {
 
-        OPT_SID_POWER_SAVE,
-        OPT_SID_ENGINE,
-        OPT_AUD_VOL_L,
-        OPT_AUD_VOL_R
+        OPT_SID_POWER_SAVE
     };
     
     // Current configuration
@@ -84,12 +81,6 @@ public:
         SID(c64, 2),
         SID(c64, 3)
     };
-
-private:
-
-    // Master volumes
-    float volL;
-    float volR;
 
 public:
 
@@ -135,9 +126,7 @@ public:
 
         worker
 
-        << config.engine
-        << config.volL
-        << config.volR;
+        << config.powerSave;
     }
     
     void operator << (SerResetter &worker) override { serialize(worker); }

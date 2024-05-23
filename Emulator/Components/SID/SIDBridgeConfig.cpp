@@ -24,15 +24,6 @@ SIDBridge::getOption(Option option) const
         case OPT_SID_POWER_SAVE:
             return config.powerSave;
 
-        case OPT_SID_ENGINE:
-            return config.engine;
-
-        case OPT_AUD_VOL_L:
-            return config.volL;
-
-        case OPT_AUD_VOL_R:
-            return config.volR;
-
         default:
             fatalError;
     }
@@ -41,7 +32,7 @@ SIDBridge::getOption(Option option) const
 void
 SIDBridge::setOption(Option option, i64 value)
 {
-    bool wasMuted = isMuted();
+    // bool wasMuted = isMuted();
 
     switch (option) {
 
@@ -54,41 +45,6 @@ SIDBridge::setOption(Option option, i64 value)
             return;
         }
 
-        case OPT_SID_ENGINE:
-        {
-            if (!SIDEngineEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, SIDEngineEnum::keyList());
-            }
-
-            {   SUSPENDED
-
-                config.engine = SIDEngine(value);
-            }
-            return;
-        }
-
-        case OPT_AUD_VOL_L:
-        {
-            config.volL = std::clamp(value, 0LL, 100LL);
-            volL = powf((float)config.volL / 50, 1.4f);
-
-            if (wasMuted != isMuted()) {
-                msgQueue.put(MSG_MUTE, isMuted());
-            }
-            return;
-        }
-
-        case OPT_AUD_VOL_R:
-        {
-            config.volR = std::clamp(value, 0LL, 100LL);
-            volR = powf((float)config.volR / 50, 1.4f);
-
-            if (wasMuted != isMuted()) {
-                msgQueue.put(MSG_MUTE, isMuted());
-            }
-            return;
-        }
-            
         default:
             fatalError;
     }

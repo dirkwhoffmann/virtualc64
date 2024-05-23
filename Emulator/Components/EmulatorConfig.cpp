@@ -180,7 +180,6 @@ Emulator::get(Option option) const
             return main.supply.getOption(option);
 
         case OPT_SID_POWER_SAVE:
-        case OPT_SID_ENGINE:
 
             return main.sidBridge.getOption(option);
 
@@ -223,6 +222,7 @@ Emulator::get(Option option, isize id) const
         case OPT_SID_ADDRESS:
         case OPT_SID_REVISION:
         case OPT_SID_FILTER:
+        case OPT_SID_ENGINE:
         case OPT_SID_SAMPLING:
         case OPT_AUD_PAN:
         case OPT_AUD_VOL:
@@ -498,6 +498,7 @@ Emulator::set(Option option, i64 value)
         case OPT_SID_ADDRESS:
         case OPT_SID_REVISION:
         case OPT_SID_FILTER:
+        case OPT_SID_ENGINE:
         case OPT_SID_SAMPLING:
 
             main.sidBridge.sid[0].setOption(option, value);
@@ -507,7 +508,6 @@ Emulator::set(Option option, i64 value)
             break;
             
         case OPT_SID_POWER_SAVE:
-        case OPT_SID_ENGINE:
         case OPT_AUD_PAN:
         case OPT_AUD_VOL:
 
@@ -651,7 +651,6 @@ Emulator::set(Option option, isize id, i64 value)
             break;
 
         case OPT_SID_POWER_SAVE:
-        case OPT_SID_ENGINE:
 
             main.sidBridge.setOption(option, value);
             break;
@@ -666,6 +665,7 @@ Emulator::set(Option option, isize id, i64 value)
         case OPT_SID_ADDRESS:
         case OPT_SID_REVISION:
         case OPT_SID_FILTER:
+        case OPT_SID_ENGINE:
         case OPT_SID_SAMPLING:
         case OPT_AUD_PAN:
         case OPT_AUD_VOL:

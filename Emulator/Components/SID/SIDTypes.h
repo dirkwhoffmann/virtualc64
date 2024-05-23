@@ -138,6 +138,7 @@ typedef struct
     bool filter;
 
     // Emlation engine settings
+    SIDEngine engine;
     SamplingMethod sampling;
 
     // Channel volumes and pan factors
@@ -150,13 +151,6 @@ typedef struct
 {
     // Hardware settings
     bool powerSave;
-
-    // Emlation engine settings
-    SIDEngine engine;
-
-    // Master volume (left and right channel)
-    i64 volL;
-    i64 volR;
 }
 SIDBridgeConfig;
 

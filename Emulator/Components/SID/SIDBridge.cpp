@@ -34,6 +34,9 @@ SIDBridge::SIDBridge(C64 &ref) : SubComponent(ref)
 bool
 SIDBridge::isMuted() const
 {
+    return false;
+
+    /*
     if (config.volL == 0 && config.volR == 0) return true;
     
     return
@@ -41,6 +44,7 @@ SIDBridge::isMuted() const
     sid[1].config.vol == 0 &&
     sid[2].config.vol == 0 &&
     sid[3].config.vol == 0;
+    */
 }
 
 void
@@ -73,14 +77,7 @@ CoreComponent &
 SIDBridge::getSID(isize nr)
 {
     assert(nr >= 0 && nr <= 3);
-    
-    switch (config.engine) {
-            
-        case SIDENGINE_RESID:   return sid[nr].resid;
-
-        default:
-            fatalError;
-    }
+    return sid[nr].resid;
 }
 
 isize
@@ -122,13 +119,7 @@ SIDBridge::peek(u16 addr)
         }
     }
     
-    switch (config.engine) {
-            
-        case SIDENGINE_RESID:   return sid[sidNr].resid.peek(addr);
-
-        default:
-            fatalError;
-    }
+    return sid[sidNr].resid.peek(addr);
 }
 
 u8

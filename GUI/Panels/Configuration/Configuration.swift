@@ -304,7 +304,7 @@ class Configuration {
         set { emu.set(.SID_ADDRESS, id: 3, value: newValue) }
     }
     var sidEngine: Int {
-        get { return emu.get(.SID_ENGINE) }
+        get { return emu.get(.SID_ENGINE, id: 0) }
         set { emu.set(.SID_ENGINE, value: newValue) }
     }
     var sidSampling: Int {

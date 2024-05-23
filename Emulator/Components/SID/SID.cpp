@@ -52,12 +52,30 @@ SID::spypeek(u16 addr) const
     return sidreg[addr & 0x1F];
 }
 
+u8 
+SID::peek(u16 addr)
+{
+    switch (config.engine) {
+
+        case SIDENGINE_RESID:   return resid.peek(addr);
+
+        default:
+            fatalError;
+    }
+}
+
 void
 SID::poke(u16 addr, u8 value)
 {
     sidreg[addr & 0x1F] = value;
     
-    resid.poke(addr & 0x1F, value);
+    switch (config.engine) {
+
+        case SIDENGINE_RESID:   resid.poke(addr & 0x1F, value); break;
+
+        default:
+            fatalError;
+    }
 }
 
 void 
