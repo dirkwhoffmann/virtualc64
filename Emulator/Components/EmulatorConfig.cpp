@@ -183,6 +183,14 @@ Emulator::get(Option option) const
 
             return main.sidBridge.getOption(option);
 
+        case OPT_AUD_VOL0:
+        case OPT_AUD_VOL1:
+        case OPT_AUD_VOL2:
+        case OPT_AUD_VOL3:
+        case OPT_AUD_PAN0:
+        case OPT_AUD_PAN1:
+        case OPT_AUD_PAN2:
+        case OPT_AUD_PAN3:
         case OPT_AUD_VOL_L:
         case OPT_AUD_VOL_R:
 
@@ -224,8 +232,6 @@ Emulator::get(Option option, isize id) const
         case OPT_SID_FILTER:
         case OPT_SID_ENGINE:
         case OPT_SID_SAMPLING:
-        case OPT_AUD_PAN:
-        case OPT_AUD_VOL:
 
             if (id == 0) return main.sidBridge.sid[0].getOption(option);
             if (id == 1) return main.sidBridge.sid[1].getOption(option);
@@ -388,8 +394,14 @@ Emulator::set(Option option, i64 value)
         OPT_DMA_DEBUG_OPACITY,
         OPT_MOUSE_VELOCITY,
         OPT_AUTOFIRE_DELAY,
-        OPT_AUD_PAN,
-        OPT_AUD_VOL,
+        OPT_AUD_VOL0,
+        OPT_AUD_VOL1,
+        OPT_AUD_VOL2,
+        OPT_AUD_VOL3,
+        OPT_AUD_PAN0,
+        OPT_AUD_PAN1,
+        OPT_AUD_PAN2,
+        OPT_AUD_PAN3,
         OPT_AUD_VOL_L,
         OPT_AUD_VOL_R,
         OPT_DRV_PAN,
@@ -508,12 +520,18 @@ Emulator::set(Option option, i64 value)
             break;
             
         case OPT_SID_POWER_SAVE:
-        case OPT_AUD_PAN:
-        case OPT_AUD_VOL:
 
             main.sidBridge.setOption(option, value);
             break;
 
+        case OPT_AUD_VOL0:
+        case OPT_AUD_VOL1:
+        case OPT_AUD_VOL2:
+        case OPT_AUD_VOL3:
+        case OPT_AUD_PAN0:
+        case OPT_AUD_PAN1:
+        case OPT_AUD_PAN2:
+        case OPT_AUD_PAN3:
         case OPT_AUD_VOL_L:
         case OPT_AUD_VOL_R:
 
@@ -604,8 +622,14 @@ Emulator::set(Option option, isize id, i64 value)
 
         OPT_MOUSE_VELOCITY,
         OPT_AUTOFIRE_DELAY,
-        OPT_AUD_PAN,
-        OPT_AUD_VOL,
+        OPT_AUD_VOL0,
+        OPT_AUD_VOL1,
+        OPT_AUD_VOL2,
+        OPT_AUD_VOL3,
+        OPT_AUD_PAN0,
+        OPT_AUD_PAN1,
+        OPT_AUD_PAN2,
+        OPT_AUD_PAN3,
         OPT_AUD_VOL_L,
         OPT_AUD_VOL_R,
         OPT_DRV_PAN,
@@ -655,6 +679,14 @@ Emulator::set(Option option, isize id, i64 value)
             main.sidBridge.setOption(option, value);
             break;
 
+        case OPT_AUD_VOL0:
+        case OPT_AUD_VOL1:
+        case OPT_AUD_VOL2:
+        case OPT_AUD_VOL3:
+        case OPT_AUD_PAN0:
+        case OPT_AUD_PAN1:
+        case OPT_AUD_PAN2:
+        case OPT_AUD_PAN3:
         case OPT_AUD_VOL_L:
         case OPT_AUD_VOL_R:
 
@@ -667,8 +699,6 @@ Emulator::set(Option option, isize id, i64 value)
         case OPT_SID_FILTER:
         case OPT_SID_ENGINE:
         case OPT_SID_SAMPLING:
-        case OPT_AUD_PAN:
-        case OPT_AUD_VOL:
 
             main.sidBridge.sid[id].setOption(option, value);
             break;

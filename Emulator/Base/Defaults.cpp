@@ -88,6 +88,14 @@ Defaults::Defaults()
     setFallback(OPT_MON_DISALIGNMENT_V, 1000);
 
     setFallback(OPT_SID_POWER_SAVE, false);
+    setFallback(OPT_AUD_VOL0, 100);
+    setFallback(OPT_AUD_VOL1, 100);
+    setFallback(OPT_AUD_VOL2, 100);
+    setFallback(OPT_AUD_VOL3, 100);
+    setFallback(OPT_AUD_PAN0, 0);
+    setFallback(OPT_AUD_PAN1, 0);
+    setFallback(OPT_AUD_PAN2, 0);
+    setFallback(OPT_AUD_PAN3, 0);
     setFallback(OPT_AUD_VOL_L, 50);
     setFallback(OPT_AUD_VOL_R, 50);
 
@@ -101,8 +109,6 @@ Defaults::Defaults()
     setFallback(OPT_SID_FILTER, {0, 1, 2, 3}, false);
     setFallback(OPT_SID_ENGINE, {0, 1, 2, 3}, SIDENGINE_RESID);
     setFallback(OPT_SID_SAMPLING, {0, 1, 2, 3}, SAMPLING_INTERPOLATE);
-    setFallback(OPT_AUD_VOL, {0, 1, 2, 3}, 100);
-    setFallback(OPT_AUD_PAN, {0, 1, 2, 3}, 0);
 
     setFallback(OPT_RAM_PATTERN, RAM_PATTERN_VICE);
     setFallback(OPT_SAVE_ROMS, true);

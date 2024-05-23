@@ -23,6 +23,12 @@ namespace vc64 {
 
 typedef struct
 {
+    // Channel volumes
+    i64 vol[4];
+
+    // Channel pan factors
+    i64 pan[4];
+
     // Master volume (left and right channel)
     i64 volL;
     i64 volR;

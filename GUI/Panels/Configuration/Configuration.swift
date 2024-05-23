@@ -312,36 +312,36 @@ class Configuration {
         set { emu.set(.SID_SAMPLING, value: newValue) }
     }
     var vol0: Int {
-        get { return emu.get(.AUD_VOL, id: 0) }
-        set { emu.set(.AUD_VOL, id: 0, value: newValue) }
+        get { return emu.get(.AUD_VOL0) }
+        set { emu.set(.AUD_VOL0, value: newValue) }
     }
     var vol1: Int {
-        get { return emu.get(.AUD_VOL, id: 1) }
-        set { emu.set(.AUD_VOL, id: 1, value: newValue) }
+        get { return emu.get(.AUD_VOL1) }
+        set { emu.set(.AUD_VOL1, value: newValue) }
     }
     var vol2: Int {
-        get { return emu.get(.AUD_VOL, id: 2) }
-        set { emu.set(.AUD_VOL, id: 2, value: newValue) }
+        get { return emu.get(.AUD_VOL2) }
+        set { emu.set(.AUD_VOL2, value: newValue) }
     }
     var vol3: Int {
-        get { return emu.get(.AUD_VOL, id: 3) }
-        set { emu.set(.AUD_VOL, id: 3, value: newValue) }
+        get { return emu.get(.AUD_VOL3) }
+        set { emu.set(.AUD_VOL3, value: newValue) }
     }
     var pan0: Int {
-        get { return emu.get(.AUD_PAN, id: 0) }
-        set { emu.set(.AUD_PAN, id: 0, value: newValue) }
+        get { return emu.get(.AUD_PAN0) }
+        set { emu.set(.AUD_PAN0, value: newValue) }
     }
     var pan1: Int {
-        get { return emu.get(.AUD_PAN, id: 1) }
-        set { emu.set(.AUD_PAN, id: 1, value: newValue) }
+        get { return emu.get(.AUD_PAN1) }
+        set { emu.set(.AUD_PAN1, value: newValue) }
     }
     var pan2: Int {
-        get { return emu.get(.AUD_PAN, id: 2) }
-        set { emu.set(.AUD_PAN, id: 2, value: newValue) }
+        get { return emu.get(.AUD_PAN2) }
+        set { emu.set(.AUD_PAN2, value: newValue) }
     }
     var pan3: Int {
-        get { return emu.get(.AUD_PAN, id: 3) }
-        set { emu.set(.AUD_PAN, id: 3, value: newValue) }
+        get { return emu.get(.AUD_PAN3) }
+        set { emu.set(.AUD_PAN3, value: newValue) }
     }
     var volL: Int {
         get { return emu.get(.AUD_VOL_L) }

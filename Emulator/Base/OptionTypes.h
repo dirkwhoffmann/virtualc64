@@ -112,8 +112,14 @@ enum_long(OPT)
     OPT_SID_SAMPLING,           ///< Audio sampling mode
 
     // Audio backend
-    OPT_AUD_PAN,                ///< Pan
-    OPT_AUD_VOL,                ///< Channel volume
+    OPT_AUD_VOL0,               ///< Channel 0 volume
+    OPT_AUD_VOL1,               ///< Channel 1 volume
+    OPT_AUD_VOL2,               ///< Channel 2 volume
+    OPT_AUD_VOL3,               ///< Channel 3 volume
+    OPT_AUD_PAN0,               ///< Channel 0 panning
+    OPT_AUD_PAN1,               ///< Channel 1 panning
+    OPT_AUD_PAN2,               ///< Channel 2 panning
+    OPT_AUD_PAN3,               ///< Channel 3 panning
     OPT_AUD_VOL_L,              ///< Master volume (left channel)
     OPT_AUD_VOL_R,              ///< Master volume (right channel)
 
@@ -252,8 +258,14 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_SID_ENGINE:            return "SID.ENGINE";
             case OPT_SID_SAMPLING:          return "SID.SAMPLING";
 
-            case OPT_AUD_PAN:               return "AUD.AUDPAN";
-            case OPT_AUD_VOL:               return "AUD.VOL";
+            case OPT_AUD_VOL0:              return "AUD.VOL0";
+            case OPT_AUD_VOL1:              return "AUD.VOL1";
+            case OPT_AUD_VOL2:              return "AUD.VOL2";
+            case OPT_AUD_VOL3:              return "AUD.VOL3";
+            case OPT_AUD_PAN0:              return "AUD.AUDPAN0";
+            case OPT_AUD_PAN1:              return "AUD.AUDPAN1";
+            case OPT_AUD_PAN2:              return "AUD.AUDPAN2";
+            case OPT_AUD_PAN3:              return "AUD.AUDPAN3";
             case OPT_AUD_VOL_L:             return "AUD.VOLL";
             case OPT_AUD_VOL_R:             return "AUD.VOLR";
 
@@ -379,8 +391,14 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_SID_POWER_SAVE:        return "Take fast paths";
             case OPT_SID_ENGINE:            return "SID backend";
             case OPT_SID_SAMPLING:          return "Audio sampling rate";
-            case OPT_AUD_PAN:               return "Pan";
-            case OPT_AUD_VOL:               return "Channel volume";
+            case OPT_AUD_VOL0:              return "Channel 0 volume";
+            case OPT_AUD_VOL1:              return "Channel 1 volume";
+            case OPT_AUD_VOL2:              return "Channel 2 volume";
+            case OPT_AUD_VOL3:              return "Channel 3 volume";
+            case OPT_AUD_PAN0:              return "Channel 0 pan";
+            case OPT_AUD_PAN1:              return "Channel 1 pan";
+            case OPT_AUD_PAN2:              return "Channel 2 pan";
+            case OPT_AUD_PAN3:              return "Channel 3 pan";
             case OPT_AUD_VOL_L:             return "Master volume (left)";
             case OPT_AUD_VOL_R:             return "Master volume (right)";
 

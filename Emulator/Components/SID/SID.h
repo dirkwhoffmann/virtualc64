@@ -53,8 +53,6 @@ class SID final : public SubComponent, public Inspectable<SIDInfo, Void>
         OPT_SID_FILTER,
         OPT_SID_ENGINE,
         OPT_SID_SAMPLING,
-        OPT_AUD_VOL,
-        OPT_AUD_PAN
     };
 
     // Current configuration
@@ -65,12 +63,6 @@ class SID final : public SubComponent, public Inspectable<SIDInfo, Void>
 
     // This SID has been executed up to this cycle
     Cycle clock = 0;
-
-    // Channel volume
-    float vol = 0.0;
-
-    // Panning factor
-    float pan = 0.0;
 
 public:
 
@@ -115,9 +107,7 @@ public:
         << config.address
         << config.revision
         << config.filter
-        << config.sampling
-        << config.vol
-        << config.pan;
+        << config.sampling;
 
     } SERIALIZERS(serialize);
 

@@ -37,10 +37,6 @@ SID::_dump(Category category, std::ostream& os) const
         os << dec(objid) << std::endl;
         os << tab("Clock");
         os << dec(clock) << std::endl;
-        os << tab("Volume");
-        os << flt(vol) << std::endl;
-        os << tab("Pan");
-        os << flt(pan) << std::endl;
         
         resid.dump(category, os);
     }

@@ -70,8 +70,6 @@ SID::getOption(Option option) const
         case OPT_SID_FILTER:    return config.filter;
         case OPT_SID_ENGINE:    return config.engine;
         case OPT_SID_SAMPLING:  return config.sampling;
-        case OPT_AUD_VOL:       return config.vol;
-        case OPT_AUD_PAN:       return config.pan;
 
         default:
             fatalError;
@@ -182,25 +180,6 @@ SID::setOption(Option option, i64 value)
                 config.sampling = SamplingMethod(value);
                 setSamplingMethod(SamplingMethod(value));
             }
-            return;
-        }
-
-        case OPT_AUD_VOL:
-        {
-            config.vol = std::clamp(value, 0LL, 100LL);
-            vol = powf((float)config.vol / 100, 1.4f) * 0.000025f;
-            if (emscripten) vol *= 0.15f;
-
-            if (wasMuted != sidBridge.isMuted()) {
-                msgQueue.put(MSG_MUTE, sidBridge.isMuted());
-            }
-            return;
-        }
-
-        case OPT_AUD_PAN:
-        {
-            config.pan = value;
-            pan = float(0.5 * (sin(config.pan * M_PI / 200.0) + 1));
             return;
         }
 

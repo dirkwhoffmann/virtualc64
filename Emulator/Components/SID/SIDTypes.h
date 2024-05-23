@@ -140,10 +140,6 @@ typedef struct
     // Emlation engine settings
     SIDEngine engine;
     SamplingMethod sampling;
-
-    // Channel volumes and pan factors
-    i64 vol;
-    i64 pan;
 }
 SIDConfig;
 

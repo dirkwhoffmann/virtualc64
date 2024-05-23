@@ -21,8 +21,33 @@ AudioPort::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
+    if (category == Category::Config) {
+
+        dumpConfig(os);
+    }
+
     if (category == Category::State) {
 
+        os << tab("Master volume left");
+        os << flt(volL.current) << " (0 ... " << flt(volL.maximum) << ")" << std::endl;
+        os << tab("Master volume right");
+        os << flt(volR.current) << " (0 ... " << flt(volR.maximum) << ")" << std::endl;
+        os << tab("Channel 0 volume");
+        os << flt(vol[0]) << std::endl;
+        os << tab("Channel 1 volume");
+        os << flt(vol[1]) << std::endl;
+        os << tab("Channel 2 volume");
+        os << flt(vol[2]) << std::endl;
+        os << tab("Channel 3 volume");
+        os << flt(vol[3]) << std::endl;
+        os << tab("Channel 0 pan");
+        os << flt(pan[0]) << std::endl;
+        os << tab("Channel 1 pan");
+        os << flt(pan[1]) << std::endl;
+        os << tab("Channel 2 pan");
+        os << flt(pan[2]) << std::endl;
+        os << tab("Channel 3 pan");
+        os << flt(pan[3]) << std::endl;
     }
 }
 
@@ -195,8 +220,8 @@ AudioPort::fadeOut()
 void
 AudioPort::mixSingleSID(isize numSamples)
 {
-    auto vol0 = sidBridge.sid[0].vol;
-    auto pan0 = sidBridge.sid[0].pan;
+    auto vol0 = vol[0];
+    auto pan0 = pan[0];
 
     debug(SID_EXEC, "vol0: %f pan0: %f volL: %f volR: %f\n",
           vol0, pan0, volL.current, volR.current);
@@ -260,10 +285,10 @@ AudioPort::mixSingleSID(isize numSamples)
 void
 AudioPort::mixMultiSID(isize numSamples)
 {
-    auto vol0 = sidBridge.sid[0].vol; auto pan0 = sidBridge.sid[0].pan;
-    auto vol1 = sidBridge.sid[1].vol; auto pan1 = sidBridge.sid[1].pan;
-    auto vol2 = sidBridge.sid[2].vol; auto pan2 = sidBridge.sid[2].pan;
-    auto vol3 = sidBridge.sid[3].vol; auto pan3 = sidBridge.sid[3].pan;
+    auto vol0 = vol[0]; auto pan0 = pan[0];
+    auto vol1 = vol[1]; auto pan1 = pan[1];
+    auto vol2 = vol[2]; auto pan2 = pan[2];
+    auto vol3 = vol[3]; auto pan3 = pan[3];
 
     debug(SID_EXEC, "vol0: %f pan0: %f vol1: %f pan1: %f volL: %f volR: %f\n",
           vol0, pan0, vol1, pan1, volL.current, volR.current);

@@ -36,6 +36,14 @@ public util::RingBuffer <SamplePair, 12288> {
 
     ConfigOptions options = {
 
+        OPT_AUD_VOL0,
+        OPT_AUD_VOL1,
+        OPT_AUD_VOL2,
+        OPT_AUD_VOL3,
+        OPT_AUD_PAN0,
+        OPT_AUD_PAN1,
+        OPT_AUD_PAN2,
+        OPT_AUD_PAN3,
         OPT_AUD_VOL_L,
         OPT_AUD_VOL_R
     };
@@ -48,6 +56,12 @@ public util::RingBuffer <SamplePair, 12288> {
 
     // Time stamp of the last write pointer alignment
     util::Time lastAlignment;
+
+    // Channel volumes
+    float vol[4] ={ };
+
+    // Panning factors
+    float pan[4] ={ };
 
     // Master volumes (fadable)
     Volume volL;
@@ -86,6 +100,8 @@ public:
 
         worker
 
+        << config.vol
+        << config.pan
         << config.volL
         << config.volR;
 
