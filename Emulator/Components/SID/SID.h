@@ -65,6 +65,9 @@ class SID final : public SubComponent, public Inspectable<SIDInfo, Void>
     // This SID has been executed up to this cycle
     Cycle clock = 0;
 
+    // The audio stream
+    SampleStream stream;
+
 public:
 
     // Backends
@@ -109,10 +112,13 @@ public:
         << config.revision
         << config.filter
         << config.sampling;
+    }
 
-    } SERIALIZERS(serialize);
-
-    void _reset(bool hard) override { };
+    void operator << (SerResetter &worker) override { serialize(worker); }
+    void operator << (SerChecker &worker) override { serialize(worker); }
+    void operator << (SerCounter &worker) override { serialize(worker); }
+    void operator << (SerReader &worker) override;
+    void operator << (SerWriter &worker) override { serialize(worker); }
 
 
     //
@@ -137,7 +143,7 @@ public:
     i64 getFallback(Option opt) const override;
     void setOption(Option opt, i64 value) override;
 
-    bool isEnabled(isize nr) const { return config.enabled; }
+    bool isEnabled() const { return config.enabled; }
 
 
     //
@@ -163,7 +169,7 @@ public:
     /* Executes SID until a certain cycle is reached. The function returns the
      * number of produced sound samples (not yet).
      */
-    void executeUntil(Cycle targetCycle, SampleStream &stream);
+    void executeUntil(Cycle targetCycle);
 
     // Indicates if sample synthesis should be skipped
     bool powerSave() const;

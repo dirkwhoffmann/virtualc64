@@ -169,10 +169,10 @@ AudioPort::generateSamples()
     lock();
 
     // Check how many samples can be generated
-    auto s0 = sidBridge.sidStream[0].count();
-    auto s1 = sidBridge.sidStream[1].count();
-    auto s2 = sidBridge.sidStream[2].count();
-    auto s3 = sidBridge.sidStream[3].count();
+    auto s0 = sid0.stream.count();
+    auto s1 = sid1.stream.count();
+    auto s2 = sid2.stream.count();
+    auto s3 = sid3.stream.count();
 
     auto numSamples = s0;
     if (s1) numSamples = std::min(numSamples, s1);
@@ -182,7 +182,7 @@ AudioPort::generateSamples()
     // Generate the samples
     bool fading = volL.isFading() || volR.isFading();
 
-    if (sidBridge.isEnabled(1) || sidBridge.isEnabled(2) || sidBridge.isEnabled(3)) {
+    if (sid1.isEnabled() || sid2.isEnabled() || sid3.isEnabled()) {
         fading ? mixMultiSID<true>(numSamples) : mixMultiSID<false>(numSamples);
     } else {
         fading ? mixSingleSID<true>(numSamples) : mixSingleSID<false>(numSamples);
@@ -219,6 +219,7 @@ AudioPort::fadeOut()
     }
 }
 
+/*
 bool
 AudioPort::zeroVolume() const
 {
@@ -230,6 +231,7 @@ AudioPort::zeroVolume() const
     (!sidBridge.isEnabled(2) || vol[2] == 0.0) &&
     (!sidBridge.isEnabled(3) || vol[3] == 0.0);
 }
+*/
 
 template <bool fading> void
 AudioPort::mixSingleSID(isize numSamples)
@@ -248,7 +250,7 @@ AudioPort::mixSingleSID(isize numSamples)
     if (!fading && (curL + curR == 0.0 || vol0 == 0.0)) {
 
         // Fast path: All samples are zero
-        for (isize i = 0; i < numSamples; i++) (void)sidBridge.sidStream[0].read();
+        for (isize i = 0; i < numSamples; i++) (void)sid0.stream.read();
         for (isize i = 0; i < numSamples; i++) write(SamplePair { 0, 0 } );
 
         // Send a MUTE message if applicable
@@ -260,7 +262,7 @@ AudioPort::mixSingleSID(isize numSamples)
         for (isize i = 0; i < numSamples; i++) {
 
             // Read SID sample from ring buffer
-            float ch0 = (float)sidBridge.sidStream[0].read() * vol0;
+            float ch0 = (float)sidBridge.sid0.stream.read() * vol0;
 
             // Compute left and right channel output
             float l = ch0 * (1 - pan0);
@@ -306,10 +308,10 @@ AudioPort::mixMultiSID(isize numSamples)
     if (!fading && (curL + curR == 0.0 || vol0 + vol1 + vol2 + vol3 == 0.0)) {
 
         // Fast path: All samples are zero
-        for (isize i = 0; i < numSamples; i++) (void)sidBridge.sidStream[0].read();
-        for (isize i = 0; i < numSamples; i++) (void)sidBridge.sidStream[1].read(0);
-        for (isize i = 0; i < numSamples; i++) (void)sidBridge.sidStream[2].read(0);
-        for (isize i = 0; i < numSamples; i++) (void)sidBridge.sidStream[3].read(0);
+        for (isize i = 0; i < numSamples; i++) (void)sid0.stream.read();
+        for (isize i = 0; i < numSamples; i++) (void)sid1.stream.read(0);
+        for (isize i = 0; i < numSamples; i++) (void)sid2.stream.read(0);
+        for (isize i = 0; i < numSamples; i++) (void)sid3.stream.read(0);
         for (isize i = 0; i < numSamples; i++) write(SamplePair { 0, 0 } );
 
         // Send a MUTE message if applicable
@@ -322,10 +324,10 @@ AudioPort::mixMultiSID(isize numSamples)
 
             float ch0, ch1, ch2, ch3, l, r;
 
-            ch0 = (float)sidBridge.sidStream[0].read()  * vol0;
-            ch1 = (float)sidBridge.sidStream[1].read(0) * vol1;
-            ch2 = (float)sidBridge.sidStream[2].read(0) * vol2;
-            ch3 = (float)sidBridge.sidStream[3].read(0) * vol3;
+            ch0 = (float)sid0.stream.read()  * vol0;
+            ch1 = (float)sid1.stream.read(0) * vol1;
+            ch2 = (float)sid2.stream.read(0) * vol2;
+            ch3 = (float)sid3.stream.read(0) * vol3;
 
             // Compute left and right channel output
             l = ch0 * (1 - pan0) + ch1 * (1 - pan1) + ch2 * (1 - pan2) + ch3 * (1 - pan3);

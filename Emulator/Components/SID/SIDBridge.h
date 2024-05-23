@@ -26,20 +26,20 @@ namespace vc64 {
  *
  *           SidBridge
  *           -------------------------------------------------
- *          |   --------  vol                                 |
- *   SID 0 --->| Buffer |----->                               |
+ *          |   --------                                      |
+ *          |  |  SID0  |----->                               |
  *          |   --------       |                              |
  *          |                  |                              |
- *          |   --------  vol  |             --------------   |
- *   SID 1 --->| Buffer |----->|          ->|  AudioPort  |-----> Speaker
- *          |   --------       |   pan   |   --------------   |
- *          |                  |-------->|                    |
- *          |   --------  vol  |  l vol  |   --------------
- *   SID 2 --->| Buffer |----->|  r vol   ->|  AudioPort  |-----> Recorder
- *          |   --------       |             --------------   |
+ *          |   --------       |                              |
+ *          |  |  SID1  |----->|                          ---------> Speaker
+ *          |   --------       |      --------------     |    |
+*          |                   |---->|  AudioPort   |----|    |
+ *          |   --------       |      --------------     |    |
+ *          |  |  SID2  |----->|       Volume, pan        ---------> Recorder
+ *          |   --------       |                              |
  *          |                  |                              |
- *          |   --------  vol  |                              |
- *   SID 3 --->| Buffer |----->                               |
+ *          |   --------       |                              |
+ *          |  |  SID3  |----->                               |
  *          |   --------                                      |
  *           -------------------------------------------------
  */
@@ -71,19 +71,7 @@ public:
         SID(c64, 3)
     };
 
-public:
 
-
-    //
-    // Audio streams
-    //
-    
-    /* The four SID streams. Each stream stores the sound samples produced by
-     * one of the four supported SIDs.
-     */
-    SampleStream sidStream[4];
-
-    
     //
     // Methods
     //
@@ -106,48 +94,18 @@ public:
     template <class T>
     void serialize(T& worker)
     {
-        worker
-        
+        worker 
+
         << sid;
-    }
-    
-    void operator << (SerResetter &worker) override { serialize(worker); }
-    void operator << (SerChecker &worker) override { serialize(worker); }
-    void operator << (SerCounter &worker) override { serialize(worker); }
-    void operator << (SerReader &worker) override;
-    void operator << (SerWriter &worker) override { serialize(worker); }
+
+    } SERIALIZERS(serialize);
 
 
     //
-    // Inspecting
+    // Running the device
     //
 
 public:
-
-    CoreComponent &getSID(isize nr);
-
-    bool isEnabled(isize nr) const { return sid[nr].config.enabled; }
-
-
-    //
-    // Managing the four sample buffers
-    //
-    
-public:
-
-    // Clears the SID sample buffers
-    void clearSampleBuffers();
-    void clearSampleBuffer(long nr);
-
-    
-    //
-    // Managing the ring buffer
-    //
-    
-public:
-
-    // Reads a audio sample pair without moving the read pointer
-    void ringbufferData(isize offset, float *left, float *right);
 
     // Prepares for a new frame
     void beginFrame();
@@ -155,21 +113,13 @@ public:
     // Finishes the current frame
     void endFrame();
 
-    /* Executes SID until a certain cycle is reached. The function returns the
-     * number of produced sound samples (not yet).
-     */
-    void executeUntil(Cycle targetCycle);
-
     
     //
     // Accessig memory
     //
     
 public:
-    
-    // Translates a memory address to the mapped SID
-    isize mappedSID(u16 addr) const;
-    
+
     // Special peek function for the I/O memory range
     u8 peek(u16 addr);
 
@@ -182,6 +132,11 @@ public:
     
     // Special poke function for the I/O memory range
     void poke(u16 addr, u8 value);
+
+private:
+
+    // Translates a memory address to the mapped SID
+    isize mappedSID(u16 addr) const;
 
 
     //

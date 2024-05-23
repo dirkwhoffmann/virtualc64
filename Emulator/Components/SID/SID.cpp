@@ -22,6 +22,13 @@ SID::SID(C64 &ref, isize id) : SubComponent(ref, id)
 }
 
 void
+SID::operator << (SerReader &worker)
+{
+    serialize(worker);
+    stream.clear(0);
+}
+
+void
 SID::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
@@ -75,9 +82,9 @@ SID::poke(u16 addr, u8 value)
 }
 
 void 
-SID::executeUntil(Cycle targetCycle, SampleStream &stream)
+SID::executeUntil(Cycle targetCycle)
 {
-    if (!powerSave()) {
+    if (isEnabled() && !powerSave()) {
 
         // Compute the number of missing cycles
         Cycle missing = targetCycle - clock;
@@ -98,7 +105,7 @@ SID::executeUntil(Cycle targetCycle, SampleStream &stream)
         }
     } else {
 
-        trace(true, "Power safe mode\n");
+        // trace(true, "Power safe mode\n");
     }
 
     clock = targetCycle;

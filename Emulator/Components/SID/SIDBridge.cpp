@@ -32,14 +32,6 @@ SIDBridge::SIDBridge(C64 &ref) : SubComponent(ref)
 }
 
 void
-SIDBridge::operator << (SerReader &worker)
-{
-    serialize(worker);
-
-    for (isize i = 0; i < 4; i++) sidStream[i].clear(0);
-}
-
-void
 SIDBridge::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
@@ -50,30 +42,14 @@ SIDBridge::_dump(Category category, std::ostream& os) const
     }
 }
 
-/*
-SIDBridgeStats
-SIDBridge::getStats()
-{
-    stats.fillLevel = audioPort.fillLevel();
-    return stats;
-}
-*/
-
-CoreComponent &
-SIDBridge::getSID(isize nr)
-{
-    assert(nr >= 0 && nr <= 3);
-    return sid[nr].resid;
-}
-
 isize
 SIDBridge::mappedSID(u16 addr) const
 {
     addr &= 0xFFE0;
     
-    if (isEnabled(1) && addr == sid[1].config.address) return 1;
-    if (isEnabled(2) && addr == sid[2].config.address) return 2;
-    if (isEnabled(3) && addr == sid[3].config.address) return 3;
+    if (sid1.isEnabled() && addr == sid1.config.address) return 1;
+    if (sid2.isEnabled() && addr == sid2.config.address) return 2;
+    if (sid3.isEnabled() && addr == sid3.config.address) return 3;
 
     return 0;
 }
@@ -85,7 +61,7 @@ SIDBridge::peek(u16 addr)
     isize sidNr = mappedSID(addr);
 
     // Get the target SID up to date
-    sid[sidNr].executeUntil(cpu.clock, sidStream[sidNr]);
+    sid[sidNr].executeUntil(cpu.clock);
 
     addr &= 0x1F;
 
@@ -156,7 +132,7 @@ SIDBridge::poke(u16 addr, u8 value)
     isize sidNr = mappedSID(addr);
 
     // Get the target SID up to date
-    sid[sidNr].executeUntil(cpu.clock, sidStream[sidNr]);
+    sid[sidNr].executeUntil(cpu.clock);
 
     // Write the register
     sid[sidNr].poke(addr, value);
@@ -175,59 +151,33 @@ void
 SIDBridge::endFrame()
 {
     // Execute all remaining SID cycles
-    sidBridge.executeUntil(cpu.clock);
+    sid0.executeUntil(cpu.clock);
+    sid1.executeUntil(cpu.clock);
+    sid2.executeUntil(cpu.clock);
+    sid3.executeUntil(cpu.clock);
 
     // Generate sound sampes
     audioPort.generateSamples();
 }
 
-void
-SIDBridge::executeUntil(Cycle targetCycle)
-{
-    sid[0].executeUntil(targetCycle, sidStream[0]);
-    if (isEnabled(1)) sid[1].executeUntil(targetCycle, sidStream[1]);
-    if (isEnabled(2)) sid[2].executeUntil(targetCycle, sidStream[2]);
-    if (isEnabled(3)) sid[3].executeUntil(targetCycle, sidStream[3]);
-}
-
-void
-SIDBridge::clearSampleBuffers()
-{
-    for (int i = 0; i < 4; i++) clearSampleBuffer(i);
-}
-
-void
-SIDBridge::clearSampleBuffer(long nr)
-{
-    sidStream[nr].clear(0);
-}
-
-void
-SIDBridge::ringbufferData(isize offset, float *left, float *right)
-{
-    const SamplePair &pair = audioPort.current((int)offset);
-    *left = pair.left;
-    *right = pair.right;
-}
-
 float
 SIDBridge::draw(u32 *buffer, isize width, isize height,
-            float maxAmp, u32 color, isize sid) const
+            float maxAmp, u32 color, isize nr) const
 {
     auto samples = new float[width][2];
     isize hheight = height / 2;
     float newMaxAmp = 0.001f, dw;
 
     // Gather data
-    switch (sid) {
+    switch (nr) {
 
         case 0: case 1: case 2: case 3:
 
-            dw = sidStream[sid].cap() / float(width);
+            dw = sid[nr].stream.cap() / float(width);
 
             for (isize w = 0; w < width; w++) {
 
-                auto sample = sidStream[sid].current(isize(w * dw));
+                auto sample = sid[nr].stream.current(isize(w * dw));
                 samples[w][0] = float(abs(sample));
                 samples[w][1] = float(abs(sample));
             }

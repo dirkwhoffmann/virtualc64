@@ -104,7 +104,7 @@ SID::setOption(Option option, i64 value)
             {   SUSPENDED
 
                 config.enabled = value;
-                c64.sidBridge.clearSampleBuffer(objid);
+                stream.clear(0);
                 c64.sidBridge.hardReset();
             }
             return;
@@ -128,7 +128,7 @@ SID::setOption(Option option, i64 value)
             {   SUSPENDED
 
                 config.address = (u16)value;
-                sidBridge.clearSampleBuffer(objid);
+                stream.clear(0);
             }
             return;
         }
