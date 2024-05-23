@@ -31,22 +31,6 @@ SIDBridge::SIDBridge(C64 &ref) : SubComponent(ref)
     };
 }
 
-bool
-SIDBridge::isMuted() const
-{
-    return false;
-
-    /*
-    if (config.volL == 0 && config.volR == 0) return true;
-    
-    return
-    sid[0].config.vol == 0 &&
-    sid[1].config.vol == 0 &&
-    sid[2].config.vol == 0 &&
-    sid[3].config.vol == 0;
-    */
-}
-
 void
 SIDBridge::operator << (SerReader &worker)
 {

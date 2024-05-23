@@ -251,6 +251,9 @@ AudioPort::mixSingleSID(isize numSamples)
         for (isize i = 0; i < numSamples; i++) (void)sidBridge.sidStream[0].read();
         for (isize i = 0; i < numSamples; i++) write(SamplePair { 0, 0 } );
 
+        // Send a MUTE message if applicable
+        if (!muted) { muted = true; msgQueue.put(MSG_MUTE, true); }
+
     } else {
 
         // Slow path: There is something to hear
@@ -277,6 +280,9 @@ AudioPort::mixSingleSID(isize numSamples)
 
             write(SamplePair { l, r } );
         }
+
+        // Send a MUTE message if applicable
+        if (muted) { muted = false; msgQueue.put(MSG_MUTE, false); }
     }
 }
 
@@ -305,6 +311,9 @@ AudioPort::mixMultiSID(isize numSamples)
         for (isize i = 0; i < numSamples; i++) (void)sidBridge.sidStream[2].read(0);
         for (isize i = 0; i < numSamples; i++) (void)sidBridge.sidStream[3].read(0);
         for (isize i = 0; i < numSamples; i++) write(SamplePair { 0, 0 } );
+
+        // Send a MUTE message if applicable
+        if (!muted) { muted = true; msgQueue.put(MSG_MUTE, true); }
 
     } else {
 
@@ -336,6 +345,9 @@ AudioPort::mixMultiSID(isize numSamples)
 
             write(SamplePair { l, r } );
         }
+
+        // Send a MUTE message if applicable
+        if (muted) { muted = false; msgQueue.put(MSG_MUTE, false); }
     }
 }
 

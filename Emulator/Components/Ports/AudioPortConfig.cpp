@@ -40,8 +40,8 @@ AudioPort::getOption(Option option) const
 void
 AudioPort::setOption(Option option, i64 value)
 {
-    // bool wasMuted = isMuted();
     isize channel = 0;
+    // bool wasMuted = zeroVolume();
 
     switch (option) {
 
@@ -53,13 +53,7 @@ AudioPort::setOption(Option option, i64 value)
             config.vol[channel] = std::clamp(value, 0LL, 100LL);
             vol[channel] = powf(config.vol[channel] / 100.0f, 1.4f) * 0.000025f;
             if (emscripten) vol[channel] *= 0.15f;
-
-            /*
-            if (wasMuted != sidBridge.isMuted()) {
-                msgQueue.put(MSG_MUTE, sidBridge.isMuted());
-            }
-            */
-            return;
+            break;
         }
 
         case OPT_AUD_PAN3: channel++;
@@ -69,32 +63,20 @@ AudioPort::setOption(Option option, i64 value)
         {
             config.pan[channel] = value;
             pan[channel] = float(0.5 * (sin(config.pan[channel] * M_PI / 200.0) + 1));
-            return;
+            break;
         }
 
         case OPT_AUD_VOL_L:
 
             config.volL = std::clamp(value, 0LL, 100LL);
             volL.maximum = powf((float)config.volL / 50, 1.4f);
-
-            /*
-            if (wasMuted != isMuted()) {
-                msgQueue.put(MSG_MUTE, isMuted());
-            }
-            */
-            return;
+            break;
 
         case OPT_AUD_VOL_R:
 
             config.volR = std::clamp(value, 0LL, 100LL);
             volR.maximum = powf((float)config.volR / 50, 1.4f);
-
-            /*
-            if (wasMuted != isMuted()) {
-                msgQueue.put(MSG_MUTE, isMuted());
-            }
-            */
-            return;
+            break;
 
         default:
             fatalError;

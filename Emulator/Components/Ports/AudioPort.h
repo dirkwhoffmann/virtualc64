@@ -67,6 +67,9 @@ public util::RingBuffer <SamplePair, 12288> {
     Volume volL;
     Volume volR;
 
+    // Used to determine if a MSG_MUTE should be sent to the GUI
+    bool muted = false;
+
 
     //
     // Methods

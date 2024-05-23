@@ -127,7 +127,6 @@ public:
     CoreComponent &getSID(isize nr);
 
     bool isEnabled(isize nr) const { return sid[nr].config.enabled; }
-    bool isMuted() const;
 
 
     //
