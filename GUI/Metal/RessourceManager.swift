@@ -199,7 +199,7 @@ class RessourceManager {
         scanlineFilterGallery[2] = BypassFilter(device: device, library: library, cutout: uc)
         scanlineFilter = scanlineFilterGallery[0]
     }
-    
+
     //
     // Selecting dot masks
     //

@@ -495,7 +495,7 @@ class Configuration {
         get { return emu.get(.MON_SCANLINES) }
         set {
             renderer.shaderOptions.scanlines = Int32(newValue)
-            if !ressourceManager.selectScanlineFilter(newValue) {
+            if ressourceManager.selectScanlineFilter(newValue) {
                 emu.set(.MON_SCANLINES, value: newValue)
             }
         }
