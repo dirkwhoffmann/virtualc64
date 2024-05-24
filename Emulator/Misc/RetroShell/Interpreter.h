@@ -184,8 +184,8 @@ public:
     // Wrappers
     //
 
-    void configure(Option option, i64 value) throws;
-    void configure(Option option, long id, i64 value) throws;
+    void configure(Option opt, i64 value) throws;
+    void configure(Option opt, long id, i64 value) throws;
 };
 
 }

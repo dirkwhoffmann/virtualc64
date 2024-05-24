@@ -97,6 +97,7 @@ public:
 
     const ConfigOptions &getOptions() const override { return options; }
     i64 getOption(Option opt) const override;
+    void checkOption(Option opt, i64 value) override;
     void setOption(Option opt, i64 value) override;
 
 
@@ -117,21 +118,22 @@ public:
 public:
 
     // Queries an option
-    i64 get(Option option) const;
-    i64 get(Option option, isize id) const;
+    i64 get(Option opt, isize id = 0) const;
 
-    // Configures the emulator to match a specific C64 model
-    void set(C64Model model);
+    // Checks an option
+    void check(Option opt, i64 value, std::optional<isize> id = std::nullopt);
 
     // Sets an option
-    void set(Option option, i64 value) throws;
-    void set(Option option, isize id, i64 value) throws;
+    void set(Option opt, i64 value, std::optional<isize> id = std::nullopt);
 
     // Convenience wrappers
     void set(Option opt, const string &value) throws;
     void set(Option opt, isize id, const string &value) throws;
     void set(const string &opt, const string &value) throws;
     void set(const string &opt, isize id, const string &value) throws;
+
+    // Configures the emulator to match a specific C64 model
+    void set(C64Model model);
 
     // Returns the emulated refresh rate of the virtual C64
     double refreshRate() const override;
@@ -141,8 +143,12 @@ private:
     const EmulatorConfig &getConfig() const { return config; }
     void resetConfig();
 
+    // Returns the target component for an option
+    std::vector<Configurable *> routeOption(Option opt);
+    std::vector<const Configurable *> routeOption(Option opt) const;
+
     // Overrides a config option if the corresponding debug option is enabled
-    i64 overrideOption(Option option, i64 value);
+    i64 overrideOption(Option opt, i64 value) const;
 
     // Powers off and resets the emulator to it's initial state
     void revertToFactorySettings();

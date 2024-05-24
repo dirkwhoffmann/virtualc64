@@ -154,6 +154,7 @@ void
 Emulator::update()
 {
     Cmd cmd;
+    bool cmdConfig = false;
 
     auto drive = [&]() -> Drive& { return cmd.value == DRIVE9 ? main.drive9 : main.drive8; };
     // auto port = [&]() -> ControlPort& { return cmd.value == PORT_2 ? main.port2 : main.port1; };
@@ -163,11 +164,20 @@ Emulator::update()
     while (cmdQueue.poll(cmd)) {
 
         debug(CMD_DEBUG, "Command: %s\n", CmdTypeEnum::key(cmd.type));
+        debug(true, "Command: %s\n", CmdTypeEnum::key(cmd.type));
 
         main.markAsDirty();
 
         switch (cmd.type) {
                 
+            case CMD_CONFIG:
+
+                cmdConfig = true;
+                cmd.config.id < 0 ?
+                set(cmd.config.option, cmd.config.value) :
+                set(cmd.config.option, cmd.config.value, cmd.config.id);
+                break;
+
             case CMD_CPU_BRK:
             case CMD_CPU_NMI:
             case CMD_ALARM_ABS:
@@ -242,6 +252,10 @@ Emulator::update()
             default:
                 fatal("Unhandled command: %s\n", CmdTypeEnum::key(cmd.type));
         }
+    }
+
+    if (cmdConfig) {
+        main.msgQueue.put(MSG_CONFIG);
     }
 }
 

@@ -139,8 +139,9 @@ public:
     void resetConfig() override;
     const SIDConfig &getConfig() const { return config; }
     const ConfigOptions &getOptions() const override { return options; }
-    i64 getOption(Option opt) const override;
     i64 getFallback(Option opt) const override;
+    i64 getOption(Option opt) const override;
+    void checkOption(Option opt, i64 value) override;
     void setOption(Option opt, i64 value) override;
 
     bool isEnabled() const { return config.enabled; }

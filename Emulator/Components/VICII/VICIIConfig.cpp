@@ -34,15 +34,45 @@ VICII::getOption(Option option) const
 }
 
 void
-VICII::setOption(Option option, i64 value)
+VICII::checkOption(Option opt, i64 value)
 {
-    switch (option) {
+    switch (opt) {
 
         case OPT_VICII_REVISION:
 
             if (!VICIIRevisionEnum::isValid(value)) {
                 throw VC64Error(ERROR_OPT_INVARG, VICIIRevisionEnum::keyList());
             }
+            return;
+
+        case OPT_VICII_POWER_SAVE:
+        case OPT_VICII_GRAY_DOT_BUG:
+        case OPT_VICII_HIDE_SPRITES:
+        case OPT_VICII_SS_COLLISIONS:
+        case OPT_VICII_SB_COLLISIONS:
+
+            return;
+
+        case OPT_GLUE_LOGIC:
+
+            if (!GlueLogicEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, GlueLogicEnum::keyList());
+            }
+            return;
+
+        default:
+            throw VC64Error(ERROR_OPT_UNSUPPORTED);
+    }
+}
+
+void
+VICII::setOption(Option opt, i64 value)
+{
+    checkOption(opt, value);
+    
+    switch (opt) {
+
+        case OPT_VICII_REVISION:
 
             config.awaiting = VICIIRevision(value);
 
@@ -77,10 +107,6 @@ VICII::setOption(Option option, i64 value)
             return;
 
         case OPT_GLUE_LOGIC:
-
-            if (!GlueLogicEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, GlueLogicEnum::keyList());
-            }
 
             config.glueLogic = GlueLogic(value);
             return;

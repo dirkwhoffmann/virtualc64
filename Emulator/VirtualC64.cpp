@@ -94,16 +94,18 @@ VirtualC64::set(C64Model model)
 }
 
 void
-VirtualC64::set(Option option, i64 value) throws
+VirtualC64::set(Option opt, i64 value) throws
 {
-    Emulator::set(option, value);
+    Emulator::check(opt, value);
+    put(CMD_CONFIG, ConfigCmd { .option = opt, .value = value, .id = -1 });
     main.markAsDirty();
 }
 
 void
-VirtualC64::set(Option option, long id, i64 value)
+VirtualC64::set(Option opt, i64 value, long id)
 {
-    Emulator::set(option, id, value);
+    Emulator::check(opt, value, id);
+    put(CMD_CONFIG, ConfigCmd { .option = opt, .value = value, .id = id });
     main.markAsDirty();
 }
 

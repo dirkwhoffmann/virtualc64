@@ -34,15 +34,30 @@ PowerSupply::getOption(Option option) const
 }
 
 void
-PowerSupply::setOption(Option option, i64 value)
+PowerSupply::checkOption(Option opt, i64 value)
 {
-    switch (option) {
-            
+    switch (opt) {
+
         case OPT_POWER_GRID:
-            
+
             if (!PowerGridEnum::isValid(value)) {
                 throw VC64Error(ERROR_OPT_INVARG, PowerGridEnum::keyList());
             }
+            return;
+
+        default:
+            throw VC64Error(ERROR_OPT_UNSUPPORTED);
+    }
+}
+
+void
+PowerSupply::setOption(Option opt, i64 value)
+{
+    checkOption(opt, value);
+
+    switch (opt) {
+            
+        case OPT_POWER_GRID:
             
             config.powerGrid = (PowerGrid)value;
             return;

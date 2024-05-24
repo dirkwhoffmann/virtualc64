@@ -29,15 +29,34 @@ C64Memory::getOption(Option option) const
 }
 
 void
-C64Memory::setOption(Option option, i64 value)
+C64Memory::checkOption(Option opt, i64 value)
 {
-    switch (option) {
+    switch (opt) {
 
         case OPT_RAM_PATTERN:
 
             if (!RamPatternEnum::isValid(value)) {
                 throw VC64Error(ERROR_OPT_INVARG, RamPatternEnum::keyList());
             }
+            return;
+
+        case OPT_SAVE_ROMS:
+
+            return;
+
+        default:
+            throw VC64Error(ERROR_OPT_UNSUPPORTED);
+    }
+}
+
+void
+C64Memory::setOption(Option opt, i64 value)
+{
+    checkOption(opt, value);
+    
+    switch (opt) {
+
+        case OPT_RAM_PATTERN:
 
             config.ramPattern = (RamPattern)value;
             return;

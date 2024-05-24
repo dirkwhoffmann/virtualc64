@@ -16,6 +16,7 @@
 #include "Aliases.h"
 #include "JoystickTypes.h"
 #include "Reflection.h"
+#include "Option.h"
 
 namespace vc64 {
 
@@ -27,6 +28,9 @@ namespace vc64 {
 enum_long(CMD_TYPE)
 {
     CMD_NONE = 0,               ///< None
+
+    // Emulator
+    CMD_CONFIG,                 ///< Configure the emulator
 
     // C64
     CMD_ALARM_ABS,              ///< Schedule an alarm (absolute cycle)
@@ -88,6 +92,8 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
 
             case CMD_NONE:                  return "NONE";
 
+            case CMD_CONFIG:                return "CONFIG";
+
             case CMD_ALARM_ABS:             return "ALARM_ABS";
             case CMD_ALARM_REL:             return "ALARM_REL";
 
@@ -131,6 +137,14 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
 //
 // Structures
 //
+
+typedef struct
+{
+    Option option;
+    isize value;
+    isize id;
+}
+ConfigCmd;
 
 typedef struct
 {
@@ -182,6 +196,7 @@ struct Cmd
     union {
 
         i64 value;
+        ConfigCmd config;
         KeyCmd key;
         CoordCmd coord;
         GamePadCmd action;
@@ -198,6 +213,7 @@ struct Cmd
     Cmd(CmdType type, const TapeCmd &cmd) : type(type), tape(cmd) { }
     Cmd(CmdType type, const AlarmCmd &cmd) : type(type), alarm(cmd) { }
     Cmd(CmdType type, const ShellCmd &cmd) : type(type), shell(cmd) { }
+    Cmd(CmdType type, const ConfigCmd &cmd) : type(type), config(cmd) { }
 };
 
 }

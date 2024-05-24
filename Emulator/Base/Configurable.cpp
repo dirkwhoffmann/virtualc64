@@ -40,6 +40,18 @@ Configurable::isValidOption(Option opt) const
 }
 
 void
+Configurable::checkOption(Option opt, const string &value)
+{
+    checkOption(opt, OptionParser::create(opt)->parse(value));
+}
+
+void
+Configurable::checkOption(const string &opt, const string &value)
+{
+    checkOption(Option(util::parseEnum<OptionEnum>(opt)), value);
+}
+
+void
 Configurable::setOption(Option opt, const string &value) 
 {
     setOption(opt, OptionParser::create(opt)->parse(value));

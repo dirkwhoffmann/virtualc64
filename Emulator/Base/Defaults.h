@@ -184,25 +184,25 @@ public:
     void setString(const string &key, const string &value);
 
     /** @brief  Writes a key-value pair into the user storage.
-     *  @param  option  The option's name forms the keys.
+     *  @param  opt     The option's name forms the keys.
      *  @param  value   The value, given as an integer.
      */
-    void set(Option option, i64 value);
+    void set(Option opt, i64 value);
 
     /** @brief  Writes a key-value pair into the user storage.
-     *  @param  option  The option's name forms the keys.
+     *  @param  opt     The option's name forms the keys.
      *  @param  nr      The key is parameterized by adding the value as suffix.
      *  @param  value   The value, given as an integer.
      */
-    void set(Option option, isize nr, i64 value);
+    void set(Option opt, isize nr, i64 value);
 
     /** @brief  Writes multiple key-value pairs into the user storage.
-     *  @param  option  The option's name forms the prefix of the keys.
+     *  @param  opt     The option's name forms the prefix of the keys.
      *  @param  nrs     The keys are parameterized by adding the vector values as suffixes.
      *  @param  value   The shared value for all pairs, given as an integer.
      *  @throw  VC64Error (#ERROR_INVALID_KEY)
      */
-    void set(Option option, std::vector <isize> nrs, i64 value);
+    void set(Option opt, std::vector <isize> nrs, i64 value);
 
     /** @brief  Writes a key-value pair into the fallback storage.
      *  @param  key     The key, given as a string.
@@ -211,40 +211,40 @@ public:
     void setFallback(const string &key, const string &value);
 
     /** @brief  Writes a key-value pair into the fallback storage.
-     *  @param  option  The option's name forms the keys.
+     *  @param  opt     The option's name forms the keys.
      *  @param  value   The value, given as a string.
      */
     void setFallback(Option option, const string &value);
 
     /** @brief  Writes a key-value pair into the fallback storage.
-     *  @param  option  The option's name forms the keys.
+     *  @param  opt     The option's name forms the keys.
      *  @param  value   The value, given as an integer.
      */
-    void setFallback(Option option, i64 value);
+    void setFallback(Option opt, i64 value);
 
     /** @brief  Writes a key-value pair into the fallback storage.
-     *  @param  option  The option's name forms the keys.
+     *  @param  opt     The option's name forms the keys.
      *  @param  nr      The key is parameterized by adding the value as suffix.
      *  @param  value   The value, given as a string.
      */
-    void setFallback(Option option, isize nr, const string &value);
+    void setFallback(Option opt, isize nr, const string &value);
 
     /** @brief  Writes a key-value pair into the fallback storage.
-     *  @param  option  The option's name forms the keys.
+     *  @param  opt     The option's name forms the keys.
      *  @param  nr      The key is parameterized by adding the value as suffix.
      *  @param  value   The value, given as an integer.
      */
-    void setFallback(Option option, isize nr, i64 value);
+    void setFallback(Option opt, isize nr, i64 value);
 
     /** @brief  Writes multiple key-value pairs into the fallback storage.
-     *  @param  option  The option's name forms the prefix of the keys.
+     *  @param  opt     The option's name forms the prefix of the keys.
      *  @param  nrs     The keys are parameterized by adding the vector values as suffixes.
      *  @param  value   The shared value for all pairs.
      */
-    void setFallback(Option option, std::vector <isize> nrs, const string &value);
+    void setFallback(Option opt, std::vector <isize> nrs, const string &value);
 
     /// @copydoc setFallback(Option, std::vector <isize>, const string &);
-    void setFallback(Option option, std::vector <isize> nrs, i64 value);
+    void setFallback(Option opt, std::vector <isize> nrs, i64 value);
 
 
     /// @}

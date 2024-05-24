@@ -33,9 +33,25 @@ Host::getOption(Option option) const
 }
 
 void
-Host::setOption(Option option, i64 value)
+Host::checkOption(Option opt, i64 value)
 {
-    switch (option) {
+    switch (opt) {
+
+        case OPT_HOST_REFRESH_RATE:
+        case OPT_HOST_SAMPLE_RATE:
+        case OPT_HOST_FRAMEBUF_WIDTH:
+        case OPT_HOST_FRAMEBUF_HEIGHT:
+            return;
+
+        default:
+            throw(ERROR_OPT_UNSUPPORTED);
+    }
+}
+
+void
+Host::setOption(Option opt, i64 value)
+{
+    switch (opt) {
 
         case OPT_HOST_REFRESH_RATE:
 

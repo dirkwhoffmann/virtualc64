@@ -207,9 +207,15 @@ class Renderer: NSObject, MTKViewDelegate {
 
                 if [50, 60, 100, 120, 200, 240].contains(newfps) {
 
+                    /*
+                     TODO: REWORK THIS!
+                     Problem: The code trigger when a combo box in the
+                     hardware config panel is opened.
+                     */
                     fps = newfps
                     emu.set(.HOST_REFRESH_RATE, value: Int(fps))
-                    debug(.vsync, "New GPU frame rate: \(fps)")
+                    // debug(.vsync, "New GPU frame rate: \(fps)")
+                    debug(1, "New GPU frame rate: \(fps)")
                 }
             }
         }

@@ -12,6 +12,7 @@
 
 #include "config.h"
 #include "Option.h"
+#include "Error.h"
 #include "EmulatorTypes.h"
 #include "VICIITypes.h"
 #include "DatasetteTypes.h"

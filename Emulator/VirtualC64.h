@@ -336,7 +336,7 @@ public:
      *  @note If this function is called for an options that applies to multiple
      *  components, all components are configured with the specified value.
      */
-    void set(Option option, i64 value) throws;
+    void set(Option opt, i64 value) throws;
 
     /** @brief  Configures a component.
      *
@@ -349,7 +349,7 @@ public:
      *  @note This function must only be called for those options that require
      *  an additional parameter to uniquely determine the configured component.
      */
-    void set(Option option, long id, i64 value);
+    void set(Option opt, i64 value, long id);
 
 
     /** @brief  Exports the current configuration.
@@ -369,6 +369,7 @@ public:
      */
     void put(const Cmd &cmd);
     void put(CmdType type, i64 payload = 0) { put(Cmd(type, payload)); }
+    void put(CmdType type, ConfigCmd payload)  { put(Cmd(type, payload)); }
     void put(CmdType type, KeyCmd payload)  { put(Cmd(type, payload)); }
     void put(CmdType type, CoordCmd payload)  { put(Cmd(type, payload)); }
     void put(CmdType type, GamePadCmd payload)  { put(Cmd(type, payload)); }

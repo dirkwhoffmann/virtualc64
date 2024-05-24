@@ -51,15 +51,88 @@ Monitor::getOption(Option option) const
 }
 
 void
-Monitor::setOption(Option option, i64 value)
+Monitor::checkOption(Option opt, i64 value)
 {
-    switch (option) {
+    switch (opt) {
 
         case OPT_MON_PALETTE:
 
             if (!PaletteEnum::isValid(value)) {
                 throw VC64Error(ERROR_OPT_INVARG, PaletteEnum::keyList());
             }
+            return;
+
+        case OPT_MON_BRIGHTNESS:
+        case OPT_MON_CONTRAST:
+        case OPT_MON_SATURATION:
+
+            if (value < 0 || value > 100) {
+                throw VC64Error(ERROR_OPT_INVARG, "0...100");
+            }
+            return;
+
+        case OPT_MON_HCENTER:
+        case OPT_MON_VCENTER:
+        case OPT_MON_HZOOM:
+        case OPT_MON_VZOOM:
+
+            return;
+
+        case OPT_MON_UPSCALER:
+
+            if (!UpscalerEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, UpscalerEnum::keyList());
+            }
+            return;
+
+        case OPT_MON_BLUR:
+        case OPT_MON_BLUR_RADIUS:
+        case OPT_MON_BLOOM:
+        case OPT_MON_BLOOM_RADIUS:
+        case OPT_MON_BLOOM_BRIGHTNESS:
+        case OPT_MON_BLOOM_WEIGHT:
+
+            return;
+
+        case OPT_MON_DOTMASK:
+
+            if (!DotmaskEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, DotmaskEnum::keyList());
+            }
+            return;
+
+        case OPT_MON_DOTMASK_BRIGHTNESS:
+
+            return;
+
+        case OPT_MON_SCANLINES:
+
+            if (!ScanlinesEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, ScanlinesEnum::keyList());
+            }
+            return;
+
+        case OPT_MON_SCANLINE_BRIGHTNESS:
+        case OPT_MON_SCANLINE_WEIGHT:
+        case OPT_MON_DISALIGNMENT:
+        case OPT_MON_DISALIGNMENT_H:
+        case OPT_MON_DISALIGNMENT_V:
+
+            return;
+
+        default:
+            throw VC64Error(ERROR_OPT_UNSUPPORTED);
+    }
+}
+
+void
+Monitor::setOption(Option opt, i64 value)
+{
+    checkOption(opt, value);
+    
+    switch (opt) {
+
+        case OPT_MON_PALETTE:
 
             config.palette = Palette(value);
             vic.updatePalette();
@@ -67,29 +140,17 @@ Monitor::setOption(Option option, i64 value)
 
         case OPT_MON_BRIGHTNESS:
 
-            if (value < 0 || value > 100) {
-                throw VC64Error(ERROR_OPT_INVARG, "0...100");
-            }
-
             config.brightness = isize(value);
             vic.updatePalette();
             return;
 
         case OPT_MON_CONTRAST:
 
-            if (value < 0 || value > 100) {
-                throw VC64Error(ERROR_OPT_INVARG, "0...100");
-            }
-
             config.contrast = isize(value);
             vic.updatePalette();
             return;
 
         case OPT_MON_SATURATION:
-
-            if (value < 0 || value > 100) {
-                throw VC64Error(ERROR_OPT_INVARG, "0...100");
-            }
 
             config.saturation = isize(value);
             vic.updatePalette();
@@ -116,10 +177,6 @@ Monitor::setOption(Option option, i64 value)
             return;
 
         case OPT_MON_UPSCALER:
-
-            if (!UpscalerEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, UpscalerEnum::keyList());
-            }
 
             config.upscaler = Upscaler(value);
             return;
@@ -156,10 +213,6 @@ Monitor::setOption(Option option, i64 value)
 
         case OPT_MON_DOTMASK:
 
-            if (!DotmaskEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, DotmaskEnum::keyList());
-            }
-
             config.dotmask = Dotmask(value);
             return;
 
@@ -169,10 +222,6 @@ Monitor::setOption(Option option, i64 value)
             return;
 
         case OPT_MON_SCANLINES:
-
-            if (!ScanlinesEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, ScanlinesEnum::keyList());
-            }
 
             config.scanlines = Scanlines(value);
             return;

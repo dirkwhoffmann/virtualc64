@@ -297,6 +297,7 @@ extension MyController {
 
         case .CONFIG:
             inspector?.fullRefresh()
+            configurator?.refresh()
             refreshStatusBar()
 
         case .POWER:

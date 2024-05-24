@@ -2338,7 +2338,7 @@ using namespace vc64;
 - (BOOL)set:(Option)opt id:(NSInteger)id value:(NSInteger)val
 {
     try {
-        [self emu]->set(opt, id, val);
+        [self emu]->set(opt, val, id);
         return true;
     } catch (VC64Error &exception) {
         return false;
@@ -2348,7 +2348,7 @@ using namespace vc64;
 - (BOOL)set:(Option)opt id:(NSInteger)id enable:(BOOL)val
 {
     try {
-        [self emu]->set(opt, id, val ? 1 : 0);
+        [self emu]->set(opt, val ? 1 : 0, id);
         return true;
     } catch (VC64Error &exception) {
         return false;
@@ -2358,7 +2358,7 @@ using namespace vc64;
 - (BOOL)set:(Option)opt drive:(NSInteger)id value:(NSInteger)val
 {
     try {
-        [self emu]->set(opt, (long)id, val);
+        [self emu]->set(opt, val, (long)id);
         return true;
     } catch (VC64Error &exception) {
         return false;
@@ -2368,7 +2368,7 @@ using namespace vc64;
 - (BOOL)set:(Option)opt drive:(NSInteger)id enable:(BOOL)val
 {
     try {
-        [self emu]->set(opt, (long)id, val ? 1 : 0);
+        [self emu]->set(opt, val ? 1 : 0, (long)id);
         return true;
     } catch (VC64Error &exception) {
         return false;

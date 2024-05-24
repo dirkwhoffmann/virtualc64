@@ -439,27 +439,27 @@ Defaults::setString(const string &key, const string &value)
 }
 
 void
-Defaults::set(Option option, i64 value)
+Defaults::set(Option opt, i64 value)
 {
-    auto key = string(OptionEnum::key(option));
+    auto key = string(OptionEnum::key(opt));
     auto val = std::to_string(value);
 
     setString(key, val);
 }
 
 void
-Defaults::set(Option option, isize nr, i64 value)
+Defaults::set(Option opt, isize nr, i64 value)
 {
-    auto key = string(OptionEnum::key(option)) + std::to_string(nr);
+    auto key = string(OptionEnum::key(opt)) + std::to_string(nr);
     auto val = std::to_string(value);
 
     setString(key, val);
 }
 
 void
-Defaults::set(Option option, std::vector <isize> nrs, i64 value)
+Defaults::set(Option opt, std::vector <isize> nrs, i64 value)
 {
-    for (auto &nr : nrs) set(option, nr, value);
+    for (auto &nr : nrs) set(opt, nr, value);
 }
 
 void
@@ -480,33 +480,33 @@ Defaults::setFallback(Option option, const string &value)
 }
 
 void
-Defaults::setFallback(Option option, i64 value)
+Defaults::setFallback(Option opt, i64 value)
 {
-    setFallback(option, std::to_string(value));
+    setFallback(opt, std::to_string(value));
 }
 
 void
-Defaults::setFallback(Option option, isize nr, const string &value)
+Defaults::setFallback(Option opt, isize nr, const string &value)
 {
-    setFallback(string(OptionEnum::key(option)) + std::to_string(nr), value);
+    setFallback(string(OptionEnum::key(opt)) + std::to_string(nr), value);
 }
 
 void
-Defaults::setFallback(Option option, isize nr, i64 value)
+Defaults::setFallback(Option opt, isize nr, i64 value)
 {
-    setFallback(option, nr, std::to_string(value));
+    setFallback(opt, nr, std::to_string(value));
 }
 
 void
-Defaults::setFallback(Option option, std::vector <isize> nrs, const string &value)
+Defaults::setFallback(Option opt, std::vector <isize> nrs, const string &value)
 {
-    for (auto &nr : nrs) setFallback(option, nr, value);
+    for (auto &nr : nrs) setFallback(opt, nr, value);
 }
 
 void
-Defaults::setFallback(Option option, std::vector <isize> nrs, i64 value)
+Defaults::setFallback(Option opt, std::vector <isize> nrs, i64 value)
 {
-    setFallback(option, nrs, std::to_string(value));
+    setFallback(opt, nrs, std::to_string(value));
 }
 
 void

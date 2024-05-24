@@ -130,11 +130,69 @@ Drive::getFallback(Option opt) const
 }
 
 void
-Drive::setOption(Option option, i64 value)
+Drive::checkOption(Option opt, i64 value)
 {
-    debug(CNF_DEBUG, "%s, %lld\n", OptionEnum::key(option), value);
+    switch (opt) {
 
-    switch (option) {
+        case OPT_DRV_AUTO_CONFIG:
+
+            return;
+
+        case OPT_DRV_TYPE:
+
+            if (!DriveTypeEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, DriveTypeEnum::keyList());
+            }
+            return;
+
+        case OPT_DRV_RAM:
+
+            if (!DriveRamEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, DriveRamEnum::keyList());
+            }
+            return;
+
+        case OPT_DRV_SAVE_ROMS:
+
+            config.saveRoms = bool(value);
+            return;
+
+        case OPT_DRV_PARCABLE:
+
+            if (!ParCableTypeEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, ParCableTypeEnum::keyList());
+            }
+            return;
+
+        case OPT_DRV_CONNECT:
+
+            if (value && !canConnect()) {
+                throw VC64Error(ERROR_ROM_DRIVE_MISSING);
+            }
+            return;
+
+        case OPT_DRV_POWER_SWITCH:
+        case OPT_DRV_POWER_SAVE:
+        case OPT_DRV_EJECT_DELAY:
+        case OPT_DRV_SWAP_DELAY:
+        case OPT_DRV_INSERT_DELAY:
+        case OPT_DRV_PAN:
+        case OPT_DRV_POWER_VOL:
+        case OPT_DRV_STEP_VOL:
+        case OPT_DRV_EJECT_VOL:
+        case OPT_DRV_INSERT_VOL:
+
+            return;
+
+        default:
+            throw VC64Error(ERROR_OPT_UNSUPPORTED);
+    }
+}
+
+void
+Drive::setOption(Option opt, i64 value)
+{
+    switch (opt) {
 
         case OPT_DRV_AUTO_CONFIG:
         {
@@ -147,19 +205,11 @@ Drive::setOption(Option option, i64 value)
         }
         case OPT_DRV_TYPE:
 
-            if (!DriveTypeEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, DriveTypeEnum::keyList());
-            }
-            
             config.type = DriveType(value);
             return;
 
         case OPT_DRV_RAM:
         {
-            if (!DriveRamEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, DriveRamEnum::keyList());
-            }
-            
             {   SUSPENDED
                 
                 config.ram = DriveRam(value);
@@ -174,10 +224,6 @@ Drive::setOption(Option option, i64 value)
 
         case OPT_DRV_PARCABLE:
         {
-            if (!ParCableTypeEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, ParCableTypeEnum::keyList());
-            }
-            
             {   SUSPENDED
 
                 config.parCable = ParCableType(value);
@@ -187,10 +233,6 @@ Drive::setOption(Option option, i64 value)
         }
         case OPT_DRV_CONNECT:
         {
-            if (value && !canConnect()) {
-                throw VC64Error(ERROR_ROM_DRIVE_MISSING);
-            }
-            
             {   SUSPENDED
 
                 config.connected = bool(value);

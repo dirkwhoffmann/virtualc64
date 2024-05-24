@@ -41,6 +41,11 @@ public:
     // Gets the fallback for a config option
     virtual i64 getFallback(Option opt) const { return 0; }
 
+    // Throws an exception of if the given option/value pair is invalid
+    virtual void checkOption(Option opt, i64 value) { }
+    void checkOption(Option opt, const string &value);
+    void checkOption(const string &opt, const string &value);
+
     // Sets a config option
     virtual void setOption(Option opt, i64 value) { }
     void setOption(Option opt, const string &value);

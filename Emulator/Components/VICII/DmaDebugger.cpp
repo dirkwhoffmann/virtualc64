@@ -52,9 +52,52 @@ DmaDebugger::getOption(Option option) const
 }
 
 void
-DmaDebugger::setOption(Option option, i64 value)
+DmaDebugger::checkOption(Option opt, i64 value)
 {
-    switch (option) {
+    switch (opt) {
+
+        case OPT_DMA_DEBUG_ENABLE:
+
+            return;
+
+        case OPT_DMA_DEBUG_MODE:
+
+            if (!DmaDisplayModeEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, DmaDisplayModeEnum::keyList());
+            }
+            return;
+
+        case OPT_DMA_DEBUG_OPACITY:
+        case OPT_VICII_CUT_LAYERS:
+        case OPT_VICII_CUT_OPACITY:
+
+        case OPT_DMA_DEBUG_CHANNEL0:
+        case OPT_DMA_DEBUG_CHANNEL1:
+        case OPT_DMA_DEBUG_CHANNEL2:
+        case OPT_DMA_DEBUG_CHANNEL3:
+        case OPT_DMA_DEBUG_CHANNEL4:
+        case OPT_DMA_DEBUG_CHANNEL5:
+
+        case OPT_DMA_DEBUG_COLOR0:
+        case OPT_DMA_DEBUG_COLOR1:
+        case OPT_DMA_DEBUG_COLOR2:
+        case OPT_DMA_DEBUG_COLOR3:
+        case OPT_DMA_DEBUG_COLOR4:
+        case OPT_DMA_DEBUG_COLOR5:
+
+            return;
+
+        default:
+            throw VC64Error(ERROR_OPT_UNSUPPORTED);
+    }
+}
+
+void
+DmaDebugger::setOption(Option opt, i64 value)
+{
+    checkOption(opt, value);
+
+    switch (opt) {
             
         case OPT_DMA_DEBUG_ENABLE:
         {

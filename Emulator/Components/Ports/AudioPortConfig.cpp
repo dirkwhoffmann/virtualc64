@@ -38,12 +38,42 @@ AudioPort::getOption(Option option) const
 }
 
 void
-AudioPort::setOption(Option option, i64 value)
+AudioPort::checkOption(Option opt, i64 value)
 {
-    isize channel = 0;
-    // bool wasMuted = zeroVolume();
+    switch (opt) {
 
-    switch (option) {
+        case OPT_AUD_VOL3:
+        case OPT_AUD_VOL2:
+        case OPT_AUD_VOL1:
+        case OPT_AUD_VOL0:
+
+            return;
+
+        case OPT_AUD_PAN3:
+        case OPT_AUD_PAN2:
+        case OPT_AUD_PAN1:
+        case OPT_AUD_PAN0:
+
+            return;
+
+        case OPT_AUD_VOL_L:
+        case OPT_AUD_VOL_R:
+
+            return;
+
+        default:
+            throw VC64Error(ERROR_OPT_UNSUPPORTED);
+    }
+}
+
+void
+AudioPort::setOption(Option opt, i64 value)
+{
+    checkOption(opt, value);
+
+    isize channel = 0;
+
+    switch (opt) {
 
         case OPT_AUD_VOL3: channel++;
         case OPT_AUD_VOL2: channel++;

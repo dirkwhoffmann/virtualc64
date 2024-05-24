@@ -169,9 +169,26 @@ Datasette::getOption(Option option) const
 }
 
 void
-Datasette::setOption(Option option, i64 value)
+Datasette::checkOption(Option opt, i64 value)
 {
-    switch (option) {
+    switch (opt) {
+
+        case OPT_DAT_MODEL:
+        case OPT_DAT_CONNECT:
+
+            return;
+
+        default:
+            throw VC64Error(ERROR_OPT_UNSUPPORTED);
+    }
+}
+
+void
+Datasette::setOption(Option opt, i64 value)
+{
+    checkOption(opt, value);
+
+    switch (opt) {
 
         case OPT_DAT_MODEL:
 

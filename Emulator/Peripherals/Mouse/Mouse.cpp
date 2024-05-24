@@ -49,9 +49,39 @@ Mouse::getOption(Option option) const
 }
 
 void
-Mouse::setOption(Option option, i64 value)
+Mouse::checkOption(Option opt, i64 value)
+{
+    switch (opt) {
+
+        case OPT_MOUSE_MODEL:
+
+            if (!MouseModelEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, MouseModelEnum::keyList());
+            }
+            return;
+
+        case OPT_MOUSE_SHAKE_DETECT:
+
+            return;
+
+        case OPT_MOUSE_VELOCITY:
+
+            if (value < 0 || value > 255) {
+                throw VC64Error(ERROR_OPT_INVARG, "0 ... 255");
+            }
+            return;
+
+        default:
+            throw VC64Error(ERROR_OPT_UNSUPPORTED);
+    }
+}
+
+void
+Mouse::setOption(Option opt, i64 value)
 {    
-    switch (option) {
+    checkOption(opt, value);
+
+    switch (opt) {
             
         case OPT_MOUSE_MODEL:
             

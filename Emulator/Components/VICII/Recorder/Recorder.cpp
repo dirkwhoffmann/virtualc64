@@ -70,9 +70,29 @@ Recorder::getOption(Option option) const
 }
 
 void
-Recorder::setOption(Option option, i64 value)
+Recorder::checkOption(Option opt, i64 value)
 {
-    switch (option) {
+    switch (opt) {
+
+        case OPT_REC_FRAME_RATE:
+        case OPT_REC_BIT_RATE:
+        case OPT_REC_SAMPLE_RATE:
+        case OPT_REC_ASPECT_X:
+        case OPT_REC_ASPECT_Y:
+
+            return;
+
+        default:
+            throw VC64Error(ERROR_OPT_UNSUPPORTED);
+    }
+}
+
+void
+Recorder::setOption(Option opt, i64 value)
+{
+    checkOption(opt, value);
+
+    switch (opt) {
 
         case OPT_REC_FRAME_RATE:
 

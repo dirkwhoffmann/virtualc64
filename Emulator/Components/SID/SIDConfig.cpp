@@ -84,19 +84,70 @@ SID::getFallback(Option opt) const
 }
 
 void
-SID::setOption(Option option, i64 value)
+SID::checkOption(Option opt, i64 value)
 {
-    // bool wasMuted = c64.sidBridge.isMuted();
+    switch (opt) {
 
-    switch (option) {
+        case OPT_SID_ENABLE:
+
+            if (objid == 0 && value == false) {
+                throw VC64Error(ERROR_OPT_INVARG, "SID 0 can't be disabled");
+            }
+            return;
+
+        case OPT_SID_ADDRESS:
+
+            if (objid == 0 && value != 0xD400) {
+                throw VC64Error(ERROR_OPT_INVARG, "SID 0 can't be remapped");
+            }
+            if (value < 0xD400 || value > 0xD7E0 || (value & 0x1F)) {
+                throw VC64Error(ERROR_OPT_INVARG, "D400, D420 ... D7E0");
+            }
+            return;
+
+        case OPT_SID_REVISION:
+
+            if (!SIDRevisionEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, SIDRevisionEnum::keyList());
+            }
+            return;
+
+        case OPT_SID_FILTER:
+
+            return;
+
+        case OPT_SID_ENGINE:
+
+            if (!SIDEngineEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, SIDEngineEnum::keyList());
+            }
+            return;
+
+        case OPT_SID_SAMPLING:
+
+            if (!SamplingMethodEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, SamplingMethodEnum::keyList());
+            }
+            return;
+
+        case OPT_SID_POWER_SAVE:
+
+            return;
+
+        default:
+            throw VC64Error(ERROR_OPT_UNSUPPORTED);
+    }
+}
+
+void
+SID::setOption(Option opt, i64 value)
+{    
+    checkOption(opt, value);
+
+    switch (opt) {
 
         case OPT_SID_ENABLE:
         {
-            if (objid == 0 && value == false) {
-                warn("SID 0 can't be disabled\n");
-                return;
-            }
-
             if (config.enabled == value) {
                 return;
             }
@@ -112,15 +163,6 @@ SID::setOption(Option option, i64 value)
 
         case OPT_SID_ADDRESS:
         {
-            if (objid == 0 && value != 0xD400) {
-                warn("SID 0 can't be remapped\n");
-                return;
-            }
-
-            if (value < 0xD400 || value > 0xD7E0 || (value & 0x1F)) {
-                throw VC64Error(ERROR_OPT_INVARG, "D400, D420 ... D7E0");
-            }
-
             if (config.address == value) {
                 return;
             }
@@ -135,10 +177,6 @@ SID::setOption(Option option, i64 value)
 
         case OPT_SID_REVISION:
         {
-            if (!SIDRevisionEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, SIDRevisionEnum::keyList());
-            }
-
             {   SUSPENDED
 
                 config.revision = SIDRevision(value);
@@ -159,10 +197,6 @@ SID::setOption(Option option, i64 value)
 
         case OPT_SID_ENGINE:
         {
-            if (!SIDEngineEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, SIDEngineEnum::keyList());
-            }
-
             {   SUSPENDED
 
                 config.engine = SIDEngine(value);
@@ -172,10 +206,6 @@ SID::setOption(Option option, i64 value)
 
         case OPT_SID_SAMPLING:
         {
-            if (!SamplingMethodEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, SamplingMethodEnum::keyList());
-            }
-
             {   SUSPENDED
 
                 config.sampling = SamplingMethod(value);
