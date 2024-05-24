@@ -194,7 +194,7 @@ class Renderer: NSObject, MTKViewDelegate {
 
     func measureFps(frames: Int64) {
 
-        let interval = Int64(10)
+        let interval = Int64(32)
 
         if frames % interval == 0 {
 
@@ -205,17 +205,13 @@ class Renderer: NSObject, MTKViewDelegate {
             let newfps = Int(round(Double(interval) / elapsed))
             if newfps != fps {
 
+                debug(.vsync, "Measured GPU frame rate: \(newfps)")
+
                 if [50, 60, 100, 120, 200, 240].contains(newfps) {
 
-                    /*
-                     TODO: REWORK THIS!
-                     Problem: The code trigger when a combo box in the
-                     hardware config panel is opened.
-                     */
                     fps = newfps
                     emu.set(.HOST_REFRESH_RATE, value: Int(fps))
-                    // debug(.vsync, "New GPU frame rate: \(fps)")
-                    debug(1, "New GPU frame rate: \(fps)")
+                    debug(.vsync, "New GPU frame rate: \(fps)")
                 }
             }
         }
