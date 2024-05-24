@@ -47,19 +47,16 @@ extension ConfigurationController {
 
         config.drive8PowerSave = sender.state == .on
         config.drive9PowerSave = sender.state == .on
-        refresh()
     }
 
     @IBAction func comViciiPowerSaveAction(_ sender: NSButton!) {
         
         config.viciiPowerSave = sender.state == .on
-        refresh()
     }
 
     @IBAction func comSidPowerSaveAction(_ sender: NSButton!) {
         
         config.sidPowerSave = sender.state == .on
-        refresh()
     }
     
     //
@@ -69,13 +66,11 @@ extension ConfigurationController {
     @IBAction func comSsCollisionsAction(_ sender: NSButton!) {
         
         config.ssCollisions = sender.state == .on
-        refresh()
     }
 
     @IBAction func comSbCollisionsAction(_ sender: NSButton!) {
         
         config.sbCollisions = sender.state == .on
-        refresh()
     }
 
     //
@@ -85,13 +80,11 @@ extension ConfigurationController {
     @IBAction func comWarpModeAction(_ sender: NSPopUpButton!) {
 
         config.warpMode = sender.selectedTag()
-        refresh()
     }
 
     @IBAction func comWarpBootAction(_ sender: NSTextField!) {
 
         config.warpBoot = sender.integerValue
-        refresh()
     }
 
     //
@@ -101,19 +94,16 @@ extension ConfigurationController {
     @IBAction func prfVSyncAction(_ sender: NSButton!) {
 
         config.vsync = sender.state == .on
-        refresh()
     }
 
     @IBAction func prfTimeLapseAction(_ sender: NSSlider!) {
 
         config.timeLapse = sender.integerValue
-        refresh()
     }
 
     @IBAction func prfRunAheadAction(_ sender: NSSlider!) {
 
         config.runAhead = sender.integerValue
-        refresh()
     }
 
     @IBAction func comPresetAction(_ sender: NSPopUpButton!) {
@@ -152,7 +142,6 @@ extension ConfigurationController {
         }
 
         emu.resume()
-        refresh()
     }
     
     @IBAction func comDefaultsAction(_ sender: NSButton!) {

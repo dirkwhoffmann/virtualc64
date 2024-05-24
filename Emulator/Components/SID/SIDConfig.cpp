@@ -147,81 +147,63 @@ SID::setOption(Option opt, i64 value)
     switch (opt) {
 
         case OPT_SID_ENABLE:
-        {
-            if (config.enabled == value) {
-                return;
-            }
 
-            {   SUSPENDED
+            if (config.enabled != value) {
 
                 config.enabled = value;
                 stream.clear(0);
                 c64.sidBridge.hardReset();
             }
             return;
-        }
 
         case OPT_SID_ADDRESS:
-        {
-            if (config.address == value) {
-                return;
-            }
 
-            {   SUSPENDED
+            if (config.address != value) {
 
                 config.address = (u16)value;
                 stream.clear(0);
             }
             return;
-        }
 
         case OPT_SID_REVISION:
-        {
-            {   SUSPENDED
+
+            if (config.revision != value) {
 
                 config.revision = SIDRevision(value);
                 setRevision(SIDRevision(value));
             }
             return;
-        }
 
         case OPT_SID_FILTER:
-        {
-            {   SUSPENDED
+
+            if (config.filter != value) {
 
                 config.filter = bool(value);
                 setAudioFilter(bool(value));
             }
             return;
-        }
 
         case OPT_SID_ENGINE:
-        {
-            {   SUSPENDED
+
+            if (config.engine != value) {
 
                 config.engine = SIDEngine(value);
             }
             return;
-        }
 
         case OPT_SID_SAMPLING:
-        {
-            {   SUSPENDED
+
+            if (config.sampling != value) {
 
                 config.sampling = SamplingMethod(value);
                 setSamplingMethod(SamplingMethod(value));
             }
             return;
-        }
 
         case OPT_SID_POWER_SAVE:
-        {
-            {   SUSPENDED
 
-                config.powerSave = bool(value);
-            }
+            config.powerSave = bool(value);
             return;
-        }
 
         default:
             fatalError;

@@ -214,7 +214,7 @@ public:
      *  @param  opt     The option's name forms the keys.
      *  @param  value   The value, given as a string.
      */
-    void setFallback(Option option, const string &value);
+    void setFallback(Option opt, const string &value);
 
     /** @brief  Writes a key-value pair into the fallback storage.
      *  @param  opt     The option's name forms the keys.

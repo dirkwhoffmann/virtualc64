@@ -100,22 +100,15 @@ DmaDebugger::setOption(Option opt, i64 value)
     switch (opt) {
             
         case OPT_DMA_DEBUG_ENABLE:
-        {
-            {   SUSPENDED
-                
-                config.dmaDebug = value;
-                vic.resetDmaTextures();
-                vic.resetEmuTextures();
-                // vic.updateVicFunctionTable();
-                msgQueue.put(MSG_DMA_DEBUG, value);
-            }
+
+            config.dmaDebug = value;
+            vic.resetDmaTextures();
+            vic.resetEmuTextures();
+            msgQueue.put(MSG_DMA_DEBUG, value);
             return;
-        }
+
         case OPT_DMA_DEBUG_MODE:
             
-            if (!DmaDisplayModeEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, DmaDisplayModeEnum::keyList());
-            }
             config.dmaDisplayMode = (DmaDisplayMode)value;
             return;
 

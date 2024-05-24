@@ -85,7 +85,7 @@ class VICII final : public SubComponent, public Inspectable<VICIIInfo, VICIIStat
         },
         {
             // VICII_NTSC_6567
-            .pal            = true,
+            .pal            = false,
             .frequency      = NTSC::CLOCK_FREQUENCY,
             .fps            = NTSC::CLOCK_FREQUENCY / (263.0 * 65.0),
             .linesPerFrame  = 263,

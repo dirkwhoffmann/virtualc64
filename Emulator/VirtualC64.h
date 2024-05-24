@@ -330,7 +330,7 @@ public:
      *
      *  This is the main function to set an configuration option.
      *
-     *  @param option   The option to set
+     *  @param opt      The option to set
      *  @param value    The option's value
      *
      *  @note If this function is called for an options that applies to multiple
@@ -342,7 +342,7 @@ public:
      *
      *  This is the main function to set an configuration option.
      *
-     *  @param option   The option to set
+     *  @param opt      The option to set
      *  @param id       The component to configure
      *  @param value    The option's value
      *

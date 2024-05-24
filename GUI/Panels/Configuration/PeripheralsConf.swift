@@ -91,7 +91,6 @@ extension ConfigurationController {
         case 9: config.drive9Connected = sender.state == .on
         default: fatalError()
         }
-        refresh()
     }
 
     @IBAction func perDriveConfigAction(_ sender: NSPopUpButton!) {
@@ -101,7 +100,6 @@ extension ConfigurationController {
         case 9: config.drive9AutoConf = sender.selectedTag() == 0
         default: fatalError()
         }
-        refresh()
     }
 
     @IBAction func perDriveTypeAction(_ sender: NSPopUpButton!) {
@@ -111,7 +109,6 @@ extension ConfigurationController {
         case 9: config.drive9Type = sender.selectedTag()
         default: fatalError()
         }
-        refresh()
     }
 
     @IBAction func perDriveRamAction(_ sender: NSPopUpButton!) {
@@ -121,7 +118,6 @@ extension ConfigurationController {
         case 9: config.drive9Ram = sender.selectedTag()
         default: fatalError()
         }
-        refresh()
     }
 
     @IBAction func perDriveCableAction(_ sender: NSPopUpButton!) {
@@ -131,19 +127,16 @@ extension ConfigurationController {
         case 9: config.drive9ParCable = sender.selectedTag()
         default: fatalError()
         }
-        refresh()
     }
 
     @IBAction func perDatasetteConnectAction(_ sender: NSButton!) {
 
         config.datasetteConnected = sender.state == .on
-        refresh()
     }
 
     @IBAction func perDatasetteModelAction(_ sender: NSPopUpButton!) {
 
         config.datasetteModel = sender.selectedTag()
-        refresh()
     }
 
     @IBAction func perControlPortAction(_ sender: NSPopUpButton!) {
@@ -153,37 +146,31 @@ extension ConfigurationController {
         case 2: config.gameDevice2 = sender.selectedTag()
         default: fatalError()
         }
-        refresh()
     }
     
     @IBAction func perMouseModelAction(_ sender: NSPopUpButton!) {
         
         config.mouseModel = sender.selectedTag()
-        refresh()
     }
     
     @IBAction func perAutofireAction(_ sender: NSButton!) {
 
         config.autofire = (sender.state == .on)
-        refresh()
     }
 
     @IBAction func perAutofireCeaseAction(_ sender: NSButton!) {
 
         config.autofireBursts = (sender.state == .on)
-        refresh()
     }
 
     @IBAction func perAutofireBulletsAction(_ sender: NSTextField!) {
 
         config.autofireBullets = sender.integerValue
-        refresh()
     }
 
     @IBAction func perAutofireFrequencyAction(_ sender: NSSlider!) {
 
         config.autofireFrequency = sender.integerValue
-        refresh()
     }
 
     @IBAction func perPresetAction(_ sender: NSPopUpButton!) {
@@ -197,7 +184,6 @@ extension ConfigurationController {
         config.applyPeripheralsUserDefaults()
 
         emu.resume()
-        refresh()
     }
 
     @IBAction func perDefaultsAction(_ sender: NSButton!) {

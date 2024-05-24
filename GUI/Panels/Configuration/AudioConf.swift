@@ -45,109 +45,91 @@ extension ConfigurationController {
     @IBAction func audVol0Action(_ sender: NSSlider!) {
 
         config.vol0 = sender.integerValue
-        refresh()
     }
     
     @IBAction func audVol1Action(_ sender: NSSlider!) {
 
         config.vol1 = sender.integerValue
-        refresh()
     }
     
     @IBAction func audVol2Action(_ sender: NSSlider!) {
 
         config.vol2 = sender.integerValue
-        refresh()
     }
     
     @IBAction func audVol3Action(_ sender: NSSlider!) {
 
         config.vol3 = sender.integerValue
-        refresh()
     }
     
     @IBAction func audPan0Action(_ sender: NSSlider!) {
         
         config.pan0 = sender.integerValue
-        refresh()
     }
     
     @IBAction func audPan1Action(_ sender: NSSlider!) {
         
         config.pan1 = sender.integerValue
-        refresh()
     }
     
     @IBAction func audPan2Action(_ sender: NSSlider!) {
         
         config.pan2 = sender.integerValue
-        refresh()
     }
     
     @IBAction func audPan3Action(_ sender: NSSlider!) {
         
         config.pan3 = sender.integerValue
-        refresh()
     }
 
     @IBAction func audVolLAction(_ sender: NSSlider!) {
         
         config.volL = sender.integerValue
-        refresh()
     }
 
     @IBAction func audVolRAction(_ sender: NSSlider!) {
         
         config.volR = sender.integerValue
-        refresh()
     }
 
     @IBAction func audStepVolumeAction(_ sender: NSSlider!) {
 
         config.stepVolume = sender.integerValue
-        refresh()
     }
 
     @IBAction func audInsertVolumeAction(_ sender: NSSlider!) {
 
         config.insertVolume = sender.integerValue
-        refresh()
     }
 
     @IBAction func audEjectVolumeAction(_ sender: NSSlider!) {
 
         config.ejectVolume = sender.integerValue
-        refresh()
     }
     
     @IBAction func audDrive8PanAction(_ sender: NSSlider!) {
         
         config.drive8Pan = sender.integerValue
-        refresh()
     }
 
     @IBAction func audDrive9PanAction(_ sender: NSSlider!) {
         
         config.drive9Pan = sender.integerValue
-        refresh()
     }
 
     @IBAction func audEngineAction(_ sender: NSPopUpButton!) {
         
         config.sidEngine = sender.selectedTag()
-        refresh()
     }
 
     @IBAction func audSamplingAction(_ sender: NSPopUpButton!) {
         
         config.sidSampling = sender.selectedTag()
-        refresh()
     }
     
     @IBAction func audFilterAction(_ sender: NSButton!) {
         
         config.sidFilter = sender.state == .on
-        refresh()
     }
     
     @IBAction func audPresetAction(_ sender: NSPopUpButton!) {
@@ -184,7 +166,6 @@ extension ConfigurationController {
         }
 
         emu.resume()
-        refresh()
     }
     
     @IBAction func audDefaultsAction(_ sender: NSButton!) {

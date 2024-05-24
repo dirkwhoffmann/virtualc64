@@ -79,34 +79,32 @@ AudioPort::setOption(Option opt, i64 value)
         case OPT_AUD_VOL2: channel++;
         case OPT_AUD_VOL1: channel++;
         case OPT_AUD_VOL0:
-        {
+
             config.vol[channel] = std::clamp(value, 0LL, 100LL);
             vol[channel] = powf(config.vol[channel] / 100.0f, 1.4f) * 0.000025f;
             if (emscripten) vol[channel] *= 0.15f;
-            break;
-        }
+            return;
 
         case OPT_AUD_PAN3: channel++;
         case OPT_AUD_PAN2: channel++;
         case OPT_AUD_PAN1: channel++;
         case OPT_AUD_PAN0:
-        {
+
             config.pan[channel] = value;
             pan[channel] = float(0.5 * (sin(config.pan[channel] * M_PI / 200.0) + 1));
-            break;
-        }
+            return;
 
         case OPT_AUD_VOL_L:
 
             config.volL = std::clamp(value, 0LL, 100LL);
             volL.maximum = powf((float)config.volL / 50, 1.4f);
-            break;
+            return;
 
         case OPT_AUD_VOL_R:
 
             config.volR = std::clamp(value, 0LL, 100LL);
             volR.maximum = powf((float)config.volR / 50, 1.4f);
-            break;
+            return;
 
         default:
             fatalError;

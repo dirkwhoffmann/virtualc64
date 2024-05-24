@@ -82,31 +82,26 @@ extension ConfigurationController {
     @IBAction func hwVicRevAction(_ sender: NSPopUpButton!) {
         
         config.vicRevision = sender.selectedTag()
-        refresh()
     }
 
     @IBAction func hwVicGrayDotBugAction(_ sender: NSButton!) {
         
         config.vicGrayDotBug = sender.state == .on
-        refresh()
     }
     
     @IBAction func hwCiaRevAction(_ sender: NSPopUpButton!) {
         
         config.ciaRevision = sender.selectedTag()
-        refresh()
     }
     
     @IBAction func hwCiaTimerBBugAction(_ sender: NSButton!) {
 
         config.ciaTimerBBug = sender.state == .on
-        refresh()
     }
     
     @IBAction func hwSidRevAction(_ sender: NSPopUpButton!) {
         
         config.sidRevision = sender.selectedTag()
-        refresh()
     }
 
     @IBAction func hwSidEnable(_ sender: NSButton!) {
@@ -117,7 +112,6 @@ extension ConfigurationController {
         case 3: config.sidEnable3 = sender.state == .on
         default: fatalError()
         }
-        refresh()
     }
 
     @IBAction func hwSidAddressAction(_ sender: NSPopUpButton!) {
@@ -128,25 +122,21 @@ extension ConfigurationController {
         case 3: config.sidAddress3 = sender.selectedTag()
         default: fatalError()
         }
-        refresh()
     }
             
     @IBAction func hwGlueLogicAction(_ sender: NSPopUpButton!) {
         
         config.glueLogic = sender.selectedTag()
-        refresh()
     }
 
     @IBAction func hwPowerGridAction(_ sender: NSPopUpButton!) {
         
         config.powerGrid = sender.selectedTag()
-        refresh()
     }
 
     @IBAction func hwRamPatternAction(_ sender: NSPopUpButton!) {
         
         config.ramPattern = sender.selectedTag()
-        refresh()
     }
 
     @IBAction func hwPresetAction(_ sender: NSPopUpButton!) {
@@ -221,7 +211,6 @@ extension ConfigurationController {
         }
 
         emu.resume()
-        refresh()
     }
 
     @IBAction func hwDefaultsAction(_ sender: NSButton!) {

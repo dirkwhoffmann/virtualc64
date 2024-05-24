@@ -192,28 +192,6 @@ Emulator::set(Option opt, i64 value, std::optional<isize> id)
     // Check if this option has been locked for debugging
     value = overrideOption(opt, value);
 
-    // The following options do not send a message to the GUI
-    static std::vector<Option> quiet = {
-
-        OPT_MOUSE_VELOCITY,
-        OPT_AUTOFIRE_DELAY,
-        OPT_AUD_VOL0,
-        OPT_AUD_VOL1,
-        OPT_AUD_VOL2,
-        OPT_AUD_VOL3,
-        OPT_AUD_PAN0,
-        OPT_AUD_PAN1,
-        OPT_AUD_PAN2,
-        OPT_AUD_PAN3,
-        OPT_AUD_VOL_L,
-        OPT_AUD_VOL_R,
-        OPT_DRV_PAN,
-        OPT_DRV_POWER_VOL,
-        OPT_DRV_STEP_VOL,
-        OPT_DRV_INSERT_VOL,
-        OPT_DRV_EJECT_VOL
-    };
-
     auto targets = routeOption(opt);
 
     if (id) {
@@ -229,11 +207,6 @@ Emulator::set(Option opt, i64 value, std::optional<isize> id)
             target->setOption(opt, value);
         }
     }
-    /*
-    if (std::find(quiet.begin(), quiet.end(), opt) == quiet.end()) {
-        main.msgQueue.put(MSG_CONFIG, opt);
-    }
-    */
 }
 
 void

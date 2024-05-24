@@ -199,15 +199,10 @@ ReSID::getRevision() const
 void
 ReSID::setRevision(SIDRevision revision)
 {
-    assert(!isRunning());
-
     assert(revision == 0 || revision == 1);
     model = revision;
 
-    {   SUSPENDED
-
-        sid->set_chip_model((reSID::chip_model)revision);
-    }
+    sid->set_chip_model((reSID::chip_model)revision);
 
     assert((SIDRevision)sid->sid_model == revision);
     trace(SID_DEBUG, "Emulating SID revision %s.\n", SIDRevisionEnum::key(revision));
@@ -231,16 +226,10 @@ ReSID::setSampleRate(double value)
 void 
 ReSID::setAudioFilter(bool value)
 {
-    assert(!isRunning());
-
     if (emulateFilter != value) {
 
         emulateFilter = value;
-
-        {   SUSPENDED
-
-            sid->enable_filter(value);
-        }
+        sid->enable_filter(value);
 
         trace(SID_DEBUG, "%s audio filter emulation.\n", value ? "Enabling" : "Disabling");
     }
@@ -256,8 +245,6 @@ ReSID::getSamplingMethod() const
 void 
 ReSID::setSamplingMethod(SamplingMethod value)
 {
-    assert(!isRunning());
-    
     if (samplingMethod != value) {
         
         switch(value) {
@@ -279,13 +266,9 @@ ReSID::setSamplingMethod(SamplingMethod value)
         }
 
         samplingMethod = value;
-
-        {   SUSPENDED
-
-            sid->set_sampling_parameters((double)clockFrequency,
-                                         (reSID::sampling_method)samplingMethod,
-                                         (double)sampleRate);
-        }
+        sid->set_sampling_parameters((double)clockFrequency,
+                                     (reSID::sampling_method)samplingMethod,
+                                     (double)sampleRate);
     }
 
     assert((SamplingMethod)sid->sampling == samplingMethod);
