@@ -864,7 +864,7 @@ extension DefaultsProxy {
         remove(.EMU_WARP_MODE)
         remove(.EMU_WARP_BOOT)
         remove(.EMU_VSYNC)
-        remove(.EMU_TIME_LAPSE)
+        remove(.EMU_SPEED_ADJUST)
         remove(.EMU_RUN_AHEAD)
     }
 }
@@ -887,7 +887,7 @@ extension Configuration {
         defaults.set(.EMU_WARP_MODE, warpMode)
         defaults.set(.EMU_WARP_BOOT, warpBoot)
         defaults.set(.EMU_VSYNC, vsync)
-        defaults.set(.EMU_TIME_LAPSE, timeLapse)
+        defaults.set(.EMU_SPEED_ADJUST, speedAdjust)
         defaults.set(.EMU_RUN_AHEAD, runAhead)
 
         defaults.save()
@@ -911,7 +911,7 @@ extension Configuration {
         warpMode = defaults.get(.EMU_WARP_MODE)
         warpBoot = defaults.get(.EMU_WARP_BOOT)
         vsync = defaults.get(.EMU_VSYNC) != 0
-        timeLapse = defaults.get(.EMU_TIME_LAPSE)
+        speedAdjust = defaults.get(.EMU_SPEED_ADJUST)
         runAhead = defaults.get(.EMU_RUN_AHEAD)
 
         emu.resume()

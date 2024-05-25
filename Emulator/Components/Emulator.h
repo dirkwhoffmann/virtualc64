@@ -33,7 +33,7 @@ class Emulator : public Thread, public Inspectable<EmulatorInfo, EmulatorStats>,
         OPT_EMU_WARP_BOOT,
         OPT_EMU_WARP_MODE,
         OPT_EMU_VSYNC,
-        OPT_EMU_TIME_LAPSE,
+        OPT_EMU_SPEED_ADJUST,
         OPT_EMU_SNAPSHOTS,
         OPT_EMU_SNAPSHOT_DELAY,
         OPT_EMU_RUN_AHEAD

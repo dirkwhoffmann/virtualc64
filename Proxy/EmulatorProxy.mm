@@ -540,26 +540,6 @@ using namespace vc64;
     return [self bridge]->getInfo((unsigned)nr);
 }
 
-- (AudioPortStats)stats
-{
-    return [self bridge]->getStats();
-}
-
-- (void)copyMono:(float *)target size:(NSInteger)n
-{
-    [self bridge]->copyMono(target, n);
-}
-
-- (void)copyStereo:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n
-{
-    [self bridge]->copyStereo(target1, target2, n);
-}
-
-- (void)copyInterleaved:(float *)target size:(NSInteger)n
-{
-    [self bridge]->copyInterleaved(target, n);
-}
-
 - (float)drawWaveform:(u32 *)buffer
                     w:(NSInteger)w
                     h:(NSInteger)h
@@ -582,6 +562,40 @@ using namespace vc64;
                         scale:s
                         color:c
                        source:source];
+}
+
+@end
+
+
+//
+// Audio port
+//
+
+@implementation AudioPortProxy
+
+- (VirtualC64::AudioPortAPI *)port
+{
+    return (VirtualC64::AudioPortAPI *)obj;
+}
+
+- (AudioPortStats)stats
+{
+    return [self port]->getStats();
+}
+
+- (void)copyMono:(float *)target size:(NSInteger)n
+{
+    [self port]->copyMono(target, n);
+}
+
+- (void)copyStereo:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n
+{
+    [self port]->copyStereo(target1, target2, n);
+}
+
+- (void)copyInterleaved:(float *)target size:(NSInteger)n
+{
+    [self port]->copyInterleaved(target, n);
 }
 
 @end
@@ -2047,6 +2061,7 @@ using namespace vc64;
 
 @implementation EmulatorProxy
 
+@synthesize audioPort;
 @synthesize breakpoints;
 @synthesize c64;
 @synthesize cia1;
@@ -2077,6 +2092,7 @@ using namespace vc64;
     obj = emu;
 
     // Create sub proxys
+    audioPort = [[AudioPortProxy alloc] initWith:&emu->audioPort emu:emu];
     breakpoints = [[GuardsProxy alloc] initWith:&emu->cpu.breakpoints];
     c64 = [[C64Proxy alloc] initWith:&emu->c64 emu:emu];
     cia1 = [[CIAProxy alloc] initWith:&emu->cia1 emu:emu];

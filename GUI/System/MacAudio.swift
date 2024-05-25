@@ -122,7 +122,7 @@ public class MacAudio: NSObject {
         if muted {
             memset(ptr, 0, 4 * Int(frameCount))
         } else {
-            emu.sid.copyMono(ptr, size: Int(frameCount))
+            emu.audioPort.copyMono(ptr, size: Int(frameCount))
         }
     }
     
@@ -139,7 +139,7 @@ public class MacAudio: NSObject {
             memset(ptr1, 0, 4 * Int(frameCount))
             memset(ptr2, 0, 4 * Int(frameCount))
         } else {
-            emu.sid.copyStereo(ptr1, buffer2: ptr2, size: Int(frameCount))
+            emu.audioPort.copyStereo(ptr1, buffer2: ptr2, size: Int(frameCount))
         }
     }
 

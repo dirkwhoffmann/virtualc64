@@ -14,6 +14,7 @@
 
 using namespace vc64;
 
+@class AudioPortProxy;
 @class AnyFileProxy;
 @class AnyCollectionProxy;
 @class EmulatorProxy;
@@ -106,6 +107,7 @@ using namespace vc64;
 
 @interface EmulatorProxy : Proxy {
         
+    AudioPortProxy *audioPort;
     CIAProxy *cia1;
     CIAProxy *cia2;
     ControlPortProxy *port1;
@@ -131,6 +133,7 @@ using namespace vc64;
 
 @property (class, readonly, strong) DefaultsProxy *defaults;
 
+@property (readonly, strong) AudioPortProxy *audioPort;
 @property (readonly, strong) C64Proxy *c64;
 @property (readonly, strong) CIAProxy *cia1;
 @property (readonly, strong) CIAProxy *cia2;
@@ -403,14 +406,24 @@ using namespace vc64;
 @interface SIDProxy : SubComponentProxy { }
 
 - (SIDInfo)getInfo:(NSInteger)nr;
+
+- (float)drawWaveform:(u32 *)buffer w:(NSInteger)w h:(NSInteger)h scale:(float)s color:(u32)c source:(NSInteger)source;
+- (float)drawWaveform:(u32 *)buffer size:(NSSize)size scale:(float)s color:(u32)c source:(NSInteger)source;
+
+@end
+
+
+//
+// Audio port
+//
+
+@interface AudioPortProxy : SubComponentProxy { }
+
 @property (readonly) AudioPortStats stats;
 
 - (void)copyMono:(float *)target size:(NSInteger)n;
 - (void)copyStereo:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;
 - (void)copyInterleaved:(float *)target size:(NSInteger)n;
-
-- (float)drawWaveform:(u32 *)buffer w:(NSInteger)w h:(NSInteger)h scale:(float)s color:(u32)c source:(NSInteger)source;
-- (float)drawWaveform:(u32 *)buffer size:(NSSize)size scale:(float)s color:(u32)c source:(NSInteger)source;
 
 @end
 

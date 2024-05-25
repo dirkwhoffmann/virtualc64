@@ -114,7 +114,7 @@ extension Inspector {
         sidFilter3.intValue = (info.filterEnableBits & 0x04) != 0 ? 1 : 0
         
         // Audio buffer
-        let stats = emu.sid.stats
+        let stats = emu.audioPort.stats
         let fillLevel = Int32(stats.fillLevel * 100)
         sidAudioBufferLevel.intValue = fillLevel
         sidAudioBufferLevelText.stringValue = "\(fillLevel) %"

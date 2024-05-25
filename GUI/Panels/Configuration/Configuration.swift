@@ -265,9 +265,9 @@ class Configuration {
         get { return emu.get(.EMU_VSYNC) != 0 }
         set { emu.set(.EMU_VSYNC, enable: newValue) }
     }
-    var timeLapse: Int {
-        get { return emu.get(.EMU_TIME_LAPSE) }
-        set { emu.set(.EMU_TIME_LAPSE, value: newValue) }
+    var speedAdjust: Int {
+        get { return emu.get(.EMU_SPEED_ADJUST) }
+        set { emu.set(.EMU_SPEED_ADJUST, value: newValue) }
     }
 
     var runAhead: Int {

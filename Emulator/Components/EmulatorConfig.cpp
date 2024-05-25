@@ -30,7 +30,7 @@ Emulator::getOption(Option opt) const
         case OPT_EMU_WARP_BOOT:         return config.warpBoot;
         case OPT_EMU_WARP_MODE:         return config.warpMode;
         case OPT_EMU_VSYNC:             return config.vsync;
-        case OPT_EMU_TIME_LAPSE:        return config.timeLapse;
+        case OPT_EMU_SPEED_ADJUST:      return config.speedAdjust;
         case OPT_EMU_SNAPSHOTS:         return config.snapshots;
         case OPT_EMU_SNAPSHOT_DELAY:    return config.snapshotDelay;
         case OPT_EMU_RUN_AHEAD:         return config.runAhead;
@@ -60,7 +60,7 @@ Emulator::checkOption(Option opt, i64 value)
 
             return;
 
-        case OPT_EMU_TIME_LAPSE:
+        case OPT_EMU_SPEED_ADJUST:
 
             if (value < 50 || value > 200) {
                 throw VC64Error(ERROR_OPT_INVARG, "50...200");
@@ -112,9 +112,9 @@ Emulator::setOption(Option opt, i64 value)
             config.vsync = bool(value);
             return;
 
-        case OPT_EMU_TIME_LAPSE:
+        case OPT_EMU_SPEED_ADJUST:
 
-            config.timeLapse = isize(value);
+            config.speedAdjust = isize(value);
             main.updateClockFrequency();
             return;
 
@@ -348,7 +348,7 @@ Emulator::routeOption(Option opt)
         case OPT_EMU_WARP_MODE:
         case OPT_EMU_WARP_BOOT:
         case OPT_EMU_VSYNC:
-        case OPT_EMU_TIME_LAPSE:
+        case OPT_EMU_SPEED_ADJUST:
         case OPT_EMU_SNAPSHOTS:
         case OPT_EMU_SNAPSHOT_DELAY:
         case OPT_EMU_RUN_AHEAD:

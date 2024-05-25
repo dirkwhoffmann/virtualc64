@@ -164,7 +164,6 @@ Emulator::update()
     while (cmdQueue.poll(cmd)) {
 
         debug(CMD_DEBUG, "Command: %s\n", CmdTypeEnum::key(cmd.type));
-        debug(true, "Command: %s\n", CmdTypeEnum::key(cmd.type));
 
         main.markAsDirty();
 
@@ -348,7 +347,7 @@ Emulator::refreshRate() const
 
     } else {
 
-        return main.vic.getFps() * config.timeLapse / 100.0;
+        return main.vic.getFps() * config.speedAdjust / 100.0;
     }
 }
 

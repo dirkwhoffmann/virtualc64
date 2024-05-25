@@ -25,7 +25,7 @@ extension ConfigurationController {
         comWarpBoot.integerValue = config.warpBoot
 
         // Threading
-        let timeLapse = config.timeLapse
+        let timeLapse = config.speedAdjust
         let runAhead = config.runAhead
         prfVSync.state = config.vsync ? .on : .off
         prfTimeLapse.integerValue = timeLapse
@@ -98,7 +98,7 @@ extension ConfigurationController {
 
     @IBAction func prfTimeLapseAction(_ sender: NSSlider!) {
 
-        config.timeLapse = sender.integerValue
+        config.speedAdjust = sender.integerValue
     }
 
     @IBAction func prfRunAheadAction(_ sender: NSSlider!) {

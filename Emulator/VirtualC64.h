@@ -796,12 +796,24 @@ public:
         SIDInfo getInfo(isize nr) const;
         SIDInfo getCachedInfo(isize nr) const;
 
-        /** @brief  Returns the current state of a specific voice.
-         *  @param  nr      SID number (0 - 3). 0 is the primary SID.
-         *  @param  voice   Voice nuber (0 - 3).
-         */
-        // VoiceInfo getVoiceInfo(isize nr, isize voice) const;
-        // VoiceInfo getCachedVoiceInfo(isize nr, isize voice) const;
+        /// @}
+        /// @name Visualizing waveforms
+        /// @{
+
+        /** @brief  Draws a visual representation of the waveform.
+         *  The Mac app uses this function to visualize the contents of the
+         *  audio buffer in one of it's inspector panels. */
+        float draw(u32 *buffer, isize width, isize height,
+                   float maxAmp, u32 color, isize sid = -1) const;
+        /// @}
+
+    } sidBridge;
+
+    /** SID Public API
+     */
+    struct AudioPortAPI : API {
+
+        using API::API;
 
         /** @brief  Returns statistical information about the components.
          */
@@ -849,7 +861,7 @@ public:
                    float maxAmp, u32 color, isize sid = -1) const;
         /// @}
 
-    } sidBridge;
+    } audioPort;
 
 
     /** DMA Debugger Public API

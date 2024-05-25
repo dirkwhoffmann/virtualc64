@@ -35,7 +35,7 @@ enum_long(OPT)
     OPT_EMU_WARP_BOOT,          ///< Warp-boot time in seconds
     OPT_EMU_WARP_MODE,          ///< Warp activation mode
     OPT_EMU_VSYNC,              ///< Adapt the frame rate to the VSYNC signal
-    OPT_EMU_TIME_LAPSE,         ///< Speed adjustment in percent
+    OPT_EMU_SPEED_ADJUST,       ///< Speed adjustment in percent
     OPT_EMU_SNAPSHOTS,          ///< Take a snapshots once in a while
     OPT_EMU_SNAPSHOT_DELAY,     ///< Delay between two snapshots in seconds
     OPT_EMU_RUN_AHEAD,          ///< Number of run-ahead frames
@@ -190,7 +190,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_EMU_WARP_BOOT:         return "EMU.WARP_BOOT";
             case OPT_EMU_WARP_MODE:         return "EMU.WARP_MODE";
             case OPT_EMU_VSYNC:             return "EMU.VSYNC";
-            case OPT_EMU_TIME_LAPSE:        return "EMU.TIME_LAPSE";
+            case OPT_EMU_SPEED_ADJUST:      return "EMU.TIME_LAPSE";
             case OPT_EMU_SNAPSHOTS:         return "EMU.SNAPSHOTS";
             case OPT_EMU_SNAPSHOT_DELAY:    return "EMU.SNAPSHOT_DELAY";
             case OPT_EMU_RUN_AHEAD:         return "EMU.RUN_AHEAD";
@@ -324,7 +324,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_EMU_WARP_BOOT:         return "Warp-boot duration";
             case OPT_EMU_WARP_MODE:         return "Warp activation";
             case OPT_EMU_VSYNC:             return "VSYNC mode";
-            case OPT_EMU_TIME_LAPSE:        return "Speed adjust";
+            case OPT_EMU_SPEED_ADJUST:      return "Speed adjustment";
             case OPT_EMU_SNAPSHOTS:         return "Take snapshots once in a while";
             case OPT_EMU_SNAPSHOT_DELAY:    return "Time span between two snapshots";
             case OPT_EMU_RUN_AHEAD:         return "Run-ahead frames";

@@ -328,7 +328,7 @@ typedef struct
     isize warpBoot;
     WarpMode warpMode;
     bool vsync;
-    isize timeLapse;
+    isize speedAdjust;
     bool snapshots;
     isize snapshotDelay;
     isize runAhead;

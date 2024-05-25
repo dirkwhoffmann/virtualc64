@@ -38,6 +38,7 @@ cia1(*this, main.cia1),
 cia2(*this, main.cia2),
 vicii(*this),
 sidBridge(*this),
+audioPort(*this),
 dmaDebugger(*this),
 keyboard(*this),
 datasette(*this),
@@ -551,18 +552,10 @@ VirtualC64::VICIIAPI::getColor(isize nr, Palette palette) const
     return monitor.getColor(nr, palette);
 }
 
+
 //
 // SID
 //
-
-/*
-SIDBridgeConfig
-VirtualC64::SIDAPI::getConfig() const
-{
-    assert(isUserThread());
-    return sidBridge.getConfig();
-}
-*/
 
 SIDInfo
 VirtualC64::SIDAPI::getInfo(isize nr) const
@@ -582,56 +575,45 @@ VirtualC64::SIDAPI::getCachedInfo(isize nr) const
     return sidBridge.sid[nr].getCachedInfo();
 }
 
-/*
-VoiceInfo
-VirtualC64::SIDAPI::getVoiceInfo(isize nr, isize voice) const
-{
-    assert(isUserThread());
-    return sidBridge.getVoiceInfo(nr, voice);
-}
-
-VoiceInfo
-VirtualC64::SIDAPI::getCachedVoiceInfo(isize nr, isize voice) const
-{
-    assert(isUserThread());
-    return sidBridge.getCachedVoiceInfo(nr, voice);
-}
-*/
-
-AudioPortStats
-VirtualC64::SIDAPI::getStats() const
-{
-    assert(isUserThread());
-    return audioPort.getStats();
-}
-
-void
-VirtualC64::SIDAPI::copyMono(float *buffer, isize n)
-{
-    assert(isUserThread());
-    audioPort.copyMono(buffer, n);
-}
-
-void
-VirtualC64::SIDAPI::copyStereo(float *left, float *right, isize n)
-{
-    assert(isUserThread());
-    audioPort.copyStereo(left, right, n);
-}
-
-void
-VirtualC64::SIDAPI::copyInterleaved(float *buffer, isize n)
-{
-    assert(isUserThread());
-    audioPort.copyInterleaved(buffer, n);
-}
-
 float
 VirtualC64::SIDAPI::draw(u32 *buffer, isize width, isize height,
                          float maxAmp, u32 color, isize sid) const
 {
     assert(isUserThread());
     return sidBridge.draw(buffer, width, height, maxAmp, color, sid);
+}
+
+
+//
+// Audio port
+//
+
+AudioPortStats
+VirtualC64::AudioPortAPI::getStats() const
+{
+    assert(isUserThread());
+    return audioPort.getStats();
+}
+
+void
+VirtualC64::AudioPortAPI::copyMono(float *buffer, isize n)
+{
+    assert(isUserThread());
+    audioPort.copyMono(buffer, n);
+}
+
+void
+VirtualC64::AudioPortAPI::copyStereo(float *left, float *right, isize n)
+{
+    assert(isUserThread());
+    audioPort.copyStereo(left, right, n);
+}
+
+void
+VirtualC64::AudioPortAPI::copyInterleaved(float *buffer, isize n)
+{
+    assert(isUserThread());
+    audioPort.copyInterleaved(buffer, n);
 }
 
 
