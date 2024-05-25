@@ -114,6 +114,16 @@ public:
 
 
     //
+    // Methods from Inspectable
+    //
+
+public:
+
+    void cacheInfo(AudioPortInfo &result) const override;
+    void cacheStats(AudioPortStats &result) const override;
+
+
+    //
     // Configuring
     //
 

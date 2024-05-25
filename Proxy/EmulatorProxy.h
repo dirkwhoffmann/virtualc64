@@ -403,7 +403,6 @@ using namespace vc64;
 @interface SIDProxy : SubComponentProxy { }
 
 - (SIDInfo)getInfo:(NSInteger)nr;
-// - (VoiceInfo)getVoiceInfo:(NSInteger)nr voice:(NSInteger)voice;
 @property (readonly) AudioPortStats stats;
 
 - (void)copyMono:(float *)target size:(NSInteger)n;

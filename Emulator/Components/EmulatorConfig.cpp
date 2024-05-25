@@ -115,6 +115,7 @@ Emulator::setOption(Option opt, i64 value)
         case OPT_EMU_TIME_LAPSE:
 
             config.timeLapse = isize(value);
+            main.updateClockFrequency();
             return;
 
         case OPT_EMU_SNAPSHOTS:

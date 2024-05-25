@@ -139,12 +139,31 @@ SIDBridge::poke(u16 addr, u8 value)
 }
 
 void 
+SIDBridge::setClockFrequency(u32 frequency)
+{
+    for (isize i = 0; i < 4; i++) {
+        sid[i].setClockFrequency(frequency);
+    }
+}
+
+void
+SIDBridge::setSampleRate(double rate)
+{
+    for (isize i = 0; i < 4; i++) {
+        sid[i].setSampleRate(rate);
+    }
+}
+
+void
 SIDBridge::beginFrame()
 {
-    sid[0].setSampleRate(host.getOption(OPT_HOST_SAMPLE_RATE)); 
+    c64.updateClockFrequency();
+    /*
+    sid[0].setSampleRate(host.getOption(OPT_HOST_SAMPLE_RATE));
     sid[1].setSampleRate(host.getOption(OPT_HOST_SAMPLE_RATE));
     sid[2].setSampleRate(host.getOption(OPT_HOST_SAMPLE_RATE));
     sid[3].setSampleRate(host.getOption(OPT_HOST_SAMPLE_RATE));
+    */
 }
 
 void 

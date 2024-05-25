@@ -102,6 +102,17 @@ public:
 
 
     //
+    // Parameterizing
+    //
+
+    // Adjusts the clock frequency for all SIDs
+    void setClockFrequency(u32 frequency);
+
+    // Adjusts the sample rate for all SIDs
+    void setSampleRate(double rate);
+
+
+    //
     // Running the device
     //
 

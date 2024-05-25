@@ -61,6 +61,7 @@ AudioPort::_reset(bool hard)
 
     // Realign the write pointer
     alignWritePtr();
+    lastAlignment = util::Time::now();
 
     // Clear statistics
     if (hard) clearStats();
@@ -133,8 +134,12 @@ AudioPort::handleBufferUnderflow()
     // Check for condition (1)
     if (elapsedTime.asSeconds() > 10.0) {
 
+        // Increase the sample rate based on what we've measured
+        isize offPerSecond = (isize)(count() / elapsedTime.asSeconds());
+        sidBridge.setSampleRate(sidBridge.sid[0].getSampleRate() + offPerSecond);
+
         stats.bufferUnderflows++;
-        warn("Last underflow: %f seconds ago\n", elapsedTime.asSeconds());
+        warn("Last underflow: %f seconds ago (%ld samples off)\n", elapsedTime.asSeconds(), offPerSecond);
     }
 }
 
@@ -158,8 +163,12 @@ AudioPort::handleBufferOverflow()
     // Check for condition (1)
     if (elapsedTime.asSeconds() > 10.0) {
 
+        // Decrease the sample rate based on what we've measured
+        isize offPerSecond = (isize)(count() / elapsedTime.asSeconds());
+        sidBridge.setSampleRate(sidBridge.sid[0].getSampleRate() - offPerSecond);
+
         stats.bufferOverflows++;
-        warn("Last overflow: %f seconds ago\n", elapsedTime.asSeconds());
+        warn("Last underflow: %f seconds ago (%ld samples off)\n", elapsedTime.asSeconds(), offPerSecond);
     }
 }
 
