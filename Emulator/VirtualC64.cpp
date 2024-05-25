@@ -58,6 +58,18 @@ VirtualC64::~VirtualC64()
     halt();
 }
 
+u32 *
+VirtualC64::getTexture() const
+{
+    return Emulator::getTexture();
+}
+
+u32 *
+VirtualC64::getDmaTexture() const
+{
+    return Emulator::getDmaTexture();
+}
+
 void
 VirtualC64::stepInto()
 {
@@ -621,20 +633,6 @@ VirtualC64::AudioPortAPI::copyInterleaved(float *buffer, isize n)
 //
 // Video port
 //
-
-u32 *
-VirtualC64::VideoPortAPI::getTexture() const
-{
-    assert(isUserThread());
-    return videoPort.getTexture();
-}
-
-u32 *
-VirtualC64::VideoPortAPI::getDmaTexture() const
-{
-    assert(isUserThread());
-    return videoPort.getDmaTexture();
-}
 
 
 //

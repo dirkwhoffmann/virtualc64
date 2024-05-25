@@ -196,7 +196,7 @@ class Canvas: Layer {
         precondition(emulatorTexture != nil)
         
         // Get a pointer to most recent texture
-        let buffer = emu.videoPort.texture
+        let buffer = emu.texture
         precondition(buffer != nil)
 
         // Only proceed if the emulator delivers a new texture

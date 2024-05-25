@@ -26,6 +26,7 @@ class VICII final : public SubComponent, public Inspectable<VICIIInfo, VICIIStat
 
     friend class C64Memory;
     friend class DmaDebugger;
+    friend class VideoPort;
     
     Descriptions descriptions = {{
 
@@ -964,18 +965,20 @@ public:
     //
     // Accessing the screen buffer and display properties
     //
-    
-    // Returns pointers to the stable textures
-    u32 *getTexture() const;
-    u32 *getDmaTexture() const;
-        
+
     // Returns a C64 color in 32 bit big endian RGBA format
     u32 getColor(isize nr) const { return rgbaTable[nr]; }
 
     // Updates the RGBA values for all 16 C64 colors
     void updatePalette();
 
-    
+private:
+
+    // Returns pointers to the stable textures
+    u32 *getTexture() const;
+    u32 *getDmaTexture() const;
+
+
     //
     // Accessing memory (VIC_memory.cpp)
     //

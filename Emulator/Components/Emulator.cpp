@@ -311,10 +311,17 @@ Emulator::recreateRunAheadInstance()
 u32 *
 Emulator::getTexture() const
 {
-    // Get the texture from the proper emulator instance
     return config.runAhead && isRunning() ?
-    ahead.vic.getTexture() :
-    main.vic.getTexture();
+    ahead.videoPort.getTexture() :
+    main.videoPort.getTexture();
+}
+
+u32 *
+Emulator::getDmaTexture() const
+{
+    return config.runAhead && isRunning() ?
+    ahead.videoPort.getDmaTexture() :
+    main.videoPort.getDmaTexture();
 }
 
 void

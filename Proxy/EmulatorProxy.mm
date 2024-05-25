@@ -612,11 +612,6 @@ using namespace vc64;
     return (VirtualC64::VideoPortAPI *)obj;
 }
 
-- (u32 *)texture
-{
-    return [self port]->getTexture();
-}
-
 @end
 
 
@@ -2260,6 +2255,11 @@ using namespace vc64;
 - (BOOL)tracking
 {
     return [self emu]->isTracking();
+}
+
+- (u32 *)texture
+{
+    return [self emu]->getTexture();
 }
 
 - (void)run:(ExceptionWrapper *)e

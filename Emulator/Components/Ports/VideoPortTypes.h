@@ -34,12 +34,4 @@ typedef struct
 }
 VideoPortInfo;
 
-/*
-typedef struct
-{
-
-}
-VideoPortStats;
-*/
-
 }

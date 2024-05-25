@@ -16,18 +16,6 @@
 
 namespace vc64 {
 
-void 
-AudioPort::cacheInfo(AudioPortInfo &result) const
-{
-
-}
-
-void 
-AudioPort::cacheStats(AudioPortStats &result) const
-{
-    stats.fillLevel = fillLevel();
-}
-
 i64
 AudioPort::getOption(Option option) const
 {

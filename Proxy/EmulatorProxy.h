@@ -178,6 +178,8 @@ using namespace vc64;
 @property (readonly) BOOL warping;
 @property (readonly) BOOL tracking;
 
+@property (readonly) u32 *texture;
+
 - (void)isReady:(ExceptionWrapper *)ex;
 - (void)powerOn:(ExceptionWrapper *)ex;
 - (void)powerOff;
@@ -434,7 +436,7 @@ using namespace vc64;
 
 @interface VideoPortProxy : SubComponentProxy { }
 
-@property (readonly) u32 *texture;
+// @property (readonly) u32 *texture;
 
 @end
 

@@ -52,6 +52,18 @@ AudioPort::_dump(Category category, std::ostream& os) const
 }
 
 void
+AudioPort::cacheInfo(AudioPortInfo &result) const
+{
+
+}
+
+void
+AudioPort::cacheStats(AudioPortStats &result) const
+{
+    stats.fillLevel = fillLevel();
+}
+
+void
 AudioPort::_reset(bool hard)
 {
     lock();
