@@ -30,7 +30,7 @@ public util::RingBuffer <SamplePair, 12288> {
     Descriptions descriptions = {{
 
         .name           = "AudioPort",
-        .shellName      = "AudioPort",
+        .shellName      = "audio",
         .description    = "Audio Port"
     }};
 

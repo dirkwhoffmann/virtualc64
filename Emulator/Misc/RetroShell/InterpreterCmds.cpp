@@ -477,6 +477,81 @@ Interpreter::initCommandShell(Command &root)
 
 
     //
+    // Ports
+    //
+
+    root.pushGroup("Ports");
+
+
+    //
+    // Ports (Power port)
+    //
+
+    cmd = powerSupply.shellName();
+    description = powerSupply.description();
+    root.add({cmd}, description);
+
+    root.pushGroup("");
+
+    root.add({cmd, ""},
+             "Displays the current configuration",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(powerSupply, Category::Config);
+    });
+
+    root.add({cmd, "set"}, "Configures the component");
+
+    for (auto &opt : powerSupply.getOptions()) {
+
+        root.add({cmd, "set", OptionEnum::plainkey(opt)},
+                 {OptionParser::create(opt)->argList()},
+                 OptionEnum::help(opt),
+                 [this](Arguments& argv, long opt) {
+
+            emulator.set(Option(opt), argv[0]);
+
+        }, opt);
+    }
+
+    root.popGroup();
+
+
+    //
+    // Ports (Audio port)
+    //
+
+    cmd = audioPort.shellName();
+    description = audioPort.description();
+    root.add({cmd}, description);
+
+    root.pushGroup("");
+
+    root.add({cmd, ""},
+             "Displays the current configuration",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(audioPort, Category::Config);
+    });
+
+    root.add({cmd, "set"}, "Configures the component");
+
+    for (auto &opt : audioPort.getOptions()) {
+
+        root.add({cmd, "set", OptionEnum::plainkey(opt)},
+                 {OptionParser::create(opt)->argList()},
+                 OptionEnum::help(opt),
+                 [this](Arguments& argv, long opt) {
+
+            emulator.set(Option(opt), argv[0]);
+
+        }, opt);
+    }
+
+    root.popGroup();
+
+
+    //
     // Components (Expansion port)
     //
 
@@ -512,74 +587,6 @@ Interpreter::initCommandShell(Command &root)
         expansionport.attachGeoRam(parseNum(argv[0]));
     });
 
-    root.popGroup();
-
-
-    //
-    // Components (Power supply)
-    //
-
-    cmd = powerSupply.shellName();
-    description = powerSupply.description();
-    root.add({cmd}, description);
-
-    root.pushGroup("");
-
-    root.add({cmd, ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
-
-        retroShell.dump(powerSupply, Category::Config);
-    });
-
-    root.add({cmd, "set"}, "Configures the component");
-
-    for (auto &opt : powerSupply.getOptions()) {
-
-        root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::create(opt)->argList()},
-                 OptionEnum::help(opt),
-                 [this](Arguments& argv, long opt) {
-
-            emulator.set(Option(opt), argv[0]);
-
-        }, opt);
-    }
-
-    root.popGroup();
-
-
-    //
-    // Components (Host)
-    //
-
-    cmd = host.shellName();
-    description = host.description();
-    root.add({cmd}, description);
-
-    root.pushGroup("");
-
-    root.add({cmd, ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
-
-        retroShell.dump(host, Category::Config);
-    });
-
-    root.add({cmd, "set"}, "Configures the component");
-
-    for (auto &opt : powerSupply.getOptions()) {
-
-        root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::create(opt)->argList()},
-                 OptionEnum::help(opt),
-                 [this](Arguments& argv, long opt) {
-
-            emulator.set(Option(opt), argv[0]);
-
-        }, opt);
-    }
-    
     root.popGroup();
 
 
@@ -1009,6 +1016,43 @@ Interpreter::initCommandShell(Command &root)
     //
 
     root.pushGroup("Miscellaneous");
+
+    //
+    // Miscellaneous (Host)
+    //
+
+    cmd = host.shellName();
+    description = host.description();
+    root.add({cmd}, description);
+
+    root.pushGroup("");
+
+    root.add({cmd, ""},
+             "Displays the current configuration",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(host, Category::Config);
+    });
+
+    root.add({cmd, "set"}, "Configures the component");
+
+    for (auto &opt : powerSupply.getOptions()) {
+
+        root.add({cmd, "set", OptionEnum::plainkey(opt)},
+                 {OptionParser::create(opt)->argList()},
+                 OptionEnum::help(opt),
+                 [this](Arguments& argv, long opt) {
+
+            emulator.set(Option(opt), argv[0]);
+
+        }, opt);
+    }
+
+    root.popGroup();
+
+    //
+    // Miscellaneous (Recorder)
+    //
 
     root.add({"recorder"},       "Screen recorder");
     root.pushGroup("");
