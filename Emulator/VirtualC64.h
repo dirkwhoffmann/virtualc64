@@ -253,30 +253,6 @@ public:
 
 
     /// @}
-    /// @name Accessing video data
-    /// @{
-
-    /** @brief  Returns a pointer to the most recent stable texture
-     *
-     * The texture dimensions are given by constants vc64::Texture::width
-     * and vc64::Texture::height texels. Each texel is represented by a
-     * 32 bit color value.
-     */
-    u32 *getTexture() const { return Emulator::getTexture(); }
-
-    /** Returns a pointer to a noise pattern
-     *
-     *  The pattern resembles the white noise produced by older analog TVs when
-     *  TV signal was present. The returned pattern is pseudo-random and
-     *  changes with each call of this function.
-     *
-     *  @note The Mac app displays this pattern when the emulator is powered on.
-     *  After powering on, the emulator texture is displayed.
-     */
-    u32 *getNoise() const { return Emulator::getNoise(); }
-
-
-    /// @}
     /// @name Configuring the emulator
     /// @{
 
@@ -809,7 +785,7 @@ public:
 
     } sidBridge;
 
-    /** SID Public API
+    /** Audio Port Public API
      */
     struct AudioPortAPI : API {
 
@@ -862,6 +838,41 @@ public:
         /// @}
 
     } audioPort;
+
+
+    /** Video Port Public API
+     */
+    struct VideoPortAPI : API {
+
+        using API::API;
+
+
+        /// @}
+        /// @name Accessing video data
+        /// @{
+
+        /** @brief  Returns a pointer to the most recent stable texture
+         *
+         * The texture dimensions are given by constants vc64::Texture::width
+         * and vc64::Texture::height texels. Each texel is represented by a
+         * 32 bit color value.
+         */
+        u32 *getTexture() const;
+        u32 *getDmaTexture() const;
+
+        /** Returns a pointer to a noise pattern
+         *
+         *  The pattern resembles the white noise produced by older analog TVs when
+         *  TV signal was present. The returned pattern is pseudo-random and
+         *  changes with each call of this function.
+         *
+         *  @note The Mac app displays this pattern when the emulator is powered on.
+         *  After powering on, the emulator texture is displayed.
+         */
+        u32 *getNoise() const;
+        /// @}
+
+    } videoPort;
 
 
     /** DMA Debugger Public API

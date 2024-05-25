@@ -22,7 +22,7 @@
 #include "CIATypes.h"
 #include "DriveTypes.h"
 #include "ParCableTypes.h"
-#include "PowerSupplyTypes.h"
+#include "PowerPortTypes.h"
 #include "MouseTypes.h"
 #include "IOUtils.h"
 
@@ -76,6 +76,8 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_DMA_DEBUG_COLOR4:          return numParser();
         case OPT_DMA_DEBUG_COLOR5:          return numParser();
 
+        case OPT_VID_WHITE_NOISE:           return boolParser();
+            
         case OPT_MON_PALETTE:               return enumParser.template operator()<PaletteEnum>();
         case OPT_MON_BRIGHTNESS:            return numParser("%");
         case OPT_MON_CONTRAST:              return numParser("%");

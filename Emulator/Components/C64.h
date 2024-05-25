@@ -17,10 +17,7 @@
 #include "Thread.h"
 
 // Sub components
-#include "ExpansionPort.h"
-#include "IEC.h"
 #include "Keyboard.h"
-#include "ControlPort.h"
 #include "C64Memory.h"
 #include "Debugger.h"
 #include "DriveMemory.h"
@@ -30,14 +27,17 @@
 #include "TOD.h"
 #include "CIA.h"
 #include "CPU.h"
-#include "PowerSupply.h"
 #include "Recorder.h"
 #include "RegressionTester.h"
 #include "RetroShell.h"
 
-// Cartridges
-#include "Cartridge.h"
-#include "CustomCartridges.h"
+// Ports
+#include "AudioPort.h"
+#include "VideoPort.h"
+#include "ControlPort.h"
+#include "PowerPort.h"
+#include "ExpansionPort.h"
+#include "IEC.h"
 
 // Peripherals
 #include "Drive.h"
@@ -45,6 +45,10 @@
 #include "Datasette.h"
 #include "Mouse.h"
 #include "Monitor.h"
+
+// Cartridges
+#include "Cartridge.h"
+#include "CustomCartridges.h"
 
 // Media files
 #include "Snapshot.h"
@@ -126,7 +130,8 @@ public:
 
     // Logic board
     AudioPort audioPort = AudioPort(*this);
-    PowerSupply supply = PowerSupply(*this);
+    VideoPort videoPort = VideoPort(*this);
+    PowerPort supply = PowerPort(*this);
     ControlPort port1 = ControlPort(*this, PORT_1);
     ControlPort port2 = ControlPort(*this, PORT_2);
     ExpansionPort expansionport = ExpansionPort(*this);
@@ -326,6 +331,7 @@ public:
         CLONE(vic)
         CLONE(sidBridge)
         CLONE(audioPort)
+        CLONE(videoPort)
         CLONE(supply)
         CLONE(port1)
         CLONE(port2)
@@ -366,6 +372,7 @@ public:
         << vic
         << sidBridge
         << audioPort
+        << videoPort
         << supply
         << port1
         << port2

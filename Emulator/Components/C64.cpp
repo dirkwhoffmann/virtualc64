@@ -204,6 +204,7 @@ C64::C64(class Emulator& ref, isize id) : CoreComponent(ref, id)
         &vic,
         &sidBridge,
         &audioPort,
+        &videoPort,
         &supply,
         &port1,
         &port2,
@@ -856,7 +857,7 @@ C64::_dump(Category category, std::ostream& os) const
         os << tab("SIDBridge");
         os << dec(sizeof(SIDBridge)) << " Bytes" << std::endl;
         os << tab("Power supply");
-        os << dec(sizeof(PowerSupply)) << " Bytes" << std::endl;
+        os << dec(sizeof(PowerPort)) << " Bytes" << std::endl;
         os << tab("Control port");
         os << dec(sizeof(ControlPort)) << " Bytes" << std::endl;
         os << tab("Expansion port");

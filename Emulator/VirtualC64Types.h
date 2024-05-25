@@ -36,7 +36,7 @@
 #include "MsgQueueTypes.h"
 #include "OptionTypes.h"
 #include "ParCableTypes.h"
-#include "PowerSupplyTypes.h"
+#include "PowerPortTypes.h"
 #include "RecorderTypes.h"
 #include "RetroShellTypes.h"
 #include "SIDTypes.h"

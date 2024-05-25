@@ -21,7 +21,7 @@
 #include "CIATypes.h"
 #include "DriveTypes.h"
 #include "ParCableTypes.h"
-#include "PowerSupplyTypes.h"
+#include "PowerPortTypes.h"
 #include "MouseTypes.h"
 #include "IOUtils.h"
 #include <algorithm>

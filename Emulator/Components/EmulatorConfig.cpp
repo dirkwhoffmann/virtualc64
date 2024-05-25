@@ -420,6 +420,11 @@ Emulator::routeOption(Option opt)
             return { &main.vic.dmaDebugger };
             break;
 
+        case OPT_VID_WHITE_NOISE:
+
+            return { &main.videoPort };
+            break;
+
         case OPT_POWER_GRID:
 
             return { &main.supply };

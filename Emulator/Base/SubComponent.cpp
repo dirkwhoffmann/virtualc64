@@ -46,7 +46,8 @@ sid0(ref.sidBridge.sid[0]),
 sid1(ref.sidBridge.sid[1]),
 sid2(ref.sidBridge.sid[2]),
 sid3(ref.sidBridge.sid[3]),
-vic(ref.vic)
+vic(ref.vic),
+videoPort(ref.videoPort)
 {
 
 };

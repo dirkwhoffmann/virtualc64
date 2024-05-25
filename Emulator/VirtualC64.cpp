@@ -39,6 +39,7 @@ cia2(*this, main.cia2),
 vicii(*this),
 sidBridge(*this),
 audioPort(*this),
+videoPort(*this),
 dmaDebugger(*this),
 keyboard(*this),
 datasette(*this),
@@ -614,6 +615,32 @@ VirtualC64::AudioPortAPI::copyInterleaved(float *buffer, isize n)
 {
     assert(isUserThread());
     audioPort.copyInterleaved(buffer, n);
+}
+
+
+//
+// Video port
+//
+
+u32 *
+VirtualC64::VideoPortAPI::getTexture() const
+{
+    assert(isUserThread());
+    return videoPort.getTexture();
+}
+
+u32 *
+VirtualC64::VideoPortAPI::getDmaTexture() const
+{
+    assert(isUserThread());
+    return videoPort.getDmaTexture();
+}
+
+u32 *
+VirtualC64::VideoPortAPI::getNoise() const
+{
+    assert(isUserThread());
+    return videoPort.getNoise();
 }
 
 

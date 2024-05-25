@@ -187,7 +187,7 @@ protected:
     class Monitor &monitor;
     class MsgQueue &msgQueue;
     class ParCable &parCable;
-    class PowerSupply &powerSupply;
+    class PowerPort &powerSupply;
     class Recorder &recorder;
     class RegressionTester &regressionTester;
     class RetroShell &retroShell;
@@ -197,6 +197,7 @@ protected:
     class SID& sid2;
     class SID& sid3;
     class VICII &vic;
+    class VideoPort &videoPort;
 
     Drive *drive[2] = { &drive8, &drive9 };
 

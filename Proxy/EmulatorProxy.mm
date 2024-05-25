@@ -602,6 +602,30 @@ using namespace vc64;
 
 
 //
+// Video port
+//
+
+@implementation VideoPortProxy
+
+- (VirtualC64::VideoPortAPI *)port
+{
+    return (VirtualC64::VideoPortAPI *)obj;
+}
+
+- (u32 *)texture
+{
+    return [self port]->getTexture();
+}
+
+- (u32 *)noise
+{
+    return [self port]->getNoise();
+}
+
+@end
+
+
+//
 // IEC bus
 //
 
@@ -2081,6 +2105,7 @@ using namespace vc64;
 @synthesize retroShell;
 @synthesize sid;
 @synthesize vic;
+@synthesize videoPort;
 @synthesize watchpoints;
 
 - (instancetype) init
@@ -2112,6 +2137,7 @@ using namespace vc64;
     retroShell = [[RetroShellProxy alloc] initWith:&emu->retroShell emu:emu];
     sid = [[SIDProxy alloc] initWith:&emu->sidBridge emu:emu];
     vic = [[VICIIProxy alloc] initWith:&emu->vicii emu:emu];
+    videoPort = [[VideoPortProxy alloc] initWith:&emu->videoPort emu:emu];
     watchpoints = [[GuardsProxy alloc] initWith:&emu->cpu.watchpoints];
 
     return self;
@@ -2304,16 +2330,6 @@ using namespace vc64;
 - (void)trackOff:(NSInteger)source
 {
     [self emu]->trackOff(source);
-}
-
-- (u32 *)texture
-{
-    return [self emu]->getTexture();
-}
-
-- (u32 *)noise
-{
-    return [self emu]->getNoise();
 }
 
 - (NSInteger)get:(Option)opt

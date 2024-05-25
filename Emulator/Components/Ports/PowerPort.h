@@ -12,19 +12,19 @@
 
 #pragma once
 
-#include "PowerSupplyTypes.h"
+#include "PowerPortTypes.h"
 #include "SubComponent.h"
 #include "Chrono.h"
 
 namespace vc64 {
 
-class PowerSupply final : public SubComponent, public Dumpable {
+class PowerPort final : public SubComponent, public Dumpable {
 
     Descriptions descriptions = {{
 
-        .name           = "PowerSupply",
-        .shellName      = "powersupply",
-        .description    = "Power Supply"
+        .name           = "PowerPort",
+        .shellName      = "power",
+        .description    = "Power Port"
     }};
 
     ConfigOptions options = {
@@ -32,7 +32,7 @@ class PowerSupply final : public SubComponent, public Dumpable {
         OPT_POWER_GRID
     };
 
-    PowerSupplyConfig config = { };
+    PowerPortConfig config = { };
 
 
     //
@@ -41,9 +41,9 @@ class PowerSupply final : public SubComponent, public Dumpable {
     
 public:
     
-    PowerSupply(C64& ref);
+    PowerPort(C64& ref);
     const Descriptions &getDescriptions() const override { return descriptions; }
-    PowerSupply& operator= (const PowerSupply& other) { return *this; }
+    PowerPort& operator= (const PowerPort& other) { return *this; }
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 
 
@@ -53,7 +53,7 @@ public:
 
 public:
 
-    const PowerSupplyConfig &getConfig() const { return config; }
+    const PowerPortConfig &getConfig() const { return config; }
     const ConfigOptions &getOptions() const override { return options; }
     i64 getOption(Option opt) const override;
     void checkOption(Option opt, i64 value) override;

@@ -4,9 +4,10 @@ target_sources(vc64Core PRIVATE
 
 AudioPort.cpp
 AudioPortConfig.cpp
-PowerSupply.cpp
 ControlPort.cpp
 ExpansionPort.cpp
 IEC.cpp
+PowerPort.cpp
+VideoPort.cpp
 
 )

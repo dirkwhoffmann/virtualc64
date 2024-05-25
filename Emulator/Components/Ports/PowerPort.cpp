@@ -11,18 +11,18 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "PowerSupply.h"
+#include "PowerPort.h"
 #include "Emulator.h"
 
 namespace vc64 {
 
-PowerSupply::PowerSupply(C64& ref) : SubComponent(ref)
+PowerPort::PowerPort(C64& ref) : SubComponent(ref)
 {
 
 }
 
 i64
-PowerSupply::getOption(Option option) const
+PowerPort::getOption(Option option) const
 {
     switch (option) {
             
@@ -34,7 +34,7 @@ PowerSupply::getOption(Option option) const
 }
 
 void
-PowerSupply::checkOption(Option opt, i64 value)
+PowerPort::checkOption(Option opt, i64 value)
 {
     switch (opt) {
 
@@ -51,7 +51,7 @@ PowerSupply::checkOption(Option opt, i64 value)
 }
 
 void
-PowerSupply::setOption(Option opt, i64 value)
+PowerPort::setOption(Option opt, i64 value)
 {
     checkOption(opt, value);
 
@@ -68,7 +68,7 @@ PowerSupply::setOption(Option opt, i64 value)
 }
 
 void
-PowerSupply::_dump(Category category, std::ostream& os) const
+PowerPort::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
@@ -79,7 +79,7 @@ PowerSupply::_dump(Category category, std::ostream& os) const
 }
 
 Cycle
-PowerSupply::todTickDelay(u8 cra)
+PowerPort::todTickDelay(u8 cra)
 {
     Cycle delay, jitter;
     i64 frequency = vic.pal() ? PAL::CLOCK_FREQUENCY : NTSC::CLOCK_FREQUENCY;

@@ -63,6 +63,8 @@ Defaults::Defaults()
     setFallback(OPT_DMA_DEBUG_COLOR4, GpuColor(0x00, 0xFF, 0x00).abgr);
     setFallback(OPT_DMA_DEBUG_COLOR5, GpuColor(0x00, 0x80, 0xFF).abgr);
 
+    setFallback(OPT_VID_WHITE_NOISE, true);
+
     setFallback(OPT_MON_PALETTE, PALETTE_COLOR);
     setFallback(OPT_MON_BRIGHTNESS, 50);
     setFallback(OPT_MON_CONTRAST, 100);

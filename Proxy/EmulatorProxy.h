@@ -51,6 +51,7 @@ using namespace vc64;
 @class T64FileProxy;
 @class TAPFileProxy;
 @class VICIIProxy;
+@class VideoPortProxy;
 
 //
 // Exception wrapper
@@ -154,6 +155,8 @@ using namespace vc64;
 @property (readonly, strong) RetroShellProxy *retroShell;
 @property (readonly, strong) SIDProxy *sid;
 @property (readonly, strong) VICIIProxy *vic;
+@property (readonly, strong) VideoPortProxy *videoPort;
+
 
 - (void)dealloc;
 - (void)kill;
@@ -196,9 +199,6 @@ using namespace vc64;
 - (void)stepOver;
 
 - (void)wakeUp;
-
-@property (readonly) u32 *texture;
-@property (readonly) u32 *noise;
 
 - (void)launch:(const void *)listener function:(Callback *)func;
 
@@ -424,6 +424,18 @@ using namespace vc64;
 - (void)copyMono:(float *)target size:(NSInteger)n;
 - (void)copyStereo:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;
 - (void)copyInterleaved:(float *)target size:(NSInteger)n;
+
+@end
+
+
+//
+// Video port
+//
+
+@interface VideoPortProxy : SubComponentProxy { }
+
+@property (readonly) u32 *texture;
+@property (readonly) u32 *noise;
 
 @end
 

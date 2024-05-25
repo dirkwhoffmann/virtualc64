@@ -60,6 +60,6 @@ typedef struct
 {
     PowerGrid powerGrid;
 }
-PowerSupplyConfig;
+PowerPortConfig;
 
 }
