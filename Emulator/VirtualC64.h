@@ -860,18 +860,6 @@ public:
         u32 *getTexture() const;
         u32 *getDmaTexture() const;
 
-        /** Returns a pointer to a noise pattern
-         *
-         *  The pattern resembles the white noise produced by older analog TVs when
-         *  TV signal was present. The returned pattern is pseudo-random and
-         *  changes with each call of this function.
-         *
-         *  @note The Mac app displays this pattern when the emulator is powered on.
-         *  After powering on, the emulator texture is displayed.
-         */
-        u32 *getNoise() const;
-        /// @}
-
     } videoPort;
 
 

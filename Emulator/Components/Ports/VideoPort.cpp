@@ -18,6 +18,11 @@
 
 namespace vc64 {
 
+VideoPort::VideoPort(C64 &ref) : SubComponent(ref)
+{
+
+};
+
 void
 VideoPort::_dump(Category category, std::ostream& os) const
 {
@@ -36,7 +41,11 @@ VideoPort::_dump(Category category, std::ostream& os) const
 u32 *
 VideoPort::getTexture() const
 {
-    return vic.getTexture();
+    if (isPoweredOff()) {
+        return config.whiteNoise ? getNoiseTexture() : getBlankTexture();
+    } else {
+        return vic.getTexture();
+    }
 }
 
 u32 *
@@ -46,9 +55,39 @@ VideoPort::getDmaTexture() const
 }
 
 u32 *
-VideoPort::getNoise() const
+VideoPort::getNoiseTexture() const
 {
-    return vic.getNoise();
+    static u32 *noise = nullptr;
+    constexpr isize noiseSize = 16 * 512 * 512;
+
+    if (!noise) {
+
+        noise = new u32[noiseSize];
+
+        for (isize i = 0; i < noiseSize; i++) {
+            noise[i] = rand() % 2 ? 0xFF000000 : 0xFFFFFFFF;
+        }
+    }
+
+    int offset = rand() % (512 * 512);
+    return noise + offset;
+}
+
+u32 *
+VideoPort::getBlankTexture() const
+{
+    static u32 *blank = nullptr;
+
+    if (!blank) {
+
+        blank = new u32[Texture::height * Texture::width];
+
+        for (isize i = 0; i < Texture::height * Texture::width; i++) {
+            blank[i] = 0xFF000000;
+        }
+    }
+
+    return blank;
 }
 
 }

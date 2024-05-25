@@ -41,7 +41,7 @@ class VideoPort final : public SubComponent, public Dumpable {
 
 public:
 
-    VideoPort(C64 &ref) : SubComponent(ref) { };
+    VideoPort(C64 &ref);
     const Descriptions &getDescriptions() const override { return descriptions; }
     void _dump(Category category, std::ostream& os) const override;
 
@@ -89,8 +89,14 @@ public:
     // Returns a pointer to the stable DMA debugger texture
     u32 *getDmaTexture() const;
 
-    // DEPRECATED
-    u32 *getNoise() const;
+private:
+
+    // Returns a pointer to a white-noise texture
+    u32 *getNoiseTexture() const;
+
+    // Returns a pointer to a solid blank texture
+    u32 *getBlankTexture() const;
+
 };
 
 }

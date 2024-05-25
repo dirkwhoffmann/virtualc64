@@ -194,16 +194,6 @@ class Canvas: Layer {
                 
         precondition(scanlineTexture != nil)
         precondition(emulatorTexture != nil)
-
-        if emu.poweredOff {
-
-            let w = TextureSize.original.width
-            let h = TextureSize.original.height
-            if !controller.inBackground || !controller.pref.pauseInBackground {
-                emulatorTexture.replace(w: w, h: h, buffer: emu.videoPort.noise)
-            }
-            return
-        }
         
         // Get a pointer to most recent texture
         let buffer = emu.videoPort.texture

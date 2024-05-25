@@ -602,9 +602,6 @@ private:
     
     // C64 colors in RGBA format (updated in updatePalette())
     u32 rgbaTable[16];
-    
-    // Buffer storing background noise (random black and white pixels)
-    u32 *noise;
 
     /* Texture buffers. VICII outputs the generated texture into these buffers.
      * At any time, one buffer is the working buffer and the other one is the
@@ -971,10 +968,7 @@ public:
     // Returns pointers to the stable textures
     u32 *getTexture() const;
     u32 *getDmaTexture() const;
-    
-    // Returns a pointer to randon noise
-    u32 *getNoise() const;
-    
+        
     // Returns a C64 color in 32 bit big endian RGBA format
     u32 getColor(isize nr) const { return rgbaTable[nr]; }
 

@@ -435,7 +435,6 @@ using namespace vc64;
 @interface VideoPortProxy : SubComponentProxy { }
 
 @property (readonly) u32 *texture;
-@property (readonly) u32 *noise;
 
 @end
 

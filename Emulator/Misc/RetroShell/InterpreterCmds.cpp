@@ -552,6 +552,40 @@ Interpreter::initCommandShell(Command &root)
 
 
     //
+    // Ports (Video port)
+    //
+
+    cmd = videoPort.shellName();
+    description = videoPort.description();
+    root.add({cmd}, description);
+
+    root.pushGroup("");
+
+    root.add({cmd, ""},
+             "Displays the current configuration",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(videoPort, Category::Config);
+    });
+
+    root.add({cmd, "set"}, "Configures the component");
+
+    for (auto &opt : videoPort.getOptions()) {
+
+        root.add({cmd, "set", OptionEnum::plainkey(opt)},
+                 {OptionParser::create(opt)->argList()},
+                 OptionEnum::help(opt),
+                 [this](Arguments& argv, long opt) {
+
+            emulator.set(Option(opt), argv[0]);
+
+        }, opt);
+    }
+
+    root.popGroup();
+
+
+    //
     // Components (Expansion port)
     //
 

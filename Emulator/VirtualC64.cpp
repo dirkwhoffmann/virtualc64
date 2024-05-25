@@ -636,13 +636,6 @@ VirtualC64::VideoPortAPI::getDmaTexture() const
     return videoPort.getDmaTexture();
 }
 
-u32 *
-VirtualC64::VideoPortAPI::getNoise() const
-{
-    assert(isUserThread());
-    return videoPort.getNoise();
-}
-
 
 //
 // DMA Debugger

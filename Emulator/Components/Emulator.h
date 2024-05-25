@@ -194,7 +194,6 @@ private:
     //
 
     u32 *getTexture() const;
-    u32 *getNoise() const;
 
 
     //

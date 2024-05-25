@@ -311,19 +311,10 @@ Emulator::recreateRunAheadInstance()
 u32 *
 Emulator::getTexture() const
 {
-    // Return a noise pattern if the emulator is powered off
-    if (isPoweredOff()) return main.vic.getNoise();
-
     // Get the texture from the proper emulator instance
     return config.runAhead && isRunning() ?
     ahead.vic.getTexture() :
     main.vic.getTexture();
-}
-
-u32 *
-Emulator::getNoise() const
-{
-    return main.vic.getNoise();
 }
 
 void

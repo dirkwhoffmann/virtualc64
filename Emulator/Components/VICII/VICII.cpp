@@ -39,14 +39,7 @@ VICII::VICII(C64 &ref) : SubComponent(ref), dmaDebugger(ref)
 
     // Assign reference clock to all time delayed variables
     baLine.setClock(&cpu.clock);
-    gAccessResult.setClock(&cpu.clock);
-    
-    // Create random background noise pattern
-    const isize noiseSize = 16 * 512 * 512;
-    noise = new u32[noiseSize];
-    for (isize i = 0; i < noiseSize; i++) {
-        noise[i] = rand() % 2 ? 0xFF000000 : 0xFFFFFFFF;
-    }
+    gAccessResult.setClock(&cpu.clock);    
 }
 
 void 
@@ -362,13 +355,6 @@ u32 *
 VICII::getDmaTexture() const
 {
     return dmaTexture == dmaTexture1 ? dmaTexture2 : dmaTexture1;
-}
-
-u32 *
-VICII::getNoise() const
-{
-    int offset = rand() % (512 * 512);
-    return noise + offset;
 }
 
 void

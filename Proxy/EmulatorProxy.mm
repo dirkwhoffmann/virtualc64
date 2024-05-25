@@ -617,11 +617,6 @@ using namespace vc64;
     return [self port]->getTexture();
 }
 
-- (u32 *)noise
-{
-    return [self port]->getNoise();
-}
-
 @end
 
 
