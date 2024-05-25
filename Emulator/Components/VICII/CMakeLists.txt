@@ -13,5 +13,3 @@ VICIITable.cpp
 DmaDebugger.cpp
 
 )
-
-add_subdirectory(Recorder)
