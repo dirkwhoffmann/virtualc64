@@ -249,7 +249,8 @@ Keyboard::autoType(const string &text)
                 pending.insert(trigger, Cmd(CMD_KEY_PRESS, KeyCmd { .keycode = u8(k.nr) }));
             }
 
-            trigger += MSEC(25);
+            // trigger += MSEC(25);
+            trigger += MSEC(50);
 
             // Schedule key releases
             for (C64Key &k : keys) {
