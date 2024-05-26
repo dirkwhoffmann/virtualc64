@@ -46,6 +46,7 @@ void
 VICII::_initialize()
 {
     CoreComponent::_initialize();
+    setRevision(config.revision);
 }
 
 void

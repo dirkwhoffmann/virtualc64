@@ -667,7 +667,6 @@ extension MyController: NSMenuItemValidation {
         openPanel.canCreateDirectories = false
         openPanel.canChooseFiles = true
         openPanel.prompt = "Insert"
-//        openPanel.allowedFileTypes = ["t64", "prg", "p00", "d64", "g64", "zip", "gz"]
         openPanel.allowedContentTypes = [ .t64, .prg, .p00, .d64, .g64, .zip, .gzip ]
         openPanel.beginSheetModal(for: window!, completionHandler: { result in
 

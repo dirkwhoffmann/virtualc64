@@ -91,7 +91,6 @@ class MyDocument: NSDocument {
         debug(.media)
 
         do {
-
             try mm.addMedia(url: url, allowedTypes: vc64.FileType.draggable)
 
         } catch let error as VC64Error {

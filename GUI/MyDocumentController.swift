@@ -7,13 +7,15 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+import UniformTypeIdentifiers
+
 class MyDocumentController: NSDocumentController {
     
     override func makeDocument(withContentsOf url: URL,
                                ofType typeName: String) throws -> NSDocument {
         
         // For media files, attach the file to a new untitled document
-        if typeName.uppercased() != "V64" {
+        if typeName != UTType.vc64.identifier {
 
             let doc = try super.makeUntitledDocument(ofType: typeName)
 

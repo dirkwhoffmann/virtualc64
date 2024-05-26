@@ -9,14 +9,6 @@
 
 import UniformTypeIdentifiers
 
-/*
-extension NSPasteboard.PasteboardType {
-
-    static let compatibleFileURL =
-    NSPasteboard.PasteboardType(UTType.fileURL as String)
-}
-*/
-
 public extension MetalView {
 
     func setupDragAndDrop() {

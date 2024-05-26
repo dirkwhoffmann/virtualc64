@@ -41,7 +41,7 @@ Drive::_initialize()
     CoreComponent::_initialize();
     
     insertionStatus = DISK_FULLY_EJECTED;
-    disk->clearDisk();
+    if (disk) disk->clearDisk();
 }
 
 void

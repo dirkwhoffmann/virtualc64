@@ -292,7 +292,6 @@ Disk::clearDisk()
 {
     // memset(&data, 0x55, sizeof(data));
     for (Halftrack ht = 1; ht <= highestHalftrack; ht++) {
-        // length.halftrack[ht] = sizeof(data.halftrack[ht]) * 8;
         clearHalftrack(ht);
     }
     writeProtected = false;
