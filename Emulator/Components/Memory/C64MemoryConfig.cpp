@@ -36,7 +36,7 @@ C64Memory::checkOption(Option opt, i64 value)
         case OPT_RAM_PATTERN:
 
             if (!RamPatternEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, RamPatternEnum::keyList());
+                throw VC64Error(ERROR_OPT_INV_ARG, RamPatternEnum::keyList());
             }
             return;
 

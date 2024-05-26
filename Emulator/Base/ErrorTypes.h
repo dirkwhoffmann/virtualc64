@@ -31,7 +31,8 @@ enum_long(ERROR_CODE)
 
     // Configuration
     ERROR_OPT_UNSUPPORTED,      ///< Unsupported configuration option
-    ERROR_OPT_INVARG,           ///< Invalid argument
+    ERROR_OPT_INV_ARG,          ///< Invalid argument
+    ERROR_OPT_INV_ID,           ///< Invalid component id
     ERROR_OPT_LOCKED,           ///< The option is temporarily locked
 
     // Property storage
@@ -121,7 +122,8 @@ struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
             case ERROR_RUNNING:                 return "RUNNING";
 
             case ERROR_OPT_UNSUPPORTED:         return "OPT_UNSUPPORTED";
-            case ERROR_OPT_INVARG:              return "OPT_INV_ARG";
+            case ERROR_OPT_INV_ARG:             return "OPT_INV_ARG";
+            case ERROR_OPT_INV_ID:              return "OPT_INV_ID";
             case ERROR_OPT_LOCKED:              return "OPT_LOCKED";
 
             case ERROR_INVALID_KEY:             return "INVALID_KEY";

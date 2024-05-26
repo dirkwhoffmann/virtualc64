@@ -91,24 +91,24 @@ SID::checkOption(Option opt, i64 value)
         case OPT_SID_ENABLE:
 
             if (objid == 0 && value == false) {
-                throw VC64Error(ERROR_OPT_INVARG, "SID 0 can't be disabled");
+                throw VC64Error(ERROR_OPT_INV_ARG, "SID 0 can't be disabled");
             }
             return;
 
         case OPT_SID_ADDRESS:
 
             if (objid == 0 && value != 0xD400) {
-                throw VC64Error(ERROR_OPT_INVARG, "SID 0 can't be remapped");
+                throw VC64Error(ERROR_OPT_INV_ARG, "SID 0 can't be remapped");
             }
             if (value < 0xD400 || value > 0xD7E0 || (value & 0x1F)) {
-                throw VC64Error(ERROR_OPT_INVARG, "D400, D420 ... D7E0");
+                throw VC64Error(ERROR_OPT_INV_ARG, "D400, D420 ... D7E0");
             }
             return;
 
         case OPT_SID_REVISION:
 
             if (!SIDRevisionEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, SIDRevisionEnum::keyList());
+                throw VC64Error(ERROR_OPT_INV_ARG, SIDRevisionEnum::keyList());
             }
             return;
 
@@ -119,14 +119,14 @@ SID::checkOption(Option opt, i64 value)
         case OPT_SID_ENGINE:
 
             if (!SIDEngineEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, SIDEngineEnum::keyList());
+                throw VC64Error(ERROR_OPT_INV_ARG, SIDEngineEnum::keyList());
             }
             return;
 
         case OPT_SID_SAMPLING:
 
             if (!SamplingMethodEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, SamplingMethodEnum::keyList());
+                throw VC64Error(ERROR_OPT_INV_ARG, SamplingMethodEnum::keyList());
             }
             return;
 

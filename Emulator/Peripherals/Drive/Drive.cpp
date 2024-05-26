@@ -141,14 +141,14 @@ Drive::checkOption(Option opt, i64 value)
         case OPT_DRV_TYPE:
 
             if (!DriveTypeEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, DriveTypeEnum::keyList());
+                throw VC64Error(ERROR_OPT_INV_ARG, DriveTypeEnum::keyList());
             }
             return;
 
         case OPT_DRV_RAM:
 
             if (!DriveRamEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, DriveRamEnum::keyList());
+                throw VC64Error(ERROR_OPT_INV_ARG, DriveRamEnum::keyList());
             }
             return;
 
@@ -160,7 +160,7 @@ Drive::checkOption(Option opt, i64 value)
         case OPT_DRV_PARCABLE:
 
             if (!ParCableTypeEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, ParCableTypeEnum::keyList());
+                throw VC64Error(ERROR_OPT_INV_ARG, ParCableTypeEnum::keyList());
             }
             return;
 

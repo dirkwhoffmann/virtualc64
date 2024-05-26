@@ -128,9 +128,9 @@ public:
 
     // Convenience wrappers
     void set(Option opt, const string &value) throws;
-    void set(Option opt, isize id, const string &value) throws;
+    void set(Option opt, const string &value, isize id) throws;
     void set(const string &opt, const string &value) throws;
-    void set(const string &opt, isize id, const string &value) throws;
+    void set(const string &opt, const string &value, isize id) throws;
 
     // Configures the emulator to match a specific C64 model
     void set(C64Model model);

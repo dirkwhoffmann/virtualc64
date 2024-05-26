@@ -297,7 +297,7 @@ Interpreter::initDebugShell(Command &root)
              [this](Arguments& argv, long value) {
 
         isize nr = parseNum(argv, 0, 0);
-        if (nr < 0 || nr > 3) throw VC64Error(ERROR_OPT_INVARG, "0 ... 3");
+        if (nr < 0 || nr > 3) throw VC64Error(ERROR_OPT_INV_ARG, "0 ... 3");
 
         retroShell.dump(sidBridge.sid[nr], { Category::Config, Category::State });
     });

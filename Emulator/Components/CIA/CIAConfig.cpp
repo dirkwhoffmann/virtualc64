@@ -36,7 +36,7 @@ CIA::checkOption(Option opt, i64 value)
         case OPT_CIA_REVISION:
 
             if (!CIARevisionEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, CIARevisionEnum::keyList());
+                throw VC64Error(ERROR_OPT_INV_ARG, CIARevisionEnum::keyList());
             }
             return;
 

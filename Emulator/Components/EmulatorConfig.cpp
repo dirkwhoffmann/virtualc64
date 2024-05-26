@@ -52,7 +52,7 @@ Emulator::checkOption(Option opt, i64 value)
         case OPT_EMU_WARP_MODE:
 
             if (!WarpModeEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, WarpModeEnum::keyList());
+                throw VC64Error(ERROR_OPT_INV_ARG, WarpModeEnum::keyList());
             }
             return;
 
@@ -63,7 +63,7 @@ Emulator::checkOption(Option opt, i64 value)
         case OPT_EMU_SPEED_ADJUST:
 
             if (value < 50 || value > 200) {
-                throw VC64Error(ERROR_OPT_INVARG, "50...200");
+                throw VC64Error(ERROR_OPT_INV_ARG, "50...200");
             }
             return;
 
@@ -74,14 +74,14 @@ Emulator::checkOption(Option opt, i64 value)
         case OPT_EMU_SNAPSHOT_DELAY:
 
             if (value < 10 || value > 3600) {
-                throw VC64Error(ERROR_OPT_INVARG, "10...3600");
+                throw VC64Error(ERROR_OPT_INV_ARG, "10...3600");
             }
             return;
 
         case OPT_EMU_RUN_AHEAD:
 
             if (value < 0 || value > 12) {
-                throw VC64Error(ERROR_OPT_INVARG, "0...12");
+                throw VC64Error(ERROR_OPT_INV_ARG, "0...12");
             }
             return;
 
@@ -190,23 +190,26 @@ Emulator::set(Option opt, i64 value, std::optional<isize> id)
 
     if (!isInitialized()) initialize();
 
-    // Check if this option has been locked for debugging
+    // Check if this option is overridden for debugging
     value = overrideOption(opt, value);
 
+    // Determine the receiver for this option
     auto targets = routeOption(opt);
 
     if (id) {
 
-        // Configure a single component
-        assert(isize(targets.size()) > *id);
+        // Check if the target component exists
+        if (id >= isize(targets.size())) {
+            warn("Invalid ID: %ld\n", *id);
+            throw VC64Error(ERROR_OPT_INV_ID, "0..." + std::to_string(targets.size() - 1));
+        }
         targets.at(*id)->setOption(opt, value);
 
     } else {
 
         // Configure all components
-        for (const auto &target : targets) {
-            target->setOption(opt, value);
-        }
+        for (const auto &target : targets) target->setOption(opt, value);
+        return;
     }
 }
 
@@ -217,9 +220,9 @@ Emulator::set(Option opt, const string &value)
 }
 
 void
-Emulator::set(Option opt, isize id, const string &value)
+Emulator::set(Option opt, const string &value, isize id)
 {
-    set(opt, id, OptionParser::create(opt)->parse(value));
+    set(opt, OptionParser::create(opt)->parse(value), id);
 }
 
 void
@@ -229,9 +232,9 @@ Emulator::set(const string &opt, const string &value)
 }
 
 void
-Emulator::set(const string &opt, isize id, const string &value)
+Emulator::set(const string &opt, const string &value, isize id)
 {
-    set(Option(util::parseEnum<OptionEnum>(opt)), id, value);
+    set(Option(util::parseEnum<OptionEnum>(opt)), value, id);
 }
 
 void

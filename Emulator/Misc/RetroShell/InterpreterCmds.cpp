@@ -315,7 +315,7 @@ Interpreter::initCommandShell(Command &root)
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
-                emulator.set(Option(HI_WORD(value)), LO_WORD(value), argv[0]);
+                emulator.set(Option(HI_WORD(value)), argv[0], LO_WORD(value));
 
             }, HI_W_LO_W(opt, i));
         }
@@ -433,7 +433,7 @@ Interpreter::initCommandShell(Command &root)
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
-                emulator.set(Option(HI_WORD(value)), LO_WORD(value), argv[0]);
+                emulator.set(Option(HI_WORD(value)), argv[0], LO_WORD(value));
 
             }, HI_W_LO_W(opt, i));
         }
@@ -749,7 +749,7 @@ Interpreter::initCommandShell(Command &root)
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
-                emulator.set(Option(HI_WORD(value)), LO_WORD(value), argv[0]);
+                emulator.set(Option(HI_WORD(value)), argv[0], LO_WORD(value));
 
             }, HI_W_LO_W(opt, i));
         }
@@ -789,7 +789,7 @@ Interpreter::initCommandShell(Command &root)
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
-                emulator.set(Option(HI_WORD(value)), LO_WORD(value), argv[0]);
+                emulator.set(Option(HI_WORD(value)), argv[0], LO_WORD(value));
 
             }, HI_W_LO_W(opt, i));
         }
@@ -1018,7 +1018,7 @@ Interpreter::initCommandShell(Command &root)
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
-                emulator.set(Option(HI_WORD(value)), LO_WORD(value), argv[0]);
+                emulator.set(Option(HI_WORD(value)), argv[0], LO_WORD(value));
 
             }, HI_W_LO_W(opt, i));
         }
