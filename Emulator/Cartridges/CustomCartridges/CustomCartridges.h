@@ -24,6 +24,7 @@
 #include "Funplay.h"
 #include "GameKiller.h"
 #include "GeoRam.h"
+#include "Gmod2.h"
 #include "Isepic.h"
 #include "Kcs.h"
 #include "Kingsoft.h"

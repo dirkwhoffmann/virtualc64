@@ -68,6 +68,8 @@ Cartridge::isSupportedType(CartridgeType type)
 
         case CRT_PAGEFOX:
         case CRT_KINGSOFT:
+        case CRT_GMOD2:
+
 
         case CRT_ISEPIC:
         case CRT_GEO_RAM:
@@ -133,6 +135,7 @@ Cartridge::makeWithType(C64 &c64, CartridgeType type)
         case CRT_MACH5:             cart = new Mach5(c64); break;
         case CRT_PAGEFOX:           cart = new PageFox(c64); break;
         case CRT_KINGSOFT:          cart = new Kingsoft(c64); break;
+        case CRT_GMOD2:             cart = new Gmod2(c64); break;
         case CRT_ISEPIC:            cart = new Isepic(c64); break;
         case CRT_GEO_RAM:           cart = new GeoRAM(c64); break;
         case CRT_REU:               cart = new Reu(c64); break;

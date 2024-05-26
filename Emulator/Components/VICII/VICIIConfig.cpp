@@ -76,8 +76,6 @@ VICII::setOption(Option opt, i64 value)
 
             config.awaiting = VICIIRevision(value);
 
-            trace(true, "case OPT_VICII_REVISION\n");
-
             // If the emulator is powered off, perform the change immediately
             if (isPoweredOff()) updateRevision();
 
