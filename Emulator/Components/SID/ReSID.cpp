@@ -92,7 +92,7 @@ ReSID::_dump(Category category, std::ostream& os) const
 
     reSID::SID::State state = sid->read_state();
     u8 *reg = (u8 *)state.sid_register;
-    u8 ft = reg[0x18] & 0x70;
+    // u8 ft = reg[0x18] & 0x70;
 
     if (category == Category::State) {
 
@@ -307,7 +307,7 @@ ReSID::executeCycles(isize numCycles, SampleStream &stream)
     
     // Check for a buffer overflow
     if (unlikely(samples > stream.free())) {
-        warn("SID %d: SAMPLE BUFFER OVERFLOW", objid);
+        warn("SID %ld: SAMPLE BUFFER OVERFLOW", objid);
         stream.clear();
     }
     
@@ -315,12 +315,6 @@ ReSID::executeCycles(isize numCycles, SampleStream &stream)
     if (samples) { for (isize i = 0; i < samples; i++) stream.write(buf[i]); }
     
     return samples;
-}
-
-isize
-ReSID::executeCycles(isize numCycles)
-{
-    return executeCycles(numCycles);
 }
 
 }

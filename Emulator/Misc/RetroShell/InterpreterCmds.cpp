@@ -781,10 +781,11 @@ Interpreter::initCommandShell(Command &root)
         }, i);
 
         root.add({cmd, "set"}, "Configures the component");
+        root.add({cmd, "set", "autofire"}, "Configures auto fire");
 
         for (auto &opt : c64.port1.joystick.getOptions()) {
 
-            root.add({cmd, "set", OptionEnum::plainkey(opt)},
+            root.add({cmd, "set", "autofire", OptionEnum::plainkey(opt)},
                      {OptionParser::create(opt)->argList()},
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
@@ -1044,6 +1045,7 @@ Interpreter::initCommandShell(Command &root)
     });
 
     root.popGroup();
+
 
     //
     // Miscellaneous

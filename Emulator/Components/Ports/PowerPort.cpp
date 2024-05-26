@@ -21,52 +21,6 @@ PowerPort::PowerPort(C64& ref) : SubComponent(ref)
 
 }
 
-i64
-PowerPort::getOption(Option option) const
-{
-    switch (option) {
-            
-        case OPT_POWER_GRID:  return config.powerGrid;
-
-        default:
-            fatalError;
-    }
-}
-
-void
-PowerPort::checkOption(Option opt, i64 value)
-{
-    switch (opt) {
-
-        case OPT_POWER_GRID:
-
-            if (!PowerGridEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INV_ARG, PowerGridEnum::keyList());
-            }
-            return;
-
-        default:
-            throw VC64Error(ERROR_OPT_UNSUPPORTED);
-    }
-}
-
-void
-PowerPort::setOption(Option opt, i64 value)
-{
-    checkOption(opt, value);
-
-    switch (opt) {
-            
-        case OPT_POWER_GRID:
-            
-            config.powerGrid = (PowerGrid)value;
-            return;
-
-        default:
-            fatalError;
-    }
-}
-
 void
 PowerPort::_dump(Category category, std::ostream& os) const
 {

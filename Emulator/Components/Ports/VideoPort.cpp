@@ -10,8 +10,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#pragma once
-
 #include "config.h"
 #include "VideoPort.h"
 #include "VICII.h"

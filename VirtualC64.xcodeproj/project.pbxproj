@@ -402,6 +402,8 @@
 		50BD64122C03396D007CD347 /* DriveConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64102C03396D007CD347 /* DriveConfig.cpp */; };
 		50BD64152C035682007CD347 /* Gmod2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64132C035682007CD347 /* Gmod2.cpp */; };
 		50BD64162C035682007CD347 /* Gmod2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64132C035682007CD347 /* Gmod2.cpp */; };
+		50BD64192C0373F9007CD347 /* PowerPortConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64182C0373F9007CD347 /* PowerPortConfig.cpp */; };
+		50BD641A2C0373F9007CD347 /* PowerPortConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64182C0373F9007CD347 /* PowerPortConfig.cpp */; };
 		50BDF9792BFB9873005AE047 /* SIDBridgeConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BDF9782BFB9873005AE047 /* SIDBridgeConfig.cpp */; };
 		50BDF97A2BFB9873005AE047 /* SIDBridgeConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BDF9782BFB9873005AE047 /* SIDBridgeConfig.cpp */; };
 		50BE4B5524E7F77F008F39C9 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5424E7F77F008F39C9 /* URL.swift */; };
@@ -965,6 +967,8 @@
 		50BD64102C03396D007CD347 /* DriveConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DriveConfig.cpp; sourceTree = "<group>"; };
 		50BD64132C035682007CD347 /* Gmod2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Gmod2.cpp; sourceTree = "<group>"; };
 		50BD64142C035682007CD347 /* Gmod2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Gmod2.h; sourceTree = "<group>"; };
+		50BD64172C0371A3007CD347 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50BD64182C0373F9007CD347 /* PowerPortConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PowerPortConfig.cpp; sourceTree = "<group>"; };
 		50BDF9782BFB9873005AE047 /* SIDBridgeConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SIDBridgeConfig.cpp; sourceTree = "<group>"; };
 		50BE4B5424E7F77F008F39C9 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		50BE4B5724E7F80C008F39C9 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
@@ -1031,7 +1035,7 @@
 		50E5BF712BA81E710004712B /* Monitor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Monitor.cpp; sourceTree = "<group>"; };
 		50E5BF722BA81E710004712B /* Monitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Monitor.h; sourceTree = "<group>"; };
 		50E5BF762BA81EB30004712B /* MonitorTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MonitorTypes.h; sourceTree = "<group>"; };
-		50E5BF772BA81ECD0004712B /* CMakeLists */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists; sourceTree = "<group>"; };
+		50E5BF772BA81ECD0004712B /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50E5D66E2B9C9C97004113A9 /* RecorderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecorderTypes.h; sourceTree = "<group>"; };
 		50E5FFAF227964F20025C73D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		50E5FFB3227964FA0025C73D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -1876,6 +1880,7 @@
 		5095C8192BA08AF500A83825 /* Debugger */ = {
 			isa = PBXGroup;
 			children = (
+				50BD64172C0371A3007CD347 /* CMakeLists.txt */,
 				5095C8182BA08AEF00A83825 /* DebuggerTypes.h */,
 				5095C81B2BA08B0A00A83825 /* Debugger.h */,
 				5095C81A2BA08B0A00A83825 /* Debugger.cpp */,
@@ -1983,6 +1988,7 @@
 				5078BEA5264D064600EDA161 /* PowerPortTypes.h */,
 				50ACF4DA256EB43B003B5690 /* PowerPort.h */,
 				50ACF4D9256EB43B003B5690 /* PowerPort.cpp */,
+				50BD64182C0373F9007CD347 /* PowerPortConfig.cpp */,
 				50B1A61625A203B100201A2C /* ControlPortTypes.h */,
 				504C434024AF29AC00E69CAE /* ControlPort.h */,
 				504C433E24AF29AC00E69CAE /* ControlPort.cpp */,
@@ -2068,7 +2074,7 @@
 		50E5BF752BA81E940004712B /* Monitor */ = {
 			isa = PBXGroup;
 			children = (
-				50E5BF772BA81ECD0004712B /* CMakeLists */,
+				50E5BF772BA81ECD0004712B /* CMakeLists.txt */,
 				50E5BF762BA81EB30004712B /* MonitorTypes.h */,
 				50E5BF722BA81E710004712B /* Monitor.h */,
 				50E5BF712BA81E710004712B /* Monitor.cpp */,
@@ -2387,6 +2393,7 @@
 				50BB3E9B2B7A50F600B2D87B /* Synchronizable.cpp in Sources */,
 				50726F642961C9B30031F2F5 /* FFmpeg.cpp in Sources */,
 				50726F4A2961C9940031F2F5 /* CPU.cpp in Sources */,
+				50BD641A2C0373F9007CD347 /* PowerPortConfig.cpp in Sources */,
 				50726FA22961CA0D0031F2F5 /* WarpSpeed.cpp in Sources */,
 				50726F472961C9940031F2F5 /* SubComponent.cpp in Sources */,
 				50726F702961C9C60031F2F5 /* pot.cc in Sources */,
@@ -2462,6 +2469,7 @@
 				50AA3EC12616F62500C96EDB /* MemUtils.cpp in Sources */,
 				504C437624AF29AC00E69CAE /* P00File.cpp in Sources */,
 				5038CA9520B6C2AC000D9193 /* VICPanel.swift in Sources */,
+				50BD64192C0373F9007CD347 /* PowerPortConfig.cpp in Sources */,
 				504C435F24AF29AC00E69CAE /* SuperGames.cpp in Sources */,
 				50BE4B5C24E7F857008F39C9 /* Data.swift in Sources */,
 				50BE4B6424E7F941008F39C9 /* NSControl.swift in Sources */,

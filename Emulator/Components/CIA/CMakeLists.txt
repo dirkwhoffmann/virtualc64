@@ -4,7 +4,7 @@ target_sources(vc64Core PRIVATE
 
 CIA.cpp
 CIAConfig.cpp
-CPUInfo.cpp
+CIAInfo.cpp
 CIARegs.cpp
 TOD.cpp
 TODInfo.cpp

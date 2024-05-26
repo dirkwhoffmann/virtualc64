@@ -13,6 +13,7 @@ FreezeFrame.cpp
 Funplay.cpp
 GameKiller.cpp
 GeoRam.cpp
+Gmod2.cpp
 Isepic.cpp
 Kcs.cpp
 Kingsoft.cpp

@@ -2,13 +2,6 @@ target_include_directories(vc64Core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_sources(vc64Core PRIVATE
 
-ReSID.cpp
-SID.cpp
-SIDConfig.cpp
-SIDInfo.cpp
-SIDBridge.cpp
-SIDBridgeConfig.cpp
+Debugger.cpp
 
 )
-
-add_subdirectory(resid)

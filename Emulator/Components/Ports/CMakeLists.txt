@@ -8,6 +8,8 @@ ControlPort.cpp
 ExpansionPort.cpp
 IEC.cpp
 PowerPort.cpp
+PowerPortConfig.cpp
 VideoPort.cpp
+VideoPortConfig.cpp
 
 )

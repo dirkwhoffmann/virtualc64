@@ -267,10 +267,10 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_AUD_VOL1:              return "AUD.VOL1";
             case OPT_AUD_VOL2:              return "AUD.VOL2";
             case OPT_AUD_VOL3:              return "AUD.VOL3";
-            case OPT_AUD_PAN0:              return "AUD.AUDPAN0";
-            case OPT_AUD_PAN1:              return "AUD.AUDPAN1";
-            case OPT_AUD_PAN2:              return "AUD.AUDPAN2";
-            case OPT_AUD_PAN3:              return "AUD.AUDPAN3";
+            case OPT_AUD_PAN0:              return "AUD.PAN0";
+            case OPT_AUD_PAN1:              return "AUD.PAN1";
+            case OPT_AUD_PAN2:              return "AUD.PAN2";
+            case OPT_AUD_PAN3:              return "AUD.PAN3";
             case OPT_AUD_VOL_L:             return "AUD.VOLL";
             case OPT_AUD_VOL_R:             return "AUD.VOLR";
 
