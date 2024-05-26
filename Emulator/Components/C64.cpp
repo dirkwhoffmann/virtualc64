@@ -236,31 +236,9 @@ C64::prefix() const
     fprintf(stderr, "[%lld] (%3d,%3d) %04X ", frame, scanline, rasterCycle, cpu.getPC0());
 }
 
-void
-C64::hardReset()
+void 
+C64::_reset(bool hard)
 {
-    // Start over from a zeroed-out state
-    Serializable::hardReset();
-
-    // Let all components perform their specific actions
-    reset(true);
-
-    // Reinitialize the program counter
-    cpu.reg.pc = cpu.reg.pc0 = mem.resetVector();
-    
-    // Inform the GUI
-    msgQueue.put(MSG_RESET);
-}
-
-void
-C64::softReset()
-{
-    // Start over from a zeroed-out state
-    Serializable::softReset();
-
-    // Let all components perform their specific actions
-    reset(false);
-
     // Reinitialize the program counter
     cpu.reg.pc = cpu.reg.pc0 = mem.resetVector();
 

@@ -274,9 +274,6 @@ public:
     void prefix() const override;
     void _dump(Category category, std::ostream& os) const override;
 
-    void hardReset();
-    void softReset();
-
 private:
 
     void initialize();
@@ -409,6 +406,8 @@ public:
     void operator << (SerCounter &worker) override { serialize(worker); }
     void operator << (SerReader &worker) override { serialize(worker); }
     void operator << (SerWriter &worker) override { serialize(worker); }
+
+    void _reset(bool hard) override;
 
 public:
 
