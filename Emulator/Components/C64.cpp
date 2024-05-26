@@ -458,7 +458,7 @@ C64::execute()
 
     } catch (StateChangeException &) {
 
-        // Finish the scanline
+        // Finish the scanline if needed
         if (++rasterCycle > lastCycle) endScanline();
 
         // Finish the current instruction

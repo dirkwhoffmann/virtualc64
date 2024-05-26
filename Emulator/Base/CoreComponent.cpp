@@ -80,6 +80,26 @@ CoreComponent::initialize()
 }
 
 void 
+CoreComponent::hardReset()
+{
+    // Start over from a zeroed-out state
+    Serializable::hardReset();
+
+    // Let all components perform their specific actions
+    reset(true);
+}
+
+void 
+CoreComponent::softReset()
+{
+    // Start over from a zeroed-out state
+    Serializable::softReset();
+
+    // Let all components perform their specific actions
+    reset(false);
+}
+
+void
 CoreComponent::reset(bool hard)
 {
     try {

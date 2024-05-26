@@ -398,6 +398,8 @@
 		50BD640B2C01FADC007CD347 /* VideoPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64082C01FADC007CD347 /* VideoPort.cpp */; };
 		50BD640E2C01FFEC007CD347 /* VideoPortConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD640D2C01FFEC007CD347 /* VideoPortConfig.cpp */; };
 		50BD640F2C01FFEC007CD347 /* VideoPortConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD640D2C01FFEC007CD347 /* VideoPortConfig.cpp */; };
+		50BD64112C03396D007CD347 /* DriveConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64102C03396D007CD347 /* DriveConfig.cpp */; };
+		50BD64122C03396D007CD347 /* DriveConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64102C03396D007CD347 /* DriveConfig.cpp */; };
 		50BDF9792BFB9873005AE047 /* SIDBridgeConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BDF9782BFB9873005AE047 /* SIDBridgeConfig.cpp */; };
 		50BDF97A2BFB9873005AE047 /* SIDBridgeConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BDF9782BFB9873005AE047 /* SIDBridgeConfig.cpp */; };
 		50BE4B5524E7F77F008F39C9 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5424E7F77F008F39C9 /* URL.swift */; };
@@ -958,6 +960,7 @@
 		50BD64092C01FADC007CD347 /* VideoPort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoPort.h; sourceTree = "<group>"; };
 		50BD640C2C01FAF5007CD347 /* VideoPortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoPortTypes.h; sourceTree = "<group>"; };
 		50BD640D2C01FFEC007CD347 /* VideoPortConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VideoPortConfig.cpp; sourceTree = "<group>"; };
+		50BD64102C03396D007CD347 /* DriveConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DriveConfig.cpp; sourceTree = "<group>"; };
 		50BDF9782BFB9873005AE047 /* SIDBridgeConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SIDBridgeConfig.cpp; sourceTree = "<group>"; };
 		50BE4B5424E7F77F008F39C9 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		50BE4B5724E7F80C008F39C9 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
@@ -1712,6 +1715,7 @@
 				50B1A61725A205D500201A2C /* DriveTypes.h */,
 				504C434C24AF29AC00E69CAE /* Drive.h */,
 				504C434D24AF29AC00E69CAE /* Drive.cpp */,
+				50BD64102C03396D007CD347 /* DriveConfig.cpp */,
 				504C434F24AF29AC00E69CAE /* DriveMemory.h */,
 				504C434B24AF29AC00E69CAE /* DriveMemory.cpp */,
 				504C434924AF29AC00E69CAE /* VIA.h */,
@@ -2349,6 +2353,7 @@
 				50726F6E2961C9C60031F2F5 /* dac.cc in Sources */,
 				50726F662961C9B80031F2F5 /* SIDBridge.cpp in Sources */,
 				50726F892961CA0D0031F2F5 /* SuperGames.cpp in Sources */,
+				50BD64122C03396D007CD347 /* DriveConfig.cpp in Sources */,
 				50B98B4B2BFDF5FC00FA1EC6 /* AudioPortConfig.cpp in Sources */,
 				50726FB02961CA230031F2F5 /* FSBlock.cpp in Sources */,
 				50726F8E2961CA0D0031F2F5 /* FreezeFrame.cpp in Sources */,
@@ -2602,6 +2607,7 @@
 				50ACF4DB256EB43B003B5690 /* PowerPort.cpp in Sources */,
 				504C43A624AF29AC00E69CAE /* Disk.cpp in Sources */,
 				504C43A224AF29AC00E69CAE /* ControlPort.cpp in Sources */,
+				50BD64112C03396D007CD347 /* DriveConfig.cpp in Sources */,
 				507A49A224C8D71400DBF984 /* BankTableView.swift in Sources */,
 				504C437424AF29AC00E69CAE /* T64File.cpp in Sources */,
 				50CCE179259DFD7800481E7F /* DevicesPrefs.swift in Sources */,

@@ -82,6 +82,10 @@ public:
     void initialize();
     virtual void _initialize() { resetConfig(); }
 
+    // Main reset routines
+    void hardReset();
+    void softReset();
+
     /* This function is called inside the C64 reset routines. It iterates
      * through all components and calls the _reset() delegate.
      */
