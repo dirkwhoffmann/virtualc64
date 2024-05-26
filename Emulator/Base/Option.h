@@ -15,6 +15,7 @@
 
 #include "OptionTypes.h"
 #include "Parser.h"
+#include <memory>
 
 namespace vc64 {
 

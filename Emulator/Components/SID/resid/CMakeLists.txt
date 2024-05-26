@@ -15,4 +15,6 @@ add_library(resid
 
 if(MSVC)
   target_compile_options(resid PUBLIC /wd5055)
+else()
+  target_compile_options(resid PUBLIC -w)
 endif()

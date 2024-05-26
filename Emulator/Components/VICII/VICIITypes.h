@@ -303,8 +303,8 @@ typedef struct
 {
     // Video standard
     bool pal;
-    double fps;
     isize frequency;
+    double fps;
 
     // Picture layout
     isize linesPerFrame;

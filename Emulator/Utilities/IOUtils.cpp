@@ -13,11 +13,13 @@
 #include "config.h"
 #include "Macros.h"
 #include "IOUtils.h"
+
 #include <assert.h>
-#include <vector>
-#include <fstream>
 #include <algorithm>
+#include <bitset>
+#include <fstream>
 #include <iomanip>
+#include <vector>
 
 namespace util {
 

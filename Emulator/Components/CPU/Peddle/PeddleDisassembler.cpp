@@ -52,10 +52,10 @@ Disassembler::disass(char *dst, const char *fmt, u16 addr) const
 {
     auto instr = RecordedInstruction {
 
-        .pc = addr,
         .byte1 = cpu.readDasm(addr),
         .byte2 = cpu.readDasm(addr + 1),
-        .byte3 = cpu.readDasm(addr + 2)
+        .byte3 = cpu.readDasm(addr + 2),
+        .pc = addr
     };
 
     return disass(dst, fmt, instr);

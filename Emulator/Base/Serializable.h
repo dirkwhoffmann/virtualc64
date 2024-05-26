@@ -399,7 +399,7 @@ public:
     template <class E, class = std::enable_if_t<std::is_enum<E>{}>>
     SerReader& operator<<(E &v)
     {
-        v = v = (E)read64(ptr);
+        v = (E)read64(ptr);
         return *this;
     }
 

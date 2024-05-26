@@ -13,6 +13,7 @@
 #pragma once
 
 #include "Types.h"
+#include <functional>
 #include <map>
 
 namespace util {

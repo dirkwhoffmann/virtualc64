@@ -13,6 +13,7 @@
 #include "config.h"
 #include "Monitor.h"
 #include "VICII.h"
+#include <cmath>
 
 namespace vc64 {
 
@@ -276,14 +277,14 @@ Monitor::_dump(Category category, std::ostream& os) const
 static double gammaCorrect(double value, double source, double target)
 {
     // Reverse gamma correction of source
-    double factor = pow(255.0, 1.0 - source);
-    value = std::clamp(factor * pow(value, source), 0.0, 255.0);
+    double factor = std::pow(255.0, 1.0 - source);
+    value = std::clamp(factor * std::pow(value, source), 0.0, 255.0);
 
     // Correct gamma for target
-    factor = pow(255.0, 1.0 - (1.0 / target));
-    value = std::clamp(factor * pow(value, 1 / target), 0.0, 255.0);
+    factor = std::pow(255.0, 1.0 - (1.0 / target));
+    value = std::clamp(factor * std::pow(value, 1 / target), 0.0, 255.0);
 
-    return round(value);
+    return std::round(value);
 }
 
 u32
