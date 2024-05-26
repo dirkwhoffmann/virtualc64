@@ -64,12 +64,12 @@ SID::getOption(Option option) const
 
     switch (option) {
 
-        case OPT_SID_ENABLE:    return config.enabled;
-        case OPT_SID_ADDRESS:   return config.address;
-        case OPT_SID_REVISION:  return config.revision;
-        case OPT_SID_FILTER:    return config.filter;
-        case OPT_SID_ENGINE:    return config.engine;
-        case OPT_SID_SAMPLING:  return config.sampling;
+        case OPT_SID_ENABLE:        return config.enabled;
+        case OPT_SID_ADDRESS:       return config.address;
+        case OPT_SID_REVISION:      return config.revision;
+        case OPT_SID_FILTER:        return config.filter;
+        case OPT_SID_ENGINE:        return config.engine;
+        case OPT_SID_SAMPLING:      return config.sampling;
         case OPT_SID_POWER_SAVE:    return config.powerSave;
 
         default:

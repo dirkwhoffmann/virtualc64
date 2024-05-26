@@ -855,12 +855,11 @@ extension DefaultsProxy {
 
         debug(.defaults)
 
-        remove(.DRV_POWER_SAVE, DRIVE8)
-        remove(.DRV_POWER_SAVE, DRIVE9)
+        remove(.DRV_POWER_SAVE, [DRIVE8, DRIVE9])
         remove(.VICII_POWER_SAVE)
         remove(.VICII_SS_COLLISIONS)
         remove(.VICII_SB_COLLISIONS)
-        remove(.SID_POWER_SAVE)
+        remove(.SID_POWER_SAVE, [0, 1, 2, 3])
         remove(.EMU_WARP_MODE)
         remove(.EMU_WARP_BOOT)
         remove(.EMU_VSYNC)
@@ -934,9 +933,9 @@ extension DefaultsProxy {
 
         debug(.defaults)
 
-        remove(.SID_ENGINE)
-        remove(.SID_SAMPLING)
-        remove(.SID_FILTER)
+        remove(.SID_ENGINE, [0, 1, 2, 3])
+        remove(.SID_SAMPLING, [0, 1, 2, 3])
+        remove(.SID_FILTER, [0, 1, 2, 3])
         remove(.AUD_VOL0)
         remove(.AUD_VOL1)
         remove(.AUD_VOL2)

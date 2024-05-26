@@ -2601,7 +2601,7 @@ Gw
                                                         <menuItem title="Revert to..." hidden="YES" id="VVO-mR-uDT">
                                                             <attributedString key="attributedTitle"/>
                                                         </menuItem>
-                                                        <menuItem title="Recommended Settings" id="he4-aJ-DcD">
+                                                        <menuItem title="Standard Settings" id="he4-aJ-DcD">
                                                             <attributedString key="attributedTitle"/>
                                                             <connections>
                                                                 <action selector="vidPresetAction:" target="-2" id="fNn-UC-YoF"/>
@@ -2612,7 +2612,7 @@ Gw
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                             <menu key="submenu" title="Geometry" id="iIB-GO-9xp">
                                                                 <items>
-                                                                    <menuItem title="Recommended Settings" tag="10" id="vk5-jn-B2d">
+                                                                    <menuItem title="Standard Settings" tag="10" id="vk5-jn-B2d">
                                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                                         <connections>
                                                                             <action selector="vidPresetAction:" target="-2" id="AXZ-hD-amL"/>
@@ -2625,7 +2625,7 @@ Gw
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                             <menu key="submenu" title="Appearance" id="P4O-h7-FWP">
                                                                 <items>
-                                                                    <menuItem title="Recommended Settings" tag="20" id="Trv-Tc-RiO">
+                                                                    <menuItem title="Standard Settings" tag="20" id="Trv-Tc-RiO">
                                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                                         <connections>
                                                                             <action selector="vidPresetAction:" target="-2" id="rzF-bp-t0X"/>
