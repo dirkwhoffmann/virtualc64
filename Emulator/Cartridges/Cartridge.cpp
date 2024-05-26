@@ -99,45 +99,50 @@ Cartridge::isROMHaddr (u16 addr)
 Cartridge *
 Cartridge::makeWithType(C64 &c64, CartridgeType type)
 {
+    Cartridge *cart;
+
     switch (type) {
 
         case CRT_NONE:              return nullptr;
             
-        case CRT_NORMAL:            return new Cartridge(c64);
-        case CRT_ACTION_REPLAY:     return new ActionReplay(c64);
-        case CRT_KCS_POWER:         return new KcsPower(c64);
-        case CRT_FINAL_III:         return new FinalIII(c64);
-        case CRT_SIMONS_BASIC:      return new SimonsBasic(c64);
-        case CRT_OCEAN:             return new Ocean(c64);
-        case CRT_EXPERT:            return new Expert(c64);
-        case CRT_FUNPLAY:           return new Funplay(c64);
-        case CRT_SUPER_GAMES:       return new SuperGames(c64);
-        case CRT_ATOMIC_POWER:      return new AtomicPower(c64);
-        case CRT_EPYX_FASTLOAD:     return new Epyx(c64);
-        case CRT_WESTERMANN:        return new Westermann(c64);
-        case CRT_REX:               return new Rex(c64);
-        case CRT_WARPSPEED:         return new WarpSpeed(c64);
-        case CRT_DINAMIC:           return new Dinamic(c64);
-        case CRT_ZAXXON:            return new Zaxxon(c64);
-        case CRT_MAGIC_DESK:        return new MagicDesk(c64);
-        case CRT_COMAL80:           return new Comal80(c64);
-        case CRT_STRUCTURED_BASIC:  return new StructuredBasic(c64);
-        case CRT_MIKRO_ASSEMBLER:   return new MikroAss(c64);
-        case CRT_STARDOS:           return new StarDos(c64);
-        case CRT_EASYFLASH:         return new EasyFlash(c64);
-        case CRT_ACTION_REPLAY3:    return new ActionReplay3(c64);
-        case CRT_GAME_KILLER:       return new GameKiller(c64);
-        case CRT_FREEZE_FRAME:      return new FreezeFrame(c64);
-        case CRT_MACH5:             return new Mach5(c64);
-        case CRT_PAGEFOX:           return new PageFox(c64);
-        case CRT_KINGSOFT:          return new Kingsoft(c64);
-        case CRT_ISEPIC:            return new Isepic(c64);
-        case CRT_GEO_RAM:           return new GeoRAM(c64);
-        case CRT_REU:               return new Reu(c64);
+        case CRT_NORMAL:            cart = new Cartridge(c64); break;
+        case CRT_ACTION_REPLAY:     cart = new ActionReplay(c64); break;
+        case CRT_KCS_POWER:         cart = new KcsPower(c64); break;
+        case CRT_FINAL_III:         cart = new FinalIII(c64); break;
+        case CRT_SIMONS_BASIC:      cart = new SimonsBasic(c64); break;
+        case CRT_OCEAN:             cart = new Ocean(c64); break;
+        case CRT_EXPERT:            cart = new Expert(c64); break;
+        case CRT_FUNPLAY:           cart = new Funplay(c64); break;
+        case CRT_SUPER_GAMES:       cart = new SuperGames(c64); break;
+        case CRT_ATOMIC_POWER:      cart = new AtomicPower(c64); break;
+        case CRT_EPYX_FASTLOAD:     cart = new Epyx(c64); break;
+        case CRT_WESTERMANN:        cart = new Westermann(c64); break;
+        case CRT_REX:               cart = new Rex(c64); break;
+        case CRT_WARPSPEED:         cart = new WarpSpeed(c64); break;
+        case CRT_DINAMIC:           cart = new Dinamic(c64); break;
+        case CRT_ZAXXON:            cart = new Zaxxon(c64); break;
+        case CRT_MAGIC_DESK:        cart = new MagicDesk(c64); break;
+        case CRT_COMAL80:           cart = new Comal80(c64); break;
+        case CRT_STRUCTURED_BASIC:  cart = new StructuredBasic(c64); break;
+        case CRT_MIKRO_ASSEMBLER:   cart = new MikroAss(c64); break;
+        case CRT_STARDOS:           cart = new StarDos(c64); break;
+        case CRT_EASYFLASH:         cart = new EasyFlash(c64); break;
+        case CRT_ACTION_REPLAY3:    cart = new ActionReplay3(c64); break;
+        case CRT_GAME_KILLER:       cart = new GameKiller(c64); break;
+        case CRT_FREEZE_FRAME:      cart = new FreezeFrame(c64); break;
+        case CRT_MACH5:             cart = new Mach5(c64); break;
+        case CRT_PAGEFOX:           cart = new PageFox(c64); break;
+        case CRT_KINGSOFT:          cart = new Kingsoft(c64); break;
+        case CRT_ISEPIC:            cart = new Isepic(c64); break;
+        case CRT_GEO_RAM:           cart = new GeoRAM(c64); break;
+        case CRT_REU:               cart = new Reu(c64); break;
 
         default:
             throw VC64Error(ERROR_CRT_UNSUPPORTED, CRTFile::cartridgeTypeName(type));
     }
+
+    cart->init();
+    return cart;
 }
 
 Cartridge *
@@ -168,9 +173,6 @@ Cartridge::makeWithCRTFile(C64 &c64, const CRTFile &file)
 Cartridge::Cartridge(C64 &ref) : SubComponent(ref)
 {
     trace(CRT_DEBUG, "Creating cartridge at address %p...\n", (void *)this);
-
-    // Allocate external memory (if any)
-    setRamCapacity(getCartridgeTraits().memory);
 }
 
 Cartridge::~Cartridge()
@@ -195,6 +197,16 @@ Cartridge::dealloc()
     }
 
     numPackets = 0;
+}
+
+void
+Cartridge::init()
+{
+    auto &traits = getCartridgeTraits();
+    trace(CRT_DEBUG, "Initializing cartridge %s...\n", traits.title);
+
+    // Allocate external memory (if any)
+    setRamCapacity(traits.memory);
 }
 
 void

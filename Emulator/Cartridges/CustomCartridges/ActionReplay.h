@@ -81,7 +81,7 @@ class ActionReplay : public Cartridge {
 
         .type       = CRT_ACTION_REPLAY,
         .title      = "Action Replay",
-
+        .memory     = KB(8),
         .buttons    = 2,
         .button1    = "Freeze",
         .button2    = "Reset"

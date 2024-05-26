@@ -157,6 +157,7 @@ public:
     ~Cartridge();
     const Descriptions &getDescriptions() const override { return descriptions; }
 
+    virtual void init();
 
     /* Resets the Game and the Exrom line. The default implementation resets
      * the values to ones found in the CRT file. A few custom cartridges need
