@@ -23,7 +23,7 @@ typedef std::vector<Option> ConfigOptions;
 
 class Configurable
 {
-    constexpr static ConfigOptions options = { };
+    const static ConfigOptions options;
 
 public:
 

@@ -30,6 +30,8 @@ namespace vc64 {
 
 using namespace util;
 
+const ConfigOptions Configurable::options = { };
+
 bool
 Configurable::isValidOption(Option opt) const
 {
