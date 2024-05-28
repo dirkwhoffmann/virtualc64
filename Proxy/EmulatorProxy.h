@@ -179,6 +179,7 @@ using namespace vc64;
 @property (readonly) BOOL tracking;
 
 @property (readonly) u32 *texture;
+@property (readonly) u32 *heatmap;
 
 - (void)isReady:(ExceptionWrapper *)ex;
 - (void)powerOn:(ExceptionWrapper *)ex;

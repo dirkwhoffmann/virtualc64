@@ -112,8 +112,9 @@ Defaults::Defaults()
     setFallback(OPT_SID_SAMPLING, {0, 1, 2, 3}, SAMPLING_INTERPOLATE);
     setFallback(OPT_SID_POWER_SAVE, {0, 1, 2, 3}, false);
 
-    setFallback(OPT_RAM_PATTERN, RAM_PATTERN_VICE);
-    setFallback(OPT_SAVE_ROMS, true);
+    setFallback(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
+    setFallback(OPT_MEM_HEATMAP, false);
+    setFallback(OPT_MEM_SAVE_ROMS, true);
     
     setFallback(OPT_DRV_AUTO_CONFIG, {DRIVE8, DRIVE9}, true);
     setFallback(OPT_DRV_TYPE, {DRIVE8, DRIVE9}, DRIVE_VC1541II);

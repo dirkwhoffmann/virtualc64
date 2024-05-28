@@ -258,7 +258,7 @@ Emulator::set(C64Model model)
                 set(OPT_SID_FILTER, true);
                 set(OPT_POWER_GRID, GRID_STABLE_50HZ);
                 set(OPT_GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
-                set(OPT_RAM_PATTERN, RAM_PATTERN_VICE);
+                set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
                 break;
 
             case C64_MODEL_PAL_II:
@@ -271,7 +271,7 @@ Emulator::set(C64Model model)
                 set(OPT_SID_FILTER, true);
                 set(OPT_POWER_GRID, GRID_STABLE_50HZ);
                 set(OPT_GLUE_LOGIC, GLUE_LOGIC_IC);
-                set(OPT_RAM_PATTERN, RAM_PATTERN_VICE);
+                set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
                 break;
 
             case C64_MODEL_PAL_OLD:
@@ -284,7 +284,7 @@ Emulator::set(C64Model model)
                 set(OPT_SID_FILTER, true);
                 set(OPT_POWER_GRID, GRID_STABLE_50HZ);
                 set(OPT_GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
-                set(OPT_RAM_PATTERN, RAM_PATTERN_VICE);
+                set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
                 break;
 
             case C64_MODEL_NTSC:
@@ -297,7 +297,7 @@ Emulator::set(C64Model model)
                 set(OPT_SID_FILTER, true);
                 set(OPT_POWER_GRID, GRID_STABLE_60HZ);
                 set(OPT_GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
-                set(OPT_RAM_PATTERN, RAM_PATTERN_VICE);
+                set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
                 break;
 
             case C64_MODEL_NTSC_II:
@@ -310,7 +310,7 @@ Emulator::set(C64Model model)
                 set(OPT_SID_FILTER, true);
                 set(OPT_POWER_GRID, GRID_STABLE_60HZ);
                 set(OPT_GLUE_LOGIC, GLUE_LOGIC_IC);
-                set(OPT_RAM_PATTERN, RAM_PATTERN_VICE);
+                set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
                 break;
 
             case C64_MODEL_NTSC_OLD:
@@ -323,7 +323,7 @@ Emulator::set(C64Model model)
                 set(OPT_SID_FILTER, true);
                 set(OPT_POWER_GRID, GRID_STABLE_60HZ);
                 set(OPT_GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
-                set(OPT_RAM_PATTERN, RAM_PATTERN_VICE);
+                set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
                 break;
 
             default:
@@ -463,8 +463,9 @@ Emulator::routeOption(Option opt)
 
             return { &main.audioPort };
 
-        case OPT_RAM_PATTERN:
-        case OPT_SAVE_ROMS:
+        case OPT_MEM_INIT_PATTERN:
+        case OPT_MEM_HEATMAP:
+        case OPT_MEM_SAVE_ROMS:
 
             return { &main.mem };
 

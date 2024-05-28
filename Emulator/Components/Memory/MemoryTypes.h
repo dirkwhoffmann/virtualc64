@@ -161,6 +161,7 @@ typedef struct
 {
     RamPattern ramPattern;
     bool saveRoms;
+    bool heatmap; 
 }
 MemConfig;
 
@@ -177,6 +178,13 @@ typedef struct
     MemoryType vicPeekSrc[16];
 }
 MemInfo;
+
+typedef struct
+{
+    isize reads[65536];
+    isize writes[65536];
+}
+MemStats;
 
 typedef struct {
 

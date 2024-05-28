@@ -127,8 +127,9 @@ enum_long(OPT)
     OPT_AUD_VOL_R,              ///< Master volume (right channel)
 
     // Memory
-    OPT_RAM_PATTERN,            ///< Ram initialization pattern
-    OPT_SAVE_ROMS,              ///< Save Roms in snapshots
+    OPT_MEM_INIT_PATTERN,       ///< Ram initialization pattern
+    OPT_MEM_HEATMAP,            ///< Memory heatmap
+    OPT_MEM_SAVE_ROMS,          ///< Save Roms in snapshots
 
     // Drive
     OPT_DRV_AUTO_CONFIG,        ///< Auto-configure drives based on the Drive Rom
@@ -274,8 +275,9 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_AUD_VOL_L:             return "AUD.VOLL";
             case OPT_AUD_VOL_R:             return "AUD.VOLR";
 
-            case OPT_RAM_PATTERN:           return "RAM_PATTERN";
-            case OPT_SAVE_ROMS:             return "SAVE_ROMS";
+            case OPT_MEM_INIT_PATTERN:      return "MEM.INIT_PATTERN";
+            case OPT_MEM_HEATMAP:           return "MEM.HEATMAP";
+            case OPT_MEM_SAVE_ROMS:         return "MEM.SAVE_ROMS";
 
             case OPT_DRV_AUTO_CONFIG:       return "DRV.AUTO_CONFIG";
             case OPT_DRV_TYPE:              return "DRV.TYPE";
@@ -409,8 +411,9 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_AUD_VOL_L:             return "Master volume (left)";
             case OPT_AUD_VOL_R:             return "Master volume (right)";
 
-            case OPT_RAM_PATTERN:           return "Memory start-up pattern";
-            case OPT_SAVE_ROMS:             return "Save ROMs in snapshots";
+            case OPT_MEM_INIT_PATTERN:      return "Memory start-up pattern";
+            case OPT_MEM_HEATMAP:           return "Heatmap";
+            case OPT_MEM_SAVE_ROMS:         return "Save ROMs in snapshots";
 
             case OPT_DRV_AUTO_CONFIG:       return "Auto-configure drives";
             case OPT_DRV_TYPE:              return "Drive model";

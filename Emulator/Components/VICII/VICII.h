@@ -28,6 +28,9 @@ class VICII final : public SubComponent, public Inspectable<VICIIInfo, VICIIStat
     friend class DmaDebugger;
     friend class VideoPort;
     
+    // REMOVE ASAP
+    friend class Heatmap;
+    
     Descriptions descriptions = {{
 
         .name           = "VICII",

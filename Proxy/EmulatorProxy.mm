@@ -474,13 +474,6 @@ using namespace vc64;
     return [self vicii]->getSpriteInfo((unsigned)sprite);
 }
 
-/*
-- (u32 *)texture
-{
-    return [self vicii]->getTexture();
-}
-*/
-
 - (NSColor *)color:(NSInteger)nr
 {
     assert (0 <= nr && nr < 16);
@@ -2260,6 +2253,11 @@ using namespace vc64;
 - (u32 *)texture
 {
     return [self emu]->getTexture();
+}
+
+- (u32 *)heatmap
+{
+    return [self emu]->getHeatmap();
 }
 
 - (void)run:(ExceptionWrapper *)e

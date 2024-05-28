@@ -672,7 +672,7 @@ extension DefaultsProxy {
         remove(.GLUE_LOGIC)
         remove(.POWER_GRID)
 
-        remove(.RAM_PATTERN)
+        remove(.MEM_INIT_PATTERN)
     }
 }
 
@@ -703,7 +703,7 @@ extension Configuration {
         defaults.set(.GLUE_LOGIC, glueLogic)
         defaults.set(.POWER_GRID, powerGrid)
 
-        defaults.set(.RAM_PATTERN, ramPattern)
+        defaults.set(.MEM_INIT_PATTERN, ramPattern)
 
         defaults.save()
 
@@ -735,7 +735,7 @@ extension Configuration {
         glueLogic = defaults.get(.GLUE_LOGIC)
         powerGrid = defaults.get(.POWER_GRID)
 
-        ramPattern = defaults.get(.RAM_PATTERN)
+        ramPattern = defaults.get(.MEM_INIT_PATTERN)
 
         emu.resume()
     }

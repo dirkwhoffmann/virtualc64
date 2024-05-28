@@ -217,6 +217,7 @@ Thread::switchState(ExecState newState)
                 switch (state) {
 
                     case STATE_RUNNING:     state = STATE_SUSPENDED; break;
+                    case STATE_PAUSED:      break;
 
                     default:
                         invalid();

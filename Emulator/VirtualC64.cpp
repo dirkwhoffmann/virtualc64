@@ -70,6 +70,12 @@ VirtualC64::getDmaTexture() const
     return Emulator::getDmaTexture();
 }
 
+u32 *
+VirtualC64::getHeatmap() const
+{
+    return Emulator::getHeatmap();
+}
+
 void
 VirtualC64::stepInto()
 {

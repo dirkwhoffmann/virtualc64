@@ -126,9 +126,9 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_AUD_VOL_L:                 return numParser("%");
         case OPT_AUD_VOL_R:                 return numParser("%");
 
-        case OPT_RAM_PATTERN:               return enumParser.template operator()<RamPatternEnum>();
-
-        case OPT_SAVE_ROMS:                 return boolParser();
+        case OPT_MEM_INIT_PATTERN:          return enumParser.template operator()<RamPatternEnum>();
+        case OPT_MEM_HEATMAP:               return boolParser();
+        case OPT_MEM_SAVE_ROMS:             return boolParser();
 
         case OPT_DRV_AUTO_CONFIG:           return boolParser();
         case OPT_DRV_TYPE:                  return enumParser.template operator()<DriveTypeEnum>();

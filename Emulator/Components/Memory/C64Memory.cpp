@@ -229,6 +229,10 @@ C64Memory::updatePeekPokeLookupTables()
 u8
 C64Memory::peek(u16 addr, MemoryType source)
 {
+    // REMOVE ASAP
+    config.heatmap = true;
+    if (config.heatmap) stats.reads[addr]++;
+
     switch(source) {
             
         case M_RAM:
@@ -280,6 +284,8 @@ C64Memory::peek(u16 addr, bool gameLine, bool exromLine)
 u8
 C64Memory::peekZP(u8 addr)
 {
+    if (config.heatmap) stats.reads[addr]++;
+
     if (likely(addr >= 0x02)) {
         return ram[addr];
     } else {
@@ -290,6 +296,8 @@ C64Memory::peekZP(u8 addr)
 u8
 C64Memory::peekStack(u8 sp)
 {
+    if (config.heatmap) stats.reads[sp]++;
+
     return ram[0x100 + sp];
 }
 
@@ -298,6 +306,8 @@ C64Memory::peekIO(u16 addr)
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
     
+    if (config.heatmap) stats.reads[addr]++;
+
     switch ((addr >> 8) & 0xF) {
             
         case 0x0: // VICII
@@ -446,6 +456,8 @@ C64Memory::spypeekColor(u16 addr) const
 void
 C64Memory::poke(u16 addr, u8 value, MemoryType target)
 {
+    if (config.heatmap) stats.writes[addr]++;
+
     switch(target) {
             
         case M_RAM:
@@ -498,6 +510,8 @@ C64Memory::poke(u16 addr, u8 value, bool gameLine, bool exromLine)
 void
 C64Memory::pokeZP(u8 addr, u8 value)
 {
+    if (config.heatmap) stats.writes[addr]++;
+
     if (likely(addr >= 0x02)) {
         ram[addr] = value;
     } else if (addr == 0x00) {
@@ -510,6 +524,8 @@ C64Memory::pokeZP(u8 addr, u8 value)
 void
 C64Memory::pokeStack(u8 sp, u8 value)
 {
+    if (config.heatmap) stats.writes[sp]++;
+
     ram[0x100 + sp] = value;
 }
 
@@ -517,7 +533,9 @@ void
 C64Memory::pokeIO(u16 addr, u8 value)
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
-    
+ 
+    if (config.heatmap) stats.writes[addr]++;
+
     switch ((addr >> 8) & 0xF) {
             
         case 0x0: // VICII
@@ -698,5 +716,14 @@ C64Memory::memDump(std::ostream& os, u16 addr, isize numLines, bool hex)
         U16_INC(addr, count);
     }
 }
+
+void 
+C64Memory::endFrame()
+{
+    if (config.heatmap) {
+        heatmap.update(*this);
+    }
+}
+
 
 }

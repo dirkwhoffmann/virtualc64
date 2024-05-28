@@ -195,7 +195,8 @@ private:
 
     u32 *getTexture() const;
     u32 *getDmaTexture() const;
-
+    u32 *getHeatmap() const;
+    
 
     //
     // Command queue

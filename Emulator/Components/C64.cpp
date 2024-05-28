@@ -958,8 +958,7 @@ C64::endFrame()
     
     vic.endFrame();
     sidBridge.endFrame();
-
-    // Execute other components
+    mem.endFrame();
     iec.execute();
     expansionport.execute();
     port1.execute();

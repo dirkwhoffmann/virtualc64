@@ -20,8 +20,9 @@ C64Memory::getOption(Option option) const
 {
     switch (option) {
 
-        case OPT_RAM_PATTERN:   return config.ramPattern;
-        case OPT_SAVE_ROMS:     return config.saveRoms;
+        case OPT_MEM_INIT_PATTERN:  return config.ramPattern;
+        case OPT_MEM_HEATMAP:       return config.heatmap;
+        case OPT_MEM_SAVE_ROMS:     return config.saveRoms;
 
         default:
             fatalError;
@@ -33,14 +34,15 @@ C64Memory::checkOption(Option opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_RAM_PATTERN:
+        case OPT_MEM_INIT_PATTERN:
 
             if (!RamPatternEnum::isValid(value)) {
                 throw VC64Error(ERROR_OPT_INV_ARG, RamPatternEnum::keyList());
             }
             return;
 
-        case OPT_SAVE_ROMS:
+        case OPT_MEM_HEATMAP:
+        case OPT_MEM_SAVE_ROMS:
 
             return;
 
@@ -56,14 +58,19 @@ C64Memory::setOption(Option opt, i64 value)
     
     switch (opt) {
 
-        case OPT_RAM_PATTERN:
+        case OPT_MEM_INIT_PATTERN:
 
             config.ramPattern = (RamPattern)value;
             return;
 
-        case OPT_SAVE_ROMS:
+        case OPT_MEM_HEATMAP:
 
-            config.saveRoms = value;
+            config.heatmap = (bool)value;
+            return;
+
+        case OPT_MEM_SAVE_ROMS:
+
+            config.saveRoms = (bool)value;
             return;
 
         default:

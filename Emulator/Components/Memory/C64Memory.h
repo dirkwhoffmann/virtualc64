@@ -14,10 +14,13 @@
 
 #include "MemoryTypes.h"
 #include "SubComponent.h"
+#include "Heatmap.h"
 
 namespace vc64 {
 
-class C64Memory final : public SubComponent, public Inspectable<MemInfo, Void> {
+class C64Memory final : public SubComponent, public Inspectable<MemInfo, MemStats> {
+
+    friend class Heatmap;
 
     Descriptions descriptions = {{
 
@@ -28,15 +31,16 @@ class C64Memory final : public SubComponent, public Inspectable<MemInfo, Void> {
 
     ConfigOptions options = {
 
-        OPT_RAM_PATTERN,
-        OPT_SAVE_ROMS
+        OPT_MEM_INIT_PATTERN,
+        OPT_MEM_HEATMAP,
+        OPT_MEM_SAVE_ROMS
     };
 
     // Current configuration
     MemConfig config = { };
 
 public:
-    
+
     /* C64 bank mapping
      *
      *     BankMap[index][range] where
@@ -66,20 +70,23 @@ public:
 
     // Peek source lookup table
     MemoryType peekSrc[16];
-    
+
     // Poke target lookup table
     MemoryType pokeTarget[16];
-    
+
     // Indicates if watchpoints should be checked
     bool checkWatchpoints = false;
-    
-    
+
+    // Debugging
+    Heatmap heatmap;
+
+
     //
     // Methods
     //
-    
+
 public:
-    
+
     C64Memory(C64 &ref);
     const Descriptions &getDescriptions() const override { return descriptions; }
     void _dump(Category category, std::ostream& os) const override;
@@ -119,7 +126,7 @@ public:
         << config.ramPattern;
 
     }
-    
+
     void operator << (SerResetter &worker) override { serialize(worker); }
     void operator << (SerChecker &worker) override { serialize(worker); }
     void operator << (SerCounter &worker) override;
@@ -154,10 +161,10 @@ public:
     //
 
 public:
-    
+
     // Erases the RAM with the provided init pattern
     void eraseWithPattern(RamPattern pattern);
-    
+
     /* Updates the peek and poke lookup tables. The lookup values depend on
      * three processor port bits and the cartridge exrom and game lines.
      */
@@ -165,7 +172,7 @@ public:
 
     // Returns the current peek source of the specified memory address
     MemoryType getPeekSource(u16 addr) { return peekSrc[addr >> 12]; }
-    
+
     // Returns the current poke target of the specified memory address
     MemoryType getPokeTarget(u16 addr) { return pokeTarget[addr >> 12]; }
 
@@ -182,7 +189,7 @@ public:
     void peekZPIdle(u8 addr) { (void)peekZP(addr); }
     void peekStackIdle(u8 sp) { (void)peekStack(sp); }
     void peekIOIdle(u16 addr) { (void)peekIO(addr); }
-    
+
     // Reads a value from memory without side effects
     u8 spypeek(u16 addr, MemoryType source) const;
     u8 spypeek(u16 addr) const { return spypeek(addr, peekSrc[addr >> 12]); }
@@ -196,12 +203,12 @@ public:
     void pokeZP(u8 addr, u8 value);
     void pokeStack(u8 sp, u8 value);
     void pokeIO(u16 addr, u8 value);
-    
+
     // Reads a vector address from memory
     u16 nmiVector() const;
     u16 irqVector() const;
     u16 resetVector();
-    
+
     // Returns a string representations for a portion of memory
     string memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const;
     string hexdump(u16 addr, isize num, isize pads, MemoryType src) const;
@@ -216,6 +223,13 @@ public:
 
     // Dumps a portion of memory to a stream
     void memDump(std::ostream& os, u16 addr, isize numLines = 16, bool hex = true);
+
+
+    //
+    // Executing
+    //
+
+    void endFrame();
 };
 
 }
