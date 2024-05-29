@@ -88,7 +88,8 @@ class Inspector: DialogController {
     @IBOutlet weak var memHiram: NSButton!
     @IBOutlet weak var memLoram: NSButton!
     @IBOutlet weak var memSource: NSPopUpButton!
-    
+    @IBOutlet weak var memHeatmapView: HeatmapView!
+
     var bankType: [Int: vc64.MemoryType] = [:]
     var displayedBank = 0
     var layoutIsDirty = true

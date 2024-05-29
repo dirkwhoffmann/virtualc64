@@ -119,6 +119,8 @@ extension Inspector {
         
         memBankTableView.refresh(count: count, full: full)
         memTableView.refresh(count: count, full: full)
+
+        memHeatmapView.update()
     }
     
     private func refreshMemoryLayout() {
