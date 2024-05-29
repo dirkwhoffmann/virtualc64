@@ -324,14 +324,6 @@ Emulator::getDmaTexture() const
     main.videoPort.getDmaTexture();
 }
 
-u32 *
-Emulator::getHeatmap() const
-{
-    return config.runAhead && isRunning() ?
-    ahead.mem.heatmap.texture :
-    main.mem.heatmap.texture;
-}
-
 void
 Emulator::put(const Cmd &cmd)
 {

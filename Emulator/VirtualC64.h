@@ -213,7 +213,6 @@ public:
      */
     u32 *getTexture() const;
     u32 *getDmaTexture() const;
-    u32 *getHeatmap() const;
 
 
     /// @}
@@ -528,6 +527,10 @@ public:
          */
         string memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const;
         string txtdump(u16 addr, isize num, MemoryType src) const;
+
+        /** @brief Experimental
+         */
+        void drawHeatmap(u32 *buffer, isize width, isize height) const;
 
     } mem;
 

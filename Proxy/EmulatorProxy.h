@@ -179,7 +179,6 @@ using namespace vc64;
 @property (readonly) BOOL tracking;
 
 @property (readonly) u32 *texture;
-@property (readonly) u32 *heatmap;
 
 - (void)isReady:(ExceptionWrapper *)ex;
 - (void)powerOn:(ExceptionWrapper *)ex;
@@ -368,6 +367,8 @@ using namespace vc64;
 
 - (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src;
 - (NSString *)txtdump:(NSInteger)addr num:(NSInteger)num src:(MemoryType)src;
+
+- (void)drawHeatmap:(u32 *)buffer w:(NSInteger)w h:(NSInteger)h;
 
 @end
 

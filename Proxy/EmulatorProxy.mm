@@ -401,6 +401,11 @@ using namespace vc64;
     return @([self mem]->txtdump((u16)addr, num, src).c_str());
 }
 
+- (void)drawHeatmap:(u32 *)buffer w:(NSInteger)w h:(NSInteger)h
+{
+    [self mem]->drawHeatmap(buffer, w, h);
+}
+
 @end
 
 
@@ -2253,11 +2258,6 @@ using namespace vc64;
 - (u32 *)texture
 {
     return [self emu]->getTexture();
-}
-
-- (u32 *)heatmap
-{
-    return [self emu]->getHeatmap();
 }
 
 - (void)run:(ExceptionWrapper *)e

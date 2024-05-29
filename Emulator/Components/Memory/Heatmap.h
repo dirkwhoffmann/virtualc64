@@ -23,19 +23,24 @@ public:
     // Heapmap data
     float heatmap[256][256] = { };
 
-    // The heatmap texture
-    u32 *texture = new u32[256 * 256]();
-
     // Cached accesses
     isize history[65536] = { };
+
+    // Color palette
+    u32 palette[256];
 
 
     //
     // Methods
     //
 
-    // Updates the heatmap
+    Heatmap();
+
+    // Updates heatmap data
     void update(const class C64Memory &mem);
+
+    // Draws a heatmap
+    void draw(u32 *buffer, isize width, isize height) const;
 };
 
 }

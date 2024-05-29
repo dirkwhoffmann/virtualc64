@@ -70,12 +70,6 @@ VirtualC64::getDmaTexture() const
     return Emulator::getDmaTexture();
 }
 
-u32 *
-VirtualC64::getHeatmap() const
-{
-    return Emulator::getHeatmap();
-}
-
 void
 VirtualC64::stepInto()
 {
@@ -493,6 +487,12 @@ VirtualC64::MemoryAPI::txtdump(u16 addr, isize num, MemoryType src) const
 {
     assert(isUserThread());
     return mem.txtdump(addr, num, src);
+}
+
+void
+VirtualC64::MemoryAPI::drawHeatmap(u32 *buffer, isize width, isize height) const
+{
+    return mem.heatmap.draw(buffer, width, height);
 }
 
 

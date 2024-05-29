@@ -17,35 +17,36 @@
 
 namespace vc64 {
 
-void 
-Heatmap::update(const class C64Memory &mem)
+Heatmap::Heatmap()
 {
-    float newheat[256][256];
-    static u32 palette[256] = { };
+    double r = 0.0, g = 0.0, b = 0.0, a = .25;
+    double dr, dg, db, da;
 
-    if (palette[0] == 0) {
-
-        u8 r = 0; u8 g = 255; u8 b = 0;
-
-        for (isize i = 0; i < 128; i++) {
-
-            palette[i] = 0xFF << 24 | b << 16 | g << 8 | r;
-            g -= 2; r += 2;
-        }
-        g = 0; r = 255;
-        for (isize i = 128; i < 256; i++) {
-
-            palette[i] = 0xFF << 24 | b << 16 | g << 8 | r;
-            g += 2; // b += 2;
-        }
-
-        printf("initalize palette\n");
-        for (isize i = 0; i < 256; i++) {
-
-        }
+    dr = (1.0 - r) / 256; dg = (0.0 - g) / 256; db = (0.0 - b) / 256; da = (1.0 - a) / 256;
+    for (isize i = 0; i < 256; i++, r += dr, g += dg, b += db, a += da) {
+        palette[i] = u8(a * 255) << 24 | u8(b * 255) << 16 | u8(g * 255) << 8 | u8(r * 255);
     }
 
+    /*
+    r = 0.0; g = 0.0; b = 0.0; a = .25;
+    dr = (0.0 - r) / 128; dg = (0.0 - g) / 128; db = (0.0 - b) / 128; da = (1.0 - a) / 128;
+    for (isize i = 0; i < 128; i++, r += dr, g += dg, b += db, a += da) {
+        palette[i] = u8(a * 255) << 24 | u8(b * 255) << 16 | u8(g * 255) << 8 | u8(r * 255);
+    }
+    dr = (1.0 - r) / 128; dg = (0.0 - g) / 128; db = (0.0 - b) / 128; da = (1.0 - a) / 128;
+    for (isize i = 128; i < 256; i++, r += dr, g += dg, b += db, a += da) {
+        palette[i] = u8(a * 255) << 24 | u8(b * 255) << 16 | u8(g * 255) << 8 | u8(r * 255);
+    }
+    */
+
+}
+
+void
+Heatmap::update(const class C64Memory &mem)
+{
     for (isize i = 0; i < 65536; i++) {
+        
+        // isize x = i % 256, y = i / 256;
 
         isize x = 0, y = 0;
         if (i & (1 << 15)) y += 128;
@@ -65,77 +66,58 @@ Heatmap::update(const class C64Memory &mem)
         if (i & (1 << 1)) y += 1;
         if (i & (1 << 0)) x += 1;
 
-        // y = i / 256; x = i % 256;
-
         auto totalAccesses = mem.stats.reads[i] + mem.stats.writes[i];
         auto accesses = totalAccesses - history[i];
         history[i] = totalAccesses;
 
-        // heatmap[y][x] = accesses;
-
-        // float oldTemperature = heatmap[y][x];
-        float newTemperature = float(accesses * 128);
-        // float mixedTemperature = 0.8f * oldTemperature + 0.2f * newTemperature;
-        if (newTemperature > 255) newTemperature = 255;
-        if (newTemperature < 0) newTemperature = 0;
-        newheat[y][x] = newTemperature;
-
-        if (x > 0 && x < 255 && y > 0 && y < 255) {
-
-            // Bleed
-            /*
-            newheat[y-1][x-1] += newTemperature / 2;
-            newheat[y-1][x] += newTemperature / 2;
-            newheat[y-1][x+1] += newTemperature / 2;
-            newheat[y][x-1] += newTemperature / 2;
-            newheat[y][x+1] += newTemperature / 2;
-            newheat[y+1][x-1] += newTemperature / 2;
-            newheat[y+1][x] += newTemperature / 2;
-            newheat[y+1][x+1] += newTemperature / 2;
-            */
-        }
-    }
-
-    for (isize i = 0; i < 65536; i++) {
-
-        float h = newheat[0][i];
-        // printf("h = %f heatmap[0][i] = %f\n", h, heatmap[0][i]);
-        if (h > 255) h = 255; if (h < 0) h = 0;
-
-
-        float heat;
-        if (h > heatmap[0][i]) {
-            heat = 0.8f * heatmap[0][i] + 0.2f * h;
+        if (accesses) {
+            heatmap[y][x] = 1.0;
         } else {
-            heat = 0.95f * heatmap[0][i] + 0.05f * h;
-        }
-        if (heat > 256 || heat < 0) {
-            printf("heatmap[0][%ld] = %f\n", i, heatmap[0][i]);
-        }
-        assert(heat < 256 && heat >= 0);
-        if (heat > 255) heat = 255;
-        if (heat < 0) heat = 0;
-        heatmap[0][i] = heat;
-
-        auto val8 = u8(heat);
-        // texture[i] = 0xFF << 24 | val8 << 16 | val8 << 8 | val8;
-        texture[i] = 0x88 << 24 | 0 << 16 | 0 << 8 | val8;
-        // texture[i] = palette[val8];
-    }
-
-    // printf("maxval = %ld\n", maxval);
-
-    // Experimental
-    /*
-    auto *t1 = mem.vic.emuTexture1;
-    auto *t2 = mem.vic.emuTexture2;
-    for (isize i = 0; i < 256; i++) {
-        for (isize j = 0; j < 256; j++) {
-            isize k = Texture::width * i + j;
-            t1[k] = t2[k] = texture[i * 256 + j];
+            heatmap[y][x] = 0.9f * heatmap[y][x] + 0.1f * accesses;
         }
     }
-    */
+}
+
+void 
+Heatmap::draw(u32 *buffer, isize width, isize height) const
+{
+    assert(width == 256);
+    assert(height == 256);
+
+    float values[32][64] = { }, max = 0;
+
+    // Accumulate values
+    for (usize y = 0; y < 256; y++) {
+        for (usize x = 0; x < 256; x++) {
+            values[y / 8][x / 4] += heatmap[y][x];
+        }
+    }
+
+    // Determine maximum value
+    for (usize y = 0; y < 32; y++) {
+        for (usize x = 0; x < 64; x++) {
+            max = std::max(max, values[y][x]);
+        }
+    }
+
+    for (isize i = 0; i < 65536; i++) buffer[i] = 0;
+
+    max /= 255.0f;
+    for (usize y = 0; y < 32; y++) {
+        for (usize x = 0; x < 64; x++) {
+
+            u8 val = u8(values[y][x] / max);
+            u32 col = palette[val];
+            buffer[y*256*8 + 4*x + 0] = col;
+            buffer[y*256*8 + 4*x + 1] = col;
+            buffer[y*256*8 + 4*x + 2] = col;
+            buffer[y*256*8 + 4*x + 3] = 0;
+        }
+        for (isize j = 0; j < 7; j++) {
+            memcpy(buffer+y*256*8+(j*256),buffer+y*256*8,256*4);
+        }
+        // memset(buffer+y*256*8+(7*256), 0, 256*4);
+    }
 }
 
 }

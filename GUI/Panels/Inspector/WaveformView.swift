@@ -14,6 +14,7 @@ class WaveformView: NSImageView {
     @IBOutlet weak var inspector: Inspector!
 
     var sid: SIDProxy { return inspector.emu.sid }
+    var mem: MemoryProxy { return inspector.emu.mem }
 
     // Waveform size
     var size: NSSize!
@@ -39,8 +40,12 @@ class WaveformView: NSImageView {
 
     override func awakeFromNib() {
 
+        /*
         let w = inspector.sidWaveformView.visibleRect.width
         let h = inspector.sidWaveformView.visibleRect.height
+        */
+        let w = 256
+        let h = 256
 
         size = NSSize(width: w, height: h)
         buffer = UnsafeMutablePointer<UInt32>.allocate(capacity: wordCount)
@@ -59,6 +64,7 @@ class WaveformView: NSImageView {
         }
 
         maxAmp = sid.drawWaveform(buffer, size: size, scale: maxAmp, color: color, source: source)
+        // mem.drawHeatmap(buffer, w: Int(size.width), h: Int(size.height))
         image = NSImage.make(data: buffer, rect: CGSize(width: size.width, height: size.height))
         super.draw(dirtyRect)
     }
