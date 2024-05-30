@@ -12,9 +12,17 @@ class MyToolbar: NSToolbar {
     var emu: EmulatorProxy { parent.emu }
 
     @IBOutlet weak var parent: MyController!
+
+    // References to toolbar items
+    @IBOutlet weak var controlPort1Item: NSToolbarItem!
+    @IBOutlet weak var controlPort2Item: NSToolbarItem!
+    @IBOutlet weak var keyboardItem: NSToolbarItem!
+    @IBOutlet weak var preferencesItem: NSToolbarItem!
+    @IBOutlet weak var controlsItem: NSToolbarItem!
+
+    // Reference to toolbar item objects
     @IBOutlet weak var controlPort1: NSPopUpButton!
     @IBOutlet weak var controlPort2: NSPopUpButton!
-    @IBOutlet weak var keyboardButton: NSToolbarItem!
     @IBOutlet weak var snapshotSegCtrl: NSSegmentedControl!
     @IBOutlet weak var screenshotSegCtrl: NSSegmentedControl!
     @IBOutlet weak var controlsSegCtrl: NSSegmentedControl!
@@ -23,7 +31,7 @@ class MyToolbar: NSToolbar {
                            
         // Disable the keyboard button if the virtual keyboard is open
         let visible = parent.virtualKeyboard?.window?.isVisible ?? false
-        let view = keyboardButton.view as? NSButton
+        let view = keyboardItem.view as? NSButton
         view?.isEnabled = !visible
         
         // Update input devices
@@ -31,6 +39,12 @@ class MyToolbar: NSToolbar {
         parent.gamePadManager.refresh(popup: controlPort2)
         controlPort1.selectItem(withTag: parent.config.gameDevice1)
         controlPort2.selectItem(withTag: parent.config.gameDevice2)
+
+        controlPort1Item.menuFormRepresentation = nil
+        controlPort2Item.menuFormRepresentation = nil
+        keyboardItem.menuFormRepresentation = nil
+        preferencesItem.menuFormRepresentation = nil
+        controlsItem.menuFormRepresentation = nil
     }
     
     func updateToolbar() {
@@ -92,14 +106,18 @@ class MyToolbar: NSToolbar {
         }
     }
     
-    @IBAction func port1Action(_ sender: NSPopUpButton) {
-        
-        parent.config.gameDevice1 = sender.selectedTag()
+    @IBAction func port1Action(_ sender: Any) {
+
+        if let obj = sender as? NSPopUpButton {
+            parent.config.gameDevice1 = obj.selectedTag()
+        }
     }
  
-    @IBAction func port2Action(_ sender: NSPopUpButton) {
-        
-        parent.config.gameDevice2 = sender.selectedTag()
+    @IBAction func port2Action(_ sender: Any) {
+
+        if let obj = sender as? NSPopUpButton {
+            parent.config.gameDevice2 = obj.selectedTag()
+        }
     }
 
     @IBAction func keyboardAction(_ sender: Any!) {
@@ -113,26 +131,28 @@ class MyToolbar: NSToolbar {
         }
     }
     
-    @IBAction func preferencesAction(_ sender: NSSegmentedControl) {
-        
-        switch sender.selectedSegment {
+    @IBAction func preferencesAction(_ sender: Any) {
 
-        case 0: parent.preferencesAction(sender)
-        case 1: parent.configureAction(sender)
+        if let obj = sender as? NSSegmentedControl {
 
-        default: assert(false)
+            switch obj.selectedSegment {
+            case 0: parent.preferencesAction(obj)
+            case 1: parent.configureAction(obj)
+            default: assert(false)
+            }
         }
     }
     
-    @IBAction func controlsAction(_ sender: NSSegmentedControl) {
+    @IBAction func controlsAction(_ sender: Any) {
 
-        switch sender.selectedSegment {
+        if let obj = sender as? NSSegmentedControl {
 
-        case 0: parent.stopAndGoAction(self)
-        case 1: parent.resetAction(self)
-        case 2: parent.powerAction(self)
-
-        default: assert(false)
+            switch obj.selectedSegment {
+            case 0: parent.stopAndGoAction(self)
+            case 1: parent.resetAction(self)
+            case 2: parent.powerAction(self)
+            default: assert(false)
+            }
         }
     }
 }

@@ -307,7 +307,7 @@
                         <popUpButton key="view" tag="10" id="L2b-nG-yBo" userLabel="Port 1">
                             <rect key="frame" x="0.0" y="14" width="45" height="20"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" image="devNoneTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" autoenablesItems="NO" id="zHf-yH-YTM">
@@ -424,10 +424,14 @@
                 </defaultToolbarItems>
                 <connections>
                     <outlet property="controlPort1" destination="L2b-nG-yBo" id="r3Z-7w-JdV"/>
+                    <outlet property="controlPort1Item" destination="kR6-IR-lNs" id="s1g-oo-fgw"/>
                     <outlet property="controlPort2" destination="4MP-rV-xX2" id="Hem-gu-lAA"/>
+                    <outlet property="controlPort2Item" destination="Klt-YL-0mv" id="qK2-bf-H6Q"/>
+                    <outlet property="controlsItem" destination="tcr-bJ-p79" id="3Ea-pP-E4K"/>
                     <outlet property="controlsSegCtrl" destination="JDC-UY-HHD" id="edL-25-gyY"/>
-                    <outlet property="keyboardButton" destination="Ckl-d3-vFW" id="ERa-sy-J2Z"/>
+                    <outlet property="keyboardItem" destination="Ckl-d3-vFW" id="ERa-sy-J2Z"/>
                     <outlet property="parent" destination="-2" id="T9L-Bq-Pny"/>
+                    <outlet property="preferencesItem" destination="E7X-uf-vpw" id="fE2-se-OKZ"/>
                     <outlet property="screenshotSegCtrl" destination="qPe-qh-6UI" id="m5u-9x-Vto"/>
                     <outlet property="snapshotSegCtrl" destination="AHD-MB-nXC" id="FJe-yy-eIY"/>
                 </connections>
