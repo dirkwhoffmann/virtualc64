@@ -168,21 +168,15 @@ FinalIII::pressButton(isize nr)
 void
 FinalIII::releaseButton(isize nr)
 {
-    assert(nr <= numButtons());
-    trace(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr));
-
-    {   SUSPENDED
-
-        switch (nr) {
-
-            case 1: // Freeze
-
-                freeezeButtonIsPressed = false;
-                qD = true;
-                updateNMI();
-                updateGame();
-                break;
-        }
+    switch (nr) {
+            
+        case 1: // Freeze
+            
+            freeezeButtonIsPressed = false;
+            qD = true;
+            updateNMI();
+            updateGame();
+            break;
     }
 }
 

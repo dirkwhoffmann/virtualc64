@@ -998,6 +998,11 @@ C64::process(const Cmd &cmd)
             setAlarmRel(cmd.alarm.cycle, cmd.alarm.value);
             break;
             
+        case CMD_INSPECTION_TARGET:
+
+            setInspectionTarget(InspectionTarget(cmd.value));
+            break;
+
         default:
             fatalError;
     }

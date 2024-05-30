@@ -179,13 +179,13 @@ VirtualC64::C64API::getInspectionTarget() const
 void
 VirtualC64::C64API::setInspectionTarget(InspectionTarget target)
 {
-    c64.setInspectionTarget(target);
+    c64.emulator.put(CMD_INSPECTION_TARGET, target);
 }
 
 void
 VirtualC64::C64API::removeInspectionTarget()
 {
-    c64.removeInspectionTarget();
+    c64.emulator.put(CMD_INSPECTION_TARGET, INSPECTION_NONE);
 }
 
 RomTraits
@@ -206,32 +206,6 @@ VirtualC64::C64API::loadSnapshot(const Snapshot &snapshot)
     c64.loadSnapshot(snapshot);
     c64.markAsDirty();
 }
-
-/*
-void
-VirtualC64::C64API::requestAutoSnapshot()
-{
-    c64.requestAutoSnapshot();
-}
-
-void
-VirtualC64::C64API::requestUserSnapshot()
-{
-    c64.requestUserSnapshot();
-}
-
-Snapshot *
-VirtualC64::C64API::latestAutoSnapshot()
-{
-    return c64.latestAutoSnapshot();
-}
-
-Snapshot *
-VirtualC64::C64API::latestUserSnapshot()
-{
-    return c64.latestUserSnapshot();
-}
-*/
 
 void
 VirtualC64::C64API::loadRom(const string &path)

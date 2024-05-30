@@ -199,8 +199,6 @@ Datasette::setOption(Option opt, i64 value)
 
             if (config.connected != bool(value)) {
 
-                SUSPENDED
-
                 config.connected = bool(value);
                 updateDatEvent();
                 msgQueue.put(MSG_VC1530_CONNECT, value);

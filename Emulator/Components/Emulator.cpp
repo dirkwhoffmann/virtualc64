@@ -181,6 +181,7 @@ Emulator::update()
             case CMD_CPU_NMI:
             case CMD_ALARM_ABS:
             case CMD_ALARM_REL:
+            case CMD_INSPECTION_TARGET:
                 
                 main.process(cmd);
                 break;

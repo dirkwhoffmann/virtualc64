@@ -205,24 +205,21 @@ Interpreter::initDebugShell(Command &root)
              std::pair<string, string>("f", "Find a sequence in memory"),
              [this](Arguments& argv, long value) {
 
-        {   SUSPENDED
+        auto pattern = parseSeq(argv[0]);
+        auto addr = parseAddr(argv, 1, debugger.current);
+        auto found = debugger.memSearch(pattern, addr);
 
-            auto pattern = parseSeq(argv[0]);
-            auto addr = parseAddr(argv, 1, debugger.current);
-            auto found = debugger.memSearch(pattern, addr);
+        if (found >= 0) {
 
-            if (found >= 0) {
+            std::stringstream ss;
+            debugger.memDump(ss, u16(found), 16);
+            retroShell << ss;
 
-                std::stringstream ss;
-                debugger.memDump(ss, u16(found), 16);
-                retroShell << ss;
+        } else {
 
-            } else {
-
-                std::stringstream ss;
-                ss << "Not found";
-                retroShell << ss;
-            }
+            std::stringstream ss;
+            ss << "Not found";
+            retroShell << ss;
         }
     });
 
@@ -230,14 +227,11 @@ Interpreter::initDebugShell(Command &root)
              std::pair<string, string>("e", "Erase memory"),
              [this](Arguments& argv, long value) {
 
-        {   SUSPENDED
-
-            auto addr = parseAddr(argv[0]);
-            auto cnt = parseNum(argv[1]);
-            auto val = u8(parseNum(argv, 2, 0));
-
-            debugger.write(addr, val, cnt);
-        }
+        auto addr = parseAddr(argv[0]);
+        auto cnt = parseNum(argv[1]);
+        auto val = u8(parseNum(argv, 2, 0));
+        
+        debugger.write(addr, val, cnt);
     });
 
     root.add({"i"},

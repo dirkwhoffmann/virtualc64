@@ -111,10 +111,6 @@ class MyApplication: NSApplication {
     public func applicationWillTerminate(_ aNotification: Notification) {
         
         debug(.lifetime)
-
-        // debug(.shutdown, "Shut down audio...")
-        // macAudio.shutDown()
-
         ProcessInfo.processInfo.endActivity(token)
     }
 }

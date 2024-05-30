@@ -85,25 +85,22 @@ RegressionTester::dumpTexture(C64 &c64, std::ostream& os)
         return ((y >> 3) & 1) == ((x >> 3) & 1) ? grey2 : grey4;
     };
 
-    {   SUSPENDED
+    auto buffer = (u32 *)c64.videoPort.getTexture();
+    char *cptr;
 
-        auto buffer = (u32 *)c64.videoPort.getTexture();
-        char *cptr;
+    for (isize y = Y1; y < Y2; y++) {
 
-        for (isize y = Y1; y < Y2; y++) {
-            
-            for (isize x = X1; x < X2; x++) {
+        for (isize x = X1; x < X2; x++) {
 
-                if (y >= y1 && y < y2 && x >= x1 && x < x2) {
-                    cptr = (char *)(buffer + y * Texture::width + x);
-                } else {
-                    cptr = checkerboard(y, x);
-                }
-
-                os.write(cptr + 0, 1);
-                os.write(cptr + 1, 1);
-                os.write(cptr + 2, 1);
+            if (y >= y1 && y < y2 && x >= x1 && x < x2) {
+                cptr = (char *)(buffer + y * Texture::width + x);
+            } else {
+                cptr = checkerboard(y, x);
             }
+
+            os.write(cptr + 0, 1);
+            os.write(cptr + 1, 1);
+            os.write(cptr + 2, 1);
         }
     }
 }

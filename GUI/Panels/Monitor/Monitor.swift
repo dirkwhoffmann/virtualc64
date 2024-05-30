@@ -225,5 +225,6 @@ extension Monitor {
 
     override func windowWillClose(_ notification: Notification) {
 
+        super.windowWillClose(notification)
     }
 }

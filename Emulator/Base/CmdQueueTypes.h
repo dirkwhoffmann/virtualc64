@@ -35,7 +35,7 @@ enum_long(CMD_TYPE)
     // C64
     CMD_ALARM_ABS,              ///< Schedule an alarm (absolute cycle)
     CMD_ALARM_REL,              ///< Schedule an alarm (relative cycle)
-
+    CMD_INSPECTION_TARGET,      ///< Sets the auto-inspection component
     // CPU
     CMD_CPU_BRK,                ///< Let the CPU execute a BRK instruction
     CMD_CPU_NMI,                ///< Emulate an external expansion port NMI
@@ -96,6 +96,7 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
 
             case CMD_ALARM_ABS:             return "ALARM_ABS";
             case CMD_ALARM_REL:             return "ALARM_REL";
+            case CMD_INSPECTION_TARGET:     return "INSPECTION_TARGET";
 
             case CMD_CPU_BRK:               return "CPU_BRK";
             case CMD_CPU_NMI:               return "CPU_NMI";

@@ -32,7 +32,9 @@ class MemTableView: NSTableView {
     }
     
     var bankType: vc64.MemoryType {
-        return inspector.bankType[inspector.displayedBank]!
+
+        let type = inspector.bankType[inspector.displayedBank]!
+        return type.rawValue == 0 ? .NONE : type
     }
 }
 

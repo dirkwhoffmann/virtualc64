@@ -47,10 +47,14 @@ class DialogController: NSWindowController, DialogControllerDelegate {
     // Remembers whether awakeFromNib has been called
     var awake = false
 
+    // Lock that is kept during the lifetime of the dialog
+    var lock = NSLock()
+
     convenience init?(with controller: MyController, nibName: NSNib.Name) {
 
         self.init(windowNibName: nibName)
-
+        
+        lock.lock()
         parent = controller
         emu = parent.emu
     }
@@ -72,14 +76,14 @@ class DialogController: NSWindowController, DialogControllerDelegate {
     
     override func windowDidLoad() {
     }
-    
+
     override func awakeFromNib() {
 
         awake = true
         window?.delegate = self
         sheetWillShow()
     }
-    
+
     func sheetWillShow() {
         
     }
@@ -132,6 +136,14 @@ class DialogController: NSWindowController, DialogControllerDelegate {
 
         hideSheet()
     }
+
+    func join() {
+
+        debug(.shutdown, "Wait until window is closed...")
+
+        lock.lock()
+        lock.unlock()
+    }
 }
 
 extension DialogController: NSWindowDelegate {
@@ -139,5 +151,6 @@ extension DialogController: NSWindowDelegate {
     func windowWillClose(_ notification: Notification) {
 
         unregister()
+        lock.unlock()
     }
 }

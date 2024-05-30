@@ -390,7 +390,7 @@ C64Memory::spypeek(u16 addr, MemoryType source) const
             return ram[addr];
             
         default:
-            fatalError;
+            fatal("Invalid mem source: %ld\n", source);
     }
 }
 

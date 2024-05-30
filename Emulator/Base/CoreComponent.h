@@ -39,7 +39,7 @@ public CoreObject, public Serializable, public Suspendable, public Synchronizabl
 public:
 
     // Dummy description
-    constexpr static Descriptions descriptions = { };
+    static Descriptions descriptions;
 
     // Reference to the emulator this instance belongs to
     class Emulator &emulator;

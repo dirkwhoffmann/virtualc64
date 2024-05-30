@@ -146,29 +146,26 @@ Isepic::getSwitchDescription(isize pos) const
 void
 Isepic::setSwitch(isize pos)
 {
-    {   SUSPENDED
+    bool oldVisible = cartIsVisible();
+    Cartridge::setSwitch(pos);
+    bool newVisible = cartIsVisible();
 
-        bool oldVisible = cartIsVisible();
-        Cartridge::setSwitch(pos);
-        bool newVisible = cartIsVisible();
+    if (oldVisible != newVisible) {
 
-        if (oldVisible != newVisible) {
+        // Enforce a call to updatePeekPokeLookupTables()
+        expansionport.setCartridgeMode(CRTMODE_OFF);
 
-            // Enforce a call to updatePeekPokeLookupTables()
-            expansionport.setCartridgeMode(CRTMODE_OFF);
+        if (newVisible) {
 
-            if (newVisible) {
+            trace(CRT_DEBUG, "Activating Ipsec cartridge\n");
 
-                trace(CRT_DEBUG, "Activating Ipsec cartridge\n");
+            // Trigger NMI
+            cpu.pullDownNmiLine(INTSRC_EXP);
+            cpu.releaseNmiLine(INTSRC_EXP);
 
-                // Trigger NMI
-                cpu.pullDownNmiLine(INTSRC_EXP);
-                cpu.releaseNmiLine(INTSRC_EXP);
+        } else {
 
-            } else {
-
-                trace(CRT_DEBUG, "Hiding Ipsec cartridge\n");
-            }
+            trace(CRT_DEBUG, "Hiding Ipsec cartridge\n");
         }
     }
 }

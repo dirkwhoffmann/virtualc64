@@ -72,13 +72,13 @@ extension MyController: NSWindowDelegate {
         debug(.shutdown, "Shut down audio...")
         macAudio.shutDown()
 
-        debug(.shutdown, "Disconnect and close inspector...")
-        inspector?.emu = nil
+        debug(.shutdown, "Close inspector...")
         inspector?.close()
+        inspector?.join()
 
-        debug(.shutdown, "Disconnect and close monitor...")
-        monitor?.emu = nil
+        debug(.shutdown, "Close monitor...")
         monitor?.close()
+        monitor?.join()
 
         debug(.shutdown, "Stop renderer...")
         renderer.halt()

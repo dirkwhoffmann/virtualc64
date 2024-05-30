@@ -138,34 +138,31 @@ Expert::pressButton(isize nr)
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
 
-    {   SUSPENDED
+    switch (nr) {
 
-        switch (nr) {
+        case 1: // Reset
 
-            case 1: // Reset
+            if (switchInOnPosition()) { active = true; }
+            c64.softReset();
+            break;
 
-                if (switchInOnPosition()) { active = true; }
-                c64.softReset();
-                break;
+        case 2: // ESM (Freeze)
 
-            case 2: // ESM (Freeze)
+            if (switchInOnPosition()) { active = true; }
 
-                if (switchInOnPosition()) { active = true; }
+            /* The Expert cartridge uses two three-state buffers in parallel
+             * to force the NMI line high, even if a program leaves it low
+             * to protect itself against freezers. The following code is
+             * surely not accurate, but it forces an NMI a trigger,
+             * regardless of the current value of the NMI line.
+             */
+            u8 oldLine = cpu.getNmiLine();
+            u8 newLine = oldLine | INTSRC_EXP;
 
-                /* The Expert cartridge uses two three-state buffers in parallel
-                 * to force the NMI line high, even if a program leaves it low
-                 * to protect itself against freezers. The following code is
-                 * surely not accurate, but it forces an NMI a trigger,
-                 * regardless of the current value of the NMI line.
-                 */
-                u8 oldLine = cpu.getNmiLine();
-                u8 newLine = oldLine | INTSRC_EXP;
-
-                cpu.releaseNmiLine((IntSource)0xFF);
-                cpu.pullDownNmiLine((IntSource)newLine);
-                cpu.releaseNmiLine(INTSRC_EXP);
-                break;
-        }
+            cpu.releaseNmiLine((IntSource)0xFF);
+            cpu.pullDownNmiLine((IntSource)newLine);
+            cpu.releaseNmiLine(INTSRC_EXP);
+            break;
     }
 }
 

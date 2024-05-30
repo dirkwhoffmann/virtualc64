@@ -480,6 +480,8 @@ extension Inspector {
     
     override func windowWillClose(_ notification: Notification) {
                 
+        super.windowWillClose(notification)
+        
         // Leave debug mode
         emu.trackOff()
         emu.set(.MEM_HEATMAP, enable: false)

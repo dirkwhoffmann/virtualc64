@@ -84,8 +84,6 @@ KcsPower::pressButton(isize nr)
 {
     if (nr == 1) {
 
-        SUSPENDED
-
         expansionport.setCartridgeMode(CRTMODE_ULTIMAX);
         cpu.pullDownNmiLine(INTSRC_EXP);
     }
@@ -95,8 +93,6 @@ void
 KcsPower::releaseButton(isize nr)
 {
     if (nr == 1) {
-
-        SUSPENDED
 
         cpu.releaseNmiLine(INTSRC_EXP);
     }

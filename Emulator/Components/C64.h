@@ -309,6 +309,9 @@ public:
 public:
 
     InspectionTarget getInspectionTarget() const;
+
+private:
+
     void setInspectionTarget(InspectionTarget target);
     void removeInspectionTarget() { setInspectionTarget(INSPECTION_NONE); }
 

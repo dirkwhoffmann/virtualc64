@@ -18,6 +18,8 @@
 
 namespace vc64 {
 
+Descriptions CoreComponent::descriptions = { };
+
 const char *
 CoreComponent::objectName() const
 {
