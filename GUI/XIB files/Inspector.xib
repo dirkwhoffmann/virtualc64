@@ -119,6 +119,7 @@
                 <outlet property="memRamButton" destination="v9o-Z3-NZy" id="pbw-Iu-S4P"/>
                 <outlet property="memSearchField" destination="oqV-f6-ndp" id="Ycg-Xf-avt"/>
                 <outlet property="memSource" destination="JGr-5C-bxz" id="zse-ng-d6z"/>
+                <outlet property="memTab" destination="2Ti-8L-feC" id="Acg-5g-LLQ"/>
                 <outlet property="memTableView" destination="9cm-34-eYe" id="iCO-ae-FMN"/>
                 <outlet property="message" destination="SRP-bu-eZG" id="h82-84-Hae"/>
                 <outlet property="panel" destination="QhJ-8A-HRo" id="g4P-OI-piB"/>
@@ -2298,6 +2299,9 @@
                                                     </view>
                                                 </tabViewItem>
                                             </tabViewItems>
+                                            <connections>
+                                                <outlet property="delegate" destination="-2" id="GRh-dD-Uhi"/>
+                                            </connections>
                                         </tabView>
                                     </subviews>
                                 </view>

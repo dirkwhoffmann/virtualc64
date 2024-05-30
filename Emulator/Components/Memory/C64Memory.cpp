@@ -229,8 +229,6 @@ C64Memory::updatePeekPokeLookupTables()
 u8
 C64Memory::peek(u16 addr, MemoryType source)
 {
-    // REMOVE ASAP
-    config.heatmap = true;
     if (config.heatmap) stats.reads[addr]++;
 
     switch(source) {

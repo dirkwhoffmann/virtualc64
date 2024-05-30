@@ -119,8 +119,10 @@ extension Inspector {
         
         memBankTableView.refresh(count: count, full: full)
         memTableView.refresh(count: count, full: full)
-
-        memHeatmapView.update()
+        
+        if memTab.selectedTabViewItem?.label == "Heatmap" {
+            memHeatmapView.update()
+        }
     }
     
     private func refreshMemoryLayout() {

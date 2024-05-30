@@ -32,7 +32,6 @@ class Inspector: DialogController {
     
     // Commons
     @IBOutlet weak var panel: NSTabView!
-    @IBOutlet weak var cpuTab: NSTabView!
     @IBOutlet weak var stopAndGoButton: NSButton!
     @IBOutlet weak var stepIntoButton: NSButton!
     @IBOutlet weak var stepOverButton: NSButton!
@@ -40,6 +39,7 @@ class Inspector: DialogController {
     @IBOutlet weak var hexDecSelector: NSMatrix!
 
     // CPU panel
+    @IBOutlet weak var cpuTab: NSTabView!
     @IBOutlet weak var cpuInstrView: InstrTableView!
     @IBOutlet weak var cpuTraceView: TraceTableView!
     @IBOutlet weak var cpuBreakView: BreakTableView!
@@ -69,6 +69,7 @@ class Inspector: DialogController {
     @IBOutlet weak var cpuRdy: NSButton!
     
     // Memory panel
+    @IBOutlet weak var memTab: NSTabView!
     @IBOutlet weak var memLayoutButton: NSButton!
     @IBOutlet weak var memLayoutSlider: NSSlider!
     @IBOutlet weak var memRamButton: NSButton!
@@ -309,7 +310,10 @@ class Inspector: DialogController {
     override func showWindow(_ sender: Any?) {
 
         super.showWindow(self)
+
+        // Enter debug mode
         emu.trackOn()
+        emu.set(.MEM_HEATMAP, enable: true)
         updateInspectionTarget()
     }
         
@@ -477,8 +481,9 @@ extension Inspector {
     override func windowWillClose(_ notification: Notification) {
                 
         // Leave debug mode
-        emu?.trackOff()
-        emu?.c64.inspectionTarget = .NONE
+        emu.trackOff()
+        emu.set(.MEM_HEATMAP, enable: false)
+        emu.c64.inspectionTarget = .NONE
     }
 }
 
@@ -506,7 +511,7 @@ extension Inspector: NSTabViewDelegate {
     }
     
     func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
-                
+
         if tabView === panel {
             updateInspectionTarget()
         }
