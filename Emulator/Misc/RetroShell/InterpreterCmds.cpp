@@ -961,6 +961,15 @@ Interpreter::initCommandShell(Command &root)
 
         }, i);
 
+        root.add({cmd, "bankmap"},
+                 "Displays the memory layout",
+                 [this](Arguments& argv, long value) {
+
+            auto &drive = value ? drive9 : drive8;
+            retroShell.dump(drive, Category::BankMap);
+
+        }, i);
+
         root.add({cmd, "connect"},
                  "Connects the drive",
                  [this](Arguments& argv, long value) {

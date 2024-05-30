@@ -92,9 +92,6 @@ Drive::_dump(Category category, std::ostream& os) const
     if (category == Category::Config) {
 
         dumpConfig(os);
-
-        os << std::endl;
-        mem.dump(Category::BankMap, os);
     }
     
     if (category == Category::State) {
