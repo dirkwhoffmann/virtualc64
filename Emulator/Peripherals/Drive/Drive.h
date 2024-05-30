@@ -329,7 +329,12 @@ public:
         << writeShiftreg
         << sync
         << byteReady
-        << watchdog
+        << watchdog;
+
+        if (isSoftResetter(worker)) return;
+
+        worker
+
         << insertionStatus;
 
         if (isResetter(worker)) return;

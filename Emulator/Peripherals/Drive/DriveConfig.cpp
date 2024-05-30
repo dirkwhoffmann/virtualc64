@@ -170,7 +170,7 @@ Drive::setOption(Option opt, i64 value)
         case OPT_DRV_POWER_SWITCH:
 
             config.switchedOn = bool(value);
-            hardReset();
+            softReset();
             msgQueue.put(MSG_DRIVE_POWER, DriveMsg { .nr = i16(objid), .value = i16(value) } );
             return;
 
