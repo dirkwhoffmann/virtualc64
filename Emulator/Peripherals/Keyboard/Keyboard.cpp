@@ -249,14 +249,13 @@ Keyboard::autoType(const string &text)
                 pending.insert(trigger, Cmd(CMD_KEY_PRESS, KeyCmd { .keycode = u8(k.nr) }));
             }
 
-            // trigger += MSEC(25);
-            trigger += MSEC(50);
+            trigger += MSEC(30);
 
             // Schedule key releases
             for (C64Key &k : keys) {
                 pending.insert(trigger, Cmd(CMD_KEY_RELEASE, KeyCmd { .keycode = u8(k.nr) }));
             }
-            trigger += MSEC(1);
+            trigger += MSEC(30);
         }
     }
 
