@@ -2,9 +2,9 @@ name: CMake-MinGW
 
 on:
   push:
-    branches: [ master, dev ]
+    branches: [ master, dev, v5.0 ]
   pull_request:
-    branches: [ master, dev ]
+    branches: [ master, dev, v5.0 ]
 
 env:
   BUILD_TYPE: Release
