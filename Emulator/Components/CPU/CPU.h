@@ -20,7 +20,7 @@ using namespace vc64::peddle;
 
 namespace vc64 {
 
-class CPU final : public Peddle, public Inspectable<CPUInfo, Void> {
+class CPU final : public Peddle, public Inspectable<CPUInfo> {
 
     friend class C64;
 

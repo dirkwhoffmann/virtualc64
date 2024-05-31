@@ -18,7 +18,7 @@
 
 namespace vc64 {
 
-class Monitor final : public SubComponent, public Dumpable {
+class Monitor final : public SubComponent {
 
     Descriptions descriptions = {
         {

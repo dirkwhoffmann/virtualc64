@@ -32,7 +32,7 @@ struct ScriptInterruption: util::Exception {
     using Exception::Exception;
 };
 
-class Interpreter: public SubComponent, public Dumpable
+class Interpreter: public SubComponent
 {
     Descriptions descriptions = {{
 

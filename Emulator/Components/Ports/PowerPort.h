@@ -18,7 +18,7 @@
 
 namespace vc64 {
 
-class PowerPort final : public SubComponent, public Dumpable {
+class PowerPort final : public SubComponent {
 
     Descriptions descriptions = {{
 

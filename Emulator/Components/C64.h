@@ -88,7 +88,7 @@ static constexpr double inspectionInterval = 0.1;
  * Please note that most subcomponents have their own public API. E.g., to
  * query information from VICII, you need to invoke a method on c64.vicii.
  */
-class C64 final : public CoreComponent, public Inspectable<C64Info, Void> {
+class C64 final : public CoreComponent, public Inspectable<C64Info> {
 
     friend class Emulator;
 

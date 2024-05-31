@@ -19,7 +19,7 @@ namespace vc64 {
 
 class C64;
 
-class RegressionTester : public SubComponent, public Dumpable {
+class RegressionTester : public SubComponent {
 
     Descriptions descriptions = {{
 

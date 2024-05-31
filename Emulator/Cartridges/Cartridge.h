@@ -19,7 +19,7 @@
 
 namespace vc64 {
 
-class Cartridge : public SubComponent, public Dumpable {
+class Cartridge : public SubComponent {
 
     Descriptions descriptions = {{
 

@@ -866,7 +866,7 @@ C64::_dump(Category category, std::ostream& os) const
 void
 C64::record() const
 {
-    Inspectable<C64Info, Void>::record();
+    Inspectable<C64Info>::record();
 
     for (isize i = 0; i < SLOT_COUNT; i++) {
             inspectSlot(EventSlot(i));

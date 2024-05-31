@@ -20,7 +20,7 @@
 
 namespace vc64 {
 
-class Recorder final : public SubComponent, public Inspectable<RecorderInfo, Void> {
+class Recorder final : public SubComponent, public Inspectable<RecorderInfo> {
 
     Descriptions descriptions = {{
 

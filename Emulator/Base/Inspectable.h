@@ -62,8 +62,8 @@ public:
  *  are used internally by the component. Examples of statistical information
  *  are the average CIA activity or the current fill level of the audio buffer.
  */
-template <typename T1, typename T2>
-class Inspectable : public Dumpable {
+template <typename T1, typename T2 = Void>
+class Inspectable {
 
 protected:
     

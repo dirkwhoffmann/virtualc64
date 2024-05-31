@@ -47,7 +47,7 @@ public:
     bool isShakingRel(double dx);
 };
 
-class Mouse final : public SubComponent, public Dumpable {
+class Mouse final : public SubComponent {
     
     Descriptions descriptions = {
         {

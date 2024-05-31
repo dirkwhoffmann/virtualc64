@@ -17,7 +17,7 @@
 
 namespace vc64 {
 
-class SID final : public SubComponent, public Inspectable<SIDInfo, Void>
+class SID final : public SubComponent, public Inspectable<SIDInfo>
 {
     friend class SIDBridge;
     friend class AudioPort;

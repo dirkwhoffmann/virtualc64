@@ -147,13 +147,7 @@ ReSID::operator << (SerWriter &worker)
 void
 ReSID::record() const
 {
-    Inspectable<SIDInfo, Void>::record();
-
-    /*
-    for (EventSlot i = 0; i < SLOT_COUNT; i++) {
-        recordVoice(i);
-    }
-    */
+    Inspectable<SIDInfo>::record();
 }
 
 void

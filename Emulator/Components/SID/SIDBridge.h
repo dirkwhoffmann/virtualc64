@@ -44,7 +44,7 @@ namespace vc64 {
  *           -------------------------------------------------
  */
 
-class SIDBridge final : public SubComponent, public Dumpable {
+class SIDBridge final : public SubComponent {
 
     friend C64Memory;
     friend AudioPort;

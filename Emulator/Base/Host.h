@@ -34,7 +34,7 @@ namespace vc64 {
 /* This class stores some information about the host system. The values have
  * are set by the GUI on start and updated on-the-fly when a value changes.
  */
-class Host final : public CoreComponent, public Dumpable {
+class Host final : public CoreComponent {
 
     Descriptions descriptions = {{
 

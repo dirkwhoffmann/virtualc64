@@ -18,7 +18,7 @@
 
 namespace vc64 {
 
-class Joystick final : public SubComponent, public Dumpable {
+class Joystick final : public SubComponent {
     
     Descriptions descriptions = {
         {

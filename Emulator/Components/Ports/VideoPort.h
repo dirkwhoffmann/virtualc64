@@ -17,7 +17,7 @@
 
 namespace vc64 {
 
-class VideoPort final : public SubComponent, public Dumpable {
+class VideoPort final : public SubComponent {
 
     Descriptions descriptions = {{
 

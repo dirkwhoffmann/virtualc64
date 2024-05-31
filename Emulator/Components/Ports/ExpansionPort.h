@@ -35,7 +35,7 @@ namespace vc64 {
  *  As well read the Commodore 64 Programmers Reference Guide pages 260-267.
  */
 
-class ExpansionPort final : public SubComponent, public Inspectable<CartridgeInfo, Void> {
+class ExpansionPort final : public SubComponent, public Inspectable<CartridgeInfo> {
     
     Descriptions descriptions = {{
 

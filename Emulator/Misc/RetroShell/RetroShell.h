@@ -21,7 +21,7 @@
 
 namespace vc64 {
 
-class RetroShell : public SubComponent, public Dumpable {
+class RetroShell : public SubComponent {
 
     Descriptions descriptions = {{
 

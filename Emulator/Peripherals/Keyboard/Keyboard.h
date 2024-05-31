@@ -20,7 +20,7 @@
 
 namespace vc64 {
 
-class Keyboard final : public SubComponent, public Dumpable {
+class Keyboard final : public SubComponent {
 
     Descriptions descriptions = {{
 
