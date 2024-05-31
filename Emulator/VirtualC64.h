@@ -30,8 +30,6 @@ namespace vc64 {
  */
 class VirtualC64 : vc64::Emulator {
 
-    using vc64::Emulator::Thread::Suspendable;
-
 
     //
     // Static methods
