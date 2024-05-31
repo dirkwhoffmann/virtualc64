@@ -186,29 +186,34 @@ using namespace vc64;
 
 - (NSInteger)addr:(NSInteger)nr
 {
-    return [self guards]->guardNr(nr)->addr;
+    return [self guards]->guardNr(nr) ? [self guards]->guardNr(nr)->addr : -1;
 }
 
+/*
 - (BOOL)isEnabled:(NSInteger)nr
 {
-    return [self guards]->isEnabled(nr);
+    return [self guards]->guardNr(nr) && [self guards]->guardNr(nr)->enabled;
 }
+*/
 
 - (BOOL)isEnabledAt:(NSInteger)addr
 {
-    return [self guards]->isEnabledAt(u32(addr));
+    return [self guards]->guardAt((u32)addr) && [self guards]->guardAt((u32)addr)->enabled;
 }
 
+/*
 - (BOOL)isDisabled:(NSInteger)nr
 {
-    return [self guards]->isDisabled(nr);
+    return [self guards]->guardNr(nr) && ![self guards]->guardNr(nr)->enabled;
 }
+*/
 
 - (BOOL)isDisabledAt:(NSInteger)addr
 {
-    return [self guards]->isDisabledAt(u32(addr));
+    return [self guards]->guardAt((u32)addr) && ![self guards]->guardAt((u32)addr)->enabled;
 }
 
+/*
 - (void)enable:(NSInteger)nr
 {
     [self guards]->enable(nr);
@@ -226,19 +231,22 @@ using namespace vc64;
 
 - (void)replace:(NSInteger)nr addr:(NSInteger)addr
 {
-    [self guards]->replace(nr, (u32)addr);
+    if ([self guards]->guardNr(nr)) [self guards]->guardNr(nr)->moveTo((u32)addr);
 }
-
+*/
+/*
 - (BOOL)isSet:(NSInteger)nr
 {
-    return [self guards]->isSet(nr);
+    return [self guards]->guardNr(nr) != nullptr;
 }
+*/
 
 - (BOOL)isSetAt:(NSInteger)addr
 {
-    return [self guards]->isSetAt((u32)addr);
+    return [self guards]->guardAt((u32)addr) != nullptr;
 }
 
+/*
 - (void)enableAt:(NSInteger)addr
 {
     [self guards]->enableAt((u32)addr);
@@ -263,6 +271,7 @@ using namespace vc64;
 {
     return [self guards]->removeAll();
 }
+*/
 
 @end
 
@@ -360,6 +369,57 @@ using namespace vc64;
     auto length = [self cpu]->disassembleRecorded(result, [fmt UTF8String], u16(addr));
     *len = (NSInteger)length;
     return @(result);
+}
+
+- (GuardInfo) guardInfo:(Guard *)guard
+{
+    GuardInfo result;
+
+    result.addr = guard ? guard->addr : 0;
+    result.enabled = guard ? guard->enabled : 0;
+    result.hits = guard ? guard->hits : 0;
+    result.ignore = guard ? guard->ignore : 0;
+
+    return result;
+}
+
+- (BOOL) hasBreakpointWithNr:(NSInteger)nr
+{
+    return [self cpu]->breakpoints.guardNr(nr) != nullptr;
+}
+
+- (GuardInfo) breakpointWithNr:(NSInteger)nr
+{
+    return [self guardInfo:[self cpu]->breakpoints.guardNr(nr)];
+}
+
+- (BOOL) hasBreakpointAtAddr:(NSInteger)addr
+{
+    return [self cpu]->breakpoints.guardAt(u32(addr)) != nullptr;
+}
+
+- (GuardInfo) breakpointAtAddr:(NSInteger)addr
+{
+    return [self guardInfo:[self cpu]->breakpoints.guardAt(u32(addr))];
+}
+
+- (BOOL) hasWatchpointWithNr:(NSInteger)nr
+{
+    return [self cpu]->watchpoints.guardNr(nr) != nullptr;
+}
+
+- (GuardInfo) watchpointWithNr:(NSInteger)nr
+{
+    return [self guardInfo:[self cpu]->watchpoints.guardNr(nr)];
+}
+
+- (BOOL) hasWatchpointAtAddr:(NSInteger)addr
+{
+    return [self cpu]->watchpoints.guardAt(u32(addr)) != nullptr;
+}
+- (GuardInfo) watchpointAtAddr:(NSInteger)addr
+{
+    return [self guardInfo:[self cpu]->watchpoints.guardAt(u32(addr))];
 }
 
 @end
@@ -2473,6 +2533,11 @@ using namespace vc64;
 - (void)put:(CmdType)type value:(NSInteger)value
 {
     [self emu]->put(type, value);
+}
+
+- (void)put:(CmdType)type value:(NSInteger)value value2:(NSInteger)value2
+{
+    [self emu]->put(type, value, value2);
 }
 
 - (void)put:(CmdType)type key:(KeyCmd)cmd

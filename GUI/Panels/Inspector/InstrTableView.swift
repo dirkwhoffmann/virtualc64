@@ -68,19 +68,19 @@ class InstrTableView: NSTableView {
         var addr = addrInFirstRow
         
         for i in 0 ..< numRows {
-            
+
             var length = 0
             addrInRow[i] = addr
             addrStrInRow[i] = cpu.disassemble(addr, format: "%p", length: &length)
             instrInRow[i] = cpu.disassemble(addr, format: "%i", length: &length)
             dataInRow[i] = cpu.disassemble(addr, format: "%b", length: &length)
 
-            if breakpoints.isDisabled(at: addr) {
-                bpInRow[i] = BreakpointType.disabled
-            } else if breakpoints.isSet(at: addr) {
+            if !cpu.hasBreakpoint(atAddr: addr) {
+                bpInRow[i] = BreakpointType.none
+            } else if cpu.breakpoint(atAddr: addr).enabled {
                 bpInRow[i] = BreakpointType.enabled
             } else {
-                bpInRow[i] = BreakpointType.none
+                bpInRow[i] = BreakpointType.disabled
             }
             
             rowForAddr[addr] = i
@@ -138,17 +138,17 @@ class InstrTableView: NSTableView {
     }
     
     func clickAction(row: Int) {
-        
+
         if let addr = addrInRow[row] {
-            
-            if !breakpoints.isSet(at: addr) {
-                breakpoints.setAt(addr)
-            } else if breakpoints.isDisabled(at: addr) {
-                breakpoints.enable(at: addr)
-            } else if breakpoints.isEnabled(at: addr) {
-                breakpoints.disable(at: addr)
+
+            if !cpu.hasBreakpoint(atAddr: addr) {
+                emu.put(.BP_SET_AT, value: addr)
+            } else if cpu.breakpoint(atAddr: addr).enabled {
+                emu.put(.BP_DISABLE_AT, value: addr)
+            } else {
+                emu.put(.BP_ENABLE_AT, value: addr)
             }
-            
+
             inspector.fullRefresh()
         }
     }
@@ -165,10 +165,10 @@ class InstrTableView: NSTableView {
         
         if let addr = addrInRow[row] {
             
-            if breakpoints.isSet(at: addr) {
-                breakpoints.remove(at: addr)
+            if cpu.hasBreakpoint(atAddr: addr) {
+                emu.put(.BP_REMOVE_AT, value: addr)
             } else {
-                breakpoints.setAt(addr)
+                emu.put(.BP_SET_AT, value: addr)
             }
             
             inspector.fullRefresh()

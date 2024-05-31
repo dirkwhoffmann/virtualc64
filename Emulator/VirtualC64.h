@@ -357,7 +357,7 @@ public:
     /** @brief  Feeds a command into the command queue.
      */
     void put(const Cmd &cmd);
-    void put(CmdType type, i64 payload = 0) { put(Cmd(type, payload)); }
+    void put(CmdType type, i64 payload = 0, i64 payload2 = 0) { put(Cmd(type, payload, payload2)); }
     void put(CmdType type, ConfigCmd payload)  { put(Cmd(type, payload)); }
     void put(CmdType type, KeyCmd payload)  { put(Cmd(type, payload)); }
     void put(CmdType type, CoordCmd payload)  { put(Cmd(type, payload)); }
@@ -561,31 +561,11 @@ public:
          */
         Guard *guardAt(u32 addr) const;
 
-        /// @}
-        /// @name Adding or removing guards
-        /// @{
-
-        /** Checks whether the guard list contains a guard at a specific position.
-         *  @param  nr      A position in the guard list.
-         */
-        bool isSet(long nr) const;
-
-        /** Checks whether a guard is set on a specific memory location.
-         *  @param  addr    A memory location.
-         */
-        bool isSetAt(u32 addr) const;
-
         /** Sets a guard on a specific memory location.
          *  @param  addr    A memory location.
          *  @param  ignore  An optional ignore counter.
          */
         void setAt(u32 addr, long ignore = 0);
-
-        /** Replaces the observed address of a specific guard.
-         *  @param  nr      A position in the guard list.
-         *  @param  addr    The new memory location.
-         */
-        void replace(long nr, u32 addr);
 
         /** Deletes a guard from the guard list.
          *  @param  nr      A position in the guard list.
@@ -604,34 +584,6 @@ public:
         /// @}
         /// @name Enabling or disabling guards
         /// @{
-
-        /** Checks if a guards is enabled.
-         *  @param  nr      A position in the guard list.
-         *  @return true if the guard list contains an enabled guard at the
-         *  provided location.
-         */
-        bool isEnabled(long nr) const;
-
-        /** Checks if a guards is enabled.
-         *  @param  addr    Observed memory address of the guard to check.
-         *  @return true if the provided memory location is observed by an
-         *  enabled guard.
-         */
-        bool isEnabledAt(u32 addr) const;
-
-        /** Checks if a guards is disabled.
-         *  @param  nr      A position in the guard list.
-         *  @return true if the guard list contains a disabled guard at the
-         *  provided location.
-         */
-        bool isDisabled(long nr) const;
-
-        /** Checks if a guards is disabled.
-         *  @param  addr    Observed memory address of the guard to check.
-         *  @return true if the provided memory location is observed by a
-         *  disabled guard.
-         */
-        bool isDisabledAt(u32 addr) const;
 
         /** Enables a guard
          *  @param  nr      Position of the guard in the guard list.

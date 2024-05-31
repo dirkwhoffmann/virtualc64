@@ -124,7 +124,7 @@ public:
 
 public:
 
-    // Processes a keyboard command
+    // Processes a command from the command queue
     void processCommand(const Cmd &cmd);
 
     // Processes the next auto-type event

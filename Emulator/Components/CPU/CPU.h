@@ -14,7 +14,8 @@
 
 #include "CPUTypes.h"
 #include "Peddle.h"
-#include "SubComponent.h"
+// #include "SubComponent.h"
+#include "CmdQueue.h"
 
 using namespace vc64::peddle;
 
@@ -215,24 +216,73 @@ public:
 
 
     //
-    // Debugging
+    // Processing commands
     //
 
 public:
 
-    // Manages the breakpoint list
+    // Processes a command from the command queue
+    void processCommand(const Cmd &cmd);
+
+
+    //
+    // Debugging (Breakpoints)
+    //
+
+public:
+
     void setBreakpoint(u32 addr, isize ignores = 0) throws;
+    void moveBreakpoint(isize nr, u32 newAddr) throws;
+
     void deleteBreakpoint(isize nr) throws;
-    void enableBreakpoint(isize nr) throws;
-    void disableBreakpoint(isize nr) throws;
+    void deleteBreakpointAt(u32 addr) throws;
+    void deleteAllBreakpoints() throws;
+
+    void enableBreakpoint(isize nr) throws { setEnableBreakpoint(nr, true); }
+    void enableBreakpointAt(u32 addr) throws { setEnableBreakpointAt(addr, true); }
+    void enableAllBreakpoints() throws { setEnableAllBreakpoints(true); }
+
+    void disableBreakpoint(isize nr) throws { setEnableBreakpoint(nr, false); }
+    void disableBreakpointAt(u32 addr) throws { setEnableBreakpointAt(addr, false); }
+    void disableAllBreakpoints() throws { setEnableAllBreakpoints(false); }
+
     void toggleBreakpoint(isize nr) throws;
 
-    // Manages the watchpoint list
+private:
+
+    void setEnableBreakpoint(isize nr, bool value) throws;
+    void setEnableBreakpointAt(u32 addr, bool value) throws;
+    void setEnableAllBreakpoints(bool value) throws;
+
+
+    //
+    // Debugging (Watchpoints)
+    //
+
+public:
+
     void setWatchpoint(u32 addr, isize ignores = 0) throws;
+    void moveWatchpoint(isize nr, u32 newAddr) throws;
+
     void deleteWatchpoint(isize nr) throws;
-    void enableWatchpoint(isize nr) throws;
-    void disableWatchpoint(isize nr) throws;
+    void deleteWatchpointAt(u32 addr) throws;
+    void deleteAllWatchpoints() throws;
+
+    void enableWatchpoint(isize nr) throws { setEnableWatchpoint(nr, true); }
+    void enableWatchpointAt(u32 addr) throws { setEnableWatchpointAt(addr, true); }
+    void enableAllWatchpoints() throws { setEnableAllWatchpoints(true); }
+
+    void disableWatchpoint(isize nr) throws { setEnableWatchpoint(nr, false); }
+    void disableWatchpointAt(u32 addr) throws { setEnableWatchpointAt(addr, false); }
+    void disableAllWatchpoints() throws { setEnableAllWatchpoints(false); }
+
     void toggleWatchpoint(isize nr) throws;
+
+private:
+
+    void setEnableWatchpoint(isize nr, bool value) throws;
+    void setEnableWatchpointAt(u32 addr, bool value) throws;
+    void setEnableAllWatchpoints(bool value) throws;
 };
 
 }

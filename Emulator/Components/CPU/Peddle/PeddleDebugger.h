@@ -31,6 +31,9 @@ public:
     
     // Returns true if the guard hits
     bool eval(u32 addr);
+
+    // Replaces the address by another
+    void moveTo(u32 newAddr);
 };
 
 // Base class for a collection of guards
@@ -85,19 +88,12 @@ public:
     bool isSetAt(u32 addr) const { return guardAtAddr(addr) != nullptr; }
 
     void setAt(u32 addr, long ignores = 0);
-    void replace(long nr, u32 addr);
+    void moveTo(long nr, u32 newAddr);
 
     void remove(long nr);
     void removeAt(u32 addr);
     void removeAll() { count = 0; setNeedsCheck(false); }
 
-
-    // DEPRECATED
-    /*
-    [[deprecated]] bool isSetAndEnabledAt(u32 addr) const;
-    [[deprecated]] bool isSetAndDisabledAt(u32 addr) const;
-    [[deprecated]] bool isSetAndConditionalAt(u32 addr) const;
-    */
 
     //
     // Enabling or disabling guards
@@ -110,10 +106,15 @@ public:
 
     void enable(long nr) { setEnable(nr, true); }
     void enableAt(u32 addr) { setEnableAt(addr, true); }
+    void enableAll() { setEnableAll(true); }
+
     void disable(long nr) { setEnable(nr, false); }
     void disableAt(u32 addr) { setEnableAt(addr, false); }
+    void disableAll() { setEnableAll(false); }
+
     void setEnable(long nr, bool val);
     void setEnableAt(u32 addr, bool val);
+    void setEnableAll(bool val);
 
     void ignore(long nr, long count);
 

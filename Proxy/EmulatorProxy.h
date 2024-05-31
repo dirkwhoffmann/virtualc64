@@ -219,6 +219,7 @@ using namespace vc64;
 
 - (void)put:(CmdType)cmd;
 - (void)put:(CmdType)type value:(NSInteger)value;
+- (void)put:(CmdType)type value:(NSInteger)value value2:(NSInteger)value2;
 - (void)put:(CmdType)type key:(KeyCmd)cmd;
 - (void)put:(CmdType)type coord:(CoordCmd)cmd;
 - (void)put:(CmdType)type action:(GamePadCmd)cmd;
@@ -271,26 +272,31 @@ using namespace vc64;
 @interface GuardsProxy : Proxy { }
 
 @property (readonly) NSInteger elements;
+
+/*
 - (NSInteger)addr:(NSInteger)nr;
 
 - (BOOL)isSet:(NSInteger)nr;
 - (BOOL)isSetAt:(NSInteger)addr;
 - (void)setAt:(NSInteger)addr;
-- (void)remove:(NSInteger)nr;
-- (void)removeAt:(NSInteger)addr;
-- (void)removeAll;
+*/
+// - (void)remove:(NSInteger)nr;
+// - (void)removeAt:(NSInteger)addr;
+// - (void)removeAll;
 
-- (void)replace:(NSInteger)nr addr:(NSInteger)addr;
+// - (void)replace:(NSInteger)nr addr:(NSInteger)addr;
 
-- (BOOL)isEnabled:(NSInteger)nr;
+// - (BOOL)isEnabled:(NSInteger)nr;
 - (BOOL)isEnabledAt:(NSInteger)addr;
-- (BOOL)isDisabled:(NSInteger)nr;
+// - (BOOL)isDisabled:(NSInteger)nr;
 - (BOOL)isDisabledAt:(NSInteger)addr;
 
+/*
 - (void)enable:(NSInteger)nr;
 - (void)enableAt:(NSInteger)addr;
 - (void)disable:(NSInteger)nr;
 - (void)disableAt:(NSInteger)addr;
+*/
 
 @end
 
@@ -324,6 +330,14 @@ using namespace vc64;
 // CPU
 //
 
+struct GuardInfo {
+
+    u32 addr;
+    bool enabled;
+    long hits;
+    long ignore;
+};
+
 @interface CPUProxy : SubComponentProxy { }
 
 @property (readonly) CPUInfo info;
@@ -337,6 +351,16 @@ using namespace vc64;
 
 - (NSString *)disassemble:(NSInteger)addr format:(NSString *)fmt length:(NSInteger *)len;
 - (NSString *)disassembleRecorded:(NSInteger)i format:(NSString *)fmt length:(NSInteger *)len;
+
+- (BOOL) hasBreakpointWithNr:(NSInteger)nr;
+- (GuardInfo) breakpointWithNr:(NSInteger)nr;
+- (BOOL) hasBreakpointAtAddr:(NSInteger)addr;
+- (GuardInfo) breakpointAtAddr:(NSInteger)addr;
+
+- (BOOL) hasWatchpointWithNr:(NSInteger)nr;
+- (GuardInfo) watchpointWithNr:(NSInteger)nr;
+- (BOOL) hasWatchpointAtAddr:(NSInteger)addr;
+- (GuardInfo) watchpointAtAddr:(NSInteger)addr;
 
 @end
 

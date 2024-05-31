@@ -177,13 +177,39 @@ Emulator::update()
                 set(cmd.config.option, cmd.config.value, cmd.config.id);
                 break;
 
-            case CMD_CPU_BRK:
-            case CMD_CPU_NMI:
             case CMD_ALARM_ABS:
             case CMD_ALARM_REL:
             case CMD_INSPECTION_TARGET:
                 
                 main.process(cmd);
+                break;
+
+            case CMD_CPU_BRK:
+            case CMD_CPU_NMI:
+            case CMD_BP_SET_AT:
+            case CMD_BP_MOVE_TO:
+            case CMD_BP_REMOVE_NR:
+            case CMD_BP_REMOVE_AT:
+            case CMD_BP_REMOVE_ALL:
+            case CMD_BP_ENABLE_NR:
+            case CMD_BP_ENABLE_AT:
+            case CMD_BP_ENABLE_ALL:
+            case CMD_BP_DISABLE_NR:
+            case CMD_BP_DISABLE_AT:
+            case CMD_BP_DISABLE_ALL:
+            case CMD_WP_SET_AT:
+            case CMD_WP_MOVE_TO:
+            case CMD_WP_REMOVE_NR:
+            case CMD_WP_REMOVE_AT:
+            case CMD_WP_REMOVE_ALL:
+            case CMD_WP_ENABLE_NR:
+            case CMD_WP_ENABLE_AT:
+            case CMD_WP_ENABLE_ALL:
+            case CMD_WP_DISABLE_NR:
+            case CMD_WP_DISABLE_AT:
+            case CMD_WP_DISABLE_ALL:
+
+                main.cpu.processCommand(cmd);
                 break;
 
             case CMD_KEY_PRESS:

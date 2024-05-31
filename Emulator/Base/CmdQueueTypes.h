@@ -36,9 +36,36 @@ enum_long(CMD_TYPE)
     CMD_ALARM_ABS,              ///< Schedule an alarm (absolute cycle)
     CMD_ALARM_REL,              ///< Schedule an alarm (relative cycle)
     CMD_INSPECTION_TARGET,      ///< Sets the auto-inspection component
+    
     // CPU
     CMD_CPU_BRK,                ///< Let the CPU execute a BRK instruction
     CMD_CPU_NMI,                ///< Emulate an external expansion port NMI
+
+    // CPU (Breakpoints)
+    CMD_BP_SET_AT,              ///< Set a breakpoint
+    CMD_BP_MOVE_TO,             ///< Change the address of breakpoint
+    CMD_BP_REMOVE_NR,           ///< Remove the n-th breakpoint
+    CMD_BP_REMOVE_AT,           ///< Remove the breakpoint at an address
+    CMD_BP_REMOVE_ALL,          ///< Remove all brekpoints
+    CMD_BP_ENABLE_NR,           ///< Enable the n-th breakpoint
+    CMD_BP_ENABLE_AT,           ///< Enable the breakpoint at an address
+    CMD_BP_ENABLE_ALL,          ///< Enable all brekpoints
+    CMD_BP_DISABLE_NR,          ///< Disable the n-th breakpoint
+    CMD_BP_DISABLE_AT,          ///< Disable the breakpoint at an address
+    CMD_BP_DISABLE_ALL,         ///< Disable all brekpoints
+
+    // CPU (Watchpoints)
+    CMD_WP_SET_AT,              ///< Set a watchpoint
+    CMD_WP_MOVE_TO,             ///< Change the address of watchpoint
+    CMD_WP_REMOVE_NR,           ///< Remove the n-th watchpoint
+    CMD_WP_REMOVE_AT,           ///< Remove the watchpoint at an address
+    CMD_WP_REMOVE_ALL,          ///< Remove all watchpoints
+    CMD_WP_ENABLE_NR,           ///< Enable the n-th watchpoint
+    CMD_WP_ENABLE_AT,           ///< Enable the watchpoint at an address
+    CMD_WP_ENABLE_ALL,          ///< Enable all watchpoints
+    CMD_WP_DISABLE_NR,          ///< Disable the n-th watchpoint
+    CMD_WP_DISABLE_AT,          ///< Disable the watchpoint at an address
+    CMD_WP_DISABLE_ALL,         ///< Disable all watchpoints
 
     // Keyboard
     CMD_KEY_PRESS,              ///< Press a key on the C64 keyboard
@@ -100,6 +127,28 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
 
             case CMD_CPU_BRK:               return "CPU_BRK";
             case CMD_CPU_NMI:               return "CPU_NMI";
+
+            case CMD_BP_SET_AT:             return "BP_SET_AT";
+            case CMD_BP_REMOVE_NR:          return "BP_REMOVE_NR";
+            case CMD_BP_REMOVE_AT:          return "BP_REMOVE_AT";
+            case CMD_BP_REMOVE_ALL:         return "BP_REMOVE_ALL";
+            case CMD_BP_ENABLE_NR:          return "BP_ENABLE_NR";
+            case CMD_BP_ENABLE_AT:          return "BP_ENABLE_AT";
+            case CMD_BP_ENABLE_ALL:         return "BP_ENABLE_ALL";
+            case CMD_BP_DISABLE_NR:         return "BP_DISABLE_NR";
+            case CMD_BP_DISABLE_AT:         return "BP_DISABLE_AT";
+            case CMD_BP_DISABLE_ALL:        return "BP_DISABLE_ALL";
+
+            case CMD_WP_SET_AT:             return "WP_SET_AT";
+            case CMD_WP_REMOVE_NR:          return "WP_REMOVE_NR";
+            case CMD_WP_REMOVE_AT:          return "WP_REMOVE_AT";
+            case CMD_WP_REMOVE_ALL:         return "WP_REMOVE_ALL";
+            case CMD_WP_ENABLE_NR:          return "WP_ENABLE_NR";
+            case CMD_WP_ENABLE_AT:          return "WP_ENABLE_AT";
+            case CMD_WP_ENABLE_ALL:         return "WP_ENABLE_ALL";
+            case CMD_WP_DISABLE_NR:         return "WP_DISABLE_NR";
+            case CMD_WP_DISABLE_AT:         return "WP_DISABLE_AT";
+            case CMD_WP_DISABLE_ALL:        return "WP_DISABLE_ALL";
 
             case CMD_KEY_PRESS:             return "KEY_PRESS";
             case CMD_KEY_RELEASE:           return "KEY_RELEASE";
@@ -196,7 +245,7 @@ struct Cmd
     // Payload
     union {
 
-        i64 value;
+        struct { i64 value; i64 value2; };
         ConfigCmd config;
         KeyCmd key;
         CoordCmd coord;
@@ -207,7 +256,7 @@ struct Cmd
     };
 
     Cmd() { }
-    Cmd(CmdType type, i64 value = 0) : type(type), value(value) { }
+    Cmd(CmdType type, i64 v1 = 0, i64 v2 = 0) : type(type), value(v1), value2(v2) { }
     Cmd(CmdType type, const KeyCmd &cmd) : type(type), key(cmd) { }
     Cmd(CmdType type, const CoordCmd &cmd) : type(type), coord(cmd) { }
     Cmd(CmdType type, const GamePadCmd &cmd) : type(type), action(cmd) { }

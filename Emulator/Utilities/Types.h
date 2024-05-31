@@ -15,21 +15,6 @@
 #include <sys/types.h>
 #include <stdint.h>
 
-//
-// Booleans
-//
-
-// #include <stdbool.h>
-
-
-//
-// Strings
-//
-
-#include <string>
-#include <cstring>
-using std::string;
-
 
 //
 // Integers
@@ -54,6 +39,15 @@ typedef unsigned long      usize;
 
 
 //
+// Strings
+//
+
+#include <string>
+#include <cstring>
+using std::string;
+
+
+//
 // Optionals
 //
 
@@ -61,8 +55,22 @@ typedef unsigned long      usize;
 using std::optional;
 
 
-// Wrapper for declaring enums
+// 
+// Enums
+//
+
+#if defined(__SWIFT__)
+
 #define new_enum_generic(_name, _type) \
 enum __attribute__((enum_extensibility(open))) _name : _type
 #define enum_long(_name) new_enum_generic(_name, long)
 #define enum_i8(_name) new_enum_generic(_name, i8)
+
+#else
+
+#define new_enum_generic(_name, _type) \
+enum _name : _type
+#define enum_long(_name) new_enum_generic(_name, long)
+#define enum_i8(_name) new_enum_generic(_name, i8)
+
+#endif

@@ -11,6 +11,7 @@ class GuardTableView: NSTableView {
 
     @IBOutlet weak var inspector: Inspector!
     var emu: EmulatorProxy { return inspector.parent.emu }
+    var cpu: CPUProxy { return emu.cpu }
     var breakpoints: GuardsProxy { return emu.breakpoints }
     var watchpoints: GuardsProxy { return emu.watchpoints }
 
@@ -127,58 +128,53 @@ class BreakTableView: GuardTableView {
         numRows = breakpoints.elements
 
         for i in 0 ..< numRows {
-            disabledCache[i] = breakpoints.isDisabled(i)
-            addrCache[i] = breakpoints.addr(i)
+
+            let info = cpu.breakpoint(withNr: i)
+            disabledCache[i] = !info.enabled
+            addrCache[i] = Int(info.addr)
         }
     }
 
     override func click(row: Int, col: Int) {
-        
-        emu.suspend()
-        
-        if col == 0 {
-            
-            // Enable / Disable
-            if breakpoints.isDisabled(row) {
-                breakpoints.enable(row)
-            } else {
-                breakpoints.disable(row)
-            }
-            inspector.fullRefresh()
-        }
-        
-        if col == 0 || col == 1 {
-            
-            // Jump to breakpoint address
-            let addr = breakpoints.addr(row)
-            if addr <= 0xFFFFFF {
+
+        if cpu.hasBreakpoint(withNr: row) {
+
+            let bp = cpu.breakpoint(withNr: row)
+
+            if col == 0 {
+
+                // Toggle enable flag
+                emu.put(bp.enabled ? .BP_DISABLE_NR : .BP_ENABLE_NR, value: row)
                 inspector.fullRefresh()
-                inspector.cpuInstrView.jumpTo(addr: addr)
+            }
+
+            if (col == 0 || col == 1) && cpu.hasBreakpoint(withNr: row) {
+
+                // Jump to breakpoint address
+                inspector.fullRefresh()
+                inspector.cpuInstrView.jumpTo(addr: Int(bp.addr))
+            }
+
+            if col == 2 {
+
+                // Delete
+                emu.put(.BP_REMOVE_NR, value: row)
+                inspector.fullRefresh()
             }
         }
-        
-        if col == 2 {
-            
-            // Delete
-            breakpoints.remove(row)
-            inspector.fullRefresh()
-        }
-        
-        emu.resume()
     }
 
     override func edit(row: Int, addr: Int) {
 
         // Abort if a breakpoint is already set
-        if breakpoints.isSet(at: addr) { NSSound.beep(); return }
-        
+        if cpu.hasBreakpoint(atAddr: addr) { NSSound.beep(); return }
+
         emu.suspend()
         
-        if row == numRows {
-            breakpoints.setAt(addr)
+        if row < numRows {
+            emu.put(.BP_MOVE_TO, value: row, value2: addr)
         } else {
-            assert(row < numRows)
-            breakpoints.replace(row, addr: addr)
+            emu.put(.BP_SET_AT, value: addr)
         }
         
         inspector.cpuInstrView.jumpTo(addr: addr)
@@ -194,8 +190,10 @@ class WatchTableView: GuardTableView {
         numRows = watchpoints.elements
 
         for i in 0 ..< numRows {
-            disabledCache[i] = watchpoints.isDisabled(i)
-            addrCache[i] = watchpoints.addr(i)
+
+            let info = cpu.watchpoint(withNr: i)
+            disabledCache[i] = !info.enabled
+            addrCache[i] = Int(info.addr)
         }
         
         symEnabled = "⚠️"
@@ -203,39 +201,38 @@ class WatchTableView: GuardTableView {
 
     override func click(row: Int, col: Int) {
         
-        if col == 0 {
-            
-            // Toggle enable status
-            if watchpoints.isDisabled(row) {
-                watchpoints.enable(row)
-            } else {
-                watchpoints.disable(row)
+        if cpu.hasWatchpoint(withNr: row) {
+
+            let wp = cpu.watchpoint(withNr: row)
+
+            if col == 0 {
+
+                emu.put(wp.enabled ? .WP_DISABLE_NR : .WP_ENABLE_NR, value: row)
+                inspector.fullRefresh()
             }
-            inspector.fullRefresh()
-        }
-        
-        if col == 2 {
             
-            // Delete
-            watchpoints.remove(row)
-            inspector.fullRefresh()
+            if col == 2 {
+
+                // Delete
+                emu.put(.WP_REMOVE_NR, value: row)
+                inspector.fullRefresh()
+            }
         }
     }
     
     override func edit(row: Int, addr: Int) {
         
         // Abort if a watchpoint is already set
-        if watchpoints.isSet(at: addr) { NSSound.beep(); return }
-        
+        if cpu.hasBreakpoint(atAddr: addr) { NSSound.beep(); return }
+
         emu.suspend()
         
-        if row == numRows {
-            watchpoints.setAt(addr)
+        if row < numRows {
+            emu.put(.WP_MOVE_TO, value: row)
         } else {
-            assert(row < numRows)
-            watchpoints.replace(row, addr: addr)
+            emu.put(.WP_SET_AT, value: addr)
         }
-        
+
         emu.resume()
     }
 }
