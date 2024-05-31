@@ -41,29 +41,8 @@ public:
     using SubComponent::SubComponent;
     const Descriptions &getDescriptions() const override { return descriptions; }
     const char *objectName() const override { return "Debugger"; }
-//     void _dump(Category category, std::ostream& os) const override { }
 
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
-
-    //
-    // Controlling program execution
-    //
-
-public:
-
-    /*
-    // Pauses or continues the emulation
-    void stopAndGo();
-
-    // Executes one CPU instruction
-    void stepInto();
-
-    // Executes to the instruction below the current PC
-    void stepOver();
-
-    // Continues execution at the specified address
-    void jump(u32 addr);
-    */
 
 
     //

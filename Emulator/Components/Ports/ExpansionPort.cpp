@@ -380,8 +380,8 @@ ExpansionPort::processCommand(const Cmd &cmd)
 {
     switch (cmd.type) {
 
-        case CMD_CRT_BUTTON_PRESS:      pressButton(cmd.value); break;
-        case CMD_CRT_BUTTON_RELEASE:    releaseButton(cmd.value); break;
+        case CMD_CRT_BUTTON_PRESS:      pressButton(isize(cmd.value)); break;
+        case CMD_CRT_BUTTON_RELEASE:    releaseButton(isize(cmd.value)); break;
         case CMD_CRT_SWITCH_LEFT:       setSwitch(-1); break;
         case CMD_CRT_SWITCH_NEUTRAL:    setSwitch(0); break;
         case CMD_CRT_SWITCH_RIGHT:      setSwitch(1); break;

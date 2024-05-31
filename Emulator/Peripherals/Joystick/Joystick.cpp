@@ -183,7 +183,7 @@ void
 Joystick::processEvent()
 {
     // Get the number of remaining bullets
-    auto shots = objid == PORT_1 ? c64.data[SLOT_AFI1] : c64.data[SLOT_AFI2];
+    auto shots = objid == PORT_1 ? (isize)c64.data[SLOT_AFI1] : (isize)c64.data[SLOT_AFI2];
     assert(shots > 0);
 
     // Cancel the current event

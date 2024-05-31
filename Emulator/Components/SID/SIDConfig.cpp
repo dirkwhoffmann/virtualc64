@@ -148,9 +148,9 @@ SID::setOption(Option opt, i64 value)
 
         case OPT_SID_ENABLE:
 
-            if (config.enabled != value) {
+            if (config.enabled != bool(value)) {
 
-                config.enabled = value;
+                config.enabled = bool(value);
                 stream.clear(0);
                 c64.sidBridge.hardReset();
             }
@@ -176,7 +176,7 @@ SID::setOption(Option opt, i64 value)
 
         case OPT_SID_FILTER:
 
-            if (config.filter != value) {
+            if (config.filter != bool(value)) {
 
                 config.filter = bool(value);
                 setAudioFilter(bool(value));

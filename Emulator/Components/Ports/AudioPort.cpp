@@ -254,45 +254,47 @@ AudioPort::mixSingleSID(isize numSamples)
     // Check for buffer overflow
     if (free() < numSamples) handleBufferOverflow();
 
-    if (!fading && (curL + curR == 0.0 || vol0 == 0.0)) {
+    if constexpr (fading == false) {
 
-        // Fast path: All samples are zero
-        for (isize i = 0; i < numSamples; i++) (void)sid0.stream.read();
-        for (isize i = 0; i < numSamples; i++) write(SamplePair { 0, 0 } );
+        if (curL + curR == 0.0 || vol0 == 0.0) {
 
-        // Send a MUTE message if applicable
-        if (!muted) { muted = true; msgQueue.put(MSG_MUTE, true); }
+            // Fast path: All samples are zero
+            for (isize i = 0; i < numSamples; i++) (void)sid0.stream.read();
+            for (isize i = 0; i < numSamples; i++) write(SamplePair { 0, 0 } );
 
-    } else {
-
-        // Slow path: There is something to hear
-        for (isize i = 0; i < numSamples; i++) {
-
-            // Read SID sample from ring buffer
-            float ch0 = (float)sidBridge.sid0.stream.read() * vol0;
-
-            // Compute left and right channel output
-            float l = ch0 * (1 - pan0);
-            float r = ch0 * pan0;
-
-            // Modulate the master volume
-            if constexpr (fading) { volL.shift(); curL = volL.current; }
-            if constexpr (fading) { volR.shift(); curR = volR.current; }
-
-            // Apply master volume
-            l *= curL;
-            r *= curR;
-
-            // Prevent hearing loss
-            assert(abs(l) < 1.0);
-            assert(abs(r) < 1.0);
-
-            write(SamplePair { l, r } );
+            // Send a MUTE message if applicable
+            if (!muted) { muted = true; msgQueue.put(MSG_MUTE, true); }
+            return;
         }
-
-        // Send a MUTE message if applicable
-        if (muted) { muted = false; msgQueue.put(MSG_MUTE, false); }
     }
+
+    // Slow path: There is something to hear
+    for (isize i = 0; i < numSamples; i++) {
+
+        // Read SID sample from ring buffer
+        float ch0 = (float)sidBridge.sid0.stream.read() * vol0;
+
+        // Compute left and right channel output
+        float l = ch0 * (1 - pan0);
+        float r = ch0 * pan0;
+
+        // Modulate the master volume
+        if constexpr (fading) { volL.shift(); curL = volL.current; }
+        if constexpr (fading) { volR.shift(); curR = volR.current; }
+
+        // Apply master volume
+        l *= curL;
+        r *= curR;
+
+        // Prevent hearing loss
+        assert(abs(l) < 1.0);
+        assert(abs(r) < 1.0);
+
+        write(SamplePair { l, r } );
+    }
+
+    // Send a MUTE message if applicable
+    if (muted) { muted = false; msgQueue.put(MSG_MUTE, false); }
 }
 
 template <bool fading> void
@@ -312,52 +314,54 @@ AudioPort::mixMultiSID(isize numSamples)
     // Check for buffer overflow
     if (free() < numSamples) handleBufferOverflow();
 
-    if (!fading && (curL + curR == 0.0 || vol0 + vol1 + vol2 + vol3 == 0.0)) {
+    if constexpr (fading == false) {
 
-        // Fast path: All samples are zero
-        for (isize i = 0; i < numSamples; i++) (void)sid0.stream.read();
-        for (isize i = 0; i < numSamples; i++) (void)sid1.stream.read(0);
-        for (isize i = 0; i < numSamples; i++) (void)sid2.stream.read(0);
-        for (isize i = 0; i < numSamples; i++) (void)sid3.stream.read(0);
-        for (isize i = 0; i < numSamples; i++) write(SamplePair { 0, 0 } );
+        if (curL + curR == 0.0 || vol0 + vol1 + vol2 + vol3 == 0.0) {
 
-        // Send a MUTE message if applicable
-        if (!muted) { muted = true; msgQueue.put(MSG_MUTE, true); }
+            // Fast path: All samples are zero
+            for (isize i = 0; i < numSamples; i++) (void)sid0.stream.read();
+            for (isize i = 0; i < numSamples; i++) (void)sid1.stream.read(0);
+            for (isize i = 0; i < numSamples; i++) (void)sid2.stream.read(0);
+            for (isize i = 0; i < numSamples; i++) (void)sid3.stream.read(0);
+            for (isize i = 0; i < numSamples; i++) write(SamplePair { 0, 0 } );
 
-    } else {
-
-        // Slow path: There is something to hear
-        for (isize i = 0; i < numSamples; i++) {
-
-            float ch0, ch1, ch2, ch3, l, r;
-
-            ch0 = (float)sid0.stream.read()  * vol0;
-            ch1 = (float)sid1.stream.read(0) * vol1;
-            ch2 = (float)sid2.stream.read(0) * vol2;
-            ch3 = (float)sid3.stream.read(0) * vol3;
-
-            // Compute left and right channel output
-            l = ch0 * (1 - pan0) + ch1 * (1 - pan1) + ch2 * (1 - pan2) + ch3 * (1 - pan3);
-            r = ch0 * pan0 + ch1 * pan1 + ch2 * pan2 + ch3 * pan3;
-
-            // Modulate the master volume
-            if constexpr (fading) { volL.shift(); curL = volL.current; }
-            if constexpr (fading) { volR.shift(); curR = volR.current; }
-
-            // Apply master volume
-            l *= curL;
-            r *= curR;
-
-            // Prevent hearing loss
-            assert(abs(l) < 1.0);
-            assert(abs(r) < 1.0);
-
-            write(SamplePair { l, r } );
+            // Send a MUTE message if applicable
+            if (!muted) { muted = true; msgQueue.put(MSG_MUTE, true); }
+            return;
         }
-
-        // Send a MUTE message if applicable
-        if (muted) { muted = false; msgQueue.put(MSG_MUTE, false); }
     }
+
+    // Slow path: There is something to hear
+    for (isize i = 0; i < numSamples; i++) {
+
+        float ch0, ch1, ch2, ch3, l, r;
+
+        ch0 = (float)sid0.stream.read()  * vol0;
+        ch1 = (float)sid1.stream.read(0) * vol1;
+        ch2 = (float)sid2.stream.read(0) * vol2;
+        ch3 = (float)sid3.stream.read(0) * vol3;
+
+        // Compute left and right channel output
+        l = ch0 * (1 - pan0) + ch1 * (1 - pan1) + ch2 * (1 - pan2) + ch3 * (1 - pan3);
+        r = ch0 * pan0 + ch1 * pan1 + ch2 * pan2 + ch3 * pan3;
+
+        // Modulate the master volume
+        if constexpr (fading) { volL.shift(); curL = volL.current; }
+        if constexpr (fading) { volR.shift(); curR = volR.current; }
+
+        // Apply master volume
+        l *= curL;
+        r *= curR;
+
+        // Prevent hearing loss
+        assert(abs(l) < 1.0);
+        assert(abs(r) < 1.0);
+
+        write(SamplePair { l, r } );
+    }
+
+    // Send a MUTE message if applicable
+    if (muted) { muted = false; msgQueue.put(MSG_MUTE, false); }
 }
 
 void

@@ -25,7 +25,7 @@ Command::pushGroup(const string &description, const string &postfix)
 {
     auto name = description.empty() ? "" : description + postfix;
 
-    groupStack.push(groups.size());
+    groupStack.push(isize(groups.size()));
     groups.push_back(name);
 }
 

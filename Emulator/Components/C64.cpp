@@ -974,44 +974,33 @@ C64::process(const Cmd &cmd)
     switch (cmd.type) {
 
         case CMD_CPU_BRK:
-
-            cpu.next = BRK;
-            cpu.reg.pc0 = cpu.reg.pc - 1;
-            break;
-
         case CMD_CPU_NMI:
+        case CMD_BP_SET_AT:
+        case CMD_BP_MOVE_TO:
+        case CMD_BP_REMOVE_NR:
+        case CMD_BP_REMOVE_AT:
+        case CMD_BP_REMOVE_ALL:
+        case CMD_BP_ENABLE_NR:
+        case CMD_BP_ENABLE_AT:
+        case CMD_BP_ENABLE_ALL:
+        case CMD_BP_DISABLE_NR:
+        case CMD_BP_DISABLE_AT:
+        case CMD_BP_DISABLE_ALL:
+        case CMD_WP_SET_AT:
+        case CMD_WP_MOVE_TO:
+        case CMD_WP_REMOVE_NR:
+        case CMD_WP_REMOVE_AT:
+        case CMD_WP_REMOVE_ALL:
+        case CMD_WP_ENABLE_NR:
+        case CMD_WP_ENABLE_AT:
+        case CMD_WP_ENABLE_ALL:
+        case CMD_WP_DISABLE_NR:
+        case CMD_WP_DISABLE_AT:
+        case CMD_WP_DISABLE_ALL:
 
-            if (cmd.value) {
-                cpu.pullDownNmiLine(INTSRC_EXP);
-            } else {
-                cpu.releaseNmiLine(INTSRC_EXP);
-            }
+            cpu.processCommand(cmd);
             break;
-
-        case CMD_BP_SET_AT:         cpu.setBreakpoint(u32(cmd.value)); break;
-        case CMD_BP_MOVE_TO:        cpu.moveBreakpoint(cmd.value, u32(cmd.value2)); break;
-        case CMD_BP_REMOVE_NR:      cpu.deleteBreakpoint(cmd.value); break;
-        case CMD_BP_REMOVE_AT:      cpu.deleteBreakpointAt(u32(cmd.value)); break;
-        case CMD_BP_REMOVE_ALL:     cpu.deleteAllBreakpoints(); break;
-        case CMD_BP_ENABLE_NR:      cpu.enableBreakpoint(cmd.value); break;
-        case CMD_BP_ENABLE_AT:      cpu.enableBreakpoint(u32(cmd.value)); break;
-        case CMD_BP_ENABLE_ALL:     cpu.enableAllBreakpoints(); break;
-        case CMD_BP_DISABLE_NR:     cpu.disableBreakpoint(cmd.value); break;
-        case CMD_BP_DISABLE_AT:     cpu.disableBreakpoint(u32(cmd.value)); break;
-        case CMD_BP_DISABLE_ALL:    cpu.disableAllBreakpoints(); break;
-
-        case CMD_WP_SET_AT:         cpu.setWatchpoint(u32(cmd.value)); break;
-        case CMD_WP_MOVE_TO:        cpu.moveWatchpoint(cmd.value, u32(cmd.value2)); break;
-        case CMD_WP_REMOVE_NR:      cpu.deleteWatchpoint(cmd.value); break;
-        case CMD_WP_REMOVE_AT:      cpu.deleteWatchpointAt(u32(cmd.value)); break;
-        case CMD_WP_REMOVE_ALL:     cpu.deleteAllWatchpoints(); break;
-        case CMD_WP_ENABLE_NR:      cpu.enableWatchpoint(cmd.value); break;
-        case CMD_WP_ENABLE_AT:      cpu.enableWatchpoint(u32(cmd.value)); break;
-        case CMD_WP_ENABLE_ALL:     cpu.enableAllWatchpoints(); break;
-        case CMD_WP_DISABLE_NR:     cpu.disableWatchpoint(cmd.value); break;
-        case CMD_WP_DISABLE_AT:     cpu.disableWatchpoint(u32(cmd.value)); break;
-        case CMD_WP_DISABLE_ALL:    cpu.disableAllWatchpoints(); break;
-
+            
         case CMD_ALARM_ABS:
 
             setAlarmAbs(cmd.alarm.cycle, cmd.alarm.value);

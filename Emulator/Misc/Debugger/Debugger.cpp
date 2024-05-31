@@ -79,15 +79,15 @@ Debugger::ascDump(std::ostream& os, u16 addr, isize lines)
     current = addr;
     
     for (isize i = 0; i < lines; i++) {
-        
-        current += dump(os, current,
-                        "%p: "
-                        "%c%c%c%c%c%c%c%c" "%c%c%c%c%c%c%c%c"
-                        "%c%c%c%c%c%c%c%c" "%c%c%c%c%c%c%c%c"
-                        "%c%c%c%c%c%c%c%c" "%c%c%c%c%c%c%c%c"
-                        "%c%c%c%c%c%c%c%c" "%c%c%c%c%c%c%c%c\n");
+
+        current += (u16)dump(os, current,
+                             "%p: "
+                             "%c%c%c%c%c%c%c%c" "%c%c%c%c%c%c%c%c"
+                             "%c%c%c%c%c%c%c%c" "%c%c%c%c%c%c%c%c"
+                             "%c%c%c%c%c%c%c%c" "%c%c%c%c%c%c%c%c"
+                             "%c%c%c%c%c%c%c%c" "%c%c%c%c%c%c%c%c\n");
     }
-    
+
     return isize(current - addr);
 }
 
@@ -98,9 +98,9 @@ Debugger::hexDump(std::ostream& os, u16 addr, isize lines)
 
     for (isize i = 0; i < lines; i++) {
 
-        current += dump(os, current,
-                        "%p: "
-                        "%b %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b\n");
+        current += (u16)dump(os, current,
+                             "%p: "
+                             "%b %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b\n");
     }
 
     return isize(current - addr);
@@ -113,10 +113,10 @@ Debugger::memDump(std::ostream& os, u16 addr, isize lines)
 
     for (isize i = 0; i < lines; i++) {
 
-        current += dump(os, current,
-                        "%p: "
-                        "%b %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b  "
-                        "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n");
+        current += (u16)dump(os, current,
+                             "%p: "
+                             "%b %b %b %b %b %b %b %b %b %b %b %b %b %b %b %b  "
+                             "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n");
     }
 
     return isize(current - addr);

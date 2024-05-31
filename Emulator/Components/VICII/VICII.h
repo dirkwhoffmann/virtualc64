@@ -1345,11 +1345,11 @@ public:
 
 #define DRAW_SPRITES_DMA1 \
 assert(isFirstDMAcycle); assert(!isSecondDMAcycle); \
-if (!(flags & HEADLESS_CYCLE)) { drawSpritesSlowPath(); }
+if constexpr (!(flags & HEADLESS_CYCLE)) { drawSpritesSlowPath(); }
 
 #define DRAW_SPRITES_DMA2 \
 assert(!isFirstDMAcycle); assert(isSecondDMAcycle); \
-if (!(flags & HEADLESS_CYCLE)) { drawSpritesSlowPath(); }
+if constexpr (!(flags & HEADLESS_CYCLE)) { drawSpritesSlowPath(); }
 
 #define DRAW_SPRITES \
 assert(!isFirstDMAcycle && !isSecondDMAcycle); \

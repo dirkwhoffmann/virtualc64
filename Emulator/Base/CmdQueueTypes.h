@@ -191,7 +191,7 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
 typedef struct
 {
     Option option;
-    isize value;
+    i64 value;
     isize id;
 }
 ConfigCmd;

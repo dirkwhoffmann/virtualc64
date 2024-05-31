@@ -361,9 +361,9 @@ Interpreter::configure(Option option, i64 value)
 }
 
 void 
-Interpreter::configure(Option option, long id, i64 value)
+Interpreter::configure(Option option, i64 value, isize id)
 {
-    emulator.set(option, id, value);
+    emulator.set(option, value, id);
 }
 
 

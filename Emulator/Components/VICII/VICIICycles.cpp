@@ -49,7 +49,7 @@ VICII::cycle1()
     }
     
     // Phi1.2 Draw sprites (invisible area)
-    if (!(flags & HEADLESS_CYCLE)) drawSpritesSlowPath();
+    if constexpr (!(flags & HEADLESS_CYCLE)) drawSpritesSlowPath();
 
     // Phi1.3 Fetch
     PAL  { sFinalize(2); pAccess <flags> (3); }
