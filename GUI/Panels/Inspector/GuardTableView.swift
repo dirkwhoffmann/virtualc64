@@ -12,8 +12,6 @@ class GuardTableView: NSTableView {
     @IBOutlet weak var inspector: Inspector!
     var emu: EmulatorProxy { return inspector.parent.emu }
     var cpu: CPUProxy { return emu.cpu }
-    var breakpoints: GuardsProxy { return emu.breakpoints }
-    var watchpoints: GuardsProxy { return emu.watchpoints }
 
     // Symbols
     var symEnabled = "⛔"  // "\u{26D4}"
@@ -125,13 +123,13 @@ class BreakTableView: GuardTableView {
     
     override func cache() {
 
-        numRows = breakpoints.elements
+        numRows = 0
+        while cpu.hasBreakpoint(withNr: numRows) {
 
-        for i in 0 ..< numRows {
-
-            let info = cpu.breakpoint(withNr: i)
-            disabledCache[i] = !info.enabled
-            addrCache[i] = Int(info.addr)
+            let info = cpu.breakpoint(withNr: numRows)
+            disabledCache[numRows] = !info.enabled
+            addrCache[numRows] = Int(info.addr)
+            numRows += 1
         }
     }
 
@@ -186,16 +184,16 @@ class BreakTableView: GuardTableView {
 class WatchTableView: GuardTableView {
 
     override func cache() {
-        
-        numRows = watchpoints.elements
 
-        for i in 0 ..< numRows {
+        numRows = 0
+        while cpu.hasWatchpoint(withNr: numRows) {
 
-            let info = cpu.watchpoint(withNr: i)
-            disabledCache[i] = !info.enabled
-            addrCache[i] = Int(info.addr)
+            let info = cpu.watchpoint(withNr: numRows)
+            disabledCache[numRows] = !info.enabled
+            addrCache[numRows] = Int(info.addr)
+            numRows += 1
         }
-        
+
         symEnabled = "⚠️"
     }
 
@@ -210,7 +208,7 @@ class WatchTableView: GuardTableView {
                 emu.put(wp.enabled ? .WP_DISABLE_NR : .WP_ENABLE_NR, value: row)
                 inspector.fullRefresh()
             }
-            
+
             if col == 2 {
 
                 // Delete

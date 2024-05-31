@@ -310,75 +310,28 @@ VirtualC64::CPUAPI::disassembleRecorded(char *dst, const char *fmt, isize nr) co
     return cpu.debugger.disassRecorded(dst, fmt, nr);
 }
 
-
-//
-// Guards
-//
-
-long
-VirtualC64::GuardAPI::elements() const
+Guard *
+VirtualC64::CPUAPI::breakpointNr(long nr) const
 {
-    return guards.elements();
+    return cpu.debugger.breakpoints.guardWithNr(nr);
 }
 
 Guard *
-VirtualC64::GuardAPI::guardNr(long nr) const
+VirtualC64::CPUAPI::breakpointAt(u32 addr) const
 {
-    return guards.guardWithNr(nr);
+    return cpu.debugger.breakpoints.guardAtAddr(addr);
 }
 
 Guard *
-VirtualC64::GuardAPI::guardAt(u32 addr) const
+VirtualC64::CPUAPI::watchpointNr(long nr) const
 {
-    return guards.guardAtAddr(addr);
+    return cpu.debugger.watchpoints.guardWithNr(nr);
 }
 
-void
-VirtualC64::GuardAPI::enable(long nr)
+Guard *
+VirtualC64::CPUAPI::watchpointAt(u32 addr) const
 {
-    guards.enable(nr);
-}
-
-void
-VirtualC64::GuardAPI::disable(long nr)
-{
-    guards.disable(nr);
-}
-
-void
-VirtualC64::GuardAPI::enableAt(u32 addr)
-{
-    guards.enableAt(addr);
-}
-
-void
-VirtualC64::GuardAPI::disableAt(u32 addr)
-{
-    guards.disableAt(addr);
-}
-
-void
-VirtualC64::GuardAPI::setAt(u32 addr, long skip)
-{
-    guards.setAt(addr, skip);
-}
-
-void
-VirtualC64::GuardAPI::removeAt(u32 addr)
-{
-    guards.removeAt(addr);
-}
-
-void
-VirtualC64::GuardAPI::remove(long nr)
-{
-    guards.remove(nr);
-}
-
-void
-VirtualC64::GuardAPI::removeAll()
-{
-    guards.removeAll();
+    return cpu.debugger.watchpoints.guardAtAddr(addr);
 }
 
 

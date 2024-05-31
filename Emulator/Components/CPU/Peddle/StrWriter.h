@@ -56,7 +56,7 @@ public:
         base = ptr = p;
     };
 
-    isize length() { return ptr - base; }
+    isize length() { return isize(ptr - base); }
     void fill(isize tab) { while (ptr < base + tab) *ptr++ = ' '; }
 
 private:

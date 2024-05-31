@@ -23,10 +23,10 @@ namespace util {
 template <class T, typename E> struct Reflection {
 
     // Returns the key including the section prefix (if any)
-    static const char *key(long nr) { return T::key((E)nr); }
+    static const char *key(isize nr) { return T::key((E)nr); }
 
     // Returns the key without the section prefix (if any)
-    static const char *plainkey(long nr) {
+    static const char *plainkey(isize nr) {
         auto *p = key(nr);
         for (isize i = 0; p[i]; i++) if (p[i] == '.') return p + i + 1;
         return p;

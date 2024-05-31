@@ -221,6 +221,7 @@ class Monitor: DialogController {
     }
 }
 
+/*
 extension Monitor {
 
     override func windowWillClose(_ notification: Notification) {
@@ -228,3 +229,4 @@ extension Monitor {
         super.windowWillClose(notification)
     }
 }
+*/

@@ -32,7 +32,7 @@ typedef util::Exception StateChangeException;
  *  the basic functionality to manage the execution state. It provides functions
  *  to launch the emulator thread, to query it's current state, and to switch
  *  to another state. */
-class Thread : public CoreObject, public Suspendable, Wakeable {
+class Thread : public CoreObject, public Suspendable, public Wakeable {
 
 protected:
 

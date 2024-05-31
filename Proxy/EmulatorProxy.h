@@ -33,7 +33,6 @@ using namespace vc64;
 @class ExpansionPortProxy;
 @class FileSystemProxy;
 @class G64FileProxy;
-@class GuardsProxy;
 @class IECProxy;
 @class JoystickProxy;
 @class KeyboardProxy;
@@ -120,8 +119,6 @@ using namespace vc64;
     DriveProxy *drive8;
     DriveProxy *drive9;
     ExpansionPortProxy *expansionport;
-    GuardsProxy *breakpoints;
-    GuardsProxy *watchpoints;
     IECProxy *iec;
     KeyboardProxy *keyboard;
     MemoryProxy *mem;
@@ -146,8 +143,6 @@ using namespace vc64;
 @property (readonly, strong) DriveProxy *drive8;
 @property (readonly, strong) DriveProxy *drive9;
 @property (readonly, strong) ExpansionPortProxy *expansionport;
-@property (readonly, strong) GuardsProxy *breakpoints;
-@property (readonly, strong) GuardsProxy *watchpoints;
 @property (readonly, strong) IECProxy *iec;
 @property (readonly, strong) KeyboardProxy *keyboard;
 @property (readonly, strong) MemoryProxy *mem;
@@ -264,41 +259,6 @@ using namespace vc64;
 
 @end
 
-
-//
-// Guards (Breakpoints, Watchpoints)
-//
-
-@interface GuardsProxy : Proxy { }
-
-@property (readonly) NSInteger elements;
-
-/*
-- (NSInteger)addr:(NSInteger)nr;
-
-- (BOOL)isSet:(NSInteger)nr;
-- (BOOL)isSetAt:(NSInteger)addr;
-- (void)setAt:(NSInteger)addr;
-*/
-// - (void)remove:(NSInteger)nr;
-// - (void)removeAt:(NSInteger)addr;
-// - (void)removeAll;
-
-// - (void)replace:(NSInteger)nr addr:(NSInteger)addr;
-
-// - (BOOL)isEnabled:(NSInteger)nr;
-- (BOOL)isEnabledAt:(NSInteger)addr;
-// - (BOOL)isDisabled:(NSInteger)nr;
-- (BOOL)isDisabledAt:(NSInteger)addr;
-
-/*
-- (void)enable:(NSInteger)nr;
-- (void)enableAt:(NSInteger)addr;
-- (void)disable:(NSInteger)nr;
-- (void)disableAt:(NSInteger)addr;
-*/
-
-@end
 
 //
 // C64

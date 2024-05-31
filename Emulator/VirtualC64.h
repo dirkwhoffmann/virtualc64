@@ -535,92 +535,13 @@ public:
     } mem;
 
 
-    /** API for breakpoints and watchpoints
-     */
-    struct GuardAPI : API {
-
-        Guards &guards;
-        GuardAPI(Emulator &emu, Guards& guards) : API(emu), guards(guards) { }
-
-        /// @name Inspecting the guard list
-        /// @{
-
-        /** @brief  Returns the number of guards in the guard list.
-         */
-        long elements() const;
-
-        /** @brief  Returns a guard from the guard list.
-         *  @param  nr      Number of the guard.
-         *  @return A pointer to the guard or nullptr if the guard does not exist.
-         */
-        Guard *guardNr(long nr) const;
-
-        /** @brief  Returns the guard set on a specific address.
-         *  @param  addr    Memory address.
-         *  @return A pointer to the guard or nullptr if the address is not guarded.
-         */
-        Guard *guardAt(u32 addr) const;
-
-        /** Sets a guard on a specific memory location.
-         *  @param  addr    A memory location.
-         *  @param  ignore  An optional ignore counter.
-         */
-        void setAt(u32 addr, long ignore = 0);
-
-        /** Deletes a guard from the guard list.
-         *  @param  nr      A position in the guard list.
-         */
-        void remove(long nr);
-
-        /** Deletes a guard from the guard list.
-         *  @param  addr    Observed memory address of the guard to be removed.
-         */
-        void removeAt(u32 addr);
-
-        /** Deletes the entire guard list.
-         */
-        void removeAll();
-
-        /// @}
-        /// @name Enabling or disabling guards
-        /// @{
-
-        /** Enables a guard
-         *  @param  nr      Position of the guard in the guard list.
-         */
-        void enable(long nr);
-
-        /** Enables a guard
-         *  @param  addr    Observed memory address of the guard to enable.
-         */
-        void enableAt(u32 addr);
-
-        /** Disables a guard
-         *  @param  nr      Position of the guard in the guard list.
-         */
-        void disable(long nr);
-
-        /** Disables a guard
-         *  @param  addr    Observed memory address of the guard to disable.
-         */
-        void disableAt(u32 addr);
-
-        /// @}
-    };
-
-
     /** CPU API
      */
     struct CPUAPI : API {
 
         using API::API;
 
-        GuardAPI breakpoints;
-        GuardAPI watchpoints;
-
-        CPUAPI(Emulator &emu) : API(emu),
-        breakpoints(emu, emu.main.cpu.debugger.breakpoints),
-        watchpoints(emu, emu.main.cpu.debugger.watchpoints) { }
+        CPUAPI(Emulator &emu) : API(emu) { }
 
         /** @brief  Returns the component's current state.
          */
@@ -660,6 +581,30 @@ public:
          *  @return Length of the disassembled instruction in bytes.
          */
         isize disassembleRecorded(char *dst, const char *fmt, isize nr) const;
+
+        /** @brief  Returns a breakpoint from the breakpoint list.
+         *  @param  nr      Number of the breakpoint.
+         *  @return A pointer to the breakpoint or nullptr if it does not exist.
+         */
+        Guard *breakpointNr(long nr) const;
+
+        /** @brief  Returns the breakpoint set on a specific address.
+         *  @param  addr    Memory address.
+         *  @return A pointer to the breakpoint or nullptr if it is not guarded.
+         */
+        Guard *breakpointAt(u32 addr) const;
+
+        /** @brief  Returns a breakpoint from the breakpoint list.
+         *  @param  nr      Number of the breakpoint.
+         *  @return A pointer to the breakpoint or nullptr if it does not exist.
+         */
+        Guard *watchpointNr(long nr) const;
+
+        /** @brief  Returns the breakpoint set on a specific address.
+         *  @param  addr    Memory address.
+         *  @return A pointer to the breakpoint or nullptr if it is not guarded.
+         */
+        Guard *watchpointAt(u32 addr) const;
 
     } cpu;
 

@@ -169,114 +169,6 @@ using namespace vc64;
 
 
 //
-// Guards (Breakpoints, Watchpoints)
-//
-
-@implementation GuardsProxy
-
-- (VirtualC64::GuardAPI *)guards
-{
-    return (VirtualC64::GuardAPI *)obj;
-}
-
-- (NSInteger)elements
-{
-    return [self guards]->elements();
-}
-
-- (NSInteger)addr:(NSInteger)nr
-{
-    return [self guards]->guardNr(nr) ? [self guards]->guardNr(nr)->addr : -1;
-}
-
-/*
-- (BOOL)isEnabled:(NSInteger)nr
-{
-    return [self guards]->guardNr(nr) && [self guards]->guardNr(nr)->enabled;
-}
-*/
-
-- (BOOL)isEnabledAt:(NSInteger)addr
-{
-    return [self guards]->guardAt((u32)addr) && [self guards]->guardAt((u32)addr)->enabled;
-}
-
-/*
-- (BOOL)isDisabled:(NSInteger)nr
-{
-    return [self guards]->guardNr(nr) && ![self guards]->guardNr(nr)->enabled;
-}
-*/
-
-- (BOOL)isDisabledAt:(NSInteger)addr
-{
-    return [self guards]->guardAt((u32)addr) && ![self guards]->guardAt((u32)addr)->enabled;
-}
-
-/*
-- (void)enable:(NSInteger)nr
-{
-    [self guards]->enable(nr);
-}
-
-- (void)disable:(NSInteger)nr
-{
-    [self guards]->disable(nr);
-}
-
-- (void)remove:(NSInteger)nr
-{
-    return [self guards]->remove(nr);
-}
-
-- (void)replace:(NSInteger)nr addr:(NSInteger)addr
-{
-    if ([self guards]->guardNr(nr)) [self guards]->guardNr(nr)->moveTo((u32)addr);
-}
-*/
-/*
-- (BOOL)isSet:(NSInteger)nr
-{
-    return [self guards]->guardNr(nr) != nullptr;
-}
-*/
-
-- (BOOL)isSetAt:(NSInteger)addr
-{
-    return [self guards]->guardAt((u32)addr) != nullptr;
-}
-
-/*
-- (void)enableAt:(NSInteger)addr
-{
-    [self guards]->enableAt((u32)addr);
-}
-
-- (void)disableAt:(NSInteger)addr
-{
-    [self guards]->disableAt((u32)addr);
-}
-
-- (void)setAt:(NSInteger)addr
-{
-    [self guards]->setAt((u32)addr);
-}
-
-- (void)removeAt:(NSInteger)addr
-{
-    [self guards]->removeAt((u32)addr);
-}
-
-- (void)removeAll
-{
-    return [self guards]->removeAll();
-}
-*/
-
-@end
-
-
-//
 // CPU proxy
 //
 
@@ -385,41 +277,41 @@ using namespace vc64;
 
 - (BOOL) hasBreakpointWithNr:(NSInteger)nr
 {
-    return [self cpu]->breakpoints.guardNr(nr) != nullptr;
+    return [self cpu]->breakpointNr(nr) != nullptr;
 }
 
 - (GuardInfo) breakpointWithNr:(NSInteger)nr
 {
-    return [self guardInfo:[self cpu]->breakpoints.guardNr(nr)];
+    return [self guardInfo:[self cpu]->breakpointNr(nr)];
 }
 
 - (BOOL) hasBreakpointAtAddr:(NSInteger)addr
 {
-    return [self cpu]->breakpoints.guardAt(u32(addr)) != nullptr;
+    return [self cpu]->breakpointAt(u32(addr)) != nullptr;
 }
 
 - (GuardInfo) breakpointAtAddr:(NSInteger)addr
 {
-    return [self guardInfo:[self cpu]->breakpoints.guardAt(u32(addr))];
+    return [self guardInfo:[self cpu]->breakpointAt(u32(addr))];
 }
 
 - (BOOL) hasWatchpointWithNr:(NSInteger)nr
 {
-    return [self cpu]->watchpoints.guardNr(nr) != nullptr;
+    return [self cpu]->watchpointNr(nr) != nullptr;
 }
 
 - (GuardInfo) watchpointWithNr:(NSInteger)nr
 {
-    return [self guardInfo:[self cpu]->watchpoints.guardNr(nr)];
+    return [self guardInfo:[self cpu]->watchpointNr(nr)];
 }
 
 - (BOOL) hasWatchpointAtAddr:(NSInteger)addr
 {
-    return [self cpu]->watchpoints.guardAt(u32(addr)) != nullptr;
+    return [self cpu]->watchpointAt(u32(addr)) != nullptr;
 }
 - (GuardInfo) watchpointAtAddr:(NSInteger)addr
 {
-    return [self guardInfo:[self cpu]->watchpoints.guardAt(u32(addr))];
+    return [self guardInfo:[self cpu]->watchpointAt(u32(addr))];
 }
 
 @end
@@ -2134,7 +2026,6 @@ using namespace vc64;
 @implementation EmulatorProxy
 
 @synthesize audioPort;
-@synthesize breakpoints;
 @synthesize c64;
 @synthesize cia1;
 @synthesize cia2;
@@ -2154,7 +2045,6 @@ using namespace vc64;
 @synthesize sid;
 @synthesize vic;
 @synthesize videoPort;
-@synthesize watchpoints;
 
 - (instancetype) init
 {
@@ -2166,7 +2056,6 @@ using namespace vc64;
 
     // Create sub proxys
     audioPort = [[AudioPortProxy alloc] initWith:&emu->audioPort emu:emu];
-    breakpoints = [[GuardsProxy alloc] initWith:&emu->cpu.breakpoints];
     c64 = [[C64Proxy alloc] initWith:&emu->c64 emu:emu];
     cia1 = [[CIAProxy alloc] initWith:&emu->cia1 emu:emu];
     cia2 = [[CIAProxy alloc] initWith:&emu->cia2 emu:emu];
@@ -2186,7 +2075,6 @@ using namespace vc64;
     sid = [[SIDProxy alloc] initWith:&emu->sidBridge emu:emu];
     vic = [[VICIIProxy alloc] initWith:&emu->vicii emu:emu];
     videoPort = [[VideoPortProxy alloc] initWith:&emu->videoPort emu:emu];
-    watchpoints = [[GuardsProxy alloc] initWith:&emu->cpu.watchpoints];
 
     return self;
 }

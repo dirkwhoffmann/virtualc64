@@ -13,7 +13,6 @@ class InstrTableView: NSTableView {
     
     var emu: EmulatorProxy { return inspector.parent.emu }
     var cpu: CPUProxy { return emu.cpu }
-    var breakpoints: GuardsProxy { return emu.breakpoints }
 
     enum BreakpointType {
         
