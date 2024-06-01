@@ -43,6 +43,14 @@ Joystick::operator << (SerReader &worker)
     axisY = 0;
 }
 
+void 
+Joystick::cacheInfo(JoystickInfo &result) const
+{
+    result.button = button;
+    result.axisX = axisX;
+    result.axisY = axisY;
+}
+
 i64
 Joystick::getOption(Option option) const
 {

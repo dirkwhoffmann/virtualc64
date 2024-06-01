@@ -209,9 +209,10 @@ public:
      * and vc64::Texture::height texels. Each texel is represented by a
      * 32 bit color value.
      */
+    /*
     u32 *getTexture() const;
     u32 *getDmaTexture() const;
-
+     */
 
     /// @}
     /// @name Single-stepping
@@ -671,13 +672,6 @@ public:
 
         using API::API;
 
-        /// @name Querying the component
-        /// @{
-
-        /** @brief  Returns the component's current configuration.
-         */
-        // SIDBridgeConfig getConfig() const;
-
         /** @brief  Returns the current state of a specific SID.
          *  @param  nr      SID number (0 - 3). 0 is the primary SID.
          */
@@ -696,6 +690,7 @@ public:
         /// @}
 
     } sidBridge;
+
 
     /** Audio Port Public API
      */
@@ -758,6 +753,19 @@ public:
 
         using API::API;
 
+        /// @}
+        /// @name Accessing video data
+        /// @{
+
+        /** @brief  Returns a pointer to the most recent stable texture
+         *
+         * The texture dimensions are given by constants vc64::Texture::width
+         * and vc64::Texture::height texels. Each texel is represented by a
+         * 32 bit color value.
+         */
+        u32 *getTexture() const;
+        u32 *getDmaTexture() const;
+        
     } videoPort;
 
 
@@ -827,28 +835,6 @@ public:
          *  @return     true iff a shaking mouse has been detected.
          */
         bool detectShakeDxDy(double dx, double dy);
-
-        /** Signals a mouse movement to the emulator.
-         *
-         *  @param x    Current horizontal mouse position.
-         *  @param y    Current vertical mouse position.
-         */
-        void setXY(double x, double y);
-
-        /** Signals a mouse movement to the emulator.
-         *
-         *  @param dx   Current horizontal mouse position, relative to the
-         *              previous position.
-         *  @param dy   Current vertical mouse position, relative to the
-         *              previous position.
-         */
-        void setDxDy(double dx, double dy);
-
-        /** @brief  Signals a mouse button to the emulator.
-         *
-         *  @param  event   The button event.
-         */
-        void trigger(GamePadAction event);
     };
 
 
@@ -859,10 +845,10 @@ public:
         Joystick &joystick;
         JoystickAPI(Emulator &emu, Joystick& joystick) : API(emu), joystick(joystick) { }
 
-        /** @brief  Triggers a gamepad event
-         *  @param  event    The event to trigger.
+        /** @brief  Returns the component's current state.
          */
-        void trigger(GamePadAction event);
+        JoystickInfo getInfo() const;
+        JoystickInfo getCachedInfo() const;
     };
 
 

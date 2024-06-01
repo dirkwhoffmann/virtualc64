@@ -58,18 +58,6 @@ VirtualC64::~VirtualC64()
     halt();
 }
 
-u32 *
-VirtualC64::getTexture() const
-{
-    return Emulator::getTexture();
-}
-
-u32 *
-VirtualC64::getDmaTexture() const
-{
-    return Emulator::getDmaTexture();
-}
-
 void
 VirtualC64::stepInto()
 {
@@ -525,6 +513,18 @@ VirtualC64::AudioPortAPI::copyInterleaved(float *buffer, isize n)
 // Video port
 //
 
+u32 *
+VirtualC64::VideoPortAPI::getTexture() const
+{
+    return emulator.getTexture();
+}
+
+u32 *
+VirtualC64::VideoPortAPI::getDmaTexture() const
+{
+    return emulator.getDmaTexture();
+}
+
 
 //
 // DMA Debugger
@@ -564,10 +564,16 @@ void VirtualC64::KeyboardAPI::abortAutoTyping()
 // Joystick
 //
 
-void VirtualC64::JoystickAPI::trigger(GamePadAction event)
+JoystickInfo
+VirtualC64::JoystickAPI::getInfo() const
 {
-    joystick.trigger(event);
-    c64.markAsDirty();
+    return joystick.getInfo();
+}
+
+JoystickInfo
+VirtualC64::JoystickAPI::getCachedInfo() const
+{
+    return joystick.getCachedInfo();
 }
 
 
@@ -614,24 +620,6 @@ bool VirtualC64::MouseAPI::detectShakeXY(double x, double y)
 bool VirtualC64::MouseAPI::detectShakeDxDy(double dx, double dy)
 {
     return mouse.detectShakeDxDy(dx, dy);
-}
-
-void VirtualC64::MouseAPI::setXY(double x, double y)
-{
-    mouse.setXY(x, y);
-    c64.markAsDirty();
-}
-
-void VirtualC64::MouseAPI::setDxDy(double dx, double dy)
-{
-    mouse.setDxDy(dx, dy);
-    c64.markAsDirty();
-}
-
-void VirtualC64::MouseAPI::trigger(GamePadAction event)
-{
-    mouse.trigger(event);
-    c64.markAsDirty();
 }
 
 

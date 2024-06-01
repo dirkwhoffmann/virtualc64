@@ -18,8 +18,8 @@
 
 namespace vc64 {
 
-class Joystick final : public SubComponent {
-    
+class Joystick final : public SubComponent, public Inspectable<JoystickInfo> {
+
     Descriptions descriptions = {
         {
             .name           = "Joystick 1",
@@ -94,6 +94,15 @@ public:
     void operator << (SerResetter &worker) override;
     void operator << (SerReader &worker) override;
     void operator << (SerWriter &worker) override { serialize(worker); }
+
+
+    //
+    // Methods from Inspectable
+    //
+
+private:
+
+    void cacheInfo(JoystickInfo &result) const override;
 
 
     //

@@ -83,4 +83,12 @@ typedef struct
 }
 JoystickConfig;
 
+typedef struct
+{
+    bool button;
+    int axisX;
+    int axisY;
+}
+JoystickInfo;
+
 }
