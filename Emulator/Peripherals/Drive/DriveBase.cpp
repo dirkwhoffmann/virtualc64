@@ -17,6 +17,137 @@
 namespace vc64 {
 
 void
+Drive::_dump(Category category, std::ostream& os) const
+{
+    using namespace util;
+
+    if (category == Category::Config) {
+
+        dumpConfig(os);
+    }
+
+    if (category == Category::State) {
+
+        os << tab("Idle");
+        os << bol(isIdle()) << std::endl;
+        os << tab("Motor");
+        os << bol(isRotating(), "on", "off") << std::endl;
+        os << tab("Has disk");
+        os << bol(hasDisk()) << std::endl;
+        os << tab("Bit ready timer");
+        os << dec(bitReadyTimer) << std::endl;
+        os << tab("Head position");
+        os << dec(halftrack) << ":" << dec(offset) << std::endl;
+        os << tab("SYNC");
+        os << bol(sync) << std::endl;
+        os << tab("Read mode");
+        os << bol(readMode()) << std::endl;
+    }
+
+    if (category == Category::BankMap) {
+
+        mem.dump(Category::BankMap, os);
+    }
+
+    if (category == Category::Disk || category == Category::Layout) {
+
+        if (hasDisk()) {
+            disk->dump(category, os);
+        } else {
+            os << "No disk";
+        }
+    }
+}
+
+void
+Drive::operator << (SerChecker &worker)
+{
+    serialize(worker);
+
+    if (hasDisk()) disk->serialize(worker);
+    if (diskToInsert) diskToInsert->serialize(worker);
+}
+
+void
+Drive::operator << (SerCounter &worker)
+{
+    serialize(worker);
+
+    // Add the size of a boolean indicating whether a disk is inserted
+    worker.count += sizeof(bool);
+
+    // Add the disk size
+    if (hasDisk()) disk->serialize(worker);
+
+    // Add the ROM size
+    if (config.saveRoms) worker << mem.rom;
+}
+
+void
+Drive::operator << (SerReader &worker)
+{
+    serialize(worker);
+
+    // Check if the snapshot includes a disk
+    bool diskInSnapshot; worker << diskInSnapshot;
+
+    // If yes, recreate the disk
+    if (diskInSnapshot) {
+        disk = std::make_unique<Disk>(worker);
+    } else {
+        disk = nullptr;
+    }
+
+    // Load the ROM if it is contained in the snapshot
+    if (config.saveRoms) worker << mem.rom;
+}
+
+void
+Drive::operator << (SerWriter &worker)
+{
+    serialize(worker);
+
+    // Indicate whether this drive has a disk is inserted
+    worker << hasDisk();
+
+    // If yes, write the disk
+    if (hasDisk()) disk->serialize(worker);
+
+    // Save the ROM if applicable
+    if (config.saveRoms) worker << mem.rom;
+}
+
+void 
+Drive::cacheInfo(DriveInfo &result) const
+{
+    result.id = objid;
+
+    result.hasDisk = hasDisk();
+    result.hasUnprotectedDisk = hasUnprotectedDisk();
+    result.hasProtectedDisk = hasProtectedDisk();
+    result.hasUnmodifiedDisk = hasUnmodifiedDisk();
+    result.hasModifiedDisk = hasModifiedDisk();
+
+    result.greenLED = isPoweredOn();
+    result.redLED = redLED;
+
+    result.spinning = spinning;
+    result.writing = writeMode();
+
+    result.halftrack = halftrack;
+    result.offset = offset;
+}
+
+void
+Drive::_reset(bool hard)
+{
+    cpu.reg.pc = 0xEAA0;
+    halftrack = 41;
+
+    needsEmulation = config.connected && config.switchedOn;
+}
+
+void
 Drive::resetConfig()
 {
     auto &defaults = emulator.defaults;

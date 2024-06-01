@@ -116,7 +116,6 @@ class Monitor: DialogController {
     @IBAction func busDebugAction(_ sender: NSButton!) {
 
         emu.set(.DMA_DEBUG_ENABLE, enable: sender.state == .on)
-        refresh()
     }
 
     @IBAction func busColorAction(_ sender: NSColorWell!) {
@@ -135,7 +134,6 @@ class Monitor: DialogController {
         case 5:  emu.set(.DMA_DEBUG_COLOR5, value: bgr)
         default: break
         }
-        refresh()
     }
 
     @IBAction func busChannelAction(_ sender: NSButton!) {
@@ -149,31 +147,26 @@ class Monitor: DialogController {
         case 5:  emu.set(.DMA_DEBUG_CHANNEL5, enable: sender.state == .on)
         default: break
         }
-        refresh()
     }
 
     @IBAction func busDisplayModeAction(_ sender: NSPopUpButton!) {
         
         emu.set(.DMA_DEBUG_MODE, value: sender.selectedTag())
-        refresh()
     }
     
     @IBAction func busOpacityAction(_ sender: NSSlider!) {
         
         emu.set(.DMA_DEBUG_OPACITY, value: sender.integerValue)
-        refresh()
     }
     
     @IBAction func hideSpritesAction(_ sender: NSButton!) {
         
         config.vicHideSprites = sender.state == .on
-        refresh()
     }
     
     @IBAction func cutOpacityAction(_ sender: NSSlider!) {
         
         config.vicCutOpacity = sender.integerValue
-        refresh()
     }
     
     func addLayer(_ mask: Int) {
@@ -186,47 +179,31 @@ class Monitor: DialogController {
     @IBAction func cutEnableAction(_ sender: NSButton!) {
 
         if sender.state == .on { addLayer(0x1000) } else { removeLayer(0x1000) }
-        refresh()
     }
     
     @IBAction func cutBorderAction(_ sender: NSButton!) {
     
         if sender.state == .on { addLayer(0x800) } else { removeLayer(0x800) }
-        refresh()
     }
 
     @IBAction func cutForegroundAction(_ sender: NSButton!) {
     
         if sender.state == .on { addLayer(0x400) } else { removeLayer(0x400) }
-        refresh()
     }
 
     @IBAction func cutBackgroundAction(_ sender: NSButton!) {
     
         if sender.state == .on { addLayer(0x200) } else { removeLayer(0x200) }
-        refresh()
     }
 
     @IBAction func cutSpritesAction(_ sender: NSButton!) {
     
         if sender.state == .on { addLayer(0x100) } else { removeLayer(0x100) }
-        refresh()
     }
 
     @IBAction func cutSingleSpriteAction(_ sender: NSButton!) {
     
         let sprite = sender.tag
         if sender.state == .on { addLayer(1 << sprite) } else { removeLayer(1 << sprite) }
-        refresh()
     }
 }
-
-/*
-extension Monitor {
-
-    override func windowWillClose(_ notification: Notification) {
-
-        super.windowWillClose(notification)
-    }
-}
-*/

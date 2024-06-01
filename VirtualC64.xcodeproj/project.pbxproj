@@ -358,10 +358,8 @@
 		50A194942BDA709D0046849E /* CPUBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194922BDA709D0046849E /* CPUBase.cpp */; };
 		50A194992BDA82720046849E /* SIDBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194982BDA82720046849E /* SIDBase.cpp */; };
 		50A1949A2BDA82720046849E /* SIDBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194982BDA82720046849E /* SIDBase.cpp */; };
-		50A1949C2BDA84610046849E /* C64MemoryInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1949B2BDA84610046849E /* C64MemoryInfo.cpp */; };
-		50A1949D2BDA84610046849E /* C64MemoryInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1949B2BDA84610046849E /* C64MemoryInfo.cpp */; };
-		50A1949F2BDA84710046849E /* C64MemoryConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1949E2BDA84710046849E /* C64MemoryConfig.cpp */; };
-		50A194A02BDA84710046849E /* C64MemoryConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1949E2BDA84710046849E /* C64MemoryConfig.cpp */; };
+		50A1949F2BDA84710046849E /* C64MemoryBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1949E2BDA84710046849E /* C64MemoryBase.cpp */; };
+		50A194A02BDA84710046849E /* C64MemoryBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1949E2BDA84710046849E /* C64MemoryBase.cpp */; };
 		50A22A1D261871E600C9FB1E /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A1C261871E600C9FB1E /* Layer.swift */; };
 		50A22A202618720100C9FB1E /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A1F2618720100C9FB1E /* SplashScreen.swift */; };
 		50A22A252618723200C9FB1E /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A242618723200C9FB1E /* Canvas.swift */; };
@@ -400,8 +398,8 @@
 		50BD640B2C01FADC007CD347 /* VideoPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64082C01FADC007CD347 /* VideoPort.cpp */; };
 		50BD640E2C01FFEC007CD347 /* VideoPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD640D2C01FFEC007CD347 /* VideoPortBase.cpp */; };
 		50BD640F2C01FFEC007CD347 /* VideoPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD640D2C01FFEC007CD347 /* VideoPortBase.cpp */; };
-		50BD64112C03396D007CD347 /* DriveConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64102C03396D007CD347 /* DriveConfig.cpp */; };
-		50BD64122C03396D007CD347 /* DriveConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64102C03396D007CD347 /* DriveConfig.cpp */; };
+		50BD64112C03396D007CD347 /* DriveBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64102C03396D007CD347 /* DriveBase.cpp */; };
+		50BD64122C03396D007CD347 /* DriveBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64102C03396D007CD347 /* DriveBase.cpp */; };
 		50BD64152C035682007CD347 /* Gmod2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64132C035682007CD347 /* Gmod2.cpp */; };
 		50BD64162C035682007CD347 /* Gmod2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64132C035682007CD347 /* Gmod2.cpp */; };
 		50BD64192C0373F9007CD347 /* PowerPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64182C0373F9007CD347 /* PowerPortBase.cpp */; };
@@ -899,8 +897,7 @@
 		50A1948C2BDA6F490046849E /* EmulatorBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EmulatorBase.cpp; sourceTree = "<group>"; };
 		50A194922BDA709D0046849E /* CPUBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CPUBase.cpp; sourceTree = "<group>"; };
 		50A194982BDA82720046849E /* SIDBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SIDBase.cpp; sourceTree = "<group>"; };
-		50A1949B2BDA84610046849E /* C64MemoryInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C64MemoryInfo.cpp; sourceTree = "<group>"; };
-		50A1949E2BDA84710046849E /* C64MemoryConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C64MemoryConfig.cpp; sourceTree = "<group>"; };
+		50A1949E2BDA84710046849E /* C64MemoryBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C64MemoryBase.cpp; sourceTree = "<group>"; };
 		50A22A1C261871E600C9FB1E /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
 		50A22A1F2618720100C9FB1E /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		50A22A242618723200C9FB1E /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
@@ -969,7 +966,7 @@
 		50BD64092C01FADC007CD347 /* VideoPort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoPort.h; sourceTree = "<group>"; };
 		50BD640C2C01FAF5007CD347 /* VideoPortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoPortTypes.h; sourceTree = "<group>"; };
 		50BD640D2C01FFEC007CD347 /* VideoPortBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VideoPortBase.cpp; sourceTree = "<group>"; };
-		50BD64102C03396D007CD347 /* DriveConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DriveConfig.cpp; sourceTree = "<group>"; };
+		50BD64102C03396D007CD347 /* DriveBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DriveBase.cpp; sourceTree = "<group>"; };
 		50BD64132C035682007CD347 /* Gmod2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Gmod2.cpp; sourceTree = "<group>"; };
 		50BD64142C035682007CD347 /* Gmod2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Gmod2.h; sourceTree = "<group>"; };
 		50BD64172C0371A3007CD347 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -1603,9 +1600,8 @@
 				5078BEBC264D740E00EDA161 /* CMakeLists.txt */,
 				50B1A61525A2028B00201A2C /* MemoryTypes.h */,
 				504C42E424AF29AB00E69CAE /* C64Memory.h */,
+				50A1949E2BDA84710046849E /* C64MemoryBase.cpp */,
 				504C42E124AF29AB00E69CAE /* C64Memory.cpp */,
-				50A1949E2BDA84710046849E /* C64MemoryConfig.cpp */,
-				50A1949B2BDA84610046849E /* C64MemoryInfo.cpp */,
 				50BD641C2C04C05A007CD347 /* Heatmap.h */,
 				50BD641B2C04C05A007CD347 /* Heatmap.cpp */,
 			);
@@ -1733,8 +1729,8 @@
 				5078BEBE264D742500EDA161 /* CMakeLists.txt */,
 				50B1A61725A205D500201A2C /* DriveTypes.h */,
 				504C434C24AF29AC00E69CAE /* Drive.h */,
+				50BD64102C03396D007CD347 /* DriveBase.cpp */,
 				504C434D24AF29AC00E69CAE /* Drive.cpp */,
-				50BD64102C03396D007CD347 /* DriveConfig.cpp */,
 				504C434F24AF29AC00E69CAE /* DriveMemory.h */,
 				504C434B24AF29AC00E69CAE /* DriveMemory.cpp */,
 				504C434924AF29AC00E69CAE /* VIA.h */,
@@ -2270,7 +2266,7 @@
 				50726FAD2961CA1C0031F2F5 /* CRTFile.cpp in Sources */,
 				50726FB62961CA290031F2F5 /* Interpreter.cpp in Sources */,
 				50726F502961C9940031F2F5 /* CoreComponent.cpp in Sources */,
-				50A194A02BDA84710046849E /* C64MemoryConfig.cpp in Sources */,
+				50A194A02BDA84710046849E /* C64MemoryBase.cpp in Sources */,
 				50726FA72961CA1C0031F2F5 /* D64File.cpp in Sources */,
 				50726F432961C97B0031F2F5 /* Checksum.cpp in Sources */,
 				50726F522961C9940031F2F5 /* ControlPort.cpp in Sources */,
@@ -2297,7 +2293,6 @@
 				500C1C762965D11000071AF3 /* StrWriter.cpp in Sources */,
 				50A1948B2BDA5EED0046849E /* VICIIBase.cpp in Sources */,
 				50726F842961C9F10031F2F5 /* Cartridge.cpp in Sources */,
-				50A1949D2BDA84610046849E /* C64MemoryInfo.cpp in Sources */,
 				506F30482B7692180083EAEA /* VirtualC64.cpp in Sources */,
 				50726F542961C99A0031F2F5 /* PeddleDebugger.cpp in Sources */,
 				50726F462961C9940031F2F5 /* Error.cpp in Sources */,
@@ -2375,7 +2370,7 @@
 				50726F6E2961C9C60031F2F5 /* dac.cc in Sources */,
 				50726F662961C9B80031F2F5 /* SIDBridge.cpp in Sources */,
 				50726F892961CA0D0031F2F5 /* SuperGames.cpp in Sources */,
-				50BD64122C03396D007CD347 /* DriveConfig.cpp in Sources */,
+				50BD64122C03396D007CD347 /* DriveBase.cpp in Sources */,
 				50B98B4B2BFDF5FC00FA1EC6 /* AudioPortBase.cpp in Sources */,
 				50726FB02961CA230031F2F5 /* FSBlock.cpp in Sources */,
 				50BD64162C035682007CD347 /* Gmod2.cpp in Sources */,
@@ -2488,7 +2483,6 @@
 				50F5B6A22959C44E000457A0 /* Host.cpp in Sources */,
 				50520F8B25108FC400C7D47F /* Folder.cpp in Sources */,
 				507A499C24C8D64700DBF984 /* InstrTableView.swift in Sources */,
-				50A1949C2BDA84610046849E /* C64MemoryInfo.cpp in Sources */,
 				5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */,
 				50BE4B6E24E7FBE1008F39C9 /* Datatypes.swift in Sources */,
 				5009CF3324C0B8EF00F674FF /* Preferences.swift in Sources */,
@@ -2605,7 +2599,7 @@
 				504C436E24AF29AC00E69CAE /* Epyx.cpp in Sources */,
 				505F8FE72580BD780066ACE4 /* AudioConf.swift in Sources */,
 				504C43A924AF29AC00E69CAE /* Drive.cpp in Sources */,
-				50A1949F2BDA84710046849E /* C64MemoryConfig.cpp in Sources */,
+				50A1949F2BDA84710046849E /* C64MemoryBase.cpp in Sources */,
 				505F8FE92582435E0066ACE4 /* PeripheralsConf.swift in Sources */,
 				50AF2F8226AFFE9A002DC43B /* PIA.cpp in Sources */,
 				50CD3695281681D000E40BFC /* NamedPipe.cpp in Sources */,
@@ -2637,7 +2631,7 @@
 				50ACF4DB256EB43B003B5690 /* PowerPort.cpp in Sources */,
 				504C43A624AF29AC00E69CAE /* Disk.cpp in Sources */,
 				504C43A224AF29AC00E69CAE /* ControlPort.cpp in Sources */,
-				50BD64112C03396D007CD347 /* DriveConfig.cpp in Sources */,
+				50BD64112C03396D007CD347 /* DriveBase.cpp in Sources */,
 				508C1E562C0B20760097473C /* ExpansionPortBase.cpp in Sources */,
 				507A49A224C8D71400DBF984 /* BankTableView.swift in Sources */,
 				504C437424AF29AC00E69CAE /* T64File.cpp in Sources */,

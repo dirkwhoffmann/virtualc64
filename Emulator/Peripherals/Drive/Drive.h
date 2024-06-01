@@ -259,11 +259,7 @@ public:
 public:
     
     Drive(C64 &ref, isize id);
-    const Descriptions &getDescriptions() const override { return descriptions; }
-    void _dump(Category category, std::ostream& os) const override;
 
-    void _initialize() override;
-    
     Drive& operator= (const Drive& other) {
 
         CLONE(mem)
@@ -302,6 +298,11 @@ public:
 
         return *this;
     }
+
+    //
+    // Methods from CoreComponent
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
     template <class T>
     void serialize(T& worker)
@@ -364,12 +365,27 @@ public:
     void operator << (SerReader &worker) override;
     void operator << (SerWriter &worker) override;
 
+private:
+
+    void _initialize() override;
+    void _dump(Category category, std::ostream& os) const override;
     void _reset(bool hard) override;
 
 
     //
-    // Configuring
+    // Methods from Inspectable
     //
+
+public:
+
+    void cacheInfo(DriveInfo &result) const override;
+
+
+    //
+    // Methods from Configurable
+    //
+
+public:
 
     const DriveConfig &getConfig() const { return config; }
     const ConfigOptions &getOptions() const override { return options; }
@@ -381,20 +397,6 @@ public:
 
     // Updates the current configuration according to the installed ROM
     void autoConfigure();
-
-    bool canConnect();
-    bool hasParCable() { return config.parCable != PAR_CABLE_NONE; }
-    ParCableType getParCableType() const { return config.parCable; }
-
-
-    //
-    // Inspecting
-    //
-
-public:
-
-    // TODO: Implement recordInfo
-    DriveInfo getInfo() const;
 
 
     //
@@ -409,6 +411,17 @@ public:
     // Convenience wrappers
     bool isDrive8() { return objid == DRIVE8; }
     bool isDrive9() { return objid == DRIVE9; }
+    bool hasParCable() { return config.parCable != PAR_CABLE_NONE; }
+    ParCableType getParCableType() const { return config.parCable; }
+
+    // Checks whether the drive is ready to be connected
+    bool canConnect();
+
+    // Checks whether the drive is connected and switched on
+    bool connectedAndOn() { return config.connected && config.switchedOn; }
+
+    // Checks whether the drive has been idle for a while
+    bool isIdle() const { return watchdog < 0; }
 
     // Returns true iff the red drive LED is on
     bool getRedLED() const { return redLED; };
@@ -425,12 +438,6 @@ public:
     // Wakes up the drive (clears the idle state)
     void wakeUp(isize awakeness = powerSafeThreshold);
 
-    // Checks whether the drive has been idle for a while
-    bool isIdle() const { return watchdog < 0; }
-    
-    // Checks whether the drive is connected and switched on
-    bool connectedAndOn() { return config.connected && config.switchedOn; }
-    
     
     //
     // Handling disks
