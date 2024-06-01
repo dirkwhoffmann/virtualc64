@@ -26,7 +26,7 @@ target_link_libraries(vc64Console vc64Core)
 # Specify compile options
 target_compile_definitions(vc64Core PUBLIC _USE_MATH_DEFINES)
 if(MSVC)
-  target_compile_options(vc64Core PUBLIC /W4 /WX)
+  target_compile_options(vc64Core PUBLIC /W4 /WX /Zc:preprocessor)
   target_compile_options(vc64Core PUBLIC /wd4100 /wd4201 /wd4324 /wd4458 /wd4996)
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   target_compile_options(vc64Core PUBLIC -Wall -Werror)

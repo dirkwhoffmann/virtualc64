@@ -20,7 +20,7 @@
 #define VER_MAJOR 5
 #define VER_MINOR 0
 #define VER_SUBMINOR 0
-#define VER_BETA 1
+#define VER_BETA 2
 
 // Snapshot version number
 #define SNP_MAJOR 5
@@ -39,7 +39,7 @@
 #if defined(__clang__)
 
 #define alwaysinline __attribute__((always_inline))
-#pragma GCC diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
+// #pragma GCC diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #pragma GCC diagnostic ignored "-Wgnu-anonymous-struct"
 #pragma GCC diagnostic ignored "-Wnested-anon-types"
 

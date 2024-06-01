@@ -754,7 +754,7 @@ public:
         using API::API;
 
         /// @}
-        /// @name Accessing video data
+        /// @name Retrieving video data
         /// @{
 
         /** @brief  Returns a pointer to the most recent stable texture
