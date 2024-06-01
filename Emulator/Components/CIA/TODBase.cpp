@@ -16,17 +16,6 @@
 namespace vc64 {
 
 void
-TOD::cacheInfo(TODInfo &info) const
-{
-    {   SYNCHRONIZED
-
-        info.time = tod;
-        info.latch = latch;
-        info.alarm = alarm;
-    }
-}
-
-void
 TOD::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
@@ -49,6 +38,17 @@ TOD::_dump(Category category, std::ostream& os) const
         os << bol(frozen) << std::endl;
         os << tab("Stopped");
         os << bol(stopped) << std::endl;
+    }
+}
+
+void
+TOD::cacheInfo(TODInfo &info) const
+{
+    {   SYNCHRONIZED
+
+        info.time = tod;
+        info.latch = latch;
+        info.alarm = alarm;
     }
 }
 

@@ -329,6 +329,8 @@
 		508C1E572C0B20760097473C /* ExpansionPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E552C0B20760097473C /* ExpansionPortBase.cpp */; };
 		508C1E5A2C0B20EE0097473C /* SerialPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E582C0B20EE0097473C /* SerialPortBase.cpp */; };
 		508C1E5B2C0B20EE0097473C /* SerialPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E582C0B20EE0097473C /* SerialPortBase.cpp */; };
+		508C1E5D2C0B31320097473C /* DmaDebuggerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E5C2C0B31320097473C /* DmaDebuggerBase.cpp */; };
+		508C1E5E2C0B31320097473C /* DmaDebuggerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E5C2C0B31320097473C /* DmaDebuggerBase.cpp */; };
 		509280CF2930A1B6006E1966 /* PeddleUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509280CD2930A1B6006E1966 /* PeddleUtils.cpp */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		5095C81C2BA09DE800A83825 /* Debugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5095C81A2BA08B0A00A83825 /* Debugger.cpp */; };
@@ -342,20 +344,18 @@
 		50A0B48D24C1CAEB00FF0B0B /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50A0B48C24C1CAEB00FF0B0B /* Preferences.xib */; };
 		50A0E0210A8F33120067714C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A0E0200A8F33120067714C /* IOKit.framework */; };
 		50A0E0250A8F332A0067714C /* System.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A0E0240A8F332A0067714C /* System.framework */; };
-		50A1947E2BDA597A0046849E /* CIAConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1947D2BDA597A0046849E /* CIAConfig.cpp */; };
-		50A1947F2BDA597A0046849E /* CIAConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1947D2BDA597A0046849E /* CIAConfig.cpp */; };
-		50A194812BDA59C90046849E /* CIAInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194802BDA59C90046849E /* CIAInfo.cpp */; };
-		50A194822BDA59C90046849E /* CIAInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194802BDA59C90046849E /* CIAInfo.cpp */; };
-		50A194842BDA5CD40046849E /* TODInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194832BDA5CD40046849E /* TODInfo.cpp */; };
-		50A194852BDA5CD40046849E /* TODInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194832BDA5CD40046849E /* TODInfo.cpp */; };
+		50A1947E2BDA597A0046849E /* CIABase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1947D2BDA597A0046849E /* CIABase.cpp */; };
+		50A1947F2BDA597A0046849E /* CIABase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1947D2BDA597A0046849E /* CIABase.cpp */; };
+		50A194842BDA5CD40046849E /* TODBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194832BDA5CD40046849E /* TODBase.cpp */; };
+		50A194852BDA5CD40046849E /* TODBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194832BDA5CD40046849E /* TODBase.cpp */; };
 		50A194872BDA5D4D0046849E /* VICIIInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194862BDA5D4D0046849E /* VICIIInfo.cpp */; };
 		50A194882BDA5D4D0046849E /* VICIIInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194862BDA5D4D0046849E /* VICIIInfo.cpp */; };
-		50A1948A2BDA5EED0046849E /* VICIIConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194892BDA5EED0046849E /* VICIIConfig.cpp */; };
-		50A1948B2BDA5EED0046849E /* VICIIConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194892BDA5EED0046849E /* VICIIConfig.cpp */; };
+		50A1948A2BDA5EED0046849E /* VICIIBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194892BDA5EED0046849E /* VICIIBase.cpp */; };
+		50A1948B2BDA5EED0046849E /* VICIIBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194892BDA5EED0046849E /* VICIIBase.cpp */; };
 		50A1948D2BDA6F490046849E /* EmulatorBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1948C2BDA6F490046849E /* EmulatorBase.cpp */; };
 		50A1948E2BDA6F490046849E /* EmulatorBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1948C2BDA6F490046849E /* EmulatorBase.cpp */; };
-		50A194932BDA709D0046849E /* CPUInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194922BDA709D0046849E /* CPUInfo.cpp */; };
-		50A194942BDA709D0046849E /* CPUInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194922BDA709D0046849E /* CPUInfo.cpp */; };
+		50A194932BDA709D0046849E /* CPUBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194922BDA709D0046849E /* CPUBase.cpp */; };
+		50A194942BDA709D0046849E /* CPUBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194922BDA709D0046849E /* CPUBase.cpp */; };
 		50A194962BDA82640046849E /* SIDInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194952BDA82640046849E /* SIDInfo.cpp */; };
 		50A194972BDA82640046849E /* SIDInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194952BDA82640046849E /* SIDInfo.cpp */; };
 		50A194992BDA82720046849E /* SIDConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194982BDA82720046849E /* SIDConfig.cpp */; };
@@ -874,6 +874,7 @@
 		508C1E552C0B20760097473C /* ExpansionPortBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ExpansionPortBase.cpp; sourceTree = "<group>"; };
 		508C1E582C0B20EE0097473C /* SerialPortBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SerialPortBase.cpp; sourceTree = "<group>"; };
 		508C1E592C0B20EE0097473C /* SerialPortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SerialPortTypes.h; sourceTree = "<group>"; };
+		508C1E5C2C0B31320097473C /* DmaDebuggerBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DmaDebuggerBase.cpp; sourceTree = "<group>"; };
 		509280CD2930A1B6006E1966 /* PeddleUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PeddleUtils.cpp; sourceTree = "<group>"; };
 		509280CE2930A1B6006E1966 /* PeddleUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleUtils.h; sourceTree = "<group>"; };
 		509280D029312C00006E1966 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -895,13 +896,12 @@
 		50A0B48C24C1CAEB00FF0B0B /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		50A0E0200A8F33120067714C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		50A0E0240A8F332A0067714C /* System.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = System.framework; path = /System/Library/Frameworks/System.framework; sourceTree = "<absolute>"; };
-		50A1947D2BDA597A0046849E /* CIAConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CIAConfig.cpp; sourceTree = "<group>"; };
-		50A194802BDA59C90046849E /* CIAInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CIAInfo.cpp; sourceTree = "<group>"; };
-		50A194832BDA5CD40046849E /* TODInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TODInfo.cpp; sourceTree = "<group>"; };
+		50A1947D2BDA597A0046849E /* CIABase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CIABase.cpp; sourceTree = "<group>"; };
+		50A194832BDA5CD40046849E /* TODBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TODBase.cpp; sourceTree = "<group>"; };
 		50A194862BDA5D4D0046849E /* VICIIInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICIIInfo.cpp; sourceTree = "<group>"; };
-		50A194892BDA5EED0046849E /* VICIIConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICIIConfig.cpp; sourceTree = "<group>"; };
+		50A194892BDA5EED0046849E /* VICIIBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICIIBase.cpp; sourceTree = "<group>"; };
 		50A1948C2BDA6F490046849E /* EmulatorBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EmulatorBase.cpp; sourceTree = "<group>"; };
-		50A194922BDA709D0046849E /* CPUInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CPUInfo.cpp; sourceTree = "<group>"; };
+		50A194922BDA709D0046849E /* CPUBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CPUBase.cpp; sourceTree = "<group>"; };
 		50A194952BDA82640046849E /* SIDInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SIDInfo.cpp; sourceTree = "<group>"; };
 		50A194982BDA82720046849E /* SIDConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SIDConfig.cpp; sourceTree = "<group>"; };
 		50A1949B2BDA84610046849E /* C64MemoryInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C64MemoryInfo.cpp; sourceTree = "<group>"; };
@@ -1624,8 +1624,8 @@
 				5078BEB0264D733100EDA161 /* CMakeLists.txt */,
 				5052A7BF25A0703D00E62EDD /* CPUTypes.h */,
 				504C42E824AF29AB00E69CAE /* CPU.h */,
+				50A194922BDA709D0046849E /* CPUBase.cpp */,
 				504C42E924AF29AB00E69CAE /* CPU.cpp */,
-				50A194922BDA709D0046849E /* CPUInfo.cpp */,
 				50AA48B5292F8F350084401D /* Peddle */,
 			);
 			path = CPU;
@@ -1654,7 +1654,7 @@
 				504C430C24AF29AC00E69CAE /* VICII.h */,
 				504C430724AF29AC00E69CAE /* VICII.cpp */,
 				50A194862BDA5D4D0046849E /* VICIIInfo.cpp */,
-				50A194892BDA5EED0046849E /* VICIIConfig.cpp */,
+				50A194892BDA5EED0046849E /* VICIIBase.cpp */,
 				504C430524AF29AB00E69CAE /* VICIIDraw.cpp */,
 				50891C002652380A0004AC1B /* VICIISprites.cpp */,
 				504C430B24AF29AC00E69CAE /* VICIIMemory.cpp */,
@@ -1662,6 +1662,7 @@
 				5003382A266F7F3C00D5456E /* VICIITable.cpp */,
 				50DBB3D22641107E006F45E6 /* DmaDebuggerTypes.h */,
 				50DBB3D02641101E006F45E6 /* DmaDebugger.h */,
+				508C1E5C2C0B31320097473C /* DmaDebuggerBase.cpp */,
 				50DBB3CF2641101E006F45E6 /* DmaDebugger.cpp */,
 			);
 			path = VICII;
@@ -1767,14 +1768,13 @@
 				5078BEB2264D734600EDA161 /* CMakeLists.txt */,
 				50E806BF25A1C93B00F08732 /* CIATypes.h */,
 				504C435324AF29AC00E69CAE /* CIA.h */,
+				50A1947D2BDA597A0046849E /* CIABase.cpp */,
 				504C435824AF29AC00E69CAE /* CIA.cpp */,
-				50A1947D2BDA597A0046849E /* CIAConfig.cpp */,
-				50A194802BDA59C90046849E /* CIAInfo.cpp */,
 				50BE4B7124E81266008F39C9 /* CIARegs.cpp */,
 				509995C826F72F3B009B68F3 /* TODTypes.h */,
 				504C435424AF29AC00E69CAE /* TOD.h */,
+				50A194832BDA5CD40046849E /* TODBase.cpp */,
 				504C435524AF29AC00E69CAE /* TOD.cpp */,
-				50A194832BDA5CD40046849E /* TODInfo.cpp */,
 			);
 			path = CIA;
 			sourceTree = "<group>";
@@ -2304,11 +2304,10 @@
 				50726F612961C9AC0031F2F5 /* VICIISprites.cpp in Sources */,
 				50726FB72961CA290031F2F5 /* InterpreterDebugCmds.cpp in Sources */,
 				500C1C762965D11000071AF3 /* StrWriter.cpp in Sources */,
-				50A1948B2BDA5EED0046849E /* VICIIConfig.cpp in Sources */,
+				50A1948B2BDA5EED0046849E /* VICIIBase.cpp in Sources */,
 				50726F842961C9F10031F2F5 /* Cartridge.cpp in Sources */,
 				50A1949D2BDA84610046849E /* C64MemoryInfo.cpp in Sources */,
 				506F30482B7692180083EAEA /* VirtualC64.cpp in Sources */,
-				50A194822BDA59C90046849E /* CIAInfo.cpp in Sources */,
 				50726F542961C99A0031F2F5 /* PeddleDebugger.cpp in Sources */,
 				50726F462961C9940031F2F5 /* Error.cpp in Sources */,
 				50726F452961C97B0031F2F5 /* Buffer.cpp in Sources */,
@@ -2328,7 +2327,7 @@
 				50726F4C2961C9940031F2F5 /* Colors.cpp in Sources */,
 				50726F602961C9AC0031F2F5 /* VICIIDraw.cpp in Sources */,
 				50726FA52961CA1C0031F2F5 /* AnyCollection.cpp in Sources */,
-				50A194942BDA709D0046849E /* CPUInfo.cpp in Sources */,
+				50A194942BDA709D0046849E /* CPUBase.cpp in Sources */,
 				50726F532961C9940031F2F5 /* SerialPort.cpp in Sources */,
 				50726F8D2961CA0D0031F2F5 /* ActionReplay.cpp in Sources */,
 				50726FB52961CA290031F2F5 /* RetroShell.cpp in Sources */,
@@ -2378,7 +2377,7 @@
 				50BB3E922B7A232800B2D87B /* Inspectable.cpp in Sources */,
 				50726FB32961CA230031F2F5 /* FileSystem.cpp in Sources */,
 				50726F712961C9C60031F2F5 /* voice.cc in Sources */,
-				50A1947F2BDA597A0046849E /* CIAConfig.cpp in Sources */,
+				50A1947F2BDA597A0046849E /* CIABase.cpp in Sources */,
 				50726F812961C9E80031F2F5 /* NeosMouse.cpp in Sources */,
 				50726F5B2961C9AC0031F2F5 /* VICIICycles.cpp in Sources */,
 				50726FA62961CA1C0031F2F5 /* G64File.cpp in Sources */,
@@ -2413,6 +2412,7 @@
 				50726F792961C9DC0031F2F5 /* ParCable.cpp in Sources */,
 				50BB3E9B2B7A50F600B2D87B /* Synchronizable.cpp in Sources */,
 				50726F642961C9B30031F2F5 /* FFmpeg.cpp in Sources */,
+				508C1E5E2C0B31320097473C /* DmaDebuggerBase.cpp in Sources */,
 				50726F4A2961C9940031F2F5 /* CPU.cpp in Sources */,
 				50BD641A2C0373F9007CD347 /* PowerPortBase.cpp in Sources */,
 				50726FA22961CA0D0031F2F5 /* WarpSpeed.cpp in Sources */,
@@ -2429,7 +2429,7 @@
 				50726F6B2961C9C60031F2F5 /* extfilt.cc in Sources */,
 				50726F9C2961CA0D0031F2F5 /* Kcs.cpp in Sources */,
 				506F30432B74C1C70083EAEA /* Wakeable.cpp in Sources */,
-				50A194852BDA5CD40046849E /* TODInfo.cpp in Sources */,
+				50A194852BDA5CD40046849E /* TODBase.cpp in Sources */,
 				508C1E5B2C0B20EE0097473C /* SerialPortBase.cpp in Sources */,
 				50726F562961C99A0031F2F5 /* PeddleUtils.cpp in Sources */,
 				50FFB54E2B8262BA00042771 /* Serializable.cpp in Sources */,
@@ -2460,7 +2460,7 @@
 				506A8A882B88D00200B95383 /* Configurable.cpp in Sources */,
 				50E5BF732BA81E710004712B /* Monitor.cpp in Sources */,
 				504C43A424AF29AC00E69CAE /* Keyboard.cpp in Sources */,
-				50A1948A2BDA5EED0046849E /* VICIIConfig.cpp in Sources */,
+				50A1948A2BDA5EED0046849E /* VICIIBase.cpp in Sources */,
 				504C439924AF29AC00E69CAE /* filter.cc in Sources */,
 				504C439824AF29AC00E69CAE /* sid.cc in Sources */,
 				50769B8A24BB1B87006FE743 /* Configuration.swift in Sources */,
@@ -2585,7 +2585,6 @@
 				504C439524AF29AC00E69CAE /* envelope.cc in Sources */,
 				50B7E26C2813F8C400A405A3 /* TextStorage.cpp in Sources */,
 				50A194992BDA82720046849E /* SIDConfig.cpp in Sources */,
-				50A194812BDA59C90046849E /* CIAInfo.cpp in Sources */,
 				50CD3698281681E800E40BFC /* FFmpeg.cpp in Sources */,
 				504C437324AF29AC00E69CAE /* RomFile.cpp in Sources */,
 				504C437E24AF29AC00E69CAE /* TAPFile.cpp in Sources */,
@@ -2600,7 +2599,7 @@
 				504C435E24AF29AC00E69CAE /* FinalIII.cpp in Sources */,
 				50A22A2F2618845800C9FB1E /* TextureRect.swift in Sources */,
 				506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */,
-				50A1947E2BDA597A0046849E /* CIAConfig.cpp in Sources */,
+				50A1947E2BDA597A0046849E /* CIABase.cpp in Sources */,
 				505D492821C155DD00A7C575 /* RomConf.swift in Sources */,
 				50BE4B5A24E7F81B008F39C9 /* NSColor.swift in Sources */,
 				50BE4B5524E7F77F008F39C9 /* URL.swift in Sources */,
@@ -2622,7 +2621,7 @@
 				50CD3695281681D000E40BFC /* NamedPipe.cpp in Sources */,
 				50D3092824C71B0A00B92563 /* Monitor.swift in Sources */,
 				504C436C24AF29AC00E69CAE /* Isepic.cpp in Sources */,
-				50A194932BDA709D0046849E /* CPUInfo.cpp in Sources */,
+				50A194932BDA709D0046849E /* CPUBase.cpp in Sources */,
 				506F30472B7692180083EAEA /* VirtualC64.cpp in Sources */,
 				50AB70762721B8EE004ABB2B /* DiskAnalyzer.cpp in Sources */,
 				5018BFB324B48DD500551848 /* RendererSetup.swift in Sources */,
@@ -2658,6 +2657,7 @@
 				5098C57F2658E1F400E05EFC /* DragImageView.swift in Sources */,
 				504C437224AF29AC00E69CAE /* FlashRom.cpp in Sources */,
 				50DBB3D12641101E006F45E6 /* DmaDebugger.cpp in Sources */,
+				508C1E5D2C0B31320097473C /* DmaDebuggerBase.cpp in Sources */,
 				50A194872BDA5D4D0046849E /* VICIIInfo.cpp in Sources */,
 				50BE4B7224E81266008F39C9 /* CIARegs.cpp in Sources */,
 				50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */,
@@ -2696,7 +2696,7 @@
 				508081E925110FFE0084B060 /* Dinamic.cpp in Sources */,
 				50BE4B5E24E7F864008F39C9 /* DispatchTime.swift in Sources */,
 				50EAFFEA24B2600D00024CD2 /* MyToolbar.swift in Sources */,
-				50A194842BDA5CD40046849E /* TODInfo.cpp in Sources */,
+				50A194842BDA5CD40046849E /* TODBase.cpp in Sources */,
 				5018BFB124B48DC400551848 /* Renderer.swift in Sources */,
 				504C436124AF29AC00E69CAE /* SimonsBasic.cpp in Sources */,
 				504C438824AF29AC00E69CAE /* Mouse.cpp in Sources */,

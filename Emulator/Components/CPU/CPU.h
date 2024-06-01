@@ -80,11 +80,6 @@ public:
 
     void setID(isize id) { this->id = id; }
 
-    void _dump(Category category, std::ostream& os) const override;
-
-    void _trackOn() override;
-    void _trackOff() override;
-    
     CPU& operator= (const CPU& other) {
 
         CLONE(flags)
@@ -160,8 +155,20 @@ public:
 
     } SERIALIZERS(serialize);
 
+
+    //
+    // Methods from CoreComponent
+    //
+
+public:
+
+    void _dump(Category category, std::ostream& os) const override;
+
     void _reset(bool hard) override;
     
+    void _trackOn() override;
+    void _trackOff() override;
+
 
     //
     // Methods from Inspectable

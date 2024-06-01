@@ -53,8 +53,7 @@ class DmaDebugger final : public SubComponent {
     // Current configuration
     DmaDebuggerConfig config = { };
     
-    // Color lookup table. There are 6 colors with different shades
-    // TODO: MOVE TO CONFIG
+    // Color lookup table. There are 6 colors with 4 different shades
     u32 debugColor[6][4];
 
     
@@ -66,8 +65,7 @@ public:
     
     DmaDebugger(C64 &ref);
     const Descriptions &getDescriptions() const override { return descriptions; }
-    void _dump(Category category, std::ostream& os) const override;
-       
+
     DmaDebugger& operator= (const DmaDebugger& other) {
 
         for (isize i = 0; i < 6; i++) CLONE_ARRAY(debugColor[i])
@@ -95,8 +93,12 @@ public:
 
 
     //
-    // Configuring
+    // Methods from CoreComponent
     //
+
+private:
+
+    void _dump(Category category, std::ostream& os) const override;
 
 public:
 

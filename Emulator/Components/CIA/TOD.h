@@ -82,8 +82,7 @@ public:
     
     TOD(C64 &ref, CIA &cia);
     const Descriptions &getDescriptions() const override { return descriptions; }
-    void _dump(Category category, std::ostream& os) const override;
-    
+
     TOD& operator= (const TOD& other) {
 
         CLONE(tod.value)
@@ -112,9 +111,18 @@ public:
 
     } SERIALIZERS(serialize);
 
+
+    //
+    // Methods from CoreComponent
+    //
+
+public:
+
+    void _dump(Category category, std::ostream& os) const override;
+
     void _reset(bool hard) override;
 
-    
+
     //
     // Methods from Inspectable
     //
@@ -122,16 +130,6 @@ public:
 public:
 
     void cacheInfo(TODInfo &result) const override;
-
-
-    //
-    // Analyzing
-    //
-
-public:
-    
-    // Returns the result of the most recent call to inspect()
-    // TODInfo getInfo() const { return CoreComponent::getInfo(info); }
 
     
     //

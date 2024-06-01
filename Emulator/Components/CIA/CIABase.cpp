@@ -70,48 +70,98 @@ CIA::_dump(Category category, std::ostream& os) const
 void
 CIA::cacheInfo(CIAInfo &result) const
 {
-    {   SYNCHRONIZED
+    result.portA.port = computePA();
+    result.portA.reg = PRA;
+    result.portA.dir = DDRA;
 
-        result.portA.port = computePA();
-        result.portA.reg = PRA;
-        result.portA.dir = DDRA;
+    result.portB.port = computePB();
+    result.portB.reg = PRB;
+    result.portB.dir = DDRB;
+    
+    result.timerA.count = LO_HI(spypeek(0x04), spypeek(0x05));
+    result.timerA.latch = latchA;
+    result.timerA.running = (delay & CIACountA3);
+    result.timerA.toggle = CRA & 0x04;
+    result.timerA.pbout = CRA & 0x02;
+    result.timerA.oneShot = CRA & 0x08;
 
-        result.portB.port = computePB();
-        result.portB.reg = PRB;
-        result.portB.dir = DDRB;
+    result.timerB.count = LO_HI(spypeek(0x06), spypeek(0x07));
+    result.timerB.latch = latchB;
+    result.timerB.running = (delay & CIACountB3);
+    result.timerB.toggle = CRB & 0x04;
+    result.timerB.pbout = CRB & 0x02;
+    result.timerB.oneShot = CRB & 0x08;
 
-        result.timerA.count = LO_HI(spypeek(0x04), spypeek(0x05));
-        result.timerA.latch = latchA;
-        result.timerA.running = (delay & CIACountA3);
-        result.timerA.toggle = CRA & 0x04;
-        result.timerA.pbout = CRA & 0x02;
-        result.timerA.oneShot = CRA & 0x08;
+    result.sdr = sdr;
+    result.ssr = sdr;  // ssr not yet implemented
+    result.icr = icr;
+    result.imr = imr;
+    result.intLine = INT;
 
-        result.timerB.count = LO_HI(spypeek(0x06), spypeek(0x07));
-        result.timerB.latch = latchB;
-        result.timerB.running = (delay & CIACountB3);
-        result.timerB.toggle = CRB & 0x04;
-        result.timerB.pbout = CRB & 0x02;
-        result.timerB.oneShot = CRB & 0x08;
-
-        result.sdr = sdr;
-        result.ssr = sdr;  // ssr not yet implemented
-        result.icr = icr;
-        result.imr = imr;
-        result.intLine = INT;
-
-        result.tod = tod.info;
-        result.todIntEnable= imr & 0x04;
-    }
+    result.tod = tod.info;
+    result.todIntEnable= imr & 0x04;
 }
 void
 CIA::cacheStats(CIAStats &result) const
 {
-    {   SYNCHRONIZED
+    result.idleSince = idleSince();
+    result.idleTotal = idleTotal() + result.idleSince;
+    result.idlePercentage =  cpu.clock ? (double)result.idleTotal / (double)cpu.clock : 100.0;
+}
 
-        result.idleSince = idleSince();
-        result.idleTotal = idleTotal() + result.idleSince;
-        result.idlePercentage =  cpu.clock ? (double)result.idleTotal / (double)cpu.clock : 100.0;
+i64
+CIA::getOption(Option option) const
+{
+    switch (option) {
+
+        case OPT_CIA_REVISION:      return config.revision;
+        case OPT_CIA_TIMER_B_BUG:   return config.timerBBug;
+
+        default:
+            fatalError;
+    }
+}
+
+void
+CIA::checkOption(Option opt, i64 value)
+{
+    switch (opt) {
+
+        case OPT_CIA_REVISION:
+
+            if (!CIARevisionEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INV_ARG, CIARevisionEnum::keyList());
+            }
+            return;
+
+        case OPT_CIA_TIMER_B_BUG:
+
+            return;
+
+        default:
+            throw VC64Error(ERROR_OPT_UNSUPPORTED);
+    }
+}
+
+void
+CIA::setOption(Option opt, i64 value)
+{
+    checkOption(opt, value);
+
+    switch (opt) {
+
+        case OPT_CIA_REVISION:
+
+            config.revision = (CIARevision)value;
+            return;
+
+        case OPT_CIA_TIMER_B_BUG:
+
+            config.timerBBug = value;
+            return;
+
+        default:
+            fatalError;
     }
 }
 

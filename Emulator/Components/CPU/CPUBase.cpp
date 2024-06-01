@@ -12,6 +12,7 @@
 
 #include "config.h"
 #include "CPU.h"
+#include "Emulator.h"
 
 namespace vc64 {
 
@@ -122,6 +123,53 @@ CPU::_dump(Category category, std::ostream& os) const
             os << "No watchpoints set" << std::endl;
         }
     }
+}
+
+void
+CPU::cacheInfo(CPUInfo &result) const
+{
+    result.cycle = clock;
+
+    result.pc0 = reg.pc0;
+    result.sp = reg.sp;
+    result.a = reg.a;
+    result.x = reg.x;
+    result.y = reg.y;
+    result.sr = getP();
+
+    result.irq = irqLine;
+    result.nmi = nmiLine;
+    result.rdy = rdyLine;
+
+    result.processorPort = readPort();
+    result.processorPortDir = readPortDir();
+}
+
+void
+CPU::_reset(bool hard)
+{
+    Peddle::reset();
+
+    // Enable or disable CPU debugging
+    c64.emulator.isTracking() ? debugger.enableLogging() : debugger.disableLogging();
+
+    assert(levelDetector.isClear());
+    assert(edgeDetector.isClear());
+}
+
+void
+CPU::_trackOn()
+{
+    // We only allow the C64 CPU to enter track mode
+    if (!isC64CPU()) return;
+
+    debugger.enableLogging();
+}
+
+void
+CPU::_trackOff()
+{
+    debugger.disableLogging();
 }
 
 }
