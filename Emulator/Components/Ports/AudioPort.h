@@ -78,15 +78,6 @@ public util::RingBuffer <SamplePair, 12288> {
 public:
 
     AudioPort(C64 &ref) : SubComponent(ref) { };
-    const Descriptions &getDescriptions() const override { return descriptions; }
-    void _dump(Category category, std::ostream& os) const override;
-
-    void _run() override;
-    void _pause() override;
-    void _warpOn() override;
-    void _warpOff() override;
-    void _focus() override;
-    void _unfocus() override;
 
     AudioPort& operator= (const AudioPort& other) {
 
@@ -110,7 +101,22 @@ public:
 
     } SERIALIZERS(serialize);
 
+
+    //
+    // Methods from CoreComponent
+    //
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
+    void _dump(Category category, std::ostream& os) const override;
+    
     void _reset(bool hard) override;
+    void _run() override;
+    void _pause() override;
+    void _warpOn() override;
+    void _warpOff() override;
+    void _focus() override;
+    void _unfocus() override;
 
 
     //
@@ -124,7 +130,7 @@ public:
 
 
     //
-    // Configuring
+    // Methods from Configurable
     //
 
 public:

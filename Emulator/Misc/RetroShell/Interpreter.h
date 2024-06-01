@@ -54,7 +54,7 @@ class Interpreter: public SubComponent
 
     
     //
-    // Initializing
+    // Methods
     //
 
 public:
@@ -71,18 +71,12 @@ private:
 
 
     //
-    // Methods from CoreObject
+    // Methods from CoreComponent
     //
 
 private:
 
-    const char *objectName() const override { return "Interpreter"; }
     void _dump(Category category, std::ostream& os) const override { }
-
-
-    //
-    // Methods from CoreComponent
-    //
 
 public:
     

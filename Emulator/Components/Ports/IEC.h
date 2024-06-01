@@ -12,11 +12,12 @@
 
 #pragma once
 
+#include "IECTypes.h"
 #include "SubComponent.h"
 
 namespace vc64 {
 
-class IEC final : public SubComponent {
+class IEC final : public SubComponent, public Inspectable<Void, IECStats> {
 
     Descriptions descriptions = {{
 
@@ -46,9 +47,6 @@ public:
     bool ciaAtn;
     bool ciaClock;
     bool ciaData;
-
-    // Bus idle time measured in frames
-    i64 idle = 0;
     
 private:
 
@@ -64,12 +62,6 @@ public:
 
     IEC(C64 &ref) : SubComponent(ref) { };
     const Descriptions &getDescriptions() const override { return descriptions; }
-    void _dump(Category category, std::ostream& os) const override;
-
-    
-    //
-    // Methods from CoreComponent
-    //
 
 public:
 
@@ -87,7 +79,7 @@ public:
         CLONE(ciaAtn)
         CLONE(ciaClock)
         CLONE(ciaData)
-        CLONE(idle)
+        CLONE(stats)
 
         return *this;
     }
@@ -109,9 +101,16 @@ public:
         << ciaAtn
         << ciaClock
         << ciaData
-        << idle;
+        << stats.idle;
 
     } SERIALIZERS(serialize);
+
+
+    //
+    // Methods from CoreComponent
+    //
+
+    void _dump(Category category, std::ostream& os) const override;
 
     void _reset(bool hard) override;
 

@@ -36,22 +36,6 @@ IEC::_reset(bool hard)
     ciaData = 1;
 }
 
-void
-IEC::_dump(Category category, std::ostream& os) const
-{
-    using namespace util;
-    
-    if (category == Category::State) {
-        
-        os << tab("VIA1::DDRB (Drive8)");
-        os << hex(drive8.via1.getDDRB()) << std::endl;
-        os << tab("VIA1::DDRB (Drive9)");
-        os << hex(drive9.via1.getDDRB()) << std::endl;
-        os << tab("Idle");
-        os << dec(idle) << " frames" << std::endl;
-    }
-}
-
 bool IEC::_updateIecLines()
 {
     // Save current values
@@ -102,7 +86,7 @@ bool IEC::_updateIecLines()
 void
 IEC::updateIecLines()
 {
-    bool wasIdle = idle;
+    bool wasIdle = stats.idle;
 
     // Update bus lines
     bool signalsChanged = _updateIecLines();
@@ -120,8 +104,8 @@ IEC::updateIecLines()
         drive9.via1.CA1action(!atnLine);
 
         // Reset the idle counter
-        idle = 0;
-        
+        stats.idle = 0;
+
         // Update the transfer status if the bus was idle
         if (wasIdle) updateTransferStatus();
     }
@@ -162,7 +146,7 @@ IEC::update()
 void
 IEC::execute()
 {
-    if (++idle == 32) {
+    if (++stats.idle == 32) {
         updateTransferStatus();
     }
 }
@@ -171,12 +155,11 @@ void
 IEC::updateTransferStatus()
 {
     bool rotating = drive8.isRotating() || drive9.isRotating();
-    bool newValue = rotating && idle < 32;
+    bool newValue = rotating && stats.idle < 32;
     
     if (transferring != newValue) {
 
         transferring = newValue;
-        // c64.updateWarpState();
         msgQueue.put(newValue ? MSG_IEC_BUS_BUSY : MSG_IEC_BUS_IDLE);
     }
 }

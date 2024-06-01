@@ -11,16 +11,27 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "VideoPort.h"
+#include "PowerPort.h"
 
 namespace vc64 {
 
+void
+PowerPort::_dump(Category category, std::ostream& os) const
+{
+    using namespace util;
+
+    if (category == Category::Config) {
+
+        dumpConfig(os);
+    }
+}
+
 i64
-VideoPort::getOption(Option option) const
+PowerPort::getOption(Option option) const
 {
     switch (option) {
 
-        case OPT_VID_WHITE_NOISE:   return config.whiteNoise;
+        case OPT_POWER_GRID:  return config.powerGrid;
 
         default:
             fatalError;
@@ -28,12 +39,15 @@ VideoPort::getOption(Option option) const
 }
 
 void
-VideoPort::checkOption(Option opt, i64 value)
+PowerPort::checkOption(Option opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_VID_WHITE_NOISE:
+        case OPT_POWER_GRID:
 
+            if (!PowerGridEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INV_ARG, PowerGridEnum::keyList());
+            }
             return;
 
         default:
@@ -42,15 +56,15 @@ VideoPort::checkOption(Option opt, i64 value)
 }
 
 void
-VideoPort::setOption(Option opt, i64 value)
+PowerPort::setOption(Option opt, i64 value)
 {
     checkOption(opt, value);
 
     switch (opt) {
 
-        case OPT_VID_WHITE_NOISE:
+        case OPT_POWER_GRID:
 
-            config.whiteNoise = (bool)value;
+            config.powerGrid = (PowerGrid)value;
             return;
 
         default:

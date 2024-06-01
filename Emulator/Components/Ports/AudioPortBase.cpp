@@ -16,6 +16,109 @@
 
 namespace vc64 {
 
+void
+AudioPort::_dump(Category category, std::ostream& os) const
+{
+    using namespace util;
+
+    if (category == Category::Config) {
+
+        dumpConfig(os);
+    }
+
+    if (category == Category::State) {
+
+        os << tab("Master volume left");
+        os << flt(volL.current) << " (0 ... " << flt(volL.maximum) << ")" << std::endl;
+        os << tab("Master volume right");
+        os << flt(volR.current) << " (0 ... " << flt(volR.maximum) << ")" << std::endl;
+        os << tab("Channel 0 volume");
+        os << flt(vol[0]) << std::endl;
+        os << tab("Channel 1 volume");
+        os << flt(vol[1]) << std::endl;
+        os << tab("Channel 2 volume");
+        os << flt(vol[2]) << std::endl;
+        os << tab("Channel 3 volume");
+        os << flt(vol[3]) << std::endl;
+        os << tab("Channel 0 pan");
+        os << flt(pan[0]) << std::endl;
+        os << tab("Channel 1 pan");
+        os << flt(pan[1]) << std::endl;
+        os << tab("Channel 2 pan");
+        os << flt(pan[2]) << std::endl;
+        os << tab("Channel 3 pan");
+        os << flt(pan[3]) << std::endl;
+    }
+}
+
+void
+AudioPort::cacheInfo(AudioPortInfo &result) const
+{
+
+}
+
+void
+AudioPort::cacheStats(AudioPortStats &result) const
+{
+    stats.fillLevel = fillLevel();
+}
+
+void
+AudioPort::_reset(bool hard)
+{
+    lock();
+
+    // Wipe out the buffer contents
+    this->clear(SamplePair{0,0});
+
+    // Realign the write pointer
+    alignWritePtr();
+    lastAlignment = util::Time::now();
+
+    // Clear statistics
+    if (hard) clearStats();
+
+    unlock();
+}
+
+void
+AudioPort::_run()
+{
+    unmute(10000);
+}
+
+void
+AudioPort::_pause()
+{
+    fadeOut();
+    mute(0);
+}
+
+void
+AudioPort::_warpOn()
+{
+    fadeOut();
+    mute(0);
+}
+
+void
+AudioPort::_warpOff()
+{
+    unmute(10000);
+}
+
+void
+AudioPort::_focus()
+{
+    unmute(100000);
+}
+
+void
+AudioPort::_unfocus()
+{
+    mute(100000);
+}
+
 i64
 AudioPort::getOption(Option option) const
 {

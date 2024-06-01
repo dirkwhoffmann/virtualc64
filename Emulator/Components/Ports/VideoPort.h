@@ -43,7 +43,6 @@ public:
 
     VideoPort(C64 &ref);
     const Descriptions &getDescriptions() const override { return descriptions; }
-    void _dump(Category category, std::ostream& os) const override;
 
     VideoPort& operator= (const VideoPort& other) {
 
@@ -65,8 +64,12 @@ public:
 
 
     //
-    // Configuring
+    // Methods from CoreComponent
     //
+
+private:
+
+    void _dump(Category category, std::ostream& os) const override;
 
 public:
 
@@ -96,7 +99,6 @@ private:
 
     // Returns a pointer to a solid blank texture
     u32 *getBlankTexture() const;
-
 };
 
 }

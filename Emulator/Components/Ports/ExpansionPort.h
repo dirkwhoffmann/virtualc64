@@ -64,8 +64,6 @@ public:
     ExpansionPort(C64 &ref) : SubComponent(ref) { };
     const Descriptions &getDescriptions() const override { return descriptions; }
 
-    void _dump(Category category, std::ostream& os) const override;
-
     ExpansionPort& operator= (const ExpansionPort& other);
 
     template <class T>
@@ -85,6 +83,13 @@ public:
     void operator << (SerCounter &worker) override;
     void operator << (SerReader &worker) override;
     void operator << (SerWriter &worker) override;
+
+
+    //
+    // Methods from CoreComponent
+    //
+
+    void _dump(Category category, std::ostream& os) const override;
 
     void _reset(bool hard) override;
 

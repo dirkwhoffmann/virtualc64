@@ -323,6 +323,12 @@
 		5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* MacAudio.swift */; };
 		5085D89D25B848940043B15C /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5085D89B25B848940043B15C /* Joystick.cpp */; };
 		50891C012652380A0004AC1B /* VICIISprites.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50891C002652380A0004AC1B /* VICIISprites.cpp */; };
+		508C1E532C0B20610097473C /* ControlPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E522C0B20610097473C /* ControlPortBase.cpp */; };
+		508C1E542C0B20610097473C /* ControlPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E522C0B20610097473C /* ControlPortBase.cpp */; };
+		508C1E562C0B20760097473C /* ExpansionPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E552C0B20760097473C /* ExpansionPortBase.cpp */; };
+		508C1E572C0B20760097473C /* ExpansionPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E552C0B20760097473C /* ExpansionPortBase.cpp */; };
+		508C1E5A2C0B20EE0097473C /* IECBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E582C0B20EE0097473C /* IECBase.cpp */; };
+		508C1E5B2C0B20EE0097473C /* IECBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E582C0B20EE0097473C /* IECBase.cpp */; };
 		509280CF2930A1B6006E1966 /* PeddleUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509280CD2930A1B6006E1966 /* PeddleUtils.cpp */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		5095C81C2BA09DE800A83825 /* Debugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5095C81A2BA08B0A00A83825 /* Debugger.cpp */; };
@@ -383,8 +389,8 @@
 		50B7566C2617703100CE1865 /* RessourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B7566B2617703100CE1865 /* RessourceManager.swift */; };
 		50B7E26C2813F8C400A405A3 /* TextStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B7E26A2813F8C400A405A3 /* TextStorage.cpp */; };
 		50B929F221C2B5C90039E8F2 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */; };
-		50B98B4A2BFDF5FC00FA1EC6 /* AudioPortConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B98B492BFDF5FC00FA1EC6 /* AudioPortConfig.cpp */; };
-		50B98B4B2BFDF5FC00FA1EC6 /* AudioPortConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B98B492BFDF5FC00FA1EC6 /* AudioPortConfig.cpp */; };
+		50B98B4A2BFDF5FC00FA1EC6 /* AudioPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B98B492BFDF5FC00FA1EC6 /* AudioPortBase.cpp */; };
+		50B98B4B2BFDF5FC00FA1EC6 /* AudioPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B98B492BFDF5FC00FA1EC6 /* AudioPortBase.cpp */; };
 		50B9F2812826392400BDFE7B /* MediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B9F2802826392400BDFE7B /* MediaManager.swift */; };
 		50BB3E912B7A232800B2D87B /* Inspectable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E8F2B7A232800B2D87B /* Inspectable.cpp */; };
 		50BB3E922B7A232800B2D87B /* Inspectable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E8F2B7A232800B2D87B /* Inspectable.cpp */; };
@@ -394,14 +400,14 @@
 		50BB3E9B2B7A50F600B2D87B /* Synchronizable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E982B7A50F600B2D87B /* Synchronizable.cpp */; };
 		50BD640A2C01FADC007CD347 /* VideoPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64082C01FADC007CD347 /* VideoPort.cpp */; };
 		50BD640B2C01FADC007CD347 /* VideoPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64082C01FADC007CD347 /* VideoPort.cpp */; };
-		50BD640E2C01FFEC007CD347 /* VideoPortConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD640D2C01FFEC007CD347 /* VideoPortConfig.cpp */; };
-		50BD640F2C01FFEC007CD347 /* VideoPortConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD640D2C01FFEC007CD347 /* VideoPortConfig.cpp */; };
+		50BD640E2C01FFEC007CD347 /* VideoPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD640D2C01FFEC007CD347 /* VideoPortBase.cpp */; };
+		50BD640F2C01FFEC007CD347 /* VideoPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD640D2C01FFEC007CD347 /* VideoPortBase.cpp */; };
 		50BD64112C03396D007CD347 /* DriveConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64102C03396D007CD347 /* DriveConfig.cpp */; };
 		50BD64122C03396D007CD347 /* DriveConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64102C03396D007CD347 /* DriveConfig.cpp */; };
 		50BD64152C035682007CD347 /* Gmod2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64132C035682007CD347 /* Gmod2.cpp */; };
 		50BD64162C035682007CD347 /* Gmod2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64132C035682007CD347 /* Gmod2.cpp */; };
-		50BD64192C0373F9007CD347 /* PowerPortConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64182C0373F9007CD347 /* PowerPortConfig.cpp */; };
-		50BD641A2C0373F9007CD347 /* PowerPortConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64182C0373F9007CD347 /* PowerPortConfig.cpp */; };
+		50BD64192C0373F9007CD347 /* PowerPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64182C0373F9007CD347 /* PowerPortBase.cpp */; };
+		50BD641A2C0373F9007CD347 /* PowerPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64182C0373F9007CD347 /* PowerPortBase.cpp */; };
 		50BD641D2C04C05A007CD347 /* Heatmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD641B2C04C05A007CD347 /* Heatmap.cpp */; };
 		50BD641E2C04C05A007CD347 /* Heatmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD641B2C04C05A007CD347 /* Heatmap.cpp */; };
 		50BD64222C077610007CD347 /* HeatmapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64212C077610007CD347 /* HeatmapView.swift */; };
@@ -864,6 +870,10 @@
 		5085D89B25B848940043B15C /* Joystick.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Joystick.cpp; sourceTree = "<group>"; };
 		5085D89C25B848940043B15C /* Joystick.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Joystick.h; sourceTree = "<group>"; };
 		50891C002652380A0004AC1B /* VICIISprites.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICIISprites.cpp; sourceTree = "<group>"; };
+		508C1E522C0B20610097473C /* ControlPortBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ControlPortBase.cpp; sourceTree = "<group>"; };
+		508C1E552C0B20760097473C /* ExpansionPortBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ExpansionPortBase.cpp; sourceTree = "<group>"; };
+		508C1E582C0B20EE0097473C /* IECBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IECBase.cpp; sourceTree = "<group>"; };
+		508C1E592C0B20EE0097473C /* IECTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IECTypes.h; sourceTree = "<group>"; };
 		509280CD2930A1B6006E1966 /* PeddleUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PeddleUtils.cpp; sourceTree = "<group>"; };
 		509280CE2930A1B6006E1966 /* PeddleUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleUtils.h; sourceTree = "<group>"; };
 		509280D029312C00006E1966 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -950,7 +960,7 @@
 		50B7E26B2813F8C400A405A3 /* TextStorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextStorage.h; sourceTree = "<group>"; };
 		50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
 		50B98B482BFDC67E00FA1EC6 /* AudioPortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioPortTypes.h; sourceTree = "<group>"; };
-		50B98B492BFDF5FC00FA1EC6 /* AudioPortConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AudioPortConfig.cpp; sourceTree = "<group>"; };
+		50B98B492BFDF5FC00FA1EC6 /* AudioPortBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AudioPortBase.cpp; sourceTree = "<group>"; };
 		50B9F2802826392400BDFE7B /* MediaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaManager.swift; sourceTree = "<group>"; };
 		50B9F2822826C23100BDFE7B /* DatasetteTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DatasetteTypes.h; sourceTree = "<group>"; };
 		50BB3E8F2B7A232800B2D87B /* Inspectable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Inspectable.cpp; sourceTree = "<group>"; };
@@ -963,12 +973,12 @@
 		50BD64082C01FADC007CD347 /* VideoPort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VideoPort.cpp; sourceTree = "<group>"; };
 		50BD64092C01FADC007CD347 /* VideoPort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoPort.h; sourceTree = "<group>"; };
 		50BD640C2C01FAF5007CD347 /* VideoPortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoPortTypes.h; sourceTree = "<group>"; };
-		50BD640D2C01FFEC007CD347 /* VideoPortConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VideoPortConfig.cpp; sourceTree = "<group>"; };
+		50BD640D2C01FFEC007CD347 /* VideoPortBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VideoPortBase.cpp; sourceTree = "<group>"; };
 		50BD64102C03396D007CD347 /* DriveConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DriveConfig.cpp; sourceTree = "<group>"; };
 		50BD64132C035682007CD347 /* Gmod2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Gmod2.cpp; sourceTree = "<group>"; };
 		50BD64142C035682007CD347 /* Gmod2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Gmod2.h; sourceTree = "<group>"; };
 		50BD64172C0371A3007CD347 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		50BD64182C0373F9007CD347 /* PowerPortConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PowerPortConfig.cpp; sourceTree = "<group>"; };
+		50BD64182C0373F9007CD347 /* PowerPortBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PowerPortBase.cpp; sourceTree = "<group>"; };
 		50BD641B2C04C05A007CD347 /* Heatmap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Heatmap.cpp; sourceTree = "<group>"; };
 		50BD641C2C04C05A007CD347 /* Heatmap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Heatmap.h; sourceTree = "<group>"; };
 		50BD64212C077610007CD347 /* HeatmapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatmapView.swift; sourceTree = "<group>"; };
@@ -1985,23 +1995,27 @@
 				5078BEAE264D731600EDA161 /* CMakeLists.txt */,
 				50B98B482BFDC67E00FA1EC6 /* AudioPortTypes.h */,
 				50549B48257D288E006FE39C /* AudioPort.h */,
+				50B98B492BFDF5FC00FA1EC6 /* AudioPortBase.cpp */,
 				50549B47257D288E006FE39C /* AudioPort.cpp */,
-				50B98B492BFDF5FC00FA1EC6 /* AudioPortConfig.cpp */,
 				50BD640C2C01FAF5007CD347 /* VideoPortTypes.h */,
 				50BD64092C01FADC007CD347 /* VideoPort.h */,
+				50BD640D2C01FFEC007CD347 /* VideoPortBase.cpp */,
 				50BD64082C01FADC007CD347 /* VideoPort.cpp */,
-				50BD640D2C01FFEC007CD347 /* VideoPortConfig.cpp */,
 				5078BEA5264D064600EDA161 /* PowerPortTypes.h */,
 				50ACF4DA256EB43B003B5690 /* PowerPort.h */,
+				50BD64182C0373F9007CD347 /* PowerPortBase.cpp */,
 				50ACF4D9256EB43B003B5690 /* PowerPort.cpp */,
-				50BD64182C0373F9007CD347 /* PowerPortConfig.cpp */,
 				50B1A61625A203B100201A2C /* ControlPortTypes.h */,
 				504C434024AF29AC00E69CAE /* ControlPort.h */,
+				508C1E522C0B20610097473C /* ControlPortBase.cpp */,
 				504C433E24AF29AC00E69CAE /* ControlPort.cpp */,
 				500333EB26202527008445E4 /* ExpansionPortTypes.h */,
 				504C434324AF29AC00E69CAE /* ExpansionPort.h */,
+				508C1E552C0B20760097473C /* ExpansionPortBase.cpp */,
 				504C434524AF29AC00E69CAE /* ExpansionPort.cpp */,
+				508C1E592C0B20EE0097473C /* IECTypes.h */,
 				504C434624AF29AC00E69CAE /* IEC.h */,
+				508C1E582C0B20EE0097473C /* IECBase.cpp */,
 				504C433C24AF29AC00E69CAE /* IEC.cpp */,
 			);
 			path = Ports;
@@ -2318,7 +2332,7 @@
 				50726F532961C9940031F2F5 /* IEC.cpp in Sources */,
 				50726F8D2961CA0D0031F2F5 /* ActionReplay.cpp in Sources */,
 				50726FB52961CA290031F2F5 /* RetroShell.cpp in Sources */,
-				50BD640F2C01FFEC007CD347 /* VideoPortConfig.cpp in Sources */,
+				50BD640F2C01FFEC007CD347 /* VideoPortBase.cpp in Sources */,
 				50726F6F2961C9C60031F2F5 /* wave.cc in Sources */,
 				50726F5A2961C9AC0031F2F5 /* DmaDebugger.cpp in Sources */,
 				50726F952961CA0D0031F2F5 /* Funplay.cpp in Sources */,
@@ -2354,6 +2368,7 @@
 				50BD641E2C04C05A007CD347 /* Heatmap.cpp in Sources */,
 				50A1948E2BDA6F490046849E /* EmulatorBase.cpp in Sources */,
 				50726F5D2961C9AC0031F2F5 /* VICII.cpp in Sources */,
+				508C1E572C0B20760097473C /* ExpansionPortBase.cpp in Sources */,
 				50726F652961C9B30031F2F5 /* NamedPipe.cpp in Sources */,
 				50726F8C2961CA0D0031F2F5 /* Reu.cpp in Sources */,
 				50726F422961C97B0031F2F5 /* Concurrency.cpp in Sources */,
@@ -2371,7 +2386,7 @@
 				50726F662961C9B80031F2F5 /* SIDBridge.cpp in Sources */,
 				50726F892961CA0D0031F2F5 /* SuperGames.cpp in Sources */,
 				50BD64122C03396D007CD347 /* DriveConfig.cpp in Sources */,
-				50B98B4B2BFDF5FC00FA1EC6 /* AudioPortConfig.cpp in Sources */,
+				50B98B4B2BFDF5FC00FA1EC6 /* AudioPortBase.cpp in Sources */,
 				50726FB02961CA230031F2F5 /* FSBlock.cpp in Sources */,
 				50BD64162C035682007CD347 /* Gmod2.cpp in Sources */,
 				50726F8E2961CA0D0031F2F5 /* FreezeFrame.cpp in Sources */,
@@ -2393,12 +2408,13 @@
 				50726F412961C97B0031F2F5 /* Parser.cpp in Sources */,
 				50726F8A2961CA0D0031F2F5 /* GameKiller.cpp in Sources */,
 				50726FAB2961CA1C0031F2F5 /* P00File.cpp in Sources */,
+				508C1E542C0B20610097473C /* ControlPortBase.cpp in Sources */,
 				50726F752961C9DC0031F2F5 /* DriveMemory.cpp in Sources */,
 				50726F792961C9DC0031F2F5 /* ParCable.cpp in Sources */,
 				50BB3E9B2B7A50F600B2D87B /* Synchronizable.cpp in Sources */,
 				50726F642961C9B30031F2F5 /* FFmpeg.cpp in Sources */,
 				50726F4A2961C9940031F2F5 /* CPU.cpp in Sources */,
-				50BD641A2C0373F9007CD347 /* PowerPortConfig.cpp in Sources */,
+				50BD641A2C0373F9007CD347 /* PowerPortBase.cpp in Sources */,
 				50726FA22961CA0D0031F2F5 /* WarpSpeed.cpp in Sources */,
 				50726F472961C9940031F2F5 /* SubComponent.cpp in Sources */,
 				50726F702961C9C60031F2F5 /* pot.cc in Sources */,
@@ -2414,6 +2430,7 @@
 				50726F9C2961CA0D0031F2F5 /* Kcs.cpp in Sources */,
 				506F30432B74C1C70083EAEA /* Wakeable.cpp in Sources */,
 				50A194852BDA5CD40046849E /* TODInfo.cpp in Sources */,
+				508C1E5B2C0B20EE0097473C /* IECBase.cpp in Sources */,
 				50726F562961C99A0031F2F5 /* PeddleUtils.cpp in Sources */,
 				50FFB54E2B8262BA00042771 /* Serializable.cpp in Sources */,
 				50726FA82961CA1C0031F2F5 /* PRGFile.cpp in Sources */,
@@ -2474,7 +2491,7 @@
 				50AA3EC12616F62500C96EDB /* MemUtils.cpp in Sources */,
 				504C437624AF29AC00E69CAE /* P00File.cpp in Sources */,
 				5038CA9520B6C2AC000D9193 /* VICPanel.swift in Sources */,
-				50BD64192C0373F9007CD347 /* PowerPortConfig.cpp in Sources */,
+				50BD64192C0373F9007CD347 /* PowerPortBase.cpp in Sources */,
 				504C435F24AF29AC00E69CAE /* SuperGames.cpp in Sources */,
 				50BE4B5C24E7F857008F39C9 /* Data.swift in Sources */,
 				50BE4B6424E7F941008F39C9 /* NSControl.swift in Sources */,
@@ -2539,7 +2556,7 @@
 				504C437B24AF29AC00E69CAE /* D64File.cpp in Sources */,
 				5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */,
 				507A499E24C8D65700DBF984 /* TraceTableView.swift in Sources */,
-				50BD640E2C01FFEC007CD347 /* VideoPortConfig.cpp in Sources */,
+				50BD640E2C01FFEC007CD347 /* VideoPortBase.cpp in Sources */,
 				50BE4B6A24E7FB6C008F39C9 /* NSImage.swift in Sources */,
 				504C438B24AF29AC00E69CAE /* Mouse1351.cpp in Sources */,
 				506D3DCE20223E5E009742CF /* MyApplication.swift in Sources */,
@@ -2579,7 +2596,7 @@
 				50CCC30A256FAC870052619A /* Concurrency.cpp in Sources */,
 				5002FA7F21C2653600DA4BBC /* GeneralPrefs.swift in Sources */,
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,
-				50B98B4A2BFDF5FC00FA1EC6 /* AudioPortConfig.cpp in Sources */,
+				50B98B4A2BFDF5FC00FA1EC6 /* AudioPortBase.cpp in Sources */,
 				504C435E24AF29AC00E69CAE /* FinalIII.cpp in Sources */,
 				50A22A2F2618845800C9FB1E /* TextureRect.swift in Sources */,
 				506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */,
@@ -2594,6 +2611,7 @@
 				50B7566C2617703100CE1865 /* RessourceManager.swift in Sources */,
 				506D4D0D20B331A00093C5C6 /* MyFormatter.swift in Sources */,
 				5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */,
+				508C1E5A2C0B20EE0097473C /* IECBase.cpp in Sources */,
 				50A9A088250DE90900723D32 /* PageFox.cpp in Sources */,
 				504C436E24AF29AC00E69CAE /* Epyx.cpp in Sources */,
 				505F8FE72580BD780066ACE4 /* AudioConf.swift in Sources */,
@@ -2619,6 +2637,7 @@
 				50BE4B5824E7F80C008F39C9 /* FileManager.swift in Sources */,
 				504C436D24AF29AC00E69CAE /* Rex.cpp in Sources */,
 				5058A920281D109F00C223C9 /* DiskInspector.swift in Sources */,
+				508C1E532C0B20610097473C /* ControlPortBase.cpp in Sources */,
 				504C436424AF29AC00E69CAE /* Expert.cpp in Sources */,
 				504C436724AF29AC00E69CAE /* MagicDesk.cpp in Sources */,
 				50033829266E47B400D5456E /* CompatibilityConf.swift in Sources */,
@@ -2630,6 +2649,7 @@
 				504C43A624AF29AC00E69CAE /* Disk.cpp in Sources */,
 				504C43A224AF29AC00E69CAE /* ControlPort.cpp in Sources */,
 				50BD64112C03396D007CD347 /* DriveConfig.cpp in Sources */,
+				508C1E562C0B20760097473C /* ExpansionPortBase.cpp in Sources */,
 				507A49A224C8D71400DBF984 /* BankTableView.swift in Sources */,
 				504C437424AF29AC00E69CAE /* T64File.cpp in Sources */,
 				50CCE179259DFD7800481E7F /* DevicesPrefs.swift in Sources */,

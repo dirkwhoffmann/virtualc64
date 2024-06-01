@@ -21,17 +21,6 @@ PowerPort::PowerPort(C64& ref) : SubComponent(ref)
 
 }
 
-void
-PowerPort::_dump(Category category, std::ostream& os) const
-{
-    using namespace util;
-
-    if (category == Category::Config) {
-
-        dumpConfig(os);
-    }
-}
-
 Cycle
 PowerPort::todTickDelay(u8 cra)
 {

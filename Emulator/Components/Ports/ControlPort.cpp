@@ -29,20 +29,6 @@ ControlPort::ControlPort(C64 &ref, isize id) : SubComponent(ref, id)
 }
 
 void
-ControlPort::_dump(Category category, std::ostream& os) const
-{
-    using namespace util;
-    
-    if (category == Category::State) {
-        
-        os << tab("Port Nr");
-        os << dec(objid) << std::endl;
-        os << tab("Detetected device");
-        os << ControlPortDeviceEnum::key(device) << std::endl;
-    }
-}
-
-void
 ControlPort::execute()
 {
     switch (device) {

@@ -60,7 +60,7 @@ public:
     using SubComponent::SubComponent;
     const Descriptions &getDescriptions() const override { return descriptions; }
 
-    const char *objectName() const override { return "RegressionTester"; }
+    // const char *objectName() const override { return "RegressionTester"; }
     void _dump(Category category, std::ostream& os) const override { }
 
     RegressionTester& operator= (const RegressionTester& other) { return *this; }
