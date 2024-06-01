@@ -46,9 +46,12 @@ Joystick::operator << (SerReader &worker)
 void 
 Joystick::cacheInfo(JoystickInfo &result) const
 {
-    result.button = button;
-    result.axisX = axisX;
-    result.axisY = axisY;
+    {   SYNCHRONIZED
+        
+        result.button = button;
+        result.axisX = axisX;
+        result.axisY = axisY;
+    }
 }
 
 i64

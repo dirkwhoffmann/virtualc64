@@ -60,13 +60,16 @@ AudioPort::cacheInfo(AudioPortInfo &result) const
 void
 AudioPort::cacheStats(AudioPortStats &result) const
 {
-    stats.fillLevel = fillLevel();
+    {   SYNCHRONIZED
+        
+        stats.fillLevel = fillLevel();
+    }
 }
 
 void
 AudioPort::_reset(bool hard)
 {
-    lock();
+    SYNCHRONIZED
 
     // Wipe out the buffer contents
     this->clear(SamplePair{0,0});
@@ -77,8 +80,6 @@ AudioPort::_reset(bool hard)
 
     // Clear statistics
     if (hard) clearStats();
-
-    unlock();
 }
 
 void

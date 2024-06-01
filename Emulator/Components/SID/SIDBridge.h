@@ -81,8 +81,10 @@ public:
     SIDBridge(C64 &ref);
     const Descriptions &getDescriptions() const override { return descriptions; }
 
+    /*
     void _dump(Category category, std::ostream& os) const override;
     void _dump(Category category, std::ostream& os, isize nr) const;
+    */
 
     SIDBridge& operator= (const SIDBridge& other) {
 

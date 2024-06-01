@@ -408,9 +408,7 @@ Recorder::prepare()
     }
     
     // Start with a nearly empty buffer
-    audioPort.lock();
-    while (audioPort.count() > 1) (void)audioPort.read();
-    audioPort.unlock();
+    audioPort.clamp(1);
 
     // Switch state and inform the GUI
     state = REC_STATE_RECORD;

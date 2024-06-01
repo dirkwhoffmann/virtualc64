@@ -17,6 +17,27 @@
 namespace vc64 {
 
 void
+SID::_dump(Category category, std::ostream& os) const
+{
+    using namespace util;
+
+    if (category == Category::Config) {
+
+        dumpConfig(os);
+    }
+
+    if (category == Category::State) {
+
+        os << tab("Chip");
+        os << dec(objid) << std::endl;
+        os << tab("Clock");
+        os << dec(clock) << std::endl;
+
+        resid.dump(category, os);
+    }
+}
+
+void
 SID::cacheInfo(SIDInfo &info) const
 {
     {   SYNCHRONIZED

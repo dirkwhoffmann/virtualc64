@@ -876,14 +876,15 @@ C64::record() const
 void
 C64::cacheInfo(C64Info &result) const
 {
-    SYNCHRONIZED
+    {   SYNCHRONIZED
 
-    result.cpuProgress = cpu.clock;
-    result.cia1Progress = cia1.sleeping ? cia1.sleepCycle : cpu.clock;
-    result.cia2Progress = cia2.sleeping ? cia2.sleepCycle : cpu.clock;
-    result.frame = frame;
-    result.vpos = scanline;
-    result.hpos = rasterCycle;
+        result.cpuProgress = cpu.clock;
+        result.cia1Progress = cia1.sleeping ? cia1.sleepCycle : cpu.clock;
+        result.cia2Progress = cia2.sleeping ? cia2.sleepCycle : cpu.clock;
+        result.frame = frame;
+        result.vpos = scanline;
+        result.hpos = rasterCycle;
+    }
 }
 
 EventSlotInfo

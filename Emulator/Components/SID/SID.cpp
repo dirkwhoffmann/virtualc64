@@ -28,27 +28,6 @@ SID::operator << (SerReader &worker)
     stream.clear(0);
 }
 
-void
-SID::_dump(Category category, std::ostream& os) const
-{
-    using namespace util;
-
-    if (category == Category::Config) {
-
-        dumpConfig(os);
-    }
-
-    if (category == Category::State) {
-
-        os << tab("Chip");
-        os << dec(objid) << std::endl;
-        os << tab("Clock");
-        os << dec(clock) << std::endl;
-        
-        resid.dump(category, os);
-    }
-}
-
 u8
 SID::spypeek(u16 addr) const
 {

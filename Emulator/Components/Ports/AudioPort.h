@@ -51,9 +51,6 @@ public util::RingBuffer <SamplePair, 12288> {
     // Current configuration
     AudioPortConfig config = { };
 
-    // Mutex for synchronizing read / write accesses
-    util::ReentrantMutex mutex;
-
     // Time stamp of the last write pointer alignment
     util::Time lastAlignment;
 
@@ -148,10 +145,6 @@ public:
 
 public:
 
-    // Locks or unlocks the mutex
-    void lock() { mutex.lock(); }
-    void unlock() { mutex.unlock(); }
-
     // Puts the write pointer somewhat ahead of the read pointer
     void alignWritePtr();
 
@@ -166,6 +159,9 @@ public:
      * able to consume.
      */
     void handleBufferOverflow();
+
+    // Reduces the sample count to the specified number
+    void clamp(isize maxSamples);
 
 
     //

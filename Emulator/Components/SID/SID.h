@@ -82,7 +82,6 @@ public:
 
     SID(C64 &ref, isize id);
     const Descriptions &getDescriptions() const override { return descriptions; }
-    void _dump(Category category, std::ostream& os) const override;
 
     SID& operator= (const SID& other) {
 
@@ -92,7 +91,6 @@ public:
 
         return *this;
     }
-
 
     template <class T>
     void serialize(T& worker)
@@ -122,17 +120,14 @@ public:
 
 
     //
-    // Methods from Inspectable
+    // Methods from CoreComponent
     //
 
-public:
+private:
+
+    void _dump(Category category, std::ostream& os) const override;
 
     void cacheInfo(SIDInfo &result) const override;
-
-
-    //
-    // Configuring
-    //
 
 public:
 
@@ -144,14 +139,15 @@ public:
     void checkOption(Option opt, i64 value) override;
     void setOption(Option opt, i64 value) override;
 
-    bool isEnabled() const { return config.enabled; }
-
 
     //
     // Accessing
     //
 
 public:
+
+    // Checks if this SID is present
+    bool isEnabled() const { return config.enabled; }
 
     // Reads the real value of a SID register (used by the debugger only)
     u8 spypeek(u16 addr) const;

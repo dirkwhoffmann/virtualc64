@@ -82,9 +82,17 @@ AudioPort::handleBufferOverflow()
 }
 
 void 
+AudioPort::clamp(isize maxSamples)
+{
+    SYNCHRONIZED
+
+    while (count() > maxSamples) read();
+}
+
+void
 AudioPort::generateSamples()
 {
-    lock();
+    SYNCHRONIZED
 
     // Check how many samples can be generated
     auto s0 = sid0.stream.count();
@@ -105,8 +113,6 @@ AudioPort::generateSamples()
     } else {
         fading ? mixSingleSID<true>(numSamples) : mixSingleSID<false>(numSamples);
     }
-
-    unlock();
 }
 
 void
@@ -264,7 +270,7 @@ AudioPort::mixMultiSID(isize numSamples)
 void
 AudioPort::copyMono(float *buffer, isize n)
 {
-    lock();
+    SYNCHRONIZED
 
     if (!recorder.isRecording()) {
 
@@ -302,14 +308,12 @@ AudioPort::copyMono(float *buffer, isize n)
         // Fill with zeroes
         for (isize i = 0; i < n; i++) *buffer++ = 0;
     }
-
-    unlock();
 }
 
 void
 AudioPort::copyStereo(float *left, float *right, isize n)
 {
-    lock();
+    SYNCHRONIZED
 
     if (!recorder.isRecording()) {
 
@@ -349,14 +353,12 @@ AudioPort::copyStereo(float *left, float *right, isize n)
         // Fill with zeroes
         for (isize i = 0; i < n; i++) { *left++ = *right++ = 0; }
     }
-
-    unlock();
 }
 
 void
 AudioPort::copyInterleaved(float *buffer, isize n)
 {
-    lock();
+   SYNCHRONIZED
 
     if (!recorder.isRecording()) {
 
@@ -396,8 +398,6 @@ AudioPort::copyInterleaved(float *buffer, isize n)
         // Fill with zeroes
         for (isize i = 0; i < n; i++) { *buffer++ = 0; *buffer++ = 0; }
     }
-
-    unlock();
 }
 
 }

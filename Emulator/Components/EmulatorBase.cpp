@@ -95,22 +95,28 @@ Emulator::_dump(Category category, std::ostream& os) const
 void
 Emulator::cacheInfo(EmulatorInfo &result) const
 {
-    result.state = state;
-    result.refreshRate = isize(refreshRate());
-    result.powered = isPoweredOn();
-    result.paused = isPaused();
-    result.running = isRunning();
-    result.suspended = isSuspended();
-    result.warping = isWarping();
-    result.tracking = isTracking();
+    {   SYNCHRONIZED
+        
+        result.state = state;
+        result.refreshRate = isize(refreshRate());
+        result.powered = isPoweredOn();
+        result.paused = isPaused();
+        result.running = isRunning();
+        result.suspended = isSuspended();
+        result.warping = isWarping();
+        result.tracking = isTracking();
+    }
 }
 
 void
 Emulator::cacheStats(EmulatorStats &result) const
 {
-    result.cpuLoad = cpuLoad;
-    result.fps = fps;
-    result.resyncs = resyncs;
+    {   SYNCHRONIZED
+        
+        result.cpuLoad = cpuLoad;
+        result.fps = fps;
+        result.resyncs = resyncs;
+    }
 
 }
 

@@ -128,21 +128,24 @@ CPU::_dump(Category category, std::ostream& os) const
 void
 CPU::cacheInfo(CPUInfo &result) const
 {
-    result.cycle = clock;
+    {   SYNCHRONIZED
+        
+        result.cycle = clock;
 
-    result.pc0 = reg.pc0;
-    result.sp = reg.sp;
-    result.a = reg.a;
-    result.x = reg.x;
-    result.y = reg.y;
-    result.sr = getP();
+        result.pc0 = reg.pc0;
+        result.sp = reg.sp;
+        result.a = reg.a;
+        result.x = reg.x;
+        result.y = reg.y;
+        result.sr = getP();
 
-    result.irq = irqLine;
-    result.nmi = nmiLine;
-    result.rdy = rdyLine;
+        result.irq = irqLine;
+        result.nmi = nmiLine;
+        result.rdy = rdyLine;
 
-    result.processorPort = readPort();
-    result.processorPortDir = readPortDir();
+        result.processorPort = readPort();
+        result.processorPortDir = readPortDir();
+    }
 }
 
 void

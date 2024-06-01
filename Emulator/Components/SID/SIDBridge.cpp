@@ -31,17 +31,6 @@ SIDBridge::SIDBridge(C64 &ref) : SubComponent(ref)
     };
 }
 
-void
-SIDBridge::_dump(Category category, std::ostream& os) const
-{
-    using namespace util;
-    
-    if (category == Category::Config) {
-        
-        dumpConfig(os);
-    }
-}
-
 isize
 SIDBridge::mappedSID(u16 addr) const
 {

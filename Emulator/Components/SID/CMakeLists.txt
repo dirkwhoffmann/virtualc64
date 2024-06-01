@@ -4,10 +4,8 @@ target_sources(vc64Core PRIVATE
 
 ReSID.cpp
 SID.cpp
-SIDConfig.cpp
-SIDInfo.cpp
+SIDBase.cpp
 SIDBridge.cpp
-SIDBridgeConfig.cpp
 
 )
 

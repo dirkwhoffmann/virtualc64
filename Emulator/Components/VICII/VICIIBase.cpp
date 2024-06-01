@@ -86,7 +86,9 @@ VICII::cacheInfo(VICIIInfo &result) const
 void
 VICII::cacheStats(VICIIStats &result) const
 {
+    {   SYNCHRONIZED
 
+    }
 }
 
 void

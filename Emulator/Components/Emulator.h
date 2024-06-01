@@ -23,7 +23,9 @@ namespace vc64 {
 
 class VirtualC64;
 
-class Emulator : public Thread, public Dumpable, public Inspectable<EmulatorInfo, EmulatorStats>, public Configurable {
+class Emulator : 
+public Thread, public Synchronizable, public Dumpable,
+public Inspectable<EmulatorInfo, EmulatorStats>, public Configurable {
 
     friend class API;
     friend class VirtualC64;
