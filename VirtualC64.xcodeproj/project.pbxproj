@@ -333,6 +333,10 @@
 		508C1E5E2C0B31320097473C /* DmaDebuggerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E5C2C0B31320097473C /* DmaDebuggerBase.cpp */; };
 		508C1E602C0B4A6A0097473C /* DriveMemoryBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E5F2C0B4A6A0097473C /* DriveMemoryBase.cpp */; };
 		508C1E612C0B4A6A0097473C /* DriveMemoryBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E5F2C0B4A6A0097473C /* DriveMemoryBase.cpp */; };
+		508C1E632C0B5EE80097473C /* KeyboardBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E622C0B5EE80097473C /* KeyboardBase.cpp */; };
+		508C1E642C0B5EE80097473C /* KeyboardBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E622C0B5EE80097473C /* KeyboardBase.cpp */; };
+		508C1E662C0B5F770097473C /* MonitorBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E652C0B5F770097473C /* MonitorBase.cpp */; };
+		508C1E672C0B5F770097473C /* MonitorBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E652C0B5F770097473C /* MonitorBase.cpp */; };
 		509280CF2930A1B6006E1966 /* PeddleUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509280CD2930A1B6006E1966 /* PeddleUtils.cpp */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		5095C81C2BA09DE800A83825 /* Debugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5095C81A2BA08B0A00A83825 /* Debugger.cpp */; };
@@ -872,6 +876,8 @@
 		508C1E592C0B20EE0097473C /* SerialPortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SerialPortTypes.h; sourceTree = "<group>"; };
 		508C1E5C2C0B31320097473C /* DmaDebuggerBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DmaDebuggerBase.cpp; sourceTree = "<group>"; };
 		508C1E5F2C0B4A6A0097473C /* DriveMemoryBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DriveMemoryBase.cpp; sourceTree = "<group>"; };
+		508C1E622C0B5EE80097473C /* KeyboardBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardBase.cpp; sourceTree = "<group>"; };
+		508C1E652C0B5F770097473C /* MonitorBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MonitorBase.cpp; sourceTree = "<group>"; };
 		509280CD2930A1B6006E1966 /* PeddleUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PeddleUtils.cpp; sourceTree = "<group>"; };
 		509280CE2930A1B6006E1966 /* PeddleUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleUtils.h; sourceTree = "<group>"; };
 		509280D029312C00006E1966 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -1210,6 +1216,7 @@
 				50AEEE7226305625001DED20 /* C64Key.h */,
 				50AEEE7126305625001DED20 /* C64Key.cpp */,
 				504C434224AF29AC00E69CAE /* Keyboard.h */,
+				508C1E622C0B5EE80097473C /* KeyboardBase.cpp */,
 				504C434424AF29AC00E69CAE /* Keyboard.cpp */,
 			);
 			path = Keyboard;
@@ -2088,6 +2095,7 @@
 				50E5BF772BA81ECD0004712B /* CMakeLists.txt */,
 				50E5BF762BA81EB30004712B /* MonitorTypes.h */,
 				50E5BF722BA81E710004712B /* Monitor.h */,
+				508C1E652C0B5F770097473C /* MonitorBase.cpp */,
 				50E5BF712BA81E710004712B /* Monitor.cpp */,
 			);
 			path = Monitor;
@@ -2315,6 +2323,7 @@
 				50726F7F2961C9E80031F2F5 /* Mouse1350.cpp in Sources */,
 				50726FAF2961CA1C0031F2F5 /* Script.cpp in Sources */,
 				50A194882BDA5D4D0046849E /* VICIIInfo.cpp in Sources */,
+				508C1E672C0B5F770097473C /* MonitorBase.cpp in Sources */,
 				50726F4C2961C9940031F2F5 /* Colors.cpp in Sources */,
 				50726F602961C9AC0031F2F5 /* VICIIDraw.cpp in Sources */,
 				50726FA52961CA1C0031F2F5 /* AnyCollection.cpp in Sources */,
@@ -2328,6 +2337,7 @@
 				50726F952961CA0D0031F2F5 /* Funplay.cpp in Sources */,
 				50726F6C2961C9C60031F2F5 /* envelope.cc in Sources */,
 				501C46BF2965C54200C4B27B /* StrWriter.h in Sources */,
+				508C1E642C0B5EE80097473C /* KeyboardBase.cpp in Sources */,
 				50726F992961CA0D0031F2F5 /* MagicDesk.cpp in Sources */,
 				50726F442961C97B0031F2F5 /* MemUtils.cpp in Sources */,
 				50726F9B2961CA0D0031F2F5 /* Mach5.cpp in Sources */,
@@ -2502,6 +2512,7 @@
 				50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */,
 				500EA6C724B09037009AA7D7 /* SubComponent.cpp in Sources */,
 				50157EEB28256035000E9DDD /* Config.swift in Sources */,
+				508C1E632C0B5EE80097473C /* KeyboardBase.cpp in Sources */,
 				501B80C325B1702500C90284 /* MyDocumentController.swift in Sources */,
 				5003382B266F7F3C00D5456E /* VICIITable.cpp in Sources */,
 				504C438324AF29AC00E69CAE /* CoreComponent.cpp in Sources */,
@@ -2547,6 +2558,7 @@
 				5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */,
 				507A499E24C8D65700DBF984 /* TraceTableView.swift in Sources */,
 				50BD640E2C01FFEC007CD347 /* VideoPortBase.cpp in Sources */,
+				508C1E662C0B5F770097473C /* MonitorBase.cpp in Sources */,
 				50BE4B6A24E7FB6C008F39C9 /* NSImage.swift in Sources */,
 				504C438B24AF29AC00E69CAE /* Mouse1351.cpp in Sources */,
 				506D3DCE20223E5E009742CF /* MyApplication.swift in Sources */,

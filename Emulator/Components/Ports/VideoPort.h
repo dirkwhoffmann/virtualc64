@@ -78,6 +78,11 @@ private:
 
     void _dump(Category category, std::ostream& os) const override;
 
+
+    //
+    // Methods from Configurable
+    //
+    
 public:
 
     const VideoPortConfig &getConfig() const { return config; }

@@ -16,47 +16,6 @@
 #include "C64Key.h"
 #include "IOUtils.h"
 
-void 
-Keyboard::_reset(bool hard)
-{
-    // Reset the keyboard matrix
-    releaseAll();
-}
-
-void
-Keyboard::_dump(Category category, std::ostream& os) const
-{
-    using namespace util;
-    
-    if (category == Category::State) {
-        
-        for (int i = 0; i < 8; i++) {
-            
-            os << dec((kbMatrixRow[i] >> 0) & 1) << " ";
-            os << dec((kbMatrixRow[i] >> 1) & 1) << " ";
-            os << dec((kbMatrixRow[i] >> 2) & 1) << " ";
-            os << dec((kbMatrixRow[i] >> 3) & 1) << " ";
-            os << dec((kbMatrixRow[i] >> 4) & 1) << " ";
-            os << dec((kbMatrixRow[i] >> 5) & 1) << " ";
-            os << dec((kbMatrixRow[i] >> 6) & 1) << " ";
-            os << dec((kbMatrixRow[i] >> 7) & 1) << "    ";
-
-            os << dec((kbMatrixCol[i] >> 0) & 1) << " ";
-            os << dec((kbMatrixCol[i] >> 1) & 1) << " ";
-            os << dec((kbMatrixCol[i] >> 2) & 1) << " ";
-            os << dec((kbMatrixCol[i] >> 3) & 1) << " ";
-            os << dec((kbMatrixCol[i] >> 4) & 1) << " ";
-            os << dec((kbMatrixCol[i] >> 5) & 1) << " ";
-            os << dec((kbMatrixCol[i] >> 6) & 1) << " ";
-            os << dec((kbMatrixCol[i] >> 7) & 1) << std::endl;
-
-            os << std::endl;
-            os << "Shift lock " << (shiftLock ? "pressed" : "not pressed");
-            os << std::endl;
-        }
-    }
-}
-
 u8
 Keyboard::getColumnValues(u8 rowMask) const
 {

@@ -110,10 +110,13 @@ public:
     // Methods from CoreComponent
     //
 
+public:
+
     const Descriptions &getDescriptions() const override { return descriptions; }
 
+private:
+
     void _dump(Category category, std::ostream& os) const override;
-    
     void _reset(bool hard) override;
     void _run() override;
     void _pause() override;

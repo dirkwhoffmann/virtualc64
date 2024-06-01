@@ -219,6 +219,6 @@ public:
 
     // Performs periodic actions for this device
     void execute();
-}; //SWIFT_IMMORTAL_REFERENCE;
+};
 
 }

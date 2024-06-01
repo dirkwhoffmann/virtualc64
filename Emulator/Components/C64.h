@@ -269,51 +269,10 @@ public:
 
     C64(class Emulator& ref, isize id);
     ~C64();
-    const Descriptions &getDescriptions() const override { return descriptions; }
-    
-    void prefix() const override;
-    void _dump(Category category, std::ostream& os) const override;
 
 private:
 
     void initialize();
-
-
-    //
-    // Configuring
-    //
-
-public:
-
-    const C64Config &getConfig() const { return config; }
-
-    // Updates the clock frequency and all variables derived from it
-    void updateClockFrequency();
-
-    // Indicates that the run-ahead instance needs an update
-    void markAsDirty() { isDirty = true; }
-
-    // Enables or disables headless mode
-    bool getHeadless() const { return headless; }
-    void setHeadless(bool value) { headless = value; }
-
-    // Exports the current configuration to a script file
-    void exportConfig(const fs::path &path) const;
-    void exportConfig(std::ostream& stream) const;
-
-
-    //
-    // Analyzing
-    //
-
-public:
-
-    InspectionTarget getInspectionTarget() const;
-
-private:
-
-    void setInspectionTarget(InspectionTarget target);
-    void removeInspectionTarget() { setInspectionTarget(INSPECTION_NONE); }
 
 
     //
@@ -422,6 +381,14 @@ public:
     // Methods from CoreComponent
     //
 
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+    void prefix() const override;
+
+private:
+
+    void _dump(Category category, std::ostream& os) const override;
     void _reset(bool hard) override;
 
 
@@ -439,6 +406,43 @@ public:
 private:
 
     void inspectSlot(EventSlot nr) const;
+
+
+    //
+    // Configuring
+    //
+
+public:
+
+    const C64Config &getConfig() const { return config; }
+
+    // Updates the clock frequency and all variables derived from it
+    void updateClockFrequency();
+
+    // Indicates that the run-ahead instance needs an update
+    void markAsDirty() { isDirty = true; }
+
+    // Enables or disables headless mode
+    bool getHeadless() const { return headless; }
+    void setHeadless(bool value) { headless = value; }
+
+    // Exports the current configuration to a script file
+    void exportConfig(const fs::path &path) const;
+    void exportConfig(std::ostream& stream) const;
+
+
+    //
+    // Analyzing
+    //
+
+public:
+
+    InspectionTarget getInspectionTarget() const;
+
+private:
+
+    void setInspectionTarget(InspectionTarget target);
+    void removeInspectionTarget() { setInspectionTarget(INSPECTION_NONE); }
 
 
     //

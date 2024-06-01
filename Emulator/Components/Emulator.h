@@ -87,9 +87,12 @@ public:
     // Methods from CoreComponent
     //
 
-private:
+public:
 
     const char *objectName() const override { return "Emulator"; }
+
+private:
+
     void _dump(Category category, std::ostream& os) const override;
 
 
