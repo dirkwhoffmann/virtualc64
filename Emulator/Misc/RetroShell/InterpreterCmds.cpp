@@ -589,8 +589,8 @@ Interpreter::initCommandShell(Command &root)
     // Components (Expansion port)
     //
 
-    cmd = expansionport.shellName();
-    description = expansionport.description();
+    cmd = expansionPort.shellName();
+    description = expansionPort.description();
     root.add({cmd}, description);
 
     root.pushGroup("");
@@ -604,21 +604,21 @@ Interpreter::initCommandShell(Command &root)
 
         auto path = argv.front();
         if (!util::fileExists(path)) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
-        expansionport.attachCartridge(path);
+        expansionPort.attachCartridge(path);
     });
 
     root.add({cmd, "attach", "reu"}, { "<KB>" },
              "Attaches a REU expansion cartridge",
              [this](Arguments& argv, long value) {
 
-        expansionport.attachReu(parseNum(argv[0]));
+        expansionPort.attachReu(parseNum(argv[0]));
     });
 
     root.add({cmd, "attach", "georam"}, { "<KB>" },
              "Attaches a GeoRAM expansion cartridge",
              [this](Arguments& argv, long value) {
 
-        expansionport.attachGeoRam(parseNum(argv[0]));
+        expansionPort.attachGeoRam(parseNum(argv[0]));
     });
 
     root.popGroup();

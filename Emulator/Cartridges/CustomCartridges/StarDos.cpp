@@ -82,13 +82,13 @@ StarDos::discharge()
 void
 StarDos::enableROML()
 {
-    expansionport.setExromLine(0);
+    expansionPort.setExromLine(0);
 }
 
 void
 StarDos::disableROML()
 {
-    expansionport.setExromLine(1);
+    expansionPort.setExromLine(1);
 }
 
 }

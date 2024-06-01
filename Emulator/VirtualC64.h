@@ -995,10 +995,10 @@ public:
 
 
     //
-    // IEC bus
+    // Serial port (IEC bus)
     //
 
-    struct IECAPI : API {
+    struct SerialPortAPI : API {
 
         using API::API;
 

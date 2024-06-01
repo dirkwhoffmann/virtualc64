@@ -29,7 +29,7 @@ Gmod2::pokeIO1(u16 addr, u8 value)
     control = value;
 
     // Update external lines
-    expansionport.setExromLine(exrom());
+    expansionPort.setExromLine(exrom());
 
     // Switch memory bank
     bankIn(value & 0x3F);

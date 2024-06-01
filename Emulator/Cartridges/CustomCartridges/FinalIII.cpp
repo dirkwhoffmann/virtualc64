@@ -36,7 +36,7 @@ FinalIII::_dump(Category category, std::ostream& os) const
 void
 FinalIII::resetCartConfig()
 {
-    expansionport.setCartridgeMode(CRTMODE_16K);
+    expansionPort.setCartridgeMode(CRTMODE_16K);
 }
 
 void
@@ -107,7 +107,7 @@ FinalIII::setControlReg(u8 value)
     // Update external lines
     updateNMI();
     updateGame();
-    expansionport.setExromLine(exrom());
+    expansionPort.setExromLine(exrom());
 
     // Switch memory bank
     bankIn(control & 0x03);
@@ -133,7 +133,7 @@ FinalIII::updateNMI()
 void
 FinalIII::updateGame()
 {
-    expansionport.setGameLine(game() && qD);
+    expansionPort.setGameLine(game() && qD);
 }
 
 const char *

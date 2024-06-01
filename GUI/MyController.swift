@@ -402,8 +402,8 @@ extension MyController {
         case .DISK_PROTECTED,
                 .DISK_MODIFIED,
                 .DRIVE_LED,
-                .IEC_BUS_BUSY,
-                .IEC_BUS_IDLE,
+                .SER_BUSY,
+                .SER_IDLE,
                 .DRIVE_MOTOR:
             refreshStatusBar()
 

@@ -24,7 +24,7 @@ KcsPower::_reset(bool hard)
 u8
 KcsPower::peekIO1(u16 addr)
 {
-    expansionport.setGameAndExrom(1, addr & 0x02 ? 1 : 0);
+    expansionPort.setGameAndExrom(1, addr & 0x02 ? 1 : 0);
     return peekRomL(0x1E00 | (addr & 0xFF));
 }
 
@@ -40,8 +40,8 @@ KcsPower::peekIO2(u16 addr)
     if (addr & 0x80) {
 
         /*
-         u8 exrom = expansionport.getExromLine() ? 0x80 : 0x00;
-         u8 game = expansionport.getGameLine() ? 0x40 : 0x00;
+         u8 exrom = expansionPort.getExromLine() ? 0x80 : 0x00;
+         u8 game = expansionPort.getGameLine() ? 0x40 : 0x00;
          return exrom | game | (vic.getDataBusPhi1() & 0x3F);
          */
         return peekRAM(addr & 0x7F);
@@ -62,7 +62,7 @@ KcsPower::spypeekIO2(u16 addr) const
 void
 KcsPower::pokeIO1(u16 addr, u8 value)
 {
-    expansionport.setGameAndExrom(0, (addr & 0b10) ? 1 : 0);
+    expansionPort.setGameAndExrom(0, (addr & 0b10) ? 1 : 0);
 }
 
 void
@@ -84,7 +84,7 @@ KcsPower::pressButton(isize nr)
 {
     if (nr == 1) {
 
-        expansionport.setCartridgeMode(CRTMODE_ULTIMAX);
+        expansionPort.setCartridgeMode(CRTMODE_ULTIMAX);
         cpu.pullDownNmiLine(INTSRC_EXP);
     }
 };

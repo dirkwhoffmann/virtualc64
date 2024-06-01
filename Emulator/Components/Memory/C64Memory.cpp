@@ -210,8 +210,8 @@ void
 C64Memory::updatePeekPokeLookupTables()
 {
     // Read game line, exrom line, and processor port bits
-    u8 game  = expansionport.getGameLine() ? 0x08 : 0x00;
-    u8 exrom = expansionport.getExromLine() ? 0x10 : 0x00;
+    u8 game  = expansionPort.getGameLine() ? 0x08 : 0x00;
+    u8 exrom = expansionPort.getExromLine() ? 0x10 : 0x00;
     u8 index = (cpu.readPort() & 0x07) | exrom | game;
     
     // Set ultimax flag
@@ -223,7 +223,7 @@ C64Memory::updatePeekPokeLookupTables()
     }
     
     // Call the Cartridge's delegation method
-    expansionport.updatePeekPokeLookupTables();
+    expansionPort.updatePeekPokeLookupTables();
 }
 
 u8
@@ -250,7 +250,7 @@ C64Memory::peek(u16 addr, MemoryType source)
         case M_CRTLO:
         case M_CRTHI:
             
-            return expansionport.peek(addr);
+            return expansionPort.peek(addr);
             
         case M_PP:
             
@@ -343,11 +343,11 @@ C64Memory::peekIO(u16 addr)
             
         case 0xE: // I/O space 1
             
-            return expansionport.peekIO1(addr);
+            return expansionPort.peekIO1(addr);
             
         case 0xF: // I/O space 2
             
-            return expansionport.peekIO2(addr);
+            return expansionPort.peekIO2(addr);
     }
     
     fatalError;
@@ -375,7 +375,7 @@ C64Memory::spypeek(u16 addr, MemoryType source) const
         case M_CRTLO:
         case M_CRTHI:
             
-            return expansionport.spypeek(addr);
+            return expansionPort.spypeek(addr);
             
         case M_PP:
             
@@ -433,11 +433,11 @@ C64Memory::spypeekIO(u16 addr) const
             
         case 0xE: // I/O space 1
             
-            return expansionport.spypeekIO1(addr);
+            return expansionPort.spypeekIO1(addr);
             
         case 0xF: // I/O space 2
             
-            return expansionport.spypeekIO2(addr);
+            return expansionPort.spypeekIO2(addr);
             
         default:
             fatalError;
@@ -474,7 +474,7 @@ C64Memory::poke(u16 addr, u8 value, MemoryType target)
         case M_CRTLO:
         case M_CRTHI:
             
-            expansionport.poke(addr, value);
+            expansionPort.poke(addr, value);
             return;
             
         case M_PP:
@@ -579,12 +579,12 @@ C64Memory::pokeIO(u16 addr, u8 value)
             
         case 0xE: // I/O space 1
             
-            expansionport.pokeIO1(addr, value);
+            expansionPort.pokeIO1(addr, value);
             return;
             
         case 0xF: // I/O space 2
             
-            expansionport.pokeIO2(addr, value);
+            expansionPort.pokeIO2(addr, value);
             return;
     }
     

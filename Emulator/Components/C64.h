@@ -37,7 +37,7 @@
 #include "ControlPort.h"
 #include "PowerPort.h"
 #include "ExpansionPort.h"
-#include "IEC.h"
+#include "SerialPort.h"
 
 // Peripherals
 #include "Drive.h"
@@ -135,7 +135,7 @@ public:
     ControlPort port1 = ControlPort(*this, PORT_1);
     ControlPort port2 = ControlPort(*this, PORT_2);
     ExpansionPort expansionport = ExpansionPort(*this);
-    IEC iec = IEC(*this);
+    SerialPort iec = SerialPort(*this);
 
     // Peripherals
     Keyboard keyboard = Keyboard(*this);

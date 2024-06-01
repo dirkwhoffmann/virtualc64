@@ -136,7 +136,7 @@ extern debugflag AUDVOL_DEBUG;
 // Drive
 extern debugflag VIA_DEBUG;
 extern debugflag PIA_DEBUG;
-extern debugflag IEC_DEBUG;
+extern debugflag SER_DEBUG;
 extern debugflag DSK_DEBUG;
 extern debugflag DSKCHG_DEBUG;
 extern debugflag GCR_DEBUG;

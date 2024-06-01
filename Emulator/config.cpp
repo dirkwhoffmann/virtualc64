@@ -58,7 +58,7 @@ debugflag AUDVOL_DEBUG    = 1; // Audio volume
 // Drive
 debugflag VIA_DEBUG       = 0; // Versatile Interface Adapter
 debugflag PIA_DEBUG       = 0; // Peripheral Interface Adapter
-debugflag IEC_DEBUG       = 0; // IEC bus
+debugflag SER_DEBUG       = 0; // Serial port (IEC bus)
 debugflag DSK_DEBUG       = 0; // Disk controller execution
 debugflag DSKCHG_DEBUG    = 0; // Disk change procedure
 debugflag GCR_DEBUG       = 0; // Disk encoding / decoding

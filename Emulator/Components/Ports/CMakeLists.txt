@@ -8,8 +8,8 @@ ControlPort.cpp
 ControlPortBase.cpp
 ExpansionPort.cpp
 ExpansionPortBase.cpp
-IEC.cpp
-IECBase.cpp
+SerialPort.cpp
+SerialPortBase.cpp
 PowerPort.cpp
 PowerPortBase.cpp
 VideoPort.cpp

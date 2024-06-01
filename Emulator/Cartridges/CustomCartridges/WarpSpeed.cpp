@@ -18,7 +18,7 @@ namespace vc64 {
 void
 WarpSpeed::resetCartConfig()
 {
-    expansionport.setCartridgeMode(CRTMODE_16K);
+    expansionPort.setCartridgeMode(CRTMODE_16K);
 }
 
 u8
@@ -48,13 +48,13 @@ WarpSpeed::spypeekIO2(u16 addr) const
 void
 WarpSpeed::pokeIO1(u16 addr, u8 value)
 {
-    expansionport.setCartridgeMode(CRTMODE_16K);
+    expansionPort.setCartridgeMode(CRTMODE_16K);
 }
 
 void
 WarpSpeed::pokeIO2(u16 addr, u8 value)
 {
-    expansionport.setCartridgeMode(CRTMODE_OFF);
+    expansionPort.setCartridgeMode(CRTMODE_OFF);
 }
 
 const char *

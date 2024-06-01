@@ -40,7 +40,7 @@ Epyx::_dump(Category category, std::ostream& os) const
 void
 Epyx::resetCartConfig()
 {
-    expansionport.setCartridgeMode(CRTMODE_8K);
+    expansionPort.setCartridgeMode(CRTMODE_8K);
 }
 
 u8
@@ -87,7 +87,7 @@ Epyx::execute()
 {
     // Switch cartridge off when the capacitor is fully charged
     if (cpu.clock > cycle) {
-        expansionport.setCartridgeMode(CRTMODE_OFF);
+        expansionPort.setCartridgeMode(CRTMODE_OFF);
     }
 }
 
@@ -95,7 +95,7 @@ void
 Epyx::dischargeCapacitor()
 {
     // Switch on cartridge
-    expansionport.setCartridgeMode(CRTMODE_8K);
+    expansionPort.setCartridgeMode(CRTMODE_8K);
 
     // Schedule cartridge to be switched off in about 512 CPU cycles
     cycle = cpu.clock + 512;

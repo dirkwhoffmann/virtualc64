@@ -28,7 +28,7 @@ EasyFlash::EasyFlash(C64 &ref) : Cartridge(ref)
 void
 EasyFlash::resetCartConfig()
 {
-    expansionport.setCartridgeMode(CRTMODE_ULTIMAX);
+    expansionPort.setCartridgeMode(CRTMODE_ULTIMAX);
 }
 
 void
@@ -276,7 +276,7 @@ EasyFlash::pokeModeReg(u8 value)
             fatalError;
     }
 
-    expansionport.setGameAndExrom(game, exrom);
+    expansionPort.setGameAndExrom(game, exrom);
 }
 
 }

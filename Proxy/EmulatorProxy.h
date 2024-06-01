@@ -33,7 +33,7 @@ using namespace vc64;
 @class ExpansionPortProxy;
 @class FileSystemProxy;
 @class G64FileProxy;
-@class IECProxy;
+@class SerialPortProxy;
 @class JoystickProxy;
 @class KeyboardProxy;
 @class MemoryProxy;
@@ -119,7 +119,7 @@ using namespace vc64;
     DriveProxy *drive8;
     DriveProxy *drive9;
     ExpansionPortProxy *expansionport;
-    IECProxy *iec;
+    SerialPortProxy *iec;
     KeyboardProxy *keyboard;
     MemoryProxy *mem;
     MouseProxy *mouse;
@@ -143,7 +143,7 @@ using namespace vc64;
 @property (readonly, strong) DriveProxy *drive8;
 @property (readonly, strong) DriveProxy *drive9;
 @property (readonly, strong) ExpansionPortProxy *expansionport;
-@property (readonly, strong) IECProxy *iec;
+@property (readonly, strong) SerialPortProxy *iec;
 @property (readonly, strong) KeyboardProxy *keyboard;
 @property (readonly, strong) MemoryProxy *mem;
 @property (readonly, strong) RecorderProxy *recorder;
@@ -484,10 +484,10 @@ struct GuardInfo {
 
 
 //
-// IEC bus
+// Serial port
 //
 
-@interface IECProxy : SubComponentProxy { }
+@interface SerialPortProxy : SubComponentProxy { }
 
 @end
 

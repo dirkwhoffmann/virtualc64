@@ -26,7 +26,7 @@ u8
 SimonsBasic::peekIO1(u16 addr)
 {
     if (addr == 0xDE00) {
-        expansionport.setCartridgeMode(CRTMODE_8K);
+        expansionPort.setCartridgeMode(CRTMODE_8K);
     }
     return Cartridge::peekIO1(addr);
 }
@@ -41,7 +41,7 @@ void
 SimonsBasic::pokeIO1(u16 addr, u8 value)
 {
     if (addr == 0xDE00) {
-        expansionport.setCartridgeMode(CRTMODE_16K);
+        expansionPort.setCartridgeMode(CRTMODE_16K);
     }
 }
 

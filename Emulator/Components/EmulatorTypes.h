@@ -71,7 +71,7 @@ enum_long(DEBUG_FLAG)
     // Drive
     FLAG_VIA_DEBUG,
     FLAG_PIA_DEBUG,
-    FLAG_IEC_DEBUG,
+    FLAG_SER_DEBUG,
     FLAG_DSK_DEBUG,
     FLAG_DSKCHG_DEBUG,
     FLAG_GCR_DEBUG,
@@ -165,7 +165,7 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
                 // Drive
             case FLAG_VIA_DEBUG:                return "VIA_DEBUG";
             case FLAG_PIA_DEBUG:                return "PIA_DEBUG";
-            case FLAG_IEC_DEBUG:                return "IEC_DEBUG";
+            case FLAG_SER_DEBUG:                return "SER_DEBUG";
             case FLAG_DSK_DEBUG:                return "DSK_DEBUG";
             case FLAG_DSKCHG_DEBUG:             return "DSKCHG_DEBUG";
             case FLAG_GCR_DEBUG:                return "GCR_DEBUG";
@@ -252,7 +252,7 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
                 // Drive
             case FLAG_VIA_DEBUG:                return "Versatile Interface Adapter";
             case FLAG_PIA_DEBUG:                return "Peripheral Interface Adapter";
-            case FLAG_IEC_DEBUG:                return "IEC bus";
+            case FLAG_SER_DEBUG:                return "Serial port (IEC bus)";
             case FLAG_DSK_DEBUG:                return "Disk controller execution";
             case FLAG_DSKCHG_DEBUG:             return "Disk change procedure";
             case FLAG_GCR_DEBUG:                return "Disk encoding / decoding";

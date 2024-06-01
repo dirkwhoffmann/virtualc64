@@ -20,12 +20,12 @@ Rex::peekIO2(u16 addr)
 {
     // Any read access to $DF00 - $DFBF disables the ROM
     if (addr >= 0xDF00 && addr <= 0xDFBF) {
-        expansionport.setCartridgeMode(CRTMODE_OFF);
+        expansionPort.setCartridgeMode(CRTMODE_OFF);
     }
 
     // Any read access to $DFC0 - $DFFF switches to 8KB configuration
     if (addr >= 0xDFC0 && addr <= 0xDFFF) {
-        expansionport.setCartridgeMode(CRTMODE_8K);
+        expansionPort.setCartridgeMode(CRTMODE_8K);
     }
 
     return 0;

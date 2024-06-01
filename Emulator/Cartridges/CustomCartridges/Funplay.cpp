@@ -31,7 +31,7 @@ Funplay::pokeIO1(u16 addr, u8 value)
 
         if (value == 0x86) {
 
-            expansionport.setCartridgeMode(CRTMODE_OFF);
+            expansionPort.setCartridgeMode(CRTMODE_OFF);
             return;
         }
 

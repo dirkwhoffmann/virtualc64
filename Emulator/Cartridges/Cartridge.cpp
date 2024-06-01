@@ -215,7 +215,7 @@ Cartridge::init()
 void
 Cartridge::resetCartConfig() {
 
-    expansionport.setGameAndExrom(gameLineInCrtFile, exromLineInCrtFile);
+    expansionPort.setGameAndExrom(gameLineInCrtFile, exromLineInCrtFile);
 }
 
 void

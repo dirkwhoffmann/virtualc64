@@ -183,9 +183,9 @@ protected:
     class Debugger &debugger;
     class Drive &drive8;
     class Drive &drive9;
-    class ExpansionPort &expansionport;
+    class ExpansionPort &expansionPort;
     class Host &host;
-    class IEC &iec;
+    class SerialPort &serialPort;
     class Keyboard &keyboard;
     class C64Memory &mem;
     class Monitor &monitor;

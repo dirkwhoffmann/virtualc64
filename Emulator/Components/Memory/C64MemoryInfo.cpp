@@ -59,15 +59,15 @@ C64Memory::cacheInfo(MemInfo &result) const
 {
     {   SYNCHRONIZED
 
-        result.exrom = expansionport.getExromLine();
-        result.game = expansionport.getGameLine();
+        result.exrom = expansionPort.getExromLine();
+        result.game = expansionPort.getGameLine();
         result.loram = cpu.getLoram();
         result.hiram = cpu.getHiram();
         result.charen = cpu.getCharen();
 
         result.bankMap = cpu.readPort();
-        if (expansionport.getGameLine()) result.bankMap |= 0x08;
-        if (expansionport.getExromLine()) result.bankMap |= 0x10;
+        if (expansionPort.getGameLine()) result.bankMap |= 0x08;
+        if (expansionPort.getExromLine()) result.bankMap |= 0x10;
 
         for (int i = 0; i < 16; i++) result.peekSrc[i] = peekSrc[i];
         for (int i = 0; i < 16; i++) result.vicPeekSrc[i] = vic.memSrc[i];

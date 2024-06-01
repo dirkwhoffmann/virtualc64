@@ -110,7 +110,7 @@ void
 ActionReplay3::setControlReg(u8 value)
 {
     control = value;
-    expansionport.setGameAndExrom(game(), exrom());
+    expansionPort.setGameAndExrom(game(), exrom());
 }
 
 
@@ -129,7 +129,7 @@ void
 ActionReplay::resetCartConfig()
 {
     trace(CRT_DEBUG, "Starting ActionReplay cartridge in 8K game mode.\n");
-    expansionport.setCartridgeMode(CRTMODE_8K);
+    expansionPort.setCartridgeMode(CRTMODE_8K);
 }
 
 u8
@@ -269,7 +269,7 @@ ActionReplay::setControlReg(u8 value)
      *   0    1 = /GAME low" [VICE]
      */
 
-    expansionport.setGameAndExrom(game(), exrom());
+    expansionPort.setGameAndExrom(game(), exrom());
 
     bankInROML(bank(), 0x2000, 0);
     bankInROMH(bank(), 0x2000, 0);

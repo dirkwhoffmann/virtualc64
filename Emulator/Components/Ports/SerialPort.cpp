@@ -11,13 +11,13 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "IEC.h"
+#include "SerialPort.h"
 #include "C64.h"
 
 namespace vc64 {
 
 void
-IEC::_reset(bool hard)
+SerialPort::_reset(bool hard)
 {
     atnLine = 1;
     clockLine = 1;
@@ -36,7 +36,7 @@ IEC::_reset(bool hard)
     ciaData = 1;
 }
 
-bool IEC::_updateIecLines()
+bool SerialPort::_updateIecLines()
 {
     // Save current values
     bool oldAtnLine = atnLine;
@@ -84,7 +84,7 @@ bool IEC::_updateIecLines()
 }
 
 void
-IEC::updateIecLines()
+SerialPort::updateIecLines()
 {
     bool wasIdle = stats.idle;
 
@@ -112,13 +112,13 @@ IEC::updateIecLines()
 }
 
 void 
-IEC::setNeedsUpdate()
+SerialPort::setNeedsUpdate()
 {
-    c64.scheduleImm<SLOT_IEC>(IEC_UPDATE);
+    c64.scheduleImm<SLOT_SER>(SER_UPDATE);
 }
 
 void
-IEC::update()
+SerialPort::update()
 {
     // Get bus signals from C64 side
     u8 ciaBits = cia2.getPA();
@@ -140,11 +140,11 @@ IEC::update()
 
     updateIecLines();
 
-    c64.cancel<SLOT_IEC>();
+    c64.cancel<SLOT_SER>();
 }
 
 void
-IEC::execute()
+SerialPort::execute()
 {
     if (++stats.idle == 32) {
         updateTransferStatus();
@@ -152,7 +152,7 @@ IEC::execute()
 }
 
 void
-IEC::updateTransferStatus()
+SerialPort::updateTransferStatus()
 {
     bool rotating = drive8.isRotating() || drive9.isRotating();
     bool newValue = rotating && stats.idle < 32;
@@ -160,7 +160,7 @@ IEC::updateTransferStatus()
     if (transferring != newValue) {
 
         transferring = newValue;
-        msgQueue.put(newValue ? MSG_IEC_BUS_BUSY : MSG_IEC_BUS_IDLE);
+        msgQueue.put(newValue ? MSG_SER_BUSY : MSG_SER_IDLE);
     }
 }
 

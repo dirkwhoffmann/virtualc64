@@ -67,12 +67,12 @@ C64::eventName(EventSlot slot, EventID id)
             }
             break;
 
-        case SLOT_IEC:
+        case SLOT_SER:
 
             switch (id) {
 
                 case EVENT_NONE:    return "none";
-                case IEC_UPDATE:    return "IEC_UPDATE";
+                case SER_UPDATE:    return "SER_UPDATE";
                 default:            return "*** INVALID ***";
             }
             break;
@@ -840,8 +840,8 @@ C64::_dump(Category category, std::ostream& os) const
         os << dec(sizeof(ControlPort)) << " Bytes" << std::endl;
         os << tab("Expansion port");
         os << dec(sizeof(ExpansionPort)) << " Bytes" << std::endl;
-        os << tab("IEC");
-        os << dec(sizeof(IEC)) << " Bytes" << std::endl;
+        os << tab("SerialPort");
+        os << dec(sizeof(SerialPort)) << " Bytes" << std::endl;
         os << tab("Keyboard");
         os << dec(sizeof(Keyboard)) << " Bytes" << std::endl;
         os << tab("Drive");
@@ -1041,7 +1041,7 @@ C64::processEvents(Cycle cycle)
         // Check secondary slots
         //
 
-        if (isDue<SLOT_IEC>(cycle)) {
+        if (isDue<SLOT_SER>(cycle)) {
             iec.update();
         }
 
@@ -1700,7 +1700,7 @@ C64::getDebugVariable(DebugFlag flag)
 
         case FLAG_VIA_DEBUG:        return VIA_DEBUG;
         case FLAG_PIA_DEBUG:        return PIA_DEBUG;
-        case FLAG_IEC_DEBUG:        return IEC_DEBUG;
+        case FLAG_SER_DEBUG:        return SER_DEBUG;
         case FLAG_DSK_DEBUG:        return DSK_DEBUG;
         case FLAG_DSKCHG_DEBUG:     return DSKCHG_DEBUG;
         case FLAG_GCR_DEBUG:        return GCR_DEBUG;
@@ -1788,7 +1788,7 @@ C64::setDebugVariable(DebugFlag flag, bool val)
 
         case FLAG_VIA_DEBUG:        VIA_DEBUG       = val; break;
         case FLAG_PIA_DEBUG:        PIA_DEBUG       = val; break;
-        case FLAG_IEC_DEBUG:        IEC_DEBUG       = val; break;
+        case FLAG_SER_DEBUG:        SER_DEBUG       = val; break;
         case FLAG_DSK_DEBUG:        DSK_DEBUG       = val; break;
         case FLAG_DSKCHG_DEBUG:     DSKCHG_DEBUG    = val; break;
         case FLAG_GCR_DEBUG:        GCR_DEBUG       = val; break;

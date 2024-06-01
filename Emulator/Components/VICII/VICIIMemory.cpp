@@ -631,7 +631,7 @@ VICII::memAccess(u16 addr)
             return mem.rom[0xC000 + addr];
 
         case M_CRTHI:
-            return expansionport.peek(addrBus | 0xF000);
+            return expansionPort.peek(addrBus | 0xF000);
             
         default:
             return mem.ram[addrBus];
@@ -655,7 +655,7 @@ VICII::memSpyAccess(u16 addr)
             case 0xB:
             case 0x7:
             case 0x3:
-                result = expansionport.spypeek(addrBus | 0xF000);
+                result = expansionPort.spypeek(addrBus | 0xF000);
                 break;
             case 0xE:
             case 0xD:

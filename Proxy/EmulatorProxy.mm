@@ -571,14 +571,14 @@ using namespace vc64;
 
 
 //
-// IEC bus
+// Serial port
 //
 
-@implementation IECProxy
+@implementation SerialPortProxy
 
-- (VirtualC64::IECAPI *)iec
+- (VirtualC64::SerialPortAPI *)iec
 {
-    return (VirtualC64::IECAPI *)obj;
+    return (VirtualC64::SerialPortAPI *)obj;
 }
 
 @end
@@ -2070,7 +2070,7 @@ using namespace vc64;
     drive8 = [[DriveProxy alloc] initWithVC1541:&emu->drive8 emu:emu];
     drive9 = [[DriveProxy alloc] initWithVC1541:&emu->drive9 emu:emu];
     expansionport = [[ExpansionPortProxy alloc] initWith:&emu->expansionport emu:emu];
-    iec = [[IECProxy alloc] initWith:&emu->iec emu:emu];
+    iec = [[SerialPortProxy alloc] initWith:&emu->iec emu:emu];
     keyboard = [[KeyboardProxy alloc] initWith:&emu->keyboard emu:emu];
     mem = [[MemoryProxy alloc] initWith:&emu->mem emu:emu];
     port1 = [[ControlPortProxy alloc] initWith:&emu->port1 emu:emu];

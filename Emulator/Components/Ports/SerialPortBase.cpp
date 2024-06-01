@@ -11,13 +11,13 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "IEC.h"
+#include "SerialPort.h"
 #include "Drive.h"
 
 namespace vc64 {
 
 void
-IEC::_dump(Category category, std::ostream& os) const
+SerialPort::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 

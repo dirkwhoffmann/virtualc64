@@ -155,7 +155,7 @@ void
 CPU::nmiWillTrigger()
 {
     if (isC64CPU()) {
-        expansionport.nmiWillTrigger();
+        expansionPort.nmiWillTrigger();
     }
 }
 
@@ -163,7 +163,7 @@ void
 CPU::nmiDidTrigger()
 {
     if (isC64CPU()) {
-        expansionport.nmiDidTrigger();
+        expansionPort.nmiDidTrigger();
     }
 }
 

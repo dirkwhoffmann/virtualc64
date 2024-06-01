@@ -964,9 +964,9 @@ VIA1::portBexternal() const
     // |  in   |               |  ack  |  out  |  in   |  out  |  in   |
     
     u8 external =
-    (iec.atnLine ? 0x00 : 0x80) |
-    (iec.clockLine ? 0x00 : 0x04) |
-    (iec.dataLine ? 0x00 : 0x01);
+    (serialPort.atnLine ? 0x00 : 0x80) |
+    (serialPort.clockLine ? 0x00 : 0x04) |
+    (serialPort.dataLine ? 0x00 : 0x01);
     
     external |= 0x1A; // All "out" pins are read as 1
     
@@ -996,7 +996,7 @@ void
 VIA1::updatePB()
 {
     VIA6522::updatePB();
-    iec.setNeedsUpdate();
+    serialPort.setNeedsUpdate();
     idleCounter = 0;
 }
 

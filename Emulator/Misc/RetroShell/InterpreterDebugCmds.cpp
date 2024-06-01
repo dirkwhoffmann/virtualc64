@@ -305,7 +305,7 @@ Interpreter::initDebugShell(Command &root)
     root.add({"i", "expansion"},    "Expansion port",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(expansionport, { Category::Config, Category::State });
+        retroShell.dump(expansionPort, { Category::Config, Category::State });
     });
 
     root.popGroup();
@@ -398,10 +398,10 @@ Interpreter::initDebugShell(Command &root)
 
     root.popGroup();
 
-    root.add({"i", "iec"},          "IEC bus",
+    root.add({"i", "serial"},       "Serial port",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(iec, { Category::Config, Category::State });
+        retroShell.dump(serialPort, { Category::Config, Category::State });
     });
 
     root.add({"i", "datasette"},    "Datasette",

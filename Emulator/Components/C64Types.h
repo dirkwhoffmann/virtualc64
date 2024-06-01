@@ -64,7 +64,7 @@ enum_long(SLOT)
     SLOT_SEC,                       // Enables secondary slots
 
     // Secondary slots
-    SLOT_IEC,                       // IEC bus
+    SLOT_SER,                       // Serial port (IEC bus)
     SLOT_DAT,                       // Datasette execution
     SLOT_TER,                       // Enables tertiary slots
 
@@ -99,7 +99,7 @@ struct EventSlotEnum : util::Reflection<EventSlotEnum, EventSlot>
             case SLOT_CIA2:     return "CIA2";
             case SLOT_SEC:      return "SEC";
 
-            case SLOT_IEC:      return "IEC";
+            case SLOT_SER:      return "SER";
             case SLOT_DAT:      return "DAT";
             case SLOT_TER:      return "TER";
 
@@ -138,9 +138,9 @@ enum_i8(EventID)
     // Events in secondary event table
     //
 
-    // IEC slot
-    IEC_UPDATE          = 1,
-    IEC_EVENT_COUNT,
+    // SER slot
+    SER_UPDATE          = 1,
+    SER_EVENT_COUNT,
 
     // DAT slot
     DAT_EXECUTE         = 1,

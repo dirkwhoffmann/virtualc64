@@ -550,7 +550,7 @@ public:
 
 
 /* First virtual VIA6522 controller. VIA1 serves as hardware interface between
- * the VC1541 CPU and the IEC bus.
+ * the VC1541 CPU and the serial port (IEC bus).
  */
 class VIA1 final : public VIA6522 {
 

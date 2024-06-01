@@ -59,9 +59,9 @@ enum_long(MSG_TYPE)
     MSG_PAL,                ///< The emulator runs in PAL mode now
     MSG_NTSC,               ///< The emulator runs in NTSC mode now
 
-    // IEC Bus
-    MSG_IEC_BUS_BUSY,       ///< The IEC bus is transferring data
-    MSG_IEC_BUS_IDLE,       ///< The IEC bus has returned to idle state
+    // Serial Port (IEC Bus)
+    MSG_SER_BUSY,           ///< The IEC bus is transferring data
+    MSG_SER_IDLE,           ///< The IEC bus has returned to idle state
 
     // Floppy drives
     MSG_DRIVE_CONNECT,      ///< A floppy drive has been connected or disconnected
@@ -152,8 +152,8 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_PAL:                   return "PAL";
             case MSG_NTSC:                  return "NTSC";
 
-            case MSG_IEC_BUS_BUSY:          return "IEC_BUS_BUSY";
-            case MSG_IEC_BUS_IDLE:          return "IEC_BUS_IDLE";
+            case MSG_SER_BUSY:              return "SER_BUSY";
+            case MSG_SER_IDLE:              return "SER_IDLE";
 
             case MSG_DRIVE_CONNECT:         return "DRIVE_CONNECT";
             case MSG_DRIVE_POWER:           return "DRIVE_POWER";

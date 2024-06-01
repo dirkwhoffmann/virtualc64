@@ -19,7 +19,7 @@ void
 MagicDesk::resetCartConfig()
 {
     trace(CRT_DEBUG, "Starting cartridge in 8K game mode\n");
-    expansionport.setCartridgeMode(CRTMODE_8K);
+    expansionPort.setCartridgeMode(CRTMODE_8K);
 }
 
 u8
@@ -49,7 +49,7 @@ MagicDesk::pokeIO1(u16 addr, u8 value)
      * RAM at $8000-$9FFF instead of ROM.
      */
 
-    expansionport.setExromLine(disabled());
+    expansionPort.setExromLine(disabled());
     bankIn(value & 0x0F);
 }
 

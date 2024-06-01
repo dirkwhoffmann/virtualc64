@@ -393,7 +393,7 @@ Drive::setRotating(bool b)
 
         spinning = b;
         msgQueue.put(MSG_DRIVE_MOTOR, DriveMsg { .nr = i16(objid), .value = b } );
-        iec.updateTransferStatus();
+        serialPort.updateTransferStatus();
     }
 }
 

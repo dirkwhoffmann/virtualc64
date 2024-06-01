@@ -17,7 +17,7 @@ extension vc64.EventSlot: CustomStringConvertible {
         case ._CIA2:    return "CIA 2"
         case ._SEC:     return "Next Secondary Event"
 
-        case ._IEC:     return "IEC Bus"
+        case ._SER:     return "Serial Port"
         case ._DAT:     return "Datasette Data"
         case ._TER:     return "Next Tertiary Event"
 

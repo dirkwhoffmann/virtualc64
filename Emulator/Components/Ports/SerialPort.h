@@ -12,18 +12,18 @@
 
 #pragma once
 
-#include "IECTypes.h"
+#include "SerialPortTypes.h"
 #include "SubComponent.h"
 
 namespace vc64 {
 
-class IEC final : public SubComponent, public Inspectable<Void, IECStats> {
+class SerialPort final : public SubComponent, public Inspectable<Void, SerialPortStats> {
 
     Descriptions descriptions = {{
 
-        .name           = "IEC",
-        .shellName      = "iec",
-        .description    = "IEC Bus"
+        .name           = "SerialPort",
+        .shellName      = "serial",
+        .description    = "Serial Port (IEC Bus)"
     }};
 
 public:
@@ -60,12 +60,12 @@ private:
     
 public:
 
-    IEC(C64 &ref) : SubComponent(ref) { };
+    SerialPort(C64 &ref) : SubComponent(ref) { };
     const Descriptions &getDescriptions() const override { return descriptions; }
 
 public:
 
-    IEC& operator= (const IEC& other) {
+    SerialPort& operator= (const SerialPort& other) {
 
         CLONE(atnLine)
         CLONE(clockLine)
@@ -121,7 +121,7 @@ public:
     
 public:
     
-    // Schedules an update event for the IEC bus
+    // Schedules an update event for the serial port (IEC bus)
     void setNeedsUpdate();
 
     /* Updates all three bus lines. The new values are determined by VIA1

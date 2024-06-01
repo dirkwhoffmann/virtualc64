@@ -23,6 +23,6 @@ typedef struct
     // Bus idle time measured in frames
     i64 idle;
 }
-IECStats;
+SerialPortStats;
 
 }

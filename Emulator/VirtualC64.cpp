@@ -737,73 +737,73 @@ VirtualC64::RetroShellAPI::setStream(std::ostream &os)
 CartridgeTraits
 VirtualC64::ExpansionPortAPI::getCartridgeTraits() const
 {
-    return expansionport.getCartridgeTraits();
+    return expansionPort.getCartridgeTraits();
 }
 
 CartridgeInfo
 VirtualC64::ExpansionPortAPI::getInfo() const
 {
-    return expansionport.getInfo();
+    return expansionPort.getInfo();
 }
 
 CartridgeInfo
 VirtualC64::ExpansionPortAPI::getCachedInfo() const
 {
-    return expansionport.getCachedInfo();
+    return expansionPort.getCachedInfo();
 }
 
 CartridgeRomInfo
 VirtualC64::ExpansionPortAPI::getRomInfo(isize nr) const
 {
-    return expansionport.getRomInfo(nr);
+    return expansionPort.getRomInfo(nr);
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachCartridge(const string &path, bool reset)
 {
-    expansionport.attachCartridge(path, reset);
+    expansionPort.attachCartridge(path, reset);
     c64.markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachCartridge(const CRTFile &c, bool reset)
 {
-    expansionport.attachCartridge(c, reset);
+    expansionPort.attachCartridge(c, reset);
     c64.markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachCartridge(Cartridge *c)
 {
-    expansionport.attachCartridge(c);
+    expansionPort.attachCartridge(c);
     c64.markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachReu(isize capacity)
 {
-    expansionport.attachReu(capacity);
+    expansionPort.attachReu(capacity);
     c64.markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachGeoRam(isize capacity)
 {
-    expansionport.attachGeoRam(capacity);
+    expansionPort.attachGeoRam(capacity);
     c64.markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachIsepicCartridge()
 {
-    expansionport.attachIsepicCartridge();
+    expansionPort.attachIsepicCartridge();
     c64.markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::detachCartridge()
 {
-    expansionport.detachCartridge();
+    expansionPort.detachCartridge();
     c64.markAsDirty();
 }
 
