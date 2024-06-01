@@ -73,8 +73,7 @@ public:
     
     CPU(C64& ref);
     CPU(CPURevision cpuModel, C64& ref);
-    const Descriptions &getDescriptions() const override { return descriptions; }
-    
+
     bool isC64CPU() const { return cpuModel == MOS_6510; }
     bool isDriveCPU() const { return cpuModel == MOS_6502; }
 
@@ -104,6 +103,13 @@ public:
 
         return *this;
     }
+
+
+    //
+    // Methods from Serializable
+    //
+
+public:
 
     template <class T>
     void serialize(T& worker)
@@ -160,12 +166,12 @@ public:
     // Methods from CoreComponent
     //
 
-public:
+private:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
     void _dump(Category category, std::ostream& os) const override;
-
     void _reset(bool hard) override;
-    
     void _trackOn() override;
     void _trackOff() override;
 

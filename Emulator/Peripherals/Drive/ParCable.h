@@ -30,13 +30,32 @@ class ParCable final : public SubComponent {
 public:
     
     ParCable(C64 &ref);
-    const Descriptions &getDescriptions() const override { return descriptions; }
-    void _dump(Category category, std::ostream& os) const override;
 
     ParCable& operator= (const ParCable& other) { return *this; }
+
+
+    //
+    // Methods from Serializable
+    //
+
+public:
+
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 
     
+    //
+    // Methods from CoreComponent
+    //
+
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
+private:
+
+    void _dump(Category category, std::ostream& os) const override;
+
+
     //
     // Using
     //

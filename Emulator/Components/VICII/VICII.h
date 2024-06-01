@@ -680,33 +680,6 @@ public:
 public:
 
     VICII(C64 &ref);
-    const Descriptions &getDescriptions() const override { return descriptions; }
-
-    void _initialize() override;
-
-    void initFuncTable(VICIIRevision revision);
-    void initFuncTable(VICIIRevision revision, u16 flags);
-
-    void updateVicFunctionTable();
-
-private:
-    
-    void resetEmuTexture(isize nr);
-    void resetEmuTextures() { resetEmuTexture(1); resetEmuTexture(2); }
-    void resetDmaTexture(isize nr);
-    void resetDmaTextures() { resetDmaTexture(1); resetDmaTexture(2); }
-    void resetTexture(u32 *p);
-
-    // ViciiFunc getViciiFunc(VICIIRevision revision, u16 flags, isize cycle);
-    ViciiFunc getViciiFunc(u16 flags, isize cycle);
-    template <u16 flags> ViciiFunc getViciiFunc(isize cycle);
-
-public:
-
-    void _dump(Category category, std::ostream& os) const override;
-
-    void _trackOn() override;
-    void _trackOff() override;
 
     VICII& operator= (const VICII& other) {
 
@@ -783,6 +756,13 @@ public:
         updateVicFunctionTable();
         return *this;
     }
+
+
+    //
+    // Methods from Serializable
+    //
+
+public:
 
     template <class T>
     void serialize(T& worker)
@@ -875,7 +855,21 @@ public:
 
     } SERIALIZERS(serialize);
 
+
+    //
+    // Methods from CoreComponent
+    //
+
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+    
+    void _dump(Category category, std::ostream& os) const override;
+
+    void _initialize() override;
     void _reset(bool hard) override;
+    void _trackOn() override;
+    void _trackOff() override;
 
 
     //
@@ -894,7 +888,7 @@ public:
 
 
     //
-    // Configuring
+    // Methods from Configurable
     //
 
 public:
@@ -912,7 +906,26 @@ private:
     void updateRevision();
     void setRevision(VICIIRevision revision);
 
-    
+
+    //
+    // Initializing
+    //
+
+private:
+
+    void resetEmuTexture(isize nr);
+    void resetEmuTextures() { resetEmuTexture(1); resetEmuTexture(2); }
+    void resetDmaTexture(isize nr);
+    void resetDmaTextures() { resetDmaTexture(1); resetDmaTexture(2); }
+    void resetTexture(u32 *p);
+
+    void initFuncTable(VICIIRevision revision);
+    void initFuncTable(VICIIRevision revision, u16 flags);
+    void updateVicFunctionTable();
+    ViciiFunc getViciiFunc(u16 flags, isize cycle);
+    template <u16 flags> ViciiFunc getViciiFunc(isize cycle);
+
+
     //
     // Deriving chip properties
     //

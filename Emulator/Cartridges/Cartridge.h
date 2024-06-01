@@ -148,39 +148,16 @@ public:
 
 
     //
-    // Initializing
+    // Methods
     //
 
 public:
 
     Cartridge(C64 &ref);
     ~Cartridge();
-    const Descriptions &getDescriptions() const override { return descriptions; }
 
     virtual void init();
-
-    /* Resets the Game and the Exrom line. The default implementation resets
-     * the values to ones found in the CRT file. A few custom cartridges need
-     * other start configurations and overwrite this function.
-     */
-    virtual void resetCartConfig();
-
     void dealloc();
-
-
-    //
-    // Methods from CoreObject
-    //
-
-protected:
-
-    const char *objectName() const override { return getCartridgeTraits().title; }
-    void _dump(Category category, std::ostream& os) const override;
-
-
-    //
-    // Methods from CoreComponent
-    //
 
 public:
 
@@ -208,6 +185,13 @@ public:
     }
     void cloneRomAndRam(const Cartridge& other);
     virtual void clone(const Cartridge &other) { *this = other; }
+
+
+    //
+    // Methods from Serializable
+    //
+
+public:
 
     template <class T>
     void serialize(T& worker)
@@ -245,6 +229,20 @@ public:
 
 
     //
+    // Methods from CoreComponent
+    //
+
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
+protected:
+
+    const char *objectName() const override { return getCartridgeTraits().title; }
+    void _dump(Category category, std::ostream& os) const override;
+
+
+    //
     // Analyzing
     //
 
@@ -270,10 +268,18 @@ public:
     virtual bool getGameLineInCrtFile() const { return gameLineInCrtFile; }
     virtual bool getExromLineInCrtFile() const { return exromLineInCrtFile; }
 
+    /* Resets the Game and the Exrom line. The default implementation resets
+     * the values to ones found in the CRT file. A few custom cartridges need
+     * other start configurations and overwrite this function.
+     */
+    virtual void resetCartConfig();
+
 
     //
     // Handling ROM packets
     //
+
+public:
 
     // Reads in a chip packet from a CRT file
     virtual void loadChip(isize nr, const CRTFile &c);

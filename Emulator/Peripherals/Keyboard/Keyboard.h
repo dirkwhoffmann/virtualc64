@@ -51,8 +51,6 @@ class Keyboard final : public SubComponent {
 public:
     
     Keyboard(C64 &ref) : SubComponent(ref) { }
-    const Descriptions &getDescriptions() const override { return descriptions; }
-    void _dump(Category category, std::ostream& os) const override;
 
     Keyboard& operator= (const Keyboard& other) {
 
@@ -65,6 +63,13 @@ public:
         
         return *this;
     }
+
+
+    //
+    // Methods from Serializable
+    //
+
+public:
 
     template <class T>
     void serialize(T& worker)
@@ -79,6 +84,18 @@ public:
 
     } SERIALIZERS(serialize);
 
+
+    //
+    // Methods from CoreComponent
+    //
+
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
+private:
+
+    void _dump(Category category, std::ostream& os) const override;
     void _reset(bool hard) override;
 
 

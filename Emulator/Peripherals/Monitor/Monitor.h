@@ -66,8 +66,6 @@ class Monitor final : public SubComponent {
 public:
 
     Monitor(C64 &ref) : SubComponent(ref) { }
-    const Descriptions &getDescriptions() const override { return descriptions; }
-    void _dump(Category category, std::ostream& os) const override;
 
     Monitor& operator= (const Monitor& other) {
 
@@ -75,6 +73,12 @@ public:
 
         return *this;
     }
+
+    //
+    // Methods from Serializable
+    //
+
+public:
 
     template <class T> void serialize(T& worker) {
 
@@ -118,7 +122,20 @@ public:
 
 
     //
-    // Configuring
+    // Methods from CoreComponent
+    //
+
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
+private:
+
+    void _dump(Category category, std::ostream& os) const override;
+
+
+    //
+    // Methods from Configurable
     //
 
 public:

@@ -54,11 +54,10 @@ public:
     CartridgeRom(C64 &ref);
     CartridgeRom(C64 &ref, u16 _size, u16 _loadAddress, const u8 *buffer = nullptr);
     ~CartridgeRom();
-    const Descriptions &getDescriptions() const override { return descriptions; }
 
 
     //
-    // Methods from CoreComponent
+    // Methods from Serializable
     //
 
 public:
@@ -79,6 +78,15 @@ public:
     void operator << (SerResetter &worker) override { serialize(worker); }
     void operator << (SerReader &worker) override;
     void operator << (SerWriter &worker) override;
+
+
+    //
+    // Methods from CoreComponent
+    //
+
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
 
     //

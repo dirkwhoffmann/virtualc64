@@ -105,14 +105,18 @@ public:
 
     Datasette(C64 &ref) : SubComponent(ref) { };
     ~Datasette();
-    const Descriptions &getDescriptions() const override { return descriptions; }
 
     void alloc(isize capacity);
     void dealloc();
 
-    void _dump(Category category, std::ostream& os) const override;
-
     Datasette& operator= (const Datasette& other);
+
+
+    //
+    // Methods from Serializable
+    //
+
+public:
 
     template <class T>
     void serialize(T& worker)
@@ -141,7 +145,20 @@ public:
 
 
     //
-    // Configuring
+    // Methods from CoreComponent
+    //
+
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
+private:
+
+    void _dump(Category category, std::ostream& os) const override;
+
+
+    //
+    // Methods from Configurable
     //
 
 public:
@@ -159,6 +176,7 @@ public:
 
 public:
 
+    // TODO: Overwrite cacheInfo
     DatasetteInfo getInfo() const;
 
 

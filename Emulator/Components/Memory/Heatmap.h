@@ -34,6 +34,8 @@ public:
     // Methods
     //
 
+public:
+    
     Heatmap();
 
     // Updates heatmap data

@@ -360,6 +360,13 @@ public:
         return *this;
     }
 
+
+    //
+    // Methods from Serializable
+    //
+
+public:
+
     template <class T>
     void serialize(T& worker)
     {
@@ -410,13 +417,12 @@ public:
     void operator << (SerReader &worker) override { serialize(worker); }
     void operator << (SerWriter &worker) override { serialize(worker); }
 
+
+    //
+    // Methods from CoreComponent
+    //
+
     void _reset(bool hard) override;
-
-public:
-
-    isize size();
-    isize load(const u8 *buffer);
-    isize save(u8 *buffer);
 
 
     //
@@ -433,6 +439,17 @@ public:
 private:
 
     void inspectSlot(EventSlot nr) const;
+
+
+    //
+    //
+    //
+
+public:
+
+    isize size();
+    isize load(const u8 *buffer);
+    isize save(u8 *buffer);
 
 
     //

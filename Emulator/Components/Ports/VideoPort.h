@@ -51,6 +51,13 @@ public:
         return *this;
     }
 
+
+    //
+    // Methods from Serializable
+    //
+
+public:
+    
     template <class T>
     void serialize(T& worker)
     {

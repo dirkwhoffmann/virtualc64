@@ -5,6 +5,7 @@ target_sources(vc64Core PRIVATE
 Drive.cpp
 DriveBase.cpp
 DriveMemory.cpp
+DriveMemoryBase.cpp
 VIA.cpp
 PIA.cpp
 ParCable.cpp

@@ -300,27 +300,10 @@ public:
 public:
     
     CIA(C64 &ref, isize id);
-    const Descriptions &getDescriptions() const override { return descriptions; }
 
     bool isCIA1() const { return objid == 0; }
     bool isCIA2() const { return objid == 1; }
 
-    
-    //
-    // Methods from CoreObject
-    //
-
-private:
-    
-    void _dump(Category category, std::ostream& os) const override;
-
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
-    
     CIA& operator= (const CIA& other) {
 
         CLONE(tod)
@@ -360,6 +343,13 @@ public:
 
         return *this;
     }
+
+
+    //
+    // Methods from Serializable
+    //
+
+public:
 
     template <class T>
     void serialize(T& worker)
@@ -408,6 +398,16 @@ public:
 
     } SERIALIZERS(serialize);
 
+
+    //
+    // Methods from CoreComponent
+    //
+
+private:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
+    void _dump(Category category, std::ostream& os) const override;
     void _reset(bool hard) override;
 
 
@@ -422,7 +422,7 @@ public:
 
 
     //
-    // Configuring
+    // Methods from Configurable
     //
 
 public:

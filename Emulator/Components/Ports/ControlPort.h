@@ -59,7 +59,6 @@ public:
 public:
 
     ControlPort(C64 &ref, isize id);
-    const Descriptions &getDescriptions() const override { return descriptions; }
 
     ControlPort& operator= (const ControlPort& other) {
 
@@ -69,6 +68,13 @@ public:
         
         return *this;
     }
+
+
+    //
+    // Methods from Serializable
+    //
+
+public:
 
     template <class T> void serialize(T& worker) {
 
@@ -84,6 +90,9 @@ public:
     // Methods from CoreComponent
     //
 
+private:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
     void _dump(Category category, std::ostream& os) const override;
 
 

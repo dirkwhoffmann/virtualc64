@@ -81,7 +81,6 @@ public:
 public:
 
     SID(C64 &ref, isize id);
-    const Descriptions &getDescriptions() const override { return descriptions; }
 
     SID& operator= (const SID& other) {
 
@@ -91,6 +90,13 @@ public:
 
         return *this;
     }
+
+
+    //
+    // Methods from Serializable
+    //
+
+public:
 
     template <class T>
     void serialize(T& worker)
@@ -125,9 +131,23 @@ public:
 
 private:
 
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
     void _dump(Category category, std::ostream& os) const override;
 
+
+    //
+    // Methods from Inspectable
+    //
+
+private:
+
     void cacheInfo(SIDInfo &result) const override;
+
+
+    //
+    // Methods from Configurable
+    //
 
 public:
 

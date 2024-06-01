@@ -81,8 +81,6 @@ public:
     ReSID(C64 &ref, isize id);
     ~ReSID();
 
-    const Descriptions &getDescriptions() const override { return descriptions; }
-
     ReSID& operator= (const ReSID& other) {
 
         CLONE(st)
@@ -94,6 +92,12 @@ public:
         return *this;
     }
 
+
+    //
+    // Methods from Serializable
+    //
+
+public:
 
     template <class T>
     void serialize(T& worker)
@@ -135,6 +139,17 @@ public:
     void operator << (SerReader &worker) override;
     void operator << (SerWriter &worker) override;
 
+
+    //
+    // Methods from CoreComponent
+    //
+
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
+private:
+
     void _reset(bool hard) override;
 
 
@@ -146,8 +161,6 @@ public:
 
     virtual void record() const override;
     void cacheInfo(SIDInfo &result) const override;
-
-    // VoiceInfo getVoiceInfo(isize nr) const;
 
 
     //

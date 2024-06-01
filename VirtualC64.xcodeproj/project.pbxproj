@@ -331,6 +331,8 @@
 		508C1E5B2C0B20EE0097473C /* SerialPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E582C0B20EE0097473C /* SerialPortBase.cpp */; };
 		508C1E5D2C0B31320097473C /* DmaDebuggerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E5C2C0B31320097473C /* DmaDebuggerBase.cpp */; };
 		508C1E5E2C0B31320097473C /* DmaDebuggerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E5C2C0B31320097473C /* DmaDebuggerBase.cpp */; };
+		508C1E602C0B4A6A0097473C /* DriveMemoryBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E5F2C0B4A6A0097473C /* DriveMemoryBase.cpp */; };
+		508C1E612C0B4A6A0097473C /* DriveMemoryBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E5F2C0B4A6A0097473C /* DriveMemoryBase.cpp */; };
 		509280CF2930A1B6006E1966 /* PeddleUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509280CD2930A1B6006E1966 /* PeddleUtils.cpp */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		5095C81C2BA09DE800A83825 /* Debugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5095C81A2BA08B0A00A83825 /* Debugger.cpp */; };
@@ -869,6 +871,7 @@
 		508C1E582C0B20EE0097473C /* SerialPortBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SerialPortBase.cpp; sourceTree = "<group>"; };
 		508C1E592C0B20EE0097473C /* SerialPortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SerialPortTypes.h; sourceTree = "<group>"; };
 		508C1E5C2C0B31320097473C /* DmaDebuggerBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DmaDebuggerBase.cpp; sourceTree = "<group>"; };
+		508C1E5F2C0B4A6A0097473C /* DriveMemoryBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DriveMemoryBase.cpp; sourceTree = "<group>"; };
 		509280CD2930A1B6006E1966 /* PeddleUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PeddleUtils.cpp; sourceTree = "<group>"; };
 		509280CE2930A1B6006E1966 /* PeddleUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleUtils.h; sourceTree = "<group>"; };
 		509280D029312C00006E1966 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -1732,6 +1735,7 @@
 				50BD64102C03396D007CD347 /* DriveBase.cpp */,
 				504C434D24AF29AC00E69CAE /* Drive.cpp */,
 				504C434F24AF29AC00E69CAE /* DriveMemory.h */,
+				508C1E5F2C0B4A6A0097473C /* DriveMemoryBase.cpp */,
 				504C434B24AF29AC00E69CAE /* DriveMemory.cpp */,
 				504C434924AF29AC00E69CAE /* VIA.h */,
 				504C434A24AF29AC00E69CAE /* VIA.cpp */,
@@ -2280,6 +2284,7 @@
 				50726F822961C9ED0031F2F5 /* C64Key.cpp in Sources */,
 				50726F942961CA0D0031F2F5 /* GeoRam.cpp in Sources */,
 				50726FB42961CA290031F2F5 /* Command.cpp in Sources */,
+				508C1E612C0B4A6A0097473C /* DriveMemoryBase.cpp in Sources */,
 				50726F592961C9A10031F2F5 /* TOD.cpp in Sources */,
 				50726F972961CA0D0031F2F5 /* Dinamic.cpp in Sources */,
 				50726FB92961CA290031F2F5 /* TextStorage.cpp in Sources */,
@@ -2536,6 +2541,7 @@
 				50549B49257D288E006FE39C /* AudioPort.cpp in Sources */,
 				504C437524AF29AC00E69CAE /* PRGFile.cpp in Sources */,
 				504C43A524AF29AC00E69CAE /* ExpansionPort.cpp in Sources */,
+				508C1E602C0B4A6A0097473C /* DriveMemoryBase.cpp in Sources */,
 				504C436524AF29AC00E69CAE /* Funplay.cpp in Sources */,
 				504C437B24AF29AC00E69CAE /* D64File.cpp in Sources */,
 				5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */,

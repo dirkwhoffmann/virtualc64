@@ -79,12 +79,6 @@ public:
 public:
 
     SIDBridge(C64 &ref);
-    const Descriptions &getDescriptions() const override { return descriptions; }
-
-    /*
-    void _dump(Category category, std::ostream& os) const override;
-    void _dump(Category category, std::ostream& os, isize nr) const;
-    */
 
     SIDBridge& operator= (const SIDBridge& other) {
 
@@ -92,6 +86,13 @@ public:
 
         return *this;
     }
+
+
+    //
+    // Methods from Serializable
+    //
+
+public:
 
     template <class T>
     void serialize(T& worker)
@@ -104,8 +105,19 @@ public:
 
 
     //
+    // Methods from CoreComponent
+    //
+
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
+
+    //
     // Parameterizing
     //
+
+public:
 
     // Adjusts the clock frequency for all SIDs
     void setClockFrequency(u32 frequency);

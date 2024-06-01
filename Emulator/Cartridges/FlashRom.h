@@ -73,8 +73,6 @@ public:
 
     FlashRom(C64 &ref);
     ~FlashRom();
-    const Descriptions &getDescriptions() const override { return descriptions; }
-    void _dump(Category category, std::ostream& os) const override;
 
     FlashRom& operator= (const FlashRom& other) {
 
@@ -83,6 +81,13 @@ public:
 
         return *this;
     }
+
+
+    //
+    // Methods from Serializable
+    //
+
+public:
 
     template <class T>
     void serialize(T& worker)
@@ -101,6 +106,18 @@ public:
     void operator << (SerReader &worker) override;
     void operator << (SerWriter &worker) override;
 
+
+    //
+    // Methods from CoreComponent
+    //
+
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
+private:
+
+    void _dump(Category category, std::ostream& os) const override;
     void _reset(bool hard) override;
 
 

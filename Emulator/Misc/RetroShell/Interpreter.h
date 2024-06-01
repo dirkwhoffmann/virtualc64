@@ -60,28 +60,34 @@ class Interpreter: public SubComponent
 public:
     
     Interpreter(C64 &ref);
-    const Descriptions &getDescriptions() const override { return descriptions; }
-    
-private:
+    Interpreter& operator= (const Interpreter& other) { return *this; }
 
-    void _initialize() override;
-    void initCommons(Command &root);
-    void initCommandShell(Command &root);
-    void initDebugShell(Command &root);
+
+    //
+    // Methods from Serializable
+    //
+
+public:
+
+    template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 
 
     //
     // Methods from CoreComponent
     //
 
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
 private:
 
     void _dump(Category category, std::ostream& os) const override { }
+    void _initialize() override;
 
-public:
-    
-    Interpreter& operator= (const Interpreter& other) { return *this; }
-    template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
+    void initCommons(Command &root);
+    void initCommandShell(Command &root);
+    void initDebugShell(Command &root);
 
 
     //

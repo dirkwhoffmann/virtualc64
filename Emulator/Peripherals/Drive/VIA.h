@@ -72,8 +72,8 @@ protected:
     
     // Owner of this VIA
     Drive &drive;
-    
-    
+
+
     //
     // Peripheral interface
     //
@@ -227,29 +227,7 @@ protected:
 public:
     
     VIA6522(C64 &ref, Drive &drvref);
-    const Descriptions &getDescriptions() const override { return descriptions; }
-
     virtual bool isVia1() const = 0;
-
-    
-    //
-    // Methods from CoreObject
-    //
-
-public:
-    
-    void prefix() const override;
-    
-private:
-    
-    void _dump(Category category, std::ostream& os) const override;
-
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
 
     VIA6522& operator= (const VIA6522& other) {
 
@@ -283,6 +261,13 @@ public:
 
         return *this;
     }
+
+
+    //
+    // Methods from Serializable
+    //
+
+public:
 
     template <class T>
     void serialize(T& worker)
@@ -319,6 +304,19 @@ public:
 
     } SERIALIZERS(serialize);
 
+
+    //
+    // Methods from CoreComponent
+    //
+
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+    void prefix() const override;
+
+private:
+
+    void _dump(Category category, std::ostream& os) const override;
     void _reset(bool hard) override;
 
 

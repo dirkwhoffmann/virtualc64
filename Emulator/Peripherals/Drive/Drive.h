@@ -299,10 +299,12 @@ public:
         return *this;
     }
 
-    //
-    // Methods from CoreComponent
 
-    const Descriptions &getDescriptions() const override { return descriptions; }
+    //
+    // Methods from Serializable
+    //
+
+public:
 
     template <class T>
     void serialize(T& worker)
@@ -364,6 +366,15 @@ public:
     void operator << (SerCounter &worker) override;
     void operator << (SerReader &worker) override;
     void operator << (SerWriter &worker) override;
+
+
+    //
+    // Methods from CoreComponent
+    //
+
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
 private:
 

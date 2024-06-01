@@ -88,17 +88,17 @@ class RetroShell : public SubComponent {
 public:
     
     RetroShell(C64& ref);
-    const Descriptions &getDescriptions() const override { return descriptions; }
+
+    RetroShell& operator= (const RetroShell& other) { return *this; }
 
 
     //
-    // Methods from CoreObject
+    // Methods from Serializable
     //
 
-private:
+public:
 
-    const char *objectName() const override { return "RetroShell"; }
-    void _dump(Category category, std::ostream& os) const override { }
+    template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 
 
     //
@@ -107,11 +107,13 @@ private:
 
 public:
 
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
+private:
+
+    void _dump(Category category, std::ostream& os) const override { }
     void _initialize() override;
     void _pause() override;
-
-    RetroShell& operator= (const RetroShell& other) { return *this; }
-    template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 
 
     //

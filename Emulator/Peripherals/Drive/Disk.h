@@ -129,11 +129,6 @@ private:
     void init(class AnyCollection &archive, bool wp) throws;
     void init(SerReader &reader) throws;
 
-private:
-    
-    const char *objectName() const override { return "Disk"; }
-    void _dump(Category category, std::ostream& os) const override;
-
 public:
 
     Disk& operator= (const Disk& other) {
@@ -145,6 +140,13 @@ public:
 
         return *this;
     }
+
+
+    //
+    // Methods from Serializable
+    //
+
+public:
 
     template <class T>
     void serialize(T& worker)
@@ -160,6 +162,16 @@ public:
     }
 
     
+    //
+    // Methods from CoreObject and Dumpable
+    //
+
+private:
+
+    const char *objectName() const override { return "Disk"; }
+    void _dump(Category category, std::ostream& os) const override;
+
+
     //
     // Accessing
     //

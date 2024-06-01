@@ -55,6 +55,11 @@ public:
     DiskAnalyzer(const class Disk &disk);
     ~DiskAnalyzer();
    
+
+    //
+    // Methods from CoreObject
+    //
+
 private:
     
     const char *objectName() const override { return "DiskAnalyzer"; }

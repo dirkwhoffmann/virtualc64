@@ -42,8 +42,15 @@ class PowerPort final : public SubComponent {
 public:
     
     PowerPort(C64& ref);
-    const Descriptions &getDescriptions() const override { return descriptions; }
     PowerPort& operator= (const PowerPort& other) { return *this; }
+
+
+    //
+    // Methods from Serializable
+    //
+
+public:
+
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 
 
@@ -51,9 +58,17 @@ public:
     // Methods from CoreComponent
     //
 
-public:
+private:
 
+    const Descriptions &getDescriptions() const override { return descriptions; }
     void _dump(Category category, std::ostream& os) const override;
+
+
+    //
+    // Methods from Inspectable
+    //
+
+public:
 
     const PowerPortConfig &getConfig() const { return config; }
     const ConfigOptions &getOptions() const override { return options; }

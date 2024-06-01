@@ -62,9 +62,14 @@ class ExpansionPort final : public SubComponent, public Inspectable<CartridgeInf
 public:
     
     ExpansionPort(C64 &ref) : SubComponent(ref) { };
-    const Descriptions &getDescriptions() const override { return descriptions; }
-
     ExpansionPort& operator= (const ExpansionPort& other);
+
+
+    //
+    // Methods from Serializable
+    //
+
+public:
 
     template <class T>
     void serialize(T& worker)
@@ -89,8 +94,11 @@ public:
     // Methods from CoreComponent
     //
 
-    void _dump(Category category, std::ostream& os) const override;
+private:
 
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
+    void _dump(Category category, std::ostream& os) const override;
     void _reset(bool hard) override;
 
 

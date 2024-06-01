@@ -88,8 +88,6 @@ public:
 public:
 
     C64Memory(C64 &ref);
-    const Descriptions &getDescriptions() const override { return descriptions; }
-    void _dump(Category category, std::ostream& os) const override;
 
     C64Memory& operator= (const C64Memory& other) {
 
@@ -104,6 +102,13 @@ public:
 
         return *this;
     }
+
+
+    //
+    // Methods from Serializable
+    //
+
+public:
 
     template <class T>
     void serialize(T& worker)
@@ -133,12 +138,26 @@ public:
     void operator << (SerReader &worker) override;
     void operator << (SerWriter &worker) override;
 
+
+    //
+    // Methods from CoreComponent
+    //
+
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
+private:
+
+    void _dump(Category category, std::ostream& os) const override;
     void _reset(bool hard) override;
 
 
     //
     // Configuring
     //
+
+public:
 
     const MemConfig &getConfig() const { return config; }
     const ConfigOptions &getOptions() const override { return options; }

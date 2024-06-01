@@ -62,8 +62,6 @@ class Host final : public CoreComponent {
 public:
 
     using CoreComponent::CoreComponent;
-    const Descriptions &getDescriptions() const override { return descriptions; }
-    void _dump(Category category, std::ostream& os) const override;
 
     Host& operator= (const Host& other) {
 
@@ -71,7 +69,24 @@ public:
         return *this;
     }
 
+
+    //
+    // Methods from Serializable
+    //
+
+public:
+
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
+
+
+    //
+    // Methods from CoreComponent
+    //
+
+private:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+    void _dump(Category category, std::ostream& os) const override;
 
 
     //

@@ -63,7 +63,6 @@ protected:
 public:
     
     PIA6821(C64 &ref, Drive &drvref);
-    const Descriptions &getDescriptions() const override { return descriptions; }
 
     PIA6821& operator= (const PIA6821& other) {
 
@@ -82,6 +81,13 @@ public:
 
         return *this;
     }
+
+
+    //
+    // Methods from Serializable
+    //
+
+public:
 
     template <class T>
     void serialize(T& worker)
@@ -102,6 +108,15 @@ public:
         << cb2;
 
     } SERIALIZERS(serialize);
+
+
+    //
+    // Methods from CoreComponent
+    //
+
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
 
     //

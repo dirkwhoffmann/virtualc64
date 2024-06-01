@@ -64,7 +64,6 @@ class DmaDebugger final : public SubComponent {
 public:
     
     DmaDebugger(C64 &ref);
-    const Descriptions &getDescriptions() const override { return descriptions; }
 
     DmaDebugger& operator= (const DmaDebugger& other) {
 
@@ -73,6 +72,13 @@ public:
 
         return *this;
     }
+
+
+    //
+    // Methods from Serializable
+    //
+
+public:
 
     template <class T>
     void serialize(T& worker)
@@ -98,7 +104,13 @@ public:
 
 private:
 
+    const Descriptions &getDescriptions() const override { return descriptions; }
     void _dump(Category category, std::ostream& os) const override;
+
+
+    //
+    // Methods from Configurable
+    //
 
 public:
 

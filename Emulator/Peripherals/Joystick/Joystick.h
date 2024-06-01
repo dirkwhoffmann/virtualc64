@@ -64,8 +64,6 @@ class Joystick final : public SubComponent, public Inspectable<JoystickInfo> {
 public:
     
     Joystick(C64 &ref, ControlPort& pref);
-    const Descriptions &getDescriptions() const override { return descriptions; }
-    void _dump(Category category, std::ostream& os) const override;
 
     Joystick& operator= (const Joystick& other) {
 
@@ -78,7 +76,14 @@ public:
         return *this;
     }
 
-    template <class T> void serialize(T& worker) { 
+
+    //
+    // Methods from Serializable
+    //
+
+public:
+
+    template <class T> void serialize(T& worker) {
 
         if (isResetter(worker)) return;
 
@@ -97,6 +102,19 @@ public:
 
 
     //
+    // Methods from CoreComponent
+    //
+
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
+private:
+
+    void _dump(Category category, std::ostream& os) const override;
+
+
+    //
     // Methods from Inspectable
     //
 
@@ -106,7 +124,7 @@ private:
 
 
     //
-    // Configuring
+    // Methods from Configurable
     //
 
 public:

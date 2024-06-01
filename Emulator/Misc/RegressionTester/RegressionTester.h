@@ -58,13 +58,30 @@ private:
 public:
     
     using SubComponent::SubComponent;
-    const Descriptions &getDescriptions() const override { return descriptions; }
-
-    // const char *objectName() const override { return "RegressionTester"; }
-    void _dump(Category category, std::ostream& os) const override { }
 
     RegressionTester& operator= (const RegressionTester& other) { return *this; }
+
+
+    //
+    // Methods from Serializable
+    //
+
+public:
+
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
+
+
+    //
+    // Methods from CoreComponent
+    //
+
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
+private:
+
+    void _dump(Category category, std::ostream& os) const override { }
 
 
     //

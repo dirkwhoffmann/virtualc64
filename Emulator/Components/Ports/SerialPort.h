@@ -61,7 +61,6 @@ private:
 public:
 
     SerialPort(C64 &ref) : SubComponent(ref) { };
-    const Descriptions &getDescriptions() const override { return descriptions; }
 
 public:
 
@@ -83,6 +82,13 @@ public:
 
         return *this;
     }
+
+
+    //
+    // Methods from Serializable
+    //
+
+public:
 
     template <class T>
     void serialize(T& worker)
@@ -110,8 +116,10 @@ public:
     // Methods from CoreComponent
     //
 
-    void _dump(Category category, std::ostream& os) const override;
+private:
 
+    const Descriptions &getDescriptions() const override { return descriptions; }
+    void _dump(Category category, std::ostream& os) const override;
     void _reset(bool hard) override;
 
 
