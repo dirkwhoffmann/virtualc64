@@ -23,7 +23,7 @@ namespace vc64 {
 
 class VirtualC64;
 
-class Emulator : public Thread, public Inspectable<EmulatorInfo, EmulatorStats>, public Dumpable, public Configurable {
+class Emulator : public Thread, public Dumpable, public Inspectable<EmulatorInfo, EmulatorStats>, public Configurable {
 
     friend class API;
     friend class VirtualC64;
@@ -82,15 +82,27 @@ public:
 
 
     //
-    // Execution control
+    // Methods from CoreComponent
     //
 
-    void stepInto();
-    void stepOver();
+private:
+
+    const char *objectName() const override { return "Emulator"; }
+    void _dump(Category category, std::ostream& os) const override;
 
 
     //
-    // Configuring
+    // Methods from Inspectable
+    //
+
+public:
+
+    void cacheInfo(EmulatorInfo &result) const override;
+    void cacheStats(EmulatorStats &result) const override;
+
+
+    //
+    // Methods from Configurable
     //
 
 public:
@@ -99,16 +111,6 @@ public:
     i64 getOption(Option opt) const override;
     void checkOption(Option opt, i64 value) override;
     void setOption(Option opt, i64 value) override;
-
-
-    //
-    // Inspecting
-    //
-
-public:
-
-    void cacheInfo(EmulatorInfo &result) const override;
-    void cacheStats(EmulatorStats &result) const override;
 
 
     //
@@ -135,9 +137,6 @@ public:
     // Configures the emulator to match a specific C64 model
     void set(C64Model model);
 
-    // Returns the emulated refresh rate of the virtual C64
-    double refreshRate() const override;
-
 private:
 
     const EmulatorConfig &getConfig() const { return config; }
@@ -155,26 +154,14 @@ private:
 
 
     //
-    // Methods from CoreObject
-    //
-
-private:
-
-    const char *objectName() const override { return "Emulator"; }
-    void _dump(Category category, std::ostream& os) const override;
-
-
-    //
     // Methods from Thread
     //
 
 private:
 
-    void isReady() override;
-    isize missingFrames() const override;
     void update() override;
     bool shouldWarp();
-
+    isize missingFrames() const override;
     void computeFrame() override;
     void recreateRunAheadInstance();
 
@@ -188,7 +175,23 @@ private:
     void _trackOn() override { main.trackOn(); }
     void _trackOff() override { main.trackOff(); }
 
-    
+    void isReady() override;
+
+public:
+
+    double refreshRate() const override;
+
+
+    //
+    // Execution control
+    //
+
+public:
+
+    void stepInto();
+    void stepOver();
+
+
     //
     // Audio and Video
     //

@@ -5,8 +5,7 @@ target_sources(vc64Core PRIVATE
 
 C64.cpp
 Emulator.cpp
-EmulatorConfig.cpp
-EmulatorInfo.cpp
+EmulatorBase.cpp
 
 )
 

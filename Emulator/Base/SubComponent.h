@@ -17,4 +17,16 @@
 
 namespace vc64 {
 
+/* Base class for all subcomponents of the C64.
+ */
+class SubComponent : public CoreComponent, public References {
+
+public:
+
+    SubComponent(C64& ref);
+    SubComponent(C64& ref, isize id);
+
+    void prefix() const override;
+};
+
 }
