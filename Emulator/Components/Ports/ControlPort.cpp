@@ -121,6 +121,8 @@ ControlPort::processCommand(const Cmd &cmd)
         case CMD_MOUSE_MOVE_REL:    mouse.setDxDy(cmd.coord.x, cmd.coord.y); break;
         case CMD_MOUSE_EVENT:       mouse.trigger(cmd.action.action); break;
         case CMD_JOY_EVENT:         joystick.trigger(cmd.action.action); break;
+        case CMD_PADDLE_ABS:        paddle.setX(cmd.coord.x); break;
+        case CMD_PADDLE_REL:        paddle.setDx(cmd.coord.x); break;
 
         default:
             fatalError;

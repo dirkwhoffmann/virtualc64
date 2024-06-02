@@ -104,7 +104,7 @@ void updatePotY();
 u8
 Paddle::readPotX() const
 {
-    return u8((pos + 1.0) * 127.5);
+    return u8((-pos + 1.0) * 127.5);
 }
 
 u8

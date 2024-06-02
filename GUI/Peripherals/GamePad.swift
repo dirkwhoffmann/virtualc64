@@ -255,9 +255,24 @@ class GamePad {
 
     // Based on
     // http://docs.ros.org/hydro/api/oculus_sdk/html/OSX__Gamepad_8cpp_source.html#l00170
-    
-    func mapAnalogAxis(value: IOHIDValue, element: IOHIDElement) -> Int? {
-        
+
+    static func analogAxis(value: IOHIDValue, element: IOHIDElement) -> Double {
+
+        let min = IOHIDElementGetLogicalMin(element)
+        let max = IOHIDElementGetLogicalMax(element)
+        let val = IOHIDValueGetIntegerValue(value)
+
+        let v = (Double) (val - min) / (Double) (max - min)
+        return v * 2.0 - 1.0
+    }
+
+    static func analogAxisRev(value: IOHIDValue, element: IOHIDElement) -> Double {
+
+        return -analogAxis(value: value, element: element)
+    }
+
+    static func mapAnalogAxis(value: IOHIDValue, element: IOHIDElement) -> Int? {
+
         let min = IOHIDElementGetLogicalMin(element)
         let max = IOHIDElementGetLogicalMax(element)
         let val = IOHIDValueGetIntegerValue(value)
@@ -276,7 +291,7 @@ class GamePad {
         return nil // Dead zone
     }
     
-    func mapHAxis(value: IOHIDValue, element: IOHIDElement) -> [vc64.GamePadAction]? {
+    static func mapHAxis(value: IOHIDValue, element: IOHIDElement) -> [vc64.GamePadAction]? {
 
         if let v = mapAnalogAxis(value: value, element: element) {
             return v == 2 ? [.PULL_RIGHT] : v == -2 ? [.PULL_LEFT] : [.RELEASE_X]
@@ -285,7 +300,7 @@ class GamePad {
         }
     }
     
-    func mapVAxis(value: IOHIDValue, element: IOHIDElement) -> [vc64.GamePadAction]? {
+    static func mapVAxis(value: IOHIDValue, element: IOHIDElement) -> [vc64.GamePadAction]? {
 
         if let v = mapAnalogAxis(value: value, element: element) {
             return v == 2 ? [.PULL_DOWN] : v == -2 ? [.PULL_UP] : [.RELEASE_Y]
@@ -294,7 +309,7 @@ class GamePad {
         }
     }
 
-    func mapVAxisRev(value: IOHIDValue, element: IOHIDElement) -> [vc64.GamePadAction]? {
+    static func mapVAxisRev(value: IOHIDValue, element: IOHIDElement) -> [vc64.GamePadAction]? {
 
         if let v = mapAnalogAxis(value: value, element: element) {
             return v == 2 ? [.PULL_UP] : v == -2 ? [.PULL_DOWN] : [.RELEASE_Y]
@@ -313,8 +328,8 @@ class GamePad {
         let usagePage = Int(IOHIDElementGetUsagePage(element))
         let usage     = Int(IOHIDElementGetUsage(element))
                 
-        debug(.hid, "usagePage = \(usagePage) usage = \(usage) value = \(intValue)")
-        
+        // debug(.hid, "usagePage = \(usagePage) usage = \(usage) value = \(intValue)")
+
         var events: [vc64.GamePadAction]?
         
         if usagePage == kHIDPage_Button {
@@ -346,46 +361,98 @@ class GamePad {
             }
         }
         
+        /* Experimental code for Paddle support
+        var pos: Double?
+        if usagePage == kHIDPage_GenericDesktop {
+
+            switch usage {
+
+            case kHIDUsage_GD_X where lScheme == Schemes.A0A1:   // A0
+                pos = GamePad.analogAxis(value: value, element: element)
+
+            case kHIDUsage_GD_X where lScheme == Schemes.A0A1r:  // A0
+                pos = GamePad.analogAxis(value: value, element: element)
+
+            case kHIDUsage_GD_Y where lScheme == Schemes.A0A1:   // A1
+                break
+
+            case kHIDUsage_GD_Y where lScheme == Schemes.A0A1r:  // A1
+                break
+
+            case kHIDUsage_GD_Z where rScheme == Schemes.A2A5:   // A2
+                pos = GamePad.analogAxis(value: value, element: element)
+
+            case kHIDUsage_GD_Z where rScheme == Schemes.A2A5r:  // A2
+                pos = GamePad.analogAxis(value: value, element: element)
+
+            case kHIDUsage_GD_Z where rScheme == Schemes.A2A3:   // A2
+                pos = GamePad.analogAxis(value: value, element: element)
+
+            case kHIDUsage_GD_Rx where lScheme == Schemes.A3A4:  // A3
+                pos = GamePad.analogAxis(value: value, element: element)
+
+            case kHIDUsage_GD_Rx where lScheme == Schemes.A2A3:  // A3
+                break
+
+            case kHIDUsage_GD_Ry where lScheme == Schemes.A3A4:  // A4
+                break
+
+            case kHIDUsage_GD_Rz where rScheme == Schemes.A2A5:  // A5
+                break
+
+            case kHIDUsage_GD_Rz where rScheme == Schemes.A2A5r: // A5
+                break
+
+            default:
+                debug(.hid, "Unknown HID usage: \(usage)")
+            }
+        }
+
+        if pos != nil {
+            print("New paddle pos: \(pos!)")
+            processPaddleEvents(pos: pos!)
+        }
+        */
         if usagePage == kHIDPage_GenericDesktop {
             
             switch usage {
             
             case kHIDUsage_GD_X where lScheme == Schemes.A0A1:   // A0
-                events = mapHAxis(value: value, element: element)
+                events = GamePad.mapHAxis(value: value, element: element)
 
             case kHIDUsage_GD_X where lScheme == Schemes.A0A1r:  // A0
-                events = mapHAxis(value: value, element: element)
-                
+                events = GamePad.mapHAxis(value: value, element: element)
+
             case kHIDUsage_GD_Y where lScheme == Schemes.A0A1:   // A1
-                events = mapVAxis(value: value, element: element)
-                
+                events = GamePad.mapVAxis(value: value, element: element)
+
             case kHIDUsage_GD_Y where lScheme == Schemes.A0A1r:  // A1
-               events = mapVAxisRev(value: value, element: element)
+                events = GamePad.mapVAxisRev(value: value, element: element)
 
             case kHIDUsage_GD_Z where rScheme == Schemes.A2A5:   // A2
-                events = mapHAxis(value: value, element: element)
+                events = GamePad.mapHAxis(value: value, element: element)
 
             case kHIDUsage_GD_Z where rScheme == Schemes.A2A5r:  // A2
-                events = mapHAxis(value: value, element: element)
+                events = GamePad.mapHAxis(value: value, element: element)
 
             case kHIDUsage_GD_Z where rScheme == Schemes.A2A3:   // A2
-                events = mapHAxis(value: value, element: element)
-                    
+                events = GamePad.mapHAxis(value: value, element: element)
+
             case kHIDUsage_GD_Rx where lScheme == Schemes.A3A4:  // A3
-                events = mapHAxis(value: value, element: element)
+                events = GamePad.mapHAxis(value: value, element: element)
 
             case kHIDUsage_GD_Rx where lScheme == Schemes.A2A3:  // A3
-                events = mapVAxisRev(value: value, element: element)
+                events = GamePad.mapVAxisRev(value: value, element: element)
 
             case kHIDUsage_GD_Ry where lScheme == Schemes.A3A4:  // A4
-                events = mapVAxis(value: value, element: element)
+                events = GamePad.mapVAxis(value: value, element: element)
 
             case kHIDUsage_GD_Rz where rScheme == Schemes.A2A5:  // A5
-                events = mapVAxis(value: value, element: element)
+                events = GamePad.mapVAxis(value: value, element: element)
 
             case kHIDUsage_GD_Rz where rScheme == Schemes.A2A5r: // A5
-                events = mapVAxisRev(value: value, element: element)
-                            
+                events = GamePad.mapVAxisRev(value: value, element: element)
+
             case 0x90 where hScheme == Schemes.U90U93:
                 events = intValue != 0 ? [.PULL_UP] : [.RELEASE_Y]
 
@@ -418,7 +485,7 @@ class GamePad {
                 debug(.hid, "Unknown HID usage: \(usage)")
             }
         }
-        
+
         // Only proceed if the event is different than the previous one
         if events == nil || oldEvents[usage] == events { return }
         oldEvents[usage] = events!
@@ -474,6 +541,16 @@ class GamePad {
         if let id = port {
 
             c64.put(.MOUSE_MOVE_REL, coord: vc64.CoordCmd(port: id, x: delta.x, y: delta.y))
+        }
+    }
+
+    func processPaddleEvents(pos: Double) {
+
+        let c64 = manager.parent.emu!
+
+        if let id = port {
+
+            c64.put(.PADDLE_ABS, coord: vc64.CoordCmd(port: id, x: pos, y: 0))
         }
     }
 

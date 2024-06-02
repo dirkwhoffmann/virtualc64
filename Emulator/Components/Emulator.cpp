@@ -607,6 +607,8 @@ Emulator::update()
 
             case CMD_MOUSE_MOVE_ABS:
             case CMD_MOUSE_MOVE_REL:
+            case CMD_PADDLE_ABS:
+            case CMD_PADDLE_REL:
 
                 switch (cmd.coord.port) {
 

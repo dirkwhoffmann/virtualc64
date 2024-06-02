@@ -73,15 +73,19 @@ enum_long(CMD_TYPE)
     CMD_KEY_RELEASE_ALL,        ///< Clear the keyboard matrix
     CMD_KEY_TOGGLE,             ///< Press or release a key on the C64 keyboard
 
-    // Mice
-    CMD_MOUSE_MOVE_ABS,         ///< Signal a mouse movement (absolut coordinates)
-    CMD_MOUSE_MOVE_REL,         ///< Signal a mouse movement (relative coordinates)
+    // Mouse
+    CMD_MOUSE_MOVE_ABS,         ///< Signal a mouse movement (absolute)
+    CMD_MOUSE_MOVE_REL,         ///< Signal a mouse movement (relative)
     CMD_MOUSE_EVENT,            ///< Signal a mouse button event
 
-    // Joysticks
+    // Joystick
     CMD_JOY_EVENT,              ///< Signal a joystick button event
 
-    // Floppy disks
+    // Paddle
+    CMD_PADDLE_ABS,             ///< Signal paddle activity (absolute)
+    CMD_PADDLE_REL,             ///< Signal paddle activity (relative)
+
+    // Floppy disk
     CMD_DSK_TOGGLE_WP,          ///< Toggle write-protection
     CMD_DSK_MODIFIED,           ///< Signal that the disk has been saved
     CMD_DSK_UNMODIFIED,         ///< Signan that the disk needs saving
@@ -91,7 +95,7 @@ enum_long(CMD_TYPE)
     CMD_DATASETTE_STOP,         ///< Press the datasette stop key
     CMD_DATASETTE_REWIND,       ///< Rewind the tape
 
-    // Cartridges
+    // Cartridge
     CMD_CRT_BUTTON_PRESS,       ///< Press a cartridge button
     CMD_CRT_BUTTON_RELEASE,     ///< Release a cartridge button
     CMD_CRT_SWITCH_LEFT,        ///< Pull the cartridge switch left
@@ -160,6 +164,9 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
             case CMD_MOUSE_EVENT:           return "MOUSE_EVENT";
 
             case CMD_JOY_EVENT:             return "JOY_EVENT";
+
+            case CMD_PADDLE_ABS:            return "PADDLE_ABS";
+            case CMD_PADDLE_REL:            return "PADDLE_REL";
 
             case CMD_DSK_TOGGLE_WP:         return "DSK_TOGGLE_WP";
             case CMD_DSK_MODIFIED:          return "DSK_MODIFIED";

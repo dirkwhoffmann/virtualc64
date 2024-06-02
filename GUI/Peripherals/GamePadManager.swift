@@ -210,20 +210,20 @@ class GamePadManager {
             
             // Inform the mouse event receiver about the new mouse
             parent.metal.mouse2 = gamePads[slot]
-            
-        } else {
-        
-        // Open device
-        if !device.open() { return }
-        
-        // Create a GamePad object
-        gamePads[slot] = GamePad(manager: self, device: device, type: .JOYSTICK)
 
-        // Register input value callback
-        let hidContext = unsafeBitCast(gamePads[slot], to: UnsafeMutableRawPointer.self)
-        IOHIDDeviceRegisterInputValueCallback(device,
-                                              gamePads[slot]!.inputValueCallback,
-                                              hidContext)
+        } else {
+
+            // Open device
+            if !device.open() { return }
+
+            // Create a GamePad object
+            gamePads[slot] = GamePad(manager: self, device: device, type: .JOYSTICK)
+
+            // Register input value callback
+            let hidContext = unsafeBitCast(gamePads[slot], to: UnsafeMutableRawPointer.self)
+            IOHIDDeviceRegisterInputValueCallback(device,
+                                                  gamePads[slot]!.inputValueCallback,
+                                                  hidContext)
         }
     }
     
