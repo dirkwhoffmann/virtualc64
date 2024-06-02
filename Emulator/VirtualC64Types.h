@@ -35,6 +35,7 @@
 #include "MouseTypes.h"
 #include "MsgQueueTypes.h"
 #include "OptionTypes.h"
+#include "PaddleTypes.h"
 #include "ParCableTypes.h"
 #include "PowerPortTypes.h"
 #include "RecorderTypes.h"

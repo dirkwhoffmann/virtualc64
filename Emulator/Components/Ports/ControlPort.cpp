@@ -53,7 +53,8 @@ ControlPort::getControlPort() const
             
         case CPDEVICE_JOYSTICK: return joystick.getControlPort();
         case CPDEVICE_MOUSE: return mouse.getControlPort();
-            
+        case CPDEVICE_PADDLE: return paddle.getControlPort();
+
         default:
             return 0xFF;
     }
@@ -62,29 +63,53 @@ ControlPort::getControlPort() const
 void
 ControlPort::updatePotX()
 {
-    if (device == CPDEVICE_MOUSE) mouse.updatePotX();
+    switch (device) {
+
+        case CPDEVICE_MOUSE: mouse.updatePotX(); break;
+        case CPDEVICE_PADDLE: paddle.updatePotX(); break;
+
+        default:
+            break;
+    }
 }
 
 void
 ControlPort::updatePotY()
 {
-    if (device == CPDEVICE_MOUSE) mouse.updatePotY();
+    switch (device) {
+
+        case CPDEVICE_MOUSE: mouse.updatePotY(); break;
+        case CPDEVICE_PADDLE: paddle.updatePotY(); break;
+
+        default:
+            break;
+    }
 }
 
 u8
 ControlPort::readPotX() const
 {
-    if (device == CPDEVICE_MOUSE) return mouse.readPotX();
-    
-    return 0xFF;
+    switch (device) {
+
+        case CPDEVICE_MOUSE: return mouse.readPotX();
+        case CPDEVICE_PADDLE: return paddle.readPotX();
+
+        default:
+            return 0xFF;
+    }
 }
 
 u8
 ControlPort::readPotY() const
 {
-    if (device == CPDEVICE_MOUSE) return mouse.readPotY();
-    
-    return 0xFF;
+    switch (device) {
+
+        case CPDEVICE_MOUSE: return mouse.readPotY();
+        case CPDEVICE_PADDLE: return paddle.readPotY();
+
+        default:
+            return 0xFF;
+    }
 }
 
 void

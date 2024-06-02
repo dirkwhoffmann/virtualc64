@@ -852,6 +852,20 @@ public:
     };
 
 
+    /** Paddle Public API
+     */
+    struct PaddleAPI : API {
+
+        Paddle &paddle;
+        PaddleAPI(Emulator &emu, Paddle& paddle) : API(emu), paddle(paddle) { }
+
+        /** @brief  Returns the component's current state.
+         */
+        PaddleInfo getInfo() const;
+        PaddleInfo getCachedInfo() const;
+    };
+
+
     /** Datasette Public API
      */
     struct DatasetteAPI : API {
@@ -882,10 +896,11 @@ public:
 
         ControlPort &port;
         ControlPortAPI(Emulator &emu, ControlPort& port) :
-        API(emu), port(port), joystick(emu, port.joystick), mouse(emu, port.mouse) { }
+        API(emu), port(port), joystick(emu, port.joystick), mouse(emu, port.mouse), paddle(emu, port.paddle) { }
 
         JoystickAPI joystick;
         MouseAPI mouse;
+        PaddleAPI paddle;
 
     } port1, port2;
 

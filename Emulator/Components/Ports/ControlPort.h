@@ -17,6 +17,7 @@
 #include "SubComponent.h"
 #include "Joystick.h"
 #include "Mouse.h"
+#include "Paddle.h"
 
 namespace vc64 {
 
@@ -24,6 +25,7 @@ class ControlPort final : public SubComponent {
 
     friend class Mouse;
     friend class Joystick;
+    friend class Paddle;
 
     Descriptions descriptions = {
         {
@@ -50,6 +52,7 @@ public:
     
     Mouse mouse = Mouse(c64, *this);
     Joystick joystick = Joystick(c64, *this);
+    Paddle paddle = Paddle(c64, *this);
 
 
     //
@@ -64,6 +67,7 @@ public:
 
         CLONE(mouse)
         CLONE(joystick)
+        CLONE(paddle)
         CLONE(device)
         
         return *this;
@@ -81,7 +85,8 @@ public:
         worker
 
         << mouse
-        << joystick;
+        << joystick
+        << paddle;
 
     } SERIALIZERS(serialize);
 

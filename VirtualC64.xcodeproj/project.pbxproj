@@ -339,6 +339,12 @@
 		508C1E672C0B5F770097473C /* MonitorBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E652C0B5F770097473C /* MonitorBase.cpp */; };
 		508C1E692C0C507D0097473C /* CartridgeBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E682C0C507D0097473C /* CartridgeBase.cpp */; };
 		508C1E6A2C0C507D0097473C /* CartridgeBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E682C0C507D0097473C /* CartridgeBase.cpp */; };
+		508C1E6D2C0C58FF0097473C /* Paddle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E6B2C0C58FF0097473C /* Paddle.cpp */; };
+		508C1E6E2C0C58FF0097473C /* Paddle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E6B2C0C58FF0097473C /* Paddle.cpp */; };
+		508C1E722C0C59A20097473C /* PaddleBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E712C0C59A20097473C /* PaddleBase.cpp */; };
+		508C1E732C0C59A20097473C /* PaddleBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E712C0C59A20097473C /* PaddleBase.cpp */; };
+		508C1E752C0C59BA0097473C /* JoystickBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E742C0C59BA0097473C /* JoystickBase.cpp */; };
+		508C1E762C0C59BA0097473C /* JoystickBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E742C0C59BA0097473C /* JoystickBase.cpp */; };
 		509280CF2930A1B6006E1966 /* PeddleUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509280CD2930A1B6006E1966 /* PeddleUtils.cpp */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		5095C81C2BA09DE800A83825 /* Debugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5095C81A2BA08B0A00A83825 /* Debugger.cpp */; };
@@ -881,6 +887,12 @@
 		508C1E622C0B5EE80097473C /* KeyboardBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardBase.cpp; sourceTree = "<group>"; };
 		508C1E652C0B5F770097473C /* MonitorBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MonitorBase.cpp; sourceTree = "<group>"; };
 		508C1E682C0C507D0097473C /* CartridgeBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CartridgeBase.cpp; sourceTree = "<group>"; };
+		508C1E6B2C0C58FF0097473C /* Paddle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Paddle.cpp; sourceTree = "<group>"; };
+		508C1E6C2C0C58FF0097473C /* Paddle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Paddle.h; sourceTree = "<group>"; };
+		508C1E702C0C59910097473C /* PaddleTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaddleTypes.h; sourceTree = "<group>"; };
+		508C1E712C0C59A20097473C /* PaddleBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PaddleBase.cpp; sourceTree = "<group>"; };
+		508C1E742C0C59BA0097473C /* JoystickBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = JoystickBase.cpp; sourceTree = "<group>"; };
+		508C1E772C0C5A1D0097473C /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		509280CD2930A1B6006E1966 /* PeddleUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PeddleUtils.cpp; sourceTree = "<group>"; };
 		509280CE2930A1B6006E1966 /* PeddleUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleUtils.h; sourceTree = "<group>"; };
 		509280D029312C00006E1966 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -1190,6 +1202,7 @@
 				5007E1E026A70006000E7344 /* CMakeLists.txt */,
 				500333EC2620269D008445E4 /* JoystickTypes.h */,
 				5085D89C25B848940043B15C /* Joystick.h */,
+				508C1E742C0C59BA0097473C /* JoystickBase.cpp */,
 				5085D89B25B848940043B15C /* Joystick.cpp */,
 			);
 			path = Joystick;
@@ -1644,6 +1657,7 @@
 				504C430E24AF29AC00E69CAE /* Datasette */,
 				5007E1DD26A6FFDC000E7344 /* Joystick */,
 				5007E1DE26A6FFE7000E7344 /* Mouse */,
+				508C1E6F2C0C59060097473C /* Paddle */,
 				5007E1DF26A6FFF4000E7344 /* Keyboard */,
 				50E5BF752BA81E940004712B /* Monitor */,
 			);
@@ -1894,6 +1908,18 @@
 				50300AEC258B2C5400D261E3 /* FSDirEntry.cpp */,
 			);
 			path = FileSystems;
+			sourceTree = "<group>";
+		};
+		508C1E6F2C0C59060097473C /* Paddle */ = {
+			isa = PBXGroup;
+			children = (
+				508C1E772C0C5A1D0097473C /* CMakeLists.txt */,
+				508C1E702C0C59910097473C /* PaddleTypes.h */,
+				508C1E6C2C0C58FF0097473C /* Paddle.h */,
+				508C1E712C0C59A20097473C /* PaddleBase.cpp */,
+				508C1E6B2C0C58FF0097473C /* Paddle.cpp */,
+			);
+			path = Paddle;
 			sourceTree = "<group>";
 		};
 		5095C8192BA08AF500A83825 /* Debugger */ = {
@@ -2330,6 +2356,7 @@
 				508C1E672C0B5F770097473C /* MonitorBase.cpp in Sources */,
 				50726F4C2961C9940031F2F5 /* Colors.cpp in Sources */,
 				50726F602961C9AC0031F2F5 /* VICIIDraw.cpp in Sources */,
+				508C1E732C0C59A20097473C /* PaddleBase.cpp in Sources */,
 				50726FA52961CA1C0031F2F5 /* AnyCollection.cpp in Sources */,
 				50A194942BDA709D0046849E /* CPUBase.cpp in Sources */,
 				50726F532961C9940031F2F5 /* SerialPort.cpp in Sources */,
@@ -2351,6 +2378,7 @@
 				50726F8B2961CA0D0031F2F5 /* Expert.cpp in Sources */,
 				50726FAE2961CA1C0031F2F5 /* Folder.cpp in Sources */,
 				50726F692961C9C60031F2F5 /* version.cc in Sources */,
+				508C1E762C0C59BA0097473C /* JoystickBase.cpp in Sources */,
 				5095C81D2BA09DE800A83825 /* Debugger.cpp in Sources */,
 				50726F4D2961C9940031F2F5 /* PowerPort.cpp in Sources */,
 				50726F512961C9940031F2F5 /* ExpansionPort.cpp in Sources */,
@@ -2435,6 +2463,7 @@
 				50726F9C2961CA0D0031F2F5 /* Kcs.cpp in Sources */,
 				506F30432B74C1C70083EAEA /* Wakeable.cpp in Sources */,
 				50A194852BDA5CD40046849E /* TODBase.cpp in Sources */,
+				508C1E6E2C0C58FF0097473C /* Paddle.cpp in Sources */,
 				508C1E5B2C0B20EE0097473C /* SerialPortBase.cpp in Sources */,
 				50726F562961C99A0031F2F5 /* PeddleUtils.cpp in Sources */,
 				50FFB54E2B8262BA00042771 /* Serializable.cpp in Sources */,
@@ -2449,6 +2478,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50E17E212B8B26AC0029747D /* Option.cpp in Sources */,
+				508C1E6D2C0C58FF0097473C /* Paddle.cpp in Sources */,
 				50B9F2812826392400BDFE7B /* MediaManager.swift in Sources */,
 				504C438A24AF29AC00E69CAE /* Mouse1350.cpp in Sources */,
 				50AD303C28141F0B00D9A7A6 /* Buffer.cpp in Sources */,
@@ -2499,6 +2529,7 @@
 				50BD64192C0373F9007CD347 /* PowerPortBase.cpp in Sources */,
 				504C435F24AF29AC00E69CAE /* SuperGames.cpp in Sources */,
 				50BE4B5C24E7F857008F39C9 /* Data.swift in Sources */,
+				508C1E722C0C59A20097473C /* PaddleBase.cpp in Sources */,
 				50BE4B6424E7F941008F39C9 /* NSControl.swift in Sources */,
 				50F5B6A22959C44E000457A0 /* Host.cpp in Sources */,
 				50520F8B25108FC400C7D47F /* Folder.cpp in Sources */,
@@ -2670,6 +2701,7 @@
 				50BE4B7224E81266008F39C9 /* CIARegs.cpp in Sources */,
 				50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */,
 				504C439324AF29AC00E69CAE /* Datasette.cpp in Sources */,
+				508C1E752C0C59BA0097473C /* JoystickBase.cpp in Sources */,
 				504C437024AF29AC00E69CAE /* Cartridge.cpp in Sources */,
 				50A077F8258A18B9005ACF5B /* FileSystem.cpp in Sources */,
 				50BE4B6824E7FB28008F39C9 /* MTLTexture.swift in Sources */,
