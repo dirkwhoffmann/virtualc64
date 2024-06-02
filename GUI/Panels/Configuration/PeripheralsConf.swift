@@ -18,11 +18,6 @@ extension ConfigurationController {
         func update(_ component: NSControl, enable: Bool) {
             component.isEnabled = enable
         }
-        /*
-        func update(_ component: NSSlider, enable: Bool) {
-            component.isEnabled = enable
-        }
-        */
 
         let enable8 = config.drive8Connected && !config.drive8AutoConf
         let enable9 = config.drive9Connected && !config.drive9AutoConf
@@ -64,7 +59,11 @@ extension ConfigurationController {
         perControlPort2.selectItem(withTag: config.gameDevice2)
 
         // Mouse
+        let paddle = config.mouseModel >= 3
         perMouseModel.selectItem(withTag: config.mouseModel)
+        perPaddleOrientation.selectItem(withTag: config.paddleOrientation)
+        update(perPaddleOrientation, enable: paddle)
+        update(perPaddleOrientationText, enable: paddle)
 
         // Joysticks
         let enable = config.autofire
@@ -152,7 +151,12 @@ extension ConfigurationController {
         
         config.mouseModel = sender.selectedTag()
     }
-    
+
+    @IBAction func perPaddleOrientationAction(_ sender: NSPopUpButton!) {
+
+        config.paddleOrientation = sender.selectedTag()
+    }
+
     @IBAction func perAutofireAction(_ sender: NSButton!) {
 
         config.autofire = (sender.state == .on)

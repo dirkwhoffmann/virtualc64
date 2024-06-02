@@ -197,6 +197,11 @@ class Configuration {
         set { emu.set(.MOUSE_MODEL, value: newValue) }
     }
 
+    var paddleOrientation: Int {
+        get { return emu.get(.PADDLE_ORIENTATION, id: 1) }
+        set { emu.set(.PADDLE_ORIENTATION, value: newValue) }
+    }
+
     var autofire: Bool {
         get { return emu.get(.AUTOFIRE, id: 1) != 0 }
         set { emu.set(.AUTOFIRE, enable: newValue) }

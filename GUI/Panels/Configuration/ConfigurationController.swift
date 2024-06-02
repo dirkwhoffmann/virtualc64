@@ -112,6 +112,8 @@ class ConfigurationController: DialogController {
         
     // Mouse
     @IBOutlet weak var perMouseModel: NSPopUpButton!
+    @IBOutlet weak var perPaddleOrientation: NSPopUpButton!
+    @IBOutlet weak var perPaddleOrientationText: NSTextField!
 
     // Joystick
     @IBOutlet weak var perAutofire: NSButton!

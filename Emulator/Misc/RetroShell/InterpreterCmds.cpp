@@ -757,6 +757,7 @@ Interpreter::initCommandShell(Command &root)
         root.popGroup();
     }
 
+
     //
     // Peripherals (Joystick)
     //
@@ -872,6 +873,47 @@ Interpreter::initCommandShell(Command &root)
             port.joystick.trigger(RELEASE_Y);
 
         }, i);
+
+        root.popGroup();
+    }
+
+
+    //
+    // Peripherals (Paddles)
+    //
+
+    for (isize i = PORT_1; i <= PORT_2; i++) {
+
+        auto &paddle = i == PORT_1 ? c64.port1.paddle : c64.port2.paddle;
+
+        cmd = paddle.shellName();
+        description = paddle.description();
+        root.add({cmd}, description);
+
+        root.pushGroup("");
+
+        root.add({cmd, ""},
+                 "Displays the current configuration",
+                 [this](Arguments& argv, long value) {
+
+            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            retroShell.dump(port.paddle, Category::Config);
+
+        }, i);
+
+        root.add({cmd, "set"}, "Configures the component");
+
+        for (auto &opt : c64.port1.paddle.getOptions()) {
+
+            root.add({cmd, "set", OptionEnum::plainkey(opt)},
+                     {OptionParser::create(opt)->argList()},
+                     OptionEnum::help(opt),
+                     [this](Arguments& argv, long value) {
+
+                emulator.set(Option(HI_WORD(value)), argv[0], LO_WORD(value));
+
+            }, HI_W_LO_W(opt, i));
+        }
 
         root.popGroup();
     }
