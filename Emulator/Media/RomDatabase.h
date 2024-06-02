@@ -413,7 +413,7 @@ static std::vector<RomTraits> roms = {
     },{
         .fnv        = 0xA1D36980A17C8756,
         .title      = "Floppy Drive Firmware",
-        .subtitle   = "MOS 355650-01",
+        .subtitle   = "MOS 355640-01",
         .revision   = "",
         .vendor     = COMMODORE,
         .type       = VC1541
