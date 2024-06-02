@@ -239,7 +239,19 @@ C64::prefix() const
 void 
 C64::_reset(bool hard)
 {
-    // Reinitialize the program counter
+    /* At this point, all components have executed their reset procedure. In
+     * the final step, we need to perform some post-reset actions we could not
+     * have performed before since they depend on the state of two
+     * interconnected components. In particular, we need to
+     *
+     *   (1) update the bank map, as it depends on the expansion port lines.
+     *   (2) rectify the program counter, as it depends on the memory contents,
+     */
+
+    // (1)
+    expansionport.resetCartConfig();
+
+    // (2)
     cpu.reg.pc = cpu.reg.pc0 = mem.resetVector();
 
     // Inform the GUI

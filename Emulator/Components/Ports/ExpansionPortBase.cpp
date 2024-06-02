@@ -41,16 +41,7 @@ void
 ExpansionPort::operator << (SerResetter &worker)
 {
     serialize(worker);
-
-    if (cartridge) {
-
-        *cartridge << worker;
-        cartridge->resetCartConfig();
-
-    } else {
-
-        setCartridgeMode(CRTMODE_OFF);
-    }
+    if (cartridge) *cartridge << worker;
 }
 
 void

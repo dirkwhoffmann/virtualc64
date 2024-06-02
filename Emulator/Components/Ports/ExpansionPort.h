@@ -151,7 +151,9 @@ public:
     CRTMode getCartridgeMode() const;
     void setCartridgeMode(CRTMode mode);
 
-    
+    void resetCartConfig();
+
+
     //
     // Attaching and detaching
     //

@@ -161,6 +161,12 @@ ExpansionPort::setCartridgeMode(CRTMode mode)
 }
 
 void
+ExpansionPort::resetCartConfig()
+{
+    cartridge ? cartridge->resetCartConfig() : setCartridgeMode(CRTMODE_OFF);
+}
+
+void
 ExpansionPort::attachCartridge(Cartridge *c)
 {
     assert(c);

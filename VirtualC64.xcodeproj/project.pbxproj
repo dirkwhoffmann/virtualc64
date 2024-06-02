@@ -337,6 +337,8 @@
 		508C1E642C0B5EE80097473C /* KeyboardBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E622C0B5EE80097473C /* KeyboardBase.cpp */; };
 		508C1E662C0B5F770097473C /* MonitorBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E652C0B5F770097473C /* MonitorBase.cpp */; };
 		508C1E672C0B5F770097473C /* MonitorBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E652C0B5F770097473C /* MonitorBase.cpp */; };
+		508C1E692C0C507D0097473C /* CartridgeBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E682C0C507D0097473C /* CartridgeBase.cpp */; };
+		508C1E6A2C0C507D0097473C /* CartridgeBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E682C0C507D0097473C /* CartridgeBase.cpp */; };
 		509280CF2930A1B6006E1966 /* PeddleUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509280CD2930A1B6006E1966 /* PeddleUtils.cpp */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		5095C81C2BA09DE800A83825 /* Debugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5095C81A2BA08B0A00A83825 /* Debugger.cpp */; };
@@ -878,6 +880,7 @@
 		508C1E5F2C0B4A6A0097473C /* DriveMemoryBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DriveMemoryBase.cpp; sourceTree = "<group>"; };
 		508C1E622C0B5EE80097473C /* KeyboardBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardBase.cpp; sourceTree = "<group>"; };
 		508C1E652C0B5F770097473C /* MonitorBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MonitorBase.cpp; sourceTree = "<group>"; };
+		508C1E682C0C507D0097473C /* CartridgeBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CartridgeBase.cpp; sourceTree = "<group>"; };
 		509280CD2930A1B6006E1966 /* PeddleUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PeddleUtils.cpp; sourceTree = "<group>"; };
 		509280CE2930A1B6006E1966 /* PeddleUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleUtils.h; sourceTree = "<group>"; };
 		509280D029312C00006E1966 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -1325,6 +1328,7 @@
 				50B1A61E25A2386F00201A2C /* HIDExtensions.swift */,
 				50FF818E1F88D9100004548A /* GamePad.swift */,
 				50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */,
+				50B1A61C25A2368D00201A2C /* DeviceDatabase.swift */,
 				50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */,
 				50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */,
 				50FE5B352039B3B7006CE7C7 /* MacKey.swift */,
@@ -1489,6 +1493,7 @@
 				5078BEC4264D746C00EDA161 /* CMakeLists.txt */,
 				50B1A61925A209A200201A2C /* CartridgeTypes.h */,
 				504C42C424AF29AB00E69CAE /* Cartridge.h */,
+				508C1E682C0C507D0097473C /* CartridgeBase.cpp */,
 				504C42C024AF29AB00E69CAE /* Cartridge.cpp */,
 				504C42C124AF29AB00E69CAE /* CartridgeRom.h */,
 				504C42C224AF29AB00E69CAE /* CartridgeRom.cpp */,
@@ -1870,7 +1875,6 @@
 				5002FA8021C2654B00DA4BBC /* ControlsPrefs.swift */,
 				50CCE178259DFD7800481E7F /* DevicesPrefs.swift */,
 				5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */,
-				50B1A61C25A2368D00201A2C /* DeviceDatabase.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -2377,6 +2381,7 @@
 				50726F782961C9DC0031F2F5 /* PIA.cpp in Sources */,
 				50BB3E922B7A232800B2D87B /* Inspectable.cpp in Sources */,
 				50726FB32961CA230031F2F5 /* FileSystem.cpp in Sources */,
+				508C1E6A2C0C507D0097473C /* CartridgeBase.cpp in Sources */,
 				50726F712961C9C60031F2F5 /* voice.cc in Sources */,
 				50A1947F2BDA597A0046849E /* CIABase.cpp in Sources */,
 				50726F812961C9E80031F2F5 /* NeosMouse.cpp in Sources */,
@@ -2619,6 +2624,7 @@
 				504C43A924AF29AC00E69CAE /* Drive.cpp in Sources */,
 				50A1949F2BDA84710046849E /* C64MemoryBase.cpp in Sources */,
 				505F8FE92582435E0066ACE4 /* PeripheralsConf.swift in Sources */,
+				508C1E692C0C507D0097473C /* CartridgeBase.cpp in Sources */,
 				50AF2F8226AFFE9A002DC43B /* PIA.cpp in Sources */,
 				50CD3695281681D000E40BFC /* NamedPipe.cpp in Sources */,
 				50D3092824C71B0A00B92563 /* Monitor.swift in Sources */,
