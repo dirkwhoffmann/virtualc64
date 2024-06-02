@@ -2267,7 +2267,7 @@
                                                                     <nil key="backgroundColor"/>
                                                                 </clipView>
                                                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="J5z-hy-zmV">
-                                                                    <rect key="frame" x="1" y="165" width="628" height="15"/>
+                                                                    <rect key="frame" x="1" y="163" width="638" height="15"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
                                                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="Mv8-Mj-2md">

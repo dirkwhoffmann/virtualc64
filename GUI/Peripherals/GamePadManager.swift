@@ -163,7 +163,17 @@ class GamePadManager {
     }
 
     func icon(slot: Int) -> NSImage {
-        return gamePads[slot]?.icon ?? NSImage(named: "devGamepad1Template")!
+
+        if let gamePad = gamePads[slot] {
+
+            if gamePad.isMouse && parent.config.mouseModel >= 3 {
+                return NSImage(named: "devPaddleTemplate")!
+            } else {
+                return gamePad.icon!
+            }
+        }
+
+        return NSImage(named: "devGamepad1Template")!
     }
 
     //

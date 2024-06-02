@@ -41,6 +41,7 @@ class GamePad {
     // References to other objects
     var manager: GamePadManager
     var prefs: Preferences { return manager.parent.pref }
+    var config: Configuration { return manager.parent.config }
     var db: DeviceDatabase { return myAppDelegate.database }
     
     // The control port this device is connected to (0, 1, or nil)

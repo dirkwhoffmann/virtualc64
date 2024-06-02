@@ -39,9 +39,9 @@ Paddle::setPosXY(isize nr, double x, double y)
     switch (config.orientation) {
 
         case PADDLE_HORIZONTAL:         pos[nr] = x; break;
-        case PADDLE_HORIZONTAL_FLIPPED: pos[nr] = -x; break;
+        case PADDLE_HORIZONTAL_FLIPPED: pos[nr] = x; break;
         case PADDLE_VERTICAL:           pos[nr] = y; break;
-        case PADDLE_VERTICAL_FLIPPED:   pos[nr] = -y; break;
+        case PADDLE_VERTICAL_FLIPPED:   pos[nr] = y; break;
 
         default:
             fatalError;
@@ -55,10 +55,10 @@ Paddle::setPosDxDy(isize nr, double x, double y)
 
     switch (config.orientation) {
 
-        case PADDLE_HORIZONTAL:         pos[nr] += x; break;
-        case PADDLE_HORIZONTAL_FLIPPED: pos[nr] += -x; break;
+        case PADDLE_HORIZONTAL:         pos[nr] -= x; break;
+        case PADDLE_HORIZONTAL_FLIPPED: pos[nr] += x; break;
         case PADDLE_VERTICAL:           pos[nr] += y; break;
-        case PADDLE_VERTICAL_FLIPPED:   pos[nr] += -y; break;
+        case PADDLE_VERTICAL_FLIPPED:   pos[nr] -= y; break;
 
         default:
             fatalError;
