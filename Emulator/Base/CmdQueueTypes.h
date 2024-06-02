@@ -81,10 +81,6 @@ enum_long(CMD_TYPE)
     // Joystick
     CMD_JOY_EVENT,              ///< Signal a joystick button event
 
-    // Paddle
-    CMD_PADDLE_ABS,             ///< Signal paddle activity (absolute)
-    CMD_PADDLE_REL,             ///< Signal paddle activity (relative)
-
     // Floppy disk
     CMD_DSK_TOGGLE_WP,          ///< Toggle write-protection
     CMD_DSK_MODIFIED,           ///< Signal that the disk has been saved
@@ -164,9 +160,6 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
             case CMD_MOUSE_EVENT:           return "MOUSE_EVENT";
 
             case CMD_JOY_EVENT:             return "JOY_EVENT";
-
-            case CMD_PADDLE_ABS:            return "PADDLE_ABS";
-            case CMD_PADDLE_REL:            return "PADDLE_REL";
 
             case CMD_DSK_TOGGLE_WP:         return "DSK_TOGGLE_WP";
             case CMD_DSK_MODIFIED:          return "DSK_MODIFIED";

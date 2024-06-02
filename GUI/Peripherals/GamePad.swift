@@ -544,16 +544,6 @@ class GamePad {
         }
     }
 
-    func processPaddleEvents(pos: Double) {
-
-        let c64 = manager.parent.emu!
-
-        if let id = port {
-
-            c64.put(.PADDLE_ABS, coord: vc64.CoordCmd(port: id, x: pos, y: 0))
-        }
-    }
-
     func processKeyDownEvent(macKey: MacKey) -> Bool {
 
         // Only proceed if a keymap is present

@@ -159,9 +159,25 @@ Mouse::setXY(double x, double y)
 {
     debug(PRT_DEBUG, "setXY(%f,%f)\n", x, y);
 
-    targetX = x * scaleX;
-    targetY = y * scaleX;
-    
+    switch(config.model) {
+
+        case MOUSE_PADDLE_X:
+
+            port.paddle.setX(x * scaleX);
+            break;
+
+        case MOUSE_PADDLE_Y:
+
+            port.paddle.setX(y * scaleY);
+            break;
+
+        default:
+
+            targetX = x * scaleX;
+            targetY = y * scaleX;
+            break;
+    }
+
     port.device = CPDEVICE_MOUSE;
 }
 
@@ -170,9 +186,25 @@ Mouse::setDxDy(double dx, double dy)
 {
     debug(PRT_DEBUG, "setDxDy(%f,%f)\n", dx, dy);
 
-    targetX += dx * scaleX;
-    targetY -= dy * scaleY;
-    
+    switch(config.model) {
+
+        case MOUSE_PADDLE_X:    
+
+            port.paddle.setDx(-dx * scaleX); 
+            break;
+
+        case MOUSE_PADDLE_Y:    
+
+            port.paddle.setDx(dy * scaleY);
+            break;
+
+        default:
+
+            targetX += dx * scaleX;
+            targetY -= dy * scaleY;
+            break;
+    }
+
     port.device = CPDEVICE_MOUSE;
 }
 
@@ -183,10 +215,12 @@ Mouse::setLeftButton(bool value)
     
     switch(config.model) {
             
-        case MOUSE_C1350: mouse1350.setLeftMouseButton(value); break;
-        case MOUSE_C1351: mouse1351.setLeftMouseButton(value); break;
-        case MOUSE_NEOS:  mouseNeos.setLeftMouseButton(value); break;
-            
+        case MOUSE_C1350:       mouse1350.setLeftMouseButton(value); break;
+        case MOUSE_C1351:       mouse1351.setLeftMouseButton(value); break;
+        case MOUSE_NEOS:        mouseNeos.setLeftMouseButton(value); break;
+        case MOUSE_PADDLE_X:
+        case MOUSE_PADDLE_Y:    port.paddle.setLeftMouseButton(value); break;
+
         default:
             fatalError;
     }
@@ -200,10 +234,13 @@ Mouse::setRightButton(bool value)
 
     switch(config.model) {
             
-        case MOUSE_C1350: mouse1350.setRightMouseButton(value); break;
-        case MOUSE_C1351: mouse1351.setRightMouseButton(value); break;
-        case MOUSE_NEOS:  mouseNeos.setRightMouseButton(value); break;
-            
+        case MOUSE_C1350:       mouse1350.setRightMouseButton(value); break;
+        case MOUSE_C1351:       mouse1351.setRightMouseButton(value); break;
+        case MOUSE_NEOS:        mouseNeos.setRightMouseButton(value); break;
+        case MOUSE_PADDLE_X:
+        case MOUSE_PADDLE_Y:    port.paddle.setRightMouseButton(value); break;
+
+
         default:
             fatalError;
     }
@@ -264,10 +301,12 @@ Mouse::readPotX() const
 {
     switch(config.model) {
             
-        case MOUSE_C1350: return mouse1350.readPotX();
-        case MOUSE_C1351: return mouse1351.readPotX();
-        case MOUSE_NEOS:  return mouseNeos.readPotX();
-            
+        case MOUSE_C1350:       return mouse1350.readPotX();
+        case MOUSE_C1351:       return mouse1351.readPotX();
+        case MOUSE_NEOS:        return mouseNeos.readPotX();
+        case MOUSE_PADDLE_X:
+        case MOUSE_PADDLE_Y:    return port.paddle.readPotX();
+
         default:
             fatalError;
     }
@@ -278,10 +317,12 @@ Mouse::readPotY() const
 {
     switch(config.model) {
             
-        case MOUSE_C1350: return mouse1350.readPotY();
-        case MOUSE_C1351: return mouse1351.readPotY();
-        case MOUSE_NEOS:  return mouseNeos.readPotY();
-            
+        case MOUSE_C1350:       return mouse1350.readPotY();
+        case MOUSE_C1351:       return mouse1351.readPotY();
+        case MOUSE_NEOS:        return mouseNeos.readPotY();
+        case MOUSE_PADDLE_X:
+        case MOUSE_PADDLE_Y:    return port.paddle.readPotY();
+
         default:
             fatalError;
     }
@@ -300,10 +341,12 @@ Mouse::getControlPort() const
 {
     switch(config.model) {
             
-        case MOUSE_C1350: return mouse1350.readControlPort();
-        case MOUSE_C1351: return mouse1351.readControlPort();
-        case MOUSE_NEOS:  return mouseNeos.readControlPort();
-            
+        case MOUSE_C1350:       return mouse1350.readControlPort();
+        case MOUSE_C1351:       return mouse1351.readControlPort();
+        case MOUSE_NEOS:        return mouseNeos.readControlPort();
+        case MOUSE_PADDLE_X:
+        case MOUSE_PADDLE_Y:    return port.paddle.readControlPort();
+
         default:
             fatalError;
     }
@@ -328,7 +371,13 @@ Mouse::execute()
             
             // Coordinates are updated in latchPosition()
             break;
-            
+
+        case MOUSE_PADDLE_X:
+        case MOUSE_PADDLE_Y:
+
+            // Nothing to do
+            break;
+
         default:
             fatalError;
     }

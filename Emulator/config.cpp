@@ -74,7 +74,7 @@ debugflag JOY_DEBUG       = 0; // Joystick
 debugflag DRV_DEBUG       = 0; // Floppy drives
 debugflag TAP_DEBUG       = 0; // Datasette
 debugflag KBD_DEBUG       = 0; // Keyboard
-debugflag PRT_DEBUG       = 1; // Control ports and connected devices
+debugflag PRT_DEBUG       = 0; // Control ports and connected devices
 debugflag EXP_DEBUG       = 0; // Expansion port
 debugflag LIP_DEBUG       = 0; // Light pen
 

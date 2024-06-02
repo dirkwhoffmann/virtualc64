@@ -53,7 +53,6 @@ ControlPort::getControlPort() const
             
         case CPDEVICE_JOYSTICK: return joystick.getControlPort();
         case CPDEVICE_MOUSE: return mouse.getControlPort();
-        case CPDEVICE_PADDLE: return paddle.getControlPort();
 
         default:
             return 0xFF;
@@ -66,7 +65,6 @@ ControlPort::updatePotX()
     switch (device) {
 
         case CPDEVICE_MOUSE: mouse.updatePotX(); break;
-        case CPDEVICE_PADDLE: paddle.updatePotX(); break;
 
         default:
             break;
@@ -79,7 +77,6 @@ ControlPort::updatePotY()
     switch (device) {
 
         case CPDEVICE_MOUSE: mouse.updatePotY(); break;
-        case CPDEVICE_PADDLE: paddle.updatePotY(); break;
 
         default:
             break;
@@ -92,7 +89,6 @@ ControlPort::readPotX() const
     switch (device) {
 
         case CPDEVICE_MOUSE: return mouse.readPotX();
-        case CPDEVICE_PADDLE: return paddle.readPotX();
 
         default:
             return 0xFF;
@@ -105,7 +101,6 @@ ControlPort::readPotY() const
     switch (device) {
 
         case CPDEVICE_MOUSE: return mouse.readPotY();
-        case CPDEVICE_PADDLE: return paddle.readPotY();
 
         default:
             return 0xFF;
@@ -121,8 +116,6 @@ ControlPort::processCommand(const Cmd &cmd)
         case CMD_MOUSE_MOVE_REL:    mouse.setDxDy(cmd.coord.x, cmd.coord.y); break;
         case CMD_MOUSE_EVENT:       mouse.trigger(cmd.action.action); break;
         case CMD_JOY_EVENT:         joystick.trigger(cmd.action.action); break;
-        case CMD_PADDLE_ABS:        paddle.setX(cmd.coord.x); break;
-        case CMD_PADDLE_REL:        paddle.setDx(cmd.coord.x); break;
 
         default:
             fatalError;

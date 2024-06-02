@@ -1384,6 +1384,12 @@ Gw
                                                         <menuItem title="Neos" tag="2" id="k4A-L3-M4R">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
+                                                        <menuItem title="Paddle (X Axis)" tag="3" id="arM-Z6-0UH">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                        <menuItem title="Paddle (Y Axis)" tag="4" id="hpj-3C-7Vi">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
@@ -3285,6 +3291,9 @@ Gw
             <point key="canvasLocation" x="222" y="255"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="boj-yF-D6X"/>
+        <menuItem title="Neos" tag="2" id="dKk-1Q-5qG">
+            <modifierMask key="keyEquivalentModifierMask"/>
+        </menuItem>
     </objects>
     <resources>
         <image name="NSTouchBarDeleteTemplate" width="19" height="22"/>

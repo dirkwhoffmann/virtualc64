@@ -44,8 +44,9 @@ class Paddle final : public SubComponent, public Inspectable<PaddleInfo> {
     // Current configuration
     PaddleConfig config = { };
 
-    // Button state
-    bool button = false;
+    // Button states
+    bool leftButton = false;
+    bool rightButton = false;
 
     // Paddle position (-1 ... 1)
     double pos = 0;
@@ -61,9 +62,11 @@ public:
 
     Paddle& operator= (const Paddle& other) {
 
-        CLONE(button)
+        /*
+        CLONE(leftButton)
+        CLONE(rightButton)
         CLONE(pos)
-
+        */
         CLONE(config)
 
         return *this;
@@ -79,15 +82,6 @@ public:
     template <class T> void serialize(T& worker) {
 
         if (isResetter(worker)) return;
-
-        /*
-        worker
-
-        << config.autofire
-        << config.autofireBursts
-        << config.autofireBullets
-        << config.autofireDelay;
-        */
     }
     void operator << (SerChecker &worker) override { serialize(worker); }
     void operator << (SerCounter &worker) override { serialize(worker); }
@@ -107,6 +101,7 @@ public:
 private:
 
     void _dump(Category category, std::ostream& os) const override;
+    void _reset(bool hard) override;
 
 
     //
@@ -137,21 +132,18 @@ public:
 
 public:
 
-    // Changes the paddle position
+    // Sets the button state
+    void setLeftMouseButton(bool value) { leftButton = value; }
+    void setRightMouseButton(bool value) { rightButton = value; }
+
+    // Sets the paddle position
     void setX(double x);
     void setX(isize x);
     void setDx(double dx);
     void setDx(isize dx);
 
-    // Triggers a gamepad event
-    void trigger(GamePadAction event);
-
     // Reads the port bits that show up in the CIA's data port registers
-    u8 getControlPort() const;
-
-    // Updates the pot bits (must be called before reading)
-    void updatePotX();
-    void updatePotY();
+    u8 readControlPort() const;
 
     // Reads the pot bits that show up in the SID registers
     u8 readPotX() const;

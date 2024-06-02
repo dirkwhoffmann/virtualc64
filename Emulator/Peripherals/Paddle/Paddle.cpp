@@ -22,11 +22,12 @@ Paddle::Paddle(C64& ref, ControlPort& pref) : SubComponent(ref, pref.objid), por
 };
 
 u8
-Paddle::getControlPort() const
+Paddle::readControlPort() const
 {
     u8 result = 0xFF;
 
-    if (button)      CLR_BIT(result, 4);
+    if (leftButton) CLR_BIT(result, 4);
+    if (rightButton) CLR_BIT(result, 0);
 
     return result;
 }
@@ -37,7 +38,7 @@ Paddle::setX(double x)
     assert(x >= -1.0 && x <= 1.0);
     pos = x;
 
-    port.device = CPDEVICE_PADDLE;
+    debug(true, "Paddle pos: %f\n", pos);
 }
 
 void 
@@ -50,7 +51,7 @@ Paddle::setX(isize x)
 void 
 Paddle::setDx(double dx)
 {
-    double newPos = pos + dx;
+    double newPos = pos + (dx / 10000.0);
     if (newPos < -1.0) newPos = -1.0;
     if (newPos > 1.0) newPos = 1.0;
 
@@ -63,55 +64,16 @@ Paddle::setDx(isize dx)
     setDx(double(dx) / 127.5);
 }
 
-void
-Paddle::trigger(GamePadAction event)
-{
-    debug(PRT_DEBUG, "Port %ld: %s\n", objid, GamePadActionEnum::key(event));
-
-    switch (event) {
-
-        case PRESS_FIRE:
-
-            button = true;
-            break;
-
-        case RELEASE_FIRE:
-
-            button = false;
-            break;
-
-        default:
-            fatalError;
-    }
-
-    port.device = CPDEVICE_PADDLE;
-}
-
-void
-Paddle::updatePotX()
-{
-
-}
-
-void
-Paddle::updatePotY()
-{
-
-}
-
-void updatePotY();
-
 u8
 Paddle::readPotX() const
 {
-    return u8((-pos + 1.0) * 127.5);
+    return u8((pos + 1.0) * 127.5);
 }
 
 u8
 Paddle::readPotY() const
 {
-    // return u8((pos + 1.0) * 127.5);
-    return 0;
+    return u8((pos + 1.0) * 127.5);
 }
 
 }

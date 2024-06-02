@@ -18,23 +18,24 @@
 namespace vc64 {
 
 void
+Paddle::_reset(bool hard)
+{
+    leftButton = false;
+    rightButton = false;
+    pos = 0;
+}
+
+
+void
 Paddle::operator << (SerResetter &worker)
 {
     serialize(worker);
-
-    // Discard any active paddle movements
-    button = false;
-    pos = 0.0;
 }
 
 void
 Paddle::operator << (SerReader &worker)
 {
     serialize(worker);
-
-    // Discard any active paddle movements
-    button = false;
-    pos = 0.0;
 }
 
 void
@@ -50,7 +51,8 @@ Paddle::_dump(Category category, std::ostream& os) const
     if (category == Category::State) {
 
         os << tab("Paddle nr") << dec(objid) << std::endl;
-        os << tab("Button") << bol(button) << std::endl;
+        os << tab("Left button") << bol(leftButton) << std::endl;
+        os << tab("Right button") << bol(rightButton) << std::endl;
         os << tab("Pos") << flt(pos) << std::endl;
     }
 }
