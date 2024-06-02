@@ -164,6 +164,9 @@ enum_long(OPT)
     OPT_AUTOFIRE_BULLETS,       ///< Number of bullets per burst
     OPT_AUTOFIRE_DELAY,         ///< Delay between two shots [frames]
 
+    // Paddles
+    OPT_PADDLE_ORIENTATION,     ///< Paddle value mapping scheme
+
     // Screen recorder
     OPT_REC_FRAME_RATE,         ///< Frame rate of the recorded video
     OPT_REC_BIT_RATE,           ///< Bit rate of the recorded video
@@ -308,6 +311,8 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_AUTOFIRE_BULLETS:      return "AUTOFIRE.BULLETS";
             case OPT_AUTOFIRE_DELAY:        return "AUTOFIRE.DELAY";
 
+            case OPT_PADDLE_ORIENTATION:    return "PADDLE_ORIENTATION";
+
             case OPT_REC_FRAME_RATE:        return "REC.FRAME_RATE";
             case OPT_REC_BIT_RATE:          return "REC.BIT_RATE";
             case OPT_REC_SAMPLE_RATE:       return "REC.SAMPLE_RATE";
@@ -443,6 +448,8 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_AUTOFIRE_BURSTS:       return "Burst mode";
             case OPT_AUTOFIRE_BULLETS:      return "Number of bullets per burst";
             case OPT_AUTOFIRE_DELAY:        return "Autofire delay in frames";
+
+            case OPT_PADDLE_ORIENTATION:    return "Paddle value mapping scheme";
 
             case OPT_REC_FRAME_RATE:        return "Frame rate of the recorded video";
             case OPT_REC_BIT_RATE:          return "Bit rate of the recorded video";

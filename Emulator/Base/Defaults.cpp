@@ -148,6 +148,8 @@ Defaults::Defaults()
     setFallback(OPT_AUTOFIRE_BULLETS, 3);
     setFallback(OPT_AUTOFIRE_DELAY, 5);
 
+    setFallback(OPT_PADDLE_ORIENTATION, PADDLE_HORIZONTAL);
+
     setFallback(OPT_REC_FRAME_RATE, 50);
     setFallback(OPT_REC_BIT_RATE, 512);
     setFallback(OPT_REC_SAMPLE_RATE, 44100);

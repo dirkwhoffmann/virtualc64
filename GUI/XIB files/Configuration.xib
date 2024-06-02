@@ -1384,10 +1384,13 @@ Gw
                                                         <menuItem title="Neos" tag="2" id="k4A-L3-M4R">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Paddle (X Axis)" tag="3" id="arM-Z6-0UH">
+                                                        <menuItem title="Paddle (POTX)" tag="3" id="arM-Z6-0UH">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Paddle (Y Axis)" tag="4" id="hpj-3C-7Vi">
+                                                        <menuItem title="Paddle (POTY)" tag="4" id="hpj-3C-7Vi">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                        <menuItem title="Paddle (POTX + POTY)" tag="5" id="zlb-9c-LpO">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                     </items>

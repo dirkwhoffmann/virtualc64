@@ -21,6 +21,7 @@
 #include "SIDTypes.h"
 #include "CIATypes.h"
 #include "DriveTypes.h"
+#include "PaddleTypes.h"
 #include "ParCableTypes.h"
 #include "PowerPortTypes.h"
 #include "MouseTypes.h"
@@ -159,6 +160,7 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_AUTOFIRE_BULLETS:          return numParser(" bullets");
         case OPT_AUTOFIRE_DELAY:            return numParser(" frames");
 
+        case OPT_PADDLE_ORIENTATION:        return enumParser.template operator()<PaddleOrientationEnum>();
         case OPT_REC_FRAME_RATE:            return numParser(" fps");
         case OPT_REC_BIT_RATE:              return numParser(" kBit");
         case OPT_REC_SAMPLE_RATE:           return numParser(" Hz");

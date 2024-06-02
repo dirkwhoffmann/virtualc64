@@ -501,6 +501,10 @@ Emulator::routeOption(Option opt)
 
             return { &main.port1.joystick, &main.port2.joystick };
 
+        case OPT_PADDLE_ORIENTATION:
+
+            return { &main.port1.paddle, &main.port2.paddle };
+
         case OPT_REC_FRAME_RATE:
         case OPT_REC_BIT_RATE:
         case OPT_REC_SAMPLE_RATE:

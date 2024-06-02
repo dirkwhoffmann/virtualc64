@@ -20,9 +20,10 @@ namespace vc64 {
 void
 Paddle::_reset(bool hard)
 {
-    leftButton = false;
-    rightButton = false;
-    pos = 0;
+    button[0] = false;
+    button[1] = false;
+    pos[0] = 0.0;
+    pos[1] = 0.0;
 }
 
 
@@ -51,9 +52,10 @@ Paddle::_dump(Category category, std::ostream& os) const
     if (category == Category::State) {
 
         os << tab("Paddle nr") << dec(objid) << std::endl;
-        os << tab("Left button") << bol(leftButton) << std::endl;
-        os << tab("Right button") << bol(rightButton) << std::endl;
-        os << tab("Pos") << flt(pos) << std::endl;
+        os << tab("Button 0") << bol(button[0]) << std::endl;
+        os << tab("Button 1") << bol(button[1]) << std::endl;
+        os << tab("Position 0") << flt(pos[0]) << std::endl;
+        os << tab("Position 1") << flt(pos[1]) << std::endl;
     }
 }
 
@@ -68,19 +70,45 @@ Paddle::cacheInfo(PaddleInfo &result) const
 i64
 Paddle::getOption(Option option) const
 {
-    fatalError;
+    switch (option) {
+
+        case OPT_PADDLE_ORIENTATION:    return config.orientation;
+
+        default:
+            fatalError;
+    }
 }
 
 void
 Paddle::checkOption(Option opt, i64 value)
 {
-    throw VC64Error(ERROR_OPT_UNSUPPORTED);
+    switch (opt) {
+
+        case OPT_PADDLE_ORIENTATION:
+
+            if (!PaddleOrientationEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INV_ARG, PaddleOrientationEnum::keyList());
+            }
+            return;
+
+        default:
+            throw VC64Error(ERROR_OPT_UNSUPPORTED);
+    }
 }
 
 void
 Paddle::setOption(Option opt, i64 value)
 {
-    fatalError;
+    switch (opt) {
+            
+        case OPT_PADDLE_ORIENTATION:
+            
+            config.orientation = PaddleOrientation(value);
+            return;
+            
+        default:
+            fatalError;
+    }
 }
 
 }

@@ -163,12 +163,18 @@ Mouse::setXY(double x, double y)
 
         case MOUSE_PADDLE_X:
 
-            port.paddle.setX(x * scaleX);
+            port.paddle.setPosXY(0, x * scaleX, y * scaleY);
             break;
 
         case MOUSE_PADDLE_Y:
 
-            port.paddle.setX(y * scaleY);
+            port.paddle.setPosXY(1, x * scaleX, y * scaleY);
+            break;
+
+        case MOUSE_PADDLE_XY:
+
+            port.paddle.setPosXY(0, x * scaleX, y * scaleY);
+            port.paddle.setPosXY(1, x * scaleX, y * scaleY);
             break;
 
         default:
@@ -190,12 +196,18 @@ Mouse::setDxDy(double dx, double dy)
 
         case MOUSE_PADDLE_X:    
 
-            port.paddle.setDx(-dx * scaleX); 
+            port.paddle.setPosDxDy(0, dx * scaleX / 10000, dy * scaleY / 10000);
             break;
 
         case MOUSE_PADDLE_Y:    
 
-            port.paddle.setDx(dy * scaleY);
+            port.paddle.setPosDxDy(1, dx * scaleX / 10000, dy * scaleY / 10000);
+            break;
+
+        case MOUSE_PADDLE_XY:
+
+            port.paddle.setPosDxDy(0, dx * scaleX / 10000, dy * scaleY / 10000);
+            port.paddle.setPosDxDy(1, dx * scaleX / 10000, dy * scaleY / 10000);
             break;
 
         default:
@@ -218,8 +230,9 @@ Mouse::setLeftButton(bool value)
         case MOUSE_C1350:       mouse1350.setLeftMouseButton(value); break;
         case MOUSE_C1351:       mouse1351.setLeftMouseButton(value); break;
         case MOUSE_NEOS:        mouseNeos.setLeftMouseButton(value); break;
-        case MOUSE_PADDLE_X:
-        case MOUSE_PADDLE_Y:    port.paddle.setLeftMouseButton(value); break;
+        case MOUSE_PADDLE_X:    port.paddle.setButton(0, value); break;
+        case MOUSE_PADDLE_Y:    port.paddle.setButton(1, value); break;
+        case MOUSE_PADDLE_XY:   port.paddle.setButton(0, value); port.paddle.setButton(1, value); break;
 
         default:
             fatalError;
@@ -237,12 +250,9 @@ Mouse::setRightButton(bool value)
         case MOUSE_C1350:       mouse1350.setRightMouseButton(value); break;
         case MOUSE_C1351:       mouse1351.setRightMouseButton(value); break;
         case MOUSE_NEOS:        mouseNeos.setRightMouseButton(value); break;
-        case MOUSE_PADDLE_X:
-        case MOUSE_PADDLE_Y:    port.paddle.setRightMouseButton(value); break;
-
 
         default:
-            fatalError;
+            break;
     }
     port.device = CPDEVICE_MOUSE;
 }
@@ -305,7 +315,8 @@ Mouse::readPotX() const
         case MOUSE_C1351:       return mouse1351.readPotX();
         case MOUSE_NEOS:        return mouseNeos.readPotX();
         case MOUSE_PADDLE_X:
-        case MOUSE_PADDLE_Y:    return port.paddle.readPotX();
+        case MOUSE_PADDLE_Y:
+        case MOUSE_PADDLE_XY:   return port.paddle.readPotX();
 
         default:
             fatalError;
@@ -321,7 +332,8 @@ Mouse::readPotY() const
         case MOUSE_C1351:       return mouse1351.readPotY();
         case MOUSE_NEOS:        return mouseNeos.readPotY();
         case MOUSE_PADDLE_X:
-        case MOUSE_PADDLE_Y:    return port.paddle.readPotY();
+        case MOUSE_PADDLE_Y:
+        case MOUSE_PADDLE_XY:   return port.paddle.readPotY();
 
         default:
             fatalError;
@@ -345,7 +357,8 @@ Mouse::getControlPort() const
         case MOUSE_C1351:       return mouse1351.readControlPort();
         case MOUSE_NEOS:        return mouseNeos.readControlPort();
         case MOUSE_PADDLE_X:
-        case MOUSE_PADDLE_Y:    return port.paddle.readControlPort();
+        case MOUSE_PADDLE_Y:
+        case MOUSE_PADDLE_XY:   return port.paddle.readControlPort();
 
         default:
             fatalError;
@@ -374,6 +387,7 @@ Mouse::execute()
 
         case MOUSE_PADDLE_X:
         case MOUSE_PADDLE_Y:
+        case MOUSE_PADDLE_XY:
 
             // Nothing to do
             break;

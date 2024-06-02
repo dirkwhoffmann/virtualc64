@@ -36,6 +36,7 @@ class Paddle final : public SubComponent, public Inspectable<PaddleInfo> {
 
     ConfigOptions options = {
 
+        OPT_PADDLE_ORIENTATION
     };
 
     // Reference to the control port this device belongs to
@@ -44,12 +45,11 @@ class Paddle final : public SubComponent, public Inspectable<PaddleInfo> {
     // Current configuration
     PaddleConfig config = { };
 
-    // Button states
-    bool leftButton = false;
-    bool rightButton = false;
+    // Paddle positions in the range [-1...1]
+    double pos[2] = { };
 
-    // Paddle position (-1 ... 1)
-    double pos = 0;
+    // Button states
+    bool button[2] = { };
 
 
     //
@@ -62,11 +62,6 @@ public:
 
     Paddle& operator= (const Paddle& other) {
 
-        /*
-        CLONE(leftButton)
-        CLONE(rightButton)
-        CLONE(pos)
-        */
         CLONE(config)
 
         return *this;
@@ -133,14 +128,11 @@ public:
 public:
 
     // Sets the button state
-    void setLeftMouseButton(bool value) { leftButton = value; }
-    void setRightMouseButton(bool value) { rightButton = value; }
+    void setButton(isize nr, bool value);
 
     // Sets the paddle position
-    void setX(double x);
-    void setX(isize x);
-    void setDx(double dx);
-    void setDx(isize dx);
+    void setPosXY(isize nr, double x, double y);
+    void setPosDxDy(isize nr, double x, double y);
 
     // Reads the port bits that show up in the CIA's data port registers
     u8 readControlPort() const;
