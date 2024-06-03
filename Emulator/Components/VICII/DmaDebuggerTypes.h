@@ -17,6 +17,8 @@
 #include "Reflection.h"
 #include "BusTypes.h"
 
+namespace vc64 {
+
 //
 // Enumerations
 //
@@ -68,3 +70,5 @@ typedef struct
     u8 cutOpacity;
 }
 DmaDebuggerConfig;
+
+}

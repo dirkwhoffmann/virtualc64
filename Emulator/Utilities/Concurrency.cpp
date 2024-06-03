@@ -13,6 +13,6 @@
 #include "config.h"
 #include "Concurrency.h"
 
-namespace util {
+namespace vc64::util {
 
 }

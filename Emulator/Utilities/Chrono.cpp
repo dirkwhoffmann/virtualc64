@@ -20,7 +20,7 @@
 #endif
 
 
-namespace util {
+namespace vc64::util {
 
 #if defined(__MACH__)
 

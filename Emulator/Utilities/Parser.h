@@ -16,7 +16,7 @@
 #include "Exception.h"
 #include <functional>
 
-namespace util {
+namespace vc64::util {
 
 struct ParseError : public std::exception {
 

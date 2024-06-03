@@ -16,7 +16,12 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
-/// Color palette
+namespace vc64 {
+
+//
+// Enumerations
+//
+
 enum_long(REC_STATE)
 {
     REC_STATE_WAIT,                     ///< The recorder is ready
@@ -69,7 +74,7 @@ typedef struct
 {
     // Indicates if FFmpeg is availabe
     bool available;
-    
+
     // The current recorder state
     RecState state;
 
@@ -77,3 +82,5 @@ typedef struct
     double duration;
 }
 RecorderInfo;
+
+}

@@ -827,7 +827,7 @@ FileSystem::importDirectory(const fs::directory_entry &dir)
         if (entry.is_regular_file()) {
 
             // Read file
-            Buffer<u8> buffer(path);
+            util::Buffer<u8> buffer(path);
             if (buffer) {
 
                 // Add file

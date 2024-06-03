@@ -16,6 +16,8 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
+namespace vc64 {
+
 enum_long(MEMACCESS)
 {
     MEMACCESS_R,     // Memory Refresh
@@ -29,16 +31,16 @@ enum_long(MEMACCESS)
 typedef MEMACCESS MemAccess;
 
 struct MemAccessEnum : util::Reflection<MemAccessEnum, MemAccess> {
-    
-	static constexpr long minVal = 0;
+
+    static constexpr long minVal = 0;
     static constexpr long maxVal = MEMACCESS_S;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return "MEMACCESS"; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case MEMACCESS_R:      return "R";
             case MEMACCESS_I:      return "I";
             case MEMACCESS_C:      return "C";
@@ -50,3 +52,5 @@ struct MemAccessEnum : util::Reflection<MemAccessEnum, MemAccess> {
         return "???";
     }
 };
+
+}

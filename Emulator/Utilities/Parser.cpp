@@ -13,7 +13,7 @@
 #include "config.h"
 #include "Parser.h"
 
-namespace util {
+namespace vc64::util {
 
 bool isBool(const string& token)
 {

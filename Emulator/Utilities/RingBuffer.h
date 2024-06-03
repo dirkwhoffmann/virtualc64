@@ -16,7 +16,7 @@
 #include "Types.h"
 #include <utility>
 
-namespace util {
+namespace vc64::util {
 
 /* The emulator uses buffers at various places. Most of them are derived from
  * one of the following two classes:

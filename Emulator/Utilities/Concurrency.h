@@ -16,7 +16,7 @@
 #include <thread>
 #include <future>
 
-namespace util {
+namespace vc64::util {
 
 class Mutex
 {

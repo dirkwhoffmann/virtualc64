@@ -17,8 +17,6 @@
 #include "CoreObject.h"
 #include "PETName.h"
 
-using util::Buffer;
-
 namespace vc64 {
 
 class FSBlock : CoreObject {

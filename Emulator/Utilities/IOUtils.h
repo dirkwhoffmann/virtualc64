@@ -26,7 +26,7 @@
 
 namespace fs = std::filesystem;
 
-namespace util {
+namespace vc64::util {
 
 //
 // Handling file names

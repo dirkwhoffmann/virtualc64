@@ -15,7 +15,7 @@
 #include "Types.h"
 #include <exception>
 
-namespace util {
+namespace vc64::util {
 
 struct Exception : public std::exception {
     

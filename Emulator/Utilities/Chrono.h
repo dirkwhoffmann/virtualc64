@@ -15,7 +15,7 @@
 #include "Types.h"
 #include <ctime>
 
-namespace util {
+namespace vc64::util {
 
 class Time {
     

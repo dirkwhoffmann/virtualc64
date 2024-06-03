@@ -14,7 +14,7 @@
 
 #include "Types.h"
 
-namespace util {
+namespace vc64::util {
 
 // Returns the FNV-1a seed value
 inline u32 fnvInit32() { return 0x811c9dc5; }

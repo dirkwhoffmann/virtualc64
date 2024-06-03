@@ -15,7 +15,7 @@
 #include "string.h"
 #include "IOUtils.h"
 
-namespace util {
+namespace vc64::util {
 
 bool isZero(const u8 *ptr, isize size)
 {

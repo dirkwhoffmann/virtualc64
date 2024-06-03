@@ -16,7 +16,7 @@
 #include "MemUtils.h"
 #include <fstream>
 
-namespace util {
+namespace vc64::util {
 
 template <class T> void
 Allocator<T>::alloc(isize elements)

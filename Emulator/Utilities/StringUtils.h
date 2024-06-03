@@ -15,7 +15,7 @@
 #include "Types.h"
 #include <vector>
 
-namespace util {
+namespace vc64::util {
 
 //
 // Creating

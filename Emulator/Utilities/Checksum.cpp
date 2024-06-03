@@ -14,7 +14,7 @@
 #include "Checksum.h"
 #include "Macros.h"
 
-namespace util {
+namespace vc64::util {
 
 u32
 NO_SANITIZE("unsigned-integer-overflow")

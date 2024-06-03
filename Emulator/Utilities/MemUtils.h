@@ -16,7 +16,7 @@
 #include "Checksum.h"
 #include <bit>
 
-namespace util {
+namespace vc64::util {
 
 // Reverses the byte ordering in an integer value
 #ifdef _MSC_VER

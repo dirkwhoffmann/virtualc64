@@ -16,6 +16,8 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
+namespace vc64 {
+
 //
 // Enumerations
 //
@@ -98,7 +100,7 @@ enum_long(CRT_TYPE)
     CRT_LT_KERNAL          = 72,
     CRT_RAMLINK            = 73,
     CRT_HERO               = 74,
-    
+
     // Cartridges with no CRT ID (values can be arbitrary)
     CRT_ISEPIC,
     CRT_GEO_RAM,
@@ -108,16 +110,16 @@ enum_long(CRT_TYPE)
 typedef CRT_TYPE CartridgeType;
 
 struct CartridgeTypeEnum : util::Reflection<CartridgeTypeEnum, CartridgeType> {
-    
-	static constexpr long minVal = 0;
+
+    static constexpr long minVal = 0;
     static constexpr long maxVal = CRT_NONE;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+
     static const char *prefix() { return "CRT"; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case CRT_NORMAL:             return "NORMAL";
             case CRT_ACTION_REPLAY:      return "ACTION_REPLAY";
             case CRT_KCS_POWER:          return "KCS_POWER";
@@ -221,16 +223,16 @@ enum_long(FLASH_STATE)
 typedef FLASH_STATE FlashState;
 
 struct FlashStateEnum : util::Reflection<FlashStateEnum, FlashState> {
-    
-	static constexpr long minVal = 0;
+
+    static constexpr long minVal = 0;
     static constexpr long maxVal = FLASH_SECTOR_ERASE_SUSPEND;
-	static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
+
     static const char *prefix() { return "FLASH"; }
     static const char *key(long value)
     {
         switch (value) {
-                
+
             case FLASH_READ:                 return "READ";
             case FLASH_MAGIC_1:              return "MAGIC_1";
             case FLASH_MAGIC_2:              return "MAGIC_2";
@@ -292,3 +294,5 @@ typedef struct
     u16 loadAddress;
 }
 CartridgeRomInfo;
+
+}

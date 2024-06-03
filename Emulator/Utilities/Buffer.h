@@ -15,7 +15,7 @@
 #include "Types.h"
 #include "Checksum.h"
 
-namespace util {
+namespace vc64::util {
 
 template <class T> struct Allocator {
     

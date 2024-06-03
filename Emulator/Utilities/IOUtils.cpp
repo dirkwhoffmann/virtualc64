@@ -21,7 +21,7 @@
 #include <iomanip>
 #include <vector>
 
-namespace util {
+namespace vc64::util {
 
 string
 extractPath(const string &s)

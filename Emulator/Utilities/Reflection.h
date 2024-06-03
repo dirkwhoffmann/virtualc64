@@ -16,7 +16,7 @@
 #include <functional>
 #include <map>
 
-namespace util {
+namespace vc64::util {
 
 #define assert_enum(e,v) assert(e##Enum::isValid(v))
 

@@ -14,7 +14,7 @@
 #include "StringUtils.h"
 #include <sstream>
 
-namespace util {
+namespace vc64::util {
 
 string createStr(const u8 *buf, isize maxLen)
 {
