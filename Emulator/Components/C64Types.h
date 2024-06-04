@@ -13,10 +13,16 @@
 
 #pragma once
 
-#include "Aliases.h"
 #include "Reflection.h"
 
 namespace vc64 {
+
+//
+// Type aliases
+//
+
+typedef i64 Cycle;
+
 
 //
 // Enumerations

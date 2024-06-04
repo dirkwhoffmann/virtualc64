@@ -13,6 +13,7 @@
 #pragma once
 
 #include "AnyFile.h"
+#include "DriveTypes.h"
 
 namespace vc64 {
 

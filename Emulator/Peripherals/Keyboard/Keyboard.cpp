@@ -208,13 +208,13 @@ Keyboard::autoType(const string &text)
                 pending.insert(trigger, Cmd(CMD_KEY_PRESS, KeyCmd { .keycode = u8(k.nr) }));
             }
 
-            trigger += MSEC(30);
+            trigger += C64::msec(30);
 
             // Schedule key releases
             for (C64Key &k : keys) {
                 pending.insert(trigger, Cmd(CMD_KEY_RELEASE, KeyCmd { .keycode = u8(k.nr) }));
             }
-            trigger += MSEC(30);
+            trigger += C64::msec(30);
         }
     }
 
@@ -238,7 +238,7 @@ Keyboard::processCommand(const Cmd &cmd)
 {
     if (cmd.key.delay > 0) {
 
-        pending.insert(cpu.clock + SEC(cmd.key.delay),
+        pending.insert(cpu.clock + C64::sec(cmd.key.delay),
                        Cmd(cmd.type, KeyCmd { .keycode = cmd.key.keycode }));
         c64.scheduleImm<SLOT_KEY>(KEY_AUTO_TYPE);
         return;

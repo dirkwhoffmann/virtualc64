@@ -46,14 +46,14 @@ class DiskInspector: DialogController {
     var showGcr: Bool { return formatPopup.selectedTag() == 0 }
     var showBytes: Bool { return formatPopup.selectedTag() == 1 }
 
-    var halftrack: Halftrack? {
+    var halftrack: vc64.Halftrack? {
         didSet {
             if let ht = halftrack, !vc64.isHalftrackNumber(ht) {
                 halftrack = nil
             }
         }
     }
-    var sector: Sector? {
+    var sector: vc64.Sector? {
         didSet {
             if let s = sector, !vc64.isSectorNumber(s) {
                 sector = nil

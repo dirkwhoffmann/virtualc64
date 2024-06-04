@@ -12,9 +12,9 @@
 
 #pragma once
 
-#include "Aliases.h"
 #include "Reflection.h"
 #include "Serializable.h"
+#include "DriveTypes.h"
 
 namespace vc64 {
 

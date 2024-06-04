@@ -13,9 +13,9 @@
 
 #pragma once
 
-#include "Aliases.h"
 #include "Reflection.h"
 #include "ThreadTypes.h"
+#include "C64Types.h"
 
 namespace vc64 {
 

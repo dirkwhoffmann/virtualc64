@@ -46,7 +46,6 @@ target_include_directories(vc64Core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Add sub directories
 add_subdirectory(Base)
-add_subdirectory(Cartridges)
 add_subdirectory(Components)
 add_subdirectory(FileSystems)
 add_subdirectory(Media)

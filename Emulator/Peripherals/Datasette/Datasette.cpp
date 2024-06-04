@@ -199,7 +199,7 @@ Datasette::setMotor(bool value)
          * counter and let the vsync handler send the message once the counter
          * has timed out.
          */
-        c64.scheduleRel<SLOT_MOT>(MSEC(200), motor ? MOT_START : MOT_STOP);
+        c64.scheduleRel<SLOT_MOT>(C64::msec(200), motor ? MOT_START : MOT_STOP);
     }
 }
 

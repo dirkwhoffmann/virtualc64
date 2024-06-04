@@ -13,8 +13,8 @@
 
 #pragma once
 
-#include "Aliases.h"
 #include "Reflection.h"
+#include "C64Types.h"
 #include "TODTypes.h"
 
 namespace vc64 {

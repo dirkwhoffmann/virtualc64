@@ -931,7 +931,6 @@
 		50A22A292618725200C9FB1E /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
 		50A22A2E2618845800C9FB1E /* TextureRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureRect.swift; sourceTree = "<group>"; };
 		50A2D7AE24AF944500671F38 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		50A2D7B024AF94B400671F38 /* Aliases.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Aliases.h; sourceTree = "<group>"; };
 		50A519401B8DA230006771E2 /* drive_click.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = drive_click.aiff; sourceTree = "<group>"; };
 		50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = drive_snatch_uae.aiff; sourceTree = "<group>"; };
 		50A9A086250DE90900723D32 /* PageFox.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PageFox.cpp; sourceTree = "<group>"; };
@@ -1589,8 +1588,8 @@
 		504C42C624AF29AB00E69CAE /* Media */ = {
 			isa = PBXGroup;
 			children = (
-				504C428E24AF29AB00E69CAE /* Cartridges */,
 				5078BEC8264D74AB00EDA161 /* CMakeLists.txt */,
+				504C428E24AF29AB00E69CAE /* Cartridges */,
 				50441AA32B9613DD00102A4D /* Media.h */,
 				50B1A61A25A20A8900201A2C /* FileTypes.h */,
 				5026118D259CACB60066E754 /* PETName.h */,
@@ -1953,7 +1952,6 @@
 			isa = PBXGroup;
 			children = (
 				5078BEAC264D72C000EDA161 /* CMakeLists.txt */,
-				50A2D7B024AF94B400671F38 /* Aliases.h */,
 				50A2D7AE24AF944500671F38 /* Constants.h */,
 				50E17E242B8B26EB0029747D /* OptionTypes.h */,
 				50E17E232B8B26D70029747D /* Option.h */,

@@ -276,6 +276,18 @@ private:
 
 
     //
+    // Static methods
+    //
+
+public:
+    
+    // Converts a time span to an (approximate) cycle count
+    static Cycle usec(isize delay) { return Cycle(delay * 1LL); }
+    static Cycle msec(isize delay) { return Cycle(delay * 1000LL); }
+    static Cycle sec(double delay) { return (Cycle)(delay * 1000000LL); }
+
+
+    //
     // Methods from CoreComponent
     //
 

@@ -17,3 +17,5 @@ Folder.cpp
 Script.cpp
 
 )
+
+add_subdirectory(Cartridges)

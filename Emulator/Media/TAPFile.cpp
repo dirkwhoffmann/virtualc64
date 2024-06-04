@@ -13,6 +13,7 @@
 #include "config.h"
 #include "TAPFile.h"
 #include "IOUtils.h"
+#include "Macros.h"
 
 namespace vc64 {
 

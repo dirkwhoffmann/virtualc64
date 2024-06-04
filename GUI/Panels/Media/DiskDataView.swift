@@ -13,8 +13,8 @@ class DiskDataView: NSScrollView {
    
     // Shortcuts
     var analyzer: DiskAnalyzerProxy? { return inspector.analyzer }
-    var halftrack: Halftrack? { return inspector.halftrack }
-    var sector: Sector? { return inspector.sector }
+    var halftrack: vc64.Halftrack? { return inspector.halftrack }
+    var sector: vc64.Sector? { return inspector.sector }
     var textView: NSTextView? { return documentView as? NSTextView }
     var storage: NSTextStorage? { return textView?.textStorage }
 

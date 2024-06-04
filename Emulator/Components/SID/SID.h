@@ -13,6 +13,7 @@
 #pragma once
 
 #include "SIDTypes.h"
+#include "C64Types.h"
 #include "ReSID.h"
 
 namespace vc64 {

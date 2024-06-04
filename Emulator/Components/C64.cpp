@@ -1230,7 +1230,7 @@ C64::scheduleNextSNPEvent()
     auto delay = emulator.get(OPT_EMU_SNAPSHOT_DELAY);
 
     if (snapshots) {
-        scheduleRel<SLOT_SNP>(SEC(double(delay)), SNP_TAKE);
+        scheduleRel<SLOT_SNP>(C64::sec(double(delay)), SNP_TAKE);
     } else {
         cancel<SLOT_SNP>();
     }

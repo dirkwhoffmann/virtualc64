@@ -13,11 +13,23 @@
 
 #pragma once
 
-#include "Aliases.h"
 #include "Reflection.h"
 #include "ParCableTypes.h"
 
 namespace vc64 {
+
+//
+// Type aliases
+//
+
+typedef isize Cylinder;
+typedef isize Head;
+typedef isize Track;
+typedef isize Halftrack;
+typedef isize Sector;
+typedef isize Block;
+typedef isize HeadPos;
+
 
 //
 // Constants

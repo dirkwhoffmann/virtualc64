@@ -670,7 +670,7 @@ Emulator::update()
 bool
 Emulator::shouldWarp()
 {
-    if (main.cpu.clock < SEC(config.warpBoot)) {
+    if (main.cpu.clock < C64::sec(config.warpBoot)) {
 
         return true;
 

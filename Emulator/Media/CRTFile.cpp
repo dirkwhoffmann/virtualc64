@@ -78,10 +78,58 @@ CRTFile::cartridgeType() const {
     return CartridgeType(type);
 }
 
+u16 
+CRTFile::cartridgeVersion() const
+{
+    return LO_HI(data[0x15], data[0x14]);
+}
+
+u32
+CRTFile::headerSize() const
+{
+    return HI_HI_LO_LO(data[0x10], data[0x11], data[0x12], data[0x13]);
+}
+
 bool
 CRTFile::isSupported() const
 {
     return Cartridge::isSupportedType(cartridgeType());
+}
+
+isize 
+CRTFile::chipCount() const 
+{
+    return numberOfChips;
+}
+
+u8 *
+CRTFile::chipData(isize nr) const
+{
+    return chips[nr]+0x10;
+}
+
+u16 
+CRTFile::chipSize(isize nr) const
+{
+    return LO_HI(chips[nr][0xF], chips[nr][0xE]);
+}
+
+u16
+CRTFile::chipType(isize nr) const
+{
+    return LO_HI(chips[nr][0x9], chips[nr][0x8]);
+}
+
+u16
+CRTFile::chipBank(isize nr) const
+{
+    return LO_HI(chips[nr][0xB], chips[nr][0xA]);
+}
+
+u16
+CRTFile::chipAddr(isize nr) const
+{
+    return LO_HI(chips[nr][0xD], chips[nr][0xC]);
 }
 
 void

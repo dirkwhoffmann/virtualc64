@@ -12,7 +12,7 @@ class SectorTableView: NSTableView, NSTableViewDelegate {
     @IBOutlet weak var inspector: DiskInspector!
 
     var sector: Int? { return inspector.sector }
-    var halftrack: Halftrack? { return inspector.halftrack }
+    var halftrack: Int? { return inspector.halftrack }
     var analyzer: DiskAnalyzerProxy? { return inspector.analyzer }
     
     //
@@ -41,7 +41,7 @@ class SectorTableView: NSTableView, NSTableViewDelegate {
             
             var row = 0
             for i in 0 ... Int(vc64.highestSector) {
-                let info = analyzer!.sectorInfo(halftrack!, sector: Sector(i))
+                let info = analyzer!.sectorInfo(halftrack!, sector: vc64.Sector(i))
                 if info.headerBegin != info.headerEnd {
                     sectorForRow[row] = i
                     row += 1
