@@ -17,9 +17,9 @@ class CartridgeInspector: DialogController {
     @IBOutlet weak var exrom: NSTextField!
     @IBOutlet weak var packets: NSTableView!
 
-    var info: CartridgeInfo = CartridgeInfo()
-    var traits: CartridgeTraits = CartridgeTraits()
-    var packetInfos: [CartridgeRomInfo] = []
+    var info: vc64.CartridgeInfo = vc64.CartridgeInfo()
+    var traits: vc64.CartridgeTraits = vc64.CartridgeTraits()
+    var packetInfos: [vc64.CartridgeRomInfo] = []
 
     //
     // Starting up

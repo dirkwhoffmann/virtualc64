@@ -171,7 +171,7 @@ extension vc64.ErrorCode {
     }
 }
 
-extension CartridgeType {
+extension vc64.CartridgeType {
     
     var description: String {
         

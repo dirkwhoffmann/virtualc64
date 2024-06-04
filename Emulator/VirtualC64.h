@@ -515,7 +515,7 @@ public:
 
         /** @brief  Returns the component's current configuration.
          */
-        MemConfig getConfig() const;
+        const MemConfig &getConfig() const;
 
         /** @brief  Returns the component's current state.
          */
@@ -617,7 +617,7 @@ public:
 
         /** @brief  Returns the component's current configuration.
          */
-        CIAConfig getConfig() const;
+        const CIAConfig &getConfig() const;
 
         /** @brief  Returns the component's current state.
          */
@@ -643,7 +643,7 @@ public:
 
         /** @brief  Returns the component's current configuration.
          */
-        VICIIConfig getConfig() const;
+        const VICIIConfig &getConfig() const;
 
         /** @brief  Returns the component's current state.
          */
@@ -777,7 +777,7 @@ public:
 
         /** @brief  Returns the component's current configuration
          */
-        DmaDebuggerConfig getConfig() const;
+        const DmaDebuggerConfig &getConfig() const;
 
     } dmaDebugger;
 

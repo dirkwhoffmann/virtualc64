@@ -327,7 +327,7 @@ VirtualC64::CPUAPI::watchpointAt(u32 addr) const
 // Memory
 //
 
-MemConfig
+const MemConfig &
 VirtualC64::MemoryAPI::getConfig() const
 {
     assert(isUserThread());
@@ -373,7 +373,7 @@ VirtualC64::MemoryAPI::drawHeatmap(u32 *buffer, isize width, isize height) const
 // CIAs
 //
 
-CIAConfig
+const CIAConfig &
 VirtualC64::CIAAPI::getConfig() const
 {
     return cia.getConfig();
@@ -408,7 +408,7 @@ VirtualC64::VICIIAPI::getTraits() const
     return vic.getTraits();
 }
 
-VICIIConfig
+const VICIIConfig &
 VirtualC64::VICIIAPI::getConfig() const
 {
     return vic.getConfig();
@@ -530,7 +530,7 @@ VirtualC64::VideoPortAPI::getDmaTexture() const
 // DMA Debugger
 //
 
-DmaDebuggerConfig
+const DmaDebuggerConfig &
 VirtualC64::DmaDebuggerAPI::getConfig() const
 {
     assert(isUserThread());
@@ -574,6 +574,23 @@ JoystickInfo
 VirtualC64::JoystickAPI::getCachedInfo() const
 {
     return joystick.getCachedInfo();
+}
+
+
+//
+// Paddle
+//
+
+PaddleInfo
+VirtualC64::PaddleAPI::getInfo() const
+{
+    return paddle.getInfo();
+}
+
+PaddleInfo
+VirtualC64::PaddleAPI::getCachedInfo() const
+{
+    return paddle.getCachedInfo();
 }
 
 
