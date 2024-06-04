@@ -53,7 +53,7 @@ class ExpansionPort final : public SubComponent, public Inspectable<CartridgeInf
     // Values of the Game and the Exrom line (true if no cartridge is attached)
     bool gameLine = 1;
     bool exromLine = 1;
-    
+
     
     //
     // Methods
@@ -111,7 +111,7 @@ private:
 public:
 
     const CartridgeTraits &getCartridgeTraits() const;
-    CartridgeInfo getInfo() const;
+    const CartridgeInfo &getInfo() const;
     CartridgeRomInfo getRomInfo(isize nr) const;
     CartridgeType getCartridgeType() const;
 

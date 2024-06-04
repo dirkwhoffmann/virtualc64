@@ -19,7 +19,7 @@
 
 namespace vc64 {
 
-class Cartridge : public SubComponent {
+class Cartridge : public SubComponent, public Inspectable<CartridgeInfo> {
 
     Descriptions descriptions = {{
 
@@ -243,12 +243,21 @@ protected:
 
 
     //
+    // Methods from Inspectable
+    //
+
+public:
+
+    void cacheInfo(CartridgeInfo &result) const override;
+
+
+    //
     // Analyzing
     //
 
 public:
 
-    CartridgeInfo getInfo() const;
+    // CartridgeInfo getInfo() const;
     CartridgeRomInfo getRomInfo(isize nr) const;
 
     // Returns the cartridge type

@@ -377,8 +377,8 @@ public:
 
         /** @brief  Returns the component's current state.
          */
-        C64Info getInfo() const { return c64.getInfo(); }
-        C64Info getCachedInfo() const { return c64.getCachedInfo(); }
+        const C64Info &getInfo() const { return c64.getInfo(); }
+        const C64Info &getCachedInfo() const { return c64.getCachedInfo(); }
 
         /** @brief  Returns the current state of an event slot.
          *
@@ -519,8 +519,8 @@ public:
 
         /** @brief  Returns the component's current state.
          */
-        MemInfo getInfo() const;
-        MemInfo getCachedInfo() const;
+        const MemInfo &getInfo() const;
+        const MemInfo &getCachedInfo() const;
 
         /** @brief  Returns a string representations for a portion of memory.
          */
@@ -544,8 +544,8 @@ public:
 
         /** @brief  Returns the component's current state.
          */
-        CPUInfo getInfo() const;
-        CPUInfo getCachedInfo() const;
+        const CPUInfo &getInfo() const;
+        const CPUInfo &getCachedInfo() const;
 
         /** @brief  Returns the number of instructions in the record buffer.
          *  @note   The record buffer is only filled in track mode. To save
@@ -621,8 +621,8 @@ public:
 
         /** @brief  Returns the component's current state.
          */
-        CIAInfo getInfo() const;
-        CIAInfo getCachedInfo() const;
+        const CIAInfo &getInfo() const;
+        const CIAInfo &getCachedInfo() const;
 
         /** @brief  Returns statistical information about the components.
          */
@@ -647,8 +647,8 @@ public:
 
         /** @brief  Returns the component's current state.
          */
-        VICIIInfo getInfo() const;
-        VICIIInfo getCachedInfo() const;
+        const VICIIInfo &getInfo() const;
+        const VICIIInfo &getCachedInfo() const;
 
         /** @brief  Returns information about a sprite.
          *  @param  nr   Number of the sprite (0 .. 7)
@@ -847,8 +847,8 @@ public:
 
         /** @brief  Returns the component's current state.
          */
-        JoystickInfo getInfo() const;
-        JoystickInfo getCachedInfo() const;
+        const JoystickInfo &getInfo() const;
+        const JoystickInfo &getCachedInfo() const;
     };
 
 
@@ -861,8 +861,8 @@ public:
 
         /** @brief  Returns the component's current state.
          */
-        PaddleInfo getInfo() const;
-        PaddleInfo getCachedInfo() const;
+        const PaddleInfo &getInfo() const;
+        const PaddleInfo &getCachedInfo() const;
     };
 
 
@@ -874,8 +874,8 @@ public:
 
         /** @brief  Returns the component's current state.
          */
-        DatasetteInfo getInfo() const;
-        DatasetteInfo getCachedInfo() const;
+        const DatasetteInfo &getInfo() const;
+        const DatasetteInfo &getCachedInfo() const;
 
         /** @brief  Inserts a tape.
          *  @param  file    The tape to insert.
@@ -917,8 +917,8 @@ public:
 
         /** @brief  Returns the component's current state.
          */
-        RecorderInfo getInfo() const;
-        RecorderInfo getCachedInfo() const;
+        const RecorderInfo &getInfo() const;
+        const RecorderInfo &getCachedInfo() const;
 
         /** @brief  Returns the path to the FFmpeg executable.
          */
@@ -964,8 +964,8 @@ public:
 
         /** @brief  Returns the state of the current cartridge.
          */
-        CartridgeInfo getInfo() const;
-        CartridgeInfo getCachedInfo() const;
+        const CartridgeInfo &getInfo() const;
+        const CartridgeInfo &getCachedInfo() const;
 
         /** @brief  Returns the state of one of the cartridge ROM packets.
          *  @param  nr      Number of the ROM packet.
@@ -1054,8 +1054,8 @@ public:
 
         /** @brief  Returns the component's current state.
          */
-        DriveInfo getInfo() const;
-        DriveInfo getCachedInfo() const;
+        const DriveInfo &getInfo() const;
+        const DriveInfo &getCachedInfo() const;
 
         /** @brief  Inserts a new disk.
          *  @param  fstype  The file system the disk should be formatted with.

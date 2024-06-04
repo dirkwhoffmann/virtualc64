@@ -249,14 +249,14 @@ VirtualC64::C64API::flash(const FileSystem &fs, isize item)
 // CPU
 //
 
-CPUInfo
+const CPUInfo &
 VirtualC64::CPUAPI::getInfo() const
 {
     assert(isUserThread());
     return cpu.getInfo();
 }
 
-CPUInfo
+const CPUInfo &
 VirtualC64::CPUAPI::getCachedInfo() const
 {
     assert(isUserThread());
@@ -334,14 +334,14 @@ VirtualC64::MemoryAPI::getConfig() const
     return mem.getConfig();
 }
 
-MemInfo
+const MemInfo &
 VirtualC64::MemoryAPI::getInfo() const
 {
     assert(isUserThread());
     return mem.getInfo();
 }
 
-MemInfo
+const MemInfo &
 VirtualC64::MemoryAPI::getCachedInfo() const
 {
     assert(isUserThread());
@@ -379,13 +379,13 @@ VirtualC64::CIAAPI::getConfig() const
     return cia.getConfig();
 }
 
-CIAInfo
+const CIAInfo &
 VirtualC64::CIAAPI::getInfo() const
 {
     return cia.getInfo();
 }
 
-CIAInfo
+const CIAInfo &
 VirtualC64::CIAAPI::getCachedInfo() const
 {
     return cia.getCachedInfo();
@@ -414,13 +414,13 @@ VirtualC64::VICIIAPI::getConfig() const
     return vic.getConfig();
 }
 
-VICIIInfo
+const VICIIInfo &
 VirtualC64::VICIIAPI::getInfo() const
 {
     return vic.getInfo();
 }
 
-VICIIInfo
+const VICIIInfo &
 VirtualC64::VICIIAPI::getCachedInfo() const
 {
     return vic.getCachedInfo();
@@ -564,13 +564,13 @@ void VirtualC64::KeyboardAPI::abortAutoTyping()
 // Joystick
 //
 
-JoystickInfo
+const JoystickInfo &
 VirtualC64::JoystickAPI::getInfo() const
 {
     return joystick.getInfo();
 }
 
-JoystickInfo
+const JoystickInfo &
 VirtualC64::JoystickAPI::getCachedInfo() const
 {
     return joystick.getCachedInfo();
@@ -581,13 +581,13 @@ VirtualC64::JoystickAPI::getCachedInfo() const
 // Paddle
 //
 
-PaddleInfo
+const PaddleInfo &
 VirtualC64::PaddleAPI::getInfo() const
 {
     return paddle.getInfo();
 }
 
-PaddleInfo
+const PaddleInfo &
 VirtualC64::PaddleAPI::getCachedInfo() const
 {
     return paddle.getCachedInfo();
@@ -598,13 +598,13 @@ VirtualC64::PaddleAPI::getCachedInfo() const
 // Datasette
 //
 
-DatasetteInfo
+const DatasetteInfo &
 VirtualC64::DatasetteAPI::getInfo() const
 {
     return datasette.getInfo();
 }
 
-DatasetteInfo
+const DatasetteInfo &
 VirtualC64::DatasetteAPI::getCachedInfo() const
 {
     return datasette.getCachedInfo();
@@ -650,13 +650,13 @@ VirtualC64::RecorderAPI::getConfig() const
     return recorder.getConfig();
 }
 
-RecorderInfo
+const RecorderInfo &
 VirtualC64::RecorderAPI::getInfo() const
 {
     return recorder.getInfo();
 }
 
-RecorderInfo
+const RecorderInfo &
 VirtualC64::RecorderAPI::getCachedInfo() const
 {
     return recorder.getCachedInfo();
@@ -757,13 +757,13 @@ VirtualC64::ExpansionPortAPI::getCartridgeTraits() const
     return expansionPort.getCartridgeTraits();
 }
 
-CartridgeInfo
+const CartridgeInfo &
 VirtualC64::ExpansionPortAPI::getInfo() const
 {
     return expansionPort.getInfo();
 }
 
-CartridgeInfo
+const CartridgeInfo &
 VirtualC64::ExpansionPortAPI::getCachedInfo() const
 {
     return expansionPort.getCachedInfo();
@@ -835,13 +835,13 @@ VirtualC64::DriveAPI::getConfig() const
     return drive.getConfig();
 }
 
-DriveInfo
+const DriveInfo &
 VirtualC64::DriveAPI::getInfo() const
 {
     return drive.getInfo();
 }
 
-DriveInfo
+const DriveInfo &
 VirtualC64::DriveAPI::getCachedInfo() const
 {
     return drive.getCachedInfo();

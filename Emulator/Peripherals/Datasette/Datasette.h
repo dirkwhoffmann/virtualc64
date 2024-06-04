@@ -158,6 +158,15 @@ private:
 
 
     //
+    // Methods from Inspectable
+    //
+
+public:
+
+    void cacheInfo(DatasetteInfo &result) const override;
+
+
+    //
     // Methods from Configurable
     //
 
@@ -168,16 +177,6 @@ public:
     i64 getOption(Option opt) const override;
     void checkOption(Option opt, i64 value) override;
     void setOption(Option opt, i64 value) override;
-
-
-    //
-    // Inspecting
-    //
-
-public:
-
-    // TODO: Overwrite cacheInfo
-    DatasetteInfo getInfo() const;
 
 
     //

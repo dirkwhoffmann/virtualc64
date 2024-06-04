@@ -24,10 +24,12 @@ ExpansionPort::getCartridgeTraits() const
     return cartridge ? cartridge->getCartridgeTraits() : none;
 }
 
-CartridgeInfo
+const CartridgeInfo &
 ExpansionPort::getInfo() const
 {
-    return cartridge ? cartridge->getInfo() : CartridgeInfo { };
+    static CartridgeInfo dummy = { };
+    
+    return cartridge ? cartridge->getInfo() : dummy;
 }
 
 CartridgeRomInfo
