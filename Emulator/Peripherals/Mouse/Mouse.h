@@ -115,6 +115,11 @@ public:
 
     Mouse& operator= (const Mouse& other) {
 
+        CLONE(targetX)
+        CLONE(targetY)
+        CLONE(scaleX)
+        CLONE(scaleY)
+
         CLONE(mouse1350)
         CLONE(mouse1351)
         CLONE(mouseNeos)

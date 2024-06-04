@@ -54,13 +54,41 @@ private:
 public:
     
     Mouse1350(C64 &ref) : SubComponent(ref) { }
-    const Descriptions &getDescriptions() const override { return descriptions; }
 
-    Mouse1350& operator= (const Mouse1350& other) { return *this; }
+    Mouse1350& operator= (const Mouse1350& other) {
+
+        CLONE(mouseX)
+        CLONE(mouseY)
+        CLONE(leftButton)
+        CLONE(rightButton)
+        CLONE(dividerX)
+        CLONE(dividerY)
+        CLONE_ARRAY(latchedX)
+        CLONE_ARRAY(latchedY)
+        CLONE(controlPort)
+
+        return *this;
+    }
+
+    //
+    // Methods from Serializable
+    //
+
+public:
+
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
     void _reset(bool hard) override;
 
 
+    //
+    // Methods from CoreComponent
+    //
+
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
+    
     //
     // Accessing
     //

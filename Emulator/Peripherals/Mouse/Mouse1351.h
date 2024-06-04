@@ -48,11 +48,39 @@ class Mouse1351 final : public SubComponent {
 public:
 
     Mouse1351(C64 &ref) : SubComponent(ref) { }
-    const Descriptions &getDescriptions() const override { return descriptions; }
 
-    Mouse1351& operator= (const Mouse1351& other) { return *this; }
+    Mouse1351& operator= (const Mouse1351& other) {
+
+        CLONE(mouseX)
+        CLONE(mouseY)
+        CLONE(leftButton)
+        CLONE(rightButton)
+        CLONE(dividerX)
+        CLONE(dividerY)
+        CLONE(shiftX)
+        CLONE(shiftY)
+
+        return *this;
+    }
+
+    
+    //
+    // Methods from Serializable
+    //
+
+public:
+
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
     void _reset(bool hard) override;
+
+
+    //
+    // Methods from CoreComponent
+    //
+
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
 
     //

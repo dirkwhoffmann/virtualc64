@@ -66,11 +66,45 @@ class NeosMouse final : public SubComponent {
 public:
     
     NeosMouse(C64 &ref) : SubComponent(ref) { }
-    const Descriptions &getDescriptions() const override { return descriptions; }
 
-    NeosMouse& operator= (const NeosMouse& other) { return *this; }
+    NeosMouse& operator= (const NeosMouse& other) {
+
+        CLONE(mouseX)
+        CLONE(mouseY)
+        CLONE(leftButton)
+        CLONE(rightButton)
+        CLONE(dividerX)
+        CLONE(dividerY)
+        CLONE(shiftX)
+        CLONE(shiftY)
+        CLONE(state)
+        CLONE(triggerCycle)
+        CLONE(latchedX)
+        CLONE(latchedY)
+        CLONE(deltaX)
+        CLONE(deltaY)
+
+        return *this;
+    }
+
+    
+    //
+    // Methods from Serializable
+    //
+
+public:
+
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
     void _reset(bool hard) override;
+
+
+    //
+    // Methods from CoreComponent
+    //
+
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
 
 
     //
