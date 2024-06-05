@@ -1490,8 +1490,8 @@ public:
     ScreenGeometry getScreenGeometry(void) const;
     
     // Returns the coordinates of a certain sprite
-    u16 getSpriteX(int nr) const { assert(nr < 8); return reg.current.sprX[nr]; }
-    u8 getSpriteY(int nr) const { assert(nr < 8); return reg.current.sprY[nr]; }
+    u16 getSpriteX(int nr) const { return reg.current.sprX[nr]; }
+    u8 getSpriteY(int nr) const { return reg.current.sprY[nr]; }
 };
 
 }

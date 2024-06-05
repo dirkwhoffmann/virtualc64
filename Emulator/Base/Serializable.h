@@ -12,7 +12,6 @@
 
 #pragma once
 
-#include "config.h"
 #include "Macros.h"
 #include "MemUtils.h"
 #include "Buffer.h"
@@ -130,7 +129,6 @@ inline void writeDouble(u8 *& buf, double value)
 inline void writeString(u8 *& buf, string value)
 {
     auto len = value.length();
-    assert(len < 256);
     write8(buf, u8(len));
     value.copy((char *)buf, len);
     buf += len;
@@ -186,7 +184,6 @@ public:
     auto& operator<<(string &v)
     {
         auto len = v.length();
-        assert(len < 256);
         count += 1 + isize(len);
         return *this;
     }
@@ -605,14 +602,6 @@ template <class T>
 static constexpr bool isSoftResetter(T &worker) {
 
     auto &id = typeid(worker);
-
-    assert(id == typeid(SerCounter) ||
-           id == typeid(SerChecker) ||
-           id == typeid(SerSoftResetter) ||
-           id == typeid(SerHardResetter) ||
-           id == typeid(SerReader) ||
-           id == typeid(SerWriter));
-
     return id == typeid(SerSoftResetter);
 }
 
@@ -620,14 +609,6 @@ template <class T>
 static constexpr bool isHardResetter(T &worker) {
 
     auto &id = typeid(worker);
-
-    assert(id == typeid(SerCounter) ||
-           id == typeid(SerChecker) ||
-           id == typeid(SerSoftResetter) ||
-           id == typeid(SerHardResetter) ||
-           id == typeid(SerReader) ||
-           id == typeid(SerWriter));
-
     return id == typeid(SerHardResetter);
 }
 

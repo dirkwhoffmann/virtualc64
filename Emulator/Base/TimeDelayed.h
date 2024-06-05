@@ -110,7 +110,6 @@ public:
         // Shift pipeline
         i64 diff = referenceTime - timeStamp;
         for (isize i = capacity - 1; i >= 0; i--) {
-            assert((i - diff <= 0) || (i - diff <= capacity));
             pipeline[i] = (i - diff > 0) ? pipeline[i - diff] : pipeline[0];
         }
         

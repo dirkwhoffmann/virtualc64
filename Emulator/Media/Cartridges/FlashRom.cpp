@@ -112,6 +112,13 @@ FlashRom::peek(u32 addr)
 }
 
 u8
+FlashRom::peek(isize bank, u16 addr)
+{
+    assert(isBankNumber(bank));
+    return peek((u32)bank * 0x2000 + addr);
+}
+
+u8
 FlashRom::spypeek(u32 addr) const
 {
     assert(addr < romSize);
@@ -173,6 +180,13 @@ FlashRom::spypeek(u32 addr) const
     }
 
     return result;
+}
+
+u8
+FlashRom::spypeek(isize bank, u16 addr) const
+{
+    assert(isBankNumber(bank));
+    return spypeek((u32)bank * 0x2000 + addr);
 }
 
 void
@@ -310,6 +324,13 @@ FlashRom::poke(u32 addr, u8 value)
     }
 }
 
+void 
+FlashRom::poke(isize bank, u16 addr, u8 value)
+{
+    assert(isBankNumber(bank)); 
+    poke((u32)bank * 0x2000 + addr, value);
+}
+
 bool
 FlashRom::doByteProgram(u32 addr, u8 value)
 {
@@ -317,6 +338,13 @@ FlashRom::doByteProgram(u32 addr, u8 value)
 
     rom[addr] &= value;
     return rom[addr] == value;
+}
+
+bool 
+FlashRom::doByteProgram(isize bank, u16 addr, u8 value)
+{
+    assert(isBankNumber(bank));
+    return doByteProgram((u32)bank * 0x2000 + addr, value);
 }
 
 void
@@ -333,6 +361,13 @@ FlashRom::doSectorErase(u32 addr)
 
     trace(CRT_DEBUG, "Erasing sector %d\n", addr >> 4);
     memset(rom + (addr & 0x0000), 0xFF, sectorSize);
+}
+
+void 
+FlashRom::doSectorErase(isize bank, u16 addr) 
+{
+    assert(isBankNumber(bank)); 
+    doSectorErase((u32)bank * 0x2000 + addr);
 }
 
 }

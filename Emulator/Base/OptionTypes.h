@@ -25,10 +25,10 @@ namespace vc64 {
 enum_long(OPT)
 {
     // Host
-    OPT_HOST_REFRESH_RATE,       ///< Refresh rate of the host display
-    OPT_HOST_SAMPLE_RATE,        ///< Refresh rate of the host display
-    OPT_HOST_FRAMEBUF_WIDTH,     ///< Current width of the emulator window
-    OPT_HOST_FRAMEBUF_HEIGHT,    ///< Current height of the emulator window
+    OPT_HOST_REFRESH_RATE,      ///< Refresh rate of the host display
+    OPT_HOST_SAMPLE_RATE,       ///< Refresh rate of the host display
+    OPT_HOST_FRAMEBUF_WIDTH,    ///< Current width of the emulator window
+    OPT_HOST_FRAMEBUF_HEIGHT,   ///< Current height of the emulator window
 
     // Emulator
     OPT_EMU_WARP_BOOT,          ///< Warp-boot time in seconds
@@ -71,28 +71,28 @@ enum_long(OPT)
     ///<
     // Monitor
     OPT_MON_PALETTE,            ///< Color palette
-    OPT_MON_BRIGHTNESS,         ///< Monitor brightness
-    OPT_MON_CONTRAST,           ///< Monitor contrast
-    OPT_MON_SATURATION,         ///< Monitor color saturation
-    OPT_MON_HCENTER,
-    OPT_MON_VCENTER,
-    OPT_MON_HZOOM,
-    OPT_MON_VZOOM,
-    OPT_MON_UPSCALER,
-    OPT_MON_BLUR,
-    OPT_MON_BLUR_RADIUS,
-    OPT_MON_BLOOM,
-    OPT_MON_BLOOM_RADIUS,
-    OPT_MON_BLOOM_BRIGHTNESS,
-    OPT_MON_BLOOM_WEIGHT,
-    OPT_MON_DOTMASK,
-    OPT_MON_DOTMASK_BRIGHTNESS,
-    OPT_MON_SCANLINES,
-    OPT_MON_SCANLINE_BRIGHTNESS,
-    OPT_MON_SCANLINE_WEIGHT,
-    OPT_MON_DISALIGNMENT,
-    OPT_MON_DISALIGNMENT_H,
-    OPT_MON_DISALIGNMENT_V,
+    OPT_MON_BRIGHTNESS,         ///< Brightness
+    OPT_MON_CONTRAST,           ///< Contrast
+    OPT_MON_SATURATION,         ///< Color saturation
+    OPT_MON_HCENTER,            ///< Horizontal centering
+    OPT_MON_VCENTER,            ///< Vertical centering
+    OPT_MON_HZOOM,              ///< Horizontal zoom
+    OPT_MON_VZOOM,              ///< Vertical centering
+    OPT_MON_UPSCALER,           ///< Pixel upscaler
+    OPT_MON_BLUR,               ///< Blur enable
+    OPT_MON_BLUR_RADIUS,        ///< Blur radius
+    OPT_MON_BLOOM,              ///< Bloom enable
+    OPT_MON_BLOOM_RADIUS,       ///< Bloom radius
+    OPT_MON_BLOOM_BRIGHTNESS,   ///< Bloom brightness
+    OPT_MON_BLOOM_WEIGHT,       ///< Bloom weight
+    OPT_MON_DOTMASK,            ///< Dotmask pattern
+    OPT_MON_DOTMASK_BRIGHTNESS, ///< Dotmask brightness
+    OPT_MON_SCANLINES,          ///< Scanline mode
+    OPT_MON_SCANLINE_BRIGHTNESS,///< Scanline brightness
+    OPT_MON_SCANLINE_WEIGHT,    ///< Scanline weight
+    OPT_MON_DISALIGNMENT,       ///< Cathode ray disalignment enable
+    OPT_MON_DISALIGNMENT_H,     ///< Horizontal cathode ray disalignment
+    OPT_MON_DISALIGNMENT_V,     ///< Vertical cathode ray disalignment
 
     // Power supply
     OPT_POWER_GRID,             ///< Power-grid stability (affects TOD)

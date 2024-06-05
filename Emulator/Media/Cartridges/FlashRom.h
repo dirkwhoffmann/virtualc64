@@ -140,16 +140,13 @@ public:
 public:
 
     u8 peek(u32 addr);
-    u8 peek(isize bank, u16 addr) {
-        assert(isBankNumber(bank)); return peek((u32)bank * 0x2000 + addr); }
+    u8 peek(isize bank, u16 addr);
 
     u8 spypeek(u32 addr) const;
-    u8 spypeek(isize bank, u16 addr) const {
-        assert(isBankNumber(bank)); return spypeek((u32)bank * 0x2000 + addr); }
+    u8 spypeek(isize bank, u16 addr) const;
 
     void poke(u32 addr, u8 value);
-    void poke(isize bank, u16 addr, u8 value) {
-        assert(isBankNumber(bank)); poke((u32)bank * 0x2000 + addr, value); }
+    void poke(isize bank, u16 addr, u8 value);
 
 
     //
@@ -164,17 +161,11 @@ public:
 
     // Performs a "Byte Program" operation
     bool doByteProgram(u32 addr, u8 value);
-
-    // Convenience wrapper with bank,offset addressing
-    bool doByteProgram(isize bank, u16 addr, u8 value) {
-        assert(isBankNumber(bank)); return doByteProgram((u32)bank * 0x2000 + addr, value); }
+    bool doByteProgram(isize bank, u16 addr, u8 value);
 
     // Performs a "Sector Erase" operation
     void doSectorErase(u32 addr);
-
-    // Convenience wrapper with bank,offset addressing
-    void doSectorErase(isize bank, u16 addr) {
-        assert(isBankNumber(bank)); doSectorErase((u32)bank * 0x2000 + addr); }
+    void doSectorErase(isize bank, u16 addr);
 
     // Performs a "Chip Erase" operation
     void doChipErase();

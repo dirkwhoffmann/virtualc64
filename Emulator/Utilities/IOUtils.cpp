@@ -14,7 +14,6 @@
 #include "Macros.h"
 #include "IOUtils.h"
 
-#include <assert.h>
 #include <algorithm>
 #include <bitset>
 #include <fstream>

@@ -12,7 +12,6 @@
 
 #pragma once
 
-#include "config.h"
 #include "Types.h"
 #include <utility>
 
@@ -70,13 +69,11 @@ template <class T, isize capacity> struct Array
     
     T operator [] (isize i) const
     {
-        assert(i >= 0 && i < capacity);
         return elements[i];
     }
 
     T& operator [] (isize i)
     {
-        assert(i >= 0 && i < capacity);
         return elements[i];
     }
 
