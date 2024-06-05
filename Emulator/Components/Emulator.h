@@ -221,22 +221,4 @@ private:
     void process(const Cmd &cmd);
 };
 
-//
-// Public API
-//
-
-class API : public Suspendable, public References {
-
-public:
-    
-    class Emulator &emulator;
-
-    API(Emulator& ref) : References(ref.main), emulator(ref) { }
-
-    void suspend() { emulator.suspend(); }
-    void resume() { emulator.resume(); }
-
-    bool isUserThread() const { return !emulator.isEmulatorThread(); }
-};
-
 }

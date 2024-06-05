@@ -19,6 +19,25 @@
 
 namespace vc64 {
 
+//
+// Public API
+//
+
+class API : public References {
+
+public:
+
+    class Emulator &emulator;
+
+    API(Emulator& ref) : References(ref.main), emulator(ref) { }
+
+    void suspend() { emulator.suspend(); }
+    void resume() { emulator.resume(); }
+
+    bool isUserThread() const { return !emulator.isEmulatorThread(); }
+};
+
+
 /** Public API
  *
  * This class declares the emulator's public API. It consists of functions
@@ -511,6 +530,8 @@ public:
      */
     struct MemoryAPI : API {
 
+        C64Memory *mem =nullptr;
+
         using API::API;
 
         /** @brief  Returns the component's current configuration.
@@ -538,6 +559,8 @@ public:
      */
     struct CPUAPI : API {
 
+        CPU *cpu = nullptr;
+        
         using API::API;
 
         CPUAPI(Emulator &emu) : API(emu) { }
@@ -612,8 +635,10 @@ public:
      */
     struct CIAAPI : API {
 
-        CIA &cia;
-        CIAAPI(Emulator &emu, CIA& cia) : API(emu), cia(cia) { }
+        class CIA *cia = nullptr;
+
+        // CIA &cia;
+        CIAAPI(Emulator &emu) : API(emu) { }
 
         /** @brief  Returns the component's current configuration.
          */
@@ -635,6 +660,8 @@ public:
      */
     struct VICIIAPI : API {
 
+        class VICII *vicii = nullptr;
+        
         using API::API;
 
         /** @brief  Provides details about the currently selected VICII revision.
@@ -670,6 +697,8 @@ public:
      */
     struct SIDAPI : API {
 
+        class SIDBridge *sidBridge = nullptr;
+
         using API::API;
 
         /** @brief  Returns the current state of a specific SID.
@@ -695,6 +724,8 @@ public:
     /** Audio Port Public API
      */
     struct AudioPortAPI : API {
+
+        class AudioPort *audioPort = nullptr;
 
         using API::API;
 
@@ -751,6 +782,8 @@ public:
      */
     struct VideoPortAPI : API {
 
+        class VideoPort *videoPort = nullptr;
+
         using API::API;
 
         /// @}
@@ -773,6 +806,8 @@ public:
      */
     struct DmaDebuggerAPI : API {
 
+        class DmaDebugger *dmaDebugger = nullptr;
+
         using API::API;
 
         /** @brief  Returns the component's current configuration
@@ -785,6 +820,8 @@ public:
     /** Keyboard Public API
      */
     struct KeyboardAPI : API {
+
+        class Keyboard *keyboard = nullptr;
 
         using API::API;
 
@@ -809,8 +846,9 @@ public:
      */
     struct MouseAPI : API {
 
-        Mouse &mouse;
-        MouseAPI(Emulator &emu, Mouse& mouse) : API(emu), mouse(mouse) { }
+        class Mouse *mouse = nullptr;
+
+        using API::API;
 
         /** Feeds a coordinate into the shake detector.
          *
@@ -842,8 +880,9 @@ public:
      */
     struct JoystickAPI : API {
 
-        Joystick &joystick;
-        JoystickAPI(Emulator &emu, Joystick& joystick) : API(emu), joystick(joystick) { }
+        class Joystick *joystick = nullptr;
+
+        using API::API;
 
         /** @brief  Returns the component's current state.
          */
@@ -856,8 +895,9 @@ public:
      */
     struct PaddleAPI : API {
 
-        Paddle &paddle;
-        PaddleAPI(Emulator &emu, Paddle& paddle) : API(emu), paddle(paddle) { }
+        class Paddle *paddle = nullptr;
+
+        using API::API;
 
         /** @brief  Returns the component's current state.
          */
@@ -869,6 +909,8 @@ public:
     /** Datasette Public API
      */
     struct DatasetteAPI : API {
+
+        class Datasette *datasette = nullptr;
 
         using API::API;
 
@@ -894,9 +936,9 @@ public:
      */
     struct ControlPortAPI : API {
 
-        ControlPort &port;
-        ControlPortAPI(Emulator &emu, ControlPort& port) :
-        API(emu), port(port), joystick(emu, port.joystick), mouse(emu, port.mouse), paddle(emu, port.paddle) { }
+        class ControlPort *controlPort;
+
+        ControlPortAPI(Emulator &emu) : API(emu), joystick(emu), mouse(emu), paddle(emu) { }
 
         JoystickAPI joystick;
         MouseAPI mouse;
@@ -908,6 +950,8 @@ public:
     /** Screen Recorder Public API
      */
     struct RecorderAPI : API {
+
+        class Recorder *recorder = nullptr;
 
         using API::API;
 
@@ -952,6 +996,8 @@ public:
     /** Expansion Port Public API
      */
     struct ExpansionPortAPI : API {
+
+        class ExpansionPort *expansionPort = nullptr;
 
         using API::API;
 
@@ -1015,6 +1061,8 @@ public:
 
     struct SerialPortAPI : API {
 
+        class SerialPort *serialPort = nullptr;
+
         using API::API;
 
     } iec;
@@ -1028,10 +1076,11 @@ public:
      */
     struct DiskAPI : API {
 
-        Drive &drive;
-        DiskAPI(Emulator &emu, Drive& drive) : API(emu), drive(drive) { }
+        class Drive *drive = nullptr;
 
-        Disk *get() { return drive.disk.get(); }
+        DiskAPI(Emulator &emu) : API(emu) { }
+
+        Disk *get() { return drive->disk.get(); }
     };
 
 
@@ -1043,8 +1092,10 @@ public:
      */
     struct DriveAPI : API {
 
-        Drive &drive;
-        DriveAPI(Emulator &emu, Drive& drive) : API(emu), drive(drive), disk(emu, drive) { }
+        class Drive *drive = nullptr;
+
+        // Drive &drive;
+        DriveAPI(Emulator &emu) : API(emu), disk(emu) { }
 
         DiskAPI disk;
 
@@ -1099,6 +1150,8 @@ public:
      */
     struct RetroShellAPI : API {
 
+        class RetroShell *retroShell = nullptr;
+        
         using API::API;
 
         /// @name Querying the console

@@ -34,8 +34,8 @@ VirtualC64::VirtualC64() :
 c64(*this),
 mem(*this),
 cpu(*this),
-cia1(*this, main.cia1),
-cia2(*this, main.cia2),
+cia1(*this),
+cia2(*this),
 vicii(*this),
 sidBridge(*this),
 audioPort(*this),
@@ -43,15 +43,43 @@ videoPort(*this),
 dmaDebugger(*this),
 keyboard(*this),
 datasette(*this),
-port1(*this, main.port1),
-port2(*this, main.port2),
+port1(*this),
+port2(*this),
 recorder(*this),
 expansionport(*this),
 iec(*this),
-drive8(*this, main.drive8),
-drive9(*this, main.drive9),
+drive8(*this),
+drive9(*this),
 retroShell(*this)
-{ }
+{ 
+    mem.mem = &main.mem;
+    cpu.cpu = &main.cpu;
+    cia1.cia = &main.cia1;
+    cia2.cia = &main.cia2;
+    vicii.vicii = &main.vic;
+    sidBridge.sidBridge = &main.sidBridge;
+    audioPort.audioPort = &main.audioPort;
+    videoPort.videoPort = &main.videoPort;
+    dmaDebugger.dmaDebugger = &main.vic.dmaDebugger;
+    keyboard.keyboard = &main.keyboard;
+    datasette.datasette = &main.datasette;
+    port1.controlPort = &main.port1;
+    port1.mouse.mouse = &main.port1.mouse;
+    port1.joystick.joystick = &main.port1.joystick;
+    port1.paddle.paddle = &main.port1.paddle;
+    port2.controlPort = &main.port2;
+    port2.mouse.mouse = &main.port2.mouse;
+    port2.joystick.joystick = &main.port2.joystick;
+    port2.paddle.paddle = &main.port2.paddle;
+    recorder.recorder = &main.recorder;
+    expansionport.expansionPort = &main.expansionport;
+    iec.serialPort = &main.iec;
+    drive8.drive = &main.drive8;
+    drive8.disk.drive = &main.drive8;
+    drive9.drive = &main.drive9;
+    drive9.disk.drive = &main.drive9;
+    retroShell.retroShell = &main.retroShell;
+}
 
 VirtualC64::~VirtualC64()
 {
@@ -139,11 +167,12 @@ VirtualC64::C64API::hardReset()
 {
     assert(isUserThread());
 
-    {   SUSPENDED
+    suspend();
 
-        c64.hardReset();
-        c64.markAsDirty();
-    }
+    c64.hardReset();
+    c64.markAsDirty();
+
+    resume();
 }
 
 void
@@ -151,11 +180,12 @@ VirtualC64::C64API::softReset()
 {
     assert(isUserThread());
 
-    {   SUSPENDED
+    suspend();
 
-        c64.hardReset();
-        c64.markAsDirty();
-    }
+    c64.hardReset();
+    c64.markAsDirty();
+
+    resume();
 }
 
 InspectionTarget
@@ -253,73 +283,73 @@ const CPUInfo &
 VirtualC64::CPUAPI::getInfo() const
 {
     assert(isUserThread());
-    return cpu.getInfo();
+    return cpu->getInfo();
 }
 
 const CPUInfo &
 VirtualC64::CPUAPI::getCachedInfo() const
 {
     assert(isUserThread());
-    return cpu.getCachedInfo();
+    return cpu->getCachedInfo();
 }
 
 isize
 VirtualC64::CPUAPI::loggedInstructions() const
 {
     assert(isUserThread());
-    return cpu.debugger.loggedInstructions();
+    return cpu->debugger.loggedInstructions();
 }
 
 void
 VirtualC64::CPUAPI::clearLog()
 {
     assert(isUserThread());
-    return cpu.debugger.clearLog();
+    return cpu->debugger.clearLog();
 }
 
 void
 VirtualC64::CPUAPI::setNumberFormat(DasmNumberFormat instrFormat, DasmNumberFormat dataFormat)
 {
     assert(isUserThread());
-    return cpu.disassembler.setNumberFormat(instrFormat, dataFormat);
+    return cpu->disassembler.setNumberFormat(instrFormat, dataFormat);
 }
 
 isize
 VirtualC64::CPUAPI::disassemble(char *dst, const char *fmt, u16 addr) const
 {
     assert(isUserThread());
-    return cpu.disassembler.disass(dst, fmt, addr);
+    return cpu->disassembler.disass(dst, fmt, addr);
 }
 
 isize
 VirtualC64::CPUAPI::disassembleRecorded(char *dst, const char *fmt, isize nr) const
 {
     assert(isUserThread());
-    return cpu.debugger.disassRecorded(dst, fmt, nr);
+    return cpu->debugger.disassRecorded(dst, fmt, nr);
 }
 
 Guard *
 VirtualC64::CPUAPI::breakpointNr(long nr) const
 {
-    return cpu.debugger.breakpoints.guardWithNr(nr);
+    return cpu->debugger.breakpoints.guardWithNr(nr);
 }
 
 Guard *
 VirtualC64::CPUAPI::breakpointAt(u32 addr) const
 {
-    return cpu.debugger.breakpoints.guardAtAddr(addr);
+    return cpu->debugger.breakpoints.guardAtAddr(addr);
 }
 
 Guard *
 VirtualC64::CPUAPI::watchpointNr(long nr) const
 {
-    return cpu.debugger.watchpoints.guardWithNr(nr);
+    return cpu->debugger.watchpoints.guardWithNr(nr);
 }
 
 Guard *
 VirtualC64::CPUAPI::watchpointAt(u32 addr) const
 {
-    return cpu.debugger.watchpoints.guardAtAddr(addr);
+    return cpu->debugger.watchpoints.guardAtAddr(addr);
 }
 
 
@@ -331,41 +361,41 @@ const MemConfig &
 VirtualC64::MemoryAPI::getConfig() const
 {
     assert(isUserThread());
-    return mem.getConfig();
+    return mem->getConfig();
 }
 
 const MemInfo &
 VirtualC64::MemoryAPI::getInfo() const
 {
     assert(isUserThread());
-    return mem.getInfo();
+    return mem->getInfo();
 }
 
 const MemInfo &
 VirtualC64::MemoryAPI::getCachedInfo() const
 {
     assert(isUserThread());
-    return mem.getCachedInfo();
+    return mem->getCachedInfo();
 }
 
 string
 VirtualC64::MemoryAPI::memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const
 {
     assert(isUserThread());
-    return mem.memdump(addr, num, hex, pads, src);
+    return mem->memdump(addr, num, hex, pads, src);
 }
 
 string
 VirtualC64::MemoryAPI::txtdump(u16 addr, isize num, MemoryType src) const
 {
     assert(isUserThread());
-    return mem.txtdump(addr, num, src);
+    return mem->txtdump(addr, num, src);
 }
 
 void
 VirtualC64::MemoryAPI::drawHeatmap(u32 *buffer, isize width, isize height) const
 {
-    return mem.heatmap.draw(buffer, width, height);
+    return mem->heatmap.draw(buffer, width, height);
 }
 
 
@@ -376,25 +406,25 @@ VirtualC64::MemoryAPI::drawHeatmap(u32 *buffer, isize width, isize height) const
 const CIAConfig &
 VirtualC64::CIAAPI::getConfig() const
 {
-    return cia.getConfig();
+    return cia->getConfig();
 }
 
 const CIAInfo &
 VirtualC64::CIAAPI::getInfo() const
 {
-    return cia.getInfo();
+    return cia->getInfo();
 }
 
 const CIAInfo &
 VirtualC64::CIAAPI::getCachedInfo() const
 {
-    return cia.getCachedInfo();
+    return cia->getCachedInfo();
 }
 
 CIAStats
 VirtualC64::CIAAPI::getStats() const
 {
-    return cia.getStats();
+    return cia->getStats();
 }
 
 
@@ -423,19 +453,19 @@ VirtualC64::VICIIAPI::getInfo() const
 const VICIIInfo &
 VirtualC64::VICIIAPI::getCachedInfo() const
 {
-    return vic.getCachedInfo();
+    return vicii->getCachedInfo();
 }
 
 SpriteInfo
 VirtualC64::VICIIAPI::getSpriteInfo(isize nr) const
 {
-    return vic.getSpriteInfo(nr);
+    return vicii->getSpriteInfo(nr);
 }
 
 u32
 VirtualC64::VICIIAPI::getColor(isize nr) const
 {
-    return vic.getColor(nr);
+    return vicii->getColor(nr);
 }
 
 u32
@@ -455,7 +485,7 @@ VirtualC64::SIDAPI::getInfo(isize nr) const
     assert(nr < 3);
 
     assert(isUserThread());
-    return sidBridge.sid[nr].getInfo();
+    return sidBridge->sid[nr].getInfo();
 }
 
 SIDInfo
@@ -464,7 +494,7 @@ VirtualC64::SIDAPI::getCachedInfo(isize nr) const
     assert(nr < 3);
 
     assert(isUserThread());
-    return sidBridge.sid[nr].getCachedInfo();
+    return sidBridge->sid[nr].getCachedInfo();
 }
 
 float
@@ -472,7 +502,7 @@ VirtualC64::SIDAPI::draw(u32 *buffer, isize width, isize height,
                          float maxAmp, u32 color, isize sid) const
 {
     assert(isUserThread());
-    return sidBridge.draw(buffer, width, height, maxAmp, color, sid);
+    return sidBridge->draw(buffer, width, height, maxAmp, color, sid);
 }
 
 
@@ -484,28 +514,28 @@ AudioPortStats
 VirtualC64::AudioPortAPI::getStats() const
 {
     assert(isUserThread());
-    return audioPort.getStats();
+    return audioPort->getStats();
 }
 
 void
 VirtualC64::AudioPortAPI::copyMono(float *buffer, isize n)
 {
     assert(isUserThread());
-    audioPort.copyMono(buffer, n);
+    audioPort->copyMono(buffer, n);
 }
 
 void
 VirtualC64::AudioPortAPI::copyStereo(float *left, float *right, isize n)
 {
     assert(isUserThread());
-    audioPort.copyStereo(left, right, n);
+    audioPort->copyStereo(left, right, n);
 }
 
 void
 VirtualC64::AudioPortAPI::copyInterleaved(float *buffer, isize n)
 {
     assert(isUserThread());
-    audioPort.copyInterleaved(buffer, n);
+    audioPort->copyInterleaved(buffer, n);
 }
 
 
@@ -534,7 +564,7 @@ const DmaDebuggerConfig &
 VirtualC64::DmaDebuggerAPI::getConfig() const
 {
     assert(isUserThread());
-    return vic.dmaDebugger.getConfig();
+    return dmaDebugger->getConfig();
 }
 
 
@@ -544,18 +574,18 @@ VirtualC64::DmaDebuggerAPI::getConfig() const
 
 bool VirtualC64::KeyboardAPI::isPressed(C64Key key) const
 {
-    return keyboard.isPressed(key);
+    return keyboard->isPressed(key);
 }
 
 void VirtualC64::KeyboardAPI::autoType(const string &text)
 {
-    keyboard.autoType(text);
+    keyboard->autoType(text);
     c64.markAsDirty();
 }
 
 void VirtualC64::KeyboardAPI::abortAutoTyping()
 {
-    keyboard.abortAutoTyping();
+    keyboard->abortAutoTyping();
     c64.markAsDirty();
 }
 
@@ -567,13 +597,13 @@ void VirtualC64::KeyboardAPI::abortAutoTyping()
 const JoystickInfo &
 VirtualC64::JoystickAPI::getInfo() const
 {
-    return joystick.getInfo();
+    return joystick->getInfo();
 }
 
 const JoystickInfo &
 VirtualC64::JoystickAPI::getCachedInfo() const
 {
-    return joystick.getCachedInfo();
+    return joystick->getCachedInfo();
 }
 
 
@@ -584,13 +614,13 @@ VirtualC64::JoystickAPI::getCachedInfo() const
 const PaddleInfo &
 VirtualC64::PaddleAPI::getInfo() const
 {
-    return paddle.getInfo();
+    return paddle->getInfo();
 }
 
 const PaddleInfo &
 VirtualC64::PaddleAPI::getCachedInfo() const
 {
-    return paddle.getCachedInfo();
+    return paddle->getCachedInfo();
 }
 
 
@@ -601,26 +631,26 @@ VirtualC64::PaddleAPI::getCachedInfo() const
 const DatasetteInfo &
 VirtualC64::DatasetteAPI::getInfo() const
 {
-    return datasette.getInfo();
+    return datasette->getInfo();
 }
 
 const DatasetteInfo &
 VirtualC64::DatasetteAPI::getCachedInfo() const
 {
-    return datasette.getCachedInfo();
+    return datasette->getCachedInfo();
 }
 
 void
 VirtualC64::DatasetteAPI::insertTape(TAPFile &file)
 {
-    datasette.insertTape(file);
+    datasette->insertTape(file);
     c64.markAsDirty();
 }
 
 void
 VirtualC64::DatasetteAPI::ejectTape()
 {
-    datasette.ejectTape();
+    datasette->ejectTape();
     c64.markAsDirty();
 }
 
@@ -631,12 +661,12 @@ VirtualC64::DatasetteAPI::ejectTape()
 
 bool VirtualC64::MouseAPI::detectShakeXY(double x, double y)
 {
-    return mouse.detectShakeXY(x, y);
+    return mouse->detectShakeXY(x, y);
 }
 
 bool VirtualC64::MouseAPI::detectShakeDxDy(double dx, double dy)
 {
-    return mouse.detectShakeDxDy(dx, dy);
+    return mouse->detectShakeDxDy(dx, dy);
 }
 
 
@@ -647,19 +677,19 @@ bool VirtualC64::MouseAPI::detectShakeDxDy(double dx, double dy)
 const RecorderConfig &
 VirtualC64::RecorderAPI::getConfig() const
 {
-    return recorder.getConfig();
+    return recorder->getConfig();
 }
 
 const RecorderInfo &
 VirtualC64::RecorderAPI::getInfo() const
 {
-    return recorder.getInfo();
+    return recorder->getInfo();
 }
 
 const RecorderInfo &
 VirtualC64::RecorderAPI::getCachedInfo() const
 {
-    return recorder.getCachedInfo();
+    return recorder->getCachedInfo();
 }
 
 const string
@@ -676,74 +706,74 @@ void VirtualC64::RecorderAPI::setExecPath(const string &path)
 void
 VirtualC64::RecorderAPI::startRecording(isize x1, isize y1, isize x2, isize y2)
 {
-    recorder.startRecording(x1, y1, x2, y2);
+    recorder->startRecording(x1, y1, x2, y2);
 }
 
 void
 VirtualC64::RecorderAPI::stopRecording()
 {
-    recorder.stopRecording();
+    recorder->stopRecording();
 }
 
 bool
 VirtualC64::RecorderAPI::exportAs(const string &path)
 {
-    return recorder.exportAs(path);
+    return recorder->exportAs(path);
 }
 
 
 const char *
 VirtualC64::RetroShellAPI::text()
 {
-    return retroShell.text();
+    return retroShell->text();
 }
 
 isize
 VirtualC64::RetroShellAPI::cursorRel()
 {
-    return retroShell.cursorRel();
+    return retroShell->cursorRel();
 }
 
 void
 VirtualC64::RetroShellAPI::press(RetroShellKey key, bool shift)
 {
-    retroShell.press(key, shift);
+    retroShell->press(key, shift);
 }
 
 void
 VirtualC64::RetroShellAPI::press(char c)
 {
-    retroShell.press(c);
+    retroShell->press(c);
 }
 
 void
 VirtualC64::RetroShellAPI::press(const string &s)
 {
-    retroShell.press(s);
+    retroShell->press(s);
 }
 
 void
 VirtualC64::RetroShellAPI::execScript(std::stringstream &ss)
 {
-    retroShell.execScript(ss);
+    retroShell->execScript(ss);
 }
 
 void
 VirtualC64::RetroShellAPI::execScript(const std::ifstream &fs)
 {
-    retroShell.execScript(fs);
+    retroShell->execScript(fs);
 }
 
 void
 VirtualC64::RetroShellAPI::execScript(const string &contents)
 {
-    retroShell.execScript(contents);
+    retroShell->execScript(contents);
 }
 
 void
 VirtualC64::RetroShellAPI::setStream(std::ostream &os)
 {
-    retroShell.setStream(os);
+    retroShell->setStream(os);
 }
 
 
@@ -754,73 +784,73 @@ VirtualC64::RetroShellAPI::setStream(std::ostream &os)
 CartridgeTraits
 VirtualC64::ExpansionPortAPI::getCartridgeTraits() const
 {
-    return expansionPort.getCartridgeTraits();
+    return expansionPort->getCartridgeTraits();
 }
 
 const CartridgeInfo &
 VirtualC64::ExpansionPortAPI::getInfo() const
 {
-    return expansionPort.getInfo();
+    return expansionPort->getInfo();
 }
 
 const CartridgeInfo &
 VirtualC64::ExpansionPortAPI::getCachedInfo() const
 {
-    return expansionPort.getCachedInfo();
+    return expansionPort->getCachedInfo();
 }
 
 CartridgeRomInfo
 VirtualC64::ExpansionPortAPI::getRomInfo(isize nr) const
 {
-    return expansionPort.getRomInfo(nr);
+    return expansionPort->getRomInfo(nr);
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachCartridge(const string &path, bool reset)
 {
-    expansionPort.attachCartridge(path, reset);
+    expansionPort->attachCartridge(path, reset);
     c64.markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachCartridge(const CRTFile &c, bool reset)
 {
-    expansionPort.attachCartridge(c, reset);
+    expansionPort->attachCartridge(c, reset);
     c64.markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachCartridge(Cartridge *c)
 {
-    expansionPort.attachCartridge(c);
+    expansionPort->attachCartridge(c);
     c64.markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachReu(isize capacity)
 {
-    expansionPort.attachReu(capacity);
+    expansionPort->attachReu(capacity);
     c64.markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachGeoRam(isize capacity)
 {
-    expansionPort.attachGeoRam(capacity);
+    expansionPort->attachGeoRam(capacity);
     c64.markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachIsepicCartridge()
 {
-    expansionPort.attachIsepicCartridge();
+    expansionPort->attachIsepicCartridge();
     c64.markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::detachCartridge()
 {
-    expansionPort.detachCartridge();
+    expansionPort->detachCartridge();
     c64.markAsDirty();
 }
 
@@ -832,60 +862,60 @@ VirtualC64::ExpansionPortAPI::detachCartridge()
 const DriveConfig &
 VirtualC64::DriveAPI::getConfig() const
 {
-    return drive.getConfig();
+    return drive->getConfig();
 }
 
 const DriveInfo &
 VirtualC64::DriveAPI::getInfo() const
 {
-    return drive.getInfo();
+    return drive->getInfo();
 }
 
 const DriveInfo &
 VirtualC64::DriveAPI::getCachedInfo() const
 {
-    return drive.getCachedInfo();
+    return drive->getCachedInfo();
 }
 
 void
 VirtualC64::DriveAPI::insertBlankDisk(DOSType fstype, PETName<16> name)
 {
-    drive.insertNewDisk(fstype, name);
+    drive->insertNewDisk(fstype, name);
     c64.markAsDirty();
 }
 
 void
 VirtualC64::DriveAPI::insertD64(const D64File &d64, bool wp)
 {
-    drive.insertD64(d64, wp);
+    drive->insertD64(d64, wp);
     c64.markAsDirty();
 }
 
 void
 VirtualC64::DriveAPI::insertG64(const G64File &g64, bool wp)
 {
-    drive.insertG64(g64, wp);
+    drive->insertG64(g64, wp);
     c64.markAsDirty();
 }
 
 void
 VirtualC64::DriveAPI::insertCollection(AnyCollection &archive, bool wp)
 {
-    drive.insertCollection(archive, wp);
+    drive->insertCollection(archive, wp);
     c64.markAsDirty();
 }
 
 void
 VirtualC64::DriveAPI::insertFileSystem(const class FileSystem &device, bool wp)
 {
-    drive.insertFileSystem(device, wp);
+    drive->insertFileSystem(device, wp);
     c64.markAsDirty();
 }
 
 void
 VirtualC64::DriveAPI::ejectDisk()
 {
-    drive.ejectDisk();
+    drive->ejectDisk();
     c64.markAsDirty();
 }
 

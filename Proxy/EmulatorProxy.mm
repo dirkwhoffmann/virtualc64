@@ -787,7 +787,7 @@ using namespace vc64;
     NSLog(@"DiskAnalyzerProxy::initWithDisk");
     
     if (!(self = [super init])) return self;
-    auto dsk = [disk disk]->drive.disk.get();
+    auto dsk = [disk disk]->drive->disk.get();
     obj = new DiskAnalyzer(*dsk);
 
     return self;
