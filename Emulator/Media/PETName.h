@@ -13,7 +13,6 @@
 #pragma once
 
 #include "CoreObject.h"
-#include "MemUtils.h"
 
 namespace vc64 {
 

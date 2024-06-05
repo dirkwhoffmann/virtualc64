@@ -13,7 +13,6 @@
 #include "config.h"
 #include "FSDirEntry.h"
 #include "C64.h"
-#include "MemUtils.h"
 
 namespace vc64 {
 

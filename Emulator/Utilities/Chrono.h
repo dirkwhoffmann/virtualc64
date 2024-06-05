@@ -93,5 +93,4 @@ public:
     ~StopWatch();
 };
 
-#define MEASURE_TIME(x) util::StopWatch _watch(x);
 }

@@ -13,7 +13,6 @@
 #include "config.h"
 #include "FSBlock.h"
 #include "FileSystem.h"
-#include "MemUtils.h"
 
 namespace vc64 {
 

@@ -13,7 +13,6 @@
 #include "config.h"
 #include "C64.h"
 #include "IOUtils.h"
-#include "MemUtils.h"
 
 namespace vc64 {
 

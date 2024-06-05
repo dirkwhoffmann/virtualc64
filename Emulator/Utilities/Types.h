@@ -34,9 +34,6 @@ typedef unsigned int       u32;
 typedef unsigned long long u64;
 typedef unsigned long      usize;
 
-// Signed alternative for the sizeof keyword
-#define isizeof(x) (isize)(sizeof(x))
-
 
 //
 // Strings
