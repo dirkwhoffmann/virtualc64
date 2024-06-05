@@ -15,6 +15,7 @@
 #include "CRTFile.h"
 #include "D64File.h"
 #include "Folder.h"
+#include "G64File.h"
 #include "P00File.h"
 #include "PRGFile.h"
 #include "RomFile.h"

@@ -8,6 +8,7 @@
 #pragma once
 
 #include "Types.h"
+#include "PeddleDebuggerTypes.h"
 
 namespace vc64::peddle {
 

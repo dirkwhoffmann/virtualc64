@@ -1022,6 +1022,7 @@
 		50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePadManager.swift; sourceTree = "<group>"; };
 		50CCC308256FAC870052619A /* Concurrency.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Concurrency.cpp; sourceTree = "<group>"; };
 		50CCC309256FAC870052619A /* Concurrency.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Concurrency.h; sourceTree = "<group>"; };
+		50CCC7FE2C10A99C0047ED17 /* PeddleDebuggerTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleDebuggerTypes.h; sourceTree = "<group>"; };
 		50CCE178259DFD7800481E7F /* DevicesPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesPrefs.swift; sourceTree = "<group>"; };
 		50CD3692281681A300E40BFC /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50CD3693281681D000E40BFC /* NamedPipe.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NamedPipe.cpp; sourceTree = "<group>"; };
@@ -2010,6 +2011,7 @@
 				5044C5D02931F94800F4A413 /* PeddleInit_cpp.h */,
 				504C42EA24AF29AB00E69CAE /* PeddleExec_cpp.h */,
 				5044C5D12931FA5F00F4A413 /* PeddleMemory_cpp.h */,
+				50CCC7FE2C10A99C0047ED17 /* PeddleDebuggerTypes.h */,
 				50995F2924DBCDE400F40713 /* PeddleDebugger.h */,
 				50995F2824DBCDE400F40713 /* PeddleDebugger.cpp */,
 				500C1C782965E7D300071AF3 /* PeddleDisassembler.h */,

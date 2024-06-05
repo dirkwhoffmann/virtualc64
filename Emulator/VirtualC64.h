@@ -14,10 +14,14 @@
 #pragma once
 
 #include "VirtualC64Types.h"
-#include "Emulator.h"
+// #include "Emulator.h"
+#include "Defaults.h"
 #include "Media.h"
+#include "C64Key.h"
 
 namespace vc64 {
+
+using peddle::Guard;
 
 //
 // Public API
@@ -29,7 +33,7 @@ public:
 
     class Emulator *emu = nullptr;
 
-    API(Emulator& ref) : emu(&ref) { }
+    API() { }
 
     void suspend();
     void resume();
@@ -47,8 +51,7 @@ public:
  * VICII API provides additional functions that interact directly with the
  * VICII graphics chip.
  */
-class VirtualC64 : vc64::Emulator {
-
+class VirtualC64 : API {
 
     //
     // Static methods
@@ -82,16 +85,16 @@ public:
 
     /** @brief  Returns the component's current configuration.
      */
-    const EmulatorConfig &getConfig() const { return Emulator::getConfig(); }
+    const EmulatorConfig &getConfig() const;
 
     /** @brief  Returns the component's current state.
      */
-    const EmulatorInfo &getInfo() const { return Emulator::getInfo(); }
-    const EmulatorInfo &getCachedInfo() const { return Emulator::getCachedInfo(); }
+    const EmulatorInfo &getInfo() const;
+    const EmulatorInfo &getCachedInfo() const;
 
     /** @brief  Returns statistical information about the components.
      */
-    const EmulatorStats &getStats() const { return Emulator::getStats(); }
+    const EmulatorStats &getStats() const;
 
     /// @}
     /// @name Querying the emulator state
@@ -99,35 +102,35 @@ public:
 
     /** @brief  Returns true iff the emulator if the emulator is powered on.
      */
-    bool isPoweredOn() { return Emulator::isPoweredOn(); }
+    bool isPoweredOn();
 
     /** @brief  Returns true iff the emulator if the emulator is powered off.
      */
-    bool isPoweredOff() { return Emulator::isPoweredOff(); }
+    bool isPoweredOff();
 
     /** @brief  Returns true iff the emulator is in paused state.
      */
-    bool isPaused() { return Emulator::isPaused(); }
+    bool isPaused();
 
     /** @brief  Returns true iff the emulator is running.
      */
-    bool isRunning() { return Emulator::isRunning(); }
+    bool isRunning();
 
     /** @brief  Returns true iff the emulator has been suspended.
      */
-    bool isSuspended() { return Emulator::isSuspended(); }
+    bool isSuspended();
 
     /** @brief  Returns true iff the emulator has shut down.
      */
-    bool isHalted() { return Emulator::isHalted(); }
+    bool isHalted();
 
     /** @brief  Returns true iff warp mode is active.
      */
-    bool isWarping() { return Emulator::isWarping(); }
+    bool isWarping();
 
     /** @brief  Returns true iff the emulator runs in track mode.
      */
-    bool isTracking() { return Emulator::isTracking(); }
+    bool isTracking();
 
     /** @brief  Checks if the emulator is runnable.
      *  The function checks if the necessary ROMs are installed to lauch the
@@ -140,7 +143,7 @@ public:
      *  @throw  VC64Error (ERROR_ROM_CHAR_MISSING)
      *  @throw  VC64Error (ERROR_ROM_MEGA65_MISMATCH)
      */
-    void isReady() { return Emulator::isReady(); }
+    void isReady();
 
 
     /// @}
@@ -153,14 +156,14 @@ public:
      *  the same state that is entered when the user hits the pause button.
      *  Calling this function on an already powered-on emulator has no effect.
      *  */
-    void powerOn() { Emulator::Thread::powerOn(); }
+    void powerOn();
 
     /** @brief  Switches the emulator off
      *
      *  Powering off the emulator changes the interal state of #STATE\_OFF.
      *  Calling this function on an already powered-off emulator has no effect.
      */
-    void powerOff() { Emulator::Thread::powerOff(); }
+    void powerOff();
 
     /** @brief  Starts emulation
      *
@@ -170,7 +173,7 @@ public:
      *  mode is switched on. If this function is called for a powere-off
      *  emulator, an implicit call to powerOn() will be performed.
      */
-    void run() { Emulator::Thread::run(); }
+    void run();
 
     /** @brief   Pauses emulation
      *
@@ -178,7 +181,7 @@ public:
      * to #STATE\_PAUSED after completing the curent frame. The emulator
      * enteres a frozes state where no more frames are computed.
      */
-    void pause() { Emulator::Thread::pause(); }
+    void pause();
 
     /** @brief   Terminates the emulator thread
      *
@@ -186,52 +189,38 @@ public:
      *  This state is part of the shutdown procedure and never entered during
      *  normal operation.
      */
-    void halt() { Emulator::Thread::halt(); }
+    void halt();
 
     /** @brief   Suspends the emulator thread
      *
      *  See the \ref vc64::Suspendable "Suspendable" class for a detailes
      *  description of the suspend-resume machanism.
      */
-    void suspend() { Emulator::suspend(); }
+    void suspend();
 
     /** @brief   Suspends the emulator thread
      *
      *  See the \ref vc64::Suspendable "Suspendable" class for a detailes
      *  description of the suspend-resume machanism.
      */
-    void resume() { Emulator::resume(); }
+    void resume();
 
     /** @brief  Enables warp mode.
      */
-    void warpOn(isize source = 0) { Emulator::warpOn(source); }
+    void warpOn(isize source = 0);
 
     /** @brief  Disables warp mode.
      */
-    void warpOff(isize source = 0) { Emulator::warpOff(source); }
+    void warpOff(isize source = 0);
 
     /** @brief  Enables track mode.
      */
-    void trackOn(isize source = 0) { Emulator::trackOn(source); }
+    void trackOn(isize source = 0);
 
     /** @brief  Disables track mode.
      */
-    void trackOff(isize source = 0) { Emulator::trackOff(source); }
+    void trackOff(isize source = 0);
 
-    /// @}
-    /// @name Accessing video data
-    /// @{
-
-    /** @brief  Returns a pointer to the most recent stable texture
-     *
-     * The texture dimensions are given by constants vc64::Texture::width
-     * and vc64::Texture::height texels. Each texel is represented by a
-     * 32 bit color value.
-     */
-    /*
-    u32 *getTexture() const;
-    u32 *getDmaTexture() const;
-     */
 
     /// @}
     /// @name Single-stepping
@@ -280,7 +269,7 @@ public:
      *  minimize jitter, the wakeup signal should be sent right after the
      *  current texture has been handed over to the GPU.
      */
-    void wakeUp() { vc64::Emulator::Thread::wakeUp(); }
+    void wakeUp();
 
 
     /// @}
@@ -364,7 +353,7 @@ public:
      *  The current configuration is exported in form of a RetroShell script.
      *  Reading in the script at a later point will restore the configuration.
      */
-    void exportConfig(const fs::path &path) const;
+    void exportConfig(const std::filesystem::path &path) const;
     void exportConfig(std::ostream& stream) const;
 
 
@@ -391,21 +380,19 @@ public:
 
         class C64 *c64 = nullptr;
 
-        using API::API;
-
         /// @name Analyzing the emulator
         /// @{
 
         /** @brief  Returns the component's current state.
          */
-        const C64Info &getInfo() const { return c64->getInfo(); }
-        const C64Info &getCachedInfo() const { return c64->getCachedInfo(); }
+        const C64Info &getInfo() const;
+        const C64Info &getCachedInfo() const;
 
         /** @brief  Returns the current state of an event slot.
          *
          *  @param  nr      Number of the event slot.
          */
-        EventSlotInfo getSlotInfo(isize nr) const { return c64->getSlotInfo(nr); }
+        EventSlotInfo getSlotInfo(isize nr) const;
 
         /** @brief  Returns information about one of the installed Roms
          *
@@ -532,9 +519,7 @@ public:
      */
     struct MemoryAPI : API {
 
-        C64Memory *mem =nullptr;
-
-        using API::API;
+        class C64Memory *mem =nullptr;
 
         /** @brief  Returns the component's current configuration.
          */
@@ -561,11 +546,7 @@ public:
      */
     struct CPUAPI : API {
 
-        CPU *cpu = nullptr;
-        
-        using API::API;
-
-        CPUAPI(Emulator &emu) : API(emu) { }
+        class CPU *cpu = nullptr;
 
         /** @brief  Returns the component's current state.
          */
@@ -588,7 +569,7 @@ public:
          *  @param  instrFormat Format for numbers inside instructions
          *  @param  dataFormat  Format for printed data values
          */
-        void setNumberFormat(DasmNumberFormat instrFormat, DasmNumberFormat dataFormat);
+        void setNumberFormat(peddle::DasmNumberFormat instrFormat, peddle::DasmNumberFormat dataFormat);
 
         /** Disassembles an instruction.
          *  @param  dst     Destination buffer
@@ -610,7 +591,7 @@ public:
          *  @param  nr      Number of the breakpoint.
          *  @return A pointer to the breakpoint or nullptr if it does not exist.
          */
-        Guard *breakpointNr(long nr) const;
+        peddle::Guard *breakpointNr(long nr) const;
 
         /** @brief  Returns the breakpoint set on a specific address.
          *  @param  addr    Memory address.
@@ -639,9 +620,6 @@ public:
 
         class CIA *cia = nullptr;
 
-        // CIA &cia;
-        CIAAPI(Emulator &emu) : API(emu) { }
-
         /** @brief  Returns the component's current configuration.
          */
         const CIAConfig &getConfig() const;
@@ -663,8 +641,6 @@ public:
     struct VICIIAPI : API {
 
         class VICII *vicii = nullptr;
-        
-        using API::API;
 
         /** @brief  Provides details about the currently selected VICII revision.
          */
@@ -701,8 +677,6 @@ public:
 
         class SIDBridge *sidBridge = nullptr;
 
-        using API::API;
-
         /** @brief  Returns the current state of a specific SID.
          *  @param  nr      SID number (0 - 3). 0 is the primary SID.
          */
@@ -728,8 +702,6 @@ public:
     struct AudioPortAPI : API {
 
         class AudioPort *audioPort = nullptr;
-
-        using API::API;
 
         /** @brief  Returns statistical information about the components.
          */
@@ -786,8 +758,6 @@ public:
 
         class VideoPort *videoPort = nullptr;
 
-        using API::API;
-
         /// @}
         /// @name Retrieving video data
         /// @{
@@ -810,8 +780,6 @@ public:
 
         class DmaDebugger *dmaDebugger = nullptr;
 
-        using API::API;
-
         /** @brief  Returns the component's current configuration
          */
         const DmaDebuggerConfig &getConfig() const;
@@ -824,8 +792,6 @@ public:
     struct KeyboardAPI : API {
 
         class Keyboard *keyboard = nullptr;
-
-        using API::API;
 
         /** @brief  Checks if a key is currently pressed.
          *  @param  key     The key to check.
@@ -849,8 +815,6 @@ public:
     struct MouseAPI : API {
 
         class Mouse *mouse = nullptr;
-
-        using API::API;
 
         /** Feeds a coordinate into the shake detector.
          *
@@ -884,8 +848,6 @@ public:
 
         class Joystick *joystick = nullptr;
 
-        using API::API;
-
         /** @brief  Returns the component's current state.
          */
         const JoystickInfo &getInfo() const;
@@ -899,8 +861,6 @@ public:
 
         class Paddle *paddle = nullptr;
 
-        using API::API;
-
         /** @brief  Returns the component's current state.
          */
         const PaddleInfo &getInfo() const;
@@ -913,8 +873,6 @@ public:
     struct DatasetteAPI : API {
 
         class Datasette *datasette = nullptr;
-
-        using API::API;
 
         /** @brief  Returns the component's current state.
          */
@@ -940,8 +898,6 @@ public:
 
         class ControlPort *controlPort;
 
-        ControlPortAPI(Emulator &emu) : API(emu), joystick(emu), mouse(emu), paddle(emu) { }
-
         JoystickAPI joystick;
         MouseAPI mouse;
         PaddleAPI paddle;
@@ -954,8 +910,6 @@ public:
     struct RecorderAPI : API {
 
         class Recorder *recorder = nullptr;
-
-        using API::API;
 
         /** @brief  Returns the component's configuration.
          */
@@ -1001,8 +955,6 @@ public:
 
         class ExpansionPort *expansionPort = nullptr;
 
-        using API::API;
-
         /// @{
         /// @name Analyzing cartridges.
 
@@ -1034,7 +986,7 @@ public:
 
         /** @brief  Attaches a cartridge to the expansion port.
          */
-        void attachCartridge(Cartridge *c);
+        // void attachCartridge(Cartridge *c);
 
         /** @brief  Attaches a RAM Expansion Unit to the expansion port.
          */
@@ -1065,8 +1017,6 @@ public:
 
         class SerialPort *serialPort = nullptr;
 
-        using API::API;
-
     } iec;
 
 
@@ -1080,9 +1030,7 @@ public:
 
         class Drive *drive = nullptr;
 
-        DiskAPI(Emulator &emu) : API(emu) { }
-
-        Disk *get() { return drive->disk.get(); }
+        class Disk *get(); // { return drive->disk.get(); }
     };
 
 
@@ -1095,9 +1043,6 @@ public:
     struct DriveAPI : API {
 
         class Drive *drive = nullptr;
-
-        // Drive &drive;
-        DriveAPI(Emulator &emu) : API(emu), disk(emu) { }
 
         DiskAPI disk;
 
@@ -1153,8 +1098,6 @@ public:
     struct RetroShellAPI : API {
 
         class RetroShell *retroShell = nullptr;
-        
-        using API::API;
 
         /// @name Querying the console
         /// @{

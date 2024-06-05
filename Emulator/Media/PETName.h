@@ -13,6 +13,7 @@
 #pragma once
 
 #include "CoreObject.h"
+#include <assert.h>
 
 namespace vc64 {
 

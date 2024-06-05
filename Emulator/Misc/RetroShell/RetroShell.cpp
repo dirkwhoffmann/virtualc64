@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "RetroShell.h"
-#include "VirtualC64.h"
+#include "Emulator.h"
 #include "Parser.h"
 #include <sstream>
 
@@ -200,7 +200,7 @@ RetroShell::welcome()
     if (interpreter.inCommandShell()) {
 
         *this << "VirtualC64 " << name << " ";
-        *this << VirtualC64::build() << '\n';
+        *this << C64::build() << '\n';
         *this << '\n';
         *this << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
         *this << "https://github.com/dirkwhoffmann/virtualc64" << '\n';

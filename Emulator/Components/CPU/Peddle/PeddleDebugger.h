@@ -12,6 +12,7 @@
 
 namespace vc64::peddle {
 
+/*
 // Base structure for a single breakpoint or watchpoint
 struct Guard {
     
@@ -35,6 +36,7 @@ public:
     // Replaces the address by another
     void moveTo(u32 newAddr);
 };
+*/
 
 // Base class for a collection of guards
 class Guards {

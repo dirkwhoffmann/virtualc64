@@ -12,6 +12,7 @@
 
 #include "config.h"
 #include "VirtualC64.h"
+#include "Emulator.h"
 
 namespace vc64 {
 
@@ -48,132 +49,317 @@ VirtualC64::build()
     return C64::build();
 }
 
-VirtualC64::VirtualC64() :
-c64(*this),
-mem(*this),
-cpu(*this),
-cia1(*this),
-cia2(*this),
-vicii(*this),
-sidBridge(*this),
-audioPort(*this),
-videoPort(*this),
-dmaDebugger(*this),
-keyboard(*this),
-datasette(*this),
-port1(*this),
-port2(*this),
-recorder(*this),
-expansionport(*this),
-iec(*this),
-drive8(*this),
-drive9(*this),
-retroShell(*this)
-{ 
-    c64.c64 = &main;
-    mem.mem = &main.mem;
-    cpu.cpu = &main.cpu;
-    cia1.cia = &main.cia1;
-    cia2.cia = &main.cia2;
-    vicii.vicii = &main.vic;
-    sidBridge.sidBridge = &main.sidBridge;
-    audioPort.audioPort = &main.audioPort;
-    videoPort.videoPort = &main.videoPort;
-    dmaDebugger.dmaDebugger = &main.vic.dmaDebugger;
-    keyboard.keyboard = &main.keyboard;
-    datasette.datasette = &main.datasette;
-    port1.controlPort = &main.port1;
-    port1.mouse.mouse = &main.port1.mouse;
-    port1.joystick.joystick = &main.port1.joystick;
-    port1.paddle.paddle = &main.port1.paddle;
-    port2.controlPort = &main.port2;
-    port2.mouse.mouse = &main.port2.mouse;
-    port2.joystick.joystick = &main.port2.joystick;
-    port2.paddle.paddle = &main.port2.paddle;
-    recorder.recorder = &main.recorder;
-    expansionport.expansionPort = &main.expansionport;
-    iec.serialPort = &main.iec;
-    drive8.drive = &main.drive8;
-    drive8.disk.drive = &main.drive8;
-    drive9.drive = &main.drive9;
-    drive9.disk.drive = &main.drive9;
-    retroShell.retroShell = &main.retroShell;
+VirtualC64::VirtualC64() {
+
+    emu = new Emulator();
+
+    c64.emu = emu;
+    c64.c64 = &emu->main;
+
+    mem.emu = emu;
+    mem.mem = &emu->main.mem;
+
+    cpu.emu = emu;
+    cpu.cpu = &emu->main.cpu;
+
+    cia1.emu = emu;
+    cia1.cia = &emu->main.cia1;
+
+    cia2.emu = emu;
+    cia2.cia = &emu->main.cia2;
+
+    vicii.emu = emu;
+    vicii.vicii = &emu->main.vic;
+
+    sidBridge.emu = emu;
+    sidBridge.sidBridge = &emu->main.sidBridge;
+
+    audioPort.emu = emu;
+    audioPort.audioPort = &emu->main.audioPort;
+
+    videoPort.emu = emu;
+    videoPort.videoPort = &emu->main.videoPort;
+
+    dmaDebugger.emu = emu;
+    dmaDebugger.dmaDebugger = &emu->main.vic.dmaDebugger;
+
+    keyboard.emu =emu;
+    keyboard.keyboard = &emu->main.keyboard;
+
+    datasette.emu = emu;
+    datasette.datasette = &emu->main.datasette;
+
+    port1.emu = emu;
+    port1.controlPort = &emu->main.port1;
+    port1.mouse.mouse = &emu->main.port1.mouse;
+    port1.joystick.joystick = &emu->main.port1.joystick;
+    port1.paddle.paddle = &emu->main.port1.paddle;
+
+    port2.emu = emu;
+    port2.controlPort = &emu->main.port2;
+    port2.mouse.mouse = &emu->main.port2.mouse;
+    port2.joystick.joystick = &emu->main.port2.joystick;
+    port2.paddle.paddle = &emu->main.port2.paddle;
+
+    recorder.emu = emu;
+    recorder.recorder = &emu->main.recorder;
+
+    expansionport.emu = emu;
+    expansionport.expansionPort = &emu->main.expansionport;
+
+    iec.emu = emu;
+    iec.serialPort = &emu->main.iec;
+
+    drive8.emu = emu;
+    drive8.drive = &emu->main.drive8;
+    drive8.disk.drive = &emu->main.drive8;
+
+    drive9.emu = emu;
+    drive9.drive = &emu->main.drive9;
+    drive9.disk.drive = &emu->main.drive9;
+
+    retroShell.emu = emu;
+    retroShell.retroShell = &emu->main.retroShell;
 }
 
 VirtualC64::~VirtualC64()
 {
-    halt();
+    emu->halt();
+    delete emu;
+}
+
+const EmulatorConfig &
+VirtualC64::getConfig() const 
+{
+    return emu->getConfig();
+}
+
+const EmulatorInfo &
+VirtualC64::getInfo() const 
+{
+    return emu->getInfo();
+}
+
+const EmulatorInfo &
+VirtualC64::getCachedInfo() const
+{
+    return emu->getCachedInfo();
+}
+
+const EmulatorStats &
+VirtualC64::getStats() const 
+{
+    return emu->getStats();
+}
+
+bool
+VirtualC64::isPoweredOn() 
+{
+    return emu->isPoweredOn();
+}
+
+bool
+VirtualC64::isPoweredOff()
+{
+    return emu->isPoweredOff();
+}
+
+bool
+VirtualC64::isPaused()
+{
+    return emu->isPaused();
+}
+
+bool
+VirtualC64::isRunning() 
+{
+    return emu->isRunning();
+}
+
+bool
+VirtualC64::isSuspended()
+{
+    return emu->isSuspended();
+}
+
+bool
+VirtualC64::isHalted()
+{
+    return emu->isHalted();
+}
+
+bool
+VirtualC64::isWarping() 
+{
+    return emu->isWarping();
+}
+
+bool
+VirtualC64::isTracking() 
+{
+    return emu->isTracking();
+}
+
+void 
+VirtualC64::isReady() 
+{
+    return emu->isReady();
+}
+
+void 
+VirtualC64::powerOn() 
+{
+    emu->Thread::powerOn();
+}
+
+void 
+VirtualC64::powerOff() 
+{
+    emu->Thread::powerOff();
+}
+
+void 
+VirtualC64::run() 
+{
+    emu->run();
+}
+
+void 
+VirtualC64::pause() 
+{
+    emu->pause();
+}
+
+void 
+VirtualC64::halt() 
+{
+    emu->halt();
+}
+
+void 
+VirtualC64::suspend() 
+{
+    emu->suspend();
+}
+
+void 
+VirtualC64::resume() 
+{
+    emu->resume();
+}
+
+void 
+VirtualC64::warpOn(isize source)
+{
+    emu->warpOn(source);
+}
+
+void 
+VirtualC64::warpOff(isize source)
+{
+    emu->warpOff(source);
+}
+
+void 
+VirtualC64::trackOn(isize source)
+{
+    emu->trackOn(source);
+}
+
+void 
+VirtualC64::trackOff(isize source)
+{
+    emu->trackOff(source);
 }
 
 void
 VirtualC64::stepInto()
 {
-    Emulator::stepInto();
+    assert(isUserThread());
+    emu->stepInto();
 }
 
 void
 VirtualC64::stepOver()
 {
-    Emulator::stepOver();
+    assert(isUserThread());
+    emu->stepOver();
+}
+
+void 
+VirtualC64::wakeUp()
+{
+    emu->wakeUp();
 }
 
 void
 VirtualC64::launch(const void *listener, Callback *func)
 {
-    Emulator::launch(listener, func);
+    assert(isUserThread());
+    emu->launch(listener, func);
 }
 
 i64
 VirtualC64::get(Option option) const
 {
-    return Emulator::get(option);
+    assert(isUserThread());
+    return emu->get(option);
 }
 
 i64
 VirtualC64::get(Option option, long id) const
 {
-    return Emulator::get(option, id);
+    assert(isUserThread());
+    return emu->get(option, id);
 }
 
 void
 VirtualC64::set(C64Model model)
 {
-    Emulator::set(model);
-    main.markAsDirty();
+    assert(isUserThread());
+    emu->set(model);
+    emu->main.markAsDirty();
 }
 
 void
 VirtualC64::set(Option opt, i64 value) throws
 {
-    Emulator::check(opt, value);
+    assert(isUserThread());
+
+    emu->check(opt, value);
     put(CMD_CONFIG, ConfigCmd { .option = opt, .value = value, .id = -1 });
-    main.markAsDirty();
+    emu->main.markAsDirty();
 }
 
 void
 VirtualC64::set(Option opt, i64 value, long id)
 {
-    Emulator::check(opt, value, id);
+    assert(isUserThread());
+
+    emu->check(opt, value, id);
     put(CMD_CONFIG, ConfigCmd { .option = opt, .value = value, .id = id });
-    main.markAsDirty();
+    emu->main.markAsDirty();
 }
 
 void
 VirtualC64::exportConfig(const fs::path &path) const
 {
-    main.exportConfig(path);
+    assert(isUserThread());
+    emu->main.exportConfig(path);
 }
 
 void
 VirtualC64::exportConfig(std::ostream& stream) const
 {
-    main.exportConfig(stream);
+    assert(isUserThread());
+    emu->main.exportConfig(stream);
 }
 
 void
 VirtualC64::put(const Cmd &cmd)
 {
-    Emulator::put(cmd);
+    assert(isUserThread());
+    emu->put(cmd);
 }
 
 
@@ -223,6 +409,24 @@ void
 VirtualC64::C64API::removeInspectionTarget()
 {
     c64->emulator.put(CMD_INSPECTION_TARGET, INSPECTION_NONE);
+}
+
+const C64Info &
+VirtualC64::C64API::getInfo() const
+{
+    return c64->getInfo();
+}
+
+const C64Info &
+VirtualC64::C64API::getCachedInfo() const
+{
+    return c64->getCachedInfo();
+}
+
+EventSlotInfo
+VirtualC64::C64API::getSlotInfo(isize nr) const
+{
+    return c64->getSlotInfo(nr);
 }
 
 RomTraits
@@ -838,12 +1042,14 @@ VirtualC64::ExpansionPortAPI::attachCartridge(const CRTFile &c, bool reset)
     expansionPort->markAsDirty();
 }
 
+/*
 void
 VirtualC64::ExpansionPortAPI::attachCartridge(Cartridge *c)
 {
     expansionPort->attachCartridge(c);
     expansionPort->markAsDirty();
 }
+*/
 
 void
 VirtualC64::ExpansionPortAPI::attachReu(isize capacity)
@@ -871,6 +1077,17 @@ VirtualC64::ExpansionPortAPI::detachCartridge()
 {
     expansionPort->detachCartridge();
     expansionPort->markAsDirty();
+}
+
+
+//
+// Disk
+//
+
+Disk *
+VirtualC64::DiskAPI::get()
+{
+    return drive->disk.get();
 }
 
 

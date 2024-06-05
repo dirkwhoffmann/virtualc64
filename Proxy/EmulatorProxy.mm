@@ -10,6 +10,7 @@
 #import "config.h"
 #import "EmulatorProxy.h"
 #import "VirtualC64.h"
+#import "Emulator.h"
 
 using namespace vc64;
 
