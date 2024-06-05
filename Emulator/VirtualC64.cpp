@@ -18,6 +18,24 @@ namespace vc64 {
 const Defaults &
 VirtualC64::defaults = Emulator::defaults;
 
+void 
+API::suspend()
+{
+    emu->suspend();
+}
+
+void 
+API::resume()
+{
+    emu->resume();
+}
+
+bool 
+API::isUserThread() const
+{
+    return !emu->isEmulatorThread();
+}
+
 string
 VirtualC64::version()
 {
@@ -436,19 +454,19 @@ VirtualC64::CIAAPI::getStats() const
 const VICIITraits &
 VirtualC64::VICIIAPI::getTraits() const
 {
-    return vic.getTraits();
+    return vicii->getTraits();
 }
 
 const VICIIConfig &
 VirtualC64::VICIIAPI::getConfig() const
 {
-    return vic.getConfig();
+    return vicii->getConfig();
 }
 
 const VICIIInfo &
 VirtualC64::VICIIAPI::getInfo() const
 {
-    return vic.getInfo();
+    return vicii->getInfo();
 }
 
 const VICIIInfo &
@@ -472,7 +490,7 @@ VirtualC64::VICIIAPI::getColor(isize nr) const
 u32
 VirtualC64::VICIIAPI::getColor(isize nr, Palette palette) const
 {
-    return monitor.getColor(nr, palette);
+    return vicii->getColor(nr, palette);
 }
 
 
@@ -547,13 +565,13 @@ VirtualC64::AudioPortAPI::copyInterleaved(float *buffer, isize n)
 u32 *
 VirtualC64::VideoPortAPI::getTexture() const
 {
-    return emulator.getTexture();
+    return emu->getTexture();
 }
 
 u32 *
 VirtualC64::VideoPortAPI::getDmaTexture() const
 {
-    return emulator.getDmaTexture();
+    return emu->getDmaTexture();
 }
 
 

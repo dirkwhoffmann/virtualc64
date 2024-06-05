@@ -23,18 +23,18 @@ namespace vc64 {
 // Public API
 //
 
-class API : public References {
+class API {
 
 public:
 
-    class Emulator &emulator;
+    class Emulator *emu = nullptr;
 
-    API(Emulator& ref) : References(ref.main), emulator(ref) { }
+    API(Emulator& ref) : emu(&ref) { }
 
-    void suspend() { emulator.suspend(); }
-    void resume() { emulator.resume(); }
+    void suspend();
+    void resume();
 
-    bool isUserThread() const { return !emulator.isEmulatorThread(); }
+    bool isUserThread() const;
 };
 
 

@@ -18,6 +18,7 @@
 #include "Constants.h"
 #include "DmaDebugger.h"
 #include "MemoryTypes.h"
+#include "MonitorTypes.h"
 #include "TimeDelayed.h"
 
 namespace vc64 {
@@ -985,6 +986,7 @@ public:
 
     // Returns a C64 color in 32 bit big endian RGBA format
     u32 getColor(isize nr) const { return rgbaTable[nr]; }
+    u32 getColor(isize nr, Palette palette) const;
 
     // Updates the RGBA values for all 16 C64 colors
     void updatePalette();

@@ -366,6 +366,12 @@ VICII::updatePalette()
     }
 }
 
+u32 
+VICII::getColor(isize nr, Palette palette) const
+{
+    return monitor.getColor(nr, palette);
+}
+
 u16
 VICII::scanline() const
 {
