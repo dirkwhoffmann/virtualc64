@@ -27,6 +27,8 @@ public:
     SubComponent(C64& ref, isize id);
 
     void prefix() const override;
+
+    void markAsDirty();
 };
 
 }

@@ -34,8 +34,6 @@ public:
     void suspend() { emulator.suspend(); }
     void resume() { emulator.resume(); }
 
-    void marAsDirty() { emulator.markAsDirty(); }
-
     bool isUserThread() const { return !emulator.isEmulatorThread(); }
 };
 
@@ -391,6 +389,8 @@ public:
      */
     struct C64API : public API {
 
+        class C64 *c64 = nullptr;
+
         using API::API;
 
         /// @name Analyzing the emulator
@@ -398,14 +398,14 @@ public:
 
         /** @brief  Returns the component's current state.
          */
-        const C64Info &getInfo() const { return c64.getInfo(); }
-        const C64Info &getCachedInfo() const { return c64.getCachedInfo(); }
+        const C64Info &getInfo() const { return c64->getInfo(); }
+        const C64Info &getCachedInfo() const { return c64->getCachedInfo(); }
 
         /** @brief  Returns the current state of an event slot.
          *
          *  @param  nr      Number of the event slot.
          */
-        EventSlotInfo getSlotInfo(isize nr) const { return c64.getSlotInfo(nr); }
+        EventSlotInfo getSlotInfo(isize nr) const { return c64->getSlotInfo(nr); }
 
         /** @brief  Returns information about one of the installed Roms
          *

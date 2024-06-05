@@ -61,4 +61,10 @@ SubComponent::prefix() const
     c64.prefix();
 }
 
+void 
+SubComponent::markAsDirty() 
+{
+    c64.markAsDirty();
+}
+
 }

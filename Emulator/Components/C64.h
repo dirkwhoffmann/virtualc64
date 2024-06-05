@@ -232,6 +232,12 @@ private:
      */
     bool headless = false;
 
+    /* Indicates whether the state has been altered by an external event.
+     * This flag is used to determine whether the run-ahead instance needs to
+     * be recreated.
+     */
+    bool isDirty = false;
+    
     // Duration of a CPU cycle in 1/10 nano seconds
     i64 durationOfOneCycle;
 
@@ -424,6 +430,9 @@ public:
 
     // Updates the clock frequency and all variables derived from it
     void updateClockFrequency();
+
+    // Indicates that the run-ahead instance needs an update
+    void markAsDirty() { isDirty = true; }
 
     // Enables or disables headless mode
     bool getHeadless() const { return headless; }

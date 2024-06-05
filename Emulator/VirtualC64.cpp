@@ -52,6 +52,7 @@ drive8(*this),
 drive9(*this),
 retroShell(*this)
 { 
+    c64.c64 = &main;
     mem.mem = &main.mem;
     cpu.cpu = &main.cpu;
     cia1.cia = &main.cia1;
@@ -120,7 +121,7 @@ void
 VirtualC64::set(C64Model model)
 {
     Emulator::set(model);
-    markAsDirty();
+    main.markAsDirty();
 }
 
 void
@@ -128,7 +129,7 @@ VirtualC64::set(Option opt, i64 value) throws
 {
     Emulator::check(opt, value);
     put(CMD_CONFIG, ConfigCmd { .option = opt, .value = value, .id = -1 });
-    markAsDirty();
+    main.markAsDirty();
 }
 
 void
@@ -136,7 +137,7 @@ VirtualC64::set(Option opt, i64 value, long id)
 {
     Emulator::check(opt, value, id);
     put(CMD_CONFIG, ConfigCmd { .option = opt, .value = value, .id = id });
-    markAsDirty();
+    main.markAsDirty();
 }
 
 void
@@ -169,8 +170,8 @@ VirtualC64::C64API::hardReset()
 
     suspend();
 
-    c64.hardReset();
-    emulator.markAsDirty();
+    c64->hardReset();
+    c64->markAsDirty();
 
     resume();
 }
@@ -182,8 +183,8 @@ VirtualC64::C64API::softReset()
 
     suspend();
 
-    c64.hardReset();
-    emulator.markAsDirty();
+    c64->hardReset();
+    c64->markAsDirty();
 
     resume();
 }
@@ -191,87 +192,87 @@ VirtualC64::C64API::softReset()
 InspectionTarget
 VirtualC64::C64API::getInspectionTarget() const
 {
-    return c64.getInspectionTarget();
+    return c64->getInspectionTarget();
 }
 
 void
 VirtualC64::C64API::setInspectionTarget(InspectionTarget target)
 {
-    c64.emulator.put(CMD_INSPECTION_TARGET, target);
+    c64->emulator.put(CMD_INSPECTION_TARGET, target);
 }
 
 void
 VirtualC64::C64API::removeInspectionTarget()
 {
-    c64.emulator.put(CMD_INSPECTION_TARGET, INSPECTION_NONE);
+    c64->emulator.put(CMD_INSPECTION_TARGET, INSPECTION_NONE);
 }
 
 RomTraits
 VirtualC64::C64API::getRomTraits(RomType type) const
 {
-    return c64.getRomTraits(type);
+    return c64->getRomTraits(type);
 }
 
 Snapshot *
 VirtualC64::C64API::takeSnapshot()
 {
-    return c64.takeSnapshot();
+    return c64->takeSnapshot();
 }
 
 void
 VirtualC64::C64API::loadSnapshot(const Snapshot &snapshot)
 {
-    c64.loadSnapshot(snapshot);
-    emulator.markAsDirty();
+    c64->loadSnapshot(snapshot);
+    c64->markAsDirty();
 }
 
 void
 VirtualC64::C64API::loadRom(const string &path)
 {
-    c64.loadRom(path);
-    emulator.markAsDirty();
+    c64->loadRom(path);
+    c64->markAsDirty();
 }
 
 void 
 VirtualC64::C64API::loadRom(const RomFile &file)
 {
-    c64.loadRom(file);
-    emulator.markAsDirty();
+    c64->loadRom(file);
+    c64->markAsDirty();
 }
 
 void 
 VirtualC64::C64API::deleteRom(RomType type)
 {
-    c64.deleteRom(type);
-    emulator.markAsDirty();
+    c64->deleteRom(type);
+    c64->markAsDirty();
 }
 
 void 
 VirtualC64::C64API::saveRom(RomType rom, const string &path)
 {
-    c64.saveRom(rom, path);
-    emulator.markAsDirty();
+    c64->saveRom(rom, path);
+    c64->markAsDirty();
 }
 
 void 
 VirtualC64::C64API::flash(const AnyFile &file)
 {
-    c64.flash(file);
-    emulator.markAsDirty();
+    c64->flash(file);
+    c64->markAsDirty();
 }
 
 void 
 VirtualC64::C64API::flash(const AnyCollection &file, isize item)
 {
-    c64.flash(file, item);
-    emulator.markAsDirty();
+    c64->flash(file, item);
+    c64->markAsDirty();
 }
 
 void 
 VirtualC64::C64API::flash(const FileSystem &fs, isize item)
 {
-    c64.flash(fs, item);
-    emulator.markAsDirty();
+    c64->flash(fs, item);
+    c64->markAsDirty();
 }
 
 
@@ -580,13 +581,13 @@ bool VirtualC64::KeyboardAPI::isPressed(C64Key key) const
 void VirtualC64::KeyboardAPI::autoType(const string &text)
 {
     keyboard->autoType(text);
-    emulator.markAsDirty();
+    keyboard->markAsDirty();
 }
 
 void VirtualC64::KeyboardAPI::abortAutoTyping()
 {
     keyboard->abortAutoTyping();
-    emulator.markAsDirty();
+    keyboard->markAsDirty();
 }
 
 
@@ -644,14 +645,14 @@ void
 VirtualC64::DatasetteAPI::insertTape(TAPFile &file)
 {
     datasette->insertTape(file);
-    emulator.markAsDirty();
+    datasette->markAsDirty();
 }
 
 void
 VirtualC64::DatasetteAPI::ejectTape()
 {
     datasette->ejectTape();
-    emulator.markAsDirty();
+    datasette->markAsDirty();
 }
 
 
@@ -809,49 +810,49 @@ void
 VirtualC64::ExpansionPortAPI::attachCartridge(const string &path, bool reset)
 {
     expansionPort->attachCartridge(path, reset);
-    emulator.markAsDirty();
+    expansionPort->markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachCartridge(const CRTFile &c, bool reset)
 {
     expansionPort->attachCartridge(c, reset);
-    emulator.markAsDirty();
+    expansionPort->markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachCartridge(Cartridge *c)
 {
     expansionPort->attachCartridge(c);
-    emulator.markAsDirty();
+    expansionPort->markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachReu(isize capacity)
 {
     expansionPort->attachReu(capacity);
-    emulator.markAsDirty();
+    expansionPort->markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachGeoRam(isize capacity)
 {
     expansionPort->attachGeoRam(capacity);
-    emulator.markAsDirty();
+    expansionPort->markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachIsepicCartridge()
 {
     expansionPort->attachIsepicCartridge();
-    emulator.markAsDirty();
+    expansionPort->markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::detachCartridge()
 {
     expansionPort->detachCartridge();
-    emulator.markAsDirty();
+    expansionPort->markAsDirty();
 }
 
 
@@ -881,42 +882,42 @@ void
 VirtualC64::DriveAPI::insertBlankDisk(DOSType fstype, PETName<16> name)
 {
     drive->insertNewDisk(fstype, name);
-    emulator.markAsDirty();
+    drive->markAsDirty();
 }
 
 void
 VirtualC64::DriveAPI::insertD64(const D64File &d64, bool wp)
 {
     drive->insertD64(d64, wp);
-    emulator.markAsDirty();
+    drive->markAsDirty();
 }
 
 void
 VirtualC64::DriveAPI::insertG64(const G64File &g64, bool wp)
 {
     drive->insertG64(g64, wp);
-    emulator.markAsDirty();
+    drive->markAsDirty();
 }
 
 void
 VirtualC64::DriveAPI::insertCollection(AnyCollection &archive, bool wp)
 {
     drive->insertCollection(archive, wp);
-    emulator.markAsDirty();
+    drive->markAsDirty();
 }
 
 void
 VirtualC64::DriveAPI::insertFileSystem(const class FileSystem &device, bool wp)
 {
     drive->insertFileSystem(device, wp);
-    emulator.markAsDirty();
+    drive->markAsDirty();
 }
 
 void
 VirtualC64::DriveAPI::ejectDisk()
 {
     drive->ejectDisk();
-    emulator.markAsDirty();
+    drive->markAsDirty();
 }
 
 }
