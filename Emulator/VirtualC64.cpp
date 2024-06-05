@@ -120,7 +120,7 @@ void
 VirtualC64::set(C64Model model)
 {
     Emulator::set(model);
-    main.markAsDirty();
+    markAsDirty();
 }
 
 void
@@ -128,7 +128,7 @@ VirtualC64::set(Option opt, i64 value) throws
 {
     Emulator::check(opt, value);
     put(CMD_CONFIG, ConfigCmd { .option = opt, .value = value, .id = -1 });
-    main.markAsDirty();
+    markAsDirty();
 }
 
 void
@@ -136,7 +136,7 @@ VirtualC64::set(Option opt, i64 value, long id)
 {
     Emulator::check(opt, value, id);
     put(CMD_CONFIG, ConfigCmd { .option = opt, .value = value, .id = id });
-    main.markAsDirty();
+    markAsDirty();
 }
 
 void
@@ -170,7 +170,7 @@ VirtualC64::C64API::hardReset()
     suspend();
 
     c64.hardReset();
-    c64.markAsDirty();
+    emulator.markAsDirty();
 
     resume();
 }
@@ -183,7 +183,7 @@ VirtualC64::C64API::softReset()
     suspend();
 
     c64.hardReset();
-    c64.markAsDirty();
+    emulator.markAsDirty();
 
     resume();
 }
@@ -222,56 +222,56 @@ void
 VirtualC64::C64API::loadSnapshot(const Snapshot &snapshot)
 {
     c64.loadSnapshot(snapshot);
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 void
 VirtualC64::C64API::loadRom(const string &path)
 {
     c64.loadRom(path);
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 void 
 VirtualC64::C64API::loadRom(const RomFile &file)
 {
     c64.loadRom(file);
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 void 
 VirtualC64::C64API::deleteRom(RomType type)
 {
     c64.deleteRom(type);
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 void 
 VirtualC64::C64API::saveRom(RomType rom, const string &path)
 {
     c64.saveRom(rom, path);
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 void 
 VirtualC64::C64API::flash(const AnyFile &file)
 {
     c64.flash(file);
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 void 
 VirtualC64::C64API::flash(const AnyCollection &file, isize item)
 {
     c64.flash(file, item);
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 void 
 VirtualC64::C64API::flash(const FileSystem &fs, isize item)
 {
     c64.flash(fs, item);
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 
@@ -580,13 +580,13 @@ bool VirtualC64::KeyboardAPI::isPressed(C64Key key) const
 void VirtualC64::KeyboardAPI::autoType(const string &text)
 {
     keyboard->autoType(text);
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 void VirtualC64::KeyboardAPI::abortAutoTyping()
 {
     keyboard->abortAutoTyping();
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 
@@ -644,14 +644,14 @@ void
 VirtualC64::DatasetteAPI::insertTape(TAPFile &file)
 {
     datasette->insertTape(file);
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 void
 VirtualC64::DatasetteAPI::ejectTape()
 {
     datasette->ejectTape();
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 
@@ -809,49 +809,49 @@ void
 VirtualC64::ExpansionPortAPI::attachCartridge(const string &path, bool reset)
 {
     expansionPort->attachCartridge(path, reset);
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachCartridge(const CRTFile &c, bool reset)
 {
     expansionPort->attachCartridge(c, reset);
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachCartridge(Cartridge *c)
 {
     expansionPort->attachCartridge(c);
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachReu(isize capacity)
 {
     expansionPort->attachReu(capacity);
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachGeoRam(isize capacity)
 {
     expansionPort->attachGeoRam(capacity);
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::attachIsepicCartridge()
 {
     expansionPort->attachIsepicCartridge();
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 void
 VirtualC64::ExpansionPortAPI::detachCartridge()
 {
     expansionPort->detachCartridge();
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 
@@ -881,42 +881,42 @@ void
 VirtualC64::DriveAPI::insertBlankDisk(DOSType fstype, PETName<16> name)
 {
     drive->insertNewDisk(fstype, name);
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 void
 VirtualC64::DriveAPI::insertD64(const D64File &d64, bool wp)
 {
     drive->insertD64(d64, wp);
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 void
 VirtualC64::DriveAPI::insertG64(const G64File &g64, bool wp)
 {
     drive->insertG64(g64, wp);
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 void
 VirtualC64::DriveAPI::insertCollection(AnyCollection &archive, bool wp)
 {
     drive->insertCollection(archive, wp);
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 void
 VirtualC64::DriveAPI::insertFileSystem(const class FileSystem &device, bool wp)
 {
     drive->insertFileSystem(device, wp);
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 void
 VirtualC64::DriveAPI::ejectDisk()
 {
     drive->ejectDisk();
-    c64.markAsDirty();
+    emulator.markAsDirty();
 }
 
 }

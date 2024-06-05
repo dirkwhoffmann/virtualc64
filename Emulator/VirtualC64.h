@@ -34,6 +34,8 @@ public:
     void suspend() { emulator.suspend(); }
     void resume() { emulator.resume(); }
 
+    void marAsDirty() { emulator.markAsDirty(); }
+
     bool isUserThread() const { return !emulator.isEmulatorThread(); }
 };
 

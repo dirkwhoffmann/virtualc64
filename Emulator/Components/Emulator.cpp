@@ -547,7 +547,7 @@ Emulator::update()
 
         debug(CMD_DEBUG, "Command: %s\n", CmdTypeEnum::key(cmd.type));
 
-        main.markAsDirty();
+        markAsDirty();
 
         switch (cmd.type) {
 
@@ -728,14 +728,14 @@ Emulator::computeFrame()
             main.execute();
 
             // Recreate the run-ahead instance if necessary
-            if (main.isDirty || RUA_ON_STEROIDS) recreateRunAheadInstance();
+            if (isDirty || RUA_ON_STEROIDS) recreateRunAheadInstance();
 
             // Run the runahead instance
             ahead.execute();
 
         } catch (StateChangeException &) {
 
-            ahead.markAsDirty();
+            markAsDirty();
             throw;
         }
 
@@ -754,7 +754,7 @@ Emulator::recreateRunAheadInstance()
     clones++;
 
     // Recreate the runahead instance from scratch
-    ahead = main; main.isDirty = false;
+    ahead = main; isDirty = false;
 
     if (RUA_DEBUG && ahead != main) {
 

@@ -49,6 +49,9 @@ public Inspectable<EmulatorInfo, EmulatorStats>, public Configurable {
     // The run-ahead instance
     C64 ahead = C64(*this, 1);
 
+    // Indicates whether the run-ahead instance needs to be recreated.
+    bool isDirty = false;
+
     // Keeps trach of the number of recreated run-ahead instances
     isize clones = 0;
 
@@ -81,6 +84,9 @@ public:
 
     // Checks the initialization state
     bool isInitialized() const;
+
+    // Marks the run-ahead instance as dirty
+    void markAsDirty() { isDirty = true; }
 
 
     //
