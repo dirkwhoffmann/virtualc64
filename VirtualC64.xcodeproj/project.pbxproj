@@ -443,6 +443,8 @@
 		50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 50C72DE51BC7F42100F1863B /* Shaders.metal */; };
 		50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */; };
 		50CCC30A256FAC870052619A /* Concurrency.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CCC308256FAC870052619A /* Concurrency.cpp */; };
+		50CCC8012C117ACF0047ED17 /* MediaFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CCC7FF2C117ACF0047ED17 /* MediaFile.cpp */; };
+		50CCC8022C117ACF0047ED17 /* MediaFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CCC7FF2C117ACF0047ED17 /* MediaFile.cpp */; };
 		50CCE179259DFD7800481E7F /* DevicesPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CCE178259DFD7800481E7F /* DevicesPrefs.swift */; };
 		50CD3695281681D000E40BFC /* NamedPipe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD3693281681D000E40BFC /* NamedPipe.cpp */; };
 		50CD3698281681E800E40BFC /* FFmpeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD3696281681E700E40BFC /* FFmpeg.cpp */; };
@@ -1023,6 +1025,8 @@
 		50CCC308256FAC870052619A /* Concurrency.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Concurrency.cpp; sourceTree = "<group>"; };
 		50CCC309256FAC870052619A /* Concurrency.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Concurrency.h; sourceTree = "<group>"; };
 		50CCC7FE2C10A99C0047ED17 /* PeddleDebuggerTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleDebuggerTypes.h; sourceTree = "<group>"; };
+		50CCC7FF2C117ACF0047ED17 /* MediaFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MediaFile.cpp; sourceTree = "<group>"; };
+		50CCC8002C117ACF0047ED17 /* MediaFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaFile.h; sourceTree = "<group>"; };
 		50CCE178259DFD7800481E7F /* DevicesPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesPrefs.swift; sourceTree = "<group>"; };
 		50CD3692281681A300E40BFC /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50CD3693281681D000E40BFC /* NamedPipe.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NamedPipe.cpp; sourceTree = "<group>"; };
@@ -1590,9 +1594,10 @@
 			isa = PBXGroup;
 			children = (
 				5078BEC8264D74AB00EDA161 /* CMakeLists.txt */,
-				504C428E24AF29AB00E69CAE /* Cartridges */,
 				50441AA32B9613DD00102A4D /* Media.h */,
 				50B1A61A25A20A8900201A2C /* FileTypes.h */,
+				50CCC8002C117ACF0047ED17 /* MediaFile.h */,
+				50CCC7FF2C117ACF0047ED17 /* MediaFile.cpp */,
 				5026118D259CACB60066E754 /* PETName.h */,
 				504C42CE24AF29AB00E69CAE /* AnyFile.h */,
 				504C42D624AF29AB00E69CAE /* AnyFile.cpp */,
@@ -1621,6 +1626,7 @@
 				50520F8925108FC400C7D47F /* Folder.cpp */,
 				50AE19382632B787005A5898 /* Script.h */,
 				50AE19372632B787005A5898 /* Script.cpp */,
+				504C428E24AF29AB00E69CAE /* Cartridges */,
 			);
 			path = Media;
 			sourceTree = "<group>";
@@ -2410,6 +2416,7 @@
 				50726F422961C97B0031F2F5 /* Concurrency.cpp in Sources */,
 				50726F492961C9940031F2F5 /* MsgQueue.cpp in Sources */,
 				500634632C0EF1A400D60D96 /* DatasetteBase.cpp in Sources */,
+				50CCC8022C117ACF0047ED17 /* MediaFile.cpp in Sources */,
 				50726F862961C9F10031F2F5 /* FlashRom.cpp in Sources */,
 				50726F782961C9DC0031F2F5 /* PIA.cpp in Sources */,
 				50BB3E922B7A232800B2D87B /* Inspectable.cpp in Sources */,
@@ -2556,6 +2563,7 @@
 				508C1E632C0B5EE80097473C /* KeyboardBase.cpp in Sources */,
 				501B80C325B1702500C90284 /* MyDocumentController.swift in Sources */,
 				5003382B266F7F3C00D5456E /* VICIITable.cpp in Sources */,
+				50CCC8012C117ACF0047ED17 /* MediaFile.cpp in Sources */,
 				504C438324AF29AC00E69CAE /* CoreComponent.cpp in Sources */,
 				50E9B92D201F299500065A89 /* MyController.swift in Sources */,
 				50DBB44B2025CE5700489271 /* Utils.swift in Sources */,

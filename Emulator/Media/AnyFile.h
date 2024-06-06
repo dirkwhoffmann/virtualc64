@@ -13,7 +13,7 @@
 #pragma once
 
 #include "CoreObject.h"
-#include "FileTypes.h"
+#include "MediaFile.h"
 #include "PETName.h"
 
 #include <sstream>
@@ -53,8 +53,8 @@ namespace vc64 {
  *               ---------   ---------    ---------    ---------
  */
 
-class AnyFile : public CoreObject {
-    
+class AnyFile : public CoreObject, public MediaFile {
+
 public:
 
     // Physical location of this file
@@ -95,16 +95,16 @@ public:
     virtual PETName<16> getName() const;
 
     // Determines the type of an arbitrary file on file
-    static FileType type(const string &path);
+    // static FileType type(const string &path);
 
     // Returns the media type of this file
-    virtual FileType type() const { return FILETYPE_UNKNOWN; }
+    // virtual FileType type() const { return FILETYPE_UNKNOWN; }
 
     // Returns a data byte
     u8 getData(isize nr) { return (data && nr < size) ? data[nr] : 0; }
 
     // Returns a fingerprint (hash value) for this file
-    u64 fnv() const;
+    u64 fnv() const override;
     
     // Removes a certain number of bytes from the beginning of the file
     void strip(isize count);

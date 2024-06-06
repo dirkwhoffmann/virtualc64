@@ -12,6 +12,9 @@
 
 #pragma once
 
+#include "MediaFile.h"
+
+/* DEPRECATED */
 #include "CRTFile.h"
 #include "D64File.h"
 #include "Folder.h"

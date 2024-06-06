@@ -35,14 +35,6 @@ public:
     //
     // Class methods
     //
-    
-    /*
-    static RomTraits &traits(u16 crc);
-    static RomTraits &basicTraits(u16 crc);
-    static RomTraits &charTraits(u16 crc);
-    static RomTraits &kernalTraits(u16 crc);
-    static RomTraits &vC1541Traits(u16 crc);
-    */
 
     static bool isCompatible(const string &name);
     static bool isCompatible(std::istream &stream);

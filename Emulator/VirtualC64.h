@@ -14,7 +14,6 @@
 #pragma once
 
 #include "VirtualC64Types.h"
-// #include "Emulator.h"
 #include "Defaults.h"
 #include "Media.h"
 #include "C64Key.h"

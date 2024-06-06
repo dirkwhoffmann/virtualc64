@@ -98,6 +98,7 @@ AnyFile::getName() const
     return PETName<16>(path.substr(start, len));
 }
 
+/*
 FileType
 AnyFile::type(const string &path)
 {
@@ -142,6 +143,7 @@ AnyFile::type(const string &path)
 
     return FILETYPE_UNKNOWN;
 }
+*/
 
 u64
 AnyFile::fnv() const
