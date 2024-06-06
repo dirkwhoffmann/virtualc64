@@ -40,6 +40,9 @@ public:
     // Returns the media type of this file
     virtual FileType type() const { return FILETYPE_UNKNOWN; }
 
+    // Returns the logical name of this file
+    virtual string name() const = 0;
+
     // Returns a fingerprint (hash value) for this file
     virtual u64 fnv() const = 0;
 

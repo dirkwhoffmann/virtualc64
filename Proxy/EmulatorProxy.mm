@@ -1165,6 +1165,40 @@ using namespace vc64;
 
 
 //
+// MediaFile
+//
+
+@implementation MediaFileProxy
+
+- (MediaFile *)file
+{
+    return (MediaFile *)obj;
+}
+
++ (FileType)typeOfUrl:(NSURL *)url
+{
+    return MediaFile::type([url fileSystemRepresentation]);
+}
+
+- (FileType)type
+{
+    return [self file]->type();
+}
+
+- (NSString *)name
+{
+    return @([self file]->name().c_str());
+}
+
+- (u64)fnv
+{
+    return [self file]->fnv();
+}
+
+@end
+
+
+//
 // AnyFile
 //
 
@@ -1374,36 +1408,6 @@ using namespace vc64;
     catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
-- (CRTFile *)crt
-{
-    return (CRTFile *)obj;
-}
-
-- (CartridgeType)cartridgeType
-{
-    return [self crt]->cartridgeType();
-}
-
-- (BOOL)isSupported
-{
-    return [self crt]->isSupported();
-}
-
-- (NSInteger)initialExromLine
-{
-    return [self crt]->initialExromLine();
-}
-
-- (NSInteger)initialGameLine
-{
-    return [self crt]->initialGameLine();
-}
-
-- (NSInteger)chipCount
-{
-    return [self crt]->chipCount();
-}
-
 @end
 
 
@@ -1430,6 +1434,7 @@ using namespace vc64;
     catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
+/*
 - (TAPFile *)tap
 {
     return (TAPFile *)obj;
@@ -1439,6 +1444,7 @@ using namespace vc64;
 {
     return [self tap]->version();
 }
+*/
 
 @end
 

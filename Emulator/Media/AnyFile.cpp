@@ -86,6 +86,12 @@ AnyFile::init(FILE *file)
     init(stream);
 }
 
+string
+AnyFile::name() const
+{
+    return getName().str();
+}
+
 PETName<16>
 AnyFile::getName() const
 {

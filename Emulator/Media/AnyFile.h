@@ -92,6 +92,7 @@ public:
 public:
     
     // Returns the logical name of this file
+    virtual string name() const override;
     virtual PETName<16> getName() const;
 
     // Determines the type of an arbitrary file on file

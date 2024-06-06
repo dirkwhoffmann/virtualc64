@@ -205,9 +205,8 @@ class DropZone: Layer {
                     mm.console.open()
 
                 default:
-
-                    let importer = DiskImporter(with: controller, nibName: "DiskImporter")
-                    try importer?.show(url: url)
+                    
+                    NSSound.beep()
                 }
             }
 

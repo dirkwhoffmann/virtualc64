@@ -31,8 +31,6 @@
 		500F7CC6281EAB64003F1A7C /* DiskCreator.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500F7CC5281EAB64003F1A7C /* DiskCreator.xib */; };
 		50133B97200D4EED00167227 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50133B96200D4EED00167227 /* MetalView.swift */; };
 		50157EEB28256035000E9DDD /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50157EEA28256035000E9DDD /* Config.swift */; };
-		50157EEF2825A814000E9DDD /* DiskImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50157EEE2825A814000E9DDD /* DiskImporter.swift */; };
-		50157EF12825A9F5000E9DDD /* DiskImporter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50157EF02825A9F5000E9DDD /* DiskImporter.xib */; };
 		5016F02829574FDF00F2063B /* Reu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5016F02629574FDF00F2063B /* Reu.cpp */; };
 		50176C810A6F7357009E80BD /* EmulatorProxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* EmulatorProxy.mm */; };
 		5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */; };
@@ -558,8 +556,6 @@
 		500FAA64261377050062488E /* Macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
 		50133B96200D4EED00167227 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
 		50157EEA28256035000E9DDD /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		50157EEE2825A814000E9DDD /* DiskImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskImporter.swift; sourceTree = "<group>"; };
-		50157EF02825A9F5000E9DDD /* DiskImporter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiskImporter.xib; sourceTree = "<group>"; };
 		5016F02629574FDF00F2063B /* Reu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Reu.cpp; sourceTree = "<group>"; };
 		5016F02729574FDF00F2063B /* Reu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reu.h; sourceTree = "<group>"; };
 		50176C790A6F7357009E80BD /* EmulatorProxy.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = EmulatorProxy.h; sourceTree = "<group>"; };
@@ -1298,7 +1294,6 @@
 				50D5F87F24F4F12F0062EF13 /* TrackTableView.swift */,
 				50D5F88324F4FE9C0062EF13 /* SectorTableView.swift */,
 				5058A921281D10B100C223C9 /* VolumeInspector.swift */,
-				50157EEE2825A814000E9DDD /* DiskImporter.swift */,
 				5058A923281D10C600C223C9 /* DiskCreator.swift */,
 				5058A91D281D107A00C223C9 /* DiskExporter.swift */,
 				500E2D652824EC130015C46F /* CartridgeInspector.swift */,
@@ -2071,7 +2066,6 @@
 				50D3092524C71AD300B92563 /* Monitor.xib */,
 				503C1DD024FC10F400D91141 /* SnapshotViewer.xib */,
 				507E7A9D24FB864E00AB433C /* ScreenshotViewer.xib */,
-				50157EF02825A9F5000E9DDD /* DiskImporter.xib */,
 				500F7CC5281EAB64003F1A7C /* DiskCreator.xib */,
 				5058A919281D041400C223C9 /* DiskExporter.xib */,
 				500E2D632824EBE30015C46F /* CartridgeInspector.xib */,
@@ -2260,7 +2254,6 @@
 				50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */,
 				50D2A69E210F20CB00F13D43 /* VirtualKeyboard.xib in Resources */,
 				501E428020D975AD000BB48D /* IconVirtualC64.icns in Resources */,
-				50157EF12825A9F5000E9DDD /* DiskImporter.xib in Resources */,
 				5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */,
 				5058A91A281D041400C223C9 /* DiskExporter.xib in Resources */,
 				501E427E20D975AD000BB48D /* IconT64.icns in Resources */,
@@ -2721,7 +2714,6 @@
 				50BE4B6824E7FB28008F39C9 /* MTLTexture.swift in Sources */,
 				50A22A2A2618725200C9FB1E /* Console.swift in Sources */,
 				500C1C752965D10F00071AF3 /* StrWriter.cpp in Sources */,
-				50157EEF2825A814000E9DDD /* DiskImporter.swift in Sources */,
 				5031D59C200B81D20088C802 /* Animation.swift in Sources */,
 				50BD640A2C01FADC007CD347 /* VideoPort.cpp in Sources */,
 				50D5F88424F4FE9C0062EF13 /* SectorTableView.swift in Sources */,

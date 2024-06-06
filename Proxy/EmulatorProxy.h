@@ -659,6 +659,21 @@ struct GuardInfo {
 
 
 //
+// MediaFile
+//
+
+@interface MediaFileProxy : Proxy { }
+
++ (FileType) typeOfUrl:(NSURL *)url;
+
+@property (readonly) FileType type;
+@property (readonly) NSString *name;
+@property (readonly) u64 fnv;
+
+@end
+
+
+//
 // AnyFile
 //
 
@@ -739,12 +754,6 @@ struct GuardInfo {
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
  
-@property (readonly) CartridgeType cartridgeType;
-@property (readonly) BOOL isSupported;
-@property (readonly) NSInteger initialExromLine;
-@property (readonly) NSInteger initialGameLine;
-@property (readonly) NSInteger chipCount;
-
 @end
 
 
@@ -756,8 +765,6 @@ struct GuardInfo {
 
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
-
-@property (readonly) TAPVersion version;
 
 @end
 

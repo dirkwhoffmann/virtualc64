@@ -322,41 +322,6 @@ extension AnyFileProxy {
     }
 }
 
-extension CRTFileProxy {
-    
-    var packageInfo: String {
-        
-        let cnt = chipCount
-        let type = cartridgeType
-        let packages = cnt == 1 ? "package" : "packages"
-
-        if type == .NORMAL {
-            return "Standard cartridge with \(cnt) chip \(packages)"
-        } else {
-            return "\(type.description)"
-        }
-    }
-    
-    var lineInfo: String {
-                
-        let exrom = initialExromLine
-        let game = initialGameLine
-        
-        var result = ""
-        
-        switch (exrom, game) {
-        case (0, 0): result += "16K Cartridge Mode"
-        case (0, 1): result += "8K Cartridge Mode"
-        case (1, 0): result += "Ultimax Cartridge Mode"
-        case (1, 1): result += "Disabled Cartridge"
-        default: fatalError()
-        }
-
-        result += " (Exrom: \(exrom), " + "Game: \(game))"
-        return result
-    }
-}
-
 extension FileSystemProxy {
 
     static func make(withDisk disk: DiskProxy) throws -> FileSystemProxy {
