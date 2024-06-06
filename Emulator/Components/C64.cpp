@@ -1166,7 +1166,7 @@ C64::clearFlag(u32 flag)
     flags &= ~flag;
 }
 
-Snapshot *
+MediaFile *
 C64::takeSnapshot()
 {
     {   SUSPENDED
@@ -1176,36 +1176,45 @@ C64::takeSnapshot()
 }
 
 void
-C64::loadSnapshot(const Snapshot &snapshot)
+C64::loadSnapshot(const MediaFile &file)
 {
-    {   SUSPENDED
+    try {
 
-        try {
+        const Snapshot &snapshot = dynamic_cast<const Snapshot &>(file);
 
-            // Restore the saved state
-            load(snapshot.getData());
+        {   SUSPENDED
 
-            // Clear the keyboard matrix to avoid constantly pressed keys
-            keyboard.releaseAll();
+            try {
 
-            // Print some debug info if requested
-            if (SNP_DEBUG) dump(Category::State);
+                // Restore the saved state
+                load(snapshot.getData());
 
-        } catch (VC64Error &error) {
+                // Clear the keyboard matrix to avoid constantly pressed keys
+                keyboard.releaseAll();
 
-            /* If we reach this point, the emulator has been put into an
-             * inconsistent state due to corrupted snapshot data. We cannot
-             * continue emulation, because it would likely crash the
-             * application. Because we cannot revert to the old state either,
-             * we perform a hard reset to eliminate the inconsistency.
-             */
-            hardReset();
-            throw error;
+                // Print some debug info if requested
+                if (SNP_DEBUG) dump(Category::State);
+
+            } catch (VC64Error &error) {
+
+                /* If we reach this point, the emulator has been put into an
+                 * inconsistent state due to corrupted snapshot data. We cannot
+                 * continue emulation, because it would likely crash the
+                 * application. Because we cannot revert to the old state either,
+                 * we perform a hard reset to eliminate the inconsistency.
+                 */
+                hardReset();
+                throw error;
+            }
         }
-    }
 
-    // Inform the GUI
-    msgQueue.put(MSG_SNAPSHOT_RESTORED);
+        // Inform the GUI
+        msgQueue.put(MSG_SNAPSHOT_RESTORED);
+
+    } catch (...) {
+
+        throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+    }
 }
 
 void

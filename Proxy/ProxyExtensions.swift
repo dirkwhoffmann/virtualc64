@@ -11,6 +11,41 @@
 // Factory extensions
 //
 
+extension MediaFileProxy {
+
+    static func makeWith(buffer: UnsafeRawPointer, length: Int, type: vc64.FileType) throws -> Self {
+
+        let exc = ExceptionWrapper()
+        let obj = make(withBuffer: buffer, length: length, type: type, exception: exc)
+        if exc.errorCode != .OK { throw VC64Error(exc) }
+        return obj!
+    }
+
+    static func make(with data: Data, type: vc64.FileType) throws -> Self {
+
+        let exc = ExceptionWrapper()
+        let obj = make(with: data, type: type, exception: exc)
+        if exc.errorCode != .OK { throw VC64Error(exc) }
+        return obj!
+    }
+
+    private static func make(with data: Data, type: vc64.FileType, exception: ExceptionWrapper) -> Self? {
+
+        return data.withUnsafeBytes { uwbp -> Self? in
+
+            return make(withBuffer: uwbp.baseAddress!, length: uwbp.count, type: type, exception: exception)
+        }
+    }
+
+    static func make(with url: URL) throws -> Self {
+
+        let exc = ExceptionWrapper()
+        let obj = make(withFile: url.path, exception: exc)
+        if exc.errorCode != .OK { throw VC64Error(exc) }
+        return obj!
+    }
+}
+
 extension MakeWithBuffer {
 
     static func makeWith(buffer: UnsafeRawPointer, length: Int) throws -> Self {

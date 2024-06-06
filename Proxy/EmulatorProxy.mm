@@ -1175,9 +1175,52 @@ using namespace vc64;
     return (MediaFile *)obj;
 }
 
++ (instancetype)make:(MediaFile *)file
+{
+    return file ? [[self alloc] initWith:file] : nil;
+}
+
 + (FileType)typeOfUrl:(NSURL *)url
 {
     return MediaFile::type([url fileSystemRepresentation]);
+}
+
++ (instancetype)makeWithFile:(NSString *)path
+                   exception:(ExceptionWrapper *)ex
+{
+    try { return [self make: MediaFile::make([path fileSystemRepresentation])]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
+}
+
++ (instancetype)makeWithFile:(NSString *)path
+                        type:(FileType)type
+                   exception:(ExceptionWrapper *)ex
+{
+    try { return [self make: MediaFile::make([path fileSystemRepresentation], type)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
+}
+
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len
+                          type:(FileType)type
+                     exception:(ExceptionWrapper *)ex
+{
+    try { return [self make: MediaFile::make((u8 *)buf, len, type)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
+}
+
++ (instancetype)makeWithC64:(EmulatorProxy *)proxy
+{
+    auto vc64 = (VirtualC64 *)proxy->obj;
+    return [self make:vc64->c64.takeSnapshot()];
+}
+
++ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy 
+                              type:(FileType)type
+                         exception:(ExceptionWrapper *)ex
+{
+    auto fs = (FileSystem *)proxy->obj;
+    try { return [self make: MediaFile::make(*fs, type)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 - (FileType)type
@@ -1193,6 +1236,49 @@ using namespace vc64;
 - (u64)fnv
 {
     return [self file]->fnv();
+}
+
+- (void)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex
+{
+    try { [self file]->writeToFile(string([path fileSystemRepresentation])); }
+    catch (VC64Error &err) { [ex save:err]; }
+}
+
+- (NSImage *)previewImage
+{
+    // Return cached image (if any)
+    if (preview) { return preview; }
+
+    // Get dimensions and data
+    auto size = [self file]->previewImageSize();
+    auto data = (unsigned char *)[self file]->previewImageData();
+
+    // Create preview image
+    if (data) {
+
+        NSBitmapImageRep *rep = [[NSBitmapImageRep alloc]
+                                 initWithBitmapDataPlanes: &data
+                                 pixelsWide:size.first
+                                 pixelsHigh:size.second
+                                 bitsPerSample:8
+                                 samplesPerPixel:4
+                                 hasAlpha:true
+                                 isPlanar:false
+                                 colorSpaceName:NSCalibratedRGBColorSpace
+                                 bytesPerRow:4*size.first
+                                 bitsPerPixel:32];
+
+        preview = [[NSImage alloc] initWithSize:[rep size]];
+        [preview addRepresentation:rep];
+
+        // image.makeGlossy()
+    }
+    return preview;
+}
+
+- (time_t)timeStamp
+{
+    return [self file]->timestamp();
 }
 
 @end
@@ -1254,12 +1340,12 @@ using namespace vc64;
 
 @implementation SnapshotProxy
 
-- (Snapshot *)snapshot
+- (MediaFile *)snapshot
 {
-    return (Snapshot *)obj;
+    return (MediaFile *)obj;
 }
 
-+ (instancetype)make:(Snapshot *)snapshot
++ (instancetype)make:(MediaFile *)snapshot
 {
     return snapshot ? [[self alloc] initWith:snapshot] : nil;
 }
@@ -1267,14 +1353,14 @@ using namespace vc64;
 + (instancetype)makeWithFile:(NSString *)path
                    exception:(ExceptionWrapper *)ex
 {
-    try { return [self make: new Snapshot([path fileSystemRepresentation])]; }
+    try { return [self make: MediaFile::make([path fileSystemRepresentation], FILETYPE_SNAPSHOT)]; }
     catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len
                      exception:(ExceptionWrapper *)ex
 {
-    try { return [self make: new Snapshot((u8 *)buf, len)]; }
+    try { return [self make: MediaFile::make((u8 *)buf, len, FILETYPE_SNAPSHOT)]; }
     catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
@@ -1290,19 +1376,19 @@ using namespace vc64;
     if (preview) { return preview; }
     
     // Create preview image
-    const Thumbnail &thumbnail = [self snapshot]->getThumbnail();
-    unsigned char *data = (unsigned char *)thumbnail.screen;
-    
+    auto size = [self snapshot]->previewImageSize();
+    auto data = (unsigned char *)[self snapshot]->previewImageData();
+
     NSBitmapImageRep *rep = [[NSBitmapImageRep alloc]
                              initWithBitmapDataPlanes: &data
-                             pixelsWide:thumbnail.width
-                             pixelsHigh:thumbnail.height
+                             pixelsWide:size.first
+                             pixelsHigh:size.second
                              bitsPerSample:8
                              samplesPerPixel:4
                              hasAlpha:true
                              isPlanar:false
                              colorSpaceName:NSCalibratedRGBColorSpace
-                             bytesPerRow:4*thumbnail.width
+                             bytesPerRow:4*size.first
                              bitsPerPixel:32];
     
     preview = [[NSImage alloc] initWithSize:[rep size]];
@@ -1315,7 +1401,7 @@ using namespace vc64;
 
 - (time_t)timeStamp
 {
-    return [self snapshot]->getThumbnail().timestamp;
+    return [self snapshot]->timestamp();
 }
 
 @end
@@ -2025,8 +2111,8 @@ using namespace vc64;
 
 - (SnapshotProxy *)takeSnapshot
 {
-    Snapshot *snapshot = [self c64]->takeSnapshot();
-    return [SnapshotProxy make:snapshot];
+    MediaFile *snapshot = [self c64]->takeSnapshot();
+    return [SnapshotProxy make:(Snapshot *)snapshot];
 }
 
 @end

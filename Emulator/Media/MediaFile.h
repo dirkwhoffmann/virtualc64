@@ -12,6 +12,7 @@
 
 #pragma once
 
+// #include "VirtualC64.h"
 #include "FileTypes.h"
 #include <sstream>
 #include <fstream>
@@ -32,6 +33,13 @@ public:
     // Determines the type of an arbitrary file on file
     static FileType type(const string &path);
 
+    // Factory methods
+    static MediaFile *make(const string &path);
+    static MediaFile *make(const string &path, FileType type);
+    static MediaFile *make(const u8 *buf, isize len, FileType type);
+    static MediaFile *make(class FileSystem &fs, FileType type); // TODO: add const 
+    // static MediaFile *make(const class DriveAPI &drive, FileType type);
+
 
     //
     // Methods
@@ -46,6 +54,29 @@ public:
     // Returns a fingerprint (hash value) for this file
     virtual u64 fnv() const = 0;
 
+    // Return a timestamp (if present)
+    virtual time_t timestamp() const { return time_t(0); }
+
+    // Return a preview image (only available for snapshot files)
+    virtual std::pair <isize,isize> previewImageSize() const { return { 0, 0 }; }
+
+    // Return a preview image (only available for snapshot files)
+    virtual const u32 *previewImageData() const { return nullptr; }
+
+
+    //
+    // Serializing
+    //
+
+public:
+
+    virtual void readFromStream(std::istream &stream) = 0;
+    virtual void readFromFile(const string &path) = 0;
+    virtual void readFromBuffer(const u8 *buf, isize len) = 0;
+
+    virtual void writeToStream(std::ostream &stream) = 0;
+    virtual void writeToFile(const string &path) = 0;
+    virtual void writeToBuffer(u8 *buf) = 0;
 };
 
 }

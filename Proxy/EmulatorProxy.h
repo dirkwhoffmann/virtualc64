@@ -662,13 +662,27 @@ struct GuardInfo {
 // MediaFile
 //
 
-@interface MediaFileProxy : Proxy { }
+@interface MediaFileProxy : Proxy
+{
+    NSImage *preview;
+}
 
 + (FileType) typeOfUrl:(NSURL *)url;
+
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithFile:(NSString *)path type:(FileType)t exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len type:(FileType)t exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithC64:(EmulatorProxy *)c64proxy;
++ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy type:(FileType)t exception:(ExceptionWrapper *)ex;
 
 @property (readonly) FileType type;
 @property (readonly) NSString *name;
 @property (readonly) u64 fnv;
+
+- (void)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex;
+
+@property (readonly, strong) NSImage *previewImage;
+@property (readonly) time_t timeStamp;
 
 @end
 

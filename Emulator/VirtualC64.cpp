@@ -435,14 +435,14 @@ VirtualC64::C64API::getRomTraits(RomType type) const
     return c64->getRomTraits(type);
 }
 
-Snapshot *
+MediaFile *
 VirtualC64::C64API::takeSnapshot()
 {
     return c64->takeSnapshot();
 }
 
 void
-VirtualC64::C64API::loadSnapshot(const Snapshot &snapshot)
+VirtualC64::C64API::loadSnapshot(const MediaFile &snapshot)
 {
     c64->loadSnapshot(snapshot);
     c64->markAsDirty();

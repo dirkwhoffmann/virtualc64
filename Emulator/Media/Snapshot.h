@@ -95,6 +95,10 @@ public:
     // Accessing
     //
 
+    std::pair <isize,isize> previewImageSize() const override;
+    const u32 *previewImageData() const override;
+    time_t timestamp() const override;
+
     // Checks the snapshot version number
     bool isTooOld() const;
     bool isTooNew() const;

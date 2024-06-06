@@ -656,10 +656,10 @@ private:
 public:
 
     // Takes a snapshot
-    Snapshot *takeSnapshot();
+    MediaFile *takeSnapshot();
 
     // Loads the current state from a snapshot file
-    void loadSnapshot(const Snapshot &snapshot) throws;
+    void loadSnapshot(const MediaFile &snapshot) throws;
 
 private:
 

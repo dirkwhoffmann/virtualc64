@@ -455,15 +455,15 @@ public:
          *  @return A pointer to the created Snapshot object.
          *
          *  @note   The function transfers the ownership to the caller. It is
-         *          the responsibility of the caller to free the object.
+         *          his responsibility of the caller to free the object.
          */
-        Snapshot *takeSnapshot();
+        MediaFile *takeSnapshot();
 
         /** @brief  Loads a snapshot into the emulator.
          *
          *  @param  snapshot    Reference to a snapshot.
          */
-        void loadSnapshot(const Snapshot &snapshot);
+        void loadSnapshot(const MediaFile &snapshot);
 
 
         /// @}

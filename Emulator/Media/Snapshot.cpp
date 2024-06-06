@@ -99,6 +99,24 @@ Snapshot::finalizeRead()
     if (isBeta() && !betaRelease) throw VC64Error(ERROR_SNAP_IS_BETA);
 }
 
+std::pair <isize,isize> 
+Snapshot::previewImageSize() const
+{
+    return { getThumbnail().width, getThumbnail().height };
+}
+
+const u32 *
+Snapshot::previewImageData() const
+{
+    return getThumbnail().screen;
+}
+
+time_t 
+Snapshot::timestamp() const
+{
+    return getThumbnail().timestamp;
+}
+
 bool
 Snapshot::isTooOld() const
 {

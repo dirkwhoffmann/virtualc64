@@ -72,4 +72,74 @@ MediaFile::type(const string &path)
     return FILETYPE_UNKNOWN;
 }
 
+MediaFile *
+MediaFile::make(const string &path)
+{
+    return make(path, type(path));
+}
+
+MediaFile *
+MediaFile::make(const string &path, FileType type)
+{
+    switch (type) {
+
+        case FILETYPE_SNAPSHOT:   return new Snapshot(path);
+        case FILETYPE_SCRIPT:     return new Script(path);
+        case FILETYPE_CRT:        return new CRTFile(path);
+        case FILETYPE_T64:        return new T64File(path);
+        case FILETYPE_PRG:        return new PRGFile(path);
+        case FILETYPE_FOLDER:     return new Folder(path);
+        case FILETYPE_P00:        return new P00File(path);
+        case FILETYPE_D64:        return new D64File(path);
+        case FILETYPE_G64:        return new G64File(path);
+        case FILETYPE_TAP:        return new TAPFile(path);
+        case FILETYPE_BASIC_ROM:  return new RomFile(path);
+        case FILETYPE_CHAR_ROM:   return new RomFile(path);
+        case FILETYPE_KERNAL_ROM: return new RomFile(path);
+        case FILETYPE_VC1541_ROM: return new RomFile(path);
+
+        default:
+            return nullptr;
+    }
+}
+
+MediaFile *
+MediaFile::make(const u8 *buf, isize len, FileType type)
+{
+    switch (type) {
+            
+        case FILETYPE_SNAPSHOT:   return new Snapshot(buf, len);
+        case FILETYPE_SCRIPT:     return new Script(buf, len);
+        case FILETYPE_CRT:        return new CRTFile(buf, len);
+        case FILETYPE_T64:        return new T64File(buf, len);
+        case FILETYPE_PRG:        return new PRGFile(buf, len);
+        case FILETYPE_P00:        return new P00File(buf, len);
+        case FILETYPE_D64:        return new D64File(buf, len);
+        case FILETYPE_G64:        return new G64File(buf, len);
+        case FILETYPE_TAP:        return new TAPFile(buf, len);
+        case FILETYPE_BASIC_ROM:  return new RomFile(buf, len);
+        case FILETYPE_CHAR_ROM:   return new RomFile(buf, len);
+        case FILETYPE_KERNAL_ROM: return new RomFile(buf, len);
+        case FILETYPE_VC1541_ROM: return new RomFile(buf, len);
+            
+        default:
+            return nullptr;
+    }
+}
+
+MediaFile *
+MediaFile::make(class FileSystem &fs, FileType type)
+{
+    switch (type) {
+
+        case FILETYPE_T64:        return new T64File(fs);
+        case FILETYPE_PRG:        return new PRGFile(fs);
+        case FILETYPE_P00:        return new P00File(fs);
+        case FILETYPE_D64:        return new D64File(fs);
+
+        default:
+            return nullptr;
+    }
+}
+
 }

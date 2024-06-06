@@ -129,15 +129,15 @@ protected:
     virtual bool isCompatiblePath(const string &path) = 0;
     virtual bool isCompatibleStream(std::istream &stream) = 0;
     
-    void readFromStream(std::istream &stream) throws;
-    void readFromFile(const string &path) throws;
-    void readFromBuffer(const u8 *buf, isize len) throws;
+    void readFromStream(std::istream &stream) override;
+    void readFromFile(const string &path) override;
+    void readFromBuffer(const u8 *buf, isize len) override;
 
 public:
     
-    void writeToStream(std::ostream &stream) throws;
-    void writeToFile(const string &path) throws;
-    void writeToBuffer(u8 *buf) throws;
+    void writeToStream(std::ostream &stream) override;
+    void writeToFile(const string &path) override;
+    void writeToBuffer(u8 *buf) override;
 
 
 private:
