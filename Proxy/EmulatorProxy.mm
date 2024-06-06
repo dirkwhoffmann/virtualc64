@@ -1338,6 +1338,7 @@ using namespace vc64;
 // Snapshot proxy
 //
 
+/*
 @implementation SnapshotProxy
 
 - (MediaFile *)snapshot
@@ -1405,6 +1406,7 @@ using namespace vc64;
 }
 
 @end
+*/
 
 
 //
@@ -2109,10 +2111,10 @@ using namespace vc64;
     [self c64]->removeInspectionTarget();
 }
 
-- (SnapshotProxy *)takeSnapshot
+- (MediaFileProxy *)takeSnapshot
 {
     MediaFile *snapshot = [self c64]->takeSnapshot();
-    return [SnapshotProxy make:(Snapshot *)snapshot];
+    return [MediaFileProxy make:snapshot];
 }
 
 @end
@@ -2494,9 +2496,9 @@ using namespace vc64;
     [self emu]->c64.deleteRom(type);
 }
 
-- (void)flash:(AnyFileProxy *)proxy exception:(ExceptionWrapper *)ex
+- (void)flash:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    try { [self emu]->c64.flash(*(AnyFile *)proxy->obj); }
+    try { [self emu]->c64.flash(*(MediaFile *)proxy->obj); }
     catch (VC64Error &error) { [ex save:error]; }
 }
 

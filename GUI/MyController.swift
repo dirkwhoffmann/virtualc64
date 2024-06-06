@@ -452,7 +452,7 @@ extension MyController {
             }
 
         case .SNAPSHOT_TAKEN:
-            mydocument.snapshots.append(SnapshotProxy.init(msg.snapshot))
+            mydocument.snapshots.append(MediaFileProxy.init(msg.snapshot))
 
         case .SNAPSHOT_RESTORED:
             renderer.rotateRight()

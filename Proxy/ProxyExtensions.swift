@@ -44,6 +44,14 @@ extension MediaFileProxy {
         if exc.errorCode != .OK { throw VC64Error(exc) }
         return obj!
     }
+
+    static func make(with url: URL, type: vc64.FileType) throws -> Self {
+
+        let exc = ExceptionWrapper()
+        let obj = make(withFile: url.path, type: type, exception: exc)
+        if exc.errorCode != .OK { throw VC64Error(exc) }
+        return obj!
+    }
 }
 
 extension MakeWithBuffer {
@@ -180,7 +188,7 @@ extension EmulatorProxy {
         if exception.errorCode != .OK { throw VC64Error(exception) }
     }
      
-    func flash(_ proxy: AnyFileProxy) throws {
+    func flash(_ proxy: MediaFileProxy) throws {
 
         let exception = ExceptionWrapper()
         flash(proxy, exception: exception)

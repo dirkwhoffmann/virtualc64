@@ -1532,7 +1532,7 @@ C64::saveRom(RomType type, const string &path)
 }
 
 void
-C64::flash(const AnyFile &file)
+C64::flash(const MediaFile &file)
 {
     {   SUSPENDED
         

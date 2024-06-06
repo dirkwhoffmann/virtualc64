@@ -63,7 +63,10 @@ public:
     // Return a preview image (only available for snapshot files)
     virtual const u32 *previewImageData() const { return nullptr; }
 
+    //
+    virtual void flash(u8 *buf, isize offset = 0) const = 0;
 
+    
     //
     // Serializing
     //

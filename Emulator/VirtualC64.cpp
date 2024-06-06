@@ -477,7 +477,7 @@ VirtualC64::C64API::saveRom(RomType rom, const string &path)
 }
 
 void 
-VirtualC64::C64API::flash(const AnyFile &file)
+VirtualC64::C64API::flash(const MediaFile &file)
 {
     c64->flash(file);
     c64->markAsDirty();

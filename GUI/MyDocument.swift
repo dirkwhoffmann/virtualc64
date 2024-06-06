@@ -39,7 +39,7 @@ class MyDocument: NSDocument {
     var emu: EmulatorProxy!
 
     // Snapshot storage
-    private(set) var snapshots = ManagedArray<SnapshotProxy>(capacity: 32)
+    private(set) var snapshots = ManagedArray<MediaFileProxy>(capacity: 32)
 
     //
     // Initializing
@@ -122,7 +122,7 @@ class MyDocument: NSDocument {
 
         if typeName == UTType.vc64.identifier {
 
-            if let snapshot = SnapshotProxy.make(withC64: emu) {
+            if let snapshot = MediaFileProxy.make(withC64: emu) {
 
                 do {
                     try snapshot.writeToFile(url: url)

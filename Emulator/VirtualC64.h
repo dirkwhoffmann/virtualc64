@@ -500,7 +500,7 @@ public:
 
         /** @brief  Flashes a file into memory
          */
-        void flash(const AnyFile &file);
+        void flash(const MediaFile &file);
 
         /** @brief  Flashes a file from a collection into memory
          */

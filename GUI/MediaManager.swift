@@ -156,7 +156,7 @@ class MediaManager {
                 switch type {
 
                 case .SNAPSHOT:
-                    return try SnapshotProxy.make(with: newUrl)
+                    return try MediaFileProxy.make(with: newUrl, type: .SNAPSHOT)
 
                 case .SCRIPT:
                     return try ScriptProxy.make(with: newUrl)
@@ -220,8 +220,15 @@ class MediaManager {
 
             switch file {
 
-            case let file as SnapshotProxy:
-                document.snapshots.append(file)
+            case let file as MediaFileProxy:
+
+                switch file.type {
+
+                case .SNAPSHOT:
+                    document.snapshots.append(file)
+
+                default: break;
+                }
 
             case is CRTFileProxy:
                 MediaManager.noteNewRecentlyAtachedCartridgeURL(url)
@@ -255,10 +262,18 @@ class MediaManager {
 
         switch proxy {
 
-        case let proxy as SnapshotProxy:
+        case let proxy as MediaFileProxy:
 
-            debug(.media, "Snapshot")
-            try emu.flash(proxy)
+            switch proxy.type {
+
+            case .SNAPSHOT:
+
+                debug(.media, "Snapshot")
+                try emu.flash(proxy)
+
+            default:
+                break
+            }
 
         case let proxy as ScriptProxy:
 
@@ -311,10 +326,18 @@ class MediaManager {
 
         switch proxy {
 
-        case let proxy as SnapshotProxy:
+        case let proxy as MediaFileProxy:
 
-            debug(.media, "Snapshot")
-            try emu.flash(proxy)
+            switch proxy.type {
+
+            case .SNAPSHOT:
+
+                debug(.media, "Snapshot")
+                try emu.flash(proxy)
+
+            default:
+                break
+            }
 
         case let proxy as ScriptProxy:
 

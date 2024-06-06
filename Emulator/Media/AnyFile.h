@@ -117,7 +117,7 @@ public:
 
     // Copies the file contents into a buffer starting at the provided offset
     // DEPRECATED
-    void flash(u8 *buf, isize offset = 0) const;
+    void flash(u8 *buf, isize offset = 0) const override;
 
     
     //

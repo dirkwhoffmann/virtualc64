@@ -36,6 +36,7 @@ using namespace vc64;
 @class SerialPortProxy;
 @class JoystickProxy;
 @class KeyboardProxy;
+@class MediaFileProxy;
 @class MemoryProxy;
 @class MouseProxy;
 @class MyController;
@@ -46,7 +47,7 @@ using namespace vc64;
 @class RomFileProxy;
 @class ScriptProxy;
 @class SIDProxy;
-@class SnapshotProxy;
+// @class SnapshotProxy;
 @class T64FileProxy;
 @class TAPFileProxy;
 @class VICIIProxy;
@@ -224,7 +225,7 @@ using namespace vc64;
 - (void)saveRom:(RomType)type url:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)deleteRom:(RomType)type;
 
-- (void)flash:(AnyFileProxy *)container exception:(ExceptionWrapper *)ex;
+- (void)flash:(MediaFileProxy *)container exception:(ExceptionWrapper *)ex;
 - (void)flash:(FileSystemProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex;
 
 @end
@@ -280,7 +281,7 @@ using namespace vc64;
 @property InspectionTarget inspectionTarget;
 - (void) removeInspectionTarget;
 
-- (SnapshotProxy *) takeSnapshot;
+- (MediaFileProxy *) takeSnapshot;
 
 @end
 
@@ -659,10 +660,28 @@ struct GuardInfo {
 
 
 //
+// AnyFile
+//
+
+@interface AnyFileProxy : Proxy { }
+
++ (FileType) typeOfUrl:(NSURL *)url;
+
+@property (readonly) FileType type;
+@property (readonly) NSString *name;
+@property (readonly) u64 fnv;
+
+- (void)setPath:(NSString *)path;
+- (void)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex;
+
+@end
+
+
+//
 // MediaFile
 //
 
-@interface MediaFileProxy : Proxy
+@interface MediaFileProxy : AnyFileProxy
 {
     NSImage *preview;
 }
@@ -688,24 +707,6 @@ struct GuardInfo {
 
 
 //
-// AnyFile
-//
-
-@interface AnyFileProxy : Proxy { }
-
-+ (FileType) typeOfUrl:(NSURL *)url;
-
-@property (readonly) FileType type;
-@property (readonly) NSString *name;
-@property (readonly) u64 fnv;
-
-- (void)setPath:(NSString *)path;
-- (void)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex;
-
-@end
-
-
-//
 // AnyCollection
 //
 
@@ -718,6 +719,7 @@ struct GuardInfo {
 // Snapshot
 //
 
+/*
 @interface SnapshotProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer>
 {
    NSImage *preview;
@@ -731,6 +733,7 @@ struct GuardInfo {
 @property (readonly) time_t timeStamp;
 
 @end
+*/
 
 
 //
