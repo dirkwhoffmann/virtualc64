@@ -13,6 +13,7 @@
 #pragma once
 
 #include "VirtualC64.h"
+#include "Concurrency.h"
 #include <map>
 
 namespace vc64 {
