@@ -15,7 +15,7 @@
 
 #include "VirtualC64Types.h"
 #include "Defaults.h"
-#include "Media.h"
+#include "MediaFile.h"
 #include "C64Key.h"
 
 namespace vc64 {
@@ -44,7 +44,7 @@ public:
  */
 struct MemoryAPI : API {
 
-    class C64Memory *mem =nullptr;
+    class C64Memory *mem = nullptr;
 
     /** @brief  Returns the component's current configuration.
      */
@@ -421,10 +421,18 @@ struct DatasetteAPI : API {
  */
 struct ControlPortAPI : API {
 
-    class ControlPort *controlPort;
+    class ControlPort *controlPort = nullptr;
 
+    /** @brief  Custom API of the joystick connected to this port
+     */
     JoystickAPI joystick;
+
+    /** @brief  Custom API of the mouse connected to this port
+     */
     MouseAPI mouse;
+
+    /** @brief  Custom API of the paddle connected to this port
+     */
     PaddleAPI paddle;
 };
 
@@ -585,24 +593,11 @@ struct DriveAPI : API {
      */
     void insertBlankDisk(DOSType fstype, string name);
 
-    /** @brief  Inserts a disk from a media file.
+    /** @brief  Inserts a disk created from a media file.
      *  @param  file    A media file wrapper object.
      *  @param  wp      Write-protection status of the disk.
      */
     void insertMedia(MediaFile &file, bool wp);
-
-    /** @brief  Inserts a disk from a G64 file.
-     *  @param  g64     A G64 file wrapper object.
-     *  @param  wp      Write-protection status of the disk.
-     */
-    // void insertG64(const G64File &g64, bool wp);
-
-    /** @brief  Inserts a disk with the contents of a file collection.
-     *  @param  archive A file collection wrapper object.
-     *  @param  wp      Write-protection status of the disk.
-     *  @throw  VC64Error
-     */
-    // void insertCollection(AnyCollection &archive, bool wp);
 
     /** @brief  Inserts a disk created from a file system.
      *  @param  fs      A file system wrapper object.
@@ -688,7 +683,6 @@ struct RetroShellAPI : API {
     void execScript(const MediaFile &file);
 
     /// @}
-
 };
 
 
@@ -1167,20 +1161,22 @@ public:
 
     } c64;
 
+    /** @brief  Custom APIs of subcomponents
+     */
     MemoryAPI mem;
     CPUAPI cpu;
     CIAAPI cia1, cia2;
     VICIIAPI vicii;
-    SIDAPI sidBridge; // TODO: Rename to sid
+    SIDAPI sid;
     AudioPortAPI audioPort;
     VideoPortAPI videoPort;
     DmaDebuggerAPI dmaDebugger;
     KeyboardAPI keyboard;
     DatasetteAPI datasette;
-    ControlPortAPI port1, port2;
+    ControlPortAPI controlPort1, controlPort2;
     RecorderAPI recorder;
-    ExpansionPortAPI expansionport;
-    SerialPortAPI iec; // TODO: Rename to serialPort
+    ExpansionPortAPI expansionPort;
+    SerialPortAPI serialPort;
     DriveAPI drive8, drive9;
     RetroShellAPI retroShell;
 };

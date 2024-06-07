@@ -71,8 +71,8 @@ VirtualC64::VirtualC64() {
     vicii.emu = emu;
     vicii.vicii = &emu->main.vic;
 
-    sidBridge.emu = emu;
-    sidBridge.sidBridge = &emu->main.sidBridge;
+    sid.emu = emu;
+    sid.sidBridge = &emu->main.sidBridge;
 
     audioPort.emu = emu;
     audioPort.audioPort = &emu->main.audioPort;
@@ -89,26 +89,26 @@ VirtualC64::VirtualC64() {
     datasette.emu = emu;
     datasette.datasette = &emu->main.datasette;
 
-    port1.emu = emu;
-    port1.controlPort = &emu->main.port1;
-    port1.mouse.mouse = &emu->main.port1.mouse;
-    port1.joystick.joystick = &emu->main.port1.joystick;
-    port1.paddle.paddle = &emu->main.port1.paddle;
+    controlPort1.emu = emu;
+    controlPort1.controlPort = &emu->main.port1;
+    controlPort1.mouse.mouse = &emu->main.port1.mouse;
+    controlPort1.joystick.joystick = &emu->main.port1.joystick;
+    controlPort1.paddle.paddle = &emu->main.port1.paddle;
 
-    port2.emu = emu;
-    port2.controlPort = &emu->main.port2;
-    port2.mouse.mouse = &emu->main.port2.mouse;
-    port2.joystick.joystick = &emu->main.port2.joystick;
-    port2.paddle.paddle = &emu->main.port2.paddle;
+    controlPort2.emu = emu;
+    controlPort2.controlPort = &emu->main.port2;
+    controlPort2.mouse.mouse = &emu->main.port2.mouse;
+    controlPort2.joystick.joystick = &emu->main.port2.joystick;
+    controlPort2.paddle.paddle = &emu->main.port2.paddle;
 
     recorder.emu = emu;
     recorder.recorder = &emu->main.recorder;
 
-    expansionport.emu = emu;
-    expansionport.expansionPort = &emu->main.expansionport;
+    expansionPort.emu = emu;
+    expansionPort.expansionPort = &emu->main.expansionport;
 
-    iec.emu = emu;
-    iec.serialPort = &emu->main.iec;
+    serialPort.emu = emu;
+    serialPort.serialPort = &emu->main.iec;
 
     drive8.emu = emu;
     drive8.drive = &emu->main.drive8;
