@@ -616,31 +616,6 @@ struct GuardInfo {
 
 
 //
-// F I L E   T Y P E   P R O X Y S
-//
-
-@protocol MakeWithFile
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
-@end
-
-@protocol MakeWithBuffer
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
-@end
-
-@protocol MakeWithDisk
-+ (instancetype)makeWithDisk:(DiskProxy *)disk exception:(ExceptionWrapper *)ex;
-@end
-
-@protocol MakeWithFileSystem
-+ (instancetype)makeWithFileSystem:(FileSystemProxy *)fs exception:(ExceptionWrapper *)ex;
-@end
-
-@protocol MakeWithFolder
-+ (instancetype)makeWithFolder:(NSString *)path exception:(ExceptionWrapper *)ex;
-@end
-
-
-//
 // AnyFile
 //
 
@@ -684,19 +659,6 @@ struct GuardInfo {
 
 @property (readonly, strong) NSImage *previewImage;
 @property (readonly) time_t timeStamp;
-
-@end
-
-
-//
-// Folder
-//
-
-@interface FolderProxy : AnyFileProxy <MakeWithFolder> { }
-
-+ (instancetype)makeWithFolder:(NSString *)path exception:(ExceptionWrapper *)ex;
-
-@property (readonly) FileSystemProxy *fileSystem;
 
 @end
 

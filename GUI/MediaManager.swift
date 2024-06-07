@@ -183,7 +183,7 @@ class MediaManager {
                     return try MediaFileProxy.make(with: newUrl, type: .TAP)
 
                 case .FOLDER:
-                    return try FolderProxy.make(with: newUrl)
+                    return try MediaFileProxy.make(with: newUrl, type: .FOLDER)
 
                 default:
                     fatalError()
@@ -287,9 +287,9 @@ class MediaManager {
                     emu.datasette.pressPlay()
                 }
 
-            case .T64, .PRG, .P00, .D64, .G64:
+            case .T64, .PRG, .P00, .D64, .G64, .FOLDER:
 
-                debug(.media, "T64, PRG, P00, D64, G64")
+                debug(.media, "T64, PRG, P00, D64, G64, FOLDER")
                 if proceedUnsaved {
                     drive!.insertMedia(proxy, protected: options.contains(.protect))
                 }

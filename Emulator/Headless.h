@@ -109,11 +109,11 @@ static const char *testScript[] = {
 
     "",
     "memory",
-    "memory set RAM_PATTERN VICE",
-    "memory set RAM_PATTERN CCS",
-    "memory set RAM_PATTERN ZEROES",
-    "memory set RAM_PATTERN ONES",
-    "memory set RAM_PATTERN RANDOM",
+    "memory set INIT_PATTERN VICE",
+    "memory set INIT_PATTERN CCS",
+    "memory set INIT_PATTERN ZEROES",
+    "memory set INIT_PATTERN ONES",
+    "memory set INIT_PATTERN RANDOM",
     "memory set SAVE_ROMS true",
     "memory set SAVE_ROMS false",
 

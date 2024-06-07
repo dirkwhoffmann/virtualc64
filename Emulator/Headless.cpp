@@ -82,7 +82,7 @@ Headless::main(int argc, char *argv[])
     c64.launch(this, vc64::process);
 
     // Execute the script
-    script.execute(c64);
+    c64.retroShell.execScript(script);
     barrier.lock();
 
     return returnCode;

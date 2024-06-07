@@ -1610,36 +1610,6 @@ using namespace vc64;
 
 
 //
-// Folder proxy
-//
-
-@implementation FolderProxy
-
-+ (instancetype)make:(Folder *)folder
-{
-    return folder ? [[self alloc] initWith:folder] : nil;
-}
-
-+ (instancetype)makeWithFolder:(NSString *)path exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new Folder([path fileSystemRepresentation])]; }
-    catch (VC64Error &err) { [ex save:err]; return nil; }    
-}
-
-- (Folder *)folder
-{
-    return (Folder *)obj;
-}
-
-- (FileSystemProxy *)fileSystem
-{
-    return [FileSystemProxy make:[self folder]->getFS()];
-}
-
-@end
-
-
-//
 // Constants
 //
 

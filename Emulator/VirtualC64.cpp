@@ -1124,22 +1124,6 @@ DriveAPI::insertMedia(MediaFile &file, bool wp)
     drive->markAsDirty();
 }
 
-/*
-void
-DriveAPI::insertD64(const D64File &d64, bool wp)
-{
-    drive->insertD64(d64, wp);
-    drive->markAsDirty();
-}
-
-void
-DriveAPI::insertG64(const G64File &g64, bool wp)
-{
-    drive->insertG64(g64, wp);
-    drive->markAsDirty();
-}
-*/
-
 void
 DriveAPI::insertCollection(AnyCollection &archive, bool wp)
 {
