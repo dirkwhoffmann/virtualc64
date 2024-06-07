@@ -165,7 +165,7 @@ class MediaManager {
                     return try MediaFileProxy.make(with: newUrl, type: .CRT)
 
                 case .D64:
-                    return try D64FileProxy.make(with: newUrl)
+                    return try MediaFileProxy.make(with: newUrl, type: .D64)
 
                 case .T64:
                     return try T64FileProxy.make(with: newUrl)
@@ -177,7 +177,7 @@ class MediaManager {
                     return try MediaFileProxy.make(with: newUrl, type: .P00)
 
                 case .G64:
-                    return try G64FileProxy.make(with: newUrl)
+                    return try MediaFileProxy.make(with: newUrl, type: .G64)
 
                 case .TAP:
                     return try MediaFileProxy.make(with: newUrl, type: .TAP)
@@ -240,9 +240,6 @@ class MediaManager {
                     break
                 }
 
-            case is D64FileProxy, is G64FileProxy, is AnyCollectionProxy:
-                MediaManager.noteNewRecentlyInsertedDiskURL(url)
-
             default:
                 break
             }
@@ -290,6 +287,13 @@ class MediaManager {
                     emu.datasette.pressPlay()
                 }
 
+            case .D64, .G64:
+
+                debug(.media, "D64, G64")
+                if proceedUnsaved {
+                    drive!.insertMedia(proxy, protected: options.contains(.protect))
+                }
+
             default:
                 break
             }
@@ -298,20 +302,6 @@ class MediaManager {
 
             debug(.media, "Script")
             console.runScript(script: proxy)
-
-        case let proxy as D64FileProxy:
-
-            debug(.media, "D64")
-            if proceedUnsaved {
-                drive!.insertD64(proxy, protected: options.contains(.protect))
-            }
-
-        case let proxy as G64FileProxy:
-
-            debug(.media, "G64")
-            if proceedUnsaved {
-                drive!.insertG64(proxy, protected: options.contains(.protect))
-            }
 
         case let proxy as AnyCollectionProxy:
 
@@ -435,7 +425,7 @@ class MediaManager {
         switch url.c64FileType {
 
         case .D64:
-            file = try D64FileProxy.make(with: fs)
+            file = try MediaFileProxy.make(with: fs, type: .D64)
 
         case .T64:
             file = try T64FileProxy.make(with: fs)

@@ -23,7 +23,6 @@ using namespace vc64;
 @class Constants;
 @class ControlPortProxy;
 @class CPUProxy;
-@class D64FileProxy;
 @class DatasetteProxy;
 @class DefaultsProxy;
 @class DiskProxy;
@@ -502,8 +501,7 @@ struct GuardInfo {
 @property (readonly) DriveInfo cachedInfo;
 
 - (void)insertBlankDisk:(DOSType)fstype name:(NSString *)name;
-- (void)insertD64:(D64FileProxy *)proxy protected:(BOOL)wp;
-- (void)insertG64:(G64FileProxy *)proxy protected:(BOOL)wp;
+- (void)insertMedia:(MediaFileProxy *)proxy protected:(BOOL)wp;
 - (void)insertCollection:(AnyCollectionProxy *)proxy protected:(BOOL)wp;
 - (void)insertFileSystem:(FileSystemProxy *)proxy protected:(BOOL)wp;
 - (void)ejectDisk;
@@ -644,10 +642,6 @@ struct GuardInfo {
 + (instancetype)makeWithCollection:(AnyCollectionProxy *)collection exception:(ExceptionWrapper *)ex;
 @end
 
-@protocol MakeWithD64
-+ (instancetype)makeWithD64:(D64FileProxy *)d64 exception:(ExceptionWrapper *)ex;;
-@end
-
 @protocol MakeWithFolder
 + (instancetype)makeWithFolder:(NSString *)path exception:(ExceptionWrapper *)ex;
 @end
@@ -686,6 +680,7 @@ struct GuardInfo {
 + (instancetype)makeWithFile:(NSString *)path type:(FileType)t exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len type:(FileType)t exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithC64:(EmulatorProxy *)c64proxy;
++ (instancetype)makeWithDrive:(DriveProxy *)proxy type:(FileType)t exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy type:(FileType)t exception:(ExceptionWrapper *)ex;
 
 @property (readonly) FileType type;
@@ -738,20 +733,6 @@ AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 
 
 //
-// D64File
-//
-
-@interface D64FileProxy :
-AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
-
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy exception:(ExceptionWrapper *)ex;
-
-@end
-
-
-//
 // G64File
 //
 
@@ -783,9 +764,8 @@ AnyCollectionProxy <MakeWithFolder> { }
 // FileSystem
 //
 
-@interface FileSystemProxy : Proxy <MakeWithDisk, MakeWithCollection, MakeWithD64> { }
+@interface FileSystemProxy : Proxy <MakeWithDisk, MakeWithCollection> { }
 
-+ (instancetype)makeWithD64:(D64FileProxy *)d64 exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithDisk:(DiskProxy *)disk exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithCollection:(AnyCollectionProxy *)collection exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithDiskType:(DiskType)diskType dosType:(DOSType)dosType;

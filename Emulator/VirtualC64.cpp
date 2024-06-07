@@ -503,74 +503,74 @@ VirtualC64::C64API::flash(const FileSystem &fs, isize item)
 //
 
 const CPUInfo &
-VirtualC64::CPUAPI::getInfo() const
+CPUAPI::getInfo() const
 {
     assert(isUserThread());
     return cpu->getInfo();
 }
 
 const CPUInfo &
-VirtualC64::CPUAPI::getCachedInfo() const
+CPUAPI::getCachedInfo() const
 {
     assert(isUserThread());
     return cpu->getCachedInfo();
 }
 
 isize
-VirtualC64::CPUAPI::loggedInstructions() const
+CPUAPI::loggedInstructions() const
 {
     assert(isUserThread());
     return cpu->debugger.loggedInstructions();
 }
 
 void
-VirtualC64::CPUAPI::clearLog()
+CPUAPI::clearLog()
 {
     assert(isUserThread());
     return cpu->debugger.clearLog();
 }
 
 void
-VirtualC64::CPUAPI::setNumberFormat(DasmNumberFormat instrFormat, DasmNumberFormat dataFormat)
+CPUAPI::setNumberFormat(DasmNumberFormat instrFormat, DasmNumberFormat dataFormat)
 {
     assert(isUserThread());
     return cpu->disassembler.setNumberFormat(instrFormat, dataFormat);
 }
 
 isize
-VirtualC64::CPUAPI::disassemble(char *dst, const char *fmt, u16 addr) const
+CPUAPI::disassemble(char *dst, const char *fmt, u16 addr) const
 {
     assert(isUserThread());
     return cpu->disassembler.disass(dst, fmt, addr);
 }
 
 isize
-VirtualC64::CPUAPI::disassembleRecorded(char *dst, const char *fmt, isize nr) const
+CPUAPI::disassembleRecorded(char *dst, const char *fmt, isize nr) const
 {
     assert(isUserThread());
     return cpu->debugger.disassRecorded(dst, fmt, nr);
 }
 
 Guard *
-VirtualC64::CPUAPI::breakpointNr(long nr) const
+CPUAPI::breakpointNr(long nr) const
 {
     return cpu->debugger.breakpoints.guardWithNr(nr);
 }
 
 Guard *
-VirtualC64::CPUAPI::breakpointAt(u32 addr) const
+CPUAPI::breakpointAt(u32 addr) const
 {
     return cpu->debugger.breakpoints.guardAtAddr(addr);
 }
 
 Guard *
-VirtualC64::CPUAPI::watchpointNr(long nr) const
+CPUAPI::watchpointNr(long nr) const
 {
     return cpu->debugger.watchpoints.guardWithNr(nr);
 }
 
 Guard *
-VirtualC64::CPUAPI::watchpointAt(u32 addr) const
+CPUAPI::watchpointAt(u32 addr) const
 {
     return cpu->debugger.watchpoints.guardAtAddr(addr);
 }
@@ -581,42 +581,42 @@ VirtualC64::CPUAPI::watchpointAt(u32 addr) const
 //
 
 const MemConfig &
-VirtualC64::MemoryAPI::getConfig() const
+MemoryAPI::getConfig() const
 {
     assert(isUserThread());
     return mem->getConfig();
 }
 
 const MemInfo &
-VirtualC64::MemoryAPI::getInfo() const
+MemoryAPI::getInfo() const
 {
     assert(isUserThread());
     return mem->getInfo();
 }
 
 const MemInfo &
-VirtualC64::MemoryAPI::getCachedInfo() const
+MemoryAPI::getCachedInfo() const
 {
     assert(isUserThread());
     return mem->getCachedInfo();
 }
 
 string
-VirtualC64::MemoryAPI::memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const
+MemoryAPI::memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const
 {
     assert(isUserThread());
     return mem->memdump(addr, num, hex, pads, src);
 }
 
 string
-VirtualC64::MemoryAPI::txtdump(u16 addr, isize num, MemoryType src) const
+MemoryAPI::txtdump(u16 addr, isize num, MemoryType src) const
 {
     assert(isUserThread());
     return mem->txtdump(addr, num, src);
 }
 
 void
-VirtualC64::MemoryAPI::drawHeatmap(u32 *buffer, isize width, isize height) const
+MemoryAPI::drawHeatmap(u32 *buffer, isize width, isize height) const
 {
     return mem->heatmap.draw(buffer, width, height);
 }
@@ -627,25 +627,25 @@ VirtualC64::MemoryAPI::drawHeatmap(u32 *buffer, isize width, isize height) const
 //
 
 const CIAConfig &
-VirtualC64::CIAAPI::getConfig() const
+CIAAPI::getConfig() const
 {
     return cia->getConfig();
 }
 
 const CIAInfo &
-VirtualC64::CIAAPI::getInfo() const
+CIAAPI::getInfo() const
 {
     return cia->getInfo();
 }
 
 const CIAInfo &
-VirtualC64::CIAAPI::getCachedInfo() const
+CIAAPI::getCachedInfo() const
 {
     return cia->getCachedInfo();
 }
 
 CIAStats
-VirtualC64::CIAAPI::getStats() const
+CIAAPI::getStats() const
 {
     return cia->getStats();
 }
@@ -656,43 +656,43 @@ VirtualC64::CIAAPI::getStats() const
 //
 
 const VICIITraits &
-VirtualC64::VICIIAPI::getTraits() const
+VICIIAPI::getTraits() const
 {
     return vicii->getTraits();
 }
 
 const VICIIConfig &
-VirtualC64::VICIIAPI::getConfig() const
+VICIIAPI::getConfig() const
 {
     return vicii->getConfig();
 }
 
 const VICIIInfo &
-VirtualC64::VICIIAPI::getInfo() const
+VICIIAPI::getInfo() const
 {
     return vicii->getInfo();
 }
 
 const VICIIInfo &
-VirtualC64::VICIIAPI::getCachedInfo() const
+VICIIAPI::getCachedInfo() const
 {
     return vicii->getCachedInfo();
 }
 
 SpriteInfo
-VirtualC64::VICIIAPI::getSpriteInfo(isize nr) const
+VICIIAPI::getSpriteInfo(isize nr) const
 {
     return vicii->getSpriteInfo(nr);
 }
 
 u32
-VirtualC64::VICIIAPI::getColor(isize nr) const
+VICIIAPI::getColor(isize nr) const
 {
     return vicii->getColor(nr);
 }
 
 u32
-VirtualC64::VICIIAPI::getColor(isize nr, Palette palette) const
+VICIIAPI::getColor(isize nr, Palette palette) const
 {
     return vicii->getColor(nr, palette);
 }
@@ -703,7 +703,7 @@ VirtualC64::VICIIAPI::getColor(isize nr, Palette palette) const
 //
 
 SIDInfo
-VirtualC64::SIDAPI::getInfo(isize nr) const
+SIDAPI::getInfo(isize nr) const
 {
     assert(nr < 3);
 
@@ -712,7 +712,7 @@ VirtualC64::SIDAPI::getInfo(isize nr) const
 }
 
 SIDInfo
-VirtualC64::SIDAPI::getCachedInfo(isize nr) const
+SIDAPI::getCachedInfo(isize nr) const
 {
     assert(nr < 3);
 
@@ -721,7 +721,7 @@ VirtualC64::SIDAPI::getCachedInfo(isize nr) const
 }
 
 float
-VirtualC64::SIDAPI::draw(u32 *buffer, isize width, isize height,
+SIDAPI::draw(u32 *buffer, isize width, isize height,
                          float maxAmp, u32 color, isize sid) const
 {
     assert(isUserThread());
@@ -734,28 +734,28 @@ VirtualC64::SIDAPI::draw(u32 *buffer, isize width, isize height,
 //
 
 AudioPortStats
-VirtualC64::AudioPortAPI::getStats() const
+AudioPortAPI::getStats() const
 {
     assert(isUserThread());
     return audioPort->getStats();
 }
 
 void
-VirtualC64::AudioPortAPI::copyMono(float *buffer, isize n)
+AudioPortAPI::copyMono(float *buffer, isize n)
 {
     assert(isUserThread());
     audioPort->copyMono(buffer, n);
 }
 
 void
-VirtualC64::AudioPortAPI::copyStereo(float *left, float *right, isize n)
+AudioPortAPI::copyStereo(float *left, float *right, isize n)
 {
     assert(isUserThread());
     audioPort->copyStereo(left, right, n);
 }
 
 void
-VirtualC64::AudioPortAPI::copyInterleaved(float *buffer, isize n)
+AudioPortAPI::copyInterleaved(float *buffer, isize n)
 {
     assert(isUserThread());
     audioPort->copyInterleaved(buffer, n);
@@ -767,13 +767,13 @@ VirtualC64::AudioPortAPI::copyInterleaved(float *buffer, isize n)
 //
 
 u32 *
-VirtualC64::VideoPortAPI::getTexture() const
+VideoPortAPI::getTexture() const
 {
     return emu->getTexture();
 }
 
 u32 *
-VirtualC64::VideoPortAPI::getDmaTexture() const
+VideoPortAPI::getDmaTexture() const
 {
     return emu->getDmaTexture();
 }
@@ -784,7 +784,7 @@ VirtualC64::VideoPortAPI::getDmaTexture() const
 //
 
 const DmaDebuggerConfig &
-VirtualC64::DmaDebuggerAPI::getConfig() const
+DmaDebuggerAPI::getConfig() const
 {
     assert(isUserThread());
     return dmaDebugger->getConfig();
@@ -795,18 +795,18 @@ VirtualC64::DmaDebuggerAPI::getConfig() const
 // Keyboard
 //
 
-bool VirtualC64::KeyboardAPI::isPressed(C64Key key) const
+bool KeyboardAPI::isPressed(C64Key key) const
 {
     return keyboard->isPressed(key);
 }
 
-void VirtualC64::KeyboardAPI::autoType(const string &text)
+void KeyboardAPI::autoType(const string &text)
 {
     keyboard->autoType(text);
     keyboard->markAsDirty();
 }
 
-void VirtualC64::KeyboardAPI::abortAutoTyping()
+void KeyboardAPI::abortAutoTyping()
 {
     keyboard->abortAutoTyping();
     keyboard->markAsDirty();
@@ -818,13 +818,13 @@ void VirtualC64::KeyboardAPI::abortAutoTyping()
 //
 
 const JoystickInfo &
-VirtualC64::JoystickAPI::getInfo() const
+JoystickAPI::getInfo() const
 {
     return joystick->getInfo();
 }
 
 const JoystickInfo &
-VirtualC64::JoystickAPI::getCachedInfo() const
+JoystickAPI::getCachedInfo() const
 {
     return joystick->getCachedInfo();
 }
@@ -835,13 +835,13 @@ VirtualC64::JoystickAPI::getCachedInfo() const
 //
 
 const PaddleInfo &
-VirtualC64::PaddleAPI::getInfo() const
+PaddleAPI::getInfo() const
 {
     return paddle->getInfo();
 }
 
 const PaddleInfo &
-VirtualC64::PaddleAPI::getCachedInfo() const
+PaddleAPI::getCachedInfo() const
 {
     return paddle->getCachedInfo();
 }
@@ -852,26 +852,26 @@ VirtualC64::PaddleAPI::getCachedInfo() const
 //
 
 const DatasetteInfo &
-VirtualC64::DatasetteAPI::getInfo() const
+DatasetteAPI::getInfo() const
 {
     return datasette->getInfo();
 }
 
 const DatasetteInfo &
-VirtualC64::DatasetteAPI::getCachedInfo() const
+DatasetteAPI::getCachedInfo() const
 {
     return datasette->getCachedInfo();
 }
 
 void
-VirtualC64::DatasetteAPI::insertTape(MediaFile &file)
+DatasetteAPI::insertTape(MediaFile &file)
 {
     datasette->insertTape(file);
     datasette->markAsDirty();
 }
 
 void
-VirtualC64::DatasetteAPI::ejectTape()
+DatasetteAPI::ejectTape()
 {
     datasette->ejectTape();
     datasette->markAsDirty();
@@ -882,12 +882,12 @@ VirtualC64::DatasetteAPI::ejectTape()
 // Mouse
 //
 
-bool VirtualC64::MouseAPI::detectShakeXY(double x, double y)
+bool MouseAPI::detectShakeXY(double x, double y)
 {
     return mouse->detectShakeXY(x, y);
 }
 
-bool VirtualC64::MouseAPI::detectShakeDxDy(double dx, double dy)
+bool MouseAPI::detectShakeDxDy(double dx, double dy)
 {
     return mouse->detectShakeDxDy(dx, dy);
 }
@@ -898,103 +898,103 @@ bool VirtualC64::MouseAPI::detectShakeDxDy(double dx, double dy)
 //
 
 const RecorderConfig &
-VirtualC64::RecorderAPI::getConfig() const
+RecorderAPI::getConfig() const
 {
     return recorder->getConfig();
 }
 
 const RecorderInfo &
-VirtualC64::RecorderAPI::getInfo() const
+RecorderAPI::getInfo() const
 {
     return recorder->getInfo();
 }
 
 const RecorderInfo &
-VirtualC64::RecorderAPI::getCachedInfo() const
+RecorderAPI::getCachedInfo() const
 {
     return recorder->getCachedInfo();
 }
 
 const string
-VirtualC64::RecorderAPI::getExecPath() const
+RecorderAPI::getExecPath() const
 {
     return FFmpeg::getExecPath();
 }
 
-void VirtualC64::RecorderAPI::setExecPath(const string &path)
+void RecorderAPI::setExecPath(const string &path)
 {
     FFmpeg::setExecPath(path);
 }
 
 void
-VirtualC64::RecorderAPI::startRecording(isize x1, isize y1, isize x2, isize y2)
+RecorderAPI::startRecording(isize x1, isize y1, isize x2, isize y2)
 {
     recorder->startRecording(x1, y1, x2, y2);
 }
 
 void
-VirtualC64::RecorderAPI::stopRecording()
+RecorderAPI::stopRecording()
 {
     recorder->stopRecording();
 }
 
 bool
-VirtualC64::RecorderAPI::exportAs(const string &path)
+RecorderAPI::exportAs(const string &path)
 {
     return recorder->exportAs(path);
 }
 
 
 const char *
-VirtualC64::RetroShellAPI::text()
+RetroShellAPI::text()
 {
     return retroShell->text();
 }
 
 isize
-VirtualC64::RetroShellAPI::cursorRel()
+RetroShellAPI::cursorRel()
 {
     return retroShell->cursorRel();
 }
 
 void
-VirtualC64::RetroShellAPI::press(RetroShellKey key, bool shift)
+RetroShellAPI::press(RetroShellKey key, bool shift)
 {
     retroShell->press(key, shift);
 }
 
 void
-VirtualC64::RetroShellAPI::press(char c)
+RetroShellAPI::press(char c)
 {
     retroShell->press(c);
 }
 
 void
-VirtualC64::RetroShellAPI::press(const string &s)
+RetroShellAPI::press(const string &s)
 {
     retroShell->press(s);
 }
 
 void
-VirtualC64::RetroShellAPI::execScript(std::stringstream &ss)
+RetroShellAPI::execScript(std::stringstream &ss)
 {
     retroShell->execScript(ss);
 }
 
 void
-VirtualC64::RetroShellAPI::execScript(const std::ifstream &fs)
+RetroShellAPI::execScript(const std::ifstream &fs)
 {
     retroShell->execScript(fs);
 }
 
 void
-VirtualC64::RetroShellAPI::execScript(const string &contents)
+RetroShellAPI::execScript(const string &contents)
 {
     retroShell->execScript(contents);
 }
 
 void
-VirtualC64::RetroShellAPI::setStream(std::ostream &os)
+RetroShellAPI::setStream(std::ostream &os)
 {
     retroShell->setStream(os);
 }
@@ -1005,66 +1005,66 @@ VirtualC64::RetroShellAPI::setStream(std::ostream &os)
 //
 
 CartridgeTraits
-VirtualC64::ExpansionPortAPI::getCartridgeTraits() const
+ExpansionPortAPI::getCartridgeTraits() const
 {
     return expansionPort->getCartridgeTraits();
 }
 
 const CartridgeInfo &
-VirtualC64::ExpansionPortAPI::getInfo() const
+ExpansionPortAPI::getInfo() const
 {
     return expansionPort->getInfo();
 }
 
 const CartridgeInfo &
-VirtualC64::ExpansionPortAPI::getCachedInfo() const
+ExpansionPortAPI::getCachedInfo() const
 {
     return expansionPort->getCachedInfo();
 }
 
 CartridgeRomInfo
-VirtualC64::ExpansionPortAPI::getRomInfo(isize nr) const
+ExpansionPortAPI::getRomInfo(isize nr) const
 {
     return expansionPort->getRomInfo(nr);
 }
 
 void
-VirtualC64::ExpansionPortAPI::attachCartridge(const string &path, bool reset)
+ExpansionPortAPI::attachCartridge(const string &path, bool reset)
 {
     expansionPort->attachCartridge(path, reset);
     expansionPort->markAsDirty();
 }
 
 void
-VirtualC64::ExpansionPortAPI::attachCartridge(const MediaFile &c, bool reset)
+ExpansionPortAPI::attachCartridge(const MediaFile &c, bool reset)
 {
     expansionPort->attachCartridge(c, reset);
     expansionPort->markAsDirty();
 }
 
 void
-VirtualC64::ExpansionPortAPI::attachReu(isize capacity)
+ExpansionPortAPI::attachReu(isize capacity)
 {
     expansionPort->attachReu(capacity);
     expansionPort->markAsDirty();
 }
 
 void
-VirtualC64::ExpansionPortAPI::attachGeoRam(isize capacity)
+ExpansionPortAPI::attachGeoRam(isize capacity)
 {
     expansionPort->attachGeoRam(capacity);
     expansionPort->markAsDirty();
 }
 
 void
-VirtualC64::ExpansionPortAPI::attachIsepicCartridge()
+ExpansionPortAPI::attachIsepicCartridge()
 {
     expansionPort->attachIsepicCartridge();
     expansionPort->markAsDirty();
 }
 
 void
-VirtualC64::ExpansionPortAPI::detachCartridge()
+ExpansionPortAPI::detachCartridge()
 {
     expansionPort->detachCartridge();
     expansionPort->markAsDirty();
@@ -1076,7 +1076,7 @@ VirtualC64::ExpansionPortAPI::detachCartridge()
 //
 
 Disk *
-VirtualC64::DiskAPI::get()
+DiskAPI::get()
 {
     return drive->disk.get();
 }
@@ -1087,60 +1087,69 @@ VirtualC64::DiskAPI::get()
 //
 
 const DriveConfig &
-VirtualC64::DriveAPI::getConfig() const
+DriveAPI::getConfig() const
 {
     return drive->getConfig();
 }
 
 const DriveInfo &
-VirtualC64::DriveAPI::getInfo() const
+DriveAPI::getInfo() const
 {
     return drive->getInfo();
 }
 
 const DriveInfo &
-VirtualC64::DriveAPI::getCachedInfo() const
+DriveAPI::getCachedInfo() const
 {
     return drive->getCachedInfo();
 }
 
 void
-VirtualC64::DriveAPI::insertBlankDisk(DOSType fstype, PETName<16> name)
+DriveAPI::insertBlankDisk(DOSType fstype, PETName<16> name)
 {
     drive->insertNewDisk(fstype, name);
     drive->markAsDirty();
 }
 
 void
-VirtualC64::DriveAPI::insertD64(const D64File &d64, bool wp)
+DriveAPI::insertMedia(MediaFile &file, bool wp)
+{
+    drive->insertMediaFile(file, wp);
+    drive->markAsDirty();
+}
+
+/*
+void
+DriveAPI::insertD64(const D64File &d64, bool wp)
 {
     drive->insertD64(d64, wp);
     drive->markAsDirty();
 }
 
 void
-VirtualC64::DriveAPI::insertG64(const G64File &g64, bool wp)
+DriveAPI::insertG64(const G64File &g64, bool wp)
 {
     drive->insertG64(g64, wp);
     drive->markAsDirty();
 }
+*/
 
 void
-VirtualC64::DriveAPI::insertCollection(AnyCollection &archive, bool wp)
+DriveAPI::insertCollection(AnyCollection &archive, bool wp)
 {
     drive->insertCollection(archive, wp);
     drive->markAsDirty();
 }
 
 void
-VirtualC64::DriveAPI::insertFileSystem(const class FileSystem &device, bool wp)
+DriveAPI::insertFileSystem(const class FileSystem &device, bool wp)
 {
     drive->insertFileSystem(device, wp);
     drive->markAsDirty();
 }
 
 void
-VirtualC64::DriveAPI::ejectDisk()
+DriveAPI::ejectDisk()
 {
     drive->ejectDisk();
     drive->markAsDirty();

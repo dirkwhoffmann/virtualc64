@@ -40,7 +40,7 @@ class DiskExporter: DialogController {
     var disk: DiskProxy?
 
     // Results of the different decoders
-    var d64: D64FileProxy?
+    var d64: MediaFileProxy?
     var t64: T64FileProxy?
     var prg: MediaFileProxy?
     var vol: FileSystemProxy?
@@ -60,7 +60,7 @@ class DiskExporter: DialogController {
             if vol != nil {
 
                 // Try to run the D64 encoder
-                d64 = try? D64FileProxy.make(with: vol!)
+                d64 = try? MediaFileProxy.make(with: vol!, type: .D64)
 
                 // Try to run the T64 encoder
                 t64 = try? T64FileProxy.make(with: vol!)

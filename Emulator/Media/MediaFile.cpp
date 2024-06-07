@@ -12,6 +12,7 @@
 
 #include "config.h"
 #include "MediaFile.h"
+#include "VirtualC64.h"
 #include "Checksum.h"
 #include "CRTFile.h"
 #include "D64File.h"
@@ -136,6 +137,21 @@ MediaFile::make(class FileSystem &fs, FileType type)
         case FILETYPE_PRG:        return new PRGFile(fs);
         case FILETYPE_P00:        return new P00File(fs);
         case FILETYPE_D64:        return new D64File(fs);
+
+        default:
+            return nullptr;
+    }
+}
+
+MediaFile *
+MediaFile::make(DriveAPI &drive, FileType type)
+{
+    auto disk = drive.disk.get();
+    if (!disk) return nullptr;
+
+    switch (type) {
+
+        case FILETYPE_G64:        return new G64File(*disk);
 
         default:
             return nullptr;

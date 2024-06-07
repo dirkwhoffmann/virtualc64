@@ -175,9 +175,9 @@ using namespace vc64;
 
 @implementation CPUProxy
 
-- (VirtualC64::CPUAPI *)cpu
+- (CPUAPI *)cpu
 {
-    return (VirtualC64::CPUAPI *)obj;
+    return (CPUAPI *)obj;
 }
 
 - (CPUInfo)info
@@ -324,9 +324,9 @@ using namespace vc64;
 
 @implementation MemoryProxy
 
-- (VirtualC64::MemoryAPI *)mem
+- (MemoryAPI *)mem
 {
-    return (VirtualC64::MemoryAPI *)obj;
+    return (MemoryAPI *)obj;
 }
 
 - (MemConfig)config
@@ -368,9 +368,9 @@ using namespace vc64;
 
 @implementation CIAProxy
 
-- (VirtualC64::CIAAPI *)cia
+- (CIAAPI *)cia
 {
-    return (VirtualC64::CIAAPI *)obj;
+    return (CIAAPI *)obj;
 }
 
 - (CIAConfig)config
@@ -402,9 +402,9 @@ using namespace vc64;
 
 @implementation VICIIProxy
 
-- (VirtualC64::VICIIAPI *)vicii
+- (VICIIAPI *)vicii
 {
-    return (VirtualC64::VICIIAPI *)obj;
+    return (VICIIAPI *)obj;
 }
 
 - (VICIITraits)traits
@@ -462,9 +462,9 @@ using namespace vc64;
 
 @implementation DmaDebuggerProxy
 
-- (VirtualC64::DmaDebuggerAPI *)debugger
+- (DmaDebuggerAPI *)debugger
 {
-    return (VirtualC64::DmaDebuggerAPI *)obj;
+    return (DmaDebuggerAPI *)obj;
 }
 
 - (DmaDebuggerConfig)getConfig
@@ -481,9 +481,9 @@ using namespace vc64;
 
 @implementation SIDProxy
 
-- (VirtualC64::SIDAPI *)bridge
+- (SIDAPI *)bridge
 {
-    return (VirtualC64::SIDAPI *)obj;
+    return (SIDAPI *)obj;
 }
 
 - (SIDInfo)getInfo:(NSInteger)nr
@@ -524,9 +524,9 @@ using namespace vc64;
 
 @implementation AudioPortProxy
 
-- (VirtualC64::AudioPortAPI *)port
+- (AudioPortAPI *)port
 {
-    return (VirtualC64::AudioPortAPI *)obj;
+    return (AudioPortAPI *)obj;
 }
 
 - (AudioPortStats)stats
@@ -558,9 +558,9 @@ using namespace vc64;
 
 @implementation VideoPortProxy
 
-- (VirtualC64::VideoPortAPI *)port
+- (VideoPortAPI *)port
 {
-    return (VirtualC64::VideoPortAPI *)obj;
+    return (VideoPortAPI *)obj;
 }
 
 - (u32 *)texture
@@ -577,9 +577,9 @@ using namespace vc64;
 
 @implementation SerialPortProxy
 
-- (VirtualC64::SerialPortAPI *)iec
+- (SerialPortAPI *)iec
 {
-    return (VirtualC64::SerialPortAPI *)obj;
+    return (SerialPortAPI *)obj;
 }
 
 @end
@@ -591,9 +591,9 @@ using namespace vc64;
 
 @implementation KeyboardProxy
 
-- (VirtualC64::KeyboardAPI *)kb
+- (KeyboardAPI *)kb
 {
-    return (VirtualC64::KeyboardAPI *)obj;
+    return (KeyboardAPI *)obj;
 }
 
 - (VirtualC64 *)emu
@@ -668,16 +668,16 @@ using namespace vc64;
 {
     if (self = [super initWith:ref emu:emuref]) {
 
-        VirtualC64::ControlPortAPI *port = (VirtualC64::ControlPortAPI *)obj;
+        ControlPortAPI *port = (ControlPortAPI *)obj;
         joystick = [[JoystickProxy alloc] initWith:&port->joystick];
         mouse = [[MouseProxy alloc] initWith:&port->mouse];
     }
     return self;
 }
 
-- (VirtualC64::ControlPortAPI *)port
+- (ControlPortAPI *)port
 {
-    return (VirtualC64::ControlPortAPI *)obj;
+    return (ControlPortAPI *)obj;
 }
 
 @end
@@ -689,9 +689,9 @@ using namespace vc64;
 
 @implementation ExpansionPortProxy
 
-- (VirtualC64::ExpansionPortAPI *)eport
+- (ExpansionPortAPI *)eport
 {
-    return (VirtualC64::ExpansionPortAPI *)obj;
+    return (ExpansionPortAPI *)obj;
 }
 
 - (VirtualC64 *)emu
@@ -759,12 +759,12 @@ using namespace vc64;
 
 @implementation DiskProxy
 
-- (VirtualC64::DriveAPI *)drive
+- (DriveAPI *)drive
 {
-    return (VirtualC64::DriveAPI *)obj;
+    return (DriveAPI *)obj;
 }
 
-- (VirtualC64::DiskAPI *)disk
+- (DiskAPI *)disk
 {
     return &[self drive]->disk;
 }
@@ -874,7 +874,7 @@ using namespace vc64;
 
 @implementation DriveProxy
 
-- (instancetype)initWithVC1541:(VirtualC64::DriveAPI *)drive emu:(VirtualC64 *)emuref
+- (instancetype)initWithVC1541:(DriveAPI *)drive emu:(VirtualC64 *)emuref
 {
     if ([self initWith:drive emu:emuref]) {
         disk = [[DiskProxy alloc] initWith:drive];
@@ -882,9 +882,9 @@ using namespace vc64;
     return self;
 }
 
-- (VirtualC64::DriveAPI *)drive
+- (DriveAPI *)drive
 {
-    return (VirtualC64::DriveAPI *)obj;
+    return (DriveAPI *)obj;
 }
 
 - (VirtualC64 *)emu
@@ -912,14 +912,9 @@ using namespace vc64;
     return [self drive]->getCachedInfo();
 }
 
-- (void)insertD64:(D64FileProxy *)proxy protected:(BOOL)wp
+- (void)insertMedia:(MediaFileProxy *)proxy protected:(BOOL)wp
 {
-    [self drive]->insertD64(*(D64File *)proxy->obj, wp);
-}
-
-- (void)insertG64:(G64FileProxy *)proxy protected:(BOOL)wp
-{
-    [self drive]->insertG64(*(G64File *)proxy->obj, wp);
+    [self drive]->insertMedia(*(MediaFile *)proxy->obj, wp);
 }
 
 - (void)insertCollection:(AnyCollectionProxy *)proxy protected:(BOOL)wp
@@ -951,9 +946,9 @@ using namespace vc64;
 
 @implementation DatasetteProxy
 
-- (VirtualC64::DatasetteAPI *)datasette
+- (DatasetteAPI *)datasette
 {
-    return (VirtualC64::DatasetteAPI *)obj;
+    return (DatasetteAPI *)obj;
 }
 
 - (VirtualC64 *)emu
@@ -1005,9 +1000,9 @@ using namespace vc64;
 
 @implementation MouseProxy
 
-- (VirtualC64::MouseAPI *)mouse
+- (MouseAPI *)mouse
 {
-    return (VirtualC64::MouseAPI *)obj;
+    return (MouseAPI *)obj;
 }
 
 - (BOOL)detectShakeAbs:(NSPoint)pos
@@ -1029,9 +1024,9 @@ using namespace vc64;
 
 @implementation JoystickProxy
 
-- (VirtualC64::JoystickAPI *)joystick
+- (JoystickAPI *)joystick
 {
-    return (VirtualC64::JoystickAPI *)obj;
+    return (JoystickAPI *)obj;
 }
 
 @end
@@ -1043,9 +1038,9 @@ using namespace vc64;
 
 @implementation RecorderProxy
 
-- (VirtualC64::RecorderAPI *)recorder
+- (RecorderAPI *)recorder
 {
-    return (VirtualC64::RecorderAPI *)obj;
+    return (RecorderAPI *)obj;
 }
 
 - (RecorderConfig)config
@@ -1127,12 +1122,12 @@ using namespace vc64;
 
 @implementation RetroShellProxy
 
-- (VirtualC64::RetroShellAPI *)shell
+- (RetroShellAPI *)shell
 {
-    return (VirtualC64::RetroShellAPI *)obj;
+    return (RetroShellAPI *)obj;
 }
 
-+ (instancetype)make:(VirtualC64::RetroShellAPI *)shell
++ (instancetype)make:(RetroShellAPI *)shell
 {
     if (shell == nullptr) { return nil; }
     
@@ -1214,7 +1209,17 @@ using namespace vc64;
     return [self make:vc64->c64.takeSnapshot()];
 }
 
-+ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy 
++ (instancetype)makeWithDrive:(DriveProxy *)proxy
+                        type:(FileType)type
+                   exception:(ExceptionWrapper *)ex
+{
+    auto drive = (DriveAPI *)proxy->obj;
+    try { return [self make: MediaFile::make(*drive, type)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
+}
+
+
++ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy
                               type:(FileType)type
                          exception:(ExceptionWrapper *)ex
 {
@@ -1222,6 +1227,17 @@ using namespace vc64;
     try { return [self make: MediaFile::make(*fs, type)]; }
     catch (VC64Error &error) { [ex save:error]; return nil; }
 }
+
+/*
++ (instancetype)makeWithDisk:(DiskProxy *)proxy
+                        type:(FileType)type
+                   exception:(ExceptionWrapper *)ex
+{
+    auto disk = (Disk *)proxy->obj;
+    try { return [self make: MediaFile::make(*disk, type)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
+}
+*/
 
 - (FileType)type
 {
@@ -1335,81 +1351,6 @@ using namespace vc64;
 
 
 //
-// Snapshot proxy
-//
-
-/*
-@implementation SnapshotProxy
-
-- (MediaFile *)snapshot
-{
-    return (MediaFile *)obj;
-}
-
-+ (instancetype)make:(MediaFile *)snapshot
-{
-    return snapshot ? [[self alloc] initWith:snapshot] : nil;
-}
-
-+ (instancetype)makeWithFile:(NSString *)path
-                   exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: MediaFile::make([path fileSystemRepresentation], FILETYPE_SNAPSHOT)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len
-                     exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: MediaFile::make((u8 *)buf, len, FILETYPE_SNAPSHOT)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-+ (instancetype)makeWithC64:(EmulatorProxy *)proxy
-{
-    auto vc64 = (VirtualC64 *)proxy->obj;
-    return [self make:vc64->c64.takeSnapshot()];
-}
-
-- (NSImage *)previewImage
-{
-    // Return cached image (if any)
-    if (preview) { return preview; }
-    
-    // Create preview image
-    auto size = [self snapshot]->previewImageSize();
-    auto data = (unsigned char *)[self snapshot]->previewImageData();
-
-    NSBitmapImageRep *rep = [[NSBitmapImageRep alloc]
-                             initWithBitmapDataPlanes: &data
-                             pixelsWide:size.first
-                             pixelsHigh:size.second
-                             bitsPerSample:8
-                             samplesPerPixel:4
-                             hasAlpha:true
-                             isPlanar:false
-                             colorSpaceName:NSCalibratedRGBColorSpace
-                             bytesPerRow:4*size.first
-                             bitsPerPixel:32];
-    
-    preview = [[NSImage alloc] initWithSize:[rep size]];
-    [preview addRepresentation:rep];
-    
-    // image.makeGlossy()
-    
-    return preview;
-}
-
-- (time_t)timeStamp
-{
-    return [self snapshot]->timestamp();
-}
-
-@end
-*/
-
-
-//
 // Script proxy
 //
 
@@ -1494,109 +1435,6 @@ using namespace vc64;
 
 
 //
-// PRG
-//
-
-/*
-@implementation PRGFileProxy
-
-+ (instancetype)make:(PRGFile *)archive
-{
-    return archive ? [[self alloc] initWith:archive] : nil;
-}
-
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new PRGFile([path fileSystemRepresentation])]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new PRGFile((const u8 *)buf, len)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-+ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new PRGFile(*(FileSystem *)proxy->obj)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-@end
-*/
-
-//
-// P00 proxy
-//
-
-/*
-@implementation P00FileProxy
-
-+ (instancetype)make:(P00File *)archive
-{
-    return archive ? [[self alloc] initWith:archive] : nil;
-}
-
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new P00File([path fileSystemRepresentation])]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new P00File((const u8 *)buf, len)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-+ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new P00File(*(FileSystem *)proxy->obj)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-@end
-*/
-
-//
-// D64 proxy
-//
-
-@implementation D64FileProxy
-
-- (D64File *)d64
-{
-    return (D64File *)obj;
-}
-
-+ (instancetype)make:(D64File *)archive
-{
-    return archive ? [[self alloc] initWith:archive] : nil;
-}
-
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new D64File([path fileSystemRepresentation])]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new D64File((const u8 *)buf, len)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-+ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new D64File(*(FileSystem *)proxy->obj)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-@end
-
-
-//
 // G64 proxy
 //
 
@@ -1657,11 +1495,13 @@ using namespace vc64;
     catch (VC64Error &err) { [ex save:err]; return nil; }
 }
 
+/*
 + (instancetype)makeWithD64:(D64FileProxy *)proxy exception:(ExceptionWrapper *)ex
 {
     try { return [self make: new FileSystem(*(D64File *)proxy->obj)]; }
     catch (VC64Error &err) { [ex save:err]; return nil; }
 }
+*/
 
 + (instancetype)makeWithDiskType:(DiskType)diskType dosType:(DOSType)dosType
 {

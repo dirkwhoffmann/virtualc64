@@ -144,6 +144,7 @@ extension MakeWithCollection {
     }
 }
 
+/*
 extension MakeWithD64 {
 
     static func make(with d64: D64FileProxy) throws -> Self {
@@ -154,6 +155,7 @@ extension MakeWithD64 {
         return obj!
     }
 }
+*/
 
 extension MakeWithFolder {
 

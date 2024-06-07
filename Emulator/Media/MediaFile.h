@@ -12,7 +12,6 @@
 
 #pragma once
 
-// #include "VirtualC64.h"
 #include "FileTypes.h"
 #include <sstream>
 #include <fstream>
@@ -38,7 +37,7 @@ public:
     static MediaFile *make(const string &path, FileType type);
     static MediaFile *make(const u8 *buf, isize len, FileType type);
     static MediaFile *make(class FileSystem &fs, FileType type); // TODO: add const 
-    // static MediaFile *make(const class DriveAPI &drive, FileType type);
+    static MediaFile *make(struct DriveAPI &drive, FileType type);
 
 
     //

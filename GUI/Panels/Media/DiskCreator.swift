@@ -115,7 +115,7 @@ extension DiskCreator: NSFilePromiseProviderDelegate {
 
             do {
                 fs.name = name
-                let d64 = try D64FileProxy.make(with: fs)
+                let d64 = try MediaFileProxy.make(with: fs, type: .D64)
                 try d64.writeToFile(url: url)
             } catch {
                 warn("Can't export file to \(url)")
