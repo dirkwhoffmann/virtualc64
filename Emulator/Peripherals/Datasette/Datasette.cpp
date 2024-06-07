@@ -35,32 +35,41 @@ Datasette::tapeDuration(isize pos)
 }
 
 void
-Datasette::insertTape(TAPFile &file)
+Datasette::insertTape(MediaFile &file)
 {
-    {   SUSPENDED
+    try {
 
-        // Allocate pulse buffer
-        isize numPulses = file.numPulses();
-        alloc(numPulses);
-        
-        debug(TAP_DEBUG, "Inserting tape (%ld pulses)...\n", numPulses);
-        
-        // Read pulses
-        file.seek(0);
-        for (isize i = 0; i < numPulses; i++) {
-            
-            pulses[i].cycles = (i32)file.read();
-            assert(pulses[i].cycles != -1);
+        TAPFile &tapFile = dynamic_cast<TAPFile &>(file);
+
+        {   SUSPENDED
+
+            // Allocate pulse buffer
+            isize numPulses = tapFile.numPulses();
+            alloc(numPulses);
+
+            debug(TAP_DEBUG, "Inserting tape (%ld pulses)...\n", numPulses);
+
+            // Read pulses
+            tapFile.seek(0);
+            for (isize i = 0; i < numPulses; i++) {
+
+                pulses[i].cycles = (i32)tapFile.read();
+                assert(pulses[i].cycles != -1);
+            }
+
+            // Rewind the tape
+            rewind();
+
+            // Update the execution event slot
+            updateDatEvent();
+
+            // Inform the GUI
+            msgQueue.put(MSG_VC1530_TAPE, 1);
         }
-        
-        // Rewind the tape
-        rewind();
 
-        // Update the execution event slot
-        updateDatEvent();
+    } catch (...) {
 
-        // Inform the GUI
-        msgQueue.put(MSG_VC1530_TAPE, 1);
+        throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
     }
 }
 

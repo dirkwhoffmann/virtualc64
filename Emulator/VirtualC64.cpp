@@ -864,7 +864,7 @@ VirtualC64::DatasetteAPI::getCachedInfo() const
 }
 
 void
-VirtualC64::DatasetteAPI::insertTape(TAPFile &file)
+VirtualC64::DatasetteAPI::insertTape(MediaFile &file)
 {
     datasette->insertTape(file);
     datasette->markAsDirty();

@@ -43,12 +43,9 @@ using namespace vc64;
 @class PRGFileProxy;
 @class RecorderProxy;
 @class RetroShellProxy;
-// @class RomFileProxy;
 @class ScriptProxy;
 @class SIDProxy;
-// @class SnapshotProxy;
 @class T64FileProxy;
-@class TAPFileProxy;
 @class VICIIProxy;
 @class VideoPortProxy;
 
@@ -560,7 +557,7 @@ struct GuardInfo {
 - (void)pressPlay;
 - (void)pressStop;
 - (void)rewind;
-- (void)insertTape:(TAPFileProxy *)tape;
+- (void)insertTape:(MediaFileProxy *)tape;
 - (void)ejectTape;
 
 @end
@@ -745,18 +742,6 @@ struct GuardInfo {
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
  
 - (void)execute:(EmulatorProxy *)proxy;
-
-@end
-
-
-//
-// TAPFile
-//
-
-@interface TAPFileProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> { }
-
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
 
 @end
 

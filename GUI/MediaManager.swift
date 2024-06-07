@@ -180,7 +180,7 @@ class MediaManager {
                     return try G64FileProxy.make(with: newUrl)
 
                 case .TAP:
-                    return try TAPFileProxy.make(with: newUrl)
+                    return try MediaFileProxy.make(with: newUrl, type: .TAP)
 
                 case .FOLDER:
                     return try FolderProxy.make(with: newUrl)
@@ -230,11 +230,12 @@ class MediaManager {
                 case .CRT:
                     MediaManager.noteNewRecentlyAtachedCartridgeURL(url)
 
-                default: break;
-                }
+                case .TAP:
+                    MediaManager.noteNewRecentlyInsertedTapeURL(url)
 
-            case is TAPFileProxy:
-                MediaManager.noteNewRecentlyInsertedTapeURL(url)
+                default:
+                    break
+                }
 
             case is D64FileProxy, is G64FileProxy, is AnyCollectionProxy:
                 MediaManager.noteNewRecentlyInsertedDiskURL(url)
@@ -276,6 +277,16 @@ class MediaManager {
                 debug(.media, "CRT")
                 try emu.expansionport.attachCartridge(proxy, reset: true)
 
+            case .TAP:
+
+                debug(.media, "TAP")
+                emu.datasette.insertTape(proxy)
+
+                if options.contains(.autostart) {
+                    controller.keyboard.type("LOAD\n")
+                    emu.datasette.pressPlay()
+                }
+
             default:
                 break
             }
@@ -284,16 +295,6 @@ class MediaManager {
 
             debug(.media, "Script")
             console.runScript(script: proxy)
-
-        case let proxy as TAPFileProxy:
-
-            debug(.media, "TAP")
-            emu.datasette.insertTape(proxy)
-
-            if options.contains(.autostart) {
-                controller.keyboard.type("LOAD\n")
-                emu.datasette.pressPlay()
-            }
 
         case let proxy as D64FileProxy:
 
@@ -340,6 +341,16 @@ class MediaManager {
                 debug(.media, "CRT")
                 try emu.expansionport.attachCartridge(proxy, reset: true)
 
+            case .TAP:
+
+                debug(.media, "TAP")
+                emu.datasette.insertTape(proxy)
+
+                if options.contains(.autostart) {
+                    controller.keyboard.type("load\n")
+                    emu.datasette.pressPlay()
+                }
+
             default:
                 break
             }
@@ -348,16 +359,6 @@ class MediaManager {
 
             debug(.media, "Script")
             console.runScript(script: proxy)
-
-        case let proxy as TAPFileProxy:
-
-            debug(.media, "TAP")
-            emu.datasette.insertTape(proxy)
-
-            if options.contains(.autostart) {
-                controller.keyboard.type("load\n")
-                emu.datasette.pressPlay()
-            }
 
         case let proxy as AnyCollectionProxy:
 

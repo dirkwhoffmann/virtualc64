@@ -986,9 +986,9 @@ using namespace vc64;
     [self emu]->put(CMD_DATASETTE_REWIND);
 }
 
-- (void)insertTape:(TAPFileProxy *)proxy
+- (void)insertTape:(MediaFileProxy *)proxy
 {
-    [self emu]->datasette.insertTape(*(TAPFile *)proxy->obj);
+    [self emu]->datasette.insertTape(*(MediaFile *)proxy->obj);
 }
 
 - (void)ejectTape
@@ -1443,44 +1443,6 @@ using namespace vc64;
 
     [self script]->execute(*c64);
 }
-
-@end
-
-
-//
-// TAP
-//
-
-@implementation TAPFileProxy
-
-+ (instancetype)make:(TAPFile *)container
-{
-    return container ? [[self alloc] initWith:container] : nil;
-}
-
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new TAPFile([path fileSystemRepresentation])]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new TAPFile((const u8 *)buf, len)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-/*
-- (TAPFile *)tap
-{
-    return (TAPFile *)obj;
-}
-
-- (TAPVersion)version
-{
-    return [self tap]->version();
-}
-*/
 
 @end
 

@@ -881,7 +881,7 @@ public:
         /** @brief  Inserts a tape.
          *  @param  file    The tape to insert.
          */
-        void insertTape(TAPFile &file);
+        void insertTape(MediaFile &file);
 
         /** @brief  Ejects a tape.
          *  This function has no effect if no tape is inserted.
