@@ -40,7 +40,7 @@ using namespace vc64;
 @class MouseProxy;
 @class MyController;
 @class P00FileProxy;
-@class PRGFileProxy;
+// @class PRGFileProxy;
 @class RecorderProxy;
 @class RetroShellProxy;
 @class ScriptProxy;
@@ -763,7 +763,7 @@ AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 //
 // PRGFile
 //
-
+/*
 @interface PRGFileProxy :
 AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 
@@ -772,7 +772,7 @@ AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 + (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy exception:(ExceptionWrapper *)ex;
 
 @end
-
+*/
 
 //
 // P00File
@@ -840,6 +840,7 @@ AnyCollectionProxy <MakeWithFolder> { }
 + (instancetype)makeWithDisk:(DiskProxy *)disk exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithCollection:(AnyCollectionProxy *)collection exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithDiskType:(DiskType)diskType dosType:(DOSType)dosType;
++ (instancetype)makeWithMediaFile:(MediaFileProxy *)file exception:(ExceptionWrapper *)ex;
 
 @property NSString *name;
 @property (readonly) NSString *idString;

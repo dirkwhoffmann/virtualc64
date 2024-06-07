@@ -52,6 +52,25 @@ extension MediaFileProxy {
         if exc.errorCode != .OK { throw VC64Error(exc) }
         return obj!
     }
+
+    static func make(with fs: FileSystemProxy, type: vc64.FileType) throws -> Self {
+
+        let exc = ExceptionWrapper()
+        let obj = make(withFileSystem: fs, type: type, exception: exc)
+        if exc.errorCode != .OK { throw VC64Error(exc) }
+        return obj!
+    }
+}
+
+extension FileSystemProxy {
+
+    static func make(with file: MediaFileProxy) throws -> Self {
+
+        let exc = ExceptionWrapper()
+        let obj = make(withMediaFile: file, exception: exc)
+        if exc.errorCode != .OK { throw VC64Error(exc) }
+        return obj!
+    }
 }
 
 extension MakeWithBuffer {

@@ -42,7 +42,7 @@ class DiskExporter: DialogController {
     // Results of the different decoders
     var d64: D64FileProxy?
     var t64: T64FileProxy?
-    var prg: PRGFileProxy?
+    var prg: MediaFileProxy?
     var vol: FileSystemProxy?
 
     func showSheet(diskDrive nr: Int) {
@@ -68,7 +68,7 @@ class DiskExporter: DialogController {
                 if vol!.numFiles > 0 {
 
                     // Try to run the PRG encoder
-                    prg = try? PRGFileProxy.make(with: vol!)
+                    prg = try? MediaFileProxy.make(with: vol!, type: .PRG)
                 }
             }
         }

@@ -171,7 +171,7 @@ class MediaManager {
                     return try T64FileProxy.make(with: newUrl)
 
                 case .PRG:
-                    return try PRGFileProxy.make(with: newUrl)
+                    return try MediaFileProxy.make(with: newUrl, type: .PRG)
 
                 case .P00:
                     return try P00FileProxy.make(with: newUrl)
@@ -232,6 +232,9 @@ class MediaManager {
 
                 case .TAP:
                     MediaManager.noteNewRecentlyInsertedTapeURL(url)
+
+                case .T64, .P00, .PRG, .D64, .G64:
+                    MediaManager.noteNewRecentlyInsertedDiskURL(url)
 
                 default:
                     break
@@ -351,6 +354,16 @@ class MediaManager {
                     emu.datasette.pressPlay()
                 }
 
+            case .PRG:
+
+                debug(.media, "PRG")
+                if let volume = try? FileSystemProxy.make(with: proxy) {
+
+                    try? emu.flash(volume, item: 0)
+                    controller.keyboard.type("run\n")
+                    controller.renderer.rotateLeft()
+                }
+
             default:
                 break
             }
@@ -429,7 +442,7 @@ class MediaManager {
 
         case .PRG:
             if fs.numFiles > 1 { showAlert(format: "PRG") }
-            file = try PRGFileProxy.make(with: fs)
+            file = try MediaFileProxy.make(with: fs, type: .PRG)
 
         case .P00:
             if fs.numFiles > 1 { showAlert(format: "P00") }

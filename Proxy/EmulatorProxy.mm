@@ -1497,6 +1497,7 @@ using namespace vc64;
 // PRG
 //
 
+/*
 @implementation PRGFileProxy
 
 + (instancetype)make:(PRGFile *)archive
@@ -1523,7 +1524,7 @@ using namespace vc64;
 }
 
 @end
-
+*/
 
 //
 // P00 proxy
@@ -1664,6 +1665,12 @@ using namespace vc64;
 + (instancetype)makeWithDiskType:(DiskType)diskType dosType:(DOSType)dosType
 {
     return [self make: new FileSystem(diskType, dosType)];
+}
+
++ (instancetype)makeWithMediaFile:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex
+{
+    try { return [self make: new FileSystem(*(MediaFile *)proxy->obj)]; }
+    catch (VC64Error &err) { [ex save:err]; return nil; }
 }
 
 - (NSString *)name

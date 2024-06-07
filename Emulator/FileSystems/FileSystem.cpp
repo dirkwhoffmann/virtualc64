@@ -24,6 +24,24 @@
 
 namespace vc64 {
 
+FileSystem::FileSystem(MediaFile &file)
+{
+    try {
+
+        const D64File &d64File = dynamic_cast<const D64File &>(file);
+        init(d64File);
+
+    } catch (...) { try {
+
+        AnyCollection &collection = dynamic_cast<AnyCollection &>(file);
+        init(collection);
+
+    } catch (...) {
+
+        throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+    }}
+}
+
 FileSystem::~FileSystem()
 {
     for (auto &b : blocks) delete b;

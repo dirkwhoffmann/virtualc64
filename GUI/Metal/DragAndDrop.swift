@@ -48,7 +48,7 @@ public extension MetalView {
                 dropUrl = url.unpacked(maxSize: 2048 * 1024)
                 
                 // Analyze the file type
-                let type = AnyFileProxy.type(of: dropUrl)
+                let type = MediaFileProxy.type(of: dropUrl)
 
                 // Open the drop zone layer
                 parent.renderer.dropZone.open(type: type, delay: 0.25)

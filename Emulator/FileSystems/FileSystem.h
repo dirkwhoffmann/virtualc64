@@ -50,6 +50,7 @@ public:
     FileSystem(const class D64File &d64) throws { init(d64); }
     FileSystem(class Disk &disk) throws { init(disk); }
     FileSystem(AnyCollection &collection) throws { init(collection); }
+    FileSystem(MediaFile &file) throws;
     FileSystem(const string &path) throws { init(path); }
     ~FileSystem();
     
@@ -61,6 +62,7 @@ private:
     void init(const class D64File &d64) throws;
     void init(class Disk &disk) throws;
     void init(AnyCollection &collection) throws;
+    void init(MediaFile &file) throws;
     void init(const string &path) throws;
 
     
