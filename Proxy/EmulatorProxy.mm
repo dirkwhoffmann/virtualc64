@@ -1451,6 +1451,7 @@ using namespace vc64;
 // RomFile proxy
 //
 
+/*
 @implementation RomFileProxy
 
 + (instancetype)make:(RomFile *)file
@@ -1471,6 +1472,7 @@ using namespace vc64;
 }
 
 @end
+*/
 
 
 //
@@ -2480,9 +2482,9 @@ using namespace vc64;
     catch (VC64Error &error) { [e save:error]; }
 }
 
-- (void) loadRom:(RomFileProxy *)proxy
+- (void) loadRom:(MediaFileProxy *)proxy
 {
-    [self emu]->c64.loadRom(*(RomFile *)proxy->obj);
+    [self emu]->c64.loadRom(*(MediaFile *)proxy->obj);
 }
 
 - (void) saveRom:(RomType)type url:(NSURL *)url exception:(ExceptionWrapper *)e

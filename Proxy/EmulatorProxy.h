@@ -44,7 +44,7 @@ using namespace vc64;
 @class PRGFileProxy;
 @class RecorderProxy;
 @class RetroShellProxy;
-@class RomFileProxy;
+// @class RomFileProxy;
 @class ScriptProxy;
 @class SIDProxy;
 // @class SnapshotProxy;
@@ -221,7 +221,7 @@ using namespace vc64;
 - (BOOL)isRom:(RomType)type url:(NSURL *)url;
 
 - (void)loadRom:(NSURL *)url exception:(ExceptionWrapper *)ex;
-- (void)loadRom:(RomFileProxy *)proxy;
+- (void)loadRom:(MediaFileProxy *)proxy;
 - (void)saveRom:(RomType)type url:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)deleteRom:(RomType)type;
 
@@ -754,13 +754,14 @@ struct GuardInfo {
 // RomFile
 //
 
+/*
 @interface RomFileProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> { }
 
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
  
 @end
-
+*/
 
 //
 // CRTFile

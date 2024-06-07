@@ -1421,7 +1421,7 @@ C64::loadRom(const string &path)
 }
 
 void
-C64::loadRom(const RomFile &file)
+C64::loadRom(const MediaFile &file)
 {
     switch (file.type()) {
             
@@ -1449,13 +1449,13 @@ C64::loadRom(const RomFile &file)
             
         case FILETYPE_VC1541_ROM:
             
-            drive8.mem.loadRom(file.data, file.size);
-            drive9.mem.loadRom(file.data, file.size);
+            drive8.mem.loadRom(file.getData(), file.getSize());
+            drive9.mem.loadRom(file.getData(), file.getSize());
             debug(MEM_DEBUG, "VC1541 Rom flashed\n");
             break;
             
         default:
-            fatalError;
+            throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
     }
 }
 

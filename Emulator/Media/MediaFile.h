@@ -48,6 +48,12 @@ public:
     // Returns the media type of this file
     virtual FileType type() const { return FILETYPE_UNKNOWN; }
 
+    // Returns the size of this file
+    virtual isize getSize() const = 0;
+
+    // Returns a pointer to the file data
+    virtual u8 *getData() const = 0;
+
     // Returns the logical name of this file
     virtual string name() const = 0;
 

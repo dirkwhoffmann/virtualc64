@@ -154,13 +154,13 @@ extension ConfigurationController {
         let c = NSData(data: NSDataAsset(name: "chargen_openroms")!.data)
         let k = NSData(data: NSDataAsset(name: "kernal_generic")!.data)
 
-        if let rom = try? RomFileProxy.makeWith(buffer: b.bytes, length: b.length) {
+        if let rom = try? MediaFileProxy.makeWith(buffer: b.bytes, length: b.length, type: .BASIC_ROM) {
             emu.loadRom(rom)
         }
-        if let rom = try? RomFileProxy.makeWith(buffer: c.bytes, length: c.length) {
+        if let rom = try? MediaFileProxy.makeWith(buffer: c.bytes, length: c.length, type: .CHAR_ROM) {
             emu.loadRom(rom)
         }
-        if let rom = try? RomFileProxy.makeWith(buffer: k.bytes, length: k.length) {
+        if let rom = try? MediaFileProxy.makeWith(buffer: k.bytes, length: k.length, type: .KERNAL_ROM) {
             emu.loadRom(rom)
         }
         

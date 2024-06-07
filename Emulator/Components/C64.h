@@ -698,7 +698,7 @@ public:
 
     // Installs a Rom
     void loadRom(const string &path) throws;
-    void loadRom(const RomFile &file);
+    void loadRom(const MediaFile &file);
 
     // Erases an installed Rom
     void deleteRom(RomType type);

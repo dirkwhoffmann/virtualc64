@@ -86,6 +86,17 @@ public:
     
     
     //
+    // Methods from MediaFile
+    //
+
+    // Returns the size of this file
+    virtual isize getSize() const override { return size; }
+
+    // Returns a pointer to the file data
+    virtual u8 *getData() const override { return data; }
+
+
+    //
     // Accessing
     //
     

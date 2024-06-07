@@ -551,7 +551,7 @@ class Configuration {
         func load(_ url: URL?, type: vc64.FileType) {
 
             if url != nil {
-                if let file = try? RomFileProxy.make(with: url!) {
+                if let file = try? MediaFileProxy.make(with: url!) {
                     if file.type == type { emu.loadRom(file) }
                 }
             }

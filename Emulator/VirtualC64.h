@@ -480,7 +480,7 @@ public:
 
         /** @brief  Loads a ROM, provided by a RomFile object
          */
-        void loadRom(const RomFile &file);
+        void loadRom(const MediaFile &file);
 
         /** @brief  Removes an installed ROM
          *          The ROM contents is overwritten with zeroes.

@@ -456,7 +456,7 @@ VirtualC64::C64API::loadRom(const string &path)
 }
 
 void 
-VirtualC64::C64API::loadRom(const RomFile &file)
+VirtualC64::C64API::loadRom(const MediaFile &file)
 {
     c64->loadRom(file);
     c64->markAsDirty();
