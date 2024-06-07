@@ -1187,7 +1187,7 @@ C64::loadSnapshot(const MediaFile &file)
             try {
 
                 // Restore the saved state
-                load(snapshot.getData());
+                load(snapshot.getSnapshotData());
 
                 // Clear the keyboard matrix to avoid constantly pressed keys
                 keyboard.releaseAll();

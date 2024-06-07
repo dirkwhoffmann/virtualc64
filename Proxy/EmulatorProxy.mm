@@ -724,9 +724,9 @@ using namespace vc64;
     return [self eport]->getCartridgeTraits().type != CRT_NONE;
 }
  
-- (void)attachCartridge:(CRTFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex
+- (void)attachCartridge:(MediaFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex
 {
-    try { [self eport]->attachCartridge(*(CRTFile *)c->obj, reset); }
+    try { [self eport]->attachCartridge(*(MediaFile *)c->obj, reset); }
     catch (VC64Error &err) { [ex save:err]; }
 }
 
@@ -1442,60 +1442,6 @@ using namespace vc64;
     VirtualC64 *c64 = (VirtualC64 *)proxy->obj;
 
     [self script]->execute(*c64);
-}
-
-@end
-
-
-//
-// RomFile proxy
-//
-
-/*
-@implementation RomFileProxy
-
-+ (instancetype)make:(RomFile *)file
-{
-    return file ? [[self alloc] initWith:file] : nil;
-}
-
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new RomFile([path fileSystemRepresentation])]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new RomFile((const u8 *)buf, len)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-@end
-*/
-
-
-//
-// CRT proxy
-//
-
-@implementation CRTFileProxy
-
-+ (instancetype)make:(CRTFile *)container
-{
-    return container ? [[self alloc] initWith:container] : nil;
-}
-
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new CRTFile([path fileSystemRepresentation])]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new CRTFile((const u8 *)buf, len)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 @end

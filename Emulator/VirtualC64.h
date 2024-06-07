@@ -981,7 +981,7 @@ public:
 
         /** @brief  Attaches a cartridge to the expansion port.
          */
-        void attachCartridge(const CRTFile &c, bool reset = true);
+        void attachCartridge(const MediaFile &c, bool reset = true);
 
         /** @brief  Attaches a cartridge to the expansion port.
          */

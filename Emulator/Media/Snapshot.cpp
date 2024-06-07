@@ -84,7 +84,7 @@ Snapshot::Snapshot(C64 &c64): Snapshot(c64.size())
     takeScreenshot(c64);
 
     if (SNP_DEBUG) c64.dump(Category::State);
-    c64.save(getData());
+    c64.save(getSnapshotData());
 }
 
 void

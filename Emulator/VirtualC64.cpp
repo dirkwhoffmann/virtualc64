@@ -1036,20 +1036,11 @@ VirtualC64::ExpansionPortAPI::attachCartridge(const string &path, bool reset)
 }
 
 void
-VirtualC64::ExpansionPortAPI::attachCartridge(const CRTFile &c, bool reset)
+VirtualC64::ExpansionPortAPI::attachCartridge(const MediaFile &c, bool reset)
 {
     expansionPort->attachCartridge(c, reset);
     expansionPort->markAsDirty();
 }
-
-/*
-void
-VirtualC64::ExpansionPortAPI::attachCartridge(Cartridge *c)
-{
-    expansionPort->attachCartridge(c);
-    expansionPort->markAsDirty();
-}
-*/
 
 void
 VirtualC64::ExpansionPortAPI::attachReu(isize capacity)

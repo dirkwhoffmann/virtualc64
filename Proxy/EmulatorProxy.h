@@ -23,7 +23,6 @@ using namespace vc64;
 @class Constants;
 @class ControlPortProxy;
 @class CPUProxy;
-@class CRTFileProxy;
 @class D64FileProxy;
 @class DatasetteProxy;
 @class DefaultsProxy;
@@ -475,7 +474,7 @@ struct GuardInfo {
 - (CartridgeRomInfo)getRomInfo:(NSInteger)nr;
 
 - (BOOL)cartridgeAttached;
-- (void)attachCartridge:(CRTFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex;
+- (void)attachCartridge:(MediaFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex;
 - (void)attachReuCartridge:(NSInteger)capacity;
 - (void)attachGeoRamCartridge:(NSInteger)capacity;
 - (void)attachIsepicCartridge;
@@ -747,31 +746,6 @@ struct GuardInfo {
  
 - (void)execute:(EmulatorProxy *)proxy;
 
-@end
-
-
-//
-// RomFile
-//
-
-/*
-@interface RomFileProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> { }
-
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
- 
-@end
-*/
-
-//
-// CRTFile
-//
-
-@interface CRTFileProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> { }
-
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
- 
 @end
 
 

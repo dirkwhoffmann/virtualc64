@@ -205,7 +205,7 @@ extension EmulatorProxy {
  
 extension ExpansionPortProxy {
     
-    func attachCartridge(_ proxy: CRTFileProxy, reset: Bool) throws {
+    func attachCartridge(_ proxy: MediaFileProxy, reset: Bool) throws {
         
         let exception = ExceptionWrapper()
         attachCartridge(proxy, reset: reset, exception: exception)

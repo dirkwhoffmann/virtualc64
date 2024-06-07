@@ -162,7 +162,7 @@ class MediaManager {
                     return try ScriptProxy.make(with: newUrl)
 
                 case .CRT:
-                    return try CRTFileProxy.make(with: newUrl)
+                    return try MediaFileProxy.make(with: newUrl, type: .CRT)
 
                 case .D64:
                     return try D64FileProxy.make(with: newUrl)
@@ -227,11 +227,11 @@ class MediaManager {
                 case .SNAPSHOT:
                     document.snapshots.append(file)
 
+                case .CRT:
+                    MediaManager.noteNewRecentlyAtachedCartridgeURL(url)
+
                 default: break;
                 }
-
-            case is CRTFileProxy:
-                MediaManager.noteNewRecentlyAtachedCartridgeURL(url)
 
             case is TAPFileProxy:
                 MediaManager.noteNewRecentlyInsertedTapeURL(url)
@@ -271,6 +271,11 @@ class MediaManager {
                 debug(.media, "Snapshot")
                 try emu.flash(proxy)
 
+            case .CRT:
+
+                debug(.media, "CRT")
+                try emu.expansionport.attachCartridge(proxy, reset: true)
+
             default:
                 break
             }
@@ -279,11 +284,6 @@ class MediaManager {
 
             debug(.media, "Script")
             console.runScript(script: proxy)
-
-        case let proxy as CRTFileProxy:
-
-            debug(.media, "CRT")
-            try emu.expansionport.attachCartridge(proxy, reset: true)
 
         case let proxy as TAPFileProxy:
 
@@ -335,6 +335,11 @@ class MediaManager {
                 debug(.media, "Snapshot")
                 try emu.flash(proxy)
 
+            case .CRT:
+
+                debug(.media, "CRT")
+                try emu.expansionport.attachCartridge(proxy, reset: true)
+
             default:
                 break
             }
@@ -343,11 +348,6 @@ class MediaManager {
 
             debug(.media, "Script")
             console.runScript(script: proxy)
-
-        case let proxy as CRTFileProxy:
-
-            debug(.media, "CRT")
-            try emu.expansionport.attachCartridge(proxy, reset: true)
 
         case let proxy as TAPFileProxy:
 

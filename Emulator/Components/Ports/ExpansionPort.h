@@ -160,7 +160,7 @@ public:
 
     // Attaches a cartridge to the expansion port
     void attachCartridge(const string &path, bool reset = true) throws;
-    void attachCartridge(const CRTFile &file, bool reset = true) throws;
+    void attachCartridge(const MediaFile &file, bool reset = true) throws;
     void attachCartridge(Cartridge *c);
     void attachReu(isize capacity);
     void attachGeoRam(isize capacity);
