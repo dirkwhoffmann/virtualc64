@@ -1151,6 +1151,11 @@ using namespace vc64;
     [self shell]->press(key);
 }
 
+- (void)executeScript:(MediaFileProxy *)file
+{
+    [self shell]->execScript(*(MediaFile *)file->obj);
+}
+
 @end
 
 
@@ -1328,44 +1333,6 @@ using namespace vc64;
 {
     try { [self file]->writeToFile(string([path fileSystemRepresentation])); }
     catch (VC64Error &err) { [ex save:err]; }    
-}
-
-@end
-
-
-//
-// Script proxy
-//
-
-@implementation ScriptProxy
-
-- (Script *)script
-{
-    return (Script *)obj;
-}
-
-+ (instancetype)make:(Script *)file
-{
-    return file ? [[self alloc] initWith:file] : nil;
-}
-
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new Script([path fileSystemRepresentation])]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new Script((u8 *)buf, len)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }    
-}
-
-- (void)execute:(EmulatorProxy *)proxy
-{
-    VirtualC64 *c64 = (VirtualC64 *)proxy->obj;
-
-    [self script]->execute(*c64);
 }
 
 @end

@@ -522,6 +522,15 @@ RetroShell::execScript(const string &contents)
 }
 
 void 
+RetroShell::execScript(const MediaFile &file)
+{
+    if (file.type() != FILETYPE_SCRIPT) throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+
+    string s((char *)file.getData(), file.getSize());
+    try { execScript(s); } catch (util::Exception &) { }
+}
+
+void
 RetroShell::abortScript()
 {
     {   SYNCHRONIZED

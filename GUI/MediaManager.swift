@@ -159,7 +159,7 @@ class MediaManager {
                     return try MediaFileProxy.make(with: newUrl, type: .SNAPSHOT)
 
                 case .SCRIPT:
-                    return try ScriptProxy.make(with: newUrl)
+                    return try MediaFileProxy.make(with: newUrl, type: .SCRIPT)
 
                 case .CRT:
                     return try MediaFileProxy.make(with: newUrl, type: .CRT)
@@ -253,7 +253,7 @@ class MediaManager {
         }
     }
 
-    func addMedia(proxy: AnyFileProxy,
+    func addMedia(proxy: AnyFileProxy, // TODO: Change type to MediaFileProxy
                   drive: DriveProxy? = nil,
                   options: [Option] = []) throws {
 
@@ -294,14 +294,14 @@ class MediaManager {
                     drive!.insertMedia(proxy, protected: options.contains(.protect))
                 }
 
+            case .SCRIPT:
+
+                debug(.media, "Script")
+                console.runScript(script: proxy)
+
             default:
                 break
             }
-
-        case let proxy as ScriptProxy:
-
-            debug(.media, "Script")
-            console.runScript(script: proxy)
 
         default:
             fatalError()
@@ -347,14 +347,14 @@ class MediaManager {
                     controller.renderer.rotateLeft()
                 }
 
+            case .SCRIPT:
+
+                debug(.media, "Script")
+                console.runScript(script: proxy)
+
             default:
                 break
             }
-
-        case let proxy as ScriptProxy:
-
-            debug(.media, "Script")
-            console.runScript(script: proxy)
 
         default:
             fatalError()

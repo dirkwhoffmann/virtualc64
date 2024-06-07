@@ -64,7 +64,7 @@ public:
     //
     
     // Executes the script
-    void execute(VirtualC64 &c64);
+    // void execute(VirtualC64 &c64);
 };
 
 }

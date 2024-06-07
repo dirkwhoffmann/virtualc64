@@ -39,7 +39,6 @@ using namespace vc64;
 @class MyController;
 @class RecorderProxy;
 @class RetroShellProxy;
-@class ScriptProxy;
 @class SIDProxy;
 @class VICIIProxy;
 @class VideoPortProxy;
@@ -611,6 +610,7 @@ struct GuardInfo {
 - (NSString *)getText;
 - (void)pressKey:(char)c;
 - (void)pressSpecialKey:(RetroShellKey)key;
+- (void)executeScript:(MediaFileProxy *)file;
 
 @end
 
@@ -684,20 +684,6 @@ struct GuardInfo {
 
 @property (readonly, strong) NSImage *previewImage;
 @property (readonly) time_t timeStamp;
-
-@end
-
-
-//
-// Script
-//
-
-@interface ScriptProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> { }
-
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
- 
-- (void)execute:(EmulatorProxy *)proxy;
 
 @end
 

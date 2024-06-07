@@ -32,11 +32,13 @@ Script::isCompatible(std::istream &stream)
     return true;
 }
 
+/*
 void
 Script::execute(VirtualC64 &c64)
 {
     string s((char *)data, size);
     try { c64.retroShell.execScript(s); } catch (util::Exception &) { }
 }
+*/
 
 }

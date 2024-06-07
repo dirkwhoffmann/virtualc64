@@ -212,6 +212,7 @@ public:
     void execScript(std::stringstream &ss) throws;
     void execScript(const std::ifstream &fs) throws;
     void execScript(const string &contents) throws;
+    void execScript(const class MediaFile &script) throws;
     void abortScript();
 
 private:
