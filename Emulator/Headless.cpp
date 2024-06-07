@@ -13,8 +13,10 @@
 
 #include "config.h"
 #include "Headless.h"
-#include <filesystem>
+#include "IOUtils.h"
 #include <chrono>
+#include <filesystem>
+#include <iostream>
 
 #ifndef _WIN32
 #include <getopt.h>
@@ -76,13 +78,13 @@ Headless::main(int argc, char *argv[])
     if (keys.find("verbose") != keys.end()) c64.retroShell.setStream(std::cout);
 
     // Read the input script
-    Script script(keys["arg1"]);
+    auto script = MediaFile::make(keys["arg1"], FILETYPE_SCRIPT);
 
     // Launch the emulator thread
     c64.launch(this, vc64::process);
 
     // Execute the script
-    c64.retroShell.execScript(script);
+    c64.retroShell.execScript(*script);
     barrier.lock();
 
     return returnCode;
