@@ -149,30 +149,6 @@ extension MakeWithFileSystem {
     }
 }
 
-extension MakeWithCollection {
-
-    static func make(with collection: AnyCollectionProxy) throws -> Self {
-        
-        let exc = ExceptionWrapper()
-        let obj = make(withCollection: collection, exception: exc)
-        if exc.errorCode != .OK { throw VC64Error(exc) }
-        return obj!
-    }
-}
-
-/*
-extension MakeWithD64 {
-
-    static func make(with d64: D64FileProxy) throws -> Self {
-
-        let exc = ExceptionWrapper()
-        let obj = make(withD64: d64, exception: exc)
-        if exc.errorCode != .OK { throw VC64Error(exc) }
-        return obj!
-    }
-}
-*/
-
 extension MakeWithFolder {
 
     static func make(with folder: URL) throws -> Self {

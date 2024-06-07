@@ -917,11 +917,6 @@ using namespace vc64;
     [self drive]->insertMedia(*(MediaFile *)proxy->obj, wp);
 }
 
-- (void)insertCollection:(AnyCollectionProxy *)proxy protected:(BOOL)wp
-{
-    [self drive]->insertCollection(*(AnyCollection *)proxy->obj, wp);
-}
-
 - (void)insertFileSystem:(FileSystemProxy *)proxy protected:(BOOL)wp
 {
     [self drive]->insertFileSystem(*(FileSystem *)proxy->obj, wp);
@@ -1377,20 +1372,6 @@ using namespace vc64;
 
 
 //
-// AnyCollection
-//
-
-@implementation AnyCollectionProxy
-
-- (AnyCollection *)unwrap
-{
-    return (AnyCollection *)obj;
-}
-
-@end
-
-
-//
 // FileSystem
 //
 
@@ -1412,20 +1393,6 @@ using namespace vc64;
     try { return [self make: new FileSystem(*disk)]; }
     catch (VC64Error &err) { [ex save:err]; return nil; }
 }
-
-+ (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new FileSystem(*(AnyCollection *)proxy->obj)]; }
-    catch (VC64Error &err) { [ex save:err]; return nil; }
-}
-
-/*
-+ (instancetype)makeWithD64:(D64FileProxy *)proxy exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new FileSystem(*(D64File *)proxy->obj)]; }
-    catch (VC64Error &err) { [ex save:err]; return nil; }
-}
-*/
 
 + (instancetype)makeWithDiskType:(DiskType)diskType dosType:(DOSType)dosType
 {

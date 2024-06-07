@@ -16,7 +16,6 @@ using namespace vc64;
 
 @class AudioPortProxy;
 @class AnyFileProxy;
-@class AnyCollectionProxy;
 @class EmulatorProxy;
 @class C64Proxy;
 @class CIAProxy;
@@ -501,7 +500,6 @@ struct GuardInfo {
 
 - (void)insertBlankDisk:(DOSType)fstype name:(NSString *)name;
 - (void)insertMedia:(MediaFileProxy *)proxy protected:(BOOL)wp;
-- (void)insertCollection:(AnyCollectionProxy *)proxy protected:(BOOL)wp;
 - (void)insertFileSystem:(FileSystemProxy *)proxy protected:(BOOL)wp;
 - (void)ejectDisk;
 
@@ -637,10 +635,6 @@ struct GuardInfo {
 + (instancetype)makeWithFileSystem:(FileSystemProxy *)fs exception:(ExceptionWrapper *)ex;
 @end
 
-@protocol MakeWithCollection
-+ (instancetype)makeWithCollection:(AnyCollectionProxy *)collection exception:(ExceptionWrapper *)ex;
-@end
-
 @protocol MakeWithFolder
 + (instancetype)makeWithFolder:(NSString *)path exception:(ExceptionWrapper *)ex;
 @end
@@ -695,15 +689,6 @@ struct GuardInfo {
 
 
 //
-// AnyCollection
-//
-
-@interface AnyCollectionProxy : AnyFileProxy { }
-
-@end
-
-
-//
 // Script
 //
 
@@ -721,8 +706,7 @@ struct GuardInfo {
 // Folder
 //
 
-@interface FolderProxy :
-AnyCollectionProxy <MakeWithFolder> { }
+@interface FolderProxy : AnyFileProxy <MakeWithFolder> { }
 
 + (instancetype)makeWithFolder:(NSString *)path exception:(ExceptionWrapper *)ex;
 
@@ -735,10 +719,9 @@ AnyCollectionProxy <MakeWithFolder> { }
 // FileSystem
 //
 
-@interface FileSystemProxy : Proxy <MakeWithCollection> { }
+@interface FileSystemProxy : Proxy { }
 
 + (instancetype)makeWithDrive:(DriveProxy *)drive exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithCollection:(AnyCollectionProxy *)collection exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithDiskType:(DiskType)diskType dosType:(DOSType)dosType;
 + (instancetype)makeWithMediaFile:(MediaFileProxy *)file exception:(ExceptionWrapper *)ex;
 
