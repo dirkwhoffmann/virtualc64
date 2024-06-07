@@ -142,7 +142,7 @@ class MediaManager {
     // Loading media files
     //
 
-    func createFileProxy(from url: URL, allowedTypes: [vc64.FileType]) throws -> AnyFileProxy {
+    func createFileProxy(from url: URL, allowedTypes: [vc64.FileType]) throws -> MediaFileProxy {
 
         debug(.media, "Reading file \(url.lastPathComponent)")
 
@@ -218,27 +218,19 @@ class MediaManager {
         // Remember the URL if requested
         if options.contains(.remember) {
 
-            switch file {
+            switch file.type {
 
-            case let file as MediaFileProxy:
+            case .SNAPSHOT:
+                document.snapshots.append(file)
 
-                switch file.type {
+            case .CRT:
+                MediaManager.noteNewRecentlyAtachedCartridgeURL(url)
 
-                case .SNAPSHOT:
-                    document.snapshots.append(file)
+            case .TAP:
+                MediaManager.noteNewRecentlyInsertedTapeURL(url)
 
-                case .CRT:
-                    MediaManager.noteNewRecentlyAtachedCartridgeURL(url)
-
-                case .TAP:
-                    MediaManager.noteNewRecentlyInsertedTapeURL(url)
-
-                case .T64, .P00, .PRG, .D64, .G64:
-                    MediaManager.noteNewRecentlyInsertedDiskURL(url)
-
-                default:
-                    break
-                }
+            case .T64, .P00, .PRG, .D64, .G64:
+                MediaManager.noteNewRecentlyInsertedDiskURL(url)
 
             default:
                 break
@@ -253,7 +245,7 @@ class MediaManager {
         }
     }
 
-    func addMedia(proxy: AnyFileProxy, // TODO: Change type to MediaFileProxy
+    func addMedia(proxy: MediaFileProxy,
                   drive: DriveProxy? = nil,
                   options: [Option] = []) throws {
 
@@ -261,55 +253,46 @@ class MediaManager {
             return options.contains(.force) || proceedWithUnsavedFloppyDisk(drive: drive!)
         }
 
-        switch proxy {
+        switch proxy.type {
 
-        case let proxy as MediaFileProxy:
+        case .SNAPSHOT:
 
-            switch proxy.type {
+            debug(.media, "Snapshot")
+            try emu.flash(proxy)
 
-            case .SNAPSHOT:
+        case .CRT:
 
-                debug(.media, "Snapshot")
-                try emu.flash(proxy)
+            debug(.media, "CRT")
+            try emu.expansionport.attachCartridge(proxy, reset: true)
 
-            case .CRT:
+        case .TAP:
 
-                debug(.media, "CRT")
-                try emu.expansionport.attachCartridge(proxy, reset: true)
+            debug(.media, "TAP")
+            emu.datasette.insertTape(proxy)
 
-            case .TAP:
-
-                debug(.media, "TAP")
-                emu.datasette.insertTape(proxy)
-
-                if options.contains(.autostart) {
-                    controller.keyboard.type("LOAD\n")
-                    emu.datasette.pressPlay()
-                }
-
-            case .T64, .PRG, .P00, .D64, .G64, .FOLDER:
-
-                debug(.media, "T64, PRG, P00, D64, G64, FOLDER")
-                if proceedUnsaved {
-                    drive!.insertMedia(proxy, protected: options.contains(.protect))
-                }
-
-            case .SCRIPT:
-
-                debug(.media, "Script")
-                console.runScript(script: proxy)
-
-            default:
-                break
+            if options.contains(.autostart) {
+                controller.keyboard.type("LOAD\n")
+                emu.datasette.pressPlay()
             }
 
+        case .T64, .PRG, .P00, .D64, .G64, .FOLDER:
+
+            debug(.media, "T64, PRG, P00, D64, G64, FOLDER")
+            if proceedUnsaved {
+                drive!.insertMedia(proxy, protected: options.contains(.protect))
+            }
+
+        case .SCRIPT:
+
+            debug(.media, "Script")
+            console.runScript(script: proxy)
+
         default:
-            fatalError()
+            break
         }
     }
 
-    func flashMedia(proxy: AnyFileProxy,
-                    options: [Option] = []) throws {
+    func flashMedia(proxy: AnyFileProxy, options: [Option] = []) throws {
 
         switch proxy {
 

@@ -88,9 +88,9 @@ using namespace vc64;
 
 @implementation DefaultsProxy
 
-- (Defaults *)props
+- (DefaultsAPI *)props
 {
-    return (Defaults *)obj;
+    return (DefaultsAPI *)obj;
 }
 
 - (void)load:(NSURL *)url exception:(ExceptionWrapper *)ex

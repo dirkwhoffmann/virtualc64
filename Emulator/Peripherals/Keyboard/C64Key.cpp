@@ -131,7 +131,8 @@ C64Key::C64Key(isize row, isize col)
     assert(row >= 0 && row < 8);
     assert(col >= 0 && col < 8);
     
-    isize nr[64] {
+    constexpr isize nr[64] {
+        
         15, 47, 63, 64, 16, 32, 48, 62,
         3, 19, 35, 4, 51, 36, 20, 50,
         5, 21, 37, 6, 53, 38, 22, 52,

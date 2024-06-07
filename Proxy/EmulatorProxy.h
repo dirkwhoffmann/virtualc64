@@ -105,7 +105,6 @@ using namespace vc64;
     ControlPortProxy *port2;
     CPUProxy *cpu;
     DatasetteProxy *datasette;
-    DefaultsProxy *defaults;
     DmaDebuggerProxy *dmaDebugger;
     DriveProxy *drive8;
     DriveProxy *drive9;
@@ -118,6 +117,7 @@ using namespace vc64;
     RetroShellProxy *retroShell;
     SIDProxy *sid;
     VICIIProxy *vic;
+    VideoPortProxy *videoPort;
 }
 
 @property (class, readonly, strong) DefaultsProxy *defaults;
@@ -142,7 +142,6 @@ using namespace vc64;
 @property (readonly, strong) SIDProxy *sid;
 @property (readonly, strong) VICIIProxy *vic;
 @property (readonly, strong) VideoPortProxy *videoPort;
-
 
 - (void)dealloc;
 - (void)kill;
@@ -225,7 +224,7 @@ using namespace vc64;
 // Defaults
 //
 
-@interface DefaultsProxy : Proxy { }
+@interface DefaultsProxy : SubComponentProxy { }
 
 - (void)load:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)save:(NSURL *)url exception:(ExceptionWrapper *)ex;

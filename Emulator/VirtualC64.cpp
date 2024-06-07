@@ -16,8 +16,7 @@
 
 namespace vc64 {
 
-const Defaults &
-VirtualC64::defaults = Emulator::defaults;
+DefaultsAPI VirtualC64::defaults(&Emulator::defaults);
 
 void 
 API::suspend()
@@ -120,6 +119,9 @@ VirtualC64::VirtualC64() {
 
     retroShell.emu = emu;
     retroShell.retroShell = &emu->main.retroShell;
+
+    defaults.emu = emu;
+    defaults.defaults = &emu->defaults;
 }
 
 VirtualC64::~VirtualC64()
@@ -1124,15 +1126,6 @@ DriveAPI::insertMedia(MediaFile &file, bool wp)
     drive->markAsDirty();
 }
 
-/*
-void
-DriveAPI::insertCollection(AnyCollection &archive, bool wp)
-{
-    drive->insertCollection(archive, wp);
-    drive->markAsDirty();
-}
-*/
-
 void
 DriveAPI::insertFileSystem(const class FileSystem &device, bool wp)
 {
@@ -1145,6 +1138,191 @@ DriveAPI::ejectDisk()
 {
     drive->ejectDisk();
     drive->markAsDirty();
+}
+
+
+//
+// Defaults
+//
+
+void
+DefaultsAPI::load(const fs::path &path)
+{
+    defaults->load(path);
+}
+
+void
+DefaultsAPI::load(std::ifstream &stream)
+{
+    defaults->load(stream);
+}
+
+void
+DefaultsAPI::load(std::stringstream &stream)
+{
+    defaults->load(stream);
+}
+
+void
+DefaultsAPI::save(const fs::path &path)
+{
+    defaults->save(path);
+}
+
+void
+DefaultsAPI::save(std::ofstream &stream)
+{
+    defaults->save(stream);
+}
+
+void
+DefaultsAPI::save(std::stringstream &stream)
+{
+    defaults->save(stream);
+}
+
+string
+DefaultsAPI::getString(const string &key) const
+{
+    return defaults->getString(key);
+}
+
+i64
+DefaultsAPI::getInt(const string &key) const
+{
+    return defaults->getInt(key);
+}
+
+i64
+DefaultsAPI::get(Option option) const
+{
+    return defaults->get(option);
+}
+
+i64
+DefaultsAPI::get(Option option, isize nr) const
+{
+    return defaults->get(option, nr);
+}
+
+string
+DefaultsAPI::getFallbackString(const string &key) const
+{
+    return defaults->getFallbackString(key);
+}
+
+i64
+DefaultsAPI::getFallbackInt(const string &key) const
+{
+    return defaults->getFallbackInt(key);
+}
+
+i64
+DefaultsAPI::getFallback(Option option) const
+{
+    return defaults->getFallback(option);
+}
+
+i64
+DefaultsAPI::getFallback(Option option, isize nr) const
+{
+    return defaults->getFallback(option, nr);
+}
+
+void
+DefaultsAPI::setString(const string &key, const string &value)
+{
+    defaults->setString(key, value);
+}
+
+void
+DefaultsAPI::set(Option opt, i64 value)
+{
+    defaults->set(opt, value);
+}
+
+void
+DefaultsAPI::set(Option opt, isize nr, i64 value)
+{
+    defaults->set(opt, nr, value);
+}
+
+void
+DefaultsAPI::set(Option opt, std::vector <isize> nrs, i64 value)
+{
+    defaults->set(opt, nrs, value);
+}
+
+void
+DefaultsAPI::setFallback(const string &key, const string &value)
+{
+    defaults->setFallback(key, value);
+}
+
+void
+DefaultsAPI::setFallback(Option option, const string &value)
+{
+    defaults->setFallback(option, value);
+}
+
+void
+DefaultsAPI::setFallback(Option opt, i64 value)
+{
+    defaults->setFallback(opt, value);
+}
+
+void
+DefaultsAPI::setFallback(Option opt, isize nr, const string &value)
+{
+    defaults->setFallback(opt, nr, value);
+}
+
+void
+DefaultsAPI::setFallback(Option opt, isize nr, i64 value)
+{
+    defaults->setFallback(opt, nr, value);
+}
+
+void
+DefaultsAPI::setFallback(Option opt, std::vector <isize> nrs, const string &value)
+{
+    defaults->setFallback(opt, nrs, value);
+}
+
+void
+DefaultsAPI::setFallback(Option opt, std::vector <isize> nrs, i64 value)
+{
+    defaults->setFallback(opt, nrs, value);
+}
+
+void
+DefaultsAPI::remove()
+{
+    defaults->remove();
+}
+
+void
+DefaultsAPI::remove(const string &key)
+{
+    defaults->remove(key);
+}
+
+void
+DefaultsAPI::remove(Option option)
+{
+    defaults->remove(option);
+}
+
+void
+DefaultsAPI::remove(Option option, isize nr)
+{
+    defaults->remove(option, nr);
+}
+
+void
+DefaultsAPI::remove(Option option, std::vector <isize> nrs)
+{
+    defaults->remove(option, nrs);
 }
 
 }

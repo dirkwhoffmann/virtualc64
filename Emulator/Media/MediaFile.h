@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "FileTypes.h"
+#include "MediaFileTypes.h"
 #include <sstream>
 #include <fstream>
 

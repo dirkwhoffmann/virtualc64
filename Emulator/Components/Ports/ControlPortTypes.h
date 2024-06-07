@@ -21,8 +21,8 @@ namespace vc64 {
 // Constants
 //
 
-#define PORT_1  0   // TODO: DON'T USE PREPROCESSOR CONSTANT
-#define PORT_2  1   // TODO: DON'T USE PREPROCESSOR CONSTANT
+static constexpr auto PORT_1 = 0;
+static constexpr auto PORT_2 = 1;
 
 
 //
