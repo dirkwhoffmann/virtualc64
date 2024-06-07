@@ -1218,7 +1218,6 @@ using namespace vc64;
     catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
-
 + (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy
                               type:(FileType)type
                          exception:(ExceptionWrapper *)ex
@@ -1227,17 +1226,6 @@ using namespace vc64;
     try { return [self make: MediaFile::make(*fs, type)]; }
     catch (VC64Error &error) { [ex save:error]; return nil; }
 }
-
-/*
-+ (instancetype)makeWithDisk:(DiskProxy *)proxy
-                        type:(FileType)type
-                   exception:(ExceptionWrapper *)ex
-{
-    auto disk = (Disk *)proxy->obj;
-    try { return [self make: MediaFile::make(*disk, type)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-*/
 
 - (FileType)type
 {
@@ -1403,70 +1391,6 @@ using namespace vc64;
 
 
 //
-// T64
-//
-
-@implementation T64FileProxy
-
-+ (instancetype)make:(T64File *)archive
-{
-    return archive ? [[self alloc] initWith:archive] : nil;
-}
-
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new T64File([path fileSystemRepresentation])]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new T64File((const u8 *)buf, len)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-+ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new T64File(*(FileSystem *)proxy->obj)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-@end
-
-
-//
-// G64 proxy
-//
-
-@implementation G64FileProxy
-
-+ (instancetype)make:(G64File *)archive
-{
-    return archive ? [[self alloc] initWith:archive] : nil;
-}
-
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new G64File([path fileSystemRepresentation])]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new G64File((const u8 *)buf, len)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-+ (instancetype)makeWithDisk:(DiskProxy *)proxy exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new G64File(*(Disk *)proxy->obj)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
-}
-
-@end
-
-
-//
 // FileSystem
 //
 
@@ -1482,9 +1406,9 @@ using namespace vc64;
     return fs ? [[self alloc] initWith: fs] : nil;
 }
 
-+ (instancetype)makeWithDisk:(DiskProxy *)proxy exception:(ExceptionWrapper *)ex
++ (instancetype)makeWithDrive:(DriveProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    auto *disk = [proxy disk]->get();
+    auto *disk = [proxy drive]->disk.get();
     try { return [self make: new FileSystem(*disk)]; }
     catch (VC64Error &err) { [ex save:err]; return nil; }
 }

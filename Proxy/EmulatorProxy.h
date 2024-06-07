@@ -42,7 +42,6 @@ using namespace vc64;
 @class RetroShellProxy;
 @class ScriptProxy;
 @class SIDProxy;
-@class T64FileProxy;
 @class VICIIProxy;
 @class VideoPortProxy;
 
@@ -719,34 +718,6 @@ struct GuardInfo {
 
 
 //
-// T64File
-//
-
-@interface T64FileProxy :
-AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
-
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy exception:(ExceptionWrapper *)ex;
-
-@end
-
-
-//
-// G64File
-//
-
-@interface G64FileProxy :
-AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithDisk> { }
-
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithDisk:(DiskProxy *)diskProxy exception:(ExceptionWrapper *)ex;
-
-@end
-
-
-//
 // Folder
 //
 
@@ -764,9 +735,9 @@ AnyCollectionProxy <MakeWithFolder> { }
 // FileSystem
 //
 
-@interface FileSystemProxy : Proxy <MakeWithDisk, MakeWithCollection> { }
+@interface FileSystemProxy : Proxy <MakeWithCollection> { }
 
-+ (instancetype)makeWithDisk:(DiskProxy *)disk exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithDrive:(DriveProxy *)drive exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithCollection:(AnyCollectionProxy *)collection exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithDiskType:(DiskType)diskType dosType:(DOSType)dosType;
 + (instancetype)makeWithMediaFile:(MediaFileProxy *)file exception:(ExceptionWrapper *)ex;

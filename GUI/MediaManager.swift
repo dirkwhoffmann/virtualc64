@@ -168,7 +168,7 @@ class MediaManager {
                     return try MediaFileProxy.make(with: newUrl, type: .D64)
 
                 case .T64:
-                    return try T64FileProxy.make(with: newUrl)
+                    return try MediaFileProxy.make(with: newUrl, type: .T64)
 
                 case .PRG:
                     return try MediaFileProxy.make(with: newUrl, type: .PRG)
@@ -287,9 +287,9 @@ class MediaManager {
                     emu.datasette.pressPlay()
                 }
 
-            case .D64, .G64:
+            case .T64, .PRG, .P00, .D64, .G64:
 
-                debug(.media, "D64, G64")
+                debug(.media, "T64, PRG, P00, D64, G64")
                 if proceedUnsaved {
                     drive!.insertMedia(proxy, protected: options.contains(.protect))
                 }
@@ -302,13 +302,6 @@ class MediaManager {
 
             debug(.media, "Script")
             console.runScript(script: proxy)
-
-        case let proxy as AnyCollectionProxy:
-
-            debug(.media, "T64, PRG, P00")
-            if proceedUnsaved {
-                drive!.insertCollection(proxy, protected: options.contains(.protect))
-            }
 
         default:
             fatalError()
@@ -344,9 +337,9 @@ class MediaManager {
                     emu.datasette.pressPlay()
                 }
 
-            case .PRG:
+            case .PRG, .P00, .T64:
 
-                debug(.media, "PRG")
+                debug(.media, "PRG, P00, T64")
                 if let volume = try? FileSystemProxy.make(with: proxy) {
 
                     try? emu.flash(volume, item: 0)
@@ -363,16 +356,6 @@ class MediaManager {
             debug(.media, "Script")
             console.runScript(script: proxy)
 
-        case let proxy as AnyCollectionProxy:
-
-            debug(.media, "AnyCollection")
-            if let volume = try? FileSystemProxy.make(with: proxy) {
-
-                try? emu.flash(volume, item: 0)
-                controller.keyboard.type("run\n")
-                controller.renderer.rotateLeft()
-            }
-
         default:
             fatalError()
         }
@@ -387,18 +370,18 @@ class MediaManager {
         debug(.media, "drive: \(id) to: \(url)")
 
         let drive = emu.drive(id)
-        try export(disk: drive.disk, to: url)
+        try export(disk: drive, to: url)
 
         emu.put(.DSK_MODIFIED, value: id)
     }
 
-    func export(disk: DiskProxy, to url: URL) throws {
+    func export(disk: DriveProxy, to url: URL) throws {
 
         debug(.media, "disk: \(disk) to: \(url)")
 
         if url.c64FileType == .G64 {
 
-            let g64 = try G64FileProxy.make(with: disk)
+            let g64 = try MediaFileProxy.make(with: disk, type: .G64)
             try export(file: g64, to: url)
 
         } else {
@@ -428,7 +411,7 @@ class MediaManager {
             file = try MediaFileProxy.make(with: fs, type: .D64)
 
         case .T64:
-            file = try T64FileProxy.make(with: fs)
+            file = try MediaFileProxy.make(with: fs, type: .T64)
 
         case .PRG:
             if fs.numFiles > 1 { showAlert(format: "PRG") }

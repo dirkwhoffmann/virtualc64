@@ -41,7 +41,7 @@ class DiskExporter: DialogController {
 
     // Results of the different decoders
     var d64: MediaFileProxy?
-    var t64: T64FileProxy?
+    var t64: MediaFileProxy?
     var prg: MediaFileProxy?
     var vol: FileSystemProxy?
 
@@ -55,7 +55,7 @@ class DiskExporter: DialogController {
         if disk != nil {
 
             // Try to extract the file system
-            vol = try? FileSystemProxy.make(with: disk!)
+            vol = try? FileSystemProxy.make(with: drive)
 
             if vol != nil {
 
@@ -63,7 +63,7 @@ class DiskExporter: DialogController {
                 d64 = try? MediaFileProxy.make(with: vol!, type: .D64)
 
                 // Try to run the T64 encoder
-                t64 = try? T64FileProxy.make(with: vol!)
+                t64 = try? MediaFileProxy.make(with: vol!, type: .T64)
 
                 if vol!.numFiles > 0 {
 

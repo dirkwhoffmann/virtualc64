@@ -53,6 +53,14 @@ extension MediaFileProxy {
         return obj!
     }
 
+    static func make(with drive: DriveProxy, type: vc64.FileType) throws -> Self {
+
+        let exc = ExceptionWrapper()
+        let obj = make(withDrive: drive, type: type, exception: exc)
+        if exc.errorCode != .OK { throw VC64Error(exc) }
+        return obj!
+    }
+
     static func make(with fs: FileSystemProxy, type: vc64.FileType) throws -> Self {
 
         let exc = ExceptionWrapper()
@@ -68,6 +76,14 @@ extension FileSystemProxy {
 
         let exc = ExceptionWrapper()
         let obj = make(withMediaFile: file, exception: exc)
+        if exc.errorCode != .OK { throw VC64Error(exc) }
+        return obj!
+    }
+
+    static func make(with drive: DriveProxy) throws -> Self {
+
+        let exc = ExceptionWrapper()
+        let obj = make(withDrive: drive, exception: exc)
         if exc.errorCode != .OK { throw VC64Error(exc) }
         return obj!
     }
@@ -114,7 +130,7 @@ extension MakeWithFile {
 extension MakeWithDisk {
 
     static func make(with disk: DiskProxy) throws -> Self {
-        
+
         let exc = ExceptionWrapper()
         let obj = make(withDisk: disk, exception: exc)
         if exc.errorCode != .OK { throw VC64Error(exc) }
@@ -387,15 +403,6 @@ extension AnyFileProxy {
 }
 
 extension FileSystemProxy {
-
-    static func make(withDisk disk: DiskProxy) throws -> FileSystemProxy {
-
-        let exception = ExceptionWrapper()
-        let result = FileSystemProxy.make(withDisk: disk, exception: exception)
-        if exception.errorCode != .OK { throw VC64Error(exception) }
-
-        return result!
-    }
 
     func icon(protected: Bool) -> NSImage {
                         
