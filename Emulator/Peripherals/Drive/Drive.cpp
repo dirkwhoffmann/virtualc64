@@ -406,6 +406,25 @@ Drive::insertFileSystem(const FileSystem &device, bool wp)
     insertDisk(std::make_unique<Disk>(device, wp));
 }
 
+void 
+Drive::insertMediaFile(class MediaFile &file, bool wp)
+{
+    try {
+
+        const D64File &d64 = dynamic_cast<const D64File &>(file);
+        insertDisk(std::make_unique<Disk>(d64, wp));
+
+    } catch (...) { try {
+
+        AnyCollection &collection = dynamic_cast<AnyCollection &>(file);
+        insertDisk(std::make_unique<Disk>(collection, wp));
+
+    } catch (...) {
+
+        throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+    }}
+}
+
 void
 Drive::insertD64(const D64File &d64, bool wp)
 {

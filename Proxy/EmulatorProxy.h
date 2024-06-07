@@ -39,8 +39,6 @@ using namespace vc64;
 @class MemoryProxy;
 @class MouseProxy;
 @class MyController;
-@class P00FileProxy;
-// @class PRGFileProxy;
 @class RecorderProxy;
 @class RetroShellProxy;
 @class ScriptProxy;
@@ -712,27 +710,6 @@ struct GuardInfo {
 
 
 //
-// Snapshot
-//
-
-/*
-@interface SnapshotProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer>
-{
-   NSImage *preview;
-}
-
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithC64:(EmulatorProxy *)c64proxy;
-
-@property (readonly, strong) NSImage *previewImage;
-@property (readonly) time_t timeStamp;
-
-@end
-*/
-
-
-//
 // Script
 //
 
@@ -751,34 +728,6 @@ struct GuardInfo {
 //
 
 @interface T64FileProxy :
-AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
-
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy exception:(ExceptionWrapper *)ex;
-
-@end
-
-
-//
-// PRGFile
-//
-/*
-@interface PRGFileProxy :
-AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
-
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy exception:(ExceptionWrapper *)ex;
-
-@end
-*/
-
-//
-// P00File
-//
-
-@interface P00FileProxy :
 AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;

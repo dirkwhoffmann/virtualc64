@@ -174,7 +174,7 @@ class MediaManager {
                     return try MediaFileProxy.make(with: newUrl, type: .PRG)
 
                 case .P00:
-                    return try P00FileProxy.make(with: newUrl)
+                    return try MediaFileProxy.make(with: newUrl, type: .P00)
 
                 case .G64:
                     return try G64FileProxy.make(with: newUrl)
@@ -446,7 +446,7 @@ class MediaManager {
 
         case .P00:
             if fs.numFiles > 1 { showAlert(format: "P00") }
-            file = try P00FileProxy.make(with: fs)
+            file = try MediaFileProxy.make(with: fs, type: .P00)
 
         default:
             throw VC64Error(vc64.ErrorCode.FILE_TYPE_MISMATCH)

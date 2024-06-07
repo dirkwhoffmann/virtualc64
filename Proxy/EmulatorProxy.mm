@@ -1530,6 +1530,7 @@ using namespace vc64;
 // P00 proxy
 //
 
+/*
 @implementation P00FileProxy
 
 + (instancetype)make:(P00File *)archive
@@ -1556,7 +1557,7 @@ using namespace vc64;
 }
 
 @end
-
+*/
 
 //
 // D64 proxy
