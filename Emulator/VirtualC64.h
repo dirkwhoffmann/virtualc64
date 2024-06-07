@@ -583,7 +583,7 @@ struct DriveAPI : API {
      *  @param  fstype  The file system the disk should be formatted with.
      *  @param  name    A PET string with the name of the new disk.
      */
-    void insertBlankDisk(DOSType fstype, PETName<16> name);
+    void insertBlankDisk(DOSType fstype, string name);
 
     /** @brief  Inserts a disk from a media file.
      *  @param  file    A media file wrapper object.
@@ -602,7 +602,7 @@ struct DriveAPI : API {
      *  @param  wp      Write-protection status of the disk.
      *  @throw  VC64Error
      */
-    void insertCollection(AnyCollection &archive, bool wp);
+    // void insertCollection(AnyCollection &archive, bool wp);
 
     /** @brief  Inserts a disk created from a file system.
      *  @param  fs      A file system wrapper object.
@@ -1158,7 +1158,7 @@ public:
 
         /** @brief  Flashes a file from a collection into memory
          */
-        void flash(const AnyCollection &file, isize item);
+        void flash(const MediaFile &file, isize item);
 
         /** @brief  Flashes a file from a file system into memory
          */

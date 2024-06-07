@@ -713,7 +713,7 @@ public:
 
     // Flashes a single file into memory
     void flash(const MediaFile &file) throws;
-    void flash(const AnyCollection &file, isize item) throws;
+    void flash(const MediaFile &file, isize item) throws;
     void flash(const FileSystem &fs, isize item) throws;
 
 

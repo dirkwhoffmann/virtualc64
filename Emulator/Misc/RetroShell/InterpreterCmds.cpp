@@ -1057,7 +1057,7 @@ Interpreter::initCommandShell(Command &root)
 
             auto type = util::parseEnum <DOSType, DOSTypeEnum> (argv.front());
             auto &drive = value ? drive9 : drive8;
-            drive.insertNewDisk(type, PETName<16>("NEW DISK"));
+            drive.insertNewDisk(type, "NEW DISK");
 
         }, i);
 

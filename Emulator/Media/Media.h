@@ -15,14 +15,16 @@
 #include "MediaFile.h"
 
 /* DEPRECATED */
-#include "CRTFile.h"
-#include "D64File.h"
-#include "Folder.h"
-#include "G64File.h"
-#include "P00File.h"
-#include "PRGFile.h"
-#include "RomFile.h"
-#include "Script.h"
-#include "Snapshot.h"
-#include "T64File.h"
-#include "TAPFile.h"
+
+// #include "CRTFile.h"
+// #include "D64File.h"
+// #include "Folder.h"
+// #include "G64File.h"
+// #include "P00File.h"
+// #include "PRGFile.h"
+// #include "RomFile.h"
+// #include "Script.h"
+// #include "Snapshot.h"
+// #include "T64File.h"
+// #include "TAPFile.h"
+

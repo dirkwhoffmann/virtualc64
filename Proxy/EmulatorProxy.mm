@@ -924,7 +924,7 @@ using namespace vc64;
 
 - (void)insertBlankDisk:(DOSType)fsType name:(NSString *)name
 {
-    [self drive]->insertBlankDisk(fsType, PETName<16>([name UTF8String]));
+    [self drive]->insertBlankDisk(fsType, [name UTF8String]);
 }
 
 - (void)ejectDisk

@@ -89,7 +89,6 @@ extension FileSystemProxy {
     }
 }
 
-
 //
 // Exception passing
 //

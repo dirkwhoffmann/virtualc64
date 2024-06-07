@@ -1566,37 +1566,45 @@ C64::flash(const MediaFile &file)
 }
 
 void
-C64::flash(const AnyCollection &file, isize nr)
+C64::flash(const MediaFile &file, isize nr)
 {
-    auto addr = (u16)file.itemLoadAddr(nr);
-    auto size = file.itemSize(nr);
-    if (size <= 2) return;
-    
-    {   SUSPENDED
-        
-        switch (file.type()) {
-                
-            case FILETYPE_D64:
-            case FILETYPE_T64:
-            case FILETYPE_P00:
-            case FILETYPE_PRG:
-            case FILETYPE_FOLDER:
+    try {
 
-                // Flash data into memory
-                size = std::min(size - 2, isize(0x10000 - addr));
-                file.copyItem(nr, mem.ram + addr, size, 2);
+        const AnyCollection &collection = dynamic_cast<const AnyCollection &>(file);
+        auto addr = (u16)collection.itemLoadAddr(nr);
+        auto size = collection.itemSize(nr);
+        if (size <= 2) return;
 
-                // Rectify zero page
-                mem.ram[0x2D] = LO_BYTE(addr + size);   // VARTAB (lo byte)
-                mem.ram[0x2E] = HI_BYTE(addr + size);   // VARTAB (high byte)
-                break;
-                
-            default:
-                fatalError;
+        {   SUSPENDED
+
+            switch (collection.type()) {
+
+                case FILETYPE_D64:
+                case FILETYPE_T64:
+                case FILETYPE_P00:
+                case FILETYPE_PRG:
+                case FILETYPE_FOLDER:
+
+                    // Flash data into memory
+                    size = std::min(size - 2, isize(0x10000 - addr));
+                    collection.copyItem(nr, mem.ram + addr, size, 2);
+
+                    // Rectify zero page
+                    mem.ram[0x2D] = LO_BYTE(addr + size);   // VARTAB (lo byte)
+                    mem.ram[0x2E] = HI_BYTE(addr + size);   // VARTAB (high byte)
+                    break;
+
+                default:
+                    fatalError;
+            }
         }
+
+        msgQueue.put(MSG_FILE_FLASHED);
+
+    } catch (...) {
+
+        throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
     }
-    
-    msgQueue.put(MSG_FILE_FLASHED);
 }
 
 void

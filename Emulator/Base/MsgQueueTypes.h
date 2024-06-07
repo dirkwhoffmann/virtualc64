@@ -215,7 +215,7 @@ typedef struct
         CpuMsg cpu;
         DriveMsg drive;
         ScriptMsg script;
-        class Snapshot *snapshot;
+        class MediaFile *snapshot;
     };
 }
 Message;

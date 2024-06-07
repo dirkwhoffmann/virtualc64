@@ -484,7 +484,7 @@ VirtualC64::C64API::flash(const MediaFile &file)
 }
 
 void 
-VirtualC64::C64API::flash(const AnyCollection &file, isize item)
+VirtualC64::C64API::flash(const MediaFile &file, isize item)
 {
     c64->flash(file, item);
     c64->markAsDirty();
@@ -1111,7 +1111,7 @@ DriveAPI::getCachedInfo() const
 }
 
 void
-DriveAPI::insertBlankDisk(DOSType fstype, PETName<16> name)
+DriveAPI::insertBlankDisk(DOSType fstype, string name)
 {
     drive->insertNewDisk(fstype, name);
     drive->markAsDirty();
@@ -1124,12 +1124,14 @@ DriveAPI::insertMedia(MediaFile &file, bool wp)
     drive->markAsDirty();
 }
 
+/*
 void
 DriveAPI::insertCollection(AnyCollection &archive, bool wp)
 {
     drive->insertCollection(archive, wp);
     drive->markAsDirty();
 }
+*/
 
 void
 DriveAPI::insertFileSystem(const class FileSystem &device, bool wp)
