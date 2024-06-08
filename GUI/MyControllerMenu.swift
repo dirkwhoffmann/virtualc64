@@ -912,8 +912,8 @@ extension MyController: NSMenuItemValidation {
         openPanel.canCreateDirectories = false
         openPanel.canChooseFiles = true
         openPanel.prompt = "Attach"
-        // openPanel.allowedFileTypes = ["crt", "zip", "gz"]
-        openPanel.allowedContentTypes = [.crt, .zip, .gzip]
+        // Note: macOS classifies CRT files as a .x509Certificate
+        openPanel.allowedContentTypes = [.crt, .zip, .gzip, .x509Certificate]
         openPanel.beginSheetModal(for: window!, completionHandler: { result in
             if result == .OK, let url = openPanel.url {
 

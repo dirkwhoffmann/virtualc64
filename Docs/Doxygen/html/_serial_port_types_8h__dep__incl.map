@@ -1,9 +1,0 @@
-<map id="/Users/hoff/Retro/virtualc64/Emulator/Components/Ports/SerialPortTypes.h" name="/Users/hoff/Retro/virtualc64/Emulator/Components/Ports/SerialPortTypes.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="21,5,211,61"/>
-<area shape="rect" id="Node000002" href="$_serial_port_8h_source.html" title=" " alt="" coords="21,109,211,165"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="119,77,119,108,113,108,113,77"/>
-<area shape="rect" id="Node000003" href="$_c64_8h_source.html" title=" " alt="" coords="19,213,213,253"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="119,180,119,212,113,212,113,180"/>
-<area shape="rect" id="Node000004" href="$_emulator_8h_source.html" title=" " alt="" coords="5,301,227,342"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="119,269,119,301,113,301,113,269"/>
-</map>

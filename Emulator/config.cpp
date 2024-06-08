@@ -13,74 +13,74 @@
 #include "config.h"
 
 // General
-debugflag XFILES          = 0; // Report paranormal activity
-debugflag CNF_DEBUG       = 0; // Configuration
-debugflag DEF_DEBUG       = 0; // User defaults
+debugflag XFILES          = 0;
+debugflag CNF_DEBUG       = 0;
+debugflag DEF_DEBUG       = 0;
 
 // Runloop
-debugflag RUN_DEBUG       = 0; // Run loop, component states
-debugflag TIM_DEBUG       = 0; // Thread synchronization
-debugflag WARP_DEBUG      = 0; // Warp mode
-debugflag CMD_DEBUG       = 0; // Command queue
-debugflag MSG_DEBUG       = 0; // Message queue
-debugflag SNP_DEBUG       = 0; // Serializing (snapshots)
+debugflag RUN_DEBUG       = 0;
+debugflag TIM_DEBUG       = 0;
+debugflag WARP_DEBUG      = 0;
+debugflag CMD_DEBUG       = 0;
+debugflag MSG_DEBUG       = 0;
+debugflag SNP_DEBUG       = 0;
 
 // Run ahead
-debugflag RUA_DEBUG       = 0; // Run ahead
-debugflag RUA_ON_STEROIDS = 0; // Update the run-ahead instance in every frame
+debugflag RUA_DEBUG       = 0;
+debugflag RUA_ON_STEROIDS = 0;
 
 // CPU
-debugflag CPU_DEBUG       = 0; // CPU
-debugflag IRQ_DEBUG       = 0; // Interrupts
+debugflag CPU_DEBUG       = 0;
+debugflag IRQ_DEBUG       = 0;
 
 // Memory
-debugflag MEM_DEBUG       = 0; // RAM and ROM
+debugflag MEM_DEBUG       = 0;
 
 // CIAs
-debugflag CIA_DEBUG       = 0; // Complex Interface Adapter
-debugflag CIAREG_DEBUG    = 0; // CIA registers
-debugflag CIA_ON_STEROIDS = 0; // Keep the CIAs awake all the time
+debugflag CIA_DEBUG       = 0;
+debugflag CIAREG_DEBUG    = 0;
+debugflag CIA_ON_STEROIDS = 0;
 
 // VICII
-debugflag VICII_DEBUG     = 0; // Video Interface Controller II
-debugflag VICII_REG_DEBUG = 0; // VICII registers
-debugflag VICII_SAFE_MODE = 0; // Disable performance optimizations
-debugflag VICII_STATS     = 0; // Collect statistical information
-debugflag RASTERIRQ_DEBUG = 0; // Raster interrupt
+debugflag VICII_DEBUG     = 0;
+debugflag VICII_REG_DEBUG = 0;
+debugflag VICII_SAFE_MODE = 0;
+debugflag VICII_STATS     = 0;
+debugflag RASTERIRQ_DEBUG = 0;
 
 // SID
-debugflag SID_DEBUG       = 0; // Sound Interface Device
-debugflag SID_EXEC        = 0; // Sound Interface Device (Execution)
-debugflag SIDREG_DEBUG    = 0; // Sound Interface Device (Registers)
-debugflag AUDBUF_DEBUG    = 0; // Audio buffers
-debugflag AUDVOL_DEBUG    = 1; // Audio volume
+debugflag SID_DEBUG       = 0;
+debugflag SID_EXEC        = 0;
+debugflag SIDREG_DEBUG    = 0;
+debugflag AUDBUF_DEBUG    = 0;
+debugflag AUDVOL_DEBUG    = 1;
 
 // Drive
-debugflag VIA_DEBUG       = 0; // Versatile Interface Adapter
-debugflag PIA_DEBUG       = 0; // Peripheral Interface Adapter
-debugflag SER_DEBUG       = 0; // Serial port (IEC bus)
-debugflag DSK_DEBUG       = 0; // Disk controller execution
-debugflag DSKCHG_DEBUG    = 0; // Disk change procedure
-debugflag GCR_DEBUG       = 0; // Disk encoding / decoding
-debugflag FS_DEBUG        = 0; // File System Classes
-debugflag PAR_DEBUG       = 0; // Parallel cable
+debugflag VIA_DEBUG       = 0;
+debugflag PIA_DEBUG       = 0;
+debugflag SER_DEBUG       = 0;
+debugflag DSK_DEBUG       = 0;
+debugflag DSKCHG_DEBUG    = 0;
+debugflag GCR_DEBUG       = 0;
+debugflag FS_DEBUG        = 0;
+debugflag PAR_DEBUG       = 0;
 
 // Media
-debugflag CRT_DEBUG       = 0; // Cartridges
-debugflag FILE_DEBUG      = 0; // Media files (D64,T64,...)
+debugflag CRT_DEBUG       = 0;
+debugflag FILE_DEBUG      = 0;
 
 // Peripherals
-debugflag JOY_DEBUG       = 0; // Joystick
-debugflag DRV_DEBUG       = 0; // Floppy drives
-debugflag TAP_DEBUG       = 0; // Datasette
-debugflag KBD_DEBUG       = 0; // Keyboard
-debugflag PRT_DEBUG       = 0; // Control ports and connected devices
-debugflag EXP_DEBUG       = 0; // Expansion port
-debugflag LIP_DEBUG       = 0; // Light pen
+debugflag JOY_DEBUG       = 0;
+debugflag DRV_DEBUG       = 0;
+debugflag TAP_DEBUG       = 0;
+debugflag KBD_DEBUG       = 0;
+debugflag PRT_DEBUG       = 0;
+debugflag EXP_DEBUG       = 0;
+debugflag LIP_DEBUG       = 0;
 
 // Other components
-debugflag REC_DEBUG       = 0; // Screen recorder
-debugflag REU_DEBUG       = 0; // REU memory expansion
+debugflag REC_DEBUG       = 0;
+debugflag REU_DEBUG       = 0;
 
 
 //

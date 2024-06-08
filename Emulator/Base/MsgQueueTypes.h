@@ -21,7 +21,7 @@ namespace vc64 {
 // Enumerations
 //
 
-///! Emulator message
+/// Emulator message
 enum_long(MSG_TYPE)
 {
     MSG_NONE = 0,           ///< Unclassified

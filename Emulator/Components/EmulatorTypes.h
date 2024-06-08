@@ -26,76 +26,76 @@ namespace vc64 {
 enum_long(DEBUG_FLAG)
 {
     // General
-    FLAG_XFILES,
-    FLAG_CNF_DEBUG,
-    FLAG_DEF_DEBUG,
+    FLAG_XFILES,            ///< Report paranormal activity
+    FLAG_CNF_DEBUG,         ///< Debug configuration code
+    FLAG_DEF_DEBUG,         ///< Debug the user defaults storage
 
     // Emulator
-    FLAG_RUN_DEBUG,
-    FLAG_TIM_DEBUG,
-    FLAG_WARP_DEBUG,
-    FLAG_CMD_DEBUG,
-    FLAG_MSG_DEBUG,
-    FLAG_SNP_DEBUG,
+    FLAG_RUN_DEBUG,         ///< Debug the run loop and component states
+    FLAG_TIM_DEBUG,         ///< Debug thread synchronization
+    FLAG_WARP_DEBUG,        ///< Debug warp mode
+    FLAG_CMD_DEBUG,         ///< Debug the command queue
+    FLAG_MSG_DEBUG,         ///< Debug the message queue
+    FLAG_SNP_DEBUG,         ///< Debug snapshots
 
     // Run ahead
-    FLAG_RUA_DEBUG,
-    FLAG_RUA_ON_STEROIDS,
+    FLAG_RUA_DEBUG,         ///< Debug run-ahead mode
+    FLAG_RUA_ON_STEROIDS,   ///< Update the run-ahead instance in every frame
 
     // CPU
-    FLAG_CPU_DEBUG,
-    FLAG_IRQ_DEBUG,
+    FLAG_CPU_DEBUG,         ///< Debug the CPU
+    FLAG_IRQ_DEBUG,         ///< Debug interrupts
 
     // Memory
-    FLAG_MEM_DEBUG,
+    FLAG_MEM_DEBUG,         ///< Debug memory accesses
 
     // CIAs
-    FLAG_CIA_DEBUG,
-    FLAG_CIAREG_DEBUG,
-    FLAG_CIA_ON_STEROIDS,
+    FLAG_CIA_DEBUG,         ///< Debug the Complex Interface Adapters
+    FLAG_CIAREG_DEBUG,      ///< Debug the CIA register accesses
+    FLAG_CIA_ON_STEROIDS,   ///< Keep the CIAs awake all the time
 
     // VICII
-    FLAG_VICII_DEBUG,
-    FLAG_VICII_REG_DEBUG,
-    FLAG_VICII_SAFE_MODE,
-    FLAG_VICII_STATS,
-    FLAG_RASTERIRQ_DEBUG,
+    FLAG_VICII_DEBUG,       ///< Debug the Video Interface Controller
+    FLAG_VICII_REG_DEBUG,   ///< Debug VICII register accesses
+    FLAG_VICII_SAFE_MODE,   ///< Disable performance optimizations
+    FLAG_VICII_STATS,       ///< Collect statistical information
+    FLAG_RASTERIRQ_DEBUG,   ///< Debug raster interrupts
 
     // SID
-    FLAG_SID_DEBUG,
-    FLAG_SID_EXEC,
-    FLAG_SIDREG_DEBUG,
-    FLAG_AUDBUF_DEBUG,
-    FLAG_AUDVOL_DEBUG,
+    FLAG_SID_DEBUG,         ///< Debug the Sound Interface Device
+    FLAG_SID_EXEC,          ///< Debug SID execution
+    FLAG_SIDREG_DEBUG,      ///< Debug SID register accesses
+    FLAG_AUDBUF_DEBUG,      ///< Debug the audio buffers
+    FLAG_AUDVOL_DEBUG,      ///< Debug the audio volumes
 
     // Drive
-    FLAG_VIA_DEBUG,
-    FLAG_PIA_DEBUG,
-    FLAG_SER_DEBUG,
-    FLAG_DSK_DEBUG,
-    FLAG_DSKCHG_DEBUG,
-    FLAG_GCR_DEBUG,
-    FLAG_FS_DEBUG,
-    FLAG_PAR_DEBUG,
+    FLAG_VIA_DEBUG,         ///< Debug the Versatile Interface Adapter
+    FLAG_PIA_DEBUG,         ///< Debug the Peripheral Interface Adapter
+    FLAG_SER_DEBUG,         ///< Debug the serial port (IEC bus)
+    FLAG_DSK_DEBUG,         ///< Debug the disk controller execution
+    FLAG_DSKCHG_DEBUG,      ///< Debug the disk change procedure
+    FLAG_GCR_DEBUG,         ///< Debug the GCR encoder and decoder
+    FLAG_FS_DEBUG,          ///< Debug files system related code
+    FLAG_PAR_DEBUG,         ///< Debug the parallel drive cable
 
     // Media
-    FLAG_CRT_DEBUG,
-    FLAG_FILE_DEBUG,
+    FLAG_CRT_DEBUG,         ///< Debug cartridges
+    FLAG_FILE_DEBUG,        ///< Debug the handling of media files
 
     // Peripherals
-    FLAG_JOY_DEBUG,
-    FLAG_DRV_DEBUG,
-    FLAG_TAP_DEBUG,
-    FLAG_KBD_DEBUG,
-    FLAG_PRT_DEBUG,
-    FLAG_EXP_DEBUG,
-    FLAG_LIP_DEBUG,
+    FLAG_JOY_DEBUG,         ///< Debug the joysticks
+    FLAG_DRV_DEBUG,         ///< Debug the floppy drives
+    FLAG_TAP_DEBUG,         ///< Debug the datasette
+    FLAG_KBD_DEBUG,         ///< Debug the keyboard
+    FLAG_PRT_DEBUG,         ///< Debug the control port and connected devices
+    FLAG_EXP_DEBUG,         ///< Debug the expansion port
+    FLAG_LIP_DEBUG,         ///< Debug the light pen
 
     // Other components
-    FLAG_REC_DEBUG,
-    FLAG_REU_DEBUG,
+    FLAG_REC_DEBUG,         ///< Debug the screen recorder
+    FLAG_REU_DEBUG,         ///< Debug the REU memory expansion
 
-    // Forced error conditions
+    //! Forced error condition
     FLAG_FORCE_ROM_MISSING,
     FLAG_FORCE_MEGA64_MISMATCH,
     FLAG_FORCE_SNAP_TOO_OLD,
@@ -323,18 +323,33 @@ struct WarpModeEnum : util::Reflection<WarpModeEnum, WarpMode>
 // Structures
 //
 
+//! The current emulator configuration
 typedef struct
 {
+    //! After a reset, the emulator runs in warp mode for this amout of seconds
     isize warpBoot;
+
+    //! Warp mode
     WarpMode warpMode;
+
+    //! Vertical Synchronization
     bool vsync;
+
+    //! Emulator speed in percent (100 is native speed)
     isize speedAdjust;
+
+    //! Enable auto-snapshots
     bool snapshots;
+
+    //! Delay between two auto-snapshots in seconds
     isize snapshotDelay;
+
+    //! Number of run-ahead frames (0 = run-ahead is disabled)
     isize runAhead;
 }
 EmulatorConfig;
 
+//! The current emulator state
 typedef struct
 {
     ExecState state;

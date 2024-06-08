@@ -32,9 +32,9 @@ static constexpr auto PORT_2 = 1;
 /// Control port device
 enum_long(CPDEVICE)
 {
-    CPDEVICE_NONE,      ///! No device
-    CPDEVICE_MOUSE,     ///! Mouse
-    CPDEVICE_JOYSTICK   ///! Joystick
+    CPDEVICE_NONE,      ///< No device
+    CPDEVICE_MOUSE,     ///< Mouse
+    CPDEVICE_JOYSTICK   ///< Joystick
 };
 typedef CPDEVICE ControlPortDevice;
 

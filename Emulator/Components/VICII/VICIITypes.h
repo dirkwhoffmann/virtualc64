@@ -145,7 +145,7 @@ struct GlueLogicEnum : util::Reflection<GlueLogicEnum, GlueLogic> {
     }
 };
 
-///! C64 canvas size
+/// C64 canvas size
 enum_long(SCREEN_GEOMETRY)
 {
     SCREEN_GEOMETRY_25_40 = 1,          ///< 25 rows x 40 columns
@@ -153,6 +153,7 @@ enum_long(SCREEN_GEOMETRY)
     SCREEN_GEOMETRY_24_40,              ///< 24 rows x 40 columns
     SCREEN_GEOMETRY_24_38               ///< 24 rows x 38 columns
 };
+/// Type alias
 typedef SCREEN_GEOMETRY ScreenGeometry;
 
 struct ScreenGeometryEnum : util::Reflection<ScreenGeometryEnum, ScreenGeometry> {
@@ -175,7 +176,7 @@ struct ScreenGeometryEnum : util::Reflection<ScreenGeometryEnum, ScreenGeometry>
     }
 };
 
-///! C64 display mode
+/// C64 display mode
 enum_long(DISPLAY_MODE)
 {
     DISPLAY_MODE_STANDARD_TEXT,         ///< Standard Character Mode

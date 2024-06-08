@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 
 ## See also
 
-- Class VirtualC64 which provides the public API.
+- Class [VirtualC64](#vc64::VirtualC64) which provides the public API.
 
 <div class="section_buttons">
 
