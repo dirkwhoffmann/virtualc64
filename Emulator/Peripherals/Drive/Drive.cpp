@@ -423,7 +423,7 @@ Drive::insertMediaFile(class MediaFile &file, bool wp)
         
         AnyCollection &collection = dynamic_cast<AnyCollection &>(file);
         insertDisk(std::make_unique<Disk>(collection, wp));
-        
+
     } catch (...) {
         
         throw Error(ERROR_FILE_TYPE_MISMATCH);

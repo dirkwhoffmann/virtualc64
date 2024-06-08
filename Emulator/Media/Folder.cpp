@@ -28,6 +28,11 @@ Folder::init(const string &path)
     if (!isCompatiblePath(path)) throw Error(ERROR_FILE_TYPE_MISMATCH);
     
     fs = new FileSystem(path);
+
+    // REMOVE ASAP
+    fs->scanDirectory();
+    fs->printDirectory();
+    printf("NumFiles: %ld\n", fs->numFiles());
 }
 
 PETName<16>
@@ -39,6 +44,7 @@ Folder::collectionName()
 isize
 Folder::collectionCount() const
 {
+    printf("collectionCount: %ld\n", fs->numFiles());
     return (isize)fs->numFiles();
 }
 

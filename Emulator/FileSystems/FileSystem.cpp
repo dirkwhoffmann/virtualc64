@@ -94,6 +94,12 @@ FileSystem::init(const D64File &d64)
     for (Block b = 0; b < (Block)blocks.size(); b++) {
         setErrorCode(b, d64.getErrorCode(b));
     }
+
+    // Update the cached directory information
+    scanDirectory();
+
+    // Print some debug information
+    if (FS_DEBUG) printDirectory();
 }
 
 void
@@ -120,6 +126,12 @@ FileSystem::init(class Disk &disk)
 
     // Import file system
     importVolume(buffer, len);
+
+    // Update the cached directory information
+    scanDirectory();
+
+    // Print some debug information
+    if (FS_DEBUG) printDirectory();
 }
 
 void
@@ -146,6 +158,7 @@ FileSystem::init(AnyCollection &collection)
         delete[] buffer;
     }
 
+    // Update the cached directory information
     scanDirectory();
 
     // Print some debug information
@@ -166,6 +179,9 @@ FileSystem::init(const string &path)
         
         // Import the folder
         importDirectory(path);
+
+        // Update the cached directory information
+        scanDirectory();
 
         // Print some debug information
         if (FS_DEBUG) printDirectory();

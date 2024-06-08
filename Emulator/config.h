@@ -26,7 +26,7 @@
 #define SNP_MAJOR 5
 #define SNP_MINOR 0
 #define SNP_SUBMINOR 0
-#define SNP_BETA 1
+#define SNP_BETA 2
 
 // Uncomment these settings in a release build
 // #define RELEASEBUILD

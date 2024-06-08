@@ -229,15 +229,15 @@ public:
     // Writing files
     //
 
-    // Returns the next free directory entry or creates one
-    FSDirEntry *getOrCreateNextFreeDirEntry();
-
     // Creates a new file
     bool makeFile(PETName<16> name, const u8 *buf, isize cnt);
 
 private:
     
     bool makeFile(PETName<16> name, FSDirEntry *entry, const u8 *buf, isize cnt);
+
+    // Returns the next free directory entry or creates one
+    FSDirEntry *getOrCreateNextFreeDirEntry();
 
     
     //
