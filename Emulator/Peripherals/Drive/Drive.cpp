@@ -415,14 +415,19 @@ Drive::insertMediaFile(class MediaFile &file, bool wp)
         insertDisk(std::make_unique<Disk>(d64, wp));
 
     } catch (...) { try {
-
+        
+        const G64File &g64 = dynamic_cast<const G64File &>(file);
+        insertDisk(std::make_unique<Disk>(g64, wp));
+        
+    } catch (...) { try {
+        
         AnyCollection &collection = dynamic_cast<AnyCollection &>(file);
         insertDisk(std::make_unique<Disk>(collection, wp));
-
+        
     } catch (...) {
-
+        
         throw Error(ERROR_FILE_TYPE_MISMATCH);
-    }}
+    }}}
 }
 
 void
