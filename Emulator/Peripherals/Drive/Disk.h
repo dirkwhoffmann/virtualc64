@@ -111,12 +111,12 @@ public:
 public:
     
     Disk();
-    Disk(const string &path, bool wp = false) { init(path, wp); } throws
+    Disk(const string &path, bool wp = false) throws { init(path, wp); }
     Disk(DOSType type, PETName<16> name, bool wp = false) { init(type, name, wp); }
     Disk(const FileSystem &device, bool wp = false) { init(device, wp); }
     Disk(const class G64File &g64, bool wp = false) { init(g64, wp); }
-    Disk(const class D64File &d64, bool wp = false) { init(d64, wp); } throws
-    Disk(class AnyCollection &archive, bool wp = false) { init(archive, wp); } throws
+    Disk(const class D64File &d64, bool wp = false) throws { init(d64, wp); }
+    Disk(class AnyCollection &archive, bool wp = false) throws { init(archive, wp); }
     Disk(SerReader &reader) throws { init(reader); }
     
 private:

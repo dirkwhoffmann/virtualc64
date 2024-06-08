@@ -29,6 +29,7 @@
 #include "ExpansionPortTypes.h"
 #include "FSTypes.h"
 #include "JoystickTypes.h"
+#include "KeyboardTypes.h"
 #include "MediaFileTypes.h"
 #include "MemoryTypes.h"
 #include "MonitorTypes.h"

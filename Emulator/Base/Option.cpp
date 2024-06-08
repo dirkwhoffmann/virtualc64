@@ -26,6 +26,7 @@
 #include "PowerPortTypes.h"
 #include "MouseTypes.h"
 #include "IOUtils.h"
+#include "Macros.h"
 
 namespace vc64 {
 

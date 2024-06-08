@@ -1046,6 +1046,7 @@
 		50D5F88724F556270062EF13 /* DiskErrors.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskErrors.xib; sourceTree = "<group>"; };
 		50D5F88924F5573D0062EF13 /* DiskErrorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskErrorController.swift; sourceTree = "<group>"; };
 		50D8421720A82CF500EB859A /* MetalViewEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalViewEvents.swift; sourceTree = "<group>"; };
+		50DA83DE2C143C2C001209AA /* KeyboardTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyboardTypes.h; sourceTree = "<group>"; };
 		50DAABD824F0108A005D426F /* VICIITypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VICIITypes.h; sourceTree = "<group>"; };
 		50DBB3CF2641101E006F45E6 /* DmaDebugger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DmaDebugger.cpp; sourceTree = "<group>"; };
 		50DBB3D02641101E006F45E6 /* DmaDebugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DmaDebugger.h; sourceTree = "<group>"; };
@@ -1233,6 +1234,7 @@
 				5007E1E426A70042000E7344 /* CMakeLists.txt */,
 				50AEEE7226305625001DED20 /* C64Key.h */,
 				50AEEE7126305625001DED20 /* C64Key.cpp */,
+				50DA83DE2C143C2C001209AA /* KeyboardTypes.h */,
 				504C434224AF29AC00E69CAE /* Keyboard.h */,
 				508C1E622C0B5EE80097473C /* KeyboardBase.cpp */,
 				504C434424AF29AC00E69CAE /* Keyboard.cpp */,
