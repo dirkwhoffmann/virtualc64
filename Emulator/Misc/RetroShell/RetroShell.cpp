@@ -524,7 +524,7 @@ RetroShell::execScript(const string &contents)
 void 
 RetroShell::execScript(const MediaFile &file)
 {
-    if (file.type() != FILETYPE_SCRIPT) throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+    if (file.type() != FILETYPE_SCRIPT) throw Error(ERROR_FILE_TYPE_MISMATCH);
 
     string s((char *)file.getData(), file.getSize());
     try { execScript(s); } catch (util::Exception &) { }
@@ -597,7 +597,7 @@ RetroShell::describe(const std::exception &e, isize line, const string &cmd)
         return;
     }
 
-    if (auto err = dynamic_cast<const VC64Error *>(&e)) {
+    if (auto err = dynamic_cast<const Error *>(&e)) {
 
         *this << err->what();
         *this << '\n';

@@ -25,7 +25,7 @@ Folder::isCompatible(const string &path)
 void
 Folder::init(const string &path)
 {
-    if (!isCompatiblePath(path)) throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+    if (!isCompatiblePath(path)) throw Error(ERROR_FILE_TYPE_MISMATCH);
     
     fs = new FileSystem(path);
 }

@@ -219,7 +219,7 @@ ExpansionPort::attachCartridge(const MediaFile &file, bool reset)
 
         // Only proceed if this cartridge is supported
         if (!crtFile.isSupported()) {
-            throw VC64Error(ERROR_CRT_UNSUPPORTED, crtFile.cartridgeTypeName());
+            throw Error(ERROR_CRT_UNSUPPORTED, crtFile.cartridgeTypeName());
         }
 
         // Create cartridge from cartridge file
@@ -234,7 +234,7 @@ ExpansionPort::attachCartridge(const MediaFile &file, bool reset)
 
     } catch (...) {
 
-        throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+        throw Error(ERROR_FILE_TYPE_MISMATCH);
     }
 }
 

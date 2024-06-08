@@ -33,7 +33,7 @@ using namespace vc64;
     return self;
 }
 
-- (void)save:(const VC64Error &)exception
+- (void)save:(const Error &)exception
 {
     errorCode = ErrorCode(exception.data);
     what = @(exception.what());
@@ -96,13 +96,13 @@ using namespace vc64;
 - (void)load:(NSURL *)url exception:(ExceptionWrapper *)ex
 {
     try { return [self props]->load([url fileSystemRepresentation]); }
-    catch (VC64Error &error) { [ex save:error]; }
+    catch (Error &error) { [ex save:error]; }
 }
 
 - (void)save:(NSURL *)url exception:(ExceptionWrapper *)ex
 {
     try { return [self props]->save([url fileSystemRepresentation]); }
-    catch (VC64Error &error) { [ex save:error]; }
+    catch (Error &error) { [ex save:error]; }
 }
 
 - (void)register:(NSString *)key value:(NSString *)value
@@ -727,7 +727,7 @@ using namespace vc64;
 - (void)attachCartridge:(MediaFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex
 {
     try { [self eport]->attachCartridge(*(MediaFile *)c->obj, reset); }
-    catch (VC64Error &err) { [ex save:err]; }
+    catch (Error &err) { [ex save:err]; }
 }
 
 - (void)attachReuCartridge:(NSInteger)capacity
@@ -1095,7 +1095,7 @@ using namespace vc64;
     auto y2 = isize(y1 + (int)rect.size.height);
 
     try { return [self recorder]->startRecording(x1, y1, x2, y2); }
-    catch (VC64Error &error) { [ex save:error]; }
+    catch (Error &error) { [ex save:error]; }
 }
 
 - (void)stopRecording
@@ -1184,7 +1184,7 @@ using namespace vc64;
                    exception:(ExceptionWrapper *)ex
 {
     try { return [self make: MediaFile::make([path fileSystemRepresentation])]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
+    catch (Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithFile:(NSString *)path
@@ -1192,7 +1192,7 @@ using namespace vc64;
                    exception:(ExceptionWrapper *)ex
 {
     try { return [self make: MediaFile::make([path fileSystemRepresentation], type)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
+    catch (Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len
@@ -1200,7 +1200,7 @@ using namespace vc64;
                      exception:(ExceptionWrapper *)ex
 {
     try { return [self make: MediaFile::make((u8 *)buf, len, type)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
+    catch (Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithC64:(EmulatorProxy *)proxy
@@ -1215,7 +1215,7 @@ using namespace vc64;
 {
     auto drive = (DriveAPI *)proxy->obj;
     try { return [self make: MediaFile::make(*drive, type)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
+    catch (Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy
@@ -1224,7 +1224,7 @@ using namespace vc64;
 {
     auto fs = (FileSystem *)proxy->obj;
     try { return [self make: MediaFile::make(*fs, type)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
+    catch (Error &error) { [ex save:error]; return nil; }
 }
 
 - (FileType)type
@@ -1245,7 +1245,7 @@ using namespace vc64;
 - (void)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
     try { [self file]->writeToFile(string([path fileSystemRepresentation])); }
-    catch (VC64Error &err) { [ex save:err]; }
+    catch (Error &err) { [ex save:err]; }
 }
 
 - (NSImage *)previewImage
@@ -1332,7 +1332,7 @@ using namespace vc64;
 - (void)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
     try { [self file]->writeToFile(string([path fileSystemRepresentation])); }
-    catch (VC64Error &err) { [ex save:err]; }    
+    catch (Error &err) { [ex save:err]; }    
 }
 
 @end
@@ -1358,7 +1358,7 @@ using namespace vc64;
 {
     auto *disk = [proxy drive]->disk.get();
     try { return [self make: new FileSystem(*disk)]; }
-    catch (VC64Error &err) { [ex save:err]; return nil; }
+    catch (Error &err) { [ex save:err]; return nil; }
 }
 
 + (instancetype)makeWithDiskType:(DiskType)diskType dosType:(DOSType)dosType
@@ -1369,7 +1369,7 @@ using namespace vc64;
 + (instancetype)makeWithMediaFile:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex
 {
     try { return [self make: new FileSystem(*(MediaFile *)proxy->obj)]; }
-    catch (VC64Error &err) { [ex save:err]; return nil; }
+    catch (Error &err) { [ex save:err]; return nil; }
 }
 
 - (NSString *)name
@@ -1553,7 +1553,7 @@ using namespace vc64;
 - (void)export:(NSString *)path exception:(ExceptionWrapper *)e
 {
     try { [self fs]->exportDirectory([path fileSystemRepresentation]); }
-    catch (VC64Error &error) { [e save:error]; }
+    catch (Error &error) { [e save:error]; }
 }
 
 - (void)info
@@ -1815,13 +1815,13 @@ using namespace vc64;
 - (void)isReady:(ExceptionWrapper *)ex
 {
     try { [self emu]->isReady(); }
-    catch (VC64Error &error) { [ex save:error]; }
+    catch (Error &error) { [ex save:error]; }
 }
 
 - (void)powerOn:(ExceptionWrapper *)ex
 {
     try { [self emu]->powerOn(); }
-    catch (VC64Error &error) { [ex save:error]; }
+    catch (Error &error) { [ex save:error]; }
 }
 
 - (void)powerOff
@@ -1974,7 +1974,7 @@ using namespace vc64;
     try {
         [self emu]->set(opt, val);
         return true;
-    } catch (VC64Error &exception) {
+    } catch (Error &exception) {
         return false;
     }
 }
@@ -1984,7 +1984,7 @@ using namespace vc64;
     try {
         [self emu]->set(opt, val ? 1 : 0);
         return true;
-    } catch (VC64Error &exception) {
+    } catch (Error &exception) {
         return false;
     }
 }
@@ -1994,7 +1994,7 @@ using namespace vc64;
     try {
         [self emu]->set(opt, val, id);
         return true;
-    } catch (VC64Error &exception) {
+    } catch (Error &exception) {
         return false;
     }
 }
@@ -2004,7 +2004,7 @@ using namespace vc64;
     try {
         [self emu]->set(opt, val ? 1 : 0, id);
         return true;
-    } catch (VC64Error &exception) {
+    } catch (Error &exception) {
         return false;
     }
 }
@@ -2014,7 +2014,7 @@ using namespace vc64;
     try {
         [self emu]->set(opt, val, (long)id);
         return true;
-    } catch (VC64Error &exception) {
+    } catch (Error &exception) {
         return false;
     }
 }
@@ -2024,7 +2024,7 @@ using namespace vc64;
     try {
         [self emu]->set(opt, val ? 1 : 0, (long)id);
         return true;
-    } catch (VC64Error &exception) {
+    } catch (Error &exception) {
         return false;
     }
 }
@@ -2037,7 +2037,7 @@ using namespace vc64;
 - (void)exportConfig:(NSURL *)url exception:(ExceptionWrapper *)ex
 {
     try { [self emu]->exportConfig([url fileSystemRepresentation]); }
-    catch (VC64Error &error) { [ex save:error]; }
+    catch (Error &error) { [ex save:error]; }
 }
 
 - (void)wakeUp
@@ -2063,7 +2063,7 @@ using namespace vc64;
 - (void) loadRom:(NSURL *)url exception:(ExceptionWrapper *)e
 {
     try { [self emu]->c64.loadRom(string([url fileSystemRepresentation])); }
-    catch (VC64Error &error) { [e save:error]; }
+    catch (Error &error) { [e save:error]; }
 }
 
 - (void) loadRom:(MediaFileProxy *)proxy
@@ -2074,7 +2074,7 @@ using namespace vc64;
 - (void) saveRom:(RomType)type url:(NSURL *)url exception:(ExceptionWrapper *)e
 {
     try { [self emu]->c64.saveRom(type, string([url fileSystemRepresentation])); }
-    catch (VC64Error &error) { [e save:error]; }
+    catch (Error &error) { [e save:error]; }
 }
 
 - (void) deleteRom:(RomType)type
@@ -2085,13 +2085,13 @@ using namespace vc64;
 - (void)flash:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex
 {
     try { [self emu]->c64.flash(*(MediaFile *)proxy->obj); }
-    catch (VC64Error &error) { [ex save:error]; }
+    catch (Error &error) { [ex save:error]; }
 }
 
 - (void)flash:(FileSystemProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex
 {
     try { [self emu]->c64.flash(*(FileSystem *)proxy->obj, (unsigned)nr); }
-    catch (VC64Error &error) { [ex save:error]; }
+    catch (Error &error) { [ex save:error]; }
 }
 
 - (void)put:(CmdType)type

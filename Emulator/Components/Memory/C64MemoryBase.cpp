@@ -96,7 +96,7 @@ C64Memory::checkOption(Option opt, i64 value)
         case OPT_MEM_INIT_PATTERN:
 
             if (!RamPatternEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INV_ARG, RamPatternEnum::keyList());
+                throw Error(ERROR_OPT_INV_ARG, RamPatternEnum::keyList());
             }
             return;
 
@@ -106,7 +106,7 @@ C64Memory::checkOption(Option opt, i64 value)
             return;
 
         default:
-            throw VC64Error(ERROR_OPT_UNSUPPORTED);
+            throw Error(ERROR_OPT_UNSUPPORTED);
     }
 }
 

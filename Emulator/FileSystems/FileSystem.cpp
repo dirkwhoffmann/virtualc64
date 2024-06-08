@@ -38,7 +38,7 @@ FileSystem::FileSystem(MediaFile &file)
 
     } catch (...) {
 
-        throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+        throw Error(ERROR_FILE_TYPE_MISMATCH);
     }}
 }
 
@@ -112,7 +112,7 @@ FileSystem::init(class Disk &disk)
         case D64File::D64_802_SECTORS: descriptor.numCyls = 42; break;
 
         default:
-            throw VC64Error(ERROR_FS_CORRUPTED);
+            throw Error(ERROR_FS_CORRUPTED);
     }
 
     // Create the device
@@ -201,7 +201,7 @@ FileSystem::init(const string &path)
         return;
     }
 
-    throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+    throw Error(ERROR_FILE_TYPE_MISMATCH);
 }
 
 void
@@ -779,7 +779,7 @@ FileSystem::importVolume(const u8 *src, isize size)
 {
     ErrorCode err;
     importVolume(src, size, &err);
-    if (err != ERROR_OK) { throw VC64Error(err); }
+    if (err != ERROR_OK) { throw Error(err); }
 }
 
 bool
@@ -824,7 +824,7 @@ FileSystem::importDirectory(const string &path)
     fs::directory_entry dir;
 
     try { dir = fs::directory_entry(path); }
-    catch (...) { throw VC64Error(ERROR_FILE_CANT_READ); }
+    catch (...) { throw Error(ERROR_FILE_CANT_READ); }
 
     importDirectory(dir);
 }
@@ -852,7 +852,7 @@ FileSystem::importDirectory(const fs::directory_entry &dir)
                 PETName<16> pet = PETName<16>(util::stripSuffix(name));
                 if (!makeFile(pet, buffer.ptr, buffer.size)) {
 
-                    throw VC64Error(ERROR_FS_CANT_IMPORT);
+                    throw Error(ERROR_FS_CANT_IMPORT);
                 }
             }
         }
@@ -908,17 +908,17 @@ FileSystem::exportDirectory(const string &path, bool createDir)
 {
     // Try to create the directory if it doesn't exist
     if (!util::isDirectory(path) && createDir && !util::createDirectory(path)) {
-        throw VC64Error(ERROR_DIR_CANT_CREATE);
+        throw Error(ERROR_DIR_CANT_CREATE);
     }
 
     // Only proceed if the directory exists
     if (!util::isDirectory(path)) {
-        throw VC64Error(ERROR_DIR_NOT_FOUND);
+        throw Error(ERROR_DIR_NOT_FOUND);
     }
 
     // Only proceed if path points to an empty directory
     if (util::numDirectoryItems(path) != 0) {
-        throw VC64Error(ERROR_DIR_NOT_EMPTY, path);
+        throw Error(ERROR_DIR_NOT_EMPTY, path);
     }
     
     // Rescan the directory to get the directory cache up to date
@@ -945,7 +945,7 @@ FileSystem::exportFile(FSDirEntry *entry, const string &path)
     debug(FS_DEBUG, "Exporting file to %s\n", name.c_str());
 
     std::ofstream stream(name);
-    if (!stream.is_open()) throw VC64Error(ERROR_FILE_CANT_CREATE);
+    if (!stream.is_open()) throw Error(ERROR_FILE_CANT_CREATE);
 
     exportFile(entry, stream);
 }

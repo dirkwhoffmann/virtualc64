@@ -90,13 +90,13 @@ Snapshot::Snapshot(C64 &c64): Snapshot(c64.size())
 void
 Snapshot::finalizeRead()
 {
-    if (FORCE_SNAP_TOO_OLD) throw VC64Error(ERROR_SNAP_TOO_OLD);
-    if (FORCE_SNAP_TOO_NEW) throw VC64Error(ERROR_SNAP_TOO_NEW);
-    if (FORCE_SNAP_IS_BETA) throw VC64Error(ERROR_SNAP_IS_BETA);
+    if (FORCE_SNAP_TOO_OLD) throw Error(ERROR_SNAP_TOO_OLD);
+    if (FORCE_SNAP_TOO_NEW) throw Error(ERROR_SNAP_TOO_NEW);
+    if (FORCE_SNAP_IS_BETA) throw Error(ERROR_SNAP_IS_BETA);
 
-    if (isTooOld()) throw VC64Error(ERROR_SNAP_TOO_OLD);
-    if (isTooNew()) throw VC64Error(ERROR_SNAP_TOO_NEW);
-    if (isBeta() && !betaRelease) throw VC64Error(ERROR_SNAP_IS_BETA);
+    if (isTooOld()) throw Error(ERROR_SNAP_TOO_OLD);
+    if (isTooNew()) throw Error(ERROR_SNAP_TOO_NEW);
+    if (isBeta() && !betaRelease) throw Error(ERROR_SNAP_IS_BETA);
 }
 
 std::pair <isize,isize> 

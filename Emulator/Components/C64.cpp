@@ -326,7 +326,7 @@ C64::exportConfig(const fs::path &path) const
     auto fs = std::ofstream(path, std::ofstream::binary);
 
     if (!fs.is_open()) {
-        throw VC64Error(ERROR_FILE_CANT_WRITE);
+        throw Error(ERROR_FILE_CANT_WRITE);
     }
 
     exportConfig(fs);
@@ -570,16 +570,16 @@ C64::_isReady() const
     bool mega = hasMega65Rom(ROM_TYPE_BASIC) && hasMega65Rom(ROM_TYPE_KERNAL);
     
     if (!hasRom(ROM_TYPE_BASIC)) {
-        throw VC64Error(ERROR_ROM_BASIC_MISSING);
+        throw Error(ERROR_ROM_BASIC_MISSING);
     }
     if (!hasRom(ROM_TYPE_CHAR)) {
-        throw VC64Error(ERROR_ROM_CHAR_MISSING);
+        throw Error(ERROR_ROM_CHAR_MISSING);
     }
     if (!hasRom(ROM_TYPE_KERNAL) || FORCE_ROM_MISSING) {
-        throw VC64Error(ERROR_ROM_KERNAL_MISSING);
+        throw Error(ERROR_ROM_KERNAL_MISSING);
     }
     if (FORCE_MEGA64_MISMATCH || (mega && string(mega65BasicRev()) != string(mega65KernalRev()))) {
-        throw VC64Error(ERROR_ROM_MEGA65_MISMATCH);
+        throw Error(ERROR_ROM_MEGA65_MISMATCH);
     }
 }
 
@@ -689,7 +689,7 @@ C64::load(const u8 *buffer)
             warn("Corrupted snapshot detected:\n");
             dump(Category::Checksums);
         }
-        throw VC64Error(ERROR_SNAP_CORRUPTED);
+        throw Error(ERROR_SNAP_CORRUPTED);
     }
 
     return count;
@@ -1195,7 +1195,7 @@ C64::loadSnapshot(const MediaFile &file)
                 // Print some debug info if requested
                 if (SNP_DEBUG) dump(Category::State);
 
-            } catch (VC64Error &error) {
+            } catch (Error &error) {
 
                 /* If we reach this point, the emulator has been put into an
                  * inconsistent state due to corrupted snapshot data. We cannot
@@ -1213,7 +1213,7 @@ C64::loadSnapshot(const MediaFile &file)
 
     } catch (...) {
 
-        throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+        throw Error(ERROR_FILE_TYPE_MISMATCH);
     }
 }
 
@@ -1455,7 +1455,7 @@ C64::loadRom(const MediaFile &file)
             break;
             
         default:
-            throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+            throw Error(ERROR_FILE_TYPE_MISMATCH);
     }
 }
 
@@ -1603,7 +1603,7 @@ C64::flash(const MediaFile &file, isize nr)
 
     } catch (...) {
 
-        throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+        throw Error(ERROR_FILE_TYPE_MISMATCH);
     }
 }
 
@@ -1763,7 +1763,7 @@ C64::getDebugVariable(DebugFlag flag)
         case FLAG_FORCE_NO_FFMPEG:          return FORCE_NO_FFMPEG;
 
         default:
-            throw VC64Error(ERROR_OPT_UNSUPPORTED, 
+            throw Error(ERROR_OPT_UNSUPPORTED, 
                             "Unhandled debug variable: " + string(DebugFlagEnum::key(flag)));
     }
 
@@ -1851,7 +1851,7 @@ C64::setDebugVariable(DebugFlag flag, bool val)
         case FLAG_FORCE_NO_FFMPEG:          FORCE_NO_FFMPEG = val; break;
 
         default:
-            throw VC64Error(ERROR_OPT_UNSUPPORTED,
+            throw Error(ERROR_OPT_UNSUPPORTED,
                             "Unhandled debug variable: " + string(DebugFlagEnum::key(flag)));
     }
 #endif

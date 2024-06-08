@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-VC64Error::VC64Error(ErrorCode code, const string &s)
+Error::Error(ErrorCode code, const string &s)
 {
     data = code;
     
@@ -252,7 +252,7 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
 }
 
 const char *
-VC64Error::what() const throw()
+Error::what() const throw()
 {
     return description.c_str();
 }

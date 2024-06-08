@@ -161,7 +161,7 @@ Emulator::checkOption(Option opt, i64 value)
         case OPT_EMU_WARP_MODE:
 
             if (!WarpModeEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INV_ARG, WarpModeEnum::keyList());
+                throw Error(ERROR_OPT_INV_ARG, WarpModeEnum::keyList());
             }
             return;
 
@@ -172,7 +172,7 @@ Emulator::checkOption(Option opt, i64 value)
         case OPT_EMU_SPEED_ADJUST:
 
             if (value < 50 || value > 200) {
-                throw VC64Error(ERROR_OPT_INV_ARG, "50...200");
+                throw Error(ERROR_OPT_INV_ARG, "50...200");
             }
             return;
 
@@ -183,19 +183,19 @@ Emulator::checkOption(Option opt, i64 value)
         case OPT_EMU_SNAPSHOT_DELAY:
 
             if (value < 10 || value > 3600) {
-                throw VC64Error(ERROR_OPT_INV_ARG, "10...3600");
+                throw Error(ERROR_OPT_INV_ARG, "10...3600");
             }
             return;
 
         case OPT_EMU_RUN_AHEAD:
 
             if (value < 0 || value > 12) {
-                throw VC64Error(ERROR_OPT_INV_ARG, "0...12");
+                throw Error(ERROR_OPT_INV_ARG, "0...12");
             }
             return;
 
         default:
-            throw VC64Error(ERROR_OPT_UNSUPPORTED);
+            throw Error(ERROR_OPT_UNSUPPORTED);
     }
 }
 

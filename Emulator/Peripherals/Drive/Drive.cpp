@@ -421,7 +421,7 @@ Drive::insertMediaFile(class MediaFile &file, bool wp)
 
     } catch (...) {
 
-        throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+        throw Error(ERROR_FILE_TYPE_MISMATCH);
     }}
 }
 

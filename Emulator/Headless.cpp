@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
         
         return 1;
 
-    } catch (vc64::VC64Error &e) {
+    } catch (vc64::Error &e) {
 
         std::cout << "VC64Error: " << std::endl;
         std::cout << e.what() << std::endl;

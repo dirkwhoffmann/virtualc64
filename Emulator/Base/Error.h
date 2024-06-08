@@ -18,17 +18,13 @@
 
 namespace vc64 {
 
-//
-// VC64Error
-//
-
 /// Emulator exception
-struct VC64Error : public util::Exception
+struct Error : public util::Exception
 {
-    VC64Error(ErrorCode code, const string &s);
-    VC64Error(ErrorCode code, long v) : VC64Error(code, std::to_string(v)) { };
-    VC64Error(ErrorCode code) : VC64Error(code, "") { }
-    VC64Error() : Exception() { }
+    Error(ErrorCode code, const string &s);
+    Error(ErrorCode code, long v) : Error(code, std::to_string(v)) { };
+    Error(ErrorCode code) : Error(code, "") { }
+    Error() : Exception() { }
 
     /// Returns a textual description of this error
     const char *what() const throw() override;

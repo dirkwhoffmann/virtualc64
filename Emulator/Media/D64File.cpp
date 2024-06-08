@@ -89,7 +89,7 @@ D64File::init(FileSystem &volume)
 
     ErrorCode err;
     if (!volume.exportVolume(data, size, &err)) {
-        throw VC64Error(err);
+        throw Error(err);
     }
 }
 

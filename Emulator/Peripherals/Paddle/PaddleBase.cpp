@@ -87,12 +87,12 @@ Paddle::checkOption(Option opt, i64 value)
         case OPT_PADDLE_ORIENTATION:
 
             if (!PaddleOrientationEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INV_ARG, PaddleOrientationEnum::keyList());
+                throw Error(ERROR_OPT_INV_ARG, PaddleOrientationEnum::keyList());
             }
             return;
 
         default:
-            throw VC64Error(ERROR_OPT_UNSUPPORTED);
+            throw Error(ERROR_OPT_UNSUPPORTED);
     }
 }
 

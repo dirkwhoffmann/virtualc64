@@ -112,7 +112,7 @@ Host::tmp() const
 
             if (!logfile.is_open()) {
 
-                throw VC64Error(ERROR_DIR_NOT_FOUND);
+                throw Error(ERROR_DIR_NOT_FOUND);
             }
         }
 
