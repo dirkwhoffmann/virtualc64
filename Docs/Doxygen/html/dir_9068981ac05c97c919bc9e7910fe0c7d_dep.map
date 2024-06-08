@@ -1,0 +1,10 @@
+<map id="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Paddle" name="/Users/hoff/Retro/virtualc64/Emulator/Peripherals/Paddle">
+<area shape="rect" id="node1" href="dir_8b75e2c966dbd6e9d814cce494bf41c3.html" title="Joystick" alt="" coords="26,126,97,152"/>
+<area shape="rect" id="node2" href="dir_9068981ac05c97c919bc9e7910fe0c7d.html" title="Paddle" alt="" coords="32,52,93,78"/>
+<area shape="poly" id="edge1" href="dir_000018_000011.html" alt="" coords="65,78,65,110,59,110,60,78"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000018_000011.html" title="1" alt="" coords="67,100,74,115"/>
+<area shape="rect" id="node3" href="dir_f1dd3ab951341472f6f0525fe7f46f05.html" title="Components" alt="" coords="120,126,216,152"/>
+<area shape="poly" id="edge2" href="dir_000018_000003.html" alt="" coords="82,76,139,115,136,119,79,81"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000018_000003.html" title="1" alt="" coords="136,101,143,116"/>
+<area shape="rect" id="clust1" href="dir_caa8e5cf067d1e3bd80d413bc762db78.html" title="Peripherals" alt="" coords="16,16,107,162"/>
+</map>

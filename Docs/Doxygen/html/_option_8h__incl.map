@@ -1,0 +1,34 @@
+<map id="/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h" name="/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="138,5,320,46"/>
+<area shape="rect" id="Node000002" href="$_option_types_8h.html" title=" " alt="" coords="59,94,164,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="201,49,143,87,141,83,198,44"/>
+<area shape="rect" id="Node000012" href="$_parser_8h_source.html" title=" " alt="" coords="194,94,263,120"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="231,46,231,78,226,78,226,46"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="288,94,356,120"/>
+<area shape="poly" id="edge17_Node000001_Node000015" title=" " alt="" coords="253,44,298,82,294,86,250,48"/>
+<area shape="rect" id="Node000003" href="$_reflection_8h_source.html" title=" " alt="" coords="55,168,146,193"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="112,120,107,153,102,152,107,119"/>
+<area shape="rect" id="Node000004" href="$_types_8h_source.html" title=" " alt="" coords="200,241,268,267"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="125,192,199,231,197,236,122,196"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="99,241,177,267"/>
+<area shape="poly" id="edge9_Node000003_Node000010" title=" " alt="" coords="109,192,127,226,122,229,104,195"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="30,241,76,267"/>
+<area shape="poly" id="edge10_Node000003_Node000011" title=" " alt="" coords="95,195,72,230,67,227,91,192"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,315,95,341"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="204,270,96,311,94,307,202,265"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="119,315,184,341"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="222,270,178,307,175,303,218,266"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="207,315,261,341"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="237,267,237,299,231,299,231,267"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="285,315,346,341"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="250,266,292,303,289,307,246,270"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="370,315,437,341"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="264,265,361,306,359,311,262,270"/>
+<area shape="poly" id="edge12_Node000012_Node000004" title=" " alt="" coords="232,120,236,226,230,226,226,120"/>
+<area shape="poly" id="edge16_Node000012_Node000010" title=" " alt="" coords="224,121,156,229,151,227,219,119"/>
+<area shape="rect" id="Node000013" href="$_exception_8h_source.html" title=" " alt="" coords="272,168,362,193"/>
+<area shape="poly" id="edge13_Node000012_Node000013" title=" " alt="" coords="245,118,292,156,288,160,242,122"/>
+<area shape="poly" id="edge14_Node000013_Node000004" title=" " alt="" coords="304,196,261,233,258,229,301,192"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="291,241,369,267"/>
+<area shape="poly" id="edge15_Node000013_Node000014" title=" " alt="" coords="321,193,328,225,322,226,316,194"/>
+</map>

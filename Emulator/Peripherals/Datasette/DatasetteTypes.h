@@ -49,20 +49,22 @@ struct DatasetteModelEnum : util::Reflection<DatasetteModelEnum, DatasetteModel>
 // Structures
 //
 
+/// Datasette configuration
 typedef struct
 {
-    DatasetteModel model;
-    bool connected;
+    DatasetteModel model;       ///< Datasette model
+    bool connected;             ///< Connection status
 }
 DatasetteConfig;
 
+/// Datasette current state
 typedef struct
 {
-    bool hasTape;
-    u8 type;
-    bool motor;
-    bool playKey;
-    isize counter;
+    bool hasTape;               ///< Is a tape inserted?
+    u8 type;                    ///< TAP file format
+    bool motor;                 ///< Is the motor on?
+    bool playKey;               ///< Is the play key pressed?
+    isize counter;              ///< Progress counter
 }
 DatasetteInfo;
 

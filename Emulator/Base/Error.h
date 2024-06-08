@@ -30,7 +30,10 @@ struct VC64Error : public util::Exception
     VC64Error(ErrorCode code) : VC64Error(code, "") { }
     VC64Error() : Exception() { }
 
+    /// Returns a textual description of this error
     const char *what() const throw() override;
+    
+    /// Return the numerical identifier of this error
     ErrorCode errorCode() const { return (ErrorCode)data; }
 };
 

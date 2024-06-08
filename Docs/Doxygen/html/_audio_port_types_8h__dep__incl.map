@@ -1,0 +1,25 @@
+<map id="/Users/hoff/Retro/virtualc64/Emulator/Components/Ports/AudioPortTypes.h" name="/Users/hoff/Retro/virtualc64/Emulator/Components/Ports/AudioPortTypes.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="241,5,431,61"/>
+<area shape="rect" id="Node000002" href="$_audio_port_8h_source.html" title=" " alt="" coords="134,109,325,165"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="298,74,260,110,256,106,295,70"/>
+<area shape="rect" id="Node000008" href="$_virtual_c64_types_8h.html" title=" " alt="" coords="365,117,553,157"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="382,69,437,114,433,118,379,73"/>
+<area shape="rect" id="Node000003" href="$_c64_8h_source.html" title=" " alt="" coords="19,509,213,549"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="146,175,120,192,98,214,77,245,64,274,58,302,57,329,69,389,91,460,109,507,104,509,85,462,64,390,52,330,53,301,59,272,73,243,94,211,116,188,143,170"/>
+<area shape="rect" id="Node000005" href="$_re_s_i_d_8h_source.html" title=" " alt="" coords="108,213,290,268"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="219,180,209,213,204,211,214,179"/>
+<area shape="rect" id="Node000007" href="$_s_i_d_bridge_8h_source.html" title=" " alt="" coords="100,405,282,461"/>
+<area shape="poly" id="edge8_Node000002_Node000007" title=" " alt="" coords="277,174,292,192,304,211,322,251,332,285,331,320,316,358,292,386,263,407,260,402,289,382,311,356,326,318,327,286,317,253,299,214,287,195,273,177"/>
+<area shape="rect" id="Node000004" href="$_emulator_8h_source.html" title=" " alt="" coords="5,597,227,638"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="119,565,119,597,113,597,113,565"/>
+<area shape="rect" id="Node000006" href="$sid_8h_source.html" title=" " alt="" coords="81,316,301,357"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="198,284,195,316,190,316,192,284"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="193,372,193,404,188,404,188,372"/>
+<area shape="poly" id="edge7_Node000007_Node000003" title=" " alt="" coords="162,475,133,510,129,507,158,471"/>
+<area shape="rect" id="Node000009" href="$_virtual_c64_8h.html" title=" " alt="" coords="376,220,558,261"/>
+<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="464,173,468,220,462,220,459,173"/>
+<area shape="rect" id="Node000010" href="$_headless_8h_source.html" title=" " alt="" coords="376,316,558,357"/>
+<area shape="poly" id="edge11_Node000009_Node000010" title=" " alt="" coords="469,276,469,316,464,316,464,276"/>
+<area shape="rect" id="Node000011" href="$_headless_8cpp.html" title=" " alt="" coords="376,413,558,453"/>
+<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="469,373,469,412,464,412,464,373"/>
+</map>

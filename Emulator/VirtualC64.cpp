@@ -370,7 +370,7 @@ VirtualC64::put(const Cmd &cmd)
 //
 
 void
-VirtualC64::C64API::hardReset()
+C64API::hardReset()
 {
     assert(isUserThread());
 
@@ -383,7 +383,7 @@ VirtualC64::C64API::hardReset()
 }
 
 void
-VirtualC64::C64API::softReset()
+C64API::softReset()
 {
     assert(isUserThread());
 
@@ -396,104 +396,104 @@ VirtualC64::C64API::softReset()
 }
 
 InspectionTarget
-VirtualC64::C64API::getInspectionTarget() const
+C64API::getInspectionTarget() const
 {
     return c64->getInspectionTarget();
 }
 
 void
-VirtualC64::C64API::setInspectionTarget(InspectionTarget target)
+C64API::setInspectionTarget(InspectionTarget target)
 {
     c64->emulator.put(CMD_INSPECTION_TARGET, target);
 }
 
 void
-VirtualC64::C64API::removeInspectionTarget()
+C64API::removeInspectionTarget()
 {
     c64->emulator.put(CMD_INSPECTION_TARGET, INSPECTION_NONE);
 }
 
 const C64Info &
-VirtualC64::C64API::getInfo() const
+C64API::getInfo() const
 {
     return c64->getInfo();
 }
 
 const C64Info &
-VirtualC64::C64API::getCachedInfo() const
+C64API::getCachedInfo() const
 {
     return c64->getCachedInfo();
 }
 
 EventSlotInfo
-VirtualC64::C64API::getSlotInfo(isize nr) const
+C64API::getSlotInfo(isize nr) const
 {
     return c64->getSlotInfo(nr);
 }
 
 RomTraits
-VirtualC64::C64API::getRomTraits(RomType type) const
+C64API::getRomTraits(RomType type) const
 {
     return c64->getRomTraits(type);
 }
 
 MediaFile *
-VirtualC64::C64API::takeSnapshot()
+C64API::takeSnapshot()
 {
     return c64->takeSnapshot();
 }
 
 void
-VirtualC64::C64API::loadSnapshot(const MediaFile &snapshot)
+C64API::loadSnapshot(const MediaFile &snapshot)
 {
     c64->loadSnapshot(snapshot);
     c64->markAsDirty();
 }
 
 void
-VirtualC64::C64API::loadRom(const string &path)
+C64API::loadRom(const string &path)
 {
     c64->loadRom(path);
     c64->markAsDirty();
 }
 
 void 
-VirtualC64::C64API::loadRom(const MediaFile &file)
+C64API::loadRom(const MediaFile &file)
 {
     c64->loadRom(file);
     c64->markAsDirty();
 }
 
 void 
-VirtualC64::C64API::deleteRom(RomType type)
+C64API::deleteRom(RomType type)
 {
     c64->deleteRom(type);
     c64->markAsDirty();
 }
 
 void 
-VirtualC64::C64API::saveRom(RomType rom, const string &path)
+C64API::saveRom(RomType rom, const string &path)
 {
     c64->saveRom(rom, path);
     c64->markAsDirty();
 }
 
 void 
-VirtualC64::C64API::flash(const MediaFile &file)
+C64API::flash(const MediaFile &file)
 {
     c64->flash(file);
     c64->markAsDirty();
 }
 
 void 
-VirtualC64::C64API::flash(const MediaFile &file, isize item)
+C64API::flash(const MediaFile &file, isize item)
 {
     c64->flash(file, item);
     c64->markAsDirty();
 }
 
 void 
-VirtualC64::C64API::flash(const FileSystem &fs, isize item)
+C64API::flash(const FileSystem &fs, isize item)
 {
     c64->flash(fs, item);
     c64->markAsDirty();

@@ -22,8 +22,8 @@ VirtualC64 utilizes the following communication mechanisms:
 
 <div class="section_buttons">
 
-| Previous                  |                     Next |
-|:--------------------------|-------------------------:|
-| [State Model](state.md)   |               VirtualC64 |
+| Previous                      |                           Next |
+|:------------------------------|-------------------------------:|
+| [State Model](state.md)       |               vc64::VirtualC64 |
  
 </div>

@@ -1,0 +1,15 @@
+<map id="/Users/hoff/Retro/virtualc64/Emulator/Components/Ports/AudioPortTypes.h" name="/Users/hoff/Retro/virtualc64/Emulator/Components/Ports/AudioPortTypes.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="139,5,329,61"/>
+<area shape="rect" id="Node000002" href="$_types_8h_source.html" title=" " alt="" coords="200,109,268,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="237,61,237,93,231,93,231,61"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,183,95,208"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="204,138,96,179,94,174,202,133"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="119,183,184,208"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="222,137,178,174,175,170,218,133"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="207,183,261,208"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="237,135,237,167,231,167,231,135"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="285,183,346,208"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="250,133,292,170,289,174,246,137"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="370,183,437,208"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="264,133,361,174,359,179,262,138"/>
+</map>

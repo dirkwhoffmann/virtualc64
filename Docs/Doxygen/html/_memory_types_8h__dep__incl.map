@@ -1,0 +1,26 @@
+<map id="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h" name="/Users/hoff/Retro/virtualc64/Emulator/Components/Memory/MemoryTypes.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="250,5,456,61"/>
+<area shape="rect" id="Node000002" href="$_c64_memory_8h_source.html" title=" " alt="" coords="27,213,234,268"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="235,48,168,57,104,71,50,89,31,99,18,111,10,124,8,136,18,163,39,190,67,210,64,214,36,194,13,166,3,136,5,122,14,107,28,95,48,84,102,66,167,52,234,43"/>
+<area shape="rect" id="Node000005" href="$_heatmap_8h_source.html" title=" " alt="" coords="27,109,234,165"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="281,70,191,111,189,106,278,65"/>
+<area shape="rect" id="Node000006" href="$_v_i_c_i_i_8h_source.html" title=" " alt="" coords="258,109,448,165"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="356,77,356,108,350,108,350,77"/>
+<area shape="rect" id="Node000007" href="$_rom_file_8h_source.html" title=" " alt="" coords="371,220,554,261"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="426,68,446,86,462,108,472,137,475,168,470,220,465,219,470,168,467,138,457,110,442,90,423,72"/>
+<area shape="rect" id="Node000008" href="$_virtual_c64_types_8h.html" title=" " alt="" coords="558,117,746,157"/>
+<area shape="poly" id="edge10_Node000001_Node000008" title=" " alt="" coords="448,64,595,113,593,118,446,69"/>
+<area shape="rect" id="Node000003" href="$_c64_8h_source.html" title=" " alt="" coords="237,316,432,357"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="204,273,293,313,291,318,202,278"/>
+<area shape="rect" id="Node000004" href="$_emulator_8h_source.html" title=" " alt="" coords="224,405,445,446"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="337,373,337,405,332,405,332,373"/>
+<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="133,180,133,212,128,212,128,180"/>
+<area shape="poly" id="edge7_Node000006_Node000003" title=" " alt="" coords="352,180,339,316,334,316,347,180"/>
+<area shape="poly" id="edge9_Node000007_Node000003" title=" " alt="" coords="425,272,363,318,359,314,422,268"/>
+<area shape="rect" id="Node000009" href="$_virtual_c64_8h.html" title=" " alt="" coords="578,220,760,261"/>
+<area shape="poly" id="edge11_Node000008_Node000009" title=" " alt="" coords="660,172,668,219,663,220,655,173"/>
+<area shape="rect" id="Node000010" href="$_headless_8h_source.html" title=" " alt="" coords="578,316,760,357"/>
+<area shape="poly" id="edge12_Node000009_Node000010" title=" " alt="" coords="672,276,672,316,666,316,666,276"/>
+<area shape="rect" id="Node000011" href="$_headless_8cpp.html" title=" " alt="" coords="578,405,760,446"/>
+<area shape="poly" id="edge13_Node000010_Node000011" title=" " alt="" coords="672,373,672,405,666,405,666,373"/>
+</map>

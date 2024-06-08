@@ -1627,9 +1627,9 @@ using namespace vc64;
 
 @implementation C64Proxy
 
-- (VirtualC64::C64API *)c64
+- (C64API *)c64
 {
-    return (VirtualC64::C64API *)obj;
+    return (C64API *)obj;
 }
 
 - (C64Info)info

@@ -1,0 +1,28 @@
+<map id="/Users/hoff/Retro/virtualc64/Emulator/Components" name="/Users/hoff/Retro/virtualc64/Emulator/Components">
+<area shape="rect" id="node1" href="dir_9110424d8d329f8b6a25ed0145171490.html" title="Base" alt="" coords="324,210,375,236"/>
+<area shape="rect" id="node2" href="dir_caa8e5cf067d1e3bd80d413bc762db78.html" title="Peripherals" alt="" coords="450,137,537,162"/>
+<area shape="poly" id="edge1" href="dir_000003_000000.html" alt="" coords="133,85,240,110,286,124,311,135,341,195,336,197,307,139,284,129,238,116,132,90"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000003_000000.html" title="11" alt="" coords="338,182,352,197"/>
+<area shape="rect" id="node4" href="dir_2fb434ef6d991966eae34475cb5121ae.html" title="CIA" alt="" coords="157,63,201,89"/>
+<area shape="rect" id="node5" href="dir_423d471fbe5556c8881c630a8e61cb1c.html" title="CPU" alt="" coords="302,63,352,89"/>
+<area shape="poly" id="edge2" href="dir_000004_000000.html" alt="" coords="337,88,349,110,359,136,361,167,358,196,353,195,356,167,353,137,344,112,332,91"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000004_000000.html" title="1" alt="" coords="361,187,368,202"/>
+<area shape="rect" id="node6" href="dir_3207aec741e2cd8cfc4463c210f840e6.html" title="Memory" alt="" coords="229,137,297,162"/>
+<area shape="rect" id="node7" href="dir_ff1638999cfee165ecdeb3e16052ca2e.html" title="Ports" alt="" coords="225,63,277,89"/>
+<area shape="poly" id="edge3" href="dir_000022_000000.html" alt="" coords="276,87,305,107,332,135,345,165,350,194,345,195,339,166,327,138,302,111,273,91"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000022_000000.html" title="2" alt="" coords="352,184,359,199"/>
+<area shape="rect" id="node8" href="dir_c6eb1b6be04fd607e5126bbfa479e02a.html" title="SID" alt="" coords="161,137,205,162"/>
+<area shape="poly" id="edge4" href="dir_000022_000027.html" alt="" coords="241,91,206,127,202,124,238,87"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000022_000027.html" title="1" alt="" coords="209,121,216,136"/>
+<area shape="poly" id="edge5" href="dir_000027_000000.html" alt="" coords="201,161,217,171,264,191,310,207,308,212,262,196,215,175,198,165"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000027_000000.html" title="1" alt="" coords="305,193,312,208"/>
+<area shape="rect" id="node9" href="dir_137a56c33be38fc40bbe4d7690612992.html" title="VICII" alt="" coords="377,63,429,89"/>
+<area shape="poly" id="edge7" href="dir_000029_000000.html" alt="" coords="430,80,475,93,523,113,542,125,554,140,558,157,550,175,524,192,482,205,391,220,390,215,481,200,522,187,546,171,553,156,550,142,538,129,520,117,474,98,429,85"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000029_000000.html" title="1" alt="" coords="391,218,398,233"/>
+<area shape="poly" id="edge8" href="dir_000029_000021.html" alt="" coords="420,87,468,125,465,129,416,91"/>
+<area shape="rect" id="edge8-headlabel" href="dir_000029_000021.html" title="1" alt="" coords="466,111,473,126"/>
+<area shape="poly" id="edge6" href="dir_000029_000014.html" alt="" coords="380,92,301,132,299,127,378,87"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000029_000014.html" title="1" alt="" coords="303,128,310,143"/>
+<area shape="rect" id="clust2" href="dir_f1dd3ab951341472f6f0525fe7f46f05.html" alt="" coords="27,52,440,173"/>
+<area shape="rect" id="clust1" href="dir_3eca51afc31ab9312b29b4249736bc7a.html" title="Emulator" alt="" coords="16,16,573,247"/>
+</map>

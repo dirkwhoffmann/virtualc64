@@ -934,6 +934,146 @@ public:
 };
 
 
+/** C64 API
+ */
+struct C64API : public API {
+
+    class C64 *c64 = nullptr;
+
+    /// @name Analyzing the emulator
+    /// @{
+
+    /** @brief  Returns the component's current state.
+     */
+    const C64Info &getInfo() const;
+    const C64Info &getCachedInfo() const;
+
+    /** @brief  Returns the current state of an event slot.
+     *
+     *  @param  nr      Number of the event slot.
+     */
+    EventSlotInfo getSlotInfo(isize nr) const;
+
+    /** @brief  Returns information about one of the installed Roms
+     *
+     *  @param  type    The ROM type
+     */
+    RomTraits getRomTraits(RomType type) const;
+
+    /// @}
+    /// @name Resetting the C64
+    /// @{
+
+    /** @brief  Performs a hard reset
+     *
+     *  A hard reset affects all components. The effect is similar to
+     *  switching power off and on.
+     */
+    void hardReset();
+
+    /** @brief  Performs a hard reset
+     *
+     *  A soft reset emulates a real reset of the C64 which can be initiated
+     *  via the reset line on the expansion port.
+     */
+    void softReset();
+
+    /// @}
+    /// @name Setting up auto-inspection
+    /// @{
+
+    /** @brief  Returns the current inspection target.
+     *
+     *  If you open the inspector panel in the Mac app while the emulator
+     *  is running, you will see continuous updates of the emulator state.
+     *  The displayed information is recorded via the auto-inspection
+     *  mechanism. If auto-inspection is active, the emulator schedules an
+     *  inspect event which calls function cacheInfo() on the inspection
+     *  target in constant intervals. The recorded information is later
+     *  picked up by the GUI.
+     *
+     *  If you change to a different panel in the inspector window, the
+     *  emulator will change the inspection target to only record the
+     *  information you're seeing in the currently open panel.
+     */
+    InspectionTarget getInspectionTarget() const;
+
+    /** @brief  Sets the current inspection target.
+     */
+    void setInspectionTarget(InspectionTarget target);
+
+    /** @brief  Removes the current inspection target.
+     */
+    void removeInspectionTarget();
+
+
+    /// @}
+    /// @name Handling snapshots
+    /// @{
+
+    /** @brief  Takes a snapshot
+     *
+     *  @return A pointer to the created Snapshot object.
+     *
+     *  @note   The function transfers the ownership to the caller. It is
+     *          his responsibility of the caller to free the object.
+     */
+    MediaFile *takeSnapshot();
+
+    /** @brief  Loads a snapshot into the emulator.
+     *
+     *  @param  snapshot    Reference to a snapshot.
+     */
+    void loadSnapshot(const MediaFile &snapshot);
+
+
+    /// @}
+    /// @name Handling ROMs
+    /// @{
+
+    /** @brief  Loads a ROM from a file
+     *          The ROM type is determined automatically.
+     *
+     *  @throw  VC64Error (ERROR_ROM_BASIC_MISSING)
+     *          VC64Error (ERROR_FILE_TYPE_MISMATCH)
+     */
+    void loadRom(const string &path);
+
+    /** @brief  Loads a ROM, provided by a RomFile object
+     */
+    void loadRom(const MediaFile &file);
+
+    /** @brief  Removes an installed ROM
+     *          The ROM contents is overwritten with zeroes.
+     */
+    void deleteRom(RomType type);
+
+    /** @brief  Saves a ROM to disk
+     *
+     *  @throw  VC64Error (ERROR_FILE_CANT_WRITE)
+     */
+    void saveRom(RomType rom, const string &path);
+
+
+    /// @}
+    /// @name Handling media files
+    /// @{
+
+    /** @brief  Flashes a file into memory
+     */
+    void flash(const MediaFile &file);
+
+    /** @brief  Flashes a file from a collection into memory
+     */
+    void flash(const MediaFile &file, isize item);
+
+    /** @brief  Flashes a file from a file system into memory
+     */
+    void flash(const FileSystem &fs, isize item);
+    /// @}
+};
+
+
 /** Public API
  *
  * This class declares the emulator's public API. It consists of functions
@@ -971,9 +1111,6 @@ public:
 
     VirtualC64();
     ~VirtualC64();
-
-    /// @brief  A reference to the user default storage.
-    // static const Defaults &defaults;
 
     /// @name Analyzing the emulator
     /// @{
@@ -1269,149 +1406,10 @@ public:
     /// @}
 
 
-    /** C64 API
-     */
-    struct C64API : public API {
-
-        class C64 *c64 = nullptr;
-
-        /// @name Analyzing the emulator
-        /// @{
-
-        /** @brief  Returns the component's current state.
-         */
-        const C64Info &getInfo() const;
-        const C64Info &getCachedInfo() const;
-
-        /** @brief  Returns the current state of an event slot.
-         *
-         *  @param  nr      Number of the event slot.
-         */
-        EventSlotInfo getSlotInfo(isize nr) const;
-
-        /** @brief  Returns information about one of the installed Roms
-         *
-         *  @param  type    The ROM type
-         */
-        RomTraits getRomTraits(RomType type) const;
-
-        /// @}
-        /// @name Resetting the C64
-        /// @{
-
-        /** @brief  Performs a hard reset
-         *
-         *  A hard reset affects all components. The effect is similar to
-         *  switching power off and on.
-         */
-        void hardReset();
-
-        /** @brief  Performs a hard reset
-         *
-         *  A soft reset emulates a real reset of the C64 which can be initiated
-         *  via the reset line on the expansion port.
-         */
-        void softReset();
-
-        /// @}
-        /// @name Setting up auto-inspection
-        /// @{
-
-        /** @brief  Returns the current inspection target.
-         *
-         *  If you open the inspector panel in the Mac app while the emulator
-         *  is running, you will see continuous updates of the emulator state.
-         *  The displayed information is recorded via the auto-inspection
-         *  mechanism. If auto-inspection is active, the emulator schedules an
-         *  inspect event which calls function cacheInfo() on the inspection
-         *  target in constant intervals. The recorded information is later
-         *  picked up by the GUI.
-         *
-         *  If you change to a different panel in the inspector window, the
-         *  emulator will change the inspection target to only record the
-         *  information you're seeing in the currently open panel.
-         */
-        InspectionTarget getInspectionTarget() const;
-
-        /** @brief  Sets the current inspection target.
-         */
-        void setInspectionTarget(InspectionTarget target);
-
-        /** @brief  Removes the current inspection target.
-         */
-        void removeInspectionTarget();
-
-
-        /// @}
-        /// @name Handling snapshots
-        /// @{
-
-        /** @brief  Takes a snapshot
-         *
-         *  @return A pointer to the created Snapshot object.
-         *
-         *  @note   The function transfers the ownership to the caller. It is
-         *          his responsibility of the caller to free the object.
-         */
-        MediaFile *takeSnapshot();
-
-        /** @brief  Loads a snapshot into the emulator.
-         *
-         *  @param  snapshot    Reference to a snapshot.
-         */
-        void loadSnapshot(const MediaFile &snapshot);
-
-
-        /// @}
-        /// @name Handling ROMs
-        /// @{
-
-        /** @brief  Loads a ROM from a file
-         *          The ROM type is determined automatically.
-         *
-         *  @throw  VC64Error (ERROR_ROM_BASIC_MISSING)
-         *          VC64Error (ERROR_FILE_TYPE_MISMATCH)
-         */
-        void loadRom(const string &path);
-
-        /** @brief  Loads a ROM, provided by a RomFile object
-         */
-        void loadRom(const MediaFile &file);
-
-        /** @brief  Removes an installed ROM
-         *          The ROM contents is overwritten with zeroes.
-         */
-        void deleteRom(RomType type);
-
-        /** @brief  Saves a ROM to disk
-         *
-         *  @throw  VC64Error (ERROR_FILE_CANT_WRITE)
-         */
-        void saveRom(RomType rom, const string &path);
-
-
-        /// @}
-        /// @name Handling media files
-        /// @{
-
-        /** @brief  Flashes a file into memory
-         */
-        void flash(const MediaFile &file);
-
-        /** @brief  Flashes a file from a collection into memory
-         */
-        void flash(const MediaFile &file, isize item);
-
-        /** @brief  Flashes a file from a file system into memory
-         */
-        void flash(const FileSystem &fs, isize item);
-        /// @}
-
-    } c64;
-
     /** @brief  Custom APIs of subcomponents
      */
     static DefaultsAPI defaults;
+    C64API c64;
     MemoryAPI mem;
     CPUAPI cpu;
     CIAAPI cia1, cia2;

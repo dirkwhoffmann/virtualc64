@@ -1,0 +1,38 @@
+<map id="/Users/hoff/Retro/virtualc64/Emulator/Peripherals" name="/Users/hoff/Retro/virtualc64/Emulator/Peripherals">
+<area shape="rect" id="node1" href="dir_899058ae01f0eb85e2d1a53e03af8bff.html" title="FileSystems" alt="" coords="681,137,775,162"/>
+<area shape="rect" id="node2" href="dir_f1dd3ab951341472f6f0525fe7f46f05.html" title="Components" alt="" coords="604,210,700,236"/>
+<area shape="rect" id="node3" href="dir_9110424d8d329f8b6a25ed0145171490.html" title="Base" alt="" coords="825,137,876,162"/>
+<area shape="rect" id="node5" href="dir_171317804943a9abfbc511e8231d6d72.html" title="Datasette" alt="" coords="317,63,395,89"/>
+<area shape="poly" id="edge2" href="dir_000006_000003.html" alt="" coords="383,87,484,134,616,201,614,205,482,139,381,92"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000006_000003.html" title="1" alt="" coords="613,187,620,202"/>
+<area shape="poly" id="edge1" href="dir_000006_000000.html" alt="" coords="396,84,407,86,513,102,597,111,680,120,787,134,810,138,809,143,786,139,680,125,596,117,513,108,406,91,395,89"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000006_000000.html" title="2" alt="" coords="805,124,812,139"/>
+<area shape="rect" id="node6" href="dir_785735119cac6aaae703f4b201f10d8d.html" title="Drive" alt="" coords="419,63,472,89"/>
+<area shape="poly" id="edge3" href="dir_000008_000010.html" alt="" coords="473,83,483,86,666,132,665,137,482,91,471,88"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000008_000010.html" title="1" alt="" coords="661,118,668,133"/>
+<area shape="poly" id="edge5" href="dir_000008_000003.html" alt="" coords="473,83,483,86,552,93,643,96,730,107,765,118,789,135,797,154,789,174,774,190,756,203,716,217,714,212,754,198,771,186,784,172,791,154,785,138,762,123,729,112,643,102,552,98,482,91,471,88"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000008_000003.html" title="1" alt="" coords="716,215,723,230"/>
+<area shape="poly" id="edge4" href="dir_000008_000000.html" alt="" coords="473,83,483,86,574,103,645,111,716,119,807,134,811,135,809,140,806,139,715,124,644,116,573,108,482,91,471,89"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000008_000000.html" title="1" alt="" coords="806,121,813,136"/>
+<area shape="rect" id="node7" href="dir_8b75e2c966dbd6e9d814cce494bf41c3.html" title="Joystick" alt="" coords="228,137,298,162"/>
+<area shape="poly" id="edge6" href="dir_000011_000003.html" alt="" coords="282,161,304,170,379,191,455,204,589,217,588,223,455,210,377,196,302,176,280,165"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000011_000003.html" title="1" alt="" coords="583,204,590,219"/>
+<area shape="rect" id="node8" href="dir_ad57646ff3c58b38e572ff2f8562525c.html" title="Keyboard" alt="" coords="495,63,572,89"/>
+<area shape="poly" id="edge8" href="dir_000012_000003.html" alt="" coords="573,84,584,86,654,92,745,95,790,99,832,106,866,118,890,135,901,157,897,176,880,190,854,201,786,215,715,222,714,217,785,210,852,196,877,186,892,173,896,158,886,138,864,123,831,112,790,105,744,101,653,97,584,91,571,89"/>
+<area shape="rect" id="edge8-headlabel" href="dir_000012_000003.html" title="1" alt="" coords="715,220,722,235"/>
+<area shape="poly" id="edge7" href="dir_000012_000000.html" alt="" coords="573,83,585,86,807,134,811,135,809,140,806,139,583,91,571,89"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000012_000000.html" title="1" alt="" coords="806,121,813,136"/>
+<area shape="rect" id="node9" href="dir_6d3b13d2604c41986d39132f8f547f0b.html" title="Monitor" alt="" coords="596,63,660,89"/>
+<area shape="poly" id="edge9" href="dir_000016_000003.html" alt="" coords="661,76,723,82,798,93,867,110,893,121,910,135,922,159,916,179,896,194,867,205,792,219,716,224,715,219,792,213,866,200,894,190,911,176,916,160,906,138,890,126,865,115,797,98,723,87,660,82"/>
+<area shape="rect" id="edge9-headlabel" href="dir_000016_000003.html" title="1" alt="" coords="715,222,722,237"/>
+<area shape="rect" id="node10" href="dir_71c828aa706dc687262082dc30a81d57.html" title="Mouse" alt="" coords="147,63,208,89"/>
+<area shape="poly" id="edge10" href="dir_000017_000011.html" alt="" coords="194,87,239,125,235,129,190,91"/>
+<area shape="rect" id="edge10-headlabel" href="dir_000017_000011.html" title="1" alt="" coords="236,111,243,126"/>
+<area shape="rect" id="node11" href="dir_9068981ac05c97c919bc9e7910fe0c7d.html" title="Paddle" alt="" coords="232,63,293,89"/>
+<area shape="poly" id="edge12" href="dir_000018_000003.html" alt="" coords="288,87,374,126,484,170,590,203,589,208,482,176,372,131,286,92"/>
+<area shape="rect" id="edge12-headlabel" href="dir_000018_000003.html" title="1" alt="" coords="585,189,592,204"/>
+<area shape="poly" id="edge11" href="dir_000018_000011.html" alt="" coords="265,89,265,121,260,121,260,89"/>
+<area shape="rect" id="edge11-headlabel" href="dir_000018_000011.html" title="1" alt="" coords="268,111,275,126"/>
+<area shape="rect" id="clust2" href="dir_caa8e5cf067d1e3bd80d413bc762db78.html" alt="" coords="27,52,671,173"/>
+<area shape="rect" id="clust1" href="dir_3eca51afc31ab9312b29b4249736bc7a.html" title="Emulator" alt="" coords="16,16,940,247"/>
+</map>
