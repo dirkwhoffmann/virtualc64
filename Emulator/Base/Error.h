@@ -15,6 +15,7 @@
 
 #include "ErrorTypes.h"
 #include "Exception.h"
+#include <filesystem>
 
 namespace vc64 {
 
@@ -22,6 +23,8 @@ namespace vc64 {
 struct Error : public util::Exception
 {
     Error(ErrorCode code, const string &s);
+    Error(ErrorCode code, const char *s) : Error(code, string(s)) { };
+    Error(ErrorCode code, const std::filesystem::path &path) : Error(code, path.string()) { };
     Error(ErrorCode code, long v) : Error(code, std::to_string(v)) { };
     Error(ErrorCode code) : Error(code, "") { }
     Error() : Exception() { }

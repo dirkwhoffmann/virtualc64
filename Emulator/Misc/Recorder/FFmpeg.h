@@ -18,6 +18,8 @@
 
 namespace vc64 {
 
+namespace fs = ::std::filesystem;
+
 class FFmpeg final {
 
 public:
@@ -42,8 +44,8 @@ public:
     static void init();
 
     // Getter and setter for the FFmpeg executable path
-    static const string getExecPath();
-    static void setExecPath(const std::filesystem::path &path);
+    static const fs::path getExecPath();
+    static void setExecPath(const fs::path &path);
 
     // Checks whether FFmeg is available
     static bool available();

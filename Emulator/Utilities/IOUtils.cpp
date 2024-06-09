@@ -45,7 +45,7 @@ getSizeOfFile(const fs::path &path)
 {
     struct stat fileProperties;
 
-    if (stat(path.c_str(), &fileProperties) != 0)
+    if (stat(path.string().c_str(), &fileProperties) != 0)
         return -1;
 
     return (isize)fileProperties.st_size;

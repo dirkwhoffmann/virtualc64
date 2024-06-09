@@ -261,11 +261,11 @@ C64::_reset(bool hard)
 void
 C64::initialize()
 {
-    auto load = [&](const string &path) {
+    auto load = [&](const fs::path &path) {
 
-        msg("Trying to load Rom from %s...\n", path.c_str());
+        msg("Trying to load Rom from %s...\n", path.string().c_str());
 
-        try { loadRom(fs::path(path)); } catch (std::exception& e) {
+        try { loadRom(path); } catch (std::exception& e) {
             warn("Error: %s\n", e.what());
         }
     };

@@ -856,7 +856,7 @@ FileSystem::importDirectory(const fs::directory_entry &dir)
         // Skip all hidden files
         if (name.c_str()[0] == '.') continue;
 
-        debug(FS_DEBUG, "Importing %s\n", path.c_str());
+        debug(FS_DEBUG, "Importing %s\n", path.string().c_str());
 
         if (entry.is_regular_file()) {
 
