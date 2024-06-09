@@ -265,7 +265,7 @@ C64::initialize()
 
         msg("Trying to load Rom from %s...\n", path.c_str());
 
-        try { loadRom(path); } catch (std::exception& e) {
+        try { loadRom(fs::path(path)); } catch (std::exception& e) {
             warn("Error: %s\n", e.what());
         }
     };
@@ -1414,7 +1414,7 @@ C64::mega65KernalRev() const
 }
 
 void
-C64::loadRom(const string &path)
+C64::loadRom(const fs::path &path)
 {
     RomFile file(path);
     loadRom(file);
@@ -1491,7 +1491,7 @@ C64::deleteRom(RomType type)
 }
 
 void
-C64::saveRom(RomType type, const string &path)
+C64::saveRom(RomType type, const fs::path &path)
 {
     switch (type) {
             

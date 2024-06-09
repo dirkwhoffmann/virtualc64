@@ -372,7 +372,7 @@ Drive::toggleProtection()
 }
 
 void
-Drive::insertDisk(const string &path, bool wp)
+Drive::insertDisk(const fs::path &path, bool wp)
 {
     insertDisk(std::make_unique<Disk>(path, wp));
 }

@@ -205,7 +205,7 @@ ExpansionPort::attachGeoRam(isize kb)
 }
 
 void
-ExpansionPort::attachCartridge(const string &path, bool reset)
+ExpansionPort::attachCartridge(const fs::path &path, bool reset)
 {
     attachCartridge(CRTFile(path), reset);
 }

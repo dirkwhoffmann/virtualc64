@@ -697,14 +697,14 @@ private:
 public:
 
     // Installs a Rom
-    void loadRom(const string &path) throws;
+    void loadRom(const fs::path &path) throws;
     void loadRom(const MediaFile &file);
 
     // Erases an installed Rom
     void deleteRom(RomType type);
 
     // Saves a Rom to disk
-    void saveRom(RomType rom, const string &path) throws;
+    void saveRom(RomType rom, const fs::path &path) throws;
 
 
     //

@@ -117,7 +117,7 @@ Disk::Disk()
 }
 
 void
-Disk::init(const string &path, bool wp)
+Disk::init(const fs::path &path, bool wp)
 {
     if (G64File::isCompatible(path)) {
 

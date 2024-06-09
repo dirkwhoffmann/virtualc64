@@ -497,7 +497,7 @@ public:
      * the currently inserted disk halfway out before it is removed completely,
      * and pushing the new disk halfway in before it is inserted completely.
      */
-    void insertDisk(const string &path, bool wp) throws;
+    void insertDisk(const fs::path &path, bool wp) throws;
     void insertDisk(std::unique_ptr<Disk> disk);
     void insertNewDisk(DOSType fstype, string name);
     void insertMediaFile(class MediaFile &file, bool wp);

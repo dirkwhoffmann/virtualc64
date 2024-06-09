@@ -131,7 +131,7 @@ public:
     void loadRom(const u8 *buf, isize size);
     
     // Saves the currently installed Rom
-    void saveRom(const string &path) throws;
+    void saveRom(const fs::path &path) throws;
 
     
     //

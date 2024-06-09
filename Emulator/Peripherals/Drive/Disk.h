@@ -111,7 +111,7 @@ public:
 public:
     
     Disk();
-    Disk(const string &path, bool wp = false) throws { init(path, wp); }
+    Disk(const fs::path &path, bool wp = false) throws { init(path, wp); }
     Disk(DOSType type, PETName<16> name, bool wp = false) { init(type, name, wp); }
     Disk(const FileSystem &device, bool wp = false) { init(device, wp); }
     Disk(const class G64File &g64, bool wp = false) { init(g64, wp); }
@@ -121,7 +121,7 @@ public:
     
 private:
     
-    void init(const string &path, bool wp) throws;
+    void init(const fs::path &path, bool wp) throws;
     void init(DOSType type, PETName<16> name, bool wp);
     void init(const class FileSystem &device, bool wp);
     void init(const class G64File &g64, bool wp);

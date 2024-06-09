@@ -117,7 +117,7 @@ DriveMemory::loadRom(const u8 *buf, isize size)
 }
 
 void
-DriveMemory::saveRom(const string &path)
+DriveMemory::saveRom(const fs::path &path)
 {
     u16 addr = romAddr();
     u16 size = romSize();
