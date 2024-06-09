@@ -10,37 +10,11 @@
 // import Foundation
 
 extension MyController {
-         
-    /*
-    func stopSnapshotTimer() {
-        
-        snapshotTimer?.invalidate()
-    }
-
-    func validateSnapshotTimer() {
-        
-        snapshotTimer?.invalidate()
-        if pref.autoSnapshots && pref.snapshotInterval > 0 {
-            
-            snapshotTimer =
-                Timer.scheduledTimer(timeInterval: TimeInterval(pref.snapshotInterval),
-                                     target: self,
-                                     selector: #selector(snapshotTimerFunc),
-                                     userInfo: nil,
-                                     repeats: true)
-        }
-    }
-    
-    @objc func snapshotTimerFunc() {
-        
-        if pref.autoSnapshots { emu.c64.requestAutoSnapshot() }
-    }
-    */
 
     func restoreSnapshot(item: Int) throws {
         
         if let snapshot = mydocument.snapshots.element(at: item) {
-            try emu.flash(snapshot)
+            try emu?.flash(snapshot)
         }
     }
     

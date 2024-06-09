@@ -11,9 +11,9 @@ class TraceTableView: NSTableView {
     
     @IBOutlet weak var inspector: Inspector!
     
-    var emu: EmulatorProxy { return inspector.parent.emu }
-    var cpu: CPUProxy { return emu.cpu }
-    
+    var emu: EmulatorProxy? { return inspector.parent.emu }
+    var cpu: CPUProxy? { return emu?.cpu }
+
     // Data caches
     var numRows = 0
     var addrInRow: [Int: String] = [:]
@@ -28,14 +28,17 @@ class TraceTableView: NSTableView {
     
     private func cache() {
         
-        numRows = emu.cpu.loggedInstructions()
-        
-        for i in 0 ..< numRows {
+        if let cpu = cpu {
 
-            var length = 0
-            addrInRow[i] = emu.cpu.disassembleRecorded(i, format: "%p", length: &length)
-            instrInRow[i] = emu.cpu.disassembleRecorded(i, format: "%i", length: &length)
-            flagsInRow[i] = emu.cpu.disassembleRecorded(i, format: "%f", length: &length)
+            numRows = cpu.loggedInstructions()
+
+            for i in 0 ..< numRows {
+
+                var length = 0
+                addrInRow[i] = cpu.disassembleRecorded(i, format: "%p", length: &length)
+                instrInRow[i] = cpu.disassembleRecorded(i, format: "%i", length: &length)
+                flagsInRow[i] = cpu.disassembleRecorded(i, format: "%f", length: &length)
+            }
         }
     }
     

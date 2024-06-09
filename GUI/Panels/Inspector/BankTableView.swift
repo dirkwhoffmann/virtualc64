@@ -11,7 +11,7 @@ class BankTableView: NSTableView, NSTableViewDelegate {
     
     @IBOutlet weak var inspector: Inspector!
    
-    var emu: EmulatorProxy { return inspector.parent.emu }
+    var emu: EmulatorProxy? { return inspector.parent.emu }
 
     // Displayed memory bank
     var bank = 0

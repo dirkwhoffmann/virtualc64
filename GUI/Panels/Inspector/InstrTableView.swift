@@ -11,8 +11,8 @@ class InstrTableView: NSTableView {
     
     @IBOutlet weak var inspector: Inspector!
     
-    var emu: EmulatorProxy { return inspector.parent.emu }
-    var cpu: CPUProxy { return emu.cpu }
+    var emu: EmulatorProxy? { return inspector.parent.emu }
+    var cpu: CPUProxy? { return emu?.cpu }
 
     enum BreakpointType {
         
@@ -61,29 +61,32 @@ class InstrTableView: NSTableView {
     
     private func cache() {
         
-        numRows = 256
-        rowForAddr = [:]
+        if let cpu = cpu {
 
-        var addr = addrInFirstRow
-        
-        for i in 0 ..< numRows {
+            numRows = 256
+            rowForAddr = [:]
 
-            var length = 0
-            addrInRow[i] = addr
-            addrStrInRow[i] = cpu.disassemble(addr, format: "%p", length: &length)
-            instrInRow[i] = cpu.disassemble(addr, format: "%i", length: &length)
-            dataInRow[i] = cpu.disassemble(addr, format: "%b", length: &length)
+            var addr = addrInFirstRow
 
-            if !cpu.hasBreakpoint(atAddr: addr) {
-                bpInRow[i] = BreakpointType.none
-            } else if cpu.breakpoint(atAddr: addr).enabled {
-                bpInRow[i] = BreakpointType.enabled
-            } else {
-                bpInRow[i] = BreakpointType.disabled
+            for i in 0 ..< numRows {
+
+                var length = 0
+                addrInRow[i] = addr
+                addrStrInRow[i] = cpu.disassemble(addr, format: "%p", length: &length)
+                instrInRow[i] = cpu.disassemble(addr, format: "%i", length: &length)
+                dataInRow[i] = cpu.disassemble(addr, format: "%b", length: &length)
+
+                if !cpu.hasBreakpoint(atAddr: addr) {
+                    bpInRow[i] = BreakpointType.none
+                } else if cpu.breakpoint(atAddr: addr).enabled {
+                    bpInRow[i] = BreakpointType.enabled
+                } else {
+                    bpInRow[i] = BreakpointType.disabled
+                }
+
+                rowForAddr[addr] = i
+                addr += length
             }
-            
-            rowForAddr[addr] = i
-            addr += length
         }
     }
     
@@ -138,17 +141,20 @@ class InstrTableView: NSTableView {
     
     func clickAction(row: Int) {
 
-        if let addr = addrInRow[row] {
+        if let cpu = cpu {
 
-            if !cpu.hasBreakpoint(atAddr: addr) {
-                emu.put(.BP_SET_AT, value: addr)
-            } else if cpu.breakpoint(atAddr: addr).enabled {
-                emu.put(.BP_DISABLE_AT, value: addr)
-            } else {
-                emu.put(.BP_ENABLE_AT, value: addr)
+            if let addr = addrInRow[row] {
+
+                if !cpu.hasBreakpoint(atAddr: addr) {
+                    emu?.put(.BP_SET_AT, value: addr)
+                } else if cpu.breakpoint(atAddr: addr).enabled {
+                    emu?.put(.BP_DISABLE_AT, value: addr)
+                } else {
+                    emu?.put(.BP_ENABLE_AT, value: addr)
+                }
+
+                inspector.fullRefresh()
             }
-
-            inspector.fullRefresh()
         }
     }
     
@@ -162,15 +168,18 @@ class InstrTableView: NSTableView {
     
     func doubleClickAction(row: Int) {
         
-        if let addr = addrInRow[row] {
-            
-            if cpu.hasBreakpoint(atAddr: addr) {
-                emu.put(.BP_REMOVE_AT, value: addr)
-            } else {
-                emu.put(.BP_SET_AT, value: addr)
+        if let cpu = cpu {
+
+            if let addr = addrInRow[row] {
+
+                if cpu.hasBreakpoint(atAddr: addr) {
+                    emu?.put(.BP_REMOVE_AT, value: addr)
+                } else {
+                    emu?.put(.BP_SET_AT, value: addr)
+                }
+
+                inspector.fullRefresh()
             }
-            
-            inspector.fullRefresh()
         }
     }
     

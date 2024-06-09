@@ -21,7 +21,7 @@ extension MyController: NSWindowDelegate {
         myAppDelegate.windowDidBecomeMain(window)
         
         // Restart the emulator if it was paused when the window lost focus
-        if pref.pauseInBackground && pauseInBackgroundSavedState { try? emu.run() }
+        if pref.pauseInBackground && pauseInBackgroundSavedState { try? emu?.run() }
 
         // Register to receive mouse movement events
         window.acceptsMouseMovedEvents = true
@@ -38,7 +38,8 @@ extension MyController: NSWindowDelegate {
         inBackground = true
 
         // Stop the emulator if it is supposed to pause in background
-        if emu != nil {
+        if let emu = emu {
+
             pauseInBackgroundSavedState = emu.running
             if pref.pauseInBackground { emu.pause() }
         }        
@@ -64,7 +65,7 @@ extension MyController: NSWindowDelegate {
         debug(.lifetime)
 
         debug(.shutdown, "Pause emulation...")
-        emu.pause()
+        emu!.pause()
 
         debug(.shutdown, "Let audio fade out...")
         usleep(250000)
@@ -87,7 +88,7 @@ extension MyController: NSWindowDelegate {
         gamePadManager.shutDown()
 
         debug(.shutdown, "Shut down the emulator...")
-        emu.halt()
+        emu!.halt()
 
         debug(.shutdown, "Done")
     }
@@ -96,7 +97,7 @@ extension MyController: NSWindowDelegate {
         
         debug(.shutdown, "Remove proxy...")
 
-        emu.kill()
+        emu!.kill()
         emu = nil
 
         debug(.shutdown, "Done")

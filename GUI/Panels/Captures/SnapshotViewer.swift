@@ -39,8 +39,8 @@ class SnapshotViewer: DialogController {
         now = Date()
         
         // Don't let the emulator take snapshots while the dialog is open
-        takeSnapshots = parent.emu.get(.EMU_SNAPSHOTS) != 0
-        parent.emu.set(.EMU_SNAPSHOTS, enable: false)
+        takeSnapshots = emu?.get(.EMU_SNAPSHOTS) != 0
+        emu.set(.EMU_SNAPSHOTS, enable: false)
 
         updateLabels()
         
@@ -197,7 +197,7 @@ class SnapshotViewer: DialogController {
                                 
         hideSheet()
 
-        parent.emu.set(.EMU_SNAPSHOTS, enable: takeSnapshots)
+        emu?.set(.EMU_SNAPSHOTS, enable: takeSnapshots)
 
         // Hide some controls
         let items: [NSView] = [

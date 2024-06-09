@@ -179,7 +179,7 @@ extension PreferencesController {
         
         pref.closeWithoutAsking = (sender.state == .on)
         for c in myAppDelegate.controllers {
-            c.needsSaving = c.emu.running
+            c.needsSaving = c.emu?.running ?? false
         }
         refresh()
     }

@@ -11,9 +11,9 @@ class MemTableView: NSTableView {
     
     @IBOutlet weak var inspector: Inspector!
 
-    var emu: EmulatorProxy { return inspector.parent.emu }
-    var mem: MemoryProxy { return emu.mem }
-        
+    var emu: EmulatorProxy? { return inspector.parent.emu }
+    var mem: MemoryProxy? { return emu?.mem }
+
     override func awakeFromNib() {
         
         delegate = self
@@ -56,11 +56,11 @@ extension MemTableView: NSTableViewDataSource {
             return addr
             
         case "ascii":
-            return mem.txtdump(Int(addr), num: 16, src: bankType)
-                    
+            return mem?.txtdump(Int(addr), num: 16, src: bankType) ?? ""
+
         case "hex0":
-            return mem.memdump(Int(addr), num: 16, hex: inspector.hex, src: bankType)
-            
+            return mem?.memdump(Int(addr), num: 16, hex: inspector.hex, src: bankType) ?? ""
+
         default:
             return "???"
         }        

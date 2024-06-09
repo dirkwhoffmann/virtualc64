@@ -14,8 +14,8 @@ class KeyboardController: NSObject {
     var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
     var parent: MyController!
         
-    var emu: EmulatorProxy { return parent.emu }
-    var keyboard: KeyboardProxy { return parent.emu.keyboard }
+    var emu: EmulatorProxy! { return parent.emu }
+    var keyboard: KeyboardProxy? { return emu.keyboard }
     var renderer: Renderer { return parent.renderer }
     var pref: Preferences { return parent.pref }
     
@@ -122,8 +122,8 @@ class KeyboardController: NSObject {
     func keyDown(with macKey: MacKey) {
 
         // Abort auto-typing (if active)
-        keyboard.abortAutoTyping()
-        
+        keyboard?.abortAutoTyping()
+
         // Check if this key is used to emulate a game device
         if parent.gamePad1?.processKeyDownEvent(macKey: macKey) == true {
             if pref.disconnectJoyKeys { return }
@@ -151,7 +151,7 @@ class KeyboardController: NSObject {
                 // Press all required keys
                 for key in c64Keys {
 
-                    keyboard.pressKey(key.nr)
+                    keyboard?.pressKey(key.nr)
                 }
 
                 parent.virtualKeyboard?.refresh()
@@ -166,7 +166,7 @@ class KeyboardController: NSObject {
 
     func keyDown(with c64Key: C64Key) {
 
-        keyboard.pressKey(c64Key.nr)
+        keyboard?.pressKey(c64Key.nr)
         parent.virtualKeyboard?.refresh()
     }
 
@@ -191,7 +191,7 @@ class KeyboardController: NSObject {
             // Symbolic key mapping
             if let c64Keys = pressedKeys[macKey.keyCode] {
                 for key in c64Keys {
-                    keyboard.releaseKey(key.nr)
+                    keyboard?.releaseKey(key.nr)
                 }
             }
 
@@ -206,7 +206,7 @@ class KeyboardController: NSObject {
 
     func keyUp(with c64Key: C64Key) {
 
-        keyboard.releaseKey(c64Key.nr)
+        keyboard?.releaseKey(c64Key.nr)
         parent.virtualKeyboard?.refresh()
     }
 
@@ -338,29 +338,29 @@ class KeyboardController: NSObject {
     func pressKey(key: C64Key, duration: TimeInterval? = nil) {
     
         // Press key
-        keyboard.pressKey(key.nr)
+        keyboard?.pressKey(key.nr)
 
         // Schedule the key release
         if let seconds = duration {
-            keyboard.releaseKey(key.nr, delay: seconds)
+            keyboard?.releaseKey(key.nr, delay: seconds)
         }
     }
 
     func toggleKey(key: C64Key) {
 
-        keyboard.toggleKey(key.nr)
+        keyboard?.toggleKey(key.nr)
     }
 
     func pressKeyCombination(key1: C64Key, key2: C64Key, duration: TimeInterval? = nil) {
 
         // Press keys
-        keyboard.pressKey(key1.nr)
-        keyboard.pressKey(key2.nr)
+        keyboard?.pressKey(key1.nr)
+        keyboard?.pressKey(key2.nr)
 
         // Schedule the key releases
         if let seconds = duration {
-            keyboard.releaseKey(key1.nr, delay: seconds)
-            keyboard.releaseKey(key2.nr, delay: seconds)
+            keyboard?.releaseKey(key1.nr, delay: seconds)
+            keyboard?.releaseKey(key2.nr, delay: seconds)
         }
     }
 
@@ -376,6 +376,6 @@ class KeyboardController: NSObject {
 
     func type(_ string: String) {
 
-        keyboard.autoType(string)
+        keyboard?.autoType(string)
     }
 }

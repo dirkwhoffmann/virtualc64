@@ -19,8 +19,8 @@ class MyController: NSWindowController, MessageReceiver {
     var mydocument: MyDocument!
     
     // Emulator proxy (bridge between the Swift frontend and the C++ backend)
-    var emu: EmulatorProxy!
-    
+    var emu: EmulatorProxy?
+
     // Media manager (handles the import and export of media files)
     var mm: MediaManager { return mydocument.mm }
 
@@ -184,10 +184,10 @@ extension MyController {
 
         do {
             // Let the C64 throw an exception if it is not ready to power on
-            try emu.isReady()
-            
+            try emu?.isReady()
+
             // Start emulation
-            try emu.run()
+            try emu?.run()
 
         } catch {
             
@@ -230,7 +230,7 @@ extension MyController {
         // Convert 'self' to a void pointer
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
         
-        emu.launch(myself) { (ptr, msg: vc64.Message) in
+        emu!.launch(myself) { (ptr, msg: vc64.Message) in
 
             // Convert void pointer back to 'self'
             let myself = Unmanaged<MyController>.fromOpaque(ptr!).takeUnretainedValue()
@@ -252,8 +252,8 @@ extension MyController {
             if inspector?.window?.isVisible == true { inspector!.continuousRefresh() }
 
             // Update the cartridge LED
-            if emu.expansionport.traits.leds > 0 {
-                let led = emu.expansionport.info.led ? 1 : 0
+            if emu?.expansionport.traits.leds ?? 0 > 0 {
+                let led = emu!.expansionport.info.led ? 1 : 0
                 if crtIcon.tag != led {
                     crtIcon.tag = led
                     crtIcon.image = NSImage(named: led == 1 ? "crtLedOnTemplate" : "crtTemplate")

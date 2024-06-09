@@ -472,7 +472,7 @@ C64API::deleteRom(RomType type)
 }
 
 void 
-C64API::saveRom(RomType rom, const string &path)
+C64API::saveRom(RomType rom, const std::filesystem::path &path)
 {
     c64->saveRom(rom, path);
     c64->markAsDirty();
@@ -923,7 +923,7 @@ RecorderAPI::getExecPath() const
     return FFmpeg::getExecPath();
 }
 
-void RecorderAPI::setExecPath(const string &path)
+void RecorderAPI::setExecPath(const std::filesystem::path &path)
 {
     FFmpeg::setExecPath(path);
 }
@@ -941,7 +941,7 @@ RecorderAPI::stopRecording()
 }
 
 bool
-RecorderAPI::exportAs(const string &path)
+RecorderAPI::exportAs(const std::filesystem::path &path)
 {
     return recorder->exportAs(path);
 }
@@ -1037,7 +1037,7 @@ ExpansionPortAPI::getRomInfo(isize nr) const
 }
 
 void
-ExpansionPortAPI::attachCartridge(const string &path, bool reset)
+ExpansionPortAPI::attachCartridge(const std::filesystem::path &path, bool reset)
 {
     expansionPort->attachCartridge(path, reset);
     expansionPort->markAsDirty();

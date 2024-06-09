@@ -17,7 +17,7 @@
 class Configuration {
     
     var parent: MyController!
-    var emu: EmulatorProxy { return parent.emu }
+    var emu: EmulatorProxy! { return parent.emu }
     var renderer: Renderer { return parent.renderer }
     var gamePadManager: GamePadManager { return parent.gamePadManager }
     var ressourceManager: RessourceManager { return renderer.ressourceManager }

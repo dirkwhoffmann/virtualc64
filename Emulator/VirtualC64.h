@@ -459,7 +459,7 @@ struct RecorderAPI : API {
 
     /** @brief  Sets the path to the FFmpeg executable.
      */
-    void setExecPath(const string &path);
+    void setExecPath(const std::filesystem::path &path);
 
     /** @brief  Starts the recorder.
      *  @param  x1      Horizontal start coordinate of the recorded area
@@ -477,7 +477,7 @@ struct RecorderAPI : API {
      *  @param  path    The export destination.
      *  @return true on success.
      */
-    bool exportAs(const string &path);
+    bool exportAs(const std::filesystem::path &path);
 
 };
 
@@ -511,7 +511,7 @@ struct ExpansionPortAPI : API {
 
     /** @brief  Attaches a cartridge to the expansion port.
      */
-    void attachCartridge(const string &path, bool reset = true);
+    void attachCartridge(const std::filesystem::path &path, bool reset = true);
 
     /** @brief  Attaches a cartridge to the expansion port.
      */
@@ -1052,7 +1052,7 @@ struct C64API : public API {
      *
      *  @throw  VC64Error (ERROR_FILE_CANT_WRITE)
      */
-    void saveRom(RomType rom, const string &path);
+    void saveRom(RomType rom, const std::filesystem::path &path);
 
 
     /// @}

@@ -9,7 +9,7 @@
 
 class MyToolbar: NSToolbar {
     
-    var emu: EmulatorProxy { parent.emu }
+    var emu: EmulatorProxy? { parent.emu }
 
     @IBOutlet weak var parent: MyController!
 
@@ -49,21 +49,24 @@ class MyToolbar: NSToolbar {
     
     func updateToolbar() {
         
-        if emu.poweredOn {
-            controlsSegCtrl.setEnabled(true, forSegment: 0) // Pause
-            controlsSegCtrl.setEnabled(true, forSegment: 1) // Reset
-            controlsSegCtrl.setToolTip("Power off", forSegment: 2) // Power
-        } else {
-            controlsSegCtrl.setEnabled(false, forSegment: 0) // Pause
-            controlsSegCtrl.setEnabled(false, forSegment: 1) // Reset
-            controlsSegCtrl.setToolTip("Power on", forSegment: 2) // Power
-        }
-        if emu.running {
-            controlsSegCtrl.setToolTip("Pause", forSegment: 0)
-            controlsSegCtrl.setImage(NSImage(named: "pauseTemplate"), forSegment: 0)
-        } else {
-            controlsSegCtrl.setToolTip("Run", forSegment: 0)
-            controlsSegCtrl.setImage(NSImage(named: "runTemplate"), forSegment: 0)
+        if emu != nil {
+
+            if emu!.poweredOn {
+                controlsSegCtrl.setEnabled(true, forSegment: 0) // Pause
+                controlsSegCtrl.setEnabled(true, forSegment: 1) // Reset
+                controlsSegCtrl.setToolTip("Power off", forSegment: 2) // Power
+            } else {
+                controlsSegCtrl.setEnabled(false, forSegment: 0) // Pause
+                controlsSegCtrl.setEnabled(false, forSegment: 1) // Reset
+                controlsSegCtrl.setToolTip("Power on", forSegment: 2) // Power
+            }
+            if emu!.running {
+                controlsSegCtrl.setToolTip("Pause", forSegment: 0)
+                controlsSegCtrl.setImage(NSImage(named: "pauseTemplate"), forSegment: 0)
+            } else {
+                controlsSegCtrl.setToolTip("Run", forSegment: 0)
+                controlsSegCtrl.setImage(NSImage(named: "runTemplate"), forSegment: 0)
+            }
         }
     }
     

@@ -10,8 +10,8 @@
 class GuardTableView: NSTableView {
 
     @IBOutlet weak var inspector: Inspector!
-    var emu: EmulatorProxy { return inspector.parent.emu }
-    var cpu: CPUProxy { return emu.cpu }
+    var emu: EmulatorProxy? { return inspector.parent.emu }
+    var cpu: CPUProxy? { return emu?.cpu }
 
     // Symbols
     var symEnabled = "⛔"  // "\u{26D4}"
@@ -123,61 +123,70 @@ class BreakTableView: GuardTableView {
     
     override func cache() {
 
-        numRows = 0
-        while cpu.hasBreakpoint(withNr: numRows) {
+        if let cpu = cpu {
 
-            let info = cpu.breakpoint(withNr: numRows)
-            disabledCache[numRows] = !info.enabled
-            addrCache[numRows] = Int(info.addr)
-            numRows += 1
+            numRows = 0
+            while cpu.hasBreakpoint(withNr: numRows) {
+
+                let info = cpu.breakpoint(withNr: numRows)
+                disabledCache[numRows] = !info.enabled
+                addrCache[numRows] = Int(info.addr)
+                numRows += 1
+            }
         }
     }
 
     override func click(row: Int, col: Int) {
 
-        if cpu.hasBreakpoint(withNr: row) {
+        if let cpu = cpu {
 
-            let bp = cpu.breakpoint(withNr: row)
+            if cpu.hasBreakpoint(withNr: row) {
 
-            if col == 0 {
+                let bp = cpu.breakpoint(withNr: row)
 
-                // Toggle enable flag
-                emu.put(bp.enabled ? .BP_DISABLE_NR : .BP_ENABLE_NR, value: row)
-                inspector.fullRefresh()
-            }
+                if col == 0 {
 
-            if (col == 0 || col == 1) && cpu.hasBreakpoint(withNr: row) {
+                    // Toggle enable flag
+                    emu?.put(bp.enabled ? .BP_DISABLE_NR : .BP_ENABLE_NR, value: row)
+                    inspector.fullRefresh()
+                }
 
-                // Jump to breakpoint address
-                inspector.fullRefresh()
-                inspector.cpuInstrView.jumpTo(addr: Int(bp.addr))
-            }
+                if (col == 0 || col == 1) && cpu.hasBreakpoint(withNr: row) {
 
-            if col == 2 {
+                    // Jump to breakpoint address
+                    inspector.fullRefresh()
+                    inspector.cpuInstrView.jumpTo(addr: Int(bp.addr))
+                }
 
-                // Delete
-                emu.put(.BP_REMOVE_NR, value: row)
-                inspector.fullRefresh()
+                if col == 2 {
+
+                    // Delete
+                    emu?.put(.BP_REMOVE_NR, value: row)
+                    inspector.fullRefresh()
+                }
             }
         }
     }
 
     override func edit(row: Int, addr: Int) {
 
-        // Abort if a breakpoint is already set
-        if cpu.hasBreakpoint(atAddr: addr) { NSSound.beep(); return }
+        if let cpu = cpu {
 
-        emu.suspend()
-        
-        if row < numRows {
-            emu.put(.BP_MOVE_TO, value: row, value2: addr)
-        } else {
-            emu.put(.BP_SET_AT, value: addr)
+            // Abort if a breakpoint is already set
+            if cpu.hasBreakpoint(atAddr: addr) { NSSound.beep(); return }
+
+            emu?.suspend()
+
+            if row < numRows {
+                emu?.put(.BP_MOVE_TO, value: row, value2: addr)
+            } else {
+                emu?.put(.BP_SET_AT, value: addr)
+            }
+
+            inspector.cpuInstrView.jumpTo(addr: addr)
+
+            emu?.resume()
         }
-        
-        inspector.cpuInstrView.jumpTo(addr: addr)
-        
-        emu.resume()
     }
 }
 
@@ -185,52 +194,61 @@ class WatchTableView: GuardTableView {
 
     override func cache() {
 
-        numRows = 0
-        while cpu.hasWatchpoint(withNr: numRows) {
+        if let cpu = cpu {
 
-            let info = cpu.watchpoint(withNr: numRows)
-            disabledCache[numRows] = !info.enabled
-            addrCache[numRows] = Int(info.addr)
-            numRows += 1
+            numRows = 0
+            while cpu.hasWatchpoint(withNr: numRows) {
+
+                let info = cpu.watchpoint(withNr: numRows)
+                disabledCache[numRows] = !info.enabled
+                addrCache[numRows] = Int(info.addr)
+                numRows += 1
+            }
+
+            symEnabled = "⚠️"
         }
-
-        symEnabled = "⚠️"
     }
 
     override func click(row: Int, col: Int) {
         
-        if cpu.hasWatchpoint(withNr: row) {
+        if let cpu = cpu {
 
-            let wp = cpu.watchpoint(withNr: row)
+            if cpu.hasWatchpoint(withNr: row) {
 
-            if col == 0 {
+                let wp = cpu.watchpoint(withNr: row)
 
-                emu.put(wp.enabled ? .WP_DISABLE_NR : .WP_ENABLE_NR, value: row)
-                inspector.fullRefresh()
-            }
+                if col == 0 {
 
-            if col == 2 {
+                    emu?.put(wp.enabled ? .WP_DISABLE_NR : .WP_ENABLE_NR, value: row)
+                    inspector.fullRefresh()
+                }
 
-                // Delete
-                emu.put(.WP_REMOVE_NR, value: row)
-                inspector.fullRefresh()
+                if col == 2 {
+
+                    // Delete
+                    emu?.put(.WP_REMOVE_NR, value: row)
+                    inspector.fullRefresh()
+                }
             }
         }
     }
     
     override func edit(row: Int, addr: Int) {
         
-        // Abort if a watchpoint is already set
-        if cpu.hasBreakpoint(atAddr: addr) { NSSound.beep(); return }
+        if let cpu = cpu {
 
-        emu.suspend()
-        
-        if row < numRows {
-            emu.put(.WP_MOVE_TO, value: row)
-        } else {
-            emu.put(.WP_SET_AT, value: addr)
+            // Abort if a watchpoint is already set
+            if cpu.hasBreakpoint(atAddr: addr) { NSSound.beep(); return }
+
+            emu?.suspend()
+
+            if row < numRows {
+                emu?.put(.WP_MOVE_TO, value: row)
+            } else {
+                emu?.put(.WP_SET_AT, value: addr)
+            }
+
+            emu?.resume()
         }
-
-        emu.resume()
     }
 }
