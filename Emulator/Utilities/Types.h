@@ -15,7 +15,6 @@
 #include <sys/types.h>
 #include <stdint.h>
 
-
 //
 // Integers
 //
@@ -52,7 +51,22 @@ using std::string;
 using std::optional;
 
 
-// 
+//
+// FileSystem
+//
+
+/*
+#include <filesystem>
+namespace vc64 {
+namespace fs = ::std::filesystem;
+}
+namespace vc64::util {
+namespace fs = ::std::filesystem;
+}
+*/
+
+
+//
 // Enums
 //
 

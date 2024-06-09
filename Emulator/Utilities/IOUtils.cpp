@@ -99,7 +99,7 @@ string makeAbsolutePath(const string &path)
     if (isAbsolutePath(path)) {
         return path;
     } else {
-        return appendPath(std::filesystem::current_path().string(), path);
+        return appendPath(fs::current_path().string(), path);
     }
 }
 
@@ -117,14 +117,25 @@ makeUniquePath(const string &path)
     return prefix + index + suffix;
 }
 
+isize
+getSizeOfFile(const fs::path &path)
+{
+    struct stat fileProperties;
+
+    if (stat(path.c_str(), &fileProperties) != 0)
+        return -1;
+
+    return (isize)fileProperties.st_size;
+}
+
 bool
-fileExists(const string &path)
+fileExists(const fs::path &path)
 {
     return getSizeOfFile(path) >= 0;
 }
 
 bool
-isDirectory(const string &path)
+isDirectory(const fs::path &path)
 {
     try {
         
@@ -138,7 +149,7 @@ isDirectory(const string &path)
 }
 
 bool
-createDirectory(const string &path)
+createDirectory(const fs::path &path)
 {
     try {
         
@@ -151,7 +162,7 @@ createDirectory(const string &path)
 }
 
 isize
-numDirectoryItems(const string &path)
+numDirectoryItems(const fs::path &path)
 {
     isize result = 0;
     
@@ -168,8 +179,8 @@ numDirectoryItems(const string &path)
     return result;
 }
 
-std::vector<string>
-files(const string &path, const string &suffix)
+std::vector<fs::path>
+files(const fs::path &path, const string &suffix)
 {
     std::vector <string> suffixes;
     if (suffix != "") suffixes.push_back(suffix);
@@ -177,16 +188,16 @@ files(const string &path, const string &suffix)
     return files(path, suffixes);
 }
 
-std::vector<string>
-files(const string &path, std::vector <string> &suffixes)
+std::vector<fs::path>
+files(const fs::path &path, std::vector <string> &suffixes)
 {
-    std::vector<string> result;
-    
+    std::vector<fs::path> result;
+
     try {
         
         for (const auto &entry : fs::directory_iterator(path)) {
             
-            const auto &name = entry.path().filename().string();
+            const auto &name = entry.path().filename();
             string suffix = lowercased(extractSuffix(name));
             
             if (std::find(suffixes.begin(), suffixes.end(), suffix) != suffixes.end()) {
@@ -197,17 +208,6 @@ files(const string &path, std::vector <string> &suffixes)
     } catch (...) { }
     
     return result;
-}
-
-isize
-getSizeOfFile(const string &path)
-{
-    struct stat fileProperties;
-        
-    if (stat(path.c_str(), &fileProperties) != 0)
-        return -1;
-    
-    return (isize)fileProperties.st_size;
 }
 
 bool

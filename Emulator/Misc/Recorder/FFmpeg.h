@@ -14,6 +14,7 @@
 
 #include "Types.h"
 #include <vector>
+#include <filesystem>
 
 namespace vc64 {
 
@@ -22,10 +23,10 @@ class FFmpeg final {
 public:
 
     // A list of available FFmpeg executables (setup in init() )
-    static std::vector<string> paths;
+    static std::vector<std::filesystem::path> paths;
 
     // Path to the selected FFmpeg executable
-    static string exec;
+    static std::filesystem::path exec;
 
 #ifdef _MSC_VER
 
@@ -42,7 +43,7 @@ public:
 
     // Getter and setter for the FFmpeg executable path
     static const string getExecPath();
-    static void setExecPath(const string &path);
+    static void setExecPath(const std::filesystem::path &path);
 
     // Checks whether FFmeg is available
     static bool available();

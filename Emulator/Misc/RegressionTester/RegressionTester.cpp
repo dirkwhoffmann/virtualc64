@@ -23,7 +23,7 @@ void
 RegressionTester::prepare(C64 &c64, C64Model model)
 {
     // Only proceed if the /tmp folder exisits
-    if (!util::fileExists("/tmp")) throw Error(ERROR_DIR_NOT_FOUND, "/tmp");
+    if (!util::fileExists(fs::path("/tmp"))) throw Error(ERROR_DIR_NOT_FOUND, "/tmp");
 
     // Check if we've got write permissions
     if (host.tmp() != "/tmp") throw Error(ERROR_DIR_ACCESS_DENIED, "/tmp");
