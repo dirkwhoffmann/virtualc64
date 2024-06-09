@@ -23,7 +23,7 @@ class MediaManager {
 
     // References to other objects
     var document: MyDocument!
-    var emu: EmulatorProxy { return document.emu }
+    var emu: EmulatorProxy? { return document.emu }
     var controller: MyController { return document.parent }
 
     // Computed references
@@ -212,36 +212,39 @@ class MediaManager {
 
         debug(.media, "url = \(url) types = \(types)")
 
-        // Read file
-        let file = try createFileProxy(from: url, allowedTypes: types)
+        if let emu = emu {
 
-        // Remember the URL if requested
-        if options.contains(.remember) {
+            // Read file
+            let file = try createFileProxy(from: url, allowedTypes: types)
 
-            switch file.type {
+            // Remember the URL if requested
+            if options.contains(.remember) {
 
-            case .SNAPSHOT:
-                document.snapshots.append(file)
+                switch file.type {
 
-            case .CRT:
-                MediaManager.noteNewRecentlyAtachedCartridgeURL(url)
+                case .SNAPSHOT:
+                    document.snapshots.append(file)
 
-            case .TAP:
-                MediaManager.noteNewRecentlyInsertedTapeURL(url)
+                case .CRT:
+                    MediaManager.noteNewRecentlyAtachedCartridgeURL(url)
 
-            case .T64, .P00, .PRG, .D64, .G64:
-                MediaManager.noteNewRecentlyInsertedDiskURL(url)
+                case .TAP:
+                    MediaManager.noteNewRecentlyInsertedTapeURL(url)
 
-            default:
-                break
+                case .T64, .P00, .PRG, .D64, .G64:
+                    MediaManager.noteNewRecentlyInsertedDiskURL(url)
+
+                default:
+                    break
+                }
             }
-        }
 
-        // Process file
-        if options.contains(.flash) {
-            try flashMedia(proxy: file, options: options)
-        } else {
-            try addMedia(proxy: file, drive: emu.drive(id), options: options)
+            // Process file
+            if options.contains(.flash) {
+                try flashMedia(proxy: file, options: options)
+            } else {
+                try addMedia(proxy: file, drive: emu.drive(id), options: options)
+            }
         }
     }
 
@@ -253,50 +256,7 @@ class MediaManager {
             return options.contains(.force) || proceedWithUnsavedFloppyDisk(drive: drive!)
         }
 
-        switch proxy.type {
-
-        case .SNAPSHOT:
-
-            debug(.media, "Snapshot")
-            try emu.flash(proxy)
-
-        case .CRT:
-
-            debug(.media, "CRT")
-            try emu.expansionport.attachCartridge(proxy, reset: true)
-
-        case .TAP:
-
-            debug(.media, "TAP")
-            emu.datasette.insertTape(proxy)
-
-            if options.contains(.autostart) {
-                controller.keyboard.type("LOAD\n")
-                emu.datasette.pressPlay()
-            }
-
-        case .T64, .PRG, .P00, .D64, .G64, .FOLDER:
-
-            debug(.media, "T64, PRG, P00, D64, G64, FOLDER")
-            if proceedUnsaved {
-                drive!.insertMedia(proxy, protected: options.contains(.protect))
-            }
-
-        case .SCRIPT:
-
-            debug(.media, "Script")
-            console.runScript(script: proxy)
-
-        default:
-            break
-        }
-    }
-
-    func flashMedia(proxy: AnyFileProxy, options: [Option] = []) throws {
-
-        switch proxy {
-
-        case let proxy as MediaFileProxy:
+        if let emu = emu {
 
             switch proxy.type {
 
@@ -316,18 +276,15 @@ class MediaManager {
                 emu.datasette.insertTape(proxy)
 
                 if options.contains(.autostart) {
-                    controller.keyboard.type("load\n")
+                    controller.keyboard.type("LOAD\n")
                     emu.datasette.pressPlay()
                 }
 
-            case .PRG, .P00, .T64:
+            case .T64, .PRG, .P00, .D64, .G64, .FOLDER:
 
-                debug(.media, "PRG, P00, T64")
-                if let volume = try? FileSystemProxy.make(with: proxy) {
-
-                    try? emu.flash(volume, item: 0)
-                    controller.keyboard.type("run\n")
-                    controller.renderer.rotateLeft()
+                debug(.media, "T64, PRG, P00, D64, G64, FOLDER")
+                if proceedUnsaved {
+                    drive!.insertMedia(proxy, protected: options.contains(.protect))
                 }
 
             case .SCRIPT:
@@ -338,9 +295,61 @@ class MediaManager {
             default:
                 break
             }
+        }
+    }
 
-        default:
-            fatalError()
+    func flashMedia(proxy: AnyFileProxy, options: [Option] = []) throws {
+
+        if let emu = emu {
+
+            switch proxy {
+
+            case let proxy as MediaFileProxy:
+
+                switch proxy.type {
+
+                case .SNAPSHOT:
+
+                    debug(.media, "Snapshot")
+                    try emu.flash(proxy)
+
+                case .CRT:
+
+                    debug(.media, "CRT")
+                    try emu.expansionport.attachCartridge(proxy, reset: true)
+
+                case .TAP:
+
+                    debug(.media, "TAP")
+                    emu.datasette.insertTape(proxy)
+
+                    if options.contains(.autostart) {
+                        controller.keyboard.type("load\n")
+                        emu.datasette.pressPlay()
+                    }
+
+                case .PRG, .P00, .T64:
+
+                    debug(.media, "PRG, P00, T64")
+                    if let volume = try? FileSystemProxy.make(with: proxy) {
+
+                        try? emu.flash(volume, item: 0)
+                        controller.keyboard.type("run\n")
+                        controller.renderer.rotateLeft()
+                    }
+
+                case .SCRIPT:
+
+                    debug(.media, "Script")
+                    console.runScript(script: proxy)
+
+                default:
+                    break
+                }
+
+            default:
+                fatalError()
+            }
         }
     }
 
@@ -352,10 +361,13 @@ class MediaManager {
 
         debug(.media, "drive: \(id) to: \(url)")
 
-        let drive = emu.drive(id)
-        try export(disk: drive, to: url)
+        if let emu = emu {
+            
+            let drive = emu.drive(id)
+            try export(disk: drive, to: url)
 
-        emu.put(.DSK_MODIFIED, value: id)
+            emu.put(.DSK_MODIFIED, value: id)
+        }
     }
 
     func export(disk: DriveProxy, to url: URL) throws {

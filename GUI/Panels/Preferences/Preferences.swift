@@ -22,18 +22,16 @@ class Preferences {
 
     // Snapshots
     var autoSnapshots = false {
-        // didSet { for c in myAppDelegate.controllers { c.validateSnapshotTimer() } }
         didSet {
-            for c64 in myAppDelegate.proxies {
-                c64.set(.EMU_SNAPSHOTS, enable: autoSnapshots)
+            for emu in myAppDelegate.proxies {
+                emu?.set(.EMU_SNAPSHOTS, enable: autoSnapshots)
             }
         }
     }
     var snapshotInterval = 0 {
-        // didSet { for c in myAppDelegate.controllers { c.validateSnapshotTimer() } }
         didSet {
-            for c64 in myAppDelegate.proxies {
-                c64.set(.EMU_SNAPSHOT_DELAY, value: snapshotInterval)
+            for emu in myAppDelegate.proxies {
+                emu?.set(.EMU_SNAPSHOT_DELAY, value: snapshotInterval)
             }
         }
     }
@@ -49,8 +47,8 @@ class Preferences {
     // Screen captures
     var ffmpegPath = "" {
         didSet {
-            for proxy in myAppDelegate.proxies {
-                proxy.recorder.path = ffmpegPath
+            for emu in myAppDelegate.proxies {
+                emu?.recorder.path = ffmpegPath
             }
         }
     }
@@ -58,22 +56,22 @@ class Preferences {
 
     var bitRate = 512 {
         didSet {
-            for c64 in myAppDelegate.proxies {
-                c64.set(.REC_BIT_RATE, value: bitRate)
+            for emu in myAppDelegate.proxies {
+                emu?.set(.REC_BIT_RATE, value: bitRate)
             }
         }
     }
     var aspectX = 768 {
         didSet {
-            for c64 in myAppDelegate.proxies {
-                c64.set(.REC_ASPECT_X, value: aspectX)
+            for emu in myAppDelegate.proxies {
+                emu?.set(.REC_ASPECT_X, value: aspectX)
             }
         }
     }
     var aspectY = 702 {
         didSet {
-            for c64 in myAppDelegate.proxies {
-                c64.set(.REC_ASPECT_Y, value: aspectY)
+            for emu in myAppDelegate.proxies {
+                emu?.set(.REC_ASPECT_Y, value: aspectY)
             }
         }
     }

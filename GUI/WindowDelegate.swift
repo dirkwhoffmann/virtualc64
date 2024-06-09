@@ -95,12 +95,8 @@ extension MyController: NSWindowDelegate {
 
     func shutDown() {
         
-        debug(.shutdown, "Remove proxy...")
-
-        emu!.kill()
-        emu = nil
-
-        debug(.shutdown, "Done")
+        debug(.shutdown)
+        mydocument.shutDown()
     }
     
     public func windowWillEnterFullScreen(_ notification: Notification) {

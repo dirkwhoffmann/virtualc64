@@ -53,7 +53,7 @@ debugflag SID_DEBUG       = 0;
 debugflag SID_EXEC        = 0;
 debugflag SIDREG_DEBUG    = 0;
 debugflag AUDBUF_DEBUG    = 0;
-debugflag AUDVOL_DEBUG    = 1;
+debugflag AUDVOL_DEBUG    = 0;
 
 // Drive
 debugflag VIA_DEBUG       = 0;

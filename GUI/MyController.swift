@@ -19,7 +19,7 @@ class MyController: NSWindowController, MessageReceiver {
     var mydocument: MyDocument!
     
     // Emulator proxy (bridge between the Swift frontend and the C++ backend)
-    var emu: EmulatorProxy?
+    var emu: EmulatorProxy? { return mydocument.emu }
 
     // Media manager (handles the import and export of media files)
     var mm: MediaManager { return mydocument.mm }

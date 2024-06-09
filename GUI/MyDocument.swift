@@ -36,7 +36,7 @@ class MyDocument: NSDocument {
     var mm: MediaManager!
 
     // Gateway to the core emulator
-    var emu: EmulatorProxy!
+    var emu: EmulatorProxy?
 
     // Snapshot storage
     private(set) var snapshots = ManagedArray<MediaFileProxy>(capacity: 32)
@@ -78,8 +78,17 @@ class MyDocument: NSDocument {
 
         // Create the window controller
         let controller = MyController(windowNibName: "MyDocument")
-        controller.emu = emu
         self.addWindowController(controller)
+    }
+
+    func shutDown() {
+
+        debug(.shutdown, "Remove proxy...")
+
+        emu!.kill()
+        emu = nil
+
+        debug(.shutdown, "Done")
     }
 
     //
