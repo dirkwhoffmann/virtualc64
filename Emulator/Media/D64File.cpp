@@ -19,9 +19,8 @@ namespace vc64 {
 bool
 D64File::isCompatible(const fs::path &path)
 {
-    auto s = util::extractSuffix(path);
-
-    return s == "d64" || s == "D64";
+    auto s = util::uppercased(path.extension().string());
+    return s == ".D64";
 }
 
 bool

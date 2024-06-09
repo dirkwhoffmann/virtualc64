@@ -20,8 +20,8 @@ namespace vc64 {
 bool
 PRGFile::isCompatible(const fs::path &path)
 {
-    auto s = util::extractSuffix(path);
-    return s == "prg" || s == "PRG";
+    auto s = util::uppercased(path.extension().string());
+    return s == ".PRG";
 }
 
 bool

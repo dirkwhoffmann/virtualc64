@@ -22,99 +22,22 @@
 
 namespace vc64::util {
 
-string
-extractPath(const string &s)
+fs::path
+makeUniquePath(const fs::path &path)
 {
-    auto idx = s.rfind('/');
-    auto pos = 0;
-    auto len = idx != string::npos ? idx + 1 : 0;
-    return s.substr(pos, len);
-}
+    auto location = path.root_path() / path.relative_path();
+    auto name = path.stem().string();
+    auto extension = path.extension();
 
-string
-extractName(const string &s)
-{
-    auto idx = s.rfind('/');
-    auto pos = idx != string::npos ? idx + 1 : 0;
-    auto len = string::npos;
-    return s.substr(pos, len);
-}
+    for (isize nr = 2;; nr++) {
 
-string
-extractSuffix(const string &s)
-{
-    auto idx = s.rfind('.');
-    auto pos = idx != string::npos ? idx + 1 : 0;
-    auto len = string::npos;
-    return s.substr(pos, len);
-}
+        auto index = std::to_string(nr);
+        fs::path result = location / fs::path(name + index) / extension;
 
-string
-stripPath(const string &s)
-{
-    auto idx = s.rfind('/');
-    auto pos = idx != string::npos ? idx + 1 : 0;
-    auto len = string::npos;
-    return s.substr(pos, len);
-}
-
-string
-stripName(const string &s)
-{
-    auto idx = s.rfind('/');
-    auto pos = 0;
-    auto len = idx != string::npos ? idx : 0;
-    return s.substr(pos, len);
-}
-
-string
-stripSuffix(const string &s)
-{
-    auto idx = s.rfind('.');
-    auto pos = 0;
-    auto len = idx != string::npos ? idx : string::npos;
-    return s.substr(pos, len);
-}
-
-string
-appendPath(const string &path, const string &path2)
-{
-    if (path.empty()) {
-        return path2;
-    }
-    if (path.back() == '/') {
-        return path + path2;
-    }
-    return path + "/" + path2;
-}
-
-bool
-isAbsolutePath(const string &path)
-{
-    return !path.empty() && path.front() == '/';
-}
-
-string makeAbsolutePath(const string &path)
-{
-    if (isAbsolutePath(path)) {
-        return path;
-    } else {
-        return appendPath(fs::current_path().string(), path);
-    }
-}
-
-string
-makeUniquePath(const string &path)
-{
-    auto prefix = stripSuffix(path);
-    auto suffix = "." + extractSuffix(path);
-    
-    string index = "";
-    for (isize nr = 2; util::fileExists(prefix + index + suffix); nr++) {
-        index = std::to_string(nr);
+        if (!util::fileExists(result)) return result;
     }
 
-    return prefix + index + suffix;
+    return path;
 }
 
 isize
@@ -196,10 +119,10 @@ files(const fs::path &path, std::vector <string> &suffixes)
     try {
         
         for (const auto &entry : fs::directory_iterator(path)) {
-            
+
             const auto &name = entry.path().filename();
-            string suffix = lowercased(extractSuffix(name));
-            
+            auto suffix = name.extension().string();
+
             if (std::find(suffixes.begin(), suffixes.end(), suffix) != suffixes.end()) {
                 result.push_back(name);
             }

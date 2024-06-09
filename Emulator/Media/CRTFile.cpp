@@ -27,7 +27,8 @@ CRTFile::cartridgeTypeName(CartridgeType type)
 bool
 CRTFile::isCompatible(const fs::path &path)
 {
-    return util::uppercased(util::extractSuffix(path)) == "CRT";
+    auto s = util::uppercased(path.extension().string());
+    return s == ".CRT";
 }
 
 bool

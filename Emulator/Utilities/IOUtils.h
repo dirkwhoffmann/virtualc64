@@ -24,43 +24,16 @@
 #include <sys/stat.h>
 #include <vector>
 
-namespace vc64 {
-namespace fs = ::std::filesystem;
-}
-namespace vc64::util {
-namespace fs = ::std::filesystem;
-}
-
 namespace vc64::util {
 
-//
-// Handling file names
-//
-
-// Extracts a certain component from a path
-string extractPath(const string &path);
-string extractName(const string &path);
-string extractSuffix(const string &path);
-
-// Strips a certain component from a path
-string stripPath(const string &path);
-string stripName(const string &path);
-string stripSuffix(const string &path);
-
-// Concatenates two path segments
-string appendPath(const string &path, const string &path2);
-
-// Checks or creates an absolute path
-bool isAbsolutePath(const string &path);
-string makeAbsolutePath(const string &path);
-
-// Makes a file name unique if a file with the provided name already exists
-string makeUniquePath(const string &path);
-
+namespace fs = ::std::filesystem;
 
 //
 // Handling files
 //
+
+// Makes a file name unique if a file with the provided name already exists
+fs::path makeUniquePath(const fs::path &path);
 
 // Returns the size of a file in bytes
 isize getSizeOfFile(const fs::path &path);

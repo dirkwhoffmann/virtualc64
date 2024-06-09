@@ -117,7 +117,7 @@ Headless::parseArguments(int argc, char *argv[])
     opterr = 0;
     
     // Remember the execution path
-    keys["exec"] = util::makeAbsolutePath(argv[0]);
+    keys["exec"] = fs::absolute(argv[0]);
 
     // Parse all options
     while (1) {

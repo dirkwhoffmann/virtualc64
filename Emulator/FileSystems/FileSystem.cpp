@@ -174,7 +174,7 @@ FileSystem::init(const fs::path &path)
         init(DISK_TYPE_SS_SD, DOS_TYPE_NODOS);
         
         // Write BAM
-        auto name = PETName<16>(util::extractName(path));
+        auto name = PETName<16>(path.filename().string());
         bamPtr()->writeBAM(name);
         
         // Import the folder
@@ -850,11 +850,11 @@ FileSystem::importDirectory(const fs::directory_entry &dir)
 {
     for (const auto& entry : fs::directory_iterator(dir)) {
 
-        const auto path = entry.path().string();
-        const auto name = entry.path().filename().string();
+        const auto path = entry.path();
+        const auto name = entry.path().stem();
 
         // Skip all hidden files
-        if (name[0] == '.') continue;
+        if (name.c_str()[0] == '.') continue;
 
         debug(FS_DEBUG, "Importing %s\n", path.c_str());
 
@@ -865,7 +865,7 @@ FileSystem::importDirectory(const fs::directory_entry &dir)
             if (buffer) {
 
                 // Add file
-                PETName<16> pet = PETName<16>(util::stripSuffix(name));
+                PETName<16> pet = PETName<16>(name.string());
                 if (!makeFile(pet, buffer.ptr, buffer.size)) {
 
                     throw Error(ERROR_FS_CANT_IMPORT);

@@ -22,8 +22,8 @@ namespace vc64 {
 bool
 Script::isCompatible(const fs::path &path)
 {
-    auto s = util::extractSuffix(path);
-    return s == "ini" || s == "INI";
+    auto s = util::uppercased(path.extension().string());
+    return s == ".INI";
 }
 
 bool
@@ -31,14 +31,5 @@ Script::isCompatible(std::istream &stream)
 {
     return true;
 }
-
-/*
-void
-Script::execute(VirtualC64 &c64)
-{
-    string s((char *)data, size);
-    try { c64.retroShell.execScript(s); } catch (util::Exception &) { }
-}
-*/
 
 }
