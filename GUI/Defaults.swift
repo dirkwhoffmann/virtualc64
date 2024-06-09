@@ -681,63 +681,71 @@ extension Configuration {
     func saveHardwareUserDefaults() {
 
         debug(.defaults)
-        let defaults = EmulatorProxy.defaults!
 
-        emu.suspend()
+        if let emu = emu {
 
-        defaults.set(.VICII_REVISION, vicRevision)
-        defaults.set(.VICII_GRAY_DOT_BUG, vicGrayDotBug)
+            emu.suspend()
 
-        defaults.set(.CIA_REVISION, ciaRevision)
-        defaults.set(.CIA_TIMER_B_BUG, ciaTimerBBug)
+            let defaults = EmulatorProxy.defaults!
 
-        defaults.set(.SID_REVISION, sidRevision)
-        defaults.set(.SID_FILTER, sidFilter)
-        defaults.set(.SID_ENABLE, 1, sidEnable1)
-        defaults.set(.SID_ENABLE, 2, sidEnable2)
-        defaults.set(.SID_ENABLE, 3, sidEnable3)
-        defaults.set(.SID_ADDRESS, 1, sidAddress1)
-        defaults.set(.SID_ADDRESS, 2, sidAddress2)
-        defaults.set(.SID_ADDRESS, 3, sidAddress3)
+            defaults.set(.VICII_REVISION, vicRevision)
+            defaults.set(.VICII_GRAY_DOT_BUG, vicGrayDotBug)
 
-        defaults.set(.GLUE_LOGIC, glueLogic)
-        defaults.set(.POWER_GRID, powerGrid)
+            defaults.set(.CIA_REVISION, ciaRevision)
+            defaults.set(.CIA_TIMER_B_BUG, ciaTimerBBug)
 
-        defaults.set(.MEM_INIT_PATTERN, ramPattern)
+            defaults.set(.SID_REVISION, sidRevision)
+            defaults.set(.SID_FILTER, sidFilter)
+            defaults.set(.SID_ENABLE, 1, sidEnable1)
+            defaults.set(.SID_ENABLE, 2, sidEnable2)
+            defaults.set(.SID_ENABLE, 3, sidEnable3)
+            defaults.set(.SID_ADDRESS, 1, sidAddress1)
+            defaults.set(.SID_ADDRESS, 2, sidAddress2)
+            defaults.set(.SID_ADDRESS, 3, sidAddress3)
 
-        defaults.save()
+            defaults.set(.GLUE_LOGIC, glueLogic)
+            defaults.set(.POWER_GRID, powerGrid)
 
-        emu.resume()
+            defaults.set(.MEM_INIT_PATTERN, ramPattern)
+
+            defaults.save()
+
+            emu.resume()
+        }
     }
 
     func applyHardwareUserDefaults() {
 
         debug(.defaults)
-        let defaults = EmulatorProxy.defaults!
 
-        emu.suspend()
+        if let emu = emu {
 
-        vicRevision = defaults.get(.VICII_REVISION)
-        vicGrayDotBug = defaults.get(.VICII_GRAY_DOT_BUG) != 0
+            emu.suspend()
 
-        ciaRevision = defaults.get(.CIA_REVISION)
-        ciaTimerBBug = defaults.get(.CIA_TIMER_B_BUG) != 0
+            let defaults = EmulatorProxy.defaults!
 
-        sidRevision = defaults.get(.SID_REVISION, 0)
-        sidFilter = defaults.get(.SID_FILTER, 0) != 0
-        sidEnable1 = defaults.get(.SID_ENABLE, 1) != 0
-        sidEnable2 = defaults.get(.SID_ENABLE, 2) != 0
-        sidEnable3 = defaults.get(.SID_ENABLE, 3) != 0
-        sidAddress1 = defaults.get(.SID_ADDRESS, 1)
-        sidAddress2 = defaults.get(.SID_ADDRESS, 2)
-        sidAddress3 = defaults.get(.SID_ADDRESS, 3)
+            vicRevision = defaults.get(.VICII_REVISION)
+            vicGrayDotBug = defaults.get(.VICII_GRAY_DOT_BUG) != 0
 
-        glueLogic = defaults.get(.GLUE_LOGIC)
-        powerGrid = defaults.get(.POWER_GRID)
+            ciaRevision = defaults.get(.CIA_REVISION)
+            ciaTimerBBug = defaults.get(.CIA_TIMER_B_BUG) != 0
 
-        ramPattern = defaults.get(.MEM_INIT_PATTERN)
+            sidRevision = defaults.get(.SID_REVISION, 0)
+            sidFilter = defaults.get(.SID_FILTER, 0) != 0
+            sidEnable1 = defaults.get(.SID_ENABLE, 1) != 0
+            sidEnable2 = defaults.get(.SID_ENABLE, 2) != 0
+            sidEnable3 = defaults.get(.SID_ENABLE, 3) != 0
+            sidAddress1 = defaults.get(.SID_ADDRESS, 1)
+            sidAddress2 = defaults.get(.SID_ADDRESS, 2)
+            sidAddress3 = defaults.get(.SID_ADDRESS, 3)
 
-        emu.resume()
+            glueLogic = defaults.get(.GLUE_LOGIC)
+            powerGrid = defaults.get(.POWER_GRID)
+
+            ramPattern = defaults.get(.MEM_INIT_PATTERN)
+
+            emu.resume()
+        }
     }
 }
 
@@ -785,59 +793,67 @@ extension Configuration {
     func savePeripheralsUserDefaults() {
 
         debug(.defaults)
-        let defaults = EmulatorProxy.defaults!
 
-        emu.suspend()
+        if let emu = emu {
 
-        defaults.set(.DRV_CONNECT, DRIVE8, drive8Connected)
-        defaults.set(.DRV_TYPE, DRIVE8, drive8Type)
-        defaults.set(.DRV_RAM, DRIVE8, drive8Ram)
-        defaults.set(.DRV_PARCABLE, DRIVE8, drive8ParCable)
-        defaults.set(.DRV_AUTO_CONFIG, DRIVE8, drive8AutoConf)
+            emu.suspend()
 
-        defaults.set(.DRV_CONNECT, DRIVE9, drive9Connected)
-        defaults.set(.DRV_TYPE, DRIVE9, drive8Type)
-        defaults.set(.DRV_RAM, DRIVE9, drive8Ram)
-        defaults.set(.DRV_PARCABLE, DRIVE9, drive8ParCable)
-        defaults.set(.DRV_AUTO_CONFIG, DRIVE9, drive8AutoConf)
+            let defaults = EmulatorProxy.defaults!
 
-        defaults.set(Keys.Per.gameDevice1, gameDevice1)
-        defaults.set(Keys.Per.gameDevice2, gameDevice2)
+            defaults.set(.DRV_CONNECT, DRIVE8, drive8Connected)
+            defaults.set(.DRV_TYPE, DRIVE8, drive8Type)
+            defaults.set(.DRV_RAM, DRIVE8, drive8Ram)
+            defaults.set(.DRV_PARCABLE, DRIVE8, drive8ParCable)
+            defaults.set(.DRV_AUTO_CONFIG, DRIVE8, drive8AutoConf)
 
-        defaults.set(.MOUSE_MODEL, mouseModel)
-        defaults.set(.PADDLE_ORIENTATION, paddleOrientation)
+            defaults.set(.DRV_CONNECT, DRIVE9, drive9Connected)
+            defaults.set(.DRV_TYPE, DRIVE9, drive8Type)
+            defaults.set(.DRV_RAM, DRIVE9, drive8Ram)
+            defaults.set(.DRV_PARCABLE, DRIVE9, drive8ParCable)
+            defaults.set(.DRV_AUTO_CONFIG, DRIVE9, drive8AutoConf)
 
-        defaults.save()
+            defaults.set(Keys.Per.gameDevice1, gameDevice1)
+            defaults.set(Keys.Per.gameDevice2, gameDevice2)
 
-        emu.resume()
+            defaults.set(.MOUSE_MODEL, mouseModel)
+            defaults.set(.PADDLE_ORIENTATION, paddleOrientation)
+
+            defaults.save()
+
+            emu.resume()
+        }
     }
 
     func applyPeripheralsUserDefaults() {
 
         debug(.defaults)
-        let defaults = EmulatorProxy.defaults!
 
-        emu.suspend()
+        if let emu = emu {
 
-        drive8Connected = defaults.get(.DRV_CONNECT, DRIVE8) != 0
-        drive8Type = defaults.get(.DRV_TYPE, DRIVE8)
-        drive8Ram = defaults.get(.DRV_RAM, DRIVE8)
-        drive8ParCable = defaults.get(.DRV_PARCABLE, DRIVE8)
-        drive8AutoConf = defaults.get(.DRV_AUTO_CONFIG, DRIVE8) != 0
+            emu.suspend()
 
-        drive9Connected = defaults.get(.DRV_CONNECT, DRIVE9) != 0
-        drive9Type = defaults.get(.DRV_TYPE, DRIVE9)
-        drive9Ram = defaults.get(.DRV_RAM, DRIVE9)
-        drive9ParCable = defaults.get(.DRV_PARCABLE, DRIVE9)
-        drive9AutoConf = defaults.get(.DRV_AUTO_CONFIG, DRIVE9) != 0
+            let defaults = EmulatorProxy.defaults!
 
-        gameDevice1 = defaults.int(Keys.Per.gameDevice1)
-        gameDevice2 = defaults.int(Keys.Per.gameDevice2)
+            drive8Connected = defaults.get(.DRV_CONNECT, DRIVE8) != 0
+            drive8Type = defaults.get(.DRV_TYPE, DRIVE8)
+            drive8Ram = defaults.get(.DRV_RAM, DRIVE8)
+            drive8ParCable = defaults.get(.DRV_PARCABLE, DRIVE8)
+            drive8AutoConf = defaults.get(.DRV_AUTO_CONFIG, DRIVE8) != 0
 
-        mouseModel = defaults.get(.MOUSE_MODEL)
-        paddleOrientation = defaults.get(.PADDLE_ORIENTATION)
+            drive9Connected = defaults.get(.DRV_CONNECT, DRIVE9) != 0
+            drive9Type = defaults.get(.DRV_TYPE, DRIVE9)
+            drive9Ram = defaults.get(.DRV_RAM, DRIVE9)
+            drive9ParCable = defaults.get(.DRV_PARCABLE, DRIVE9)
+            drive9AutoConf = defaults.get(.DRV_AUTO_CONFIG, DRIVE9) != 0
 
-        emu.resume()
+            gameDevice1 = defaults.int(Keys.Per.gameDevice1)
+            gameDevice2 = defaults.int(Keys.Per.gameDevice2)
+
+            mouseModel = defaults.get(.MOUSE_MODEL)
+            paddleOrientation = defaults.get(.PADDLE_ORIENTATION)
+
+            emu.resume()
+        }
     }
 }
 
@@ -875,47 +891,55 @@ extension Configuration {
     func savePerformanceUserDefaults() {
 
         debug(.defaults)
-        let defaults = EmulatorProxy.defaults!
 
-        emu.suspend()
+        if let emu = emu {
 
-        defaults.set(.DRV_POWER_SAVE, DRIVE8, drive8PowerSave)
-        defaults.set(.DRV_POWER_SAVE, DRIVE9, drive9PowerSave)
-        defaults.set(.SID_POWER_SAVE, sidPowerSave)
-        defaults.set(.VICII_POWER_SAVE, viciiPowerSave)
-        defaults.set(.VICII_SS_COLLISIONS, ssCollisions)
-        defaults.set(.VICII_SB_COLLISIONS, sbCollisions)
-        defaults.set(.EMU_WARP_MODE, warpMode)
-        defaults.set(.EMU_WARP_BOOT, warpBoot)
-        defaults.set(.EMU_VSYNC, vsync)
-        defaults.set(.EMU_SPEED_ADJUST, speedAdjust)
-        defaults.set(.EMU_RUN_AHEAD, runAhead)
+            emu.suspend()
 
-        defaults.save()
+            let defaults = EmulatorProxy.defaults!
 
-        emu.resume()
+            defaults.set(.DRV_POWER_SAVE, DRIVE8, drive8PowerSave)
+            defaults.set(.DRV_POWER_SAVE, DRIVE9, drive9PowerSave)
+            defaults.set(.SID_POWER_SAVE, sidPowerSave)
+            defaults.set(.VICII_POWER_SAVE, viciiPowerSave)
+            defaults.set(.VICII_SS_COLLISIONS, ssCollisions)
+            defaults.set(.VICII_SB_COLLISIONS, sbCollisions)
+            defaults.set(.EMU_WARP_MODE, warpMode)
+            defaults.set(.EMU_WARP_BOOT, warpBoot)
+            defaults.set(.EMU_VSYNC, vsync)
+            defaults.set(.EMU_SPEED_ADJUST, speedAdjust)
+            defaults.set(.EMU_RUN_AHEAD, runAhead)
+
+            defaults.save()
+
+            emu.resume()
+        }
     }
 
     func applyPerformanceUserDefaults() {
 
         debug(.defaults)
-        let defaults = EmulatorProxy.defaults!
 
-        emu.suspend()
+        if let emu = emu {
 
-        drive8PowerSave = defaults.get(.DRV_POWER_SAVE, DRIVE8) != 0
-        drive9PowerSave = defaults.get(.DRV_POWER_SAVE, DRIVE9) != 0
-        sidPowerSave = defaults.get(.SID_POWER_SAVE, 0) != 0
-        viciiPowerSave = defaults.get(.VICII_POWER_SAVE) != 0
-        ssCollisions = defaults.get(.VICII_SS_COLLISIONS) != 0
-        sbCollisions = defaults.get(.VICII_SB_COLLISIONS) != 0
-        warpMode = defaults.get(.EMU_WARP_MODE)
-        warpBoot = defaults.get(.EMU_WARP_BOOT)
-        vsync = defaults.get(.EMU_VSYNC) != 0
-        speedAdjust = defaults.get(.EMU_SPEED_ADJUST)
-        runAhead = defaults.get(.EMU_RUN_AHEAD)
+            emu.suspend()
 
-        emu.resume()
+            let defaults = EmulatorProxy.defaults!
+
+            drive8PowerSave = defaults.get(.DRV_POWER_SAVE, DRIVE8) != 0
+            drive9PowerSave = defaults.get(.DRV_POWER_SAVE, DRIVE9) != 0
+            sidPowerSave = defaults.get(.SID_POWER_SAVE, 0) != 0
+            viciiPowerSave = defaults.get(.VICII_POWER_SAVE) != 0
+            ssCollisions = defaults.get(.VICII_SS_COLLISIONS) != 0
+            sbCollisions = defaults.get(.VICII_SB_COLLISIONS) != 0
+            warpMode = defaults.get(.EMU_WARP_MODE)
+            warpBoot = defaults.get(.EMU_WARP_BOOT)
+            vsync = defaults.get(.EMU_VSYNC) != 0
+            speedAdjust = defaults.get(.EMU_SPEED_ADJUST)
+            runAhead = defaults.get(.EMU_RUN_AHEAD)
+
+            emu.resume()
+        }
     }
 }
 
@@ -960,61 +984,69 @@ extension Configuration {
     func saveAudioUserDefaults() {
 
         debug(.defaults)
-        let defaults = EmulatorProxy.defaults!
 
-        emu.suspend()
+        if let emu = emu {
 
-        defaults.set(.AUD_VOL0, vol0)
-        defaults.set(.AUD_VOL1, vol1)
-        defaults.set(.AUD_VOL2, vol2)
-        defaults.set(.AUD_VOL3, vol3)
-        defaults.set(.AUD_PAN0, pan0)
-        defaults.set(.AUD_PAN1, pan1)
-        defaults.set(.AUD_PAN2, pan2)
-        defaults.set(.AUD_PAN3, pan3)
-        defaults.set(.AUD_VOL_L, volL)
-        defaults.set(.AUD_VOL_R, volR)
-        defaults.set(.SID_SAMPLING, sidSampling)
-        defaults.set(.DRV_PAN, DRIVE8, drive8Pan)
-        defaults.set(.DRV_PAN, DRIVE9, drive9Pan)
-        defaults.set(.DRV_STEP_VOL, [DRIVE8, DRIVE9], stepVolume)
-        defaults.set(.DRV_INSERT_VOL, [DRIVE8, DRIVE9], insertVolume)
-        defaults.set(.DRV_EJECT_VOL, [DRIVE8, DRIVE9], ejectVolume)
-        defaults.set(.SID_FILTER, sidFilter)
-        defaults.save()
+            emu.suspend()
 
-        emu.resume()
+            let defaults = EmulatorProxy.defaults!
+
+            defaults.set(.AUD_VOL0, vol0)
+            defaults.set(.AUD_VOL1, vol1)
+            defaults.set(.AUD_VOL2, vol2)
+            defaults.set(.AUD_VOL3, vol3)
+            defaults.set(.AUD_PAN0, pan0)
+            defaults.set(.AUD_PAN1, pan1)
+            defaults.set(.AUD_PAN2, pan2)
+            defaults.set(.AUD_PAN3, pan3)
+            defaults.set(.AUD_VOL_L, volL)
+            defaults.set(.AUD_VOL_R, volR)
+            defaults.set(.SID_SAMPLING, sidSampling)
+            defaults.set(.DRV_PAN, DRIVE8, drive8Pan)
+            defaults.set(.DRV_PAN, DRIVE9, drive9Pan)
+            defaults.set(.DRV_STEP_VOL, [DRIVE8, DRIVE9], stepVolume)
+            defaults.set(.DRV_INSERT_VOL, [DRIVE8, DRIVE9], insertVolume)
+            defaults.set(.DRV_EJECT_VOL, [DRIVE8, DRIVE9], ejectVolume)
+            defaults.set(.SID_FILTER, sidFilter)
+            defaults.save()
+
+            emu.resume()
+        }
     }
 
     func applyAudioUserDefaults() {
 
         debug(.defaults)
-        let defaults = EmulatorProxy.defaults!
 
-        emu.suspend()
+        if let emu = emu {
 
-        vol0 = defaults.get(.AUD_VOL0)
-        vol1 = defaults.get(.AUD_VOL1)
-        vol2 = defaults.get(.AUD_VOL2)
-        vol3 = defaults.get(.AUD_VOL3)
+            emu.suspend()
 
-        pan0 = defaults.get(.AUD_PAN0)
-        pan1 = defaults.get(.AUD_PAN1)
-        pan2 = defaults.get(.AUD_PAN2)
-        pan3 = defaults.get(.AUD_PAN3)
+            let defaults = EmulatorProxy.defaults!
 
-        drive8Pan = defaults.get(.DRV_PAN, DRIVE8)
-        drive9Pan = defaults.get(.DRV_PAN, DRIVE9)
+            vol0 = defaults.get(.AUD_VOL0)
+            vol1 = defaults.get(.AUD_VOL1)
+            vol2 = defaults.get(.AUD_VOL2)
+            vol3 = defaults.get(.AUD_VOL3)
 
-        volL = defaults.get(.AUD_VOL_L)
-        volR = defaults.get(.AUD_VOL_R)
-        sidSampling = defaults.get(.SID_SAMPLING, 0)
-        stepVolume = defaults.get(.DRV_STEP_VOL, DRIVE8)
-        insertVolume = defaults.get(.DRV_INSERT_VOL, DRIVE8)
-        ejectVolume = defaults.get(.DRV_EJECT_VOL, DRIVE8)
-        sidFilter = defaults.get(.SID_FILTER, 0) != 0
+            pan0 = defaults.get(.AUD_PAN0)
+            pan1 = defaults.get(.AUD_PAN1)
+            pan2 = defaults.get(.AUD_PAN2)
+            pan3 = defaults.get(.AUD_PAN3)
 
-        emu.resume()
+            drive8Pan = defaults.get(.DRV_PAN, DRIVE8)
+            drive9Pan = defaults.get(.DRV_PAN, DRIVE9)
+
+            volL = defaults.get(.AUD_VOL_L)
+            volR = defaults.get(.AUD_VOL_R)
+            sidSampling = defaults.get(.SID_SAMPLING, 0)
+            stepVolume = defaults.get(.DRV_STEP_VOL, DRIVE8)
+            insertVolume = defaults.get(.DRV_INSERT_VOL, DRIVE8)
+            ejectVolume = defaults.get(.DRV_EJECT_VOL, DRIVE8)
+            sidFilter = defaults.get(.SID_FILTER, 0) != 0
+
+            emu.resume()
+        }
     }
 }
 
@@ -1095,63 +1127,69 @@ extension Configuration {
     func saveColorUserDefaults() {
 
         debug(.defaults)
-        let defaults = EmulatorProxy.defaults!
 
-        emu.suspend()
+        if let emu = emu {
 
-        defaults.set(.MON_PALETTE, palette)
-        defaults.set(.MON_BRIGHTNESS, brightness)
-        defaults.set(.MON_CONTRAST, contrast)
-        defaults.set(.MON_SATURATION, saturation)
+            emu.suspend()
 
-        defaults.save()
+            let defaults = EmulatorProxy.defaults!
+            defaults.set(.MON_PALETTE, palette)
+            defaults.set(.MON_BRIGHTNESS, brightness)
+            defaults.set(.MON_CONTRAST, contrast)
+            defaults.set(.MON_SATURATION, saturation)
+            defaults.save()
 
-        emu.resume()
+            emu.resume()
+        }
     }
 
     func saveGeometryUserDefaults() {
 
         debug(.defaults)
-        let defaults = EmulatorProxy.defaults!
 
-        emu.suspend()
+        if let emu = emu {
 
-        defaults.set(.MON_HCENTER, hCenter)
-        defaults.set(.MON_VCENTER, vCenter)
-        defaults.set(.MON_HZOOM, hZoom)
-        defaults.set(.MON_VZOOM, vZoom)
+            emu.suspend()
 
-        defaults.save()
+            let defaults = EmulatorProxy.defaults!
+            defaults.set(.MON_HCENTER, hCenter)
+            defaults.set(.MON_VCENTER, vCenter)
+            defaults.set(.MON_HZOOM, hZoom)
+            defaults.set(.MON_VZOOM, vZoom)
+            defaults.save()
 
-        emu.resume()
+            emu.resume()
+        }
     }
 
     func saveShaderUserDefaults() {
 
         debug(.defaults)
-        let defaults = EmulatorProxy.defaults!
 
-        emu.suspend()
+        if let emu = emu {
 
-        defaults.set(.MON_UPSCALER, upscaler)
-        defaults.set(.MON_BLUR, blur)
-        defaults.set(.MON_BLUR_RADIUS, blurRadius)
-        defaults.set(.MON_BLOOM, bloom)
-        defaults.set(.MON_BLOOM_RADIUS, bloomRadius)
-        defaults.set(.MON_BLOOM_BRIGHTNESS, bloomBrightness)
-        defaults.set(.MON_BLOOM_WEIGHT, bloomWeight)
-        defaults.set(.MON_DOTMASK, dotMask)
-        defaults.set(.MON_DOTMASK_BRIGHTNESS, dotMaskBrightness)
-        defaults.set(.MON_SCANLINES, scanlines)
-        defaults.set(.MON_SCANLINE_BRIGHTNESS, scanlineBrightness)
-        defaults.set(.MON_SCANLINE_WEIGHT, scanlineWeight)
-        defaults.set(.MON_DISALIGNMENT, disalignment)
-        defaults.set(.MON_DISALIGNMENT_H, disalignmentH)
-        defaults.set(.MON_DISALIGNMENT_V, disalignmentV)
+            emu.suspend()
 
-        defaults.save()
+            let defaults = EmulatorProxy.defaults!
+            defaults.set(.MON_UPSCALER, upscaler)
+            defaults.set(.MON_BLUR, blur)
+            defaults.set(.MON_BLUR_RADIUS, blurRadius)
+            defaults.set(.MON_BLOOM, bloom)
+            defaults.set(.MON_BLOOM_RADIUS, bloomRadius)
+            defaults.set(.MON_BLOOM_BRIGHTNESS, bloomBrightness)
+            defaults.set(.MON_BLOOM_WEIGHT, bloomWeight)
+            defaults.set(.MON_DOTMASK, dotMask)
+            defaults.set(.MON_DOTMASK_BRIGHTNESS, dotMaskBrightness)
+            defaults.set(.MON_SCANLINES, scanlines)
+            defaults.set(.MON_SCANLINE_BRIGHTNESS, scanlineBrightness)
+            defaults.set(.MON_SCANLINE_WEIGHT, scanlineWeight)
+            defaults.set(.MON_DISALIGNMENT, disalignment)
+            defaults.set(.MON_DISALIGNMENT_H, disalignmentH)
+            defaults.set(.MON_DISALIGNMENT_V, disalignmentV)
+            defaults.save()
 
-        emu.resume()
+            emu.resume()
+        }
     }
 
     func applyVideoUserDefaults() {
@@ -1166,56 +1204,67 @@ extension Configuration {
     func applyColorUserDefaults() {
 
         debug(.defaults)
-        let defaults = EmulatorProxy.defaults!
 
-        emu.suspend()
+        if let emu = emu {
 
-        palette = defaults.get(.MON_PALETTE)
-        brightness = defaults.get(.MON_BRIGHTNESS)
-        contrast = defaults.get(.MON_CONTRAST)
-        saturation = defaults.get(.MON_SATURATION)
+            emu.suspend()
 
-        emu.resume()
+            let defaults = EmulatorProxy.defaults!
+            palette = defaults.get(.MON_PALETTE)
+            brightness = defaults.get(.MON_BRIGHTNESS)
+            contrast = defaults.get(.MON_CONTRAST)
+            saturation = defaults.get(.MON_SATURATION)
+
+            emu.resume()
+        }
     }
 
     func applyGeometryUserDefaults() {
 
         debug(.defaults)
-        let defaults = EmulatorProxy.defaults!
 
-        emu.suspend()
+        if let emu = emu {
 
-        hCenter = defaults.get(.MON_HCENTER)
-        vCenter = defaults.get(.MON_VCENTER)
-        hZoom = defaults.get(.MON_HZOOM)
-        vZoom = defaults.get(.MON_VZOOM)
+            emu.suspend()
 
-        emu.resume()
+            let defaults = EmulatorProxy.defaults!
+
+            hCenter = defaults.get(.MON_HCENTER)
+            vCenter = defaults.get(.MON_VCENTER)
+            hZoom = defaults.get(.MON_HZOOM)
+            vZoom = defaults.get(.MON_VZOOM)
+
+            emu.resume()
+        }
     }
 
     func applyShaderUserDefaults() {
 
         debug(.defaults)
-        let defaults = EmulatorProxy.defaults!
 
-        emu.suspend()
+        if let emu = emu {
 
-        upscaler = defaults.get(.MON_UPSCALER)
-        blur = defaults.get(.MON_BLUR)
-        blurRadius = defaults.get(.MON_BLUR_RADIUS)
-        bloom = defaults.get(.MON_BLOOM)
-        bloomRadius = defaults.get(.MON_BLOOM_RADIUS)
-        bloomBrightness = defaults.get(.MON_BLOOM_BRIGHTNESS)
-        bloomWeight = defaults.get(.MON_BLOOM_WEIGHT)
-        dotMask = defaults.get(.MON_DOTMASK)
-        dotMaskBrightness = defaults.get(.MON_DOTMASK_BRIGHTNESS)
-        scanlines = defaults.get(.MON_SCANLINES)
-        scanlineBrightness = defaults.get(.MON_SCANLINE_BRIGHTNESS)
-        scanlineWeight = defaults.get(.MON_SCANLINE_WEIGHT)
-        disalignment = defaults.get(.MON_DISALIGNMENT)
-        disalignmentH = defaults.get(.MON_DISALIGNMENT_H)
-        disalignmentV = defaults.get(.MON_DISALIGNMENT_V)
+            emu.suspend()
 
-        emu.resume()
+            let defaults = EmulatorProxy.defaults!
+
+            upscaler = defaults.get(.MON_UPSCALER)
+            blur = defaults.get(.MON_BLUR)
+            blurRadius = defaults.get(.MON_BLUR_RADIUS)
+            bloom = defaults.get(.MON_BLOOM)
+            bloomRadius = defaults.get(.MON_BLOOM_RADIUS)
+            bloomBrightness = defaults.get(.MON_BLOOM_BRIGHTNESS)
+            bloomWeight = defaults.get(.MON_BLOOM_WEIGHT)
+            dotMask = defaults.get(.MON_DOTMASK)
+            dotMaskBrightness = defaults.get(.MON_DOTMASK_BRIGHTNESS)
+            scanlines = defaults.get(.MON_SCANLINES)
+            scanlineBrightness = defaults.get(.MON_SCANLINE_BRIGHTNESS)
+            scanlineWeight = defaults.get(.MON_SCANLINE_WEIGHT)
+            disalignment = defaults.get(.MON_DISALIGNMENT)
+            disalignmentH = defaults.get(.MON_DISALIGNMENT_H)
+            disalignmentV = defaults.get(.MON_DISALIGNMENT_V)
+
+            emu.resume()
+        }
     }
 }

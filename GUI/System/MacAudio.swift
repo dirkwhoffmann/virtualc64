@@ -11,8 +11,10 @@ import AVFoundation
 
 public class MacAudio: NSObject {
 
+    var parent: MyController!
+
     // Audio source
-    var emu: EmulatorProxy!
+    var emu: EmulatorProxy? { return parent.emu }
 
     // Gateway to the host's audio unit
     var audiounit: AUAudioUnit!
@@ -31,8 +33,8 @@ public class MacAudio: NSObject {
         debug(.lifetime, "Initializing audio interface")
 
         self.init()
-        emu = controller.emu
-        
+        parent = controller
+
         // Create AudioUnit
         let compDesc = AudioComponentDescription(
             componentType: kAudioUnitType_Output,
@@ -54,7 +56,7 @@ public class MacAudio: NSObject {
         let stereo = (channels > 1)
         
         // Pass some host parameters to the emulator
-        emu.set(.HOST_SAMPLE_RATE, value: Int(sampleRate))
+        emu?.set(.HOST_SAMPLE_RATE, value: Int(sampleRate))
 
         // Make the input bus compatible with the output bus
         let renderFormat = AVAudioFormat(standardFormatWithSampleRate: sampleRate,
@@ -108,7 +110,6 @@ public class MacAudio: NSObject {
         
         audiounit.stopHardware()
         audiounit.outputProvider = nil
-        emu = nil
     }
 
     private func renderMono(inputDataList: UnsafeMutablePointer<AudioBufferList>,
@@ -122,7 +123,7 @@ public class MacAudio: NSObject {
         if muted {
             memset(ptr, 0, 4 * Int(frameCount))
         } else {
-            emu.audioPort.copyMono(ptr, size: Int(frameCount))
+            emu?.audioPort.copyMono(ptr, size: Int(frameCount))
         }
     }
     
@@ -139,7 +140,7 @@ public class MacAudio: NSObject {
             memset(ptr1, 0, 4 * Int(frameCount))
             memset(ptr2, 0, 4 * Int(frameCount))
         } else {
-            emu.audioPort.copyStereo(ptr1, buffer2: ptr2, size: Int(frameCount))
+            emu?.audioPort.copyStereo(ptr1, buffer2: ptr2, size: Int(frameCount))
         }
     }
 
