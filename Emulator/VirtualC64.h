@@ -455,7 +455,7 @@ struct RecorderAPI : API {
 
     /** @brief  Returns the path to the FFmpeg executable.
      */
-    const string getExecPath() const;
+    const fs::path getExecPath() const;
 
     /** @brief  Sets the path to the FFmpeg executable.
      */

@@ -917,7 +917,7 @@ RecorderAPI::getCachedInfo() const
     return recorder->getCachedInfo();
 }
 
-const string
+const fs::path
 RecorderAPI::getExecPath() const
 {
     return FFmpeg::getExecPath();

@@ -152,7 +152,7 @@ Headless::parseArguments(int argc, char *argv[])
     // Parse all remaining arguments
     auto nr = 1;
     while (optind < argc) {
-        keys["arg" + std::to_string(nr++)] = util::makeAbsolutePath(argv[optind++]);
+        keys["arg" + std::to_string(nr++)] = fs::absolute(fs::path(argv[optind++])).string();
     }
 
     // Check for syntax errors
