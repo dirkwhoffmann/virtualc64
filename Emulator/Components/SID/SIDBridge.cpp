@@ -146,13 +146,11 @@ SIDBridge::setSampleRate(double rate)
 void
 SIDBridge::beginFrame()
 {
+    // Update the CPU clock frequency
     c64.updateClockFrequency();
-    /*
-    sid[0].setSampleRate(host.getOption(OPT_HOST_SAMPLE_RATE));
-    sid[1].setSampleRate(host.getOption(OPT_HOST_SAMPLE_RATE));
-    sid[2].setSampleRate(host.getOption(OPT_HOST_SAMPLE_RATE));
-    sid[3].setSampleRate(host.getOption(OPT_HOST_SAMPLE_RATE));
-    */
+
+    // Update the audio sample rate
+    setSampleRate(host.getOption(OPT_HOST_SAMPLE_RATE) + audioPort.getSampleRateCorrection());
 }
 
 void 

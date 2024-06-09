@@ -54,8 +54,11 @@ public util::RingBuffer <SamplePair, 12288> {
     // Time stamp of the last write pointer alignment
     util::Time lastAlignment;
 
+    // Sample rate adjustment
+    double sampleRateCorrection = 0.0;
+
     // Channel volumes
-    float vol[4] ={ };
+    float vol[4] = { };
 
     // Panning factors
     float pan[4] ={ };
@@ -118,6 +121,7 @@ private:
 
     void _dump(Category category, std::ostream& os) const override;
     void _reset(bool hard) override;
+    void _powerOn() override;
     void _run() override;
     void _pause() override;
     void _warpOn() override;
@@ -182,6 +186,9 @@ public:
 
     // Generates samples
     void generateSamples();
+
+    // Returns the sample rate adjustment
+    double getSampleRateCorrection() { return sampleRateCorrection; }
 
     // Rescale the existing samples to gradually fade out (to avoid cracks)
     void fadeOut();

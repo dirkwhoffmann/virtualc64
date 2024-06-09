@@ -44,11 +44,15 @@ AudioPort::handleBufferUnderflow()
     if (elapsedTime.asSeconds() > 10.0) {
 
         // Increase the sample rate based on what we've measured
+        sampleRateCorrection += count() / elapsedTime.asSeconds();
+        /*
         isize offPerSecond = (isize)(count() / elapsedTime.asSeconds());
         sidBridge.setSampleRate(sidBridge.sid[0].getSampleRate() + offPerSecond);
+        */
 
         stats.bufferUnderflows++;
-        warn("Last underflow: %f seconds ago (%ld samples off)\n", elapsedTime.asSeconds(), offPerSecond);
+        warn("Last underflow: %f seconds ago\n", elapsedTime.asSeconds());
+        warn("New sample rate correction: %f\n", sampleRateCorrection);
     }
 }
 
@@ -73,11 +77,15 @@ AudioPort::handleBufferOverflow()
     if (elapsedTime.asSeconds() > 10.0) {
 
         // Decrease the sample rate based on what we've measured
+        sampleRateCorrection -= count() / elapsedTime.asSeconds();
+        /*
         isize offPerSecond = (isize)(count() / elapsedTime.asSeconds());
         sidBridge.setSampleRate(sidBridge.sid[0].getSampleRate() - offPerSecond);
+        */
 
         stats.bufferOverflows++;
-        warn("Last underflow: %f seconds ago (%ld samples off)\n", elapsedTime.asSeconds(), offPerSecond);
+        warn("Last overflow: %f seconds ago\n", elapsedTime.asSeconds());
+        warn("New sample rate correction: %f\n", sampleRateCorrection);
     }
 }
 

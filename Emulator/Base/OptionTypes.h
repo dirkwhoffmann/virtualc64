@@ -327,7 +327,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
     {
         switch (value) {
 
-            case OPT_HOST_REFRESH_RATE:     return "Host refresh rate (fps)";
+            case OPT_HOST_REFRESH_RATE:     return "Host video refresh rate";
             case OPT_HOST_SAMPLE_RATE:      return "Host audio sample rate";
             case OPT_HOST_FRAMEBUF_WIDTH:   return "Window width";
             case OPT_HOST_FRAMEBUF_HEIGHT:  return "Window height";

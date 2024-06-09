@@ -48,6 +48,8 @@ AudioPort::_dump(Category category, std::ostream& os) const
         os << flt(pan[2]) << std::endl;
         os << tab("Channel 3 pan");
         os << flt(pan[3]) << std::endl;
+        os << tab("Sample rate correction");
+        os << flt(sampleRateCorrection) << " Hz" << std::endl;
     }
 }
 
@@ -80,6 +82,12 @@ AudioPort::_reset(bool hard)
 
     // Clear statistics
     if (hard) clearStats();
+}
+
+void 
+AudioPort::_powerOn()
+{
+    sampleRateCorrection = 0.0;
 }
 
 void
