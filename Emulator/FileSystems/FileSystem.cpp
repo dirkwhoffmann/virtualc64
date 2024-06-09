@@ -958,7 +958,7 @@ void
 FileSystem::exportFile(FSDirEntry *entry, const fs::path &path)
 {
     auto name = path / entry->getFileSystemRepresentation();
-    debug(FS_DEBUG, "Exporting file to %s\n", name.c_str());
+    debug(FS_DEBUG, "Exporting file to %s\n", name.string().c_str());
 
     std::ofstream stream(name);
     if (!stream.is_open()) throw Error(ERROR_FILE_CANT_CREATE);
