@@ -77,7 +77,7 @@ FSDirEntry::isHidden() const
     return typeString() == "";
 }
 
-string
+fs::path
 FSDirEntry::getFileSystemRepresentation() const
 {
     auto name = getName().str();
@@ -92,7 +92,7 @@ FSDirEntry::getFileSystemRepresentation() const
             result += c;
         }
     }
-    return result;
+    return fs::path(result);
 }
 
 FSFileType

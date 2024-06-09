@@ -18,7 +18,7 @@
 namespace vc64 {
 
 bool
-TAPFile::isCompatible(const string &path)
+TAPFile::isCompatible(const fs::path &path)
 {
     auto s = util::uppercased(util::extractSuffix(path));
     return s == "TAP" || s == "T64";

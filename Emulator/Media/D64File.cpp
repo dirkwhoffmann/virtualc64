@@ -17,7 +17,7 @@
 namespace vc64 {
 
 bool
-D64File::isCompatible(const string &path)
+D64File::isCompatible(const fs::path &path)
 {
     auto s = util::extractSuffix(path);
 

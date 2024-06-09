@@ -32,7 +32,7 @@ public:
     // Error information stored in the D64 archive
     u8 errors[802];
     
-    static bool isCompatible(const string &name);
+    static bool isCompatible(const fs::path &name);
     static bool isCompatible(std::istream &stream);
 
 
@@ -42,7 +42,7 @@ public:
     
     D64File();
     D64File(isize tracks, bool ecc);
-    D64File(const string &path) throws : D64File() { init(path); }
+    D64File(const fs::path &path) throws : D64File() { init(path); }
     D64File(const u8 *buf, isize len) throws : D64File() { init(buf, len); }
     D64File(class FileSystem &fs) throws : D64File() { init(fs); }
     
@@ -66,7 +66,7 @@ public:
     // Methods from AnyFile
     //
     
-    bool isCompatiblePath(const string &path) override { return isCompatible(path); }
+    bool isCompatiblePath(const fs::path &path) override { return isCompatible(path); }
     bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return FILETYPE_D64; }
     PETName<16> getName() const override;

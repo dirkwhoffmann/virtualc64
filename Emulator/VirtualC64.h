@@ -1037,7 +1037,7 @@ struct C64API : public API {
      *  @throw  VC64Error (ERROR_ROM_BASIC_MISSING)
      *          VC64Error (ERROR_FILE_TYPE_MISMATCH)
      */
-    void loadRom(const string &path);
+    void loadRom(const fs::path &path);
 
     /** @brief  Loads a ROM, provided by a RomFile object
      */

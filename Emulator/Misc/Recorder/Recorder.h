@@ -170,7 +170,7 @@ public:
     void stopRecording();
 
     // Exports the recorded video
-    bool exportAs(const string &path);
+    bool exportAs(const fs::path &path);
 
     
     //

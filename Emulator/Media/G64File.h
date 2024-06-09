@@ -25,7 +25,7 @@ public:
     // Class methods
     //
 
-    static bool isCompatible(const string &name);
+    static bool isCompatible(const fs::path &path);
     static bool isCompatible(std::istream &stream);
 
     
@@ -35,7 +35,7 @@ public:
     
     G64File() { };
     G64File(isize capacity);
-    G64File(const string &path) throws { init(path); }
+    G64File(const fs::path &path) throws { init(path); }
     G64File(const u8 *buf, isize len) throws { init(buf, len); }
     G64File(class Disk &disk) throws { init(disk); }
 
@@ -58,7 +58,7 @@ public:
     // Methods from AnyFile
     //
     
-    bool isCompatiblePath(const string &path) override { return isCompatible(path); }
+    bool isCompatiblePath(const fs::path &path) override { return isCompatible(path); }
     bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return FILETYPE_G64; }
 

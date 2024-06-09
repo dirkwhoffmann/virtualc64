@@ -22,27 +22,20 @@ class Folder : public AnyCollection {
 
 public:
 
-    static bool isCompatible(const string &path);
+    static bool isCompatible(const fs::path &path);
     static bool isCompatible(std::istream &stream) { return false; }
 
-    
-    //
-    // Constructing
-    //
-    
-    // static Folder *makeWithFolder(const string &path) throws;
 
-    
     //
     // Initializing
     //
     
-    Folder(const string &path) throws { init(path); }
+    Folder(const fs::path &path) throws { init(path); }
 
 private:
     
-    void init(const string &path) throws;
-    
+    void init(const fs::path &path) throws;
+
 
     //
     // Methods from CoreObject
@@ -57,7 +50,7 @@ public:
     // Methods from AnyFile
     //
 
-    bool isCompatiblePath(const string &path) override { return isCompatible(path); }
+    bool isCompatiblePath(const fs::path &path) override { return isCompatible(path); }
     bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return FILETYPE_FOLDER; }
     

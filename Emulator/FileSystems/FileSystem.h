@@ -51,7 +51,7 @@ public:
     FileSystem(class Disk &disk) throws { init(disk); }
     FileSystem(AnyCollection &collection) throws { init(collection); }
     FileSystem(MediaFile &file) throws;
-    FileSystem(const string &path) throws { init(path); }
+    FileSystem(const fs::path &path) throws { init(path); }
     ~FileSystem();
     
 private:
@@ -63,7 +63,7 @@ private:
     void init(class Disk &disk) throws;
     void init(AnyCollection &collection) throws;
     void init(MediaFile &file) throws;
-    void init(const string &path) throws;
+    void init(const fs::path &path) throws;
 
     
 public:
@@ -290,7 +290,7 @@ public:
     bool importVolume(const u8 *src, isize size, ErrorCode *err);
     
     // Imports a folder from the host file system
-    void importDirectory(const string &path) throws;
+    void importDirectory(const fs::path &path) throws;
     void importDirectory(const fs::directory_entry &dir) throws;
 
     // Exports the volume to a buffer
@@ -301,8 +301,8 @@ public:
     bool exportBlocks(isize first, isize last, u8 *dst, isize size, ErrorCode *err = nullptr);
 
     // Exports all files or a single file to a folder in the host file system
-    void exportDirectory(const string &path, bool createDir = true) throws;
-    void exportFile(FSDirEntry *item, const string &path) throws;
+    void exportDirectory(const fs::path &path, bool createDir = true) throws;
+    void exportFile(FSDirEntry *item, const fs::path &path) throws;
     void exportFile(FSDirEntry *entry, std::ofstream &stream) throws;
 
 

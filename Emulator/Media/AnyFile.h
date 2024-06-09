@@ -58,8 +58,8 @@ class AnyFile : public CoreObject, public MediaFile {
 public:
 
     // Physical location of this file
-    string path = "";
-    
+    fs::path path = "";
+
     // The raw data of this file
     u8 *data = nullptr;
     
@@ -78,8 +78,8 @@ public:
     virtual ~AnyFile();
     
     void init(isize capacity);
-    void init(const string &path) throws;
-    void init(const string &path, std::istream &stream) throws;
+    void init(const fs::path &path) throws;
+    void init(const fs::path &path, std::istream &stream) throws;
     void init(std::istream &stream) throws;
     void init(const u8 *buf, isize len) throws;
     void init(FILE *file) throws;
@@ -106,12 +106,6 @@ public:
     virtual string name() const override;
     virtual PETName<16> getName() const;
 
-    // Determines the type of an arbitrary file on file
-    // static FileType type(const string &path);
-
-    // Returns the media type of this file
-    // virtual FileType type() const { return FILETYPE_UNKNOWN; }
-
     // Returns a data byte
     u8 getData(isize nr) { return (data && nr < size) ? data[nr] : 0; }
 
@@ -137,17 +131,17 @@ public:
     
 protected:
 
-    virtual bool isCompatiblePath(const string &path) = 0;
+    virtual bool isCompatiblePath(const fs::path &path) = 0;
     virtual bool isCompatibleStream(std::istream &stream) = 0;
     
     void readFromStream(std::istream &stream) override;
-    void readFromFile(const string &path) override;
+    void readFromFile(const fs::path &path) override;
     void readFromBuffer(const u8 *buf, isize len) override;
 
 public:
     
     void writeToStream(std::ostream &stream) override;
-    void writeToFile(const string &path) override;
+    void writeToFile(const fs::path &path) override;
     void writeToBuffer(u8 *buf) override;
 
 

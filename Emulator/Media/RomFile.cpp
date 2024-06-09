@@ -17,26 +17,6 @@
 
 namespace vc64 {
 
-/*
-RomTraits &
-RomFile::traits(u32 crc)
-{
-    switch (crc) {
-
-    }
-}
-
-RomTraits &
-RomFile::basicTraits(u32 crc)
-{
-    switch (crc) {
-
-        default:
-            return RomTraits {};
-    }
-}
-*/
-
 const RomSignature RomFile::signatures[] = {
 
     { ROM_TYPE_BASIC,  0x2000, 0x0000, { 0x94, 0xE3, 0x7B } }, // Commodore
@@ -66,7 +46,7 @@ const RomSignature RomFile::signatures[] = {
 };
 
 bool
-RomFile::isCompatible(const string &path)
+RomFile::isCompatible(const fs::path &path)
 {
     return true;
 }
@@ -129,32 +109,32 @@ RomFile::isVC1541RomStream(std::istream &is)
 }
 
 bool
-RomFile::isRomFile(RomType type, const string &path)
+RomFile::isRomFile(RomType type, const fs::path &path)
 {
     std::ifstream stream(path);
     return isRomStream(type, stream);
 }
 
 bool
-RomFile::isBasicRomFile(const string &path)
+RomFile::isBasicRomFile(const fs::path &path)
 {
     return isRomFile(ROM_TYPE_BASIC, path);
 }
 
 bool
-RomFile::isCharRomFile(const string &path)
+RomFile::isCharRomFile(const fs::path &path)
 {
     return isRomFile(ROM_TYPE_CHAR, path);
 }
 
 bool
-RomFile::isKernalRomFile(const string &path)
+RomFile::isKernalRomFile(const fs::path &path)
 {
     return isRomFile(ROM_TYPE_KERNAL, path);
 }
 
 bool
-RomFile::isVC1541RomFile(const string &path)
+RomFile::isVC1541RomFile(const fs::path &path)
 {
     return isRomFile(ROM_TYPE_VC1541, path);
 }

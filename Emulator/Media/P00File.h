@@ -20,7 +20,7 @@ class P00File : public AnyCollection {
 
 public:
 
-    static bool isCompatible(const string &name);
+    static bool isCompatible(const fs::path &path);
     static bool isCompatible(std::istream &stream);
     
     
@@ -30,7 +30,7 @@ public:
     
     P00File() : AnyCollection() { }
     P00File(isize capacity) : AnyCollection(capacity) { }
-    P00File(const string &path) throws { init(path); }
+    P00File(const fs::path &path) throws { init(path); }
     P00File(const u8 *buf, isize len) throws { init(buf, len); }
     P00File(class FileSystem &fs) throws { init(fs); }
     
@@ -51,7 +51,7 @@ private:
     // Methods from AnyFile
     //
     
-    bool isCompatiblePath(const string &path) override { return isCompatible(path); }
+    bool isCompatiblePath(const fs::path &path) override { return isCompatible(path); }
     bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return FILETYPE_P00; }
     PETName<16> getName() const override;

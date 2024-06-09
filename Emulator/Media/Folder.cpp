@@ -17,13 +17,13 @@
 namespace vc64 {
 
 bool
-Folder::isCompatible(const string &path)
+Folder::isCompatible(const fs::path &path)
 {
     return util::isDirectory(path);
 }
 
 void
-Folder::init(const string &path)
+Folder::init(const fs::path &path)
 {
     if (!isCompatiblePath(path)) throw Error(ERROR_FILE_TYPE_MISMATCH);
     

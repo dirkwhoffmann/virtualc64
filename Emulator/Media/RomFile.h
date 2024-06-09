@@ -36,7 +36,7 @@ public:
     // Class methods
     //
 
-    static bool isCompatible(const string &name);
+    static bool isCompatible(const fs::path &name);
     static bool isCompatible(std::istream &stream);
     
     static bool isRomStream(RomType type, std::istream &stream);
@@ -45,11 +45,11 @@ public:
     static bool isKernalRomStream(std::istream &stream);
     static bool isVC1541RomStream(std::istream &stream);
     
-    static bool isRomFile(RomType type, const string &path);
-    static bool isBasicRomFile(const string &path);
-    static bool isCharRomFile(const string &path);
-    static bool isKernalRomFile(const string &path);
-    static bool isVC1541RomFile(const string &path);
+    static bool isRomFile(RomType type, const fs::path &path);
+    static bool isBasicRomFile(const fs::path &path);
+    static bool isCharRomFile(const fs::path &path);
+    static bool isKernalRomFile(const fs::path &path);
+    static bool isVC1541RomFile(const fs::path &path);
 
     static bool isRomBuffer(RomType type, const u8 *buf, isize len);
     static bool isBasicRomBuffer(const u8 *buf, isize len);
@@ -62,8 +62,8 @@ public:
     // Initializing
     //
     
-    RomFile(const string &path) throws { init(path); }
-    RomFile(const string &path, std::istream &stream) throws { init(path, stream); }
+    RomFile(const fs::path &path) throws { init(path); }
+    RomFile(const fs::path &path, std::istream &stream) throws { init(path, stream); }
     RomFile(const u8 *buf, isize len) throws { init(buf, len); }
 
     
@@ -78,7 +78,7 @@ public:
     // Methods from AnyFile
     //
     
-    bool isCompatiblePath(const string &path) override { return isCompatible(path); }
+    bool isCompatiblePath(const fs::path &path) override { return isCompatible(path); }
     bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return romFileType; }
     void finalizeRead() override;

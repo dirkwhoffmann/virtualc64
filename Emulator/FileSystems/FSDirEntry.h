@@ -14,8 +14,11 @@
 
 #include "FSTypes.h"
 #include "PETName.h"
+#include <filesystem>
 
 namespace vc64 {
+
+namespace fs = ::std::filesystem;
 
 struct FSDirEntry
 {
@@ -43,7 +46,7 @@ struct FSDirEntry
     PETName<16> getName() const { return PETName<16>(fileName); }
 
     // Return the name of this file with certain symbols escaped
-    string getFileSystemRepresentation() const;
+    fs::path getFileSystemRepresentation() const;
 
     // Returns the file type of this file
     FSFileType getFileType() const;

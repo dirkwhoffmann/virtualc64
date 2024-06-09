@@ -20,7 +20,7 @@
 namespace vc64 {
 
 bool
-Script::isCompatible(const string &path)
+Script::isCompatible(const fs::path &path)
 {
     auto s = util::extractSuffix(path);
     return s == "ini" || s == "INI";

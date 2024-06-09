@@ -451,7 +451,7 @@ C64API::loadSnapshot(const MediaFile &snapshot)
 }
 
 void
-C64API::loadRom(const string &path)
+C64API::loadRom(const fs::path &path)
 {
     c64->loadRom(path);
     c64->markAsDirty();

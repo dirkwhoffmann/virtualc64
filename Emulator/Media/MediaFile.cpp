@@ -29,7 +29,7 @@
 namespace vc64 {
 
 FileType
-MediaFile::type(const string &path)
+MediaFile::type(const fs::path &path)
 {
     std::ifstream stream(path);
     if (!stream.is_open()) return FILETYPE_UNKNOWN;
@@ -74,13 +74,13 @@ MediaFile::type(const string &path)
 }
 
 MediaFile *
-MediaFile::make(const string &path)
+MediaFile::make(const fs::path &path)
 {
     return make(path, type(path));
 }
 
 MediaFile *
-MediaFile::make(const string &path, FileType type)
+MediaFile::make(const fs::path &path, FileType type)
 {
     switch (type) {
 

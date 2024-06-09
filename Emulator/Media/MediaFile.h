@@ -15,8 +15,11 @@
 #include "MediaFileTypes.h"
 #include <sstream>
 #include <fstream>
+#include <filesystem>
 
 namespace vc64 {
+
+namespace fs = ::std::filesystem;
 
 class MediaFile {
 
@@ -30,11 +33,11 @@ public:
     //
 
     // Determines the type of an arbitrary file on file
-    static FileType type(const string &path);
+    static FileType type(const fs::path &path);
 
     // Factory methods
-    static MediaFile *make(const string &path);
-    static MediaFile *make(const string &path, FileType type);
+    static MediaFile *make(const fs::path &path);
+    static MediaFile *make(const fs::path &path, FileType type);
     static MediaFile *make(const u8 *buf, isize len, FileType type);
     static MediaFile *make(class FileSystem &fs, FileType type); // TODO: add const 
     static MediaFile *make(struct DriveAPI &drive, FileType type);
@@ -79,11 +82,11 @@ public:
 public:
 
     virtual void readFromStream(std::istream &stream) = 0;
-    virtual void readFromFile(const string &path) = 0;
+    virtual void readFromFile(const fs::path &path) = 0;
     virtual void readFromBuffer(const u8 *buf, isize len) = 0;
 
     virtual void writeToStream(std::ostream &stream) = 0;
-    virtual void writeToFile(const string &path) = 0;
+    virtual void writeToFile(const fs::path &path) = 0;
     virtual void writeToBuffer(u8 *buf) = 0;
 };
 

@@ -43,7 +43,7 @@ public:
     //
     
     static string cartridgeTypeName(CartridgeType type);
-    static bool isCompatible(const string &name);
+    static bool isCompatible(const fs::path &path);
     static bool isCompatible(std::istream &stream);
 
     
@@ -51,7 +51,7 @@ public:
     // Initializing
     //
     
-    CRTFile(const string &path) throws { init(path); }
+    CRTFile(const fs::path &path) throws { init(path); }
     CRTFile(const u8 *buf, isize len) throws { init(buf, len); }
     
     
@@ -66,7 +66,7 @@ public:
     // Methods from AnyFile
     //
     
-    bool isCompatiblePath(const string &path) override { return isCompatible(path); }
+    bool isCompatiblePath(const fs::path &path) override { return isCompatible(path); }
     bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return FILETYPE_CRT; }
     PETName<16> getName() const override;

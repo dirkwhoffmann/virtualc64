@@ -14,8 +14,11 @@
 
 #include "Types.h"
 #include "Checksum.h"
+#include <filesystem>
 
 namespace vc64::util {
+
+namespace fs = ::std::filesystem;
 
 template <class T> struct Allocator {
     
@@ -39,9 +42,9 @@ template <class T> struct Allocator {
     void init(isize elements, T value = 0);
     void init(const T *buf, isize elements);
     void init(const Allocator<T> &other);
-    void init(const string &path);
-    void init(const string &path, const string &name);
-    
+    void init(const fs::path &path);
+    void init(const fs::path &path, const string &name);
+
     // Resizes an existing buffer
     void resize(isize elements);
     void resize(isize elements, T pad);
@@ -77,9 +80,9 @@ template <class T> struct Buffer : public Allocator <T> {
     : Allocator<T>(ptr) { this->init(bytes, value); }
     Buffer(const T *buf, isize len)
     : Allocator<T>(ptr) { this->init(buf, len); }
-    Buffer(const string &path)
+    Buffer(const fs::path &path)
     : Allocator<T>(ptr) { this->init(path); }
-    Buffer(const string &path, const string &name)
+    Buffer(const fs::path &path, const string &name)
     : Allocator<T>(ptr) { this->init(path, name); }
     
     T operator [] (isize i) const { return ptr[i]; }

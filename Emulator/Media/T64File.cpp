@@ -19,7 +19,7 @@
 namespace vc64 {
 
 bool
-T64File::isCompatible(const string &path)
+T64File::isCompatible(const fs::path &path)
 {
     auto s = util::extractSuffix(path);
     return s == "t64" || s == "T64";

@@ -24,7 +24,7 @@ public:
     // Class methods
     //
     
-    static bool isCompatible(const string &name);
+    static bool isCompatible(const fs::path &path);
     static bool isCompatible(std::istream &stream);
     
     
@@ -34,7 +34,7 @@ public:
     
     PRGFile() : AnyCollection() { }
     PRGFile(isize capacity) : AnyCollection(capacity) { }
-    PRGFile(const string &path) throws { init(path); }
+    PRGFile(const fs::path &path) throws { init(path); }
     PRGFile(const u8 *buf, isize len) throws { init(buf, len); }
     PRGFile(class FileSystem &fs) throws { init(fs); }
     
@@ -55,7 +55,7 @@ private:
     // Methods from AnyFile
     //
 
-    bool isCompatiblePath(const string &path) override { return isCompatible(path); }
+    bool isCompatiblePath(const fs::path &path) override { return isCompatible(path); }
     bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return FILETYPE_PRG; }
     

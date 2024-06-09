@@ -166,7 +166,7 @@ FileSystem::init(AnyCollection &collection)
 }
 
 void
-FileSystem::init(const string &path)
+FileSystem::init(const fs::path &path)
 {
     if (Folder::isCompatible(path)) {
 
@@ -835,7 +835,7 @@ FileSystem::importVolume(const u8 *src, isize size, ErrorCode *err)
 }
 
 void
-FileSystem::importDirectory(const string &path)
+FileSystem::importDirectory(const fs::path &path)
 {
     fs::directory_entry dir;
 
@@ -920,7 +920,7 @@ FileSystem::exportBlocks(isize first, isize last, u8 *dst, isize size, ErrorCode
 }
 
 void
-FileSystem::exportDirectory(const string &path, bool createDir)
+FileSystem::exportDirectory(const fs::path &path, bool createDir)
 {
     // Try to create the directory if it doesn't exist
     if (!util::isDirectory(path) && createDir && !util::createDirectory(path)) {
@@ -955,9 +955,9 @@ FileSystem::exportDirectory(const string &path, bool createDir)
 }
 
 void
-FileSystem::exportFile(FSDirEntry *entry, const string &path)
+FileSystem::exportFile(FSDirEntry *entry, const fs::path &path)
 {
-    string name = path + "/" + entry->getFileSystemRepresentation();
+    auto name = path / entry->getFileSystemRepresentation();
     debug(FS_DEBUG, "Exporting file to %s\n", name.c_str());
 
     std::ofstream stream(name);

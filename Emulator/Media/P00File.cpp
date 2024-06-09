@@ -18,7 +18,7 @@
 namespace vc64 {
 
 bool
-P00File::isCompatible(const string &path)
+P00File::isCompatible(const fs::path &path)
 {
     auto s = util::extractSuffix(path);
     return s == "p00" || s == "P00";

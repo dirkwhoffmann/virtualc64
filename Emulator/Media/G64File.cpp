@@ -18,7 +18,7 @@
 namespace vc64 {
 
 bool
-G64File::isCompatible(const string &path)
+G64File::isCompatible(const fs::path &path)
 {
     auto s = util::extractSuffix(path);
     return s == "g64" || s == "G64";

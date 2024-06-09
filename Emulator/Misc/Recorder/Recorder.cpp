@@ -327,7 +327,7 @@ Recorder::stopRecording()
 }
 
 bool
-Recorder::exportAs(const string &path)
+Recorder::exportAs(const fs::path &path)
 {
     if (isRecording()) return false;
 
@@ -346,7 +346,7 @@ Recorder::exportAs(const string &path)
     cmd += " -c:v copy -c:a copy";
 
     // Output file
-    cmd += " -y " + path;
+    cmd += " -y " + path.string();
 
     //
     // Launch FFmpeg

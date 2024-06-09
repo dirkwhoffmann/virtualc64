@@ -18,7 +18,7 @@
 namespace vc64 {
 
 bool
-PRGFile::isCompatible(const string &path)
+PRGFile::isCompatible(const fs::path &path)
 {
     auto s = util::extractSuffix(path);
     return s == "prg" || s == "PRG";

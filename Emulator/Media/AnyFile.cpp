@@ -46,7 +46,7 @@ AnyFile::init(isize capacity)
 }
 
 void
-AnyFile::init(const string &path)
+AnyFile::init(const fs::path &path)
 {
     std::ifstream stream(path);
     if (!stream.is_open()) throw Error(ERROR_FILE_NOT_FOUND, path);
@@ -54,7 +54,7 @@ AnyFile::init(const string &path)
 }
 
 void
-AnyFile::init(const string &path, std::istream &stream)
+AnyFile::init(const fs::path &path, std::istream &stream)
 {
     if (!isCompatiblePath(path)) throw Error(ERROR_FILE_TYPE_MISMATCH);
     init(stream);
@@ -95,61 +95,16 @@ AnyFile::name() const
 PETName<16>
 AnyFile::getName() const
 {
-    auto idx = path.rfind('/');
+    auto s = path.string();
+
+    auto idx = s.rfind('/');
     auto start = idx != string::npos ? idx + 1 : 0;
 
-    idx = path.rfind('.');
+    idx = s.rfind('.');
     auto len = idx != string::npos ? idx - start : string::npos;
 
-    return PETName<16>(path.substr(start, len));
+    return PETName<16>(s.substr(start, len));
 }
-
-/*
-FileType
-AnyFile::type(const string &path)
-{
-    std::ifstream stream(path);
-    if (!stream.is_open()) return FILETYPE_UNKNOWN;
-    
-    if (Snapshot::isCompatible(path) &&
-        Snapshot::isCompatible(stream))return FILETYPE_SNAPSHOT;
-
-    if (Script::isCompatible(path) &&
-        Script::isCompatible(stream))return FILETYPE_SCRIPT;
-
-    if (CRTFile::isCompatible(path) &&
-        CRTFile::isCompatible(stream))return FILETYPE_CRT;
-
-    if (T64File::isCompatible(path) &&
-        T64File::isCompatible(stream)) return FILETYPE_T64;
-
-    if (P00File::isCompatible(path) &&
-        P00File::isCompatible(stream)) return FILETYPE_P00;
-
-    if (PRGFile::isCompatible(path) &&
-        PRGFile::isCompatible(stream)) return FILETYPE_PRG;
-
-    if (D64File::isCompatible(path) &&
-        D64File::isCompatible(stream)) return FILETYPE_D64;
-
-    if (G64File::isCompatible(path) &&
-        G64File::isCompatible(stream)) return FILETYPE_G64;
-
-    if (TAPFile::isCompatible(path) &&
-        TAPFile::isCompatible(stream)) return FILETYPE_TAP;
-
-    if (RomFile::isCompatible(path)) {
-        if (RomFile::isRomStream(ROM_TYPE_BASIC, stream)) return FILETYPE_BASIC_ROM;
-        if (RomFile::isRomStream(ROM_TYPE_CHAR, stream)) return FILETYPE_CHAR_ROM;
-        if (RomFile::isRomStream(ROM_TYPE_KERNAL, stream)) return FILETYPE_KERNAL_ROM;
-        if (RomFile::isRomStream(ROM_TYPE_VC1541, stream)) return FILETYPE_VC1541_ROM;
-    }
-    
-    if (Folder::isCompatible(path)) return FILETYPE_FOLDER;
-
-    return FILETYPE_UNKNOWN;
-}
-*/
 
 u64
 AnyFile::fnv() const
@@ -199,7 +154,7 @@ AnyFile::readFromStream(std::istream &stream)
 }
 
 void
-AnyFile::readFromFile(const string  &path)
+AnyFile::readFromFile(const fs::path &path)
 {
     std::ifstream stream(path);
 
@@ -207,7 +162,7 @@ AnyFile::readFromFile(const string  &path)
         throw Error(ERROR_FILE_CANT_READ);
     }
     
-    this->path = string(path);
+    this->path = path;
 
     readFromStream(stream);
 }
@@ -234,7 +189,7 @@ AnyFile::writeToStream(std::ostream &stream)
 }
 
 void
-AnyFile::writeToFile(const string &path)
+AnyFile::writeToFile(const fs::path &path)
 {
     std::ofstream stream(path);
 

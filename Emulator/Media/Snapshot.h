@@ -60,7 +60,7 @@ public:
     // Class methods
     //
 
-    static bool isCompatible(const string &name);
+    static bool isCompatible(const fs::path &path);
     static bool isCompatible(std::istream &stream);
 
     
@@ -68,7 +68,7 @@ public:
     // Initializing
     //
 
-    Snapshot(const string &path) throws { init(path); }
+    Snapshot(const fs::path &path) throws { init(path); }
     Snapshot(const u8 *buf, isize len) throws { init(buf, len); }
     Snapshot(isize capacity);
     Snapshot(C64 &c64);
@@ -86,7 +86,7 @@ public:
     //
 
     FileType type() const override { return FILETYPE_SNAPSHOT; }
-    bool isCompatiblePath(const string &path) override { return isCompatible(path); }
+    bool isCompatiblePath(const fs::path &path) override { return isCompatible(path); }
     bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     void finalizeRead() throws override;
 
