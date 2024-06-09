@@ -40,7 +40,7 @@ class SnapshotViewer: DialogController {
         
         // Don't let the emulator take snapshots while the dialog is open
         takeSnapshots = emu?.get(.EMU_SNAPSHOTS) != 0
-        emu.set(.EMU_SNAPSHOTS, enable: false)
+        emu?.set(.EMU_SNAPSHOTS, enable: false)
 
         updateLabels()
         

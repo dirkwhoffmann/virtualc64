@@ -9,8 +9,8 @@
 
 class VirtualKeyboardController: DialogController {
 
-    var keyboard: KeyboardProxy { return emu.keyboard }
-    
+    var keyboard: KeyboardProxy? { return emu?.keyboard }
+
     @IBOutlet weak var caseSelector: NSSegmentedControl!
 
     // Array holding a reference to the view of each key
@@ -72,30 +72,33 @@ class VirtualKeyboardController: DialogController {
 
     func refresh() {
                 
-        // Only proceed if the keyboard is visible
-        if window == nil || !window!.isVisible { return }
-        
-        var newModifiers: Modifier = []
-        
-        if keyboard.isPressed(.shift) { newModifiers.insert(.shift) }
-        if keyboard.isPressed(.rightShift) { newModifiers.insert(.shift) }
-        if keyboard.isPressed(.shiftLock) { newModifiers.insert(.shift) }
-        if keyboard.isPressed(.control) { newModifiers.insert(.control) }
-        if keyboard.isPressed(.commodore) { newModifiers.insert(.commodore) }
-        if lowercase { newModifiers.insert(.lowercase) }
-                
-        // Update images if the modifier flags have changed
-        if modifiers != newModifiers {
-            modifiers = newModifiers
-            updateImageCache()
-        }
-        
-        for nr in 0 ... 65 {
-                        
-            if emu.keyboard.isPressed(nr) {
-                keyView[nr]!.image = pressedKeyImage[nr]
-            } else {
-                keyView[nr]!.image = keyImage[nr]
+        if let keyboard = keyboard {
+
+            // Only proceed if the keyboard is visible
+            if window == nil || !window!.isVisible { return }
+
+            var newModifiers: Modifier = []
+
+            if keyboard.isPressed(.shift) { newModifiers.insert(.shift) }
+            if keyboard.isPressed(.rightShift) { newModifiers.insert(.shift) }
+            if keyboard.isPressed(.shiftLock) { newModifiers.insert(.shift) }
+            if keyboard.isPressed(.control) { newModifiers.insert(.control) }
+            if keyboard.isPressed(.commodore) { newModifiers.insert(.commodore) }
+            if lowercase { newModifiers.insert(.lowercase) }
+
+            // Update images if the modifier flags have changed
+            if modifiers != newModifiers {
+                modifiers = newModifiers
+                updateImageCache()
+            }
+
+            for nr in 0 ... 65 {
+
+                if keyboard.isPressed(nr) {
+                    keyView[nr]!.image = pressedKeyImage[nr]
+                } else {
+                    keyView[nr]!.image = keyImage[nr]
+                }
             }
         }
     }
@@ -113,32 +116,38 @@ class VirtualKeyboardController: DialogController {
         
     func pressKey(nr: Int) {
 
-        if autoClose {
+        if let keyboard = keyboard {
 
-            if nr == 34 /* SHIFT LOCK */ {
-                emu.keyboard.toggleKey(nr)
+            if autoClose {
+
+                if nr == 34 /* SHIFT LOCK */ {
+                    keyboard.toggleKey(nr)
+                } else {
+                    keyboard.pressKey(nr)
+                    keyboard.releaseAll(withDelay: 0.25)
+                }
+                cancelAction(self)
+
             } else {
-                emu.keyboard.pressKey(nr)
-                emu.keyboard.releaseAll(withDelay: 0.25)
-            }
-            cancelAction(self)
 
-        } else {
-
-            if nr == 34 /* SHIFT LOCK */ {
-                emu.keyboard.toggleKey(nr)
-            } else {
-                emu.keyboard.pressKey(nr)
-                emu.keyboard.releaseKey(nr, delay: 0.25)
+                if nr == 34 /* SHIFT LOCK */ {
+                    keyboard.toggleKey(nr)
+                } else {
+                    keyboard.pressKey(nr)
+                    keyboard.releaseKey(nr, delay: 0.25)
+                }
+                refresh()
             }
-            refresh()
         }
     }
     
     func holdKey(nr: Int) {
         
-        emu.keyboard.toggleKey(nr)
-        refresh()
+        if let keyboard = keyboard {
+
+            keyboard.toggleKey(nr)
+            refresh()
+        }
     }
     
     override func mouseDown(with event: NSEvent) {

@@ -47,33 +47,36 @@ class DiskExporter: DialogController {
 
     func showSheet(diskDrive nr: Int) {
 
-        drive = emu.drive(nr)
+        if let emu = emu {
 
-        // Get the disk from the specified drive
-        disk = drive?.disk
+            drive = emu.drive(nr)
 
-        if disk != nil {
+            // Get the disk from the specified drive
+            disk = drive?.disk
 
-            // Try to extract the file system
-            vol = try? FileSystemProxy.make(with: drive)
+            if disk != nil {
 
-            if vol != nil {
+                // Try to extract the file system
+                vol = try? FileSystemProxy.make(with: drive)
 
-                // Try to run the D64 encoder
-                d64 = try? MediaFileProxy.make(with: vol!, type: .D64)
+                if vol != nil {
 
-                // Try to run the T64 encoder
-                t64 = try? MediaFileProxy.make(with: vol!, type: .T64)
+                    // Try to run the D64 encoder
+                    d64 = try? MediaFileProxy.make(with: vol!, type: .D64)
 
-                if vol!.numFiles > 0 {
+                    // Try to run the T64 encoder
+                    t64 = try? MediaFileProxy.make(with: vol!, type: .T64)
 
-                    // Try to run the PRG encoder
-                    prg = try? MediaFileProxy.make(with: vol!, type: .PRG)
+                    if vol!.numFiles > 0 {
+
+                        // Try to run the PRG encoder
+                        prg = try? MediaFileProxy.make(with: vol!, type: .PRG)
+                    }
                 }
             }
-        }
 
-        super.showSheet()
+            super.showSheet()
+        }
     }
 
     func updateFormatPopup() {
@@ -249,7 +252,7 @@ class DiskExporter: DialogController {
                 fatalError()
             }
 
-            emu.put(.DSK_UNMODIFIED, value: drive.info.id)
+            emu?.put(.DSK_UNMODIFIED, value: drive.info.id)
             if rememberUrl {
                 mm.noteNewRecentlyExportedDiskURL(url, drive: drive.info.id)
             }

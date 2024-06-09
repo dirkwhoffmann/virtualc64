@@ -14,10 +14,13 @@ extension Inspector {
     
     private func cacheCIA() {
 
-        let cia = cia1 ? emu.cia1! : emu.cia2!
+        if let emu = emu {
 
-        ciaInfo = emu.paused ? cia.info : cia.cachedInfo
-        ciaStats = cia.stats
+            let cia = cia1 ? emu.cia1! : emu.cia2!
+
+            ciaInfo = emu.paused ? cia.info : cia.cachedInfo
+            ciaStats = cia.stats
+        }
     }
 
     func refreshCIA(count: Int = 0, full: Bool = false) {

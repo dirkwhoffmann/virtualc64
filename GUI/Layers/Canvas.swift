@@ -187,7 +187,7 @@ class Canvas: Layer {
         updateTexture()
 
         // Let the emulator compute the next frame
-        emu.wakeUp()
+        emu?.wakeUp()
     }
     
     func updateTexture() {
@@ -196,18 +196,18 @@ class Canvas: Layer {
         precondition(emulatorTexture != nil)
         
         // Get a pointer to most recent texture
-        let buffer = emu.videoPort.texture
-        precondition(buffer != nil)
+        if let buffer = emu?.videoPort.texture {
 
-        // Only proceed if the emulator delivers a new texture
-        // TODO: THE FOLLOWING LINE DOES NO LONGER WORK WITH RUNAHEAD
-        // if prevBuffer == buffer { return }
-        prevBuffer = buffer
+            // Only proceed if the emulator delivers a new texture
+            // TODO: THE FOLLOWING LINE DOES NO LONGER WORK WITH RUNAHEAD
+            // if prevBuffer == buffer { return }
+            prevBuffer = buffer
 
-        // Update the GPU texture
-        let w = Constants.texWidth
-        let h = Constants.texHeight
-        emulatorTexture.replace(w: w, h: h, buffer: buffer)
+            // Update the GPU texture
+            let w = Constants.texWidth
+            let h = Constants.texHeight
+            emulatorTexture.replace(w: w, h: h, buffer: buffer)
+        }
     }
     
     //
@@ -279,7 +279,7 @@ class Canvas: Layer {
         }
         
         // Setup uniforms
-        fragmentUniforms.alpha = emu.paused ? 0.5 : alpha.current
+        fragmentUniforms.alpha = (emu?.paused ?? true) ? 0.5 : alpha.current
         fragmentUniforms.white = renderer.white.current
         fragmentUniforms.dotMaskHeight = Int32(ressourceManager.dotMask.height)
         fragmentUniforms.dotMaskWidth = Int32(ressourceManager.dotMask.width)

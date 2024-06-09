@@ -22,8 +22,8 @@ struct MemColors {
 
 extension Inspector {
     
-    var mem: MemoryProxy { return emu.mem }
-        
+    var mem: MemoryProxy? { return emu?.mem }
+
     private func updateBankMap() {
     
         switch memSource.selectedTag() {
@@ -91,9 +91,12 @@ extension Inspector {
     
     private func cacheMemory() {
         
-        let oldBankMap = memInfo?.bankMap
-        memInfo = emu.paused ? emu.mem.info : emu.mem.cachedInfo
-        if oldBankMap != memInfo.bankMap { layoutIsDirty = true }
+        if let emu = emu {
+            
+            let oldBankMap = memInfo?.bankMap
+            memInfo = emu.paused ? emu.mem.info : emu.mem.cachedInfo
+            if oldBankMap != memInfo.bankMap { layoutIsDirty = true }
+        }
     }
     
     func refreshMemory(count: Int = 0, full: Bool = false) {

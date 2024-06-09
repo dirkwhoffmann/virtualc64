@@ -240,8 +240,8 @@ class ConfigurationController: DialogController {
     
     var bootable: Bool {
         
-        do { try emu.isReady() } catch { return false }
-        return emu.poweredOff
+        do { try emu?.isReady() } catch { return false }
+        return emu?.poweredOff ?? false
     }
 
     // The tab to open first
@@ -285,7 +285,7 @@ class ConfigurationController: DialogController {
     
     @IBAction func unlockAction(_ sender: Any!) {
                 
-        emu.powerOff()
+        emu?.powerOff()
         refresh()
     }
     
@@ -297,7 +297,7 @@ class ConfigurationController: DialogController {
     @IBAction func powerAction(_ sender: Any!) {
         
         hideSheet()
-        try? emu.run()
+        try? emu?.run()
     }
 }
 

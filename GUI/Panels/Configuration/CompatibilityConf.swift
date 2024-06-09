@@ -108,40 +108,43 @@ extension ConfigurationController {
 
     @IBAction func comPresetAction(_ sender: NSPopUpButton!) {
         
-        emu.suspend()
+        if let emu = emu {
+            
+            emu.suspend()
 
-        // Revert to standard settings
-        EmulatorProxy.defaults.removePerformanceUserDefaults()
+            // Revert to standard settings
+            EmulatorProxy.defaults.removePerformanceUserDefaults()
 
-        // Update the configuration
-        config.applyPerformanceUserDefaults()
+            // Update the configuration
+            config.applyPerformanceUserDefaults()
 
-        // Override some options
-        switch sender.selectedTag() {
+            // Override some options
+            switch sender.selectedTag() {
 
-        case 1: // Accurate
+            case 1: // Accurate
 
-            config.drive8PowerSave = false
-            config.drive9PowerSave = false
-            config.viciiPowerSave = false
-            config.sidPowerSave = false
-            config.ssCollisions = true
-            config.sbCollisions = true
+                config.drive8PowerSave = false
+                config.drive9PowerSave = false
+                config.viciiPowerSave = false
+                config.sidPowerSave = false
+                config.ssCollisions = true
+                config.sbCollisions = true
 
-        case 2: // Accelerated
+            case 2: // Accelerated
 
-            config.drive8PowerSave = true
-            config.drive9PowerSave = true
-            config.viciiPowerSave = true
-            config.sidPowerSave = true
-            config.ssCollisions = false
-            config.sbCollisions = false
+                config.drive8PowerSave = true
+                config.drive9PowerSave = true
+                config.viciiPowerSave = true
+                config.sidPowerSave = true
+                config.ssCollisions = false
+                config.sbCollisions = false
 
-        default:
-            break
+            default:
+                break
+            }
+
+            emu.resume()
         }
-
-        emu.resume()
     }
     
     @IBAction func comDefaultsAction(_ sender: NSButton!) {

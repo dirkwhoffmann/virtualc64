@@ -141,76 +141,79 @@ extension ConfigurationController {
 
     @IBAction func hwPresetAction(_ sender: NSPopUpButton!) {
 
-        emu.suspend()
+        if let emu = emu {
 
-        // Revert to standard settings
-        EmulatorProxy.defaults.removePeripheralsUserDefaults()
+            emu.suspend()
 
-        // Update the configuration
-        config.applyPeripheralsUserDefaults()
+            // Revert to standard settings
+            EmulatorProxy.defaults.removePeripheralsUserDefaults()
 
-        // Override some options
-        switch sender.selectedTag() {
+            // Update the configuration
+            config.applyPeripheralsUserDefaults()
 
-        case 0: // C64_PAL
-            config.vicRevision = vc64.VICIIRevision.PAL_6569_R3.rawValue
-            config.vicGrayDotBug = false
-            config.ciaRevision = vc64.CIARevision.MOS_6526.rawValue
-            config.ciaTimerBBug = true
-            config.sidRevision = vc64.SIDRevision.MOS_6581.rawValue
-            config.glueLogic = vc64.GlueLogic.DISCRETE.rawValue
-            config.powerGrid = vc64.PowerGrid.STABLE_50HZ.rawValue
+            // Override some options
+            switch sender.selectedTag() {
 
-        case 1: // C64_II_PAL
-            config.vicRevision = vc64.VICIIRevision.PAL_8565.rawValue
-            config.vicGrayDotBug = true
-            config.ciaRevision = vc64.CIARevision.MOS_8521.rawValue
-            config.ciaTimerBBug = false
-            config.sidRevision = vc64.SIDRevision.MOS_8580.rawValue
-            config.glueLogic = vc64.GlueLogic.IC.rawValue
-            config.powerGrid = vc64.PowerGrid.STABLE_50HZ.rawValue
+            case 0: // C64_PAL
+                config.vicRevision = vc64.VICIIRevision.PAL_6569_R3.rawValue
+                config.vicGrayDotBug = false
+                config.ciaRevision = vc64.CIARevision.MOS_6526.rawValue
+                config.ciaTimerBBug = true
+                config.sidRevision = vc64.SIDRevision.MOS_6581.rawValue
+                config.glueLogic = vc64.GlueLogic.DISCRETE.rawValue
+                config.powerGrid = vc64.PowerGrid.STABLE_50HZ.rawValue
 
-        case 2: // C64_OLD_PAL
-            config.vicRevision = vc64.VICIIRevision.PAL_6569_R1.rawValue
-            config.vicGrayDotBug = false
-            config.ciaRevision = vc64.CIARevision.MOS_6526.rawValue
-            config.ciaTimerBBug = true
-            config.sidRevision = vc64.SIDRevision.MOS_6581.rawValue
-            config.glueLogic = vc64.GlueLogic.DISCRETE.rawValue
-            config.powerGrid = vc64.PowerGrid.STABLE_50HZ.rawValue
+            case 1: // C64_II_PAL
+                config.vicRevision = vc64.VICIIRevision.PAL_8565.rawValue
+                config.vicGrayDotBug = true
+                config.ciaRevision = vc64.CIARevision.MOS_8521.rawValue
+                config.ciaTimerBBug = false
+                config.sidRevision = vc64.SIDRevision.MOS_8580.rawValue
+                config.glueLogic = vc64.GlueLogic.IC.rawValue
+                config.powerGrid = vc64.PowerGrid.STABLE_50HZ.rawValue
 
-        case 3: // C64_NTSC
-            config.vicRevision = vc64.VICIIRevision.NTSC_6567.rawValue
-            config.vicGrayDotBug = false
-            config.ciaRevision = vc64.CIARevision.MOS_6526.rawValue
-            config.ciaTimerBBug = false
-            config.sidRevision = vc64.SIDRevision.MOS_6581.rawValue
-            config.glueLogic = vc64.GlueLogic.DISCRETE.rawValue
-            config.powerGrid = vc64.PowerGrid.STABLE_60HZ.rawValue
+            case 2: // C64_OLD_PAL
+                config.vicRevision = vc64.VICIIRevision.PAL_6569_R1.rawValue
+                config.vicGrayDotBug = false
+                config.ciaRevision = vc64.CIARevision.MOS_6526.rawValue
+                config.ciaTimerBBug = true
+                config.sidRevision = vc64.SIDRevision.MOS_6581.rawValue
+                config.glueLogic = vc64.GlueLogic.DISCRETE.rawValue
+                config.powerGrid = vc64.PowerGrid.STABLE_50HZ.rawValue
 
-        case 4: // C64_II_NTSC
-            config.vicRevision = vc64.VICIIRevision.NTSC_8562.rawValue
-            config.vicGrayDotBug = true
-            config.ciaRevision = vc64.CIARevision.MOS_8521.rawValue
-            config.ciaTimerBBug = true
-            config.sidRevision = vc64.SIDRevision.MOS_8580.rawValue
-            config.glueLogic = vc64.GlueLogic.IC.rawValue
-            config.powerGrid = vc64.PowerGrid.STABLE_60HZ.rawValue
+            case 3: // C64_NTSC
+                config.vicRevision = vc64.VICIIRevision.NTSC_6567.rawValue
+                config.vicGrayDotBug = false
+                config.ciaRevision = vc64.CIARevision.MOS_6526.rawValue
+                config.ciaTimerBBug = false
+                config.sidRevision = vc64.SIDRevision.MOS_6581.rawValue
+                config.glueLogic = vc64.GlueLogic.DISCRETE.rawValue
+                config.powerGrid = vc64.PowerGrid.STABLE_60HZ.rawValue
 
-        case 5: // C64_OLD_NTSC
-            config.vicRevision = vc64.VICIIRevision.NTSC_6567_R56A.rawValue
-            config.vicGrayDotBug = false
-            config.ciaRevision = vc64.CIARevision.MOS_6526.rawValue
-            config.ciaTimerBBug = false
-            config.sidRevision = vc64.SIDRevision.MOS_6581.rawValue
-            config.glueLogic = vc64.GlueLogic.DISCRETE.rawValue
-            config.powerGrid = vc64.PowerGrid.STABLE_60HZ.rawValue
+            case 4: // C64_II_NTSC
+                config.vicRevision = vc64.VICIIRevision.NTSC_8562.rawValue
+                config.vicGrayDotBug = true
+                config.ciaRevision = vc64.CIARevision.MOS_8521.rawValue
+                config.ciaTimerBBug = true
+                config.sidRevision = vc64.SIDRevision.MOS_8580.rawValue
+                config.glueLogic = vc64.GlueLogic.IC.rawValue
+                config.powerGrid = vc64.PowerGrid.STABLE_60HZ.rawValue
 
-        default:
-            fatalError()
+            case 5: // C64_OLD_NTSC
+                config.vicRevision = vc64.VICIIRevision.NTSC_6567_R56A.rawValue
+                config.vicGrayDotBug = false
+                config.ciaRevision = vc64.CIARevision.MOS_6526.rawValue
+                config.ciaTimerBBug = false
+                config.sidRevision = vc64.SIDRevision.MOS_6581.rawValue
+                config.glueLogic = vc64.GlueLogic.DISCRETE.rawValue
+                config.powerGrid = vc64.PowerGrid.STABLE_60HZ.rawValue
+
+            default:
+                fatalError()
+            }
+
+            emu.resume()
         }
-
-        emu.resume()
     }
 
     @IBAction func hwDefaultsAction(_ sender: NSButton!) {

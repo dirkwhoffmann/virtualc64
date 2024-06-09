@@ -133,39 +133,42 @@ extension ConfigurationController {
     }
     
     @IBAction func audPresetAction(_ sender: NSPopUpButton!) {
-                
-        emu.suspend()
+              
+        if let emu = emu {
+            
+            emu.suspend()
 
-        // Revert to standard settings
-        EmulatorProxy.defaults.removeAudioUserDefaults()
+            // Revert to standard settings
+            EmulatorProxy.defaults.removeAudioUserDefaults()
 
-        // Update the configuration
-        config.applyAudioUserDefaults()
+            // Update the configuration
+            config.applyAudioUserDefaults()
 
-        // Override some options
-        switch sender.selectedTag() {
+            // Override some options
+            switch sender.selectedTag() {
 
-        case 0: // Mono
-            config.pan0 = 0
-            config.pan1 = 0
-            config.pan2 = 0
-            config.pan3 = 0
-            config.drive8Pan = 0
-            config.drive9Pan = 0
+            case 0: // Mono
+                config.pan0 = 0
+                config.pan1 = 0
+                config.pan2 = 0
+                config.pan3 = 0
+                config.drive8Pan = 0
+                config.drive9Pan = 0
 
-        case 1: // Stereo
-            config.pan0 = 100
-            config.pan1 = 300
-            config.pan2 = 300
-            config.pan3 = 100
-            config.drive8Pan = 100
-            config.drive9Pan = 300
+            case 1: // Stereo
+                config.pan0 = 100
+                config.pan1 = 300
+                config.pan2 = 300
+                config.pan3 = 100
+                config.drive8Pan = 100
+                config.drive9Pan = 300
 
-        default:
-            fatalError()
+            default:
+                fatalError()
+            }
+
+            emu.resume()
         }
-
-        emu.resume()
     }
     
     @IBAction func audDefaultsAction(_ sender: NSButton!) {

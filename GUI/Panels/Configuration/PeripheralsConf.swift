@@ -179,15 +179,18 @@ extension ConfigurationController {
 
     @IBAction func perPresetAction(_ sender: NSPopUpButton!) {
 
-        emu.suspend()
+        if let emu = emu {
+            
+            emu.suspend()
 
-        // Revert to standard settings
-        EmulatorProxy.defaults.removePeripheralsUserDefaults()
+            // Revert to standard settings
+            EmulatorProxy.defaults.removePeripheralsUserDefaults()
 
-        // Update the configuration
-        config.applyPeripheralsUserDefaults()
+            // Update the configuration
+            config.applyPeripheralsUserDefaults()
 
-        emu.resume()
+            emu.resume()
+        }
     }
 
     @IBAction func perDefaultsAction(_ sender: NSButton!) {

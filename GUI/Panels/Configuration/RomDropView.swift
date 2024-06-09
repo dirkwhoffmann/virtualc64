@@ -22,8 +22,8 @@ extension NSDraggingInfo {
 class DropView: NSImageView {
 
     @IBOutlet var parent: ConfigurationController!
-    var emu: EmulatorProxy { return parent.emu }
-        
+    var emu: EmulatorProxy? { return parent.emu }
+
     override func awakeFromNib() {
 
         registerForDraggedTypes([NSPasteboard.PasteboardType.fileURL])
@@ -72,7 +72,7 @@ class RomDropView: DropView {
         do {
 
             let rom = try MediaFileProxy.make(with: url)
-            emu.loadRom(rom)
+            emu?.loadRom(rom)
 
             return true
 
@@ -90,7 +90,7 @@ class RomDropView: DropView {
 class BasicRomDropView: RomDropView {
 
     override func acceptDragSource(url: URL) -> Bool {
-        return emu.poweredOff && emu.isRom(.BASIC, url: url)
+        return emu != nil && emu!.poweredOff && emu!.isRom(.BASIC, url: url)
     }
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
@@ -100,7 +100,7 @@ class BasicRomDropView: RomDropView {
 
 class CharRomDropView: RomDropView {
     override func acceptDragSource(url: URL) -> Bool {
-        return emu.poweredOff && emu.isRom(.CHAR, url: url)
+        return emu != nil && emu!.poweredOff && emu!.isRom(.CHAR, url: url)
     }
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         return performDrag(type: .CHAR, url: sender.url)
@@ -110,7 +110,7 @@ class CharRomDropView: RomDropView {
 class KernalRomDropView: RomDropView {
 
     override func acceptDragSource(url: URL) -> Bool {
-        return emu.poweredOff && emu.isRom(.KERNAL, url: url)
+        return emu != nil && emu!.poweredOff && emu!.isRom(.KERNAL, url: url)
     }
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         return performDrag(type: .KERNAL, url: sender.url)
@@ -120,7 +120,7 @@ class KernalRomDropView: RomDropView {
 class Vc1541RomDropView: RomDropView {
     
     override func acceptDragSource(url: URL) -> Bool {
-        return emu.poweredOff && emu.isRom(.VC1541, url: url)
+        return emu != nil && emu!.poweredOff && emu!.isRom(.VC1541, url: url)
     }
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         return performDrag(type: .VC1541, url: sender.url)

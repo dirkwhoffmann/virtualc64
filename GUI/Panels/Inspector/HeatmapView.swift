@@ -13,7 +13,7 @@ class HeatmapView: NSImageView {
 
     @IBOutlet weak var inspector: Inspector!
 
-    var mem: MemoryProxy { return inspector.emu.mem }
+    var mem: MemoryProxy? { return inspector.emu?.mem }
 
     // View size
     var size: NSSize!
@@ -47,7 +47,7 @@ class HeatmapView: NSImageView {
 
     override func draw(_ dirtyRect: NSRect) {
 
-        mem.drawHeatmap(buffer, w: Int(size.width), h: Int(size.height))
+        mem?.drawHeatmap(buffer, w: Int(size.width), h: Int(size.height))
         image = NSImage.make(data: buffer, rect: CGSize(width: size.width, height: size.height))
         super.draw(dirtyRect)
     }

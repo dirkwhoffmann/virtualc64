@@ -312,8 +312,8 @@ class Inspector: DialogController {
         super.showWindow(self)
 
         // Enter debug mode
-        emu.trackOn()
-        emu.set(.MEM_HEATMAP, enable: true)
+        emu?.trackOn()
+        emu?.set(.MEM_HEATMAP, enable: true)
         updateInspectionTarget()
     }
         
@@ -325,7 +325,7 @@ class Inspector: DialogController {
     func continuousRefresh() {
         
         if isRunning { refresh(count: refreshCnt) }
-        isRunning = emu.running
+        isRunning = emu?.running ?? false
         refreshCnt += 1
     }
     
@@ -334,9 +334,9 @@ class Inspector: DialogController {
         if window?.isVisible == false { return }
         
         if full {
-            
-            if emu.running {
-                
+
+            if emu?.running ?? false {
+
                 stopAndGoButton.image = NSImage(named: "pauseTemplate")
                 stopAndGoButton.toolTip = "Pause"
                 stepIntoButton.isEnabled = false
@@ -450,17 +450,23 @@ class Inspector: DialogController {
 
     @IBAction func stopAndGoAction(_ sender: NSButton!) {
 
-        if emu.running { emu.pause() } else { try? emu.run() }
+        if let emu = emu {
+            if emu.running { emu.pause() } else { try? emu.run() }
+        }
     }
     
     @IBAction func stepIntoAction(_ sender: NSButton!) {
 
-        emu.stepInto()
+        if let emu = emu {
+            emu.stepInto()
+        }
     }
     
     @IBAction func stepOverAction(_ sender: NSButton!) {
 
-        emu.stepOver()
+        if let emu = emu {
+            emu.stepOver()
+        }
     }
     
     @IBAction func hexAction(_ sender: NSButtonCell!) {
@@ -481,11 +487,14 @@ extension Inspector {
     override func windowWillClose(_ notification: Notification) {
                 
         super.windowWillClose(notification)
-        
-        // Leave debug mode
-        emu.trackOff()
-        emu.set(.MEM_HEATMAP, enable: false)
-        emu.c64.inspectionTarget = .NONE
+
+        if let emu = emu {
+
+            // Leave debug mode
+            emu.trackOff()
+            emu.set(.MEM_HEATMAP, enable: false)
+            emu.c64.inspectionTarget = .NONE
+        }
     }
 }
 
@@ -497,12 +506,12 @@ extension Inspector: NSTabViewDelegate {
                     
             switch id {
                 
-            case "CPU":     emu.c64.inspectionTarget = .CPU
-            case "Memory":  emu.c64.inspectionTarget = .MEM
-            case "CIA":     emu.c64.inspectionTarget = .CIA
-            case "VICII":   emu.c64.inspectionTarget = .VICII
-            case "SID":     emu.c64.inspectionTarget = .SID
-            case "Events":  emu.c64.inspectionTarget = .C64
+            case "CPU":     emu?.c64.inspectionTarget = .CPU
+            case "Memory":  emu?.c64.inspectionTarget = .MEM
+            case "CIA":     emu?.c64.inspectionTarget = .CIA
+            case "VICII":   emu?.c64.inspectionTarget = .VICII
+            case "SID":     emu?.c64.inspectionTarget = .SID
+            case "Events":  emu?.c64.inspectionTarget = .C64
 
             default:
                 break

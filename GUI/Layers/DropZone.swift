@@ -60,43 +60,46 @@ class DropZone: Layer {
     
     private func setType(_ type: vc64.FileType) {
     
-        let info8 = emu.drive8.info
-        let config8 = emu.drive8.config
+        if let emu = emu {
 
-        let info9 = emu.drive9.info
-        let config9 = emu.drive9.config
+            let info8 = emu.drive8.info
+            let config8 = emu.drive8.config
 
-        inUse[0] = info8.hasDisk
-        inUse[1] = info9.hasDisk
-        inUse[2] = false
-        inUse[3] = emu.expansionport.cartridgeAttached()
-        inUse[4] = emu.datasette.info.hasTape
+            let info9 = emu.drive9.info
+            let config9 = emu.drive9.config
 
-        switch type {
+            inUse[0] = info8.hasDisk
+            inUse[1] = info9.hasDisk
+            inUse[2] = false
+            inUse[3] = emu.expansionport.cartridgeAttached()
+            inUse[4] = emu.datasette.info.hasTape
 
-        case .T64, .P00, .PRG:
-            enabled = [config8.connected, config9.connected, true, false, false]
+            switch type {
 
-        case .FOLDER, .D64, .G64:
-            enabled = [config8.connected, config9.connected, false, false, false]
+            case .T64, .P00, .PRG:
+                enabled = [config8.connected, config9.connected, true, false, false]
 
-        case .CRT:
-            enabled = [false, false, false, true, false]
-            
-        case .TAP:
-            enabled = [false, false, false, false, true]
-            
-        default:
-            enabled = [false, false, false, false, false]
+            case .FOLDER, .D64, .G64:
+                enabled = [config8.connected, config9.connected, false, false, false]
+
+            case .CRT:
+                enabled = [false, false, false, true, false]
+
+            case .TAP:
+                enabled = [false, false, false, false, true]
+
+            default:
+                enabled = [false, false, false, false, false]
+            }
+
+            for i in 0...4 {
+
+                zones[i].image = image(zone: i)
+            }
+
+            // Hide all drop zones if none is enabled
+            hideAll = !enabled[0] && !enabled[1] && !enabled[2] && !enabled[3] && !enabled[4]
         }
-        
-        for i in 0...4 {
-            
-            zones[i].image = image(zone: i)
-        }
-        
-        // Hide all drop zones if none is enabled
-        hideAll = !enabled[0] && !enabled[1] && !enabled[2] && !enabled[3] && !enabled[4]
     }
 
     func open(type: vc64.FileType, delay: Double) {

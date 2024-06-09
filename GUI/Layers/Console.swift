@@ -46,14 +46,14 @@ class Console: Layer {
 		
 		super.update(frames: frames)
 
-		if isDirty {
-			
-			if let text = emu.retroShell.getText() {
-				
+		if isDirty && emu != nil {
+
+			if let text = emu!.retroShell.getText() {
+
 				let cursorColor = NSColor(r: 255, g: 255, b: 255, a: 128)
 				let monoFont = NSFont.monospaced(ofSize: 14, weight: .medium)
-				let cpos = emu.retroShell.cursorRel - 1
-				
+				let cpos = emu!.retroShell.cursorRel - 1
+
 				let attr = [
 					NSAttributedString.Key.foregroundColor: NSColor.white,
 					NSAttributedString.Key.font: monoFont
@@ -107,35 +107,38 @@ class Console: Layer {
     
     func keyDown(with event: NSEvent) {
         
-        let macKey = MacKey(event: event)
-        let shift  = macKey.modifierFlags.contains(.shift)
-        let ctrl   = macKey.modifierFlags.contains(.control)
+        if let emu = emu {
 
-        switch macKey.keyCode {
+            let macKey = MacKey(event: event)
+            let shift  = macKey.modifierFlags.contains(.shift)
+            let ctrl   = macKey.modifierFlags.contains(.control)
 
-        case kVK_ANSI_A where ctrl: emu.retroShell.pressSpecialKey(.HOME)
-        case kVK_ANSI_E where ctrl: emu.retroShell.pressSpecialKey(.END)
-        case kVK_ANSI_K where ctrl: emu.retroShell.pressSpecialKey(.CUT)
-        case kVK_UpArrow: emu.retroShell.pressSpecialKey(.UP)
-        case kVK_DownArrow: emu.retroShell.pressSpecialKey(.DOWN)
-        case kVK_LeftArrow: emu.retroShell.pressSpecialKey(.LEFT)
-        case kVK_RightArrow: emu.retroShell.pressSpecialKey(.RIGHT)
-        case kVK_Home: emu.retroShell.pressSpecialKey(.HOME)
-        case kVK_End: emu.retroShell.pressSpecialKey(.END)
-        case kVK_Delete: emu.retroShell.pressSpecialKey(.BACKSPACE)
-        case kVK_ForwardDelete: emu.retroShell.pressSpecialKey(.DEL)
-        case kVK_Return: emu.retroShell.pressSpecialKey(shift ? .SHIFT_RETURN : .RETURN)
-        case kVK_Tab: emu.retroShell.pressSpecialKey(.TAB)
-        case kVK_Escape: close()
+            switch macKey.keyCode {
 
-        default:
+            case kVK_ANSI_A where ctrl: emu.retroShell.pressSpecialKey(.HOME)
+            case kVK_ANSI_E where ctrl: emu.retroShell.pressSpecialKey(.END)
+            case kVK_ANSI_K where ctrl: emu.retroShell.pressSpecialKey(.CUT)
+            case kVK_UpArrow: emu.retroShell.pressSpecialKey(.UP)
+            case kVK_DownArrow: emu.retroShell.pressSpecialKey(.DOWN)
+            case kVK_LeftArrow: emu.retroShell.pressSpecialKey(.LEFT)
+            case kVK_RightArrow: emu.retroShell.pressSpecialKey(.RIGHT)
+            case kVK_Home: emu.retroShell.pressSpecialKey(.HOME)
+            case kVK_End: emu.retroShell.pressSpecialKey(.END)
+            case kVK_Delete: emu.retroShell.pressSpecialKey(.BACKSPACE)
+            case kVK_ForwardDelete: emu.retroShell.pressSpecialKey(.DEL)
+            case kVK_Return: emu.retroShell.pressSpecialKey(shift ? .SHIFT_RETURN : .RETURN)
+            case kVK_Tab: emu.retroShell.pressSpecialKey(.TAB)
+            case kVK_Escape: close()
 
-            if let c = event.characters?.utf8CString.first {
-                emu.retroShell.pressKey(c)
+            default:
+
+                if let c = event.characters?.utf8CString.first {
+                    emu.retroShell.pressKey(c)
+                }
             }
-        }
 
-        isDirty = true
+            isDirty = true
+        }
     }
     
     func keyUp(with event: NSEvent) {
@@ -144,7 +147,7 @@ class Console: Layer {
 
     func runScript(script: MediaFileProxy) {
 
-        emu.retroShell.executeScript(script)
+        emu?.retroShell.executeScript(script)
         isDirty = true
     }
 }

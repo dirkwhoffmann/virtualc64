@@ -149,16 +149,20 @@ extension PreferencesController {
 
     @IBAction func kbPresetAction(_ sender: NSPopUpButton!) {
         
-        emu.suspend()
+        if let emu = emu {
 
-        // Revert to standard settings
-        EmulatorProxy.defaults.removeKeyboardUserDefaults()
+            emu.suspend()
 
-        // Update the configuration
-        pref.applyKeyboardUserDefaults()
+            // Revert to standard settings
+            EmulatorProxy.defaults.removeKeyboardUserDefaults()
 
-        emu.resume()
-        refresh()
+            // Update the configuration
+            pref.applyKeyboardUserDefaults()
+
+            emu.resume()
+
+            refresh()
+        }
     }
 }
 

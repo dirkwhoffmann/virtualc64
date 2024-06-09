@@ -11,50 +11,53 @@ extension PreferencesController {
     
     func refreshGeneralTab() {
 
-        // Initialize combo boxes
-        if genFFmpegPath.tag == 0 {
+        if let emu = emu {
+            
+            // Initialize combo boxes
+            if genFFmpegPath.tag == 0 {
 
-            genFFmpegPath.tag = 1
+                genFFmpegPath.tag = 1
 
-            for i in 0...5 {
-                if let path = emu.recorder.findFFmpeg(i) {
-                    genFFmpegPath.addItem(withObjectValue: path)
-                } else {
-                    break
+                for i in 0...5 {
+                    if let path = emu.recorder.findFFmpeg(i) {
+                        genFFmpegPath.addItem(withObjectValue: path)
+                    } else {
+                        break
+                    }
                 }
             }
+
+            // Snapshots
+            genAutoSnapshots.state = pref.autoSnapshots ? .on : .off
+            genSnapshotInterval.integerValue = pref.snapshotInterval
+            genSnapshotInterval.isEnabled = pref.autoSnapshots
+
+            // Screenshots
+            genScreenshotSourcePopup.selectItem(withTag: pref.screenshotSource)
+            genScreenshotTargetPopup.selectItem(withTag: pref.screenshotTargetIntValue)
+
+            // Screen captures
+            let hasFFmpeg = emu.recorder.hasFFmpeg
+            genFFmpegPath.stringValue = emu.recorder.path
+            genFFmpegPath.textColor = hasFFmpeg ? .textColor : .warningColor
+            genSource.selectItem(withTag: pref.captureSource)
+            genBitRate.stringValue = "\(pref.bitRate)"
+            genAspectX.integerValue = pref.aspectX
+            genAspectY.integerValue = pref.aspectY
+            genSource.isEnabled = hasFFmpeg
+            genBitRate.isEnabled = hasFFmpeg
+            genAspectX.isEnabled = hasFFmpeg
+            genAspectY.isEnabled = hasFFmpeg
+
+            // Fullscreen
+            genAspectRatioButton.state = pref.keepAspectRatio ? .on : .off
+            genExitOnEscButton.state = pref.exitOnEsc ? .on : .off
+
+            // Miscellaneous
+            genEjectUnasked.state = pref.ejectWithoutAsking ? .on : .off
+            genCloseWithoutAskingButton.state = pref.closeWithoutAsking ? .on : .off
+            genPauseInBackground.state = pref.pauseInBackground ? .on : .off
         }
-
-        // Snapshots
-        genAutoSnapshots.state = pref.autoSnapshots ? .on : .off
-        genSnapshotInterval.integerValue = pref.snapshotInterval
-        genSnapshotInterval.isEnabled = pref.autoSnapshots
-
-        // Screenshots
-        genScreenshotSourcePopup.selectItem(withTag: pref.screenshotSource)
-        genScreenshotTargetPopup.selectItem(withTag: pref.screenshotTargetIntValue)
-        
-        // Screen captures
-        let hasFFmpeg = emu.recorder.hasFFmpeg
-        genFFmpegPath.stringValue = emu.recorder.path
-        genFFmpegPath.textColor = hasFFmpeg ? .textColor : .warningColor
-        genSource.selectItem(withTag: pref.captureSource)
-        genBitRate.stringValue = "\(pref.bitRate)"
-        genAspectX.integerValue = pref.aspectX
-        genAspectY.integerValue = pref.aspectY
-        genSource.isEnabled = hasFFmpeg
-        genBitRate.isEnabled = hasFFmpeg
-        genAspectX.isEnabled = hasFFmpeg
-        genAspectY.isEnabled = hasFFmpeg
-
-        // Fullscreen
-        genAspectRatioButton.state = pref.keepAspectRatio ? .on : .off
-        genExitOnEscButton.state = pref.exitOnEsc ? .on : .off
-
-        // Miscellaneous
-        genEjectUnasked.state = pref.ejectWithoutAsking ? .on : .off
-        genCloseWithoutAskingButton.state = pref.closeWithoutAsking ? .on : .off
-        genPauseInBackground.state = pref.pauseInBackground ? .on : .off
     }
     
     func selectGeneralTab() {

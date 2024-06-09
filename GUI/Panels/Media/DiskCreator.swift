@@ -22,7 +22,7 @@ class DiskCreator: DialogController {
 
     var nr = DRIVE8
     var diskType: String!
-    var drive: DriveProxy? { emu.drive(nr) }
+    var drive: DriveProxy? { emu?.drive(nr) }
 
     //
     // Starting up
@@ -38,18 +38,21 @@ class DiskCreator: DialogController {
 
         super.awakeFromNib()
 
-        let type = emu.get(.DRV_TYPE, drive: nr)
-        switch vc64.DriveType(rawValue: type) {
+        if let emu = emu {
 
-        case .VC1541, .VC1541C, .VC1541II:
-            capacity.lastItem?.title = "5.25\" SD"
+            let type = emu.get(.DRV_TYPE, drive: nr)
+            switch vc64.DriveType(rawValue: type) {
 
-        default:
-            fatalError()
+            case .VC1541, .VC1541C, .VC1541II:
+                capacity.lastItem?.title = "5.25\" SD"
+
+            default:
+                fatalError()
+            }
+
+            fileSystem.selectItem(withTag: 1)
+            update()
         }
-
-        fileSystem.selectItem(withTag: 1)
-        update()
     }
 
     override func windowDidLoad() {

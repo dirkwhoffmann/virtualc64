@@ -23,8 +23,8 @@ extension Canvas {
     // Returns the used texture area (including HBLANK and VBLANK)
     var entire: CGRect {
         
-        let w = emu.vic.traits.cyclesPerLine * 8
-        let h = emu.vic.traits.linesPerFrame
+        let w = emu?.vic.traits.cyclesPerLine ?? 0 * 8
+        let h = emu?.vic.traits.linesPerFrame ?? 0
 
         return CGRect(x: 0, y: 0, width: w, height: h)
     }
@@ -37,7 +37,7 @@ extension Canvas {
     // Returns the largest visibile texture area (excluding HBLANK and VBLANK)
     var largestVisible: CGRect {
         
-        if emu.vic.traits.pal {
+        if emu?.vic.traits.pal == true {
             return CGRect(x: 104, y: 16, width: 487 - 104, height: 299 - 16)
         } else {
             return CGRect(x: 104, y: 16, width: 487 - 104, height: 249 - 16)

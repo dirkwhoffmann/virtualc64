@@ -11,7 +11,9 @@ extension Inspector {
 
     private func cacheEvents() {
 
-        eventInfo = emu.paused ? emu.c64.info : emu.c64.cachedInfo
+        if let emu = emu {
+            eventInfo = emu.paused ? emu.c64.info : emu.c64.cachedInfo
+        }
     }
 
     func refreshEvents(count: Int = 0, full: Bool = false) {

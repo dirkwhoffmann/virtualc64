@@ -38,7 +38,7 @@ protocol DialogControllerDelegate: AnyObject {
 class DialogController: NSWindowController, DialogControllerDelegate {
     
     var parent: MyController!
-    var emu: EmulatorProxy!
+    var emu: EmulatorProxy? { return parent.emu }
     var mm: MediaManager { return parent.mydocument.mm }
 
     // List of open windows or sheets (to make ARC happy)
@@ -56,7 +56,6 @@ class DialogController: NSWindowController, DialogControllerDelegate {
         
         lock.lock()
         parent = controller
-        emu = parent.emu
     }
 
     func register() {

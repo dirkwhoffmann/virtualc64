@@ -13,7 +13,7 @@ class WaveformView: NSImageView {
 
     @IBOutlet weak var inspector: Inspector!
 
-    var sid: SIDProxy { return inspector.emu.sid }
+    var sid: SIDProxy? { return inspector.emu?.sid }
 
     // Waveform size
     var size: NSSize!
@@ -59,7 +59,7 @@ class WaveformView: NSImageView {
             source = inspector.selectedSID
         }
 
-        maxAmp = sid.drawWaveform(buffer, size: size, scale: maxAmp, color: color, source: source)
+        maxAmp = sid?.drawWaveform(buffer, size: size, scale: maxAmp, color: color, source: source) ?? 0
         image = NSImage.make(data: buffer, rect: CGSize(width: size.width, height: size.height))
         super.draw(dirtyRect)
     }
