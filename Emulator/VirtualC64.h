@@ -1099,9 +1099,6 @@ public:
      */
     static string build();
 
-    struct TestAPI : API {
-
-    } testAPI;
 
     //
     // Initializing

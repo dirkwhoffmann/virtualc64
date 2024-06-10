@@ -41,6 +41,7 @@ CoreComponent::description() const
     return getDescriptions().at(objid).description;
 }
 
+/*
 std::vector<CoreComponent *>
 CoreComponent::collectComponents() const
 {
@@ -58,6 +59,7 @@ CoreComponent::collectComponents(std::vector<CoreComponent *> &components) const
         c->collectComponents(components);
     }
 }
+*/
 
 bool
 CoreComponent::operator== (CoreComponent &other)
@@ -125,6 +127,17 @@ void
 CoreComponent::resetConfig()
 {
     Configurable::resetConfig(emulator.defaults);
+}
+
+void
+CoreComponent::routeOption(Option opt, std::vector<Configurable *> &result)
+{
+    for (auto &o : getOptions()) {
+        if (o == opt) result.push_back(this);
+    }
+    for (auto &c : subComponents) {
+        c->routeOption(opt, result);
+    }
 }
 
 void

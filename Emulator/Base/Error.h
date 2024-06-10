@@ -27,13 +27,9 @@ struct Error : public util::Exception
     Error(ErrorCode code, const std::filesystem::path &path) : Error(code, path.string()) { };
     Error(ErrorCode code, long v) : Error(code, std::to_string(v)) { };
     Error(ErrorCode code) : Error(code, "") { }
-    Error() : Exception() { }
 
     /// Returns a textual description of this error
-    const char *what() const throw() override;
-    
-    /// Return the numerical identifier of this error
-    ErrorCode errorCode() const { return (ErrorCode)data; }
+    const char *what() const throw() override;    
 };
 
 }

@@ -49,7 +49,7 @@ public Inspectable<EmulatorInfo, EmulatorStats>, public Configurable {
     // The run-ahead instance
     C64 ahead = C64(*this, 1);
 
-    // Keeps trach of the number of recreated run-ahead instances
+    // Keeps track of the number of recreated run-ahead instances
     isize clones = 0;
 
 public:

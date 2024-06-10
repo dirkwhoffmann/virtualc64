@@ -24,7 +24,8 @@ ControlPort::ControlPort(C64 &ref, isize id) : SubComponent(ref, id)
     subComponents = std::vector<CoreComponent *> {
         
         &mouse,
-        &joystick
+        &joystick,
+        &paddle
     };
 }
 

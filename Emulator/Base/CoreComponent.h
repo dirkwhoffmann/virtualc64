@@ -69,9 +69,11 @@ public:
     const char *shellName() const;
     const char *description() const;
 
+    /*
     std::vector<CoreComponent *> collectComponents() const;
     void collectComponents(std::vector<CoreComponent *> &components) const;
-
+     */
+    
     bool operator== (CoreComponent &other);
     bool operator!= (CoreComponent &other) { return !(other == *this); }
 
@@ -97,6 +99,9 @@ public:
 
     // Resets the current configuration
     virtual void resetConfig();
+
+    //
+    void routeOption(Option opt, std::vector<Configurable *> &result);
 
 
     //
