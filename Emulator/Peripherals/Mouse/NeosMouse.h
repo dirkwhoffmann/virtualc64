@@ -21,7 +21,6 @@ class NeosMouse final : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "NeosMouse",
-        .shellName      = "",
         .description    = "Neos Mouse"
     }};
 

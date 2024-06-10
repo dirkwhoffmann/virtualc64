@@ -17,6 +17,12 @@
 
 namespace vc64 {
 
+string 
+Interpreter::shellName(const CoreObject &object)
+{
+    return util::lowercased(object.objectName());
+}
+
 void
 Interpreter::initCommons(Command &root)
 {
@@ -166,7 +172,7 @@ Interpreter::initCommandShell(Command &root)
     // Components (C64)
     //
 
-    auto cmd = c64.shellName();
+    string cmd = shellName(c64);
     auto description = c64.description();
     root.add({cmd}, description);
 
@@ -238,7 +244,7 @@ Interpreter::initCommandShell(Command &root)
     // Components (Memory)
     //
 
-    cmd = mem.shellName();
+    cmd = shellName(mem);
     description = mem.description();
     root.add({cmd}, description);
 
@@ -290,7 +296,7 @@ Interpreter::initCommandShell(Command &root)
 
     for (isize i = 0; i < 2; i++) {
 
-        cmd = (i == 0) ? cia1.shellName() : cia2.shellName();
+        cmd = (i == 0) ? shellName(cia1) : shellName(cia2);
         description = (i == 0) ? cia1.description() : cia2.description();
         root.add({cmd}, description);
 
@@ -327,7 +333,7 @@ Interpreter::initCommandShell(Command &root)
     // Components (VICII)
     //
 
-    cmd = vic.shellName();
+    cmd = shellName(vic);
     description = vic.description();
     root.add({cmd}, description);
 
@@ -360,7 +366,7 @@ Interpreter::initCommandShell(Command &root)
     // Components (DMA Debugger)
     //
 
-    cmd = vic.dmaDebugger.shellName();
+    cmd = shellName(vic.dmaDebugger);
     description = vic.dmaDebugger.description();
     root.add({cmd}, description);
 
@@ -412,7 +418,7 @@ Interpreter::initCommandShell(Command &root)
 
         auto &sid = sidBridge.sid[i];
 
-        cmd = sid.shellName();
+        cmd = shellName(sid);
         description = sid.description();
         root.add({cmd}, description);
 
@@ -446,7 +452,7 @@ Interpreter::initCommandShell(Command &root)
     // Components (SIDBridge)
     //
 
-    cmd = sidBridge.shellName();
+    cmd = shellName(sidBridge);
     description = sidBridge.description();
     root.add({cmd}, description);
 
@@ -487,7 +493,7 @@ Interpreter::initCommandShell(Command &root)
     // Ports (Power port)
     //
 
-    cmd = powerSupply.shellName();
+    cmd = shellName(powerSupply);
     description = powerSupply.description();
     root.add({cmd}, description);
 
@@ -521,7 +527,7 @@ Interpreter::initCommandShell(Command &root)
     // Ports (Audio port)
     //
 
-    cmd = audioPort.shellName();
+    cmd = shellName(audioPort);
     description = audioPort.description();
     root.add({cmd}, description);
 
@@ -555,7 +561,7 @@ Interpreter::initCommandShell(Command &root)
     // Ports (Video port)
     //
 
-    cmd = videoPort.shellName();
+    cmd = shellName(videoPort);
     description = videoPort.description();
     root.add({cmd}, description);
 
@@ -589,7 +595,7 @@ Interpreter::initCommandShell(Command &root)
     // Components (Expansion port)
     //
 
-    cmd = expansionPort.shellName();
+    cmd = shellName(expansionPort);
     description = expansionPort.description();
     root.add({cmd}, description);
 
@@ -635,7 +641,7 @@ Interpreter::initCommandShell(Command &root)
     // Peripherals (Monitor)
     //
 
-    cmd = monitor.shellName();
+    cmd = shellName(monitor);
     description = monitor.description();
     root.add({cmd}, description);
 
@@ -670,7 +676,7 @@ Interpreter::initCommandShell(Command &root)
     // Peripherals (Keyboard)
     //
 
-    cmd = keyboard.shellName();
+    cmd = shellName(keyboard);
     description = keyboard.description();
     root.add({cmd}, description);
 
@@ -725,7 +731,7 @@ Interpreter::initCommandShell(Command &root)
 
         auto &mouse = i == PORT_1 ? c64.port1.mouse : c64.port2.mouse;
 
-        cmd = mouse.shellName();
+        cmd = shellName(mouse);
         description = mouse.description();
         root.add({cmd}, description);
 
@@ -766,7 +772,7 @@ Interpreter::initCommandShell(Command &root)
 
         auto &joystick = i == PORT_1 ? c64.port1.joystick : c64.port2.joystick;
 
-        cmd =joystick.shellName();
+        cmd = shellName(joystick);
         description = joystick.description();
         root.add({cmd}, description);
 
@@ -886,7 +892,7 @@ Interpreter::initCommandShell(Command &root)
 
         auto &paddle = i == PORT_1 ? c64.port1.paddle : c64.port2.paddle;
 
-        cmd = paddle.shellName();
+        cmd = shellName(paddle);
         description = paddle.description();
         root.add({cmd}, description);
 
@@ -922,7 +928,7 @@ Interpreter::initCommandShell(Command &root)
     // Peripherals (Datasette)
     //
 
-    cmd = datasette.shellName();
+    cmd = shellName(datasette);
     description = datasette.description();
     root.add({cmd}, description);
 
@@ -988,7 +994,7 @@ Interpreter::initCommandShell(Command &root)
 
         auto &drive = i == 0 ? c64.drive8 : c64.drive9;
 
-        cmd = drive.shellName();
+        cmd = shellName(drive);
         description = drive.description();
         root.add({cmd}, description);
 
@@ -1082,7 +1088,7 @@ Interpreter::initCommandShell(Command &root)
     // Peripherals (Parallel cable)
     //
 
-    cmd = parCable.shellName();
+    cmd = shellName(parCable);
     description = parCable.description();
     root.add({cmd}, description);
 
@@ -1108,7 +1114,7 @@ Interpreter::initCommandShell(Command &root)
     // Miscellaneous (Host)
     //
 
-    cmd = host.shellName();
+    cmd = shellName(host);
     description = host.description();
     root.add({cmd}, description);
 

@@ -95,12 +95,10 @@ class C64 final : public CoreComponent, public Inspectable<C64Info> {
     Descriptions descriptions = {
         {
             .name           = "C64",
-            .shellName      = "c64",
             .description    = "Commodore 64"
         },
         {
             .name           = "C64[run-ahead]",
-            .shellName      = "",
             .description    = "Commodore 64"
         }
     };

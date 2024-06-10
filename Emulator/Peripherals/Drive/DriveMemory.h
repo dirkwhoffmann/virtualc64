@@ -22,7 +22,6 @@ class DriveMemory final : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "DriveMemory",
-        .shellName      = "",
         .description    = "Drive Memory"
     }};
 

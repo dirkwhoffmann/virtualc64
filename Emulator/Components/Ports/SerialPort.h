@@ -21,8 +21,7 @@ class SerialPort final : public SubComponent, public Inspectable<Void, SerialPor
 
     Descriptions descriptions = {{
 
-        .name           = "SerialPort",
-        .shellName      = "serial",
+        .name           = "Serial",
         .description    = "Serial Port (IEC Bus)"
     }};
 

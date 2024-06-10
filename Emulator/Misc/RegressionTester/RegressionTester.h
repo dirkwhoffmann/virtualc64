@@ -24,7 +24,6 @@ class RegressionTester : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "RegressionTester",
-        .shellName      = "",
         .description    = "Regression Tester"
     }};
 

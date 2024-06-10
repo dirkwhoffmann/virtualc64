@@ -28,38 +28,11 @@ CoreComponent::objectName() const
 }
 
 const char *
-CoreComponent::shellName() const
-{
-    assert(isize(getDescriptions().size()) > objid);
-    return getDescriptions().at(objid).shellName;
-}
-
-const char *
 CoreComponent::description() const
 {
     assert(isize(getDescriptions().size()) > objid);
     return getDescriptions().at(objid).description;
 }
-
-/*
-std::vector<CoreComponent *>
-CoreComponent::collectComponents() const
-{
-    std::vector<CoreComponent *> result;
-    collectComponents(result);
-    return result;
-}
-
-void 
-CoreComponent::collectComponents(std::vector<CoreComponent *> &components) const
-{
-    for (auto c : subComponents) {
-
-        components.push_back(c);
-        c->collectComponents(components);
-    }
-}
-*/
 
 bool
 CoreComponent::operator== (CoreComponent &other)
@@ -295,7 +268,7 @@ void CoreComponent::exportConfig(std::ostream& ss, bool diff) const
                 first = false;
             }
 
-            auto cmd = "try " + string(shellName());
+            auto cmd = "try " +Interpreter::shellName(*this);
             auto currentStr = OptionParser::create(opt, current)->asPlainString();
             auto fallbackStr = OptionParser::create(opt, fallback)->asPlainString();
 

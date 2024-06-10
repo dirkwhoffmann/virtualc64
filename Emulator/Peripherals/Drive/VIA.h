@@ -61,7 +61,6 @@ class VIA6522 : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "VIA",
-        .shellName      = "",
         .description    = "VIA 6522"
     }};
 

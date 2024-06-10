@@ -22,7 +22,6 @@ class Debugger : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "Debugger",
-        .shellName      = "",
         .description    = "Debugger"
     }};
 

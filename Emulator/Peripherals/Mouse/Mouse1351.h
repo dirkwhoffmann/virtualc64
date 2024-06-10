@@ -21,7 +21,6 @@ class Mouse1351 final : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "Mouse1351",
-        .shellName      = "",
         .description    = "Mouse 1351"
     }};
 

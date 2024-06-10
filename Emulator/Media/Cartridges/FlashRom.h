@@ -29,7 +29,6 @@ class FlashRom final : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "FlashRom",
-        .shellName      = "",
         .description    = "Flash ROM"
     }};
 

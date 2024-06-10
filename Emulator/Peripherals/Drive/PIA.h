@@ -24,7 +24,6 @@ class PIA6821 : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "PIA",
-        .shellName      = "",
         .description    = "PIA 6821"
     }};
 

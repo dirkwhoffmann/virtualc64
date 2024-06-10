@@ -23,13 +23,11 @@ class Paddle final : public SubComponent, public Inspectable<PaddleInfo> {
 
     Descriptions descriptions = {
         {
-            .name           = "Paddle 1",
-            .shellName      = "paddle1",
+            .name           = "Paddle1",
             .description    = "Paddle in Port 1"
         },
         {
-            .name           = "Paddle 2",
-            .shellName      = "paddle2",
+            .name           = "Paddle2",
             .description    = "Paddle in Port 2"
         }
     };

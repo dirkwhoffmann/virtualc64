@@ -29,13 +29,11 @@ class ControlPort final : public SubComponent {
 
     Descriptions descriptions = {
         {
-            .name           = "ControlPort 1",
-            .shellName      = "port1",
+            .name           = "Port1",
             .description    = "Control Port 1"
         },
         {
-            .name           = "ControlPort 2",
-            .shellName      = "port2",
+            .name           = "Port2",
             .description    = "Control Port 2"
         }
     };

@@ -39,7 +39,6 @@ class Host final : public CoreComponent {
     Descriptions descriptions = {{
 
         .name           = "Host",
-        .shellName      = "host",
         .description    = "Host Computer"
     }};
 

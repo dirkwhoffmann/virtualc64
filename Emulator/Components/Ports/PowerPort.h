@@ -22,8 +22,7 @@ class PowerPort final : public SubComponent {
 
     Descriptions descriptions = {{
 
-        .name           = "PowerPort",
-        .shellName      = "power",
+        .name           = "Power",
         .description    = "Power Port"
     }};
 

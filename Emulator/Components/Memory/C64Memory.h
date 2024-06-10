@@ -24,8 +24,7 @@ class C64Memory final : public SubComponent, public Inspectable<MemInfo, MemStat
 
     Descriptions descriptions = {{
 
-        .name           = "C64Memory",
-        .shellName      = "memory",
+        .name           = "Memory",
         .description    = "C64 Memory"
     }};
 

@@ -66,7 +66,7 @@ public:
     virtual const Descriptions &getDescriptions() const { return descriptions; }
 
     const char *objectName() const override;
-    const char *shellName() const;
+    // const char *shellName() const;
     const char *description() const;
 
     /*

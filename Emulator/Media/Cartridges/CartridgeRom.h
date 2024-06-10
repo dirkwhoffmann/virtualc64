@@ -21,7 +21,6 @@ class CartridgeRom final : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "CartridgeRom",
-        .shellName      = "",
         .description    = "Cartridge ROM"
     }};
 

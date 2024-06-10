@@ -25,7 +25,6 @@ class Keyboard final : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "Keyboard",
-        .shellName      = "keyboard",
         .description    = "Keyboard"
     }};
 

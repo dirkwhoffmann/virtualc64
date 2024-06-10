@@ -257,35 +257,35 @@ Interpreter::initDebugShell(Command &root)
 
     root.popGroup();
 
-    auto cmd = c64.shellName();
+    auto cmd = shellName(c64);
     auto description = c64.description();
     root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
 
         retroShell.dump(c64, { Category::Config, Category::State });
     });
 
-    cmd = mem.shellName();
+    cmd = shellName(mem);
     description = mem.description();
     root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
 
         retroShell.dump(mem, { Category::Config, Category::State });
     });
 
-    cmd = cia1.shellName();
+    cmd = shellName(cia1);
     description = cia1.description();
     root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
 
         retroShell.dump(cia1, { Category::Config, Category::State });
     });
 
-    cmd = cia2.shellName();
+    cmd = shellName(cia2);
     description = cia2.description();
     root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
 
         retroShell.dump(cia2, { Category::Config, Category::State });
     });
 
-    cmd = vic.shellName();
+    cmd = shellName(vic);
     description = vic.description();
     root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
 
@@ -301,14 +301,14 @@ Interpreter::initDebugShell(Command &root)
         retroShell.dump(sidBridge.sid[nr], { Category::Config, Category::State });
     });
 
-    cmd = sidBridge.shellName();
+    cmd = shellName(sidBridge);
     description = sidBridge.description();
     root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
 
         retroShell.dump(sidBridge, { Category::Config, Category::State });
     });
 
-    cmd = expansionPort.shellName();
+    cmd = shellName(expansionPort);
     description = expansionPort.description();
     root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
 
@@ -319,49 +319,49 @@ Interpreter::initDebugShell(Command &root)
 
     root.pushGroup("Peripherals");
 
-    cmd = keyboard.shellName();
+    cmd = shellName(keyboard);
     description = keyboard.description();
     root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
 
         retroShell.dump(keyboard, { Category::Config, Category::State });
     });
 
-    cmd = port1.shellName();
+    cmd = shellName(port1);
     description = port1.description();
     root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
 
         retroShell.dump(port1, { Category::Config, Category::State });
     });
 
-    cmd = port2.shellName();
+    cmd = shellName(port2);
     description = port2.description();
     root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
 
         retroShell.dump(port2, { Category::Config, Category::State });
     });
 
-    cmd = port1.joystick.shellName();
+    cmd = shellName(port1.joystick);
     description = port1.joystick.description();
     root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
 
         retroShell.dump(port1.joystick, { Category::Config, Category::State });
     });
 
-    cmd = port2.joystick.shellName();
+    cmd = shellName(port2.joystick);
     description = port2.joystick.description();
     root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
 
         retroShell.dump(port2.joystick, { Category::Config, Category::State });
     });
 
-    cmd = port1.mouse.shellName();
+    cmd = shellName(port1.mouse);
     description = port1.mouse.description();
     root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
 
         retroShell.dump(port1.mouse, { Category::Config, Category::State });
     });
 
-    cmd = port2.mouse.shellName();
+    cmd = shellName(port2.mouse);
     description = port2.mouse.description();
     root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
 
@@ -372,7 +372,7 @@ Interpreter::initDebugShell(Command &root)
 
         auto &drive = i == 0 ? c64.drive8 : c64.drive9;
 
-        cmd = drive.shellName();
+        cmd = shellName(drive);
         description = drive.description();
         root.add({cmd}, description);
 
@@ -415,14 +415,14 @@ Interpreter::initDebugShell(Command &root)
         root.popGroup();
     }
 
-    cmd = serialPort.shellName();
+    cmd = shellName(serialPort);
     description = serialPort.description();
     root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
 
         retroShell.dump(serialPort, { Category::Config, Category::State });
     });
 
-    cmd = datasette.shellName();
+    cmd = shellName(datasette);
     description = datasette.description();
     root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
 
@@ -433,7 +433,7 @@ Interpreter::initDebugShell(Command &root)
 
     root.pushGroup("Ports");
 
-    cmd = audioPort.shellName();
+    cmd = shellName(audioPort);
     description = audioPort.description();
     root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
 
@@ -444,7 +444,7 @@ Interpreter::initDebugShell(Command &root)
 
     root.pushGroup("Miscellaneous");
 
-    cmd = host.shellName();
+    cmd = shellName(host);
     description = host.description();
     root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
 
