@@ -1003,9 +1003,12 @@ private:
 
     void initFuncTable(VICIIRevision revision);
     void initFuncTable(VICIIRevision revision, u16 flags);
-    void updateVicFunctionTable();
     ViciiFunc getViciiFunc(u16 flags, isize cycle);
     template <u16 flags> ViciiFunc getViciiFunc(isize cycle);
+
+public:
+
+    void updateVicFunctionTable();
 
 
     //

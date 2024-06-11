@@ -1189,6 +1189,9 @@ C64::loadSnapshot(const MediaFile &file)
                 // Restore the saved state
                 load(snapshot.getSnapshotData());
 
+                // Rectify the VICII function table (varies between PAL and NTSC)
+                vic.updateVicFunctionTable();
+
                 // Clear the keyboard matrix to avoid constantly pressed keys
                 keyboard.releaseAll();
 
@@ -1209,6 +1212,7 @@ C64::loadSnapshot(const MediaFile &file)
         }
 
         // Inform the GUI
+        msgQueue.put(vic.pal() ? MSG_PAL : MSG_NTSC);
         msgQueue.put(MSG_SNAPSHOT_RESTORED);
 
     } catch (...) {

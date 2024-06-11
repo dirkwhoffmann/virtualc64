@@ -456,7 +456,7 @@ extension MyController {
 
         case .SNAPSHOT_RESTORED:
             renderer.rotateRight()
-            renderer.canvas.updateTextureRect()
+            // renderer.canvas.updateTextureRect()
             refreshStatusBar()
             hideOrShowDriveMenus()
 

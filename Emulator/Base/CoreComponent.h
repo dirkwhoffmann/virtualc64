@@ -27,7 +27,6 @@ namespace vc64 {
 struct Description {
 
     const char *name;
-    const char *shellName;
     const char *description;
 };
 
