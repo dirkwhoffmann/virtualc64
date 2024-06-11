@@ -12,46 +12,12 @@
 
 #pragma once
 
+#include "Dumpable.h"
 #include <iostream>
 
 namespace vc64 {
 
-enum class Category
-{
-    BankMap,
-    Breakpoints,
-    Checksums,
-    Config,
-    Current,
-    Debug,
-    Defaults,
-    Disk,
-    Dma,
-    Layout,
-    Properties,
-    Registers,
-    RunAhead,
-    Sizeof,
-    Slots,
-    State,
-    Stats,
-    Summary,
-    Tod,
-    Watchpoints
-};
-
 struct Void { };
-
-class Dumpable {
-
-public:
-
-    virtual ~Dumpable() = default;
-    virtual void _dump(Category category, std::ostream& ss) const { }
-
-    void dump(Category category, std::ostream& ss) const { _dump(category, ss); }
-    void dump(Category category) const { dump(category, std::cout); }
-};
 
 /** Inspection interface
  *

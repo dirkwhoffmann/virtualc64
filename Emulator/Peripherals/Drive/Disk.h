@@ -24,7 +24,7 @@ namespace vc64 {
 class DiskAnalyzer;
 class FileSystem;
 
-class Disk final : public CoreObject, public Dumpable {
+class Disk final : public CoreObject {
     
     friend class Drive;
     

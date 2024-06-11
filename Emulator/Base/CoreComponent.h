@@ -17,6 +17,7 @@
 #include "Synchronizable.h"
 #include "Serializable.h"
 #include "Configurable.h"
+#include "Inspectable.h"
 #include "Concurrency.h"
 #include "Suspendable.h"
 #include "ThreadTypes.h"
@@ -33,12 +34,9 @@ struct Description {
 typedef std::vector<Description> Descriptions;
 
 class CoreComponent :
-public CoreObject, public Serializable, public Suspendable, public Dumpable, public Synchronizable, public Configurable {
+public CoreObject, public Serializable, public Suspendable, public Synchronizable, public Configurable {
 
 public:
-
-    // Dummy description
-    static Descriptions descriptions;
 
     // Reference to the emulator this instance belongs to
     class Emulator &emulator;
@@ -48,9 +46,6 @@ public:
 
     // Sub components
     std::vector<CoreComponent *> subComponents;
-
-    // Set to false to silence all debug messages for this component
-    bool verbose = true;
 
 
     //
@@ -62,17 +57,10 @@ public:
     CoreComponent(Emulator& ref) : emulator(ref), objid(0) { }
     CoreComponent(Emulator& ref, isize id) : emulator(ref), objid(id) { }
 
-    virtual const Descriptions &getDescriptions() const { return descriptions; }
-
+    virtual const Descriptions &getDescriptions() const = 0;
     const char *objectName() const override;
-    // const char *shellName() const;
-    const char *description() const;
+    const char *description() const override;
 
-    /*
-    std::vector<CoreComponent *> collectComponents() const;
-    void collectComponents(std::vector<CoreComponent *> &components) const;
-     */
-    
     bool operator== (CoreComponent &other);
     bool operator!= (CoreComponent &other) { return !(other == *this); }
 

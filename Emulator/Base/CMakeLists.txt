@@ -8,6 +8,7 @@ Configurable.cpp
 CoreObject.cpp
 CoreComponent.cpp
 Defaults.cpp
+Dumpable.cpp
 Error.cpp
 Host.cpp
 Inspectable.cpp

@@ -21,7 +21,7 @@ namespace vc64 {
 
 namespace fs = ::std::filesystem;
 
-class Defaults final : public CoreObject, public Dumpable {
+class Defaults final : public CoreObject {
 
     mutable util::ReentrantMutex mutex;
 

@@ -13,7 +13,7 @@
 #pragma once
 
 #include "Error.h"
-#include "Inspectable.h"
+#include "Dumpable.h"
 
 namespace vc64 {
 
@@ -48,10 +48,11 @@ namespace vc64 {
  * the emulator's state model.
  */
 
-class CoreObject {
+class CoreObject : public Dumpable {
 
 protected:
 
+    // Set to false to disable all debug messages
     static bool verbose;
 
     //
@@ -64,7 +65,10 @@ public:
     
     // Returns the name for this component (e.g., "CPU" or "VICII")
     virtual const char *objectName() const = 0;
-    
+
+    // Returns a textual description for this component
+    virtual const char *description() const { return ""; }
+
     // Called by debug() and trace() to produce a detailed debug output
     virtual void prefix() const;
 };
