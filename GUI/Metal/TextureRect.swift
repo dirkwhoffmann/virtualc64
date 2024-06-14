@@ -23,7 +23,7 @@ extension Canvas {
     // Returns the used texture area (including HBLANK and VBLANK)
     var entire: CGRect {
         
-        let w = emu?.vic.traits.cyclesPerLine ?? 0 * 8
+        let w = (emu?.vic.traits.cyclesPerLine ?? 0) * 8
         let h = emu?.vic.traits.linesPerFrame ?? 0
 
         return CGRect(x: 0, y: 0, width: w, height: h)

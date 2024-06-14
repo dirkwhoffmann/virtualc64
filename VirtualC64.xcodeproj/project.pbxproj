@@ -2831,7 +2831,7 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				LLVM_LTO = NO;
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
-				MARKETING_VERSION = 5.0b4;
+				MARKETING_VERSION = 5.0b5;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 c++20";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
@@ -2877,7 +2877,7 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				LLVM_LTO = YES_THIN;
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
-				MARKETING_VERSION = 5.0b4;
+				MARKETING_VERSION = 5.0b5;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 c++20";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";

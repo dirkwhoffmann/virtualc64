@@ -55,6 +55,24 @@ class Monitor: DialogController {
         refresh()
     }
     
+    override func showWindow(_ sender: Any?) {
+
+        super.showWindow(self)
+
+        print("Monitor: showWindow")
+
+        // Update colors
+        if let dma = emu?.dmaDebugger.getConfig() {
+
+            busColorR.setColor(dma.dmaColor.0)
+            busColorI.setColor(dma.dmaColor.1)
+            busColorC.setColor(dma.dmaColor.2)
+            busColorG.setColor(dma.dmaColor.3)
+            busColorP.setColor(dma.dmaColor.4)
+            busColorS.setColor(dma.dmaColor.5)
+        }
+    }
+
     func refresh() {
                 
         if let dma = emu?.dmaDebugger.getConfig() {
@@ -67,15 +85,6 @@ class Monitor: DialogController {
             busChannelG.state = dma.dmaChannel.3 ? .on : .off
             busChannelP.state = dma.dmaChannel.4 ? .on : .off
             busChannelS.state = dma.dmaChannel.5 ? .on : .off
-
-            // Colors
-            busColorR.setColor(dma.dmaColor.0)
-            busColorI.setColor(dma.dmaColor.1)
-            busColorC.setColor(dma.dmaColor.2)
-            busColorG.setColor(dma.dmaColor.3)
-            busColorP.setColor(dma.dmaColor.4)
-            busColorS.setColor(dma.dmaColor.5)
-
             busOpacity.integerValue = Int(dma.dmaOpacity)
             busDisplayMode.selectItem(withTag: dma.dmaDisplayMode.rawValue)
 
@@ -121,11 +130,11 @@ class Monitor: DialogController {
 
     @IBAction func busColorAction(_ sender: NSColorWell!) {
         
-        let r = Int(sender.color.redComponent * 255)
-        let g = Int(sender.color.greenComponent * 255)
-        let b = Int(sender.color.blueComponent * 255)
+        let r = Int((sender.color.redComponent * 255.0).rounded())
+        let g = Int((sender.color.greenComponent * 255.0).rounded())
+        let b = Int((sender.color.blueComponent * 255.0).rounded())
         let bgr = (b << 16) | (g << 8) | (r << 0)
-        
+
         switch sender.tag {
         case 0:  emu?.set(.DMA_DEBUG_COLOR0, value: bgr)
         case 1:  emu?.set(.DMA_DEBUG_COLOR1, value: bgr)
