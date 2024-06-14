@@ -11,8 +11,8 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Emulator.h"
 #include "CoreComponent.h"
+#include "Emulator.h"
 #include "Checksum.h"
 #include "Option.h"
 

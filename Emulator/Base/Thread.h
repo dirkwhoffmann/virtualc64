@@ -123,7 +123,7 @@ private:
 
     /** The thread's main entry point.
      *
-     *  this function is called when the thread is created.
+     *  This function is called when the thread is created.
      */
     void runLoop();
 
@@ -194,8 +194,6 @@ private:
 
     // Initiates a state change
     void changeStateTo(ExecState requestedState);
-
-private:
 
     // Returns if the emulator is ready to runs, throws an exception otherwise
     virtual void isReady() throws = 0;

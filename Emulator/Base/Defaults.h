@@ -74,8 +74,8 @@ public:
     // Queries a key-value pair
     string getString(const string &key) const;
     i64 getInt(const string &key) const;
-    i64 get(Option option) const;
-    i64 get(Option option, isize nr) const;
+    // i64 get(Option option) const;
+    i64 get(Option option, isize nr = 0) const;
 
     // Queries a fallback key-value pair
     string getFallbackString(const string &key) const;
@@ -90,18 +90,15 @@ public:
 
     // Writes a key-value pair into the user storage
     void setString(const string &key, const string &value);
-    void set(Option opt, i64 value);
-    void set(Option opt, isize nr, i64 value);
-    void set(Option opt, std::vector<isize> nrs, i64 value);
+    void set(Option opt, i64 value, isize nr = 0);
+    void set(Option opt, i64 value, std::vector<isize> nrs);
 
     // Writes a key-value pair into the fallback storage
     void setFallback(const string &key, const string &value);
-    void setFallback(Option opt, const string &value);
-    void setFallback(Option opt, i64 value);
-    void setFallback(Option opt, isize nr, const string &value);
-    void setFallback(Option opt, isize nr, i64 value);
-    void setFallback(Option opt, std::vector <isize> nrs, const string &value);
-    void setFallback(Option opt, std::vector <isize> nrs, i64 value);
+    void setFallback(Option opt, const string &value, isize nr = 0);
+    void setFallback(Option opt, i64 value, isize nr = 0);
+    void setFallback(Option opt, const string &value, std::vector <isize> nrs);
+    void setFallback(Option opt, i64 value, std::vector <isize> nrs);
 
 
     //
@@ -113,8 +110,7 @@ public:
 
     // Deletes selected key-value pairs
     void remove(const string &key) throws;
-    void remove(Option option) throws;
-    void remove(Option option, isize nr) throws;
+    void remove(Option option, isize nr = 0) throws;
     void remove(Option option, std::vector <isize> nrs) throws;
 };
 

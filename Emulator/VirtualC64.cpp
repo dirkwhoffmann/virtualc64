@@ -1242,15 +1242,15 @@ DefaultsAPI::set(Option opt, i64 value)
 }
 
 void
-DefaultsAPI::set(Option opt, isize nr, i64 value)
+DefaultsAPI::set(Option opt, i64 value, isize nr)
 {
-    defaults->set(opt, nr, value);
+    defaults->set(opt, value, nr);
 }
 
 void
-DefaultsAPI::set(Option opt, std::vector <isize> nrs, i64 value)
+DefaultsAPI::set(Option opt, i64 value, std::vector <isize> nrs)
 {
-    defaults->set(opt, nrs, value);
+    defaults->set(opt, value, nrs);
 }
 
 void
@@ -1272,27 +1272,27 @@ DefaultsAPI::setFallback(Option opt, i64 value)
 }
 
 void
-DefaultsAPI::setFallback(Option opt, isize nr, const string &value)
+DefaultsAPI::setFallback(Option opt, const string &value, isize nr)
 {
-    defaults->setFallback(opt, nr, value);
+    defaults->setFallback(opt, value, nr);
 }
 
 void
-DefaultsAPI::setFallback(Option opt, isize nr, i64 value)
+DefaultsAPI::setFallback(Option opt, i64 value, isize nr)
 {
-    defaults->setFallback(opt, nr, value);
+    defaults->setFallback(opt, value, nr);
 }
 
 void
-DefaultsAPI::setFallback(Option opt, std::vector <isize> nrs, const string &value)
+DefaultsAPI::setFallback(Option opt, const string &value, std::vector <isize> nrs)
 {
-    defaults->setFallback(opt, nrs, value);
+    defaults->setFallback(opt, value, nrs);
 }
 
 void
-DefaultsAPI::setFallback(Option opt, std::vector <isize> nrs, i64 value)
+DefaultsAPI::setFallback(Option opt, i64 value, std::vector <isize> nrs)
 {
-    defaults->setFallback(opt, nrs, value);
+    defaults->setFallback(opt, value, nrs);
 }
 
 void

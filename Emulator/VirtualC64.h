@@ -840,18 +840,18 @@ public:
 
     /** @brief  Writes a key-value pair into the user storage.
      *  @param  opt     The option's name forms the keys.
-     *  @param  nr      The key is parameterized by adding the value as suffix.
      *  @param  value   The value, given as an integer.
+     *  @param  nr      The key is parameterized by adding the value as suffix.
      */
-    void set(Option opt, isize nr, i64 value);
+    void set(Option opt, i64 value, isize nr);
 
     /** @brief  Writes multiple key-value pairs into the user storage.
      *  @param  opt     The option's name forms the prefix of the keys.
-     *  @param  nrs     The keys are parameterized by adding the vector values as suffixes.
      *  @param  value   The shared value for all pairs, given as an integer.
+     *  @param  nrs     The keys are parameterized by adding the vector values as suffixes.
      *  @throw  VC64Error (#ERROR_INVALID_KEY)
      */
-    void set(Option opt, std::vector<isize> nrs, i64 value);
+    void set(Option opt, i64 value, std::vector<isize> nrs);
 
     /** @brief  Writes a key-value pair into the fallback storage.
      *  @param  key     The key, given as a string.
@@ -873,27 +873,27 @@ public:
 
     /** @brief  Writes a key-value pair into the fallback storage.
      *  @param  opt     The option's name forms the keys.
-     *  @param  nr      The key is parameterized by adding the value as suffix.
      *  @param  value   The value, given as a string.
+     *  @param  nr      The key is parameterized by adding the value as suffix.
      */
-    void setFallback(Option opt, isize nr, const string &value);
+    void setFallback(Option opt, const string &value, isize nr);
 
     /** @brief  Writes a key-value pair into the fallback storage.
      *  @param  opt     The option's name forms the keys.
-     *  @param  nr      The key is parameterized by adding the value as suffix.
      *  @param  value   The value, given as an integer.
+     *  @param  nr      The key is parameterized by adding the value as suffix.
      */
-    void setFallback(Option opt, isize nr, i64 value);
+    void setFallback(Option opt, i64 value, isize nr);
 
     /** @brief  Writes multiple key-value pairs into the fallback storage.
      *  @param  opt     The option's name forms the prefix of the keys.
-     *  @param  nrs     The keys are parameterized by adding the vector values as suffixes.
      *  @param  value   The shared value for all pairs.
+     *  @param  nrs     The keys are parameterized by adding the vector values as suffixes.
      */
-    void setFallback(Option opt, std::vector <isize> nrs, const string &value);
+    void setFallback(Option opt, const string &value, std::vector <isize> nrs);
 
     /// @copydoc setFallback(Option, std::vector <isize>, const string &);
-    void setFallback(Option opt, std::vector <isize> nrs, i64 value);
+    void setFallback(Option opt, i64 value, std::vector <isize> nrs);
 
 
     /// @}
@@ -1166,11 +1166,11 @@ public:
      *  emulator. On success, the functions returns. Otherwise, an exception
      *  is thrown.
      *
-     *  @throw  VC64Error (ERROR_ROM_BASIC_MISSING)
-     *  @throw  VC64Error (ERROR_ROM_CHAR_MISSING)
-     *  @throw  VC64Error (ERROR_ROM_KERNAL_MISSING)
-     *  @throw  VC64Error (ERROR_ROM_CHAR_MISSING)
-     *  @throw  VC64Error (ERROR_ROM_MEGA65_MISMATCH)
+     *  @throw  Error (ERROR_ROM_BASIC_MISSING)
+     *  @throw  Error (ERROR_ROM_CHAR_MISSING)
+     *  @throw  Error (ERROR_ROM_KERNAL_MISSING)
+     *  @throw  Error (ERROR_ROM_CHAR_MISSING)
+     *  @throw  Error (ERROR_ROM_MEGA65_MISMATCH)
      */
     void isReady();
 
