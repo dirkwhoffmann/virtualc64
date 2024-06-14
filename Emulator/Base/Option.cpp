@@ -12,21 +12,9 @@
 
 #include "config.h"
 #include "Option.h"
+#include "VirtualC64Types.h"
 #include "Error.h"
-#include "EmulatorTypes.h"
-#include "VICIITypes.h"
-#include "DatasetteTypes.h"
-#include "MemoryTypes.h"
-#include "MonitorTypes.h"
-#include "SIDTypes.h"
-#include "CIATypes.h"
-#include "DriveTypes.h"
-#include "PaddleTypes.h"
-#include "ParCableTypes.h"
-#include "PowerPortTypes.h"
-#include "MouseTypes.h"
 #include "IOUtils.h"
-#include "Macros.h"
 
 namespace vc64 {
 
