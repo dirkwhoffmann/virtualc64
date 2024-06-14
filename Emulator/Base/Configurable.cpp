@@ -44,7 +44,7 @@ Configurable::isValidOption(Option opt) const
 void
 Configurable::checkOption(Option opt, const string &value)
 {
-    checkOption(opt, OptionParser::create(opt)->parse(value));
+    checkOption(opt, OptionParser::parse(opt, value));
 }
 
 void
@@ -56,7 +56,7 @@ Configurable::checkOption(const string &opt, const string &value)
 void
 Configurable::setOption(Option opt, const string &value) 
 {
-    setOption(opt, OptionParser::create(opt)->parse(value));
+    setOption(opt, OptionParser::parse(opt, value));
 }
 
 void
@@ -82,7 +82,7 @@ Configurable::dumpConfig(std::ostream& os) const
 
         auto name = OptionEnum::plainkey(opt);
         auto help = OptionEnum::help(opt);
-        auto arg  = OptionParser::create(opt, getOption(opt))->asString();
+        auto arg  = OptionParser::asString(opt, getOption(opt));
 
         os << tab(name);
         os << std::setw(16) << std::left << std::setfill(' ') << arg;

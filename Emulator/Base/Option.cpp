@@ -173,7 +173,37 @@ OptionParser::create(Option opt, i64 arg)
     }
 }
 
-string 
+i64 
+OptionParser::parse(Option opt, const string &arg)
+{
+    return create(opt)->parse(arg);
+}
+
+string
+OptionParser::asPlainString(Option opt, i64 arg)
+{
+    return create(opt, arg)->asPlainString();
+}
+
+string
+OptionParser::asString(Option opt, i64 arg)
+{
+    return create(opt, arg)->asString();
+}
+
+string
+OptionParser::keyList(Option opt)
+{
+    return create(opt)->keyList();
+}
+
+string
+OptionParser::argList(Option opt)
+{
+    return create(opt)->argList();
+}
+
+string
 HexParser::asPlainString()
 {
     std::stringstream ss;

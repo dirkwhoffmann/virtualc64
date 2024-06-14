@@ -189,7 +189,7 @@ Interpreter::initCommandShell(Command &root)
     for (auto &opt : emulator.getOptions()) {
 
         root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::create(opt)->argList()},
+                 {OptionParser::argList(opt)},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
@@ -261,7 +261,7 @@ Interpreter::initCommandShell(Command &root)
     for (auto &opt : mem.getOptions()) {
 
         root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::create(opt)->argList()},
+                 {OptionParser::argList(opt)},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
@@ -317,7 +317,7 @@ Interpreter::initCommandShell(Command &root)
         for (auto &opt : cia1.getOptions()) {
 
             root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                     {OptionParser::create(opt)->argList()},
+                     {OptionParser::argList(opt)},
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
@@ -350,7 +350,7 @@ Interpreter::initCommandShell(Command &root)
     for (auto &opt : vic.getOptions()) {
 
         root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::create(opt)->argList()},
+                 {OptionParser::argList(opt)},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
@@ -398,7 +398,7 @@ Interpreter::initCommandShell(Command &root)
     for (auto &opt : vic.dmaDebugger.getOptions()) {
 
         root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::create(opt)->argList()},
+                 {OptionParser::argList(opt)},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
@@ -435,7 +435,7 @@ Interpreter::initCommandShell(Command &root)
         for (auto &opt : sidBridge.sid[i].getOptions()) {
 
             root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                     {OptionParser::create(opt)->argList()},
+                     {OptionParser::argList(opt)},
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
@@ -470,7 +470,7 @@ Interpreter::initCommandShell(Command &root)
     for (auto &opt : sidBridge.getOptions()) {
 
         root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::create(opt)->argList()},
+                 {OptionParser::argList(opt)},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
@@ -511,7 +511,7 @@ Interpreter::initCommandShell(Command &root)
     for (auto &opt : powerSupply.getOptions()) {
 
         root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::create(opt)->argList()},
+                 {OptionParser::argList(opt)},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
@@ -545,7 +545,7 @@ Interpreter::initCommandShell(Command &root)
     for (auto &opt : audioPort.getOptions()) {
 
         root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::create(opt)->argList()},
+                 {OptionParser::argList(opt)},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
@@ -579,7 +579,7 @@ Interpreter::initCommandShell(Command &root)
     for (auto &opt : videoPort.getOptions()) {
 
         root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::create(opt)->argList()},
+                 {OptionParser::argList(opt)},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
@@ -660,7 +660,7 @@ Interpreter::initCommandShell(Command &root)
     for (auto &opt : c64.monitor.getOptions()) {
 
         root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::create(opt)->argList()},
+                 {OptionParser::argList(opt)},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long value) {
 
@@ -751,7 +751,7 @@ Interpreter::initCommandShell(Command &root)
         for (auto &opt : c64.port1.mouse.getOptions()) {
 
             root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                     {OptionParser::create(opt)->argList()},
+                     {OptionParser::argList(opt)},
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
@@ -793,7 +793,7 @@ Interpreter::initCommandShell(Command &root)
         for (auto &opt : c64.port1.joystick.getOptions()) {
 
             root.add({cmd, "set", "autofire", OptionEnum::plainkey(opt)},
-                     {OptionParser::create(opt)->argList()},
+                     {OptionParser::argList(opt)},
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
@@ -912,7 +912,7 @@ Interpreter::initCommandShell(Command &root)
         for (auto &opt : c64.port1.paddle.getOptions()) {
 
             root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                     {OptionParser::create(opt)->argList()},
+                     {OptionParser::argList(opt)},
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
@@ -974,7 +974,7 @@ Interpreter::initCommandShell(Command &root)
     for (auto &opt : datasette.getOptions()) {
 
         root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::create(opt)->argList()},
+                 {OptionParser::argList(opt)},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
@@ -1072,7 +1072,7 @@ Interpreter::initCommandShell(Command &root)
         for (auto &opt : drive8.getOptions()) {
 
             root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                     {OptionParser::create(opt)->argList()},
+                     {OptionParser::argList(opt)},
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
@@ -1132,7 +1132,7 @@ Interpreter::initCommandShell(Command &root)
     for (auto &opt : powerSupply.getOptions()) {
 
         root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::create(opt)->argList()},
+                 {OptionParser::argList(opt)},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
@@ -1162,7 +1162,7 @@ Interpreter::initCommandShell(Command &root)
     for (auto &opt : recorder.getOptions()) {
 
         root.add({"recorder", "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::create(opt)->argList()},
+                 {OptionParser::argList(opt)},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long value) {
 

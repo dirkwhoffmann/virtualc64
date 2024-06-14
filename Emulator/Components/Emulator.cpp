@@ -215,13 +215,13 @@ Emulator::set(Option opt, i64 value, std::optional<isize> id)
 void
 Emulator::set(Option opt, const string &value)
 {
-    set(opt, OptionParser::create(opt)->parse(value));
+    set(opt, OptionParser::parse(opt, value));
 }
 
 void
 Emulator::set(Option opt, const string &value, isize id)
 {
-    set(opt, OptionParser::create(opt)->parse(value), id);
+    set(opt, OptionParser::parse(opt, value), id);
 }
 
 void

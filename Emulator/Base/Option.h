@@ -23,6 +23,10 @@ class OptionParser {
 
 public:
 
+    virtual ~OptionParser() = default;
+
+protected:
+
     Option opt;
     i64 arg;
     string unit;
@@ -31,7 +35,6 @@ public:
     OptionParser(Option opt, const string &unit) : opt(opt), arg(0), unit(unit) { };
     OptionParser(Option opt, i64 arg) : opt(opt), arg(arg) { };
     OptionParser(Option opt, i64 arg, const string &unit) : opt(opt), arg(arg), unit(unit) { };
-    virtual ~OptionParser() = default;
 
     // Factory method for creating the proper parser instance for an option
     static std::unique_ptr<OptionParser> create(Option opt, i64 arg = 0);
@@ -44,6 +47,14 @@ public:
     virtual string asString() = 0;
     virtual string keyList() = 0;
     virtual string argList() = 0;
+
+public:
+
+    static i64 parse(Option opt, const string &arg);
+    static string asPlainString(Option opt, i64 arg);
+    static string asString(Option opt, i64 arg);
+    static string keyList(Option opt);
+    static string argList(Option opt);
 };
 
 class BoolParser : public OptionParser {

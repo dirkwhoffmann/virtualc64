@@ -268,8 +268,8 @@ void CoreComponent::exportConfig(std::ostream& ss, bool diff) const
             }
 
             auto cmd = "try " +Interpreter::shellName(*this);
-            auto currentStr = OptionParser::create(opt, current)->asPlainString();
-            auto fallbackStr = OptionParser::create(opt, fallback)->asPlainString();
+            auto currentStr = OptionParser::asPlainString(opt, current);
+            auto fallbackStr = OptionParser::asPlainString(opt, fallback);
 
             string line = cmd + " set " + OptionEnum::plainkey(opt) + " " + currentStr;
             string comment = diff ? fallbackStr : OptionEnum::help(opt);
