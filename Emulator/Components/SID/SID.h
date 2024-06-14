@@ -150,7 +150,6 @@ private:
 
 public:
 
-    void resetConfig() override;
     const SIDConfig &getConfig() const { return config; }
     const ConfigOptions &getOptions() const override { return options; }
     i64 getFallback(Option opt) const override;

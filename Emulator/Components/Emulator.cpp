@@ -59,10 +59,14 @@ void
 Emulator::initialize()
 {
     // Initialize all components
-    resetConfig();
-    host.resetConfig();
     main.initialize();
     ahead.initialize();
+
+    // Setup the default configuration
+    resetConfig();
+    host.resetConfig();
+    main.resetConfig();
+    ahead.resetConfig();
 
     // Perform a hard reset
     main.hardReset();

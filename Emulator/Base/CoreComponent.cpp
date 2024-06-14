@@ -97,7 +97,8 @@ CoreComponent::getFallback(Option opt) const
 void
 CoreComponent::resetConfig()
 {
-    Configurable::resetConfig(emulator.defaults);
+    for (CoreComponent *c : subComponents) { c->resetConfig(); }
+    Configurable::resetConfig(emulator.defaults, objid);
 }
 
 void

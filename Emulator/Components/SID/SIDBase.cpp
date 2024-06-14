@@ -73,12 +73,6 @@ SID::cacheInfo(SIDInfo &info) const
     }
 }
 
-void
-SID::resetConfig()
-{
-    Configurable::resetConfig(emulator.defaults, objid);
-}
-
 i64
 SID::getOption(Option option) const
 {

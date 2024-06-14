@@ -34,8 +34,8 @@ Defaults::Defaults()
 
     setFallback(OPT_POWER_GRID,                 GRID_STABLE_50HZ);
 
-    setFallback(OPT_CIA_REVISION,               MOS_6526);
-    setFallback(OPT_CIA_TIMER_B_BUG,            true);
+    setFallback(OPT_CIA_REVISION,               MOS_6526,               {0, 1});
+    setFallback(OPT_CIA_TIMER_B_BUG,            true,                   {0, 1});
 
     setFallback(OPT_VICII_REVISION,             VICII_PAL_8565);
     setFallback(OPT_VICII_POWER_SAVE,           true);
@@ -139,16 +139,16 @@ Defaults::Defaults()
     setFallback(OPT_DAT_MODEL,                  DATASETTE_C1530);
     setFallback(OPT_DAT_CONNECT,                true);
 
-    setFallback(OPT_MOUSE_MODEL,                MOUSE_C1350);
-    setFallback(OPT_MOUSE_SHAKE_DETECT,         true);
-    setFallback(OPT_MOUSE_VELOCITY,             100);
+    setFallback(OPT_MOUSE_MODEL,                MOUSE_C1350,        {0, 1});
+    setFallback(OPT_MOUSE_SHAKE_DETECT,         true,               {0, 1});
+    setFallback(OPT_MOUSE_VELOCITY,             100,                {0, 1});
 
-    setFallback(OPT_AUTOFIRE,                   false);
-    setFallback(OPT_AUTOFIRE_BURSTS,            false);
-    setFallback(OPT_AUTOFIRE_BULLETS,           3);
-    setFallback(OPT_AUTOFIRE_DELAY,             5);
+    setFallback(OPT_AUTOFIRE,                   false,              {0, 1});
+    setFallback(OPT_AUTOFIRE_BURSTS,            false,              {0, 1});
+    setFallback(OPT_AUTOFIRE_BULLETS,           3,                  {0, 1});
+    setFallback(OPT_AUTOFIRE_DELAY,             5,                  {0, 1});
 
-    setFallback(OPT_PADDLE_ORIENTATION,         PADDLE_HORIZONTAL);
+    setFallback(OPT_PADDLE_ORIENTATION,         PADDLE_HORIZONTAL,  {0, 1});
 
     setFallback(OPT_REC_FRAME_RATE,             50);
     setFallback(OPT_REC_BIT_RATE,               512);

@@ -66,18 +66,10 @@ Configurable::setOption(const string &opt, const string &value)
 }
 
 void
-Configurable::resetConfig(const Defaults &defaults)
+Configurable::resetConfig(const Defaults &defaults, isize objid)
 {
     for (auto &option : getOptions()) {
-        setOption(option, defaults.get(option));
-    }
-}
-
-void
-Configurable::resetConfig(const Defaults &defaults, isize i)
-{
-    for (auto &option : getOptions()) {
-        setOption(option, defaults.get(option, i));
+        setOption(option, defaults.get(option, objid));
     }
 }
 
