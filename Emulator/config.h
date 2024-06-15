@@ -20,13 +20,13 @@
 #define VER_MAJOR 5
 #define VER_MINOR 0
 #define VER_SUBMINOR 0
-#define VER_BETA 4
+#define VER_BETA 5
 
 // Snapshot version number
 #define SNP_MAJOR 5
 #define SNP_MINOR 0
 #define SNP_SUBMINOR 0
-#define SNP_BETA 4
+#define SNP_BETA 5
 
 // Uncomment these settings in a release build
 // #define RELEASEBUILD

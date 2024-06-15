@@ -220,11 +220,12 @@ public:
     
     /* Copies n audio samples into a memory buffer. These functions mark the
      * final step in the audio pipeline. They are used to copy the generated
-     * sound samples into the buffers of the native sound device.
+     * sound samples into the buffers of the native sound device. The function
+     * returns the number of copied samples.
      */
-    void copyMono(float *buffer, isize n);
-    void copyStereo(float *left, float *right, isize n);
-    void copyInterleaved(float *buffer, isize n);
+    isize copyMono(float *buffer, isize n);
+    isize copyStereo(float *left, float *right, isize n);
+    isize copyInterleaved(float *buffer, isize n);
 };
 
 }

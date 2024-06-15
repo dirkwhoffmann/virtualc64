@@ -36,7 +36,7 @@ Emulator::Emulator()
 
 Emulator::~Emulator()
 {
-
+    halt();
 }
 
 void

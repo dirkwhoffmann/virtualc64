@@ -126,8 +126,8 @@ VirtualC64::VirtualC64() {
 
 VirtualC64::~VirtualC64()
 {
-    emu->halt();
     delete emu;
+    emu = nullptr;
 }
 
 const EmulatorConfig &
@@ -742,25 +742,25 @@ AudioPortAPI::getStats() const
     return audioPort->getStats();
 }
 
-void
+isize
 AudioPortAPI::copyMono(float *buffer, isize n)
 {
     assert(isUserThread());
-    audioPort->copyMono(buffer, n);
+    return audioPort->copyMono(buffer, n);
 }
 
-void
+isize
 AudioPortAPI::copyStereo(float *left, float *right, isize n)
 {
     assert(isUserThread());
-    audioPort->copyStereo(left, right, n);
+    return audioPort->copyStereo(left, right, n);
 }
 
-void
+isize
 AudioPortAPI::copyInterleaved(float *buffer, isize n)
 {
     assert(isUserThread());
-    audioPort->copyInterleaved(buffer, n);
+    return audioPort->copyInterleaved(buffer, n);
 }
 
 

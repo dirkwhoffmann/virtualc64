@@ -244,15 +244,17 @@ struct AudioPortAPI : API {
      *  added together and written to to the destination buffer.
      *  @param  buffer  Pointer to the destination buffer
      *  @param  n       Number of sound samples to copy.
+     *  @return         Number of actually copied sound sound samples.
      */
-    void copyMono(float *buffer, isize n);
+    isize copyMono(float *buffer, isize n);
 
     /** @brief  Extracts a number of stereo samples from the audio buffer.
      *  @param  left    Pointer to the left channel's destination buffer.
      *  @param  right   Pointer to the right channel's destination buffer.
      *  @param  n       Number of sound samples to copy.
+     *  @return         Number of actually copied sound sound samples.
      */
-    void copyStereo(float *left, float *right, isize n);
+    isize copyStereo(float *left, float *right, isize n);
 
     /** @brief  Extracts a number of stereo samples from the audio buffer.
      *  This function has to be used if a stereo stream is managed in a
@@ -261,8 +263,9 @@ struct AudioPortAPI : API {
      *  followed by a sample of the right channel and vice versa.
      *  @param  buffer  Pointer to the destinationleft buffer.
      *  @param  n       Number of sound samples to copy.
+     *  @return         Number of actually copied sound sound samples.
      */
-    void copyInterleaved(float *buffer, isize n);
+    isize copyInterleaved(float *buffer, isize n);
 
     /// @}
     /// @name Visualizing waveforms

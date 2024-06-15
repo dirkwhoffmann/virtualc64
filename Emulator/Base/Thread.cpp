@@ -293,8 +293,14 @@ Thread::halt()
 {
     if (state != STATE_HALTED) {
         
+        debug(RUN_DEBUG, "Switching to HALT state...\n");
         changeStateTo(STATE_HALTED);
+
+        debug(RUN_DEBUG, "Waiting for the emulator thread to terminate...\n");
         join();
+
+        debug(RUN_DEBUG, "Emulator is halted.\n");
+        assert(state == STATE_HALTED);
     }
 }
 

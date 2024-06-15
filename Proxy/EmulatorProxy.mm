@@ -534,19 +534,19 @@ using namespace vc64;
     return [self port]->getStats();
 }
 
-- (void)copyMono:(float *)target size:(NSInteger)n
+- (NSInteger)copyMono:(float *)target size:(NSInteger)n
 {
-    [self port]->copyMono(target, n);
+    return [self port]->copyMono(target, n);
 }
 
-- (void)copyStereo:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n
+- (NSInteger)copyStereo:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n
 {
-    [self port]->copyStereo(target1, target2, n);
+    return [self port]->copyStereo(target1, target2, n);
 }
 
-- (void)copyInterleaved:(float *)target size:(NSInteger)n
+- (NSInteger)copyInterleaved:(float *)target size:(NSInteger)n
 {
-    [self port]->copyInterleaved(target, n);
+    return [self port]->copyInterleaved(target, n);
 }
 
 @end

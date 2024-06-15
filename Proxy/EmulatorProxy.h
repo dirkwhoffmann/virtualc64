@@ -397,9 +397,9 @@ struct GuardInfo {
 
 @property (readonly) AudioPortStats stats;
 
-- (void)copyMono:(float *)target size:(NSInteger)n;
-- (void)copyStereo:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;
-- (void)copyInterleaved:(float *)target size:(NSInteger)n;
+- (NSInteger)copyMono:(float *)target size:(NSInteger)n;
+- (NSInteger)copyStereo:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;
+- (NSInteger)copyInterleaved:(float *)target size:(NSInteger)n;
 
 @end
 

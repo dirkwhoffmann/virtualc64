@@ -275,26 +275,20 @@ AudioPort::mixMultiSID(isize numSamples)
     if (muted) { muted = false; msgQueue.put(MSG_MUTE, false); }
 }
 
-void
+isize
 AudioPort::copyMono(float *buffer, isize n)
 {
-    SYNCHRONIZED
+    {   SYNCHRONIZED
 
-    if (!recorder.isRecording()) {
+        // Be silent when the recorder is running (fill with zeroes)
+        if (recorder.isRecording()) {
 
-        auto cnt = count();
+            for (isize i = 0; i < n; i++) { *buffer++ = 0; }
+            return 0;
+        }
 
         // Check for buffer underflows
-        if (cnt >= count()) {
-
-            // We have enough samples. Copy over the requested number
-            for (isize i = 0; i < n; i++) {
-
-                SamplePair pair = read();
-                *buffer++ = pair.left + pair.right;
-            }
-
-        } else {
+        if (auto cnt = count(); cnt < n) {
 
             // Copy all we have and stepwise lower the volume to minimize cracks
             for (isize i = 0; i < cnt; i++) {
@@ -309,36 +303,35 @@ AudioPort::copyMono(float *buffer, isize n)
 
             // Realign the ring buffer
             handleBufferUnderflow();
+
+            return cnt;
         }
 
-    } else {
+        // The standard case: We have enough samples. Copy the requested number
+        for (isize i = 0; i < n; i++) {
 
-        // Fill with zeroes
-        for (isize i = 0; i < n; i++) *buffer++ = 0;
+            SamplePair pair = read();
+            *buffer++ = pair.left + pair.right;
+        }
+
+        return n;
     }
 }
 
-void
+isize
 AudioPort::copyStereo(float *left, float *right, isize n)
 {
-    SYNCHRONIZED
+    {   SYNCHRONIZED
 
-    if (!recorder.isRecording()) {
+        // Be silent when the recorder is running (fill with zeroes)
+        if (recorder.isRecording()) {
 
-        auto cnt = count();
+            for (isize i = 0; i < n; i++) { *left++ = *right++ = 0; }
+            return 0;
+        }
 
         // Check for buffer underflows
-        if (cnt >= n) {
-
-            // We have enough samples. Copy over the requested number
-            for (isize i = 0; i < n; i++) {
-
-                SamplePair pair = read();
-                *left++ = pair.left;
-                *right++ = pair.right;
-            }
-
-        } else {
+        if (auto cnt = count(); cnt < n) {
 
             // Copy all we have and stepwise lower the volume to minimize cracks
             for (isize i = 0; i < cnt; i++) {
@@ -354,36 +347,37 @@ AudioPort::copyStereo(float *left, float *right, isize n)
 
             // Realign the ring buffer
             handleBufferUnderflow();
+
+            return cnt;
         }
 
-    } else {
+        // The standard case: We have enough samples. Copy the requested number
+        for (isize i = 0; i < n; i++) {
 
-        // Fill with zeroes
-        for (isize i = 0; i < n; i++) { *left++ = *right++ = 0; }
+            SamplePair pair = read();
+            *left++ = pair.left;
+            *right++ = pair.right;
+        }
+
+        return n;
     }
 }
 
-void
+isize
 AudioPort::copyInterleaved(float *buffer, isize n)
 {
-   SYNCHRONIZED
+    {   SYNCHRONIZED
 
-    if (!recorder.isRecording()) {
+        // Be silent when the recorder is running (fill with zeroes)
+        if (recorder.isRecording()) {
 
-        auto cnt = count();
+            // Fill with zeroes
+            for (isize i = 0; i < n; i++) { *buffer++ = 0; }
+            return 0;
+        }
 
         // Check for buffer underflows
-        if (cnt >= n) {
-
-            // We have enough samples. Copy over the requested number
-            for (isize i = 0; i < n; i++) {
-
-                SamplePair pair = read();
-                *buffer++ = pair.left;
-                *buffer++ = pair.right;
-            }
-
-        } else {
+        if (auto cnt = count(); cnt < n) {
 
             // Copy all we have and stepwise lower the volume to minimize cracks
             for (isize i = 0; i < cnt; i++) {
@@ -395,16 +389,23 @@ AudioPort::copyInterleaved(float *buffer, isize n)
             assert(isEmpty());
 
             // Fill the rest with zeroes
-            for (isize i = cnt; i < n; i++) { *buffer++ = 0; *buffer++ = 0; }
+            for (isize i = cnt; i < n; i++) { *buffer++ = 0; }
 
             // Realign the ring buffer
             handleBufferUnderflow();
+
+            return cnt;
         }
 
-    } else {
+        // We have enough samples. Copy over the requested number
+        for (isize i = 0; i < n; i++) {
 
-        // Fill with zeroes
-        for (isize i = 0; i < n; i++) { *buffer++ = 0; *buffer++ = 0; }
+            SamplePair pair = read();
+            *buffer++ = pair.left;
+            *buffer++ = pair.right;
+        }
+        
+        return n;
     }
 }
 

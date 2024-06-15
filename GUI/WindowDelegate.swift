@@ -67,24 +67,21 @@ extension MyController: NSWindowDelegate {
         debug(.shutdown, "Pause emulation...")
         emu!.pause()
 
-        debug(.shutdown, "Let audio fade out...")
-        usleep(250000)
-
-        debug(.shutdown, "Shut down audio...")
+        debug(.shutdown, "Shut down the audio unit...")
         macAudio.shutDown()
 
-        debug(.shutdown, "Close inspector...")
+        debug(.shutdown, "Close the inspector...")
         inspector?.close()
         inspector?.join()
 
-        debug(.shutdown, "Close monitor...")
+        debug(.shutdown, "Close the monitor...")
         monitor?.close()
         monitor?.join()
 
-        debug(.shutdown, "Stop renderer...")
+        debug(.shutdown, "Stop the renderer...")
         renderer.halt()
 
-        debug(.shutdown, "Disconnect gaming devices...")
+        debug(.shutdown, "Disconnect all gaming devices...")
         gamePadManager.shutDown()
 
         debug(.shutdown, "Shut down the emulator...")
