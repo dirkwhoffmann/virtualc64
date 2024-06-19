@@ -143,7 +143,7 @@ using namespace vc64;
 
 - (void)setOpt:(Option)option nr:(NSInteger)nr value:(NSInteger)value
 {
-    [self props]->set(option, nr, value);
+    [self props]->set(option, value, nr);
 }
 
 - (void)removeAll
