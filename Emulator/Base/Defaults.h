@@ -78,10 +78,10 @@ public:
     i64 get(Option option, isize nr = 0) const;
 
     // Queries a fallback key-value pair
-    string getFallbackString(const string &key) const;
-    i64 getFallbackInt(const string &key) const;
+    string getFallbackRaw(const string &key) const;
+    i64 getFallback(const string &key) const;
     i64 getFallback(Option option) const;
-    i64 getFallback(Option option, isize nr) const;
+    i64 getFallback(Option option, isize nr = 0) const;
 
 
     //
@@ -89,16 +89,14 @@ public:
     //
 
     // Writes a key-value pair into the user storage
-    void setString(const string &key, const string &value);
-    void set(Option opt, i64 value, isize nr = 0);
-    void set(Option opt, i64 value, std::vector<isize> nrs);
+    void set(const string &key, const string &value);
+    void set(Option option, const string &value, std::vector<isize> objids = { 0 });
+    void set(Option option, i64 value, std::vector<isize> objids = { 0 });
 
     // Writes a key-value pair into the fallback storage
     void setFallback(const string &key, const string &value);
-    void setFallback(Option opt, const string &value, isize nr = 0);
-    void setFallback(Option opt, i64 value, isize nr = 0);
-    void setFallback(Option opt, const string &value, std::vector <isize> nrs);
-    void setFallback(Option opt, i64 value, std::vector <isize> nrs);
+    void setFallback(Option option, const string &value, std::vector<isize> objids = { 0 });
+    void setFallback(Option option, i64 value, std::vector<isize> objids = { 0 });
 
 
     //

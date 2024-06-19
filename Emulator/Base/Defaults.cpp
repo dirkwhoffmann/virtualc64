@@ -100,12 +100,12 @@ Defaults::Defaults()
     setFallback(OPT_AUD_VOL_L,                  50);
     setFallback(OPT_AUD_VOL_R,                  50);
 
-    setFallback(OPT_SID_ENABLE,                 true,                   0);
+    setFallback(OPT_SID_ENABLE,                 true,                   {0});
     setFallback(OPT_SID_ENABLE,                 false,                  {1, 2, 3});
-    setFallback(OPT_SID_ADDRESS,                0xD400,                 0);
-    setFallback(OPT_SID_ADDRESS,                0xD420,                 1);
-    setFallback(OPT_SID_ADDRESS,                0xD440,                 2);
-    setFallback(OPT_SID_ADDRESS,                0xD460,                 3);
+    setFallback(OPT_SID_ADDRESS,                0xD400,                 {0});
+    setFallback(OPT_SID_ADDRESS,                0xD420,                 {1});
+    setFallback(OPT_SID_ADDRESS,                0xD440,                 {2});
+    setFallback(OPT_SID_ADDRESS,                0xD460,                 {3});
     setFallback(OPT_SID_REVISION,               MOS_8580,               {0, 1, 2, 3});
     setFallback(OPT_SID_FILTER,                 false,                  {0, 1, 2, 3});
     setFallback(OPT_SID_ENGINE,                 SIDENGINE_RESID,        {0, 1, 2, 3});
@@ -121,16 +121,16 @@ Defaults::Defaults()
     setFallback(OPT_DRV_RAM,                    DRVRAM_NONE,        {DRIVE8, DRIVE9});
     setFallback(OPT_DRV_SAVE_ROMS,              true,               {DRIVE8, DRIVE9});
     setFallback(OPT_DRV_PARCABLE,               PAR_CABLE_NONE,     {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_CONNECT,                true,               DRIVE8);
-    setFallback(OPT_DRV_CONNECT,                false,              DRIVE9);
-    setFallback(OPT_DRV_POWER_SWITCH,           true,               DRIVE8);
-    setFallback(OPT_DRV_POWER_SWITCH,           true,               DRIVE9);
+    setFallback(OPT_DRV_CONNECT,                true,               {DRIVE8});
+    setFallback(OPT_DRV_CONNECT,                false,              {DRIVE9});
+    setFallback(OPT_DRV_POWER_SWITCH,           true,               {DRIVE8});
+    setFallback(OPT_DRV_POWER_SWITCH,           true,               {DRIVE9});
     setFallback(OPT_DRV_POWER_SAVE,             true,               {DRIVE8, DRIVE9});
     setFallback(OPT_DRV_EJECT_DELAY,            30,                 {DRIVE8, DRIVE9});
     setFallback(OPT_DRV_SWAP_DELAY,             30,                 {DRIVE8, DRIVE9});
     setFallback(OPT_DRV_INSERT_DELAY,           30,                 {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_PAN,                    0,                  DRIVE8);
-    setFallback(OPT_DRV_PAN,                    0,                  DRIVE9);
+    setFallback(OPT_DRV_PAN,                    0,                  {DRIVE8});
+    setFallback(OPT_DRV_PAN,                    0,                  {DRIVE9});
     setFallback(OPT_DRV_POWER_VOL,              50,                 {DRIVE8, DRIVE9});
     setFallback(OPT_DRV_STEP_VOL,               50,                 {DRIVE8, DRIVE9});
     setFallback(OPT_DRV_INSERT_VOL,             50,                 {DRIVE8, DRIVE9});
@@ -380,7 +380,7 @@ Defaults::get(Option option, isize nr) const
 }
 
 string
-Defaults::getFallbackString(const string &key) const
+Defaults::getFallbackRaw(const string &key) const
 {
     if (fallbacks.contains(key)) return fallbacks.at(key);
 
@@ -390,9 +390,9 @@ Defaults::getFallbackString(const string &key) const
 }
 
 i64
-Defaults::getFallbackInt(const string &key) const
+Defaults::getFallback(const string &key) const
 {
-    auto value = getFallbackString(key);
+    auto value = getFallbackRaw(key);
     i64 result = 0;
 
     try {
@@ -408,19 +408,13 @@ Defaults::getFallbackInt(const string &key) const
 }
 
 i64
-Defaults::getFallback(Option option) const
-{
-    return getFallbackInt(string(OptionEnum::key(option)));
-}
-
-i64
 Defaults::getFallback(Option option, isize nr) const
 {
-    return getFallbackInt(string(OptionEnum::key(option)) + (nr ? std::to_string(nr) : ""));
+    return getFallback(string(OptionEnum::key(option)) + (nr ? std::to_string(nr) : ""));
 }
 
 void
-Defaults::setString(const string &key, const string &value)
+Defaults::set(const string &key, const string &value)
 {
     {   SYNCHRONIZED
 
@@ -438,18 +432,19 @@ Defaults::setString(const string &key, const string &value)
 }
 
 void
-Defaults::set(Option opt, i64 value, isize nr)
+Defaults::set(Option option, const string &value, std::vector <isize> objids)
 {
-    auto key = string(OptionEnum::key(opt)) + (nr ? std::to_string(nr) : "");
-    auto val = std::to_string(value);
+    auto key = string(OptionEnum::key(option));
 
-    setString(key, val);
+    for (auto &nr : objids) {
+        set(key + (nr ? std::to_string(nr) : ""), value);
+    }
 }
 
 void
-Defaults::set(Option opt, i64 value, std::vector <isize> nrs)
+Defaults::set(Option option, i64 value, std::vector <isize> objids)
 {
-    for (auto &nr : nrs) set(opt, value, nr);
+    set(option, std::to_string(value), objids);
 }
 
 void
@@ -464,27 +459,19 @@ Defaults::setFallback(const string &key, const string &value)
 }
 
 void
-Defaults::setFallback(Option opt, const string &value, isize nr)
+Defaults::setFallback(Option option, const string &value, std::vector <isize> objids)
 {
-    setFallback(string(OptionEnum::key(opt)) + (nr ? std::to_string(nr) : ""), value);
+    auto key = string(OptionEnum::key(option));
+
+    for (auto &nr : objids) {
+        setFallback(key + (nr ? std::to_string(nr) : ""), value);
+    }
 }
 
 void
-Defaults::setFallback(Option opt, i64 value, isize nr)
+Defaults::setFallback(Option option, i64 value, std::vector <isize> objids)
 {
-    setFallback(opt, std::to_string(value), nr);
-}
-
-void
-Defaults::setFallback(Option opt, const string &value, std::vector <isize> nrs)
-{
-    for (auto &nr : nrs) setFallback(opt, value, nr);
-}
-
-void
-Defaults::setFallback(Option opt, i64 value, std::vector <isize> nrs)
-{
-    setFallback(opt, std::to_string(value), nrs);
+    setFallback(option, std::to_string(value), objids);
 }
 
 void

@@ -799,14 +799,14 @@ public:
      *  @result The value as a string.
      *  @throw  VC64Error (#ERROR\_INVALID\_KEY)
      */
-    string getFallbackString(const string &key) const;
+    string getFallbackRaw(const string &key) const;
 
     /** @brief  Queries a fallback key-value pair.
      *  @param  key     The key.
      *  @result The value as an integer. 0 if the value cannot not be parsed.
      *  @throw  VC64Error (#ERROR\_INVALID\_KEY)
      */
-    i64 getFallbackInt(const string &key) const;
+    i64 getFallback(const string &key) const;
 
     /** @brief  Queries a fallback key-value pair.
      *  @param  option  A config option whose name is used as the key.
@@ -816,12 +816,12 @@ public:
     i64 getFallback(Option option) const;
 
     /** @brief  Queries a fallback key-value pair.
-     *  @param  option  A config option whose name is used as the prefix of the key.
-     *  @param  nr      The key is parameterized by adding the value as suffix.
+     *  @param  option  A config option whose name is used as the key.
+     *  @param  nr      Optional number that is appened to the key as suffix.
      *  @result The value as an integer.
      *  @throw  VC64Error (#ERROR\_INVALID\_KEY)
      */
-    i64 getFallback(Option option, isize nr) const;
+    i64 getFallback(Option option, isize nr = 0) const;
 
 
     /// @}
@@ -833,28 +833,23 @@ public:
      *  @param  value   The value, given as a string.
      *  @throw  VC64Error (#ERROR_INVALID_KEY)
      */
-    void setString(const string &key, const string &value);
-
-    /** @brief  Writes a key-value pair into the user storage.
-     *  @param  opt     The option's name forms the keys.
-     *  @param  value   The value, given as an integer.
-     */
-    void set(Option opt, i64 value);
-
-    /** @brief  Writes a key-value pair into the user storage.
-     *  @param  opt     The option's name forms the keys.
-     *  @param  value   The value, given as an integer.
-     *  @param  nr      The key is parameterized by adding the value as suffix.
-     */
-    void set(Option opt, i64 value, isize nr);
+    void set(const string &key, const string &value);
 
     /** @brief  Writes multiple key-value pairs into the user storage.
      *  @param  opt     The option's name forms the prefix of the keys.
-     *  @param  value   The shared value for all pairs, given as an integer.
-     *  @param  nrs     The keys are parameterized by adding the vector values as suffixes.
+     *  @param  value   The value for all pairs, given as a string.
+     *  @param  objids  The keys are parameterized by adding the vector values as suffixes.
      *  @throw  VC64Error (#ERROR_INVALID_KEY)
      */
-    void set(Option opt, i64 value, std::vector<isize> nrs);
+    void set(Option opt, const string &value, std::vector<isize> objids = { 0 });
+
+    /** @brief  Writes multiple key-value pairs into the user storage.
+     *  @param  opt     The option's name forms the prefix of the keys.
+     *  @param  value   The value for all pairs, given as an integer.
+     *  @param  objids  The keys are parameterized by adding the vector values as suffixes.
+     *  @throw  VC64Error (#ERROR_INVALID_KEY)
+     */
+    void set(Option opt, i64 value, std::vector<isize> objids = { 0 });
 
     /** @brief  Writes a key-value pair into the fallback storage.
      *  @param  key     The key, given as a string.
@@ -862,41 +857,19 @@ public:
      */
     void setFallback(const string &key, const string &value);
 
-    /** @brief  Writes a key-value pair into the fallback storage.
-     *  @param  opt     The option's name forms the keys.
-     *  @param  value   The value, given as a string.
+    /** @brief  Writes multiple key-value pairs into the fallback storage.
+     *  @param  opt     The option's name forms the prefix of the keys.
+     *  @param  value   The shared value for all pairs, given as a string.
+     *  @param  objids  The keys are parameterized by adding the vector values as suffixes.
      */
-    void setFallback(Option opt, const string &value);
-
-    /** @brief  Writes a key-value pair into the fallback storage.
-     *  @param  opt     The option's name forms the keys.
-     *  @param  value   The value, given as an integer.
-     */
-    void setFallback(Option opt, i64 value);
-
-    /** @brief  Writes a key-value pair into the fallback storage.
-     *  @param  opt     The option's name forms the keys.
-     *  @param  value   The value, given as a string.
-     *  @param  nr      The key is parameterized by adding the value as suffix.
-     */
-    void setFallback(Option opt, const string &value, isize nr);
-
-    /** @brief  Writes a key-value pair into the fallback storage.
-     *  @param  opt     The option's name forms the keys.
-     *  @param  value   The value, given as an integer.
-     *  @param  nr      The key is parameterized by adding the value as suffix.
-     */
-    void setFallback(Option opt, i64 value, isize nr);
+    void setFallback(Option opt, const string &value, std::vector<isize> objids = { 0 });
 
     /** @brief  Writes multiple key-value pairs into the fallback storage.
      *  @param  opt     The option's name forms the prefix of the keys.
-     *  @param  value   The shared value for all pairs.
-     *  @param  nrs     The keys are parameterized by adding the vector values as suffixes.
+     *  @param  value   The shared value for all pairs, given as an integer.
+     *  @param  objids  The keys are parameterized by adding the vector values as suffixes.
      */
-    void setFallback(Option opt, const string &value, std::vector <isize> nrs);
-
-    /// @copydoc setFallback(Option, std::vector <isize>, const string &);
-    void setFallback(Option opt, i64 value, std::vector <isize> nrs);
+    void setFallback(Option opt, i64 value, std::vector<isize> objids = { 0 });
 
 
     /// @}

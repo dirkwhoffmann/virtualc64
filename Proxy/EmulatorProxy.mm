@@ -133,7 +133,7 @@ using namespace vc64;
 
 - (void)setKey:(NSString *)key value:(NSString *)value
 {
-    [self props]->setString(string([key UTF8String]), string([value UTF8String]));
+    [self props]->set(string([key UTF8String]), string([value UTF8String]));
 }
 
 - (void)setOpt:(Option)option value:(NSInteger)value
@@ -143,7 +143,7 @@ using namespace vc64;
 
 - (void)setOpt:(Option)option nr:(NSInteger)nr value:(NSInteger)value
 {
-    [self props]->set(option, value, nr);
+    [self props]->set(option, value, {nr});
 }
 
 - (void)removeAll
