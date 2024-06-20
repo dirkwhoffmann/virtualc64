@@ -115,49 +115,4 @@ Emulator::cacheStats(EmulatorStats &result) const
 
 }
 
-
-//
-// Methods from Configurable
-//
-
-/*
-void
-Emulator::resetConfig()
-{
-
-}
-
-i64
-Emulator::getOption(Option opt) const
-{
-    switch (opt) {
-
-        default:
-            fatalError;
-    }
-}
-
-void
-Emulator::checkOption(Option opt, i64 value)
-{
-    switch (opt) {
-
-        default:
-            throw Error(ERROR_OPT_UNSUPPORTED);
-    }
-}
-
-void
-Emulator::setOption(Option opt, i64 value)
-{
-    checkOption(opt, value);
-
-    switch (opt) {
-
-        default:
-            fatalError;
-    }
-}
-*/
-
 }

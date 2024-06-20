@@ -71,9 +71,6 @@ public:
     // Checks the initialization state
     bool isInitialized() const;
 
-    // Marks the run-ahead instance as dirty
-    // [[deprecated]] void markAsDirty() { main.markAsDirty(); }
-
 
     //
     // Methods from CoreComponent
@@ -97,19 +94,6 @@ public:
     void cacheInfo(EmulatorInfo &result) const override;
     void cacheStats(EmulatorStats &result) const override;
 
-
-    //
-    // Methods from Configurable
-    //
-
-public:
-
-    /*
-    const ConfigOptions &getOptions() const override { return options; }
-    i64 getOption(Option opt) const override;
-    void checkOption(Option opt, i64 value) override;
-    void setOption(Option opt, i64 value) override;
-    */
 
     //
     // Main entry points for configuring the emulator
@@ -136,9 +120,6 @@ public:
     void set(C64Model model);
 
 private:
-
-    // const EmulatorConfig &getConfig() const { return config; }
-    // void resetConfig();
 
     // Returns the target component for an option
     std::vector<Configurable *> routeOption(Option opt);
