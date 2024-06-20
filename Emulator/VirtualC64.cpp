@@ -1191,13 +1191,13 @@ DefaultsAPI::save(std::stringstream &stream)
 string
 DefaultsAPI::getString(const string &key) const
 {
-    return defaults->getString(key);
+    return defaults->getRaw(key);
 }
 
 i64
 DefaultsAPI::getInt(const string &key) const
 {
-    return defaults->getInt(key);
+    return defaults->get(key);
 }
 
 i64

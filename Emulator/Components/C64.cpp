@@ -270,10 +270,10 @@ C64::initialize()
         }
     };
 
-    if (auto path = Emulator::defaults.getString("BASIC_PATH");  path != "") load(path);
-    if (auto path = Emulator::defaults.getString("CHAR_PATH");   path != "") load(path);
-    if (auto path = Emulator::defaults.getString("KERNAL_PATH"); path != "") load(path);
-    if (auto path = Emulator::defaults.getString("VC1541_PATH"); path != "") load(path);
+    if (auto path = Emulator::defaults.getRaw("BASIC_PATH");  path != "") load(path);
+    if (auto path = Emulator::defaults.getRaw("CHAR_PATH");   path != "") load(path);
+    if (auto path = Emulator::defaults.getRaw("KERNAL_PATH"); path != "") load(path);
+    if (auto path = Emulator::defaults.getRaw("VC1541_PATH"); path != "") load(path);
 
     CoreComponent::initialize();
 }

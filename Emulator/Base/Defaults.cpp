@@ -24,18 +24,18 @@ Defaults::Defaults()
     setFallback(OPT_HOST_FRAMEBUF_WIDTH,        0);
     setFallback(OPT_HOST_FRAMEBUF_HEIGHT,       0);
 
-    setFallback(OPT_EMU_WARP_BOOT,              0,                      {0, 1});
-    setFallback(OPT_EMU_WARP_MODE,              WARP_NEVER,             {0, 1});
-    setFallback(OPT_EMU_VSYNC,                  false,                  {0, 1});
-    setFallback(OPT_EMU_SPEED_ADJUST,           100,                    {0, 1});
-    setFallback(OPT_EMU_SNAPSHOTS,              false,                  {0, 1});
-    setFallback(OPT_EMU_SNAPSHOT_DELAY,         10,                     {0, 1});
-    setFallback(OPT_EMU_RUN_AHEAD,              0,                      {0, 1});
+    setFallback(OPT_EMU_WARP_BOOT,              0);
+    setFallback(OPT_EMU_WARP_MODE,              WARP_NEVER);
+    setFallback(OPT_EMU_VSYNC,                  false);
+    setFallback(OPT_EMU_SPEED_ADJUST,           100);
+    setFallback(OPT_EMU_SNAPSHOTS,              false);
+    setFallback(OPT_EMU_SNAPSHOT_DELAY,         10);
+    setFallback(OPT_EMU_RUN_AHEAD,              0);
 
     setFallback(OPT_POWER_GRID,                 GRID_STABLE_50HZ);
 
-    setFallback(OPT_CIA_REVISION,               MOS_6526,               {0, 1});
-    setFallback(OPT_CIA_TIMER_B_BUG,            true,                   {0, 1});
+    setFallback(OPT_CIA_REVISION,               MOS_6526);
+    setFallback(OPT_CIA_TIMER_B_BUG,            true);
 
     setFallback(OPT_VICII_REVISION,             VICII_PAL_8565);
     setFallback(OPT_VICII_POWER_SAVE,           true);
@@ -106,49 +106,49 @@ Defaults::Defaults()
     setFallback(OPT_SID_ADDRESS,                0xD420,                 {1});
     setFallback(OPT_SID_ADDRESS,                0xD440,                 {2});
     setFallback(OPT_SID_ADDRESS,                0xD460,                 {3});
-    setFallback(OPT_SID_REVISION,               MOS_8580,               {0, 1, 2, 3});
-    setFallback(OPT_SID_FILTER,                 false,                  {0, 1, 2, 3});
-    setFallback(OPT_SID_ENGINE,                 SIDENGINE_RESID,        {0, 1, 2, 3});
-    setFallback(OPT_SID_SAMPLING,               SAMPLING_INTERPOLATE,   {0, 1, 2, 3});
-    setFallback(OPT_SID_POWER_SAVE,             false,                  {0, 1, 2, 3});
+    setFallback(OPT_SID_REVISION,               MOS_8580);
+    setFallback(OPT_SID_FILTER,                 false);
+    setFallback(OPT_SID_ENGINE,                 SIDENGINE_RESID);
+    setFallback(OPT_SID_SAMPLING,               SAMPLING_INTERPOLATE);
+    setFallback(OPT_SID_POWER_SAVE,             false);
 
     setFallback(OPT_MEM_INIT_PATTERN,           RAM_PATTERN_VICE);
     setFallback(OPT_MEM_HEATMAP,                false);
     setFallback(OPT_MEM_SAVE_ROMS,              true);
 
-    setFallback(OPT_DRV_AUTO_CONFIG,            true,               {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_TYPE,                   DRIVE_VC1541II,     {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_RAM,                    DRVRAM_NONE,        {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_SAVE_ROMS,              true,               {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_PARCABLE,               PAR_CABLE_NONE,     {DRIVE8, DRIVE9});
+    setFallback(OPT_DRV_AUTO_CONFIG,            true);
+    setFallback(OPT_DRV_TYPE,                   DRIVE_VC1541II);
+    setFallback(OPT_DRV_RAM,                    DRVRAM_NONE);
+    setFallback(OPT_DRV_SAVE_ROMS,              true);
+    setFallback(OPT_DRV_PARCABLE,               PAR_CABLE_NONE);
     setFallback(OPT_DRV_CONNECT,                true,               {DRIVE8});
     setFallback(OPT_DRV_CONNECT,                false,              {DRIVE9});
     setFallback(OPT_DRV_POWER_SWITCH,           true,               {DRIVE8});
     setFallback(OPT_DRV_POWER_SWITCH,           true,               {DRIVE9});
-    setFallback(OPT_DRV_POWER_SAVE,             true,               {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_EJECT_DELAY,            30,                 {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_SWAP_DELAY,             30,                 {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_INSERT_DELAY,           30,                 {DRIVE8, DRIVE9});
+    setFallback(OPT_DRV_POWER_SAVE,             true);
+    setFallback(OPT_DRV_EJECT_DELAY,            30);
+    setFallback(OPT_DRV_SWAP_DELAY,             30);
+    setFallback(OPT_DRV_INSERT_DELAY,           30);
     setFallback(OPT_DRV_PAN,                    0,                  {DRIVE8});
     setFallback(OPT_DRV_PAN,                    0,                  {DRIVE9});
-    setFallback(OPT_DRV_POWER_VOL,              50,                 {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_STEP_VOL,               50,                 {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_INSERT_VOL,             50,                 {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_EJECT_VOL,              50,                 {DRIVE8, DRIVE9});
+    setFallback(OPT_DRV_POWER_VOL,              50);
+    setFallback(OPT_DRV_STEP_VOL,               50);
+    setFallback(OPT_DRV_INSERT_VOL,             50);
+    setFallback(OPT_DRV_EJECT_VOL,              50);
 
     setFallback(OPT_DAT_MODEL,                  DATASETTE_C1530);
     setFallback(OPT_DAT_CONNECT,                true);
 
-    setFallback(OPT_MOUSE_MODEL,                MOUSE_C1350,        {0, 1});
-    setFallback(OPT_MOUSE_SHAKE_DETECT,         true,               {0, 1});
-    setFallback(OPT_MOUSE_VELOCITY,             100,                {0, 1});
+    setFallback(OPT_MOUSE_MODEL,                MOUSE_C1350);
+    setFallback(OPT_MOUSE_SHAKE_DETECT,         true);
+    setFallback(OPT_MOUSE_VELOCITY,             100);
 
-    setFallback(OPT_AUTOFIRE,                   false,              {0, 1});
-    setFallback(OPT_AUTOFIRE_BURSTS,            false,              {0, 1});
-    setFallback(OPT_AUTOFIRE_BULLETS,           3,                  {0, 1});
-    setFallback(OPT_AUTOFIRE_DELAY,             5,                  {0, 1});
+    setFallback(OPT_AUTOFIRE,                   false);
+    setFallback(OPT_AUTOFIRE_BURSTS,            false);
+    setFallback(OPT_AUTOFIRE_BULLETS,           3);
+    setFallback(OPT_AUTOFIRE_DELAY,             5);
 
-    setFallback(OPT_PADDLE_ORIENTATION,         PADDLE_HORIZONTAL,  {0, 1});
+    setFallback(OPT_PADDLE_ORIENTATION,         PADDLE_HORIZONTAL);
 
     setFallback(OPT_REC_FRAME_RATE,             50);
     setFallback(OPT_REC_BIT_RATE,               512);
@@ -314,7 +314,7 @@ Defaults::save(std::stringstream &stream)
         for (const auto &it: fallbacks) {
 
             auto key = it.first;
-            auto value = getString(key);
+            auto value = getRaw(key);
 
             // Check if the key belongs to a group
             if (auto pos = key.find('.'); pos == std::string::npos) {
@@ -345,38 +345,41 @@ Defaults::save(std::stringstream &stream)
 }
 
 string
-Defaults::getString(const string &key) const
+Defaults::getRaw(const string &key) const
 {
     if (values.contains(key)) return values.at(key);
     if (fallbacks.contains(key)) return fallbacks.at(key);
 
-    warn("Invalid key: %s\n", key.c_str());
-    assert(false);
     throw Error(ERROR_INVALID_KEY, key);
 }
 
 i64
-Defaults::getInt(const string &key) const
+Defaults::get(const string &key) const
 {
-    auto value = getString(key);
-    i64 result = 0;
+    auto value = getRaw(key);
 
     try {
 
-        result = i64(std::stoll(value));
+        return i64(std::stoll(value));
 
     } catch (...) {
 
         warn("Can't parse value %s\n", key.c_str());
+        return 0;
     }
-
-    return result;
 }
 
 i64
 Defaults::get(Option option, isize nr) const
 {
-    return getInt(string(OptionEnum::key(option)) + (nr ? std::to_string(nr) : ""));
+    try {
+
+        return get(string(OptionEnum::key(option)) + std::to_string(nr));
+
+    } catch (...) {
+
+        return get(string(OptionEnum::key(option)));
+    }
 }
 
 string
@@ -384,8 +387,6 @@ Defaults::getFallbackRaw(const string &key) const
 {
     if (fallbacks.contains(key)) return fallbacks.at(key);
 
-    warn("Invalid key: %s\n", key.c_str());
-    assert(false);
     throw Error(ERROR_INVALID_KEY, key);
 }
 
@@ -393,24 +394,29 @@ i64
 Defaults::getFallback(const string &key) const
 {
     auto value = getFallbackRaw(key);
-    i64 result = 0;
 
     try {
 
-        result = i64(std::stoll(value));
+        return i64(std::stoll(value));
 
     } catch (...) {
 
         warn("Can't parse value %s\n", key.c_str());
+        return 0;
     }
-
-    return result;
 }
 
 i64
 Defaults::getFallback(Option option, isize nr) const
 {
-    return getFallback(string(OptionEnum::key(option)) + (nr ? std::to_string(nr) : ""));
+    try {
+
+        return getFallback(string(OptionEnum::key(option)) + std::to_string(nr));
+
+    } catch (...) {
+
+        return getFallback(string(OptionEnum::key(option)));
+    }
 }
 
 void
@@ -432,13 +438,25 @@ Defaults::set(const string &key, const string &value)
 }
 
 void
+Defaults::set(Option option, const string &value)
+{
+    set(OptionEnum::key(option), value);
+}
+
+void
 Defaults::set(Option option, const string &value, std::vector <isize> objids)
 {
     auto key = string(OptionEnum::key(option));
 
     for (auto &nr : objids) {
-        set(key + (nr ? std::to_string(nr) : ""), value);
+        set(key + std::to_string(nr), value);
     }
+}
+
+void 
+Defaults::set(Option option, i64 value)
+{
+    set(option, std::to_string(value));
 }
 
 void
@@ -453,9 +471,14 @@ Defaults::setFallback(const string &key, const string &value)
     {   SYNCHRONIZED
 
         debug(DEF_DEBUG, "Fallback: %s = %s\n", key.c_str(), value.c_str());
-
         fallbacks[key] = value;
     }
+}
+
+void
+Defaults::setFallback(Option option, const string &value)
+{
+    setFallback(OptionEnum::key(option), value);
 }
 
 void
@@ -464,8 +487,14 @@ Defaults::setFallback(Option option, const string &value, std::vector <isize> ob
     auto key = string(OptionEnum::key(option));
 
     for (auto &nr : objids) {
-        setFallback(key + (nr ? std::to_string(nr) : ""), value);
+        setFallback(key + std::to_string(nr), value);
     }
+}
+
+void
+Defaults::setFallback(Option option, i64 value)
+{
+    setFallback(option, std::to_string(value));
 }
 
 void

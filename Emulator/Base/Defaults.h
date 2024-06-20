@@ -72,8 +72,8 @@ public:
 public:
 
     // Queries a key-value pair
-    string getString(const string &key) const;
-    i64 getInt(const string &key) const;
+    string getRaw(const string &key) const;
+    i64 get(const string &key) const;
     // i64 get(Option option) const;
     i64 get(Option option, isize nr = 0) const;
 
@@ -90,13 +90,17 @@ public:
 
     // Writes a key-value pair into the user storage
     void set(const string &key, const string &value);
-    void set(Option option, const string &value, std::vector<isize> objids = { 0 });
-    void set(Option option, i64 value, std::vector<isize> objids = { 0 });
+    void set(Option option, const string &value);
+    void set(Option option, const string &value, std::vector<isize> objids);
+    void set(Option option, i64 value);
+    void set(Option option, i64 value, std::vector<isize> objids);
 
     // Writes a key-value pair into the fallback storage
     void setFallback(const string &key, const string &value);
-    void setFallback(Option option, const string &value, std::vector<isize> objids = { 0 });
-    void setFallback(Option option, i64 value, std::vector<isize> objids = { 0 });
+    void setFallback(Option option, const string &value);
+    void setFallback(Option option, const string &value, std::vector<isize> objids);
+    void setFallback(Option option, i64 value);
+    void setFallback(Option option, i64 value, std::vector<isize> objids);
 
 
     //
