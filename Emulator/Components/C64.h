@@ -103,6 +103,17 @@ class C64 final : public CoreComponent, public Inspectable<C64Info> {
         }
     };
 
+    ConfigOptions options = {
+
+        OPT_EMU_WARP_BOOT,
+        OPT_EMU_WARP_MODE,
+        OPT_EMU_VSYNC,
+        OPT_EMU_SPEED_ADJUST,
+        OPT_EMU_SNAPSHOTS,
+        OPT_EMU_SNAPSHOT_DELAY,
+        OPT_EMU_RUN_AHEAD
+    };
+    
 private:
 
     // The current configuration
@@ -377,7 +388,15 @@ public:
 
         worker
 
-        << durationOfOneCycle;
+        << durationOfOneCycle
+
+        << config.warpBoot
+        << config.warpMode
+        << config.vsync
+        << config.speedAdjust
+        << config.snapshots
+        << config.snapshotDelay
+        << config.runAhead;
     }
 
     void operator << (SerResetter &worker) override;
@@ -417,6 +436,18 @@ private:
 
     void inspectSlot(EventSlot nr) const;
 
+
+    //
+    // Methods from Configurable
+    //
+
+public:
+
+    const ConfigOptions &getOptions() const override { return options; }
+    i64 getOption(Option opt) const override;
+    void checkOption(Option opt, i64 value) override;
+    void setOption(Option opt, i64 value) override;
+    
 
     //
     // Configuring

@@ -72,6 +72,9 @@ Emulator::initialize()
     main.hardReset();
     ahead.hardReset();
 
+    // Force the run-ahead instance to be rebuild
+    // main.markAsDirty();
+
     assert(isInitialized());
 }
 
@@ -114,7 +117,7 @@ Emulator::revertToFactorySettings()
 u32 *
 Emulator::getTexture() const
 {
-    return config.runAhead && isRunning() ?
+    return main.config.runAhead && isRunning() ?
     ahead.videoPort.getTexture() :
     main.videoPort.getTexture();
 }
@@ -122,7 +125,7 @@ Emulator::getTexture() const
 u32 *
 Emulator::getDmaTexture() const
 {
-    return config.runAhead && isRunning() ?
+    return main.config.runAhead && isRunning() ?
     ahead.videoPort.getDmaTexture() :
     main.videoPort.getDmaTexture();
 }
@@ -506,6 +509,8 @@ Emulator::update()
 bool
 Emulator::shouldWarp()
 {
+    auto &config = main.getConfig();
+
     if (main.cpu.clock < C64::sec(config.warpBoot)) {
 
         return true;
@@ -527,6 +532,8 @@ Emulator::shouldWarp()
 isize
 Emulator::missingFrames() const
 {
+    auto &config = main.getConfig();
+
     // In VSYNC mode, compute exactly one frame per wakeup call
     if (config.vsync) return 1;
 
@@ -543,6 +550,8 @@ Emulator::missingFrames() const
 double
 Emulator::refreshRate() const
 {
+    auto &config = main.getConfig();
+
     if (config.vsync) {
 
         return double(host.getOption(OPT_HOST_REFRESH_RATE));
@@ -556,6 +565,8 @@ Emulator::refreshRate() const
 void
 Emulator::computeFrame()
 {
+    auto &config = main.getConfig();
+
     if (config.runAhead) {
 
         try {
@@ -585,6 +596,8 @@ Emulator::computeFrame()
 void
 Emulator::recreateRunAheadInstance()
 {
+    auto &config = main.getConfig();
+
     debug(RUA_DEBUG, "%lld: Recomputing the run-ahead instance\n", main.frame);
 
     clones++;

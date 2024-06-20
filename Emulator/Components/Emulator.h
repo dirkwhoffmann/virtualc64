@@ -29,17 +29,7 @@ public Inspectable<EmulatorInfo, EmulatorStats>, public Configurable {
     friend class API;
     friend class VirtualC64;
 
-    ConfigOptions options = {
-
-        OPT_EMU_WARP_BOOT,
-        OPT_EMU_WARP_MODE,
-        OPT_EMU_VSYNC,
-        OPT_EMU_SPEED_ADJUST,
-        OPT_EMU_SNAPSHOTS,
-        OPT_EMU_SNAPSHOT_DELAY,
-        OPT_EMU_RUN_AHEAD
-    };
-    
+    ConfigOptions options = { };
     EmulatorConfig config = { };
 
     // The virtual C64
@@ -82,7 +72,7 @@ public:
     bool isInitialized() const;
 
     // Marks the run-ahead instance as dirty
-    [[deprecated]] void markAsDirty() { main.markAsDirty(); }
+    // [[deprecated]] void markAsDirty() { main.markAsDirty(); }
 
 
     //

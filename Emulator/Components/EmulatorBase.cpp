@@ -128,21 +128,13 @@ Emulator::cacheStats(EmulatorStats &result) const
 void
 Emulator::resetConfig()
 {
-    Configurable::resetConfig(defaults);
+
 }
 
 i64
 Emulator::getOption(Option opt) const
 {
     switch (opt) {
-
-        case OPT_EMU_WARP_BOOT:         return config.warpBoot;
-        case OPT_EMU_WARP_MODE:         return config.warpMode;
-        case OPT_EMU_VSYNC:             return config.vsync;
-        case OPT_EMU_SPEED_ADJUST:      return config.speedAdjust;
-        case OPT_EMU_SNAPSHOTS:         return config.snapshots;
-        case OPT_EMU_SNAPSHOT_DELAY:    return config.snapshotDelay;
-        case OPT_EMU_RUN_AHEAD:         return config.runAhead;
 
         default:
             fatalError;
@@ -153,46 +145,6 @@ void
 Emulator::checkOption(Option opt, i64 value)
 {
     switch (opt) {
-
-        case OPT_EMU_WARP_BOOT:
-
-            return;
-
-        case OPT_EMU_WARP_MODE:
-
-            if (!WarpModeEnum::isValid(value)) {
-                throw Error(ERROR_OPT_INV_ARG, WarpModeEnum::keyList());
-            }
-            return;
-
-        case OPT_EMU_VSYNC:
-
-            return;
-
-        case OPT_EMU_SPEED_ADJUST:
-
-            if (value < 50 || value > 200) {
-                throw Error(ERROR_OPT_INV_ARG, "50...200");
-            }
-            return;
-
-        case OPT_EMU_SNAPSHOTS:
-
-            return;
-
-        case OPT_EMU_SNAPSHOT_DELAY:
-
-            if (value < 10 || value > 3600) {
-                throw Error(ERROR_OPT_INV_ARG, "10...3600");
-            }
-            return;
-
-        case OPT_EMU_RUN_AHEAD:
-
-            if (value < 0 || value > 12) {
-                throw Error(ERROR_OPT_INV_ARG, "0...12");
-            }
-            return;
 
         default:
             throw Error(ERROR_OPT_UNSUPPORTED);
@@ -205,44 +157,6 @@ Emulator::setOption(Option opt, i64 value)
     checkOption(opt, value);
 
     switch (opt) {
-
-        case OPT_EMU_WARP_BOOT:
-
-            config.warpBoot = isize(value);
-            return;
-
-        case OPT_EMU_WARP_MODE:
-
-            config.warpMode = WarpMode(value);
-            return;
-
-        case OPT_EMU_VSYNC:
-
-            config.vsync = bool(value);
-            return;
-
-        case OPT_EMU_SPEED_ADJUST:
-
-            config.speedAdjust = isize(value);
-            main.updateClockFrequency();
-            return;
-
-        case OPT_EMU_SNAPSHOTS:
-
-            config.snapshots = bool(value);
-            main.scheduleNextSNPEvent();
-            return;
-
-        case OPT_EMU_SNAPSHOT_DELAY:
-
-            config.snapshotDelay = isize(value);
-            main.scheduleNextSNPEvent();
-            return;
-
-        case OPT_EMU_RUN_AHEAD:
-
-            config.runAhead = isize(value);
-            return;
 
         default:
             fatalError;

@@ -719,163 +719,6 @@ C64::save(u8 *buffer)
 }
 
 void
-C64::_dump(Category category, std::ostream& os) const
-{
-    using namespace util;
-    auto append = [&](const string &s1, const string &s2) {
-        return s1.empty() ? s2 : s1 + ", " + s2;
-    };
-
-    if (category == Category::Config) {
-
-        dumpConfig(os);
-    }
-
-    if (category == Category::State) {
-
-        os << tab("Power");
-        os << bol(isPoweredOn()) << std::endl;
-        os << tab("Running");
-        os << bol(isRunning()) << std::endl;
-        os << tab("Suspended");
-        os << bol(isSuspended()) << std::endl;
-        os << tab("Warping");
-        os << bol(emulator.isWarping()) << std::endl;
-        os << tab("Tracking");
-        os << bol(emulator.isTracking()) << std::endl;
-        os << std::endl;
-
-        string str = "";
-        if (flags & RL::WARP_ON)        str = append(str, "WARP_ON");
-        if (flags & RL::WARP_OFF)       str = append(str, "WARP_OFF");
-        if (flags & RL::BREAKPOINT)     str = append(str, "BREAKPOINT");
-        if (flags & RL::WATCHPOINT)     str = append(str, "WATCHPOINT");
-        if (flags & RL::CPU_JAM)        str = append(str, "CPU_JAM");
-        if (flags & RL::SINGLE_STEP)    str = append(str, "SINGLE_STEP");
-
-        os << tab("Runloop flags");
-        os << (str.empty() ? "-" : str) << std::endl;
-        os << std::endl;
-
-        os << tab("Ultimax mode");
-        os << bol(getUltimax()) << std::endl;
-        os << std::endl;
-
-        os << tab("Frame");
-        os << dec(frame) << std::endl;
-        os << tab("CPU progress");
-        os << dec(cpu.clock) << " Cycles" << std::endl;
-        os << tab("CIA 1 progress");
-        os << dec(cia1.isSleeping() ? cia1.sleepCycle : cpu.clock) << " Cycles" << std::endl;
-        os << tab("CIA 2 progress");
-        os << dec(cia2.isSleeping() ? cia2.sleepCycle : cpu.clock) << " Cycles" << std::endl;
-    }
-
-    if (category == Category::Summary) {
-
-        auto vicRev = (VICIIRevision)emulator.get(OPT_VICII_REVISION);
-        auto sidRev = (SIDRevision)emulator.get(OPT_SID_REVISION);
-        auto cia1Rev = (CIARevision)cia1.getOption(OPT_CIA_REVISION);
-        auto cia2Rev = (CIARevision)cia2.getOption(OPT_CIA_REVISION);
-
-        os << tab("Model");
-        os << (vic.pal() ? "PAL" : "NTSC") << std::endl;
-        os << tab("VICII");
-        os << VICIIRevisionEnum::key(vicRev) << std::endl;
-        os << tab("SID");
-        os << SIDRevisionEnum::key(sidRev) << std::endl;
-        os << tab("CIA 1");
-        os << CIARevisionEnum::key(cia1Rev) << std::endl;
-        os << tab("CIA 2");
-        os << CIARevisionEnum::key(cia2Rev) << std::endl;
-    }
-
-    if (category == Category::Checksums) {
-
-        for (auto &c : subComponents) {
-
-            os << tab(c->objectName());
-            os << hex(c->checksum())  << "  " << dec(c->size()) << " bytes";
-            os << std::endl;
-
-            for (auto &cc : c->subComponents) {
-
-                os << tab(cc->objectName());
-                os << hex(cc->checksum()) << "  " << dec(cc->size()) << " bytes";
-                os << std::endl;
-            }
-        }
-    }
-
-    if (category == Category::Current) {
-
-        os << std::setfill('0') << std::uppercase << std::hex << std::left;
-        os << " PC  SR AC XR YR SP  NV-BDIZC" << std::endl;
-        os << std::setw(4) << isize(cpu.reg.pc0) << " ";
-        os << std::setw(2) << isize(cpu.getP()) << " ";
-        os << std::setw(2) << isize(cpu.reg.a) << " ";
-        os << std::setw(2) << isize(cpu.reg.x) << " ";
-        os << std::setw(2) << isize(cpu.reg.y) << " ";
-        os << std::setw(2) << isize(cpu.reg.sp) << "  ";
-        os << (cpu.getN() ? "1" : "0");
-        os << (cpu.getV() ? "1" : "0");
-        os << "1";
-        os << (cpu.getB() ? "1" : "0");
-        os << (cpu.getD() ? "1" : "0");
-        os << (cpu.getI() ? "1" : "0");
-        os << (cpu.getZ() ? "1" : "0");
-        os << (cpu.getC() ? "1" : "0");
-        os << std::endl;
-    }
-
-    if (category == Category::Sizeof) {
-
-        os << tab("Emulator");
-        os << dec(sizeof(Emulator)) << " Bytes" << std::endl;
-        os << tab("C64");
-        os << dec(sizeof(C64)) << " Bytes" << std::endl;
-        os << tab("C64 Memory");
-        os << dec(sizeof(C64Memory)) << " Bytes" << std::endl;
-        os << tab("Drive Memory");
-        os << dec(sizeof(DriveMemory)) << " Bytes" << std::endl;
-        os << tab("CPU");
-        os << dec(sizeof(CPU)) << " Bytes" << std::endl;
-        os << tab("CIA");
-        os << dec(sizeof(CIA)) << " Bytes" << std::endl;
-        os << tab("VICII");
-        os << dec(sizeof(VICII)) << " Bytes" << std::endl;
-        os << tab("SIDBridge");
-        os << dec(sizeof(SIDBridge)) << " Bytes" << std::endl;
-        os << tab("Power supply");
-        os << dec(sizeof(PowerPort)) << " Bytes" << std::endl;
-        os << tab("Control port");
-        os << dec(sizeof(ControlPort)) << " Bytes" << std::endl;
-        os << tab("Expansion port");
-        os << dec(sizeof(ExpansionPort)) << " Bytes" << std::endl;
-        os << tab("SerialPort");
-        os << dec(sizeof(SerialPort)) << " Bytes" << std::endl;
-        os << tab("Keyboard");
-        os << dec(sizeof(Keyboard)) << " Bytes" << std::endl;
-        os << tab("Drive");
-        os << dec(sizeof(Drive)) << " Bytes" << std::endl;
-        os << tab("Parallel Cable");
-        os << dec(sizeof(ParCable)) << " Bytes" << std::endl;
-        os << tab("Datasette");
-        os << dec(sizeof(Datasette)) << " Bytes" << std::endl;
-        os << tab("RetroShell");
-        os << dec(sizeof(RetroShell)) << " Bytes" << std::endl;
-        os << tab("Regression Tester");
-        os << dec(sizeof(RegressionTester)) << " Bytes" << std::endl;
-        os << tab("Recorder");
-        os << dec(sizeof(Recorder)) << " Bytes" << std::endl;
-        os << tab("MsgQueue");
-        os << dec(sizeof(MsgQueue)) << " Bytes" << std::endl;
-        os << tab("CmdQueue");
-        os << dec(sizeof(CmdQueue)) << " Bytes" << std::endl;
-    }
-}
-
-void
 C64::record() const
 {
     Inspectable<C64Info>::record();
@@ -1563,6 +1406,15 @@ C64::flash(const MediaFile &file)
                 loadSnapshot(dynamic_cast<const Snapshot &>(file));
                 break;
                 
+            case FILETYPE_D64:
+            case FILETYPE_T64:
+            case FILETYPE_P00:
+            case FILETYPE_PRG:
+            case FILETYPE_FOLDER:
+
+                flash(file, 0);
+                break;
+
             default:
                 fatalError;
         }

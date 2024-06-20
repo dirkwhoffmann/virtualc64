@@ -292,32 +292,6 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
     }
 };
 
-enum_long(WARP_MODE)
-{
-    WARP_AUTO,
-    WARP_NEVER,
-    WARP_ALWAYS
-};
-typedef WARP_MODE WarpMode;
-
-struct WarpModeEnum : util::Reflection<WarpModeEnum, WarpMode>
-{
-    static constexpr long minVal = 0;
-    static constexpr long maxVal = WARP_ALWAYS;
-    static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
-
-    static const char *prefix() { return "WARP"; }
-    static const char *key(long value)
-    {
-        switch (value) {
-
-            case WARP_AUTO:     return "WARP_AUTO";
-            case WARP_NEVER:    return "WARP_NEVER";
-            case WARP_ALWAYS:   return "WARP_ALWAYS";
-        }
-        return "???";
-    }
-};
 
 //
 // Structures
@@ -326,26 +300,7 @@ struct WarpModeEnum : util::Reflection<WarpModeEnum, WarpMode>
 //! The current emulator configuration
 typedef struct
 {
-    //! After a reset, the emulator runs in warp mode for this amout of seconds
-    isize warpBoot;
 
-    //! Warp mode
-    WarpMode warpMode;
-
-    //! Vertical Synchronization
-    bool vsync;
-
-    //! Emulator speed in percent (100 is native speed)
-    isize speedAdjust;
-
-    //! Enable auto-snapshots
-    bool snapshots;
-
-    //! Delay between two auto-snapshots in seconds
-    isize snapshotDelay;
-
-    //! Number of run-ahead frames (0 = run-ahead is disabled)
-    isize runAhead;
 }
 EmulatorConfig;
 
