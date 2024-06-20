@@ -24,6 +24,7 @@ enum_long(ERROR_CODE)
     ERROR_UNKNOWN,              ///< Unclassified error condition
 
     // Execution state
+    ERROR_LAUNCH,               ///< Launch error
     ERROR_POWERED_OFF,          ///< The emulator is powered off
     ERROR_POWERED_ON,           ///< The emulator is powered on
     ERROR_RUNNING,              ///< The emulator is running
@@ -116,6 +117,7 @@ struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
             case ERROR_OK:                      return "OK";
             case ERROR_UNKNOWN:                 return "UNKNOWN";
 
+            case ERROR_LAUNCH:                  return "LAUNCH";
             case ERROR_POWERED_OFF:             return "POWERED_OFF";
             case ERROR_POWERED_ON:              return "POWERED_ON";
             case ERROR_RUNNING:                 return "RUNNING";

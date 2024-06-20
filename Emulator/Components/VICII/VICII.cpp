@@ -153,7 +153,7 @@ VICII::setRevision(VICIIRevision revision)
 
     } else {
 
-        assert(isPoweredOff());
+        assert(isPoweredOff() || !emulator.isInitialized());
     }
 
     recorder.stopRecording();

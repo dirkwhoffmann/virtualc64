@@ -58,30 +58,28 @@ Emulator::launch(const void *listener, Callback *func)
 void
 Emulator::initialize()
 {
+    // Make sure this function is only called once
+    if (isInitialized()) throw Error(ERROR_LAUNCH, "The emulator is already initialized.");
+
     // Initialize all components
     main.initialize();
     ahead.initialize();
 
     // Setup the default configuration
-    resetConfig();
-    host.resetConfig();
-    main.resetConfig();
-    ahead.resetConfig();
-
-    // Perform a hard reset
-    main.hardReset();
-    ahead.hardReset();
+    revertToFactorySettings();
 
     // Force the run-ahead instance to be rebuild
     // main.markAsDirty();
 
+    // Switch state
+    state = newState = STATE_OFF;
     assert(isInitialized());
 }
 
 bool 
 Emulator::isInitialized() const
 {
-    return main.vic.vicfunc[1] != nullptr;
+    return state != STATE_UNINIT;
 }
 
 void
@@ -107,11 +105,14 @@ Emulator::stepOver()
 void
 Emulator::revertToFactorySettings()
 {
-    // Power off the emulator
-    powerOff();
+    // Setup the default configuration
+    host.resetConfig();
+    main.resetConfig();
+    ahead.resetConfig();
 
-    // Put all components into their initial state
-    initialize();
+    // Perform a hard reset
+    main.hardReset();
+    ahead.hardReset();
 }
 
 u32 *
@@ -246,6 +247,7 @@ Emulator::set(C64Model model)
 
     {   SUSPENDED
 
+        powerOff();
         revertToFactorySettings();
 
         switch(model) {

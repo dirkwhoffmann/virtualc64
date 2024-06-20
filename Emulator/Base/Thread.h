@@ -40,8 +40,8 @@ protected:
     std::thread thread;
     
     // The current thread state and a change request
-    ExecState state = STATE_OFF;
-    ExecState newState = STATE_OFF;
+    ExecState state = STATE_UNINIT;
+    ExecState newState = STATE_UNINIT;
     std::atomic_flag stateChangeRequest {};
 
     // Warp and track state

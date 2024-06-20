@@ -25,6 +25,10 @@ Error::Error(ErrorCode code, const string &s)
         case ERROR_OK:
             fatalError;
 
+        case ERROR_LAUNCH:
+            description = s == "" ? "Launch error." : s;
+            break;
+
         case ERROR_POWERED_OFF:
             description = "The emulator is powered off.";
             break;
