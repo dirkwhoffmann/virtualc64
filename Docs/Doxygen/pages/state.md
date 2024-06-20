@@ -6,6 +6,7 @@ After lauching, the emulator runs as a single thread alongside the GUI. The thre
  
  The following states are distinguishedd:
  
+ - **Uninit:** The emulator has just been created
  - **Off:** The emulator is turned off
  - **Paused:** The emulator is turned on but not running
  - **Running:** The emulator is turned on and running

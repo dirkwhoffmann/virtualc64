@@ -130,12 +130,6 @@ VirtualC64::~VirtualC64()
     emu = nullptr;
 }
 
-const EmulatorConfig &
-VirtualC64::getConfig() const 
-{
-    return emu->getConfig();
-}
-
 const EmulatorInfo &
 VirtualC64::getInfo() const 
 {
@@ -797,9 +791,22 @@ DmaDebuggerAPI::getConfig() const
 // Keyboard
 //
 
-bool KeyboardAPI::isPressed(C64Key key) const
+bool 
+KeyboardAPI::isPressed(C64Key key) const
 {
     return keyboard->isPressed(key);
+}
+
+void
+KeyboardAPI::press(C64Key key, double delay) const
+{
+    emu->put(Cmd(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
+}
+
+void
+KeyboardAPI::release(C64Key key, double delay) const
+{
+    emu->put(Cmd(CMD_KEY_RELEASE, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
 }
 
 void KeyboardAPI::autoType(const string &text)

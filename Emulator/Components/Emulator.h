@@ -24,13 +24,13 @@ namespace vc64 {
 class VirtualC64;
 
 class Emulator : public Thread, public Synchronizable,
-public Inspectable<EmulatorInfo, EmulatorStats>, public Configurable {
+public Inspectable<EmulatorInfo, EmulatorStats> {
 
     friend class API;
     friend class VirtualC64;
 
-    ConfigOptions options = { };
-    EmulatorConfig config = { };
+    // ConfigOptions options = { };
+    // EmulatorConfig config = { };
 
     // The virtual C64
     C64 main = C64(*this, 0);
@@ -104,11 +104,12 @@ public:
 
 public:
 
+    /*
     const ConfigOptions &getOptions() const override { return options; }
     i64 getOption(Option opt) const override;
     void checkOption(Option opt, i64 value) override;
     void setOption(Option opt, i64 value) override;
-
+    */
 
     //
     // Main entry points for configuring the emulator
@@ -136,8 +137,8 @@ public:
 
 private:
 
-    const EmulatorConfig &getConfig() const { return config; }
-    void resetConfig();
+    // const EmulatorConfig &getConfig() const { return config; }
+    // void resetConfig();
 
     // Returns the target component for an option
     std::vector<Configurable *> routeOption(Option opt);

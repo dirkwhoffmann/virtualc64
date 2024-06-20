@@ -182,11 +182,11 @@ Interpreter::initCommandShell(Command &root)
              "Display the current configuration",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(emulator, Category::Config);
+        retroShell.dump(c64, Category::Config);
     });
 
     root.add({cmd, "set"}, "Configure the component");
-    for (auto &opt : emulator.getOptions()) {
+    for (auto &opt : c64.getOptions()) {
 
         root.add({cmd, "set", OptionEnum::plainkey(opt)},
                  {OptionParser::argList(opt)},

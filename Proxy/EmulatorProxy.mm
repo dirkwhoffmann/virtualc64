@@ -1829,10 +1829,12 @@ using namespace vc64;
     [self emu]->powerOff();
 }
 
+/*
 - (EmulatorConfig)config
 {
     return [self emu]->getConfig();
 }
+*/
 
 - (EmulatorInfo)info
 {

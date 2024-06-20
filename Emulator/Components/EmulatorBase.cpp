@@ -25,11 +25,6 @@ Emulator::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
-    if (category == Category::Config) {
-
-        dumpConfig(os);
-    }
-
     if (category == Category::Debug) {
 
         for (isize i = DebugFlagEnum::minVal; i < DebugFlagEnum::maxVal; i++) {
@@ -125,6 +120,7 @@ Emulator::cacheStats(EmulatorStats &result) const
 // Methods from Configurable
 //
 
+/*
 void
 Emulator::resetConfig()
 {
@@ -162,5 +158,6 @@ Emulator::setOption(Option opt, i64 value)
             fatalError;
     }
 }
+*/
 
 }

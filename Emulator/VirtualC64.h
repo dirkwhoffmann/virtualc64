@@ -322,6 +322,30 @@ struct KeyboardAPI : API {
 
     class Keyboard *keyboard = nullptr;
 
+    /** @brief  Presses a key
+     *  @param  key     The key to press.
+     *  @param  delay   An optional delay in seconds.
+     *
+     *  If no delay is specified, the function will immediately modify the
+     *  C64's keyboard matrix. Otherwise, it will ask the event scheduler
+     *  to modify the matrix with the specified delay.
+     *
+     *  @note If you wish to press multiple keys, make sure to let some time
+     *  pass between two key presses. You need to give the C64 time to scan the
+     *  keyboard matrix before another key can be pressed.
+     */
+    void press(C64Key key, double delay = 0.0) const;
+
+    /** @brief  Releases a key
+     *  @param  key     The key to release.
+     *  @param  delay   An optional delay in seconds.
+     *
+     *  If no delay is specified, the function will immediately modify the
+     *  C64's keyboard matrix. Otherwise, it will ask the event scheduler
+     *  to modify the matrix with the specified delay.
+     */
+    void release(C64Key key, double delay = 0.0) const;
+
     /** @brief  Checks if a key is currently pressed.
      *  @param  key     The key to check.
      */
@@ -1084,13 +1108,6 @@ public:
 
     VirtualC64();
     ~VirtualC64();
-
-    /// @name Analyzing the emulator
-    /// @{
-
-    /** @brief  Returns the component's current configuration.
-     */
-    const EmulatorConfig &getConfig() const;
 
     /** @brief  Returns the component's current state.
      */

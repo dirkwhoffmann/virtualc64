@@ -352,7 +352,6 @@ Emulator::routeOption(Option opt)
 {
     std::vector<Configurable *> result;
 
-    if (isValidOption(opt)) result.push_back(this);
     if (host.isValidOption(opt)) result.push_back(&host);
     main.routeOption(opt, result);
 

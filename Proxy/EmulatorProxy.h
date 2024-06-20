@@ -149,7 +149,7 @@ using namespace vc64;
 @property (class, readonly) NSString *build;
 @property (class, readonly) NSString *version;
 
-@property (readonly) EmulatorConfig config;
+// @property (readonly) EmulatorConfig config;
 @property (readonly) EmulatorInfo info;
 @property (readonly) EmulatorInfo cachedInfo;
 @property (readonly) EmulatorStats stats;

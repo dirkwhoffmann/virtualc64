@@ -307,22 +307,23 @@ EmulatorConfig;
 //! The current emulator state
 typedef struct
 {
-    ExecState state;
-    isize refreshRate;
-    bool powered;
-    bool paused;
-    bool running;
-    bool suspended;
-    bool warping;
-    bool tracking;
+    ExecState state;        ///< The current emulator state
+    isize refreshRate;      ///< Screen refresh rate of the virtual C64
+    bool powered;           ///< Indicates if the emulator is powered on
+    bool paused;            ///< Indicates if emulation is paused
+    bool running;           ///< Indicates if the emulator is running
+    bool suspended;         ///< Indicates if the emulator is in suspended state
+    bool warping;           ///< Indicates if warp mode is currently on
+    bool tracking;          ///< Indicates if track mode is enabled
 }
 EmulatorInfo;
 
+//! Collected run-time data
 typedef struct
 {
-    double cpuLoad;
-    double fps;
-    isize resyncs;
+    double cpuLoad;         ///< Measured CPU load
+    double fps;             ///< Measured frames per seconds
+    isize resyncs;          ///< Number of out-of-sync conditions
 }
 EmulatorStats;
 

@@ -65,7 +65,7 @@ public:
     // Return a timestamp (if present)
     virtual time_t timestamp() const { return time_t(0); }
 
-    // Return a preview image (only available for snapshot files)
+    // Return the size of the preview image (only available for snapshot files)
     virtual std::pair <isize,isize> previewImageSize() const { return { 0, 0 }; }
 
     // Return a preview image (only available for snapshot files)
