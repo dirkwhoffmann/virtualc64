@@ -1291,12 +1291,6 @@ DefaultsAPI::remove(Option option)
 }
 
 void
-DefaultsAPI::remove(Option option, isize nr)
-{
-    defaults->remove(option, nr);
-}
-
-void
 DefaultsAPI::remove(Option option, std::vector <isize> nrs)
 {
     defaults->remove(option, nrs);

@@ -163,7 +163,7 @@ using namespace vc64;
 
 - (void)remove:(Option) option nr:(NSInteger)nr
 {
-    [self props]->remove(option, nr);
+    [self props]->remove(option, {nr});
 }
 
 @end

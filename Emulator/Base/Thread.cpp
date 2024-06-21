@@ -235,6 +235,7 @@ Thread::switchState(ExecState newState)
                     default:
                         invalid();
                 }
+                break;
 
             default:
                 fatalError;

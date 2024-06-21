@@ -528,15 +528,17 @@ Defaults::remove(const string &key)
 }
 
 void
-Defaults::remove(Option option, isize nr)
+Defaults::remove(Option option)
 {
-    remove(string(OptionEnum::key(option)) + (nr ? std::to_string(nr) : ""));
+    remove(string(OptionEnum::key(option)));
 }
 
 void
 Defaults::remove(Option option, std::vector <isize> nrs)
 {
-    for (auto &nr : nrs) remove(option, nr);
+    for (auto &nr : nrs) {
+        remove(string(OptionEnum::key(option)) + std::to_string(nr));
+    }
 }
 
 }

@@ -920,13 +920,6 @@ public:
      */
     void remove(Option option) throws;
 
-    /** @brief  Deletes a key-value pair.
-     *  @param  option  The option's name forms the prefix of the key.
-     *  @param  nr      The key is parameterized by adding this value as suffix.
-     *  @throw  VC64Error (#ERROR_INVALID_KEY)
-     */
-    void remove(Option option, isize nr) throws;
-
     /** @brief  Deletes multiple key-value pairs.
      *  @param  option  The option's name forms the prefix of the keys.
      *  @param  nrs     The keys are parameterized by adding the vector values as suffixes.

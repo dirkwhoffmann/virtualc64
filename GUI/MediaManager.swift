@@ -264,6 +264,7 @@ class MediaManager {
 
                 debug(.media, "Snapshot")
                 try emu.flash(proxy)
+                debug(.media, "Snapshot flashed")
 
             case .CRT:
 
