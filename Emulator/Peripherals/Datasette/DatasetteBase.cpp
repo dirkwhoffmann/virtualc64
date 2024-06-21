@@ -13,6 +13,7 @@
 #include "config.h"
 #include "Datasette.h"
 #include "MsgQueue.h"
+#include "IOUtils.h"
 
 namespace vc64 {
 

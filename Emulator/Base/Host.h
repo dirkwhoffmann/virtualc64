@@ -12,8 +12,8 @@
 
 #pragma once
 
+#include "HostTypes.h"
 #include "CoreComponent.h"
-#include "IOUtils.h"
 
 typedef struct
 {

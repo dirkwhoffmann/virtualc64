@@ -156,49 +156,4 @@ public:
     void exportDiff(std::ostream& ss) const { exportConfig(ss, true); }
 };
 
-/* This class exposes references to all subcomponents of the C64. It's purpose
- * is the simply access to components. E.g., VICII can be accessed via vicii
- * instead of c64.vicii. */
-class References {
-
-protected:
-
-    class AudioPort &audioPort;
-    class C64 &c64;
-    class CIA1 &cia1;
-    class CIA2 &cia2;
-    class ControlPort &port1;
-    class ControlPort &port2;
-    class CPU &cpu;
-    class Datasette &datasette;
-    class Debugger &debugger;
-    class Drive &drive8;
-    class Drive &drive9;
-    class ExpansionPort &expansionPort;
-    class Host &host;
-    class SerialPort &serialPort;
-    class Keyboard &keyboard;
-    class C64Memory &mem;
-    class Monitor &monitor;
-    class MsgQueue &msgQueue;
-    class ParCable &parCable;
-    class PowerPort &powerSupply;
-    class Recorder &recorder;
-    class RegressionTester &regressionTester;
-    class RetroShell &retroShell;
-    class SIDBridge &sidBridge;
-    class SID& sid0;
-    class SID& sid1;
-    class SID& sid2;
-    class SID& sid3;
-    class VICII &vic;
-    class VideoPort &videoPort;
-
-    Drive *drive[2] = { &drive8, &drive9 };
-
-public:
-
-    References(C64& ref);
-};
-
 }

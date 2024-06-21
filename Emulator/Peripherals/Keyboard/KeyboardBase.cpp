@@ -12,6 +12,7 @@
 
 #include "config.h"
 #include "Keyboard.h"
+#include "IOUtils.h"
 
 namespace vc64 {
 

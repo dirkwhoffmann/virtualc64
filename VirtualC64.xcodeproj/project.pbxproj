@@ -1035,6 +1035,7 @@
 		50CD3697281681E700E40BFC /* FFmpeg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFmpeg.h; sourceTree = "<group>"; };
 		50CD369A2817D69000E40BFC /* Defaults.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Defaults.cpp; sourceTree = "<group>"; };
 		50CD369B2817D69000E40BFC /* Defaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Defaults.h; sourceTree = "<group>"; };
+		50CFF5652C2589DF00A47ECC /* HostTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HostTypes.h; sourceTree = "<group>"; };
 		50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerMenu.swift; sourceTree = "<group>"; };
 		50D20B742508F6D70088E8F2 /* VICIICycles.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICIICycles.cpp; sourceTree = "<group>"; };
 		50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VirtualKeyboard.xib; sourceTree = "<group>"; };
@@ -2002,6 +2003,7 @@
 				504C42F124AF29AB00E69CAE /* MsgQueue.cpp */,
 				50CD369B2817D69000E40BFC /* Defaults.h */,
 				50CD369A2817D69000E40BFC /* Defaults.cpp */,
+				50CFF5652C2589DF00A47ECC /* HostTypes.h */,
 				50F5B6A12959C44E000457A0 /* Host.h */,
 				50F5B6A02959C44E000457A0 /* Host.cpp */,
 			);

@@ -28,6 +28,11 @@ OptionParser::create(Option opt, i64 arg)
 
     switch (opt) {
 
+        case OPT_HOST_SAMPLE_RATE:          return numParser(" Hz");
+        case OPT_HOST_REFRESH_RATE:         return numParser(" fps");
+        case OPT_HOST_FRAMEBUF_WIDTH:       return numParser(" pixels");
+        case OPT_HOST_FRAMEBUF_HEIGHT:      return numParser(" pixels");
+
         case OPT_EMU_WARP_MODE:             return enumParser.template operator()<WarpModeEnum>();
         case OPT_EMU_WARP_BOOT:             return numParser(" sec");
         case OPT_EMU_VSYNC:                 return boolParser();
@@ -35,11 +40,6 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_EMU_SNAPSHOTS:             return boolParser();
         case OPT_EMU_SNAPSHOT_DELAY:        return numParser(" sec");
         case OPT_EMU_RUN_AHEAD:             return numParser(" frames");
-
-        case OPT_HOST_SAMPLE_RATE:          return numParser(" Hz");
-        case OPT_HOST_REFRESH_RATE:         return numParser(" fps");
-        case OPT_HOST_FRAMEBUF_WIDTH:       return numParser(" pixels");
-        case OPT_HOST_FRAMEBUF_HEIGHT:      return numParser(" pixels");
 
         case OPT_VICII_REVISION:            return enumParser.template operator()<VICIIRevisionEnum>();
         case OPT_VICII_GRAY_DOT_BUG:        return boolParser();

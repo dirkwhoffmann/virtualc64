@@ -14,6 +14,7 @@
 #include "Defaults.h"
 #include "C64.h"
 #include "StringUtils.h"
+#include "IOUtils.h"
 
 namespace vc64 {
 

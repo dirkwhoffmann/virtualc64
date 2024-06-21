@@ -33,9 +33,9 @@ enum_long(OPT)
     // Emulator
     OPT_EMU_WARP_BOOT,          ///< Warp-boot time in seconds
     OPT_EMU_WARP_MODE,          ///< Warp activation mode
-    OPT_EMU_VSYNC,              ///< Adapt the frame rate to the VSYNC signal
+    OPT_EMU_VSYNC,              ///< Derive the frame rate to the VSYNC signal
     OPT_EMU_SPEED_ADJUST,       ///< Speed adjustment in percent
-    OPT_EMU_SNAPSHOTS,          ///< Take a snapshots once in a while
+    OPT_EMU_SNAPSHOTS,          ///< Automatically take a snapshots
     OPT_EMU_SNAPSHOT_DELAY,     ///< Delay between two snapshots in seconds
     OPT_EMU_RUN_AHEAD,          ///< Number of run-ahead frames
 
@@ -336,7 +336,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_EMU_WARP_MODE:         return "Warp activation";
             case OPT_EMU_VSYNC:             return "VSYNC mode";
             case OPT_EMU_SPEED_ADJUST:      return "Speed adjustment";
-            case OPT_EMU_SNAPSHOTS:         return "Take snapshots once in a while";
+            case OPT_EMU_SNAPSHOTS:         return "Automatically take snapshots";
             case OPT_EMU_SNAPSHOT_DELAY:    return "Time span between two snapshots";
             case OPT_EMU_RUN_AHEAD:         return "Run-ahead frames";
 
