@@ -798,15 +798,21 @@ KeyboardAPI::isPressed(C64Key key) const
 }
 
 void
-KeyboardAPI::press(C64Key key, double delay) const
+KeyboardAPI::press(C64Key key, double delay)
 {
     emu->put(Cmd(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
 }
 
 void
-KeyboardAPI::release(C64Key key, double delay) const
+KeyboardAPI::release(C64Key key, double delay)
 {
     emu->put(Cmd(CMD_KEY_RELEASE, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
+}
+
+void 
+KeyboardAPI::releaseAll()
+{
+    emu->put(Cmd(CMD_KEY_RELEASE_ALL));
 }
 
 void KeyboardAPI::autoType(const string &text)
