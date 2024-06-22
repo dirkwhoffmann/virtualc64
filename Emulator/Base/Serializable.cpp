@@ -18,14 +18,14 @@ namespace vc64 {
 void 
 Serializable::hardReset() {
 
-    SerHardResetter resetter;
+    SerResetter resetter(true);
     *this << resetter;
 }
 
 void
 Serializable::softReset() {
 
-    SerSoftResetter resetter;
+    SerResetter resetter(false);
     *this << resetter;
 }
 

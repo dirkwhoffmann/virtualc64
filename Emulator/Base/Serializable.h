@@ -25,7 +25,7 @@ public:
 
     virtual ~Serializable() = default;
 
-    // Serialization operators (to be implemented by the subclass)
+    // Serializers (to be implemented by the subclass)
     virtual void operator << (class SerCounter &worker) = 0;
     virtual void operator << (class SerChecker &worker) = 0;
     virtual void operator << (class SerResetter &worker) = 0;
@@ -520,12 +520,21 @@ return *this; \
 
 class SerResetter
 {
+    bool hard;
+
+public:
+
+    SerResetter(bool hard) : hard(hard) { };
+
+    bool isHard() { return hard; }
+    bool isSoft() { return !isHard(); }
+
+    /*
 protected:
 
     SerResetter() { }
     virtual ~SerResetter() = default;
-    
-public:
+    */
 
     RESET(bool)
     RESET(char)
@@ -586,41 +595,14 @@ public:
     }
 };
 
-class SerSoftResetter : public SerResetter
-{
-public:
-    SerSoftResetter() { }
-};
-
-class SerHardResetter : public SerResetter
-{
-public:
-    SerHardResetter() { }
-};
-
-template <class T>
-static constexpr bool isSoftResetter(T &worker) {
-
-    auto &id = typeid(worker);
-    return id == typeid(SerSoftResetter);
-}
-
-template <class T>
-static constexpr bool isHardResetter(T &worker) {
-
-    auto &id = typeid(worker);
-    return id == typeid(SerHardResetter);
-}
-
-template <class T>
-static constexpr bool isResetter(T &worker) {
-    return isSoftResetter(worker) || isHardResetter(worker);
-}
-
-template <class T>
-static constexpr bool isChecker(T &worker) {
-    return typeid(worker) == typeid(SerChecker);
-}
+template <class T> inline bool isChecker(T &worker) { return false; }
+template <> inline bool isChecker(SerChecker &worker) { return true; }
+template <class T> inline bool isResetter(T &worker) { return false; }
+template <> inline bool isResetter(SerResetter &worker) { return true; }
+template <class T> inline bool isSoftResetter(T &worker) { return false; }
+template <> inline bool isSoftResetter(SerResetter &worker) { return worker.isSoft(); }
+template <class T> inline bool isHardResetter(T &worker) { return false; }
+template <> inline bool isHardResetter(SerResetter &worker) { return worker.isHard(); }
 
 }
 

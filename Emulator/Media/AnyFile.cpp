@@ -81,7 +81,7 @@ void
 AnyFile::init(FILE *file)
 {
     assert(file);
-    std::stringstream stream;
+    std::stringstream stream(std::ios::binary);
     int c; while ((c = fgetc(file)) != EOF) { stream.put((char)c); }
     init(stream);
 }
