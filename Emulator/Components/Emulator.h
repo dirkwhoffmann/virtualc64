@@ -29,9 +29,6 @@ public Inspectable<EmulatorInfo, EmulatorStats> {
     friend class API;
     friend class VirtualC64;
 
-    // ConfigOptions options = { };
-    // EmulatorConfig config = { };
-
     // The virtual C64
     C64 main = C64(*this, 0);
 
@@ -68,9 +65,6 @@ public:
     // Initializes all components
     void initialize();
 
-    // Checks the initialization state
-    bool isInitialized() const;
-
 
     //
     // Methods from CoreComponent
@@ -96,7 +90,7 @@ public:
 
 
     //
-    // Main entry points for configuring the emulator
+    // Main API for configuring the emulator
     //
 
 public:

@@ -17,16 +17,6 @@
 
 namespace vc64 {
 
-Thread::Thread()
-{
-
-}
-
-Thread::~Thread()
-{
-
-}
-
 void
 Thread::launch()
 {

@@ -16,10 +16,6 @@
 
 namespace vc64 {
 
-//
-// Methods from Dumpable
-//
-
 void
 Emulator::_dump(Category category, std::ostream& os) const
 {
@@ -81,11 +77,6 @@ Emulator::_dump(Category category, std::ostream& os) const
         os << dec(isize(refreshRate())) << " Fps" << std::endl;
     }
 }
-
-
-//
-// Methods from Inspectable
-//
 
 void
 Emulator::cacheInfo(EmulatorInfo &result) const

@@ -76,12 +76,6 @@ Emulator::initialize()
     assert(isInitialized());
 }
 
-bool 
-Emulator::isInitialized() const
-{
-    return state != STATE_UNINIT;
-}
-
 void
 Emulator::stepInto()
 {

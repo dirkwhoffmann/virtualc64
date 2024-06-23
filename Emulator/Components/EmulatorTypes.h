@@ -208,6 +208,7 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
     {
         switch (value) {
 
+                //General
             case FLAG_XFILES:                   return "Report paranormal activity";
             case FLAG_CNF_DEBUG:                return "Configuration";
             case FLAG_DEF_DEBUG:                return "User defaults";
@@ -296,13 +297,6 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
 //
 // Structures
 //
-
-//! The current emulator configuration
-typedef struct
-{
-
-}
-EmulatorConfig;
 
 //! The current emulator state
 typedef struct

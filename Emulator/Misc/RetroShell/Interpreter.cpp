@@ -16,11 +16,6 @@
 
 namespace vc64 {
 
-Interpreter::Interpreter(C64 &ref) : SubComponent(ref)
-{
-
-}
-
 void
 Interpreter::_initialize()
 {

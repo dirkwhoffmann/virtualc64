@@ -58,7 +58,8 @@ class Interpreter: public SubComponent
 
 public:
     
-    Interpreter(C64 &ref);
+    // Interpreter(C64 &ref);
+    using SubComponent::SubComponent;
     Interpreter& operator= (const Interpreter& other) { return *this; }
 
 
