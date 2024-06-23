@@ -16,7 +16,7 @@
 #include "MsgQueue.h"
 #include "Thread.h"
 
-// Sub components
+// Subcomponents
 #include "Keyboard.h"
 #include "C64Memory.h"
 #include "Debugger.h"
@@ -124,7 +124,7 @@ private:
 
 
     //
-    // Sub components
+    // Subcomponents
     //
 
 public:

@@ -75,7 +75,7 @@ class Mouse final : public SubComponent {
 
     
     //
-    // Sub components
+    // Subcomponents
     //
 
     // Shake detector

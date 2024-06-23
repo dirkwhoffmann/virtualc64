@@ -43,7 +43,7 @@ class ControlPort final : public SubComponent {
 
 
     //
-    // Sub components
+    // Subcomponents
     //
 
 public:

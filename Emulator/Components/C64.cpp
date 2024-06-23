@@ -702,8 +702,6 @@ C64::save(u8 *buffer)
     isize count = 8;
     write64(buffer, checksum());
 
- 
-
     // Save internal state
     count += Serializable::save(buffer);
 

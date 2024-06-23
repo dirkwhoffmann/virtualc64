@@ -103,7 +103,7 @@ class Drive final : public SubComponent, public Inspectable<DriveInfo> {
 
     
     //
-    // Sub components
+    // Subcomponents
     //
     
 public:

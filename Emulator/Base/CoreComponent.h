@@ -22,6 +22,7 @@
 #include "Suspendable.h"
 #include "ThreadTypes.h"
 #include <vector>
+#include <functional>
 
 namespace vc64 {
 
@@ -44,7 +45,7 @@ public:
     // Object identifier (to distinguish instances of the same component)
     const isize objid;
 
-    // Sub components
+    // Subcomponents
     std::vector<CoreComponent *> subComponents;
 
 
@@ -54,8 +55,7 @@ public:
     
 public:
 
-    CoreComponent(Emulator& ref) : emulator(ref), objid(0) { }
-    CoreComponent(Emulator& ref, isize id) : emulator(ref), objid(id) { }
+    CoreComponent(Emulator& ref, isize id = 0) : emulator(ref), objid(id) { }
 
     virtual const Descriptions &getDescriptions() const = 0;
     const char *objectName() const override;

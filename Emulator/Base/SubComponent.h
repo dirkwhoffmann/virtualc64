@@ -13,7 +13,6 @@
 #pragma once
 
 #include "CoreComponent.h"
-#include "CPUTypes.h"
 
 namespace vc64 {
 
@@ -59,9 +58,6 @@ public:
     References(C64& ref);
 };
 
-
-/* Base class for all subcomponents of the C64.
- */
 class SubComponent : public CoreComponent, public References {
 
 public:

@@ -132,7 +132,7 @@ class CIA : public SubComponent, public Inspectable<CIAInfo, CIAStats> {
 
     
     //
-    // Sub components
+    // Subcomponents
     //
     
 public:

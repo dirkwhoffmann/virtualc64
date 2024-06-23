@@ -57,7 +57,7 @@ class SIDBridge final : public SubComponent {
 
     
     //
-    // Sub components
+    // Subcomponents
     //
 
 public:

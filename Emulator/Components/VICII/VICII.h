@@ -219,7 +219,7 @@ class VICII final : public SubComponent, public Inspectable<VICIIInfo, VICIIStat
 
 public:
     
-    // Sub components
+    // Subcomponents
     DmaDebugger dmaDebugger;
 
     /* The VICII function table. Each entry in this table is a pointer to a

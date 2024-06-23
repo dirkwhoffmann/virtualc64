@@ -17,37 +17,6 @@
 
 namespace vc64 {
 
-/* Object model:
- *
- * ------------------
- * |   CoreObject   |
- * ------------------
- *         |
- * ------------------
- * | CoreComponent  |
- * ------------------
- *         |
- *         |   ------------------   ----------------
- *         |-->|     Thread     |-->|     C64      |
- *         |   ------------------   ----------------
- *         |   ------------------
- *         |-->|  SubComponent  |
- *             ------------------
- *
- * CoreObject is the base class for all C64 related classes. It provides a
- * a textual description for the object as well as various functions for
- * printing debug information.
- *
- * CoreComponent defines the base functionality of all hardware components. It
- * comprises functions for initializing, configuring, and serializing the
- * object, as well as functions for powering up and down, running and
- * pausing. Furthermore, a 'SYNCHRONIZED' macro is provided to prevent mutual
- * execution of certain code blocks.
- *
- * Thread adds the ability to run the component asynchroneously. It implements
- * the emulator's state model.
- */
-
 class CoreObject : public Dumpable {
 
 protected:
@@ -55,6 +24,7 @@ protected:
     // Set to false to disable all debug messages
     static bool verbose;
 
+    
     //
     // Initializing
     //
@@ -63,7 +33,7 @@ public:
     
     virtual ~CoreObject() = default;
     
-    // Returns the name for this component (e.g., "CPU" or "VICII")
+    // Returns the name for this component
     virtual const char *objectName() const = 0;
 
     // Returns a textual description for this component
