@@ -332,13 +332,11 @@ public:
         << byteReady
         << watchdog;
 
-        if (isSoftResetter(worker)) return;
+        if (isResetter(worker)) return;
 
         worker
 
         << insertionStatus;
-
-        if (isResetter(worker)) return;
 
         worker
 

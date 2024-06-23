@@ -529,13 +529,6 @@ public:
     bool isHard() { return hard; }
     bool isSoft() { return !isHard(); }
 
-    /*
-protected:
-
-    SerResetter() { }
-    virtual ~SerResetter() = default;
-    */
-
     RESET(bool)
     RESET(char)
     RESET(signed char)

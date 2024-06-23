@@ -84,8 +84,8 @@ Headless::main(int argc, char *argv[])
     c64.launch(this, vc64::process);
 
     // Execute the script
-    c64.retroShell.execScript(*script);
     barrier.lock();
+    c64.retroShell.execScript(*script);
 
     return returnCode;
 }
