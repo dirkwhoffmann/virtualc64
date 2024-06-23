@@ -29,8 +29,7 @@ namespace vc64 {
 
 AnyFile::AnyFile(isize capacity)
 {
-    data = new u8[capacity]();
-    size = capacity;
+    init(capacity);
 }
 
 AnyFile::~AnyFile()

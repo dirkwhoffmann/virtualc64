@@ -23,14 +23,18 @@ namespace vc64 {
 
 class RetroShell : public SubComponent {
 
+    friend class Interpreter;
+
     Descriptions descriptions = {{
 
         .name           = "RetroShell",
         .description    = "Command Console"
     }};
 
-    friend class Interpreter;
-    
+    ConfigOptions options = {
+
+    };
+
     // The command interpreter (parses commands typed into the console window)
     Interpreter interpreter;
 

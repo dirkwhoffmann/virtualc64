@@ -422,15 +422,8 @@ RetroShell::execUserCommand(const string &command)
 
         } else {
 
-            if (c64.isRunning()) {
-
-                emulator.pause();
-
-            } else {
-
-                emulator.stepInto();
-            }
-        }
+            c64.isRunning() ? emulator.pause() : emulator.stepInto();
+    }
 
     } else {
 
