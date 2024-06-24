@@ -1195,21 +1195,15 @@ DefaultsAPI::save(std::stringstream &stream)
 }
 
 string
-DefaultsAPI::getString(const string &key) const
+DefaultsAPI::getRaw(const string &key) const
 {
     return defaults->getRaw(key);
 }
 
 i64
-DefaultsAPI::getInt(const string &key) const
+DefaultsAPI::get(const string &key) const
 {
     return defaults->get(key);
-}
-
-i64
-DefaultsAPI::get(Option option) const
-{
-    return defaults->get(option);
 }
 
 i64
@@ -1243,9 +1237,21 @@ DefaultsAPI::set(const string &key, const string &value)
 }
 
 void
+DefaultsAPI::set(Option opt, const string &value)
+{
+    defaults->set(opt, value);
+}
+
+void
 DefaultsAPI::set(Option opt, const string &value, std::vector<isize> objids)
 {
     defaults->set(opt, value, objids);
+}
+
+void
+DefaultsAPI::set(Option opt, i64 value)
+{
+    defaults->set(opt, value);
 }
 
 void
@@ -1260,10 +1266,22 @@ DefaultsAPI::setFallback(const string &key, const string &value)
     defaults->setFallback(key, value);
 }
 
-void 
+void
+DefaultsAPI::setFallback(Option opt, const string &value)
+{
+    defaults->setFallback(opt, value);
+}
+
+void
 DefaultsAPI::setFallback(Option opt, const string &value, std::vector<isize> objids)
 {
     defaults->setFallback(opt, value, objids);
+}
+
+void
+DefaultsAPI::setFallback(Option opt, i64 value)
+{
+    defaults->setFallback(opt, value);
 }
 
 void
@@ -1291,9 +1309,9 @@ DefaultsAPI::remove(Option option)
 }
 
 void
-DefaultsAPI::remove(Option option, std::vector <isize> nrs)
+DefaultsAPI::remove(Option option, std::vector <isize> objids)
 {
-    defaults->remove(option, nrs);
+    defaults->remove(option, objids);
 }
 
 }

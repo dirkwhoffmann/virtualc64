@@ -112,13 +112,13 @@ using namespace vc64;
 
 - (NSString *)getString:(NSString *)key
 {
-    auto result = [self props]->getString([key UTF8String]);
+    auto result = [self props]->getRaw([key UTF8String]);
     return @(result.c_str());
 }
 
 - (NSInteger)getInt:(NSString *)key
 {
-    return [self props]->getInt([key UTF8String]);
+    return [self props]->get([key UTF8String]);
 }
 
 - (NSInteger)getOpt:(Option)option

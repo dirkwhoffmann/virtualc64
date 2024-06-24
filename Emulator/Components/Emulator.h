@@ -40,13 +40,13 @@ public Inspectable<EmulatorInfo, EmulatorStats> {
 
 public:
 
-    // Storage for external events
-    CmdQueue cmdQueue;
-
     // User default settings
     static Defaults defaults;
 
-    // Information about the host system
+    // Incoming external events
+    CmdQueue cmdQueue;
+
+    // Host system information
     Host host = Host(*this);
 
 
