@@ -154,6 +154,15 @@ template <class T, isize capacity> struct RingBuffer
     RingBuffer() { clear(); }
     ~RingBuffer() { delete[] elements; }
 
+    RingBuffer& operator= (const RingBuffer& other) {
+
+        memcpy(elements, other.elements, capacity);
+        r = other.r;
+        w = other.w;
+
+        return *this;
+    }
+
     void clear() { r = w = 0; }
     void clear(T t) { for (isize i = 0; i < capacity; i++) elements[i] = t; clear(); }
     void align(isize offset) { w = (r + offset) % capacity; }
@@ -251,6 +260,14 @@ struct SortedRingBuffer : public RingBuffer<T, capacity>
     //
 
     ~SortedRingBuffer() { delete[] keys; }
+
+    SortedRingBuffer& operator= (const SortedRingBuffer& other) {
+
+        RingBuffer<T, capacity>::operator=(other);
+        memcpy(keys, other.keys, capacity);
+
+        return *this;
+    }
 
     // Inserts an element at the proper position
     void insert(i64 key, T element)

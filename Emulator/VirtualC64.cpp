@@ -960,6 +960,10 @@ RecorderAPI::exportAs(const std::filesystem::path &path)
 }
 
 
+//
+// RetroShell
+//
+
 const char *
 RetroShellAPI::text()
 {
