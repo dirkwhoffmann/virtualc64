@@ -99,6 +99,8 @@ class MyDocument: NSDocument {
 
         debug(.media)
 
+        launchUrl = url
+        /*
         do {
             try mm.addMedia(url: url, allowedTypes: vc64.FileType.draggable)
 
@@ -106,6 +108,7 @@ class MyDocument: NSDocument {
 
             throw NSError(error: error)
         }
+        */
     }
 
     override open func revert(toContentsOf url: URL, ofType typeName: String) throws {

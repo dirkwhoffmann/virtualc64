@@ -1325,6 +1325,10 @@ public:
      */
     void launch(const void *listener, Callback *func);
 
+    /** @brief  Returns true if the emulator has been launched.
+     */
+    bool isLaunched() const;
+
     /** @brief  Queries a configuration option.
      *
      *  This is the main function to query a configuration option.

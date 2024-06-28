@@ -295,6 +295,12 @@ VirtualC64::launch(const void *listener, Callback *func)
     emu->launch(listener, func);
 }
 
+bool
+VirtualC64::isLaunched() const
+{
+    return emu->isLaunched();
+}
+
 i64
 VirtualC64::get(Option option) const
 {

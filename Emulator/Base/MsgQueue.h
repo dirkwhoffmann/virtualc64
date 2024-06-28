@@ -61,7 +61,6 @@ public:
     void put(MsgType type, CpuMsg payload);
     void put(MsgType type, DriveMsg payload);
     void put(MsgType type, ScriptMsg payload);
-    // void put(MsgType type, Snapshot *payload);
 
     // Reads a message
     bool get(Message &msg);

@@ -53,9 +53,6 @@ class MyController: NSWindowController, MessageReceiver {
 
     // Virtual keyboard
     var virtualKeyboard: VirtualKeyboardController?
-
-    // Snapshot timers
-    // var snapshotTimer: Timer?
     
     // Speedometer to measure clock frequence and frames per second
     var speedometer: Speedometer!
