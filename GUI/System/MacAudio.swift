@@ -26,9 +26,6 @@ public class MacAudio: NSObject {
     // Lock that is kept while the component is active
     var lock = NSLock()
 
-    // Sample rate of the host's audio unit
-    var sampleRate = 0.0
-
     // Cached audio players
     var audioPlayers: [String: [AVAudioPlayer]] = [:]
 
@@ -56,7 +53,7 @@ public class MacAudio: NSObject {
         // Query parameters
         let hardwareFormat = audiounit.outputBusses[0].format
         let channels = hardwareFormat.channelCount
-        sampleRate = hardwareFormat.sampleRate
+        let sampleRate = hardwareFormat.sampleRate
         let stereo = (channels > 1)
 
         // Pass some host parameters to the emulator
@@ -157,7 +154,7 @@ public class MacAudio: NSObject {
 
         case .off:
 
-            memset(ptr, 0, 4 * Int(frameCount))
+            memset(ptr, 0, 4 * n)
         }
     }
 
@@ -191,8 +188,8 @@ public class MacAudio: NSObject {
 
         case .off:
 
-            memset(ptr1, 0, 4 * Int(frameCount))
-            memset(ptr2, 0, 4 * Int(frameCount))
+            memset(ptr1, 0, 4 * n)
+            memset(ptr2, 0, 4 * n)
         }
     }
 

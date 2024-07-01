@@ -463,8 +463,8 @@ Recorder::recordAudio()
         isize written = 0;
 
         SamplePair pair = audioPort.read();
-        written += audioPipe.write((u8 *)&pair.left, sizeof(float));
-        written += audioPipe.write((u8 *)&pair.right, sizeof(float));
+        written += audioPipe.write((u8 *)&pair.l, sizeof(float));
+        written += audioPipe.write((u8 *)&pair.r, sizeof(float));
 
         if (written != 2 * sizeof(float) || FORCE_RECORDING_ERROR) {
             state = REC_STATE_ABORT;

@@ -487,6 +487,8 @@ RetroShell::exec(const string &command, isize line)
 void
 RetroShell::execScript(std::stringstream &ss)
 {
+    SYNCHRONIZED
+    
     std::string line;
     isize nr = 1;
 

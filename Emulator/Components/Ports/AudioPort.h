@@ -66,7 +66,7 @@ public util::RingBuffer <SamplePair, 12288> {
     Volume volL;
     Volume volR;
 
-    // Used to determine if a MSG_MUTE should be sent to the GUI
+    // Used to determine if a MSG_MUTE should be send
     bool muted = false;
 
 
@@ -189,6 +189,21 @@ public:
     // Returns the sample rate adjustment
     double getSampleRateCorrection() { return sampleRateCorrection; }
 
+private:
+
+    // Generates samples from the audio source with a single active SID
+    template <bool fading> void mixSingleSID(isize numSamples);
+
+    // Generates samples from the audio source with multiple active SIDs
+    template <bool fading> void mixMultiSID(isize numSamples);
+
+
+    //
+    // Controlling volume
+    //
+
+public:
+
     // Rescale the existing samples to gradually fade out (to avoid cracks)
     void fadeOut();
 
@@ -199,17 +214,6 @@ public:
     // Gradually inrease the master volume to max
     void unmute() { volL.unmute(); volR.unmute(); }
     void unmute(isize steps) { volL.unmute(steps); volR.unmute(steps); }
-
-    // Checks whether the volume settings result in a zeroed-out audio stream
-    // bool zeroMasterVolume() const { return volL.current == 0.0 && volR.current == 0.0; }
-
-private:
-
-    // Generates samples from the audio source with a single active SID
-    template <bool fading> void mixSingleSID(isize numSamples);
-
-    // Generates samples from the audio source with multiple active SIDs
-    template <bool fading> void mixMultiSID(isize numSamples);
 
 
     //
