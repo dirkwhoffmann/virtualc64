@@ -52,6 +52,7 @@
 
 #endif
 
+#define rs232_support 1
 
 //
 // Configuration overrides

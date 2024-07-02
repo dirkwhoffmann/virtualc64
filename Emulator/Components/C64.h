@@ -558,6 +558,11 @@ public:
     // Executes a single clock cycle.
     void executeOneCycle();
 
+#ifdef rs232_support
+    void executeRS232();
+    void write_string_to_ser(const char *buf);
+    void configure_rs232_ser_speed(unsigned baud);
+#endif
 private:
 
     // Invoked after executing the last cycle of a scanline
