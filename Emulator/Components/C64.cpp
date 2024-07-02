@@ -16,6 +16,7 @@
 #include "IOUtils.h"
 #include "RomDatabase.h"
 #include <algorithm>
+#include <queue>
 
 namespace vc64 {
 
@@ -803,7 +804,85 @@ C64::endScanline()
         scanline = 0;
         endFrame();
     }
+#ifdef rs232_support
+     executeRS232();
+#endif
 }
+
+#ifdef rs232_support
+std::queue<u8> rs232_queue;
+void charcode_to_8bit(u8 n, u8 *buf, unsigned offset)
+{
+    for(int i=0; i<8;i++)
+    {
+        buf[offset+i] = (n>>i) & 1; //least significant bit first
+    }
+}
+
+u8 serbits[11]={0/*startbit*/, 1,0,0,0,0,0,1,0,  1/*stopbit*/}; //AAAAAA 8Bit
+//u8 serbits[11]={0/*startbit*/, 0,1,0,0,0,0,1,0,  1/*stopbit*/}; //BBBB 8Bit
+
+u16 baud=300;
+u16 cycles_per_bit=982800/baud;
+u64 target_bit_send_cycle=0;
+int serpos=0;
+
+void C64::configure_rs232_ser_speed(unsigned baud_value)
+{
+    baud = baud_value;
+    cycles_per_bit=982800/baud;
+}
+
+void C64::write_string_to_ser(const char *buf)
+{
+    u16 length=strlen(buf);
+    printf("%d, %u\n",length, buf[0]);
+    if(length==1 && buf[0]== 24)
+    {//24 is ascii for Cancel (Device Control Character)
+     //clear queue
+        while(!rs232_queue.empty()) rs232_queue.pop();
+    }
+    else
+    {
+        for(int i=0; i<length;i++)
+        {
+            rs232_queue.push(buf[i]);
+        }
+    }
+}
+
+void C64::executeRS232()
+{
+    if(cpu.getInfo().cycle < target_bit_send_cycle)
+        return;
+
+    if(!rs232_queue.empty() || serpos > 0 /* in which case it is still sending */)
+    {
+        if(serpos > 8/*BitCode */ +2/*stop und startbit*/ -1)
+        {//when char has been completely sent
+          serpos=0;
+        }
+
+        if(serpos == 0)
+        {//get next char from queue
+          if(rs232_queue.empty())
+          {
+              return;
+          }
+          else
+          {
+            charcode_to_8bit(rs232_queue.front(),serbits, 1);
+            rs232_queue.pop();
+          }
+        }
+        cia2.portBexternal_value=serbits[serpos];
+        serpos++;
+        cia2.triggerFallingEdgeOnFlagPin();
+
+        target_bit_send_cycle = cpu.getInfo().cycle + cycles_per_bit;
+    }
+}
+#endif
 
 void
 C64::endFrame()
@@ -1541,7 +1620,7 @@ C64::getDebugVariable(DebugFlag flag)
 {
 #ifdef RELEASEBUILD
 
-    throw VC64Error(ERROR_OPT_UNSUPPORTED, "Debug variables are only accessible in debug builds.");
+    throw Error(ERROR_OPT_UNSUPPORTED, "Debug variables are only accessible in debug builds.");
 
 #else
 
@@ -1629,7 +1708,7 @@ C64::setDebugVariable(DebugFlag flag, bool val)
 {
 #ifdef RELEASEBUILD
 
-    throw VC64Error(ERROR_OPT_UNSUPPORTED, "Debug variables are only accessible in debug builds.");
+    throw Error(ERROR_OPT_UNSUPPORTED, "Debug variables are only accessible in debug builds.");
 
 #else
 
