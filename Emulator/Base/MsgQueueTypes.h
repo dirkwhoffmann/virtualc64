@@ -107,11 +107,10 @@ enum_long(MSG_TYPE)
     MSG_DMA_DEBUG,          ///< The DMA debugger has been started or stopped
 
     // Scheduled alarms
-    MSG_ALARM               ///< A user-set alarm event has fired
-#ifdef rs232_support
-    ,MSG_RS232               ///userport rs232 output char
-#endif
+    MSG_ALARM,              ///< A user-set alarm event has fired
+    MSG_RS232               ///< RS232 activity
 };
+
 typedef MSG_TYPE MsgType;
 
 struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
@@ -194,9 +193,7 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_DMA_DEBUG:             return "DMA_DEBUG";
 
             case MSG_ALARM:                 return "ALARM";
-#ifdef rs232_support
             case MSG_RS232:                 return "RS232";
-#endif
         }
         return "???";
     }

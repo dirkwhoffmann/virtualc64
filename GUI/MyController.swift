@@ -475,6 +475,9 @@ extension MyController {
         case .ALARM:
             debug(.events, "Received Alarm \(msg.value)")
 
+        case .RS232:
+            warn("RS232: \(msg.value)")
+
         default:
             warn("Unknown message: \(msg)")
             fatalError()
