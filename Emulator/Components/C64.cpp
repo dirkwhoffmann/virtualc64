@@ -882,6 +882,7 @@ void C64::executeRS232()
         target_bit_send_cycle = cpu.getInfo().cycle + cycles_per_bit;
     }
 }
+#endif
 
 void
 C64::endFrame()
