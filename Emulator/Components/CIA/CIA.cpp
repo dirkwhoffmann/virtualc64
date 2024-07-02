@@ -850,11 +850,11 @@ CIA2::pokePRA(u8 value)
         if(txd_bit == 1)
         {
             msgQueue.put(MSG_RS232, txd_char);
-//            printf("txd = %c\n",txd_char);
+            printf("txd = %c\n",txd_char);
         }
         else
         {
-//            printf("ups no stop bit!\n");
+            printf("ups no stop bit!\n");
         }
         rs232_msg_started = false;
     }

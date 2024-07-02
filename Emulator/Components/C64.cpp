@@ -1175,7 +1175,12 @@ C64::getRomTraits(u64 fnv)
     // Crawl through the Rom database
     for (auto &traits : roms) if (traits.fnv == fnv) return traits;
 
-    return RomTraits { };
+    return RomTraits {
+        .title = "Unknown ROM",
+        .subtitle = "",
+        .revision = "",
+        .vendor = ROM_VENDOR_OTHER
+    };
 }
 
 RomTraits
@@ -1214,13 +1219,6 @@ C64::getRomTraits(RomType type) const
             default:
                 fatalError;
         }
-
-    } else if (!result.fnv) {
-
-        result.title = "Unknown ROM";
-        result.subtitle = "";
-        result.revision = "";
-        result.vendor = ROM_VENDOR_OTHER;
     }
 
     return result;
