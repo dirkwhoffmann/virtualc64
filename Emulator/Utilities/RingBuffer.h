@@ -156,7 +156,7 @@ template <class T, isize capacity> struct RingBuffer
 
     RingBuffer& operator= (const RingBuffer& other) {
 
-        memcpy(elements, other.elements, capacity);
+        for (isize i = 0; i < capacity; i++) elements[i] = other.elements[i];
         r = other.r;
         w = other.w;
 
@@ -264,7 +264,7 @@ struct SortedRingBuffer : public RingBuffer<T, capacity>
     SortedRingBuffer& operator= (const SortedRingBuffer& other) {
 
         RingBuffer<T, capacity>::operator=(other);
-        memcpy(keys, other.keys, capacity);
+        for (isize i = 0; i < capacity; i++) keys[i] = other.keys[i];
 
         return *this;
     }

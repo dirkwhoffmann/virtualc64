@@ -60,8 +60,10 @@ Interpreter::initCommons(Command &root)
         retroShell.help(argv.empty() ? "" : argv.front());
 
         // REMOVE ASAP
+#ifdef rs232_support
         c64.configure_rs232_ser_speed(600);
         c64.write_string_to_ser(argv.front().c_str());
+#endif
     });
 
     root.add({"joshua"},
