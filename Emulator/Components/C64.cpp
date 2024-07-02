@@ -811,7 +811,7 @@ C64::endScanline()
 
 #ifdef rs232_support
 std::queue<u8> rs232_queue;
-void charcode_to_8bit(u8 n, u8 *buf, unsigned offset)
+static void charcode_to_8bit(u8 n, u8 *buf, unsigned offset)
 {
     for(int i=0; i<8;i++)
     {
@@ -823,19 +823,19 @@ u8 serbits[11]={0/*startbit*/, 1,0,0,0,0,0,1,0,  1/*stopbit*/}; //AAAAAA 8Bit
 //u8 serbits[11]={0/*startbit*/, 0,1,0,0,0,0,1,0,  1/*stopbit*/}; //BBBB 8Bit
 
 u16 baud=300;
-u16 cycles_per_bit=982800/baud;
-u64 target_bit_send_cycle=0;
+u16 cycles_per_bit= u16(982800/baud);
+i64 target_bit_send_cycle=0;
 int serpos=0;
 
-void C64::configure_rs232_ser_speed(unsigned baud_value)
+void C64::configure_rs232_ser_speed(u16 baud_value)
 {
     baud = baud_value;
-    cycles_per_bit=982800/baud;
+    cycles_per_bit = u16(982800 / baud);
 }
 
 void C64::write_string_to_ser(const char *buf)
 {
-    u16 length=strlen(buf);
+    u16 length = u16(strlen(buf));
     printf("%d, %u\n",length, buf[0]);
     if(length==1 && buf[0]== 24)
     {//24 is ascii for Cancel (Device Control Character)

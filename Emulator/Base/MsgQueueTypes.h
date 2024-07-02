@@ -194,7 +194,9 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_DMA_DEBUG:             return "DMA_DEBUG";
 
             case MSG_ALARM:                 return "ALARM";
-            case MSG_RS232:                 return "RS232";            
+#ifdef rs232_support
+            case MSG_RS232:                 return "RS232";
+#endif
         }
         return "???";
     }

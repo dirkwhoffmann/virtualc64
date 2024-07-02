@@ -561,7 +561,7 @@ public:
 #ifdef rs232_support
     void executeRS232();
     void write_string_to_ser(const char *buf);
-    void configure_rs232_ser_speed(unsigned baud);
+    void configure_rs232_ser_speed(u16 baud);
 #endif
 private:
 
