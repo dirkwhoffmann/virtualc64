@@ -36,8 +36,8 @@ ParCable::_dump(Category category, std::ostream& os) const
 u8
 ParCable::getValue() const
 {
-    u8 result = getCIA();
-    
+    u8 result = 0xFF;
+
     switch (drive8.getParCableType()) {
             
         case PAR_CABLE_STANDARD: result &= getVIA(drive8); break;
@@ -51,7 +51,7 @@ ParCable::getValue() const
         default: break;
     }
 
-    return result;
+    return getCIA(result);
 }
 
 void
@@ -91,12 +91,12 @@ ParCable::c64Handshake(Drive &drive)
 }
 
 u8
-ParCable::getCIA() const
+ParCable::getCIA(u8 cable) const
 {
     u8 ciaprb = cia2.portBinternal();
     u8 ciaddr = cia2.getDDRB();
 
-    return (ciaprb & ciaddr) | (0xFF & ~ciaddr);
+    return (ciaprb & ciaddr) | (cable & ~ciaddr);
 }
 
 u8

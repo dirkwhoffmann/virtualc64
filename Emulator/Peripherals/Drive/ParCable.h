@@ -75,7 +75,7 @@ private:
 private:
     
     // Collects port values
-    u8 getCIA() const;
+    u8 getCIA(u8 cable) const;
     u8 getVIA(const Drive &drive) const;
     u8 getPIA(const Drive &drive) const;
 };
