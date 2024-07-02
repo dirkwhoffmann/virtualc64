@@ -16,6 +16,7 @@
 #include "IOUtils.h"
 #include "RomDatabase.h"
 #include <algorithm>
+#include <queue>
 
 namespace vc64 {
 
