@@ -98,6 +98,26 @@ C64::eventName(EventSlot slot, EventID id)
             }
             break;
 
+        case SLOT_TXD:
+
+            switch (id) {
+
+                case EVENT_NONE:    return "none";
+                case TXD_BIT:       return "TXD_BIT";
+                default:            return "*** INVALID ***";
+            }
+            break;
+
+        case SLOT_RXD:
+
+            switch (id) {
+
+                case EVENT_NONE:    return "none";
+                case RXD_BIT:       return "RXD_BIT";
+                default:            return "*** INVALID ***";
+            }
+            break;
+
         case SLOT_AFI1:
         case SLOT_AFI2:
 
@@ -949,7 +969,12 @@ C64::processEvents(Cycle cycle)
             //
             // Check tertiary slots
             //
-
+            if (isDue<SLOT_TXD>(cycle)) {
+                userPort.rs232.processTxdEvent();
+            }
+            if (isDue<SLOT_RXD>(cycle)) {
+                userPort.rs232.processRxdEvent();
+            }
             if (isDue<SLOT_AFI1>(cycle)) {
                 port1.joystick.processEvent();
             }

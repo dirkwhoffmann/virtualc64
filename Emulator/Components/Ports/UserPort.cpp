@@ -15,7 +15,20 @@
 
 namespace vc64 {
 
-void 
+u8 
+UserPort::getPB() const
+{
+    switch (config.device) {
+
+        case USR_RS232: 
+            return rs232.getPB();
+
+        default:
+            return 0xFF;
+    }
+}
+
+void
 UserPort::setPA2(bool value)
 {
     switch (config.device) {

@@ -12,10 +12,15 @@
 
 #include "config.h"
 #include "RS232.h"
-#include "RetroShell.h"
-#include "MsgQueue.h"
+#include "C64.h"
 
 namespace vc64 {
+
+u8 
+RS232::getPB() const
+{
+    return pb;
+}
 
 void
 RS232::setPA2(bool value)
@@ -29,7 +34,7 @@ RS232::setPA2(bool value)
 void
 RS232::sendBit(bool value)
 {
-    if (counter == 0) {
+    if (txdCnt == 0) {
 
         if (value == 1) {
 
@@ -38,21 +43,44 @@ RS232::sendBit(bool value)
         } else {
 
             trace(USR_DEBUG, "Start bit received (%d)\n", value);
-            counter++;
+            txdCnt++;
         }
 
-    } else if (counter < 9) {
+    } else if (txdCnt < 9) {
 
-        trace(USR_DEBUG, "Data bit %ld reveived (%d)\n", counter, value);
-        value ? SET_BIT(shrOut, counter - 1) : CLR_BIT(shrOut, counter - 1);
-        counter++;
+        trace(USR_DEBUG, "Data bit %ld reveived (%d)\n", txdCnt, value);
+        value ? SET_BIT(txdShr, txdCnt - 1) : CLR_BIT(txdShr, txdCnt - 1);
+        txdCnt++;
 
-    } else if (counter == 9) {
+    } else if (txdCnt == 9) {
 
         trace(USR_DEBUG, "Stop bit reveived (%d)\n", value);
-        recordOutgoingPacket(shrOut);
-        counter = 0;
-        shrOut = 0;
+        recordOutgoingPacket(txdShr);
+        txdCnt = 0;
+        txdShr = 0;
+    }
+}
+
+void
+RS232::operator<<(char c)
+{
+    *this << string{c};
+}
+
+void
+RS232::operator<<(const string &s)
+{
+    {   SYNCHRONIZED
+
+        // Add the text
+        for (auto &c : s) {
+
+            input += c;
+            if (c == '\n') input += '\r';
+        }
+
+        // Start the reception process on the C64 side if needed
+        if (!c64.hasEvent<SLOT_RXD>()) c64.scheduleImm<SLOT_RXD>(RXD_BIT, 0);
     }
 }
 
@@ -109,6 +137,52 @@ RS232::dumpPacket(u16 packet)
                 if (isprint(c)) retroShell.press(c);
                 break;
         }
+    }
+}
+
+void 
+RS232::processTxdEvent()
+{
+    trace(USR_DEBUG, "processTxdEvent\n");
+}
+
+void 
+RS232::processRxdEvent()
+{
+    assert(c64.eventid[SLOT_RXD] == RXD_BIT);
+    auto payload = c64.data[SLOT_RXD];
+
+    auto send = [&](bool bit) {
+        pb = bit ? 0xFF : 0xFE;
+        trace(USR_DEBUG, "Sending %d\n", pb);
+        // cia2.triggerFallingEdgeOnFlagPin();
+    };
+
+    trace(USR_DEBUG, "processRxdEvent(%lld)\n", payload);
+
+    switch (payload) {
+
+        case 0: send(0); cia2.triggerFallingEdgeOnFlagPin(); break;
+        case 1: send(0); break;
+        case 2: send(1); cia2.triggerFallingEdgeOnFlagPin(); break;
+        case 3: send(1); break;
+        case 4: send(0); break;
+        case 5: send(0); break;
+        case 6: send(0); break;
+        case 7: send(0); break;
+        case 8: send(1); cia2.triggerFallingEdgeOnFlagPin(); break;
+        case 9: send(1); break;
+        // case 10: send(1); break;
+    }
+
+    if (payload == 9) {
+
+        c64.cancel<SLOT_RXD>();
+
+    } else {
+
+        // Schedule the next reception event
+        c64.scheduleRel<SLOT_RXD>(982800 / config.baud, RXD_BIT, payload + 1);
     }
 }
 

@@ -34,16 +34,23 @@ class RS232 final : public SubComponent {
     // Current configuration
     RS232Config config = { };
 
-    // Bit counter
-    isize counter = 0;
+    // Bit counters
+    isize txdCnt = 0;
+    isize rxdCnt = 0;
 
     // Shift registers
-    u16 shrIn = 0;
-    u16 shrOut = 0;
+    u16 rxdShr = 0;
+    u16 txdShr = 0;
+
+    //
+    u8 pb = 0xFF;
 
     // Temporary storage for incoming and outgoing bytes
     std::u16string incoming;
     std::u16string outgoing;
+
+    // External input
+    string input;
 
 
     //
@@ -120,11 +127,18 @@ public:
 
 public:
 
+    u8 getPB() const;
     void setPA2(bool value);
 
 
     //
-    // Receiving and sending bits
+    // Receiving and sending data
+
+public:
+
+    // Feeds in text
+    void operator<<(char c);
+    void operator<<(const string &s);
 
 private:
 
@@ -139,6 +153,15 @@ private:
     // Dumps a byte to RetroShell
     void dumpPacket(u16 byte);
 
+
+    //
+    // Processing events
+    //
+
+public:
+
+    void processTxdEvent();
+    void processRxdEvent();
 
 };
 

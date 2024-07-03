@@ -102,6 +102,8 @@ enum_long(SLOT)
     SLOT_TER,                       // Enables tertiary slots
 
     // Tertiary slots
+    SLOT_TXD,                       // Serial data out (RS232)
+    SLOT_RXD,                       // Serial data in (RS232)
     SLOT_AFI1,                      // Auto-fire (joystick port 1)
     SLOT_AFI2,                      // Auto-fire (joystick port 2)
     SLOT_MOT,                       // Datasette motor
@@ -186,6 +188,14 @@ enum_i8(EventID)
     //
     // Events in tertiary event table
     //
+
+    // Serial data out (RS232)
+    TXD_BIT             = 1,
+    TXD_EVENT_COUNT,
+
+    // Serial data in (RS232)
+    RXD_BIT             = 1,
+    RXD_EVENT_COUT,
 
     // Auto-fire
     AFI_FIRE            = 1,

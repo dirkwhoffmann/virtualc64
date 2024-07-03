@@ -1176,6 +1176,13 @@ Interpreter::initCommandShell(Command &root)
         }, opt);
     }
 
+    root.add({cmd, "send"}, {Arg::string},
+             "Feeds text into the RS232 adapter",
+             [this](Arguments& argv, long value) {
+
+        userPort.rs232 << argv[0];
+    });
+
     root.popGroup();
 
 

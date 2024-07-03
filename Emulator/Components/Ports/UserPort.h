@@ -111,7 +111,7 @@ public:
      * This functions returns the values of the PB pins as they would appear
      * if all CIA pins were configured as inputs.
      */
-    u8 getPB() const { return 0xFF; }
+    u8 getPB() const;
 
     /* Changes the value on the PA2 pin */
     void setPA2(bool value);

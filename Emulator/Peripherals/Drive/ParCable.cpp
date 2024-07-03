@@ -36,7 +36,7 @@ ParCable::_dump(Category category, std::ostream& os) const
 u8
 ParCable::getValue() const
 {
-    u8 result = 0xFF;
+    u8 result = userPort.getPB(); //  0xFF;
 
     switch (drive8.getParCableType()) {
             

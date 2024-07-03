@@ -21,6 +21,8 @@ extension vc64.EventSlot: CustomStringConvertible {
         case ._DAT:     return "Datasette Data"
         case ._TER:     return "Next Tertiary Event"
 
+        case ._TXD:     return "RS232 Out"
+        case ._RXD:     return "RS232 In"
         case ._AFI1:    return "Auto-fire Port 1"
         case ._AFI2:    return "Auto-fire Port 2"
         case ._MOT:     return "Datasette Motor"
