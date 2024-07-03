@@ -632,7 +632,7 @@ Interpreter::initCommandShell(Command &root)
 
 
     //
-    // Components (Expansion port)
+    // Ports (Expansion port)
     //
 
     cmd = shellName(expansionPort);
@@ -1140,6 +1140,41 @@ Interpreter::initCommandShell(Command &root)
 
         retroShell.dump(parCable, Category::Config);
     });
+
+    root.popGroup();
+
+
+    //
+    // Peripherals (RS232)
+    //
+
+    cmd = shellName(userPort.rs232);
+    description = userPort.rs232.description();
+    root.add({cmd}, description);
+
+    root.pushGroup("");
+
+    root.add({cmd, ""},
+             "Displays the current configuration",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(userPort.rs232, Category::Config);
+
+    });
+
+    root.add({cmd, "set"}, "Configures the component");
+
+    for (auto &opt : userPort.rs232.getOptions()) {
+
+        root.add({cmd, "set", OptionEnum::plainkey(opt)},
+                 {OptionParser::argList(opt)},
+                 OptionEnum::help(opt),
+                 [this](Arguments& argv, long value) {
+
+            emulator.set(Option(value), argv[0]);
+
+        }, opt);
+    }
 
     root.popGroup();
 

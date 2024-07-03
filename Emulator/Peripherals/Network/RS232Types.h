@@ -9,10 +9,22 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
-#include "config.h"
-#include "UserPort.h"
+#pragma once
+
+#include "Reflection.h"
 
 namespace vc64 {
+
+//
+// Structures
+//
+
+typedef struct
+{
+    isize baud;
+}
+RS232Config;
 
 }

@@ -14,6 +14,7 @@
 
 #include "UserPortTypes.h"
 #include "SubComponent.h"
+#include "RS232.h"
 
 namespace vc64 {
 
@@ -32,6 +33,15 @@ class UserPort final : public SubComponent {
 
     // Current configuration
     UserPortConfig config = { };
+
+    //
+    // Subcomponents
+    //
+
+public:
+    
+    // RS232 adapter
+    RS232 rs232 = RS232(c64);
 
 
     //

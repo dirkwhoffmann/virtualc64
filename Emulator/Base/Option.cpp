@@ -152,6 +152,9 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_AUTOFIRE_DELAY:            return numParser(" frames");
 
         case OPT_PADDLE_ORIENTATION:        return enumParser.template operator()<PaddleOrientationEnum>();
+
+        case OPT_RS232_BAUD:                return numParser(" Bd");
+
         case OPT_REC_FRAME_RATE:            return numParser(" fps");
         case OPT_REC_BIT_RATE:              return numParser(" kBit");
         case OPT_REC_SAMPLE_RATE:           return numParser(" Hz");

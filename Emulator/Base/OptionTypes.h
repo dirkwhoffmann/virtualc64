@@ -169,6 +169,9 @@ enum_long(OPT)
     // Paddles
     OPT_PADDLE_ORIENTATION,     ///< Paddle value mapping scheme
 
+    // RS232 adapter
+    OPT_RS232_BAUD,             ///< Transmission rate
+
     // Screen recorder
     OPT_REC_FRAME_RATE,         ///< Frame rate of the recorded video
     OPT_REC_BIT_RATE,           ///< Bit rate of the recorded video
@@ -315,7 +318,9 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_AUTOFIRE_BULLETS:      return "AUTOFIRE.BULLETS";
             case OPT_AUTOFIRE_DELAY:        return "AUTOFIRE.DELAY";
 
-            case OPT_PADDLE_ORIENTATION:    return "PADDLE_ORIENTATION";
+            case OPT_PADDLE_ORIENTATION:    return "PADDLE.ORIENTATION";
+
+            case OPT_RS232_BAUD:            return "RS232.BAUD";
 
             case OPT_REC_FRAME_RATE:        return "REC.FRAME_RATE";
             case OPT_REC_BIT_RATE:          return "REC.BIT_RATE";
@@ -456,6 +461,8 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_AUTOFIRE_DELAY:        return "Autofire delay in frames";
 
             case OPT_PADDLE_ORIENTATION:    return "Paddle value mapping scheme";
+
+            case OPT_RS232_BAUD:            return "Transmission rate (baud)";
 
             case OPT_REC_FRAME_RATE:        return "Frame rate of the recorded video";
             case OPT_REC_BIT_RATE:          return "Bit rate of the recorded video";

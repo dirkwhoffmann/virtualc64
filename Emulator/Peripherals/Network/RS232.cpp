@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "UserPort.h"
+#include "RS232.h"
 
 namespace vc64 {
 

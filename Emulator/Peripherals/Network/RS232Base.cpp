@@ -11,20 +11,12 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "UserPort.h"
+#include "RS232.h"
 
 namespace vc64 {
 
-UserPort::UserPort(C64 &ref) : SubComponent(ref)
-{
-    subComponents = std::vector<CoreComponent *> {
-
-        &rs232
-    };
-}
-
 void
-UserPort::_dump(Category category, std::ostream& os) const
+RS232::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
@@ -32,18 +24,14 @@ UserPort::_dump(Category category, std::ostream& os) const
 
         dumpConfig(os);
     }
-
-    if (category == Category::State) {
-
-    }
 }
 
 i64
-UserPort::getOption(Option option) const
+RS232::getOption(Option option) const
 {
     switch (option) {
 
-        case OPT_USR_DEVICE:    return config.device;
+        case OPT_RS232_BAUD:    return (i64)config.baud;
 
         default:
             fatalError;
@@ -51,15 +39,11 @@ UserPort::getOption(Option option) const
 }
 
 void
-UserPort::checkOption(Option opt, i64 value)
+RS232::checkOption(Option opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_USR_DEVICE:
-
-            if (!UserPortDeviceEnum::isValid(value)) {
-                throw Error(ERROR_OPT_INV_ARG, UserPortDeviceEnum::keyList());
-            }
+        case OPT_RS232_BAUD:
             return;
 
         default:
@@ -68,20 +52,17 @@ UserPort::checkOption(Option opt, i64 value)
 }
 
 void
-UserPort::setOption(Option opt, i64 value)
+RS232::setOption(Option opt, i64 value)
 {
-    checkOption(opt, value);
-
     switch (opt) {
 
-        case OPT_USR_DEVICE:
+        case OPT_RS232_BAUD:
 
-            config.device = (UserPortDevice)value;
+            config.baud = isize(value);
             return;
 
         default:
             fatalError;
     }
 }
-
 }

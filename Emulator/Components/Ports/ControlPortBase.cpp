@@ -16,6 +16,18 @@
 
 namespace vc64 {
 
+ControlPort::ControlPort(C64 &ref, isize id) : SubComponent(ref, id)
+{
+    assert(id == PORT_1 || id == PORT_2);
+
+    subComponents = std::vector<CoreComponent *> {
+
+        &mouse,
+        &joystick,
+        &paddle
+    };
+}
+
 void
 ControlPort::_dump(Category category, std::ostream& os) const
 {

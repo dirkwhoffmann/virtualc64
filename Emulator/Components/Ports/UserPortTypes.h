@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "Reflection.h"
+#include "RS232Types.h"
 
 namespace vc64 {
 
