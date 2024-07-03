@@ -10,27 +10,14 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#pragma once
-
-#include "Types.h"
+#include "config.h"
+#include "UserPort.h"
 
 namespace vc64 {
 
-//
-// Structures
-//
-
-typedef struct
-{
-    bool whiteNoise;
-}
-
-VideoPortConfig;
-
-typedef struct
+UserPort::UserPort(C64 &ref) : SubComponent(ref)
 {
 
-}
-VideoPortInfo;
+};
 
 }

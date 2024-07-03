@@ -158,6 +158,10 @@
 		5058A920281D109F00C223C9 /* DiskInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058A91F281D109F00C223C9 /* DiskInspector.swift */; };
 		5058A922281D10B100C223C9 /* VolumeInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058A921281D10B100C223C9 /* VolumeInspector.swift */; };
 		5058A924281D10C600C223C9 /* DiskCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058A923281D10C600C223C9 /* DiskCreator.swift */; };
+		505A132B2C3503B400FF8D2C /* UserPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505A13292C3503B400FF8D2C /* UserPort.cpp */; };
+		505A132C2C3503B400FF8D2C /* UserPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505A13292C3503B400FF8D2C /* UserPort.cpp */; };
+		505A132F2C3503EB00FF8D2C /* UserPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505A132D2C3503EB00FF8D2C /* UserPortBase.cpp */; };
+		505A13302C3503EB00FF8D2C /* UserPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505A132D2C3503EB00FF8D2C /* UserPortBase.cpp */; };
 		505D492821C155DD00A7C575 /* RomConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505D492721C155DD00A7C575 /* RomConf.swift */; };
 		505F8FE72580BD780066ACE4 /* AudioConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F8FE62580BD780066ACE4 /* AudioConf.swift */; };
 		505F8FE92582435E0066ACE4 /* PeripheralsConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F8FE82582435E0066ACE4 /* PeripheralsConf.swift */; };
@@ -813,6 +817,10 @@
 		5058A91F281D109F00C223C9 /* DiskInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskInspector.swift; sourceTree = "<group>"; };
 		5058A921281D10B100C223C9 /* VolumeInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeInspector.swift; sourceTree = "<group>"; };
 		5058A923281D10C600C223C9 /* DiskCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskCreator.swift; sourceTree = "<group>"; };
+		505A13292C3503B400FF8D2C /* UserPort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UserPort.cpp; sourceTree = "<group>"; };
+		505A132A2C3503B400FF8D2C /* UserPort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserPort.h; sourceTree = "<group>"; };
+		505A132D2C3503EB00FF8D2C /* UserPortBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UserPortBase.cpp; sourceTree = "<group>"; };
+		505A132E2C3503EB00FF8D2C /* UserPortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserPortTypes.h; sourceTree = "<group>"; };
 		505D492721C155DD00A7C575 /* RomConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomConf.swift; sourceTree = "<group>"; };
 		505F8FE62580BD780066ACE4 /* AudioConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioConf.swift; sourceTree = "<group>"; };
 		505F8FE82582435E0066ACE4 /* PeripheralsConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralsConf.swift; sourceTree = "<group>"; };
@@ -2042,14 +2050,6 @@
 				50549B48257D288E006FE39C /* AudioPort.h */,
 				50B98B492BFDF5FC00FA1EC6 /* AudioPortBase.cpp */,
 				50549B47257D288E006FE39C /* AudioPort.cpp */,
-				50BD640C2C01FAF5007CD347 /* VideoPortTypes.h */,
-				50BD64092C01FADC007CD347 /* VideoPort.h */,
-				50BD640D2C01FFEC007CD347 /* VideoPortBase.cpp */,
-				50BD64082C01FADC007CD347 /* VideoPort.cpp */,
-				5078BEA5264D064600EDA161 /* PowerPortTypes.h */,
-				50ACF4DA256EB43B003B5690 /* PowerPort.h */,
-				50BD64182C0373F9007CD347 /* PowerPortBase.cpp */,
-				50ACF4D9256EB43B003B5690 /* PowerPort.cpp */,
 				50B1A61625A203B100201A2C /* ControlPortTypes.h */,
 				504C434024AF29AC00E69CAE /* ControlPort.h */,
 				508C1E522C0B20610097473C /* ControlPortBase.cpp */,
@@ -2058,10 +2058,22 @@
 				504C434324AF29AC00E69CAE /* ExpansionPort.h */,
 				508C1E552C0B20760097473C /* ExpansionPortBase.cpp */,
 				504C434524AF29AC00E69CAE /* ExpansionPort.cpp */,
+				5078BEA5264D064600EDA161 /* PowerPortTypes.h */,
+				50ACF4DA256EB43B003B5690 /* PowerPort.h */,
+				50BD64182C0373F9007CD347 /* PowerPortBase.cpp */,
+				50ACF4D9256EB43B003B5690 /* PowerPort.cpp */,
 				508C1E592C0B20EE0097473C /* SerialPortTypes.h */,
 				504C434624AF29AC00E69CAE /* SerialPort.h */,
 				508C1E582C0B20EE0097473C /* SerialPortBase.cpp */,
 				504C433C24AF29AC00E69CAE /* SerialPort.cpp */,
+				505A132E2C3503EB00FF8D2C /* UserPortTypes.h */,
+				505A132A2C3503B400FF8D2C /* UserPort.h */,
+				505A132D2C3503EB00FF8D2C /* UserPortBase.cpp */,
+				505A13292C3503B400FF8D2C /* UserPort.cpp */,
+				50BD640C2C01FAF5007CD347 /* VideoPortTypes.h */,
+				50BD64092C01FADC007CD347 /* VideoPort.h */,
+				50BD640D2C01FFEC007CD347 /* VideoPortBase.cpp */,
+				50BD64082C01FADC007CD347 /* VideoPort.cpp */,
 			);
 			path = Ports;
 			sourceTree = "<group>";
@@ -2327,6 +2339,7 @@
 				50726FA72961CA1C0031F2F5 /* D64File.cpp in Sources */,
 				50726F432961C97B0031F2F5 /* Checksum.cpp in Sources */,
 				50726F522961C9940031F2F5 /* ControlPort.cpp in Sources */,
+				505A13302C3503EB00FF8D2C /* UserPortBase.cpp in Sources */,
 				50726F632961C9B30031F2F5 /* Recorder.cpp in Sources */,
 				50E5BF742BA81E710004712B /* Monitor.cpp in Sources */,
 				50726F622961C9AC0031F2F5 /* VICIITable.cpp in Sources */,
@@ -2458,6 +2471,7 @@
 				50726F7B2961C9DC0031F2F5 /* Drive.cpp in Sources */,
 				50726F412961C97B0031F2F5 /* Parser.cpp in Sources */,
 				50726F8A2961CA0D0031F2F5 /* GameKiller.cpp in Sources */,
+				505A132C2C3503B400FF8D2C /* UserPort.cpp in Sources */,
 				50726FAB2961CA1C0031F2F5 /* P00File.cpp in Sources */,
 				508C1E542C0B20610097473C /* ControlPortBase.cpp in Sources */,
 				50726F752961C9DC0031F2F5 /* DriveMemory.cpp in Sources */,
@@ -2592,6 +2606,7 @@
 				50EFB0C42C18D6200013B73C /* Dumpable.cpp in Sources */,
 				50FF1FCB26BAB3DA0061E5CE /* DropZone.swift in Sources */,
 				5018AF66202EDD2000B4C886 /* Defaults.swift in Sources */,
+				505A132F2C3503EB00FF8D2C /* UserPortBase.cpp in Sources */,
 				50D20B752508F6D70088E8F2 /* VICIICycles.cpp in Sources */,
 				504C436A24AF29AC00E69CAE /* FreezeFrame.cpp in Sources */,
 				504C439124AF29AC00E69CAE /* VICIIMemory.cpp in Sources */,
@@ -2705,6 +2720,7 @@
 				50BE4B7024E7FC21008F39C9 /* MTLDevice.swift in Sources */,
 				5055D5B726158ABC005D3DA6 /* Checksum.cpp in Sources */,
 				50AA48B2292F8EC30084401D /* Peddle.cpp in Sources */,
+				505A132B2C3503B400FF8D2C /* UserPort.cpp in Sources */,
 				50ACF4DB256EB43B003B5690 /* PowerPort.cpp in Sources */,
 				504C43A624AF29AC00E69CAE /* Disk.cpp in Sources */,
 				504C43A224AF29AC00E69CAE /* ControlPort.cpp in Sources */,

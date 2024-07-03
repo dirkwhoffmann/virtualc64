@@ -66,6 +66,9 @@ enum_long(OPT)
     OPT_DMA_DEBUG_COLOR4,       ///< Color for channel 4
     OPT_DMA_DEBUG_COLOR5,       ///< Color for channel 5
 
+    // User port
+    OPT_USR_DEVICE,             ///< Device connected to the user port
+
     // Video port
     OPT_VID_WHITE_NOISE,        ///< Generate white-noise when switched off
     ///<
@@ -226,6 +229,8 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_DMA_DEBUG_COLOR4:      return "DMA_DEBUG.COLOR4";
             case OPT_DMA_DEBUG_COLOR5:      return "DMA_DEBUG.COLOR5";
 
+            case OPT_USR_DEVICE:            return "USR.DEVICE";
+
             case OPT_VID_WHITE_NOISE:       return "VID.WHITE_NOISE";
 
             case OPT_MON_PALETTE:           return "MON.PALETTE";
@@ -365,8 +370,10 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_DMA_DEBUG_COLOR4:      return "Color of channel 4";
             case OPT_DMA_DEBUG_COLOR5:      return "Color of channel 5";
 
+            case OPT_USR_DEVICE:            return "User port device";
+
             case OPT_VID_WHITE_NOISE:       return "White noise";
-                
+
             case OPT_MON_PALETTE:           return "Color palette";
             case OPT_MON_BRIGHTNESS:        return "Monitor brightness";
             case OPT_MON_CONTRAST:          return "Monitor contrast";

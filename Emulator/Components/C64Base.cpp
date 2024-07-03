@@ -17,6 +17,46 @@
 
 namespace vc64 {
 
+C64::C64(class Emulator& ref, isize id) : CoreComponent(ref, id)
+{
+    trace(RUN_DEBUG, "Creating virtual C64\n");
+
+    subComponents = std::vector<CoreComponent *> {
+
+        &mem,
+        &cpu,
+        &cia1, &cia2,
+        &vic,
+        &sidBridge,
+        &audioPort,
+        &videoPort,
+        &supply,
+        &port1,
+        &port2,
+        &expansionport,
+        &iec,
+        &userPort,
+        &keyboard,
+        &drive8,
+        &drive9,
+        &parCable,
+        &datasette,
+        &monitor,
+        &retroShell,
+        &regressionTester,
+        &recorder
+    };
+
+    // Assign a unique ID to the CPU
+    cpu.setID(0);
+}
+
+C64::~C64()
+{
+    trace(RUN_DEBUG, "Destructing virtual C64\n");
+}
+
+
 //
 // Methods from Dumpable
 //

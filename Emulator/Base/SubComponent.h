@@ -32,6 +32,7 @@ protected:
     class Drive &drive8;
     class Drive &drive9;
     class ExpansionPort &expansionPort;
+    class UserPort &userPort;
     class Host &host;
     class SerialPort &serialPort;
     class Keyboard &keyboard;

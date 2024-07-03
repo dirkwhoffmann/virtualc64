@@ -38,6 +38,7 @@
 #include "PowerPort.h"
 #include "ExpansionPort.h"
 #include "SerialPort.h"
+#include "UserPort.h"
 
 // Peripherals
 #include "Drive.h"
@@ -137,7 +138,7 @@ public:
     VICII vic = VICII(*this);
     SIDBridge sidBridge = SIDBridge(*this);
 
-    // Logic board
+    // Ports
     AudioPort audioPort = AudioPort(*this);
     VideoPort videoPort = VideoPort(*this);
     PowerPort supply = PowerPort(*this);
@@ -145,6 +146,7 @@ public:
     ControlPort port2 = ControlPort(*this, PORT_2);
     ExpansionPort expansionport = ExpansionPort(*this);
     SerialPort iec = SerialPort(*this);
+    UserPort userPort = UserPort(*this);
 
     // Peripherals
     Keyboard keyboard = Keyboard(*this);

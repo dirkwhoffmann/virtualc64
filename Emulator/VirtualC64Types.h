@@ -43,6 +43,7 @@
 #include "RetroShellTypes.h"
 #include "SIDTypes.h"
 #include "ThreadTypes.h"
+#include "UserPortTypes.h"
 #include "VICIITypes.h"
 
 #include "Constants.h"
