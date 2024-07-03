@@ -153,6 +153,7 @@ OptionParser::create(Option opt, i64 arg)
 
         case OPT_PADDLE_ORIENTATION:        return enumParser.template operator()<PaddleOrientationEnum>();
 
+        case OPT_RS232_DEVICE:              return enumParser.template operator()<CommunicationDeviceEnum>();
         case OPT_RS232_BAUD:                return numParser(" Bd");
 
         case OPT_REC_FRAME_RATE:            return numParser(" fps");

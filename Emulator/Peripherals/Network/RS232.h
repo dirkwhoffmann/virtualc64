@@ -27,11 +27,23 @@ class RS232 final : public SubComponent {
 
     ConfigOptions options = {
 
+        OPT_RS232_DEVICE,
         OPT_RS232_BAUD
     };
 
     // Current configuration
     RS232Config config = { };
+
+    // Bit counter
+    isize counter = 0;
+
+    // Shift registers
+    u16 shrIn = 0;
+    u16 shrOut = 0;
+
+    // Temporary storage for incoming and outgoing bytes
+    std::u16string incoming;
+    std::u16string outgoing;
 
 
     //
@@ -100,6 +112,33 @@ public:
     i64 getOption(Option opt) const override;
     void checkOption(Option opt, i64 value) override;
     void setOption(Option opt, i64 value) override;
+
+
+    //
+    // Controlling pins
+    //
+
+public:
+
+    void setPA2(bool value);
+
+
+    //
+    // Receiving and sending bits
+
+private:
+
+    void sendBit(bool value);
+    // void sendPacket(u16 value);
+
+
+    // Called when a packet has been received or sent
+    void recordIncomingPacket(u16 byte);
+    void recordOutgoingPacket(u16 byte);
+
+    // Dumps a byte to RetroShell
+    void dumpPacket(u16 byte);
+
 
 };
 

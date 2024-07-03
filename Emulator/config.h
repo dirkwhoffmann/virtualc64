@@ -155,7 +155,7 @@ extern debugflag TAP_DEBUG;
 extern debugflag KBD_DEBUG;
 extern debugflag PRT_DEBUG;
 extern debugflag EXP_DEBUG;
-extern debugflag LIP_DEBUG;
+extern debugflag USR_DEBUG;
 
 // Other components
 extern debugflag REC_DEBUG;

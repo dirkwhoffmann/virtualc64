@@ -89,7 +89,7 @@ enum_long(DEBUG_FLAG)
     FLAG_KBD_DEBUG,         ///< Debug the keyboard
     FLAG_PRT_DEBUG,         ///< Debug the control port and connected devices
     FLAG_EXP_DEBUG,         ///< Debug the expansion port
-    FLAG_LIP_DEBUG,         ///< Debug the light pen
+    FLAG_USR_DEBUG,         ///< User port
 
     // Other components
     FLAG_REC_DEBUG,         ///< Debug the screen recorder
@@ -183,7 +183,7 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
             case FLAG_KBD_DEBUG:                return "KBD_DEBUG";
             case FLAG_PRT_DEBUG:                return "PRT_DEBUG";
             case FLAG_EXP_DEBUG:                return "EXP_DEBUG";
-            case FLAG_LIP_DEBUG:                return "LIP_DEBUG";
+            case FLAG_USR_DEBUG:                return "USR_DEBUG";
 
                 // Other components
             case FLAG_REC_DEBUG:                return "REC_DEBUG";
@@ -271,7 +271,7 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
             case FLAG_KBD_DEBUG:                return "Keyboard";
             case FLAG_PRT_DEBUG:                return "Control ports and connected devices";
             case FLAG_EXP_DEBUG:                return "Expansion port";
-            case FLAG_LIP_DEBUG:                return "Light pen";
+            case FLAG_USR_DEBUG:                return "User port";
 
                 // Other components
             case FLAG_REC_DEBUG:                return "Screen recorder";

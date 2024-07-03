@@ -170,6 +170,7 @@ enum_long(OPT)
     OPT_PADDLE_ORIENTATION,     ///< Paddle value mapping scheme
 
     // RS232 adapter
+    OPT_RS232_DEVICE,           ///< Device connected to the RS232 adapter
     OPT_RS232_BAUD,             ///< Transmission rate
 
     // Screen recorder
@@ -320,6 +321,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
 
             case OPT_PADDLE_ORIENTATION:    return "PADDLE.ORIENTATION";
 
+            case OPT_RS232_DEVICE:          return "RS232.DEVICE";
             case OPT_RS232_BAUD:            return "RS232.BAUD";
 
             case OPT_REC_FRAME_RATE:        return "REC.FRAME_RATE";
@@ -462,6 +464,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
 
             case OPT_PADDLE_ORIENTATION:    return "Paddle value mapping scheme";
 
+            case OPT_RS232_DEVICE:          return "Connected RS232 device";
             case OPT_RS232_BAUD:            return "Transmission rate (baud)";
 
             case OPT_REC_FRAME_RATE:        return "Frame rate of the recorded video";

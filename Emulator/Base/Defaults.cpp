@@ -65,7 +65,7 @@ Defaults::Defaults()
     setFallback(OPT_DMA_DEBUG_COLOR4,           GpuColor(0x00, 0xFF, 0x00).abgr);
     setFallback(OPT_DMA_DEBUG_COLOR5,           GpuColor(0x00, 0x80, 0xFF).abgr);
 
-    setFallback(OPT_USR_DEVICE,                 USR_NONE);
+    setFallback(OPT_USR_DEVICE,                 USR_RS232);
 
     setFallback(OPT_VID_WHITE_NOISE,            true);
 
@@ -151,6 +151,7 @@ Defaults::Defaults()
     setFallback(OPT_AUTOFIRE_BULLETS,           3);
     setFallback(OPT_AUTOFIRE_DELAY,             5);
 
+    setFallback(OPT_RS232_DEVICE,               COMDEV_RETROSHELL);
     setFallback(OPT_RS232_BAUD,                 600);
 
     setFallback(OPT_PADDLE_ORIENTATION,         PADDLE_HORIZONTAL);

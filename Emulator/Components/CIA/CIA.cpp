@@ -820,6 +820,9 @@ CIA2::pokePRA(u8 value)
     
     // PA0 (VA14) and PA1 (VA15) determine the memory bank seen by VICII
     vic.switchBank(0xDD00);
+    
+    // PA2 is connected to the user port
+    userPort.setPA2(GET_BIT(value, 2));
 
 #ifdef rs232_support
     u8 txd_bit = (value >> 2) & 1; //second bit of PA

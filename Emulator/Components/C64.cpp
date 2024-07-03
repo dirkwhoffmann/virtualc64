@@ -1639,7 +1639,7 @@ C64::getDebugVariable(DebugFlag flag)
         case FLAG_KBD_DEBUG:        return KBD_DEBUG;
         case FLAG_PRT_DEBUG:        return PRT_DEBUG;
         case FLAG_EXP_DEBUG:        return EXP_DEBUG;
-        case FLAG_LIP_DEBUG:        return LIP_DEBUG;
+        case FLAG_USR_DEBUG:        return USR_DEBUG;
 
         case FLAG_REC_DEBUG:        return REC_DEBUG;
         case FLAG_REU_DEBUG:        return REU_DEBUG;
@@ -1727,7 +1727,7 @@ C64::setDebugVariable(DebugFlag flag, bool val)
         case FLAG_KBD_DEBUG:        KBD_DEBUG       = val; break;
         case FLAG_PRT_DEBUG:        PRT_DEBUG       = val; break;
         case FLAG_EXP_DEBUG:        EXP_DEBUG       = val; break;
-        case FLAG_LIP_DEBUG:        LIP_DEBUG       = val; break;
+        case FLAG_USR_DEBUG:        USR_DEBUG       = val; break;
 
         case FLAG_REC_DEBUG:        REC_DEBUG       = val; break;
         case FLAG_REU_DEBUG:        REU_DEBUG       = val; break;

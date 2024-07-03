@@ -15,4 +15,19 @@
 
 namespace vc64 {
 
+void 
+UserPort::setPA2(bool value)
+{
+    switch (config.device) {
+
+        case USR_RS232:
+
+            rs232.setPA2(value);
+            break;
+
+        default:
+            break;
+    }
+}
+
 }

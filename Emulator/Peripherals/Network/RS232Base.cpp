@@ -31,6 +31,7 @@ RS232::getOption(Option option) const
 {
     switch (option) {
 
+        case OPT_RS232_DEVICE:  return (i64)config.device;
         case OPT_RS232_BAUD:    return (i64)config.baud;
 
         default:
@@ -42,6 +43,12 @@ void
 RS232::checkOption(Option opt, i64 value)
 {
     switch (opt) {
+
+        case OPT_RS232_DEVICE:
+            if (!CommunicationDeviceEnum::isValid(value)) {
+                throw Error(ERROR_OPT_INV_ARG, CommunicationDeviceEnum::keyList());
+            }
+            return;
 
         case OPT_RS232_BAUD:
             return;
@@ -55,6 +62,11 @@ void
 RS232::setOption(Option opt, i64 value)
 {
     switch (opt) {
+
+        case OPT_RS232_DEVICE:
+
+            config.device = CommunicationDevice(value);
+            return;
 
         case OPT_RS232_BAUD:
 

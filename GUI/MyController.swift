@@ -478,6 +478,12 @@ extension MyController {
         case .RS232:
             warn("RS232: \(msg.value)")
 
+        case .RS232_IN:
+            print("RS232_IN: \(msg.value)")
+
+        case .RS232_OUT:
+            print("RS232_OUT: \(msg.value)")
+
         default:
             warn("Unknown message: \(msg)")
             fatalError()

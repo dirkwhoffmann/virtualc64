@@ -102,7 +102,7 @@ public:
 
 
     //
-    // Reading port values
+    // Reading and writing port values
     //
 
 public:
@@ -112,6 +112,9 @@ public:
      * if all CIA pins were configured as inputs.
      */
     u8 getPB() const { return 0xFF; }
+
+    /* Changes the value on the PA2 pin */
+    void setPA2(bool value);
 };
 
 }

@@ -18,11 +18,46 @@
 namespace vc64 {
 
 //
+// Enumerations
+//
+
+enum_long(COMDEV)
+{
+    COMDEV_NONE,
+    COMDEV_RETROSHELL,
+    COMDEV_COMMANDER
+};
+typedef COMDEV CommunicationDevice;
+
+#ifdef __cplusplus
+struct CommunicationDeviceEnum : util::Reflection<CommunicationDeviceEnum, CommunicationDevice>
+{
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = COMDEV_COMMANDER;
+    static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
+
+    static const char *prefix() { return "COMDEV"; }
+    static const char *key(long value)
+    {
+        switch (value) {
+
+            case COMDEV_NONE:       return "NONE";
+            case COMDEV_RETROSHELL: return "RETROSHELL";
+            case COMDEV_COMMANDER:  return "COMMANDER";
+        }
+        return "???";
+    }
+};
+#endif
+
+
+//
 // Structures
 //
 
 typedef struct
 {
+    CommunicationDevice device;
     isize baud;
 }
 RS232Config;

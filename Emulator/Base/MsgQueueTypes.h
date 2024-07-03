@@ -108,7 +108,9 @@ enum_long(MSG_TYPE)
 
     // Scheduled alarms
     MSG_ALARM,              ///< A user-set alarm event has fired
-    MSG_RS232               ///< RS232 activity
+    MSG_RS232,              ///< RS232 activity (DEPRECATED)
+    MSG_RS232_IN,           ///< RS232 adapter has received data
+    MSG_RS232_OUT           ///< RS232 adapter has sent data
 };
 
 typedef MSG_TYPE MsgType;
@@ -194,6 +196,8 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
 
             case MSG_ALARM:                 return "ALARM";
             case MSG_RS232:                 return "RS232";
+            case MSG_RS232_IN:              return "RS232_IN";
+            case MSG_RS232_OUT:             return "RS232_OUT";
         }
         return "???";
     }
