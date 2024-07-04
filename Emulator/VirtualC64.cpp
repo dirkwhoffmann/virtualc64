@@ -125,6 +125,9 @@ VirtualC64::VirtualC64() {
     drive9.drive = &emu->main.drive9;
     drive9.disk.drive = &emu->main.drive9;
 
+    recorder.emu = emu;
+    recorder.recorder = &emu->main.recorder;
+
     retroShell.emu = emu;
     retroShell.retroShell = &emu->main.retroShell;
 

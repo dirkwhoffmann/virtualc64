@@ -138,9 +138,8 @@ class CIA : public SubComponent, public Inspectable<CIAInfo, CIAStats> {
 public:
     
     TOD tod = TOD(c64, *this);
-#ifdef rs232_support
-    u8 portBexternal_value=0xFF;
-#endif
+
+    
     //
     // Internals
     //

@@ -774,12 +774,7 @@ CIA2::portBinternal() const
 u8
 CIA2::portBexternal() const
 {
-#ifndef rs232_support
-    // User port is not implemented. All pins are high if nothing is connected.
     return 0xFF;
-#else
-    return portBexternal_value;
-#endif
 }
 
 void
@@ -791,27 +786,8 @@ CIA2::updatePB()
 u8
 CIA2::computePB() const
 {
-#ifndef rs232_support
-        return parCable.getValue();
-#else
-    if(drive8.getParCableType()== PAR_CABLE_NONE)
-    {//if no parcable connected we can connect a serial cable to userport instead
-        return (portBinternal() & DDRB) | (portBexternal() & ~DDRB); 
-    }
-    else
-    {
-        return parCable.getValue();
-    }
-#endif
+    return parCable.getValue();
 }
-
-#ifdef rs232_support
-bool rs232_msg_started=false;    
-u64 target_txd_cycle = 0;
-
-u8 txd_char=0;
-int txd_serpos=0;
-#endif
 
 void
 CIA2::pokePRA(u8 value)
@@ -823,45 +799,6 @@ CIA2::pokePRA(u8 value)
     
     // PA2 is connected to the user port
     userPort.setPA2(GET_BIT(value, 2));
-
-#ifdef rs232_support
-    u8 txd_bit = (value >> 2) & 1; //second bit of PA
-    
-//    printf("pokePA bit2 %u (at cycle %llu)\n", txd_bit, cpu.cycle);
-    //accept only when bit pattern is 0 nnnn nnnn 1
-    //and maybe later in an more correct version assure that the poke comes in correct timing, if not then we excpect again a startbit that is 0
-    if(rs232_msg_started == false)
-    {//we are at the startbit
-        if(txd_bit == 0)
-        {//the startbit must be 0
-            rs232_msg_started=true;
-//            printf("char recording started (at cycle %llu)\n", cpu.cycle);
-            //target_txd_cycle = cpu.cycle + txd_cycles_per_bit;
-            txd_char=0;
-            txd_serpos=0;
-        }
-    }
-    else if(rs232_msg_started == true && txd_serpos < 8)
-    {//message bits
-//        printf("char recording pos=%u (at cycle %llu)\n", txd_serpos, cpu.cycle);
-
-        txd_char |= txd_bit << txd_serpos;
-        txd_serpos++; 
-    }
-    else if(txd_serpos == 8)
-    {//we are at the stopbit
-        if(txd_bit == 1)
-        {
-            msgQueue.put(MSG_RS232, txd_char);
-            printf("txd = %c\n",txd_char);
-        }
-        else
-        {
-            printf("ups no stop bit!\n");
-        }
-        rs232_msg_started = false;
-    }
-#endif
 }
 
 void
