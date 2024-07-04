@@ -475,14 +475,21 @@ extension MyController {
         case .ALARM:
             debug(.events, "Received Alarm \(msg.value)")
 
-        case .RS232:
-            warn("RS232: \(msg.value)")
-
         case .RS232_IN:
-            print("RS232_IN: \(msg.value)")
+            var c = emu?.userPort.rs232.readIncomingPrintableByte() ?? -1
+            while c != -1 {
+                // serialIn += String(UnicodeScalar(UInt8(c)))
+                // print("IN: \(UnicodeScalar(UInt8(c)))")
+                c = emu?.userPort.rs232.readIncomingPrintableByte() ?? -1
+            }
 
         case .RS232_OUT:
-            print("RS232_OUT: \(msg.value)")
+            var c = emu?.userPort.rs232.readOutgoingPrintableByte() ?? -1
+            while c != -1 {
+                // serialOut += String(UnicodeScalar(UInt8(c)))
+                // print("OUT: \(UnicodeScalar(UInt8(c)))")
+                c = emu?.userPort.rs232.readOutgoingPrintableByte() ?? -1
+            }
 
         default:
             warn("Unknown message: \(msg)")

@@ -12,6 +12,7 @@
 
 #include "config.h"
 #include "RS232.h"
+#include "IOUtils.h"
 
 namespace vc64 {
 
@@ -23,6 +24,14 @@ RS232::_dump(Category category, std::ostream& os) const
     if (category == Category::Config) {
 
         dumpConfig(os);
+    }
+
+    if (category == Category::State) {
+
+        os << tab("txdShr") << hex(txdShr) << std::endl;
+        os << tab("rxdCnt") << dec(rxdCnt) << std::endl;
+        os << tab("txdCnt") << dec(txdCnt) << std::endl;
+        os << tab("Pending input") << input << std::endl;
     }
 }
 

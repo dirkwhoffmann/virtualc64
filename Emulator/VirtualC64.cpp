@@ -90,18 +90,26 @@ VirtualC64::VirtualC64() {
 
     controlPort1.emu = emu;
     controlPort1.controlPort = &emu->main.port1;
+    controlPort1.mouse.emu = emu;
     controlPort1.mouse.mouse = &emu->main.port1.mouse;
+    controlPort1.joystick.emu = emu;
     controlPort1.joystick.joystick = &emu->main.port1.joystick;
+    controlPort1.paddle.emu = emu;
     controlPort1.paddle.paddle = &emu->main.port1.paddle;
 
     controlPort2.emu = emu;
     controlPort2.controlPort = &emu->main.port2;
+    controlPort2.mouse.emu = emu;
     controlPort2.mouse.mouse = &emu->main.port2.mouse;
+    controlPort2.joystick.emu = emu;
     controlPort2.joystick.joystick = &emu->main.port2.joystick;
+    controlPort2.paddle.emu = emu;
     controlPort2.paddle.paddle = &emu->main.port2.paddle;
 
-    recorder.emu = emu;
-    recorder.recorder = &emu->main.recorder;
+    userPort.emu = emu;
+    userPort.userPort = &emu->main.userPort;
+    userPort.rs232.emu = emu;
+    userPort.rs232.rs232 = &emu->main.userPort.rs232;
 
     expansionPort.emu = emu;
     expansionPort.expansionPort = &emu->main.expansionport;
@@ -896,6 +904,47 @@ DatasetteAPI::ejectTape()
 {
     datasette->ejectTape();
     datasette->markAsDirty();
+}
+
+
+//
+// RS232
+//
+
+void
+RS232API::operator<<(char c)
+{
+    *rs232 << c;
+}
+
+void 
+RS232API::operator<<(const string &s)
+{
+    *rs232 << s;
+}
+
+std::u16string
+RS232API::readIncoming()
+{
+    return rs232->readIncoming();
+}
+
+std::u16string 
+RS232API::readOutgoing()
+{
+    return rs232->readOutgoing();
+}
+
+int
+RS232API::readIncomingPrintableByte()
+{
+    return rs232->readIncomingPrintableByte();
+}
+
+int
+RS232API::readOutgoingPrintableByte()
+{
+    return rs232->readOutgoingPrintableByte();
 }
 
 

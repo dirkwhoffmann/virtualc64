@@ -37,27 +37,13 @@ class RS232 final : public SubComponent {
     // The current values of the external port pins (client side)
     u32 port = 0xFFFF;
 
-    // Bit counters
-    isize txdCnt = 0;
-    isize rxdCnt = 0;
-
     // Shift registers
     u16 rxdShr = 0;
     u16 txdShr = 0;
 
-    //
-    // u8 pb = 0xFF;
-
-    // Input registers
-    u16 receiveBuffer = 0;
-    u16 receiveShiftReg = 0;
-
-    // Output registers
-    u16 transmitBuffer = 0;
-    u16 transmitShiftReg = 0;
-
-    // Bit reception counter
-    u8 recCnt = 0;
+    // Bit counters
+    u8 rxdCnt = 0;
+    u8 txdCnt = 0;
 
     // External input
     string input;
@@ -78,7 +64,13 @@ public:
     RS232& operator= (const RS232& other) {
 
         CLONE(config)
-
+        CLONE(port)
+        CLONE(rxdShr)
+        CLONE(txdShr)
+        CLONE(rxdCnt)
+        CLONE(txdCnt)
+        CLONE(input)
+        
         return *this;
     }
 
@@ -90,6 +82,15 @@ public:
 public:
 
     template <class T> void serialize(T& worker) {
+
+        worker
+
+        << port
+        << rxdShr
+        << txdShr
+        << rxdCnt
+        << txdCnt
+        << input;
 
         if (isResetter(worker)) return;
 
@@ -180,16 +181,9 @@ private:
     // Modifies multiple port pins
     void setPort(u32 mask, bool value);
 
-    // Updates the value on the UART's TXD line
-    void updateTXD();
-
-    // Called when the RXD port pin changes it's value
-    void rxdHasChanged(bool oldValue, bool newValue);
-
-
 
     //
-    // Controlling pins
+    // Interfacing with the user port
     //
 
 public:
@@ -199,7 +193,8 @@ public:
 
 
     //
-    // Receiving and sending data
+    // Receiving data
+    //
 
 public:
 
@@ -229,20 +224,13 @@ public:
     int readIncomingPrintableByte();
     int readOutgoingPrintableByte();
 
-
-
-
 private:
-
-    void sendBit(bool value);
-    // void sendPacket(u16 value);
-
 
     // Called when a packet has been received or sent
     void recordIncomingPacket(u16 byte);
     void recordOutgoingPacket(u16 byte);
 
-    // Dumps a byte to RetroShell
+    // Sends a packet to RetroShell
     void dumpPacket(u16 byte);
 
 
@@ -254,7 +242,6 @@ public:
 
     void processTxdEvent();
     void processRxdEvent();
-
 };
 
 }

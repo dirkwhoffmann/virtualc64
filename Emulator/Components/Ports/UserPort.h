@@ -113,7 +113,7 @@ public:
      */
     u8 getPB() const;
 
-    /* Changes the value on the PA2 pin */
+    // Signals a change on the PA2 pin
     void setPA2(bool value);
 };
 

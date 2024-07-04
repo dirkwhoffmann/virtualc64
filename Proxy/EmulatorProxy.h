@@ -39,7 +39,9 @@ using namespace vc64;
 @class MyController;
 @class RecorderProxy;
 @class RetroShellProxy;
+@class RS232Proxy;
 @class SIDProxy;
+@class UserPortProxy;
 @class VICIIProxy;
 @class VideoPortProxy;
 
@@ -109,6 +111,7 @@ using namespace vc64;
     DriveProxy *drive8;
     DriveProxy *drive9;
     ExpansionPortProxy *expansionport;
+    UserPortProxy *userPort;
     SerialPortProxy *iec;
     KeyboardProxy *keyboard;
     MemoryProxy *mem;
@@ -134,6 +137,7 @@ using namespace vc64;
 @property (readonly, strong) DriveProxy *drive8;
 @property (readonly, strong) DriveProxy *drive9;
 @property (readonly, strong) ExpansionPortProxy *expansionport;
+@property (readonly, strong) UserPortProxy *userPort;
 @property (readonly, strong) SerialPortProxy *iec;
 @property (readonly, strong) KeyboardProxy *keyboard;
 @property (readonly, strong) MemoryProxy *mem;
@@ -471,6 +475,36 @@ struct GuardInfo {
 - (void)detachCartridge;
 
 @end
+
+
+//
+// RS232
+//
+
+@interface RS232Proxy : SubComponentProxy { }
+
+// @property (readonly) RS232Info info;
+// @property (readonly) RS232Info cachedInfo;
+
+- (NSInteger)readIncomingPrintableByte;
+- (NSInteger)readOutgoingPrintableByte;
+
+@end
+
+
+//
+// UserPort
+//
+
+@interface UserPortProxy : SubComponentProxy {
+
+    RS232Proxy *rs232;
+}
+
+@property (readonly) RS232Proxy *rs232;
+
+@end
+
 
 
 //

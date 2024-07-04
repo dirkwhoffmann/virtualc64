@@ -76,7 +76,7 @@ debugflag TAP_DEBUG       = 0;
 debugflag KBD_DEBUG       = 0;
 debugflag PRT_DEBUG       = 0;
 debugflag EXP_DEBUG       = 0;
-debugflag USR_DEBUG       = 1;
+debugflag USR_DEBUG       = 0;
 
 // Other components
 debugflag REC_DEBUG       = 0;

@@ -754,6 +754,32 @@ using namespace vc64;
 
 
 //
+// User port
+//
+
+@implementation UserPortProxy
+
+@synthesize rs232;
+
+- (instancetype) initWith:(void *)ref emu:(VirtualC64 *)emuref
+{
+    if (self = [super initWith:ref emu:emuref]) {
+
+        UserPortAPI *port = (UserPortAPI *)obj;
+        rs232 = [[RS232Proxy alloc] initWith:&port->rs232];
+    }
+    return self;
+}
+
+- (RS232API *)port
+{
+    return (RS232API *)obj;
+}
+
+@end
+
+
+//
 // Disk
 //
 
@@ -987,6 +1013,31 @@ using namespace vc64;
 }
 
 @end
+
+
+//
+// RS232 proxy
+//
+
+@implementation RS232Proxy
+
+- (RS232API *)rs232
+{
+    return (RS232API *)obj;
+}
+
+- (NSInteger)readIncomingPrintableByte
+{
+    return [self rs232]->readIncomingPrintableByte();
+}
+
+- (NSInteger)readOutgoingPrintableByte
+{
+    return [self rs232]->readOutgoingPrintableByte();
+}
+
+@end
+
 
 
 //
@@ -1721,6 +1772,7 @@ using namespace vc64;
 @synthesize drive8;
 @synthesize drive9;
 @synthesize expansionport;
+@synthesize userPort;
 @synthesize iec;
 @synthesize keyboard;
 @synthesize mem;
@@ -1751,6 +1803,7 @@ using namespace vc64;
     drive8 = [[DriveProxy alloc] initWithVC1541:&emu->drive8 emu:emu];
     drive9 = [[DriveProxy alloc] initWithVC1541:&emu->drive9 emu:emu];
     expansionport = [[ExpansionPortProxy alloc] initWith:&emu->expansionPort emu:emu];
+    userPort = [[UserPortProxy alloc] initWith:&emu->userPort emu:emu];
     iec = [[SerialPortProxy alloc] initWith:&emu->serialPort emu:emu];
     keyboard = [[KeyboardProxy alloc] initWith:&emu->keyboard emu:emu];
     mem = [[MemoryProxy alloc] initWith:&emu->mem emu:emu];
