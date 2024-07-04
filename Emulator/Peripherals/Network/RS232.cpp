@@ -16,10 +16,95 @@
 
 namespace vc64 {
 
-u8 
+constexpr u32 TXD_MASK = 1 << 2;
+constexpr u32 RXD_MASK = 1 << 3;
+constexpr u32 RTS_MASK = 1 << 4;
+constexpr u32 CTS_MASK = 1 << 5;
+constexpr u32 DSR_MASK = 1 << 6;
+constexpr u32 CD_MASK  = 1 << 8;
+constexpr u32 DTR_MASK = 1 << 20;
+constexpr u32 RI_MASK  = 1 << 22;
+
+bool
+RS232::getPin(isize nr) const
+{
+    assert(nr >= 1 && nr <= 25);
+
+    bool result = GET_BIT(port, nr);
+
+    // debug(SER_DEBUG, "getPin(%d) = %d port = %X\n", nr, result, port);
+    return result;
+}
+
+void
+RS232::setPin(isize nr, bool value)
+{
+    // debug(SER_DEBUG, "setPin(%d,%d)\n", nr, value);
+    assert(nr >= 1 && nr <= 25);
+
+    setPort(1 << nr, value);
+}
+
+void
+RS232::setPort(u32 mask, bool value)
+{
+    u32 oldPort = port;
+
+    // THIS IS FROM VAMIGA. ADAPT FOR THE C64 AT A LATER POINT
+    
+    /* Emulate the loopback cable (if connected)
+     *
+     *     Connected pins: A: 2 - 3       (TXD - RXD)
+     *                     B: 4 - 5 - 6   (RTS - CTS - DSR)
+     *                     C: 8 - 20 - 22 (CD - DTR - RI)
+     */
+    if (config.device == COMDEV_LOOPBACK) {
+
+        u32 maskA = TXD_MASK | RXD_MASK;
+        u32 maskB = RTS_MASK | CTS_MASK | DSR_MASK;
+        u32 maskC = CD_MASK | DTR_MASK | RI_MASK;
+
+        if (mask & maskA) mask |= maskA;
+        if (mask & maskB) mask |= maskB;
+        if (mask & maskC) mask |= maskC;
+    }
+
+    // Change the port pins
+    if (value) port |= mask; else port &= ~mask;
+
+    // Take action if RXD has changed
+    if ((oldPort ^ port) & RXD_MASK) rxdHasChanged(oldPort, value);
+}
+
+void
+RS232::updateTXD()
+{
+    // Get the UARTBRK bit
+    // bool uartbrk = GET_BIT(paula.adkcon, 11);
+
+    // If the bit is set, force the TXD line to 0
+    // serialPort.setTXD(outBit && !uartbrk);
+ 
+    assert(false);
+}
+
+void
+RS232::rxdHasChanged(bool oldValue, bool newValue)
+{
+    if (FALLING_EDGE(oldValue, newValue)) {
+
+        cia2.triggerFallingEdgeOnFlagPin();
+    }
+}
+
+
+
+
+
+u8
 RS232::getPB() const
 {
-    return pb;
+    return (port & RXD_MASK) ? 0xFF : 0xFE;
 }
 
 void
@@ -29,6 +114,13 @@ RS232::setPA2(bool value)
     // Shortcut for testing...
     // TODO: Start a receive event via the event scheduler
     sendBit(value);
+}
+
+Cycle 
+RS232::pulseWidth() const
+{
+    assert(config.baud);
+    return vic.getTraits().frequency / config.baud;
 }
 
 void
@@ -72,15 +164,91 @@ RS232::operator<<(const string &s)
 {
     {   SYNCHRONIZED
 
-        // Add the text
         for (auto &c : s) {
 
+            // Add a single character
             input += c;
+
+            // Add an additional carriage return to all newline characters
             if (c == '\n') input += '\r';
         }
 
         // Start the reception process on the C64 side if needed
         if (!c64.hasEvent<SLOT_RXD>()) c64.scheduleImm<SLOT_RXD>(RXD_BIT, 0);
+    }
+}
+
+std::u16string
+RS232::readIncoming()
+{
+    {   SYNCHRONIZED
+
+        auto result = incoming;
+        incoming.clear();
+        return result;
+    }
+}
+
+std::u16string
+RS232::readOutgoing()
+{
+    {   SYNCHRONIZED
+
+        auto result = outgoing;
+        outgoing.clear();
+        return result;
+    }
+}
+
+int
+RS232::readIncomingByte()
+{
+    {   SYNCHRONIZED
+
+        if (incoming.empty()) return -1;
+
+        int result = incoming[0];
+        incoming.erase(incoming.begin());
+        return result;
+    }
+}
+
+int
+RS232::readOutgoingByte()
+{
+    {   SYNCHRONIZED
+
+        if (outgoing.empty()) return -1;
+
+        int result = outgoing[0];
+        outgoing.erase(outgoing.begin());
+        return result;
+    }
+}
+
+int
+RS232::readIncomingPrintableByte()
+{
+    {   SYNCHRONIZED
+
+        while (1) {
+
+            auto byte = readIncomingByte();
+            if (byte == -1 || isprint(byte) || byte == '\n') return byte;
+        }
+    }
+}
+
+int
+RS232::readOutgoingPrintableByte()
+{
+    {   SYNCHRONIZED
+
+        while (1) {
+
+            auto byte = readOutgoingByte();
+            if (byte == -1 || isprint(byte) || byte == '\n') return byte;
+        }
     }
 }
 
@@ -149,41 +317,49 @@ RS232::processTxdEvent()
 void 
 RS232::processRxdEvent()
 {
+    SYNCHRONIZED
+
+    trace(USR_DEBUG, "processRxdEvent()\n");
     assert(c64.eventid[SLOT_RXD] == RXD_BIT);
-    auto payload = c64.data[SLOT_RXD];
 
-    auto send = [&](bool bit) {
-        pb = bit ? 0xFF : 0xFE;
-        trace(USR_DEBUG, "Sending %d\n", pb);
-        // cia2.triggerFallingEdgeOnFlagPin();
-    };
+    // Stop sending, if there are no characters left
+    if (input.empty()) {
 
-    trace(USR_DEBUG, "processRxdEvent(%lld)\n", payload);
-
-    switch (payload) {
-
-        case 0: send(0); cia2.triggerFallingEdgeOnFlagPin(); break;
-        case 1: send(0); break;
-        case 2: send(1); cia2.triggerFallingEdgeOnFlagPin(); break;
-        case 3: send(1); break;
-        case 4: send(0); break;
-        case 5: send(0); break;
-        case 6: send(0); break;
-        case 7: send(0); break;
-        case 8: send(1); cia2.triggerFallingEdgeOnFlagPin(); break;
-        case 9: send(1); break;
-        // case 10: send(1); break;
+        trace(USR_DEBUG, "All characters sent.\n");
+        c64.cancel<SLOT_RXD>(); return;
+        return;
     }
 
-    if (payload == 9) {
+    // Put the next bit on the RXD line
+    if (recCnt == 0) {
 
-        c64.cancel<SLOT_RXD>();
-
-    } else {
-
-        // Schedule the next reception event
-        c64.scheduleRel<SLOT_RXD>(982800 / config.baud, RXD_BIT, payload + 1);
+        trace(USR_DEBUG, "Sending start bit 0...\n");
+        setRXD(0);
+        recCnt++;
     }
+
+    else if (recCnt >= 1 && recCnt <= 8) {
+
+        bool bit = GET_BIT(input[0], recCnt - 1);
+        trace(USR_DEBUG, "Sending data bit %d...\n", bit);
+        setRXD(bit);
+        recCnt++;
+
+    } else if (recCnt >= 9) {
+
+        trace(USR_DEBUG, "Sending stop bit 1...\n");
+        setRXD(1);
+
+        assert(!input.empty());
+
+        // Remove the processed character
+        input.erase(0, 1);
+
+        recCnt = 0;
+    }
+
+    // Schedule the next reception event
+    c64.scheduleRel<SLOT_RXD>(pulseWidth(), RXD_BIT);
 }
 
 }

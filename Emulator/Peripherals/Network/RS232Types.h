@@ -24,6 +24,7 @@ namespace vc64 {
 enum_long(COMDEV)
 {
     COMDEV_NONE,
+    COMDEV_LOOPBACK,
     COMDEV_RETROSHELL,
     COMDEV_COMMANDER
 };
@@ -42,6 +43,7 @@ struct CommunicationDeviceEnum : util::Reflection<CommunicationDeviceEnum, Commu
         switch (value) {
 
             case COMDEV_NONE:       return "NONE";
+            case COMDEV_LOOPBACK:   return "LOOPBACK";
             case COMDEV_RETROSHELL: return "RETROSHELL";
             case COMDEV_COMMANDER:  return "COMMANDER";
         }
