@@ -22,13 +22,20 @@ MsgQueue::setListener(const void *listener, Callback *callback)
 
         this->listener = listener;
         this->callback = callback;
+    }
 
-        // Send all pending messages
-        while (!queue.isEmpty()) {
+    // Send all pending messages
+    while (1) {
 
-            Message &msg = queue.read();
-            callback(listener, msg);
-        }        
+        Message msg;
+
+        {   SYNCHRONIZED
+
+            if (queue.isEmpty()) break;
+            msg = queue.read();
+        }
+
+        callback(listener, msg);
     }
 }
 
