@@ -12,9 +12,9 @@
 
 #pragma once
 
+#include "KeyboardTypes.h"
 #include "SubComponent.h"
 #include "CmdQueue.h"
-#include "C64Types.h"
 #include "C64Key.h"
 #include "Buffer.h"
 

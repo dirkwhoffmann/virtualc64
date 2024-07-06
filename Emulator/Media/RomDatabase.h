@@ -10,6 +10,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
+#pragma once
+
 #define BASIC       ROM_TYPE_BASIC
 #define KERNAL      ROM_TYPE_KERNAL
 #define CHAR        ROM_TYPE_CHAR

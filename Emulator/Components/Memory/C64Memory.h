@@ -153,7 +153,7 @@ private:
 
 
     //
-    // Configuring
+    // Methods from Configurable
     //
 
 public:
@@ -166,7 +166,7 @@ public:
 
 
     //
-    // Inspecting
+    // Methods from Inspectable
     //
 
 public:

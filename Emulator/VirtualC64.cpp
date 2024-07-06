@@ -1035,7 +1035,7 @@ RetroShellAPI::cursorRel()
 }
 
 void
-RetroShellAPI::press(RetroShellKey key, bool shift)
+RetroShellAPI::press(RetroShellKey key, bool shift) // shift no longer used
 {
     retroShell->press(key, shift);
 }

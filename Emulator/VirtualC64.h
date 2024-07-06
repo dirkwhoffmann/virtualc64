@@ -322,6 +322,11 @@ struct KeyboardAPI : API {
 
     class Keyboard *keyboard = nullptr;
 
+    /** @brief  Checks if a key is currently pressed.
+     *  @param  key     The key to check.
+     */
+    bool isPressed(C64Key key) const;
+
     /** @brief  Presses a key
      *  @param  key     The key to press.
      *  @param  delay   An optional delay in seconds.
@@ -350,11 +355,6 @@ struct KeyboardAPI : API {
      */
     void releaseAll();
 
-    /** @brief  Checks if a key is currently pressed.
-     *  @param  key     The key to check.
-     */
-    bool isPressed(C64Key key) const;
-
     /** @brief  Uses the auto-typing daemon to type a string.
      *  @param  text    The text to type.
      */
@@ -363,7 +363,6 @@ struct KeyboardAPI : API {
     /** @brief  Aborts any active auto-typing activity.
      */
     void abortAutoTyping();
-
 };
 
 

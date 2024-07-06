@@ -373,7 +373,7 @@ Emulator::update()
     Cmd cmd;
     bool cmdConfig = false;
 
-    auto drive = [&]() -> Drive& { return cmd.value == DRIVE9 ? main.drive9 : main.drive8; };
+    auto drive = [&]() -> Drive& { return cmd.value == 0 ? main.drive8 : main.drive9; };
 
     shouldWarp() ? warpOn() : warpOff();
 
