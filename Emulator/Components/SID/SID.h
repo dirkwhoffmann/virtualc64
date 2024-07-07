@@ -81,9 +81,11 @@ public:
 
     SID& operator= (const SID& other) {
 
-        CLONE(resid)
-        CLONE(config)
+        CLONE_ARRAY(sidreg)
         CLONE(clock)
+        CLONE(resid)
+
+        CLONE(config)
 
         return *this;
     }
