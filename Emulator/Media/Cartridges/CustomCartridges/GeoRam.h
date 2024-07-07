@@ -18,17 +18,23 @@ namespace vc64 {
 
 class GeoRAM final : public Cartridge {
 
-    CartridgeTraits traits = {
+    virtual const CartridgeTraits &getCartridgeTraits() const override {
 
-        .type       = CRT_GEO_RAM,
-        .title      = "GeoRam",
-        .memory     = 0,            // Set in constructor
-        .battery    = true
-    };
+        static CartridgeTraits traits = {
 
-    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
+            .type       = CRT_GEO_RAM,
+            .title      = "GeoRam",
+            .memory     = KB(kb),
+            .battery    = true
+        };
+
+        return traits;
+    }
 
 private:
+
+    // RAM capacity in KB
+    isize kb = 0;
 
     // Selected RAM bank
     u8 bank = 0;
@@ -66,7 +72,7 @@ public:
 
         Cartridge::operator=(other);
 
-        CLONE(traits)
+        CLONE(kb)
         CLONE(bank)
         CLONE(page)
 
@@ -81,6 +87,7 @@ public:
 
         worker
 
+        << kb
         << bank
         << page;
 

@@ -18,46 +18,52 @@ namespace vc64 {
 
 class Reu final : public Cartridge {
 
-    CartridgeTraits traits = {
+    virtual const CartridgeTraits &getCartridgeTraits() const override {
 
-        .type       = CRT_REU,
-        .title      = "REU",
-        .memory     = 0,            // Set in constructor
-        .battery    = true
-    };
+        static CartridgeTraits traits = {
 
-    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
+            .type       = CRT_REU,
+            .title      = "REU",
+            .memory     = KB(kb),
+            .battery    = true
+        };
+
+        return traits;
+    }
 
 private:
+
+    // REU capacity in KB
+    isize kb = 0;
 
     //
     // REU registers
     //
 
     // Status register
-    u8 sr;
+    u8 sr = 0;
 
     // Command register
-    u8 cr;
+    u8 cr = 0;
 
     // Base address registers
-    u16 c64Base;
-    u32 reuBase;
+    u16 c64Base = 0;
+    u32 reuBase = 0;
 
     // Upper bank bits (used by modded REUs with higher capacities)
-    u32 upperBankBits;
+    u32 upperBankBits = 0;
 
     // Transfer length register
-    u16 tlen;
+    u16 tlen = 0;
 
     // Interrupt mask
-    u8 imr;
+    u8 imr = 0;
 
     // Address control register
-    u8 acr;
+    u8 acr = 0;
 
     // Latest value on the data bus
-    u8 bus;
+    u8 bus = 0;
 
 
     //
@@ -65,7 +71,7 @@ private:
     //
 
     // Remembers the memory type of the uppermost memory bank
-    MemoryType memTypeF;
+    MemoryType memTypeF = M_NONE;
 
 
     //
@@ -97,7 +103,7 @@ public:
 
         Cartridge::operator=(other);
 
-        CLONE(traits)
+        CLONE(kb)
         CLONE(sr)
         CLONE(cr)
         CLONE(c64Base)
@@ -120,6 +126,7 @@ public:
 
         worker
 
+        << kb
         << sr
         << cr
         << c64Base

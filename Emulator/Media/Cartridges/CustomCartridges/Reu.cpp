@@ -15,14 +15,13 @@
 
 namespace vc64 {
 
-Reu::Reu(C64 &ref, isize kb) : Cartridge(ref)
+Reu::Reu(C64 &ref, isize kb) : Cartridge(ref), kb(kb)
 {
     // The RAM capacity must be a power of two between 128 and 16384
     if ((kb & (kb - 1)) || kb < 128 || kb > 16384) {
         throw Error(ERROR_OPT_INV_ARG, "128, 256, 512, ..., 16384");
     }
 
-    traits.memory = KB(kb);
     setRamCapacity(KB(kb));
 }
 
@@ -253,6 +252,7 @@ Reu::pokeIO2(u16 addr, u8 value)
                 case KB(16384): upperBankBits = (value & 0b11111000) << 16; break;
 
                 default:
+                    dump(Category::State);
                     fatalError;
             }
             break;

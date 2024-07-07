@@ -15,14 +15,13 @@
 
 namespace vc64 {
 
-GeoRAM::GeoRAM(C64 &ref, isize kb) : GeoRAM(ref)
+GeoRAM::GeoRAM(C64 &ref, isize kb) : Cartridge(ref), kb(kb)
 {
     // The RAM capacity must be a power of two between 64 and 4096
     if ((kb & (kb - 1)) || kb < 64 || kb > 4096) {
         throw Error(ERROR_OPT_INV_ARG, "64, 128, 256, ..., 4096");
     }
 
-    traits.memory = KB(kb);
     setRamCapacity(KB(kb));
 }
 

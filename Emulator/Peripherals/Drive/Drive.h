@@ -320,7 +320,6 @@ public:
         
         << spinning
         << redLED
-        << insertionStatus
         << elapsedTime
         << nextClock
         << nextCarry
