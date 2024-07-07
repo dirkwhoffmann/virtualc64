@@ -319,11 +319,13 @@ public:
         CLONE(port2)
         CLONE(expansionport)
         CLONE(iec)
+        CLONE(userPort)
         CLONE(keyboard)
         CLONE(drive8)
         CLONE(drive9)
         CLONE(parCable)
         CLONE(datasette)
+        CLONE(monitor)
         CLONE(retroShell)
         CLONE(regressionTester)
         CLONE(recorder)
@@ -338,6 +340,8 @@ public:
         CLONE(ultimax)
 
         CLONE(durationOfOneCycle)
+
+        CLONE(config)
 
         return *this;
     }

@@ -109,11 +109,6 @@ public:
         CLONE(bus)
         CLONE(memTypeF)
 
-        printf("Other: \n");
-        other.dump(Category::State);
-        printf("This: \n");
-        dump(Category::State);
-
         return *this;
     }
     virtual void clone(const Cartridge &other) override { *this = (const Reu &)other; }

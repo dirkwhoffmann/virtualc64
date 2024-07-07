@@ -221,6 +221,7 @@ Cartridge::resetCartConfig() {
 void
 Cartridge::cloneRomAndRam(const Cartridge& other)
 {
+    // Clone ROM
     if (numPackets != other.numPackets) {
 
         dealloc();
@@ -233,10 +234,18 @@ Cartridge::cloneRomAndRam(const Cartridge& other)
         }
     }
 
+    // Clone RAM
     if (other.ramCapacity) {
 
-        if (!externalRam) externalRam = new u8[other.ramCapacity];
-        if (writes != other.writes) memcpy(externalRam, other.externalRam, ramCapacity);
+        if (!externalRam) {
+
+            externalRam = new u8[other.ramCapacity];
+            memcpy(externalRam, other.externalRam, ramCapacity);
+
+        } else if (writes != other.writes) {
+
+            memcpy(externalRam, other.externalRam, ramCapacity);
+        }
     }
 }
 

@@ -55,6 +55,7 @@ public:
 
     UserPort& operator= (const UserPort& other) {
 
+        CLONE(rs232)
         CLONE(config)
 
         return *this;
