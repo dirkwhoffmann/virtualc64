@@ -264,6 +264,7 @@ public:
         CLONE(cpu)
         CLONE(via1)
         CLONE(via2)
+        CLONE(pia)
 
         CLONE(spinning)
         CLONE(redLED)
@@ -282,6 +283,8 @@ public:
         CLONE(sync)
         CLONE(byteReady)
         CLONE(watchdog)
+        CLONE(needsEmulation)
+
         CLONE(insertionStatus)
 
         CLONE(config)
@@ -313,9 +316,11 @@ public:
         << cpu
         << via1
         << via2
-
+        << pia
+        
         << spinning
         << redLED
+        << insertionStatus
         << elapsedTime
         << nextClock
         << nextCarry
@@ -330,7 +335,8 @@ public:
         << writeShiftreg
         << sync
         << byteReady
-        << watchdog;
+        << watchdog
+        << needsEmulation;
 
         if (isResetter(worker)) return;
 
