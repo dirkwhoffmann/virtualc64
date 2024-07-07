@@ -188,7 +188,7 @@ extension MyController: NSMenuItemValidation {
             }
         }
 
-        return false
+        return true
     }
 
     func hideOrShowDriveMenus() {

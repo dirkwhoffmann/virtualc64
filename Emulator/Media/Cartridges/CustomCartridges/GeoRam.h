@@ -66,6 +66,7 @@ public:
 
         Cartridge::operator=(other);
 
+        CLONE(traits)
         CLONE(bank)
         CLONE(page)
 

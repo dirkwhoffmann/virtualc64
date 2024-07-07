@@ -97,6 +97,7 @@ public:
 
         Cartridge::operator=(other);
 
+        CLONE(traits)
         CLONE(sr)
         CLONE(cr)
         CLONE(c64Base)
@@ -107,6 +108,11 @@ public:
         CLONE(acr)
         CLONE(bus)
         CLONE(memTypeF)
+
+        printf("Other: \n");
+        other.dump(Category::State);
+        printf("This: \n");
+        dump(Category::State);
 
         return *this;
     }

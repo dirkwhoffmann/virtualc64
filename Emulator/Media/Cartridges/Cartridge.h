@@ -27,15 +27,18 @@ class Cartridge : public SubComponent, public Inspectable<CartridgeInfo> {
         .description    = "Cartridge"
     }};
 
-    CartridgeTraits traits = {
-
-        .type       = CRT_NORMAL,
-        .title      = "Cartridge",
-    };
-
 public:
 
-    virtual const CartridgeTraits &getCartridgeTraits() const { return traits; }
+    virtual const CartridgeTraits &getCartridgeTraits() const {
+
+        static CartridgeTraits traits = {
+
+            .type       = CRT_NORMAL,
+            .title      = "Cartridge",
+        };
+
+        return traits;
+    }
 
     // Maximum number of chip packets on a single cartridge
     static const isize MAX_PACKETS = 128;

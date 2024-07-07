@@ -186,9 +186,8 @@ using namespace vc64;
 - (void)stepInto;
 - (void)stepOver;
 
-- (void)wakeUp;
-
 - (void)launch:(const void *)listener function:(Callback *)func;
+- (void)wakeUp;
 
 - (NSInteger)get:(Option)opt;
 - (NSInteger)get:(Option)opt id:(NSInteger)id;
@@ -200,7 +199,6 @@ using namespace vc64;
 - (BOOL)set:(Option)opt drive:(NSInteger)id value:(NSInteger)val;
 - (BOOL)set:(Option)opt drive:(NSInteger)id enable:(BOOL)val;
 - (void)set:(C64Model)value;
-
 - (void)exportConfig:(NSURL *)url exception:(ExceptionWrapper *)ex;
 
 - (void)put:(CmdType)cmd;

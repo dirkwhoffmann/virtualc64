@@ -111,7 +111,7 @@ Cartridge::_dump(Category category, std::ostream& os) const
             os << tab("On-Board RAM");
             os << dec(getRamCapacity() / 1024) << " KB" << std::endl;
             os << tab("Battery");
-            os << bol(traits.battery) << std::endl;
+            os << bol(getCartridgeTraits().battery) << std::endl;
         }
     }
 }
