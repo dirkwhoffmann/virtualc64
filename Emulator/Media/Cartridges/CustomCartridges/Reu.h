@@ -24,10 +24,11 @@ class Reu final : public Cartridge {
 
             .type       = CRT_REU,
             .title      = "REU",
-            .memory     = KB(kb),
+            .memory     = 0,
             .battery    = true
         };
 
+        traits.memory = KB(kb);
         return traits;
     }
 

@@ -25,7 +25,7 @@ CPU::_dump(Category category, std::ostream& os) const
 
         for (int i = 0; i < guards.elements(); i++) {
 
-            auto guard = guards.guardWithNr(i);
+            auto guard = guards.guardNr(i);
 
             os << util::tab(name + " " + std::to_string(i));
             os << util::hex(guard->addr);

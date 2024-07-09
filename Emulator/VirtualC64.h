@@ -117,7 +117,7 @@ struct CPUAPI : API {
      *  @param  nr      Number of the breakpoint.
      *  @return A pointer to the breakpoint or nullptr if it does not exist.
      */
-    peddle::Guard *breakpointNr(long nr) const;
+    Guard *breakpointNr(long nr) const;
 
     /** @brief  Returns the breakpoint set on a specific address.
      *  @param  addr    Memory address.
@@ -136,7 +136,6 @@ struct CPUAPI : API {
      *  @return A pointer to the breakpoint or nullptr if it is not guarded.
      */
     Guard *watchpointAt(u32 addr) const;
-
 };
 
 

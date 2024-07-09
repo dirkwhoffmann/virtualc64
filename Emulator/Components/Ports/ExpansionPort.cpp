@@ -193,14 +193,14 @@ ExpansionPort::attachCartridge(Cartridge *c)
 void
 ExpansionPort::attachReu(isize kb)
 {
-    debug(EXP_DEBUG, "Attaching REU (%ld KB)", kb);
+    debug(EXP_DEBUG, "Attaching REU (%ld KB)\n", kb);
     attachCartridge(new Reu(c64, kb));
 }
 
 void
 ExpansionPort::attachGeoRam(isize kb)
 {
-    debug(EXP_DEBUG, "Attaching GeoRAM (%ld KB)", kb);
+    debug(EXP_DEBUG, "Attaching GeoRAM (%ld KB)\n", kb);
     attachCartridge(new GeoRAM(c64, kb));
 }
 

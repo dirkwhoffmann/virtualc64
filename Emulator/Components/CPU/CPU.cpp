@@ -214,7 +214,7 @@ CPU::setBreakpoint(u32 addr, isize ignores)
 void 
 CPU::moveBreakpoint(isize nr, u32 newAddr)
 {
-    if (!debugger.breakpoints.guardWithNr(nr)) throw Error(ERROR_BP_NOT_FOUND, nr);
+    if (!debugger.breakpoints.guardNr(nr)) throw Error(ERROR_BP_NOT_FOUND, nr);
 
     debugger.breakpoints.moveTo(nr, newAddr);
     msgQueue.put(MSG_BREAKPOINT_UPDATED);
@@ -223,7 +223,7 @@ CPU::moveBreakpoint(isize nr, u32 newAddr)
 void
 CPU::deleteBreakpoint(isize nr)
 {
-    if (!debugger.breakpoints.guardWithNr(nr)) throw Error(ERROR_BP_NOT_FOUND, nr);
+    if (!debugger.breakpoints.guardNr(nr)) throw Error(ERROR_BP_NOT_FOUND, nr);
 
     debugger.breakpoints.remove(nr);
     msgQueue.put(MSG_BREAKPOINT_UPDATED);
@@ -232,7 +232,7 @@ CPU::deleteBreakpoint(isize nr)
 void
 CPU::deleteBreakpointAt(u32 addr)
 {
-    if (!debugger.breakpoints.guardAtAddr(addr)) throw Error(ERROR_BP_NOT_FOUND, addr);
+    if (!debugger.breakpoints.guardAt(addr)) throw Error(ERROR_BP_NOT_FOUND, addr);
 
     debugger.breakpoints.removeAt(addr);
     msgQueue.put(MSG_BREAKPOINT_UPDATED);
@@ -254,7 +254,7 @@ CPU::toggleBreakpoint(isize nr)
 void 
 CPU::setEnableBreakpoint(isize nr, bool value)
 {
-    if (!debugger.breakpoints.guardWithNr(nr)) throw Error(ERROR_BP_NOT_FOUND, nr);
+    if (!debugger.breakpoints.guardNr(nr)) throw Error(ERROR_BP_NOT_FOUND, nr);
 
     debugger.breakpoints.setEnable(nr, value);
     msgQueue.put(MSG_BREAKPOINT_UPDATED);
@@ -263,7 +263,7 @@ CPU::setEnableBreakpoint(isize nr, bool value)
 void 
 CPU::setEnableBreakpointAt(u32 addr, bool value)
 {
-    if (!debugger.breakpoints.guardAtAddr(addr)) throw Error(ERROR_BP_NOT_FOUND, addr);
+    if (!debugger.breakpoints.guardAt(addr)) throw Error(ERROR_BP_NOT_FOUND, addr);
 
     debugger.breakpoints.setEnableAt(addr, value);
     msgQueue.put(MSG_BREAKPOINT_UPDATED);
@@ -288,7 +288,7 @@ CPU::setWatchpoint(u32 addr, isize ignores)
 void
 CPU::moveWatchpoint(isize nr, u32 newAddr)
 {
-    if (!debugger.watchpoints.guardWithNr(nr)) throw Error(ERROR_WP_NOT_FOUND, nr);
+    if (!debugger.watchpoints.guardNr(nr)) throw Error(ERROR_WP_NOT_FOUND, nr);
 
     debugger.watchpoints.moveTo(nr, newAddr);
     msgQueue.put(MSG_WATCHPOINT_UPDATED);
@@ -297,7 +297,7 @@ CPU::moveWatchpoint(isize nr, u32 newAddr)
 void
 CPU::deleteWatchpoint(isize nr)
 {
-    if (!debugger.watchpoints.guardWithNr(nr)) throw Error(ERROR_WP_NOT_FOUND, nr);
+    if (!debugger.watchpoints.guardNr(nr)) throw Error(ERROR_WP_NOT_FOUND, nr);
 
     debugger.watchpoints.remove(nr);
     msgQueue.put(MSG_WATCHPOINT_UPDATED);
@@ -306,7 +306,7 @@ CPU::deleteWatchpoint(isize nr)
 void
 CPU::deleteWatchpointAt(u32 addr)
 {
-    if (!debugger.watchpoints.guardAtAddr(addr)) throw Error(ERROR_WP_NOT_FOUND, addr);
+    if (!debugger.watchpoints.guardAt(addr)) throw Error(ERROR_WP_NOT_FOUND, addr);
 
     debugger.watchpoints.removeAt(addr);
     msgQueue.put(MSG_WATCHPOINT_UPDATED);
@@ -328,7 +328,7 @@ CPU::toggleWatchpoint(isize nr)
 void
 CPU::setEnableWatchpoint(isize nr, bool value)
 {
-    if (!debugger.watchpoints.guardWithNr(nr)) throw Error(ERROR_WP_NOT_FOUND, nr);
+    if (!debugger.watchpoints.guardNr(nr)) throw Error(ERROR_WP_NOT_FOUND, nr);
 
     debugger.watchpoints.setEnable(nr, value);
     msgQueue.put(MSG_WATCHPOINT_UPDATED);
@@ -337,7 +337,7 @@ CPU::setEnableWatchpoint(isize nr, bool value)
 void
 CPU::setEnableWatchpointAt(u32 addr, bool value)
 {
-    if (!debugger.watchpoints.guardAtAddr(addr)) throw Error(ERROR_WP_NOT_FOUND, addr);
+    if (!debugger.watchpoints.guardAt(addr)) throw Error(ERROR_WP_NOT_FOUND, addr);
 
     debugger.watchpoints.setEnableAt(addr, value);
     msgQueue.put(MSG_WATCHPOINT_UPDATED);

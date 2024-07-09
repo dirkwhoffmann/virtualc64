@@ -397,7 +397,7 @@ Emulator::update()
             case CMD_ALARM_REL:
             case CMD_INSPECTION_TARGET:
 
-                main.process(cmd);
+                main.processCommand(cmd);
                 break;
 
             case CMD_CPU_BRK:

@@ -24,10 +24,11 @@ class GeoRAM final : public Cartridge {
 
             .type       = CRT_GEO_RAM,
             .title      = "GeoRam",
-            .memory     = KB(kb),
+            .memory     = 0,
             .battery    = true
         };
 
+        traits.memory = KB(kb);
         return traits;
     }
 

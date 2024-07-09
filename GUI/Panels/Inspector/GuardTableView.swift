@@ -151,7 +151,7 @@ class BreakTableView: GuardTableView {
                     inspector.fullRefresh()
                 }
 
-                if (col == 0 || col == 1) && cpu.hasBreakpoint(withNr: row) {
+                if (col == 0 || col == 1) {
 
                     // Jump to breakpoint address
                     inspector.fullRefresh()

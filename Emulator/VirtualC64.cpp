@@ -567,25 +567,25 @@ CPUAPI::disassembleRecorded(char *dst, const char *fmt, isize nr) const
 Guard *
 CPUAPI::breakpointNr(long nr) const
 {
-    return cpu->debugger.breakpoints.guardWithNr(nr);
+    return cpu->debugger.breakpoints.guardNr(nr);
 }
 
 Guard *
 CPUAPI::breakpointAt(u32 addr) const
 {
-    return cpu->debugger.breakpoints.guardAtAddr(addr);
+    return cpu->debugger.breakpoints.guardAt(addr);
 }
 
 Guard *
 CPUAPI::watchpointNr(long nr) const
 {
-    return cpu->debugger.watchpoints.guardWithNr(nr);
+    return cpu->debugger.watchpoints.guardNr(nr);
 }
 
 Guard *
 CPUAPI::watchpointAt(u32 addr) const
 {
-    return cpu->debugger.watchpoints.guardAtAddr(addr);
+    return cpu->debugger.watchpoints.guardAt(addr);
 }
 
 

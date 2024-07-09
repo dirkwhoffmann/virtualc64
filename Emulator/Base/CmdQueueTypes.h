@@ -245,24 +245,24 @@ struct Cmd
     union {
 
         struct { i64 value; i64 value2; };
+        AlarmCmd alarm;
         ConfigCmd config;
-        KeyCmd key;
         CoordCmd coord;
         GamePadCmd action;
-        TapeCmd tape;
-        AlarmCmd alarm;
+        KeyCmd key;
         ShellCmd shell;
+        TapeCmd tape;
     };
 
     Cmd() { }
     Cmd(CmdType type, i64 v1 = 0, i64 v2 = 0) : type(type), value(v1), value2(v2) { }
-    Cmd(CmdType type, const KeyCmd &cmd) : type(type), key(cmd) { }
+    Cmd(CmdType type, const AlarmCmd &cmd) : type(type), alarm(cmd) { }
+    Cmd(CmdType type, const ConfigCmd &cmd) : type(type), config(cmd) { }
     Cmd(CmdType type, const CoordCmd &cmd) : type(type), coord(cmd) { }
     Cmd(CmdType type, const GamePadCmd &cmd) : type(type), action(cmd) { }
-    Cmd(CmdType type, const TapeCmd &cmd) : type(type), tape(cmd) { }
-    Cmd(CmdType type, const AlarmCmd &cmd) : type(type), alarm(cmd) { }
+    Cmd(CmdType type, const KeyCmd &cmd) : type(type), key(cmd) { }
     Cmd(CmdType type, const ShellCmd &cmd) : type(type), shell(cmd) { }
-    Cmd(CmdType type, const ConfigCmd &cmd) : type(type), config(cmd) { }
+    Cmd(CmdType type, const TapeCmd &cmd) : type(type), tape(cmd) { }
 };
 
 }
