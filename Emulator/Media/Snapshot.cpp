@@ -67,9 +67,9 @@ Snapshot::Snapshot(isize capacity)
 {
     size = capacity + sizeof(SnapshotHeader);
     data = new u8[size];
-    
+
     SnapshotHeader *header = (SnapshotHeader *)data;
-    
+
     header->magic[0] = 'V';
     header->magic[1] = 'C';
     header->magic[2] = '6';
@@ -77,6 +77,7 @@ Snapshot::Snapshot(isize capacity)
     header->major = SNP_MAJOR;
     header->minor = SNP_MINOR;
     header->subminor = SNP_SUBMINOR;
+    header->beta = SNP_BETA;
 }
 
 Snapshot::Snapshot(C64 &c64): Snapshot(c64.size())
