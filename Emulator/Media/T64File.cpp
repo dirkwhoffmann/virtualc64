@@ -43,7 +43,7 @@ T64File::isCompatible(std::istream &stream)
 }
 
 void
-T64File::init(class FileSystem &fs)
+T64File::init(const class FileSystem &fs)
 {
     // Analyze the file system
     isize numFiles = fs.numFiles();

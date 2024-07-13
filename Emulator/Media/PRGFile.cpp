@@ -31,7 +31,7 @@ PRGFile::isCompatible(std::istream &stream)
 }
 
 void
-PRGFile::init(FileSystem &fs)
+PRGFile::init(const FileSystem &fs)
 {
     isize item = 0;
     isize itemSize = fs.fileSize(item);

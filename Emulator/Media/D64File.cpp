@@ -74,7 +74,7 @@ D64File::init(isize tracks, bool ecc)
 }
 
 void
-D64File::init(FileSystem &volume)
+D64File::init(const FileSystem &volume)
 {
     switch (volume.getNumBlocks() * 256) {
 

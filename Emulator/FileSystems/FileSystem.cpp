@@ -876,19 +876,19 @@ FileSystem::importDirectory(const fs::directory_entry &dir)
 }
 
 bool
-FileSystem::exportVolume(u8 *dst, isize size, ErrorCode *err)
+FileSystem::exportVolume(u8 *dst, isize size, ErrorCode *err) const
 {
     return exportBlocks(0, layout.numBlocks() - 1, dst, size, err);
 }
 
 bool
-FileSystem::exportBlock(isize nr, u8 *dst, isize size, ErrorCode *err)
+FileSystem::exportBlock(isize nr, u8 *dst, isize size, ErrorCode *err) const
 {
     return exportBlocks(nr, nr, dst, size, err);
 }
 
 bool
-FileSystem::exportBlocks(isize first, isize last, u8 *dst, isize size, ErrorCode *err)
+FileSystem::exportBlocks(isize first, isize last, u8 *dst, isize size, ErrorCode *err) const
 {
     assert(last < (u32)layout.numBlocks());
     assert(first <= last);

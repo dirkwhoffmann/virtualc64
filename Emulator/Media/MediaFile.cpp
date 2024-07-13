@@ -31,7 +31,7 @@ namespace vc64 {
 FileType
 MediaFile::type(const fs::path &path)
 {
-    std::ifstream stream(path);
+    std::ifstream stream(path, std::ifstream::binary);
     if (!stream.is_open()) return FILETYPE_UNKNOWN;
 
     if (Snapshot::isCompatible(path) &&
@@ -129,7 +129,7 @@ MediaFile::make(const u8 *buf, isize len, FileType type)
 }
 
 MediaFile *
-MediaFile::make(class FileSystem &fs, FileType type)
+MediaFile::make(const class FileSystem &fs, FileType type)
 {
     switch (type) {
 

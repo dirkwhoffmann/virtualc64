@@ -32,14 +32,14 @@ public:
     // Static methods
     //
 
-    // Determines the type of an arbitrary file on file
+    // Determines the type of an arbitrary file on disk
     static FileType type(const fs::path &path);
 
     // Factory methods
     static MediaFile *make(const fs::path &path);
     static MediaFile *make(const fs::path &path, FileType type);
     static MediaFile *make(const u8 *buf, isize len, FileType type);
-    static MediaFile *make(class FileSystem &fs, FileType type); // TODO: add const 
+    static MediaFile *make(const class FileSystem &fs, FileType type);
     static MediaFile *make(struct DriveAPI &drive, FileType type);
 
 

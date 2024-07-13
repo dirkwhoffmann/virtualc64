@@ -34,7 +34,7 @@ P00File::isCompatible(std::istream &stream)
 }
 
 void
-P00File::init(FileSystem &fs)
+P00File::init(const FileSystem &fs)
 {
     isize item = 0;
     isize itemSize = fs.fileSize(item);

@@ -32,12 +32,12 @@ public:
     T64File(isize capacity) : AnyCollection(capacity) { }
     T64File(const fs::path &path) throws { init(path); }
     T64File(const u8 *buf, isize len) throws { init(buf, len); }
-    T64File(class FileSystem &fs) throws { init(fs); }
-    
+    T64File(const class FileSystem &fs) throws { init(fs); }
+
 private:
     
     using AnyFile::init;
-    void init(FileSystem &fs) throws;
+    void init(const FileSystem &fs) throws;
 
     
     //

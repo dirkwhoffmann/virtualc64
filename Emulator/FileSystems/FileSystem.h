@@ -294,11 +294,11 @@ public:
     void importDirectory(const fs::directory_entry &dir) throws;
 
     // Exports the volume to a buffer
-    bool exportVolume(u8 *dst, isize size, ErrorCode *err = nullptr);
+    bool exportVolume(u8 *dst, isize size, ErrorCode *err = nullptr) const;
 
     // Exports a single block or a range of blocks
-    bool exportBlock(isize nr, u8 *dst, isize size, ErrorCode *err = nullptr);
-    bool exportBlocks(isize first, isize last, u8 *dst, isize size, ErrorCode *err = nullptr);
+    bool exportBlock(isize nr, u8 *dst, isize size, ErrorCode *err = nullptr) const;
+    bool exportBlocks(isize first, isize last, u8 *dst, isize size, ErrorCode *err = nullptr) const;
 
     // Exports all files or a single file to a folder in the host file system
     void exportDirectory(const fs::path &path, bool createDir = true) throws;

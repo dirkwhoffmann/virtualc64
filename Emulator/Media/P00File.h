@@ -32,13 +32,13 @@ public:
     P00File(isize capacity) : AnyCollection(capacity) { }
     P00File(const fs::path &path) throws { init(path); }
     P00File(const u8 *buf, isize len) throws { init(buf, len); }
-    P00File(class FileSystem &fs) throws { init(fs); }
+    P00File(const class FileSystem &fs) throws { init(fs); }
     
 private:
     
     using AnyFile::init;
-    void init(FileSystem &fs) throws;
-    
+    void init(const FileSystem &fs) throws;
+
     
     //
     // Methods from CoreObject
