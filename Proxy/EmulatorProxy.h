@@ -29,7 +29,6 @@ using namespace vc64;
 @class DriveProxy;
 @class ExpansionPortProxy;
 @class FileSystemProxy;
-@class G64FileProxy;
 @class SerialPortProxy;
 @class JoystickProxy;
 @class KeyboardProxy;
@@ -674,6 +673,7 @@ struct GuardInfo {
 
 + (FileType) typeOfUrl:(NSURL *)url;
 
++ (instancetype)make:(MediaFile *)file;
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithFile:(NSString *)path type:(FileType)t exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len type:(FileType)t exception:(ExceptionWrapper *)ex;

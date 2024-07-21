@@ -23,7 +23,7 @@ namespace vc64 {
 using peddle::Guard;
 
 //
-// Public API
+// Base class for all APIs
 //
 
 class API {
@@ -37,6 +37,8 @@ public:
 
     void suspend();
     void resume();
+
+protected:
 
     bool isUserThread() const;
 };

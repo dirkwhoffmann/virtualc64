@@ -25,8 +25,6 @@ class MediaManager {
     var document: MyDocument!
     var emu: EmulatorProxy? { return document.emu }
     var controller: MyController { return document.parent }
-
-    // Computed references
     var console: Console { return controller.renderer.console }
 
     // Shared list of recently inserted tapes

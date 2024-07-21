@@ -1258,6 +1258,7 @@ C64::loadRom(const MediaFile &file)
             break;
             
         default:
+            
             throw Error(ERROR_FILE_TYPE_MISMATCH);
     }
 }

@@ -181,7 +181,7 @@ RS232::readIncomingPrintableByte()
         while (1) {
 
             auto byte = readIncomingByte();
-            if (byte == -1 || isprint(byte) || byte == '\n') return byte;
+            if (byte == -1 || isprint(byte) || byte == '\n' || byte == '\r') return byte;
         }
     }
 }
@@ -194,7 +194,7 @@ RS232::readOutgoingPrintableByte()
         while (1) {
 
             auto byte = readOutgoingByte();
-            if (byte == -1 || isprint(byte) || byte == '\n') return byte;
+            if (byte == -1 || isprint(byte) || byte == '\n' || byte == '\r') return byte;
         }
     }
 }

@@ -1221,14 +1221,14 @@ using namespace vc64;
     return (MediaFile *)obj;
 }
 
-+ (instancetype)make:(MediaFile *)file
-{
-    return file ? [[self alloc] initWith:file] : nil;
-}
-
 + (FileType)typeOfUrl:(NSURL *)url
 {
     return MediaFile::type([url fileSystemRepresentation]);
+}
+
++ (instancetype)make:(MediaFile *)file
+{
+    return file ? [[self alloc] initWith:file] : nil;
 }
 
 + (instancetype)makeWithFile:(NSString *)path
