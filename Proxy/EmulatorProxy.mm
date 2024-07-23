@@ -10,6 +10,11 @@
 #import "config.h"
 #import "EmulatorProxy.h"
 #import "VirtualC64.h"
+
+// REMOVE EVENTUALLY
+#import "DiskAnalyzer.h"
+#import "Drive.h"
+#import "FFmpeg.h"
 #import "Emulator.h"
 
 using namespace vc64;
@@ -843,29 +848,6 @@ using namespace vc64;
     return [NSString stringWithUTF8String:s.c_str()];
 }
 
-/*
-- (NSInteger)numErrors:(Halftrack)ht
-{
-    return [self analyzer]->numErrors(ht);
-}
-
-- (NSString *)errorMessage:(Halftrack)ht nr:(NSInteger)nr
-{
-    string s = [self analyzer]->errorMessage(ht, nr);
-    return [NSString stringWithUTF8String:s.c_str()];
-}
-
-- (NSInteger)firstErroneousBit:(Halftrack)ht nr:(NSInteger)nr
-{
-    return [self analyzer]->firstErroneousBit(ht, nr);
-}
-
-- (NSInteger)lastErroneousBit:(Halftrack)ht nr:(NSInteger)nr
-{
-    return [self analyzer]->lastErroneousBit(ht, nr);
-}
-*/
-
 - (SectorInfo)sectorInfo:(Halftrack)ht sector:(Sector)s
 {
     return [self analyzer]->sectorLayout(ht, s);
@@ -1334,56 +1316,6 @@ using namespace vc64;
 - (time_t)timeStamp
 {
     return [self file]->timestamp();
-}
-
-@end
-
-
-//
-// AnyFile
-//
-
-@implementation AnyFileProxy
-
-+ (AnyFileProxy *)makeWithFile:(AnyFile *)file
-{
-    return file ? [[self alloc] initWith:file] : nil;
-}
-
-- (AnyFile *)file
-{
-    return (AnyFile *)obj;
-}
-
-+ (FileType)typeOfUrl:(NSURL *)url
-{
-    return AnyFile::type([url fileSystemRepresentation]);
-}
-
-- (FileType)type
-{
-    return [self file]->type();
-}
-
-- (NSString *)name
-{
-    return [NSString stringWithUTF8String:[self file]->getName().c_str()];
-}
-
-- (u64)fnv
-{
-    return [self file]->fnv();
-}
-
-- (void)setPath:(NSString *)path
-{
-    [self file]->path = [path fileSystemRepresentation];
-}
-
-- (void)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex
-{
-    try { [self file]->writeToFile(string([path fileSystemRepresentation])); }
-    catch (Error &err) { [ex save:err]; }    
 }
 
 @end

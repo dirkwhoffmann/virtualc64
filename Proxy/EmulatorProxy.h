@@ -15,7 +15,6 @@
 using namespace vc64;
 
 @class AudioPortProxy;
-@class AnyFileProxy;
 @class EmulatorProxy;
 @class C64Proxy;
 @class CIAProxy;
@@ -645,28 +644,10 @@ struct GuardInfo {
 
 
 //
-// AnyFile
-//
-
-@interface AnyFileProxy : Proxy { }
-
-+ (FileType) typeOfUrl:(NSURL *)url;
-
-@property (readonly) FileType type;
-@property (readonly) NSString *name;
-@property (readonly) u64 fnv;
-
-- (void)setPath:(NSString *)path;
-- (void)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex;
-
-@end
-
-
-//
 // MediaFile
 //
 
-@interface MediaFileProxy : AnyFileProxy
+@interface MediaFileProxy : Proxy
 {
     NSImage *preview;
 }

@@ -44,7 +44,7 @@ extension vc64.EventSlot: CustomStringConvertible {
 extension vc64.FileType {
 
     init?(url: URL?) {
-        self = url == nil ? .UNKNOWN : AnyFileProxy.type(of: url)
+        self = url == nil ? .UNKNOWN : MediaFileProxy.type(of: url)
     }
 
     static var all: [vc64.FileType] {

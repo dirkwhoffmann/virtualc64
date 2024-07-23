@@ -21,6 +21,8 @@
 namespace vc64 {
 
 using peddle::Guard;
+using peddle::DasmStyle;
+using peddle::DasmNumberFormat;
 
 //
 // Base class for all APIs
@@ -97,7 +99,7 @@ struct CPUAPI : API {
      *  @param  instrFormat Format for numbers inside instructions
      *  @param  dataFormat  Format for printed data values
      */
-    void setNumberFormat(peddle::DasmNumberFormat instrFormat, peddle::DasmNumberFormat dataFormat);
+    void setNumberFormat(DasmNumberFormat instrFormat, DasmNumberFormat dataFormat);
 
     /** Disassembles an instruction.
      *  @param  dst     Destination buffer

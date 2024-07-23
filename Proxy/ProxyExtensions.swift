@@ -155,7 +155,7 @@ extension ExpansionPortProxy {
     }
 }
 
-extension AnyFileProxy {
+extension MediaFileProxy {
     
     func writeToFile(url: URL) throws {
         
@@ -277,8 +277,8 @@ public extension DriveProxy {
     }
 }
 
-extension AnyFileProxy {
-        
+extension MediaFileProxy {
+
     func icon(protected: Bool = false) -> NSImage {
      
         switch type {
@@ -293,8 +293,8 @@ extension AnyFileProxy {
             return NSImage(named: "NSFolder")!
 
         case .D64, .G64, .T64, .PRG, .P00:
-            return AnyFileProxy.diskIcon(protected: protected)
-            
+            return MediaFileProxy.diskIcon(protected: protected)
+
         default:
             fatalError()
         }

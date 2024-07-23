@@ -297,57 +297,49 @@ class MediaManager {
         }
     }
 
-    func flashMedia(proxy: AnyFileProxy, options: [Option] = []) throws {
+    func flashMedia(proxy: MediaFileProxy, options: [Option] = []) throws {
 
         if let emu = emu {
 
-            switch proxy {
+            switch proxy.type {
 
-            case let proxy as MediaFileProxy:
+            case .SNAPSHOT:
 
-                switch proxy.type {
+                debug(.media, "Snapshot")
+                try emu.flash(proxy)
 
-                case .SNAPSHOT:
+            case .CRT:
 
-                    debug(.media, "Snapshot")
-                    try emu.flash(proxy)
+                debug(.media, "CRT")
+                try emu.expansionport.attachCartridge(proxy, reset: true)
 
-                case .CRT:
+            case .TAP:
 
-                    debug(.media, "CRT")
-                    try emu.expansionport.attachCartridge(proxy, reset: true)
+                debug(.media, "TAP")
+                emu.datasette.insertTape(proxy)
 
-                case .TAP:
-
-                    debug(.media, "TAP")
-                    emu.datasette.insertTape(proxy)
-
-                    if options.contains(.autostart) {
-                        controller.keyboard.type("load\n")
-                        emu.datasette.pressPlay()
-                    }
-
-                case .PRG, .P00, .T64:
-
-                    debug(.media, "PRG, P00, T64")
-                    if let volume = try? FileSystemProxy.make(with: proxy) {
-
-                        try? emu.flash(volume, item: 0)
-                        controller.keyboard.type("run\n")
-                        controller.renderer.rotateLeft()
-                    }
-
-                case .SCRIPT:
-
-                    debug(.media, "Script")
-                    console.runScript(script: proxy)
-
-                default:
-                    break
+                if options.contains(.autostart) {
+                    controller.keyboard.type("load\n")
+                    emu.datasette.pressPlay()
                 }
 
+            case .PRG, .P00, .T64:
+
+                debug(.media, "PRG, P00, T64")
+                if let volume = try? FileSystemProxy.make(with: proxy) {
+
+                    try? emu.flash(volume, item: 0)
+                    controller.keyboard.type("run\n")
+                    controller.renderer.rotateLeft()
+                }
+
+            case .SCRIPT:
+
+                debug(.media, "Script")
+                console.runScript(script: proxy)
+
             default:
-                fatalError()
+                break
             }
         }
     }
@@ -397,7 +389,7 @@ class MediaManager {
 
         debug(.media, "fs: \(fs) to: \(url)")
 
-        var file: AnyFileProxy?
+        var file: MediaFileProxy?
 
         switch url.c64FileType {
 
@@ -422,7 +414,7 @@ class MediaManager {
         try export(file: file!, to: url)
     }
 
-    func export(file: AnyFileProxy, to url: URL) throws {
+    func export(file: MediaFileProxy, to url: URL) throws {
 
         try file.writeToFile(url: url)
     }
