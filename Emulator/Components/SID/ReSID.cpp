@@ -52,27 +52,6 @@ ReSID::_reset(bool hard)
     sid->enable_filter(emulateFilter);
 }
 
-u32
-ReSID::getClockFrequency() const
-{
-    assert((u32)sid->clock_frequency == clockFrequency);
-    return (u32)sid->clock_frequency;
-}
-
-void
-ReSID::setClockFrequency(u32 frequency)
-{
-    trace(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
-
-    clockFrequency = frequency;
-    
-    sid->set_sampling_parameters((double)clockFrequency,
-                                 (reSID::sampling_method)samplingMethod,
-                                 (double)sampleRate);
-    
-    assert((u32)sid->clock_frequency == clockFrequency);
-}
-
 void
 ReSID::_dump(Category category, std::ostream& os) const
 {
@@ -183,6 +162,28 @@ ReSID::cacheInfo(SIDInfo &info) const
     }
 }
 
+u32
+ReSID::getClockFrequency() const
+{
+    assert((u32)sid->clock_frequency == clockFrequency);
+    return (u32)sid->clock_frequency;
+}
+
+void
+ReSID::setClockFrequency(u32 frequency)
+{
+    if (clockFrequency != frequency) {
+
+        clockFrequency = frequency;
+        sid->set_sampling_parameters((double)clockFrequency,
+                                     (reSID::sampling_method)samplingMethod,
+                                     (double)sampleRate);
+        trace(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
+    }
+
+    assert((u32)sid->clock_frequency == clockFrequency);
+}
+
 SIDRevision
 ReSID::getRevision() const
 {
@@ -194,12 +195,15 @@ void
 ReSID::setRevision(SIDRevision revision)
 {
     assert(revision == 0 || revision == 1);
-    model = revision;
 
-    sid->set_chip_model((reSID::chip_model)revision);
+    if (model != revision) {
+
+        model = revision;
+        sid->set_chip_model((reSID::chip_model)revision);
+        trace(SID_DEBUG, "Emulating SID revision %s.\n", SIDRevisionEnum::key(revision));
+    }
 
     assert((SIDRevision)sid->sid_model == revision);
-    trace(SID_DEBUG, "Emulating SID revision %s.\n", SIDRevisionEnum::key(revision));
 }
 
 void
@@ -208,11 +212,9 @@ ReSID::setSampleRate(double value)
     if (sampleRate != value) {
 
         sampleRate = value;
-
         sid->set_sampling_parameters((double)clockFrequency,
                                      (reSID::sampling_method)samplingMethod,
                                      sampleRate);
-
         trace(SID_DEBUG, "Setting sample rate to %f samples per second\n", sampleRate);
     }
 }
