@@ -16,7 +16,7 @@
 #include "MsgQueue.h"
 #include "Thread.h"
 
-// Subcomponents
+// Components
 #include "Keyboard.h"
 #include "C64Memory.h"
 #include "Debugger.h"
@@ -82,13 +82,6 @@ static constexpr Cycle NEVER = INT64_MAX;
 static constexpr double inspectionInterval = 0.1;
 
 
-/* A complete virtual C64. This class is the most prominent one of all. To run
- * the emulator, it is sufficient to create a single object of this type. All
- * subcomponents are created automatically. The public API gives you control
- * over the emulator's behaviour such as running and pausing the emulation.
- * Please note that most subcomponents have their own public API. E.g., to
- * query information from VICII, you need to invoke a method on c64.vicii.
- */
 class C64 final : public CoreComponent, public Inspectable<C64Info> {
 
     friend class Emulator;
@@ -106,13 +99,13 @@ class C64 final : public CoreComponent, public Inspectable<C64Info> {
 
     ConfigOptions options = {
 
-        OPT_EMU_WARP_BOOT,
-        OPT_EMU_WARP_MODE,
-        OPT_EMU_VSYNC,
-        OPT_EMU_SPEED_ADJUST,
-        OPT_EMU_SNAPSHOTS,
-        OPT_EMU_SNAPSHOT_DELAY,
-        OPT_EMU_RUN_AHEAD
+        OPT_C64_WARP_BOOT,
+        OPT_C64_WARP_MODE,
+        OPT_C64_VSYNC,
+        OPT_C64_SPEED_ADJUST,
+        OPT_C64_SNAPSHOTS,
+        OPT_C64_SNAPSHOT_DELAY,
+        OPT_C64_RUN_AHEAD
     };
     
 private:
@@ -206,9 +199,6 @@ private:
 
 private:
 
-    Snapshot *autoSnapshot = nullptr;
-    Snapshot *userSnapshot = nullptr;
-
     typedef struct { Cycle trigger; i64 payload; } Alarm;
     std::vector<Alarm> alarms;
 
@@ -299,7 +289,7 @@ public:
 
 
     //
-    // Methods from CoreComponent
+    // Operators
     //
 
 public:

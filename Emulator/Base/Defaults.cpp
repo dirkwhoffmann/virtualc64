@@ -25,13 +25,13 @@ Defaults::Defaults()
     setFallback(OPT_HOST_FRAMEBUF_WIDTH,        0);
     setFallback(OPT_HOST_FRAMEBUF_HEIGHT,       0);
 
-    setFallback(OPT_EMU_WARP_BOOT,              0);
-    setFallback(OPT_EMU_WARP_MODE,              WARP_NEVER);
-    setFallback(OPT_EMU_VSYNC,                  false);
-    setFallback(OPT_EMU_SPEED_ADJUST,           100);
-    setFallback(OPT_EMU_SNAPSHOTS,              false);
-    setFallback(OPT_EMU_SNAPSHOT_DELAY,         10);
-    setFallback(OPT_EMU_RUN_AHEAD,              0);
+    setFallback(OPT_C64_WARP_BOOT,              0);
+    setFallback(OPT_C64_WARP_MODE,              WARP_NEVER);
+    setFallback(OPT_C64_VSYNC,                  false);
+    setFallback(OPT_C64_SPEED_ADJUST,           100);
+    setFallback(OPT_C64_SNAPSHOTS,              false);
+    setFallback(OPT_C64_SNAPSHOT_DELAY,         10);
+    setFallback(OPT_C64_RUN_AHEAD,              0);
 
     setFallback(OPT_POWER_GRID,                 GRID_STABLE_50HZ);
 

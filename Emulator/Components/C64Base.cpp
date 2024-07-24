@@ -235,13 +235,13 @@ C64::getOption(Option opt) const
 {
     switch (opt) {
 
-        case OPT_EMU_WARP_BOOT:         return config.warpBoot;
-        case OPT_EMU_WARP_MODE:         return config.warpMode;
-        case OPT_EMU_VSYNC:             return config.vsync;
-        case OPT_EMU_SPEED_ADJUST:      return config.speedAdjust;
-        case OPT_EMU_SNAPSHOTS:         return config.snapshots;
-        case OPT_EMU_SNAPSHOT_DELAY:    return config.snapshotDelay;
-        case OPT_EMU_RUN_AHEAD:         return config.runAhead;
+        case OPT_C64_WARP_BOOT:         return config.warpBoot;
+        case OPT_C64_WARP_MODE:         return config.warpMode;
+        case OPT_C64_VSYNC:             return config.vsync;
+        case OPT_C64_SPEED_ADJUST:      return config.speedAdjust;
+        case OPT_C64_SNAPSHOTS:         return config.snapshots;
+        case OPT_C64_SNAPSHOT_DELAY:    return config.snapshotDelay;
+        case OPT_C64_RUN_AHEAD:         return config.runAhead;
 
         default:
             fatalError;
@@ -253,40 +253,40 @@ C64::checkOption(Option opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_EMU_WARP_BOOT:
+        case OPT_C64_WARP_BOOT:
 
             return;
 
-        case OPT_EMU_WARP_MODE:
+        case OPT_C64_WARP_MODE:
 
             if (!WarpModeEnum::isValid(value)) {
                 throw Error(ERROR_OPT_INV_ARG, WarpModeEnum::keyList());
             }
             return;
 
-        case OPT_EMU_VSYNC:
+        case OPT_C64_VSYNC:
 
             return;
 
-        case OPT_EMU_SPEED_ADJUST:
+        case OPT_C64_SPEED_ADJUST:
 
             if (value < 50 || value > 200) {
                 throw Error(ERROR_OPT_INV_ARG, "50...200");
             }
             return;
 
-        case OPT_EMU_SNAPSHOTS:
+        case OPT_C64_SNAPSHOTS:
 
             return;
 
-        case OPT_EMU_SNAPSHOT_DELAY:
+        case OPT_C64_SNAPSHOT_DELAY:
 
             if (value < 10 || value > 3600) {
                 throw Error(ERROR_OPT_INV_ARG, "10...3600");
             }
             return;
 
-        case OPT_EMU_RUN_AHEAD:
+        case OPT_C64_RUN_AHEAD:
 
             if (value < 0 || value > 12) {
                 throw Error(ERROR_OPT_INV_ARG, "0...12");
@@ -305,40 +305,40 @@ C64::setOption(Option opt, i64 value)
 
     switch (opt) {
 
-        case OPT_EMU_WARP_BOOT:
+        case OPT_C64_WARP_BOOT:
 
             config.warpBoot = isize(value);
             return;
 
-        case OPT_EMU_WARP_MODE:
+        case OPT_C64_WARP_MODE:
 
             config.warpMode = WarpMode(value);
             return;
 
-        case OPT_EMU_VSYNC:
+        case OPT_C64_VSYNC:
 
             config.vsync = bool(value);
             return;
 
-        case OPT_EMU_SPEED_ADJUST:
+        case OPT_C64_SPEED_ADJUST:
 
             config.speedAdjust = isize(value);
             updateClockFrequency();
             return;
 
-        case OPT_EMU_SNAPSHOTS:
+        case OPT_C64_SNAPSHOTS:
 
             config.snapshots = bool(value);
             scheduleNextSNPEvent();
             return;
 
-        case OPT_EMU_SNAPSHOT_DELAY:
+        case OPT_C64_SNAPSHOT_DELAY:
 
             config.snapshotDelay = isize(value);
             scheduleNextSNPEvent();
             return;
 
-        case OPT_EMU_RUN_AHEAD:
+        case OPT_C64_RUN_AHEAD:
 
             config.runAhead = isize(value);
             return;

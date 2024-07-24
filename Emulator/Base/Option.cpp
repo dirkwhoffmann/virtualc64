@@ -33,13 +33,13 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_HOST_FRAMEBUF_WIDTH:       return numParser(" pixels");
         case OPT_HOST_FRAMEBUF_HEIGHT:      return numParser(" pixels");
 
-        case OPT_EMU_WARP_MODE:             return enumParser.template operator()<WarpModeEnum>();
-        case OPT_EMU_WARP_BOOT:             return numParser(" sec");
-        case OPT_EMU_VSYNC:                 return boolParser();
-        case OPT_EMU_SPEED_ADJUST:          return numParser("%");
-        case OPT_EMU_SNAPSHOTS:             return boolParser();
-        case OPT_EMU_SNAPSHOT_DELAY:        return numParser(" sec");
-        case OPT_EMU_RUN_AHEAD:             return numParser(" frames");
+        case OPT_C64_WARP_MODE:             return enumParser.template operator()<WarpModeEnum>();
+        case OPT_C64_WARP_BOOT:             return numParser(" sec");
+        case OPT_C64_VSYNC:                 return boolParser();
+        case OPT_C64_SPEED_ADJUST:          return numParser("%");
+        case OPT_C64_SNAPSHOTS:             return boolParser();
+        case OPT_C64_SNAPSHOT_DELAY:        return numParser(" sec");
+        case OPT_C64_RUN_AHEAD:             return numParser(" frames");
 
         case OPT_VICII_REVISION:            return enumParser.template operator()<VICIIRevisionEnum>();
         case OPT_VICII_GRAY_DOT_BUG:        return boolParser();

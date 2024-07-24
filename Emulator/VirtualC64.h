@@ -161,7 +161,6 @@ struct CIAAPI : API {
     /** @brief  Returns statistical information about the components.
      */
     CIAStats getStats() const;
-
 };
 
 

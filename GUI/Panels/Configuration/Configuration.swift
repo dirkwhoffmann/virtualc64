@@ -257,27 +257,27 @@ class Configuration {
     }
 
     var warpMode: Int {
-        get { return emu?.get(.EMU_WARP_MODE) ?? 0 }
-        set { emu?.set(.EMU_WARP_MODE, value: newValue) }
+        get { return emu?.get(.C64_WARP_MODE) ?? 0 }
+        set { emu?.set(.C64_WARP_MODE, value: newValue) }
     }
 
     var warpBoot: Int {
-        get { return emu?.get(.EMU_WARP_BOOT) ?? 0 }
-        set { emu?.set(.EMU_WARP_BOOT, value: newValue) }
+        get { return emu?.get(.C64_WARP_BOOT) ?? 0 }
+        set { emu?.set(.C64_WARP_BOOT, value: newValue) }
     }
 
     var vsync: Bool {
-        get { return emu?.get(.EMU_VSYNC) != 0 }
-        set { emu?.set(.EMU_VSYNC, enable: newValue) }
+        get { return emu?.get(.C64_VSYNC) != 0 }
+        set { emu?.set(.C64_VSYNC, enable: newValue) }
     }
     var speedAdjust: Int {
-        get { return emu?.get(.EMU_SPEED_ADJUST) ?? 0 }
-        set { emu?.set(.EMU_SPEED_ADJUST, value: newValue) }
+        get { return emu?.get(.C64_SPEED_ADJUST) ?? 0 }
+        set { emu?.set(.C64_SPEED_ADJUST, value: newValue) }
     }
 
     var runAhead: Int {
-        get { return emu?.get(.EMU_RUN_AHEAD) ?? 0 }
-        set { emu?.set(.EMU_RUN_AHEAD, value: newValue) }
+        get { return emu?.get(.C64_RUN_AHEAD) ?? 0 }
+        set { emu?.set(.C64_RUN_AHEAD, value: newValue) }
     }
 
     //
@@ -385,18 +385,22 @@ class Configuration {
         get { return emu?.get(.MON_PALETTE) ?? 0 }
         set { emu?.set(.MON_PALETTE, value: newValue) }
     }
+
     var brightness: Int {
         get { return emu?.get(.MON_BRIGHTNESS) ?? 0 }
         set { emu?.set(.MON_BRIGHTNESS, value: newValue) }
     }
+
     var contrast: Int {
         get { return emu?.get(.MON_CONTRAST) ?? 0 }
         set { emu?.set(.MON_CONTRAST, value: newValue) }
     }
+
     var saturation: Int {
         get { return emu?.get(.MON_SATURATION) ?? 0 }
         set { emu?.set(.MON_SATURATION, value: newValue) }
     }
+
     var hCenter: Int {
         get { return emu?.get(.MON_HCENTER) ?? 0 }
         set {
@@ -411,6 +415,7 @@ class Configuration {
             renderer.canvas.updateTextureRect()
         }
     }
+
     var hZoom: Int {
         get { return emu?.get(.MON_HZOOM) ?? 0 }
         set {
@@ -418,6 +423,7 @@ class Configuration {
             renderer.canvas.updateTextureRect()
         }
     }
+
     var vZoom: Int {
         get { return emu?.get(.MON_VZOOM) ?? 0 }
         set {
@@ -425,6 +431,7 @@ class Configuration {
             renderer.canvas.updateTextureRect()
         }
     }
+
     var upscaler: Int {
         get { return emu?.get(.MON_UPSCALER) ?? 0 }
         set {
@@ -433,6 +440,7 @@ class Configuration {
             }
         }
     }
+
     var blur: Int {
         get { return emu?.get(.MON_BLUR) ?? 0 }
         set {
@@ -440,6 +448,7 @@ class Configuration {
             renderer.shaderOptions.blur = Int32(newValue)
         }
     }
+
     var blurRadius: Int {
         get { return emu?.get(.MON_BLUR_RADIUS) ?? 0 }
         set {
@@ -447,6 +456,7 @@ class Configuration {
             renderer.shaderOptions.blurRadius = Float(newValue) / 1000.0
         }
     }
+
     var bloom: Int {
         get { return emu?.get(.MON_BLOOM) ?? 0 }
         set {
@@ -456,6 +466,7 @@ class Configuration {
             }
         }
     }
+
     var bloomRadius: Int {
         get { return emu?.get(.MON_BLOOM_RADIUS) ?? 0 }
         set {
@@ -463,6 +474,7 @@ class Configuration {
             renderer.shaderOptions.bloomRadius = Float(newValue) / 1000.0
         }
     }
+
     var bloomBrightness: Int {
         get { return emu?.get(.MON_BLOOM_BRIGHTNESS) ?? 0 }
         set {
@@ -470,6 +482,7 @@ class Configuration {
             renderer.shaderOptions.bloomBrightness = Float(newValue) / 1000.0
         }
     }
+
     var bloomWeight: Int {
         get { return emu?.get(.MON_BLOOM_WEIGHT) ?? 0 }
         set {
@@ -477,6 +490,7 @@ class Configuration {
             renderer.shaderOptions.bloomWeight = Float(newValue) / 1000.0
         }
     }
+
     var dotMask: Int {
         get { return emu?.get(.MON_DOTMASK) ?? 0 }
         set {
@@ -487,6 +501,7 @@ class Configuration {
             }
         }
     }
+
     var dotMaskBrightness: Int {
         get { return emu?.get(.MON_DOTMASK_BRIGHTNESS) ?? 0 }
         set {
@@ -496,6 +511,7 @@ class Configuration {
             ressourceManager.selectDotMask(dotMask)
         }
     }
+
     var scanlines: Int {
         get { return emu?.get(.MON_SCANLINES) ?? 0 }
         set {
@@ -505,6 +521,7 @@ class Configuration {
             }
         }
     }
+
     var scanlineBrightness: Int {
         get { return emu?.get(.MON_SCANLINE_BRIGHTNESS) ?? 0 }
         set {
@@ -512,6 +529,7 @@ class Configuration {
             renderer.shaderOptions.scanlineBrightness = Float(newValue) / 1000.0
         }
     }
+
     var scanlineWeight: Int {
         get { return emu?.get(.MON_SCANLINE_WEIGHT) ?? 0 }
         set {
@@ -519,6 +537,7 @@ class Configuration {
             renderer.shaderOptions.scanlineWeight = Float(newValue) / 1000.0
         }
     }
+
     var disalignment: Int {
         get { return emu?.get(.MON_DISALIGNMENT) ?? 0 }
         set {
@@ -526,6 +545,7 @@ class Configuration {
             renderer.shaderOptions.disalignment = Int32(newValue)
         }
     }
+
     var disalignmentH: Int {
         get { return emu?.get(.MON_DISALIGNMENT_H) ?? 0 }
         set {
@@ -533,6 +553,7 @@ class Configuration {
             renderer.shaderOptions.disalignmentH = Float(newValue) / 1000000.0
         }
     }
+    
     var disalignmentV: Int {
         get { return emu?.get(.MON_DISALIGNMENT_V) ?? 0 }
         set {

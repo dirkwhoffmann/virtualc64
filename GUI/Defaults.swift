@@ -878,11 +878,11 @@ extension DefaultsProxy {
         remove(.VICII_SS_COLLISIONS)
         remove(.VICII_SB_COLLISIONS)
         remove(.SID_POWER_SAVE, [0, 1, 2, 3])
-        remove(.EMU_WARP_MODE)
-        remove(.EMU_WARP_BOOT)
-        remove(.EMU_VSYNC)
-        remove(.EMU_SPEED_ADJUST)
-        remove(.EMU_RUN_AHEAD)
+        remove(.C64_WARP_MODE)
+        remove(.C64_WARP_BOOT)
+        remove(.C64_VSYNC)
+        remove(.C64_SPEED_ADJUST)
+        remove(.C64_RUN_AHEAD)
     }
 }
 
@@ -904,11 +904,11 @@ extension Configuration {
             defaults.set(.VICII_POWER_SAVE, viciiPowerSave)
             defaults.set(.VICII_SS_COLLISIONS, ssCollisions)
             defaults.set(.VICII_SB_COLLISIONS, sbCollisions)
-            defaults.set(.EMU_WARP_MODE, warpMode)
-            defaults.set(.EMU_WARP_BOOT, warpBoot)
-            defaults.set(.EMU_VSYNC, vsync)
-            defaults.set(.EMU_SPEED_ADJUST, speedAdjust)
-            defaults.set(.EMU_RUN_AHEAD, runAhead)
+            defaults.set(.C64_WARP_MODE, warpMode)
+            defaults.set(.C64_WARP_BOOT, warpBoot)
+            defaults.set(.C64_VSYNC, vsync)
+            defaults.set(.C64_SPEED_ADJUST, speedAdjust)
+            defaults.set(.C64_RUN_AHEAD, runAhead)
 
             defaults.save()
 
@@ -932,11 +932,11 @@ extension Configuration {
             viciiPowerSave = defaults.get(.VICII_POWER_SAVE) != 0
             ssCollisions = defaults.get(.VICII_SS_COLLISIONS) != 0
             sbCollisions = defaults.get(.VICII_SB_COLLISIONS) != 0
-            warpMode = defaults.get(.EMU_WARP_MODE)
-            warpBoot = defaults.get(.EMU_WARP_BOOT)
-            vsync = defaults.get(.EMU_VSYNC) != 0
-            speedAdjust = defaults.get(.EMU_SPEED_ADJUST)
-            runAhead = defaults.get(.EMU_RUN_AHEAD)
+            warpMode = defaults.get(.C64_WARP_MODE)
+            warpBoot = defaults.get(.C64_WARP_BOOT)
+            vsync = defaults.get(.C64_VSYNC) != 0
+            speedAdjust = defaults.get(.C64_SPEED_ADJUST)
+            runAhead = defaults.get(.C64_RUN_AHEAD)
 
             emu.resume()
         }
