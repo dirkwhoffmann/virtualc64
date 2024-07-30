@@ -25,7 +25,8 @@ class Recorder final : public SubComponent, public Inspectable<RecorderInfo> {
     Descriptions descriptions = {{
 
         .name           = "Recorder",
-        .description    = "Screen Recorder"
+        .description    = "Screen Recorder",
+        .shell          = "recorder"
     }};
 
     ConfigOptions options = {

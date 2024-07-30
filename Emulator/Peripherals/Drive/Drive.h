@@ -38,11 +38,13 @@ class Drive final : public SubComponent, public Inspectable<DriveInfo> {
     Descriptions descriptions = {
         {
             .name           = "Drive8",
-            .description    = "First Floppy Drive"
+            .description    = "First Floppy Drive",
+            .shell          = "drive8"
         },
         {
             .name           = "Drive9",
-            .description    = "Second Floppy Drive"
+            .description    = "Second Floppy Drive",
+            .shell          = "drive9"
         }
     };
 

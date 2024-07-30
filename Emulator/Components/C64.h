@@ -89,11 +89,13 @@ class C64 final : public CoreComponent, public Inspectable<C64Info> {
     Descriptions descriptions = {
         {
             .name           = "C64",
-            .description    = "Commodore 64"
+            .description    = "Commodore 64",
+            .shell          = "c64"
         },
         {
             .name           = "C64[run-ahead]",
-            .description    = "Commodore 64"
+            .description    = "Commodore 64",
+            .shell          = ""
         }
     };
 
@@ -508,7 +510,7 @@ private:
     void processFlags();
 
 
-    // Experimental (for runahead)
+    // Fast-forward the run-ahead instance
     void fastForward(isize frames);
 
 
@@ -771,13 +773,13 @@ private:
 public:
 
     // Gets or sets an internal debug variable (only available in debug builds)
-    static bool getDebugVariable(DebugFlag flag);
-    static void setDebugVariable(DebugFlag flag, bool val);
+    static int getDebugVariable(DebugFlag flag);
+    static void setDebugVariable(DebugFlag flag, int val);
 
     // Translates the current clock cycle into pseudo-random number
     u32 random();
 
-    // Translates x into a pseudo-random number
+    // Translates seed into a pseudo-random number
     u32 random(u32 seed);
 };
 

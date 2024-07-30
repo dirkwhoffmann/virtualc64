@@ -40,7 +40,8 @@ class Datasette final : public SubComponent, public Inspectable<DatasetteInfo> {
     Descriptions descriptions = {{
 
         .name           = "Datasette",
-        .description    = "Datasette"
+        .description    = "Datasette",
+        .shell          = "datasette"
     }};
 
     ConfigOptions options = {

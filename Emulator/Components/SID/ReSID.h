@@ -40,7 +40,8 @@ class ReSID final : public SubComponent, public Inspectable<SIDInfo> {
     Descriptions descriptions = {{
 
         .name           = "ReSID",
-        .description    = "ReSID Backend"
+        .description    = "ReSID Backend",
+        .shell          = "resid"
     }};
 
 

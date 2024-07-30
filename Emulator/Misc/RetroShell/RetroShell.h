@@ -28,7 +28,8 @@ class RetroShell : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "RetroShell",
-        .description    = "Command Console"
+        .description    = "Command Console",
+        .shell          = ""
     }};
 
     ConfigOptions options = {

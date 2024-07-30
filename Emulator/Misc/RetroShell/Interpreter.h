@@ -37,7 +37,8 @@ class Interpreter: public SubComponent
     Descriptions descriptions = {{
 
         .name           = "Interpreter",
-        .description    = "Command Interpreter"
+        .description    = "Command Interpreter",
+        .shell          = ""
     }};
 
     enum class Shell { Command, Debug };

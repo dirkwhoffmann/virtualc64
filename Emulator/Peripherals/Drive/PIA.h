@@ -24,7 +24,8 @@ class PIA6821 : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "PIA",
-        .description    = "PIA 6821"
+        .description    = "PIA 6821",
+        .shell          = "pia"
     }};
 
 protected:

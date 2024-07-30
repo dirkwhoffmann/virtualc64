@@ -21,7 +21,8 @@ class Mouse1351 final : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "Mouse1351",
-        .description    = "Mouse 1351"
+        .description    = "Mouse 1351",
+        .shell          = ""
     }};
 
     // Mouse position

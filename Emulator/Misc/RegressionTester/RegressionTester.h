@@ -24,7 +24,8 @@ class RegressionTester : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "RegressionTester",
-        .description    = "Regression Tester"
+        .description    = "Regression Tester",
+        .shell          = "regression"
     }};
 
     // Pixel area ritten to the test image

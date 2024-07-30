@@ -385,7 +385,7 @@ AudioPort::copyInterleaved(float *buffer, isize n)
             assert(isEmpty());
 
             // Fill the rest with zeroes
-            for (isize i = cnt; i < n; i++) *buffer++ = *buffer++ = 0;
+            for (isize i = cnt; i < n; i++) { *buffer++ = 0; *buffer++ = 0; }
 
             // Realign the ring buffer
             handleBufferUnderflow();

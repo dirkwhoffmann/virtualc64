@@ -52,11 +52,13 @@ class Mouse final : public SubComponent {
     Descriptions descriptions = {
         {
             .name           = "Mouse1",
-            .description    = "Mouse in Port 1"
+            .description    = "Mouse in Port 1",
+            .shell          = "mouse1"
         },
         {
             .name           = "Mouse2",
-            .description    = "Mouse in Port 2"
+            .description    = "Mouse in Port 2",
+            .shell          = "mouse2"
         }
     };
 

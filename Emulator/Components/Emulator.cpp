@@ -68,9 +68,6 @@ Emulator::initialize()
     // Setup the default configuration
     revertToFactorySettings();
 
-    // Force the run-ahead instance to be rebuild
-    // main.markAsDirty();
-
     // Switch state
     state = newState = STATE_OFF;
     assert(isInitialized());

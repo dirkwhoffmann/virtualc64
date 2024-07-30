@@ -1494,7 +1494,7 @@ C64::scheduleNextAlarm()
     }
 }
 
-bool
+int
 C64::getDebugVariable(DebugFlag flag)
 {
 #ifdef RELEASEBUILD
@@ -1526,7 +1526,6 @@ C64::getDebugVariable(DebugFlag flag)
 
         case FLAG_CIA_DEBUG:        return CIA_DEBUG;
         case FLAG_CIAREG_DEBUG:     return CIAREG_DEBUG;
-        case FLAG_CIA_ON_STEROIDS:  return CIA_ON_STEROIDS;
 
         case FLAG_VICII_DEBUG:      return VICII_DEBUG;
         case FLAG_VICII_REG_DEBUG:  return VICII_REG_DEBUG;
@@ -1573,17 +1572,17 @@ C64::getDebugVariable(DebugFlag flag)
         case FLAG_FORCE_CRT_UNSUPPORTED:    return FORCE_CRT_UNSUPPORTED;
         case FLAG_FORCE_RECORDING_ERROR:    return FORCE_RECORDING_ERROR;
         case FLAG_FORCE_NO_FFMPEG:          return FORCE_NO_FFMPEG;
-
+            
         default:
             throw Error(ERROR_OPT_UNSUPPORTED, 
-                            "Unhandled debug variable: " + string(DebugFlagEnum::key(flag)));
+                        "Unhandled debug variable: " + string(DebugFlagEnum::key(flag)));
     }
 
 #endif
 }
 
 void
-C64::setDebugVariable(DebugFlag flag, bool val)
+C64::setDebugVariable(DebugFlag flag, int val)
 {
 #ifdef RELEASEBUILD
 
@@ -1614,7 +1613,6 @@ C64::setDebugVariable(DebugFlag flag, bool val)
 
         case FLAG_CIA_DEBUG:        CIA_DEBUG       = val; break;
         case FLAG_CIAREG_DEBUG:     CIAREG_DEBUG    = val; break;
-        case FLAG_CIA_ON_STEROIDS:  CIA_ON_STEROIDS = val; break;
 
         case FLAG_VICII_DEBUG:      VICII_DEBUG     = val; break;
         case FLAG_VICII_REG_DEBUG:  VICII_REG_DEBUG = val; break;
@@ -1664,7 +1662,7 @@ C64::setDebugVariable(DebugFlag flag, bool val)
 
         default:
             throw Error(ERROR_OPT_UNSUPPORTED,
-                            "Unhandled debug variable: " + string(DebugFlagEnum::key(flag)));
+                        "Unhandled debug variable: " + string(DebugFlagEnum::key(flag)));
     }
 #endif
 }

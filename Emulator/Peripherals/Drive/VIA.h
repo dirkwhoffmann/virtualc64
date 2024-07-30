@@ -61,7 +61,8 @@ class VIA6522 : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "VIA",
-        .description    = "VIA 6522"
+        .description    = "VIA 6522",
+        .shell          = "via"
     }};
 
     friend class Drive;

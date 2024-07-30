@@ -24,7 +24,8 @@ class Cartridge : public SubComponent, public Inspectable<CartridgeInfo> {
     Descriptions descriptions = {{
 
         .name           = "Cartridge",
-        .description    = "Cartridge"
+        .description    = "Cartridge",
+        .shell          = "cartridge"
     }};
 
 public:

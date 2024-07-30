@@ -52,7 +52,6 @@ enum_long(DEBUG_FLAG)
     // CIAs
     FLAG_CIA_DEBUG,         ///< Debug the Complex Interface Adapters
     FLAG_CIAREG_DEBUG,      ///< Debug the CIA register accesses
-    FLAG_CIA_ON_STEROIDS,   ///< Keep the CIAs awake all the time
 
     // VICII
     FLAG_VICII_DEBUG,       ///< Debug the Video Interface Controller
@@ -146,7 +145,6 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
                 // CIAs
             case FLAG_CIA_DEBUG:                return "CIA_DEBUG";
             case FLAG_CIAREG_DEBUG:             return "CIAREG_DEBUG";
-            case FLAG_CIA_ON_STEROIDS:          return "CIA_ON_STEROIDS";
 
                 // VICII
             case FLAG_VICII_DEBUG:              return "VICII_DEBUG";
@@ -235,7 +233,6 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
                 // CIAs
             case FLAG_CIA_DEBUG:                return "Complex Interface Adapter";
             case FLAG_CIAREG_DEBUG:             return "CIA registers";
-            case FLAG_CIA_ON_STEROIDS:          return "Keep CIAs awake all the time";
 
                 // VICII
             case FLAG_VICII_DEBUG:              return "Video Interface Controller";

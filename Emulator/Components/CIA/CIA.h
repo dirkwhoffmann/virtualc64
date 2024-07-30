@@ -26,18 +26,21 @@ class CIA : public SubComponent, public Inspectable<CIAInfo, CIAStats> {
     Descriptions descriptions = {
         {
             .name           = "CIA1",
-            .description    = "Complex Interface Adapter 1"
+            .description    = "Complex Interface Adapter 1",
+            .shell          = "cia1"
         },
         {
             .name           = "CIA2",
-            .description    = "Complex Interface Adapter 2"
+            .description    = "Complex Interface Adapter 2",
+            .shell          = "cia2"
         }
     };
 
     ConfigOptions options = {
 
         OPT_CIA_REVISION,
-        OPT_CIA_TIMER_B_BUG
+        OPT_CIA_TIMER_B_BUG,
+        OPT_CIA_IDLE_SLEEP
     };
 
 

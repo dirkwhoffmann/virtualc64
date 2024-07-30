@@ -39,7 +39,6 @@ debugflag MEM_DEBUG       = 0;
 // CIAs
 debugflag CIA_DEBUG       = 0;
 debugflag CIAREG_DEBUG    = 0;
-debugflag CIA_ON_STEROIDS = 0;
 
 // VICII
 debugflag VICII_DEBUG     = 0;

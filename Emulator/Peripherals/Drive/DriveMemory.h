@@ -22,7 +22,8 @@ class DriveMemory final : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "DriveMemory",
-        .description    = "Drive Memory"
+        .description    = "Drive Memory",
+        .shell          = ""
     }};
 
     // Reference to the connected disk drive

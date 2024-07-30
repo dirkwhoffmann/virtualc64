@@ -107,6 +107,7 @@ typedef struct
 {
     CIARevision revision;
     bool timerBBug;
+    bool idleSleep;
 }
 CIAConfig;
 

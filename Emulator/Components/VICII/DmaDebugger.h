@@ -25,7 +25,8 @@ class DmaDebugger final : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "DmaDebugger",
-        .description    = "Bus Monitor"
+        .description    = "Bus Monitor",
+        .shell          = "dmadebugger"
     }};
 
     ConfigOptions options = {

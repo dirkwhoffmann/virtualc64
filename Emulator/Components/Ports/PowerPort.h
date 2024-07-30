@@ -23,7 +23,8 @@ class PowerPort final : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "Power",
-        .description    = "Power Port"
+        .description    = "Power Port",
+        .shell          = "power"
     }};
 
     ConfigOptions options = {

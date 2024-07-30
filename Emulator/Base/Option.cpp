@@ -98,6 +98,7 @@ OptionParser::create(Option opt, i64 arg)
 
         case OPT_CIA_REVISION:              return enumParser.template operator()<CIARevisionEnum>();
         case OPT_CIA_TIMER_B_BUG:           return boolParser();
+        case OPT_CIA_IDLE_SLEEP:            return boolParser();
 
         case OPT_SID_ENABLE:                return boolParser();
         case OPT_SID_ADDRESS:               return hexParser();

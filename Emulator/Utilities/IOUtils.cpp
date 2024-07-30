@@ -76,7 +76,7 @@ createDirectory(const fs::path &path)
 {
     try {
         
-        return fs::create_directory(fs::path(path));
+        return fs::create_directory(path);
     
     } catch (...) {
         

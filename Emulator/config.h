@@ -29,7 +29,7 @@
 #define SNP_BETA 0
 
 // Uncomment these settings in a release build
-#define RELEASEBUILD
+// #define RELEASEBUILD
 
 
 //
@@ -117,7 +117,6 @@ extern debugflag MEM_DEBUG;
 // CIAs
 extern debugflag CIA_DEBUG;
 extern debugflag CIAREG_DEBUG;
-extern debugflag CIA_ON_STEROIDS;
 
 // VICII
 extern debugflag VICII_DEBUG;

@@ -29,7 +29,8 @@ class FlashRom final : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "FlashRom",
-        .description    = "Flash ROM"
+        .description    = "Flash ROM",
+        .shell          = ""
     }};
 
     // Number of sectors in this Flash Rom

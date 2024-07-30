@@ -22,7 +22,8 @@ class RS232 final : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "RS232",
-        .description    = "RS232 User-Port Adapter"
+        .description    = "RS232 User-Port Adapter",
+        .shell          = "rs232"
     }};
 
     ConfigOptions options = {

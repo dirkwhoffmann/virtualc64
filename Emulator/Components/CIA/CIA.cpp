@@ -489,7 +489,7 @@ CIA::executeOneCycle()
     this->delay = delay;
     
     // Sleep if threshold is reached
-    if (tiredness > 8 && !CIA_ON_STEROIDS) {
+    if (tiredness > 8 && config.idleSleep) {
         sleep();
         scheduleWakeUp();
     } else {

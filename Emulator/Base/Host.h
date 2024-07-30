@@ -39,7 +39,8 @@ class Host final : public CoreComponent {
     Descriptions descriptions = {{
 
         .name           = "Host",
-        .description    = "Host Computer"
+        .description    = "Host Computer",
+        .shell          = "host"
     }};
 
     ConfigOptions options = {

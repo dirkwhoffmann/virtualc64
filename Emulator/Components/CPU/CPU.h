@@ -28,7 +28,8 @@ class CPU final : public Peddle, public Inspectable<CPUInfo> {
     Descriptions descriptions = {{
 
         .name           = "CPU",
-        .description    = "Central Processing Unit"
+        .description    = "Central Processing Unit",
+        .shell          = "cpu"
     }};
 
     // Result of the latest inspection

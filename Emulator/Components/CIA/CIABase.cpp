@@ -122,6 +122,8 @@ CIA::getOption(Option option) const
 
         case OPT_CIA_REVISION:      return config.revision;
         case OPT_CIA_TIMER_B_BUG:   return config.timerBBug;
+        case OPT_CIA_IDLE_SLEEP:    return config.idleSleep;
+
 
         default:
             fatalError;
@@ -141,6 +143,7 @@ CIA::checkOption(Option opt, i64 value)
             return;
 
         case OPT_CIA_TIMER_B_BUG:
+        case OPT_CIA_IDLE_SLEEP:
 
             return;
 
@@ -164,6 +167,11 @@ CIA::setOption(Option opt, i64 value)
         case OPT_CIA_TIMER_B_BUG:
 
             config.timerBBug = value;
+            return;
+
+        case OPT_CIA_IDLE_SLEEP:
+
+            config.idleSleep = value;
             return;
 
         default:

@@ -28,8 +28,9 @@ namespace vc64 {
 
 struct Description {
 
-    const char *name;
-    const char *description;
+    const char *name;               // Short name
+    const char *description;        // Textual descripiton
+    const char *shell;              // RetroShell access
 };
 
 typedef std::vector<Description> Descriptions;

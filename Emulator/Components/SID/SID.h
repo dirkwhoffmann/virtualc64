@@ -26,19 +26,23 @@ class SID final : public SubComponent, public Inspectable<SIDInfo>
     Descriptions descriptions = {
         {
             .name           = "SID",
-            .description    = "Primary Sound Interface Device"
+            .description    = "Primary Sound Interface Device",
+            .shell          = "sid"
         },
         {
             .name           = "SID2",
-            .description    = "First Auxiliary SID"
+            .description    = "First Auxiliary SID",
+            .shell          = "sid2"
         },
         {
             .name           = "SID3",
-            .description    = "Second Auxiliary SID"
+            .description    = "Second Auxiliary SID",
+            .shell          = "sid3"
         },
         {
             .name           = "SID4",
-            .description    = "Third Auxiliary SID"
+            .description    = "Third Auxiliary SID",
+            .shell          = "sid4"
         }
     };
 

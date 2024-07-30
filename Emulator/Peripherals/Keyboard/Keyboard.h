@@ -25,7 +25,8 @@ class Keyboard final : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "Keyboard",
-        .description    = "Keyboard"
+        .description    = "Keyboard",
+        .shell          = "keyboard"
     }};
 
     // The keyboard matrix (indexed by row or by column)

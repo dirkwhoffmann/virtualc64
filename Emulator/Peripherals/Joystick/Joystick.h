@@ -23,11 +23,13 @@ class Joystick final : public SubComponent, public Inspectable<JoystickInfo> {
     Descriptions descriptions = {
         {
             .name           = "Joystick1",
-            .description    = "Joystick in Port 1"
+            .description    = "Joystick in Port 1",
+            .shell          = "joystick1"
         },
         {
             .name           = "Joystick2",
-            .description    = "Joystick in Port 2"
+            .description    = "Joystick in Port 2",
+            .shell          = "joystick2"
         }
     };
 

@@ -23,7 +23,8 @@ class UserPort final : public SubComponent {
     Descriptions descriptions = {{
 
         .name           = "User",
-        .description    = "User Port"
+        .description    = "User Port",
+        .shell          = "user"
     }};
 
     ConfigOptions options = {

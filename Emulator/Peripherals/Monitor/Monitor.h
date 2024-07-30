@@ -23,7 +23,8 @@ class Monitor final : public SubComponent {
     Descriptions descriptions = {
         {
             .name           = "Monitor",
-            .description    = "Computer Monitor"
+            .description    = "Computer Monitor",
+            .shell          = "monitor"
         }
     };
 

@@ -39,6 +39,7 @@ Defaults::Defaults()
 
     setFallback(OPT_CIA_REVISION,               MOS_6526);
     setFallback(OPT_CIA_TIMER_B_BUG,            true);
+    setFallback(OPT_CIA_IDLE_SLEEP,             true);
 
     setFallback(OPT_VICII_REVISION,             VICII_PAL_8565);
     setFallback(OPT_VICII_POWER_SAVE,           true);

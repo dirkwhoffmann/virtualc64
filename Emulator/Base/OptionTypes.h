@@ -106,6 +106,7 @@ enum_long(OPT)
     // CIA
     OPT_CIA_REVISION,           ///< Chip revision
     OPT_CIA_TIMER_B_BUG,        ///< Emulate timer B bug
+    OPT_CIA_IDLE_SLEEP,         ///< Enter idle state while not in use
 
     // SID
     OPT_SID_ENABLE,             ///< Enable or disable SID
@@ -266,6 +267,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
 
             case OPT_CIA_REVISION:          return "CIA.REVISION";
             case OPT_CIA_TIMER_B_BUG:       return "CIA.TIMER_B_BUG";
+            case OPT_CIA_IDLE_SLEEP:        return "CIA.IDLE_SLEEP";
 
             case OPT_SID_ENABLE:            return "SID.ENABLE";
             case OPT_SID_ADDRESS:           return "SID.ADDRESS";
@@ -410,6 +412,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
 
             case OPT_CIA_REVISION:          return "Chip revision";
             case OPT_CIA_TIMER_B_BUG:       return "Emulate Timer-B bug";
+            case OPT_CIA_IDLE_SLEEP:        return "Enter idle state while not in use";
 
             case OPT_SID_ENABLE:            return "Enable";
             case OPT_SID_ADDRESS:           return "Memory location";
