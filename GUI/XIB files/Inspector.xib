@@ -2154,7 +2154,7 @@
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                                                 <clipView key="contentView" drawsBackground="NO" id="EqP-5S-dIY">
                                                                     <rect key="frame" x="1" y="1" width="118" height="177"/>
-                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                    <autoresizingMask key="autoresizingMask"/>
                                                                     <subviews>
                                                                         <tableView wantsLayer="YES" focusRingType="exterior" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="15" headerView="oYx-eh-0z5" id="Dol-9l-TFV" customClass="BankTableView" customModule="VirtualC64" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="0.0" width="118" height="152"/>
@@ -2213,7 +2213,7 @@
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <clipView key="contentView" drawsBackground="NO" id="uN2-KZ-pod">
                                                                     <rect key="frame" x="1" y="1" width="638" height="177"/>
-                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                    <autoresizingMask key="autoresizingMask"/>
                                                                     <subviews>
                                                                         <tableView focusRingType="exterior" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="Yjj-no-34g" id="9cm-34-eYe" customClass="MemTableView" customModule="VirtualC64" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="0.0" width="638" height="152"/>
@@ -2876,15 +2876,15 @@
                                                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XxL-6f-s5D">
                                                         <rect key="frame" x="69" y="73" width="172" height="22"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <popUpButtonCell key="cell" type="push" title="38x24" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="4" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="8dl-vK-njN" id="lRR-p0-ceg">
+                                                        <popUpButtonCell key="cell" type="push" title="38x24" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="3" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="8dl-vK-njN" id="lRR-p0-ceg">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="message" size="11"/>
                                                             <menu key="menu" title="OtherViews" id="trY-iz-OTh">
                                                                 <items>
-                                                                    <menuItem title="40x25" tag="1" id="ZNW-zi-6ea"/>
-                                                                    <menuItem title="38x25" tag="2" id="ZjB-kp-SCj"/>
-                                                                    <menuItem title="40x24" tag="3" id="v3g-cH-f3l"/>
-                                                                    <menuItem title="38x24" state="on" tag="4" id="8dl-vK-njN"/>
+                                                                    <menuItem title="40x25" id="ZNW-zi-6ea"/>
+                                                                    <menuItem title="38x25" tag="1" id="ZjB-kp-SCj"/>
+                                                                    <menuItem title="40x24" tag="2" id="v3g-cH-f3l"/>
+                                                                    <menuItem title="38x24" state="on" tag="3" id="8dl-vK-njN"/>
                                                                 </items>
                                                             </menu>
                                                         </popUpButtonCell>

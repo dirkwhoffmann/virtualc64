@@ -23,7 +23,7 @@ namespace vc64 {
 
 enum_long(FILETYPE)
 {
-    FILETYPE_UNKNOWN = 0,
+    FILETYPE_UNKNOWN,
     FILETYPE_SNAPSHOT,
     FILETYPE_SCRIPT,
     FILETYPE_CRT,
@@ -48,7 +48,7 @@ struct FileTypeEnum : util::Reflection<FileTypeEnum, FileType> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "FILETYPE"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
 
@@ -86,7 +86,7 @@ struct TAPVersionEnum : util::Reflection<TAPVersionEnum, TAPVersion> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "TAP_VERSION"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
 

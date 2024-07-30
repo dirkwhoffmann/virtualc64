@@ -115,7 +115,7 @@ struct CartridgeTypeEnum : util::Reflection<CartridgeTypeEnum, CartridgeType> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "CRT"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
 
@@ -228,7 +228,7 @@ struct FlashStateEnum : util::Reflection<FlashStateEnum, FlashState> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "FLASH"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
 

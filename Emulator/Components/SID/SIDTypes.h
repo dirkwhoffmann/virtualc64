@@ -44,7 +44,7 @@ struct SIDRevisionEnum : util::Reflection<SIDRevisionEnum, SIDRevision> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return nullptr; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
 
@@ -69,7 +69,7 @@ struct SIDEngineEnum : util::Reflection<SIDEngineEnum, SIDEngine> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "SIDENGINE"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
 
@@ -96,7 +96,7 @@ struct SamplingMethodEnum : util::Reflection<SamplingMethodEnum, SamplingMethod>
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "SAMPLING"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
 

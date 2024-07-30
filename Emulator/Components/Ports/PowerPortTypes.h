@@ -38,7 +38,7 @@ struct PowerGridEnum : util::Reflection<PowerGridEnum, PowerGrid> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "GRID"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
 

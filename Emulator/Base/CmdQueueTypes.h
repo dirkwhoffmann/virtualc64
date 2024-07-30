@@ -26,7 +26,7 @@ namespace vc64 {
 /// Emulator command
 enum_long(CMD_TYPE)
 {
-    CMD_NONE = 0,               ///< None
+    CMD_NONE,                   ///< None
 
     // Emulator
     CMD_CONFIG,                 ///< Configure the emulator
@@ -105,14 +105,14 @@ enum_long(CMD_TYPE)
 };
 typedef CMD_TYPE CmdType;
 
-struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
+struct CmdTypeEnum : util::Reflection<CmdTypeEnum, CmdType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = CMD_FOCUS;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "CMD"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
 

@@ -104,7 +104,7 @@ struct VICIIRevisionEnum : util::Reflection<VICIIRevisionEnum, VICIIRevision> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "VICII"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
                 
@@ -134,7 +134,7 @@ struct GlueLogicEnum : util::Reflection<GlueLogicEnum, GlueLogic> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "GLUE_LOGIC"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
                 
@@ -148,7 +148,7 @@ struct GlueLogicEnum : util::Reflection<GlueLogicEnum, GlueLogic> {
 /// C64 canvas size
 enum_long(SCREEN_GEOMETRY)
 {
-    SCREEN_GEOMETRY_25_40 = 1,          ///< 25 rows x 40 columns
+    SCREEN_GEOMETRY_25_40,              ///< 25 rows x 40 columns
     SCREEN_GEOMETRY_25_38,              ///< 25 rows x 38 columns
     SCREEN_GEOMETRY_24_40,              ///< 24 rows x 40 columns
     SCREEN_GEOMETRY_24_38               ///< 24 rows x 38 columns
@@ -158,12 +158,12 @@ typedef SCREEN_GEOMETRY ScreenGeometry;
 
 struct ScreenGeometryEnum : util::Reflection<ScreenGeometryEnum, ScreenGeometry> {
     
-	static constexpr long minVal = 1;
+	static constexpr long minVal = 0;
     static constexpr long maxVal = SCREEN_GEOMETRY_24_38;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "SCREEN_GEOMETRY"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
                 
@@ -197,7 +197,7 @@ struct DisplayModeEnum : util::Reflection<DisplayModeEnum, DisplayMode> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "DISPLAY_MODE"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
                 
@@ -235,7 +235,7 @@ struct ColorSourceEnum : util::Reflection<ColorSourceEnum, ColorSource> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "COLSRC"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
                 

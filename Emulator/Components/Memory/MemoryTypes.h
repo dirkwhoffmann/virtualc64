@@ -24,7 +24,8 @@ namespace vc64 {
 /// Memory type
 enum_long(M_TYPE)
 {
-    M_RAM = 1,      ///< Ram
+    M_NONE,         ///< Unmapped
+    M_RAM,          ///< Ram
     M_CHAR,         ///< Character Rom
     M_KERNAL,       ///< Kernal Rom
     M_BASIC,        ///< Basic Rom
@@ -32,8 +33,6 @@ enum_long(M_TYPE)
     M_CRTLO,        ///< Cartridge Rom (low bank)
     M_CRTHI,        ///< Cartridge Rom (high bank)
     M_PP,           ///< Processor port
-    M_NONE,         ///< Unmapped
-    M_COUNT
 };
 typedef M_TYPE MemoryType;
 
@@ -44,10 +43,11 @@ struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "M"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
 
+            case M_NONE:    return "NONE";
             case M_RAM:     return "RAM";
             case M_CHAR:    return "CHAR";
             case M_KERNAL:  return "KERNAL";
@@ -56,8 +56,6 @@ struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
             case M_CRTLO:   return "CRTLO";
             case M_CRTHI:   return "CRTHI";
             case M_PP:      return "PP";
-            case M_NONE:    return "NONE";
-            case M_COUNT:   return "???";
         }
         return "???";
     }
@@ -81,7 +79,7 @@ struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "RAM_PATTERN"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
 
@@ -111,7 +109,7 @@ struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "ROM_TYPE"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
 
@@ -139,7 +137,7 @@ struct RomVendorEnum : util::Reflection<RomVendorEnum, RomVendor> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "ROM_VENDOR"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
 

@@ -38,7 +38,7 @@ struct RecStateEnum : util::Reflection<RecStateEnum, RecState> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "REC_STATE"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
 

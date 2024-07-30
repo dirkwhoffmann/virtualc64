@@ -123,7 +123,7 @@ struct DiskTypeEnum : util::Reflection<DiskTypeEnum, DiskType> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "DISK_TYPE"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
 
@@ -150,7 +150,7 @@ struct CBMFileTypeEnum : util::Reflection<CBMFileTypeEnum, CBMFileType> {
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "CBM"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
 
@@ -158,51 +158,6 @@ struct CBMFileTypeEnum : util::Reflection<CBMFileTypeEnum, CBMFileType> {
             case CBM_FILE_SEQ:    return "SEQ";
             case CBM_FILE_USR:    return "USR";
             case CBM_FILE_REL:    return "REL";
-        }
-        return "???";
-    }
-};
-
-enum_long(DISK_ERROR_CODE)
-{
-    DISK_OK                            = 0x1,
-    HEADER_BLOCK_NOT_FOUND_ERROR       = 0x2,
-    NO_SYNC_SEQUENCE_ERROR             = 0x3,
-    DATA_BLOCK_NOT_FOUND_ERROR         = 0x4,
-    DATA_BLOCK_CHECKSUM_ERROR          = 0x5,
-    WRITE_VERIFY_ERROR_ON_FORMAT_ERROR = 0x6,
-    WRITE_VERIFY_ERROR                 = 0x7,
-    WRITE_PROTECT_ON_ERROR             = 0x8,
-    HEADER_BLOCK_CHECKSUM_ERROR        = 0x9,
-    WRITE_ERROR                        = 0xA,
-    DISK_ID_MISMATCH_ERROR             = 0xB,
-    DRIVE_NOT_READY_ERRROR             = 0xF
-};
-typedef DISK_ERROR_CODE DiskErrorCode;
-
-struct DiskErrorCodeEnum : util::Reflection<DiskErrorCodeEnum, DiskErrorCode> {
-
-    static constexpr long minVal = 0;
-    static constexpr long maxVal = DRIVE_NOT_READY_ERRROR;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-
-    static const char *prefix() { return ""; }
-    static const char *key(long value)
-    {
-        switch (value) {
-
-            case DISK_OK:                            return "DISK_OK";
-            case HEADER_BLOCK_NOT_FOUND_ERROR:       return "HEADER_BLOCK_NOT_FOUND_ERROR";
-            case NO_SYNC_SEQUENCE_ERROR:             return "NO_SYNC_SEQUENCE_ERROR";
-            case DATA_BLOCK_NOT_FOUND_ERROR:         return "DATA_BLOCK_NOT_FOUND_ERROR";
-            case DATA_BLOCK_CHECKSUM_ERROR:          return "DATA_BLOCK_CHECKSUM_ERROR";
-            case WRITE_VERIFY_ERROR_ON_FORMAT_ERROR: return "WRITE_VERIFY_ERROR_ON_FORMAT_ERROR";
-            case WRITE_VERIFY_ERROR:                 return "WRITE_VERIFY_ERROR";
-            case WRITE_PROTECT_ON_ERROR:             return "WRITE_PROTECT_ON_ERROR";
-            case HEADER_BLOCK_CHECKSUM_ERROR:        return "HEADER_BLOCK_CHECKSUM_ERROR";
-            case WRITE_ERROR:                        return "WRITE_ERROR";
-            case DISK_ID_MISMATCH_ERROR:             return "DISK_ID_MISMATCH_ERROR";
-            case DRIVE_NOT_READY_ERRROR:             return "DRIVE_NOT_READY_ERRROR";
         }
         return "???";
     }

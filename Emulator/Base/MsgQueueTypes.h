@@ -24,7 +24,7 @@ namespace vc64 {
 /// Emulator message
 enum_long(MSG_TYPE)
 {
-    MSG_NONE = 0,           ///< Unclassified
+    MSG_NONE,               ///< Unclassified
 
     // Execution state
     MSG_CONFIG,             ///< The configuration has changed
@@ -115,14 +115,14 @@ enum_long(MSG_TYPE)
 
 typedef MSG_TYPE MsgType;
 
-struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
+struct MsgTypeEnum : util::Reflection<MsgTypeEnum, MsgType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = MSG_ALARM;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "MSG"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
 

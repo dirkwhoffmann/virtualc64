@@ -37,7 +37,7 @@ struct UserPortDeviceEnum : util::Reflection<UserPortDeviceEnum, UserPortDevice>
     static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
 
     static const char *prefix() { return "USR"; }
-    static const char *key(long value)
+    static const char *_key(long value)
     {
         switch (value) {
 
