@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "Types.h"
+#include "BasicTypes.h"
 #include <vector>
 
 namespace vc64 {

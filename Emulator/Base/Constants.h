@@ -13,7 +13,7 @@
 ///
 #pragma once
 
-#include "Types.h"
+#include "BasicTypes.h"
 
 /** VirtualC64 project namespace
  */

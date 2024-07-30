@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "Types.h"
+#include "BasicTypes.h"
 #include "PeddleDebuggerTypes.h"
 
 namespace vc64::peddle {
