@@ -118,6 +118,24 @@ split(const string &s, char delimiter)
     return result;
 }
 
+std::vector<string> 
+split(const std::vector<string> &sv, char delimiter)
+{
+    std::vector<string> result;
+
+    for (const auto &s : sv) {
+
+        auto splitted = util::split(s, delimiter);
+
+        if (splitted.empty()) {
+            result.push_back("");
+        } else {
+            result.insert(result.end(), splitted.begin(), splitted.end());
+        }
+    }
+    return result;
+}
+
 string
 concat(std::vector<string> &s, string delimiter)
 {

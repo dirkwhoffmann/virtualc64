@@ -37,7 +37,7 @@ makeUniquePath(const fs::path &path)
         if (!util::fileExists(result)) return result;
     }
 
-    return path;
+    unreachable;
 }
 
 isize

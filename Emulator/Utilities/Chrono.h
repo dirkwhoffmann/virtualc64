@@ -30,7 +30,7 @@ public:
     static Time microseconds(i64 value) { return Time(value * 1000); }
     static Time milliseconds(i64 value)  { return Time(value * 1000000); }
     static Time seconds(i64 value) { return Time(value * 1000000000); }
-    static Time seconds(float value) { return Time(i64(value * 1000000000.f)); }
+    static Time seconds(double value) { return Time(i64(value * 1000000000.f)); }
     static std::tm local(const std::time_t &time);
     
     Time() { };
@@ -50,11 +50,15 @@ public:
     Time operator+(const Time &rhs) const;
     Time operator-(const Time &rhs) const;
     Time operator*(const long i) const;
+    Time operator*(const double d) const;
     Time operator/(const long i) const;
+    Time operator/(const double d) const;
     Time& operator+=(const Time &rhs);
     Time& operator-=(const Time &rhs);
     Time& operator*=(const long i);
+    Time& operator*=(const double d);
     Time& operator/=(const long i);
+    Time& operator/=(const double d);
     Time abs() const;
     Time diff() const;
     

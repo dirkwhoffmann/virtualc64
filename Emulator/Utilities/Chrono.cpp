@@ -206,9 +206,21 @@ Time::operator*(const long i) const
 }
 
 Time
+Time::operator*(const double d) const
+{
+    return Time(i64(this->ticks * d));
+}
+
+Time
 Time::operator/(const long i) const
 {
     return Time(this->ticks / i);
+}
+
+Time
+Time::operator/(const double d) const
+{
+    return Time(i64(this->ticks / d));
 }
 
 Time&
@@ -230,9 +242,21 @@ Time::operator*=(const long i)
 }
 
 Time&
+Time::operator*=(const double d)
+{
+    return *this = *this * d;
+}
+
+Time&
 Time::operator/=(const long i)
 {
     return *this = *this / i;
+}
+
+Time&
+Time::operator/=(const double d)
+{
+    return *this = *this / d;
 }
 
 Time

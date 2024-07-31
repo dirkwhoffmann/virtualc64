@@ -1068,6 +1068,7 @@
 		50D5F88524F52A300062EF13 /* DiskDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskDataView.swift; sourceTree = "<group>"; };
 		50D5F88724F556270062EF13 /* DiskErrors.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskErrors.xib; sourceTree = "<group>"; };
 		50D5F88924F5573D0062EF13 /* DiskErrorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskErrorController.swift; sourceTree = "<group>"; };
+		50D7DE812C5910E700A6CE94 /* Animated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Animated.h; sourceTree = "<group>"; };
 		50D8421720A82CF500EB859A /* MetalViewEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalViewEvents.swift; sourceTree = "<group>"; };
 		50DA83DE2C143C2C001209AA /* KeyboardTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyboardTypes.h; sourceTree = "<group>"; };
 		50DAABD824F0108A005D426F /* VICIITypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VICIITypes.h; sourceTree = "<group>"; };
@@ -1274,6 +1275,7 @@
 				500FAA63261376C50062488E /* BasicTypes.h */,
 				500FAA64261377050062488E /* Macros.h */,
 				50E806BE25A1C2B800F08732 /* Reflection.h */,
+				50D7DE812C5910E700A6CE94 /* Animated.h */,
 				50AD303B28141F0B00D9A7A6 /* Buffer.h */,
 				50AD303A28141F0B00D9A7A6 /* Buffer.cpp */,
 				50AA3EC2261718D700C96EDB /* RingBuffer.h */,

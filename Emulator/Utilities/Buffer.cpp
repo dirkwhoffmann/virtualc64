@@ -18,6 +18,18 @@
 
 namespace vc64::util {
 
+template <class T> Allocator<T>&
+Allocator<T>::operator= (const Allocator<T>& other)
+{
+    // Reallocate buffer if needed
+    if (size != other.size) alloc(other.size);
+    assert(size == other.size);
+
+    // Copy buffer
+    if (size) memcpy(ptr, other.ptr, size);
+    return *this;
+}
+
 template <class T> void
 Allocator<T>::alloc(isize elements)
 {
@@ -89,7 +101,7 @@ Allocator<T>::init(const Allocator<T> &other)
 }
 
 template <class T> void
-Allocator<T>::init(const fs::path &path)
+Allocator<T>::init(const std::filesystem::path &path)
 {
     // Open stream in binary mode
     std::ifstream stream(path, std::ifstream::binary);
@@ -111,13 +123,11 @@ Allocator<T>::init(const fs::path &path)
     stream.read((char *)ptr, length);
 }
 
-/*
 template <class T> void
-Allocator<T>::init(const fs::path &path, const string &name)
+Allocator<T>::init(const std::filesystem::path &path, const string &name)
 {
-    init(path + "/" + name);
+    init(path / name);
 }
-*/
 
 template <class T> void
 Allocator<T>::resize(isize elements)
@@ -201,12 +211,14 @@ Allocator<T>::patch(const char *seq, const char *subst)
 //
 
 #define INSTANTIATE_ALLOCATOR(T) \
+template Allocator<T>& Allocator<T>::operator=(const Allocator<T>& other); \
 template void Allocator<T>::alloc(isize bytes); \
 template void Allocator<T>::dealloc(); \
 template void Allocator<T>::init(isize bytes, T value); \
 template void Allocator<T>::init(const T *buf, isize len); \
 template void Allocator<T>::init(const Allocator<T> &other); \
-template void Allocator<T>::init(const fs::path &path); \
+template void Allocator<T>::init(const std::filesystem::path &path); \
+template void Allocator<T>::init(const std::filesystem::path &path, const string &name); \
 template void Allocator<T>::resize(isize elements); \
 template void Allocator<T>::resize(isize elements, T value); \
 template void Allocator<T>::clear(T value, isize offset, isize len); \

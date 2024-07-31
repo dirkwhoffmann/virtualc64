@@ -24,9 +24,10 @@
 #include <sys/stat.h>
 #include <vector>
 
-namespace vc64::util {
+// Namespace aliases
+namespace vc64 { namespace fs = std::filesystem; }
 
-namespace fs = ::std::filesystem;
+namespace vc64::util {
 
 //
 // Handling files
@@ -92,10 +93,10 @@ struct dec {
 
 struct hex {
     
-    int digits;
+    isize digits;
     u64 value;
     
-    hex(int d, u64 v) : digits(d), value(v) { };
+    hex(isize d, u64 v) : digits(d), value(v) { };
     hex(u64 v) : hex(16, v) { };
     hex(u32 v) : hex(8, v) { };
     hex(u16 v) : hex(4, v) { };
@@ -127,10 +128,10 @@ struct flt {
 
 struct tab {
     
-    int pads;
+    isize pads;
     const string &str;
     
-    tab(int p, const string &s) : pads(p), str(s) { };
+    tab(isize p, const string &s) : pads(p), str(s) { };
     tab(const string &s) : tab(24, s) { };
     std::ostream &operator()(std::ostream &os) const;
 };
