@@ -313,13 +313,7 @@ public:
     void serialize(T& worker)
     {
         worker
-        
-        << mem
-        << cpu
-        << via1
-        << via2
-        << pia
-        
+                
         << spinning
         << redLED
         << elapsedTime

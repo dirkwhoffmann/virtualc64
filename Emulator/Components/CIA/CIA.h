@@ -356,8 +356,6 @@ public:
     void serialize(T& worker)
     {
         worker
-
-        << tod
         
         << counterA
         << counterB

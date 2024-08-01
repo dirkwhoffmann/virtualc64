@@ -54,46 +54,21 @@ CoreComponent::initialize()
     }
 }
 
-/*
-void
-CoreComponent::hardReset()
-{
-    // Start over from a zeroed-out state
-    Serializable::hardReset();
-
-    // Let all components perform their specific actions
-    reset(true);
-}
-
-void 
-CoreComponent::softReset()
-{
-    // Start over from a zeroed-out state
-    Serializable::softReset();
-
-    // Let all components perform their specific actions
-    reset(false);
-}
-*/
-
 void
 CoreComponent::reset(bool hard)
 {
-    // Start over from a zeroed-out state
-    if (hard) {
-        Serializable::hardReset();
-    } else {
-        Serializable::softReset();
-    }
+    SerResetter resetter(hard);
 
-    try {
+    {   SUSPENDED
 
-        for (CoreComponent *c : subComponents) { c->reset(hard); }
-        _didReset(hard);
+        // Call the pre-reset delegate
+        postorderWalk([hard](CoreComponent *c) { c->_willReset(hard); });
 
-    } catch (std::exception &e) {
+        // Revert to a clean state
+        postorderWalk([&resetter](CoreComponent *c) { *c << resetter; });
 
-        fatal("Failed to reset: %s\n", e.what());
+        // Call the post-reset delegate
+        postorderWalk([hard](CoreComponent *c) { c->_didReset(hard); });
     }
 }
 
@@ -276,9 +251,6 @@ CoreComponent::unfocus()
 isize
 CoreComponent::size()
 {
-    return Serializable::size() + 8;
-
-    /*
     SerCounter counter;
     *this << counter;
     isize result = counter.count;
@@ -288,7 +260,60 @@ CoreComponent::size()
 
     for (CoreComponent *c : subComponents) { result += c->size(); }
     return result;
-    */
+}
+
+isize
+CoreComponent::load(const u8 *buffer)
+{
+    assert(!isRunning());
+
+    const u8 *ptr = buffer;
+
+    // Load internal state of all subcomponents
+    for (CoreComponent *c : subComponents) {
+        ptr += c->load(ptr);
+    }
+
+    // Load the checksum for this component
+    auto hash = read64(ptr);
+
+    // Load internal state of this component
+    SerReader reader(ptr);
+    *this << reader;
+    ptr = reader.ptr;
+
+    // Check integrity
+    if (hash != checksum(false) || FORCE_SNAP_CORRUPTED) {
+        throw Error(ERROR_SNAP_CORRUPTED);
+    }
+
+    isize result = (isize)(ptr - buffer);
+    debug(SNP_DEBUG, "Loaded %ld bytes (expected %ld)\n", result, size());
+    return result;
+}
+
+isize
+CoreComponent::save(u8 *buffer)
+{
+    u8 *ptr = buffer;
+
+    // Save internal state of all subcomponents
+    for (CoreComponent *c : subComponents) {
+        ptr += c->save(ptr);
+    }
+
+    // Save the checksum for this component
+    write64(ptr, checksum(false));
+
+    // Save the internal state of this component
+    SerWriter writer(ptr);
+    *this << writer;
+    ptr = writer.ptr;
+
+    isize result = (isize)(ptr - buffer);
+    debug(SNP_DEBUG, "Saved %ld bytes (expected %ld)\n", result, size());
+    assert(result == size());
+    return result;
 }
 
 std::vector<CoreComponent *>

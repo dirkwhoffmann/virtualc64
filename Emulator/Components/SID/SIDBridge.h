@@ -95,13 +95,7 @@ public:
 public:
 
     template <class T>
-    void serialize(T& worker)
-    {
-        worker 
-
-        << sid;
-
-    } SERIALIZERS(serialize);
+    void serialize(T& worker) { } SERIALIZERS(serialize);
 
 
     //

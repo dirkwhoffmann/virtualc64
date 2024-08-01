@@ -851,8 +851,6 @@ public:
     {
         worker
 
-        << dmaDebugger
-
         << reg.current
         << reg.delayed
         << rasterIrqLine

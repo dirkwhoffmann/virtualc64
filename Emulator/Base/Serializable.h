@@ -32,6 +32,7 @@ public:
     virtual void operator << (class SerReader &worker) = 0;
     virtual void operator << (class SerWriter &worker) = 0;
 
+    /*
     // Zeroes out all items
     void hardReset();
     void softReset();
@@ -47,6 +48,7 @@ public:
 
     // Serializes the component into a buffer
     isize save(u8 *buffer);
+    */
 };
 
 

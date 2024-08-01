@@ -80,15 +80,7 @@ public:
 
 public:
 
-    template <class T> void serialize(T& worker) {
-
-        worker
-
-        << mouse
-        << joystick
-        << paddle;
-
-    } SERIALIZERS(serialize);
+    template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 
 
     //

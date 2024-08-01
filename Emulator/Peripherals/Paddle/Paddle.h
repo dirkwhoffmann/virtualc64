@@ -77,7 +77,12 @@ public:
     template <class T> void serialize(T& worker) {
 
         if (isResetter(worker)) return;
+
+        worker
+
+        << config.orientation;
     }
+    
     void operator << (SerChecker &worker) override { serialize(worker); }
     void operator << (SerCounter &worker) override { serialize(worker); }
     void operator << (SerResetter &worker) override;

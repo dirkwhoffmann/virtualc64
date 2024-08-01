@@ -350,29 +350,6 @@ public:
     {
         worker
 
-        << mem
-        << cpu
-        << cia1
-        << cia2
-        << vic
-        << sidBridge
-        << audioPort
-        << videoPort
-        << supply
-        << port1
-        << port2
-        << expansionport
-        << iec
-        << keyboard
-        << drive8
-        << drive9
-        << parCable
-        << datasette
-        << monitor
-        << retroShell
-        << regressionTester
-        << recorder
-
         << trigger
         << eventid
         << data
@@ -491,8 +468,8 @@ private:
 public:
 
     // isize size();
-    isize load(const u8 *buffer);
-    isize save(u8 *buffer);
+    // isize load(const u8 *buffer);
+    // isize save(u8 *buffer);
 
 
     //

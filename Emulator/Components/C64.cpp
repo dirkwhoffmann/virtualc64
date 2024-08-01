@@ -644,63 +644,6 @@ C64::_trackOff()
     msgQueue.put(MSG_TRACK, 0);
 }
 
-/*
-isize
-C64::size()
-{
-    return Serializable::size() + 8;
-}
-*/
-
-isize
-C64::load(const u8 *buffer)
-{
-    assert(!isRunning());
-
-    // Load checksum
-    isize count = 8;
-    auto hash = read64(buffer);
-
-    // Load internal state
-    count += Serializable::load(buffer);
-
-    // Check integrity
-    debug(SNP_DEBUG, "Loaded %ld bytes (expected %ld)\n", count, size());
-
-    if (hash != checksum(false) || FORCE_SNAP_CORRUPTED) {
-
-        if (SNP_DEBUG) {
-         
-            warn("Corrupted snapshot detected:\n");
-            dump(Category::Checksums);
-        }
-        throw Error(ERROR_SNAP_CORRUPTED);
-    }
-
-    return count;
-}
-
-isize
-C64::save(u8 *buffer)
-{
-    // Save checksum
-    isize count = 8;
-    write64(buffer, checksum(false));
-
-    // Save internal state
-    count += Serializable::save(buffer);
-
-    // Check integrity
-    if (SNP_DEBUG) {
-
-        msg("Saved %ld bytes (expected %ld)\n", count, size());
-        dump(Category::Checksums);
-    }
-    assert(count == size());
-
-    return count;
-}
-
 void
 C64::record() const
 {

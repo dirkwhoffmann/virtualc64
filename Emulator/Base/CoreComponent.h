@@ -187,12 +187,12 @@ public:
     virtual void _didReset(bool hard) { }
 
     // Loads the internal state from a memory buffer
-    // virtual isize load(const u8 *buf) throws;
-    // virtual void _didLoad() { }
+    virtual isize load(const u8 *buf) throws;
+    virtual void _didLoad() { }
 
     // Saves the internal state to a memory buffer
-    // virtual isize save(u8 *buf);
-    // virtual void _didSave() { }
+    virtual isize save(u8 *buf);
+    virtual void _didSave() { }
 
 
     //

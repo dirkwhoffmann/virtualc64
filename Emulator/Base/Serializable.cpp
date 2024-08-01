@@ -15,7 +15,8 @@
 
 namespace vc64 {
 
-void 
+/*
+void
 Serializable::hardReset() {
 
     SerResetter resetter(true);
@@ -60,6 +61,6 @@ Serializable::save(u8 *buffer) {
     *this << writer;
     return (isize)(writer.ptr - buffer);
 }
+*/
 
 }
-
