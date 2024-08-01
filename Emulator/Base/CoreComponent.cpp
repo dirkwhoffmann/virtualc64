@@ -35,7 +35,7 @@ CoreComponent::description() const
 bool
 CoreComponent::operator== (CoreComponent &other)
 {
-    return checksum() == other.checksum();
+    return checksum(true) == other.checksum(true);
 }
 
 void
@@ -54,7 +54,8 @@ CoreComponent::initialize()
     }
 }
 
-void 
+/*
+void
 CoreComponent::hardReset()
 {
     // Start over from a zeroed-out state
@@ -73,10 +74,18 @@ CoreComponent::softReset()
     // Let all components perform their specific actions
     reset(false);
 }
+*/
 
 void
 CoreComponent::reset(bool hard)
 {
+    // Start over from a zeroed-out state
+    if (hard) {
+        Serializable::hardReset();
+    } else {
+        Serializable::softReset();
+    }
+
     try {
 
         for (CoreComponent *c : subComponents) { c->reset(hard); }
@@ -161,7 +170,6 @@ CoreComponent::isReady() const
     _isReady();
 }
 
-/*
 u64
 CoreComponent::checksum(bool recursive)
 {
@@ -175,7 +183,6 @@ CoreComponent::checksum(bool recursive)
 
     return checker.hash;
 }
-*/
 
 void
 CoreComponent::suspend() 
@@ -264,6 +271,24 @@ CoreComponent::unfocus()
 {
     for (auto c : subComponents) { c->unfocus(); }
     _unfocus();
+}
+
+isize
+CoreComponent::size()
+{
+    return Serializable::size() + 8;
+
+    /*
+    SerCounter counter;
+    *this << counter;
+    isize result = counter.count;
+
+    // Add 8 bytes for the checksum
+    result += 8;
+
+    for (CoreComponent *c : subComponents) { result += c->size(); }
+    return result;
+    */
 }
 
 bool

@@ -19,8 +19,6 @@ namespace vc64 {
 void
 Interpreter::_initialize()
 {
-    CoreComponent::_initialize();
-
     initCommandShell(commandShellRoot);
     initDebugShell(debugShellRoot);
 }

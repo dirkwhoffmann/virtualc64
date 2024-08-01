@@ -138,13 +138,13 @@ C64::_dump(Category category, std::ostream& os) const
         for (auto &c : subComponents) {
 
             os << tab(c->objectName());
-            os << hex(c->checksum())  << "  " << dec(c->size()) << " bytes";
+            os << hex(c->checksum(false))  << "  " << dec(c->size()) << " bytes";
             os << std::endl;
 
             for (auto &cc : c->subComponents) {
 
                 os << tab(cc->objectName());
-                os << hex(cc->checksum()) << "  " << dec(cc->size()) << " bytes";
+                os << hex(cc->checksum(true)) << "  " << dec(cc->size()) << " bytes";
                 os << std::endl;
             }
         }

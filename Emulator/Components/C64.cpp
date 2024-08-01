@@ -644,11 +644,13 @@ C64::_trackOff()
     msgQueue.put(MSG_TRACK, 0);
 }
 
+/*
 isize
 C64::size()
 {
-    return Serializable::size() + 8 /* checksum */;
+    return Serializable::size() + 8;
 }
+*/
 
 isize
 C64::load(const u8 *buffer)
@@ -665,7 +667,7 @@ C64::load(const u8 *buffer)
     // Check integrity
     debug(SNP_DEBUG, "Loaded %ld bytes (expected %ld)\n", count, size());
 
-    if (hash != checksum() || FORCE_SNAP_CORRUPTED) {
+    if (hash != checksum(false) || FORCE_SNAP_CORRUPTED) {
 
         if (SNP_DEBUG) {
          
@@ -683,7 +685,7 @@ C64::save(u8 *buffer)
 {
     // Save checksum
     isize count = 8;
-    write64(buffer, checksum());
+    write64(buffer, checksum(false));
 
     // Save internal state
     count += Serializable::save(buffer);

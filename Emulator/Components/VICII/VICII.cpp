@@ -45,7 +45,6 @@ VICII::VICII(C64 &ref) : SubComponent(ref), dmaDebugger(ref)
 void 
 VICII::_initialize()
 {
-    CoreComponent::_initialize();
     setRevision(config.revision);
 }
 

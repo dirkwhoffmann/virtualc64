@@ -96,7 +96,7 @@ public:
     virtual void isReady() const throws;
 
     // Computes a checksum
-    // u64 checksum(bool recursive);
+    u64 checksum(bool recursive);
 
 
     //
@@ -108,39 +108,13 @@ public:
     void resume() override;
 
 
-    /* This function is called inside the emulator's launch routine. It iterates
-     * through all components and calls the _initialize() delegate.
-     */
+    //
+    // Controlling the state
+    //
+
+public:
+
     void initialize();
-    virtual void _initialize() { }
-
-    // Main reset routines
-    void hardReset();
-    void softReset();
-
-    /* This function is called inside the C64 reset routines. It iterates
-     * through all components and calls the _reset() delegate.
-     */
-    void reset(bool hard);
-    virtual void _reset(bool hard) { }
-
-    // Returns the fallback value for a config option
-    i64 getFallback(Option opt) const override;
-
-    // Resets the configuration of this component and all subcomponents
-    virtual void resetConfig();
-
-    //
-    void routeOption(Option opt, std::vector<Configurable *> &result);
-
-
-    //
-    // Controlling the state (see Thread class for details)
-    //
-
-
-protected:
-
     void powerOn();
     void powerOff();
     void run();
@@ -157,8 +131,14 @@ protected:
     void warpOnOff(bool value) { value ? warpOn() : warpOff(); }
     void trackOnOff(bool value) { value ? trackOn() : trackOff(); }
 
+
+    //
+    // Performing state changes
+    //
+
 private:
 
+    virtual void _initialize() { }
     virtual void _isReady() const throws { }
     virtual void _powerOn() { }
     virtual void _powerOff() { }
@@ -171,6 +151,53 @@ private:
     virtual void _trackOff() { }
     virtual void _focus() { }
     virtual void _unfocus() { }
+
+
+    //
+    // Serializing
+    //
+
+public:
+
+    // Returns the size of the internal state in bytes
+    isize size();
+
+    // Resets the internal state
+    void hardReset() { reset(true); }
+    void softReset() { reset(false); }
+    void reset(bool hard);
+    // virtual void _willReset(bool hard) { }
+    // virtual void _didReset(bool hard) { }
+    virtual void _reset(bool hard) { }
+
+    // Loads the internal state from a memory buffer
+    // virtual isize load(const u8 *buf) throws;
+    // virtual void _didLoad() { }
+
+    // Saves the internal state to a memory buffer
+    // virtual isize save(u8 *buf);
+    // virtual void _didSave() { }
+
+
+    // Main reset routines
+    // void hardReset();
+    // void softReset();
+
+    /* This function is called inside the C64 reset routines. It iterates
+     * through all components and calls the _reset() delegate.
+     */
+    // void reset(bool hard);
+    // virtual void _reset(bool hard) { }
+
+    // Returns the fallback value for a config option
+    i64 getFallback(Option opt) const override;
+
+    // Resets the configuration of this component and all subcomponents
+    virtual void resetConfig();
+
+    //
+    void routeOption(Option opt, std::vector<Configurable *> &result);
+
 
 
     //

@@ -29,8 +29,6 @@ RetroShell::RetroShell(C64& ref) : SubComponent(ref), interpreter(ref)
 void
 RetroShell::_initialize()
 {
-    CoreComponent::_initialize();
-
     // Initialize the text storage
     clear();
 
