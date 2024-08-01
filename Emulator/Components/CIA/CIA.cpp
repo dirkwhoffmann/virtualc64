@@ -23,7 +23,7 @@ CIA::CIA(C64 &ref, isize id) : SubComponent(ref, id)
 }
 
 void
-CIA::_reset(bool hard)
+CIA::_didReset(bool hard)
 {
     CNT = true;
     INT = 1;

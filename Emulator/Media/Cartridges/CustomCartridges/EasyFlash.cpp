@@ -32,7 +32,7 @@ EasyFlash::resetCartConfig()
 }
 
 void
-EasyFlash::_reset(bool hard)
+EasyFlash::_didReset(bool hard)
 {
     eraseRAM(0);
 

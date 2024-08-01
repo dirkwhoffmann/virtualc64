@@ -16,7 +16,7 @@
 namespace vc64 {
 
 void
-SimonsBasic::_reset(bool hard)
+SimonsBasic::_didReset(bool hard)
 {
     bankIn(0);
     bankIn(1);

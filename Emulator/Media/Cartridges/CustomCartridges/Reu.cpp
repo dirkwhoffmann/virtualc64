@@ -26,7 +26,7 @@ Reu::Reu(C64 &ref, isize kb) : Cartridge(ref), kb(kb)
 }
 
 void
-Reu::_reset(bool hard)
+Reu::_didReset(bool hard)
 {
     // Initialize the status register
     sr = isREU1700() ? 0x00 : 0x10;

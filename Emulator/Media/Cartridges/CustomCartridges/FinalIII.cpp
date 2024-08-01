@@ -40,7 +40,7 @@ FinalIII::resetCartConfig()
 }
 
 void
-FinalIII::_reset(bool hard)
+FinalIII::_didReset(bool hard)
 {
     qD = true;
     bankIn(0);

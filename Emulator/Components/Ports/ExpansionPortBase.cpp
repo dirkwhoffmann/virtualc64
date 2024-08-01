@@ -109,9 +109,9 @@ ExpansionPort::_dump(Category category, std::ostream& os) const
 }
 
 void
-ExpansionPort::_reset(bool hard)
+ExpansionPort::_didReset(bool hard)
 {
-    if (cartridge) cartridge->_reset(hard);
+    if (cartridge) cartridge->_didReset(hard);
 }
 
 }

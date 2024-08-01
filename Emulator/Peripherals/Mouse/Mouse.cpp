@@ -28,7 +28,7 @@ Mouse::Mouse(C64 &ref, ControlPort& pref) : SubComponent(ref, pref.objid), port(
     };
 }
 
-void Mouse::_reset(bool hard)
+void Mouse::_didReset(bool hard)
 {
     targetX = 0;
     targetY = 0;

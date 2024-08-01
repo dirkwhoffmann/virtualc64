@@ -101,7 +101,7 @@ C64Memory::C64Memory(C64 &ref) : SubComponent(ref)
 }
 
 void
-C64Memory::_reset(bool hard)
+C64Memory::_didReset(bool hard)
 {
     if (hard) {
 

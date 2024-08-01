@@ -19,7 +19,7 @@
 namespace vc64 {
 
 void
-Mouse1350::_reset(bool hard)
+Mouse1350::_didReset(bool hard)
 {
     leftButton = false;
     rightButton = false;

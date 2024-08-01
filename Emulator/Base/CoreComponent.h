@@ -109,6 +109,23 @@ public:
 
 
     //
+    // Configuring
+    //
+
+public:
+
+    // Initializes all configuration items with their default values
+    virtual void resetConfig();
+
+    // Returns the target component for a given configuration option
+    void routeOption(Option opt, std::vector<Configurable *> &result);
+    // Configurable *routeOption(Option opt, isize objid);
+
+    // Returns the fallback value for a config option
+    i64 getFallback(Option opt) const override;
+
+
+    //
     // Controlling the state
     //
 
@@ -166,9 +183,8 @@ public:
     void hardReset() { reset(true); }
     void softReset() { reset(false); }
     void reset(bool hard);
-    // virtual void _willReset(bool hard) { }
-    // virtual void _didReset(bool hard) { }
-    virtual void _reset(bool hard) { }
+    virtual void _willReset(bool hard) { }
+    virtual void _didReset(bool hard) { }
 
     // Loads the internal state from a memory buffer
     // virtual isize load(const u8 *buf) throws;
@@ -179,25 +195,19 @@ public:
     // virtual void _didSave() { }
 
 
-    // Main reset routines
-    // void hardReset();
-    // void softReset();
-
-    /* This function is called inside the C64 reset routines. It iterates
-     * through all components and calls the _reset() delegate.
-     */
-    // void reset(bool hard);
-    // virtual void _reset(bool hard) { }
-
-    // Returns the fallback value for a config option
-    i64 getFallback(Option opt) const override;
-
-    // Resets the configuration of this component and all subcomponents
-    virtual void resetConfig();
-
     //
-    void routeOption(Option opt, std::vector<Configurable *> &result);
+    // Working with subcomponents
+    //
 
+public:
+
+    // Collects references to this components and all subcomponents
+    std::vector<CoreComponent *> collectComponents();
+    void collectComponents(std::vector<CoreComponent *> &result);
+
+    // Traverses the component tree and applies a function
+    void preoderWalk(std::function<void(CoreComponent *)> func);
+    void postorderWalk(std::function<void(CoreComponent *)> func);
 
 
     //

@@ -16,7 +16,7 @@
 namespace vc64 {
 
 void
-FreezeFrame::_reset(bool hard)
+FreezeFrame::_didReset(bool hard)
 {
     // In Ultimax mode, the same ROM chip that appears in ROML also appears
     // in ROMH. By default, it it appears in ROML only, so let's bank it in

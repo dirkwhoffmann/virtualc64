@@ -77,7 +77,7 @@ public:
 public:
 
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
-    void _reset(bool hard) override;
+    void _didReset(bool hard) override;
 
 
     //

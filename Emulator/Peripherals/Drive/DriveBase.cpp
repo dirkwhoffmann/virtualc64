@@ -139,7 +139,7 @@ Drive::cacheInfo(DriveInfo &result) const
 }
 
 void
-Drive::_reset(bool hard)
+Drive::_didReset(bool hard)
 {
     cpu.reg.pc = 0xEAA0;
     halftrack = 41;

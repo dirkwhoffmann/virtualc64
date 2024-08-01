@@ -25,7 +25,7 @@ VIA6522::VIA6522(C64 &ref, Drive &drvref) : SubComponent(ref), drive(drvref)
 {
 }
 
-void VIA6522::_reset(bool hard)
+void VIA6522::_didReset(bool hard)
 {    
     t1 = 0x01AA;
     t2 = 0x01AA;

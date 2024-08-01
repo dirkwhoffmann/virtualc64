@@ -88,7 +88,7 @@ public:
 
     } CARTRIDGE_SERIALIZERS(serialize);
 
-    void _reset(bool hard) override;
+    void _didReset(bool hard) override;
 
 
     //

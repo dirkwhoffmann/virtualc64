@@ -16,7 +16,7 @@
 namespace vc64 {
 
 void
-Epyx::_reset(bool hard)
+Epyx::_didReset(bool hard)
 {
     dischargeCapacitor();
 }

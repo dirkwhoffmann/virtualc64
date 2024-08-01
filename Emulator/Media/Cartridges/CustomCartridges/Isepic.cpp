@@ -45,7 +45,7 @@ Isepic::_dump(Category category, std::ostream& os) const
 }
 
 void
-Isepic::_reset(bool hard)
+Isepic::_didReset(bool hard)
 {
     eraseRAM(0);
     page = 0;

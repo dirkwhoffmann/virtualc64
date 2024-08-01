@@ -17,7 +17,7 @@
 namespace vc64 {
 
 void
-SerialPort::_reset(bool hard)
+SerialPort::_didReset(bool hard)
 {
     atnLine = 1;
     clockLine = 1;

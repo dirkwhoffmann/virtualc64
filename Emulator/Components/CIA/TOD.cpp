@@ -25,7 +25,7 @@ TOD::TOD(C64 &ref, CIA &ciaref) : SubComponent(ref), cia(ciaref)
 
 
 void
-TOD::_reset(bool hard)
+TOD::_didReset(bool hard)
 {    
     tod.hour = 1;
     stopped = true;

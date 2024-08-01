@@ -89,7 +89,7 @@ CoreComponent::reset(bool hard)
     try {
 
         for (CoreComponent *c : subComponents) { c->reset(hard); }
-        _reset(hard);
+        _didReset(hard);
 
     } catch (std::exception &e) {
 
@@ -289,6 +289,35 @@ CoreComponent::size()
     for (CoreComponent *c : subComponents) { result += c->size(); }
     return result;
     */
+}
+
+std::vector<CoreComponent *>
+CoreComponent::collectComponents()
+{
+    std::vector<CoreComponent *> result;
+    collectComponents(result);
+    return result;
+}
+
+void
+CoreComponent::collectComponents(std::vector<CoreComponent *> &result)
+{
+    result.push_back(this);
+    for (auto &c : subComponents) c->collectComponents(result);
+}
+
+void
+CoreComponent::preoderWalk(std::function<void(CoreComponent *)> func)
+{
+    func(this);
+    for (auto &c : subComponents) c->preoderWalk(func);
+}
+
+void
+CoreComponent::postorderWalk(std::function<void(CoreComponent *)> func)
+{
+    for (auto &c : subComponents) c->postorderWalk(func);
+    func(this);
 }
 
 bool

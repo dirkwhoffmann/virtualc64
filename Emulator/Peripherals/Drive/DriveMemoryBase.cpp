@@ -17,7 +17,7 @@
 namespace vc64 {
 
 void
-DriveMemory::_reset(bool hard)
+DriveMemory::_didReset(bool hard)
 {
     // Initialize RAM with the power-up pattern (pattern from Hoxs64)
     for (isize i = 0; i < isizeof(ram); i++) {

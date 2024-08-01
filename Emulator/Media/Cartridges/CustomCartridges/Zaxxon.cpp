@@ -16,7 +16,7 @@
 namespace vc64 {
 
 void
-Zaxxon::_reset(bool hard)
+Zaxxon::_didReset(bool hard)
 {
     // Make sure peekRomL() is called for the whole 8KB ROML range.
     mappedBytesL = 0x2000;

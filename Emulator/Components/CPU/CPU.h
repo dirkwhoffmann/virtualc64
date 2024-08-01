@@ -173,7 +173,7 @@ public:
 private:
 
     void _dump(Category category, std::ostream& os) const override;
-    void _reset(bool hard) override;
+    void _didReset(bool hard) override;
     void _trackOn() override;
     void _trackOff() override;
 

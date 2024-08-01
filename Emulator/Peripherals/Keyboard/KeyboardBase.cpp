@@ -17,7 +17,7 @@
 namespace vc64 {
 
 void
-Keyboard::_reset(bool hard)
+Keyboard::_didReset(bool hard)
 {
     // Reset the keyboard matrix
     releaseAll();

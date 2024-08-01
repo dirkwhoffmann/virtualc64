@@ -69,7 +69,7 @@ AudioPort::cacheStats(AudioPortStats &result) const
 }
 
 void
-AudioPort::_reset(bool hard)
+AudioPort::_didReset(bool hard)
 {
     SYNCHRONIZED
 

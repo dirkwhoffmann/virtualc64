@@ -220,7 +220,7 @@ C64::prefix() const
 }
 
 void 
-C64::_reset(bool hard)
+C64::_didReset(bool hard)
 {
     /* At this point, all components have executed their reset procedure. In
      * the final step, we need to perform some post-reset actions we could not

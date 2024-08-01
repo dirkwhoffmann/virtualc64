@@ -13,12 +13,11 @@
 #include "config.h"
 #include "Paddle.h"
 #include "Emulator.h"
-// #include "IOUtils.h"
 
 namespace vc64 {
 
 void
-Paddle::_reset(bool hard)
+Paddle::_didReset(bool hard)
 {
     button[0] = false;
     button[1] = false;

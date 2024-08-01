@@ -49,7 +49,7 @@ VICII::_initialize()
 }
 
 void
-VICII::_reset(bool hard)
+VICII::_didReset(bool hard)
 {
     if (hard) {
 

@@ -149,7 +149,7 @@ CPU::cacheInfo(CPUInfo &result) const
 }
 
 void
-CPU::_reset(bool hard)
+CPU::_didReset(bool hard)
 {
     Peddle::reset();
 
