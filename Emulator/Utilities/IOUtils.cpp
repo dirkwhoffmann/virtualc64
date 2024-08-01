@@ -13,7 +13,6 @@
 #include "config.h"
 #include "Macros.h"
 #include "IOUtils.h"
-
 #include <algorithm>
 #include <bitset>
 #include <fstream>
@@ -264,7 +263,7 @@ dec::operator()(std::ostream &os) const
 std::ostream &
 hex::operator()(std::ostream &os) const
 {
-    os << std::hex << "0x" << std::setw(digits) << std::setfill('0') << value;
+    os << std::hex << "0x" << std::setw(int(digits)) << std::setfill('0') << value;
     return os;
 };
 
@@ -296,7 +295,7 @@ flt::operator()(std::ostream &os) const
 
 std::ostream &
 tab::operator()(std::ostream &os) const {
-    os << std::setw(pads) << std::right << std::setfill(' ') << str;
+    os << std::setw(int(pads)) << std::right << std::setfill(' ') << str;
     os << (str.empty() ? "   " : " : ");
     return os;
 }

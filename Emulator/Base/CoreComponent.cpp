@@ -112,11 +112,10 @@ CoreComponent::routeOption(Option opt, std::vector<Configurable *> &result)
     }
 }
 
-void
-CoreComponent::isReady() const
+bool
+CoreComponent::isInitialized() const
 {
-    for (auto c : subComponents) { c->isReady(); }
-    _isReady();
+    return emulator.isInitialized();
 }
 
 bool
@@ -155,7 +154,30 @@ CoreComponent::isHalted() const
     return emulator.isHalted();
 }
 
-void 
+void
+CoreComponent::isReady() const
+{
+    for (auto c : subComponents) { c->isReady(); }
+    _isReady();
+}
+
+/*
+u64
+CoreComponent::checksum(bool recursive)
+{
+    SerChecker checker;
+
+    // Compute a checksum for the members of this component
+    *this << checker;
+
+    // Incoorporate subcomponents if requested
+    if (recursive) for (auto &c : subComponents) checker << c->checksum(recursive);
+
+    return checker.hash;
+}
+*/
+
+void
 CoreComponent::suspend() 
 {
     return emulator.suspend();

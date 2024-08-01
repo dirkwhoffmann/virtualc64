@@ -14,15 +14,6 @@
 #include "Configurable.h"
 #include "Option.h"
 #include "Parser.h"
-#include "VICIITypes.h"
-#include "DatasetteTypes.h"
-#include "MemoryTypes.h"
-#include "SIDTypes.h"
-#include "CIATypes.h"
-#include "DriveTypes.h"
-#include "ParCableTypes.h"
-#include "PowerPortTypes.h"
-#include "MouseTypes.h"
 #include "IOUtils.h"
 #include <algorithm>
 

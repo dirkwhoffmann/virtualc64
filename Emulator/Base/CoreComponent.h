@@ -51,19 +51,62 @@ public:
 
 
     //
-    // Initializing
+    // Initializers
     //
     
 public:
 
     CoreComponent(Emulator& ref, isize id = 0) : emulator(ref), objid(id) { }
 
-    virtual const Descriptions &getDescriptions() const = 0;
-    const char *objectName() const override;
-    const char *description() const override;
+
+    //
+    // Operators
+    //
+
+public:
 
     bool operator== (CoreComponent &other);
     bool operator!= (CoreComponent &other) { return !(other == *this); }
+
+
+    //
+    // Querying properties
+    //
+
+public:
+
+    // Returns the description struct of this component
+    virtual const Descriptions &getDescriptions() const = 0;
+
+    // Returns certain elements from the description struct
+    const char *objectName() const override;
+    const char *description() const override;
+    const char *shellName() const;
+
+    // State properties (see Thread class for details)
+    virtual bool isInitialized() const;
+    virtual bool isPoweredOff() const;
+    virtual bool isPoweredOn() const;
+    virtual bool isPaused() const;
+    virtual bool isRunning() const;
+    virtual bool isSuspended() const;
+    virtual bool isHalted() const;
+
+    // Throws an exception if the emulator is not ready to power on
+    virtual void isReady() const throws;
+
+    // Computes a checksum
+    // u64 checksum(bool recursive);
+
+
+    //
+    // Suspending and Resuming
+    //
+
+    // Suspends or resumes the emulator thread
+    void suspend() override;
+    void resume() override;
+
 
     /* This function is called inside the emulator's launch routine. It iterates
      * through all components and calls the _initialize() delegate.
@@ -95,20 +138,6 @@ public:
     // Controlling the state (see Thread class for details)
     //
 
-public:
-
-    virtual bool isPoweredOff() const;
-    virtual bool isPoweredOn() const;
-    virtual bool isPaused() const;
-    virtual bool isRunning() const;
-    virtual bool isSuspended() const;
-    virtual bool isHalted() const;
-
-    void suspend() override;
-    void resume() override;
-
-    // Throws an exception if the emulator is not ready to power on
-    virtual void isReady() const throws;
 
 protected:
 
