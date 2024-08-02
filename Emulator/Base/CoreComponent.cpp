@@ -249,7 +249,7 @@ CoreComponent::unfocus()
 }
 
 isize
-CoreComponent::size()
+CoreComponent::size(bool recursive)
 {
     SerCounter counter;
     *this << counter;
@@ -258,7 +258,9 @@ CoreComponent::size()
     // Add 8 bytes for the checksum
     result += 8;
 
-    for (CoreComponent *c : subComponents) { result += c->size(); }
+    // Add size of subcomponents if requested
+    if (recursive) for (CoreComponent *c : subComponents) { result += c->size(); }
+    
     return result;
 }
 
@@ -267,52 +269,64 @@ CoreComponent::load(const u8 *buffer)
 {
     assert(!isRunning());
 
-    const u8 *ptr = buffer;
+    isize result = 0;
 
-    // Load internal state of all subcomponents
-    for (CoreComponent *c : subComponents) {
-        ptr += c->load(ptr);
-    }
+    postorderWalk([this, buffer, &result](CoreComponent *c) {
 
-    // Load the checksum for this component
-    auto hash = read64(ptr);
+        const u8 *ptr = buffer + result;
 
-    // Load internal state of this component
-    SerReader reader(ptr);
-    *this << reader;
-    ptr = reader.ptr;
+        // Load the checksum for this component
+        auto hash = read64(ptr);
 
-    // Check integrity
-    if (hash != checksum(false) || FORCE_SNAP_CORRUPTED) {
-        throw Error(ERROR_SNAP_CORRUPTED);
-    }
+        // Load the internal state of this component
+        SerReader reader(ptr); *c << reader;
 
-    isize result = (isize)(ptr - buffer);
-    debug(SNP_DEBUG, "Loaded %ld bytes (expected %ld)\n", result, size());
+        // Determine the number of loaded bytes
+        isize count = (isize)(reader.ptr - (buffer + result));
+
+        // Check integrity
+        if (hash != c->checksum(false) || FORCE_SNAP_CORRUPTED) {
+            if (SNP_DEBUG) { fatalError; } else { throw Error(ERROR_SNAP_CORRUPTED); }
+        }
+
+        debug(SNP_DEBUG, "Loaded %ld bytes (expected %ld)\n", count, c->size(false));
+        result += count;
+    });
+
+    postorderWalk([](CoreComponent *c) { c->_didLoad(); });
+
     return result;
 }
 
 isize
 CoreComponent::save(u8 *buffer)
 {
-    u8 *ptr = buffer;
+    isize result = 0;
 
-    // Save internal state of all subcomponents
-    for (CoreComponent *c : subComponents) {
-        ptr += c->save(ptr);
-    }
+    postorderWalk([this, buffer, &result](CoreComponent *c) {
 
-    // Save the checksum for this component
-    write64(ptr, checksum(false));
+        u8 *ptr = buffer + result;
 
-    // Save the internal state of this component
-    SerWriter writer(ptr);
-    *this << writer;
-    ptr = writer.ptr;
+        // Save the checksum for this component
+        write64(ptr, c->checksum(false));
 
-    isize result = (isize)(ptr - buffer);
-    debug(SNP_DEBUG, "Saved %ld bytes (expected %ld)\n", result, size());
-    assert(result == size());
+        // Save the internal state of this component
+        SerWriter writer(ptr); *c << writer;
+
+        // Determine the number of written bytes
+        isize count = (isize)(writer.ptr - (buffer + result));
+
+        // Check integrity
+        if (count != c->size(false) || FORCE_SNAP_CORRUPTED) {
+            if (SNP_DEBUG) { fatalError; } else { throw Error(ERROR_SNAP_CORRUPTED); }
+        }
+
+        debug(SNP_DEBUG, "Saved %ld bytes (expected %ld)\n", count, c->size(false));
+        result += count;
+    });
+
+    postorderWalk([](CoreComponent *c) { c->_didSave(); });
+
     return result;
 }
 

@@ -31,24 +31,6 @@ public:
     virtual void operator << (class SerResetter &worker) = 0;
     virtual void operator << (class SerReader &worker) = 0;
     virtual void operator << (class SerWriter &worker) = 0;
-
-    /*
-    // Zeroes out all items
-    void hardReset();
-    void softReset();
-
-    // Calculates the snapshot size
-    isize size();
-
-    // Computes a checksum
-    u64 checksum();
-
-    // Recreates the component from a buffer
-    isize load(const u8 *buffer);
-
-    // Serializes the component into a buffer
-    isize save(u8 *buffer);
-    */
 };
 
 

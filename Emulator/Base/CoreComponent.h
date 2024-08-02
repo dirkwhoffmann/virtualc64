@@ -177,21 +177,23 @@ private:
 public:
 
     // Returns the size of the internal state in bytes
-    isize size();
+    isize size(bool recursive = true);
 
     // Resets the internal state
-    void hardReset() { reset(true); }
-    void softReset() { reset(false); }
     void reset(bool hard);
     virtual void _willReset(bool hard) { }
     virtual void _didReset(bool hard) { }
 
+    // Convenience wrappers
+    void hardReset() { reset(true); }
+    void softReset() { reset(false); }
+
     // Loads the internal state from a memory buffer
-    virtual isize load(const u8 *buf) throws;
+    isize load(const u8 *buf) throws;
     virtual void _didLoad() { }
 
     // Saves the internal state to a memory buffer
-    virtual isize save(u8 *buf);
+    isize save(u8 *buf);
     virtual void _didSave() { }
 
 
