@@ -57,9 +57,9 @@ SubComponent::SubComponent(C64& ref) : CoreComponent(ref.emulator), References(r
 SubComponent::SubComponent(C64& ref, isize id) : CoreComponent(ref.emulator, id), References(ref) { };
 
 void
-SubComponent::prefix() const
+SubComponent::prefix(isize level, isize line) const
 {
-    c64.prefix();
+    c64.prefix(level, line);
 }
 
 void 

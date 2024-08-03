@@ -388,7 +388,7 @@ public:
 public:
 
     const Descriptions &getDescriptions() const override { return descriptions; }
-    void prefix() const override;
+    void prefix(isize level, isize line) const override;
 
 private:
 
@@ -459,17 +459,6 @@ private:
 
     void setInspectionTarget(InspectionTarget target);
     void removeInspectionTarget() { setInspectionTarget(INSPECTION_NONE); }
-
-
-    //
-    //
-    //
-
-public:
-
-    // isize size();
-    // isize load(const u8 *buffer);
-    // isize save(u8 *buffer);
 
 
     //

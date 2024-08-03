@@ -312,7 +312,6 @@ public:
 public:
 
     const Descriptions &getDescriptions() const override { return descriptions; }
-    void prefix() const override;
 
 private:
 

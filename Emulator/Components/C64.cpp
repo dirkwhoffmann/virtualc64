@@ -214,9 +214,31 @@ C64::eventName(EventSlot slot, EventID id)
 }
 
 void
-C64::prefix() const
+C64::prefix(isize level, isize line) const
 {
     fprintf(stderr, "[%lld] (%3d,%3d) %04X ", frame, scanline, rasterCycle, cpu.getPC0());
+
+    if (level) {
+
+        if (level >= 2) {
+
+            if (objid == 1) fprintf(stderr, "[Run-ahead] ");
+            fprintf(stderr, "%s:%ld", objectName(), line);
+        }
+        if (level >= 3) {
+
+            fprintf(stderr, " [%lld] (%3d,%3d)", frame, scanline, rasterCycle);
+        }
+        if (level >= 4) {
+
+            fprintf(stderr, " %04X", cpu.getPC0());
+        }
+        if (level >= 5) {
+
+            fprintf(stderr, " %s%s", (cpu.irqLine ? "*" : "-"), (cpu.nmiLine ? "+" : "-"));
+        }
+        fprintf(stderr, " ");
+    }
 }
 
 void 

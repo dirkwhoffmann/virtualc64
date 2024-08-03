@@ -69,7 +69,7 @@ CRTFile::finalizeRead()
         ptr += chipSize(numberOfChips);
     }
     
-    plain(CRT_DEBUG, "CRT file imported (%ld chips)\n", numberOfChips);
+    debug(CRT_DEBUG, "CRT file imported (%ld chips)\n", numberOfChips);
 }
 
 CartridgeType

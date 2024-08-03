@@ -36,12 +36,6 @@ void VIA6522::_didReset(bool hard)
 }
 
 void
-VIA6522::prefix() const
-{
-    fprintf(stderr, "D[%lld] (%3d,%3d) %04X ", c64.frame, c64.scanline, c64.rasterCycle, drive.cpu.getPC0());
-}
-
-void
 VIA6522::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
