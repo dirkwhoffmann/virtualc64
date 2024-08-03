@@ -90,10 +90,6 @@ private:
     void initCommandShell(Command &root);
     void initDebugShell(Command &root);
 
-public:
-
-    static string shellName(const CoreObject &object);
-
 
     //
     // Parsing input

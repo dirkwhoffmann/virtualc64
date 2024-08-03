@@ -18,6 +18,12 @@
 
 namespace vc64 {
 
+bool
+CoreComponent::operator== (CoreComponent &other)
+{
+    return checksum(true) == other.checksum(true);
+}
+
 const char *
 CoreComponent::objectName() const
 {
@@ -32,68 +38,11 @@ CoreComponent::description() const
     return getDescriptions().at(objid).description;
 }
 
-bool
-CoreComponent::operator== (CoreComponent &other)
+const char *
+CoreComponent::shellName() const
 {
-    return checksum(true) == other.checksum(true);
-}
-
-void
-CoreComponent::initialize()
-{
-    assert(!isRunning());
-
-    try {
-
-        for (CoreComponent *c : subComponents) { c->initialize(); }
-        _initialize();
-
-    } catch (std::exception &e) {
-
-        warn("Initialization aborted: %s\n", e.what());
-    }
-}
-
-void
-CoreComponent::reset(bool hard)
-{
-    SerResetter resetter(hard);
-
-    {   SUSPENDED
-
-        // Call the pre-reset delegate
-        postorderWalk([hard](CoreComponent *c) { c->_willReset(hard); });
-
-        // Revert to a clean state
-        postorderWalk([&resetter](CoreComponent *c) { *c << resetter; });
-
-        // Call the post-reset delegate
-        postorderWalk([hard](CoreComponent *c) { c->_didReset(hard); });
-    }
-}
-
-i64 
-CoreComponent::getFallback(Option opt) const
-{
-    return emulator.defaults.get(opt);
-}
-
-void
-CoreComponent::resetConfig()
-{
-    for (CoreComponent *c : subComponents) { c->resetConfig(); }
-    Configurable::resetConfig(emulator.defaults, objid);
-}
-
-void
-CoreComponent::routeOption(Option opt, std::vector<Configurable *> &result)
-{
-    for (auto &o : getOptions()) {
-        if (o == opt) result.push_back(this);
-    }
-    for (auto &c : subComponents) {
-        c->routeOption(opt, result);
-    }
+    assert(isize(getDescriptions().size()) > objid);
+    return getDescriptions().at(objid).shell;
 }
 
 bool
@@ -160,15 +109,73 @@ CoreComponent::checksum(bool recursive)
 }
 
 void
-CoreComponent::suspend() 
+CoreComponent::suspend()
 {
     return emulator.suspend();
 }
 
 void
-CoreComponent::resume() 
+CoreComponent::resume()
 {
     return emulator.resume();
+}
+
+void
+CoreComponent::resetConfig()
+{
+    for (CoreComponent *c : subComponents) { c->resetConfig(); }
+    Configurable::resetConfig(emulator.defaults, objid);
+}
+
+i64
+CoreComponent::getFallback(Option opt) const
+{
+    return emulator.defaults.get(opt);
+}
+
+void
+CoreComponent::routeOption(Option opt, std::vector<Configurable *> &result)
+{
+    for (auto &o : getOptions()) {
+        if (o == opt) result.push_back(this);
+    }
+    for (auto &c : subComponents) {
+        c->routeOption(opt, result);
+    }
+}
+
+void
+CoreComponent::initialize()
+{
+    assert(!isRunning());
+
+    try {
+
+        for (CoreComponent *c : subComponents) { c->initialize(); }
+        _initialize();
+
+    } catch (std::exception &e) {
+
+        warn("Initialization aborted: %s\n", e.what());
+    }
+}
+
+void
+CoreComponent::reset(bool hard)
+{
+    SerResetter resetter(hard);
+
+    {   SUSPENDED
+
+        // Call the pre-reset delegate
+        postorderWalk([hard](CoreComponent *c) { c->_willReset(hard); });
+
+        // Revert to a clean state
+        postorderWalk([&resetter](CoreComponent *c) { *c << resetter; });
+
+        // Call the post-reset delegate
+        postorderWalk([hard](CoreComponent *c) { c->_didReset(hard); });
+    }
 }
 
 void
@@ -260,7 +267,7 @@ CoreComponent::size(bool recursive)
 
     // Add size of subcomponents if requested
     if (recursive) for (CoreComponent *c : subComponents) { result += c->size(); }
-    
+
     return result;
 }
 
@@ -382,7 +389,7 @@ void CoreComponent::exportConfig(std::ostream& ss, bool diff) const
                 first = false;
             }
 
-            auto cmd = "try " +Interpreter::shellName(*this);
+            auto cmd = "try " + string(shellName());
             auto currentStr = OptionParser::asPlainString(opt, current);
             auto fallbackStr = OptionParser::asPlainString(opt, fallback);
 
