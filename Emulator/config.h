@@ -158,6 +158,8 @@ extern debugflag USR_DEBUG;
 // Other components
 extern debugflag REC_DEBUG;
 extern debugflag REU_DEBUG;
+extern debugflag SCK_DEBUG;
+extern debugflag SRV_DEBUG;
 
 
 //

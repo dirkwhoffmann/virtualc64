@@ -165,6 +165,11 @@ Defaults::Defaults()
     setFallback(OPT_REC_ASPECT_X,               768);
     setFallback(OPT_REC_ASPECT_Y,               702);
 
+    setFallback(OPT_SRV_PORT,                   8081,                   { SERVER_RSH });
+    setFallback(OPT_SRV_PROTOCOL,               SRVPROT_DEFAULT,        { SERVER_RSH });
+    setFallback(OPT_SRV_AUTORUN,                false,                  { SERVER_RSH });
+    setFallback(OPT_SRV_VERBOSE,                true,                   { SERVER_RSH });
+
     setFallback("BASIC_PATH", "");
     setFallback("CHAR_PATH", "");
     setFallback("KERNAL_PATH", "");

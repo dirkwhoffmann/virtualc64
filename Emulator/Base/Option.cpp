@@ -163,6 +163,11 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_REC_ASPECT_X:              return numParser();
         case OPT_REC_ASPECT_Y:              return numParser();
 
+        case OPT_SRV_PORT:                  return numParser();
+        case OPT_SRV_PROTOCOL:              return enumParser.template operator()<ServerProtocolEnum>();
+        case OPT_SRV_AUTORUN:               return boolParser();
+        case OPT_SRV_VERBOSE:               return boolParser();
+
         default:
             fatalError;
     }

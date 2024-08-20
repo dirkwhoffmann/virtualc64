@@ -93,6 +93,8 @@ enum_long(DEBUG_FLAG)
     // Other components
     FLAG_REC_DEBUG,         ///< Debug the screen recorder
     FLAG_REU_DEBUG,         ///< Debug the REU memory expansion
+    FLAG_SCK_DEBUG,         ///< Debug the socket interface
+    FLAG_SRV_DEBUG,         ///< Debug the remote servers
 
     //! Forced error condition
     FLAG_FORCE_ROM_MISSING,
@@ -186,6 +188,8 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
                 // Other components
             case FLAG_REC_DEBUG:                return "REC_DEBUG";
             case FLAG_REU_DEBUG:                return "REU_DEBUG";
+            case FLAG_SCK_DEBUG:                return "SCK_DEBUG";
+            case FLAG_SRV_DEBUG:                return "SRV_DEBUG";
 
                 // Forced error conditions
             case FLAG_FORCE_ROM_MISSING:        return "FORCE_ROM_MISSING";
@@ -273,6 +277,8 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
                 // Other components
             case FLAG_REC_DEBUG:                return "Screen recorder";
             case FLAG_REU_DEBUG:                return "REU memory expansion";
+            case FLAG_SCK_DEBUG:                return "Sockets";
+            case FLAG_SRV_DEBUG:                return "Remote servers";
 
                 // Forced error conditions
             case FLAG_FORCE_ROM_MISSING:        return "";

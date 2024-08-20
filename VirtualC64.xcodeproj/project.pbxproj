@@ -391,6 +391,15 @@
 		50A22A2F2618845800C9FB1E /* TextureRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A2E2618845800C9FB1E /* TextureRect.swift */; };
 		50A519411B8DA230006771E2 /* drive_click.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50A519401B8DA230006771E2 /* drive_click.aiff */; };
 		50A519431B8DA360006771E2 /* drive_snatch_uae.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */; };
+		50A5B7CE2C74E44C00D6DDAD /* CMakeLists.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50A5B7C22C74E44C00D6DDAD /* CMakeLists.txt */; };
+		50A5B7CF2C74E44C00D6DDAD /* RemoteManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A5B7C32C74E44C00D6DDAD /* RemoteManager.cpp */; };
+		50A5B7D02C74E44C00D6DDAD /* RemoteManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A5B7C32C74E44C00D6DDAD /* RemoteManager.cpp */; };
+		50A5B7D12C74E44C00D6DDAD /* RemoteServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A5B7C62C74E44C00D6DDAD /* RemoteServer.cpp */; };
+		50A5B7D22C74E44C00D6DDAD /* RemoteServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A5B7C62C74E44C00D6DDAD /* RemoteServer.cpp */; };
+		50A5B7D32C74E44C00D6DDAD /* RshServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A5B7C92C74E44C00D6DDAD /* RshServer.cpp */; };
+		50A5B7D42C74E44C00D6DDAD /* RshServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A5B7C92C74E44C00D6DDAD /* RshServer.cpp */; };
+		50A5B7D52C74E44C00D6DDAD /* Socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A5B7CB2C74E44C00D6DDAD /* Socket.cpp */; };
+		50A5B7D62C74E44C00D6DDAD /* Socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A5B7CB2C74E44C00D6DDAD /* Socket.cpp */; };
 		50A9A088250DE90900723D32 /* PageFox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A9A086250DE90900723D32 /* PageFox.cpp */; };
 		50AA3EC12616F62500C96EDB /* MemUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AA3EC02616F62500C96EDB /* MemUtils.cpp */; };
 		50AA48B2292F8EC30084401D /* Peddle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AA48B0292F8EC30084401D /* Peddle.cpp */; };
@@ -952,6 +961,17 @@
 		50A2D7AE24AF944500671F38 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		50A519401B8DA230006771E2 /* drive_click.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = drive_click.aiff; sourceTree = "<group>"; };
 		50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = drive_snatch_uae.aiff; sourceTree = "<group>"; };
+		50A5B7C22C74E44C00D6DDAD /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50A5B7C32C74E44C00D6DDAD /* RemoteManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RemoteManager.cpp; sourceTree = "<group>"; };
+		50A5B7C42C74E44C00D6DDAD /* RemoteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteManager.h; sourceTree = "<group>"; };
+		50A5B7C52C74E44C00D6DDAD /* RemoteManagerTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteManagerTypes.h; sourceTree = "<group>"; };
+		50A5B7C62C74E44C00D6DDAD /* RemoteServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RemoteServer.cpp; sourceTree = "<group>"; };
+		50A5B7C72C74E44C00D6DDAD /* RemoteServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteServer.h; sourceTree = "<group>"; };
+		50A5B7C82C74E44C00D6DDAD /* RemoteServerTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteServerTypes.h; sourceTree = "<group>"; };
+		50A5B7C92C74E44C00D6DDAD /* RshServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RshServer.cpp; sourceTree = "<group>"; };
+		50A5B7CA2C74E44C00D6DDAD /* RshServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RshServer.h; sourceTree = "<group>"; };
+		50A5B7CB2C74E44C00D6DDAD /* Socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Socket.cpp; sourceTree = "<group>"; };
+		50A5B7CC2C74E44C00D6DDAD /* Socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Socket.h; sourceTree = "<group>"; };
 		50A9A086250DE90900723D32 /* PageFox.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PageFox.cpp; sourceTree = "<group>"; };
 		50A9A087250DE90900723D32 /* PageFox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageFox.h; sourceTree = "<group>"; };
 		50AA3EBF2616F60800C96EDB /* MemUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemUtils.h; sourceTree = "<group>"; };
@@ -2042,6 +2062,24 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		50A5B7CD2C74E44C00D6DDAD /* RemoteServers */ = {
+			isa = PBXGroup;
+			children = (
+				50A5B7C22C74E44C00D6DDAD /* CMakeLists.txt */,
+				50A5B7C52C74E44C00D6DDAD /* RemoteManagerTypes.h */,
+				50A5B7C42C74E44C00D6DDAD /* RemoteManager.h */,
+				50A5B7C32C74E44C00D6DDAD /* RemoteManager.cpp */,
+				50A5B7C82C74E44C00D6DDAD /* RemoteServerTypes.h */,
+				50A5B7C72C74E44C00D6DDAD /* RemoteServer.h */,
+				50A5B7C62C74E44C00D6DDAD /* RemoteServer.cpp */,
+				50A5B7CA2C74E44C00D6DDAD /* RshServer.h */,
+				50A5B7C92C74E44C00D6DDAD /* RshServer.cpp */,
+				50A5B7CC2C74E44C00D6DDAD /* Socket.h */,
+				50A5B7CB2C74E44C00D6DDAD /* Socket.cpp */,
+			);
+			path = RemoteServers;
+			sourceTree = "<group>";
+		};
 		50AA48B5292F8F350084401D /* Peddle */ = {
 			isa = PBXGroup;
 			children = (
@@ -2198,6 +2236,7 @@
 			children = (
 				50EF22322815927D00440C4D /* CMakeLists.txt */,
 				5095C8192BA08AF500A83825 /* Debugger */,
+				50A5B7CD2C74E44C00D6DDAD /* RemoteServers */,
 				5036E0AD261AEF000048E66A /* RetroShell */,
 				50EF22302815922300440C4D /* RegressionTester */,
 				50CD36912816817500E40BFC /* Recorder */,
@@ -2296,6 +2335,7 @@
 				503C1DD124FC10F400D91141 /* SnapshotViewer.xib in Resources */,
 				50A0B48D24C1CAEB00FF0B0B /* Preferences.xib in Resources */,
 				50D3092624C71AD300B92563 /* Monitor.xib in Resources */,
+				50A5B7CE2C74E44C00D6DDAD /* CMakeLists.txt in Resources */,
 				500F7CC6281EAB64003F1A7C /* DiskCreator.xib in Resources */,
 				501E2C1225B2DDED00B9C9C0 /* AppIcon.icns in Resources */,
 				5098C57D2658D4DC00E05EFC /* VideoExporter.xib in Resources */,
@@ -2455,6 +2495,7 @@
 				50BD641E2C04C05A007CD347 /* Heatmap.cpp in Sources */,
 				50A1948E2BDA6F490046849E /* EmulatorBase.cpp in Sources */,
 				50726F5D2961C9AC0031F2F5 /* VICII.cpp in Sources */,
+				50A5B7D22C74E44C00D6DDAD /* RemoteServer.cpp in Sources */,
 				508C1E572C0B20760097473C /* ExpansionPortBase.cpp in Sources */,
 				50726F652961C9B30031F2F5 /* NamedPipe.cpp in Sources */,
 				50726F8C2961CA0D0031F2F5 /* Reu.cpp in Sources */,
@@ -2462,6 +2503,7 @@
 				50726F492961C9940031F2F5 /* MsgQueue.cpp in Sources */,
 				500634632C0EF1A400D60D96 /* DatasetteBase.cpp in Sources */,
 				50CCC8022C117ACF0047ED17 /* MediaFile.cpp in Sources */,
+				50A5B7D02C74E44C00D6DDAD /* RemoteManager.cpp in Sources */,
 				50726F862961C9F10031F2F5 /* FlashRom.cpp in Sources */,
 				50726F782961C9DC0031F2F5 /* PIA.cpp in Sources */,
 				50BB3E922B7A232800B2D87B /* Inspectable.cpp in Sources */,
@@ -2507,6 +2549,7 @@
 				508C1E5E2C0B31320097473C /* DmaDebuggerBase.cpp in Sources */,
 				50726F4A2961C9940031F2F5 /* CPU.cpp in Sources */,
 				50BD641A2C0373F9007CD347 /* PowerPortBase.cpp in Sources */,
+				50A5B7D42C74E44C00D6DDAD /* RshServer.cpp in Sources */,
 				50726FA22961CA0D0031F2F5 /* WarpSpeed.cpp in Sources */,
 				50726F472961C9940031F2F5 /* SubComponent.cpp in Sources */,
 				50726F702961C9C60031F2F5 /* pot.cc in Sources */,
@@ -2520,6 +2563,7 @@
 				50726F962961CA0D0031F2F5 /* Westermann.cpp in Sources */,
 				50726F6B2961C9C60031F2F5 /* extfilt.cc in Sources */,
 				50726F9C2961CA0D0031F2F5 /* Kcs.cpp in Sources */,
+				50A5B7D62C74E44C00D6DDAD /* Socket.cpp in Sources */,
 				506F30432B74C1C70083EAEA /* Wakeable.cpp in Sources */,
 				50A194852BDA5CD40046849E /* TODBase.cpp in Sources */,
 				508C1E6E2C0C58FF0097473C /* Paddle.cpp in Sources */,
@@ -2565,6 +2609,7 @@
 				5052A7C125A0AC0700E62EDD /* Errors.swift in Sources */,
 				50AE19392632B787005A5898 /* Script.cpp in Sources */,
 				5044A03B2657A7A800C551C6 /* Recorder.cpp in Sources */,
+				50A5B7CF2C74E44C00D6DDAD /* RemoteManager.cpp in Sources */,
 				5085D89D25B848940043B15C /* Joystick.cpp in Sources */,
 				500E2D662824EC140015C46F /* CartridgeInspector.swift in Sources */,
 				500E34172615C40D006A38DA /* Parser.cpp in Sources */,
@@ -2673,6 +2718,7 @@
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				504C43AB24AF29AC00E69CAE /* CIA.cpp in Sources */,
 				5058A922281D10B100C223C9 /* VolumeInspector.swift in Sources */,
+				50A5B7D32C74E44C00D6DDAD /* RshServer.cpp in Sources */,
 				504C436024AF29AC00E69CAE /* Mach5.cpp in Sources */,
 				50891C012652380A0004AC1B /* VICIISprites.cpp in Sources */,
 				50DF719425021FCA00953E2E /* Keycap.swift in Sources */,
@@ -2745,6 +2791,7 @@
 				504C436724AF29AC00E69CAE /* MagicDesk.cpp in Sources */,
 				50033829266E47B400D5456E /* CompatibilityConf.swift in Sources */,
 				50B485FD24FA1D3200844133 /* iCarousel.m in Sources */,
+				50A5B7D52C74E44C00D6DDAD /* Socket.cpp in Sources */,
 				50BE4B7024E7FC21008F39C9 /* MTLDevice.swift in Sources */,
 				5055D5B726158ABC005D3DA6 /* Checksum.cpp in Sources */,
 				50AA48B2292F8EC30084401D /* Peddle.cpp in Sources */,
@@ -2784,6 +2831,7 @@
 				50300AEE258B2C5400D261E3 /* FSDirEntry.cpp in Sources */,
 				507A49A024C8D66A00DBF984 /* GuardTableView.swift in Sources */,
 				5016F02829574FDF00F2063B /* Reu.cpp in Sources */,
+				50A5B7D12C74E44C00D6DDAD /* RemoteServer.cpp in Sources */,
 				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
 				5077AC682B5ACC5100EFAC85 /* config.cpp in Sources */,
 				5036E0B7261AEF000048E66A /* Interpreter.cpp in Sources */,

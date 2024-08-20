@@ -110,7 +110,12 @@ enum_long(MSG_TYPE)
     MSG_ALARM,              ///< A user-set alarm event has fired
     MSG_RS232,              ///< RS232 activity (DEPRECATED)
     MSG_RS232_IN,           ///< RS232 adapter has received data
-    MSG_RS232_OUT           ///< RS232 adapter has sent data
+    MSG_RS232_OUT,          ///< RS232 adapter has sent data
+
+    // Remote server
+    MSG_SRV_STATE,
+    MSG_SRV_RECEIVE,
+    MSG_SRV_SEND
 };
 
 typedef MSG_TYPE MsgType;
@@ -118,7 +123,7 @@ typedef MSG_TYPE MsgType;
 struct MsgTypeEnum : util::Reflection<MsgTypeEnum, MsgType> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = MSG_ALARM;
+    static constexpr long maxVal = MSG_SRV_SEND;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "MSG"; }
@@ -198,6 +203,10 @@ struct MsgTypeEnum : util::Reflection<MsgTypeEnum, MsgType> {
             case MSG_RS232:                 return "RS232";
             case MSG_RS232_IN:              return "RS232_IN";
             case MSG_RS232_OUT:             return "RS232_OUT";
+
+            case MSG_SRV_STATE:             return "SRV_STATE";
+            case MSG_SRV_RECEIVE:           return "SRV_RECEIVE";
+            case MSG_SRV_SEND:              return "SRV_SEND";
         }
         return "???";
     }

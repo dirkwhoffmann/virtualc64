@@ -40,6 +40,8 @@
 #include "ParCableTypes.h"
 #include "PowerPortTypes.h"
 #include "RecorderTypes.h"
+#include "RemoteManagerTypes.h"
+#include "RemoteServerTypes.h"
 #include "RetroShellTypes.h"
 #include "SIDTypes.h"
 #include "ThreadTypes.h"

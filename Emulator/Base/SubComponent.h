@@ -43,6 +43,7 @@ protected:
     class PowerPort &powerSupply;
     class Recorder &recorder;
     class RegressionTester &regressionTester;
+    class RemoteManager &remoteManager;
     class RetroShell &retroShell;
     class SIDBridge &sidBridge;
     class SID& sid0;

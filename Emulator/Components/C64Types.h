@@ -112,6 +112,7 @@ enum_long(SLOT)
     SLOT_SNP,                       // Snapshots
     SLOT_RSH,                       // Retro Shell
     SLOT_KEY,                       // Auto-typing
+    SLOT_SRV,                       // Remote server manager
     SLOT_ALA,                       // Alarms (set by the GUI)
     SLOT_INS,                       // Handles periodic calls to inspect()
 
@@ -143,6 +144,7 @@ struct EventSlotEnum : util::Reflection<EventSlotEnum, EventSlot>
             case SLOT_SNP:      return "SNP";
             case SLOT_RSH:      return "RSH";
             case SLOT_KEY:      return "KEY";
+            case SLOT_SRV:      return "SRV";
             case SLOT_ALA:      return "ALA";
             case SLOT_INS:      return "INS";
 
@@ -222,6 +224,10 @@ enum_i8(EventID)
     // Auto typing
     KEY_AUTO_TYPE       = 1,
     KEY_EVENT_COUNT,
+
+    // Remote server manager
+    SRV_LAUNCH_DAEMON   = 1,
+    SRV_EVENT_COUNT,
 
     // Alarm event slot
     ALA_TRIGGER         = 1,

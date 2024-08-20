@@ -181,6 +181,12 @@ enum_long(OPT)
     OPT_REC_ASPECT_X,           ///< Numerator of the video's aspect ratio
     OPT_REC_ASPECT_Y,           ///< Denumerator of the video's aspect ratio
 
+    // Remote servers
+    OPT_SRV_PORT,
+    OPT_SRV_PROTOCOL,
+    OPT_SRV_AUTORUN,
+    OPT_SRV_VERBOSE,
+
     OPT_COUNT
 };
 typedef OPT Option;
@@ -332,6 +338,11 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_REC_ASPECT_X:          return "REC.ASPECT_X";
             case OPT_REC_ASPECT_Y:          return "REC.ASPECT_Y";
 
+            case OPT_SRV_PORT:              return "SRV.PORT";
+            case OPT_SRV_PROTOCOL:          return "SRV.PROTOCOL";
+            case OPT_SRV_AUTORUN:           return "SRV.AUTORUN";
+            case OPT_SRV_VERBOSE:           return "SRV.VERBOSE";
+
             case OPT_COUNT:                 return "???";
         }
         return "???";
@@ -475,6 +486,11 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_REC_SAMPLE_RATE:       return "Audio sample rate of the recorded video";
             case OPT_REC_ASPECT_X:          return "Numerator of the video's aspect ratio";
             case OPT_REC_ASPECT_Y:          return "Denumerator of the video's aspect ratio";
+
+            case OPT_SRV_PORT:              return "Server port";
+            case OPT_SRV_PROTOCOL:          return "Server protocol";
+            case OPT_SRV_AUTORUN:           return "Auto run";
+            case OPT_SRV_VERBOSE:           return "Verbose mode";
 
             case OPT_COUNT:                 return "???";
         }

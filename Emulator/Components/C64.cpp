@@ -182,6 +182,16 @@ C64::eventName(EventSlot slot, EventID id)
             }
             break;
 
+        case SLOT_SRV:
+
+            switch (id) {
+
+                case EVENT_NONE:        return "none";
+                case SRV_LAUNCH_DAEMON: return "SRV_LAUNCH_DAEMON";
+                default:                return "*** INVALID ***";
+            }
+            break;
+
         case SLOT_ALA:
 
             switch (id) {
@@ -302,6 +312,7 @@ C64::operator << (SerResetter &worker)
     // Schedule initial events
     scheduleAbs<SLOT_CIA1>(cpu.clock, CIA_EXECUTE);
     scheduleAbs<SLOT_CIA2>(cpu.clock, CIA_EXECUTE);
+    scheduleRel<SLOT_SRV>(C64::sec(0.5), SRV_LAUNCH_DAEMON);
     if (insEvent) scheduleRel <SLOT_INS> (0, insEvent);
     scheduleNextSNPEvent();
 
@@ -859,6 +870,9 @@ C64::processEvents(Cycle cycle)
             }
             if (isDue<SLOT_KEY>(cycle)) {
                 keyboard.processKeyEvent(eventid[SLOT_KEY]);
+            }
+            if (isDue<SLOT_SRV>(cycle)) {
+                remoteManager.serviceServerEvent();
             }
             if (isDue<SLOT_ALA>(cycle)) {
                 processAlarmEvent();
@@ -1528,6 +1542,8 @@ C64::getDebugVariable(DebugFlag flag)
 
         case FLAG_REC_DEBUG:        return REC_DEBUG;
         case FLAG_REU_DEBUG:        return REU_DEBUG;
+        case FLAG_SCK_DEBUG:        return SCK_DEBUG;
+        case FLAG_SRV_DEBUG:        return SRV_DEBUG;
 
         case FLAG_FORCE_ROM_MISSING:        return FORCE_ROM_MISSING;
         case FLAG_FORCE_MEGA64_MISMATCH:    return FORCE_MEGA64_MISMATCH;
@@ -1615,6 +1631,8 @@ C64::setDebugVariable(DebugFlag flag, int val)
 
         case FLAG_REC_DEBUG:        REC_DEBUG       = val; break;
         case FLAG_REU_DEBUG:        REU_DEBUG       = val; break;
+        case FLAG_SCK_DEBUG:        SCK_DEBUG       = val; break;
+        case FLAG_SRV_DEBUG:        SRV_DEBUG       = val; break;
 
         case FLAG_FORCE_ROM_MISSING:        FORCE_ROM_MISSING = val; break;
         case FLAG_FORCE_MEGA64_MISMATCH:    FORCE_MEGA64_MISMATCH = val; break;

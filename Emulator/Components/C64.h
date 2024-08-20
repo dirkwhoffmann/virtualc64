@@ -28,8 +28,6 @@
 #include "CIA.h"
 #include "CPU.h"
 #include "Recorder.h"
-#include "RegressionTester.h"
-#include "RetroShell.h"
 
 // Ports
 #include "AudioPort.h"
@@ -63,6 +61,13 @@
 #include "TAPFile.h"
 #include "CRTFile.h"
 #include "FileSystem.h"
+
+// Misc
+#include "Host.h"
+#include "RegressionTester.h"
+#include "RemoteManager.h"
+#include "RetroShell.h"
+#include "RshServer.h"
 
 namespace vc64 {
 
@@ -156,6 +161,7 @@ public:
 
     // Misc
     RetroShell retroShell = RetroShell(*this);
+    RemoteManager remoteManager = RemoteManager(*this);
     Debugger debugger = Debugger(*this);
     RegressionTester regressionTester = RegressionTester(*this);
     Recorder recorder = Recorder(*this);

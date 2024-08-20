@@ -80,6 +80,8 @@ debugflag USR_DEBUG       = 0;
 // Other components
 debugflag REC_DEBUG       = 0;
 debugflag REU_DEBUG       = 0;
+debugflag SCK_DEBUG       = 0;
+debugflag SRV_DEBUG       = 0;
 
 
 //
