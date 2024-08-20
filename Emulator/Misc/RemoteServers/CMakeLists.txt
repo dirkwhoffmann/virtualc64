@@ -4,7 +4,6 @@ target_sources(vc64Core PRIVATE
 
 RemoteManager.cpp
 RemoteServer.cpp
-SerServer.cpp
 RshServer.cpp
 Socket.cpp
 
