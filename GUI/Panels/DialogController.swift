@@ -18,11 +18,6 @@ class DialogWindow: NSWindow {
     }
 }
 
-/* Base class for all auxiliary windows. The class extends NSWindowController
- * by a reference to the controller of the connected emulator window (parent)
- * and a reference to the parents proxy object. It also provides some wrappers
- * around showing and hiding the window.
- */
 protocol DialogControllerDelegate: AnyObject {
 
     // Called before beginSheet() is called
@@ -35,6 +30,11 @@ protocol DialogControllerDelegate: AnyObject {
     func cleanup()
 }
 
+/* Base class for all auxiliary windows. The class extends NSWindowController
+ * by a reference to the controller of the connected emulator window (parent)
+ * and a reference to the parents proxy object. It also provides some wrappers
+ * around showing and hiding the window.
+ */
 class DialogController: NSWindowController, DialogControllerDelegate {
     
     var parent: MyController!

@@ -160,55 +160,55 @@ VirtualC64::getStats() const
 }
 
 bool
-VirtualC64::isPoweredOn() 
+VirtualC64::isPoweredOn() const
 {
     return emu->isPoweredOn();
 }
 
 bool
-VirtualC64::isPoweredOff()
+VirtualC64::isPoweredOff() const
 {
     return emu->isPoweredOff();
 }
 
 bool
-VirtualC64::isPaused()
+VirtualC64::isPaused() const
 {
     return emu->isPaused();
 }
 
 bool
-VirtualC64::isRunning() 
+VirtualC64::isRunning() const
 {
     return emu->isRunning();
 }
 
 bool
-VirtualC64::isSuspended()
+VirtualC64::isSuspended() const
 {
     return emu->isSuspended();
 }
 
 bool
-VirtualC64::isHalted()
+VirtualC64::isHalted() const
 {
     return emu->isHalted();
 }
 
 bool
-VirtualC64::isWarping() 
+VirtualC64::isWarping() const
 {
     return emu->isWarping();
 }
 
 bool
-VirtualC64::isTracking() 
+VirtualC64::isTracking() const
 {
     return emu->isTracking();
 }
 
 void 
-VirtualC64::isReady() 
+VirtualC64::isReady() const
 {
     return emu->isReady();
 }

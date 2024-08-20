@@ -40,7 +40,7 @@ class Keyboard final : public SubComponent {
     // Indicates if the shift lock is currently pressed
     bool shiftLock = false;
 
-    // Delayed keyboard commands (auto-typing)
+    // Delayed keyboard commands (used, e.g., for auto-typing)
     util::SortedRingBuffer<Cmd, 1024> pending;
 
 

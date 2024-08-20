@@ -488,7 +488,7 @@ CIA::executeOneCycle()
     // Write back local copy
     this->delay = delay;
     
-    // Sleep if threshold is reached
+    // Sleep when threshold is reached
     if (tiredness > 8 && config.idleSleep) {
         sleep();
         scheduleWakeUp();
@@ -538,10 +538,12 @@ CIA::wakeUp()
     if (missedCycles > 0) {
         
         if (feed & CIACountA0) {
+
             assert(counterA >= missedCycles);
             counterA -= u16(missedCycles);
         }
         if (feed & CIACountB0) {
+
             assert(counterB >= missedCycles);
             counterB -= u16(missedCycles);
         }

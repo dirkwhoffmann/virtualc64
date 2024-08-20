@@ -56,11 +56,6 @@ public:
 
     // Dumps the current configuration
     void dumpConfig(std::ostream& os) const;
-
-    // Returns a textual description for all available options
-    string keyList() { return OptionEnum::keyList([&](Option i) { return isValidOption(i); }); }
-    string argList() { return OptionEnum::argList([&](Option i) { return isValidOption(i); }); }
-
 };
 
 }

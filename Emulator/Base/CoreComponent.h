@@ -220,8 +220,10 @@ public:
     
     bool isEmulatorThread() const;
 
-    // Experimental
+    // Exports the current configuration to a script file
     void exportConfig(std::ostream& ss, bool diff = false) const;
+
+    // Exports only those options that differ from the default config
     void exportDiff(std::ostream& ss) const { exportConfig(ss, true); }
 };
 
