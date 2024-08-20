@@ -13,12 +13,6 @@
 #include "config.h"
 #include "RemoteServer.h"
 #include "Emulator.h"
-#include "CPU.h"
-#include "IOUtils.h"
-#include "Memory.h"
-#include "MemUtils.h"
-#include "MsgQueue.h"
-#include "RetroShell.h"
 
 namespace vc64 {
 
