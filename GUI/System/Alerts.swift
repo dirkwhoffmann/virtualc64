@@ -79,6 +79,6 @@ extension MyController {
         alert.informativeText = "The screen recorder failed to open this file for output."
         alert.addButton(withTitle: "OK")
         
-        alert.beginSheetModal(for: self.window!) { (_: NSApplication.ModalResponse) -> Void in }
+        alert.beginSheetModal(for: self.window!) { (_: NSApplication.ModalResponse) in }
     }
 }

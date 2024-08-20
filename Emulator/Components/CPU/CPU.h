@@ -14,7 +14,6 @@
 
 #include "CPUTypes.h"
 #include "Peddle.h"
-// #include "SubComponent.h"
 #include "CmdQueue.h"
 
 using namespace vc64::peddle;

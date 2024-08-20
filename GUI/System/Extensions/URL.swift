@@ -194,9 +194,8 @@ extension URL {
         debug(.exec, "exec = \(exec)")
         debug(.exec, "args = \(args)")
         
-        if let result = FileManager.exec(launchPath: exec, arguments: args) {
-            print("\(result)")
-        }
+        let result = FileManager.exec(launchPath: exec, arguments: args)
+        print("\(result)")
         
         // Collect all extracted URLs with a supported file type
         let types = ["VC64", "CRT", "D64", "T64", "PRG", "P00", "G64", "TAP"]

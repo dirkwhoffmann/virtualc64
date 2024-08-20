@@ -9,7 +9,7 @@
 
 extension FileManager {
     
-    static func exec(launchPath: String, arguments: [String]) -> String? {
+    static func exec(launchPath: String, arguments: [String]) -> String {
         
         let task = Process()
         task.launchPath = launchPath
@@ -21,7 +21,8 @@ extension FileManager {
         task.launch()
         
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        let result = String(data: data, encoding: .utf8)
+        // let result = String(data: data, encoding: .utf8)
+        let result = String(decoding: data, as: UTF8.self)
         task.waitUntilExit()
         
         return result

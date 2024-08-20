@@ -12,6 +12,8 @@
 
 #pragma once
 
+namespace vc64 {
+
 #define BASIC       ROM_TYPE_BASIC
 #define KERNAL      ROM_TYPE_KERNAL
 #define CHAR        ROM_TYPE_CHAR
@@ -510,3 +512,5 @@ static std::vector<RomTraits> roms = {
 #undef COMMODORE
 #undef MEGA65
 #undef OTHER
+
+}

@@ -23,7 +23,7 @@ public extension CGImage {
         
         let dealloc: CGDataProviderReleaseDataCallback = {
             
-            (info: UnsafeMutableRawPointer?, data: UnsafeRawPointer, size: Int) -> Void in
+            (info: UnsafeMutableRawPointer?, data: UnsafeRawPointer, size: Int) in
             
             // Core Foundation objects are memory managed, aren't they?
             return

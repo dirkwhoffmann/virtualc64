@@ -16,22 +16,24 @@
 #include "C64Key.h"
 #include "IOUtils.h"
 
+namespace vc64 {
+
 u8
 Keyboard::getColumnValues(u8 rowMask) const
 {
     u8 result = 0xff;
-    
+
     for (isize i = 0; i < 8; i++) {
         if (GET_BIT(rowMask, i)) {
             result &= kbMatrixCol[i];
         }
     }
-    
+
     // Check for shift-lock
     if (shiftLock && GET_BIT(rowMask, 7)) {
         CLR_BIT(result, 1);
     }
-    
+
     return result;
 }
 
@@ -39,18 +41,18 @@ u8
 Keyboard::getRowValues(u8 columnMask) const
 {
     u8 result = 0xff;
-        
+
     for (isize i = 0; i < 8; i++) {
         if (GET_BIT(columnMask, i)) {
             result &= kbMatrixRow[i];
         }
     }
-    
+
     // Check for shift-lock
     if (shiftLock && GET_BIT(columnMask, 1)) {
         CLR_BIT(result, 7);
     }
-    
+
     return result;
 }
 
@@ -74,33 +76,33 @@ Keyboard::getRowValues(u8 columnMask, u8 thresholdMask) const
      * "A special case is the shift-lock key, which will also work and which
      *  you can seperate from the normal left shift key in this configuration."
      */
-    
+
     // Check if we can fallback to the (faster) standard routine
     if (thresholdMask == 0) return getRowValues(columnMask);
-    
-	u8 result = 0xff;
+
+    u8 result = 0xff;
     u8 count[8] = { };
-    
+
     // Count the number of pressed keys per column
-	for (isize i = 0; i < 8; i++) {
-		if (GET_BIT(columnMask, i)) {
+    for (isize i = 0; i < 8; i++) {
+        if (GET_BIT(columnMask, i)) {
             for (isize j = 0; j < 8; j++) {
                 if (GET_BIT(kbMatrixRow[i], j) == 0) count[j]++;
             }
-		}
-	}
+        }
+    }
 
     // Only detect those keys with a high enough column count
     for (isize j = 0; j < 8; j++) {
         if (count[j] >= (GET_BIT(thresholdMask, j) ? 2 : 1)) CLR_BIT(result, j);
     }
-    
+
     // Check for shift-lock
     if (shiftLock && GET_BIT(columnMask, 1)) {
         CLR_BIT(result, 7);
     }
-    
-	return result;
+
+    return result;
 }
 
 bool
@@ -109,7 +111,7 @@ Keyboard::isPressed(C64Key key) const
     assert(key.nr < 66);
 
     switch (key.nr) {
-            
+
         case 34: return shiftLock;
         case 31: return cpu.getNmiLine() & INTSRC_KBD;
     }
@@ -239,7 +241,7 @@ Keyboard::abortAutoTyping()
     }
 }
 
-void 
+void
 Keyboard::processCommand(const Cmd &cmd)
 {
     if (cmd.key.delay > 0) {
@@ -286,4 +288,6 @@ Keyboard::processKeyEvent(EventID id)
 
         c64.rescheduleAbs<SLOT_KEY>(pending.keys[pending.r]);
     }
+}
+
 }
