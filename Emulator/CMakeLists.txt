@@ -26,7 +26,7 @@ target_link_libraries(vc64Console vc64Core)
 # Specify compile options
 target_compile_definitions(vc64Core PUBLIC _USE_MATH_DEFINES)
 if(WIN32)
-  target_link_libraries(vAmigaConsole ws2_32)
+  target_link_libraries(vc64Console ws2_32)
 endif()
 if(MSVC)
   target_compile_options(vc64Core PUBLIC /W4 /WX /Zc:preprocessor)
