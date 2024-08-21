@@ -94,7 +94,7 @@ Headless::parseArguments(int argc, char *argv[])
     keys["check"] = "1";
     keys["size"] = "1";
     keys["verbose"] = "1";
-    keys["arg1"] = selfTestScript();
+    keys["arg1"] = testScriptPath().string();
 }
 
 #else
