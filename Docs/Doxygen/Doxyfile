@@ -2102,14 +2102,14 @@ PDF_HYPERLINKS         = YES
 USE_PDFLATEX           = YES
 
 # The LATEX_BATCHMODE tag signals the behavior of LaTeX in case of an error.
-# Possible values are: NO same as ERROR_STOP, YES same as BATCH, BATCH In batch
+# Possible values are: NO same as VC64ERROR_STOP, YES same as BATCH, BATCH In batch
 # mode nothing is printed on the terminal, errors are scrolled as if <return> is
 # hit at every error; missing files that TeX tries to input or request from
 # keyboard input (\read on a not open input stream) cause the job to abort,
 # NON_STOP In nonstop mode the diagnostic message will appear on the terminal,
 # but there is no possibility of user interaction just like in batch mode,
 # SCROLL In scroll mode, TeX will stop only for missing files to input or if
-# keyboard input is necessary and ERROR_STOP In errorstop mode, TeX will stop at
+# keyboard input is necessary and VC64ERROR_STOP In errorstop mode, TeX will stop at
 # each error, asking for user intervention.
 # The default value is: NO.
 # This tag requires that the tag GENERATE_LATEX is set to YES.

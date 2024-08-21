@@ -59,7 +59,7 @@ void
 Emulator::initialize()
 {
     // Make sure this function is only called once
-    if (isInitialized()) throw Error(vc64::ERROR_LAUNCH, "The emulator is already initialized.");
+    if (isInitialized()) throw Error(VC64ERROR_LAUNCH, "The emulator is already initialized.");
 
     // Initialize all components
     main.initialize();
@@ -195,7 +195,7 @@ Emulator::set(Option opt, i64 value, std::optional<isize> id)
         // Check if the target component exists
         if (id >= isize(targets.size())) {
             warn("Invalid ID: %ld\n", *id);
-            throw Error(vc64::ERROR_OPT_INV_ID, "0..." + std::to_string(targets.size() - 1));
+            throw Error(VC64ERROR_OPT_INV_ID, "0..." + std::to_string(targets.size() - 1));
         }
         targets.at(*id)->setOption(opt, value);
 

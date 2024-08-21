@@ -22,54 +22,54 @@ Error::Error(ErrorCode code, const string &s)
     
     switch (code) {
             
-        case ERROR_OK:
+        case VC64ERROR_OK:
             fatalError;
 
-        case ERROR_LAUNCH:
+        case VC64ERROR_LAUNCH:
             description = s == "" ? "Launch error." : s;
             break;
 
-        case ERROR_POWERED_OFF:
+        case VC64ERROR_POWERED_OFF:
             description = "The emulator is powered off.";
             break;
 
-        case ERROR_POWERED_ON:
+        case VC64ERROR_POWERED_ON:
             description = "The emulator is powered on.";
             break;
 
-        case ERROR_RUNNING:
+        case VC64ERROR_RUNNING:
             description = "The emulator is running.";
             break;
 
-        case ERROR_OPT_UNSUPPORTED:
+        case VC64ERROR_OPT_UNSUPPORTED:
             description = s == "" ? "This option is not supported yet." : s;
             break;
             
-        case ERROR_OPT_INV_ARG:
+        case VC64ERROR_OPT_INV_ARG:
             description = "Invalid argument. Expected: " + s;
             break;
 
-        case ERROR_OPT_INV_ID:
+        case VC64ERROR_OPT_INV_ID:
             description = "Invalid component ID. Expected: " + s;
             break;
 
-        case ERROR_OPT_LOCKED:
+        case VC64ERROR_OPT_LOCKED:
             description = "This option is locked because the C64 is powered on.";
             break;
 
-        case ERROR_INVALID_KEY:
+        case VC64ERROR_INVALID_KEY:
             description = "Invalid key: " + s;
             break;
 
-        case ERROR_SYNTAX:
+        case VC64ERROR_SYNTAX:
             description = "Syntax error in line " + s;
             break;
 
-        case ERROR_OUT_OF_MEMORY:
+        case VC64ERROR_OUT_OF_MEMORY:
             description = "Out of memory.";
             break;
 
-        case ERROR_DIR_NOT_FOUND:
+        case VC64ERROR_DIR_NOT_FOUND:
             if (s.empty()) {
                 description = "Folder not found.";
             } else {
@@ -77,7 +77,7 @@ Error::Error(ErrorCode code, const string &s)
             }
             break;
 
-        case ERROR_DIR_ACCESS_DENIED:
+        case VC64ERROR_DIR_ACCESS_DENIED:
             if (s.empty()) {
                 description = "Unable to access folder. Permission denied.";
             } else {
@@ -85,7 +85,7 @@ Error::Error(ErrorCode code, const string &s)
             }
             break;
 
-        case ERROR_DIR_CANT_CREATE:
+        case VC64ERROR_DIR_CANT_CREATE:
             if (s.empty()) {
                 description = "Failed to create directory.";
             } else {
@@ -93,7 +93,7 @@ Error::Error(ErrorCode code, const string &s)
             }
             break;
 
-        case ERROR_DIR_NOT_EMPTY:
+        case VC64ERROR_DIR_NOT_EMPTY:
             if (s.empty()) {
                 description = "Directory is not empty.";
             } else {
@@ -101,7 +101,7 @@ Error::Error(ErrorCode code, const string &s)
             }
             break;
 
-        case ERROR_FILE_NOT_FOUND:
+        case VC64ERROR_FILE_NOT_FOUND:
             if (s.empty()) {
                 description = "File not found.";
             } else {
@@ -109,7 +109,7 @@ Error::Error(ErrorCode code, const string &s)
             }
             break;
 
-        case ERROR_FILE_EXISTS:
+        case VC64ERROR_FILE_EXISTS:
             if (s.empty()) {
                 description = "File already exists.";
             } else {
@@ -117,7 +117,7 @@ Error::Error(ErrorCode code, const string &s)
             }
             break;
 
-        case ERROR_FILE_IS_DIRECTORY:
+        case VC64ERROR_FILE_IS_DIRECTORY:
             if (s.empty()) {
                 description = "The selected file is a directory.";
             } else {
@@ -125,7 +125,7 @@ Error::Error(ErrorCode code, const string &s)
             }
             break;
 
-        case ERROR_FILE_ACCESS_DENIED:
+        case VC64ERROR_FILE_ACCESS_DENIED:
             if (s.empty()) {
                 description = "Unable to access file. Permission denied.";
             } else {
@@ -133,11 +133,11 @@ Error::Error(ErrorCode code, const string &s)
             }
             break;
 
-        case ERROR_FILE_TYPE_MISMATCH:
+        case VC64ERROR_FILE_TYPE_MISMATCH:
             description = "The file content and the file type do not match.";
             break;
 
-        case ERROR_FILE_CANT_READ:
+        case VC64ERROR_FILE_CANT_READ:
             if (s.empty()) {
                 description = "Failed to read from file.";
             } else {
@@ -145,7 +145,7 @@ Error::Error(ErrorCode code, const string &s)
             }
             break;
 
-        case ERROR_FILE_CANT_WRITE:
+        case VC64ERROR_FILE_CANT_WRITE:
             if (s.empty()) {
                 description = "Failed to write to file.";
             } else {
@@ -153,7 +153,7 @@ Error::Error(ErrorCode code, const string &s)
             }
             break;
 
-        case ERROR_FILE_CANT_CREATE:
+        case VC64ERROR_FILE_CANT_CREATE:
             if (s.empty()) {
                 description = "Failed to create file.";
             } else {
@@ -161,91 +161,91 @@ Error::Error(ErrorCode code, const string &s)
             }
             break;
 
-        case ERROR_ROM_BASIC_MISSING:
+        case VC64ERROR_ROM_BASIC_MISSING:
             description = "No Basic Rom installed.";
             break;
 
-        case ERROR_ROM_CHAR_MISSING:
+        case VC64ERROR_ROM_CHAR_MISSING:
             description = "No Character Rom installed.";
             break;
 
-        case ERROR_ROM_KERNAL_MISSING:
+        case VC64ERROR_ROM_KERNAL_MISSING:
             description = "No Kernal Rom installed.";
             break;
 
-        case ERROR_ROM_DRIVE_MISSING:
+        case VC64ERROR_ROM_DRIVE_MISSING:
             description = "No Floppy Drive Rom installed.";
             break;
 
-        case ERROR_ROM_MEGA65_MISMATCH:
+        case VC64ERROR_ROM_MEGA65_MISMATCH:
             description = "Mega65 Rom revisions do not match.";
             break;
 
-        case ERROR_REC_LAUNCH:
+        case VC64ERROR_REC_LAUNCH:
             description = s;
             break;
 
-        case ERROR_SNAP_TOO_OLD:
+        case VC64ERROR_SNAP_TOO_OLD:
             description = "The snapshot was created with an older version of VirtualC64";
             description += " and is incompatible with this release.";
             break;
 
-        case ERROR_SNAP_TOO_NEW:
+        case VC64ERROR_SNAP_TOO_NEW:
             description = "The snapshot was created with a newer version of VirtualC64";
             description += " and is incompatible with this release.";
             break;
 
-        case ERROR_SNAP_IS_BETA:
+        case VC64ERROR_SNAP_IS_BETA:
             description = "The snapshot was created with a beta version of VirtualC64";
             description += " and is incompatible with this release.";
             break;
 
-        case ERROR_SNAP_CORRUPTED:
+        case VC64ERROR_SNAP_CORRUPTED:
             description = "The snapshot data is corrupted and has put the";
             description += " emulator into an inconsistent state.";
             break;
 
-        case ERROR_DRV_UNCONNECTED:
+        case VC64ERROR_DRV_UNCONNECTED:
             description = "Drive is unconnected.";
             break;
 
-        case ERROR_CRT_UNKNOWN:
+        case VC64ERROR_CRT_UNKNOWN:
             description = "This cartridge is a type " + s + " cartridge which";
             description += " is unknown to the emulator.";
             break;
 
-        case ERROR_CRT_UNSUPPORTED:
+        case VC64ERROR_CRT_UNSUPPORTED:
             description = "Cartridges of type " + s + " are not yet supported.";
             break;
 
-        case ERROR_CRT_TOO_MANY_PACKETS:
+        case VC64ERROR_CRT_TOO_MANY_PACKETS:
             description = "The packet counts exceeds the allowed limit.";
             break;
 
-        case ERROR_CRT_CORRUPTED_PACKET:
+        case VC64ERROR_CRT_CORRUPTED_PACKET:
             description = "Corrputed packet detected.";
             
-        case ERROR_FS_UNSUPPORTED:
+        case VC64ERROR_FS_UNSUPPORTED:
             description = "Unsupported file system.";
             break;
             
-        case ERROR_FS_WRONG_CAPACITY:
+        case VC64ERROR_FS_WRONG_CAPACITY:
             description = "Wrong file system capacity.";
             break;
 
-        case ERROR_FS_CORRUPTED:
+        case VC64ERROR_FS_CORRUPTED:
             description = "Corrupted file system.";
             break;
 
-        case ERROR_FS_HAS_NO_FILES:
+        case VC64ERROR_FS_HAS_NO_FILES:
             description = "Directory is empty.";
             break;
 
-        case ERROR_FS_HAS_CYCLES:
+        case VC64ERROR_FS_HAS_CYCLES:
             description = "Cyclic reference chain detected.";
             break;
             
-        case ERROR_FS_CANT_IMPORT:
+        case VC64ERROR_FS_CANT_IMPORT:
             description = "Unable to import.";
             break;
 

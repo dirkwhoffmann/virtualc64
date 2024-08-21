@@ -32,7 +32,7 @@ using namespace vc64;
 
     if (self = [super init]) {
         
-        errorCode = ERROR_OK;
+        errorCode = VC64ERROR_OK;
         what = @"";
     }
     return self;

@@ -56,10 +56,10 @@ CRTFile::finalizeRead()
     for (numberOfChips = 0; ptr < data + size; numberOfChips++) {
         
         if (numberOfChips == MAX_PACKETS) {
-            throw Error(vc64::ERROR_CRT_TOO_MANY_PACKETS);
+            throw Error(VC64ERROR_CRT_TOO_MANY_PACKETS);
         }
         if (memcmp("CHIP", ptr, 4) != 0) {
-            throw Error(vc64::ERROR_CRT_CORRUPTED_PACKET);
+            throw Error(VC64ERROR_CRT_CORRUPTED_PACKET);
         }
         
         // Remember start address of each chip section

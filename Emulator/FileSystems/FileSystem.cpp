@@ -38,7 +38,7 @@ FileSystem::FileSystem(MediaFile &file)
 
     } catch (...) {
 
-        throw Error(vc64::ERROR_FILE_TYPE_MISMATCH);
+        throw Error(VC64ERROR_FILE_TYPE_MISMATCH);
     }}
 }
 
@@ -118,7 +118,7 @@ FileSystem::init(class Disk &disk)
         case D64File::D64_802_SECTORS: descriptor.numCyls = 42; break;
 
         default:
-            throw Error(vc64::ERROR_FS_CORRUPTED);
+            throw Error(VC64ERROR_FS_CORRUPTED);
     }
 
     // Create the device
@@ -217,7 +217,7 @@ FileSystem::init(const fs::path &path)
         return;
     }
 
-    throw Error(vc64::ERROR_FILE_TYPE_MISMATCH);
+    throw Error(VC64ERROR_FILE_TYPE_MISMATCH);
 }
 
 void
@@ -795,7 +795,7 @@ FileSystem::importVolume(const u8 *src, isize size)
 {
     ErrorCode err;
     importVolume(src, size, &err);
-    if (err != ERROR_OK) { throw Error(err); }
+    if (err != VC64ERROR_OK) { throw Error(err); }
 }
 
 bool
@@ -808,7 +808,7 @@ FileSystem::importVolume(const u8 *src, isize size, ErrorCode *err)
     // Only proceed if the buffer size matches
     if ((isize)blocks.size() * 256 > size) {
         warn("BUFFER SIZE MISMATCH (%zu %zu)\n", blocks.size(), blocks.size() * 256);
-        if (err) *err = ERROR_FS_WRONG_CAPACITY;
+        if (err) *err = VC64ERROR_FS_WRONG_CAPACITY;
         return false;
     }
 
@@ -819,7 +819,7 @@ FileSystem::importVolume(const u8 *src, isize size, ErrorCode *err)
         blocks[i]->importBlock(data);
     }
     
-    if (err) *err = ERROR_OK;
+    if (err) *err = VC64ERROR_OK;
 
     // Run a directory scan
     scanDirectory();
@@ -840,7 +840,7 @@ FileSystem::importDirectory(const fs::path &path)
     fs::directory_entry dir;
 
     try { dir = fs::directory_entry(path); }
-    catch (...) { throw Error(vc64::ERROR_FILE_CANT_READ); }
+    catch (...) { throw Error(VC64ERROR_FILE_CANT_READ); }
 
     importDirectory(dir);
 }
@@ -868,7 +868,7 @@ FileSystem::importDirectory(const fs::directory_entry &dir)
                 PETName<16> pet = PETName<16>(name.string());
                 if (!makeFile(pet, buffer.ptr, buffer.size)) {
 
-                    throw Error(vc64::ERROR_FS_CANT_IMPORT);
+                    throw Error(VC64ERROR_FS_CANT_IMPORT);
                 }
             }
         }
@@ -900,7 +900,7 @@ FileSystem::exportBlocks(isize first, isize last, u8 *dst, isize size, ErrorCode
 
     // Only proceed if the source buffer contains the right amount of data
     if (count * 256 != size) {
-        if (err) *err = ERROR_FS_WRONG_CAPACITY;
+        if (err) *err = VC64ERROR_FS_WRONG_CAPACITY;
         return false;
     }
 
@@ -915,7 +915,7 @@ FileSystem::exportBlocks(isize first, isize last, u8 *dst, isize size, ErrorCode
 
     debug(FS_DEBUG, "Success\n");
     
-    if (err) *err = ERROR_OK;
+    if (err) *err = VC64ERROR_OK;
     return true;
 }
 
@@ -924,17 +924,17 @@ FileSystem::exportDirectory(const fs::path &path, bool createDir)
 {
     // Try to create the directory if it doesn't exist
     if (!util::isDirectory(path) && createDir && !util::createDirectory(path)) {
-        throw Error(vc64::ERROR_DIR_CANT_CREATE);
+        throw Error(VC64ERROR_DIR_CANT_CREATE);
     }
 
     // Only proceed if the directory exists
     if (!util::isDirectory(path)) {
-        throw Error(vc64::ERROR_DIR_NOT_FOUND);
+        throw Error(VC64ERROR_DIR_NOT_FOUND);
     }
 
     // Only proceed if path points to an empty directory
     if (util::numDirectoryItems(path) != 0) {
-        throw Error(vc64::ERROR_DIR_NOT_EMPTY, path);
+        throw Error(VC64ERROR_DIR_NOT_EMPTY, path);
     }
     
     // Rescan the directory to get the directory cache up to date
@@ -961,7 +961,7 @@ FileSystem::exportFile(FSDirEntry *entry, const fs::path &path)
     debug(FS_DEBUG, "Exporting file to %s\n", name.string().c_str());
 
     std::ofstream stream(name);
-    if (!stream.is_open()) throw Error(vc64::ERROR_FILE_CANT_CREATE);
+    if (!stream.is_open()) throw Error(VC64ERROR_FILE_CANT_CREATE);
 
     exportFile(entry, stream);
 }
