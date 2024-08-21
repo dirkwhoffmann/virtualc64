@@ -26,9 +26,9 @@ class RemoteServer : public SubComponent {
 
     Descriptions descriptions = {{
 
-        .name           = "RemoteServer",
-        .description    = "Remote Server",
-        .shell          = ""
+        .name           = "RshServer",
+        .description    = "Remote Shell Server",
+        .shell          = "server rshell"
     }};
 
     ConfigOptions options = {

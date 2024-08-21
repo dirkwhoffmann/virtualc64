@@ -36,6 +36,7 @@ using namespace vc64;
 @class MouseProxy;
 @class MyController;
 @class RecorderProxy;
+@class RemoteManagerProxy;
 @class RetroShellProxy;
 @class RS232Proxy;
 @class SIDProxy;
@@ -140,6 +141,7 @@ using namespace vc64;
 @property (readonly, strong) KeyboardProxy *keyboard;
 @property (readonly, strong) MemoryProxy *mem;
 @property (readonly, strong) RecorderProxy *recorder;
+@property (readonly, strong) RemoteManagerProxy *remoteManager;
 @property (readonly, strong) RetroShellProxy *retroShell;
 @property (readonly, strong) SIDProxy *sid;
 @property (readonly, strong) VICIIProxy *vic;
@@ -623,6 +625,16 @@ struct GuardInfo {
 - (void)stopRecording;
 - (BOOL)exportAs:(NSString *)path;
 
+@end
+
+
+//
+// RemoteManager
+//
+
+@interface RemoteManagerProxy : SubComponentProxy { }
+
+@property (readonly) RemoteManagerInfo info;
 
 @end
 

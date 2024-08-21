@@ -1214,6 +1214,68 @@ Interpreter::initCommandShell(Command &root)
     root.popGroup();
 
     //
+    // Miscellaneous (Remote server)
+    //
+
+    root.add({"server"}, "Remote connections");
+
+    root.pushGroup("");
+    {
+
+        root.add({"server", ""},
+                 "Displays a server status summary",
+                 [this](Arguments& argv, long value) {
+
+            retroShell.dump(remoteManager, Category::State);
+        });
+
+        root.add({"server", "rshell"},
+                 "Retro shell server");
+
+        root.add({"server", "rshell", "start"},
+                 "Starts the retro shell server",
+                 [this](Arguments& argv, long value) {
+
+            remoteManager.rshServer.start();
+        });
+
+        root.add({"server", "rshell", "stop"},
+                 "Stops the retro shell server",
+                 [this](Arguments& argv, long value) {
+
+            remoteManager.rshServer.stop();
+        });
+
+        root.add({"server", "rshell", "disconnect"},
+                 "Disconnects a client",
+                 [this](Arguments& argv, long value) {
+
+            remoteManager.rshServer.disconnect();
+        });
+
+        root.add({"server", "rshell", ""},
+                 "Displays the current configuration",
+                 [this](Arguments& argv, long value) {
+
+            retroShell.dump(remoteManager.rshServer, Category::Config);
+        });
+
+        for (auto &opt : remoteManager.rshServer.getOptions()) {
+
+            root.add({cmd, "set", OptionEnum::plainkey(opt)},
+                     {OptionParser::argList(opt)},
+                     OptionEnum::help(opt),
+                     [this](Arguments& argv, long opt) {
+
+                emulator.set(Option(opt), argv[0]);
+
+            }, opt);
+        }
+    }
+    root.popGroup();
+
+
+    //
     // Miscellaneous (Recorder)
     //
 

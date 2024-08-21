@@ -22,6 +22,7 @@
                 <outlet property="muteIcon" destination="1v4-GY-YOm" id="Quj-qX-AH1"/>
                 <outlet property="redLED8" destination="1210" id="GLI-bf-y3R"/>
                 <outlet property="redLED9" destination="iKN-RM-vsV" id="cac-3p-tQd"/>
+                <outlet property="serverIcon" destination="SCM-Qu-4XG" id="40K-fX-k5b"/>
                 <outlet property="spinning8" destination="2203" id="ons-cN-UFy"/>
                 <outlet property="spinning9" destination="xzf-hU-AKK" id="C8r-MJ-Kde"/>
                 <outlet property="tapeCounter" destination="HdD-JF-2Va" id="Dps-K3-bdI"/>
@@ -139,7 +140,7 @@
                         </connections>
                     </customView>
                     <button hidden="YES" tag="2" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LJd-96-8ze">
-                        <rect key="frame" x="444" y="3" width="20" height="20"/>
+                        <rect key="frame" x="416" y="3" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="haltTemplate" imagePosition="only" alignment="right" alternateImage="crtButtonOnTemplate" imageScaling="proportionallyUpOrDown" id="f5d-Lu-xCR">
                             <behavior key="behavior" lightByContents="YES"/>
@@ -244,6 +245,14 @@
                             <action selector="activityTypeAction:" target="-2" id="8M0-s6-SDQ"/>
                         </connections>
                     </popUpButton>
+                    <button hidden="YES" tag="2" id="SCM-Qu-4XG" userLabel="Debug Mode">
+                        <rect key="frame" x="444" y="3" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="srvConnectTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="o9k-Z2-bas">
+                            <behavior key="behavior" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
                 </subviews>
             </view>
             <toolbar key="toolbar" implicitIdentifier="562FDE63-25B0-4E4E-80C7-EF6E742B5F6F" displayMode="iconAndLabel" sizeMode="regular" id="1845" customClass="MyToolbar" customModule="VirtualC64" customModuleProvider="target">
@@ -470,6 +479,7 @@
         <image name="prefTemplate" width="36" height="36"/>
         <image name="pushTemplate" width="36" height="36"/>
         <image name="resetTemplate" width="36" height="36"/>
+        <image name="srvConnectTemplate" width="48" height="49"/>
         <image name="tapeTemplate" width="241" height="240"/>
         <image name="timeMachineTemplate" width="36" height="36"/>
     </resources>

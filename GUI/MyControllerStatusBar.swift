@@ -82,6 +82,9 @@ extension MyController {
             // Datasette
             refreshStatusBarDatasette()
 
+            // Remote server icon
+            refreshStatusBarServerIcon()
+
             // Warp mode
             refreshStatusBarWarpIcon()
 
@@ -96,6 +99,7 @@ extension MyController {
                 trackNumber9: connected9 && on9,
 
                 haltIcon: jammed,
+                serverIcon: true,
                 trackIcon: tracking,
                 muteIcon: warping || muted,
 
@@ -251,6 +255,14 @@ extension MyController {
             let min = counter / 60
             let sec = counter % 60
             tapeCounter.stringValue = String(format: "%02d:%02d", min, sec)
+        }
+    }
+
+    func refreshStatusBarServerIcon() {
+
+        if let emu = emu {
+
+            serverIcon.image = emu.remoteManager.icon
         }
     }
 

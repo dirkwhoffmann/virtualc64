@@ -700,6 +700,24 @@ struct DriveAPI : API {
 };
 
 
+/** RemoteManager Public API
+ */
+struct RemoteManagerAPI : public API {
+
+    class RemoteManager *remoteManager = nullptr;
+
+    /// @name Analyzing the emulator
+    /// @{
+
+    /** @brief  Returns the component's current state.
+     */
+    const RemoteManagerInfo &getInfo() const;
+    const RemoteManagerInfo &getCachedInfo() const;
+
+    /// @}
+};
+
+
 /** RetroShell Public API
  */
 struct RetroShellAPI : API {
@@ -1485,6 +1503,7 @@ public:
     ExpansionPortAPI expansionPort;
     SerialPortAPI serialPort;
     DriveAPI drive8, drive9;
+    RemoteManagerAPI remoteManager;
     RetroShellAPI retroShell;
 };
 

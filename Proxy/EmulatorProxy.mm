@@ -1145,6 +1145,33 @@ using namespace vc64;
 
 
 //
+// RemoteManager proxy
+//
+
+@implementation RemoteManagerProxy
+
+- (RemoteManagerAPI *)manager
+{
+    return (RemoteManagerAPI *)obj;
+}
+
++ (instancetype)make:(RemoteManagerAPI *)manager
+{
+    if (manager == nullptr) { return nil; }
+
+    RemoteManagerProxy *proxy = [[self alloc] initWith: manager];
+    return proxy;
+}
+
+- (RemoteManagerInfo)info
+{
+    return [self manager]->getInfo();
+}
+
+@end
+
+
+//
 // RetroShell proxy
 //
 
@@ -1711,6 +1738,7 @@ using namespace vc64;
 @synthesize port1;
 @synthesize port2;
 @synthesize recorder;
+@synthesize remoteManager;
 @synthesize retroShell;
 @synthesize sid;
 @synthesize vic;
@@ -1742,6 +1770,7 @@ using namespace vc64;
     port1 = [[ControlPortProxy alloc] initWith:&emu->controlPort1 emu:emu];
     port2 = [[ControlPortProxy alloc] initWith:&emu->controlPort2 emu:emu];
     recorder = [[RecorderProxy alloc] initWith:&emu->recorder emu:emu];
+    remoteManager = [[RemoteManagerProxy alloc] initWith:&emu->remoteManager emu:emu];
     retroShell = [[RetroShellProxy alloc] initWith:&emu->retroShell emu:emu];
     sid = [[SIDProxy alloc] initWith:&emu->sid emu:emu];
     vic = [[VICIIProxy alloc] initWith:&emu->vicii emu:emu];

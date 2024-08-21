@@ -18,13 +18,6 @@ namespace vc64 {
 
 class RshServer : public RemoteServer {
 
-    Descriptions descriptions = {{
-
-        .name           = "RshServer",
-        .description    = "Remote Shell Server",
-        .shell          = "server rshell"
-    }};
-
 public:
     
     using RemoteServer::RemoteServer;
@@ -43,10 +36,6 @@ public:
 private:
 
     void _dump(Category category, std::ostream& os) const override;
-
-public:
-
-    const Descriptions &getDescriptions() const override { return descriptions; }
 
 
     //

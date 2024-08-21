@@ -185,6 +185,29 @@ extension RecorderProxy {
     }
 }
 
+extension RemoteManagerProxy {
+
+    var icon: NSImage? {
+
+        let info = info
+
+        if info.numConnected > 0 {
+            return NSImage(named: "srvConnectTemplate")!
+        }
+        if info.numListening > 0 {
+            return NSImage(named: "srvListenTemplate")!
+        }
+        if info.numLaunching > 0 {
+            return NSImage(named: "srvLaunchTemplate")!
+        }
+        if info.numErroneous > 0 {
+            return NSImage(named: "srvErrorTemplate")!
+        }
+
+        return nil
+    }
+}
+
 //
 // Keyboard
 //

@@ -128,6 +128,9 @@ VirtualC64::VirtualC64() {
     recorder.emu = emu;
     recorder.recorder = &emu->main.recorder;
 
+    remoteManager.emu = emu;
+    remoteManager.remoteManager = &emu->main.remoteManager;
+
     retroShell.emu = emu;
     retroShell.retroShell = &emu->main.retroShell;
 
@@ -1015,6 +1018,23 @@ bool
 RecorderAPI::exportAs(const std::filesystem::path &path)
 {
     return recorder->exportAs(path);
+}
+
+
+//
+// RemoteManager
+//
+
+const RemoteManagerInfo &
+RemoteManagerAPI::getInfo() const
+{
+    return remoteManager->getInfo();
+}
+
+const RemoteManagerInfo &
+RemoteManagerAPI::getCachedInfo() const
+{
+    return remoteManager->getCachedInfo();
 }
 
 

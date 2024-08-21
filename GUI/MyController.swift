@@ -106,6 +106,7 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var spinning9: NSProgressIndicator!
     
     @IBOutlet weak var haltIcon: NSButton!
+    @IBOutlet weak var serverIcon: NSButton!
     @IBOutlet weak var trackIcon: NSButton!
     @IBOutlet weak var muteIcon: NSButton!
     @IBOutlet weak var tapeIcon: NSButton!
@@ -491,6 +492,12 @@ extension MyController {
                 c = emu?.userPort.rs232.readOutgoingPrintableByte() ?? -1
             }
 
+        case .SRV_STATE:
+            refreshStatusBar()
+
+        case .SRV_RECEIVE, .SRV_SEND:
+            break
+            
         default:
             warn("Unknown message: \(msg)")
             fatalError()
