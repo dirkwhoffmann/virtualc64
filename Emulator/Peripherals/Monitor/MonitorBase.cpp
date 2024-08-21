@@ -59,7 +59,7 @@ Monitor::checkOption(Option opt, i64 value)
         case OPT_MON_PALETTE:
             
             if (!PaletteEnum::isValid(value)) {
-                throw Error(ERROR_OPT_INV_ARG, PaletteEnum::keyList());
+                throw Error(vc64::ERROR_OPT_INV_ARG, PaletteEnum::keyList());
             }
             return;
             
@@ -68,7 +68,7 @@ Monitor::checkOption(Option opt, i64 value)
         case OPT_MON_SATURATION:
             
             if (value < 0 || value > 100) {
-                throw Error(ERROR_OPT_INV_ARG, "0...100");
+                throw Error(vc64::ERROR_OPT_INV_ARG, "0...100");
             }
             return;
             
@@ -82,7 +82,7 @@ Monitor::checkOption(Option opt, i64 value)
         case OPT_MON_UPSCALER:
             
             if (!UpscalerEnum::isValid(value)) {
-                throw Error(ERROR_OPT_INV_ARG, UpscalerEnum::keyList());
+                throw Error(vc64::ERROR_OPT_INV_ARG, UpscalerEnum::keyList());
             }
             return;
             
@@ -98,7 +98,7 @@ Monitor::checkOption(Option opt, i64 value)
         case OPT_MON_DOTMASK:
             
             if (!DotmaskEnum::isValid(value)) {
-                throw Error(ERROR_OPT_INV_ARG, DotmaskEnum::keyList());
+                throw Error(vc64::ERROR_OPT_INV_ARG, DotmaskEnum::keyList());
             }
             return;
             
@@ -109,7 +109,7 @@ Monitor::checkOption(Option opt, i64 value)
         case OPT_MON_SCANLINES:
             
             if (!ScanlinesEnum::isValid(value)) {
-                throw Error(ERROR_OPT_INV_ARG, ScanlinesEnum::keyList());
+                throw Error(vc64::ERROR_OPT_INV_ARG, ScanlinesEnum::keyList());
             }
             return;
             
@@ -122,7 +122,7 @@ Monitor::checkOption(Option opt, i64 value)
             return;
             
         default:
-            throw Error(ERROR_OPT_UNSUPPORTED);
+            throw Error(vc64::ERROR_OPT_UNSUPPORTED);
     }
 }
 

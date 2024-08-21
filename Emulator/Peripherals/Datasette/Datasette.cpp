@@ -69,7 +69,7 @@ Datasette::insertTape(MediaFile &file)
 
     } catch (...) {
 
-        throw Error(ERROR_FILE_TYPE_MISMATCH);
+        throw Error(vc64::ERROR_FILE_TYPE_MISMATCH);
     }
 }
 

@@ -48,14 +48,14 @@ void
 AnyFile::init(const fs::path &path)
 {
     std::ifstream stream(path);
-    if (!stream.is_open()) throw Error(ERROR_FILE_NOT_FOUND, path);
+    if (!stream.is_open()) throw Error(vc64::ERROR_FILE_NOT_FOUND, path);
     init(path, stream);
 }
 
 void
 AnyFile::init(const fs::path &path, std::istream &stream)
 {
-    if (!isCompatiblePath(path)) throw Error(ERROR_FILE_TYPE_MISMATCH);
+    if (!isCompatiblePath(path)) throw Error(vc64::ERROR_FILE_TYPE_MISMATCH);
     init(stream);
     this->path = path;
 }
@@ -63,7 +63,7 @@ AnyFile::init(const fs::path &path, std::istream &stream)
 void
 AnyFile::init(std::istream &stream)
 {
-    if (!isCompatibleStream(stream)) throw Error(ERROR_FILE_TYPE_MISMATCH);
+    if (!isCompatibleStream(stream)) throw Error(vc64::ERROR_FILE_TYPE_MISMATCH);
     readFromStream(stream);
 }
 
@@ -158,7 +158,7 @@ AnyFile::readFromFile(const fs::path &path)
     std::ifstream stream(path);
 
     if (!stream.is_open()) {
-        throw Error(ERROR_FILE_CANT_READ);
+        throw Error(vc64::ERROR_FILE_CANT_READ);
     }
     
     this->path = path;
@@ -193,7 +193,7 @@ AnyFile::writeToFile(const fs::path &path)
     std::ofstream stream(path);
 
     if (!stream.is_open()) {
-        throw Error(ERROR_FILE_CANT_WRITE);
+        throw Error(vc64::ERROR_FILE_CANT_WRITE);
     }
     
     writeToStream(stream);

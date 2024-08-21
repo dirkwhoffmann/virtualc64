@@ -68,7 +68,7 @@ Interpreter::initCommons(Command &root)
              [this](Arguments& argv, long value) {
 
         auto stream = std::ifstream(argv.front());
-        if (!stream.is_open()) throw Error(ERROR_FILE_NOT_FOUND, argv.front());
+        if (!stream.is_open()) throw Error(vc64::ERROR_FILE_NOT_FOUND, argv.front());
         retroShell.execScript(stream);
     });
 
@@ -276,7 +276,7 @@ Interpreter::initCommandShell(Command &root)
              [this](Arguments& argv, long value) {
 
         auto path = argv.front();
-        if (!util::fileExists(path)) throw Error(ERROR_FILE_NOT_FOUND, path);
+        if (!util::fileExists(path)) throw Error(vc64::ERROR_FILE_NOT_FOUND, path);
 
         auto file = PRGFile(path);
         c64.flash(file, 0);
@@ -637,7 +637,7 @@ Interpreter::initCommandShell(Command &root)
              [this](Arguments& argv, long value) {
 
         auto path = argv.front();
-        if (!util::fileExists(path)) throw Error(ERROR_FILE_NOT_FOUND, path);
+        if (!util::fileExists(path)) throw Error(vc64::ERROR_FILE_NOT_FOUND, path);
         expansionPort.attachCartridge(path);
     });
 
@@ -1078,7 +1078,7 @@ Interpreter::initCommandShell(Command &root)
                  [this](Arguments& argv, long value) {
 
             auto path = argv.front();
-            if (!util::fileExists(path)) throw Error(ERROR_FILE_NOT_FOUND, path);
+            if (!util::fileExists(path)) throw Error(vc64::ERROR_FILE_NOT_FOUND, path);
 
             auto &drive = value ? drive9 : drive8;
             drive.insertDisk(path, false);

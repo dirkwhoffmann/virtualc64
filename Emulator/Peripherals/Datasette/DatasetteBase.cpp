@@ -184,7 +184,7 @@ Datasette::checkOption(Option opt, i64 value)
             return;
 
         default:
-            throw Error(ERROR_OPT_UNSUPPORTED);
+            throw Error(vc64::ERROR_OPT_UNSUPPORTED);
     }
 }
 
