@@ -13,6 +13,8 @@
 
 #include "config.h"
 #include "Headless.h"
+#include "C64.h"
+#include "Script.h"
 #include "IOUtils.h"
 #include <chrono>
 #include <filesystem>
@@ -32,7 +34,8 @@ int main(int argc, char *argv[])
 
         std::cout << "Usage: VirtualC64Core [-svm] | { [-vm] <script> } " << std::endl;
         std::cout << std::endl;
-        std::cout << "       -s or --selftest  Checks the integrity of the build" << std::endl;
+        std::cout << "       -c or --check     Checks the integrity of the build" << std::endl;
+        std::cout << "       -s or --size      Reports the size of certain objects" << std::endl;
         std::cout << "       -v or --verbose   Print executed script lines" << std::endl;
         std::cout << "       -m or --messages  Observe the message queue" << std::endl;
         std::cout << std::endl;
@@ -45,14 +48,12 @@ int main(int argc, char *argv[])
 
     } catch (vc64::Error &e) {
 
-        std::cout << "VC64Error: " << std::endl;
-        std::cout << e.what() << std::endl;
+        std::cout << "Error: " << e.what() << std::endl;
         return 1;
         
     } catch (std::exception &e) {
 
-        std::cout << "Error: " << std::endl;
-        std::cout << e.what() << std::endl;
+        std::cout << "System Error: " << e.what() << std::endl;
         return 1;
     
     } catch (...) {
@@ -68,26 +69,22 @@ namespace vc64 {
 int
 Headless::main(int argc, char *argv[])
 {
-    std::cout << "VirtualC64 Headless v" << c64.version();
+    std::cout << "VirtualC64 Headless v" << VirtualC64::version();
     std::cout << " - (C)opyright Dirk W. Hoffmann" << std::endl << std::endl;
 
     // Parse all command line arguments
     parseArguments(argc, argv);
 
-    // Redirect shell output to the console in verbose mode
-    if (keys.find("verbose") != keys.end()) c64.retroShell.setStream(std::cout);
+    // Check for the --size option
+    if (keys.find("size") != keys.end()) {
 
-    // Read the input script
-    auto script = MediaFile::make(keys["arg1"], FILETYPE_SCRIPT);
+        reportSize();
+        return 0;
 
-    // Launch the emulator thread
-    c64.launch(this, vc64::process);
+    } else {
 
-    // Execute the script
-    barrier.lock();
-    c64.retroShell.execScript(*script);
-
-    return returnCode;
+        return execScript();
+    }
 }
 
 #ifdef _WIN32
@@ -95,7 +92,8 @@ Headless::main(int argc, char *argv[])
 void
 Headless::parseArguments(int argc, char *argv[])
 {
-    keys["selftest"] = "1";
+    keys["check"] = "1";
+    keys["size"] = "1";
     keys["verbose"] = "1";
     keys["arg1"] = selfTestScript();
 }
@@ -107,7 +105,8 @@ Headless::parseArguments(int argc, char *argv[])
 {
     static struct option long_options[] = {
         
-        { "selftest",   no_argument,    NULL,   's' },
+        { "check",      no_argument,    NULL,   'c' },
+        { "size",       no_argument,    NULL,   's' },
         { "verbose",    no_argument,    NULL,   'v' },
         { "messages",   no_argument,    NULL,   'm' },
         { NULL,         0,              NULL,    0  }
@@ -121,14 +120,18 @@ Headless::parseArguments(int argc, char *argv[])
 
     // Parse all options
     while (1) {
-        
-        int arg = getopt_long(argc, argv, ":svm", long_options, NULL);
+
+        int arg = getopt_long(argc, argv, ":csvm", long_options, NULL);
         if (arg == -1) break;
 
         switch (arg) {
-                
+
+            case 'c':
+                keys["check"] = "1";
+                break;
+
             case 's':
-                keys["selftest"] = "1";
+                keys["size"] = "1";
                 break;
 
             case 'v':
@@ -142,7 +145,7 @@ Headless::parseArguments(int argc, char *argv[])
             case ':':
                 throw SyntaxError("Missing argument for option '" +
                                   string(argv[optind - 1]) + "'");
-                
+
             default:
                 throw SyntaxError("Invalid option '" +
                                   string(argv[optind - 1]) + "'");
@@ -159,7 +162,7 @@ Headless::parseArguments(int argc, char *argv[])
     checkArguments();
 
     // Create the selftest script if needed
-    if (keys.find("selftest") != keys.end()) keys["arg1"] = selfTestScript();
+    if (keys.find("check") != keys.end()) keys["arg1"] = selfTestScript();
 }
 
 #endif
@@ -167,11 +170,11 @@ Headless::parseArguments(int argc, char *argv[])
 void
 Headless::checkArguments()
 {
-    if (keys.find("selftest") != keys.end()) {
+    if (keys.find("check") != keys.end() || keys.find("size") != keys.end()) {
 
         // No input file must be given
         if (keys.find("arg1") != keys.end()) {
-            throw SyntaxError("No script file must be given in selftest mode");
+            throw SyntaxError("No script file must be given");
         }
 
     } else {
@@ -197,8 +200,8 @@ Headless::selfTestScript()
     auto path = std::filesystem::temp_directory_path() / "selftest.ini";
     auto file = std::ofstream(path);
 
-    for (isize i = 0; i < isizeof(testScript) / isizeof(const char *); i++) {
-        file << testScript[i] << std::endl;
+    for (isize i = 0; i < isizeof(script) / isizeof(const char *); i++) {
+        file << script[i] << std::endl;
     }
     return path.string();
 }
@@ -222,23 +225,72 @@ Headless::process(Message msg)
     }
 
     switch (msg.type) {
-            
-        case MSG_SCRIPT_DONE:
+
+        case MSG_RSH_EXEC:
 
             returnCode = 0;
             barrier.unlock();
             break;
 
-        case MSG_SCRIPT_ABORT:
+        case MSG_RSH_ERROR:
         case MSG_ABORT:
 
             returnCode = 1;
             barrier.unlock();
             break;
-            
+
         default:
             break;
     }
+}
+
+void
+Headless::reportSize()
+{
+    msg("               C64 : %zu bytes\n", sizeof(C64));
+    msg("         C64Memory : %zu bytes\n", sizeof(C64Memory));
+    msg("       DriveMemory : %zu bytes\n", sizeof(DriveMemory));
+    msg("               CPU : %zu bytes\n", sizeof(CPU));
+    msg("               CIA : %zu bytes\n", sizeof(CIA));
+    msg("             VICII : %zu bytes\n", sizeof(VICII));
+    msg("         SIDBridge : %zu bytes\n", sizeof(SIDBridge));
+    msg("         PowerPort : %zu bytes\n", sizeof(PowerPort));
+    msg("       ControlPort : %zu bytes\n", sizeof(ControlPort));
+    msg("     ExpansionPort : %zu bytes\n", sizeof(ExpansionPort));
+    msg("        SerialPort : %zu bytes\n", sizeof(SerialPort));
+    msg("          Keyboard : %zu bytes\n", sizeof(Keyboard));
+    msg("             Drive : %zu bytes\n", sizeof(Drive));
+    msg("          ParCable : %zu bytes\n", sizeof(ParCable));
+    msg("         Datasette : %zu bytes\n", sizeof(Datasette));
+    msg("        RetroShell : %zu bytes\n", sizeof(RetroShell));
+    msg("  RegressionTester : %zu bytes\n", sizeof(RegressionTester));
+    msg("          Recorder : %zu bytes\n", sizeof(Recorder));
+    msg("          MsgQueue : %zu bytes\n", sizeof(MsgQueue));
+    msg("          CmdQueue : %zu bytes\n", sizeof(CmdQueue));
+    msg("\n");
+}
+
+int
+Headless::execScript()
+{
+    // Create an emulator instance
+    VirtualC64 c64;
+
+    // Redirect shell output to the console in verbose mode
+    if (keys.find("verbose") != keys.end()) c64.retroShell.setStream(std::cout);
+
+    // Read the input script
+    auto script = MediaFile::make(keys["arg1"], FILETYPE_SCRIPT);
+
+    // Launch the emulator thread
+    c64.launch(this, vc64::process);
+
+    // Execute the script
+    barrier.lock();
+    c64.retroShell.execScript(*script);
+    barrier.lock();
+
+    return returnCode;
 }
 
 }

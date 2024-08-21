@@ -1055,59 +1055,51 @@ RetroShellAPI::cursorRel()
 }
 
 void
-RetroShellAPI::press(RetroShellKey key, bool shift) // shift no longer used
+RetroShellAPI::press(RetroShellKey key, bool shift)
 {
     retroShell->press(key, shift);
-    retroShell->markAsDirty();
 }
 
 void
 RetroShellAPI::press(char c)
 {
     retroShell->press(c);
-    retroShell->markAsDirty();
 }
 
 void
 RetroShellAPI::press(const string &s)
 {
     retroShell->press(s);
-    retroShell->markAsDirty();
 }
 
 void
 RetroShellAPI::execScript(std::stringstream &ss)
 {
-    retroShell->execScript(ss);
-    retroShell->markAsDirty();
+    retroShell->asyncExecScript(ss);
 }
 
 void
 RetroShellAPI::execScript(const std::ifstream &fs)
 {
-    retroShell->execScript(fs);
-    retroShell->markAsDirty();
+    retroShell->asyncExecScript(fs);
 }
 
 void
 RetroShellAPI::execScript(const string &contents)
 {
-    retroShell->execScript(contents);
-    retroShell->markAsDirty();
+    retroShell->asyncExecScript(contents);
 }
 
 void 
 RetroShellAPI::execScript(const MediaFile &file)
 {
-    retroShell->execScript(file);
-    retroShell->markAsDirty();
+    retroShell->asyncExecScript(file);
 }
 
 void
 RetroShellAPI::setStream(std::ostream &os)
 {
     retroShell->setStream(os);
-    retroShell->markAsDirty();
 }
 
 

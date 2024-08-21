@@ -11,12 +11,168 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Interpreter.h"
+#include "Console.h"
 #include "Emulator.h"
 #include "Option.h"
 
 namespace vc64 {
 
+void
+CommandConsole::_pause()
+{
+
+}
+
+string
+CommandConsole::getPrompt()
+{
+    return "vc64% ";
+}
+
+void
+CommandConsole::welcome()
+{
+    storage << "VirtualC64 RetroShell ";
+    remoteManager.rshServer << "VirtualC64 RetroShell Remote Server ";
+    *this << C64::build() << '\n';
+    *this << '\n';
+    *this << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
+    *this << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
+    *this << '\n';
+
+    printHelp();
+    *this << '\n';
+}
+
+void
+CommandConsole::printHelp()
+{
+    storage << "Type 'help' or press 'TAB' twice for help.\n";
+    storage << "Type '.' or press 'SHIFT+RETURN' to enter debug mode.";
+
+    remoteManager.rshServer << "Type 'help' for help.\n";
+    remoteManager.rshServer << "Type '.' to enter debug mode.";
+
+    *this << '\n';
+}
+
+void
+CommandConsole::pressReturn(bool shift)
+{
+    if (!shift && input.empty()) {
+
+        printHelp();
+
+    } else {
+
+        Console::pressReturn(shift);
+    }
+}
+
+void
+Console::initCommands(Command &root)
+{
+    //
+    // Common commands
+    //
+
+    Command::currentGroup = "Shell commands";
+
+    root.add({"welcome"},
+             "", // Prints the welcome message
+             [this](Arguments& argv, long value) {
+
+        welcome();
+    });
+
+    root.add({"."},
+             "Enter or exit the debugger",
+             [this](Arguments& argv, long value) {
+
+        retroShell.switchConsole();
+    });
+
+    root.add({"clear"},
+             "Clear the console window",
+             [this](Arguments& argv, long value) {
+
+        clear();
+    });
+
+    root.add({"close"},
+             "Hide the console window",
+             [this](Arguments& argv, long value) {
+
+        msgQueue.put(MSG_RSH_CLOSE);
+    });
+
+    root.add({"help"}, { }, {Arg::command},
+             "Print usage information",
+             [this](Arguments& argv, long value) {
+
+        help(argv.empty() ? "" : argv.front());
+    });
+
+    root.add({"state"},
+             "", // Prints the welcome message
+             [this](Arguments& argv, long value) {
+
+        printState();
+    });
+
+
+    root.add({"joshua"},
+             "",
+             [this](Arguments& argv, long value) {
+
+        *this << "\nGREETINGS PROFESSOR HOFFMANN.\n";
+        *this << "THE ONLY WINNING MOVE IS NOT TO PLAY.\n";
+        *this << "HOW ABOUT A NICE GAME OF CHESS?\n\n";
+    });
+
+    root.add({"source"}, {Arg::path},
+             "Process a command script",
+             [this](Arguments& argv, long value) {
+
+        auto stream = std::ifstream(argv.front());
+        if (!stream.is_open()) throw Error(VC64ERROR_FILE_NOT_FOUND, argv.front());
+        retroShell.asyncExecScript(stream);
+    });
+
+    root.add({"wait"}, {Arg::value, Arg::seconds},
+             "", // Pause the execution of a command script",
+             [this](Arguments& argv, long value) {
+
+        auto seconds = parseNum(argv[0]);
+        c64.scheduleRel<SLOT_RSH>(C64::sec(seconds), RSH_WAKEUP);
+        throw ScriptInterruption();
+    });
+}
+
+void
+Console::initSetters(Command &root, const CoreComponent &c)
+{
+    if (auto cmd = string(c.shellName()); !cmd.empty()) {
+
+        if (auto &options = c.getOptions(); !options.empty()) {
+
+            root.add({cmd, "set"}, "Configure the component");
+            for (auto &opt : options) {
+
+                root.add({cmd, "set", OptionEnum::key(opt)},
+                         {OptionParser::argList(opt)},
+                         OptionEnum::help(opt),
+                         [this](Arguments& argv, long value) {
+
+                    emulator.set(Option(HI_WORD(value)), argv[0], LO_WORD(value));
+
+                }, HI_W_LO_W(opt, c.objid));
+            }
+        }
+    }
+}
+
+/*
 void
 Interpreter::initCommons(Command &root)
 {
@@ -88,16 +244,12 @@ Interpreter::initCommons(Command &root)
         throw ScriptInterruption("");
     });
 }
+*/
 
 void
-Interpreter::initCommandShell(Command &root)
+CommandConsole::initCommands(Command &root)
 {
-    //
-    // Shared commands
-    //
-
-    initCommons(root);
-
+    Console::initCommands(root);
 
     //
     // Regression tester
@@ -105,7 +257,7 @@ Interpreter::initCommandShell(Command &root)
 
     Command::currentGroup = "Regression tester";
 
-    root.add({"regression"}, ""); // Run the regression tester
+    root.add({"regression"}, debugBuild ? "Runs the regression tester" : "");
 
     root.add({"regression", "setup"}, { C64ModelEnum::argList() },
              "Initialize the test environment",
@@ -178,7 +330,7 @@ Interpreter::initCommandShell(Command &root)
              "Display the current configuration",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(c64, Category::Config);
+        dump(c64, Category::Config);
     });
 
     root.add({cmd, "set"}, "Configure the component");
@@ -198,7 +350,7 @@ Interpreter::initCommandShell(Command &root)
              "Display the user defaults storage",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(emulator, Category::Defaults);
+        dump(emulator, Category::Defaults);
     });
 
     root.add({cmd, "power"}, { Arg::onoff },
@@ -246,7 +398,7 @@ Interpreter::initCommandShell(Command &root)
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(mem, Category::Config);
+        dump(mem, Category::Config);
     });
 
     root.add({cmd, "set"}, "Configures the component");
@@ -296,8 +448,8 @@ Interpreter::initCommandShell(Command &root)
                  [this](Arguments& argv, long value) {
 
             value == 0 ?
-            retroShell.dump(cia1, Category::Config) :
-            retroShell.dump(cia2, Category::Config) ;
+            dump(cia1, Category::Config) :
+            dump(cia2, Category::Config) ;
 
         }, i);
 
@@ -328,7 +480,7 @@ Interpreter::initCommandShell(Command &root)
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(vic, Category::Config);
+        dump(vic, Category::Config);
     });
 
     root.add({cmd, "set"}, "Configures the component");
@@ -357,21 +509,21 @@ Interpreter::initCommandShell(Command &root)
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(vic.dmaDebugger, Category::Config);
+        dump(vic.dmaDebugger, Category::Config);
     });
 
     root.add({cmd, "open"},
              "Opens the DMA debugger",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_DMA_DEBUG_ENABLE, true);
+        emulator.set(OPT_DMA_DEBUG_ENABLE, true);
     });
 
     root.add({cmd, "close"},
              "Closes the DMA debugger",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_DMA_DEBUG_ENABLE, false);
+        emulator.set(OPT_DMA_DEBUG_ENABLE, false);
     });
 
     root.add({cmd, "set"}, "Configures the component");
@@ -405,7 +557,7 @@ Interpreter::initCommandShell(Command &root)
                  "Displays the current configuration",
                  [this](Arguments& argv, long value) {
 
-            retroShell.dump(sidBridge.sid[value], Category::Config);
+            dump(sidBridge.sid[value], Category::Config);
         }, i);
 
         root.add({cmd, "set"}, "Configures the component");
@@ -436,7 +588,7 @@ Interpreter::initCommandShell(Command &root)
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(sidBridge, Category::Config);
+        dump(sidBridge, Category::Config);
     });
 
     root.add({cmd, "set"}, "Configures the component");
@@ -473,7 +625,7 @@ Interpreter::initCommandShell(Command &root)
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(powerSupply, Category::Config);
+        dump(powerSupply, Category::Config);
     });
 
     root.add({cmd, "set"}, "Configures the component");
@@ -503,7 +655,7 @@ Interpreter::initCommandShell(Command &root)
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(audioPort, Category::Config);
+        dump(audioPort, Category::Config);
     });
 
     root.add({cmd, "set"}, "Configures the component");
@@ -533,7 +685,7 @@ Interpreter::initCommandShell(Command &root)
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(userPort, Category::Config);
+        dump(userPort, Category::Config);
     });
 
     root.add({cmd, "set"}, "Configures the component");
@@ -563,7 +715,7 @@ Interpreter::initCommandShell(Command &root)
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(videoPort, Category::Config);
+        dump(videoPort, Category::Config);
     });
 
     root.add({cmd, "set"}, "Configures the component");
@@ -635,7 +787,7 @@ Interpreter::initCommandShell(Command &root)
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(monitor, Category::Config);
+        dump(monitor, Category::Config);
 
     });
 
@@ -718,7 +870,7 @@ Interpreter::initCommandShell(Command &root)
                  [this](Arguments& argv, long value) {
 
             auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
-            retroShell.dump(port.mouse, Category::Config);
+            dump(port.mouse, Category::Config);
 
         }, i);
 
@@ -755,7 +907,7 @@ Interpreter::initCommandShell(Command &root)
                  [this](Arguments& argv, long value) {
 
             auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
-            retroShell.dump(port.joystick, Category::Config);
+            dump(port.joystick, Category::Config);
 
         }, i);
 
@@ -871,7 +1023,7 @@ Interpreter::initCommandShell(Command &root)
                  [this](Arguments& argv, long value) {
 
             auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
-            retroShell.dump(port.paddle, Category::Config);
+            dump(port.paddle, Category::Config);
 
         }, i);
 
@@ -902,21 +1054,21 @@ Interpreter::initCommandShell(Command &root)
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(datasette, Category::Config);
+        dump(datasette, Category::Config);
     });
 
     root.add({cmd, "connect"},
              "Connects the datasette",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_DAT_CONNECT, true);
+        emulator.set(OPT_DAT_CONNECT, true);
     });
 
     root.add({cmd, "disconnect"},
              "Disconnects the datasette",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_DAT_CONNECT, false);
+        emulator.set(OPT_DAT_CONNECT, false);
     });
 
     root.add({cmd, "rewind"},
@@ -965,7 +1117,7 @@ Interpreter::initCommandShell(Command &root)
                  [this](Arguments& argv, long value) {
 
             auto &drive = value ? drive9 : drive8;
-            retroShell.dump(drive, Category::Config);
+            dump(drive, Category::Config);
 
         }, i);
 
@@ -974,7 +1126,7 @@ Interpreter::initCommandShell(Command &root)
                  [this](Arguments& argv, long value) {
 
             auto &drive = value ? drive9 : drive8;
-            retroShell.dump(drive, Category::BankMap);
+            dump(drive, Category::BankMap);
 
         }, i);
 
@@ -983,7 +1135,7 @@ Interpreter::initCommandShell(Command &root)
                  [this](Arguments& argv, long value) {
 
             auto id = value ? DRIVE9 : DRIVE8;
-            configure(OPT_DRV_CONNECT, id, true);
+            emulator.set(OPT_DRV_CONNECT, id, true);
 
         }, i);
 
@@ -992,7 +1144,7 @@ Interpreter::initCommandShell(Command &root)
                  [this](Arguments& argv, long value) {
 
             auto id = value ? DRIVE9 : DRIVE8;
-            configure(OPT_DRV_CONNECT, id, false);
+            emulator.set(OPT_DRV_CONNECT, id, false);
 
         }, i);
 
@@ -1055,7 +1207,7 @@ Interpreter::initCommandShell(Command &root)
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(parCable, Category::Config);
+        dump(parCable, Category::Config);
     });
 
 
@@ -1071,7 +1223,7 @@ Interpreter::initCommandShell(Command &root)
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(userPort.rs232, Category::Config);
+        dump(userPort.rs232, Category::Config);
 
     });
 
@@ -1115,7 +1267,7 @@ Interpreter::initCommandShell(Command &root)
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(host, Category::Config);
+        dump(host, Category::Config);
     });
 
     root.add({cmd, "set"}, "Configures the component");
@@ -1143,7 +1295,7 @@ Interpreter::initCommandShell(Command &root)
              "Displays a server status summary",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(remoteManager, Category::State);
+        dump(remoteManager, Category::State);
     });
 
     root.add({"server", "rshell"},
@@ -1174,7 +1326,7 @@ Interpreter::initCommandShell(Command &root)
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(remoteManager.rshServer, Category::Config);
+        dump(remoteManager.rshServer, Category::Config);
     });
 
     for (auto &opt : remoteManager.rshServer.getOptions()) {
@@ -1200,7 +1352,7 @@ Interpreter::initCommandShell(Command &root)
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(recorder, Category::Config);
+        dump(recorder, Category::Config);
     });
 
     root.add({"recorder", "set"}, "Configures the component");

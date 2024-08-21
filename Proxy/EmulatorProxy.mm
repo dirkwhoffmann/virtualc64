@@ -1211,6 +1211,11 @@ using namespace vc64;
     [self shell]->press(key);
 }
 
+- (void)pressSpecialKey:(RetroShellKey)key shift:(BOOL)shift
+{
+    [self shell]->press(key, shift);
+}
+
 - (void)executeScript:(MediaFileProxy *)file
 {
     [self shell]->execScript(*(MediaFile *)file->obj);

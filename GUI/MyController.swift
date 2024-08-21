@@ -348,17 +348,20 @@ extension MyController {
             muted = value != 0
             refreshStatusBar()
 
-        case .CONSOLE_CLOSE:
+        case .RSH_CLOSE:
             renderer.console.close(delay: 0.25)
 
-        case .CONSOLE_UPDATE:
+        case .RSH_UPDATE:
             renderer.console.isDirty = true
 
-        case .CONSOLE_DEBUGGER:
+        case .RSH_DEBUGGER:
             break
 
-        case .SCRIPT_DONE,
-                .SCRIPT_ABORT:
+        case .RSH_EXEC, .RSH_WAIT:
+            renderer.console.isDirty = true
+
+        case .RSH_ERROR:
+            NSSound.beep()
             renderer.console.isDirty = true
 
         case .BREAKPOINT_UPDATED, 

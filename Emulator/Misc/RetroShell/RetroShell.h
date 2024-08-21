@@ -14,21 +14,37 @@
 
 #include "RetroShellTypes.h"
 #include "SubComponent.h"
-#include "Interpreter.h"
+#include "Console.h"
 #include "TextStorage.h"
 #include <sstream>
 #include <fstream>
+#include <functional>
+
+/* RetroShell is a text-based command shell capable of controlling the emulator.
+ * The shell's functionality is split among multiple consoles:
+ *
+ * 1. Commmand console:
+ *
+ *    This console is the default console and offers various command for
+ *    configuring the emulator and performing actions such as ejecting a disk.
+ *
+ * 2. Debug console:
+ *
+ *    This console offers multiple debug command similar to the ones found in
+ *    debug monitor. E.g., it is possible to inspect the registers of various
+ *    components or generating a memory dump.
+ */
 
 namespace vc64 {
 
 class RetroShell : public SubComponent {
 
-    friend class Interpreter;
+    friend class RshServer;
 
     Descriptions descriptions = {{
 
         .name           = "RetroShell",
-        .description    = "Command Console",
+        .description    = "Retro Shell",
         .shell          = ""
     }};
 
@@ -36,63 +52,30 @@ class RetroShell : public SubComponent {
 
     };
 
-    // The command interpreter (parses commands typed into the console window)
-    Interpreter interpreter;
+public:
 
+    // Consoles
+    CommandConsole commander = CommandConsole(c64, 0);
+    DebugConsole debugger = DebugConsole(c64, 1);
 
-    //
-    // Text storage
-    //
+    // Indicates if one of the consoles has new contents
+    bool isDirty = false;
 
-    // The text storage
-    TextStorage storage;
-
-    // History buffer storing old input strings and cursor positions
-    std::vector<std::pair<string,isize>> history;
-
-    // The currently active input string
-    isize ipos = 0;
-
-
-    //
-    // User input
-    //
-
-    // Input line
-    string input;
+private:
 
     // Command queue (stores all pending commands)
-    std::vector<std::pair<isize,string>> commands;
+    std::vector<QueuedCmd> commands;
 
-    // Input prompt
-    string prompt = "vc64% ";
+    // The currently active console
+    Console *current = &commander;
 
-    // Cursor position
-    isize cursor = 0;
-
-    // Indicates if TAB was the most recently pressed key
-    bool tabPressed = false;
+    bool inCommandShell() { return current == &commander; }
+    bool inDebugShell() { return current == &debugger; }
 
 
-    //
-    // Scripts
-    //
-
-    // The currently processed script
-    std::stringstream script;
-
-    // The script line counter (first line = 1)
-    isize scriptLine = 0;
-
-    
-    //
-    // Initializing
-    //
-    
 public:
-    
-    RetroShell(C64& ref);
 
+    RetroShell(C64& ref);
     RetroShell& operator= (const RetroShell& other) { return *this; }
 
 
@@ -117,16 +100,54 @@ private:
 
     void _dump(Category category, std::ostream& os) const override { }
     void _initialize() override;
-    void _pause() override;
 
 
     //
-    // Working with the text storage
+    // Methods from Configurable
     //
 
 public:
 
-    // Prints a message
+    const ConfigOptions &getOptions() const override { return options; }
+
+
+    //
+    // Managing consoles
+    //
+
+    void switchConsole();
+    void enterDebugger();
+    void enterCommander();
+
+public:
+
+    // Adds a command to the list of pending commands
+    void asyncExec(const string &command, bool append = true);
+
+    // Adds the commands of a shell script to the list of pending commands
+    void asyncExecScript(std::stringstream &ss);
+    void asyncExecScript(const std::ifstream &fs);
+    void asyncExecScript(const string &contents);
+    void asyncExecScript(const class MediaFile &script) throws;
+
+    // Aborts the execution of a script
+    void abortScript();
+
+    // Executes all pending commands
+    void exec() throws;
+
+private:
+
+    // Executes a single pending command
+    void exec(QueuedCmd cmd) throws;
+
+
+    //
+    // Bridge functions
+    //
+
+public:
+
     RetroShell &operator<<(char value);
     RetroShell &operator<<(const string &value);
     RetroShell &operator<<(int value);
@@ -137,116 +158,12 @@ public:
     RetroShell &operator<<(unsigned long long value);
     RetroShell &operator<<(std::stringstream &stream);
 
-    // Returns the prompt
-    const string &getPrompt();
-
-    // Updates the prompt according to the current shell mode
-    void updatePrompt();
-
-    // Returns the contents of the whole storage as a single C string
     const char *text();
-
-    // Moves the cursor forward to a certain column
-    void tab(isize pos);
-
-    // Assigns an additional output stream
-    void setStream(std::ostream &os);
-
-private:
-
-    // Marks the text storage as dirty
-    void needsDisplay();
-
-    // Clears the console window
-    void clear();
-
-    // Prints the welcome message
-    void welcome();
-
-    // Prints the help line
-    void printHelp();
-
-    // Prints a state summary (used by the debug shell)
-    void printState();
-
-    
-    //
-    // Managing user input
-    //
-
-public:
-
-    // Returns the size of the current user-input string
-    isize inputLength() { return (isize)input.length(); }
-
-    // Presses a key or a series of keys
+    isize cursorRel();
     void press(RetroShellKey key, bool shift = false);
     void press(char c);
     void press(const string &s);
-
-    // Returns the cursor position relative to the line end
-    isize cursorRel();
-
-
-    //
-    // Working with the history buffer
-    //
-
-public:
-
-    isize historyLength() { return (isize)history.size(); }
-
-    
-    //
-    // Executing commands
-    //
-
-public:
-
-    // Main entry point for executing commands that were typed in by the user
-    void execUserCommand(const string &command);
-
-    // Executes all pending commands
-    void exec() throws;
-
-    // Executes a single command
-    void exec(const string &command, isize line = 0) throws;
-
-    // Executes a shell script
-    void execScript(std::stringstream &ss) throws;
-    void execScript(const std::ifstream &fs) throws;
-    void execScript(const string &contents) throws;
-    void execScript(const class MediaFile &script) throws;
-    void abortScript();
-
-private:
-
-    // Prints a textual description of an error in the console
-    void describe(const std::exception &exception, isize line = 0, const string &cmd = "");
-
-    // Prints help messages for a given command string
-    void help(const string &command);
-
-
-    //
-    // Command handlers
-    //
-
-public:
-
-    void dump(Dumpable &component, std::vector <Category> categories);
-    void dump(Dumpable &component, Category category);
-
-private:
-
-    void _dump(Dumpable &component, Category category);
-
-    
-    //
-    // Servicing events
-    //
-
-public:
+    void setStream(std::ostream &os);
 
     void serviceEvent();
 };

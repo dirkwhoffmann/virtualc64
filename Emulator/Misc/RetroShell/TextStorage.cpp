@@ -50,6 +50,18 @@ TextStorage::clear()
     storage.push_back("");
 }
 
+bool
+TextStorage::isCleared()
+{
+    return storage.size() == 1 && storage[0].size() == 0;
+}
+
+bool 
+TextStorage::lastLineIsEmpty()
+{
+    return storage.back().empty();
+}
+
 void
 TextStorage::append(const string &line)
 {
@@ -69,6 +81,7 @@ TextStorage::operator<<(char c)
         case '\n':
 
             if (ostream) *ostream << storage.back() << std::endl;
+
             append("");
             break;
 

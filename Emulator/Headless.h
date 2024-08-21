@@ -30,9 +30,6 @@ class Headless {
     // Parsed command line arguments
     std::map<string,string> keys;
 
-    // The emulator instance
-    VirtualC64 c64;
-
     // Barrier for syncing script execution
     util::Mutex barrier;
 
@@ -60,6 +57,9 @@ private:
     // Returns the path to the self-test script
     string selfTestScript();
 
+    // Executes the provided script
+    int execScript();
+
 
     //
     // Running
@@ -67,6 +67,9 @@ private:
 
 public:
     
+    // Reports size information
+    void reportSize();
+
     // Processes an incoming message
     void process(Message msg);
 };
@@ -75,7 +78,7 @@ public:
 // Self-test script
 //
 
-static const char *testScript[] = {
+static const char *script[] = {
 
     "# Self-test script for VirtualC64",
     "# ",

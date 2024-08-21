@@ -650,6 +650,7 @@ struct GuardInfo {
 - (NSString *)getText;
 - (void)pressKey:(char)c;
 - (void)pressSpecialKey:(RetroShellKey)key;
+- (void)pressSpecialKey:(RetroShellKey)key shift:(BOOL)shift;
 - (void)executeScript:(MediaFileProxy *)file;
 
 @end

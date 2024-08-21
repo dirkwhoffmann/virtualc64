@@ -126,7 +126,7 @@ class Console: Layer {
             case kVK_End: emu.retroShell.pressSpecialKey(.END)
             case kVK_Delete: emu.retroShell.pressSpecialKey(.BACKSPACE)
             case kVK_ForwardDelete: emu.retroShell.pressSpecialKey(.DEL)
-            case kVK_Return: emu.retroShell.pressSpecialKey(shift ? .SHIFT_RETURN : .RETURN)
+            case kVK_Return: emu.retroShell.pressSpecialKey(.RETURN, shift: shift)
             case kVK_Tab: emu.retroShell.pressSpecialKey(.TAB)
             case kVK_Escape: close()
 
