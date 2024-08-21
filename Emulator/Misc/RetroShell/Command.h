@@ -30,6 +30,7 @@ namespace Arg {
 static const std::string address    = "<address>";
 static const std::string boolean    = "{ true | false }";
 static const std::string command    = "<command>";
+static const std::string count      = "<count>";
 static const std::string dst        = "<destination>";
 static const std::string ignores    = "<ignores>";
 static const std::string kb         = "<kb>";
@@ -39,7 +40,6 @@ static const std::string path       = "<path>";
 static const std::string process    = "<process>";
 static const std::string seconds    = "<seconds>";
 static const std::string value      = "<value>";
-static const std::string count      = "<count>";
 static const std::string sequence   = "<byte sequence>";
 static const std::string src        = "<source>";
 static const std::string volume     = "<volume>";
@@ -49,14 +49,11 @@ static const std::string string     = "<string>";
 
 struct Command {
 
-    // Textual descriptions of all command groups
-    static std::vector<string> groups;
-
-    // Group stack
-    static std::stack<isize> groupStack;
+    // Used during command registration
+    static string currentGroup;
 
     // Group of this command
-    isize group;
+    string groupName;
 
     // Name of this command (e.g., "eject")
     string name;
@@ -75,24 +72,20 @@ struct Command {
 
     // List of subcommands
     std::vector<Command> subCommands;
-    
+
     // Command handler
     std::function<void (Arguments&, long)> callback = nullptr;
 
     // Additional argument passed to the command handler
     long param = 0;
-    
+
     // Indicates if this command appears in help descriptions
     bool hidden = false;
 
-    
+
     //
     // Methods
     //
-
-    // Begins or ends a command group
-    void pushGroup(const string &description, const string &postfix = ":");
-    void popGroup();
 
     // Creates a new node in the command tree
     void add(const std::vector<string> &tokens,
@@ -134,11 +127,6 @@ struct Command {
                const string &help,
                long param = 0);
 
-    /*
-    void registerSetCommand(const string &cmd, const ConfigOptions &options,
-                            std::function<void (Arguments&, long)> func = nullptr, long param = 0);
-    */
-
     // Returns arguments counts
     isize minArgs() const { return isize(requiredArgs.size()); }
     isize optArgs() const { return isize(optionalArgs.size()); }
@@ -155,7 +143,7 @@ struct Command {
 
     // Automatically completes a partial token string
     string autoComplete(const string& token);
-        
+
     // Returns a syntax string for this command
     string usage() const;
 };

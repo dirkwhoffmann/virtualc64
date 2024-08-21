@@ -317,22 +317,23 @@ Interpreter::help(const Command& current)
     }
     tab += (isize)indent.size();
 
-    isize group = -1;
+    isize newlines = 1;
 
     for (auto &it : current.subCommands) {
 
         // Only proceed if the command is visible
         if (it.hidden) continue;
 
-        // Print group description when a new group begins
-        if (group != it.group) {
+        // Print the group (if present)
+        if (!it.groupName.empty()) {
 
-            group = it.group;
+            retroShell << '\n' << it.groupName << '\n';
+            newlines = 1;
+        }
+
+        // Print newlines
+        for (; newlines > 0; newlines--) {
             retroShell << '\n';
-
-            if (!Command::groups[group].empty()) {
-                retroShell << Command::groups[group] << '\n' << '\n';
-            }
         }
 
         // Print command descriptioon

@@ -58,7 +58,7 @@ Interpreter::initDebugShell(Command &root)
     // Program execution
     //
 
-    root.pushGroup("Program execution");
+    Command::currentGroup = "Program execution";
 
     root.add({"goto"}, { }, { Arg::value },
              std::pair <string, string>("g[oto]", "Goto address"),
@@ -85,7 +85,6 @@ Interpreter::initDebugShell(Command &root)
     root.clone("n", {"next"});
 
     root.add({"break"},     "Manage CPU breakpoints");
-    root.pushGroup("");
 
     root.add({"break", ""},
              "List all breakpoints",
@@ -115,11 +114,7 @@ Interpreter::initDebugShell(Command &root)
         cpu.toggleBreakpoint(parseNum(argv[0]));
     });
 
-    root.popGroup();
-
     root.add({"watch"},     "Manage CPU watchpoints");
-
-    root.pushGroup("");
 
     root.add({"watch", ""},
              "List all watchpoints",
@@ -149,14 +144,12 @@ Interpreter::initDebugShell(Command &root)
         cpu.toggleWatchpoint(parseNum(argv[0]));
     });
 
-    root.popGroup();
-
 
     //
     // Monitoring
     //
 
-    root.pushGroup("Monitoring");
+    Command::currentGroup = "Monitoring";
 
     root.add({"d"}, { }, { Arg::address },
              "Disassemble instructions",
@@ -237,11 +230,9 @@ Interpreter::initDebugShell(Command &root)
     root.add({"i"},
              "Inspect a component");
 
-    root.pushGroup("Components");
+    Command::currentGroup = "Components";
 
     root.add({"i", "thread"},       "Emulator thread");
-
-    root.pushGroup("");
 
     root.add({"i", "thread", ""},        "Displays the thread state",
              [this](Arguments& argv, long value) {
@@ -254,8 +245,6 @@ Interpreter::initDebugShell(Command &root)
 
         retroShell.dump(emulator, Category::RunAhead);
     });
-
-    root.popGroup();
 
     auto cmd = c64.shellName();
     auto description = c64.description();
@@ -315,9 +304,7 @@ Interpreter::initDebugShell(Command &root)
         retroShell.dump(expansionPort, { Category::Config, Category::State });
     });
 
-    root.popGroup();
-
-    root.pushGroup("Peripherals");
+    Command::currentGroup = "Peripherals";
 
     cmd = keyboard.shellName();
     description = keyboard.description();
@@ -378,8 +365,6 @@ Interpreter::initDebugShell(Command &root)
 
         root.add({"i", cmd}, description);
 
-        root.pushGroup("");
-
         root.add({"i", cmd, ""},
                  "Inspects the internal state",
                  [this](Arguments& argv, long value) {
@@ -411,8 +396,6 @@ Interpreter::initDebugShell(Command &root)
             auto &drive = value ? drive9 : drive8;
             retroShell.dump(drive, Category::Layout);
         }, i);
-
-        root.popGroup();
     }
 
     cmd = serialPort.shellName();
@@ -429,10 +412,6 @@ Interpreter::initDebugShell(Command &root)
         retroShell.dump(datasette, { Category::Config, Category::State });
     });
 
-    root.popGroup();
-
-    root.pushGroup("Ports");
-
     cmd = audioPort.shellName();
     description = audioPort.description();
     root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
@@ -440,9 +419,7 @@ Interpreter::initDebugShell(Command &root)
         retroShell.dump(audioPort, { Category::Config, Category::State });
     });
 
-    root.popGroup();
-
-    root.pushGroup("Miscellaneous");
+    Command::currentGroup = "Miscellaneous";
 
     cmd = host.shellName();
     description = host.description();
@@ -450,8 +427,6 @@ Interpreter::initDebugShell(Command &root)
 
         retroShell.dump(host, { Category::Config, Category::State });
     });
-
-    root.popGroup();
 
     root.add({"r"},
              "Show registers");
@@ -480,14 +455,10 @@ Interpreter::initDebugShell(Command &root)
         retroShell.dump(sidBridge.sid[0], Category::Registers);
     });
 
-    root.popGroup();
-
 
     //
     // Miscellaneous (Recorder)
     //
-
-    root.pushGroup("Miscellaneous");
 
     root.add({"checksums"},
              "Displays checksum of various components",
@@ -502,8 +473,6 @@ Interpreter::initDebugShell(Command &root)
 
         retroShell.dump(c64, Category::Sizeof);
     });
-
-    root.popGroup();
 }
 
 }

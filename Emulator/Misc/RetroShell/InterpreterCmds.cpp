@@ -24,7 +24,14 @@ Interpreter::initCommons(Command &root)
     // Common commands
     //
 
-    root.pushGroup("Shell commands");
+    Command::currentGroup = "Shell commands";
+
+    root.add({"welcome"},
+             "", // Prints the welcome message
+             [this](Arguments& argv, long value) {
+
+        // welcome();
+    });
 
     root.add({"."},
              "Enter or exit the debugger",
@@ -96,8 +103,7 @@ Interpreter::initCommandShell(Command &root)
     // Regression tester
     //
 
-    root.pushGroup("Regression tester");
-    root.pushGroup("");
+    Command::currentGroup = "Regression tester";
 
     root.add({"regression"}, ""); // Run the regression tester
 
@@ -153,14 +159,12 @@ Interpreter::initCommandShell(Command &root)
         regressionTester.dumpTexture(c64, argv.front());
     });
 
-    root.popGroup();
-
 
     //
     // Components
     //
 
-    root.pushGroup("Components");
+    Command::currentGroup = "Components";
 
     //
     // Components (C64)
@@ -169,8 +173,6 @@ Interpreter::initCommandShell(Command &root)
     string cmd = c64.shellName();
     auto description = c64.description();
     root.add({cmd}, description);
-
-    root.pushGroup("");
 
     root.add({cmd, ""},
              "Display the current configuration",
@@ -230,8 +232,6 @@ Interpreter::initCommandShell(Command &root)
 
         c64.exportConfig("/tmp/test.ini");
     });
-    
-    root.popGroup();
 
 
     //
@@ -241,8 +241,6 @@ Interpreter::initCommandShell(Command &root)
     cmd = mem.shellName();
     description = mem.description();
     root.add({cmd}, description);
-
-    root.pushGroup("");
 
     root.add({cmd, ""},
              "Displays the current configuration",
@@ -282,7 +280,6 @@ Interpreter::initCommandShell(Command &root)
         c64.flash(file, 0);
     });
 
-    root.popGroup();
 
     //
     // Components (CIA)
@@ -293,8 +290,6 @@ Interpreter::initCommandShell(Command &root)
         cmd = (i == 0) ? cia1.shellName() : cia2.shellName();
         description = (i == 0) ? cia1.description() : cia2.description();
         root.add({cmd}, description);
-
-        root.pushGroup("");
 
         root.add({cmd, ""},
                  "Displays the current configuration",
@@ -319,8 +314,6 @@ Interpreter::initCommandShell(Command &root)
 
             }, HI_W_LO_W(opt, i));
         }
-
-        root.popGroup();
     }
 
     //
@@ -330,8 +323,6 @@ Interpreter::initCommandShell(Command &root)
     cmd = vic.shellName();
     description = vic.description();
     root.add({cmd}, description);
-
-    root.pushGroup("");
 
     root.add({cmd, ""},
              "Displays the current configuration",
@@ -353,8 +344,6 @@ Interpreter::initCommandShell(Command &root)
         }, opt);
     }
 
-    root.popGroup();
-
 
     //
     // Components (DMA Debugger)
@@ -363,8 +352,6 @@ Interpreter::initCommandShell(Command &root)
     cmd = vic.dmaDebugger.shellName();
     description = vic.dmaDebugger.description();
     root.add({cmd}, description);
-
-    root.pushGroup("");
 
     root.add({cmd, ""},
              "Displays the current configuration",
@@ -400,8 +387,6 @@ Interpreter::initCommandShell(Command &root)
 
         }, opt);
     }
-    
-    root.popGroup();
 
 
     //
@@ -416,7 +401,6 @@ Interpreter::initCommandShell(Command &root)
         description = sid.description();
         root.add({cmd}, description);
 
-        root.pushGroup("");
         root.add({cmd, ""},
                  "Displays the current configuration",
                  [this](Arguments& argv, long value) {
@@ -437,8 +421,6 @@ Interpreter::initCommandShell(Command &root)
 
             }, HI_W_LO_W(opt, i));
         }
-
-        root.popGroup();
     }
 
 
@@ -449,8 +431,6 @@ Interpreter::initCommandShell(Command &root)
     cmd = sidBridge.shellName();
     description = sidBridge.description();
     root.add({cmd}, description);
-
-    root.pushGroup("");
 
     root.add({cmd, ""},
              "Displays the current configuration",
@@ -473,14 +453,12 @@ Interpreter::initCommandShell(Command &root)
         }, opt);
     }
 
-    root.popGroup();
-
 
     //
     // Ports
     //
 
-    root.pushGroup("Ports");
+    Command::currentGroup = "Ports";
 
 
     //
@@ -490,8 +468,6 @@ Interpreter::initCommandShell(Command &root)
     cmd = powerSupply.shellName();
     description = powerSupply.description();
     root.add({cmd}, description);
-
-    root.pushGroup("");
 
     root.add({cmd, ""},
              "Displays the current configuration",
@@ -514,8 +490,6 @@ Interpreter::initCommandShell(Command &root)
         }, opt);
     }
 
-    root.popGroup();
-
 
     //
     // Ports (Audio port)
@@ -524,8 +498,6 @@ Interpreter::initCommandShell(Command &root)
     cmd = audioPort.shellName();
     description = audioPort.description();
     root.add({cmd}, description);
-
-    root.pushGroup("");
 
     root.add({cmd, ""},
              "Displays the current configuration",
@@ -548,8 +520,6 @@ Interpreter::initCommandShell(Command &root)
         }, opt);
     }
 
-    root.popGroup();
-
 
     //
     // Ports (User port)
@@ -558,8 +528,6 @@ Interpreter::initCommandShell(Command &root)
     cmd = userPort.shellName();
     description = userPort.description();
     root.add({cmd}, description);
-
-    root.pushGroup("");
 
     root.add({cmd, ""},
              "Displays the current configuration",
@@ -582,8 +550,6 @@ Interpreter::initCommandShell(Command &root)
         }, opt);
     }
 
-    root.popGroup();
-
 
     //
     // Ports (Video port)
@@ -592,8 +558,6 @@ Interpreter::initCommandShell(Command &root)
     cmd = videoPort.shellName();
     description = videoPort.description();
     root.add({cmd}, description);
-
-    root.pushGroup("");
 
     root.add({cmd, ""},
              "Displays the current configuration",
@@ -616,8 +580,6 @@ Interpreter::initCommandShell(Command &root)
         }, opt);
     }
 
-    root.popGroup();
-
 
     //
     // Ports (Expansion port)
@@ -626,8 +588,6 @@ Interpreter::initCommandShell(Command &root)
     cmd = expansionPort.shellName();
     description = expansionPort.description();
     root.add({cmd}, description);
-
-    root.pushGroup("");
 
     root.add({cmd, "attach"},
              "Attaches a cartridge");
@@ -655,14 +615,12 @@ Interpreter::initCommandShell(Command &root)
         expansionPort.attachGeoRam(parseNum(argv[0]));
     });
 
-    root.popGroup();
-
 
     //
     // Peripherals
     //
 
-    root.pushGroup("Peripherals");
+    Command::currentGroup = "Peripherals";
 
 
     //
@@ -672,8 +630,6 @@ Interpreter::initCommandShell(Command &root)
     cmd = monitor.shellName();
     description = monitor.description();
     root.add({cmd}, description);
-
-    root.pushGroup("");
 
     root.add({cmd, ""},
              "Displays the current configuration",
@@ -697,8 +653,6 @@ Interpreter::initCommandShell(Command &root)
         }, opt);
     }
 
-    root.popGroup();
-
 
     //
     // Peripherals (Keyboard)
@@ -707,8 +661,6 @@ Interpreter::initCommandShell(Command &root)
     cmd = keyboard.shellName();
     description = keyboard.description();
     root.add({cmd}, description);
-
-    root.pushGroup("");
 
     root.add({cmd, "press"}, { Arg::value },
              "Presses a key",
@@ -748,8 +700,6 @@ Interpreter::initCommandShell(Command &root)
         keyboard.autoType("run\n");
     });
 
-    root.popGroup();
-
 
     //
     // Peripherals (Mouse)
@@ -762,8 +712,6 @@ Interpreter::initCommandShell(Command &root)
         cmd = mouse.shellName();
         description = mouse.description();
         root.add({cmd}, description);
-
-        root.pushGroup("");
 
         root.add({cmd, ""},
                  "Displays the current configuration",
@@ -787,8 +735,6 @@ Interpreter::initCommandShell(Command &root)
 
             }, HI_W_LO_W(opt, i));
         }
-
-        root.popGroup();
     }
 
 
@@ -803,8 +749,6 @@ Interpreter::initCommandShell(Command &root)
         cmd = joystick.shellName();
         description = joystick.description();
         root.add({cmd}, description);
-
-        root.pushGroup("");
 
         root.add({cmd, ""},
                  "Displays the current configuration",
@@ -907,8 +851,6 @@ Interpreter::initCommandShell(Command &root)
             port.joystick.trigger(RELEASE_Y);
 
         }, i);
-
-        root.popGroup();
     }
 
 
@@ -923,8 +865,6 @@ Interpreter::initCommandShell(Command &root)
         cmd = paddle.shellName();
         description = paddle.description();
         root.add({cmd}, description);
-
-        root.pushGroup("");
 
         root.add({cmd, ""},
                  "Displays the current configuration",
@@ -948,8 +888,6 @@ Interpreter::initCommandShell(Command &root)
 
             }, HI_W_LO_W(opt, i));
         }
-
-        root.popGroup();
     }
 
     //
@@ -959,8 +897,6 @@ Interpreter::initCommandShell(Command &root)
     cmd = datasette.shellName();
     description = datasette.description();
     root.add({cmd}, description);
-
-    root.pushGroup("");
 
     root.add({cmd, ""},
              "Displays the current configuration",
@@ -1011,8 +947,6 @@ Interpreter::initCommandShell(Command &root)
         }, opt);
     }
 
-    root.popGroup();
-
 
     //
     // Peripherals (Drives)
@@ -1025,8 +959,6 @@ Interpreter::initCommandShell(Command &root)
         cmd = drive.shellName();
         description = drive.description();
         root.add({cmd}, description);
-
-        root.pushGroup("");
 
         root.add({cmd, ""},
                  "Displays the current configuration",
@@ -1108,9 +1040,8 @@ Interpreter::initCommandShell(Command &root)
 
             }, HI_W_LO_W(opt, i));
         }
-
-        root.popGroup();
     }
+
 
     //
     // Peripherals (Parallel cable)
@@ -1120,16 +1051,12 @@ Interpreter::initCommandShell(Command &root)
     description = parCable.description();
     root.add({cmd}, description);
 
-    root.pushGroup("");
-
     root.add({cmd, ""},
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
         retroShell.dump(parCable, Category::Config);
     });
-
-    root.popGroup();
 
 
     //
@@ -1139,8 +1066,6 @@ Interpreter::initCommandShell(Command &root)
     cmd = userPort.rs232.shellName();
     description = userPort.rs232.description();
     root.add({cmd}, description);
-
-    root.pushGroup("");
 
     root.add({cmd, ""},
              "Displays the current configuration",
@@ -1171,14 +1096,12 @@ Interpreter::initCommandShell(Command &root)
         userPort.rs232 << argv[0];
     });
 
-    root.popGroup();
-
 
     //
     // Miscellaneous
     //
 
-    root.pushGroup("Miscellaneous");
+    Command::currentGroup = "Miscellaneous";
 
     //
     // Miscellaneous (Host)
@@ -1187,8 +1110,6 @@ Interpreter::initCommandShell(Command &root)
     cmd = host.shellName();
     description = host.description();
     root.add({cmd}, description);
-
-    root.pushGroup("");
 
     root.add({cmd, ""},
              "Displays the current configuration",
@@ -1211,7 +1132,6 @@ Interpreter::initCommandShell(Command &root)
         }, opt);
     }
 
-    root.popGroup();
 
     //
     // Miscellaneous (Remote server)
@@ -1219,68 +1139,62 @@ Interpreter::initCommandShell(Command &root)
 
     root.add({"server"}, "Remote connections");
 
-    root.pushGroup("");
-    {
+    root.add({"server", ""},
+             "Displays a server status summary",
+             [this](Arguments& argv, long value) {
 
-        root.add({"server", ""},
-                 "Displays a server status summary",
-                 [this](Arguments& argv, long value) {
+        retroShell.dump(remoteManager, Category::State);
+    });
 
-            retroShell.dump(remoteManager, Category::State);
-        });
+    root.add({"server", "rshell"},
+             "Retro shell server");
 
-        root.add({"server", "rshell"},
-                 "Retro shell server");
+    root.add({"server", "rshell", "start"},
+             "Starts the retro shell server",
+             [this](Arguments& argv, long value) {
 
-        root.add({"server", "rshell", "start"},
-                 "Starts the retro shell server",
-                 [this](Arguments& argv, long value) {
+        remoteManager.rshServer.start();
+    });
 
-            remoteManager.rshServer.start();
-        });
+    root.add({"server", "rshell", "stop"},
+             "Stops the retro shell server",
+             [this](Arguments& argv, long value) {
 
-        root.add({"server", "rshell", "stop"},
-                 "Stops the retro shell server",
-                 [this](Arguments& argv, long value) {
+        remoteManager.rshServer.stop();
+    });
 
-            remoteManager.rshServer.stop();
-        });
+    root.add({"server", "rshell", "disconnect"},
+             "Disconnects a client",
+             [this](Arguments& argv, long value) {
 
-        root.add({"server", "rshell", "disconnect"},
-                 "Disconnects a client",
-                 [this](Arguments& argv, long value) {
+        remoteManager.rshServer.disconnect();
+    });
 
-            remoteManager.rshServer.disconnect();
-        });
+    root.add({"server", "rshell", ""},
+             "Displays the current configuration",
+             [this](Arguments& argv, long value) {
 
-        root.add({"server", "rshell", ""},
-                 "Displays the current configuration",
-                 [this](Arguments& argv, long value) {
+        retroShell.dump(remoteManager.rshServer, Category::Config);
+    });
 
-            retroShell.dump(remoteManager.rshServer, Category::Config);
-        });
+    for (auto &opt : remoteManager.rshServer.getOptions()) {
 
-        for (auto &opt : remoteManager.rshServer.getOptions()) {
+        root.add({cmd, "set", OptionEnum::plainkey(opt)},
+                 {OptionParser::argList(opt)},
+                 OptionEnum::help(opt),
+                 [this](Arguments& argv, long opt) {
 
-            root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                     {OptionParser::argList(opt)},
-                     OptionEnum::help(opt),
-                     [this](Arguments& argv, long opt) {
+            emulator.set(Option(opt), argv[0]);
 
-                emulator.set(Option(opt), argv[0]);
-
-            }, opt);
-        }
+        }, opt);
     }
-    root.popGroup();
 
 
     //
     // Miscellaneous (Recorder)
     //
 
-    root.add({"recorder"},       "Screen recorder");
-    root.pushGroup("");
+    root.add({"recorder"}, "Screen recorder");
 
     root.add({"recorder", ""},
              "Displays the current configuration",
@@ -1302,9 +1216,6 @@ Interpreter::initCommandShell(Command &root)
 
         }, opt);
     }
-
-    root.popGroup();
-    root.popGroup();
 }
 
 }
