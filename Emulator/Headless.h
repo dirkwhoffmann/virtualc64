@@ -14,6 +14,7 @@
 
 #include "VirtualC64.h"
 #include "Concurrency.h"
+#include <filesystem>
 #include <map>
 
 namespace vc64 {
@@ -55,7 +56,7 @@ private:
     void checkArguments() throws;
 
     // Returns the path to the self-test script
-    string selfTestScript();
+    std::filesystem::path testScriptPath();
 
     // Executes the provided script
     int execScript();
@@ -78,7 +79,7 @@ public:
 // Self-test script
 //
 
-static const char *script[] = {
+static const char *testScript[] = {
 
     "# Self-test script for VirtualC64",
     "# ",

@@ -17,7 +17,6 @@
 #include "Script.h"
 #include "IOUtils.h"
 #include <chrono>
-#include <filesystem>
 #include <iostream>
 
 #ifndef _WIN32
@@ -162,7 +161,7 @@ Headless::parseArguments(int argc, char *argv[])
     checkArguments();
 
     // Create the selftest script if needed
-    if (keys.find("check") != keys.end()) keys["arg1"] = selfTestScript();
+    if (keys.find("check") != keys.end()) keys["arg1"] = testScriptPath().string();
 }
 
 #endif
@@ -194,16 +193,16 @@ Headless::checkArguments()
     }
 }
 
-string
-Headless::selfTestScript()
+std::filesystem::path
+Headless::testScriptPath()
 {
     auto path = std::filesystem::temp_directory_path() / "selftest.ini";
     auto file = std::ofstream(path);
 
-    for (isize i = 0; i < isizeof(script) / isizeof(const char *); i++) {
-        file << script[i] << std::endl;
+    for (isize i = 0; i < isizeof(testScript) / isizeof(const char *); i++) {
+        file << testScript[i] << std::endl;
     }
-    return path.string();
+    return path;
 }
 
 void
