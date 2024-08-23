@@ -41,7 +41,6 @@ struct SIDRevisionEnum : util::Reflection<SIDRevisionEnum, SIDRevision> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = MOS_8580;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return nullptr; }
     static const char *_key(long value)
@@ -66,7 +65,6 @@ struct SIDEngineEnum : util::Reflection<SIDEngineEnum, SIDEngine> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = SIDENGINE_RESID;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "SIDENGINE"; }
     static const char *_key(long value)
@@ -93,7 +91,6 @@ struct SamplingMethodEnum : util::Reflection<SamplingMethodEnum, SamplingMethod>
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = SAMPLING_RESAMPLE_FASTMEM;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "SAMPLING"; }
     static const char *_key(long value)

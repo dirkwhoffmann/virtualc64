@@ -39,6 +39,9 @@ namespace vc64::util {
 
 template <class T, typename E> struct Reflection {
 
+    // Checks if the provides value is inside the valid range
+    static constexpr bool isValid(auto value) { return long(value) >= T::minVal && long(value) <= T::maxVal; }
+
     // Returns the key as a C string
     static const char *key(isize value) {
 

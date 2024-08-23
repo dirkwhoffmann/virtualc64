@@ -44,7 +44,6 @@ struct C64ModelEnum : util::Reflection<C64ModelEnum, C64Model> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = C64_MODEL_NTSC_OLD;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "C64_MODEL"; }
     static const char *_key(long value)
@@ -74,7 +73,6 @@ struct WarpModeEnum : util::Reflection<WarpModeEnum, WarpMode>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = WARP_ALWAYS;
-    static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
 
     static const char *prefix() { return "WARP"; }
     static const char *_key(long value)
@@ -124,7 +122,6 @@ struct EventSlotEnum : util::Reflection<EventSlotEnum, EventSlot>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = SLOT_COUNT - 1;
-    static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
 
     static const char *prefix() { return "SLOT"; }
     static const char *_key(long value)
@@ -262,7 +259,6 @@ struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionT
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = INSPECTION_EVENTS;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "INSPECTION"; }
     static const char *_key(long value)

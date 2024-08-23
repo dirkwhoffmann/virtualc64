@@ -37,7 +37,6 @@ struct PaletteEnum : util::Reflection<PaletteEnum, Palette> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = PALETTE_SEPIA;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "PALETTE"; }
     static const char *_key(long value)
@@ -68,7 +67,6 @@ struct UpscalerEnum : util::Reflection<UpscalerEnum, Upscaler> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = UPSCALER_XBR_4X;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "UPSCALER"; }
     static const char *_key(long value)
@@ -98,7 +96,6 @@ struct DotmaskEnum : util::Reflection<DotmaskEnum, Dotmask> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = DOTMASK_TRISECTED_SHIFTED;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "DOTMASK"; }
     static const char *_key(long value)
@@ -128,7 +125,6 @@ struct ScanlinesEnum : util::Reflection<ScanlinesEnum, Scanlines> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = SCANLINES_SUPERIMPOSE;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "SCANLINES"; }
     static const char *_key(long value)

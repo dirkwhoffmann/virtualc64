@@ -37,7 +37,6 @@ struct MouseModelEnum : util::Reflection<MouseModelEnum, MouseModel> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = MOUSE_PADDLE_XY;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "MOUSE"; }
     static const char *_key(long value)

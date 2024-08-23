@@ -31,7 +31,6 @@ struct ServerTypeEnum : util::Reflection<ServerTypeEnum, ServerType>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = SERVER_RSH;
-    static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
 
     static const char *prefix() { return "SERVER"; }
     static const char *_key(long value)

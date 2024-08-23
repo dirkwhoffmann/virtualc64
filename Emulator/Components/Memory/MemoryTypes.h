@@ -40,7 +40,6 @@ struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
 
     static constexpr long minVal = 1;
     static constexpr long maxVal = M_NONE;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "M"; }
     static const char *_key(long value)
@@ -76,7 +75,6 @@ struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = RAM_PATTERN_RANDOM;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "RAM_PATTERN"; }
     static const char *_key(long value)
@@ -106,7 +104,6 @@ struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = ROM_TYPE_VC1541;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "ROM_TYPE"; }
     static const char *_key(long value)
@@ -134,7 +131,6 @@ struct RomVendorEnum : util::Reflection<RomVendorEnum, RomVendor> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = ROM_VENDOR_OTHER;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "ROM_VENDOR"; }
     static const char *_key(long value)

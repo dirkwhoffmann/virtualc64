@@ -35,7 +35,6 @@ struct CommunicationDeviceEnum : util::Reflection<CommunicationDeviceEnum, Commu
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = COMDEV_COMMANDER;
-    static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
 
     static const char *prefix() { return "COMDEV"; }
     static const char *_key(long value)

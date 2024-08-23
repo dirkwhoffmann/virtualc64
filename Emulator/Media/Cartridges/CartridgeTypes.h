@@ -112,7 +112,6 @@ struct CartridgeTypeEnum : util::Reflection<CartridgeTypeEnum, CartridgeType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = CRT_NONE;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "CRT"; }
     static const char *_key(long value)
@@ -225,7 +224,6 @@ struct FlashStateEnum : util::Reflection<FlashStateEnum, FlashState> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = FLASH_SECTOR_ERASE_SUSPEND;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "FLASH"; }
     static const char *_key(long value)

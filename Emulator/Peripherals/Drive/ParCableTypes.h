@@ -34,7 +34,6 @@ struct ParCableTypeEnum : util::Reflection<ParCableTypeEnum, ParCableType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = PAR_CABLE_DOLPHIN3;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "PAR_CABLE"; }
     static const char *_key(long value)

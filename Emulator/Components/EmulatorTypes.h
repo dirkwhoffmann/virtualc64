@@ -114,7 +114,6 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = FLAG_FORCE_NO_FFMPEG;
-    static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
 
     static const char *prefix() { return "FLAG"; }
     static const char *_key(long value)

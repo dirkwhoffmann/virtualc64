@@ -120,7 +120,6 @@ struct DiskTypeEnum : util::Reflection<DiskTypeEnum, DiskType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = DISK_TYPE_DS_SD;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "DISK_TYPE"; }
     static const char *_key(long value)
@@ -147,7 +146,6 @@ struct CBMFileTypeEnum : util::Reflection<CBMFileTypeEnum, CBMFileType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = CBM_FILE_REL;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "CBM"; }
     static const char *_key(long value)

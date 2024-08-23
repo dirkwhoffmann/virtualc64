@@ -195,7 +195,6 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = OPT_AUTOFIRE_DELAY;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "OPT"; }
     static const char *_key(long value)

@@ -33,7 +33,6 @@ struct MemAccessEnum : util::Reflection<MemAccessEnum, MemAccess> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = MEMACCESS_S;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "MEMACCESS"; }
     static const char *_key(long value)

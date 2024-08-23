@@ -56,7 +56,6 @@ struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = DRIVE_VC1541II;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "DRIVE"; }
     static const char *_key(long value)
@@ -83,7 +82,6 @@ struct DriveRamEnum : util::Reflection<DriveRamEnum, DriveRam> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = DRVRAM_6000_7FFF;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "DRVRAM"; }
     static const char *_key(long value)
@@ -114,7 +112,6 @@ struct DrvMemTypeEnum : util::Reflection<DrvMemTypeEnum, DrvMemType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = DRVMEM_PIA;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "DRVMEM"; }
     static const char *_key(long value)
@@ -146,7 +143,6 @@ struct InsertionStatusEnum : util::Reflection<InsertionStatusEnum, InsertionStat
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = DISK_PARTIALLY_EJECTED;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "DISK"; }
     static const char *_key(long value)

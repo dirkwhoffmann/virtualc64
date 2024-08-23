@@ -34,7 +34,6 @@ struct UserPortDeviceEnum : util::Reflection<UserPortDeviceEnum, UserPortDevice>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = USR_RS232;
-    static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
 
     static const char *prefix() { return "USR"; }
     static const char *_key(long value)
