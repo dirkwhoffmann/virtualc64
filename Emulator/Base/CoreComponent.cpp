@@ -393,7 +393,7 @@ void CoreComponent::exportConfig(std::ostream& ss, bool diff) const
             auto currentStr = OptionParser::asPlainString(opt, current);
             auto fallbackStr = OptionParser::asPlainString(opt, fallback);
 
-            string line = cmd + " set " + OptionEnum::plainkey(opt) + " " + currentStr;
+            string line = cmd + " set " + OptionEnum::key(opt) + " " + currentStr;
             string comment = diff ? fallbackStr : OptionEnum::help(opt);
 
             ss << std::setw(40) << std::left << line << " # " << comment << std::endl;

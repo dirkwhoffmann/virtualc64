@@ -45,7 +45,7 @@ Recorder::_dump(Category category, std::ostream& os) const
         os << tab("Available");
         os << bol(FFmpeg::available()) << std::endl;
         os << tab("Recorder state");
-        os << bol(RecStateEnum::plainkey(state)) << std::endl;
+        os << bol(RecStateEnum::key(state)) << std::endl;
         os << tab("Duration");
         os << flt(getDuration().asSeconds()) << std::endl;
     }

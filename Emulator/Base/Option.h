@@ -101,7 +101,6 @@ class EnumParser : public OptionParser {
     using OptionParser::OptionParser;
 
     virtual i64 parse(const string &s) override { return (arg = util::parseEnum<T>(s)); }
-    virtual string asPlainString() override { return T::plainkey(isize(arg)); }
     virtual string asString() override { return T::key(isize(arg)); }
     virtual string keyList() override { return T::keyList(); }
     virtual string argList() override { return T::argList(); }

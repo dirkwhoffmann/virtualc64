@@ -860,7 +860,7 @@ Console::registerComponent(CoreComponent &c)
         root.add({cmd, "set"}, "Configure the component");
         for (auto &opt : options) {
 
-            root.add({cmd, "set", OptionEnum::plainkey(opt)},
+            root.add({cmd, "set", OptionEnum::key(opt)},
                      {OptionParser::argList(opt)},
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
