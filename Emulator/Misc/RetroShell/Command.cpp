@@ -65,13 +65,16 @@ Command::add(const std::vector<string> &tokens,
 }
 
 void
-Command::add(const std::vector<string> &tokens,
+Command::add(const std::vector<string> &rawtokens,
              const std::vector<string> &requiredArgs,
              const std::vector<string> &optionalArgs,
              std::pair<const string &, const string &> help,
              std::function<void (Arguments&, long)> func, long param)
 {
-    assert(!tokens.empty());
+    assert(!rawtokens.empty());
+
+    // Cleanse the token list (convert { "aaa bbb" } into { "aaa", "bbb" }
+    auto tokens = util::split(rawtokens, ' ');
 
     // Traverse the node tree
     Command *cmd = seek(std::vector<string> { tokens.begin(), tokens.end() - 1 });

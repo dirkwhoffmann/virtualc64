@@ -70,86 +70,6 @@ CommandConsole::pressReturn(bool shift)
 }
 
 void
-Console::initCommands(Command &root)
-{
-    //
-    // Common commands
-    //
-
-    Command::currentGroup = "Shell commands";
-
-    root.add({"welcome"},
-             "", // Prints the welcome message
-             [this](Arguments& argv, long value) {
-
-        welcome();
-    });
-
-    root.add({"."},
-             "Enter or exit the debugger",
-             [this](Arguments& argv, long value) {
-
-        retroShell.switchConsole();
-    });
-
-    root.add({"clear"},
-             "Clear the console window",
-             [this](Arguments& argv, long value) {
-
-        clear();
-    });
-
-    root.add({"close"},
-             "Hide the console window",
-             [this](Arguments& argv, long value) {
-
-        msgQueue.put(MSG_RSH_CLOSE);
-    });
-
-    root.add({"help"}, { }, {Arg::command},
-             "Print usage information",
-             [this](Arguments& argv, long value) {
-
-        help(argv.empty() ? "" : argv.front());
-    });
-
-    root.add({"state"},
-             "", // Prints the welcome message
-             [this](Arguments& argv, long value) {
-
-        printState();
-    });
-
-
-    root.add({"joshua"},
-             "",
-             [this](Arguments& argv, long value) {
-
-        *this << "\nGREETINGS PROFESSOR HOFFMANN.\n";
-        *this << "THE ONLY WINNING MOVE IS NOT TO PLAY.\n";
-        *this << "HOW ABOUT A NICE GAME OF CHESS?\n\n";
-    });
-
-    root.add({"source"}, {Arg::path},
-             "Process a command script",
-             [this](Arguments& argv, long value) {
-
-        auto stream = std::ifstream(argv.front());
-        if (!stream.is_open()) throw Error(VC64ERROR_FILE_NOT_FOUND, argv.front());
-        retroShell.asyncExecScript(stream);
-    });
-
-    root.add({"wait"}, {Arg::value, Arg::seconds},
-             "", // Pause the execution of a command script",
-             [this](Arguments& argv, long value) {
-
-        auto seconds = parseNum(argv[0]);
-        c64.scheduleRel<SLOT_RSH>(C64::sec(seconds), RSH_WAKEUP);
-        throw ScriptInterruption();
-    });
-}
-
-void
 Console::initSetters(Command &root, const CoreComponent &c)
 {
     if (auto cmd = string(c.shellName()); !cmd.empty()) {
@@ -159,7 +79,7 @@ Console::initSetters(Command &root, const CoreComponent &c)
             root.add({cmd, "set"}, "Configure the component");
             for (auto &opt : options) {
 
-                root.add({cmd, "set", OptionEnum::key(opt)},
+                root.add({cmd, "set", OptionEnum::plainkey(opt)},
                          {OptionParser::argList(opt)},
                          OptionEnum::help(opt),
                          [this](Arguments& argv, long value) {
@@ -171,80 +91,6 @@ Console::initSetters(Command &root, const CoreComponent &c)
         }
     }
 }
-
-/*
-void
-Interpreter::initCommons(Command &root)
-{
-    //
-    // Common commands
-    //
-
-    Command::currentGroup = "Shell commands";
-
-    root.add({"welcome"},
-             "", // Prints the welcome message
-             [this](Arguments& argv, long value) {
-
-        // welcome();
-    });
-
-    root.add({"."},
-             "Enter or exit the debugger",
-             [this](Arguments& argv, long value) {
-
-        switchInterpreter();
-    });
-
-    root.add({"clear"},
-             "Clear the console window",
-             [this](Arguments& argv, long value) {
-
-        retroShell.clear();
-    });
-
-    root.add({"close"},
-             "Hide the console window",
-             [this](Arguments& argv, long value) {
-
-        msgQueue.put(MSG_CONSOLE_CLOSE);
-    });
-
-    root.add({"help"}, { }, {Arg::command},
-             "Print usage information",
-             [this](Arguments& argv, long value) {
-
-        retroShell.help(argv.empty() ? "" : argv.front());
-    });
-
-    root.add({"joshua"},
-             "",
-             [this](Arguments& argv, long value) {
-
-        retroShell << "\nGREETINGS PROFESSOR HOFFMANN.\n";
-        retroShell << "THE ONLY WINNING MOVE IS NOT TO PLAY.\n";
-        retroShell << "HOW ABOUT A NICE GAME OF CHESS?\n\n";
-    });
-
-    root.add({"source"}, {Arg::path},
-             "Process a command script",
-             [this](Arguments& argv, long value) {
-
-        auto stream = std::ifstream(argv.front());
-        if (!stream.is_open()) throw Error(VC64ERROR_FILE_NOT_FOUND, argv.front());
-        retroShell.execScript(stream);
-    });
-
-    root.add({"wait"}, {Arg::value, Arg::seconds},
-             "", // "Pause the execution of a command script",
-             [this](Arguments& argv, long value) {
-
-        auto cycles = parseNum(argv[0]) * vic.getFrequency();
-        c64.scheduleRel<SLOT_RSH>(cycles, RSH_WAKEUP);
-        throw ScriptInterruption("");
-    });
-}
-*/
 
 void
 CommandConsole::initCommands(Command &root)
@@ -333,18 +179,7 @@ CommandConsole::initCommands(Command &root)
         dump(c64, Category::Config);
     });
 
-    root.add({cmd, "set"}, "Configure the component");
-    for (auto &opt : c64.getOptions()) {
-
-        root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::argList(opt)},
-                 OptionEnum::help(opt),
-                 [this](Arguments& argv, long opt) {
-
-            emulator.set(Option(opt), argv[0]);
-
-        }, opt);
-    }
+    initSetters(root, c64);
 
     root.add({cmd, "defaults"},
              "Display the user defaults storage",
@@ -401,18 +236,7 @@ CommandConsole::initCommands(Command &root)
         dump(mem, Category::Config);
     });
 
-    root.add({cmd, "set"}, "Configures the component");
-    for (auto &opt : mem.getOptions()) {
-
-        root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::argList(opt)},
-                 OptionEnum::help(opt),
-                 [this](Arguments& argv, long opt) {
-
-            emulator.set(Option(opt), argv[0]);
-
-        }, opt);
-    }
+    initSetters(root, mem);
 
     root.add({cmd, "load"}, { Arg::path },
              "Installs a Rom image",
@@ -452,21 +276,11 @@ CommandConsole::initCommands(Command &root)
             dump(cia2, Category::Config) ;
 
         }, i);
-
-        root.add({cmd, "set"}, "Configures the component");
-
-        for (auto &opt : cia1.getOptions()) {
-
-            root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                     {OptionParser::argList(opt)},
-                     OptionEnum::help(opt),
-                     [this](Arguments& argv, long value) {
-
-                emulator.set(Option(HI_WORD(value)), argv[0], LO_WORD(value));
-
-            }, HI_W_LO_W(opt, i));
-        }
     }
+
+    initSetters(root, cia1);
+    initSetters(root, cia2);
+
 
     //
     // Components (VICII)
@@ -483,18 +297,7 @@ CommandConsole::initCommands(Command &root)
         dump(vic, Category::Config);
     });
 
-    root.add({cmd, "set"}, "Configures the component");
-    for (auto &opt : vic.getOptions()) {
-
-        root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::argList(opt)},
-                 OptionEnum::help(opt),
-                 [this](Arguments& argv, long opt) {
-
-            emulator.set(Option(opt), argv[0]);
-
-        }, opt);
-    }
+    initSetters(root, vic);
 
 
     //
@@ -512,6 +315,8 @@ CommandConsole::initCommands(Command &root)
         dump(vic.dmaDebugger, Category::Config);
     });
 
+    initSetters(root, vic.dmaDebugger);
+
     root.add({cmd, "open"},
              "Opens the DMA debugger",
              [this](Arguments& argv, long value) {
@@ -525,20 +330,6 @@ CommandConsole::initCommands(Command &root)
 
         emulator.set(OPT_DMA_DEBUG_ENABLE, false);
     });
-
-    root.add({cmd, "set"}, "Configures the component");
-
-    for (auto &opt : vic.dmaDebugger.getOptions()) {
-
-        root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::argList(opt)},
-                 OptionEnum::help(opt),
-                 [this](Arguments& argv, long opt) {
-
-            emulator.set(Option(opt), argv[0]);
-
-        }, opt);
-    }
 
 
     //
@@ -559,21 +350,12 @@ CommandConsole::initCommands(Command &root)
 
             dump(sidBridge.sid[value], Category::Config);
         }, i);
-
-        root.add({cmd, "set"}, "Configures the component");
-
-        for (auto &opt : sidBridge.sid[i].getOptions()) {
-
-            root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                     {OptionParser::argList(opt)},
-                     OptionEnum::help(opt),
-                     [this](Arguments& argv, long value) {
-
-                emulator.set(Option(HI_WORD(value)), argv[0], LO_WORD(value));
-
-            }, HI_W_LO_W(opt, i));
-        }
     }
+
+    initSetters(root, sid0);
+    initSetters(root, sid1);
+    initSetters(root, sid2);
+    initSetters(root, sid3);
 
 
     //
@@ -591,19 +373,7 @@ CommandConsole::initCommands(Command &root)
         dump(sidBridge, Category::Config);
     });
 
-    root.add({cmd, "set"}, "Configures the component");
-
-    for (auto &opt : sidBridge.getOptions()) {
-
-        root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::argList(opt)},
-                 OptionEnum::help(opt),
-                 [this](Arguments& argv, long opt) {
-
-            emulator.set(Option(opt), argv[0]);
-
-        }, opt);
-    }
+    initSetters(root, sidBridge);
 
 
     //
@@ -628,19 +398,7 @@ CommandConsole::initCommands(Command &root)
         dump(powerSupply, Category::Config);
     });
 
-    root.add({cmd, "set"}, "Configures the component");
-
-    for (auto &opt : powerSupply.getOptions()) {
-
-        root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::argList(opt)},
-                 OptionEnum::help(opt),
-                 [this](Arguments& argv, long opt) {
-
-            emulator.set(Option(opt), argv[0]);
-
-        }, opt);
-    }
+    initSetters(root, powerSupply);
 
 
     //
@@ -658,19 +416,7 @@ CommandConsole::initCommands(Command &root)
         dump(audioPort, Category::Config);
     });
 
-    root.add({cmd, "set"}, "Configures the component");
-
-    for (auto &opt : audioPort.getOptions()) {
-
-        root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::argList(opt)},
-                 OptionEnum::help(opt),
-                 [this](Arguments& argv, long opt) {
-
-            emulator.set(Option(opt), argv[0]);
-
-        }, opt);
-    }
+    initSetters(root, audioPort);
 
 
     //
@@ -688,19 +434,7 @@ CommandConsole::initCommands(Command &root)
         dump(userPort, Category::Config);
     });
 
-    root.add({cmd, "set"}, "Configures the component");
-
-    for (auto &opt : userPort.getOptions()) {
-
-        root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::argList(opt)},
-                 OptionEnum::help(opt),
-                 [this](Arguments& argv, long opt) {
-
-            emulator.set(Option(opt), argv[0]);
-
-        }, opt);
-    }
+    initSetters(root, userPort);
 
 
     //
@@ -718,19 +452,7 @@ CommandConsole::initCommands(Command &root)
         dump(videoPort, Category::Config);
     });
 
-    root.add({cmd, "set"}, "Configures the component");
-
-    for (auto &opt : videoPort.getOptions()) {
-
-        root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::argList(opt)},
-                 OptionEnum::help(opt),
-                 [this](Arguments& argv, long opt) {
-
-            emulator.set(Option(opt), argv[0]);
-
-        }, opt);
-    }
+    initSetters(root, videoPort);
 
 
     //
@@ -791,19 +513,7 @@ CommandConsole::initCommands(Command &root)
 
     });
 
-    root.add({cmd, "set"}, "Configures the component");
-
-    for (auto &opt : c64.monitor.getOptions()) {
-
-        root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::argList(opt)},
-                 OptionEnum::help(opt),
-                 [this](Arguments& argv, long value) {
-
-            emulator.set(Option(value), argv[0]);
-
-        }, opt);
-    }
+    initSetters(root, monitor);
 
 
     //
@@ -873,21 +583,10 @@ CommandConsole::initCommands(Command &root)
             dump(port.mouse, Category::Config);
 
         }, i);
-
-        root.add({cmd, "set"}, "Configures the component");
-
-        for (auto &opt : c64.port1.mouse.getOptions()) {
-
-            root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                     {OptionParser::argList(opt)},
-                     OptionEnum::help(opt),
-                     [this](Arguments& argv, long value) {
-
-                emulator.set(Option(HI_WORD(value)), argv[0], LO_WORD(value));
-
-            }, HI_W_LO_W(opt, i));
-        }
     }
+
+    initSetters(root, c64.port1.mouse);
+    initSetters(root, c64.port2.mouse);
 
 
     //
@@ -910,21 +609,6 @@ CommandConsole::initCommands(Command &root)
             dump(port.joystick, Category::Config);
 
         }, i);
-
-        root.add({cmd, "set"}, "Configures the component");
-        root.add({cmd, "set", "autofire"}, "Configures auto fire");
-
-        for (auto &opt : c64.port1.joystick.getOptions()) {
-
-            root.add({cmd, "set", "autofire", OptionEnum::plainkey(opt)},
-                     {OptionParser::argList(opt)},
-                     OptionEnum::help(opt),
-                     [this](Arguments& argv, long value) {
-
-                emulator.set(Option(HI_WORD(value)), argv[0], LO_WORD(value));
-
-            }, HI_W_LO_W(opt, i));
-        }
 
         root.add({cmd, "press"},
                  "Presses the joystick button",
@@ -1005,6 +689,9 @@ CommandConsole::initCommands(Command &root)
         }, i);
     }
 
+    initSetters(root, c64.port1.joystick);
+    initSetters(root, c64.port2.joystick);
+
 
     //
     // Peripherals (Paddles)
@@ -1026,21 +713,11 @@ CommandConsole::initCommands(Command &root)
             dump(port.paddle, Category::Config);
 
         }, i);
-
-        root.add({cmd, "set"}, "Configures the component");
-
-        for (auto &opt : c64.port1.paddle.getOptions()) {
-
-            root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                     {OptionParser::argList(opt)},
-                     OptionEnum::help(opt),
-                     [this](Arguments& argv, long value) {
-
-                emulator.set(Option(HI_WORD(value)), argv[0], LO_WORD(value));
-
-            }, HI_W_LO_W(opt, i));
-        }
     }
+
+    initSetters(root, c64.port1.paddle);
+    initSetters(root, c64.port2.paddle);
+
 
     //
     // Peripherals (Datasette)
@@ -1056,6 +733,8 @@ CommandConsole::initCommands(Command &root)
 
         dump(datasette, Category::Config);
     });
+
+    initSetters(root, datasette);
 
     root.add({cmd, "connect"},
              "Connects the datasette",
@@ -1085,20 +764,6 @@ CommandConsole::initCommands(Command &root)
         datasette.rewind(parseNum(argv[0]));
     });
 
-    root.add({cmd, "set"}, "Configures the component");
-
-    for (auto &opt : datasette.getOptions()) {
-
-        root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::argList(opt)},
-                 OptionEnum::help(opt),
-                 [this](Arguments& argv, long opt) {
-
-            emulator.set(Option(opt), argv[0]);
-
-        }, opt);
-    }
-
 
     //
     // Peripherals (Drives)
@@ -1120,6 +785,9 @@ CommandConsole::initCommands(Command &root)
             dump(drive, Category::Config);
 
         }, i);
+
+        if (i == 0) initSetters(root, drive8);
+        if (i == 1) initSetters(root, drive9);
 
         root.add({cmd, "bankmap"},
                  "Displays the memory layout",
@@ -1178,20 +846,6 @@ CommandConsole::initCommands(Command &root)
             drive.insertNewDisk(type, "NEW DISK");
 
         }, i);
-
-        root.add({cmd, "set"}, "Configures the component");
-
-        for (auto &opt : drive8.getOptions()) {
-
-            root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                     {OptionParser::argList(opt)},
-                     OptionEnum::help(opt),
-                     [this](Arguments& argv, long value) {
-
-                emulator.set(Option(HI_WORD(value)), argv[0], LO_WORD(value));
-
-            }, HI_W_LO_W(opt, i));
-        }
     }
 
 
@@ -1199,16 +853,20 @@ CommandConsole::initCommands(Command &root)
     // Peripherals (Parallel cable)
     //
 
-    cmd = parCable.shellName();
-    description = parCable.description();
-    root.add({cmd}, description);
+    /*
+     cmd = parCable.shellName();
+     description = parCable.description();
+     root.add({cmd}, description);
 
-    root.add({cmd, ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
+     root.add({cmd, ""},
+     "Displays the current configuration",
+     [this](Arguments& argv, long value) {
 
-        dump(parCable, Category::Config);
-    });
+     dump(parCable, Category::Config);
+     });
+
+     initSetters(root, parCable);
+     */
 
 
     //
@@ -1227,19 +885,7 @@ CommandConsole::initCommands(Command &root)
 
     });
 
-    root.add({cmd, "set"}, "Configures the component");
-
-    for (auto &opt : userPort.rs232.getOptions()) {
-
-        root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::argList(opt)},
-                 OptionEnum::help(opt),
-                 [this](Arguments& argv, long value) {
-
-            emulator.set(Option(value), argv[0]);
-
-        }, opt);
-    }
+    initSetters(root, userPort.rs232);
 
     root.add({cmd, "send"}, {Arg::string},
              "Feeds text into the RS232 adapter",
@@ -1270,19 +916,7 @@ CommandConsole::initCommands(Command &root)
         dump(host, Category::Config);
     });
 
-    root.add({cmd, "set"}, "Configures the component");
-
-    for (auto &opt : powerSupply.getOptions()) {
-
-        root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::argList(opt)},
-                 OptionEnum::help(opt),
-                 [this](Arguments& argv, long opt) {
-
-            emulator.set(Option(opt), argv[0]);
-
-        }, opt);
-    }
+    initSetters(root, host);
 
 
     //
@@ -1329,17 +963,7 @@ CommandConsole::initCommands(Command &root)
         dump(remoteManager.rshServer, Category::Config);
     });
 
-    for (auto &opt : remoteManager.rshServer.getOptions()) {
-
-        root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::argList(opt)},
-                 OptionEnum::help(opt),
-                 [this](Arguments& argv, long opt) {
-
-            emulator.set(Option(opt), argv[0]);
-
-        }, opt);
-    }
+    initSetters(root, remoteManager.rshServer);
 
 
     //
@@ -1355,19 +979,7 @@ CommandConsole::initCommands(Command &root)
         dump(recorder, Category::Config);
     });
 
-    root.add({"recorder", "set"}, "Configures the component");
-
-    for (auto &opt : recorder.getOptions()) {
-
-        root.add({"recorder", "set", OptionEnum::plainkey(opt)},
-                 {OptionParser::argList(opt)},
-                 OptionEnum::help(opt),
-                 [this](Arguments& argv, long value) {
-
-            emulator.set(Option(value), argv[0]);
-
-        }, opt);
-    }
+    initSetters(root, recorder);
 }
 
 }

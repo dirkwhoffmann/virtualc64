@@ -194,8 +194,8 @@ AudioPort::mixSingleSID(isize numSamples)
         r *= curR;
 
         // Prevent hearing loss
-        assert(abs(l) < 1.0);
-        assert(abs(r) < 1.0);
+        assert(std::abs(l) < 1.0);
+        assert(std::abs(r) < 1.0);
 
         write(SamplePair { l, r } );
     }

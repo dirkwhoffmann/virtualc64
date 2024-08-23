@@ -45,7 +45,7 @@ class RetroShell : public SubComponent {
 
         .name           = "RetroShell",
         .description    = "Retro Shell",
-        .shell          = ""
+        .shell          = "server rshell"
     }};
 
     ConfigOptions options = {

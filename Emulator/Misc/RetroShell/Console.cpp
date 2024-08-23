@@ -755,4 +755,84 @@ Console::_dump(CoreObject &component, Category category)
     *this << ss << '\n';
 }
 
+void
+Console::initCommands(Command &root)
+{
+    //
+    // Common commands
+    //
+
+    Command::currentGroup = "Shell commands";
+
+    root.add({"welcome"},
+             "", // Prints the welcome message
+             [this](Arguments& argv, long value) {
+
+        welcome();
+    });
+
+    root.add({"."},
+             "Enter or exit the debugger",
+             [this](Arguments& argv, long value) {
+
+        retroShell.switchConsole();
+    });
+
+    root.add({"clear"},
+             "Clear the console window",
+             [this](Arguments& argv, long value) {
+
+        clear();
+    });
+
+    root.add({"close"},
+             "Hide the console window",
+             [this](Arguments& argv, long value) {
+
+        msgQueue.put(MSG_RSH_CLOSE);
+    });
+
+    root.add({"help"}, { }, {Arg::command},
+             "Print usage information",
+             [this](Arguments& argv, long value) {
+
+        help(argv.empty() ? "" : argv.front());
+    });
+
+    root.add({"state"},
+             "", // Prints the welcome message
+             [this](Arguments& argv, long value) {
+
+        printState();
+    });
+
+
+    root.add({"joshua"},
+             "",
+             [this](Arguments& argv, long value) {
+
+        *this << "\nGREETINGS PROFESSOR HOFFMANN.\n";
+        *this << "THE ONLY WINNING MOVE IS NOT TO PLAY.\n";
+        *this << "HOW ABOUT A NICE GAME OF CHESS?\n\n";
+    });
+
+    root.add({"source"}, {Arg::path},
+             "Process a command script",
+             [this](Arguments& argv, long value) {
+
+        auto stream = std::ifstream(argv.front());
+        if (!stream.is_open()) throw Error(VC64ERROR_FILE_NOT_FOUND, argv.front());
+        retroShell.asyncExecScript(stream);
+    });
+
+    root.add({"wait"}, {Arg::value, Arg::seconds},
+             "", // Pause the execution of a command script",
+             [this](Arguments& argv, long value) {
+
+        auto seconds = parseNum(argv[0]);
+        c64.scheduleRel<SLOT_RSH>(C64::sec(seconds), RSH_WAKEUP);
+        throw ScriptInterruption();
+    });
+}
+
 }

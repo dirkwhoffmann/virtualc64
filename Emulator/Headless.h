@@ -242,12 +242,12 @@ static const char *testScript[] = {
     "datasette rewind to 10",
 
     "joystick1",
-    "joystick1 set autofire ENABLE true",
-    "joystick1 set autofire ENABLE false",
-    "joystick1 set autofire BURSTS true",
-    "joystick1 set autofire BURSTS false",
-    "joystick1 set autofire BULLETS 10",
-    "joystick1 set autofire DELAY 10",
+    "joystick1 set ENABLE true",
+    "joystick1 set ENABLE false",
+    "joystick1 set BURSTS true",
+    "joystick1 set BURSTS false",
+    "joystick1 set BULLETS 10",
+    "joystick1 set DELAY 10",
     "joystick1 press",
     "joystick1 unpress",
     "joystick1 pull left",
@@ -258,12 +258,12 @@ static const char *testScript[] = {
     "joystick1 release y",
 
     "joystick2",
-    "joystick2 set autofire ENABLE true",
-    "joystick2 set autofire ENABLE false",
-    "joystick2 set autofire BURSTS true",
-    "joystick2 set autofire BURSTS false",
-    "joystick2 set autofire BULLETS 10",
-    "joystick2 set autofire DELAY 10",
+    "joystick2 set ENABLE true",
+    "joystick2 set ENABLE false",
+    "joystick2 set BURSTS true",
+    "joystick2 set BURSTS false",
+    "joystick2 set BULLETS 10",
+    "joystick2 set DELAY 10",
     "joystick2 press",
     "joystick2 unpress",
     "joystick2 pull left",
@@ -287,9 +287,7 @@ static const char *testScript[] = {
     "mouse2 set MODEL NEOS",
     "mouse2 set VELOCITY 50",
     "mouse2 set SHAKE_DETECTION true",
-    "mouse2 set SHAKE_DETECTION false",
-
-    "parcable"
+    "mouse2 set SHAKE_DETECTION false"
 };
 
 }
