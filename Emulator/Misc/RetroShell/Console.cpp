@@ -835,4 +835,43 @@ Console::initCommands(Command &root)
     });
 }
 
+const char *
+Console::registerComponent(CoreComponent &c)
+{
+    // Get the shell name for this component
+    auto cmd = c.shellName();
+    assert(cmd != nullptr);
+
+    // Register a command with the proper name
+    root.add({cmd}, c.description());
+
+    // If this component has options...
+    if (auto &options = c.getOptions(); !options.empty()) {
+
+        // ...register a command for querying the current configuration
+        root.add({cmd, ""},
+                 "Display the current configuration",
+                 [this, &c](Arguments& argv, long value) {
+
+            retroShell.commander.dump(c, Category::Config);
+        });
+
+        // ...register a setter for all config options
+        root.add({cmd, "set"}, "Configure the component");
+        for (auto &opt : options) {
+
+            root.add({cmd, "set", OptionEnum::plainkey(opt)},
+                     {OptionParser::argList(opt)},
+                     OptionEnum::help(opt),
+                     [this](Arguments& argv, long value) {
+
+                emulator.set(Option(HI_WORD(value)), argv[0], LO_WORD(value));
+
+            }, HI_W_LO_W(opt, c.objid));
+        }
+    }
+
+    return cmd;
+}
+
 }

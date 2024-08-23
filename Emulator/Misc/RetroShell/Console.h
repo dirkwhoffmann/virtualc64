@@ -107,8 +107,7 @@ public:
 protected:
 
     virtual void initCommands(Command &root);
-
-    void initSetters(Command &root, const CoreComponent &c);
+    const char *registerComponent(CoreComponent &c);
 
 
     //

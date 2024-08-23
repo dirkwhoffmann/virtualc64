@@ -70,29 +70,6 @@ CommandConsole::pressReturn(bool shift)
 }
 
 void
-Console::initSetters(Command &root, const CoreComponent &c)
-{
-    if (auto cmd = string(c.shellName()); !cmd.empty()) {
-
-        if (auto &options = c.getOptions(); !options.empty()) {
-
-            root.add({cmd, "set"}, "Configure the component");
-            for (auto &opt : options) {
-
-                root.add({cmd, "set", OptionEnum::plainkey(opt)},
-                         {OptionParser::argList(opt)},
-                         OptionEnum::help(opt),
-                         [this](Arguments& argv, long value) {
-
-                    emulator.set(Option(HI_WORD(value)), argv[0], LO_WORD(value));
-
-                }, HI_W_LO_W(opt, c.objid));
-            }
-        }
-    }
-}
-
-void
 CommandConsole::initCommands(Command &root)
 {
     Console::initCommands(root);
@@ -168,18 +145,7 @@ CommandConsole::initCommands(Command &root)
     // Components (C64)
     //
 
-    string cmd = c64.shellName();
-    auto description = c64.description();
-    root.add({cmd}, description);
-
-    root.add({cmd, ""},
-             "Display the current configuration",
-             [this](Arguments& argv, long value) {
-
-        dump(c64, Category::Config);
-    });
-
-    initSetters(root, c64);
+    auto cmd = registerComponent(c64);
 
     root.add({cmd, "defaults"},
              "Display the user defaults storage",
@@ -225,18 +191,7 @@ CommandConsole::initCommands(Command &root)
     // Components (Memory)
     //
 
-    cmd = mem.shellName();
-    description = mem.description();
-    root.add({cmd}, description);
-
-    root.add({cmd, ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
-
-        dump(mem, Category::Config);
-    });
-
-    initSetters(root, mem);
+    cmd = registerComponent(mem);
 
     root.add({cmd, "load"}, { Arg::path },
              "Installs a Rom image",
@@ -261,61 +216,22 @@ CommandConsole::initCommands(Command &root)
     // Components (CIA)
     //
 
-    for (isize i = 0; i < 2; i++) {
-
-        cmd = (i == 0) ? cia1.shellName() : cia2.shellName();
-        description = (i == 0) ? cia1.description() : cia2.description();
-        root.add({cmd}, description);
-
-        root.add({cmd, ""},
-                 "Displays the current configuration",
-                 [this](Arguments& argv, long value) {
-
-            value == 0 ?
-            dump(cia1, Category::Config) :
-            dump(cia2, Category::Config) ;
-
-        }, i);
-    }
-
-    initSetters(root, cia1);
-    initSetters(root, cia2);
+    cmd = registerComponent(cia1);
+    cmd = registerComponent(cia2);
 
 
     //
     // Components (VICII)
     //
 
-    cmd = vic.shellName();
-    description = vic.description();
-    root.add({cmd}, description);
-
-    root.add({cmd, ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
-
-        dump(vic, Category::Config);
-    });
-
-    initSetters(root, vic);
+    cmd = registerComponent(vic);
 
 
     //
     // Components (DMA Debugger)
     //
 
-    cmd = vic.dmaDebugger.shellName();
-    description = vic.dmaDebugger.description();
-    root.add({cmd}, description);
-
-    root.add({cmd, ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
-
-        dump(vic.dmaDebugger, Category::Config);
-    });
-
-    initSetters(root, vic.dmaDebugger);
+    cmd = registerComponent(vic.dmaDebugger);
 
     root.add({cmd, "open"},
              "Opens the DMA debugger",
@@ -336,44 +252,17 @@ CommandConsole::initCommands(Command &root)
     // Components (SID)
     //
 
-    for (isize i = 0; i < 4; i++) {
-
-        auto &sid = sidBridge.sid[i];
-
-        cmd = sid.shellName();
-        description = sid.description();
-        root.add({cmd}, description);
-
-        root.add({cmd, ""},
-                 "Displays the current configuration",
-                 [this](Arguments& argv, long value) {
-
-            dump(sidBridge.sid[value], Category::Config);
-        }, i);
-    }
-
-    initSetters(root, sid0);
-    initSetters(root, sid1);
-    initSetters(root, sid2);
-    initSetters(root, sid3);
+    cmd = registerComponent(sid0);
+    cmd = registerComponent(sid1);
+    cmd = registerComponent(sid2);
+    cmd = registerComponent(sid3);
 
 
     //
     // Components (SIDBridge)
     //
 
-    cmd = sidBridge.shellName();
-    description = sidBridge.description();
-    root.add({cmd}, description);
-
-    root.add({cmd, ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
-
-        dump(sidBridge, Category::Config);
-    });
-
-    initSetters(root, sidBridge);
+    cmd = registerComponent(sidBridge);
 
 
     //
@@ -387,81 +276,35 @@ CommandConsole::initCommands(Command &root)
     // Ports (Power port)
     //
 
-    cmd = powerSupply.shellName();
-    description = powerSupply.description();
-    root.add({cmd}, description);
-
-    root.add({cmd, ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
-
-        dump(powerSupply, Category::Config);
-    });
-
-    initSetters(root, powerSupply);
+    cmd = registerComponent(powerSupply);
 
 
     //
     // Ports (Audio port)
     //
 
-    cmd = audioPort.shellName();
-    description = audioPort.description();
-    root.add({cmd}, description);
-
-    root.add({cmd, ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
-
-        dump(audioPort, Category::Config);
-    });
-
-    initSetters(root, audioPort);
+    cmd = registerComponent(audioPort);
 
 
     //
     // Ports (User port)
     //
 
-    cmd = userPort.shellName();
-    description = userPort.description();
-    root.add({cmd}, description);
-
-    root.add({cmd, ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
-
-        dump(userPort, Category::Config);
-    });
-
-    initSetters(root, userPort);
+    cmd = registerComponent(userPort);
 
 
     //
     // Ports (Video port)
     //
 
-    cmd = videoPort.shellName();
-    description = videoPort.description();
-    root.add({cmd}, description);
-
-    root.add({cmd, ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
-
-        dump(videoPort, Category::Config);
-    });
-
-    initSetters(root, videoPort);
+    cmd = registerComponent(videoPort);
 
 
     //
     // Ports (Expansion port)
     //
 
-    cmd = expansionPort.shellName();
-    description = expansionPort.description();
-    root.add({cmd}, description);
+    cmd = registerComponent(expansionPort);
 
     root.add({cmd, "attach"},
              "Attaches a cartridge");
@@ -501,28 +344,14 @@ CommandConsole::initCommands(Command &root)
     // Peripherals (Monitor)
     //
 
-    cmd = monitor.shellName();
-    description = monitor.description();
-    root.add({cmd}, description);
-
-    root.add({cmd, ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
-
-        dump(monitor, Category::Config);
-
-    });
-
-    initSetters(root, monitor);
+    registerComponent(monitor);
 
 
     //
     // Peripherals (Keyboard)
     //
 
-    cmd = keyboard.shellName();
-    description = keyboard.description();
-    root.add({cmd}, description);
+    cmd = registerComponent(keyboard);
 
     root.add({cmd, "press"}, { Arg::value },
              "Presses a key",
@@ -567,48 +396,18 @@ CommandConsole::initCommands(Command &root)
     // Peripherals (Mouse)
     //
 
-    for (isize i = PORT_1; i <= PORT_2; i++) {
-
-        auto &mouse = i == PORT_1 ? c64.port1.mouse : c64.port2.mouse;
-
-        cmd = mouse.shellName();
-        description = mouse.description();
-        root.add({cmd}, description);
-
-        root.add({cmd, ""},
-                 "Displays the current configuration",
-                 [this](Arguments& argv, long value) {
-
-            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
-            dump(port.mouse, Category::Config);
-
-        }, i);
-    }
-
-    initSetters(root, c64.port1.mouse);
-    initSetters(root, c64.port2.mouse);
+    registerComponent(c64.port1.mouse);
+    registerComponent(c64.port2.mouse);
 
 
     //
     // Peripherals (Joystick)
     //
 
-    for (isize i = PORT_1; i <= PORT_2; i++) {
+    for (isize i = 0; i <= 1; i++) {
 
-        auto &joystick = i == PORT_1 ? c64.port1.joystick : c64.port2.joystick;
-
-        cmd = joystick.shellName();
-        description = joystick.description();
-        root.add({cmd}, description);
-
-        root.add({cmd, ""},
-                 "Displays the current configuration",
-                 [this](Arguments& argv, long value) {
-
-            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
-            dump(port.joystick, Category::Config);
-
-        }, i);
+        if (i == 0) cmd = registerComponent(port1.joystick);
+        if (i == 1) cmd = registerComponent(port2.joystick);
 
         root.add({cmd, "press"},
                  "Presses the joystick button",
@@ -689,52 +488,20 @@ CommandConsole::initCommands(Command &root)
         }, i);
     }
 
-    initSetters(root, c64.port1.joystick);
-    initSetters(root, c64.port2.joystick);
-
 
     //
     // Peripherals (Paddles)
     //
 
-    for (isize i = PORT_1; i <= PORT_2; i++) {
-
-        auto &paddle = i == PORT_1 ? c64.port1.paddle : c64.port2.paddle;
-
-        cmd = paddle.shellName();
-        description = paddle.description();
-        root.add({cmd}, description);
-
-        root.add({cmd, ""},
-                 "Displays the current configuration",
-                 [this](Arguments& argv, long value) {
-
-            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
-            dump(port.paddle, Category::Config);
-
-        }, i);
-    }
-
-    initSetters(root, c64.port1.paddle);
-    initSetters(root, c64.port2.paddle);
+    cmd = registerComponent(port1.paddle);
+    cmd = registerComponent(port2.paddle);
 
 
     //
     // Peripherals (Datasette)
     //
 
-    cmd = datasette.shellName();
-    description = datasette.description();
-    root.add({cmd}, description);
-
-    root.add({cmd, ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
-
-        dump(datasette, Category::Config);
-    });
-
-    initSetters(root, datasette);
+    cmd = registerComponent(datasette);
 
     root.add({cmd, "connect"},
              "Connects the datasette",
@@ -771,23 +538,8 @@ CommandConsole::initCommands(Command &root)
 
     for (isize i = 0; i < 2; i++) {
 
-        auto &drive = i == 0 ? c64.drive8 : c64.drive9;
-
-        cmd = drive.shellName();
-        description = drive.description();
-        root.add({cmd}, description);
-
-        root.add({cmd, ""},
-                 "Displays the current configuration",
-                 [this](Arguments& argv, long value) {
-
-            auto &drive = value ? drive9 : drive8;
-            dump(drive, Category::Config);
-
-        }, i);
-
-        if (i == 0) initSetters(root, drive8);
-        if (i == 1) initSetters(root, drive9);
+        if (i == 0) cmd = registerComponent(drive8);
+        if (i == 1) cmd = registerComponent(drive9);
 
         root.add({cmd, "bankmap"},
                  "Displays the memory layout",
@@ -850,42 +602,10 @@ CommandConsole::initCommands(Command &root)
 
 
     //
-    // Peripherals (Parallel cable)
-    //
-
-    /*
-     cmd = parCable.shellName();
-     description = parCable.description();
-     root.add({cmd}, description);
-
-     root.add({cmd, ""},
-     "Displays the current configuration",
-     [this](Arguments& argv, long value) {
-
-     dump(parCable, Category::Config);
-     });
-
-     initSetters(root, parCable);
-     */
-
-
-    //
     // Peripherals (RS232)
     //
 
-    cmd = userPort.rs232.shellName();
-    description = userPort.rs232.description();
-    root.add({cmd}, description);
-
-    root.add({cmd, ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
-
-        dump(userPort.rs232, Category::Config);
-
-    });
-
-    initSetters(root, userPort.rs232);
+    cmd = registerComponent(userPort.rs232);
 
     root.add({cmd, "send"}, {Arg::string},
              "Feeds text into the RS232 adapter",
@@ -905,18 +625,7 @@ CommandConsole::initCommands(Command &root)
     // Miscellaneous (Host)
     //
 
-    cmd = host.shellName();
-    description = host.description();
-    root.add({cmd}, description);
-
-    root.add({cmd, ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
-
-        dump(host, Category::Config);
-    });
-
-    initSetters(root, host);
+    cmd = registerComponent(host);
 
 
     //
@@ -932,54 +641,35 @@ CommandConsole::initCommands(Command &root)
         dump(remoteManager, Category::State);
     });
 
-    root.add({"server", "rshell"},
-             "Retro shell server");
+    cmd = registerComponent(remoteManager.rshServer);
 
-    root.add({"server", "rshell", "start"},
+    root.add({cmd, "start"},
              "Starts the retro shell server",
              [this](Arguments& argv, long value) {
 
         remoteManager.rshServer.start();
     });
 
-    root.add({"server", "rshell", "stop"},
+    root.add({cmd, "stop"},
              "Stops the retro shell server",
              [this](Arguments& argv, long value) {
 
         remoteManager.rshServer.stop();
     });
 
-    root.add({"server", "rshell", "disconnect"},
+    root.add({cmd, "disconnect"},
              "Disconnects a client",
              [this](Arguments& argv, long value) {
 
         remoteManager.rshServer.disconnect();
     });
 
-    root.add({"server", "rshell", ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
-
-        dump(remoteManager.rshServer, Category::Config);
-    });
-
-    initSetters(root, remoteManager.rshServer);
-
 
     //
     // Miscellaneous (Recorder)
     //
 
-    root.add({"recorder"}, "Screen recorder");
-
-    root.add({"recorder", ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
-
-        dump(recorder, Category::Config);
-    });
-
-    initSetters(root, recorder);
+    cmd = registerComponent(recorder);
 }
 
 }
