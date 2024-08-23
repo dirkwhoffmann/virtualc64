@@ -172,50 +172,6 @@ C64::_dump(Category category, std::ostream& os) const
         os << std::endl;
     }
 
-    if (category == Category::Sizeof) {
-
-        os << tab("C64");
-        os << dec(sizeof(C64)) << " Bytes" << std::endl;
-        os << tab("C64 Memory");
-        os << dec(sizeof(C64Memory)) << " Bytes" << std::endl;
-        os << tab("Drive Memory");
-        os << dec(sizeof(DriveMemory)) << " Bytes" << std::endl;
-        os << tab("CPU");
-        os << dec(sizeof(CPU)) << " Bytes" << std::endl;
-        os << tab("CIA");
-        os << dec(sizeof(CIA)) << " Bytes" << std::endl;
-        os << tab("VICII");
-        os << dec(sizeof(VICII)) << " Bytes" << std::endl;
-        os << tab("SIDBridge");
-        os << dec(sizeof(SIDBridge)) << " Bytes" << std::endl;
-        os << tab("Power supply");
-        os << dec(sizeof(PowerPort)) << " Bytes" << std::endl;
-        os << tab("Control port");
-        os << dec(sizeof(ControlPort)) << " Bytes" << std::endl;
-        os << tab("Expansion port");
-        os << dec(sizeof(ExpansionPort)) << " Bytes" << std::endl;
-        os << tab("SerialPort");
-        os << dec(sizeof(SerialPort)) << " Bytes" << std::endl;
-        os << tab("Keyboard");
-        os << dec(sizeof(Keyboard)) << " Bytes" << std::endl;
-        os << tab("Drive");
-        os << dec(sizeof(Drive)) << " Bytes" << std::endl;
-        os << tab("Parallel Cable");
-        os << dec(sizeof(ParCable)) << " Bytes" << std::endl;
-        os << tab("Datasette");
-        os << dec(sizeof(Datasette)) << " Bytes" << std::endl;
-        os << tab("RetroShell");
-        os << dec(sizeof(RetroShell)) << " Bytes" << std::endl;
-        os << tab("Regression Tester");
-        os << dec(sizeof(RegressionTester)) << " Bytes" << std::endl;
-        os << tab("Recorder");
-        os << dec(sizeof(Recorder)) << " Bytes" << std::endl;
-        os << tab("MsgQueue");
-        os << dec(sizeof(MsgQueue)) << " Bytes" << std::endl;
-        os << tab("CmdQueue");
-        os << dec(sizeof(CmdQueue)) << " Bytes" << std::endl;
-    }
-
     if (category == Category::Debug) {
 
         for (isize i = DebugFlagEnum::minVal; i < DebugFlagEnum::maxVal; i++) {

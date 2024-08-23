@@ -515,13 +515,6 @@ DebugConsole::initCommands(Command &root)
 
         dump(c64, Category::Checksums);
     });
-
-    root.add({"sizeof"},
-             "Displays static memory footprints of various components",
-             [this](Arguments& argv, long value) {
-
-        dump(c64, Category::Sizeof);
-    });
 }
 
 }

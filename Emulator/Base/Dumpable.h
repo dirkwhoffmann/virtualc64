@@ -31,7 +31,6 @@ enum class Category
     Properties,
     Registers,
     RunAhead,
-    Sizeof,
     Slots,
     State,
     Stats,
