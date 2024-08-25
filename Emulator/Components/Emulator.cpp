@@ -97,7 +97,6 @@ void
 Emulator::revertToFactorySettings()
 {
     // Setup the default configuration
-    host.resetConfig();
     main.resetConfig();
     ahead.resetConfig();
 
@@ -343,7 +342,6 @@ Emulator::routeOption(Option opt)
 {
     std::vector<Configurable *> result;
 
-    if (host.isValidOption(opt)) result.push_back(&host);
     main.routeOption(opt, result);
 
     assert(!result.empty());
@@ -425,7 +423,7 @@ Emulator::refreshRate() const
 
     if (config.vsync) {
 
-        return double(host.getOption(OPT_HOST_REFRESH_RATE));
+        return double(main.host.getOption(OPT_HOST_REFRESH_RATE));
 
     } else {
 

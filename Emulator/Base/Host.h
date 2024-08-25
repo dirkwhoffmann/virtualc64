@@ -13,7 +13,7 @@
 #pragma once
 
 #include "HostTypes.h"
-#include "CoreComponent.h"
+#include "SubComponent.h"
 
 typedef struct
 {
@@ -34,7 +34,7 @@ namespace vc64 {
 /* This class stores some information about the host system. The values have
  * are set by the GUI on start and updated on-the-fly when a value changes.
  */
-class Host final : public CoreComponent {
+class Host final : public SubComponent {
 
     Descriptions descriptions = {{
 
@@ -61,7 +61,7 @@ class Host final : public CoreComponent {
 
 public:
 
-    using CoreComponent::CoreComponent;
+    using SubComponent::SubComponent;
 
     Host& operator= (const Host& other) {
 

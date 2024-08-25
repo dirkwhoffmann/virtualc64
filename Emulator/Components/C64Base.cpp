@@ -23,6 +23,7 @@ C64::C64(class Emulator& ref, isize id) : CoreComponent(ref, id)
 
     subComponents = std::vector<CoreComponent *> {
 
+        &host,
         &mem,
         &cpu,
         &cia1, &cia2,

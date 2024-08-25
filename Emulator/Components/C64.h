@@ -130,7 +130,10 @@ private:
 
 public:
 
-    // Core components
+    // Host system information
+    Host host = Host(*this);
+
+    // Components
     C64Memory mem = C64Memory(*this);
     CPU cpu = CPU(MOS_6510, *this);
     CIA1 cia1 = CIA1(*this);
