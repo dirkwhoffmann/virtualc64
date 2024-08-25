@@ -1688,6 +1688,7 @@ C64::getDebugVariable(DebugFlag flag)
         case FLAG_SNP_DEBUG:        return SNP_DEBUG;
 
         case FLAG_RUA_DEBUG:        return RUA_DEBUG;
+        case FLAG_RUA_CHECKSUM:     return RUA_CHECKSUM;
         case FLAG_RUA_ON_STEROIDS:  return RUA_ON_STEROIDS;
 
         case FLAG_CPU_DEBUG:        return CPU_DEBUG;
@@ -1777,6 +1778,7 @@ C64::setDebugVariable(DebugFlag flag, int val)
         case FLAG_SNP_DEBUG:        SNP_DEBUG       = val; break;
 
         case FLAG_RUA_DEBUG:        RUA_DEBUG       = val; break;
+        case FLAG_RUA_CHECKSUM:     RUA_CHECKSUM    = val; break;
         case FLAG_RUA_ON_STEROIDS:  RUA_ON_STEROIDS = val; break;
 
         case FLAG_CPU_DEBUG:        CPU_DEBUG       = val; break;

@@ -372,6 +372,23 @@ CoreComponent::isEmulatorThread() const
     return emulator.isEmulatorThread();
 }
 
+void
+CoreComponent::diff(CoreComponent &other)
+{
+    auto num = subComponents.size();
+    assert(num == other.subComponents.size());
+
+    // Compare all subcomponents
+    for (usize i = 0; i < num; i++) {
+        subComponents[i]->diff(*other.subComponents[i]);
+    }
+
+    // Compare this component
+    if (auto check1 = checksum(false), check2 = other.checksum(false); check1 != check2) {
+        msg("Checksum mismatch: %llx != %llx\n", check1, check2);
+    }
+}
+
 void CoreComponent::exportConfig(std::ostream& ss, bool diff) const
 {
     bool first = true;

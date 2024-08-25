@@ -465,26 +465,40 @@ Emulator::computeFrame()
 }
 
 void
-Emulator::recreateRunAheadInstance()
+Emulator::cloneRunAheadInstance()
 {
-    auto &config = main.getConfig();
-
-    debug(RUA_DEBUG, "%lld: Recomputing the run-ahead instance\n", main.frame);
-
     clones++;
 
     // Recreate the runahead instance from scratch
     ahead = main; isDirty = false;
 
-    if (RUA_DEBUG && ahead != main) {
+    if (RUA_CHECKSUM && ahead != main) {
 
-        main.dump(Category::Checksums);
-        ahead.dump(Category::Checksums);
+        main.diff(ahead);
         fatal("Corrupted run-ahead clone detected");
+    }
+}
+
+void
+Emulator::recreateRunAheadInstance()
+{
+    auto &config = main.getConfig();
+
+    // Clone the main instance
+    if (RUA_DEBUG) {
+        util::StopWatch watch("Run-ahead: Clone");
+        cloneRunAheadInstance();
+    } else {
+        cloneRunAheadInstance();
     }
 
     // Advance to the proper frame
-    ahead.fastForward(config.runAhead - 1);
+    if (RUA_DEBUG) {
+        util::StopWatch watch("Run-ahead: Fast-forward");
+        ahead.fastForward(config.runAhead - 1);
+    } else {
+        ahead.fastForward(config.runAhead - 1);
+    }
 }
 
 void

@@ -27,6 +27,7 @@ debugflag SNP_DEBUG       = 0;
 
 // Run ahead
 debugflag RUA_DEBUG       = 0;
+debugflag RUA_CHECKSUM    = 0;
 debugflag RUA_ON_STEROIDS = 0;
 
 // CPU

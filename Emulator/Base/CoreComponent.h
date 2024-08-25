@@ -220,6 +220,9 @@ public:
     
     bool isEmulatorThread() const;
 
+    // Compares two components and reports differences (for debugging)
+    void diff(CoreComponent &other);
+
     // Exports the current configuration to a script file
     void exportConfig(std::ostream& ss, bool diff = false) const;
 

@@ -39,7 +39,8 @@ enum_long(DEBUG_FLAG)
     FLAG_SNP_DEBUG,         ///< Debug snapshots
 
     // Run ahead
-    FLAG_RUA_DEBUG,         ///< Debug run-ahead mode
+    FLAG_RUA_DEBUG,         ///< Inform about run-ahead activity
+    FLAG_RUA_CHECKSUM,      ///< Verify the integrity of the run-ahead instance
     FLAG_RUA_ON_STEROIDS,   ///< Update the run-ahead instance in every frame
 
     // CPU
@@ -132,8 +133,9 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
             case FLAG_MSG_DEBUG:                return "MSG_DEBUG";
             case FLAG_SNP_DEBUG:                return "SNP_DEBUG";
 
-                // Run ahead
+                // Run-ahead
             case FLAG_RUA_DEBUG:                return "RUA_DEBUG";
+            case FLAG_RUA_CHECKSUM:             return "RUA_CHECKSUM";
             case FLAG_RUA_ON_STEROIDS:          return "RUA_ON_STEROIDS";
 
                 // CPU
@@ -223,7 +225,8 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
             case FLAG_SNP_DEBUG:                return "Serializing (snapshots)";
 
                 // Run ahead
-            case FLAG_RUA_DEBUG:                return "Run-ahead mode";
+            case FLAG_RUA_DEBUG:                return "Inform about run-ahead activity";
+            case FLAG_RUA_CHECKSUM:             return "Verify the integrity of the run-ahead instance";
             case FLAG_RUA_ON_STEROIDS:          return "Update the run-ahead instance in every frame";
 
                 // CPU
