@@ -890,7 +890,7 @@ FileSystem::exportBlock(isize nr, u8 *dst, isize size, ErrorCode *err) const
 bool
 FileSystem::exportBlocks(isize first, isize last, u8 *dst, isize size, ErrorCode *err) const
 {
-    assert(last < (u32)layout.numBlocks());
+    assert(last < layout.numBlocks());
     assert(first <= last);
     assert(dst);
     

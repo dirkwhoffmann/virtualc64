@@ -165,7 +165,6 @@ Console::printState()
 {
     std::stringstream ss;
 
-    ss << "\n";
     cpu.debugger.dumpLogBuffer(ss, 8);
     ss << "\n";
     c64.dump(Category::Current, ss);

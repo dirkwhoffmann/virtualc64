@@ -386,14 +386,14 @@ Cartridge::setRamCapacity(isize size)
 u8
 Cartridge::peekRAM(u32 addr) const
 {
-    assert(addr < ramCapacity);
+    assert(isize(addr) < ramCapacity);
     return externalRam[addr];
 }
 
 void
 Cartridge::pokeRAM(u32 addr, u8 value)
 {
-    assert(addr < ramCapacity);
+    assert(isize(addr) < ramCapacity);
     externalRam[addr] = value;
     writes++;
 }

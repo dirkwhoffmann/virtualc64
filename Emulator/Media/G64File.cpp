@@ -113,7 +113,7 @@ G64File::init(Disk &disk)
         buffer[pos++] = 0;
         buffer[pos++] = 0;
     }
-    assert(pos == length);
+    assert(isize(pos) == length);
     
     std::stringstream stream;
     stream.write((char *)buffer, length);
