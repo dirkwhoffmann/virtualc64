@@ -371,135 +371,10 @@ Emulator::update()
     shouldWarp() ? warpOn() : warpOff();
 
     // Mark the run-ahead instance dirty when the command queue has entries
-    if (!cmdQueue.empty) main.markAsDirty();
+    isDirty |= !cmdQueue.empty;
 
-    Cmd cmd;
-    bool cmdConfig = false;
-
-    auto drive = [&]() -> Drive& { return cmd.value == 0 ? main.drive8 : main.drive9; };
-
-    while (cmdQueue.poll(cmd)) {
-
-        debug(CMD_DEBUG, "Command: %s\n", CmdTypeEnum::key(cmd.type));
-
-        switch (cmd.type) {
-
-            case CMD_CONFIG:
-
-                cmdConfig = true;
-                cmd.config.id < 0 ?
-                set(cmd.config.option, cmd.config.value) :
-                set(cmd.config.option, cmd.config.value, cmd.config.id);
-                break;
-
-            case CMD_ALARM_ABS:
-            case CMD_ALARM_REL:
-            case CMD_INSPECTION_TARGET:
-
-                main.processCommand(cmd);
-                break;
-
-            case CMD_CPU_BRK:
-            case CMD_CPU_NMI:
-            case CMD_BP_SET_AT:
-            case CMD_BP_MOVE_TO:
-            case CMD_BP_REMOVE_NR:
-            case CMD_BP_REMOVE_AT:
-            case CMD_BP_REMOVE_ALL:
-            case CMD_BP_ENABLE_NR:
-            case CMD_BP_ENABLE_AT:
-            case CMD_BP_ENABLE_ALL:
-            case CMD_BP_DISABLE_NR:
-            case CMD_BP_DISABLE_AT:
-            case CMD_BP_DISABLE_ALL:
-            case CMD_WP_SET_AT:
-            case CMD_WP_MOVE_TO:
-            case CMD_WP_REMOVE_NR:
-            case CMD_WP_REMOVE_AT:
-            case CMD_WP_REMOVE_ALL:
-            case CMD_WP_ENABLE_NR:
-            case CMD_WP_ENABLE_AT:
-            case CMD_WP_ENABLE_ALL:
-            case CMD_WP_DISABLE_NR:
-            case CMD_WP_DISABLE_AT:
-            case CMD_WP_DISABLE_ALL:
-
-                main.cpu.processCommand(cmd);
-                break;
-
-            case CMD_KEY_PRESS:
-            case CMD_KEY_RELEASE:
-            case CMD_KEY_RELEASE_ALL:
-            case CMD_KEY_TOGGLE:
-
-                main.keyboard.processCommand(cmd);
-                break;
-
-            case CMD_DSK_TOGGLE_WP:
-            case CMD_DSK_MODIFIED:
-            case CMD_DSK_UNMODIFIED:
-
-                drive().processCommand(cmd);
-                break;
-
-            case CMD_MOUSE_MOVE_ABS:
-            case CMD_MOUSE_MOVE_REL:
-
-                switch (cmd.coord.port) {
-
-                    case PORT_1: main.port1.processCommand(cmd); break;
-                    case PORT_2: main.port2.processCommand(cmd); break;
-                    default: fatalError;
-                }
-                break;
-
-            case CMD_MOUSE_EVENT:
-            case CMD_JOY_EVENT:
-
-                switch (cmd.action.port) {
-
-                    case PORT_1: main.port1.processCommand(cmd); break;
-                    case PORT_2: main.port2.processCommand(cmd); break;
-                    default: fatalError;
-                }
-                break;
-
-            case CMD_DATASETTE_PLAY:
-            case CMD_DATASETTE_STOP:
-            case CMD_DATASETTE_REWIND:
-
-                main.datasette.processCommand(cmd);
-                break;
-
-            case CMD_CRT_BUTTON_PRESS:
-            case CMD_CRT_BUTTON_RELEASE:
-            case CMD_CRT_SWITCH_LEFT:
-            case CMD_CRT_SWITCH_NEUTRAL:
-            case CMD_CRT_SWITCH_RIGHT:
-
-                main.expansionport.processCommand(cmd);
-                break;
-
-            case CMD_RSH_EXECUTE:
-
-                main.retroShell.exec();
-                break;
-
-            case CMD_FOCUS:
-
-                cmd.value ? main.focus() : main.unfocus();
-                break;
-
-            default:
-                fatal("Unhandled command: %s\n", CmdTypeEnum::key(cmd.type));
-        }
-    }
-
-    // Inform the GUI about a changed machine configuration
-    if (cmdConfig) { main.msgQueue.put(MSG_CONFIG); }
-
-    // Inform the GUI about new RetroShell content
-    if (main.retroShell.isDirty) { main.retroShell.isDirty = false; main.msgQueue.put(MSG_RSH_UPDATE); }
+    // Process all commands
+    main.update(cmdQueue);
 }
 
 bool
@@ -568,24 +443,24 @@ Emulator::computeFrame()
         try {
 
             // Run the main instance
-            main.execute();
+            main.computeFrame();
 
             // Recreate the run-ahead instance if necessary
-            if (main.isDirty || RUA_ON_STEROIDS) recreateRunAheadInstance();
+            if (isDirty || RUA_ON_STEROIDS) recreateRunAheadInstance();
 
             // Run the runahead instance
-            ahead.execute();
+            ahead.computeFrame();
 
         } catch (StateChangeException &) {
 
-            main.markAsDirty();
+            isDirty = true;
             throw;
         }
 
     } else {
 
         // Only run the main instance
-        main.execute();
+        main.computeFrame();
     }
 }
 
@@ -599,7 +474,7 @@ Emulator::recreateRunAheadInstance()
     clones++;
 
     // Recreate the runahead instance from scratch
-    ahead = main; main.isDirty = false;
+    ahead = main; isDirty = false;
 
     if (RUA_DEBUG && ahead != main) {
 

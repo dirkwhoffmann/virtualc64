@@ -63,10 +63,4 @@ SubComponent::prefix(isize level, isize line) const
     c64.prefix(level, line);
 }
 
-void 
-SubComponent::markAsDirty() 
-{
-    c64.markAsDirty();
-}
-
 }

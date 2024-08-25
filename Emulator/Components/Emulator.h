@@ -35,6 +35,9 @@ public Inspectable<EmulatorInfo, EmulatorStats> {
     // The run-ahead instance
     C64 ahead = C64(*this, 1);
 
+    // Indicates if the run-ahead instance needs to be updated
+    bool isDirty = true;
+    
     // Keeps track of the number of recreated run-ahead instances
     isize clones = 0;
 
@@ -64,6 +67,9 @@ public:
 
     // Initializes all components
     void initialize();
+
+    // Forces to recreate the run-ahead instance in the next frame
+    void markAsDirty() { isDirty = true; }
 
 
     //

@@ -245,7 +245,7 @@ private:
      * This flag is used to determine whether the run-ahead instance needs to
      * be recreated.
      */
-    bool isDirty = false;
+    // bool isDirty = false;
     
     // Duration of a CPU cycle in 1/10 nano seconds
     i64 durationOfOneCycle;
@@ -441,9 +441,6 @@ public:
     // Updates the clock frequency and all variables derived from it
     void updateClockFrequency();
 
-    // Indicates that the run-ahead instance needs an update
-    void markAsDirty() { isDirty = true; }
-
     // Enables or disables headless mode
     bool getHeadless() const { return headless; }
     void setHeadless(bool value) { headless = value; }
@@ -468,19 +465,22 @@ private:
 
 
     //
-    // Executing
+    // Emulating
     //
 
 private:
 
-    void execute();
-    void execute(bool headless);
-    void executeHeadless() { execute(true); }
+    // Called by the Emulator class in it's own update function
+    void update(CmdQueue &queue);
+
+    // Emulates a frame
+    void computeFrame();
+    void computeFrame(bool headless);
+    void computeFrameHeadless() { computeFrame(true); }
     template <bool enable8, bool enable9> void execute();
     template <bool enable8, bool enable9> alwaysinline void executeCycle();
     template <bool enable8, bool enable9> void finishInstruction();
     void processFlags();
-
 
     // Fast-forward the run-ahead instance
     void fastForward(isize frames);

@@ -334,7 +334,7 @@ VirtualC64::set(C64Model model)
 {
     assert(isUserThread());
     emu->set(model);
-    emu->main.markAsDirty();
+    emu->markAsDirty();
 }
 
 void
@@ -344,7 +344,7 @@ VirtualC64::set(Option opt, i64 value) throws
 
     emu->check(opt, value);
     put(CMD_CONFIG, ConfigCmd { .option = opt, .value = value, .id = -1 });
-    emu->main.markAsDirty();
+    emu->markAsDirty();
 }
 
 void
@@ -354,7 +354,7 @@ VirtualC64::set(Option opt, i64 value, long id)
 
     emu->check(opt, value, id);
     put(CMD_CONFIG, ConfigCmd { .option = opt, .value = value, .id = id });
-    emu->main.markAsDirty();
+    emu->markAsDirty();
 }
 
 void
@@ -391,7 +391,7 @@ C64API::hardReset()
     suspend();
 
     c64->hardReset();
-    c64->markAsDirty();
+    emu->markAsDirty();
 
     resume();
 }
@@ -404,7 +404,7 @@ C64API::softReset()
     suspend();
 
     c64->hardReset();
-    c64->markAsDirty();
+    emu->markAsDirty();
 
     resume();
 }
@@ -461,77 +461,77 @@ void
 C64API::loadSnapshot(const MediaFile &snapshot)
 {
     c64->loadSnapshot(snapshot);
-    c64->markAsDirty();
+    emu->markAsDirty();
 }
 
 void
 C64API::loadRom(const fs::path &path)
 {
     c64->loadRom(path);
-    c64->markAsDirty();
+    emu->markAsDirty();
 }
 
 void 
 C64API::loadRom(const MediaFile &file)
 {
     c64->loadRom(file);
-    c64->markAsDirty();
+    emu->markAsDirty();
 }
 
 void 
 C64API::deleteRom(RomType type)
 {
     c64->deleteRom(type);
-    c64->markAsDirty();
+    emu->markAsDirty();
 }
 
 void 
 C64API::deleteRoms()
 {
     c64->deleteRoms();
-    c64->markAsDirty();
+    emu->markAsDirty();
 }
 
 void
 C64API::saveRom(RomType rom, const std::filesystem::path &path)
 {
     c64->saveRom(rom, path);
-    c64->markAsDirty();
+    emu->markAsDirty();
 }
 
 void
 C64API::installOpenRom(RomType type)
 {
     c64->installOpenRom(type);
-    c64->markAsDirty();
+    emu->markAsDirty();
 }
 
 void
 C64API::installOpenRoms()
 {
     c64->installOpenRoms();
-    c64->markAsDirty();
+    emu->markAsDirty();
 }
 
 void
 C64API::flash(const MediaFile &file)
 {
     c64->flash(file);
-    c64->markAsDirty();
+    emu->markAsDirty();
 }
 
 void 
 C64API::flash(const MediaFile &file, isize item)
 {
     c64->flash(file, item);
-    c64->markAsDirty();
+    emu->markAsDirty();
 }
 
 void 
 C64API::flash(const FileSystem &fs, isize item)
 {
     c64->flash(fs, item);
-    c64->markAsDirty();
+    emu->markAsDirty();
 }
 
 
@@ -859,13 +859,13 @@ KeyboardAPI::releaseAll()
 void KeyboardAPI::autoType(const string &text)
 {
     keyboard->autoType(text);
-    keyboard->markAsDirty();
+    emu->markAsDirty();
 }
 
 void KeyboardAPI::abortAutoTyping()
 {
     keyboard->abortAutoTyping();
-    keyboard->markAsDirty();
+    emu->markAsDirty();
 }
 
 
@@ -923,14 +923,14 @@ void
 DatasetteAPI::insertTape(MediaFile &file)
 {
     datasette->insertTape(file);
-    datasette->markAsDirty();
+    emu->markAsDirty();
 }
 
 void
 DatasetteAPI::ejectTape()
 {
     datasette->ejectTape();
-    datasette->markAsDirty();
+    emu->markAsDirty();
 }
 
 
@@ -1156,42 +1156,42 @@ void
 ExpansionPortAPI::attachCartridge(const std::filesystem::path &path, bool reset)
 {
     expansionPort->attachCartridge(path, reset);
-    expansionPort->markAsDirty();
+    emu->markAsDirty();
 }
 
 void
 ExpansionPortAPI::attachCartridge(const MediaFile &c, bool reset)
 {
     expansionPort->attachCartridge(c, reset);
-    expansionPort->markAsDirty();
+    emu->markAsDirty();
 }
 
 void
 ExpansionPortAPI::attachReu(isize capacity)
 {
     expansionPort->attachReu(capacity);
-    expansionPort->markAsDirty();
+    emu->markAsDirty();
 }
 
 void
 ExpansionPortAPI::attachGeoRam(isize capacity)
 {
     expansionPort->attachGeoRam(capacity);
-    expansionPort->markAsDirty();
+    emu->markAsDirty();
 }
 
 void
 ExpansionPortAPI::attachIsepicCartridge()
 {
     expansionPort->attachIsepicCartridge();
-    expansionPort->markAsDirty();
+    emu->markAsDirty();
 }
 
 void
 ExpansionPortAPI::detachCartridge()
 {
     expansionPort->detachCartridge();
-    expansionPort->markAsDirty();
+    emu->markAsDirty();
 }
 
 
@@ -1232,28 +1232,28 @@ void
 DriveAPI::insertBlankDisk(DOSType fstype, string name)
 {
     drive->insertNewDisk(fstype, name);
-    drive->markAsDirty();
+    emu->markAsDirty();
 }
 
 void
 DriveAPI::insertMedia(MediaFile &file, bool wp)
 {
     drive->insertMediaFile(file, wp);
-    drive->markAsDirty();
+    emu->markAsDirty();
 }
 
 void
 DriveAPI::insertFileSystem(const class FileSystem &device, bool wp)
 {
     drive->insertFileSystem(device, wp);
-    drive->markAsDirty();
+    emu->markAsDirty();
 }
 
 void
 DriveAPI::ejectDisk()
 {
     drive->ejectDisk();
-    drive->markAsDirty();
+    emu->markAsDirty();
 }
 
 

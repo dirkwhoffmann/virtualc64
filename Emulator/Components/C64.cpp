@@ -407,17 +407,149 @@ C64::setInspectionTarget(InspectionTarget target)
 }
 
 void
-C64::execute()
+C64::update(CmdQueue &queue)
+{
+    Cmd cmd;
+    bool cmdConfig = false;
+
+    auto drive = [&]() -> Drive& { return cmd.value == 0 ? drive8 : drive9; };
+
+    while (queue.poll(cmd)) {
+
+        debug(CMD_DEBUG, "Command: %s\n", CmdTypeEnum::key(cmd.type));
+
+        switch (cmd.type) {
+
+            case CMD_CONFIG:
+
+                cmdConfig = true;
+                cmd.config.id < 0 ?
+                emulator.set(cmd.config.option, cmd.config.value) :
+                emulator.set(cmd.config.option, cmd.config.value, cmd.config.id);
+                break;
+
+            case CMD_ALARM_ABS:
+            case CMD_ALARM_REL:
+            case CMD_INSPECTION_TARGET:
+
+                processCommand(cmd);
+                break;
+
+            case CMD_CPU_BRK:
+            case CMD_CPU_NMI:
+            case CMD_BP_SET_AT:
+            case CMD_BP_MOVE_TO:
+            case CMD_BP_REMOVE_NR:
+            case CMD_BP_REMOVE_AT:
+            case CMD_BP_REMOVE_ALL:
+            case CMD_BP_ENABLE_NR:
+            case CMD_BP_ENABLE_AT:
+            case CMD_BP_ENABLE_ALL:
+            case CMD_BP_DISABLE_NR:
+            case CMD_BP_DISABLE_AT:
+            case CMD_BP_DISABLE_ALL:
+            case CMD_WP_SET_AT:
+            case CMD_WP_MOVE_TO:
+            case CMD_WP_REMOVE_NR:
+            case CMD_WP_REMOVE_AT:
+            case CMD_WP_REMOVE_ALL:
+            case CMD_WP_ENABLE_NR:
+            case CMD_WP_ENABLE_AT:
+            case CMD_WP_ENABLE_ALL:
+            case CMD_WP_DISABLE_NR:
+            case CMD_WP_DISABLE_AT:
+            case CMD_WP_DISABLE_ALL:
+
+                cpu.processCommand(cmd);
+                break;
+
+            case CMD_KEY_PRESS:
+            case CMD_KEY_RELEASE:
+            case CMD_KEY_RELEASE_ALL:
+            case CMD_KEY_TOGGLE:
+
+                keyboard.processCommand(cmd);
+                break;
+
+            case CMD_DSK_TOGGLE_WP:
+            case CMD_DSK_MODIFIED:
+            case CMD_DSK_UNMODIFIED:
+
+                drive().processCommand(cmd);
+                break;
+
+            case CMD_MOUSE_MOVE_ABS:
+            case CMD_MOUSE_MOVE_REL:
+
+                switch (cmd.coord.port) {
+
+                    case PORT_1: port1.processCommand(cmd); break;
+                    case PORT_2: port2.processCommand(cmd); break;
+                    default: fatalError;
+                }
+                break;
+
+            case CMD_MOUSE_EVENT:
+            case CMD_JOY_EVENT:
+
+                switch (cmd.action.port) {
+
+                    case PORT_1: port1.processCommand(cmd); break;
+                    case PORT_2: port2.processCommand(cmd); break;
+                    default: fatalError;
+                }
+                break;
+
+            case CMD_DATASETTE_PLAY:
+            case CMD_DATASETTE_STOP:
+            case CMD_DATASETTE_REWIND:
+
+                datasette.processCommand(cmd);
+                break;
+
+            case CMD_CRT_BUTTON_PRESS:
+            case CMD_CRT_BUTTON_RELEASE:
+            case CMD_CRT_SWITCH_LEFT:
+            case CMD_CRT_SWITCH_NEUTRAL:
+            case CMD_CRT_SWITCH_RIGHT:
+
+                expansionport.processCommand(cmd);
+                break;
+
+            case CMD_RSH_EXECUTE:
+
+                retroShell.exec();
+                break;
+
+            case CMD_FOCUS:
+
+                cmd.value ? focus() : unfocus();
+                break;
+
+            default:
+                fatal("Unhandled command: %s\n", CmdTypeEnum::key(cmd.type));
+        }
+    }
+
+    // Inform the GUI about a changed machine configuration
+    if (cmdConfig) { msgQueue.put(MSG_CONFIG); }
+
+    // Inform the GUI about new RetroShell content
+    if (retroShell.isDirty) { retroShell.isDirty = false; msgQueue.put(MSG_RSH_UPDATE); }
+}
+
+void
+C64::computeFrame()
 {
     if (emulator.get(OPT_VICII_POWER_SAVE)) {
-        execute(emulator.isWarping() && (frame & 7) != 0);
+        computeFrame(emulator.isWarping() && (frame & 7) != 0);
     } else {
-        execute(false);
+        computeFrame(false);
     }
 }
 
 void 
-C64::execute(bool headless)
+C64::computeFrame(bool headless)
 {
     setHeadless(headless);
 
@@ -578,7 +710,7 @@ C64::fastForward(isize frames)
     auto target = frame + frames;
 
     // Execute until the target frame has been reached
-    while (frame < target) execute();
+    while (frame < target) computeFrame();
 }
 
 void
@@ -746,7 +878,7 @@ void
 C64::executeOneCycle()
 {
     setFlag(RL::SINGLE_STEP);
-    execute();
+    computeFrame();
     clearFlag(RL::SINGLE_STEP);
 }
 
