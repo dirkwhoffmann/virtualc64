@@ -48,10 +48,9 @@ RetroShell::enterDebugger()
 
     // Enter tracking mode
     emulator.trackOn(1);
-    msgQueue.put(MSG_RSH_DEBUGGER, true);
 
-    // Print the welcome message if entered the first time
-    if (current->isEmpty()) asyncExec("welcome", false);
+    // Call the delegate of the new console
+    current->_enter();
 }
 
 void
@@ -62,10 +61,9 @@ RetroShell::enterCommander()
 
     // Leave tracking mode
     emulator.trackOff(1);
-    msgQueue.put(MSG_RSH_DEBUGGER, false);
 
-    // Print the welcome message if entered the first time
-    if (current->isEmpty()) asyncExec("welcome", false);
+    // Call the delegate of the new console
+    current->_enter();
 }
 
 void
@@ -164,7 +162,6 @@ RetroShell::exec()
             commands.erase(commands.begin());
             exec(cmd);
         }
-        msgQueue.put(MSG_RSH_EXEC);
 
     } catch (ScriptInterruption &) {
 

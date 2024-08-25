@@ -18,6 +18,20 @@
 namespace vc64 {
 
 void
+CommandConsole::_enter()
+{
+    msgQueue.put(MSG_RSH_DEBUGGER, false);
+
+    // If the console is entered the first time...
+    if (isEmpty()) {
+
+        // Print the welcome message
+        exec("welcome");
+        *this << getPrompt();
+    }
+}
+
+void
 CommandConsole::_pause()
 {
 
@@ -193,15 +207,8 @@ CommandConsole::initCommands(Command &root)
 
     cmd = registerComponent(mem);
 
-    root.add({cmd, "load"}, { Arg::path },
-             "Installs a Rom image",
-             [this](Arguments& argv, long value) {
-
-        c64.loadRom(argv.front());
-    });
-
     root.add({cmd, "flash"}, { Arg::path },
-             "Flashes a file into memory",
+             "Flash a file into memory",
              [this](Arguments& argv, long value) {
 
         auto path = argv.front();
@@ -209,6 +216,20 @@ CommandConsole::initCommands(Command &root)
 
         auto file = PRGFile(path);
         c64.flash(file, 0);
+    });
+
+    root.add({cmd, "load"}, { Arg::path },
+             "Load a Rom image from disk",
+             [this](Arguments& argv, long value) {
+
+        c64.loadRom(argv.front());
+    });
+
+    root.add({cmd, "openroms"},
+             "Install MEGA65 OpenROMs",
+             [this](Arguments& argv, long value) {
+
+        c64.installOpenRoms();
     });
 
 

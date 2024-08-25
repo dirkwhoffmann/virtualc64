@@ -833,6 +833,13 @@ Console::initCommands(Command &root)
         c64.scheduleRel<SLOT_RSH>(C64::sec(seconds), RSH_WAKEUP);
         throw ScriptInterruption();
     });
+
+    root.add({"shutdown"},
+             "Terminates the application",
+             [this](Arguments& argv, long value) {
+
+        msgQueue.put(MSG_ABORT, 0);
+    });
 }
 
 const char *

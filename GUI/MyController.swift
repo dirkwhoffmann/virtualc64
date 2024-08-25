@@ -357,7 +357,7 @@ extension MyController {
         case .RSH_DEBUGGER:
             break
 
-        case .RSH_EXEC, .RSH_WAIT:
+        case .RSH_WAIT:
             renderer.console.isDirty = true
 
         case .RSH_ERROR:

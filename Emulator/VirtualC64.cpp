@@ -486,13 +486,34 @@ C64API::deleteRom(RomType type)
 }
 
 void 
+C64API::deleteRoms()
+{
+    c64->deleteRoms();
+    c64->markAsDirty();
+}
+
+void
 C64API::saveRom(RomType rom, const std::filesystem::path &path)
 {
     c64->saveRom(rom, path);
     c64->markAsDirty();
 }
 
-void 
+void
+C64API::installOpenRom(RomType type)
+{
+    c64->installOpenRom(type);
+    c64->markAsDirty();
+}
+
+void
+C64API::installOpenRoms()
+{
+    c64->installOpenRoms();
+    c64->markAsDirty();
+}
+
+void
 C64API::flash(const MediaFile &file)
 {
     c64->flash(file);

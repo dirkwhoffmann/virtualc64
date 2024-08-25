@@ -58,14 +58,18 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--messages"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--diagnose"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--check"
-            isEnabled = "YES">
+            argument = "--footprint"
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--size"
+            argument = "--smoke"
             isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>

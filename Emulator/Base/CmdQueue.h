@@ -27,6 +27,8 @@ class CmdQueue final : CoreObject, Synchronizable {
     /// Ring buffer storing all pending commands
     util::RingBuffer <Cmd, 128> queue;
 
+public:
+    
     /// Indicates if the queue is empty
     std::atomic<bool> empty = true;
 

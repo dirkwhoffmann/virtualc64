@@ -143,6 +143,14 @@ public:
 
 
     //
+    // Delegates
+    //
+
+    // Called from RetroShell when the console is entered
+    virtual void _enter() { };
+
+
+    //
     // Working with the text storage
     //
 
@@ -326,6 +334,7 @@ class CommandConsole : public Console
     using Console::Console;
 
     virtual void initCommands(Command &root) override;
+    void _enter() override;
     void _pause() override;
     string getPrompt() override;
     void welcome() override;
@@ -338,6 +347,7 @@ class DebugConsole : public Console
     using Console::Console;
 
     virtual void initCommands(Command &root) override;
+    void _enter() override;
     void _pause() override;
     string getPrompt() override;
     void welcome() override;

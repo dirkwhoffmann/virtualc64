@@ -699,13 +699,18 @@ public:
     void loadRom(const fs::path &path) throws;
     void loadRom(const MediaFile &file);
 
-    // Erases an installed Rom
+    // Erases an installed Rom or all Roms
     void deleteRom(RomType type);
+    void deleteRoms();
 
     // Saves a Rom to disk
     void saveRom(RomType rom, const fs::path &path) throws;
 
+    // Installs an OpenROM or all three of them
+    void installOpenRom(RomType type);
+    void installOpenRoms();
 
+    
     //
     // Flashing files
     //

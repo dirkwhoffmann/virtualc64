@@ -43,7 +43,6 @@ enum_long(MSG_TYPE)
     MSG_RSH_CLOSE,          ///< RetroShell has been closed
     MSG_RSH_UPDATE,         ///< RetroShell has generated new output
     MSG_RSH_DEBUGGER,       ///< The RetroShell debugger has been opend or closed
-    MSG_RSH_EXEC,           ///< Commands have been executed
     MSG_RSH_WAIT,           ///< Execution has peen postponed due to a wait command
     MSG_RSH_ERROR,          ///< Command execution has been aborted due to an error
 
@@ -147,7 +146,6 @@ struct MsgTypeEnum : util::Reflection<MsgTypeEnum, MsgType> {
             case MSG_RSH_CLOSE:             return "RSH_CLOSE";
             case MSG_RSH_UPDATE:            return "RSH_UPDATE";
             case MSG_RSH_DEBUGGER:          return "RSH_DEBUGGER";
-            case MSG_RSH_EXEC:              return "RSH_EXEC";
             case MSG_RSH_WAIT:              return "RSH_WAIT";
             case MSG_RSH_ERROR:             return "RSH_ERROR";
                 

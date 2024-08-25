@@ -15,6 +15,7 @@
 #include "Checksum.h"
 #include "IOUtils.h"
 #include "RomDatabase.h"
+#include "OpenRoms.h"
 #include <algorithm>
 #include <queue>
 
@@ -1246,31 +1247,46 @@ C64::loadRom(const MediaFile &file)
 void
 C64::deleteRom(RomType type)
 {
-    switch (type) {
-            
-        case ROM_TYPE_BASIC:
+    {   SUSPENDED
 
-            memset(mem.rom + 0xA000, 0, 0x2000);
-            break;
+        switch (type) {
 
-        case ROM_TYPE_CHAR:
+            case ROM_TYPE_BASIC:
 
-            memset(mem.rom + 0xD000, 0, 0x1000);
-            break;
+                memset(mem.rom + 0xA000, 0, 0x2000);
+                break;
 
-        case ROM_TYPE_KERNAL:
+            case ROM_TYPE_CHAR:
 
-            memset(mem.rom + 0xE000, 0, 0x2000);
-            break;
+                memset(mem.rom + 0xD000, 0, 0x1000);
+                break;
 
-        case ROM_TYPE_VC1541:
+            case ROM_TYPE_KERNAL:
 
-            drive8.mem.deleteRom();
-            drive9.mem.deleteRom();
-            break;
+                memset(mem.rom + 0xE000, 0, 0x2000);
+                break;
 
-        default:
-            fatalError;
+            case ROM_TYPE_VC1541:
+
+                drive8.mem.deleteRom();
+                drive9.mem.deleteRom();
+                break;
+
+            default:
+                fatalError;
+        }
+    }
+}
+
+void 
+C64::deleteRoms()
+{
+    {   SUSPENDED
+
+        deleteRom(ROM_TYPE_BASIC);
+        deleteRom(ROM_TYPE_KERNAL);
+        deleteRom(ROM_TYPE_CHAR);
+        deleteRom(ROM_TYPE_VC1541);
     }
 }
 
@@ -1312,6 +1328,48 @@ C64::saveRom(RomType type, const fs::path &path)
             
         default:
             fatalError;
+    }
+}
+
+void 
+C64::installOpenRoms()
+{
+    {   SUSPENDED
+
+        installOpenRom(ROM_TYPE_BASIC);
+        installOpenRom(ROM_TYPE_KERNAL);
+        installOpenRom(ROM_TYPE_CHAR);
+    }
+}
+
+void
+C64::installOpenRom(RomType type)
+{
+    {   SUSPENDED
+
+        switch (type) {
+
+            case ROM_TYPE_BASIC:
+
+                assert(sizeof(basic_generic) == 0x2000);
+                memcpy(mem.rom + 0xA000, basic_generic, 0x2000);
+                break;
+
+            case ROM_TYPE_CHAR:
+
+                assert(sizeof(chargen_openroms) == 0x1000);
+                memcpy(mem.rom + 0xD000, chargen_openroms, 0x1000);
+                break;
+
+            case ROM_TYPE_KERNAL:
+
+                assert(sizeof(kernel_generic) == 0x2000);
+                memcpy(mem.rom + 0xE000, kernel_generic, 0x2000);
+                break;
+
+            default:
+                fatalError;
+        }
     }
 }
 

@@ -62,5 +62,6 @@ find_package(Threads REQUIRED)
 target_link_libraries(vc64Core resid Threads::Threads)
 
 # Add tests
-add_test(NAME SelfTest1 COMMAND vc64Console --size)
-add_test(NAME SelfTest2 COMMAND vc64Console --check)
+add_test(NAME SelfTest1 COMMAND vc64Console --verbose --footprint)
+add_test(NAME SelfTest2 COMMAND vc64Console --verbose --smoke)
+add_test(NAME SelfTest3 COMMAND vc64Console --verbose --diagnose)

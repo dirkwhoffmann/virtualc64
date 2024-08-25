@@ -367,18 +367,20 @@ Emulator::overrideOption(Option opt, i64 value) const
 void
 Emulator::update()
 {
+    // Switch warp mode on or off
+    shouldWarp() ? warpOn() : warpOff();
+
+    // Mark the run-ahead instance dirty when the command queue has entries
+    if (!cmdQueue.empty) main.markAsDirty();
+
     Cmd cmd;
     bool cmdConfig = false;
 
     auto drive = [&]() -> Drive& { return cmd.value == 0 ? main.drive8 : main.drive9; };
 
-    shouldWarp() ? warpOn() : warpOff();
-
     while (cmdQueue.poll(cmd)) {
 
         debug(CMD_DEBUG, "Command: %s\n", CmdTypeEnum::key(cmd.type));
-
-        main.markAsDirty();
 
         switch (cmd.type) {
 
@@ -493,9 +495,11 @@ Emulator::update()
         }
     }
 
-    if (cmdConfig) {
-        main.msgQueue.put(MSG_CONFIG);
-    }
+    // Inform the GUI about a changed machine configuration
+    if (cmdConfig) { main.msgQueue.put(MSG_CONFIG); }
+
+    // Inform the GUI about new RetroShell content
+    if (main.retroShell.isDirty) { main.retroShell.isDirty = false; main.msgQueue.put(MSG_RSH_UPDATE); }
 }
 
 bool
