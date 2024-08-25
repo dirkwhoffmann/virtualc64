@@ -272,6 +272,11 @@ public:
     // Returns a textual description for an event
     static const char *eventName(EventSlot slot, EventID id);
 
+    // Converts a time span to an (approximate) cycle count
+    static Cycle usec(isize delay) { return Cycle(delay * 1LL); }
+    static Cycle msec(isize delay) { return Cycle(delay * 1000LL); }
+    static Cycle sec(double delay) { return Cycle(delay * 1000000LL); }
+
 
     //
     // Methods
@@ -285,18 +290,6 @@ public:
 private:
 
     void initialize();
-
-
-    //
-    // Static methods
-    //
-
-public:
-    
-    // Converts a time span to an (approximate) cycle count
-    static Cycle usec(isize delay) { return Cycle(delay * 1LL); }
-    static Cycle msec(isize delay) { return Cycle(delay * 1000LL); }
-    static Cycle sec(double delay) { return Cycle(delay * 1000000LL); }
 
 
     //
@@ -402,7 +395,18 @@ public:
 private:
 
     void _dump(Category category, std::ostream& os) const override;
+
     void _didReset(bool hard) override;
+    void _isReady() const throws override;
+    void _powerOn() override;
+    void _powerOff() override;
+    void _run() override;
+    void _pause() override;
+    void _halt() override;
+    void _warpOn() override;
+    void _warpOff() override;
+    void _trackOn() override;
+    void _trackOff() override;
 
 
     //
@@ -459,6 +463,9 @@ public:
 
 public:
 
+    bool getUltimax() const { return ultimax; }
+    void setUltimax(bool b) { ultimax = b; }
+
     InspectionTarget getInspectionTarget() const;
 
 private:
@@ -490,31 +497,10 @@ private:
 
 
     //
-    // Controlling
-    //
-
-private:
-
-    void _isReady() const throws override;
-    void _powerOn() override;
-    void _powerOff() override;
-    void _run() override;
-    void _pause() override;
-    void _halt() override;
-    void _warpOn() override;
-    void _warpOff() override;
-    void _trackOn() override;
-    void _trackOff() override;
-
-
-    //
-    // Running the emulator
+    // Controlling the run loop
     //
 
 public:
-
-    bool getUltimax() const { return ultimax; }
-    void setUltimax(bool b) { ultimax = b; }
 
     /* Sets or clears a flag for controlling the run loop. The functions are
      * thread-safe and can be called safely from outside the emulator thread.
