@@ -210,6 +210,7 @@ using namespace vc64;
 
 - (BOOL)isRom:(RomType)type url:(NSURL *)url;
 
+- (void)installOpenRoms;
 - (void)loadRom:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)loadRom:(MediaFileProxy *)proxy;
 - (void)saveRom:(RomType)type url:(NSURL *)url exception:(ExceptionWrapper *)ex;

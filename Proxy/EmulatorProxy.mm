@@ -2074,6 +2074,11 @@ using namespace vc64;
     return RomFile::isRomFile(type, [url fileSystemRepresentation]);
 }
 
+- (void)installOpenRoms
+{
+    [self emu]->c64.installOpenRoms();
+}
+
 - (void) loadRom:(NSURL *)url exception:(ExceptionWrapper *)e
 {
     try { [self emu]->c64.loadRom(string([url fileSystemRepresentation])); }

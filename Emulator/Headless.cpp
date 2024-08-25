@@ -40,25 +40,21 @@ int main(int argc, char *argv[])
         if (auto what = string(e.what()); !what.empty()) {
             std::cout << what << std::endl;
         }
-        return 1;
 
     } catch (vc64::Error &e) {
 
         std::cout << "VAError: " << e.what() << std::endl;
-        return 1;
 
     } catch (std::exception &e) {
 
         std::cout << "System Error: " << e.what() << std::endl;
-        return 1;
 
     } catch (...) {
 
         std::cout << "Error" << std::endl;
-        return 1;
     }
 
-    return 0;
+    return 1;
 }
 
 namespace vc64 {
