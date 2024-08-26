@@ -108,13 +108,14 @@ CommandConsole::initCommands(Command &root)
         throw ScriptInterruption("");
     });
 
-    root.add({"screenshot"}, debugBuild ? "Take a screenshot and exit" : "");
     root.add({"regression", "run"}, { Arg::path },
              "Launch a regression test",
              [this](Arguments& argv, long value) {
 
         regressionTester.run(argv.front());
     });
+
+    root.add({"screenshot"}, debugBuild ? "Manages screenshots" : "");
 
     root.add({"screenshot", "set"},
              "Configure the screenshot");

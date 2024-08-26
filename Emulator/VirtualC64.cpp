@@ -841,19 +841,49 @@ KeyboardAPI::isPressed(C64Key key) const
 void
 KeyboardAPI::press(C64Key key, double delay)
 {
-    emu->put(Cmd(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
+    if (delay > 0.0) {
+
+        emu->put(Cmd(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
+        return;
+    }
+    keyboard->press(key);
+    emu->markAsDirty();
+}
+
+void 
+KeyboardAPI::toggle(C64Key key, double delay)
+{
+    if (delay > 0.0) {
+
+        emu->put(Cmd(CMD_KEY_TOGGLE, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
+        return;
+    }
+    keyboard->toggle(key);
+    emu->markAsDirty();
 }
 
 void
 KeyboardAPI::release(C64Key key, double delay)
 {
-    emu->put(Cmd(CMD_KEY_RELEASE, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
+    if (delay > 0.0) {
+
+        emu->put(Cmd(CMD_KEY_RELEASE, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
+        return;
+    }
+    keyboard->release(key);
+    emu->markAsDirty();
 }
 
 void 
-KeyboardAPI::releaseAll()
+KeyboardAPI::releaseAll(double delay)
 {
-    emu->put(Cmd(CMD_KEY_RELEASE_ALL));
+    if (delay > 0.0) {
+
+        emu->put(Cmd(CMD_KEY_RELEASE_ALL, KeyCmd { .delay = delay }));
+        return;
+    }
+    keyboard->releaseAll();
+    emu->markAsDirty();
 }
 
 void KeyboardAPI::autoType(const string &text)

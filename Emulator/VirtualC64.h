@@ -343,6 +343,16 @@ struct KeyboardAPI : API {
      */
     void press(C64Key key, double delay = 0.0);
 
+    /** @brief  Toggles a key
+     *  @param  key     The key to press or release.
+     *  @param  delay   An optional delay in seconds.
+     *
+     *  If no delay is specified, the function will immediately modify the
+     *  C64's keyboard matrix. Otherwise, it will ask the event scheduler
+     *  to modify the matrix with the specified delay.
+     */
+    void toggle(C64Key key, double delay = 0.0);
+
     /** @brief  Releases a key
      *  @param  key     The key to release.
      *  @param  delay   An optional delay in seconds.
@@ -355,7 +365,7 @@ struct KeyboardAPI : API {
 
     /** @brief  Releases all currently pressed keys
      */
-    void releaseAll();
+    void releaseAll(double delay = 0.0);
 
     /** @brief  Uses the auto-typing daemon to type a string.
      *  @param  text    The text to type.

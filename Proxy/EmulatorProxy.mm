@@ -613,38 +613,37 @@ using namespace vc64;
 
 - (void)pressKey:(NSInteger)nr
 {
-    [self emu]->put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)nr });
+    [self kb]->press(C64Key(nr));
 }
 
 - (void)releaseKey:(NSInteger)nr
 {
-    // [self kb]->release(C64Key(nr));
-    [self emu]->put(CMD_KEY_RELEASE, KeyCmd { .keycode = u8(nr) });
+    [self kb]->release(C64Key(nr));
 }
 
 - (void)releaseKey:(NSInteger)nr delay:(double)delay
 {
-    [self emu]->put(CMD_KEY_RELEASE, KeyCmd { .keycode = (u8)nr, .delay = delay });
+    [self kb]->release(C64Key(nr), delay);
 }
 
 - (void)releaseAll
 {
-    [self emu]->put(CMD_KEY_RELEASE_ALL);
+    [self kb]->releaseAll();
 }
 
 - (void)releaseAllWithDelay:(double)delay
 {
-    [self emu]->put(CMD_KEY_RELEASE_ALL, KeyCmd { .delay = delay });
+    [self kb]->releaseAll(delay);
 }
 
 - (void)toggleKey:(NSInteger)nr
 {
-    [self emu]->put(CMD_KEY_TOGGLE, KeyCmd { .keycode = u8(nr) });
+    [self kb]->toggle(C64Key(nr));
 }
 
 - (void)toggleKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
-    [self emu]->put(CMD_KEY_TOGGLE, KeyCmd { .keycode = u8(C64Key(row, col).nr) });
+    [self kb]->toggle(C64Key(row, col).nr);
 }
 
 - (void)autoType:(NSString *)text
