@@ -92,7 +92,7 @@ CommandConsole::initCommands(Command &root)
     // Regression tester
     //
 
-    Command::currentGroup = "Regression tester";
+    Command::currentGroup = "Regression testing";
 
     root.add({"regression"}, debugBuild ? "Runs the regression tester" : "");
 
@@ -108,7 +108,7 @@ CommandConsole::initCommands(Command &root)
         throw ScriptInterruption("");
     });
 
-    root.add({"screenshot"}, ""); // Take a screenshot and exit
+    root.add({"screenshot"}, debugBuild ? "Take a screenshot and exit" : "");
     root.add({"regression", "run"}, { Arg::path },
              "Launch a regression test",
              [this](Arguments& argv, long value) {

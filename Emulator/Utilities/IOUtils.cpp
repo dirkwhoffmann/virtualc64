@@ -279,7 +279,7 @@ bin::operator()(std::ostream &os) const
             (digits == 16 && i < 2) ||
             (digits == 8  && i < 1)  ) {
 
-            std::bitset<8> x(GET_BYTE(value, 0));
+            std::bitset<8> x(GET_BYTE(value, i));
             os << x << (i ? "." : "");
         }
     }

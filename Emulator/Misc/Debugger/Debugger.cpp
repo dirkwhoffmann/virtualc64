@@ -210,10 +210,10 @@ Debugger::convertNumeric(std::ostream& os, string s) const
 {
     u8 bytes[4];
 
-    bytes[0] = s.length() >= 4 ? (u8)s[s.length() - 1] : 0;
-    bytes[1] = s.length() >= 3 ? (u8)s[s.length() - 2] : 0;
-    bytes[2] = s.length() >= 2 ? (u8)s[s.length() - 3] : 0;
-    bytes[3] = s.length() >= 1 ? (u8)s[s.length() - 4] : 0;
+    bytes[0] = s.length() >= 4 ? (u8)s[s.length() - 4] : 0;
+    bytes[1] = s.length() >= 3 ? (u8)s[s.length() - 3] : 0;
+    bytes[2] = s.length() >= 2 ? (u8)s[s.length() - 2] : 0;
+    bytes[3] = s.length() >= 1 ? (u8)s[s.length() - 1] : 0;
 
     convertNumeric(os, u32(HI_HI_LO_LO(bytes[0], bytes[1], bytes[2], bytes[3])));
 }

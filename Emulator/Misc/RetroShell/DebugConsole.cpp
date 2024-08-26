@@ -426,7 +426,6 @@ DebugConsole::initCommands(Command &root)
 
         cmd = drive.shellName();
         description = drive.description();
-        root.add({cmd}, description);
 
         root.add({"i", cmd}, description);
 
@@ -522,8 +521,10 @@ DebugConsole::initCommands(Command &root)
 
 
     //
-    // Miscellaneous (Recorder)
+    // Miscellaneous
     //
+
+    Command::currentGroup = "Miscellaneous";
 
     root.add({"checksums"},
              "Displays checksum of various components",
@@ -531,6 +532,53 @@ DebugConsole::initCommands(Command &root)
 
         dump(c64, Category::Checksums);
     });
+
+    root.add({"debug"}, "Debug variables");
+
+    root.add({"debug", ""}, {},
+             "Display all debug variables",
+             [this](Arguments& argv, long value) {
+
+        dump(emulator, Category::Debug);
+    });
+
+    if (debugBuild) {
+
+        for (isize i = DebugFlagEnum::minVal; i < DebugFlagEnum::maxVal; i++) {
+
+            root.add({"debug", DebugFlagEnum::key(i)}, { Arg::boolean },
+                     DebugFlagEnum::help(i),
+                     [](Arguments& argv, long value) {
+
+                C64::setDebugVariable(DebugFlag(value), int(util::parseNum(argv[0])));
+
+            }, i);
+        }
+
+        root.add({"debug", "verbosity"}, { Arg::value },
+                 "Set the verbosity level for generated debug output",
+                 [](Arguments& argv, long value) {
+
+            CoreObject::verbosity = isize(util::parseNum(argv[0]));
+        });
+    }
+
+    root.add({"?"}, { Arg::value },
+             "Convert a value into different formats",
+             [this](Arguments& argv, long value) {
+
+        std::stringstream ss;
+
+        if (isNum(argv[0])) {
+            debugger.convertNumeric(ss, u32(parseNum(argv[0])));
+        } else {
+            debugger.convertNumeric(ss, argv.front());
+        }
+
+        retroShell << '\n' << ss << '\n';
+    });
 }
+
+
 
 }
