@@ -21,6 +21,7 @@ class VideoPort final : public SubComponent {
 
     Descriptions descriptions = {{
 
+        .type           = VideoPortClass,
         .name           = "Video",
         .description    = "Video Port",
         .shell          = "video"

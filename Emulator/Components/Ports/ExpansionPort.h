@@ -39,6 +39,7 @@ class ExpansionPort final : public SubComponent, public Inspectable<CartridgeInf
     
     Descriptions descriptions = {{
 
+        .type           = ExpansionPortClass,
         .name           = "Expansion",
         .description    = "Expansion Port",
         .shell          = "expansion"

@@ -22,6 +22,7 @@ class ParCable final : public SubComponent {
         
     Descriptions descriptions = {{
 
+        .type           = ParCableClass,
         .name           = "ParCable",
         .description    = "Parallel Drive Cable",
         .shell          = "parcable"

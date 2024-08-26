@@ -12,6 +12,7 @@
 
 #pragma once
 
+#include "CoreComponentTypes.h"
 #include "EmulatorTypes.h"
 #include "CoreObject.h"
 #include "Synchronizable.h"
@@ -28,6 +29,7 @@ namespace vc64 {
 
 struct Description {
 
+    const CType type;               // Class identifier
     const char *name;               // Short name
     const char *description;        // Textual descripiton
     const char *shell;              // RetroShell access

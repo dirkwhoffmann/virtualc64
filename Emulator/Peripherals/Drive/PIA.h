@@ -23,6 +23,7 @@ class PIA6821 : public SubComponent {
 
     Descriptions descriptions = {{
 
+        .type           = PIAClass,
         .name           = "PIA",
         .description    = "PIA 6821",
         .shell          = "pia"

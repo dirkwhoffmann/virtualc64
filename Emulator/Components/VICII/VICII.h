@@ -115,6 +115,7 @@ class VICII final : public SubComponent, public Inspectable<VICIIInfo, VICIIStat
     
     Descriptions descriptions = {{
 
+        .type           = VICIIClass,
         .name           = "VIC",
         .description    = "Video Interface Controller",
         .shell          = "vic"

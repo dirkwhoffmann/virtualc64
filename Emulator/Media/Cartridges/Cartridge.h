@@ -23,6 +23,7 @@ class Cartridge : public SubComponent, public Inspectable<CartridgeInfo> {
 
     Descriptions descriptions = {{
 
+        .type           = CartridgeClass,
         .name           = "Cartridge",
         .description    = "Cartridge",
         .shell          = "cartridge"

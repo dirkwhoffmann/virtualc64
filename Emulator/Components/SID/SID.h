@@ -12,6 +12,7 @@
 
 #pragma once
 
+#include "CoreComponentTypes.h"
 #include "SIDTypes.h"
 #include "C64Types.h"
 #include "ReSID.h"
@@ -25,21 +26,25 @@ class SID final : public SubComponent, public Inspectable<SIDInfo>
 
     Descriptions descriptions = {
         {
+            .type           = SIDClass,
             .name           = "SID",
             .description    = "Primary Sound Interface Device",
             .shell          = "sid"
         },
         {
+            .type           = SIDClass,
             .name           = "SID2",
             .description    = "First Auxiliary SID",
             .shell          = "sid2"
         },
         {
+            .type           = SIDClass,
             .name           = "SID3",
             .description    = "Second Auxiliary SID",
             .shell          = "sid3"
         },
         {
+            .type           = SIDClass,
             .name           = "SID4",
             .description    = "Third Auxiliary SID",
             .shell          = "sid4"

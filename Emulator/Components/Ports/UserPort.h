@@ -22,6 +22,7 @@ class UserPort final : public SubComponent {
 
     Descriptions descriptions = {{
 
+        .type           = UserPortClass,
         .name           = "User",
         .description    = "User Port",
         .shell          = "user"

@@ -843,6 +843,7 @@
 		505F8FE62580BD780066ACE4 /* AudioConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioConf.swift; sourceTree = "<group>"; };
 		505F8FE82582435E0066ACE4 /* PeripheralsConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralsConf.swift; sourceTree = "<group>"; };
 		50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
+		5066B4152C7CCFA0003AEEE8 /* CoreComponentTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreComponentTypes.h; sourceTree = "<group>"; };
 		506A724721C033EF00DA0AC3 /* Configuration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Configuration.xib; sourceTree = "<group>"; };
 		506A724921C0341900DA0AC3 /* ConfigurationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationController.swift; sourceTree = "<group>"; };
 		506A8A862B88D00200B95383 /* Configurable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Configurable.cpp; sourceTree = "<group>"; };
@@ -2044,6 +2045,7 @@
 				506F30402B74C1C70083EAEA /* Wakeable.cpp */,
 				504C42EC24AF29AB00E69CAE /* CoreObject.h */,
 				504C42ED24AF29AB00E69CAE /* CoreObject.cpp */,
+				5066B4152C7CCFA0003AEEE8 /* CoreComponentTypes.h */,
 				504C42F524AF29AB00E69CAE /* CoreComponent.h */,
 				504C42EE24AF29AB00E69CAE /* CoreComponent.cpp */,
 				500EA6C624B09037009AA7D7 /* SubComponent.h */,

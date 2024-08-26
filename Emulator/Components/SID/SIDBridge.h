@@ -51,6 +51,7 @@ class SIDBridge final : public SubComponent {
     
     Descriptions descriptions = {{
 
+        .type           = SIDBridgeClass,
         .name           = "SIDBridge",
         .description    = "SID Bridge",
         .shell          = "sidbridge"
