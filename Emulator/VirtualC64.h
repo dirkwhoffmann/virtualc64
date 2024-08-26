@@ -1041,12 +1041,6 @@ struct C64API : public API {
     const C64Info &getInfo() const;
     const C64Info &getCachedInfo() const;
 
-    /** @brief  Returns the current state of an event slot.
-     *
-     *  @param  nr      Number of the event slot.
-     */
-    EventSlotInfo getSlotInfo(isize nr) const;
-
     /** @brief  Returns information about one of the installed Roms
      *
      *  @param  type    The ROM type
@@ -1071,33 +1065,30 @@ struct C64API : public API {
      */
     void softReset();
 
+
     /// @}
-    /// @name Setting up auto-inspection
+    /// @name Auto-inspecting components
     /// @{
 
-    /** @brief  Returns the current inspection target.
+    /** @brief  Gets the current auto-inspection mask
+     *  The GUI utilizes Auto-Inspection to display life updates of the internal
+     *  emulator state in the Inspector panel. As soon as an auto-inspection
+     *  mask is set, the emulator caches the internal states of the inspected
+     *  components at periodic intervals. The inspected components are
+     *  specified as a bit mask.
      *
-     *  If you open the inspector panel in the Mac app while the emulator
-     *  is running, you will see continuous updates of the emulator state.
-     *  The displayed information is recorded via the auto-inspection
-     *  mechanism. If auto-inspection is active, the emulator schedules an
-     *  inspect event which calls function cacheInfo() on the inspection
-     *  target in constant intervals. The recorded information is later
-     *  picked up by the GUI.
+     *  @return A bit mask indicating the components under inspection
+     */
+    u64 getAutoInspectionMask() const;
+
+    /** @brief  Sets the current auto-inspection mask
      *
-     *  If you change to a different panel in the inspector window, the
-     *  emulator will change the inspection target to only record the
-     *  information you're seeing in the currently open panel.
+     *  @example The following call enables auto-inspections for the CIA chips
+     *  and the CPU: setAutoInspectionMask(1 << CIAClass | 1 << CPUClass);
+     *
+     *  @param  mask A bit mask indicating the components under inspection
      */
-    InspectionTarget getInspectionTarget() const;
-
-    /** @brief  Sets the current inspection target.
-     */
-    void setInspectionTarget(InspectionTarget target);
-
-    /** @brief  Removes the current inspection target.
-     */
-    void removeInspectionTarget();
+    void setAutoInspectionMask(u64 mask);
 
 
     /// @}

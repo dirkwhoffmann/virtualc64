@@ -172,15 +172,6 @@ C64::_dump(Category category, std::ostream& os) const
         os << (cpu.getC() ? "1" : "0");
         os << std::endl;
     }
-
-    if (category == Category::Debug) {
-
-        for (isize i = DebugFlagEnum::minVal; i < DebugFlagEnum::maxVal; i++) {
-
-            os << tab(DebugFlagEnum::key(i));
-            os << bol(getDebugVariable(DebugFlag(i))) << std::endl;
-        }
-    }
 }
 
 

@@ -409,22 +409,16 @@ C64API::softReset()
     resume();
 }
 
-InspectionTarget
-C64API::getInspectionTarget() const
+u64
+C64API::getAutoInspectionMask() const
 {
-    return c64->getInspectionTarget();
+    return c64->getAutoInspectionMask();
 }
 
 void
-C64API::setInspectionTarget(InspectionTarget target)
+C64API::setAutoInspectionMask(u64 mask)
 {
-    c64->emulator.put(CMD_INSPECTION_TARGET, target);
-}
-
-void
-C64API::removeInspectionTarget()
-{
-    c64->emulator.put(CMD_INSPECTION_TARGET, INSPECTION_NONE);
+    c64->setAutoInspectionMask(mask);
 }
 
 const C64Info &
@@ -437,12 +431,6 @@ const C64Info &
 C64API::getCachedInfo() const
 {
     return c64->getCachedInfo();
-}
-
-EventSlotInfo
-C64API::getSlotInfo(isize nr) const
-{
-    return c64->getSlotInfo(nr);
 }
 
 RomTraits

@@ -39,6 +39,7 @@ class DialogController: NSWindowController, DialogControllerDelegate {
     
     var parent: MyController!
     var emu: EmulatorProxy? { return parent.emu }
+    var c64: C64Proxy? { return emu?.c64 }
     var mm: MediaManager { return parent.mydocument.mm }
 
     // List of open windows or sheets (to make ARC happy)

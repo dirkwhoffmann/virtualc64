@@ -493,7 +493,7 @@ extension Inspector {
             // Leave debug mode
             emu.trackOff()
             emu.set(.MEM_HEATMAP, enable: false)
-            emu.c64.inspectionTarget = .NONE
+            emu.c64.autoInspectionMask = 0
         }
     }
 }
@@ -502,16 +502,24 @@ extension Inspector: NSTabViewDelegate {
     
     func updateInspectionTarget() {
 
+        func mask(_ types: [CType]) -> Int {
+
+            var result = 0
+            for type in types { result = result | 1 << type.rawValue }
+            return result
+        }
+        func mask(_ type: CType) -> Int { return mask([type]) }
+
         if let id = panel.selectedTabViewItem?.label {
                     
             switch id {
                 
-            case "CPU":     emu?.c64.inspectionTarget = .CPU
-            case "Memory":  emu?.c64.inspectionTarget = .MEM
-            case "CIA":     emu?.c64.inspectionTarget = .CIA
-            case "VICII":   emu?.c64.inspectionTarget = .VICII
-            case "SID":     emu?.c64.inspectionTarget = .SID
-            case "Events":  emu?.c64.inspectionTarget = .C64
+            case "CPU":     c64?.autoInspectionMask = mask([.CPUClass])
+            case "Memory":  c64?.autoInspectionMask = mask([.C64MemoryClass])
+            case "CIA":     c64?.autoInspectionMask = mask([.CIAClass])
+            case "VICII":   c64?.autoInspectionMask = mask([.VICIIClass])
+            case "SID":     c64?.autoInspectionMask = mask([.SIDClass])
+            case "Events":  c64?.autoInspectionMask = mask([.C64Class])
 
             default:
                 break

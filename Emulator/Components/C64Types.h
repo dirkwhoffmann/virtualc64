@@ -241,42 +241,6 @@ enum_i8(EventID)
     INS_EVENT_COUNT
 };
 
-enum_long(INSPECTION_TARGET)
-{
-    INSPECTION_NONE,
-    INSPECTION_C64,
-    INSPECTION_CPU,
-    INSPECTION_CIA,
-    INSPECTION_MEM,
-    INSPECTION_VICII,
-    INSPECTION_SID,
-    INSPECTION_EVENTS
-
-};
-typedef INSPECTION_TARGET InspectionTarget;
-
-struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionTarget> {
-
-    static constexpr long minVal = 0;
-    static constexpr long maxVal = INSPECTION_EVENTS;
-
-    static const char *prefix() { return "INSPECTION"; }
-    static const char *_key(long value)
-    {
-        switch (value) {
-
-            case INSPECTION_NONE:   return "NONE";
-            case INSPECTION_C64:    return "C64";
-            case INSPECTION_CPU:    return "CPU";
-            case INSPECTION_CIA:    return "CIA";
-            case INSPECTION_MEM:    return "MEM";
-            case INSPECTION_VICII:  return "VICII";
-            case INSPECTION_SID:    return "SID";
-            case INSPECTION_EVENTS: return "EVENTS";
-        }
-        return "???";
-    }
-};
 
 //
 // Structures
@@ -324,17 +288,6 @@ RomInfo;
 
 typedef struct
 {
-    Cycle cpuProgress;
-    Cycle cia1Progress;
-    Cycle cia2Progress;
-    i64 frame;
-    long vpos;
-    long hpos;
-}
-C64Info;
-
-typedef struct
-{
     EventSlot slot;
     EventID eventId;
     const char *eventName;
@@ -351,6 +304,20 @@ typedef struct
     long hpos;
 }
 EventSlotInfo;
+
+typedef struct
+{
+    Cycle cpuProgress;
+    Cycle cia1Progress;
+    Cycle cia2Progress;
+    i64 frame;
+    long vpos;
+    long hpos;
+
+    // Events
+    EventSlotInfo slotInfo[SLOT_COUNT];
+}
+C64Info;
 
 typedef u32 RunLoopFlags;
 

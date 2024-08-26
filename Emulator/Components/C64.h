@@ -417,14 +417,17 @@ private:
 
 public:
 
-    virtual void record() const override;
+    // virtual void record() const override;
     void cacheInfo(C64Info &result) const override;
 
-    EventSlotInfo getSlotInfo(isize nr) const;
+    // EventSlotInfo getSlotInfo(isize nr) const;
+
+    u64 getAutoInspectionMask() const;
+    void setAutoInspectionMask(u64 mask);
 
 private:
 
-    void inspectSlot(EventSlot nr) const;
+    // void inspectSlot(EventSlot nr) const;
 
 
     //
@@ -467,13 +470,6 @@ public:
 
     bool getUltimax() const { return ultimax; }
     void setUltimax(bool b) { ultimax = b; }
-
-    InspectionTarget getInspectionTarget() const;
-
-private:
-
-    void setInspectionTarget(InspectionTarget target);
-    void removeInspectionTarget() { setInspectionTarget(INSPECTION_NONE); }
 
 
     //
@@ -636,7 +632,7 @@ public:
 private:
 
     // Services an inspection event
-    void processINSEvent(EventID id);
+    void processINSEvent();
 
 
     //
@@ -739,10 +735,6 @@ private:
     //
 
 public:
-
-    // Gets or sets an internal debug variable (only available in debug builds)
-    static int getDebugVariable(DebugFlag flag);
-    static void setDebugVariable(DebugFlag flag, int val);
 
     // Translates the current clock cycle into pseudo-random number
     u32 random();

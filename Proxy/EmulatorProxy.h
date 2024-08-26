@@ -258,7 +258,8 @@ using namespace vc64;
 
 @property (readonly) C64Info info;
 @property (readonly) C64Info cachedInfo;
-- (EventSlotInfo)getEventSlotInfo:(NSInteger)slot;
+- (EventSlotInfo)cachedSlotInfo:(NSInteger)slot;
+@property NSInteger autoInspectionMask;
 
 - (RomTraits)getRomTraits:(RomType)type;
 @property (readonly) RomTraits basicRom;
@@ -268,9 +269,6 @@ using namespace vc64;
 
 - (void)hardReset;
 - (void)softReset;
-
-@property InspectionTarget inspectionTarget;
-- (void) removeInspectionTarget;
 
 - (MediaFileProxy *) takeSnapshot;
 

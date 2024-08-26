@@ -110,9 +110,9 @@ DebugConsole::initCommands(Command &root)
 
             root.add({"debug", DebugFlagEnum::key(i)}, { Arg::boolean },
                      DebugFlagEnum::help(i),
-                     [this](Arguments& argv, long value) {
+                     [](Arguments& argv, long value) {
 
-                c64.setDebugVariable(DebugFlag(value), util::parseBool(argv[0]));
+                Emulator::setDebugVariable(DebugFlag(value), util::parseBool(argv[0]));
 
             }, i);
         }
@@ -550,7 +550,7 @@ DebugConsole::initCommands(Command &root)
                      DebugFlagEnum::help(i),
                      [](Arguments& argv, long value) {
 
-                C64::setDebugVariable(DebugFlag(value), int(util::parseNum(argv[0])));
+                Emulator::setDebugVariable(DebugFlag(value), int(util::parseNum(argv[0])));
 
             }, i);
         }

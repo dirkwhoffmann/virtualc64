@@ -1656,9 +1656,20 @@ using namespace vc64;
     return [self c64]->getCachedInfo();
 }
 
-- (EventSlotInfo)getEventSlotInfo:(NSInteger)slot
+- (NSInteger)autoInspectionMask
 {
-    return [self c64]->getSlotInfo(slot);
+    return (NSInteger)[self c64]->getAutoInspectionMask();
+}
+
+- (void)setAutoInspectionMask:(NSInteger)mask
+{
+    return [self c64]->setAutoInspectionMask(u64(mask));
+}
+
+- (EventSlotInfo)cachedSlotInfo:(NSInteger)slot
+{
+    // return [self c64]->getSlotInfo(slot);
+    return [self c64]->getCachedInfo().slotInfo[slot];
 }
 
 - (RomTraits)getRomTraits:(RomType)type
@@ -1694,21 +1705,6 @@ using namespace vc64;
 - (void)softReset
 {
     [self c64]->softReset();
-}
-
-- (InspectionTarget)inspectionTarget
-{
-    return [self c64]->getInspectionTarget();
-}
-
-- (void)setInspectionTarget:(InspectionTarget)target
-{
-    [self c64]->setInspectionTarget(target);
-}
-
-- (void) removeInspectionTarget
-{
-    [self c64]->removeInspectionTarget();
 }
 
 - (MediaFileProxy *)takeSnapshot
