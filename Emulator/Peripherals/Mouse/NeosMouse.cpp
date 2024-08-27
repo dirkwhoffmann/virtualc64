@@ -164,8 +164,8 @@ NeosMouse::latchPosition(i64 targetX, i64 targetY)
     // Compute deltas and latch values
     //
     
-    i64 dx = std::clamp(latchedX - mouseX, 127LL, -128LL);
-    i64 dy = std::clamp(mouseY - latchedY, 127LL, -128LL);
+    i64 dx = std::clamp(latchedX - mouseX, -128LL, 127LL);
+    i64 dy = std::clamp(mouseY - latchedY, -128LL, 127LL);
     
     deltaX = (u8)dx;
     deltaY = (u8)dy;
