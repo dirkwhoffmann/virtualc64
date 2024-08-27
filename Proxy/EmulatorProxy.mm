@@ -784,25 +784,6 @@ using namespace vc64;
 
 
 //
-// Disk
-//
-
-@implementation DiskProxy
-
-- (DriveAPI *)drive
-{
-    return (DriveAPI *)obj;
-}
-
-- (DiskAPI *)disk
-{
-    return &[self drive]->disk;
-}
-
-@end
-
-
-//
 // DiskAnalyzer
 //
 
@@ -812,19 +793,6 @@ using namespace vc64;
 {
     return (DiskAnalyzer *)obj;
 }
-
-/*
-- (instancetype) initWithDisk:(DiskProxy *)disk
-{
-    NSLog(@"DiskAnalyzerProxy::initWithDisk");
-    
-    if (!(self = [super init])) return self;
-    auto dsk = [disk disk]->drive->disk.get();
-    obj = new DiskAnalyzer(*dsk);
-
-    return self;
-}
-*/
 
 - (instancetype) initWithDrive:(DriveProxy *)drive
 {
@@ -894,14 +862,6 @@ using namespace vc64;
 
 @implementation DriveProxy
 
-- (instancetype)initWithVC1541:(DriveAPI *)drive emu:(VirtualC64 *)emuref
-{
-    if ([self initWith:drive emu:emuref]) {
-        disk = [[DiskProxy alloc] initWith:drive];
-    }
-    return self;
-}
-
 - (DriveAPI *)drive
 {
     return (DriveAPI *)obj;
@@ -910,11 +870,6 @@ using namespace vc64;
 - (VirtualC64 *)emu
 {
     return (VirtualC64 *)emu;
-}
-
-- (DiskProxy *)disk
-{
-    return [self drive]->getInfo().hasDisk ? disk : NULL;
 }
 
 - (DriveConfig)config
@@ -1773,8 +1728,8 @@ using namespace vc64;
     cpu = [[CPUProxy alloc] initWith:&emu->cpu emu:emu];
     datasette = [[DatasetteProxy alloc] initWith:&emu->datasette emu:emu];
     dmaDebugger = [[DmaDebuggerProxy alloc] initWith:&emu->dmaDebugger];
-    drive8 = [[DriveProxy alloc] initWithVC1541:&emu->drive8 emu:emu];
-    drive9 = [[DriveProxy alloc] initWithVC1541:&emu->drive9 emu:emu];
+    drive8 = [[DriveProxy alloc] initWith:&emu->drive8 emu:emu];
+    drive9 = [[DriveProxy alloc] initWith:&emu->drive9 emu:emu];
     expansionport = [[ExpansionPortProxy alloc] initWith:&emu->expansionPort emu:emu];
     userPort = [[UserPortProxy alloc] initWith:&emu->userPort emu:emu];
     iec = [[SerialPortProxy alloc] initWith:&emu->serialPort emu:emu];

@@ -23,7 +23,6 @@ using namespace vc64;
 @class CPUProxy;
 @class DatasetteProxy;
 @class DefaultsProxy;
-@class DiskProxy;
 @class DmaDebuggerProxy;
 @class DriveProxy;
 @class ExpansionPortProxy;
@@ -518,10 +517,8 @@ struct GuardInfo {
 
 @interface DriveProxy : SubComponentProxy {
 
-    DiskProxy *disk;
 }
 
-@property (readonly) DiskProxy *disk;
 @property (readonly) DriveConfig config;
 @property (readonly) DriveInfo info;
 @property (readonly) DriveInfo cachedInfo;
@@ -535,21 +532,11 @@ struct GuardInfo {
 
 
 //
-// Disk
-//
-
-@interface DiskProxy : SubComponentProxy { }
-
-@end
-
-
-//
 // DiskAnalyzer
 //
 
 @interface DiskAnalyzerProxy : Proxy { }
 
-// - (instancetype) initWithDisk:(DiskProxy *)disk;
 - (instancetype) initWithDrive:(DriveProxy *)drive;
 - (void)dealloc;
 
