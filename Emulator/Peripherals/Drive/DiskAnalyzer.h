@@ -53,8 +53,13 @@ class DiskAnalyzer final : public CoreObject {
 public:
 
     DiskAnalyzer(const class Disk &disk);
+    DiskAnalyzer(const class Drive &drive);
     ~DiskAnalyzer();
-   
+
+private:
+
+    void init(const class Disk &disk);
+
 
     //
     // Methods from CoreObject

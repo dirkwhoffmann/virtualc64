@@ -36,9 +36,6 @@ class DiskExporter: DialogController {
     // Reference to the export drive
     var drive: DriveProxy!
 
-    // The disk to export
-    var disk: DiskProxy?
-
     // Results of the different decoders
     var d64: MediaFileProxy?
     var t64: MediaFileProxy?
@@ -51,10 +48,7 @@ class DiskExporter: DialogController {
 
             drive = emu.drive(nr)
 
-            // Get the disk from the specified drive
-            disk = drive?.disk
-
-            if disk != nil {
+            if drive.info.hasDisk {
 
                 // Try to extract the file system
                 vol = try? FileSystemProxy.make(with: drive)

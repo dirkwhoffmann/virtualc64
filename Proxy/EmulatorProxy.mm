@@ -813,6 +813,7 @@ using namespace vc64;
     return (DiskAnalyzer *)obj;
 }
 
+/*
 - (instancetype) initWithDisk:(DiskProxy *)disk
 {
     NSLog(@"DiskAnalyzerProxy::initWithDisk");
@@ -820,6 +821,18 @@ using namespace vc64;
     if (!(self = [super init])) return self;
     auto dsk = [disk disk]->drive->disk.get();
     obj = new DiskAnalyzer(*dsk);
+
+    return self;
+}
+*/
+
+- (instancetype) initWithDrive:(DriveProxy *)drive
+{
+    NSLog(@"DiskAnalyzerProxy::initWithDrive");
+
+    if (!(self = [super init])) return self;
+    auto drv = (DriveAPI *)drive->obj;
+    obj = new DiskAnalyzer(*drv->drive);
 
     return self;
 }

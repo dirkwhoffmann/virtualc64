@@ -209,6 +209,10 @@ Error::Error(ErrorCode code, const string &s)
             description = "Drive is unconnected.";
             break;
 
+        case VC64ERROR_DRV_NO_DISK:
+            description = "No disk in drive.";
+            break;
+
         case VC64ERROR_CRT_UNKNOWN:
             description = "This cartridge is a type " + s + " cartridge which";
             description += " is unknown to the emulator.";

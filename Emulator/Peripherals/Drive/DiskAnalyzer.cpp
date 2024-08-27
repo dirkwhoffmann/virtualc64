@@ -12,6 +12,7 @@
 
 #include "config.h"
 #include "DiskAnalyzer.h"
+#include "Drive.h"
 #include "Disk.h"
 
 #include <stdarg.h>
@@ -20,29 +21,43 @@ namespace vc64 {
 
 DiskAnalyzer::DiskAnalyzer(const Disk &disk)
 {
-    // Extract the GCR encoded bit stream from the disk
-    for (Halftrack ht = 1; ht < 85; ht++) {
+    init(disk);
+}
 
-        length[ht] = disk.length.halftrack[ht];
-        data[ht] = new u8[2 * maxBitsOnTrack]();
-        
-        for (isize i = 0, j = 0; i < maxBytesOnTrack; i++) {
+DiskAnalyzer::DiskAnalyzer(const class Drive &drive)
+{
+    auto disk = drive.disk.get();
+    if (disk == nullptr) throw Error(VC64ERROR_DRV_NO_DISK);
 
-            auto byte = disk.data.halftrack[ht][i];
-            for (isize k = 7; k >= 0; k--) data[ht][j++] = !!GET_BIT(byte, k);
-        }
-        
-        assert(length[ht] <= maxBitsOnTrack);
-        std::memcpy(data[ht] + length[ht], data[ht], length[ht]);
-    }
-    
-    // Analyze the bit stream
-    analyzeDisk();
+    init(*disk);
 }
 
 DiskAnalyzer::~DiskAnalyzer()
 {    
     for (isize ht = 1; ht < 85; ht++) delete [] data[ht];
+}
+
+void 
+DiskAnalyzer::init(const class Disk &disk)
+{
+    // Extract the GCR encoded bit stream from the disk
+    for (Halftrack ht = 1; ht < 85; ht++) {
+
+        length[ht] = disk.length.halftrack[ht];
+        data[ht] = new u8[2 * maxBitsOnTrack]();
+
+        for (isize i = 0, j = 0; i < maxBytesOnTrack; i++) {
+
+            auto byte = disk.data.halftrack[ht][i];
+            for (isize k = 7; k >= 0; k--) data[ht][j++] = !!GET_BIT(byte, k);
+        }
+
+        assert(length[ht] <= maxBitsOnTrack);
+        std::memcpy(data[ht] + length[ht], data[ht], length[ht]);
+    }
+
+    // Analyze the bit stream
+    analyzeDisk();
 }
 
 isize

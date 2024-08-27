@@ -549,7 +549,8 @@ struct GuardInfo {
 
 @interface DiskAnalyzerProxy : Proxy { }
 
-- (instancetype) initWithDisk:(DiskProxy *)disk;
+// - (instancetype) initWithDisk:(DiskProxy *)disk;
+- (instancetype) initWithDrive:(DriveProxy *)drive;
 - (void)dealloc;
 
 - (NSInteger)lengthOfTrack:(Track)t;

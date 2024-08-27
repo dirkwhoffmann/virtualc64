@@ -81,6 +81,7 @@ enum_long(VC64ERROR_CODE)
 
     // Drives
     VC64ERROR_DRV_UNCONNECTED,      ///< Floppy drive is not connected
+    VC64ERROR_DRV_NO_DISK,          ///< Floppy drive contains no disk
 
     // Cartridges
     VC64ERROR_CRT_UNKNOWN,          ///< Unknown cartridge type
@@ -180,6 +181,7 @@ struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
             case VC64ERROR_SNAP_CORRUPTED:		    return "SNAP_CORRUPTED";
 
             case VC64ERROR_DRV_UNCONNECTED:         return "DRV_UNCONNECTED";
+            case VC64ERROR_DRV_NO_DISK:             return "DRV_NO_DISK";
 
             case VC64ERROR_CRT_UNKNOWN:             return "VC64ERROR_CRT_UNKNOWN";
             case VC64ERROR_CRT_UNSUPPORTED:         return "CRT_UNSUPPORTED";

@@ -115,9 +115,19 @@ Headless::checkArguments()
         throw SyntaxError("More than one script file is given");
     }
 
-    // The input file must exist
-    if (keys.find("arg1") != keys.end() && !util::fileExists(keys["arg1"])) {
-        throw SyntaxError("File " + keys["arg1"] + " does not exist");
+    if (keys.find("arg1") != keys.end()) {
+
+        // The input file must exist
+        if (!util::fileExists(keys["arg1"])) {
+            throw SyntaxError("File " + keys["arg1"] + " does not exist");
+        }
+
+    } else {
+
+        // Either -f, -s, or -d needs to be specified
+        if (!keys.contains("footprint") &&
+            !keys.contains("smoke") &&
+            !keys.contains("diagnose")) throw SyntaxError("");
     }
 }
 

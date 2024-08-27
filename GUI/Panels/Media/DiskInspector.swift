@@ -136,6 +136,15 @@ class DiskInspector: DialogController {
 
     func analyzeDisk() {
 
+        if drive.info.hasDisk {
+
+            analyzer = DiskAnalyzerProxy(drive: drive)
+
+        } else {
+            
+            analyzer = nil
+        }
+        /*
         if let disk = drive.disk {
 
             analyzer = DiskAnalyzerProxy(disk: disk)
@@ -144,6 +153,7 @@ class DiskInspector: DialogController {
 
             analyzer = nil
         }
+        */
     }
 
     func setSelectedTrack(_ nr: Int) {
