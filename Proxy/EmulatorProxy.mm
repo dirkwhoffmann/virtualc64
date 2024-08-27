@@ -10,8 +10,6 @@
 #import "config.h"
 #import "EmulatorProxy.h"
 #import "VirtualC64.h"
-
-// REMOVE EVENTUALLY
 #import "DiskAnalyzer.h"
 #import "FFmpeg.h"
 #import "FileSystem.h"

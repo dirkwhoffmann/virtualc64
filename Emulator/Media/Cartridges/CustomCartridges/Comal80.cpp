@@ -29,7 +29,7 @@ Comal80::pokeIO1(u16 addr, u8 value)
     if (addr >= 0xDE00 && addr <= 0xDEFF) {
 
         control = value & 0xC7;
-        bankIn(value & 0x03);
+        bankIn(value & 0x07);
 
         switch (value & 0xE0) {
 
