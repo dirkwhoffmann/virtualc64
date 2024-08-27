@@ -40,7 +40,7 @@ public:
     virtual const char *description() const { return ""; }
 
     // Called by debug() and trace() to produce a detailed debug output
-    virtual void prefix(isize level, isize line) const;
+    virtual void prefix(isize level, const char *component, isize line) const;
 };
 
 /* This file provides several macros for printing messages:
@@ -81,17 +81,17 @@ fprintf(stderr, "Warning: " format __VA_OPT__(,) __VA_ARGS__);
 
 #define debug(enable, format, ...) \
 if (enable) { if (verbosity) { \
-prefix(verbosity, __LINE__); \
+prefix(verbosity, objectName(), __LINE__); \
 fprintf(stderr, format __VA_OPT__(,) __VA_ARGS__); }}
 
 #define trace(enable, format, ...) \
 if (enable) { if (verbosity) { \
-prefix(5, __LINE__); \
+prefix(5, objectName(), __LINE__); \
 fprintf(stderr, format __VA_OPT__(,) __VA_ARGS__); }}
 
 #define xfiles(format, ...) \
 if (XFILES) { if (verbosity) { \
-prefix(verbosity, __LINE__); \
+prefix(verbosity, objectName(), __LINE__); \
 fprintf(stderr, "XFILES: " format __VA_OPT__(,) __VA_ARGS__); }}
 
 }

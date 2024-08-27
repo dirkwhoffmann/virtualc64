@@ -20,7 +20,7 @@ isize
 CoreObject::verbosity = 2;
 
 void
-CoreObject::prefix(isize level, isize line) const
+CoreObject::prefix(isize level, const char *component, isize line) const
 {
     if (level == 1) {
         fprintf(stderr, "%s: ", objectName());

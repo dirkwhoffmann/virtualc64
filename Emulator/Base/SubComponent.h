@@ -66,7 +66,7 @@ public:
     SubComponent(C64& ref);
     SubComponent(C64& ref, isize id);
 
-    void prefix(isize level, isize line) const override;
+    void prefix(isize level, const char *component, isize line) const override;
 };
 
 }

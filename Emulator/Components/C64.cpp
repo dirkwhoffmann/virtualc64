@@ -225,7 +225,7 @@ C64::eventName(EventSlot slot, EventID id)
 }
 
 void
-C64::prefix(isize level, isize line) const
+C64::prefix(isize level, const char *component, isize line) const
 {
     fprintf(stderr, "[%lld] (%3d,%3d) %04X ", frame, scanline, rasterCycle, cpu.getPC0());
 
@@ -234,7 +234,7 @@ C64::prefix(isize level, isize line) const
         if (level >= 2) {
 
             if (objid == 1) fprintf(stderr, "[Run-ahead] ");
-            fprintf(stderr, "%s:%ld", objectName(), line);
+            fprintf(stderr, "%s:%ld", component, line);
         }
         if (level >= 3) {
 
@@ -651,6 +651,7 @@ C64::processFlags()
         if (!stepTo.has_value() || *stepTo == cpu.getPC0()) {
 
             clearFlag(RL::SINGLE_STEP);
+            msgQueue.put(MSG_STEP);
             interrupt = true;
         }
     }
