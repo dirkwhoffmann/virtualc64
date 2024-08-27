@@ -173,6 +173,51 @@ MemoryDebugger::copy(u16 src, u16 dst, isize cnt)
 }
 
 void
+MemoryDebugger::load(std::istream& is, u16 addr)
+{
+    for (;; addr++) {
+
+        auto val = is.get();
+        if (val == EOF) return;
+
+        mem.poke(addr, u8(val), M_RAM);
+        
+        if (addr == 0xFFFF) break;
+    }
+}
+
+void
+MemoryDebugger::load(fs::path& path, u16 addr)
+{
+    std::ifstream stream(path, std::ifstream::binary);
+    if (!stream.is_open()) throw Error(VC64ERROR_FILE_NOT_FOUND, path);
+
+    load(stream, addr);
+}
+
+void
+MemoryDebugger::save(std::ostream& os, u16 addr, isize count)
+{
+    for (isize i = 0; i < count; i++) {
+
+        u16 a = u16(addr + i);
+        auto val = mem.peek(a, M_RAM);
+        os.put(val);
+
+        if (a == 0xFFFF) break;
+    }
+}
+
+void
+MemoryDebugger::save(fs::path& path, u16 addr, isize count)
+{
+    std::ofstream stream(path, std::ifstream::binary);
+    if (!stream.is_open()) throw Error(VC64ERROR_FILE_CANT_CREATE, path);
+
+    save(stream, addr, count);
+}
+
+void
 MemoryDebugger::convertNumeric(std::ostream& os, u8 value) const
 {
     using namespace util;

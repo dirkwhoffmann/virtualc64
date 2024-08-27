@@ -219,18 +219,40 @@ CommandConsole::initCommands(Command &root)
         c64.flash(file, 0);
     });
 
-    root.add({cmd, "load"}, { Arg::path },
+    root.add({cmd, "load"},
+             "Load memory contents from a file");
+
+    root.add({cmd, "load", "rom"}, { Arg::path },
              "Load a Rom image from disk",
              [this](Arguments& argv, long value) {
 
         c64.loadRom(argv.front());
     });
 
-    root.add({cmd, "openroms"},
+    root.add({cmd, "load", "ram"}, { Arg::path, Arg::address },
+             "Load a chunk of RAM",
+             [this](Arguments& argv, long value) {
+
+        fs::path path(argv[0]);
+        mem.debugger.load(path, parseAddr(argv[1]));
+    });
+
+    root.add({cmd, "load", "openroms"},
              "Install MEGA65 OpenROMs",
              [this](Arguments& argv, long value) {
 
         c64.installOpenRoms();
+    });
+
+    root.add({cmd, "save"},
+             "Save memory contents to a file");
+
+    root.add({cmd, "save", "ram"}, { Arg::path, Arg::address, Arg::count },
+             "Save a chunk of RAM",
+             [this](Arguments& argv, long value) {
+
+        fs::path path(argv[0]);
+        mem.debugger.save(path, parseAddr(argv[1]), parseNum(argv[2]));
     });
 
 
