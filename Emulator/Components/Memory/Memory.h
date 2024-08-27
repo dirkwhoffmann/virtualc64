@@ -13,6 +13,7 @@
 #pragma once
 
 #include "MemoryTypes.h"
+#include "MemoryDebugger.h"
 #include "SubComponent.h"
 #include "Heatmap.h"
 
@@ -41,6 +42,9 @@ class Memory final : public SubComponent, public Inspectable<MemInfo, MemStats> 
     MemConfig config = { };
 
 public:
+
+    // Subcomponents
+    MemoryDebugger debugger = MemoryDebugger(c64);
 
     /* C64 bank mapping
      *

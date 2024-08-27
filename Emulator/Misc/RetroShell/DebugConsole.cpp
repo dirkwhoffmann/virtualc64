@@ -230,7 +230,7 @@ DebugConsole::initCommands(Command &root)
              [this](Arguments& argv, long value) {
 
         std::stringstream ss;
-        debugger.ascDump(ss, parseAddr(argv, 0, debugger.current), 16);
+        mem.debugger.ascDump(ss, parseAddr(argv, 0, mem.debugger.current), 16);
         retroShell << '\n' << ss << '\n';
     });
 
@@ -239,7 +239,7 @@ DebugConsole::initCommands(Command &root)
              [this](Arguments& argv, long value) {
 
         std::stringstream ss;
-        debugger.memDump(ss, parseAddr(argv, 0, debugger.current), 16);
+        mem.debugger.memDump(ss, parseAddr(argv, 0, mem.debugger.current), 16);
         retroShell << '\n' << ss << '\n';
     });
 
@@ -247,16 +247,16 @@ DebugConsole::initCommands(Command &root)
              std::pair<string, string>("w", "Write into memory"),
              [this](Arguments& argv, long value) {
 
-        u16 addr = debugger.current;
+        u16 addr = mem.debugger.current;
         if (argv.size() > 1) { addr = parseAddr(argv[1]); }
-        debugger.write(addr, u8(parseNum(argv[0])));
+        mem.debugger.write(addr, u8(parseNum(argv[0])));
     });
 
     root.add({"c"}, { Arg::src, Arg::dst, Arg::count },
              std::pair<string, string>("c", "Copy a chunk of memory"),
              [this](Arguments& argv, long value) {
 
-        debugger.copy(u16(parseNum(argv[0])), u16(parseNum(argv[1])), parseNum(argv[2]));
+        mem.debugger.copy(u16(parseNum(argv[0])), u16(parseNum(argv[1])), parseNum(argv[2]));
     });
 
     root.add({"f"}, { Arg::sequence }, { Arg::address },
@@ -264,13 +264,13 @@ DebugConsole::initCommands(Command &root)
              [this](Arguments& argv, long value) {
 
         auto pattern = parseSeq(argv[0]);
-        auto addr = parseAddr(argv, 1, debugger.current);
-        auto found = debugger.memSearch(pattern, addr);
+        auto addr = parseAddr(argv, 1, mem.debugger.current);
+        auto found = mem.debugger.memSearch(pattern, addr);
 
         if (found >= 0) {
 
             std::stringstream ss;
-            debugger.memDump(ss, u16(found), 16);
+            mem.debugger.memDump(ss, u16(found), 16);
             retroShell << ss;
 
         } else {
@@ -289,7 +289,7 @@ DebugConsole::initCommands(Command &root)
         auto cnt = parseNum(argv[1]);
         auto val = u8(parseNum(argv, 2, 0));
         
-        debugger.write(addr, val, cnt);
+        mem.debugger.write(addr, val, cnt);
     });
 
     root.add({"i"},
@@ -570,9 +570,9 @@ DebugConsole::initCommands(Command &root)
         std::stringstream ss;
 
         if (isNum(argv[0])) {
-            debugger.convertNumeric(ss, u32(parseNum(argv[0])));
+            mem.debugger.convertNumeric(ss, u32(parseNum(argv[0])));
         } else {
-            debugger.convertNumeric(ss, argv.front());
+            mem.debugger.convertNumeric(ss, argv.front());
         }
 
         retroShell << '\n' << ss << '\n';

@@ -12,17 +12,17 @@
 
 #pragma once
 
-#include "DebuggerTypes.h"
+#include "MemoryTypes.h"
 #include "SubComponent.h"
 
 namespace vc64 {
 
-class Debugger : public SubComponent {
+class MemoryDebugger : public SubComponent {
 
     Descriptions descriptions = {{
 
-        .name           = "Debugger",
-        .description    = "Debugger",
+        .name           = "MemoryDebugger",
+        .description    = "Memory Debugger",
         .shell          = ""
     }};
 
@@ -39,6 +39,11 @@ public:
 public:
 
     using SubComponent::SubComponent;
+
+    MemoryDebugger& operator= (const Host& other) {
+
+        return *this;
+    }
 
 
     //

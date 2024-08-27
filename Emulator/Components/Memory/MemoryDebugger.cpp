@@ -11,14 +11,14 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Debugger.h"
+#include "MemoryDebugger.h"
 #include "C64.h"
 #include "IOUtils.h"
 
 namespace vc64 {
 
 isize
-Debugger::dump(char *dst, u16 addr, const char *fmt) const
+MemoryDebugger::dump(char *dst, u16 addr, const char *fmt) const
 {
     bool ctrl = false;
     isize bcnt = 0, ccnt = 0;
@@ -65,7 +65,7 @@ Debugger::dump(char *dst, u16 addr, const char *fmt) const
 }
 
 isize
-Debugger::dump(std::ostream& os, u16 addr, const char *fmt) const
+MemoryDebugger::dump(std::ostream& os, u16 addr, const char *fmt) const
 {
     char str[256];
     isize result = dump(str, addr, fmt);
@@ -74,7 +74,7 @@ Debugger::dump(std::ostream& os, u16 addr, const char *fmt) const
 }
 
 isize
-Debugger::ascDump(std::ostream& os, u16 addr, isize lines) 
+MemoryDebugger::ascDump(std::ostream& os, u16 addr, isize lines)
 {
     current = addr;
     
@@ -92,7 +92,7 @@ Debugger::ascDump(std::ostream& os, u16 addr, isize lines)
 }
 
 isize
-Debugger::hexDump(std::ostream& os, u16 addr, isize lines)
+MemoryDebugger::hexDump(std::ostream& os, u16 addr, isize lines)
 {
     current = addr;
 
@@ -107,7 +107,7 @@ Debugger::hexDump(std::ostream& os, u16 addr, isize lines)
 }
 
 isize
-Debugger::memDump(std::ostream& os, u16 addr, isize lines)
+MemoryDebugger::memDump(std::ostream& os, u16 addr, isize lines)
 {
     current = addr;
 
@@ -123,7 +123,7 @@ Debugger::memDump(std::ostream& os, u16 addr, isize lines)
 }
 
 isize
-Debugger::memSearch(const string &pattern, u16 addr)
+MemoryDebugger::memSearch(const string &pattern, u16 addr)
 {
     if (isize length = isize(pattern.length()); length > 0) {
 
@@ -147,7 +147,7 @@ Debugger::memSearch(const string &pattern, u16 addr)
 }
 
 void
-Debugger::write(u16 addr, u8 val, isize repeats)
+MemoryDebugger::write(u16 addr, u8 val, isize repeats)
 {
     for (isize i = 0; i < repeats && addr + i <= 0xFFFF; i++) {
 
@@ -158,7 +158,7 @@ Debugger::write(u16 addr, u8 val, isize repeats)
 }
 
 void 
-Debugger::copy(u16 src, u16 dst, isize cnt)
+MemoryDebugger::copy(u16 src, u16 dst, isize cnt)
 {
     if (src < dst) {
 
@@ -173,7 +173,7 @@ Debugger::copy(u16 src, u16 dst, isize cnt)
 }
 
 void
-Debugger::convertNumeric(std::ostream& os, u8 value) const
+MemoryDebugger::convertNumeric(std::ostream& os, u8 value) const
 {
     using namespace util;
 
@@ -184,7 +184,7 @@ Debugger::convertNumeric(std::ostream& os, u8 value) const
 }
 
 void
-Debugger::convertNumeric(std::ostream& os, u16 value) const
+MemoryDebugger::convertNumeric(std::ostream& os, u16 value) const
 {
     using namespace util;
 
@@ -195,7 +195,7 @@ Debugger::convertNumeric(std::ostream& os, u16 value) const
 }
 
 void
-Debugger::convertNumeric(std::ostream& os, u32 value) const
+MemoryDebugger::convertNumeric(std::ostream& os, u32 value) const
 {
     using namespace util;
 
@@ -206,7 +206,7 @@ Debugger::convertNumeric(std::ostream& os, u32 value) const
 }
 
 void
-Debugger::convertNumeric(std::ostream& os, string s) const
+MemoryDebugger::convertNumeric(std::ostream& os, string s) const
 {
     u8 bytes[4];
 

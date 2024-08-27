@@ -4,6 +4,7 @@ target_sources(vc64Core PRIVATE
 
 Memory.cpp
 MemoryBase.cpp
+MemoryDebugger.cpp
 Heatmap.cpp
 
 )

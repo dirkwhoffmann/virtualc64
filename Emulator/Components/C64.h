@@ -19,7 +19,6 @@
 // Components
 #include "Keyboard.h"
 #include "Memory.h"
-#include "Debugger.h"
 #include "DriveMemory.h"
 #include "FlashRom.h"
 #include "VICII.h"
@@ -167,7 +166,6 @@ public:
     // Misc
     RetroShell retroShell = RetroShell(*this);
     RemoteManager remoteManager = RemoteManager(*this);
-    Debugger debugger = Debugger(*this);
     RegressionTester regressionTester = RegressionTester(*this);
     Recorder recorder = Recorder(*this);
 
