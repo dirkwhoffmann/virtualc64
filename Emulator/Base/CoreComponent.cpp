@@ -144,6 +144,19 @@ CoreComponent::routeOption(Option opt, std::vector<Configurable *> &result)
     }
 }
 
+Configurable *
+CoreComponent::routeOption(Option opt, isize objid)
+{
+    if (this->objid == objid) {
+        for (auto &o : getOptions()) if (o == opt) return this;
+    }
+    for (auto &c : subComponents) {
+        if (auto result = c->routeOption(opt, objid); result) return result;
+    }
+
+    return nullptr;
+}
+
 void
 CoreComponent::initialize()
 {

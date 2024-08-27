@@ -343,16 +343,14 @@ VirtualC64::set(Option opt, i64 value) throws
     assert(isUserThread());
 
     emu->check(opt, value);
-    put(CMD_CONFIG, ConfigCmd { .option = opt, .value = value, .id = -1 });
+    put(CMD_CONFIG_ALL, ConfigCmd { .option = opt, .value = value });
     emu->markAsDirty();
 }
 
 void
 VirtualC64::set(Option opt, i64 value, long id)
 {
-    assert(isUserThread());
-
-    emu->check(opt, value, id);
+    emu->check(opt, value, { id });
     put(CMD_CONFIG, ConfigCmd { .option = opt, .value = value, .id = id });
     emu->markAsDirty();
 }
@@ -360,7 +358,6 @@ VirtualC64::set(Option opt, i64 value, long id)
 void
 VirtualC64::exportConfig(const fs::path &path) const
 {
-    assert(isUserThread());
     emu->main.exportConfig(path);
 }
 

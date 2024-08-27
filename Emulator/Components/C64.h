@@ -418,14 +418,9 @@ public:
     // virtual void record() const override;
     void cacheInfo(C64Info &result) const override;
 
-    // EventSlotInfo getSlotInfo(isize nr) const;
-
     u64 getAutoInspectionMask() const;
     void setAutoInspectionMask(u64 mask);
 
-private:
-
-    // void inspectSlot(EventSlot nr) const;
 
 
     //
@@ -434,19 +429,41 @@ private:
 
 public:
 
+    const C64Config &getConfig() const { return config; }
     const ConfigOptions &getOptions() const override { return options; }
+    
     i64 getOption(Option opt) const override;
     void checkOption(Option opt, i64 value) override;
     void setOption(Option opt, i64 value) override;
     
+    // Exports the current configuration to a script file
+    void exportConfig(const fs::path &path) const;
+    void exportConfig(std::ostream& stream) const;
+
 
     //
-    // Configuring
+    // Main API for configuring the emulator
     //
 
 public:
 
-    const C64Config &getConfig() const { return config; }
+    // TODO
+
+public:
+
+    // Returns the target component for an option
+    Configurable *routeOption(Option opt, isize objid);
+    const Configurable *routeOption(Option opt, isize objid) const;
+
+    // Overrides a config option if the corresponding debug option is enabled
+    i64 overrideOption(Option opt, i64 value) const;
+
+
+    //
+    //
+    //
+
+public:
 
     // Updates the clock frequency and all variables derived from it
     void updateClockFrequency();
@@ -455,9 +472,6 @@ public:
     bool getHeadless() const { return headless; }
     void setHeadless(bool value) { headless = value; }
 
-    // Exports the current configuration to a script file
-    void exportConfig(const fs::path &path) const;
-    void exportConfig(std::ostream& stream) const;
 
 
     //

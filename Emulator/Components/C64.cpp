@@ -360,6 +360,33 @@ C64::exportConfig(std::ostream &stream) const
     stream << "c64 power on\n";
 }
 
+Configurable *
+C64::routeOption(Option opt, isize objid)
+{
+    return CoreComponent::routeOption(opt, objid);
+}
+
+const Configurable *
+C64::routeOption(Option opt, isize objid) const
+{
+    auto result = const_cast<C64 *>(this)->routeOption(opt, objid);
+    return const_cast<const Configurable *>(result);
+}
+
+i64
+C64::overrideOption(Option opt, i64 value) const
+{
+    static std::map<Option,i64> overrides = OVERRIDES;
+
+    if (overrides.find(opt) != overrides.end()) {
+
+        msg("Overriding option: %s = %lld\n", OptionEnum::key(opt), value);
+        return overrides[opt];
+    }
+
+    return value;
+}
+
 void
 C64::update(CmdQueue &queue)
 {
@@ -377,9 +404,13 @@ C64::update(CmdQueue &queue)
             case CMD_CONFIG:
 
                 cmdConfig = true;
-                cmd.config.id < 0 ?
-                emulator.set(cmd.config.option, cmd.config.value) :
-                emulator.set(cmd.config.option, cmd.config.value, cmd.config.id);
+                emulator.set(cmd.config.option, cmd.config.value, { cmd.config.id });
+                break;
+
+            case CMD_CONFIG_ALL:
+
+                cmdConfig = true;
+                emulator.set(cmd.config.option, cmd.config.value, { });
                 break;
 
             case CMD_ALARM_ABS:

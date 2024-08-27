@@ -599,7 +599,7 @@ CommandConsole::initCommands(Command &root)
                  [this](Arguments& argv, long value) {
 
             auto id = value ? DRIVE9 : DRIVE8;
-            emulator.set(OPT_DRV_CONNECT, id, true);
+            emulator.set(OPT_DRV_CONNECT, true, { id });
 
         }, i);
 
@@ -608,7 +608,7 @@ CommandConsole::initCommands(Command &root)
                  [this](Arguments& argv, long value) {
 
             auto id = value ? DRIVE9 : DRIVE8;
-            emulator.set(OPT_DRV_CONNECT, id, false);
+            emulator.set(OPT_DRV_CONNECT, false, { id });
 
         }, i);
 

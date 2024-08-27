@@ -871,7 +871,7 @@ Console::registerComponent(CoreComponent &c)
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
-                emulator.set(Option(HI_WORD(value)), argv[0], LO_WORD(value));
+                emulator.set(Option(HI_WORD(value)), argv[0], { LO_WORD(value) });
 
             }, HI_W_LO_W(opt, c.objid));
         }

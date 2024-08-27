@@ -30,6 +30,7 @@ enum_long(CMD_TYPE)
 
     // Emulator
     CMD_CONFIG,                 ///< Configure the emulator
+    CMD_CONFIG_ALL,             ///< Configure the emulator
 
     // C64
     CMD_ALARM_ABS,              ///< Schedule an alarm (absolute cycle)
@@ -118,6 +119,7 @@ struct CmdTypeEnum : util::Reflection<CmdTypeEnum, CmdType> {
             case CMD_NONE:                  return "NONE";
 
             case CMD_CONFIG:                return "CONFIG";
+            case CMD_CONFIG_ALL:            return "CONFIG_ALL";
 
             case CMD_ALARM_ABS:             return "ALARM_ABS";
             case CMD_ALARM_REL:             return "ALARM_REL";

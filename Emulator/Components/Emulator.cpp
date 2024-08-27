@@ -134,100 +134,81 @@ Emulator::process(const Cmd &cmd)
 }
 
 i64
-Emulator::get(Option opt, isize id) const
+Emulator::get(Option opt, isize objid) const
 {
-    auto targets = routeOption(opt);
-    assert(isize(targets.size()) > id);
-    return targets.at(id)->getOption(opt);
+    debug(CNF_DEBUG, "get(%s, %ld)\n", OptionEnum::key(opt), objid);
+
+    auto target = main.routeOption(opt, objid);
+    if (target == nullptr) throw Error(VC64ERROR_OPT_INV_ID);
+    return target->getOption(opt);
 }
 
 void
-Emulator::check(Option opt, i64 value, std::optional<isize> id)
+Emulator::check(Option opt, i64 value, const std::vector<isize> objids)
 {
-    if (id) {
-        debug(CNF_DEBUG, "check(%s, %lld, %ld)\n", OptionEnum::key(opt), value, *id);
-    } else {
-        debug(CNF_DEBUG, "check(%s, %lld)\n", OptionEnum::key(opt), value);
-    }
+    value = main.overrideOption(opt, value);
 
-    if (!isInitialized()) initialize();
+    if (objids.empty()) {
 
-    // Check if this option has been locked for debugging
-    value = overrideOption(opt, value);
+        for (isize objid = 0;; objid++) {
 
-    auto targets = routeOption(opt);
+            auto target = main.routeOption(opt, objid);
+            if (target == nullptr) break;
 
-    if (id) {
-
-        // Check a single component
-        assert(isize(targets.size()) > *id);
-        targets.at(*id)->checkOption(opt, value);
-
-    } else {
-
-        // Check all components
-        for (const auto &target : targets) {
+            debug(CNF_DEBUG, "check(%s, %lld, %ld)\n", OptionEnum::key(opt), value, objid);
             target->checkOption(opt, value);
         }
     }
+    for (auto &objid : objids) {
+
+        debug(CNF_DEBUG, "check(%s, %lld, %ld)\n", OptionEnum::key(opt), value, objid);
+
+        auto target = main.routeOption(opt, objid);
+        if (target == nullptr) throw Error(VC64ERROR_OPT_INV_ID);
+
+        target->checkOption(opt, value);
+    }
 }
 
 void
-Emulator::set(Option opt, i64 value, std::optional<isize> id)
+Emulator::set(Option opt, i64 value, const std::vector<isize> objids)
 {
-    if (id) {
-        debug(CNF_DEBUG, "set(%s, %lld, %ld)\n", OptionEnum::key(opt), value, *id);
-    } else {
-        debug(CNF_DEBUG, "set(%s, %lld)\n", OptionEnum::key(opt), value);
-    }
-
     if (!isInitialized()) initialize();
 
-    // Check if this option is overridden for debugging
-    value = overrideOption(opt, value);
+    value = main.overrideOption(opt, value);
 
-    // Determine the receiver for this option
-    auto targets = routeOption(opt);
+    if (objids.empty()) {
 
-    if (id) {
+        for (isize objid = 0;; objid++) {
 
-        // Check if the target component exists
-        if (id >= isize(targets.size())) {
-            warn("Invalid ID: %ld\n", *id);
-            throw Error(VC64ERROR_OPT_INV_ID, "0..." + std::to_string(targets.size() - 1));
+            auto target = main.routeOption(opt, objid);
+            if (target == nullptr) break;
+
+            debug(CNF_DEBUG, "set(%s, %lld, %ld)\n", OptionEnum::key(opt), value, objid);
+            target->setOption(opt, value);
         }
-        targets.at(*id)->setOption(opt, value);
+    }
+    for (auto &objid : objids) {
 
-    } else {
+        debug(CNF_DEBUG, "set(%s, %lld, %ld)\n", OptionEnum::key(opt), value, objid);
 
-        // Configure all components
-        for (const auto &target : targets) target->setOption(opt, value);
-        return;
+        auto target = main.routeOption(opt, objid);
+        if (target == nullptr) throw Error(VC64ERROR_OPT_INV_ID);
+
+        target->setOption(opt, value);
     }
 }
 
 void
-Emulator::set(Option opt, const string &value)
+Emulator::set(Option opt, const string &value, const std::vector<isize> objids)
 {
-    set(opt, OptionParser::parse(opt, value));
+    set(opt, OptionParser::parse(opt, value), objids);
 }
 
 void
-Emulator::set(Option opt, const string &value, isize id)
+Emulator::set(const string &opt, const string &value, const std::vector<isize> objids)
 {
-    set(opt, OptionParser::parse(opt, value), id);
-}
-
-void
-Emulator::set(const string &opt, const string &value)
-{
-    set(Option(util::parseEnum<OptionEnum>(opt)), value);
-}
-
-void
-Emulator::set(const string &opt, const string &value, isize id)
-{
-    set(Option(util::parseEnum<OptionEnum>(opt)), value, id);
+    set(Option(util::parseEnum<OptionEnum>(opt)), value, objids);
 }
 
 void
@@ -324,42 +305,6 @@ Emulator::set(C64Model model)
                 fatalError;
         }
     }
-}
-
-std::vector<const Configurable *>
-Emulator::routeOption(Option opt) const
-{
-    std::vector<const Configurable *> result;
-
-    for (const auto &target : const_cast<Emulator *>(this)->routeOption(opt)) {
-        result.push_back(const_cast<const Configurable *>(target));
-    }
-    return result;
-}
-
-std::vector<Configurable *>
-Emulator::routeOption(Option opt)
-{
-    std::vector<Configurable *> result;
-
-    main.routeOption(opt, result);
-
-    assert(!result.empty());
-    return result;
-}
-
-i64
-Emulator::overrideOption(Option opt, i64 value) const
-{
-    static std::map<Option,i64> overrides = OVERRIDES;
-
-    if (overrides.find(opt) != overrides.end()) {
-
-        msg("Overriding option: %s = %lld\n", OptionEnum::key(opt), value);
-        return overrides[opt];
-    }
-
-    return value;
 }
 
 void
