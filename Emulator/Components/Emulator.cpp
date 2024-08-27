@@ -127,184 +127,48 @@ Emulator::put(const Cmd &cmd)
     cmdQueue.put(cmd);
 }
 
+/*
 void
 Emulator::process(const Cmd &cmd)
 {
 
 }
+*/
 
 i64
 Emulator::get(Option opt, isize objid) const
 {
-    debug(CNF_DEBUG, "get(%s, %ld)\n", OptionEnum::key(opt), objid);
-
-    auto target = main.routeOption(opt, objid);
-    if (target == nullptr) throw Error(VC64ERROR_OPT_INV_ID);
-    return target->getOption(opt);
+    return main.get(opt, objid);
 }
 
 void
 Emulator::check(Option opt, i64 value, const std::vector<isize> objids)
 {
-    value = main.overrideOption(opt, value);
-
-    if (objids.empty()) {
-
-        for (isize objid = 0;; objid++) {
-
-            auto target = main.routeOption(opt, objid);
-            if (target == nullptr) break;
-
-            debug(CNF_DEBUG, "check(%s, %lld, %ld)\n", OptionEnum::key(opt), value, objid);
-            target->checkOption(opt, value);
-        }
-    }
-    for (auto &objid : objids) {
-
-        debug(CNF_DEBUG, "check(%s, %lld, %ld)\n", OptionEnum::key(opt), value, objid);
-
-        auto target = main.routeOption(opt, objid);
-        if (target == nullptr) throw Error(VC64ERROR_OPT_INV_ID);
-
-        target->checkOption(opt, value);
-    }
+    return main.check(opt, value, objids);
 }
 
 void
 Emulator::set(Option opt, i64 value, const std::vector<isize> objids)
 {
-    if (!isInitialized()) initialize();
-
-    value = main.overrideOption(opt, value);
-
-    if (objids.empty()) {
-
-        for (isize objid = 0;; objid++) {
-
-            auto target = main.routeOption(opt, objid);
-            if (target == nullptr) break;
-
-            debug(CNF_DEBUG, "set(%s, %lld, %ld)\n", OptionEnum::key(opt), value, objid);
-            target->setOption(opt, value);
-        }
-    }
-    for (auto &objid : objids) {
-
-        debug(CNF_DEBUG, "set(%s, %lld, %ld)\n", OptionEnum::key(opt), value, objid);
-
-        auto target = main.routeOption(opt, objid);
-        if (target == nullptr) throw Error(VC64ERROR_OPT_INV_ID);
-
-        target->setOption(opt, value);
-    }
+    return main.set(opt, value, objids);
 }
 
 void
 Emulator::set(Option opt, const string &value, const std::vector<isize> objids)
 {
-    set(opt, OptionParser::parse(opt, value), objids);
+    return main.set(opt, value, objids);
 }
 
 void
 Emulator::set(const string &opt, const string &value, const std::vector<isize> objids)
 {
-    set(Option(util::parseEnum<OptionEnum>(opt)), value, objids);
+    return main.set(opt, value, objids);
 }
 
 void
 Emulator::set(C64Model model)
 {
-    assert_enum(C64Model, model);
-
-    {   SUSPENDED
-
-        powerOff();
-        revertToFactorySettings();
-
-        switch(model) {
-
-            case C64_MODEL_PAL:
-
-                set(OPT_VICII_REVISION, VICII_PAL_6569_R3);
-                set(OPT_VICII_GRAY_DOT_BUG, false);
-                set(OPT_CIA_REVISION, MOS_6526);
-                set(OPT_CIA_TIMER_B_BUG, true);
-                set(OPT_SID_REVISION, MOS_6581);
-                set(OPT_SID_FILTER, true);
-                set(OPT_POWER_GRID, GRID_STABLE_50HZ);
-                set(OPT_GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
-                set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
-                break;
-
-            case C64_MODEL_PAL_II:
-
-                set(OPT_VICII_REVISION, VICII_PAL_8565);
-                set(OPT_VICII_GRAY_DOT_BUG, true);
-                set(OPT_CIA_REVISION, MOS_8521);
-                set(OPT_CIA_TIMER_B_BUG, false);
-                set(OPT_SID_REVISION, MOS_8580);
-                set(OPT_SID_FILTER, true);
-                set(OPT_POWER_GRID, GRID_STABLE_50HZ);
-                set(OPT_GLUE_LOGIC, GLUE_LOGIC_IC);
-                set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
-                break;
-
-            case C64_MODEL_PAL_OLD:
-
-                set(OPT_VICII_REVISION, VICII_PAL_6569_R1);
-                set(OPT_VICII_GRAY_DOT_BUG, false);
-                set(OPT_CIA_REVISION, MOS_6526);
-                set(OPT_CIA_TIMER_B_BUG, true);
-                set(OPT_SID_REVISION, MOS_6581);
-                set(OPT_SID_FILTER, true);
-                set(OPT_POWER_GRID, GRID_STABLE_50HZ);
-                set(OPT_GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
-                set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
-                break;
-
-            case C64_MODEL_NTSC:
-
-                set(OPT_VICII_REVISION, VICII_NTSC_6567);
-                set(OPT_VICII_GRAY_DOT_BUG, false);
-                set(OPT_CIA_REVISION, MOS_6526);
-                set(OPT_CIA_TIMER_B_BUG, false);
-                set(OPT_SID_REVISION, MOS_6581);
-                set(OPT_SID_FILTER, true);
-                set(OPT_POWER_GRID, GRID_STABLE_60HZ);
-                set(OPT_GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
-                set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
-                break;
-
-            case C64_MODEL_NTSC_II:
-
-                set(OPT_VICII_REVISION, VICII_NTSC_8562);
-                set(OPT_VICII_GRAY_DOT_BUG, true);
-                set(OPT_CIA_REVISION, MOS_8521);
-                set(OPT_CIA_TIMER_B_BUG, true);
-                set(OPT_SID_REVISION, MOS_8580);
-                set(OPT_SID_FILTER, true);
-                set(OPT_POWER_GRID, GRID_STABLE_60HZ);
-                set(OPT_GLUE_LOGIC, GLUE_LOGIC_IC);
-                set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
-                break;
-
-            case C64_MODEL_NTSC_OLD:
-
-                set(OPT_VICII_REVISION, VICII_NTSC_6567_R56A);
-                set(OPT_VICII_GRAY_DOT_BUG, false);
-                set(OPT_CIA_REVISION, MOS_6526);
-                set(OPT_CIA_TIMER_B_BUG, false);
-                set(OPT_SID_REVISION, MOS_6581);
-                set(OPT_SID_FILTER, true);
-                set(OPT_POWER_GRID, GRID_STABLE_60HZ);
-                set(OPT_GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
-                set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
-                break;
-
-            default:
-                fatalError;
-        }
-    }
+    main.set(model);
 }
 
 void

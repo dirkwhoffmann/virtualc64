@@ -114,15 +114,6 @@ public:
     // Configures the emulator to match a specific C64 model
     void set(C64Model model);
 
-private:
-
-    // Returns the target component for an option
-    // std::vector<Configurable *> routeOption(Option opt);
-    // std::vector<const Configurable *> routeOption(Option opt) const;
-
-    // Overrides a config option if the corresponding debug option is enabled
-    // i64 overrideOption(Option opt, i64 value) const;
-
     // Powers off and resets the emulator to it's initial state
     void revertToFactorySettings();
 
@@ -199,7 +190,7 @@ public:
 private:
 
     // Processes a command from the command queue
-    void process(const Cmd &cmd);
+    // void process(const Cmd &cmd);
 
 
     //
