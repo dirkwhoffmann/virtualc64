@@ -285,14 +285,12 @@ VirtualC64::trackOff(isize source)
 void
 VirtualC64::stepInto()
 {
-    assert(isUserThread());
     emu->stepInto();
 }
 
 void
 VirtualC64::stepOver()
 {
-    assert(isUserThread());
     emu->stepOver();
 }
 
@@ -305,7 +303,6 @@ VirtualC64::wakeUp()
 void
 VirtualC64::launch(const void *listener, Callback *func)
 {
-    assert(isUserThread());
     emu->launch(listener, func);
 }
 
@@ -318,21 +315,18 @@ VirtualC64::isLaunched() const
 i64
 VirtualC64::get(Option option) const
 {
-    assert(isUserThread());
     return emu->get(option);
 }
 
 i64
 VirtualC64::get(Option option, long id) const
 {
-    assert(isUserThread());
     return emu->get(option, id);
 }
 
 void
 VirtualC64::set(C64Model model)
 {
-    assert(isUserThread());
     emu->set(model);
     emu->markAsDirty();
 }
@@ -340,8 +334,6 @@ VirtualC64::set(C64Model model)
 void
 VirtualC64::set(Option opt, i64 value) throws
 {
-    assert(isUserThread());
-
     emu->check(opt, value);
     put(CMD_CONFIG_ALL, ConfigCmd { .option = opt, .value = value });
     emu->markAsDirty();
@@ -364,14 +356,12 @@ VirtualC64::exportConfig(const fs::path &path) const
 void
 VirtualC64::exportConfig(std::ostream& stream) const
 {
-    assert(isUserThread());
     emu->main.exportConfig(stream);
 }
 
 void
 VirtualC64::put(const Cmd &cmd)
 {
-    assert(isUserThread());
     emu->put(cmd);
 }
 
@@ -383,8 +373,6 @@ VirtualC64::put(const Cmd &cmd)
 void
 C64API::hardReset()
 {
-    assert(isUserThread());
-
     suspend();
 
     c64->hardReset();
@@ -396,8 +384,6 @@ C64API::hardReset()
 void
 C64API::softReset()
 {
-    assert(isUserThread());
-
     suspend();
 
     c64->hardReset();
@@ -527,49 +513,42 @@ C64API::flash(const FileSystem &fs, isize item)
 const CPUInfo &
 CPUAPI::getInfo() const
 {
-    assert(isUserThread());
     return cpu->getInfo();
 }
 
 const CPUInfo &
 CPUAPI::getCachedInfo() const
 {
-    assert(isUserThread());
     return cpu->getCachedInfo();
 }
 
 isize
 CPUAPI::loggedInstructions() const
 {
-    assert(isUserThread());
     return cpu->debugger.loggedInstructions();
 }
 
 void
 CPUAPI::clearLog()
 {
-    assert(isUserThread());
     return cpu->debugger.clearLog();
 }
 
 void
 CPUAPI::setNumberFormat(DasmNumberFormat instrFormat, DasmNumberFormat dataFormat)
 {
-    assert(isUserThread());
     return cpu->disassembler.setNumberFormat(instrFormat, dataFormat);
 }
 
 isize
 CPUAPI::disassemble(char *dst, const char *fmt, u16 addr) const
 {
-    assert(isUserThread());
     return cpu->disassembler.disass(dst, fmt, addr);
 }
 
 isize
 CPUAPI::disassembleRecorded(char *dst, const char *fmt, isize nr) const
 {
-    assert(isUserThread());
     return cpu->debugger.disassRecorded(dst, fmt, nr);
 }
 
@@ -605,35 +584,30 @@ CPUAPI::watchpointAt(u32 addr) const
 const MemConfig &
 MemoryAPI::getConfig() const
 {
-    assert(isUserThread());
     return mem->getConfig();
 }
 
 const MemInfo &
 MemoryAPI::getInfo() const
 {
-    assert(isUserThread());
     return mem->getInfo();
 }
 
 const MemInfo &
 MemoryAPI::getCachedInfo() const
 {
-    assert(isUserThread());
     return mem->getCachedInfo();
 }
 
 string
 MemoryAPI::memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const
 {
-    assert(isUserThread());
     return mem->memdump(addr, num, hex, pads, src);
 }
 
 string
 MemoryAPI::txtdump(u16 addr, isize num, MemoryType src) const
 {
-    assert(isUserThread());
     return mem->txtdump(addr, num, src);
 }
 
@@ -729,7 +703,6 @@ SIDAPI::getInfo(isize nr) const
 {
     assert(nr < 3);
 
-    assert(isUserThread());
     return sidBridge->sid[nr].getInfo();
 }
 
@@ -738,7 +711,6 @@ SIDAPI::getCachedInfo(isize nr) const
 {
     assert(nr < 3);
 
-    assert(isUserThread());
     return sidBridge->sid[nr].getCachedInfo();
 }
 
@@ -746,7 +718,6 @@ float
 SIDAPI::draw(u32 *buffer, isize width, isize height,
                          float maxAmp, u32 color, isize sid) const
 {
-    assert(isUserThread());
     return sidBridge->draw(buffer, width, height, maxAmp, color, sid);
 }
 
@@ -758,28 +729,24 @@ SIDAPI::draw(u32 *buffer, isize width, isize height,
 AudioPortStats
 AudioPortAPI::getStats() const
 {
-    assert(isUserThread());
     return audioPort->getStats();
 }
 
 isize
 AudioPortAPI::copyMono(float *buffer, isize n)
 {
-    assert(isUserThread());
     return audioPort->copyMono(buffer, n);
 }
 
 isize
 AudioPortAPI::copyStereo(float *left, float *right, isize n)
 {
-    assert(isUserThread());
     return audioPort->copyStereo(left, right, n);
 }
 
 isize
 AudioPortAPI::copyInterleaved(float *buffer, isize n)
 {
-    assert(isUserThread());
     return audioPort->copyInterleaved(buffer, n);
 }
 
@@ -808,7 +775,6 @@ VideoPortAPI::getDmaTexture() const
 const DmaDebuggerConfig &
 DmaDebuggerAPI::getConfig() const
 {
-    assert(isUserThread());
     return dmaDebugger->getConfig();
 }
 
