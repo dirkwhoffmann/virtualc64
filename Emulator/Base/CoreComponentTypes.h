@@ -25,10 +25,10 @@ enum_long(COMP_TYPE)
 
     // Components
     C64Class,
-    C64MemoryClass,
     CPUClass,
     CIAClass,
     HostClass,
+    MemoryClass,
     PIAClass,
     SIDClass,
     SIDBridgeClass,

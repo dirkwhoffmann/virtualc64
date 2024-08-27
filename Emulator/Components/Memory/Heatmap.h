@@ -39,7 +39,7 @@ public:
     Heatmap();
 
     // Updates heatmap data
-    void update(const class C64Memory &mem);
+    void update(const class Memory &mem);
 
     // Draws a heatmap
     void draw(u32 *buffer, isize width, isize height) const;

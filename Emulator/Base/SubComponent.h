@@ -36,7 +36,7 @@ protected:
     class Host &host;
     class SerialPort &serialPort;
     class Keyboard &keyboard;
-    class C64Memory &mem;
+    class Memory &mem;
     class Monitor &monitor;
     class MsgQueue &msgQueue;
     class ParCable &parCable;

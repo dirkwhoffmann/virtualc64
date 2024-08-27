@@ -515,7 +515,7 @@ extension Inspector: NSTabViewDelegate {
             switch id {
                 
             case "CPU":     c64?.autoInspectionMask = mask([.CPUClass])
-            case "Memory":  c64?.autoInspectionMask = mask([.C64MemoryClass])
+            case "Memory":  c64?.autoInspectionMask = mask([.MemoryClass])
             case "CIA":     c64?.autoInspectionMask = mask([.CIAClass])
             case "VICII":   c64?.autoInspectionMask = mask([.VICIIClass])
             case "SID":     c64?.autoInspectionMask = mask([.SIDClass])

@@ -46,7 +46,7 @@ namespace vc64 {
 
 class SIDBridge final : public SubComponent {
 
-    friend C64Memory;
+    friend Memory;
     friend AudioPort;
     
     Descriptions descriptions = {{

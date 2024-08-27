@@ -18,13 +18,13 @@
 
 namespace vc64 {
 
-class C64Memory final : public SubComponent, public Inspectable<MemInfo, MemStats> {
+class Memory final : public SubComponent, public Inspectable<MemInfo, MemStats> {
 
     friend class Heatmap;
 
     Descriptions descriptions = {{
 
-        .type           = C64MemoryClass,
+        .type           = MemoryClass,
         .name           = "Memory",
         .description    = "C64 Memory",
         .shell          = "memory"
@@ -88,9 +88,9 @@ public:
 
 public:
 
-    C64Memory(C64 &ref);
+    Memory(C64 &ref);
 
-    C64Memory& operator= (const C64Memory& other) {
+    Memory& operator= (const Memory& other) {
 
         CLONE_ARRAY(ram)
         CLONE_ARRAY(rom)

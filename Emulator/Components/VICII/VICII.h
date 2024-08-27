@@ -106,7 +106,7 @@ struct SpriteSR : Serializable
 
 class VICII final : public SubComponent, public Inspectable<VICIIInfo, VICIIStats> {
 
-    friend class C64Memory;
+    friend class Memory;
     friend class DmaDebugger;
     friend class VideoPort;
     

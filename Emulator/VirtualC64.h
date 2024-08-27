@@ -49,7 +49,7 @@ protected:
  */
 struct MemoryAPI : API {
 
-    class C64Memory *mem = nullptr;
+    class Memory *mem = nullptr;
 
     /** @brief  Returns the component's current configuration.
      */

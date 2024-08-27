@@ -995,7 +995,7 @@ C64::processINSEvent()
     // Analyze bit mask
     if (mask & 1LL << C64Class)             { record(); }
     if (mask & 1LL << CPUClass)             { cpu.record(); }
-    if (mask & 1LL << C64MemoryClass)       { mem.record(); }
+    if (mask & 1LL << MemoryClass)          { mem.record(); }
     if (mask & 1LL << CIAClass)             { cia1.record(); cia2.record(); }
     if (mask & 1LL << VICIIClass)           { vic.record(); }
     
@@ -1005,31 +1005,6 @@ C64::processINSEvent()
 
     // Reschedule the event
     rescheduleRel<SLOT_INS>(Cycle(inspectionInterval * PAL::CYCLES_PER_SECOND));
-
-    /*
-    // trace(true, "processINSEvent %d\n", id);
-    switch (id) {
-
-        case INS_C64:       record(); break;
-        case INS_CPU:       cpu.record(); break;
-        case INS_MEM:       mem.record(); break;
-        case INS_CIA:       cia1.record(); cia2.record(); break;
-        case INS_VICII:     vic.record(); break;
-        
-        case INS_SID:
-
-            sidBridge.sid[0].record();
-            sidBridge.sid[1].record();
-            sidBridge.sid[2].record();
-            break;
-
-        default:
-            fatalError;
-    }
-
-    // Reschedule event
-    scheduleRel<SLOT_INS>((Cycle)(inspectionInterval * PAL::CYCLES_PER_SECOND), id);
-    */
 }
 
 void

@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "Heatmap.h"
-#include "C64Memory.h"
+#include "Memory.h"
 #include "VICII.h"
 
 namespace vc64 {
@@ -42,7 +42,7 @@ Heatmap::Heatmap()
 }
 
 void
-Heatmap::update(const class C64Memory &mem)
+Heatmap::update(const class Memory &mem)
 {
     for (isize i = 0; i < 65536; i++) {
         

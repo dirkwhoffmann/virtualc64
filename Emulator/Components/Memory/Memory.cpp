@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "C64Memory.h"
+#include "Memory.h"
 #include "Emulator.h"
 #include "IOUtils.h"
 
@@ -19,7 +19,7 @@
 
 namespace vc64 {
 
-C64Memory::C64Memory(C64 &ref) : SubComponent(ref)
+Memory::Memory(C64 &ref) : SubComponent(ref)
 {    		
     memset(rom, 0, sizeof(rom));
     
@@ -101,7 +101,7 @@ C64Memory::C64Memory(C64 &ref) : SubComponent(ref)
 }
 
 void
-C64Memory::_didReset(bool hard)
+Memory::_didReset(bool hard)
 {
     if (hard) {
 
@@ -119,28 +119,28 @@ C64Memory::_didReset(bool hard)
 }
 
 void 
-C64Memory::operator << (SerCounter &worker)
+Memory::operator << (SerCounter &worker)
 {
     serialize(worker);
     if (config.saveRoms) worker << rom;
 }
 
 void 
-C64Memory::operator << (SerReader &worker)
+Memory::operator << (SerReader &worker)
 {
     serialize(worker);
     if (config.saveRoms) worker << rom;
 }
 
 void 
-C64Memory::operator << (SerWriter &worker)
+Memory::operator << (SerWriter &worker)
 {
     serialize(worker);
     if (config.saveRoms) worker << rom;
 }
 
 void
-C64Memory::eraseWithPattern(RamPattern pattern)
+Memory::eraseWithPattern(RamPattern pattern)
 {
     /* Note: The RAM init pattern is not unique across C64 models (for details,
      * see the README file in the VICE test suite C64/raminitpattern). By
@@ -207,7 +207,7 @@ C64Memory::eraseWithPattern(RamPattern pattern)
 }
 
 void 
-C64Memory::updatePeekPokeLookupTables()
+Memory::updatePeekPokeLookupTables()
 {
     // Read game line, exrom line, and processor port bits
     u8 game  = expansionPort.getGameLine() ? 0x08 : 0x00;
@@ -227,7 +227,7 @@ C64Memory::updatePeekPokeLookupTables()
 }
 
 u8
-C64Memory::peek(u16 addr, MemoryType source)
+Memory::peek(u16 addr, MemoryType source)
 {
     if (config.heatmap) stats.reads[addr]++;
 
@@ -270,7 +270,7 @@ C64Memory::peek(u16 addr, MemoryType source)
 }
 
 u8
-C64Memory::peek(u16 addr, bool gameLine, bool exromLine)
+Memory::peek(u16 addr, bool gameLine, bool exromLine)
 {
     u8 game  = gameLine ? 0x08 : 0x00;
     u8 exrom = exromLine ? 0x10 : 0x00;
@@ -280,7 +280,7 @@ C64Memory::peek(u16 addr, bool gameLine, bool exromLine)
 }
 
 u8
-C64Memory::peekZP(u8 addr)
+Memory::peekZP(u8 addr)
 {
     if (config.heatmap) stats.reads[addr]++;
 
@@ -292,7 +292,7 @@ C64Memory::peekZP(u8 addr)
 }
 
 u8
-C64Memory::peekStack(u8 sp)
+Memory::peekStack(u8 sp)
 {
     if (config.heatmap) stats.reads[sp]++;
 
@@ -300,7 +300,7 @@ C64Memory::peekStack(u8 sp)
 }
 
 u8
-C64Memory::peekIO(u16 addr)
+Memory::peekIO(u16 addr)
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
     
@@ -354,7 +354,7 @@ C64Memory::peekIO(u16 addr)
 }
 
 u8
-C64Memory::spypeek(u16 addr, MemoryType source) const
+Memory::spypeek(u16 addr, MemoryType source) const
 {
     switch(source) {
             
@@ -395,7 +395,7 @@ C64Memory::spypeek(u16 addr, MemoryType source) const
 }
 
 u8
-C64Memory::spypeekIO(u16 addr) const
+Memory::spypeekIO(u16 addr) const
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
     
@@ -445,14 +445,14 @@ C64Memory::spypeekIO(u16 addr) const
 }
 
 u8
-C64Memory::spypeekColor(u16 addr) const
+Memory::spypeekColor(u16 addr) const
 {
     assert(addr <= 0x400);
     return colorRam[addr];
 }
 
 void
-C64Memory::poke(u16 addr, u8 value, MemoryType target)
+Memory::poke(u16 addr, u8 value, MemoryType target)
 {
     if (config.heatmap) stats.writes[addr]++;
 
@@ -496,7 +496,7 @@ C64Memory::poke(u16 addr, u8 value, MemoryType target)
 }
 
 void
-C64Memory::poke(u16 addr, u8 value, bool gameLine, bool exromLine)
+Memory::poke(u16 addr, u8 value, bool gameLine, bool exromLine)
 {
     u8 game  = gameLine ? 0x08 : 0x00;
     u8 exrom = exromLine ? 0x10 : 0x00;
@@ -506,7 +506,7 @@ C64Memory::poke(u16 addr, u8 value, bool gameLine, bool exromLine)
 }
 
 void
-C64Memory::pokeZP(u8 addr, u8 value)
+Memory::pokeZP(u8 addr, u8 value)
 {
     if (config.heatmap) stats.writes[addr]++;
 
@@ -520,7 +520,7 @@ C64Memory::pokeZP(u8 addr, u8 value)
 }
 
 void
-C64Memory::pokeStack(u8 sp, u8 value)
+Memory::pokeStack(u8 sp, u8 value)
 {
     if (config.heatmap) stats.writes[sp]++;
 
@@ -528,7 +528,7 @@ C64Memory::pokeStack(u8 sp, u8 value)
 }
 
 void
-C64Memory::pokeIO(u16 addr, u8 value)
+Memory::pokeIO(u16 addr, u8 value)
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
  
@@ -592,7 +592,7 @@ C64Memory::pokeIO(u16 addr, u8 value)
 }
 
 u16
-C64Memory::nmiVector() const {
+Memory::nmiVector() const {
     
     if (peekSrc[0xF] != M_KERNAL || c64.hasRom(ROM_TYPE_KERNAL)) {
         return LO_HI(spypeek(0xFFFA), spypeek(0xFFFB));
@@ -602,7 +602,7 @@ C64Memory::nmiVector() const {
 }
 
 u16
-C64Memory::irqVector() const {
+Memory::irqVector() const {
     
     if (peekSrc[0xF] != M_KERNAL || c64.hasRom(ROM_TYPE_KERNAL)) {
         return LO_HI(spypeek(0xFFFE), spypeek(0xFFFF));
@@ -612,7 +612,7 @@ C64Memory::irqVector() const {
 }
 
 u16
-C64Memory::resetVector() {
+Memory::resetVector() {
 
     updatePeekPokeLookupTables();
     
@@ -624,7 +624,7 @@ C64Memory::resetVector() {
 }
 
 string
-C64Memory::memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const
+Memory::memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const
 {
     char result[128];
     char *p = result;
@@ -660,19 +660,19 @@ C64Memory::memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) co
 }
 
 string
-C64Memory::hexdump(u16 addr, isize num, isize pads, MemoryType src) const
+Memory::hexdump(u16 addr, isize num, isize pads, MemoryType src) const
 {
     return memdump(addr, num, true, pads, src);
 }
 
 string
-C64Memory::decdump(u16 addr, isize num, isize pads, MemoryType src) const
+Memory::decdump(u16 addr, isize num, isize pads, MemoryType src) const
 {
     return memdump(addr, num, false, pads, src);
 }
 
 string
-C64Memory::txtdump(u16 addr, isize num, MemoryType src) const
+Memory::txtdump(u16 addr, isize num, MemoryType src) const
 {
     char result[17];
     char *p = result;
@@ -696,7 +696,7 @@ C64Memory::txtdump(u16 addr, isize num, MemoryType src) const
 }
 
 void
-C64Memory::memDump(std::ostream& os, u16 addr, isize numLines, bool hex)
+Memory::memDump(std::ostream& os, u16 addr, isize numLines, bool hex)
 {
     addr &= ~0xF;
 
@@ -716,7 +716,7 @@ C64Memory::memDump(std::ostream& os, u16 addr, isize numLines, bool hex)
 }
 
 void 
-C64Memory::endFrame()
+Memory::endFrame()
 {
     if (config.heatmap) {
         heatmap.update(*this);

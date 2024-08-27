@@ -198,7 +198,7 @@ void
 Headless::reportSize()
 {
     msg("               C64 : %zu bytes\n", sizeof(C64));
-    msg("         C64Memory : %zu bytes\n", sizeof(C64Memory));
+    msg("            Memory : %zu bytes\n", sizeof(Memory));
     msg("       DriveMemory : %zu bytes\n", sizeof(DriveMemory));
     msg("               CPU : %zu bytes\n", sizeof(CPU));
     msg("               CIA : %zu bytes\n", sizeof(CIA));

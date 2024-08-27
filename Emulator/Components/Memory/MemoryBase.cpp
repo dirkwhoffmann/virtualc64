@@ -11,13 +11,13 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "C64Memory.h"
+#include "Memory.h"
 #include "C64.h"
 
 namespace vc64 {
 
 void
-C64Memory::_dump(Category category, std::ostream& os) const
+Memory::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
@@ -55,7 +55,7 @@ C64Memory::_dump(Category category, std::ostream& os) const
 }
 
 void
-C64Memory::cacheInfo(MemInfo &result) const
+Memory::cacheInfo(MemInfo &result) const
 {
     {   SYNCHRONIZED
 
@@ -75,7 +75,7 @@ C64Memory::cacheInfo(MemInfo &result) const
 }
 
 i64
-C64Memory::getOption(Option option) const
+Memory::getOption(Option option) const
 {
     switch (option) {
 
@@ -89,7 +89,7 @@ C64Memory::getOption(Option option) const
 }
 
 void
-C64Memory::checkOption(Option opt, i64 value)
+Memory::checkOption(Option opt, i64 value)
 {
     switch (opt) {
 
@@ -111,7 +111,7 @@ C64Memory::checkOption(Option opt, i64 value)
 }
 
 void
-C64Memory::setOption(Option opt, i64 value)
+Memory::setOption(Option opt, i64 value)
 {
     checkOption(opt, value);
     
