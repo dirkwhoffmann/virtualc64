@@ -13,9 +13,8 @@
 
 // REMOVE EVENTUALLY
 #import "DiskAnalyzer.h"
-// #import "Drive.h"
-// #import "FFmpeg.h"
-#import "Emulator.h"
+#import "FFmpeg.h"
+#import "FileSystem.h"
 
 using namespace vc64;
 
@@ -2034,7 +2033,13 @@ using namespace vc64;
 
 - (BOOL) isRom:(RomType)type url:(NSURL *)url
 {
-    return RomFile::isRomFile(type, [url fileSystemRepresentation]);
+    auto fileType = MediaFile::type([url fileSystemRepresentation]);
+
+    return 
+    (fileType == FILETYPE_BASIC_ROM && type == ROM_TYPE_BASIC) ||
+    (fileType == FILETYPE_CHAR_ROM && type == ROM_TYPE_CHAR) ||
+    (fileType == FILETYPE_KERNAL_ROM && type == ROM_TYPE_KERNAL) ||
+    (fileType == FILETYPE_VC1541_ROM && type == ROM_TYPE_VC1541);
 }
 
 - (void)installOpenRoms
