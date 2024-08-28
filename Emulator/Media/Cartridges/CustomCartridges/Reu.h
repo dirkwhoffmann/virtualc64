@@ -51,6 +51,10 @@ private:
     u16 c64Base = 0;
     u32 reuBase = 0;
 
+    // Address registers used during DMA
+    u16 memAddr = 0;
+    u32 reuAddr = 0;
+
     // Upper bank bits (used by modded REUs with higher capacities)
     u32 upperBankBits = 0;
 
@@ -109,6 +113,8 @@ public:
         CLONE(cr)
         CLONE(c64Base)
         CLONE(reuBase)
+        CLONE(memAddr)
+        CLONE(reuAddr)
         CLONE(upperBankBits)
         CLONE(tlen)
         CLONE(imr)
@@ -132,6 +138,8 @@ public:
         << cr
         << c64Base
         << reuBase
+        << memAddr
+        << reuAddr
         << upperBankBits
         << tlen
         << imr
@@ -151,6 +159,9 @@ public:
     bool isREU1700() const { return getRamCapacity() == KB(128); }
     bool isREU1764() const { return getRamCapacity() == KB(256); }
     bool isREU1750() const { return getRamCapacity() >= KB(512); }
+
+    // Indicates if all data should be transfered in a single cycle
+    bool turbo() { return true; }
 
     // Returns the bitmask of the REU address register
     u32 wrapMask() const { return isREU1700() ? 0x1FFFF : 0x7FFFF; }
@@ -201,10 +212,17 @@ private:
     void incReuAddr(u32 &addr) { addr = U32_ADD(addr, 1) & wrapMask(); }
 
     void doDma();
-    void stash(u16 memAddr, u32 reuAddr, isize len);
-    void fetch(u16 memAddr, u32 reuAddr, isize len);
-    void swap(u16 memAddr, u32 reuAddr, isize len);
-    void verify(u16 memAddr, u32 reuAddr, isize len);
+    void stash(isize len);
+    void fetch(isize len);
+    void swap(isize len);
+    void verify(isize len);
+
+
+    //
+    // Processing events
+    //
+
+    void processEvent(EventID id) override;
 
 
     //
@@ -222,7 +240,6 @@ private:
 public:
 
     void updatePeekPokeLookupTables() override;
-
 };
 
 }

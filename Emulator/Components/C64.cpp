@@ -99,6 +99,19 @@ C64::eventName(EventSlot slot, EventID id)
             }
             break;
 
+        case SLOT_EXP:
+
+            switch (id) {
+
+                case EVENT_NONE:        return "none";
+                case EXP_REU_STASH:     return "EXP_REU_STASH";
+                case EXP_REU_FETCH:     return "EXP_REU_FETCH";
+                case EXP_REU_SWAP:      return "EXP_REU_SWAP";
+                case EXP_REU_VERIFY:    return "EXP_REU_STASH";
+                default:                return "*** INVALID ***";
+            }
+            break;
+
         case SLOT_TXD:
 
             switch (id) {
@@ -1129,6 +1142,9 @@ C64::processEvents(Cycle cycle)
             //
             // Check tertiary slots
             //
+            if (isDue<SLOT_EXP>(cycle)) {
+                expansionport.processEvent(eventid[SLOT_EXP]);
+            }
             if (isDue<SLOT_TXD>(cycle)) {
                 userPort.rs232.processTxdEvent();
             }

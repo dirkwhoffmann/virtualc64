@@ -199,6 +199,15 @@ public:
 
 
     //
+    // Processing events
+    //
+
+public:
+
+    void processEvent(EventID id);
+
+
+    //
     // Handling delegation calls
     //
     

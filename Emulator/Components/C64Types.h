@@ -100,6 +100,7 @@ enum_long(SLOT)
     SLOT_TER,                       // Enables tertiary slots
 
     // Tertiary slots
+    SLOT_EXP,                       // Expansion port
     SLOT_TXD,                       // Serial data out (RS232)
     SLOT_RXD,                       // Serial data in (RS232)
     SLOT_AFI1,                      // Auto-fire (joystick port 1)
@@ -187,6 +188,13 @@ enum_i8(EventID)
     //
     // Events in tertiary event table
     //
+
+    // Expansion port
+    EXP_REU_STASH       = 1,
+    EXP_REU_FETCH,
+    EXP_REU_SWAP,
+    EXP_REU_VERIFY,
+    EXP_EVENT_COUNT,
 
     // Serial data out (RS232)
     TXD_BIT             = 1,

@@ -413,6 +413,14 @@ public:
 
 
     //
+    // Processing events
+    //
+
+    // Processes an event in the expansion port slot
+    virtual void processEvent(EventID id) { };
+
+
+    //
     // Handling delegation calls
     //
 

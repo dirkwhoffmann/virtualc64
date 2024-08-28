@@ -333,16 +333,16 @@ Reu::doDma()
 {
     if (REU_DEBUG) { dump(Category::Dma, std::cout); }
 
-    u16 memAddr = c64Base;
-    u32 reuAddr = reuBase;
+    memAddr = c64Base;
+    reuAddr = reuBase;
     isize len = tlen ? tlen : 0x10000;
 
     switch (cr & 0x3) {
 
-        case 0: stash(memAddr, reuAddr, len); break;
-        case 1: fetch(memAddr, reuAddr, len); break;
-        case 2: swap(memAddr, reuAddr, len); break;
-        case 3: verify(memAddr, reuAddr, len); break;
+        case 0: stash(len); break;
+        case 1: fetch(len); break;
+        case 2: swap(len); break;
+        case 3: verify(len); break;
 
         default:
             fatalError;
@@ -350,7 +350,7 @@ Reu::doDma()
 }
 
 void
-Reu::stash(u16 memAddr, u32 reuAddr, isize len)
+Reu::stash(isize len)
 {
     debug(REU_DEBUG, "stash(%x,%x,%ld)\n", memAddr, reuAddr, len);
 
@@ -380,7 +380,7 @@ Reu::stash(u16 memAddr, u32 reuAddr, isize len)
 }
 
 void
-Reu::fetch(u16 memAddr, u32 reuAddr, isize len)
+Reu::fetch(isize len)
 {
     debug(REU_DEBUG, "fetch(%x,%x,%ld)\n", memAddr, reuAddr, len);
 
@@ -412,7 +412,7 @@ Reu::fetch(u16 memAddr, u32 reuAddr, isize len)
 }
 
 void
-Reu::swap(u16 memAddr, u32 reuAddr, isize len)
+Reu::swap(isize len)
 {
     debug(REU_DEBUG, "swap(%x,%x,%ld)\n", memAddr, reuAddr, len);
 
@@ -442,7 +442,7 @@ Reu::swap(u16 memAddr, u32 reuAddr, isize len)
 }
 
 void
-Reu::verify(u16 memAddr, u32 reuAddr, isize len)
+Reu::verify(isize len)
 {
     debug(REU_DEBUG, "verify(%x,%x,%ld)\n", memAddr, reuAddr, len);
 
@@ -481,6 +481,12 @@ Reu::verify(u16 memAddr, u32 reuAddr, isize len)
     triggerEndOfBlockIrq();
 }
 
+void 
+Reu::processEvent(EventID id)
+{
+
+}
+
 void
 Reu::triggerEndOfBlockIrq()
 {
@@ -516,7 +522,7 @@ Reu::updatePeekPokeLookupTables()
      *  expansion bus, which means that, without the FF00 option, I/O space
      *  would be enabled when DMA was initiated. This option, therefore, allows
      *  the user to bank out the the C64 I/O space, replacing it with RAM,
-     *  before the DMA takes place. The FFOO option is cleared each time it is
+     *  before the DMA takes place. The FF00 option is cleared each time it is
      *  used."
      */
 

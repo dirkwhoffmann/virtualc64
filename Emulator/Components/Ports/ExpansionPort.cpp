@@ -301,6 +301,16 @@ ExpansionPort::processCommand(const Cmd &cmd)
     }
 }
 
+void 
+ExpansionPort::processEvent(EventID id)
+{
+    if (cartridge) {
+        cartridge->processEvent(id);
+    } else {
+        c64.cancel<SLOT_EXP>();
+    }
+}
+
 void
 ExpansionPort::execute()
 {
