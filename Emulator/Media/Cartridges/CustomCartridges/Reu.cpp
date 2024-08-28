@@ -337,17 +337,25 @@ Reu::prepareDma()
     reuAddr = reuBase;
     isize len = tlen ? tlen : 0x10000;
 
-    // Schedule the first event
-    switch (cr & 0x3) {
+    EventID id =
+    ((cr & 0x3) == 0) ? EXP_REU_STASH :
+    ((cr & 0x3) == 1) ? EXP_REU_FETCH :
+    ((cr & 0x3) == 2) ? EXP_REU_SWAP : EXP_REU_VERIFY;
 
-        case 0: c64.scheduleImm<SLOT_EXP>(EXP_REU_STASH, len); break;
-        case 1: c64.scheduleImm<SLOT_EXP>(EXP_REU_FETCH, len); break;
-        case 2: c64.scheduleImm<SLOT_EXP>(EXP_REU_SWAP, len); break;
-        case 3: c64.scheduleImm<SLOT_EXP>(EXP_REU_VERIFY, len); break;
+    // Check for turbo TEU (perform the entire data transfer immediately)
+    if (turbo()) {
 
-        default:
-            fatalError;
+        // Perform the entire data transfer immediately
+        for (isize i = 0; i < len; i++) if (!doDma(id)) break;
+        finalizeDma(id);
+        return;
     }
+
+    // Freeze the CPU
+    // TODO
+    
+    // Schedule the first event
+    c64.scheduleImm<SLOT_EXP>(id, len);
 }
 
 bool
@@ -441,6 +449,22 @@ Reu::processEvent(EventID id)
 {
     isize len = c64.data[SLOT_EXP];
 
+    // Perform a DMA cycle
+    if (len) {
+
+        doDma(id);
+        len--;
+        c64.data[SLOT_EXP] = len;
+    }
+
+    // Finalize DMA if this was the last cycle
+    if (len == 0) {
+
+        finalizeDma(id);
+        c64.cancel<SLOT_EXP>();
+    }
+
+    /*
     switch (id) {
 
         case EXP_REU_STASH:  stash(len); break;
@@ -453,6 +477,7 @@ Reu::processEvent(EventID id)
     }
 
     c64.cancel<SLOT_EXP>();
+    */
 }
 
 void
@@ -463,21 +488,6 @@ Reu::stash(isize len)
     // Perform DMA
     for (isize i = 0; i < len; i++) doDma(EXP_REU_STASH);
     finalizeDma(EXP_REU_STASH);
-
-    /*
-    // Set the "End of Block" bit
-    SET_BIT(sr, 6);
-
-    // Update registers if autoload is disabled
-    if (!autoloadEnabled()) {
-
-        c64Base = c64Addr;
-        reuBase = reuAddr;
-        len = 1;
-    }
-
-    triggerEndOfBlockIrq();
-    */
 }
 
 void
@@ -488,23 +498,6 @@ Reu::fetch(isize len)
     // Perform DMA
     for (isize i = 0; i < len; i++) doDma(EXP_REU_FETCH);
     finalizeDma(EXP_REU_FETCH);
-
-    /*
-    // Update bus value
-    (void)readFromReuRam(reuAddr);
-
-    // Set the "End of Block" bit
-    SET_BIT(sr, 6);
-
-    if (!autoloadEnabled()) {
-
-        c64Base = c64Addr;
-        reuBase = reuAddr;
-        len = 1;
-    }
-
-    triggerEndOfBlockIrq();
-    */
 }
 
 void
@@ -515,20 +508,6 @@ Reu::swap(isize len)
     // Perform DMA
     for (isize i = 0; i < len; i++) doDma(EXP_REU_SWAP);
     finalizeDma(EXP_REU_SWAP);
-
-    /*
-    // Set the "End of Block" bit
-    SET_BIT(sr, 6);
-
-    if (!autoloadEnabled()) {
-
-        c64Base = c64Addr;
-        reuBase = reuAddr;
-        len = 1;
-    }
-
-    triggerEndOfBlockIrq();
-    */
 }
 
 void
@@ -539,20 +518,6 @@ Reu::verify(isize len)
     // Perform DMA
     for (isize i = 0; i < len; i++) if (!doDma(EXP_REU_VERIFY)) break;
     finalizeDma(EXP_REU_VERIFY);
-
-    /*
-    // Set the "End of Block" bit
-    SET_BIT(sr, 6);
-
-    if (!autoloadEnabled()) {
-
-        c64Base = c64Addr;
-        reuBase = reuAddr;
-        len = 1;
-    }
-
-    triggerEndOfBlockIrq();
-    */
 }
 
 void
