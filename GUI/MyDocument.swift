@@ -39,7 +39,7 @@ class MyDocument: NSDocument {
     var emu: EmulatorProxy?
 
     // Snapshot storage
-    private(set) var snapshots = ManagedArray<MediaFileProxy>(maxCount: 32)
+    private(set) var snapshots = ManagedArray<MediaFileProxy>(maxSize: 512 * 1024 * 1024)
 
     //
     // Initializing

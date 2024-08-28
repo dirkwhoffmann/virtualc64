@@ -10,7 +10,7 @@
 class ManagedArray<Element> {
 
     // Element storage (each element is associated with a size)
-    var elements: [(Element,Int)] = []
+    var elements: [(Element, Int)] = []
 
     // Maximum number of stored items
     var maxItems: Int
@@ -50,7 +50,7 @@ class ManagedArray<Element> {
 
         // Remove older elements until the capacity contraints are met,
         // but do not delete the new element.
-        while (count > 1 && (count > maxItems || used > maxSize)) {
+        while count > 1 && (count > maxItems || used > maxSize) {
 
             elements.remove(at: 0)
         }

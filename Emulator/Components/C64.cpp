@@ -1291,7 +1291,7 @@ C64::processSNPEvent(EventID eventId)
     if (objid == 0) {
 
         // Take snapshot and hand it over to GUI
-        msgQueue.put( Message { .type = MSG_SNAPSHOT_TAKEN, .snapshot = new Snapshot(*this) } );
+        msgQueue.put( Message { .type = MSG_SNAPSHOT_TAKEN, .snapshot = { new Snapshot(*this) } } );
     }
 
     // Schedule the next event

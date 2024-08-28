@@ -14,11 +14,15 @@ class SnapshotViewer: DialogController {
     @IBOutlet weak var carousel: iCarousel!
     @IBOutlet weak var moveUp: NSButton!
     @IBOutlet weak var moveDown: NSButton!
-    @IBOutlet weak var restore: NSButton!
+    @IBOutlet weak var trash: NSButton!
     @IBOutlet weak var nr: NSTextField!
     @IBOutlet weak var text1: NSTextField!
     @IBOutlet weak var text2: NSTextField!
-    
+    @IBOutlet weak var text3: NSTextField!
+    @IBOutlet weak var message: NSTextField!
+    @IBOutlet weak var indicator: NSLevelIndicator!
+    @IBOutlet weak var indicatorText: NSTextField!
+
     // Computed variables
     var myDocument: MyDocument { return parent.mydocument! }
     var numItems: Int { return carousel.numberOfItems }
@@ -43,12 +47,12 @@ class SnapshotViewer: DialogController {
         emu?.set(.C64_SNAPSHOTS, enable: false)
 
         updateLabels()
-        
+
         self.carousel.type = iCarouselType.timeMachine
         self.carousel.isHidden = false
         self.updateCarousel(goto: self.lastItem, animated: false)
     }
-    
+
     func updateLabels() {
         
         moveUp.isEnabled = currentItem >= 0 && currentItem < lastItem
@@ -58,20 +62,30 @@ class SnapshotViewer: DialogController {
         moveUp.isHidden = empty
         moveDown.isHidden = empty
         nr.isHidden = empty
-        restore.isHidden = empty
+        trash.isHidden = empty
         
         if let snapshot = myDocument.snapshots.element(at: currentItem) {
             let takenAt = snapshot.timeStamp
             text1.stringValue = "Taken at " + timeInfo(time: takenAt)
             text2.stringValue = timeDiffInfo(time: takenAt)
+            text3.stringValue = "\(snapshot.size / 1024) KB"
+            message.stringValue = ""
         } else {
-            text1.stringValue = "No snapshots available"
+            text1.stringValue = "No snapshots taken"
             text2.stringValue = ""
+            text3.stringValue = ""
+            message.stringValue = ""
         }
-        text1.isHidden = false
-        text2.isHidden = false
+
+        let MB = 1024 * 1024
+        let fill = Int(myDocument.snapshots.fill.rounded())
+        let size = myDocument.snapshots.used / MB
+        let max = myDocument.snapshots.maxSize / MB
+
+        indicator.integerValue = fill
+        indicatorText.stringValue = "\(size) MB / \(max) MB"
     }
-      
+
     func updateCarousel(goto item: Int, animated: Bool) {
         
         carousel.reloadData()
@@ -183,7 +197,13 @@ class SnapshotViewer: DialogController {
             carousel.scrollToItem(at: currentItem - 1, animated: true)
         }
     }
-        
+
+    @IBAction func trashAction(_ sender: NSButton!) {
+
+        myDocument.snapshots.remove(at: currentItem)
+        updateCarousel()
+    }
+
     @IBAction func revertAction(_ sender: NSButton!) {
 
         do {
@@ -205,7 +225,7 @@ class SnapshotViewer: DialogController {
             nr,
             moveUp,
             moveDown,
-            restore,
+            trash,
             text1,
             text2,
             carousel
