@@ -63,7 +63,7 @@ class SnapshotViewer: DialogController {
         if let snapshot = myDocument.snapshots.element(at: currentItem) {
             let takenAt = snapshot.timeStamp
             text1.stringValue = "Taken at " + timeInfo(time: takenAt)
-            text2.stringValue = timeDiffInfo(time: takenAt)
+            text2.stringValue = Date.elapsed(time: takenAt)
             text3.stringValue = "\(snapshot.size / 1024) KB"
             message.stringValue = ""
         } else {
@@ -118,69 +118,6 @@ class SnapshotViewer: DialogController {
     func timeInfo(time: time_t) -> String {
         
         return timeInfo(date: Date(timeIntervalSince1970: TimeInterval(time)))
-    }
-    
-    func timeDiffInfo(seconds: Int) -> String {
-        
-        let secPerMin = 60
-        let secPerHour = secPerMin * 60
-        let secPerDay = secPerHour * 24
-        let secPerWeek = secPerDay * 7
-        let secPerMonth = secPerWeek * 4
-        let secPerYear = secPerWeek * 52
-        
-        if seconds == 0 {
-            return "Now"
-        }
-        if seconds < secPerMin {
-            return "\(seconds) second" + (seconds == 1 ? "" : "s") + " ago"
-        }
-        if seconds < secPerHour {
-            let m = seconds / secPerMin
-            return "\(m) minute" + (m == 1 ? "" : "s") + " ago"
-        }
-        if seconds < secPerDay {
-            let h = seconds / secPerHour
-            return "\(h) hour" + (h == 1 ? "" : "s") + " ago"
-        }
-        if seconds < secPerWeek {
-            let d = seconds / secPerDay
-            return "\(d) day" + (d == 1 ? "" : "s") + " ago"
-        }
-        if seconds < secPerMonth {
-            let w = seconds / secPerWeek
-            return "\(w) week" + (w == 1 ? "" : "s") + " ago"
-        }
-        if seconds < secPerYear {
-            let m = seconds / secPerMonth
-            return "\(m) month" + (m == 1 ? "" : "s") + " ago"
-        } else {
-            let y = seconds / secPerYear
-            return "\(y) year" + (y == 1 ? "" : "s") + " ago"
-        }
-    }
-    
-    func timeDiffInfo(interval: TimeInterval?) -> String {
-        
-        guard let interval else { return "" }
-        return timeDiffInfo(seconds: Int(interval))
-    }
-    
-    func timeDiffInfo(date: Date?) -> String {
-        
-        guard let date else { return "" }
-        return timeDiffInfo(interval: -date.timeIntervalSince(now))
-    }
-    
-    func timeDiffInfo(time: time_t) -> String {
-        
-        let date = Date(timeIntervalSince1970: TimeInterval(time))
-        return timeDiffInfo(date: date)
-    }
-
-    func timeDiffInfo(url: URL) -> String {
-        
-        return timeDiffInfo(date: url.modificationDate)
     }
 
     @IBAction func selectorAction(_ sender: NSSegmentedControl!) {
