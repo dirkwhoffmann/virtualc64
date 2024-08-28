@@ -654,7 +654,7 @@ struct GuardInfo {
 
 + (FileType) typeOfUrl:(NSURL *)url;
 
-+ (instancetype)make:(MediaFile *)file;
++ (instancetype)make:(void *)file;
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithFile:(NSString *)path type:(FileType)t exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len type:(FileType)t exception:(ExceptionWrapper *)ex;
@@ -663,8 +663,8 @@ struct GuardInfo {
 + (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy type:(FileType)t exception:(ExceptionWrapper *)ex;
 
 @property (readonly) FileType type;
-@property (readonly) NSString *name;
 @property (readonly) u64 fnv;
+@property (readonly) NSInteger size;
 
 - (void)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 

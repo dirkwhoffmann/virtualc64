@@ -325,10 +325,10 @@ extension MyController: NSMenuItemValidation {
     }
     
     @IBAction func takeSnapshotAction(_ sender: Any!) {
-        
-        if let emu = emu {
 
-            mydocument.snapshots.append(emu.c64.takeSnapshot())
+        if let snapshot = emu?.c64.takeSnapshot() {
+
+            mydocument.snapshots.append(snapshot, size: snapshot.size)
             renderer.flash()
         }
     }

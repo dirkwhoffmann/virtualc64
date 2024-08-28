@@ -221,7 +221,7 @@ class MediaManager {
                 switch file.type {
 
                 case .SNAPSHOT:
-                    document.snapshots.append(file)
+                    document.snapshots.append(file, size: file.size)
 
                 case .CRT:
                     MediaManager.noteNewRecentlyAtachedCartridgeURL(url)

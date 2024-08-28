@@ -8,68 +8,61 @@
 // -----------------------------------------------------------------------------
 
 class ManagedArray<Element> {
-    
-    var capacity: Int
-    var elements: [Element] = []
-    var counter = 0
-    var modified = false
-    
-    init(capacity: Int) {
-        self.capacity = capacity
+
+    // Element storage (each element is associated with a size)
+    var elements: [(Element,Int)] = []
+
+    // Maximum number of stored items
+    var maxItems: Int
+
+    // Maximum accumulated size
+    var maxSize: Int
+
+    init(maxCount: Int = Int.max, maxSize: Int = Int.max) {
+
+        self.maxItems = maxCount
+        self.maxSize = maxSize
     }
-    
+
     func clear() {
+
         elements = []
-        counter = 0
-        modified = false
     }
-    
+
     var count: Int { return elements.count }
-    
+    var used: Int { return elements.reduce(0) { $0 + $1.1 } }
+    var fill: Double { return Double(used) / Double(maxSize) }
+
     func element(at index: Int) -> Element? {
-        
-        return (index >= 0 && index < elements.count) ? elements[index] : nil
+
+        return (index >= 0 && index < elements.count) ? elements[index].0 : nil
     }
 
     var lastElement: Element? {
-        
-        return elements.count > 0 ? elements[elements.count - 1] : nil
+
+        return elements.count > 0 ? elements[elements.count - 1].0 : nil
     }
 
-    func append(_ newElement: Element) {
-        
-        // Thin out the array if capacity has been reached
-        if elements.count >= capacity {
-            
-            let itemToDelete = 0
-            
-            /*
-            if counter % 2 == 0 {
-                itemToDelete = 24
-            } else if (counter >> 1) % 2 == 0 {
-                itemToDelete = 16
-            } else if (counter >> 2) % 2 == 0 {
-                itemToDelete = 8
-            }
-            */
-            counter += 1
-                        
-            elements.remove(at: itemToDelete)
+    func append(_ newElement: Element, size: Int) {
+
+        // Append the elements
+        elements.append((newElement, size))
+
+        // Remove older elements until the capacity contraints are met,
+        // but do not delete the new element.
+        while (count > 1 && (count > maxItems || used > maxSize)) {
+
+            elements.remove(at: 0)
         }
-        
-        elements.append(newElement)
-        modified = true
     }
-    
+
     func remove(at index: Int) {
-        
+
         elements.remove(at: index)
-        modified = true
     }
 
     func swapAt(_ i: Int, _ j: Int) {
-        
+
         elements.swapAt(i, j)
-        modified = true
     }
 }

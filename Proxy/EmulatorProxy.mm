@@ -1204,7 +1204,7 @@ using namespace vc64;
     return MediaFile::type([url fileSystemRepresentation]);
 }
 
-+ (instancetype)make:(MediaFile *)file
++ (instancetype)make:(void *)file
 {
     return file ? [[self alloc] initWith:file] : nil;
 }
@@ -1261,14 +1261,14 @@ using namespace vc64;
     return [self file]->type();
 }
 
-- (NSString *)name
-{
-    return @([self file]->name().c_str());
-}
-
 - (u64)fnv
 {
     return [self file]->fnv();
+}
+
+- (NSInteger)size
+{
+    return [self file]->getSize();
 }
 
 - (void)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex

@@ -453,7 +453,9 @@ extension MyController {
             }
 
         case .SNAPSHOT_TAKEN:
-            mydocument.snapshots.append(MediaFileProxy.init(msg.snapshot))
+            let ptr = msg.snapshot.snapshot
+            let proxy = MediaFileProxy.init(ptr)!
+            mydocument.snapshots.append(proxy, size: proxy.size)
 
         case .SNAPSHOT_RESTORED:
             renderer.rotateRight()

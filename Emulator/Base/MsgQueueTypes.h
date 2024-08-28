@@ -218,6 +218,7 @@ struct MsgTypeEnum : util::Reflection<MsgTypeEnum, MsgType> {
 typedef struct { u16 pc; } CpuMsg;
 typedef struct { i16 nr; i16 value; i16 volume; i16 pan; } DriveMsg;
 typedef struct { isize line; i16 delay; } ScriptMsg;
+typedef struct { void *snapshot; } SnapshotMsg;
 
 typedef struct
 {
@@ -230,7 +231,7 @@ typedef struct
         CpuMsg cpu;
         DriveMsg drive;
         ScriptMsg script;
-        class MediaFile *snapshot;
+        SnapshotMsg snapshot;
     };
 }
 Message;
