@@ -22,6 +22,7 @@ class SnapshotViewer: DialogController {
     @IBOutlet weak var message: NSTextField!
     @IBOutlet weak var indicator: NSLevelIndicator!
     @IBOutlet weak var indicatorText: NSTextField!
+    @IBOutlet weak var revert: NSButton!
 
     // Computed variables
     var myDocument: MyDocument { return parent.mydocument! }
@@ -57,13 +58,8 @@ class SnapshotViewer: DialogController {
         
         moveUp.isEnabled = currentItem >= 0 && currentItem < lastItem
         moveDown.isEnabled = currentItem > 0
-        nr.stringValue = "\(currentItem + 1) / \(numItems)"
-    
-        moveUp.isHidden = empty
-        moveDown.isHidden = empty
-        nr.isHidden = empty
-        trash.isHidden = empty
-        
+        nr.stringValue = "Snapshot \(currentItem + 1) / \(numItems)"
+
         if let snapshot = myDocument.snapshots.element(at: currentItem) {
             let takenAt = snapshot.timeStamp
             text1.stringValue = "Taken at " + timeInfo(time: takenAt)
@@ -71,19 +67,25 @@ class SnapshotViewer: DialogController {
             text3.stringValue = "\(snapshot.size / 1024) KB"
             message.stringValue = ""
         } else {
-            text1.stringValue = "No snapshots taken"
-            text2.stringValue = ""
-            text3.stringValue = ""
+            nr.stringValue = "No snapshots taken"
             message.stringValue = ""
         }
 
         let MB = 1024 * 1024
-        let fill = Int(myDocument.snapshots.fill.rounded())
+        let fill = myDocument.snapshots.fill 
         let size = myDocument.snapshots.used / MB
         let max = myDocument.snapshots.maxSize / MB
-
-        indicator.integerValue = fill
+        indicator.doubleValue = fill
         indicatorText.stringValue = "\(size) MB / \(max) MB"
+
+        text1.isHidden  = empty
+        text2.isHidden  = empty
+        text3.isHidden  = empty
+        moveUp.isHidden = empty
+        moveDown.isHidden = empty
+        nr.isHidden = false
+        trash.isHidden = empty
+        revert.isHidden = empty
     }
 
     func updateCarousel(goto item: Int, animated: Bool) {
@@ -108,7 +110,7 @@ class SnapshotViewer: DialogController {
          
          let formatter = DateFormatter()
          formatter.timeZone = TimeZone.current
-         formatter.dateFormat = "HH:mm:ss" // "yyyy-MM-dd HH:mm"
+         formatter.dateFormat = "HH:mm:ss"
          
          return formatter.string(from: date!)
     }
@@ -160,12 +162,14 @@ class SnapshotViewer: DialogController {
     
     func timeDiffInfo(interval: TimeInterval?) -> String {
         
-        return interval == nil ? "" : timeDiffInfo(seconds: Int(interval!))
+        guard let interval else { return "" }
+        return timeDiffInfo(seconds: Int(interval))
     }
     
     func timeDiffInfo(date: Date?) -> String {
         
-        return date == nil ? "" : timeDiffInfo(interval: date!.diff(now))
+        guard let date else { return "" }
+        return timeDiffInfo(interval: -date.timeIntervalSince(now))
     }
     
     func timeDiffInfo(time: time_t) -> String {
@@ -208,6 +212,7 @@ class SnapshotViewer: DialogController {
 
         do {
             try parent.restoreSnapshot(item: currentItem)
+            hideSheet()
         } catch {
             NSSound.beep()
         }
@@ -228,6 +233,7 @@ class SnapshotViewer: DialogController {
             trash,
             text1,
             text2,
+            text3,
             carousel
         ]
         

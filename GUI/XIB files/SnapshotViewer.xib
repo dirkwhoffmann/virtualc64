@@ -15,6 +15,7 @@
                 <outlet property="moveDown" destination="I52-QF-mAA" id="O0z-WG-ydC"/>
                 <outlet property="moveUp" destination="ei8-Pp-SFQ" id="Dev-eI-N1u"/>
                 <outlet property="nr" destination="KY7-9B-sgD" id="E5X-FV-FqX"/>
+                <outlet property="revert" destination="yvb-zb-t5e" id="qNH-BP-3IM"/>
                 <outlet property="text1" destination="SsQ-W0-Z3p" id="zed-1i-whu"/>
                 <outlet property="text2" destination="WZs-gg-qKQ" id="b1w-ss-xEf"/>
                 <outlet property="text3" destination="J04-ZC-bxQ" id="ttC-Zz-AeW"/>
@@ -63,9 +64,9 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yvb-zb-t5e">
-                        <rect key="frame" x="422" y="13" width="81" height="32"/>
+                        <rect key="frame" x="426" y="13" width="74" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Restore" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ffM-67-38e">
+                        <buttonCell key="cell" type="push" title="Revert" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ffM-67-38e">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent" base64-UTF8="YES">
@@ -76,26 +77,26 @@ DQ
                             <action selector="revertAction:" target="-2" id="biF-kv-oeh"/>
                         </connections>
                     </button>
-                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WZs-gg-qKQ">
-                        <rect key="frame" x="17" y="224" width="167" height="14"/>
+                    <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WZs-gg-qKQ">
+                        <rect key="frame" x="17" y="208" width="167" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="left" title="99 seconds ago" id="bpy-3h-SFW">
-                            <font key="font" metaFont="controlContent" size="11"/>
+                        <textFieldCell key="cell" controlSize="mini" lineBreakMode="clipping" alignment="left" title="99 seconds ago" id="bpy-3h-SFW">
+                            <font key="font" metaFont="miniSystem"/>
                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SsQ-W0-Z3p">
-                        <rect key="frame" x="17" y="241" width="167" height="14"/>
+                    <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SsQ-W0-Z3p">
+                        <rect key="frame" x="17" y="222" width="167" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="left" title="99 seconds ago" id="VWZ-FL-jnm">
+                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="left" title="Taken at 00:00:00" id="VWZ-FL-jnm">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KY7-9B-sgD">
-                        <rect key="frame" x="17" y="269" width="64" height="16"/>
+                    <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KY7-9B-sgD">
+                        <rect key="frame" x="17" y="269" width="162" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="42 / 42" id="hzw-jl-crw">
                             <font key="font" metaFont="system"/>
@@ -104,7 +105,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <button hidden="YES" toolTip="Move one item down" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I52-QF-mAA">
-                        <rect key="frame" x="159" y="145" width="24" height="16"/>
+                        <rect key="frame" x="159" y="146" width="25" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="downTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="jg6-Dc-r2r">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -115,7 +116,7 @@ DQ
                         </connections>
                     </button>
                     <button hidden="YES" toolTip="Move one item up" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ei8-Pp-SFQ">
-                        <rect key="frame" x="158" y="198" width="24" height="16"/>
+                        <rect key="frame" x="158" y="198" width="25" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="upTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="gx4-bl-7by">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -154,7 +155,7 @@ DQ
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </box>
                     <button hidden="YES" toolTip="Restore snapshot" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l2m-91-PpC">
-                        <rect key="frame" x="159" y="172" width="24" height="16"/>
+                        <rect key="frame" x="158" y="172" width="25" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="trashTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="4z1-GH-AOu">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -164,7 +165,7 @@ DQ
                             <action selector="trashAction:" target="-2" id="wma-0Z-cgm"/>
                         </connections>
                     </button>
-                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FVP-JO-HEL">
+                    <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FVP-JO-HEL">
                         <rect key="frame" x="197" y="22" width="215" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="sAW-01-Zfu">
@@ -173,10 +174,10 @@ DQ
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J04-ZC-bxQ">
-                        <rect key="frame" x="17" y="207" width="167" height="14"/>
+                    <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J04-ZC-bxQ">
+                        <rect key="frame" x="17" y="240" width="167" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="left" title="99 seconds ago" id="JuO-IZ-7NI">
+                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="left" title="0 KB" id="JuO-IZ-7NI">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
