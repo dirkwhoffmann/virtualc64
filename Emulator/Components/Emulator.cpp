@@ -74,6 +74,24 @@ Emulator::initialize()
 }
 
 void
+Emulator::hardReset()
+{
+    {   SUSPENDED
+
+        main.hardReset();
+    }
+}
+
+void
+Emulator::softReset()
+{
+    {   SUSPENDED
+
+        main.softReset();
+    }
+}
+
+void
 Emulator::stepInto()
 {
     if (isRunning()) return;

@@ -373,23 +373,15 @@ VirtualC64::put(const Cmd &cmd)
 void
 C64API::hardReset()
 {
-    suspend();
-
-    c64->hardReset();
+    emu->hardReset();
     emu->markAsDirty();
-
-    resume();
 }
 
 void
 C64API::softReset()
 {
-    suspend();
-
-    c64->hardReset();
+    emu->softReset();
     emu->markAsDirty();
-
-    resume();
 }
 
 u64
