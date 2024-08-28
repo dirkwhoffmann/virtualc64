@@ -12,45 +12,45 @@
 
 // Atomic CPU tasks
 #define FETCH_OPCODE \
-if (likely(rdyLine)) instr = read<C>(reg.pc++); else return;
+if (likely(!rdyLine)) instr = read<C>(reg.pc++); else return;
 #define FETCH_ADDR_LO \
-if (likely(rdyLine)) reg.adl = read<C>(reg.pc++); else return;
+if (likely(!rdyLine)) reg.adl = read<C>(reg.pc++); else return;
 #define FETCH_ADDR_HI \
-if (likely(rdyLine)) reg.adh = read<C>(reg.pc++); else return;
+if (likely(!rdyLine)) reg.adh = read<C>(reg.pc++); else return;
 #define FETCH_POINTER_ADDR \
-if (likely(rdyLine)) reg.idl = read<C>(reg.pc++); else return;
+if (likely(!rdyLine)) reg.idl = read<C>(reg.pc++); else return;
 #define FETCH_ADDR_LO_INDIRECT \
-if (likely(rdyLine)) reg.adl = read<C>((u16)reg.idl++); else return;
+if (likely(!rdyLine)) reg.adl = read<C>((u16)reg.idl++); else return;
 #define FETCH_ADDR_HI_INDIRECT \
-if (likely(rdyLine)) reg.adh = read<C>((u16)reg.idl++); else return;
+if (likely(!rdyLine)) reg.adh = read<C>((u16)reg.idl++); else return;
 #define IDLE_FETCH \
-if (likely(rdyLine)) readIdle<C>(reg.pc); else return;
+if (likely(!rdyLine)) readIdle<C>(reg.pc); else return;
 
 #define READ_RELATIVE \
-if (likely(rdyLine)) reg.d = read<C>(reg.pc); else return;
+if (likely(!rdyLine)) reg.d = read<C>(reg.pc); else return;
 #define READ_IMMEDIATE \
-if (likely(rdyLine)) reg.d = read<C>(reg.pc++); else return;
+if (likely(!rdyLine)) reg.d = read<C>(reg.pc++); else return;
 #define READ_FROM(x) \
-if (likely(rdyLine)) reg.d = read<C>(x); else return;
+if (likely(!rdyLine)) reg.d = read<C>(x); else return;
 #define READ_FROM_ADDRESS \
-if (likely(rdyLine)) reg.d = read<C>(HI_LO(reg.adh, reg.adl)); else return;
+if (likely(!rdyLine)) reg.d = read<C>(HI_LO(reg.adh, reg.adl)); else return;
 #define READ_FROM_ZERO_PAGE \
-if (likely(rdyLine)) reg.d = readZeroPage<C>(reg.adl); else return;
+if (likely(!rdyLine)) reg.d = readZeroPage<C>(reg.adl); else return;
 #define READ_FROM_ADDRESS_INDIRECT \
-if (likely(rdyLine)) reg.d = readZeroPage<C>(reg.dl); else return;
+if (likely(!rdyLine)) reg.d = readZeroPage<C>(reg.dl); else return;
 
 #define IDLE_READ_IMPLIED \
-if (likely(rdyLine)) readIdle<C>(reg.pc); else return;
+if (likely(!rdyLine)) readIdle<C>(reg.pc); else return;
 #define IDLE_READ_IMMEDIATE \
-if (likely(rdyLine)) readIdle<C>(reg.pc++); else return;
+if (likely(!rdyLine)) readIdle<C>(reg.pc++); else return;
 #define IDLE_READ_FROM(x) \
-if (likely(rdyLine)) readIdle<C>(x); else return;
+if (likely(!rdyLine)) readIdle<C>(x); else return;
 #define IDLE_READ_FROM_ADDRESS \
-if (likely(rdyLine)) readIdle<C>(HI_LO(reg.adh, reg.adl)); else return;
+if (likely(!rdyLine)) readIdle<C>(HI_LO(reg.adh, reg.adl)); else return;
 #define IDLE_READ_FROM_ZERO_PAGE \
-if (likely(rdyLine)) readZeroPageIdle<C>(reg.adl); else return;
+if (likely(!rdyLine)) readZeroPageIdle<C>(reg.adl); else return;
 #define IDLE_READ_FROM_ADDRESS_INDIRECT \
-if (likely(rdyLine)) readZeroPageIdle<C>(reg.idl); else return;
+if (likely(!rdyLine)) readZeroPageIdle<C>(reg.idl); else return;
 
 #define WRITE_TO_ADDRESS \
 write<C>(HI_LO(reg.adh, reg.adl), reg.d);
@@ -73,11 +73,11 @@ writeZeroPage<C>(reg.adl, reg.d); setN(reg.d & 0x80); setZ(reg.d == 0);
 #define PUSH_P writeStack<C>(reg.sp--, getP());
 #define PUSH_P_WITH_B_SET writeStack<C>(reg.sp--, getP() | B_FLAG);
 #define PUSH_A writeStack<C>(reg.sp--, reg.a);
-#define PULL_PCL if (likely(rdyLine)) { SET_PCL(readStack<C>(reg.sp)); } else return;
-#define PULL_PCH if (likely(rdyLine)) { SET_PCH(readStack<C>(reg.sp)); } else return;
-#define PULL_P if (likely(rdyLine)) { setPWithoutB(readStack<C>(reg.sp)); } else return;
-#define PULL_A if (likely(rdyLine)) { loadA(readStack<C>(reg.sp)); } else return;
-#define IDLE_PULL if (likely(rdyLine)) { readStackIdle<C>(reg.sp); } else return;
+#define PULL_PCL if (likely(!rdyLine)) { SET_PCL(readStack<C>(reg.sp)); } else return;
+#define PULL_PCH if (likely(!rdyLine)) { SET_PCH(readStack<C>(reg.sp)); } else return;
+#define PULL_P if (likely(!rdyLine)) { setPWithoutB(readStack<C>(reg.sp)); } else return;
+#define PULL_A if (likely(!rdyLine)) { loadA(readStack<C>(reg.sp)); } else return;
+#define IDLE_PULL if (likely(!rdyLine)) { readStackIdle<C>(reg.sp); } else return;
 
 #define PAGE_BOUNDARY_CROSSED reg.ovl
 #define FIX_ADDR_HI reg.adh++;
@@ -262,7 +262,7 @@ Peddle::reset()
     clock = 0;
     flags = 0;
     next = fetch;
-    rdyLine = true;
+    rdyLine = 0;
     rdyLineUp = 0;
     rdyLineDown = 0;
     nmiLine = 0;

@@ -120,6 +120,16 @@ Peddle::pullDownIrqLine(IntSource source)
 }
 
 void
+Peddle::pullDownRdyLine(IntSource source)
+{
+    assert(source != 0);
+
+    auto old = rdyLine;
+    rdyLine |= source;
+    if (!old && rdyLine) rdyLineDown = clock;
+}
+
+void
 Peddle::releaseIrqLine(IntSource source)
 {
     irqLine &= ~source;
@@ -127,18 +137,13 @@ Peddle::releaseIrqLine(IntSource source)
 }
 
 void
-Peddle::setRDY(bool value)
+Peddle::releaseRdyLine(IntSource source)
 {
-    if (rdyLine)
-    {
-        rdyLine = value;
-        if (!rdyLine) rdyLineDown = clock;
-    }
-    else
-    {
-        rdyLine = value;
-        if (rdyLine) rdyLineUp = clock;
-    }
+    assert(source != 0);
+    
+    auto old = rdyLine;
+    rdyLine &= ~source;
+    if (old && !rdyLine) rdyLineUp = clock;
 }
 
 u8

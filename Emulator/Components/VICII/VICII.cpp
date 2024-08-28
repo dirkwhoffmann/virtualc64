@@ -494,12 +494,15 @@ VICII::updateBA(u8 value)
     if (value != baLine.current()) {
 
         if (value) {
+
             baLine.write(value);
+            cpu.pullDownRdyLine(INTSRC_VIC);
+
         } else {
+
             baLine.clear();
+            cpu.releaseRdyLine(INTSRC_VIC);
         }
-        
-        cpu.setRDY(value == 0);
     }
 }
 

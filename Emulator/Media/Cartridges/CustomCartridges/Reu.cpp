@@ -447,7 +447,7 @@ Reu::finalizeDma(EventID id)
 void 
 Reu::processEvent(EventID id)
 {
-    isize len = c64.data[SLOT_EXP];
+    auto len = c64.data[SLOT_EXP];
 
     // Perform a DMA cycle
     if (len) {

@@ -98,8 +98,13 @@ public:
 
 protected:
 
-    // Ready line (RDY). If pulled low, the CPU freezes on the next read access
-    bool rdyLine;
+    /* Ready line (RDY).
+     * 
+     * The variable is usually 0 which means that the RDY line is high. If
+     * pulled low, that is, the variable has a value different to 0, the CPU
+     * freezes on the next read access.
+     */
+    IntSource rdyLine;
 
     // Cycle of the most recent rising edge of the RDY line
     i64 rdyLineUp;
@@ -271,25 +276,25 @@ protected:
 
 
     //
-    // Handling interrupts
+    // Handling interrupts and the Ready line
     //
 
 public:
 
-    // Pulls down an interrupt line
+    // Pulls down a line
     void pullDownNmiLine(IntSource source);
     void pullDownIrqLine(IntSource source);
+    void pullDownRdyLine(IntSource source);
 
-    // Releases an interrupt line
+    // Releases a line
     void releaseNmiLine(IntSource source);
     void releaseIrqLine(IntSource source);
+    void releaseRdyLine(IntSource source);
 
-    // Checks the status of an interrupt line
+    // Checks the status of a line
     IntSource getNmiLine() const { return nmiLine; }
     IntSource getIrqLine() const { return irqLine; }
-
-    // Sets the value on the RDY line
-    void setRDY(bool value);
+    IntSource getRdyLine() const { return rdyLine; }
 
 
     //

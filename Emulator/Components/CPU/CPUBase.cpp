@@ -73,15 +73,15 @@ CPU::_dump(Category category, std::ostream& os) const
         os << tab("Next microinstruction");
         os << dec(next) << std::endl;
         os << tab("Rdy Line");
-        os << bol(rdyLine, "high", "low") << std::endl;
+        os << (rdyLine ? "low" : "high") << "(" << hex(rdyLine) << ")" << std::endl;
         os << tab("Nmi Line");
-        os << hex(nmiLine) << std::endl;
+        os << (nmiLine ? "low" : "high") << "(" << hex(nmiLine) << ")" << std::endl;
         os << tab("Edge detector");
         os << hex(edgeDetector.current()) << std::endl;
         os << tab("doNmi");
         os << bol(doNmi) << std::endl;
         os << tab("Irq Line");
-        os << hex(irqLine) << std::endl;
+        os << (irqLine ? "low" : "high") << "(" << hex(irqLine) << ")" << std::endl;
         os << tab("Edge Detector");
         os << hex(levelDetector.current()) << std::endl;
         os << tab("doIrq");
