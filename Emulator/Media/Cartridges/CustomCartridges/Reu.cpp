@@ -350,16 +350,90 @@ Reu::prepareDma()
     }
 }
 
-void 
+bool
 Reu::doDma(EventID id)
 {
+    u8 c64Val, reuVal;
 
+    switch (id) {
+
+        case EXP_REU_STASH:
+
+            c64Val = mem.peek(c64Addr);
+            writeToReuRam(reuAddr, c64Val);
+
+            // debug(REU_DEBUG,"(%x, %02x) -> %x\n", memAddr, c64Val, reuAddr);
+
+            if (memStep()) incMemAddr(c64Addr);
+            if (reuStep()) incReuAddr(reuAddr);
+            break;
+
+        case EXP_REU_FETCH:
+
+            reuVal = readFromReuRam(reuAddr);
+            mem.poke(c64Addr, reuVal);
+
+            // debug(REU_DEBUG,"%x <- (%x, %02x)\n", memAddr, reuAddr, reuVal);
+
+            if (memStep()) incMemAddr(c64Addr);
+            if (reuStep()) incReuAddr(reuAddr);
+            break;
+
+        case EXP_REU_SWAP:
+
+            c64Val = mem.peek(c64Addr);
+            reuVal = readFromReuRam(reuAddr);
+
+            mem.poke(c64Addr, reuVal);
+            writeToReuRam(reuAddr, c64Val);
+
+            if (memStep()) incMemAddr(c64Addr);
+            if (reuStep()) incReuAddr(reuAddr);
+            break;
+
+        case EXP_REU_VERIFY:
+
+            c64Val = mem.peek(c64Addr);
+            reuVal = readFromReuRam(reuAddr);
+
+            if (c64Val != reuVal) {
+
+                debug(REU_DEBUG, "Verify error: (%x,%02x) <-> (%x,%02x)\n",
+                      c64Addr, c64Val, reuAddr, reuVal);
+
+                // Set the "Fault" bit
+                SET_BIT(sr, 5);
+
+                // Trigger interrupt if enabled
+                triggerVerifyErrorIrq();
+
+                return false;
+            }
+
+            if (memStep()) incMemAddr(c64Addr);
+            if (reuStep()) incReuAddr(reuAddr);
+            break;
+
+        default:
+            fatalError;
+    }
+
+    return true;
 }
 
 void 
 Reu::finalizeDma(EventID id)
 {
+    // Set the "End of Block" bit
+    SET_BIT(sr, 6);
 
+    if (!autoloadEnabled()) {
+
+        c64Base = c64Addr;
+        reuBase = reuAddr;
+    }
+
+    triggerEndOfBlockIrq();
 }
 
 void 
@@ -381,45 +455,16 @@ Reu::processEvent(EventID id)
     c64.cancel<SLOT_EXP>();
 }
 
-/*
-void
-Reu::doDma()
-{
-    if (REU_DEBUG) { dump(Category::Dma, std::cout); }
-
-    memAddr = c64Base;
-    reuAddr = reuBase;
-    isize len = tlen ? tlen : 0x10000;
-
-    switch (cr & 0x3) {
-
-        case 0: stash(len); break;
-        case 1: fetch(len); break;
-        case 2: swap(len); break;
-        case 3: verify(len); break;
-
-        default:
-            fatalError;
-    }
-}
-*/
-
 void
 Reu::stash(isize len)
 {
     debug(REU_DEBUG, "stash(%x,%x,%ld)\n", c64Addr, reuAddr, len);
 
-    for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
+    // Perform DMA
+    for (isize i = 0; i < len; i++) doDma(EXP_REU_STASH);
+    finalizeDma(EXP_REU_STASH);
 
-        u8 memValue = mem.peek(c64Addr);
-        writeToReuRam(reuAddr, memValue);
-
-        // debug(REU_DEBUG,"(%x, %02x) -> %x\n", memAddr, value, reuAddr);
-
-        if (ms) incMemAddr(c64Addr);
-        if (rs) incReuAddr(reuAddr);
-    }
-
+    /*
     // Set the "End of Block" bit
     SET_BIT(sr, 6);
 
@@ -432,6 +477,7 @@ Reu::stash(isize len)
     }
 
     triggerEndOfBlockIrq();
+    */
 }
 
 void
@@ -439,17 +485,11 @@ Reu::fetch(isize len)
 {
     debug(REU_DEBUG, "fetch(%x,%x,%ld)\n", c64Addr, reuAddr, len);
 
-    for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
+    // Perform DMA
+    for (isize i = 0; i < len; i++) doDma(EXP_REU_FETCH);
+    finalizeDma(EXP_REU_FETCH);
 
-        u8 reuValue = readFromReuRam(reuAddr);
-        mem.poke(c64Addr, reuValue);
-
-        // debug(REU_DEBUG,"%x <- (%x, %02x)\n", memAddr, reuAddr, value);
-
-        if (ms) incMemAddr(c64Addr);
-        if (rs) incReuAddr(reuAddr);
-    }
-
+    /*
     // Update bus value
     (void)readFromReuRam(reuAddr);
 
@@ -464,6 +504,7 @@ Reu::fetch(isize len)
     }
 
     triggerEndOfBlockIrq();
+    */
 }
 
 void
@@ -471,18 +512,11 @@ Reu::swap(isize len)
 {
     debug(REU_DEBUG, "swap(%x,%x,%ld)\n", c64Addr, reuAddr, len);
 
-    for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
+    // Perform DMA
+    for (isize i = 0; i < len; i++) doDma(EXP_REU_SWAP);
+    finalizeDma(EXP_REU_SWAP);
 
-        u8 memVal = mem.peek(c64Addr);
-        u8 reuVal = readFromReuRam(reuAddr);
-
-        mem.poke(c64Addr, reuVal);
-        writeToReuRam(reuAddr, memVal);
-
-        if (ms) incMemAddr(c64Addr);
-        if (rs) incReuAddr(reuAddr);
-    }
-
+    /*
     // Set the "End of Block" bit
     SET_BIT(sr, 6);
 
@@ -494,6 +528,7 @@ Reu::swap(isize len)
     }
 
     triggerEndOfBlockIrq();
+    */
 }
 
 void
@@ -501,28 +536,11 @@ Reu::verify(isize len)
 {
     debug(REU_DEBUG, "verify(%x,%x,%ld)\n", c64Addr, reuAddr, len);
 
-    for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
+    // Perform DMA
+    for (isize i = 0; i < len; i++) if (!doDma(EXP_REU_VERIFY)) break;
+    finalizeDma(EXP_REU_VERIFY);
 
-        u8 memVal = mem.peek(c64Addr);
-        u8 reuVal = readFromReuRam(reuAddr);
-
-        if (memVal != reuVal) {
-
-            debug(REU_DEBUG, "Verify error: (%x,%02x) <-> (%x,%02x)\n", c64Addr, memVal, reuAddr, reuVal);
-
-            // Set the "Fault" bit
-            SET_BIT(sr, 5);
-
-            // Trigger interrupt if enabled
-            triggerVerifyErrorIrq();
-
-            break;
-        }
-
-        if (ms) incMemAddr(c64Addr);
-        if (rs) incReuAddr(reuAddr);
-    }
-
+    /*
     // Set the "End of Block" bit
     SET_BIT(sr, 6);
 
@@ -534,6 +552,7 @@ Reu::verify(isize len)
     }
 
     triggerEndOfBlockIrq();
+    */
 }
 
 void

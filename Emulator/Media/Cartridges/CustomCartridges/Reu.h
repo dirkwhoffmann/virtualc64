@@ -212,7 +212,7 @@ private:
     void incReuAddr(u32 &addr) { addr = U32_ADD(addr, 1) & wrapMask(); }
 
     void prepareDma();
-    void doDma(EventID id);
+    bool doDma(EventID id);
     void finalizeDma(EventID id);
 
     // [[deprecated]] void doDma();
