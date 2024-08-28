@@ -50,7 +50,7 @@ class Drive final : public SubComponent, public Inspectable<DriveInfo> {
         }
     };
 
-    ConfigOptions options = {
+    Options options = {
 
         OPT_DRV_AUTO_CONFIG,
         OPT_DRV_TYPE,
@@ -398,7 +398,7 @@ public:
 public:
 
     const DriveConfig &getConfig() const { return config; }
-    const ConfigOptions &getOptions() const override { return options; }
+    const Options &getOptions() const override { return options; }
     i64 getFallback(Option opt) const override;
     i64 getOption(Option opt) const override;
     void checkOption(Option opt, i64 value) override;

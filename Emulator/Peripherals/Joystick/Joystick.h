@@ -35,7 +35,7 @@ class Joystick final : public SubComponent, public Inspectable<JoystickInfo> {
         }
     };
 
-    ConfigOptions options = {
+    Options options = {
 
         OPT_AUTOFIRE,
         OPT_AUTOFIRE_BURSTS,
@@ -132,7 +132,7 @@ private:
 public:
 
     const JoystickConfig &getConfig() const { return config; }
-    const ConfigOptions &getOptions() const override { return options; }
+    const Options &getOptions() const override { return options; }
     i64 getOption(Option opt) const override;
     void checkOption(Option opt, i64 value) override;
     void setOption(Option opt, i64 value) override;

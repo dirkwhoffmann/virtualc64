@@ -75,9 +75,9 @@ public:
 public:
 
     // Queries a key-value pair
-    string getRaw(const string &key) const;
-    i64 get(const string &key) const;
-    i64 get(Option option, isize nr = 0) const;
+    string getRaw(const string &key) const throws;
+    i64 get(const string &key) const throws;
+    i64 get(Option option, isize nr = 0) const throws;
 
     // Queries a fallback key-value pair
     string getFallbackRaw(const string &key) const;

@@ -36,7 +36,7 @@ class Paddle final : public SubComponent, public Inspectable<PaddleInfo> {
         }
     };
 
-    ConfigOptions options = {
+    Options options = {
 
         OPT_PADDLE_ORIENTATION
     };
@@ -122,7 +122,7 @@ private:
 public:
 
     const PaddleConfig &getConfig() const { return config; }
-    const ConfigOptions &getOptions() const override { return options; }
+    const Options &getOptions() const override { return options; }
     i64 getOption(Option opt) const override;
     void checkOption(Option opt, i64 value) override;
     void setOption(Option opt, i64 value) override;

@@ -31,7 +31,7 @@ class RemoteServer : public SubComponent {
         .shell          = "server rshell"
     }};
 
-    ConfigOptions options = {
+    Options options = {
 
         OPT_SRV_PORT,
         OPT_SRV_PROTOCOL,
@@ -121,7 +121,7 @@ private:
 public:
 
     const ServerConfig &getConfig() const { return config; }
-    const ConfigOptions &getOptions() const override { return options; }
+    const Options &getOptions() const override { return options; }
     i64 getOption(Option option) const override;
     void checkOption(Option opt, i64 value) override;
     void setOption(Option option, i64 value) override;

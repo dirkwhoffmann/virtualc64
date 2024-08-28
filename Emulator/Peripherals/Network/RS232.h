@@ -27,7 +27,7 @@ class RS232 final : public SubComponent {
         .shell          = "rs232"
     }};
 
-    ConfigOptions options = {
+    Options options = {
 
         OPT_RS232_DEVICE,
         OPT_RS232_BAUD
@@ -132,7 +132,7 @@ private:
 public:
 
     const RS232Config &getConfig() const { return config; }
-    const ConfigOptions &getOptions() const override { return options; }
+    const Options &getOptions() const override { return options; }
     i64 getOption(Option opt) const override;
     void checkOption(Option opt, i64 value) override;
     void setOption(Option opt, i64 value) override;

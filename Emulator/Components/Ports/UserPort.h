@@ -28,7 +28,7 @@ class UserPort final : public SubComponent {
         .shell          = "user"
     }};
 
-    ConfigOptions options = {
+    Options options = {
 
         OPT_USR_DEVICE
     };
@@ -98,7 +98,7 @@ private:
 public:
 
     const UserPortConfig &getConfig() const { return config; }
-    const ConfigOptions &getOptions() const override { return options; }
+    const Options &getOptions() const override { return options; }
     i64 getOption(Option opt) const override;
     void checkOption(Option opt, i64 value) override;
     void setOption(Option opt, i64 value) override;

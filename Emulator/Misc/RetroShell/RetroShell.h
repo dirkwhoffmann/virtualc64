@@ -48,7 +48,7 @@ class RetroShell : public SubComponent {
         .shell          = "server rshell"
     }};
 
-    ConfigOptions options = {
+    Options options = {
 
     };
 
@@ -108,7 +108,7 @@ private:
 
 public:
 
-    const ConfigOptions &getOptions() const override { return options; }
+    const Options &getOptions() const override { return options; }
 
 
     //

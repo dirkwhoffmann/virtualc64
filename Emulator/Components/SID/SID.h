@@ -51,7 +51,7 @@ class SID final : public SubComponent, public Inspectable<SIDInfo>
         }
     };
 
-    ConfigOptions options = {
+    Options options = {
 
         OPT_SID_ENABLE,
         OPT_SID_ADDRESS,
@@ -162,7 +162,7 @@ private:
 public:
 
     const SIDConfig &getConfig() const { return config; }
-    const ConfigOptions &getOptions() const override { return options; }
+    const Options &getOptions() const override { return options; }
     i64 getFallback(Option opt) const override;
     i64 getOption(Option opt) const override;
     void checkOption(Option opt, i64 value) override;

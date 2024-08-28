@@ -19,18 +19,18 @@
 
 namespace vc64 {
 
-typedef std::vector<Option> ConfigOptions;
+typedef std::vector<Option> Options;
 
 class Configurable
 {
-    const static ConfigOptions options;
+    const static Options options;
 
 public:
 
     virtual ~Configurable() = default;
 
     // Returns the available config options
-    virtual const ConfigOptions &getOptions() const { return options; }
+    virtual const Options &getOptions() const { return options; }
 
     // Returns true iff a specific option is available
     bool isValidOption(Option opt) const;

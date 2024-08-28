@@ -29,7 +29,7 @@ class Recorder final : public SubComponent, public Inspectable<RecorderInfo> {
         .shell          = "recorder"
     }};
 
-    ConfigOptions options = {
+    Options options = {
 
         OPT_REC_FRAME_RATE,
         OPT_REC_BIT_RATE,
@@ -118,7 +118,7 @@ private:
 public:
 
     const RecorderConfig &getConfig() const { return config; }
-    const ConfigOptions &getOptions() const override { return options; }
+    const Options &getOptions() const override { return options; }
     i64 getOption(Option opt) const override;
     void checkOption(Option opt, i64 value) override;
     void setOption(Option opt, i64 value) override;

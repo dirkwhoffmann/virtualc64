@@ -53,7 +53,7 @@ class Console : public SubComponent
         }
     };
 
-    ConfigOptions options = {
+    Options options = {
 
     };
 
@@ -139,7 +139,7 @@ private:
 
 public:
 
-    const ConfigOptions &getOptions() const override { return options; }
+    const Options &getOptions() const override { return options; }
 
 
     //

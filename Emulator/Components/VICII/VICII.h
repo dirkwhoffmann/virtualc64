@@ -196,7 +196,7 @@ class VICII final : public SubComponent, public Inspectable<VICIIInfo, VICIIStat
         }
     };
 
-    ConfigOptions options = {
+    Options options = {
 
         OPT_VICII_REVISION,
         OPT_VICII_POWER_SAVE,
@@ -976,7 +976,7 @@ public:
 public:
 
     const VICIIConfig &getConfig() const { return config; }
-    const ConfigOptions &getOptions() const override { return options; }
+    const Options &getOptions() const override { return options; }
     i64 getOption(Option opt) const override;
     void checkOption(Option opt, i64 value) override;
     void setOption(Option opt, i64 value) override;

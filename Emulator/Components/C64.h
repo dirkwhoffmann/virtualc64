@@ -105,7 +105,7 @@ class C64 final : public CoreComponent, public Inspectable<C64Info> {
         }
     };
 
-    ConfigOptions options = {
+    Options options = {
 
         OPT_C64_WARP_BOOT,
         OPT_C64_WARP_MODE,
@@ -430,7 +430,7 @@ public:
 public:
 
     const C64Config &getConfig() const { return config; }
-    const ConfigOptions &getOptions() const override { return options; }
+    const Options &getOptions() const override { return options; }
     
     i64 getOption(Option opt) const override;
     void checkOption(Option opt, i64 value) override;
