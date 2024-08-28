@@ -52,7 +52,7 @@ private:
     u32 reuBase = 0;
 
     // Address registers used during DMA
-    u16 memAddr = 0;
+    u16 c64Addr = 0;
     u32 reuAddr = 0;
 
     // Upper bank bits (used by modded REUs with higher capacities)
@@ -113,7 +113,7 @@ public:
         CLONE(cr)
         CLONE(c64Base)
         CLONE(reuBase)
-        CLONE(memAddr)
+        CLONE(c64Addr)
         CLONE(reuAddr)
         CLONE(upperBankBits)
         CLONE(tlen)
@@ -138,7 +138,7 @@ public:
         << cr
         << c64Base
         << reuBase
-        << memAddr
+        << c64Addr
         << reuAddr
         << upperBankBits
         << tlen
@@ -211,11 +211,15 @@ private:
     void incMemAddr(u16 &addr) { addr = U16_ADD(addr, 1); }
     void incReuAddr(u32 &addr) { addr = U32_ADD(addr, 1) & wrapMask(); }
 
-    void doDma();
-    void stash(isize len);
-    void fetch(isize len);
-    void swap(isize len);
-    void verify(isize len);
+    void prepareDma();
+    void doDma(EventID id);
+    void finalizeDma(EventID id);
+
+    // [[deprecated]] void doDma();
+    [[deprecated]] void stash(isize len);
+    [[deprecated]] void fetch(isize len);
+    [[deprecated]] void swap(isize len);
+    [[deprecated]] void verify(isize len);
 
 
     //

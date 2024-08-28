@@ -212,7 +212,7 @@ Reu::pokeIO2(u16 addr, u8 value)
             if (GET_BIT(cr,7) && ff00Disabled()) {
 
                 debug(REU_DEBUG, "Initiating DMA...\n");
-                doDma();
+                prepareDma();
             }
             break;
 
@@ -294,7 +294,7 @@ Reu::poke(u16 addr, u8 value)
     if (addr == 0xFF00 && isArmed()) {
 
         // Initiate DMA
-        doDma();
+        prepareDma();
 
     } else {
 
@@ -328,6 +328,60 @@ Reu::writeToReuRam(u32 addr, u8 value)
     }
 }
 
+void 
+Reu::prepareDma()
+{
+    if (REU_DEBUG) { dump(Category::Dma, std::cout); }
+
+    c64Addr = c64Base;
+    reuAddr = reuBase;
+    isize len = tlen ? tlen : 0x10000;
+
+    // Schedule the first event
+    switch (cr & 0x3) {
+
+        case 0: c64.scheduleImm<SLOT_EXP>(EXP_REU_STASH, len); break;
+        case 1: c64.scheduleImm<SLOT_EXP>(EXP_REU_FETCH, len); break;
+        case 2: c64.scheduleImm<SLOT_EXP>(EXP_REU_SWAP, len); break;
+        case 3: c64.scheduleImm<SLOT_EXP>(EXP_REU_VERIFY, len); break;
+
+        default:
+            fatalError;
+    }
+}
+
+void 
+Reu::doDma(EventID id)
+{
+
+}
+
+void 
+Reu::finalizeDma(EventID id)
+{
+
+}
+
+void 
+Reu::processEvent(EventID id)
+{
+    isize len = c64.data[SLOT_EXP];
+
+    switch (id) {
+
+        case EXP_REU_STASH:  stash(len); break;
+        case EXP_REU_FETCH:  fetch(len); break;
+        case EXP_REU_SWAP:   swap(len); break;
+        case EXP_REU_VERIFY: verify(len); break;
+
+        default:
+            fatalError;
+    }
+
+    c64.cancel<SLOT_EXP>();
+}
+
+/*
 void
 Reu::doDma()
 {
@@ -348,20 +402,21 @@ Reu::doDma()
             fatalError;
     }
 }
+*/
 
 void
 Reu::stash(isize len)
 {
-    debug(REU_DEBUG, "stash(%x,%x,%ld)\n", memAddr, reuAddr, len);
+    debug(REU_DEBUG, "stash(%x,%x,%ld)\n", c64Addr, reuAddr, len);
 
     for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
 
-        u8 memValue = mem.peek(memAddr);
+        u8 memValue = mem.peek(c64Addr);
         writeToReuRam(reuAddr, memValue);
 
         // debug(REU_DEBUG,"(%x, %02x) -> %x\n", memAddr, value, reuAddr);
 
-        if (ms) incMemAddr(memAddr);
+        if (ms) incMemAddr(c64Addr);
         if (rs) incReuAddr(reuAddr);
     }
 
@@ -371,7 +426,7 @@ Reu::stash(isize len)
     // Update registers if autoload is disabled
     if (!autoloadEnabled()) {
 
-        c64Base = memAddr;
+        c64Base = c64Addr;
         reuBase = reuAddr;
         len = 1;
     }
@@ -382,16 +437,16 @@ Reu::stash(isize len)
 void
 Reu::fetch(isize len)
 {
-    debug(REU_DEBUG, "fetch(%x,%x,%ld)\n", memAddr, reuAddr, len);
+    debug(REU_DEBUG, "fetch(%x,%x,%ld)\n", c64Addr, reuAddr, len);
 
     for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
 
         u8 reuValue = readFromReuRam(reuAddr);
-        mem.poke(memAddr, reuValue);
+        mem.poke(c64Addr, reuValue);
 
         // debug(REU_DEBUG,"%x <- (%x, %02x)\n", memAddr, reuAddr, value);
 
-        if (ms) incMemAddr(memAddr);
+        if (ms) incMemAddr(c64Addr);
         if (rs) incReuAddr(reuAddr);
     }
 
@@ -403,7 +458,7 @@ Reu::fetch(isize len)
 
     if (!autoloadEnabled()) {
 
-        c64Base = memAddr;
+        c64Base = c64Addr;
         reuBase = reuAddr;
         len = 1;
     }
@@ -414,17 +469,17 @@ Reu::fetch(isize len)
 void
 Reu::swap(isize len)
 {
-    debug(REU_DEBUG, "swap(%x,%x,%ld)\n", memAddr, reuAddr, len);
+    debug(REU_DEBUG, "swap(%x,%x,%ld)\n", c64Addr, reuAddr, len);
 
     for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
 
-        u8 memVal = mem.peek(memAddr);
+        u8 memVal = mem.peek(c64Addr);
         u8 reuVal = readFromReuRam(reuAddr);
 
-        mem.poke(memAddr, reuVal);
+        mem.poke(c64Addr, reuVal);
         writeToReuRam(reuAddr, memVal);
 
-        if (ms) incMemAddr(memAddr);
+        if (ms) incMemAddr(c64Addr);
         if (rs) incReuAddr(reuAddr);
     }
 
@@ -433,7 +488,7 @@ Reu::swap(isize len)
 
     if (!autoloadEnabled()) {
 
-        c64Base = memAddr;
+        c64Base = c64Addr;
         reuBase = reuAddr;
         len = 1;
     }
@@ -444,16 +499,16 @@ Reu::swap(isize len)
 void
 Reu::verify(isize len)
 {
-    debug(REU_DEBUG, "verify(%x,%x,%ld)\n", memAddr, reuAddr, len);
+    debug(REU_DEBUG, "verify(%x,%x,%ld)\n", c64Addr, reuAddr, len);
 
     for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
 
-        u8 memVal = mem.peek(memAddr);
+        u8 memVal = mem.peek(c64Addr);
         u8 reuVal = readFromReuRam(reuAddr);
 
         if (memVal != reuVal) {
 
-            debug(REU_DEBUG, "Verify error: (%x,%02x) <-> (%x,%02x)\n", memAddr, memVal, reuAddr, reuVal);
+            debug(REU_DEBUG, "Verify error: (%x,%02x) <-> (%x,%02x)\n", c64Addr, memVal, reuAddr, reuVal);
 
             // Set the "Fault" bit
             SET_BIT(sr, 5);
@@ -464,7 +519,7 @@ Reu::verify(isize len)
             break;
         }
 
-        if (ms) incMemAddr(memAddr);
+        if (ms) incMemAddr(c64Addr);
         if (rs) incReuAddr(reuAddr);
     }
 
@@ -473,18 +528,12 @@ Reu::verify(isize len)
 
     if (!autoloadEnabled()) {
 
-        c64Base = memAddr;
+        c64Base = c64Addr;
         reuBase = reuAddr;
         len = 1;
     }
 
     triggerEndOfBlockIrq();
-}
-
-void 
-Reu::processEvent(EventID id)
-{
-
 }
 
 void
