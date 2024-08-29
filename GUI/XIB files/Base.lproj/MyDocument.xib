@@ -11,7 +11,6 @@
                 <outlet property="activityBar" destination="9Nj-IT-cDl" id="QvU-2F-QaA"/>
                 <outlet property="activityInfo" destination="tD7-Kt-2R4" id="vjY-Pa-Shn"/>
                 <outlet property="activityType" destination="ApN-dX-M4Z" id="zMi-4l-Cko"/>
-                <outlet property="cpuInfo" destination="tD7-Kt-2R4" id="3c1-O6-Q9y"/>
                 <outlet property="crtIcon" destination="2003" id="CVl-nZ-xP2"/>
                 <outlet property="diskIcon8" destination="1045" id="wFy-Xz-5J7"/>
                 <outlet property="diskIcon9" destination="D1i-Ep-fTN" id="4H9-ek-oFn"/>
@@ -316,7 +315,7 @@
                         <popUpButton key="view" tag="10" id="L2b-nG-yBo" userLabel="Port 1">
                             <rect key="frame" x="0.0" y="14" width="45" height="20"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" image="devNoneTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" autoenablesItems="NO" id="zHf-yH-YTM">

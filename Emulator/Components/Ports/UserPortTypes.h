@@ -59,7 +59,6 @@ typedef struct
 {
     UserPortDevice device;
 }
-
 UserPortConfig;
 
 typedef struct

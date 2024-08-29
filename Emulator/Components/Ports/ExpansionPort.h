@@ -47,8 +47,12 @@ class ExpansionPort final : public SubComponent, public Inspectable<CartridgeInf
 
     Options options = {
 
+        OPT_EXP_REU_SPEED
     };
     
+    // Current configuration
+    ExpansionPortConfig config = { };
+
     // Attached cartridge or nullptr
     std::unique_ptr<Cartridge> cartridge;
     
@@ -115,8 +119,11 @@ private:
 
 public:
 
+    const ExpansionPortConfig &getConfig() const { return config; }
     const Options &getOptions() const override { return options; }
-    
+    i64 getOption(Option opt) const override;
+    void checkOption(Option opt, i64 value) override;
+    void setOption(Option opt, i64 value) override;
 
     //
     // Analyzing

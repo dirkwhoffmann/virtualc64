@@ -89,9 +89,14 @@ ExpansionPort::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
-    auto type = cartridge ? cartridge->getCartridgeType() : CRT_NONE;
+    if (category == Category::Config) {
+
+        dumpConfig(os);
+    }
 
     if (category == Category::State) {
+
+        auto type = cartridge ? cartridge->getCartridgeType() : CRT_NONE;
 
         os << tab("Game line");
         os << bol(gameLine) << std::endl;
@@ -105,6 +110,52 @@ ExpansionPort::_dump(Category category, std::ostream& os) const
             os << std::endl;
             cartridge->dump(category, os);
         }
+    }
+}
+
+i64
+ExpansionPort::getOption(Option option) const
+{
+    switch (option) {
+
+        case OPT_EXP_REU_SPEED:     return (i64)config.reuSpeed;
+
+        default:
+            fatalError;
+    }
+}
+
+void
+ExpansionPort::checkOption(Option opt, i64 value)
+{
+    switch (opt) {
+
+        case OPT_EXP_REU_SPEED:
+
+            if (value < 1 || value > 65535) {
+                throw Error(VC64ERROR_OPT_INV_ARG, "1...65535");
+            }
+            return;
+
+        default:
+            throw Error(VC64ERROR_OPT_UNSUPPORTED);
+    }
+}
+
+void
+ExpansionPort::setOption(Option opt, i64 value)
+{
+    checkOption(opt, value);
+
+    switch (opt) {
+
+        case OPT_EXP_REU_SPEED:
+
+            config.reuSpeed = (isize)value;
+            return;
+
+        default:
+            fatalError;
     }
 }
 

@@ -50,4 +50,14 @@ struct CRTModeEnum : util::Reflection<CRTModeEnum, CRTMode> {
     }
 };
 
+//
+// Structures
+//
+
+typedef struct
+{
+    isize reuSpeed;
+}
+ExpansionPortConfig;
+
 }
