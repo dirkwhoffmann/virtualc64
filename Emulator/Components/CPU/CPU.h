@@ -32,8 +32,12 @@ class CPU final : public Peddle, public Inspectable<CPUInfo> {
         .shell          = "cpu"
     }};
 
+    Options options = {
+
+    };
+
     // Result of the latest inspection
-    mutable CPUInfo info = { };
+    // mutable CPUInfo info = { };
 
 public:
 
@@ -186,6 +190,15 @@ public:
 
     void cacheInfo(CPUInfo &result) const override;
 
+
+    //
+    // Methods from Configurable
+    //
+
+public:
+
+    const Options &getOptions() const override { return options; }
+    
 
     //
     // Methods from Peddle

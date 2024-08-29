@@ -25,6 +25,10 @@ class Mouse1350 final : public SubComponent {
         .shell          = ""
     }};
 
+    Options options = {
+
+    };
+    
 private:
     
     // Mouse position
@@ -88,7 +92,16 @@ public:
 
     const Descriptions &getDescriptions() const override { return descriptions; }
 
+
+    //
+    // Methods from Configurable
+    //
+
+public:
+
+    const Options &getOptions() const override { return options; }
     
+
     //
     // Accessing
     //

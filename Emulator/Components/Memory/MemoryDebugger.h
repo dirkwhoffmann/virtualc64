@@ -26,6 +26,10 @@ class MemoryDebugger : public SubComponent {
         .shell          = ""
     }};
 
+    Options options = {
+
+    };
+    
 public:
 
     // Last used address (current object location)
@@ -63,6 +67,15 @@ public:
 
     const Descriptions &getDescriptions() const override { return descriptions; }
 
+
+    //
+    // Methods from Configurable
+    //
+
+public:
+
+    const Options &getOptions() const override { return options; }
+    
 
     //
     // Managing memory

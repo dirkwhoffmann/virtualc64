@@ -27,6 +27,10 @@ class DriveMemory final : public SubComponent {
         .shell          = ""
     }};
 
+    Options options = {
+
+    };
+    
     // Reference to the connected disk drive
     class Drive &drive;
     
@@ -107,6 +111,15 @@ private:
     void _didReset(bool hard) override;
 
 
+    //
+    // Methods from Configurable
+    //
+
+public:
+
+    const Options &getOptions() const override { return options; }
+
+    
     //
     // Working with Roms
     //

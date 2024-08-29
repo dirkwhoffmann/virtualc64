@@ -42,6 +42,10 @@ class ControlPort final : public SubComponent {
         }
     };
 
+    Options options = {
+
+    };
+    
     // The connected device
     ControlPortDevice device = CPDEVICE_NONE;
 
@@ -97,6 +101,15 @@ private:
 
     void _dump(Category category, std::ostream& os) const override;
 
+
+    //
+    // Methods from Configurable
+    //
+
+public:
+
+    const Options &getOptions() const override { return options; }
+    
 
     //
     // Emulating

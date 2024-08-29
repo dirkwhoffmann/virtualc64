@@ -25,6 +25,10 @@ class NeosMouse final : public SubComponent {
         .shell          = ""
     }};
 
+    Options options = {
+
+    };
+    
     // Mouse position
     i64 mouseX;
     i64 mouseY;
@@ -106,6 +110,15 @@ public:
 
     const Descriptions &getDescriptions() const override { return descriptions; }
 
+
+    //
+    // Methods from Configurable
+    //
+
+public:
+
+    const Options &getOptions() const override { return options; }
+    
 
     //
     // Accessing

@@ -29,6 +29,10 @@ class PIA6821 : public SubComponent {
         .shell          = "pia"
     }};
 
+    Options options = {
+
+    };
+    
 protected:
     
     // Owner of this PIA
@@ -119,6 +123,15 @@ public:
 
     const Descriptions &getDescriptions() const override { return descriptions; }
 
+
+    //
+    // Methods from Configurable
+    //
+
+public:
+
+    const Options &getOptions() const override { return options; }
+    
 
     //
     // Managing interrupts

@@ -45,6 +45,10 @@ class ExpansionPort final : public SubComponent, public Inspectable<CartridgeInf
         .shell          = "expansion"
     }};
 
+    Options options = {
+
+    };
+    
     // Attached cartridge or nullptr
     std::unique_ptr<Cartridge> cartridge;
     
@@ -104,6 +108,15 @@ private:
     void _dump(Category category, std::ostream& os) const override;
     void _didReset(bool hard) override;
 
+
+    //
+    // Methods from Configurable
+    //
+
+public:
+
+    const Options &getOptions() const override { return options; }
+    
 
     //
     // Analyzing

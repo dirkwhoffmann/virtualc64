@@ -23,14 +23,13 @@ typedef std::vector<Option> Options;
 
 class Configurable
 {
-    const static Options options;
 
 public:
 
     virtual ~Configurable() = default;
 
     // Returns the available config options
-    virtual const Options &getOptions() const { return options; }
+    virtual const Options &getOptions() const = 0;
 
     // Returns true iff a specific option is available
     bool isValidOption(Option opt) const;

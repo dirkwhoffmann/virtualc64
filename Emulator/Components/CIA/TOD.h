@@ -34,6 +34,10 @@ class TOD final : public SubComponent, public Inspectable<TODInfo> {
         .shell          = "tod"
     }};
 
+    Options options = {
+
+    };
+
 private:
     
     // Result of the latest inspection
@@ -141,7 +145,16 @@ public:
 
     void cacheInfo(TODInfo &result) const override;
 
+
+    //
+    // Methods from Configurable
+    //
+
+public:
+
+    const Options &getOptions() const override { return options; }
     
+
     //
     // Accessing
     //

@@ -66,6 +66,10 @@ class VIA6522 : public SubComponent {
         .shell          = "via"
     }};
 
+    Options options = {
+
+    };
+    
     friend class Drive;
     friend class ParCable;
     
@@ -318,6 +322,15 @@ private:
 
     void _dump(Category category, std::ostream& os) const override;
     void _didReset(bool hard) override;
+
+    
+    //
+    // Methods from Configurable
+    //
+
+public:
+
+    const Options &getOptions() const override { return options; }
 
 
     //

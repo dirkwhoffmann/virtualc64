@@ -29,6 +29,10 @@ class Cartridge : public SubComponent, public Inspectable<CartridgeInfo> {
         .shell          = "cartridge"
     }};
 
+    Options options = {
+
+    };
+    
 public:
 
     virtual const CartridgeTraits &getCartridgeTraits() const {
@@ -254,6 +258,15 @@ public:
 
     void cacheInfo(CartridgeInfo &result) const override;
 
+
+    //
+    // Methods from Configurable
+    //
+
+public:
+
+    const Options &getOptions() const override { return options; }
+    
 
     //
     // Analyzing

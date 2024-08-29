@@ -30,6 +30,10 @@ class Keyboard final : public SubComponent {
         .shell          = "keyboard"
     }};
 
+    Options options = {
+
+    };
+    
     // The keyboard matrix (indexed by row or by column)
     u8 kbMatrixRow[8] = { };
     u8 kbMatrixCol[8] = { };
@@ -99,6 +103,15 @@ private:
     void _dump(Category category, std::ostream& os) const override;
     void _didReset(bool hard) override;
 
+
+    //
+    // Methods from Configurable
+    //
+
+public:
+
+    const Options &getOptions() const override { return options; }
+    
 
     //
     // Accessing the keyboard matrix

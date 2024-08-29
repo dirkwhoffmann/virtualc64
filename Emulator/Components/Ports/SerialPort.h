@@ -27,6 +27,10 @@ class SerialPort final : public SubComponent, public Inspectable<Void, SerialPor
         .shell          = "serial"
     }};
 
+    Options options = {
+
+    };
+    
 public:
     
     // Current values of the IEC bus lines
@@ -126,6 +130,15 @@ private:
     void _dump(Category category, std::ostream& os) const override;
     void _didReset(bool hard) override;
 
+
+    //
+    // Methods from Configurable
+    //
+
+public:
+
+    const Options &getOptions() const override { return options; }
+    
 
     //
     // Accessing

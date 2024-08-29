@@ -57,7 +57,11 @@ class SIDBridge final : public SubComponent {
         .shell          = "sidbridge"
     }};
 
+    Options options = {
+
+    };
     
+
     //
     // Subcomponents
     //
@@ -107,6 +111,15 @@ public:
 
     const Descriptions &getDescriptions() const override { return descriptions; }
 
+
+    //
+    // Methods from Configurable
+    //
+
+public:
+
+    const Options &getOptions() const override { return options; }
+    
 
     //
     // Parameterizing
