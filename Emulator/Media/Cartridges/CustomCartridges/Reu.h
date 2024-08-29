@@ -171,7 +171,7 @@ public:
      * a turbo REU. In that case, the entire data transfer is performed in a
      * single DMA cycle.
      */
-    isize bytesPerDmaCycle() { return 1; }
+    isize bytesPerDmaCycle() { return expansionPort.getConfig().reuSpeed; }
 
 
     //

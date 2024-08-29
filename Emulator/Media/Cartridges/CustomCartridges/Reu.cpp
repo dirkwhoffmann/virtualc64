@@ -337,27 +337,11 @@ Reu::prepareDma()
     reuAddr = reuBase;
     isize len = tlen ? tlen : 0x10000;
 
-    EventID id =
-    ((cr & 0x3) == 0) ? EXP_REU_STASH :
-    ((cr & 0x3) == 1) ? EXP_REU_FETCH :
-    ((cr & 0x3) == 2) ? EXP_REU_SWAP : EXP_REU_VERIFY;
-
-    /*
-    // Check for turbo TEU (perform the entire data transfer immediately)
-    if (turbo()) {
-
-        // Perform the entire data transfer immediately
-        for (isize i = 0; i < len; i++) if (!doDma(id)) break;
-        finalizeDma(id);
-        return;
-    }
-    */
-
     // Freeze the CPU
     cpu.pullDownRdyLine(INTSRC_EXP);
     
     // Schedule the first event
-    c64.scheduleImm<SLOT_EXP>(id, len);
+    c64.scheduleRel<SLOT_EXP>(2, EXP_REU_PREPARE, len);
 }
 
 bool
@@ -452,13 +436,27 @@ Reu::finalizeDma(EventID id)
 void 
 Reu::processEvent(EventID id)
 {
+    if (id == EXP_REU_PREPARE) {
+
+        switch (cr & 0x3) {
+
+            case 0: id = EXP_REU_STASH; break;
+            case 1: id = EXP_REU_FETCH; break;
+            case 2: id = EXP_REU_SWAP; break;
+            case 3: id = EXP_REU_VERIFY; break;
+        }
+    }
+
     auto remaining = c64.data[SLOT_EXP];
 
     // Determine the number of bytes to transfer
     auto todo = std::min(remaining, i64(bytesPerDmaCycle()));
 
-    // Emulate all missing cycles
-    for (; todo && doDma(id); todo--) remaining--;
+    // Perform DMA if the bus is available
+    if (!(cpu.getRdyLine() & INTSRC_VIC)) {
+
+        for (; todo && doDma(id); todo--) remaining--;
+    }
 
     if (remaining) {
 

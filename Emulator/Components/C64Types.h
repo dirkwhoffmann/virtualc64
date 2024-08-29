@@ -190,7 +190,8 @@ enum_i8(EventID)
     //
 
     // Expansion port
-    EXP_REU_STASH       = 1,
+    EXP_REU_PREPARE     = 1,
+    EXP_REU_STASH,
     EXP_REU_FETCH,
     EXP_REU_SWAP,
     EXP_REU_VERIFY,

@@ -104,10 +104,11 @@ C64::eventName(EventSlot slot, EventID id)
             switch (id) {
 
                 case EVENT_NONE:        return "none";
+                case EXP_REU_PREPARE:   return "EXP_REU_PREPARE";
                 case EXP_REU_STASH:     return "EXP_REU_STASH";
                 case EXP_REU_FETCH:     return "EXP_REU_FETCH";
                 case EXP_REU_SWAP:      return "EXP_REU_SWAP";
-                case EXP_REU_VERIFY:    return "EXP_REU_STASH";
+                case EXP_REU_VERIFY:    return "EXP_REU_VERIFY";
                 default:                return "*** INVALID ***";
             }
             break;
