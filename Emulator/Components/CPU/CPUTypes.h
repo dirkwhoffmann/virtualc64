@@ -27,7 +27,6 @@ namespace vc64 {
 #define INTSRC_VIA2 0b00001000
 #define INTSRC_EXP  0b00010000
 #define INTSRC_KBD  0b00100000
-#define INTSRC_REU  0b01000000
 
 
 //

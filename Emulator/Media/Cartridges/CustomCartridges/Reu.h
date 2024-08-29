@@ -160,11 +160,18 @@ public:
     bool isREU1764() const { return getRamCapacity() == KB(256); }
     bool isREU1750() const { return getRamCapacity() >= KB(512); }
 
-    // Indicates if all data should be transfered in a single cycle
-    bool turbo() { return true; }
-
     // Returns the bitmask of the REU address register
     u32 wrapMask() const { return isREU1700() ? 0x1FFFF : 0x7FFFF; }
+
+    /* Emulation speed
+     *
+     * This value indicates how many bytes are transfered during a single DMA
+     * cycle. A value of 1 means the REU is emulated at native speed. A value
+     * of 2 emulates a REU at twice the speed etc. A very high value emulates
+     * a turbo REU. In that case, the entire data transfer is performed in a
+     * single DMA cycle.
+     */
+    isize bytesPerDmaCycle() { return 1; }
 
 
     //

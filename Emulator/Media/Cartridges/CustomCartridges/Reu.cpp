@@ -342,6 +342,7 @@ Reu::prepareDma()
     ((cr & 0x3) == 1) ? EXP_REU_FETCH :
     ((cr & 0x3) == 2) ? EXP_REU_SWAP : EXP_REU_VERIFY;
 
+    /*
     // Check for turbo TEU (perform the entire data transfer immediately)
     if (turbo()) {
 
@@ -350,9 +351,10 @@ Reu::prepareDma()
         finalizeDma(id);
         return;
     }
+    */
 
     // Freeze the CPU
-    // TODO
+    cpu.pullDownRdyLine(INTSRC_EXP);
     
     // Schedule the first event
     c64.scheduleImm<SLOT_EXP>(id, len);
@@ -442,42 +444,33 @@ Reu::finalizeDma(EventID id)
     }
 
     triggerEndOfBlockIrq();
+
+    // Release the CPU
+    cpu.releaseRdyLine(INTSRC_EXP);
 }
 
 void 
 Reu::processEvent(EventID id)
 {
-    auto len = c64.data[SLOT_EXP];
+    auto remaining = c64.data[SLOT_EXP];
 
-    // Perform a DMA cycle
-    if (len) {
+    // Determine the number of bytes to transfer
+    auto todo = std::min(remaining, i64(bytesPerDmaCycle()));
 
-        doDma(id);
-        len--;
-        c64.data[SLOT_EXP] = len;
-    }
+    // Emulate all missing cycles
+    for (; todo && doDma(id); todo--) remaining--;
 
-    // Finalize DMA if this was the last cycle
-    if (len == 0) {
+    if (remaining) {
 
+        // Prepare the next event
+        c64.scheduleInc<SLOT_EXP>(1, id, remaining);
+
+    } else {
+
+        // Finalize DMA if this was the last cycle
         finalizeDma(id);
         c64.cancel<SLOT_EXP>();
     }
-
-    /*
-    switch (id) {
-
-        case EXP_REU_STASH:  stash(len); break;
-        case EXP_REU_FETCH:  fetch(len); break;
-        case EXP_REU_SWAP:   swap(len); break;
-        case EXP_REU_VERIFY: verify(len); break;
-
-        default:
-            fatalError;
-    }
-
-    c64.cancel<SLOT_EXP>();
-    */
 }
 
 void
