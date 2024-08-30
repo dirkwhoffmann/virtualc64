@@ -23,7 +23,7 @@ debugflag TIM_DEBUG       = 0;
 debugflag WARP_DEBUG      = 0;
 debugflag CMD_DEBUG       = 0;
 debugflag MSG_DEBUG       = 0;
-debugflag SNP_DEBUG       = 0;
+debugflag SNP_DEBUG       = 1;
 
 // Run ahead
 debugflag RUA_DEBUG       = 0;

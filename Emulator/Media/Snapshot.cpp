@@ -65,8 +65,6 @@ Snapshot::isCompatible(std::istream &stream)
 
 Snapshot::Snapshot(isize capacity)
 {
-    // size = capacity + sizeof(SnapshotHeader);
-    //  data = new u8[size];
     init(capacity + sizeof(SnapshotHeader));
 
     SnapshotHeader *header = (SnapshotHeader *)data.ptr;
@@ -79,14 +77,19 @@ Snapshot::Snapshot(isize capacity)
     header->minor = SNP_MINOR;
     header->subminor = SNP_SUBMINOR;
     header->beta = SNP_BETA;
+    header->compressed = false;
 }
 
-Snapshot::Snapshot(C64 &c64): Snapshot(c64.size())
+Snapshot::Snapshot(C64 &c64) : Snapshot(c64.size())
 {
     takeScreenshot(c64);
 
     if (SNP_DEBUG) c64.dump(Category::State);
     c64.save(getSnapshotData());
+
+    // REMOVE ASAP (TEST CODE FOR THE RUN-LENGTH ENCODER)
+    compress();
+    uncompress();
 }
 
 void
@@ -155,6 +158,33 @@ void
 Snapshot::takeScreenshot(C64 &c64)
 {
     ((SnapshotHeader *)data.ptr)->screenshot.take(c64);
+}
+
+void 
+Snapshot::compress()
+{
+    if (!isCompressed()) {
+
+        debug(SNP_DEBUG, "Compressing %ld bytes (hash: 0x%x)...\n", data.size, data.fnv32());
+
+        data.compress(2, sizeof(SnapshotHeader));
+        getHeader()->compressed = true;
+
+        debug(SNP_DEBUG, "Compressed size: %ld bytes\n", data.size);
+    }
+}
+void 
+Snapshot::uncompress()
+{
+    if (isCompressed()) {
+
+        debug(SNP_DEBUG, "Uncompressing %ld bytes...\n", data.size);
+
+        data.uncompress(2, sizeof(SnapshotHeader));
+        getHeader()->compressed = false;
+
+        debug(SNP_DEBUG, "Uncompressed size: %ld bytes (hash: 0x%x)\n", data.size, data.fnv32());
+    }
 }
 
 }

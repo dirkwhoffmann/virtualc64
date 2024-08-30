@@ -48,6 +48,9 @@ struct SnapshotHeader {
     u8 subminor;
     u8 beta;
 
+    // Indicates if the snapshot contents is stored as compressed data
+    bool compressed;
+
     // Preview image
     Thumbnail screenshot;
 };
@@ -63,7 +66,7 @@ public:
     static bool isCompatible(const fs::path &path);
     static bool isCompatible(std::istream &stream);
 
-    
+
     //
     // Initializing
     //
@@ -73,14 +76,14 @@ public:
     Snapshot(isize capacity);
     Snapshot(C64 &c64);
 
-    
+
     //
     // Methods from CoreObject
     //
 
     const char *objectName() const override { return "Snapshot"; }
 
-    
+
     //
     // Methods from AnyFile
     //
@@ -90,7 +93,7 @@ public:
     bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     void finalizeRead() throws override;
 
-    
+
     //
     // Accessing
     //
@@ -116,6 +119,18 @@ public:
 
     // Records a screenshot
     void takeScreenshot(C64 &c64);
+
+
+    //
+    // Compressing
+    //
+
+    // Indicates whether the snapshot is compressed
+    bool isCompressed() { return getHeader()->compressed; }
+
+    // Compresses or uncompresses the snapshot
+    void compress();
+    void uncompress();
 };
 
 }

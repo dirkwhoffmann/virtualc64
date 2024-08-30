@@ -51,6 +51,7 @@ VirtualC64::build()
 VirtualC64::VirtualC64() {
 
     // REMOVE ASAP
+    /*
     u8 payload[8][16] = {
         { 1,2,2,3,3,3,4,4,4,4,5,5,5,5,5,4},
         { 1,1,2,3,3,3,4,4,4,4,4,4,4,4,4,4},
@@ -92,6 +93,8 @@ VirtualC64::VirtualC64() {
         }
         printf(" } %s\n\n", checksum == b.fnv32() ? "OK" : "*** ERRROR ***");
     }
+    */
+    
     emu = new Emulator();
 
     c64.emu = emu;
