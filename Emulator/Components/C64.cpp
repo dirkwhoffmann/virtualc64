@@ -1318,8 +1318,8 @@ C64::processSNPEvent(EventID eventId)
 void 
 C64::scheduleNextSNPEvent()
 {
-    auto snapshots = emulator.get(OPT_C64_SNAPSHOTS);
-    auto delay = emulator.get(OPT_C64_SNAPSHOT_DELAY);
+    auto snapshots = emulator.get(OPT_C64_SNAP_AUTO);
+    auto delay = emulator.get(OPT_C64_SNAP_DELAY);
 
     if (snapshots) {
         scheduleRel<SLOT_SNP>(C64::sec(double(delay)), SNP_TAKE);

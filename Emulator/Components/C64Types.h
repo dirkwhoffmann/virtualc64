@@ -269,14 +269,17 @@ typedef struct
     //! Emulator speed in percent (100 is native speed)
     isize speedAdjust;
 
+    //! Number of run-ahead frames (0 = run-ahead is disabled)
+    isize runAhead;
+
     //! Enable auto-snapshots
     bool snapshots;
 
     //! Delay between two auto-snapshots in seconds
     isize snapshotDelay;
 
-    //! Number of run-ahead frames (0 = run-ahead is disabled)
-    isize runAhead;
+    //! Indicates whether snapshots should be stored in compressed form
+    bool snapshotCompress;
 }
 C64Config;
 

@@ -111,9 +111,9 @@ class C64 final : public CoreComponent, public Inspectable<C64Info> {
         OPT_C64_WARP_MODE,
         OPT_C64_VSYNC,
         OPT_C64_SPEED_ADJUST,
-        OPT_C64_SNAPSHOTS,
-        OPT_C64_SNAPSHOT_DELAY,
-        OPT_C64_RUN_AHEAD
+        OPT_C64_RUN_AHEAD,
+        OPT_C64_SNAP_AUTO,
+        OPT_C64_SNAP_DELAY,
     };
     
 private:

@@ -29,9 +29,10 @@ Defaults::Defaults()
     setFallback(OPT_C64_WARP_MODE,              WARP_NEVER);
     setFallback(OPT_C64_VSYNC,                  false);
     setFallback(OPT_C64_SPEED_ADJUST,           100);
-    setFallback(OPT_C64_SNAPSHOTS,              false);
-    setFallback(OPT_C64_SNAPSHOT_DELAY,         10);
     setFallback(OPT_C64_RUN_AHEAD,              0);
+
+    setFallback(OPT_C64_SNAP_AUTO,              false);
+    setFallback(OPT_C64_SNAP_DELAY,             10);
 
     setFallback(OPT_POWER_GRID,                 GRID_STABLE_50HZ);
 

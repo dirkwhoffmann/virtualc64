@@ -188,9 +188,9 @@ C64::getOption(Option opt) const
         case OPT_C64_WARP_MODE:         return config.warpMode;
         case OPT_C64_VSYNC:             return config.vsync;
         case OPT_C64_SPEED_ADJUST:      return config.speedAdjust;
-        case OPT_C64_SNAPSHOTS:         return config.snapshots;
-        case OPT_C64_SNAPSHOT_DELAY:    return config.snapshotDelay;
         case OPT_C64_RUN_AHEAD:         return config.runAhead;
+        case OPT_C64_SNAP_AUTO:         return config.snapshots;
+        case OPT_C64_SNAP_DELAY:        return config.snapshotDelay;
 
         default:
             fatalError;
@@ -224,21 +224,21 @@ C64::checkOption(Option opt, i64 value)
             }
             return;
 
-        case OPT_C64_SNAPSHOTS:
-
-            return;
-
-        case OPT_C64_SNAPSHOT_DELAY:
-
-            if (value < 10 || value > 3600) {
-                throw Error(VC64ERROR_OPT_INV_ARG, "10...3600");
-            }
-            return;
-
         case OPT_C64_RUN_AHEAD:
 
             if (value < 0 || value > 12) {
                 throw Error(VC64ERROR_OPT_INV_ARG, "0...12");
+            }
+            return;
+
+        case OPT_C64_SNAP_AUTO:
+
+            return;
+
+        case OPT_C64_SNAP_DELAY:
+
+            if (value < 10 || value > 3600) {
+                throw Error(VC64ERROR_OPT_INV_ARG, "10...3600");
             }
             return;
 
@@ -275,13 +275,13 @@ C64::setOption(Option opt, i64 value)
             updateClockFrequency();
             return;
 
-        case OPT_C64_SNAPSHOTS:
+        case OPT_C64_SNAP_AUTO:
 
             config.snapshots = bool(value);
             scheduleNextSNPEvent();
             return;
 
-        case OPT_C64_SNAPSHOT_DELAY:
+        case OPT_C64_SNAP_DELAY:
 
             config.snapshotDelay = isize(value);
             scheduleNextSNPEvent();

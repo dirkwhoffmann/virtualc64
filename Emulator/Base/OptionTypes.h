@@ -35,9 +35,11 @@ enum_long(OPT)
     OPT_C64_WARP_MODE,          ///< Warp activation mode
     OPT_C64_VSYNC,              ///< Derive the frame rate to the VSYNC signal
     OPT_C64_SPEED_ADJUST,       ///< Speed adjustment in percent
-    OPT_C64_SNAPSHOTS,          ///< Automatically take a snapshots
-    OPT_C64_SNAPSHOT_DELAY,     ///< Delay between two snapshots in seconds
     OPT_C64_RUN_AHEAD,          ///< Number of run-ahead frames
+
+    // Snapshots
+    OPT_C64_SNAP_AUTO,          ///< Automatically take a snapshots
+    OPT_C64_SNAP_DELAY,         ///< Delay between two snapshots in seconds
 
     // VICII
     OPT_VICII_REVISION,         ///< Chip revision
@@ -209,13 +211,14 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_HOST_FRAMEBUF_WIDTH:   return "HOST.FRAMEBUF_WIDTH";
             case OPT_HOST_FRAMEBUF_HEIGHT:  return "HOST.FRAMEBUF_HEIGHT";
 
-            case OPT_C64_WARP_BOOT:         return "EMU.WARP_BOOT";
-            case OPT_C64_WARP_MODE:         return "EMU.WARP_MODE";
-            case OPT_C64_VSYNC:             return "EMU.VSYNC";
-            case OPT_C64_SPEED_ADJUST:      return "EMU.TIME_LAPSE";
-            case OPT_C64_SNAPSHOTS:         return "EMU.SNAPSHOTS";
-            case OPT_C64_SNAPSHOT_DELAY:    return "EMU.SNAPSHOT_DELAY";
-            case OPT_C64_RUN_AHEAD:         return "EMU.RUN_AHEAD";
+            case OPT_C64_WARP_BOOT:         return "C64.WARP_BOOT";
+            case OPT_C64_WARP_MODE:         return "C64.WARP_MODE";
+            case OPT_C64_VSYNC:             return "C64.VSYNC";
+            case OPT_C64_SPEED_ADJUST:      return "C64.TIME_LAPSE";
+            case OPT_C64_RUN_AHEAD:         return "C64.RUN_AHEAD";
+            
+            case OPT_C64_SNAP_AUTO:         return "C64.SNAP_AUTO";
+            case OPT_C64_SNAP_DELAY:        return "C64.SNAP_DELAY";
 
             case OPT_VICII_REVISION:        return "VICII.REVISION";
             case OPT_VICII_GRAY_DOT_BUG:    return "VICII.GRAY_DOT_BUG";
@@ -365,9 +368,10 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_C64_WARP_MODE:         return "Warp activation";
             case OPT_C64_VSYNC:             return "VSYNC mode";
             case OPT_C64_SPEED_ADJUST:      return "Speed adjustment";
-            case OPT_C64_SNAPSHOTS:         return "Automatically take snapshots";
-            case OPT_C64_SNAPSHOT_DELAY:    return "Time span between two snapshots";
             case OPT_C64_RUN_AHEAD:         return "Run-ahead frames";
+
+            case OPT_C64_SNAP_AUTO:         return "Automatically take snapshots";
+            case OPT_C64_SNAP_DELAY:        return "Time span between two snapshots";
 
             case OPT_VICII_REVISION:        return "Chip revision";
             case OPT_VICII_GRAY_DOT_BUG:    return "Emulate gray-dot bug";

@@ -24,14 +24,14 @@ class Preferences {
     var autoSnapshots = false {
         didSet {
             for emu in myAppDelegate.proxies {
-                emu?.set(.C64_SNAPSHOTS, enable: autoSnapshots)
+                emu?.set(.C64_SNAP_AUTO, enable: autoSnapshots)
             }
         }
     }
     var snapshotInterval = 0 {
         didSet {
             for emu in myAppDelegate.proxies {
-                emu?.set(.C64_SNAPSHOT_DELAY, value: snapshotInterval)
+                emu?.set(.C64_SNAP_DELAY, value: snapshotInterval)
             }
         }
     }

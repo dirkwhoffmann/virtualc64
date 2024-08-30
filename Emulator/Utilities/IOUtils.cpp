@@ -180,6 +180,7 @@ streamLength(std::istream &stream)
     auto end = stream.tellg();
     stream.seekg(cur, std::ios::beg);
     
+    printf("stream length: %d %d %d\n", int(cur), int(beg), int(end));
     return (isize)(end - beg);
 }
 
