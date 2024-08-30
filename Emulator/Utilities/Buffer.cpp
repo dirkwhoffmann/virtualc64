@@ -101,6 +101,15 @@ Allocator<T>::init(const Allocator<T> &other)
 }
 
 template <class T> void
+Allocator<T>::init(const std::vector<T> &vector)
+{
+    isize vecsize = isize(vector.size());
+
+    alloc(vecsize);
+    for (isize i = 0; i < vecsize; i++) ptr[i] = vector[i];
+}
+
+template <class T> void
 Allocator<T>::init(const std::filesystem::path &path)
 {
     // Open stream in binary mode
@@ -225,7 +234,7 @@ Allocator<T>::compress(isize n, isize offset)
     // Perform run-length encoding
     for (isize i = offset; i < size; i++) {
 
-        if (ptr[i] == prev && repetitions < 255) {
+        if (ptr[i] == prev && repetitions < std::numeric_limits<T>::max()) {
 
             repetitions++;
 
@@ -239,8 +248,7 @@ Allocator<T>::compress(isize n, isize offset)
     encode(prev, repetitions);
 
     // Replace old data
-    alloc(vec.size());
-    for (isize i = 0; i < size; i++) ptr[i] = vec[i];
+    init(vec);
 }
 
 template <class T> void
@@ -273,8 +281,7 @@ Allocator<T>::uncompress(isize n, isize offset)
     }
 
     // Replace old data
-    alloc(vec.size());
-    for (isize i = 0; i < size; i++) ptr[i] = vec[i];
+    init(vec);
 }
 
 
