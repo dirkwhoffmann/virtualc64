@@ -206,6 +206,73 @@ Allocator<T>::patch(const char *seq, const char *subst)
     if (ptr) util::replace((char *)ptr, bytesize(), seq, subst);
 }
 
+template <class T> void
+Allocator<T>::compress(isize n)
+{
+    T prev = 0;
+    isize repetitions = 0;
+    std::vector<T> vec;
+    vec.reserve(size);
+
+    auto encode = [&](T element, isize count) {
+
+        for (isize i = 0; i < std::min(count, n); i++) vec.push_back(element);
+        if (count >= n) vec.push_back(T(count - n));
+    };
+
+    // Perform run-length encoding
+    for (isize i = 0; i < size; i++) {
+
+        if (ptr[i] == prev && repetitions < 255) {
+
+            repetitions++;
+
+        } else {
+
+            encode(prev, repetitions);
+            prev = ptr[i];
+            repetitions = 1;
+        }
+    }
+    encode(prev, repetitions);
+
+    // Replace the old data
+    alloc(vec.size());
+    for (isize i = 0; i < size; i++) ptr[i] = vec[i];
+}
+
+template <class T> void
+Allocator<T>::uncompress(isize n)
+{
+    T prev = 0;
+    isize repetitions = 0;
+    std::vector<T> vec;
+    vec.reserve(size);
+
+    auto decode = [&](T element, isize count) {
+
+        for (isize i = 0; i < count; i++) vec.push_back(element);
+    };
+
+    for (isize i = 0; i < size; i++) {
+
+        vec.push_back(ptr[i]);
+        repetitions = prev != ptr[i] ? 1 : repetitions + 1;
+        prev = ptr[i];
+
+        if (repetitions == n && i < size - 1) {
+
+            decode(prev, isize(ptr[++i]));
+            repetitions = 0;
+        }
+    }
+
+    // Replace the old data
+    alloc(vec.size());
+    for (isize i = 0; i < size; i++) ptr[i] = vec[i];
+}
+
+
 //
 // Template instantiations
 //
@@ -224,7 +291,9 @@ template void Allocator<T>::resize(isize elements, T value); \
 template void Allocator<T>::clear(T value, isize offset, isize len); \
 template void Allocator<T>::copy(T *buf, isize offset, isize len) const; \
 template void Allocator<T>::patch(const u8 *seq, const u8 *subst); \
-template void Allocator<T>::patch(const char *seq, const char *subst);
+template void Allocator<T>::patch(const char *seq, const char *subst); \
+template void Allocator<T>::compress(isize); \
+template void Allocator<T>::uncompress(isize);
 
 INSTANTIATE_ALLOCATOR(u8)
 INSTANTIATE_ALLOCATOR(u32)

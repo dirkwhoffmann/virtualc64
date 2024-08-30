@@ -67,6 +67,10 @@ template <class T> struct Allocator {
     u64 fnv64() const { return ptr ? util::fnv64((u8 *)ptr, bytesize()) : 0; }
     u16 crc16() const { return ptr ? util::crc16((u8 *)ptr, bytesize()) : 0; }
     u32 crc32() const { return ptr ? util::crc32((u8 *)ptr, bytesize()) : 0; }
+
+    // Compresses or uncompresses a buffer
+    void compress(isize n = 3);
+    void uncompress(isize n = 3);
 };
 
 template <class T> struct Buffer : public Allocator <T> {
