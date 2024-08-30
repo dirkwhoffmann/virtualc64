@@ -46,15 +46,13 @@ D64File::D64File(isize tracks, bool ecc) : D64File()
 {
     switch(tracks) {
             
-        case 35: size = ecc ? D64_683_SECTORS_ECC : D64_683_SECTORS; break;
-        case 40: size = ecc ? D64_768_SECTORS_ECC : D64_768_SECTORS; break;
-        case 42: size = ecc ? D64_802_SECTORS_ECC : D64_802_SECTORS; break;
-            
+        case 35: init(ecc ? D64_683_SECTORS_ECC : D64_683_SECTORS); break;
+        case 40: init(ecc ? D64_768_SECTORS_ECC : D64_768_SECTORS); break;
+        case 42: init(ecc ? D64_802_SECTORS_ECC : D64_802_SECTORS); break;
+
         default:
             fatalError;
-    }
-    
-    data = new u8[size]();
+    }    
 }
 
 void
@@ -62,15 +60,13 @@ D64File::init(isize tracks, bool ecc)
 {
     switch(tracks) {
             
-        case 35: size = ecc ? D64_683_SECTORS_ECC : D64_683_SECTORS; break;
-        case 40: size = ecc ? D64_768_SECTORS_ECC : D64_768_SECTORS; break;
-        case 42: size = ecc ? D64_802_SECTORS_ECC : D64_802_SECTORS; break;
-            
+        case 35: init(ecc ? D64_683_SECTORS_ECC : D64_683_SECTORS); break;
+        case 40: init(ecc ? D64_768_SECTORS_ECC : D64_768_SECTORS); break;
+        case 42: init(ecc ? D64_802_SECTORS_ECC : D64_802_SECTORS); break;
+
         default:
             fatalError;
     }
-    
-    data = new u8[size]();
 }
 
 void
@@ -87,7 +83,7 @@ D64File::init(const FileSystem &volume)
     }
 
     ErrorCode err;
-    if (!volume.exportVolume(data, size, &err)) {
+    if (!volume.exportVolume(data.ptr, data.size, &err)) {
         throw Error(err);
     }
 }
@@ -96,7 +92,7 @@ D64File::init(const FileSystem &volume)
 PETName<16>
 D64File::getName() const
 {
-    return PETName<16>(data + offset(18, 0) + 0x90);
+    return PETName<16>(data.ptr + offset(18, 0) + 0x90);
 }
 
 void
@@ -105,7 +101,7 @@ D64File::finalizeRead()
     isize numSectors;
     bool errorCodes;
 
-    switch (size)
+    switch (data.size)
     {
         case D64_683_SECTORS: // 35 tracks, no errors
             
@@ -158,15 +154,15 @@ D64File::finalizeRead()
 
     // Copy error codes
     if (errorCodes) {
-        std::memcpy(errors, data + (numSectors * 256), numSectors);
+        std::memcpy(errors, data.ptr + (numSectors * 256), numSectors);
     }
 }
 
 Track
 D64File::numHalftracks() const
 {
-    switch (size) {
-            
+    switch (data.size) {
+
         case D64_683_SECTORS: case D64_683_SECTORS_ECC: return 2 * 35;
         case D64_768_SECTORS: case D64_768_SECTORS_ECC: return 2 * 40;
         case D64_802_SECTORS: case D64_802_SECTORS_ECC: return 2 * 42;
@@ -205,7 +201,7 @@ D64File::offset(Track track, Sector sector) const
 void
 D64File::dump(Track track, Sector sector) const
 {
-    util::hexdump(data + offset(track, sector), 256);
+    util::hexdump(data.ptr + offset(track, sector), 256);
 }
 
 }

@@ -40,7 +40,7 @@ CRTFile::isCompatible(std::istream &stream)
 PETName<16>
 CRTFile::getName() const
 {
-    return PETName<16>(data + 0x20, 0x00);
+    return PETName<16>(data.ptr + 0x20, 0x00);
 }
 
 void
@@ -52,9 +52,9 @@ CRTFile::finalizeRead()
     repair();
 
     // Load chip packets
-    u8 *ptr = data + headerSize();
-    for (numberOfChips = 0; ptr < data + size; numberOfChips++) {
-        
+    u8 *ptr = data.ptr + headerSize();
+    for (numberOfChips = 0; ptr < data.ptr + data.size; numberOfChips++) {
+
         if (numberOfChips == MAX_PACKETS) {
             throw Error(VC64ERROR_CRT_TOO_MANY_PACKETS);
         }
@@ -163,7 +163,7 @@ CRTFile::repair()
     // Individual errors
     //
     
-    switch (util::fnv64(data, size)) {
+    switch (fnv64()) {
 
         case 0xb2a479a5a2ee6cd5: // Mikro Assembler
 

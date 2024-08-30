@@ -43,7 +43,7 @@ PRGFile::init(const FileSystem &fs)
     init(itemSize);
 
     // Add data
-    fs.copyFile(item, data, itemSize);
+    fs.copyFile(item, data.ptr, itemSize);
 }
 
 PETName<16>
@@ -69,7 +69,7 @@ isize
 PRGFile::itemSize(isize nr) const
 {
     assert(nr == 0);
-    return size;
+    return data.size;
 }
 
 u8

@@ -66,7 +66,7 @@ T64File::init(const class FileSystem &fs)
     //
     
     // Magic bytes (32 bytes)
-    u8 *ptr = data;
+    u8 *ptr = data.ptr;
     strncpy((char *)ptr, "C64 tape image file", 32);
     ptr += 32;
     
@@ -91,8 +91,8 @@ T64File::init(const class FileSystem &fs)
     name.write(ptr);
     ptr += 24;
     
-    assert(ptr - data == 64);
-    
+    assert(ptr - data.ptr == 64);
+
     //
     // Tape entries
     //
@@ -154,13 +154,13 @@ T64File::init(const class FileSystem &fs)
 PETName<16>
 T64File::getName() const
 {
-    return PETName<16>(data + 0x28).stripped(' ');
+    return PETName<16>(data.ptr + 0x28).stripped(' ');
 }
 
 PETName<16>
 T64File::collectionName()
 {
-    return PETName<16>(data + 0x28).stripped(' ');
+    return PETName<16>(data.ptr + 0x28).stripped(' ');
 }
 
 isize
@@ -174,7 +174,7 @@ T64File::itemName(isize nr) const
 {
     assert(nr < collectionCount());
     
-    return PETName<16>(data + 0x50 + nr * 0x20).stripped(' ');
+    return PETName<16>(data.ptr + 0x50 + nr * 0x20).stripped(' ');
 }
 
 isize
@@ -201,8 +201,8 @@ T64File::readByte(isize nr, isize pos) const
 
     // Locate the requested byte
     i64 offset = start + pos - 2;
-    assert(offset < size);
-    
+    assert(offset < data.size);
+
     return data[offset];
 }
 
@@ -226,7 +226,7 @@ T64File::directoryItemIsPresent(isize item)
     isize i;
     
     // check for zeros...
-    if (last < (isize)size)
+    if (last < data.size)
         for (i = first; i < last; i++)
             if (data[i] != 0)
                 return true;
@@ -285,7 +285,7 @@ T64File::finalizeRead()
         n = 0x48 + (i * 0x20);
         isize startAddrInContainer = LO_LO_HI_HI(data[n], data[n+1], data[n+2], data[n+3]);
 
-        if (startAddrInContainer >= size) {
+        if (startAddrInContainer >= data.size) {
             warn("T64: Offset mismatch. Sorry, can't repair.\n");
             return;
         }
@@ -305,7 +305,7 @@ T64File::finalizeRead()
         if (endAddrInMemory == 0xC3C6) {
 
             // Let's assume that the rest of the file data belongs to this file ...
-            isize fixedEndAddrInMemory = startAddrInMemory + (size - startAddrInContainer);
+            isize fixedEndAddrInMemory = startAddrInMemory + (data.size - startAddrInContainer);
 
             warn("T64: Changing end address of item %ld from %04lX to %04lX.\n",
                  i, endAddrInMemory, fixedEndAddrInMemory);

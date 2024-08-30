@@ -65,10 +65,11 @@ Snapshot::isCompatible(std::istream &stream)
 
 Snapshot::Snapshot(isize capacity)
 {
-    size = capacity + sizeof(SnapshotHeader);
-    data = new u8[size];
+    // size = capacity + sizeof(SnapshotHeader);
+    //  data = new u8[size];
+    init(capacity + sizeof(SnapshotHeader));
 
-    SnapshotHeader *header = (SnapshotHeader *)data;
+    SnapshotHeader *header = (SnapshotHeader *)data.ptr;
 
     header->magic[0] = 'V';
     header->magic[1] = 'C';
@@ -153,7 +154,7 @@ Snapshot::isBeta() const
 void
 Snapshot::takeScreenshot(C64 &c64)
 {
-    ((SnapshotHeader *)data)->screenshot.take(c64);
+    ((SnapshotHeader *)data.ptr)->screenshot.take(c64);
 }
 
 }

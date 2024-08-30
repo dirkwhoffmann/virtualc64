@@ -1263,7 +1263,7 @@ using namespace vc64;
 
 - (u64)fnv
 {
-    return [self file]->fnv();
+    return [self file]->fnv64();
 }
 
 - (NSInteger)size

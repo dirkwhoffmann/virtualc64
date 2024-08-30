@@ -53,6 +53,9 @@ public:
     // Returns the size of this file
     virtual isize getSize() const = 0;
 
+    // Returns a textual representation of the file size
+    virtual string getSizeAsString() const;
+
     // Returns a pointer to the file data
     virtual u8 *getData() const = 0;
 
@@ -60,7 +63,8 @@ public:
     virtual string name() const = 0;
 
     // Returns a fingerprint (hash value) for this file
-    virtual u64 fnv() const = 0;
+    virtual u64 fnv64() const = 0;
+    virtual u32 crc32() const = 0;
 
     // Return a timestamp (if present)
     virtual time_t timestamp() const { return time_t(0); }
@@ -81,13 +85,13 @@ public:
 
 public:
 
-    virtual void readFromStream(std::istream &stream) = 0;
-    virtual void readFromFile(const fs::path &path) = 0;
-    virtual void readFromBuffer(const u8 *buf, isize len) = 0;
+    virtual isize readFromStream(std::istream &stream) = 0;
+    virtual isize readFromFile(const std::filesystem::path &path) = 0;
+    virtual isize readFromBuffer(const u8 *buf, isize len) = 0;
 
-    virtual void writeToStream(std::ostream &stream) = 0;
-    virtual void writeToFile(const fs::path &path) = 0;
-    virtual void writeToBuffer(u8 *buf) = 0;
+    virtual isize writeToStream(std::ostream &stream) = 0;
+    virtual isize writeToFile(const std::filesystem::path &path) = 0;
+    virtual isize writeToBuffer(u8 *buf) = 0;
 };
 
 }

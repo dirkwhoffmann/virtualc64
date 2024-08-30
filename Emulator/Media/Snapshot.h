@@ -106,13 +106,13 @@ public:
     bool matches() { return !isTooOld() && !isTooNew(); }
 
     // Returns a pointer to the snapshot header
-    SnapshotHeader *getHeader() const { return (SnapshotHeader *)data; }
+    SnapshotHeader *getHeader() const { return (SnapshotHeader *)data.ptr; }
 
     // Returns a pointer to the thumbnail image
     const Thumbnail &getThumbnail() const { return getHeader()->screenshot; }
 
     // Returns pointer to the core data
-    u8 *getSnapshotData() const { return data + sizeof(SnapshotHeader); }
+    u8 *getSnapshotData() const { return data.ptr + sizeof(SnapshotHeader); }
 
     // Records a screenshot
     void takeScreenshot(C64 &c64);

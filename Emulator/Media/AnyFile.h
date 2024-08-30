@@ -14,12 +14,15 @@
 
 #include "CoreObject.h"
 #include "MediaFile.h"
+#include "Buffer.h"
 #include "PETName.h"
 
 #include <sstream>
 #include <fstream>
 
 namespace vc64 {
+
+using util::Buffer;
 
 /* All media files are organized in the class hierarchy displayed below. Two
  * abstract classes are involed: AnyFile and AnyCollection. AnyFiles provides
@@ -58,14 +61,11 @@ class AnyFile : public CoreObject, public MediaFile {
 public:
 
     // Physical location of this file
-    fs::path path = "";
+    std::filesystem::path path = "";
 
     // The raw data of this file
-    u8 *data = nullptr;
-    
-    // The size of this file in bytes
-    isize size = 0;
-    
+    Buffer<u8> data;
+
     
     //
     // Initializing
@@ -73,27 +73,29 @@ public:
     
 public:
     
-    AnyFile() { };
-    AnyFile(isize capacity);
-    virtual ~AnyFile();
-    
+    virtual ~AnyFile() { };
+
     void init(isize capacity);
-    void init(const fs::path &path) throws;
-    void init(const fs::path &path, std::istream &stream) throws;
-    void init(std::istream &stream) throws;
+    void init(const Buffer<u8> &buffer) throws;
     void init(const u8 *buf, isize len) throws;
+    void init(const std::filesystem::path &path) throws;
+    void init(const std::filesystem::path &path, std::istream &stream) throws;
+    void init(std::istream &stream) throws;
     void init(FILE *file) throws;
     
-    
+    // explicit operator bool() const { return data.ptr != nullptr; }
+
+
     //
     // Methods from MediaFile
     //
 
-    // Returns the size of this file
-    virtual isize getSize() const override { return size; }
+public:
 
-    // Returns a pointer to the file data
-    virtual u8 *getData() const override { return data; }
+    virtual isize getSize() const override { return data.size; }
+    virtual u8 *getData() const override { return data.ptr; }
+    virtual u64 fnv64() const override { return data.fnv64(); }
+    virtual u32 crc32() const override { return data.crc32(); }
 
 
     //
@@ -107,10 +109,10 @@ public:
     virtual PETName<16> getName() const;
 
     // Returns a data byte
-    u8 getData(isize nr) { return (data && nr < size) ? data[nr] : 0; }
+    u8 getData(isize nr) { return (data.ptr && nr < data.size) ? data.ptr[nr] : 0; }
 
     // Returns a fingerprint (hash value) for this file
-    u64 fnv() const override;
+    // u64 fnv() const override;
     
     // Removes a certain number of bytes from the beginning of the file
     void strip(isize count);
@@ -134,16 +136,22 @@ protected:
     virtual bool isCompatiblePath(const fs::path &path) = 0;
     virtual bool isCompatibleStream(std::istream &stream) = 0;
     
-    void readFromStream(std::istream &stream) override;
-    void readFromFile(const fs::path &path) override;
-    void readFromBuffer(const u8 *buf, isize len) override;
+    isize readFromStream(std::istream &stream) throws override;
+    isize readFromFile(const fs::path &path) throws override;
+    isize readFromBuffer(const u8 *buf, isize len) throws override;
+    isize readFromBuffer(const Buffer<u8> &buffer) throws;
 
 public:
     
-    void writeToStream(std::ostream &stream) override;
-    void writeToFile(const fs::path &path) override;
-    void writeToBuffer(u8 *buf) override;
+    isize writeToStream(std::ostream &stream, isize offset, isize len) throws;
+    isize writeToFile(const std::filesystem::path &path, isize offset, isize len) throws;
+    isize writeToBuffer(u8 *buf, isize offset, isize len) throws;
+    isize writeToBuffer(Buffer<u8> &buffer, isize offset, isize len) throws;
 
+    isize writeToStream(std::ostream &stream) throws override;
+    isize writeToFile(const std::filesystem::path &path) throws override;
+    isize writeToBuffer(u8 *buf) throws override;
+    isize writeToBuffer(Buffer<u8> &buffer) throws;
 
 private:
     

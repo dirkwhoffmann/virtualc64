@@ -38,8 +38,9 @@ G64File::G64File(isize capacity)
 {
     assert(capacity > 0);
     
-    data = new u8[capacity];
-    size = capacity;
+    // data = new u8[capacity];
+    // size = capacity;
+    init(capacity);
 }
 
 void
@@ -139,7 +140,7 @@ G64File::copyHalftrack(Halftrack ht, u8 *buf) const
     isize start = getStartOfHalftrack(ht) + 2;
     isize len = getSizeOfHalftrack(ht);
     
-    memcpy(buf, data + start, len);
+    memcpy(buf, data.ptr + start, len);
 }
 
 isize

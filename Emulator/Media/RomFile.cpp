@@ -174,12 +174,12 @@ RomFile::isVC1541RomBuffer(const u8 *buf, isize len)
 void
 RomFile::finalizeRead()
 {
-    // Deterrmine the ROM type
+    // Determine the ROM type
     romFileType =
-    isBasicRomBuffer(data, size) ? FILETYPE_BASIC_ROM :
-    isCharRomBuffer(data, size) ? FILETYPE_CHAR_ROM :
-    isKernalRomBuffer(data, size) ? FILETYPE_KERNAL_ROM :
-    isVC1541RomBuffer(data, size) ? FILETYPE_VC1541_ROM :
+    isBasicRomBuffer(data.ptr, data.size) ? FILETYPE_BASIC_ROM :
+    isCharRomBuffer(data.ptr, data.size) ? FILETYPE_CHAR_ROM :
+    isKernalRomBuffer(data.ptr, data.size) ? FILETYPE_KERNAL_ROM :
+    isVC1541RomBuffer(data.ptr, data.size) ? FILETYPE_VC1541_ROM :
     FILETYPE_UNKNOWN;
 
     // Count the number of 0xFF bytes at the beginning of the file

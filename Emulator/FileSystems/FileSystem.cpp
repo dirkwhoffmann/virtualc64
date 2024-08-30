@@ -88,8 +88,8 @@ FileSystem::init(const D64File &d64)
     init(descriptor);
 
     // Import file system
-    importVolume(d64.data, d64.size);
-    
+    importVolume(d64.data.ptr, d64.data.size);
+
     // Import error codes (if any)
     for (Block b = 0; b < (Block)blocks.size(); b++) {
         setErrorCode(b, d64.getErrorCode(b));

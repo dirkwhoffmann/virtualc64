@@ -47,7 +47,7 @@ P00File::init(const FileSystem &fs)
     init(p00Size);
 
     // Write magic bytes (8 bytes)
-    u8 *p = data;
+    u8 *p = data.ptr;
     strcpy((char *)p, "C64File");
     p += 8;
     
@@ -69,7 +69,7 @@ PETName<16>
 P00File::getName() const
 {
     // P00 files use 0x00 as padding character
-    auto result = PETName<16>(data + 8, 0x00);
+    auto result = PETName<16>(data.ptr + 8, 0x00);
 
     // Rectify the padding characters
     result.setPad(0xA0);
@@ -101,7 +101,7 @@ isize
 P00File::itemSize(isize nr) const
 {
     assert(nr == 0);
-    return size - 0x1A;
+    return data.size - 0x1A;
 }
 
 u8

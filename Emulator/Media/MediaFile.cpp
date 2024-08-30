@@ -13,6 +13,7 @@
 #include "config.h"
 #include "MediaFile.h"
 #include "VirtualC64.h"
+#include "StringUtils.h"
 #include "Checksum.h"
 #include "CRTFile.h"
 #include "D64File.h"
@@ -156,6 +157,12 @@ MediaFile::make(DriveAPI &drive, FileType type)
         default:
             return nullptr;
     }
+}
+
+string
+MediaFile::getSizeAsString() const
+{
+    return util::byteCountAsString(getSize());
 }
 
 }
