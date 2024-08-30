@@ -15,6 +15,7 @@
 #include "BasicTypes.h"
 #include "Checksum.h"
 #include <filesystem>
+#include <vector>
 
 namespace vc64::util {
 

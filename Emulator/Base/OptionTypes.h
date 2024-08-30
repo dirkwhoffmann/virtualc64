@@ -30,7 +30,7 @@ enum_long(OPT)
     OPT_HOST_FRAMEBUF_WIDTH,    ///< Current width of the emulator window
     OPT_HOST_FRAMEBUF_HEIGHT,   ///< Current height of the emulator window
 
-    // Emulator
+    // C64
     OPT_C64_WARP_BOOT,          ///< Warp-boot time in seconds
     OPT_C64_WARP_MODE,          ///< Warp activation mode
     OPT_C64_VSYNC,              ///< Derive the frame rate to the VSYNC signal

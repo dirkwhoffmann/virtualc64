@@ -232,9 +232,10 @@ Allocator<T>::compress(isize n, isize offset)
     for (isize i = 0; i < std::min(offset, size); i++) vec.push_back(ptr[i]);
 
     // Perform run-length encoding
+    auto maxChunkSize = isize(std::numeric_limits<T>::max());
     for (isize i = offset; i < size; i++) {
 
-        if (ptr[i] == prev && repetitions < std::numeric_limits<T>::max()) {
+        if (ptr[i] == prev && repetitions < maxChunkSize) {
 
             repetitions++;
 
