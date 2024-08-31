@@ -30,6 +30,12 @@ PRGFile::isCompatible(std::istream &stream)
     return (util::streamLength(stream) >= 2);
 }
 
+bool
+PRGFile::isCompatible(const u8 *buf, isize len)
+{
+    return (len >= 2);
+}
+
 void
 PRGFile::init(const FileSystem &fs)
 {

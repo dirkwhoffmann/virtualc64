@@ -33,6 +33,15 @@ P00File::isCompatible(std::istream &stream)
     return util::matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
 
+bool
+P00File::isCompatible(const u8 *buf, isize len)
+{
+    const u8 magicBytes[] = { 0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65 };
+
+    if (len < 0x1A) return false;
+    return util::matchingBufferHeader(buf, magicBytes, sizeof(magicBytes));
+}
+
 void
 P00File::init(const FileSystem &fs)
 {

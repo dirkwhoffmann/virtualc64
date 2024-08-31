@@ -44,6 +44,7 @@ void
 AnyFile::init(const u8 *buf, isize len)
 {
     assert(buf);
+    if (!isCompatibleBuffer(buf, len)) throw Error(VC64ERROR_FILE_TYPE_MISMATCH);
     std::stringstream stream(std::ios::binary);
     stream.write((const char *)buf, len);
     init(stream);

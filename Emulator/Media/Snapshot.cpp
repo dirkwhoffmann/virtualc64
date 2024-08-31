@@ -63,6 +63,12 @@ Snapshot::isCompatible(std::istream &stream)
     return util::matchingStreamHeader(stream, "VC64");
 }
 
+bool
+Snapshot::isCompatible(const u8 *buf, isize len)
+{
+    return len >= 0x15 && util::matchingBufferHeader(buf, string("VC64"));
+}
+
 Snapshot::Snapshot(isize capacity)
 {
     init(capacity + sizeof(SnapshotHeader));

@@ -37,6 +37,12 @@ CRTFile::isCompatible(std::istream &stream)
     return util::matchingStreamHeader(stream, "C64 CARTRIDGE   ");
 }
 
+bool
+CRTFile::isCompatible(const u8 *buf, isize len)
+{
+    return util::matchingBufferHeader(buf, len, string("C64 CARTRIDGE   "));
+}
+
 PETName<16>
 CRTFile::getName() const
 {

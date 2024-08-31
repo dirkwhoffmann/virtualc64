@@ -62,6 +62,16 @@ RomFile::isCompatible(std::istream &stream)
 }
 
 bool
+RomFile::isCompatible(const u8 *buf, isize len)
+{
+    return
+    isBasicRomBuffer(buf, len) ||
+    isCharRomBuffer(buf, len) ||
+    isKernalRomBuffer(buf, len) ||
+    isVC1541RomBuffer(buf, len);
+}
+
+bool
 RomFile::isRomStream(RomType type, std::istream &is)
 {
     isize size = util::streamLength(is);

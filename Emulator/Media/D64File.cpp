@@ -37,6 +37,18 @@ D64File::isCompatible(std::istream &stream)
     len == D64_802_SECTORS_ECC;
 }
 
+bool
+D64File::isCompatible(const u8 *buf, isize len)
+{
+    return
+    len == D64_683_SECTORS ||
+    len == D64_683_SECTORS_ECC ||
+    len == D64_768_SECTORS ||
+    len == D64_768_SECTORS_ECC ||
+    len == D64_802_SECTORS ||
+    len == D64_802_SECTORS_ECC;
+}
+
 D64File::D64File()
 {
     memset(errors, 0x01, sizeof(errors));

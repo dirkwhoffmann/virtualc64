@@ -32,4 +32,10 @@ Script::isCompatible(std::istream &stream)
     return true;
 }
 
+bool
+Script::isCompatible(const u8 *buf, isize len)
+{
+    return true;
+}
+
 }

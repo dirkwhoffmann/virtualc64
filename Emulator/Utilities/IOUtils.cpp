@@ -17,6 +17,7 @@
 #include <bitset>
 #include <fstream>
 #include <iomanip>
+#include <limits>
 #include <vector>
 
 namespace vc64::util {
@@ -157,17 +158,38 @@ matchingStreamHeader(std::istream &is, const string &header, isize offset)
 }
 
 bool
-matchingBufferHeader(const u8 *buffer, const u8 *header, isize len, isize offset)
+matchingBufferHeader(const u8 *buf, const u8 *header, isize hlen, isize offset)
 {
-    assert(buffer != nullptr);
+    assert(buf != nullptr);
     assert(header != nullptr);
     
-    for (isize i = 0; i < len; i++) {
-        if (buffer[offset + i] != header[i])
+    for (isize i = 0; i < hlen; i++) {
+        if (buf[offset + i] != header[i])
             return false;
     }
 
     return true;
+}
+
+bool matchingBufferHeader(const u8 *buf, isize blen, const string &header, isize offset)
+{
+    assert(buf != nullptr);
+
+    if (isize length = isize(header.length()); length <= blen) {
+    
+        for (usize i = 0; i < header.length(); i++) {
+            if (buf[offset + i] != header[i])
+                return false;
+        }
+    }
+
+    return true;
+}
+
+bool matchingBufferHeader(const u8 *buf, const string &header, isize offset)
+{
+    auto blen = isize(std::numeric_limits<isize>::max);
+    return matchingBufferHeader(buf, blen, header, offset);
 }
 
 isize
