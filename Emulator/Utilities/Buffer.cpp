@@ -97,7 +97,7 @@ Allocator<T>::init(const T *buf, isize elements)
 template <class T> void
 Allocator<T>::init(const string &str)
 {
-    init((const T *)str.c_str(), str.length() / sizeof(T));
+    init((const T *)str.c_str(), isize(str.length() / sizeof(T)));
 }
 
 template <class T> void
