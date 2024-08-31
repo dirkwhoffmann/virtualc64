@@ -57,13 +57,6 @@ Snapshot::isCompatible(const fs::path &path)
 }
 
 bool
-Snapshot::isCompatible(std::istream &stream)
-{
-    if (util::streamLength(stream) < 0x15) return false;
-    return util::matchingStreamHeader(stream, "VC64");
-}
-
-bool
 Snapshot::isCompatible(const u8 *buf, isize len)
 {
     return len >= 0x15 && util::matchingBufferHeader(buf, string("VC64"));

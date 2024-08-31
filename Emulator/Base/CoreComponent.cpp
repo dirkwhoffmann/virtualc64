@@ -133,17 +133,6 @@ CoreComponent::getFallback(Option opt) const
     return emulator.defaults.get(opt);
 }
 
-void
-CoreComponent::routeOption(Option opt, std::vector<Configurable *> &result)
-{
-    for (auto &o : getOptions()) {
-        if (o == opt) result.push_back(this);
-    }
-    for (auto &c : subComponents) {
-        c->routeOption(opt, result);
-    }
-}
-
 Configurable *
 CoreComponent::routeOption(Option opt, isize objid)
 {

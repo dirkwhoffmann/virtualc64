@@ -24,20 +24,6 @@ D64File::isCompatible(const fs::path &path)
 }
 
 bool
-D64File::isCompatible(std::istream &stream)
-{
-    isize len = util::streamLength(stream);
-    
-    return
-    len == D64_683_SECTORS ||
-    len == D64_683_SECTORS_ECC ||
-    len == D64_768_SECTORS ||
-    len == D64_768_SECTORS_ECC ||
-    len == D64_802_SECTORS ||
-    len == D64_802_SECTORS_ECC;
-}
-
-bool
 D64File::isCompatible(const u8 *buf, isize len)
 {
     return

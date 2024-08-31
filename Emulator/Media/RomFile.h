@@ -37,21 +37,8 @@ public:
     //
 
     static bool isCompatible(const fs::path &name);
-    [[deprecated]] static bool isCompatible(std::istream &stream);
     static bool isCompatible(const u8 *buf, isize len);
     static bool isCompatible(const Buffer<u8> &buffer);
-
-    [[deprecated]] static bool isRomStream(RomType type, std::istream &stream);
-    [[deprecated]] static bool isBasicRomStream(std::istream &stream);
-    [[deprecated]] static bool isCharRomStream(std::istream &stream);
-    [[deprecated]] static bool isKernalRomStream(std::istream &stream);
-    [[deprecated]] static bool isVC1541RomStream(std::istream &stream);
-
-    [[deprecated]] static bool isRomFile(RomType type, const fs::path &path);
-    [[deprecated]] static bool isBasicRomFile(const fs::path &path);
-    [[deprecated]] static bool isCharRomFile(const fs::path &path);
-    [[deprecated]] static bool isKernalRomFile(const fs::path &path);
-    [[deprecated]] static bool isVC1541RomFile(const fs::path &path);
 
     static bool isRomBuffer(RomType type, const u8 *buf, isize len);
     static bool isBasicRomBuffer(const u8 *buf, isize len);
@@ -87,7 +74,6 @@ public:
     //
     
     bool isCompatiblePath(const fs::path &path) override { return isCompatible(path); }
-    [[deprecated]] bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     bool isCompatibleBuffer(const u8 *buf, isize len) override { return isCompatible(buf, len); }
     FileType type() const override { return romFileType; }
     void finalizeRead() override;

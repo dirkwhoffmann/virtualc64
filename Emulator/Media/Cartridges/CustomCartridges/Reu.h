@@ -222,13 +222,7 @@ private:
     bool doDma(EventID id);
     void finalizeDma(EventID id);
 
-    // [[deprecated]] void doDma();
-    [[deprecated]] void stash(isize len);
-    [[deprecated]] void fetch(isize len);
-    [[deprecated]] void swap(isize len);
-    [[deprecated]] void verify(isize len);
-
-
+    
     //
     // Processing events
     //

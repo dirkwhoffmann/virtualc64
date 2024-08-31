@@ -130,21 +130,6 @@ Allocator<T>::init(const std::filesystem::path &path)
 
     // Call the proper init delegate
     init(sstr.str());
-
-    /*
-    // Get the stream length in bytes
-    auto length = streamLength(stream);
-    
-    // Create a buffer of proper size
-    if (length % sizeof(T)) {
-        init(length / sizeof(T) + 1);
-    } else {
-        alloc(length / sizeof(T));
-    }
-    
-    // Read from stream
-    stream.read((char *)ptr, length);
-    */
 }
 
 template <class T> void

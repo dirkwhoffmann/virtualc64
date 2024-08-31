@@ -25,15 +25,6 @@ P00File::isCompatible(const fs::path &path)
 }
 
 bool
-P00File::isCompatible(std::istream &stream)
-{
-    const u8 magicBytes[] = { 0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65 };
-
-    if (util::streamLength(stream) < 0x1A) return false;
-    return util::matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
-}
-
-bool
 P00File::isCompatible(const u8 *buf, isize len)
 {
     const u8 magicBytes[] = { 0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65 };

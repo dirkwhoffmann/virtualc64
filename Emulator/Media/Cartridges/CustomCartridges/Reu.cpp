@@ -472,46 +472,6 @@ Reu::processEvent(EventID id)
 }
 
 void
-Reu::stash(isize len)
-{
-    debug(REU_DEBUG, "stash(%x,%x,%ld)\n", c64Addr, reuAddr, len);
-
-    // Perform DMA
-    for (isize i = 0; i < len; i++) doDma(EXP_REU_STASH);
-    finalizeDma(EXP_REU_STASH);
-}
-
-void
-Reu::fetch(isize len)
-{
-    debug(REU_DEBUG, "fetch(%x,%x,%ld)\n", c64Addr, reuAddr, len);
-
-    // Perform DMA
-    for (isize i = 0; i < len; i++) doDma(EXP_REU_FETCH);
-    finalizeDma(EXP_REU_FETCH);
-}
-
-void
-Reu::swap(isize len)
-{
-    debug(REU_DEBUG, "swap(%x,%x,%ld)\n", c64Addr, reuAddr, len);
-
-    // Perform DMA
-    for (isize i = 0; i < len; i++) doDma(EXP_REU_SWAP);
-    finalizeDma(EXP_REU_SWAP);
-}
-
-void
-Reu::verify(isize len)
-{
-    debug(REU_DEBUG, "verify(%x,%x,%ld)\n", c64Addr, reuAddr, len);
-
-    // Perform DMA
-    for (isize i = 0; i < len; i++) if (!doDma(EXP_REU_VERIFY)) break;
-    finalizeDma(EXP_REU_VERIFY);
-}
-
-void
 Reu::triggerEndOfBlockIrq()
 {
     if (irqEnabled() && irqOnEndOfBlock() && GET_BIT(sr, 6)) {

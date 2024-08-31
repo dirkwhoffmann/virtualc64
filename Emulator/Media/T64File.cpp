@@ -26,23 +26,6 @@ T64File::isCompatible(const fs::path &path)
 }
 
 bool
-T64File::isCompatible(std::istream &stream)
-{
-    const string magicT64 = "C64";
-    const string magicTAP = "C64-TAPE";
-
-    if (util::streamLength(stream) < 0x40) return false;
-
-    // T64 files must begin with "C64"
-    if (!util::matchingStreamHeader(stream, magicT64)) return false;
-
-    // T64 files must *not* begin with "C64-TAPE" (which is used by TAP files)
-    if (util::matchingStreamHeader(stream, magicTAP)) return false;
-
-    return true;
-}
-
-bool
 T64File::isCompatible(const u8 *buf, isize len)
 {
     const string magicT64 = "C64";

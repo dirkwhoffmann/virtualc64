@@ -64,7 +64,6 @@ public:
     //
 
     static bool isCompatible(const fs::path &path);
-    [[deprecated]] static bool isCompatible(std::istream &stream);
     static bool isCompatible(const u8 *buf, isize len);
     static bool isCompatible(const Buffer<u8> &buffer);
 
@@ -93,7 +92,6 @@ public:
 
     FileType type() const override { return FILETYPE_SNAPSHOT; }
     bool isCompatiblePath(const fs::path &path) override { return isCompatible(path); }
-    [[deprecated]] bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     bool isCompatibleBuffer(const u8 *buf, isize len) override { return isCompatible(buf, len); }
     void finalizeRead() throws override;
 

@@ -52,16 +52,6 @@ RomFile::isCompatible(const fs::path &path)
 }
 
 bool
-RomFile::isCompatible(std::istream &stream)
-{
-    return
-    isBasicRomStream(stream) ||
-    isCharRomStream(stream) ||
-    isKernalRomStream(stream) ||
-    isVC1541RomStream(stream);
-}
-
-bool
 RomFile::isCompatible(const u8 *buf, isize len)
 {
     return
@@ -75,84 +65,6 @@ bool
 RomFile::isCompatible(const Buffer<u8> &buf)
 {
     return isCompatible(buf.ptr, buf.size);
-}
-
-bool
-RomFile::isRomStream(RomType type, std::istream &is)
-{
-    isize size = util::streamLength(is);
-    
-    for (isize i = 0; signatures[i].size != 0; i++) {
-
-        // Only proceed if the file type matches
-        if (signatures[i].type != type) continue;
-        
-        // Only proceed if the file size matches
-        if (signatures[i].size != size) continue;
-
-        // Only proceed if the matches bytes matche
-        if (!util::matchingStreamHeader(is, signatures[i].magic, 3, signatures[i].offset))
-            continue;
-
-        return true;
-    }
-
-    return false;
-}
-
-bool
-RomFile::isBasicRomStream(std::istream &is)
-{
-    return isRomStream(ROM_TYPE_BASIC, is);
-}
-
-bool
-RomFile::isCharRomStream(std::istream &is)
-{
-    return isRomStream(ROM_TYPE_CHAR, is);
-}
-
-bool
-RomFile::isKernalRomStream(std::istream &is)
-{
-    return isRomStream(ROM_TYPE_KERNAL, is);
-}
-
-bool
-RomFile::isVC1541RomStream(std::istream &is)
-{
-    return isRomStream(ROM_TYPE_VC1541, is);
-}
-
-bool
-RomFile::isRomFile(RomType type, const fs::path &path)
-{
-    std::ifstream stream(path);
-    return isRomStream(type, stream);
-}
-
-bool
-RomFile::isBasicRomFile(const fs::path &path)
-{
-    return isRomFile(ROM_TYPE_BASIC, path);
-}
-
-bool
-RomFile::isCharRomFile(const fs::path &path)
-{
-    return isRomFile(ROM_TYPE_CHAR, path);
-}
-
-bool
-RomFile::isKernalRomFile(const fs::path &path)
-{
-    return isRomFile(ROM_TYPE_KERNAL, path);
-}
-
-bool
-RomFile::isVC1541RomFile(const fs::path &path)
-{
-    return isRomFile(ROM_TYPE_VC1541, path);
 }
 
 bool
