@@ -51,7 +51,7 @@ AnyFile::init(const u8 *buf, isize len)
 void 
 AnyFile::init(const string &str)
 {
-    init((const u8 *)str.c_str(), str.length());
+    init((const u8 *)str.c_str(), (isize)str.length());
 }
 
 void

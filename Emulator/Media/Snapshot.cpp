@@ -128,12 +128,19 @@ Snapshot::isTooOld() const
 {
     auto header = getHeader();
     
+    return
+    header->major != SNP_MAJOR ? header->major < SNP_MAJOR :
+    header->minor != SNP_MINOR ? header->minor < SNP_MINOR :
+    header->subminor < SNP_SUBMINOR;
+
+    /*
     if (header->major < SNP_MAJOR) return true;
     if (header->major > SNP_MAJOR) return false;
     if (header->minor < SNP_MINOR) return true;
     if (header->minor > SNP_MINOR) return false;
     
     return header->subminor < SNP_SUBMINOR;
+    */
 }
 
 bool
@@ -141,12 +148,19 @@ Snapshot::isTooNew() const
 {
     auto header = getHeader();
     
+    return
+    header->major != SNP_MAJOR ? header->major > SNP_MAJOR :
+    header->minor != SNP_MINOR ? header->minor > SNP_MINOR :
+    header->subminor > SNP_SUBMINOR;
+
+    /*
     if (header->major > SNP_MAJOR) return true;
     if (header->major < SNP_MAJOR) return false;
     if (header->minor > SNP_MINOR) return true;
     if (header->minor < SNP_MINOR) return false;
 
     return header->subminor > SNP_SUBMINOR;
+    */
 }
 
 bool

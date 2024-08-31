@@ -88,12 +88,6 @@ RomFile::isRomBuffer(RomType type, const u8 *buf, isize len)
     }
 
     return false;
-
-    /*
-    std::stringstream stream;
-    stream.write((const char *)buf, len);
-    return isRomStream(type, stream);
-    */
 }
 
 bool

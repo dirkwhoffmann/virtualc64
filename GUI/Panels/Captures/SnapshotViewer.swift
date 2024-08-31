@@ -51,7 +51,7 @@ class SnapshotViewer: DialogController {
 
         self.carousel.type = iCarouselType.timeMachine
         self.carousel.isHidden = false
-        self.updateCarousel(goto: self.lastItem, animated: false)
+        self.updateCarousel(goto: myDocument.snapshots.count - 1, animated: false)
     }
 
     func updateLabels() {
@@ -95,7 +95,7 @@ class SnapshotViewer: DialogController {
         
         let index = min(item, carousel.numberOfItems - 1)
         if index >= 0 { carousel.scrollToItem(at: index, animated: animated) }
-        
+
         carousel.layOutItemViews()
         updateLabels()
     }

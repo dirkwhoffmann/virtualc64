@@ -120,12 +120,8 @@ G64File::init(Disk &disk)
         buffer[pos++] = 0;
         buffer[pos++] = 0;
     }
+
     assert(isize(pos) == length);
-    
-    std::stringstream stream;
-    stream.write((char *)buffer, length);
-    stream.seekg(0, std::ios::beg);
-    
     init(buffer, length);
 }
 
