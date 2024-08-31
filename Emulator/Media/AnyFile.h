@@ -77,12 +77,11 @@ public:
 
     void init(isize capacity);
     void init(const Buffer<u8> &buffer) throws;
+    // void init(const std::vector<u8> &vector) throws;
     void init(const u8 *buf, isize len) throws;
+    void init(const string &str) throws;
     void init(const std::filesystem::path &path) throws;
-    void init(const std::filesystem::path &path, std::istream &stream) throws;
-    void init(std::istream &stream) throws;
-    void init(FILE *file) throws;
-    
+
     // explicit operator bool() const { return data.ptr != nullptr; }
 
 
@@ -111,9 +110,6 @@ public:
     // Returns a data byte
     u8 getData(isize nr) { return (data.ptr && nr < data.size) ? data.ptr[nr] : 0; }
 
-    // Returns a fingerprint (hash value) for this file
-    // u64 fnv() const override;
-    
     // Removes a certain number of bytes from the beginning of the file
     void strip(isize count);
 
@@ -137,8 +133,6 @@ protected:
     virtual bool isCompatibleBuffer(const u8 *buf, isize len) = 0;
     virtual bool isCompatibleStream(std::istream &stream) = 0;
 
-    isize readFromStream(std::istream &stream) throws override;
-    isize readFromFile(const fs::path &path) throws override;
     isize readFromBuffer(const u8 *buf, isize len) throws override;
     isize readFromBuffer(const Buffer<u8> &buffer) throws;
 

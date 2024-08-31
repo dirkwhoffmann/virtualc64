@@ -130,7 +130,7 @@ G64File::init(Disk &disk)
     stream.write((char *)buffer, length);
     stream.seekg(0, std::ios::beg);
     
-    init(stream);
+    init(buffer, length);
 }
 
 isize

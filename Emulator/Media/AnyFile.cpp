@@ -45,9 +45,13 @@ AnyFile::init(const u8 *buf, isize len)
 {
     assert(buf);
     if (!isCompatibleBuffer(buf, len)) throw Error(VC64ERROR_FILE_TYPE_MISMATCH);
-    std::stringstream stream(std::ios::binary);
-    stream.write((const char *)buf, len);
-    init(stream);
+    readFromBuffer(buf, len);
+}
+
+void 
+AnyFile::init(const string &str)
+{
+    init((const u8 *)str.c_str(), str.length());
 }
 
 void
@@ -55,31 +59,11 @@ AnyFile::init(const fs::path &path)
 {
     std::ifstream stream(path, std::ios::binary);
     if (!stream.is_open()) throw Error(VC64ERROR_FILE_NOT_FOUND, path);
-    init(path, stream);
-}
 
-void
-AnyFile::init(const fs::path &path, std::istream &stream)
-{
-    if (!isCompatiblePath(path)) throw Error(VC64ERROR_FILE_TYPE_MISMATCH);
-    init(stream);
+    std::ostringstream sstr(std::ios::binary);
+    sstr << stream.rdbuf();
+    init(sstr.str());
     this->path = path;
-}
-
-void
-AnyFile::init(std::istream &stream)
-{
-    if (!isCompatibleStream(stream)) throw Error(VC64ERROR_FILE_TYPE_MISMATCH);
-    readFromStream(stream);
-}
-
-void
-AnyFile::init(FILE *file)
-{
-    assert(file);
-    std::stringstream stream(std::ios::binary);
-    int c; while ((c = fgetc(file)) != EOF) { stream.put((char)c); }
-    init(stream);
 }
 
 string
@@ -116,42 +100,6 @@ AnyFile::flash(u8 *buffer, isize offset) const
         assert(buffer);
         std::memcpy(buffer + offset, data.ptr, data.size);
     }
-}
-
-isize
-AnyFile::readFromStream(std::istream &stream)
-{
-    // Get stream size
-    auto fsize = stream.tellg();
-    stream.seekg(0, std::ios::end);
-    fsize = stream.tellg() - fsize;
-    stream.seekg(0, std::ios::beg);
-
-    // Allocate memory
-    data.init(isize(fsize));
-
-    // Read from stream
-    stream.read((char *)data.ptr, data.size);
-    finalizeRead();
-
-    return data.size;
-}
-
-isize
-AnyFile::readFromFile(const fs::path &path)
-{
-    std::ifstream stream(path, std::ifstream::binary);
-
-    if (!stream.is_open()) {
-        throw Error(VC64ERROR_FILE_CANT_READ, path);
-    }
-    
-    this->path = path;
-
-    isize result = readFromStream(stream);
-    assert(result == data.size);
-
-    return result;
 }
 
 isize

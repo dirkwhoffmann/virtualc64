@@ -85,8 +85,8 @@ public:
 
 public:
 
-    virtual isize readFromStream(std::istream &stream) = 0;
-    virtual isize readFromFile(const std::filesystem::path &path) = 0;
+    // virtual isize readFromStream(std::istream &stream) = 0;
+    // virtual isize readFromFile(const std::filesystem::path &path) = 0;
     virtual isize readFromBuffer(const u8 *buf, isize len) = 0;
 
     virtual isize writeToStream(std::ostream &stream) = 0;
