@@ -3,8 +3,10 @@ name: CMake with MinGW
 on:
   push:
   pull_request:
-  schedule:
-    - cron: '40 5 * * *'
+    branches: [ master, dev, v5.0 ]
+
+#env:
+#  BUILD_TYPE: Release
 
 jobs:
   build:
