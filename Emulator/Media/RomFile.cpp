@@ -158,9 +158,30 @@ RomFile::isVC1541RomFile(const fs::path &path)
 bool
 RomFile::isRomBuffer(RomType type, const u8 *buf, isize len)
 {
+    for (isize i = 0; signatures[i].size != 0; i++) {
+
+        auto magic = signatures[i].magic;
+        auto offset = signatures[i].offset;
+
+        // Only proceed if the file type matches
+        if (signatures[i].type != type) continue;
+
+        // Only proceed if the file size matches
+        if (signatures[i].size != len) continue;
+
+        // Only proceed if the matches bytes matche
+        if (!util::matchingBufferHeader(buf, magic, 3, offset)) continue;
+
+        return true;
+    }
+
+    return false;
+
+    /*
     std::stringstream stream;
     stream.write((const char *)buf, len);
     return isRomStream(type, stream);
+    */
 }
 
 bool

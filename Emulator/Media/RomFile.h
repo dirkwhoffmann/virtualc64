@@ -47,11 +47,11 @@ public:
     [[deprecated]] static bool isKernalRomStream(std::istream &stream);
     [[deprecated]] static bool isVC1541RomStream(std::istream &stream);
 
-    static bool isRomFile(RomType type, const fs::path &path);
-    static bool isBasicRomFile(const fs::path &path);
-    static bool isCharRomFile(const fs::path &path);
-    static bool isKernalRomFile(const fs::path &path);
-    static bool isVC1541RomFile(const fs::path &path);
+    [[deprecated]] static bool isRomFile(RomType type, const fs::path &path);
+    [[deprecated]] static bool isBasicRomFile(const fs::path &path);
+    [[deprecated]] static bool isCharRomFile(const fs::path &path);
+    [[deprecated]] static bool isKernalRomFile(const fs::path &path);
+    [[deprecated]] static bool isVC1541RomFile(const fs::path &path);
 
     static bool isRomBuffer(RomType type, const u8 *buf, isize len);
     static bool isBasicRomBuffer(const u8 *buf, isize len);
