@@ -17,7 +17,7 @@
 
 namespace vc64 {
 
-class MemoryDebugger : public SubComponent {
+class MemoryDebugger final : public SubComponent {
 
     Descriptions descriptions = {{
 

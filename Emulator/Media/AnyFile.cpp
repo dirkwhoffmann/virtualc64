@@ -40,14 +40,6 @@ AnyFile::init(const Buffer<u8> &buffer)
     init(buffer.ptr, buffer.size);
 }
 
-void
-AnyFile::init(const u8 *buf, isize len)
-{
-    assert(buf);
-    if (!isCompatibleBuffer(buf, len)) throw Error(VC64ERROR_FILE_TYPE_MISMATCH);
-    readFromBuffer(buf, len);
-}
-
 void 
 AnyFile::init(const string &str)
 {
@@ -64,6 +56,14 @@ AnyFile::init(const fs::path &path)
     sstr << stream.rdbuf();
     init(sstr.str());
     this->path = path;
+}
+
+void
+AnyFile::init(const u8 *buf, isize len)
+{
+    assert(buf);
+    if (!isCompatibleBuffer(buf, len)) throw Error(VC64ERROR_FILE_TYPE_MISMATCH);
+    readFromBuffer(buf, len);
 }
 
 string

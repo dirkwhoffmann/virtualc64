@@ -77,12 +77,9 @@ public:
 
     void init(isize capacity);
     void init(const Buffer<u8> &buffer) throws;
-    // void init(const std::vector<u8> &vector) throws;
-    void init(const u8 *buf, isize len) throws;
     void init(const string &str) throws;
     void init(const std::filesystem::path &path) throws;
-
-    // explicit operator bool() const { return data.ptr != nullptr; }
+    void init(const u8 *buf, isize len) throws;
 
 
     //
