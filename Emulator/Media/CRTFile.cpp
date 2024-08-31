@@ -43,6 +43,12 @@ CRTFile::isCompatible(const u8 *buf, isize len)
     return util::matchingBufferHeader(buf, len, string("C64 CARTRIDGE   "));
 }
 
+bool
+CRTFile::isCompatible(const Buffer<u8> &buf)
+{
+    return isCompatible(buf.ptr, buf.size);
+}
+
 PETName<16>
 CRTFile::getName() const
 {

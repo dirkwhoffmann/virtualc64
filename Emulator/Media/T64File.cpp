@@ -59,6 +59,12 @@ T64File::isCompatible(const u8 *buf, isize len)
     return true;
 }
 
+bool
+T64File::isCompatible(const Buffer<u8> &buf)
+{
+    return isCompatible(buf.ptr, buf.size);
+}
+
 void
 T64File::init(const class FileSystem &fs)
 {

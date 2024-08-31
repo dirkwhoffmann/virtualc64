@@ -131,7 +131,8 @@ protected:
 
     virtual bool isCompatiblePath(const fs::path &path) = 0;
     virtual bool isCompatibleBuffer(const u8 *buf, isize len) = 0;
-    virtual bool isCompatibleStream(std::istream &stream) = 0;
+    bool isCompatibleBuffer(const Buffer<u8> &buffer);
+    [[deprecated]] virtual bool isCompatibleStream(std::istream &stream) = 0;
 
     isize readFromBuffer(const u8 *buf, isize len) throws override;
     isize readFromBuffer(const Buffer<u8> &buffer) throws;

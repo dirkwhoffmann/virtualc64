@@ -72,6 +72,12 @@ RomFile::isCompatible(const u8 *buf, isize len)
 }
 
 bool
+RomFile::isCompatible(const Buffer<u8> &buf)
+{
+    return isCompatible(buf.ptr, buf.size);
+}
+
+bool
 RomFile::isRomStream(RomType type, std::istream &is)
 {
     isize size = util::streamLength(is);
@@ -179,6 +185,36 @@ bool
 RomFile::isVC1541RomBuffer(const u8 *buf, isize len)
 {
     return isRomBuffer(ROM_TYPE_VC1541, buf, len);
+}
+
+bool
+RomFile::isRomBuffer(RomType type, const Buffer<u8> &buf)
+{
+    return isRomBuffer(type, buf.ptr, buf.size);
+}
+
+bool
+RomFile::isBasicRomBuffer(const Buffer<u8> &buf)
+{
+    return isRomBuffer(ROM_TYPE_BASIC, buf.ptr, buf.size);
+}
+
+bool
+RomFile::isCharRomBuffer(const Buffer<u8> &buf)
+{
+    return isRomBuffer(ROM_TYPE_CHAR, buf.ptr, buf.size);
+}
+
+bool
+RomFile::isKernalRomBuffer(const Buffer<u8> &buf)
+{
+    return isRomBuffer(ROM_TYPE_KERNAL, buf.ptr, buf.size);
+}
+
+bool
+RomFile::isVC1541RomBuffer(const Buffer<u8> &buf)
+{
+    return isRomBuffer(ROM_TYPE_VC1541, buf.ptr, buf.size);
 }
 
 void

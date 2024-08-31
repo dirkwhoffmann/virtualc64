@@ -49,6 +49,12 @@ D64File::isCompatible(const u8 *buf, isize len)
     len == D64_802_SECTORS_ECC;
 }
 
+bool
+D64File::isCompatible(const Buffer<u8> &buf)
+{
+    return isCompatible(buf.ptr, buf.size);
+}
+
 D64File::D64File()
 {
     memset(errors, 0x01, sizeof(errors));

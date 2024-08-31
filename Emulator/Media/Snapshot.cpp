@@ -69,6 +69,12 @@ Snapshot::isCompatible(const u8 *buf, isize len)
     return len >= 0x15 && util::matchingBufferHeader(buf, string("VC64"));
 }
 
+bool
+Snapshot::isCompatible(const Buffer<u8> &buf)
+{
+    return isCompatible(buf.ptr, buf.size);
+}
+
 Snapshot::Snapshot(isize capacity)
 {
     init(capacity + sizeof(SnapshotHeader));

@@ -52,7 +52,7 @@ public:
     //
 
     bool isCompatiblePath(const fs::path &path) override { return isCompatible(path); }
-    bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
+    [[deprecated]] bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     bool isCompatibleBuffer(const u8 *buf, isize len) override { return isCompatible(buf, len); }
     FileType type() const override { return FILETYPE_FOLDER; }
 

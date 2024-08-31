@@ -42,6 +42,12 @@ P00File::isCompatible(const u8 *buf, isize len)
     return util::matchingBufferHeader(buf, magicBytes, sizeof(magicBytes));
 }
 
+bool
+P00File::isCompatible(const Buffer<u8> &buf)
+{
+    return isCompatible(buf.ptr, buf.size);
+}
+
 void
 P00File::init(const FileSystem &fs)
 {

@@ -32,41 +32,41 @@ namespace vc64 {
 FileType
 MediaFile::type(const fs::path &path)
 {
-    std::ifstream stream(path, std::ifstream::binary);
-    if (!stream.is_open()) return FILETYPE_UNKNOWN;
+    Buffer<u8> buffer(path);
+    if (buffer.empty()) return FILETYPE_UNKNOWN;
 
     if (Snapshot::isCompatible(path) &&
-        Snapshot::isCompatible(stream))return FILETYPE_SNAPSHOT;
+        Snapshot::isCompatible(buffer)) return FILETYPE_SNAPSHOT;
 
     if (Script::isCompatible(path) &&
-        Script::isCompatible(stream))return FILETYPE_SCRIPT;
+        Script::isCompatible(buffer)) return FILETYPE_SCRIPT;
 
     if (CRTFile::isCompatible(path) &&
-        CRTFile::isCompatible(stream))return FILETYPE_CRT;
+        CRTFile::isCompatible(buffer)) return FILETYPE_CRT;
 
     if (T64File::isCompatible(path) &&
-        T64File::isCompatible(stream)) return FILETYPE_T64;
+        T64File::isCompatible(buffer)) return FILETYPE_T64;
 
     if (P00File::isCompatible(path) &&
-        P00File::isCompatible(stream)) return FILETYPE_P00;
+        P00File::isCompatible(buffer)) return FILETYPE_P00;
 
     if (PRGFile::isCompatible(path) &&
-        PRGFile::isCompatible(stream)) return FILETYPE_PRG;
+        PRGFile::isCompatible(buffer)) return FILETYPE_PRG;
 
     if (D64File::isCompatible(path) &&
-        D64File::isCompatible(stream)) return FILETYPE_D64;
+        D64File::isCompatible(buffer)) return FILETYPE_D64;
 
     if (G64File::isCompatible(path) &&
-        G64File::isCompatible(stream)) return FILETYPE_G64;
+        G64File::isCompatible(buffer)) return FILETYPE_G64;
 
     if (TAPFile::isCompatible(path) &&
-        TAPFile::isCompatible(stream)) return FILETYPE_TAP;
+        TAPFile::isCompatible(buffer)) return FILETYPE_TAP;
 
     if (RomFile::isCompatible(path)) {
-        if (RomFile::isRomStream(ROM_TYPE_BASIC, stream)) return FILETYPE_BASIC_ROM;
-        if (RomFile::isRomStream(ROM_TYPE_CHAR, stream)) return FILETYPE_CHAR_ROM;
-        if (RomFile::isRomStream(ROM_TYPE_KERNAL, stream)) return FILETYPE_KERNAL_ROM;
-        if (RomFile::isRomStream(ROM_TYPE_VC1541, stream)) return FILETYPE_VC1541_ROM;
+        if (RomFile::isRomBuffer(ROM_TYPE_BASIC, buffer)) return FILETYPE_BASIC_ROM;
+        if (RomFile::isRomBuffer(ROM_TYPE_CHAR, buffer)) return FILETYPE_CHAR_ROM;
+        if (RomFile::isRomBuffer(ROM_TYPE_KERNAL, buffer)) return FILETYPE_KERNAL_ROM;
+        if (RomFile::isRomBuffer(ROM_TYPE_VC1541, buffer)) return FILETYPE_VC1541_ROM;
     }
 
     if (Folder::isCompatible(path)) return FILETYPE_FOLDER;

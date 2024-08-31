@@ -44,6 +44,12 @@ G64File::isCompatible(const u8 *buf, isize len)
     return util::matchingBufferHeader(buf, magicBytes, sizeof(magicBytes));
 }
 
+bool
+G64File::isCompatible(const Buffer<u8> &buf)
+{
+    return isCompatible(buf.ptr, buf.size);
+}
+
 G64File::G64File(isize capacity)
 {
     assert(capacity > 0);
