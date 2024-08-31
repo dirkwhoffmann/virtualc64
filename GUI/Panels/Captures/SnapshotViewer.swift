@@ -62,9 +62,10 @@ class SnapshotViewer: DialogController {
 
         if let snapshot = myDocument.snapshots.element(at: currentItem) {
             let takenAt = snapshot.timeStamp
+            let compressed = snapshot.compressed ? "(Compressed)" : ""
             text1.stringValue = "Taken at " + timeInfo(time: takenAt)
             text2.stringValue = Date.elapsed(time: takenAt)
-            text3.stringValue = "\(snapshot.size / 1024) KB"
+            text3.stringValue = "\(snapshot.size / 1024) KB " + compressed
             message.stringValue = ""
         } else {
             nr.stringValue = "No snapshots taken"

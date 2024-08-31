@@ -191,6 +191,7 @@ C64::getOption(Option opt) const
         case OPT_C64_RUN_AHEAD:         return config.runAhead;
         case OPT_C64_SNAP_AUTO:         return config.snapshots;
         case OPT_C64_SNAP_DELAY:        return config.snapshotDelay;
+        case OPT_C64_SNAP_COMPRESS:     return config.compressSnapshots;
 
         default:
             fatalError;
@@ -242,6 +243,10 @@ C64::checkOption(Option opt, i64 value)
             }
             return;
 
+        case OPT_C64_SNAP_COMPRESS:
+
+            return;
+
         default:
             throw Error(VC64ERROR_OPT_UNSUPPORTED);
     }
@@ -275,6 +280,11 @@ C64::setOption(Option opt, i64 value)
             updateClockFrequency();
             return;
 
+        case OPT_C64_RUN_AHEAD:
+
+            config.runAhead = isize(value);
+            return;
+
         case OPT_C64_SNAP_AUTO:
 
             config.snapshots = bool(value);
@@ -287,9 +297,9 @@ C64::setOption(Option opt, i64 value)
             scheduleNextSNPEvent();
             return;
 
-        case OPT_C64_RUN_AHEAD:
+        case OPT_C64_SNAP_COMPRESS:
 
-            config.runAhead = isize(value);
+            config.compressSnapshots = bool(value);
             return;
 
         default:

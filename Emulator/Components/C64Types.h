@@ -279,7 +279,7 @@ typedef struct
     isize snapshotDelay;
 
     //! Indicates whether snapshots should be stored in compressed form
-    bool snapshotCompress;
+    bool compressSnapshots;
 }
 C64Config;
 

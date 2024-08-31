@@ -95,7 +95,7 @@ enum_long(MSG_TYPE)
     MSG_SHAKING,            ///< A shaking mouse has been detected
 
     // Snapshots
-    MSG_SNAPSHOT_TAKEN,     ///< A snapshot has been taken (see OPT_SNAPSHOTS)
+    MSG_SNAPSHOT_TAKEN,     ///< A snapshot has been taken (see OPT_C64_SNAP_AUTO)
     MSG_SNAPSHOT_RESTORED,  ///< A snapshot has been restored
 
     // Screen recording

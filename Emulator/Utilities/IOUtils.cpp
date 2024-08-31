@@ -188,7 +188,7 @@ bool matchingBufferHeader(const u8 *buf, isize blen, const string &header, isize
 
 bool matchingBufferHeader(const u8 *buf, const string &header, isize offset)
 {
-    auto blen = isize(std::numeric_limits<isize>::max);
+    auto blen = std::numeric_limits<isize>::max();
     return matchingBufferHeader(buf, blen, header, offset);
 }
 

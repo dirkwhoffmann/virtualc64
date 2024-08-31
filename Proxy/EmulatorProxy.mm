@@ -1271,6 +1271,11 @@ using namespace vc64;
     return [self file]->getSize();
 }
 
+- (BOOL)compressed
+{
+    return [self file]->isCompressed();
+}
+
 - (void)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
     try { [self file]->writeToFile(string([path fileSystemRepresentation])); }

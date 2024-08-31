@@ -114,6 +114,7 @@ class C64 final : public CoreComponent, public Inspectable<C64Info> {
         OPT_C64_RUN_AHEAD,
         OPT_C64_SNAP_AUTO,
         OPT_C64_SNAP_DELAY,
+        OPT_C64_SNAP_COMPRESS
     };
     
 private:

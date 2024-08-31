@@ -91,10 +91,6 @@ Snapshot::Snapshot(C64 &c64) : Snapshot(c64.size())
 
     if (SNP_DEBUG) c64.dump(Category::State);
     c64.save(getSnapshotData());
-
-    // REMOVE ASAP (TEST CODE FOR THE RUN-LENGTH ENCODER)
-    compress();
-    uncompress();
 }
 
 void

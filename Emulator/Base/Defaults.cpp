@@ -33,6 +33,7 @@ Defaults::Defaults()
 
     setFallback(OPT_C64_SNAP_AUTO,              false);
     setFallback(OPT_C64_SNAP_DELAY,             10);
+    setFallback(OPT_C64_SNAP_COMPRESS,          true);
 
     setFallback(OPT_POWER_GRID,                 GRID_STABLE_50HZ);
 

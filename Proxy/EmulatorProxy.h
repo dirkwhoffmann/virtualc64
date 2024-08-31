@@ -665,6 +665,7 @@ struct GuardInfo {
 @property (readonly) FileType type;
 @property (readonly) u64 fnv;
 @property (readonly) NSInteger size;
+@property (readonly) BOOL compressed;
 
 - (void)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 

@@ -1249,10 +1249,15 @@ C64::clearFlag(u32 flag)
 MediaFile *
 C64::takeSnapshot()
 {
-    {   SUSPENDED
+    Snapshot *result;
 
-        return new Snapshot(*this);
-    }
+    // Take the snapshot
+    { SUSPENDED result = new Snapshot(*this); }
+
+    // Compress the snapshot if requested
+    if (config.compressSnapshots) result->compress();
+
+    return result;
 }
 
 void
@@ -1260,7 +1265,13 @@ C64::loadSnapshot(const MediaFile &file)
 {
     try {
 
-        const Snapshot &snapshot = dynamic_cast<const Snapshot &>(file);
+        const Snapshot &snap = dynamic_cast<const Snapshot &>(file);
+
+        // Make a copy so we can modify the snapshot
+        Snapshot snapshot(snap);
+
+        // Uncompress the snapshot
+        snapshot.uncompress();
 
         {   SUSPENDED
 

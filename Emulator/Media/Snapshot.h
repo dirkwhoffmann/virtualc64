@@ -128,11 +128,11 @@ public:
     //
 
     // Indicates whether the snapshot is compressed
-    bool isCompressed() { return getHeader()->compressed; }
+    bool isCompressed() const override { return getHeader()->compressed; }
 
     // Compresses or uncompresses the snapshot
-    void compress();
-    void uncompress();
+    void compress() override;
+    void uncompress() override;
 };
 
 }
