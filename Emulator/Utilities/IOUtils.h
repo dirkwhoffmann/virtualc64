@@ -85,7 +85,7 @@ void sprint16b(char *s, u16 value);
 // Handling streams
 //
 
-isize streamLength(std::istream &stream);
+[[deprecated]] isize streamLength(std::istream &stream);
 
 struct dec {
     

@@ -43,6 +43,7 @@ template <class T> struct Allocator {
     void dealloc();
     void init(isize elements, T value = 0);
     void init(const T *buf, isize elements);
+    void init(const string &str);
     void init(const Allocator<T> &other);
     void init(const std::vector<T> &vector);
     void init(const fs::path &path);

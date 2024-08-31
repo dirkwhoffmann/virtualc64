@@ -95,6 +95,12 @@ Allocator<T>::init(const T *buf, isize elements)
 }
 
 template <class T> void
+Allocator<T>::init(const string &str)
+{
+    init((const T *)str.c_str(), str.length() / sizeof(T));
+}
+
+template <class T> void
 Allocator<T>::init(const Allocator<T> &other)
 {
     init(other.ptr, other.size);
@@ -118,6 +124,14 @@ Allocator<T>::init(const std::filesystem::path &path)
     // Return an empty buffer if the stream could not be opened
     if (!stream) { dealloc(); return; }
     
+    // Read file contents into a string stream
+    std::ostringstream sstr(std::ios::binary);
+    sstr << stream.rdbuf();
+
+    // Call the proper init delegate
+    init(sstr.str());
+
+    /*
     // Get the stream length in bytes
     auto length = streamLength(stream);
     
@@ -130,6 +144,7 @@ Allocator<T>::init(const std::filesystem::path &path)
     
     // Read from stream
     stream.read((char *)ptr, length);
+    */
 }
 
 template <class T> void

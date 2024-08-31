@@ -39,7 +39,7 @@ public:
     static bool isCompatible(const fs::path &name);
     static bool isCompatible(std::istream &stream);
     static bool isCompatible(const u8 *buf, isize len);
-    
+
     static bool isRomStream(RomType type, std::istream &stream);
     static bool isBasicRomStream(std::istream &stream);
     static bool isCharRomStream(std::istream &stream);
