@@ -103,8 +103,6 @@ enum_long(SLOT)
     SLOT_EXP,                       // Expansion port
     SLOT_TXD,                       // Serial data out (RS232)
     SLOT_RXD,                       // Serial data in (RS232)
-    SLOT_AFI1,                      // Auto-fire (joystick port 1)
-    SLOT_AFI2,                      // Auto-fire (joystick port 2)
     SLOT_MOT,                       // Datasette motor
     SLOT_DC8,                       // Disk change (Drive 8)
     SLOT_DC9,                       // Disk change (Drive 9)
@@ -204,10 +202,6 @@ enum_i8(EventID)
     // Serial data in (RS232)
     RXD_BIT             = 1,
     RXD_EVENT_COUT,
-
-    // Auto-fire
-    AFI_FIRE            = 1,
-    AFI_EVENT_COUNT,
 
     // Datasette motor
     MOT_START           = 1,

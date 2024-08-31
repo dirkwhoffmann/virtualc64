@@ -24,8 +24,6 @@ extension vc64.EventSlot: CustomStringConvertible {
         case ._EXP:     return "Expansion Port"
         case ._TXD:     return "RS232 Out"
         case ._RXD:     return "RS232 In"
-        case ._AFI1:    return "Auto-fire Port 1"
-        case ._AFI2:    return "Auto-fire Port 2"
         case ._MOT:     return "Datasette Motor"
         case ._DC8:     return "Disk Change Drive 8"
         case ._DC9:     return "Disk Change Drive 9"

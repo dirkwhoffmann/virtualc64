@@ -185,13 +185,15 @@ public:
     // Checks whether autofiring is active
     bool isAutofiring();
 
+    // Returns the maximum number of bullets to fire
+    isize magazineSize();
+
     // Starts or stops autofire mode
     void startAutofire();
     void stopAutofire();
 
     // Reloads the autofire magazine
     void reload();
-    void reload(isize bullets);
 };
 
 }

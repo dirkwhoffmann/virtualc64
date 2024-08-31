@@ -62,7 +62,7 @@ Joystick::trigger(GamePadAction event)
                     if (config.autofireBursts) {
 
                         // In burst mode, reload the magazine.
-                        reload(config.autofireBullets);
+                        reload();
 
                     } else {
 
@@ -125,13 +125,19 @@ Joystick::isAutofiring()
     return bulletCounter > 0;
 }
 
+isize 
+Joystick::magazineSize()
+{
+    return config.autofireBursts ? config.autofireBullets : INT_MAX;
+}
+
 void
 Joystick::startAutofire()
 {
     debug(JOY_DEBUG, "startAutofire()\n");
 
     // Load magazine
-    reload(config.autofireBursts ? config.autofireBullets : INT_MAX);
+    reload();
 
     // Fire the first shot
     button = true;
@@ -156,20 +162,7 @@ Joystick::stopAutofire()
 void
 Joystick::reload()
 {
-    if (config.autofire) {
-
-        reload(config.autofireBursts ? config.autofireBullets : INT_MAX);
-
-    } else {
-
-        reload(0);
-    }
-}
-
-void
-Joystick::reload(isize bullets)
-{
-    bulletCounter = bullets;
+    bulletCounter = magazineSize();
 }
 
 }

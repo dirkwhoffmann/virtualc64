@@ -133,17 +133,6 @@ C64::eventName(EventSlot slot, EventID id)
             }
             break;
 
-        case SLOT_AFI1:
-        case SLOT_AFI2:
-
-            switch (id) {
-
-                case EVENT_NONE:    return "none";
-                case AFI_FIRE:      return "AFI_FIRE";
-                default:            return "*** INVALID ***";
-            }
-            break;
-
         case SLOT_MOT:
 
             switch (id) {
@@ -1150,14 +1139,6 @@ C64::processEvents(Cycle cycle)
             if (isDue<SLOT_RXD>(cycle)) {
                 userPort.rs232.processRxdEvent();
             }
-            /*
-            if (isDue<SLOT_AFI1>(cycle)) {
-                port1.joystick.processEvent();
-            }
-            if (isDue<SLOT_AFI2>(cycle)) {
-                port2.joystick.processEvent();
-            }
-            */
             if (isDue<SLOT_MOT>(cycle)) {
                 datasette.processMotEvent(eventid[SLOT_MOT]);
             }

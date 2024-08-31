@@ -373,7 +373,7 @@ extension MyController {
         emu?.set(.C64_SPEED_ADJUST, value: value)
     }
 
-    @IBAction func speedResetAction(_ sender:Any!) {
+    @IBAction func speedResetAction(_ sender: Any!) {
 
         emu?.set(.C64_SPEED_ADJUST, value: 100)
     }
