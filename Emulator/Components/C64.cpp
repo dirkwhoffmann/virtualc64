@@ -241,8 +241,6 @@ C64::eventName(EventSlot slot, EventID id)
 void
 C64::prefix(isize level, const char *component, isize line) const
 {
-    fprintf(stderr, "[%lld] (%3d,%3d) %04X ", frame, scanline, rasterCycle, cpu.getPC0());
-
     if (level) {
 
         if (level >= 2) {
@@ -260,7 +258,7 @@ C64::prefix(isize level, const char *component, isize line) const
         }
         if (level >= 5) {
 
-            fprintf(stderr, " %s%s", (cpu.irqLine ? "*" : "-"), (cpu.nmiLine ? "+" : "-"));
+            fprintf(stderr, " [%s%s]", (cpu.irqLine ? "*" : "-"), (cpu.nmiLine ? "+" : "-"));
         }
         fprintf(stderr, " ");
     }
@@ -1152,12 +1150,14 @@ C64::processEvents(Cycle cycle)
             if (isDue<SLOT_RXD>(cycle)) {
                 userPort.rs232.processRxdEvent();
             }
+            /*
             if (isDue<SLOT_AFI1>(cycle)) {
                 port1.joystick.processEvent();
             }
             if (isDue<SLOT_AFI2>(cycle)) {
                 port2.joystick.processEvent();
             }
+            */
             if (isDue<SLOT_MOT>(cycle)) {
                 datasette.processMotEvent(eventid[SLOT_MOT]);
             }
