@@ -22,6 +22,7 @@
                 <outlet property="redLED8" destination="1210" id="GLI-bf-y3R"/>
                 <outlet property="redLED9" destination="iKN-RM-vsV" id="cac-3p-tQd"/>
                 <outlet property="serverIcon" destination="SCM-Qu-4XG" id="40K-fX-k5b"/>
+                <outlet property="speedStepper" destination="thS-H1-lgy" id="fcb-xj-h0B"/>
                 <outlet property="spinning8" destination="2203" id="ons-cN-UFy"/>
                 <outlet property="spinning9" destination="xzf-hU-AKK" id="C8r-MJ-Kde"/>
                 <outlet property="tapeCounter" destination="HdD-JF-2Va" id="Dps-K3-bdI"/>
@@ -58,7 +59,7 @@
                         </connections>
                     </button>
                     <button toolTip="Warp mode" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1052">
-                        <rect key="frame" x="701" y="4" width="18" height="18"/>
+                        <rect key="frame" x="692" y="4" width="18" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="hourglass1Template" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" id="1707">
                             <behavior key="behavior" lightByContents="YES"/>
@@ -207,7 +208,7 @@
                         </textFieldCell>
                     </textField>
                     <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tD7-Kt-2R4">
-                        <rect key="frame" x="612" y="5" width="66" height="13"/>
+                        <rect key="frame" x="604" y="5" width="66" height="13"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="right" title="00% CPU" id="9E6-Hh-KcI">
                             <font key="font" metaFont="label" size="9"/>
@@ -216,14 +217,17 @@
                         </textFieldCell>
                     </textField>
                     <levelIndicator verticalHuggingPriority="750" id="9Nj-IT-cDl">
-                        <rect key="frame" x="729" y="3" width="64" height="18"/>
+                        <rect key="frame" x="731" y="3" width="64" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <levelIndicatorCell key="cell" alignment="left" maxValue="200" warningValue="200" criticalValue="200" levelIndicatorStyle="continuousCapacity" id="5VJ-SQ-5Qh">
                             <font key="font" metaFont="system"/>
                         </levelIndicatorCell>
+                        <connections>
+                            <action selector="speedResetAction:" target="-2" id="abI-83-qC9"/>
+                        </connections>
                     </levelIndicator>
                     <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ApN-dX-M4Z">
-                        <rect key="frame" x="673" y="3" width="27" height="20"/>
+                        <rect key="frame" x="665" y="3" width="27" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <popUpButtonCell key="cell" type="bevel" title="C64 Frequency" bezelStyle="regularSquare" imagePosition="left" lineBreakMode="truncatingTail" state="on" transparent="YES" inset="2" preferredEdge="minX" selectedItem="LP1-PF-LdL" id="qjo-CF-dOg">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -252,6 +256,14 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
+                    <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="thS-H1-lgy">
+                        <rect key="frame" x="715" y="1" width="15" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <stepperCell key="cell" controlSize="small" continuous="YES" alignment="left" increment="5" minValue="50" maxValue="200" doubleValue="100" id="mUK-Lg-YYt"/>
+                        <connections>
+                            <action selector="speedAction:" target="-2" id="XJC-Z3-NId"/>
+                        </connections>
+                    </stepper>
                 </subviews>
             </view>
             <toolbar key="toolbar" implicitIdentifier="562FDE63-25B0-4E4E-80C7-EF6E742B5F6F" displayMode="iconAndLabel" sizeMode="regular" id="1845" customClass="MyToolbar" customModule="VirtualC64" customModuleProvider="target">

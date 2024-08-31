@@ -215,7 +215,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_C64_WARP_BOOT:         return "C64.WARP_BOOT";
             case OPT_C64_WARP_MODE:         return "C64.WARP_MODE";
             case OPT_C64_VSYNC:             return "C64.VSYNC";
-            case OPT_C64_SPEED_ADJUST:      return "C64.TIME_LAPSE";
+            case OPT_C64_SPEED_ADJUST:      return "C64.SPEED_ADJUST";
             case OPT_C64_RUN_AHEAD:         return "C64.RUN_AHEAD";
             
             case OPT_C64_SNAP_AUTO:         return "C64.SNAP_AUTO";

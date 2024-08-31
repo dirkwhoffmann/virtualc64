@@ -118,6 +118,7 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var activityType: NSPopUpButton!
     @IBOutlet weak var activityInfo: NSTextField!
     @IBOutlet weak var activityBar: NSLevelIndicator!
+    @IBOutlet weak var speedStepper: NSStepper!
 
     // Toolbar
     @IBOutlet weak var toolbar: MyToolbar!
