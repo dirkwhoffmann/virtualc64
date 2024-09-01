@@ -70,7 +70,7 @@ debugflag CRT_DEBUG       = 0;
 debugflag FILE_DEBUG      = 0;
 
 // Peripherals
-debugflag JOY_DEBUG       = 1;
+debugflag JOY_DEBUG       = 0;
 debugflag DRV_DEBUG       = 0;
 debugflag TAP_DEBUG       = 0;
 debugflag KBD_DEBUG       = 0;

@@ -232,24 +232,24 @@ C64::prefix(isize level, const char *component, isize line) const
 {
     if (level) {
 
-        if (level >= 2) {
+        if (objid == 1) fprintf(stderr, "[Run-ahead] ");
 
-            if (objid == 1) fprintf(stderr, "[Run-ahead] ");
-            fprintf(stderr, "%s:%ld", component, line);
-        }
         if (level >= 3) {
 
-            fprintf(stderr, " [%lld] (%3d,%3d)", frame, scanline, rasterCycle);
+            fprintf(stderr, "[%lld] (%3d,%3d) ", frame, scanline, rasterCycle);
         }
         if (level >= 4) {
 
-            fprintf(stderr, " %04X", cpu.getPC0());
+            fprintf(stderr, "%04X ", cpu.getPC0());
         }
         if (level >= 5) {
 
-            fprintf(stderr, " [%s%s]", (cpu.irqLine ? "*" : "-"), (cpu.nmiLine ? "+" : "-"));
+            fprintf(stderr, "<%s%s> ", (cpu.irqLine ? "I" : "i"), (cpu.nmiLine ? "N" : "n"));
         }
-        fprintf(stderr, " ");
+        if (level >= 2) {
+
+            fprintf(stderr, "%s:%ld ", component, line);
+        }
     }
 }
 
