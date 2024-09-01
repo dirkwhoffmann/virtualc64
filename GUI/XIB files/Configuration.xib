@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -98,8 +97,8 @@
                 <outlet property="prefTabView" destination="baz-eW-A74" id="fgy-dU-alU"/>
                 <outlet property="prfRunAheadInfo" destination="7Gk-Yf-PBW" id="vcy-N8-4dH"/>
                 <outlet property="prfRunAheadSlider" destination="qYR-eZ-gM3" id="mzS-g4-Sqw"/>
-                <outlet property="prfTimeLapse" destination="jG0-WW-g2Z" id="A9q-ck-1Ow"/>
-                <outlet property="prfTimeLapseInfo" destination="KOV-eH-3s2" id="85r-j2-FqP"/>
+                <outlet property="prfSpeedBoost" destination="jG0-WW-g2Z" id="A9q-ck-1Ow"/>
+                <outlet property="prfSpeedBoostInfo" destination="KOV-eH-3s2" id="85r-j2-FqP"/>
                 <outlet property="prfVSync" destination="FHx-4K-dGQ" id="t0q-RM-Yzd"/>
                 <outlet property="romInstallButton" destination="UjG-e3-b19" id="c56-L7-acn"/>
                 <outlet property="romLockImage" destination="eyT-7E-Fac" id="kDq-Pq-Z6g"/>
@@ -1837,7 +1836,7 @@ Gw
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="50" maxValue="200" doubleValue="100" tickMarkPosition="above" numberOfTickMarks="7" sliderType="linear" id="3vJ-WS-Xis"/>
                                             <connections>
-                                                <action selector="prfTimeLapseAction:" target="-2" id="9XL-tt-bYA"/>
+                                                <action selector="prfSpeedBoostAction:" target="-2" id="9XL-tt-bYA"/>
                                             </connections>
                                         </slider>
                                         <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qYR-eZ-gM3">

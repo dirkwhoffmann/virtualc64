@@ -254,7 +254,7 @@ Emulator::refreshRate() const
 
     } else {
 
-        return main.vic.getFps() * config.speedAdjust / 100.0;
+        return main.vic.getFps() * config.speedBoost / 100.0;
     }
 }
 

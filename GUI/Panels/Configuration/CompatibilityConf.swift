@@ -25,15 +25,15 @@ extension ConfigurationController {
         comWarpBoot.integerValue = config.warpBoot
 
         // Threading
-        let timeLapse = config.speedAdjust
+        let speedBoost = config.speedBoost
         let runAhead = config.runAhead
         prfVSync.state = config.vsync ? .on : .off
-        prfTimeLapse.integerValue = timeLapse
-        prfTimeLapseInfo.stringValue = "\(timeLapse) %"
+        prfSpeedBoost.integerValue = speedBoost
+        prfSpeedBoostInfo.stringValue = "\(speedBoost) %"
         prfRunAheadSlider.integerValue = runAhead
         prfRunAheadInfo.stringValue = "\(runAhead) frame" + (runAhead == 1 ? "" : "s")
-        prfTimeLapse.isEnabled = !config.vsync
-        prfTimeLapseInfo.textColor = config.vsync ? .tertiaryLabelColor : .labelColor
+        prfSpeedBoost.isEnabled = !config.vsync
+        prfSpeedBoostInfo.textColor = config.vsync ? .tertiaryLabelColor : .labelColor
 
         // Power button
         comPowerButton.isHidden = !bootable
@@ -96,9 +96,9 @@ extension ConfigurationController {
         config.vsync = sender.state == .on
     }
 
-    @IBAction func prfTimeLapseAction(_ sender: NSSlider!) {
+    @IBAction func prfSpeedBoostAction(_ sender: NSSlider!) {
 
-        config.speedAdjust = sender.integerValue
+        config.speedBoost = sender.integerValue
     }
 
     @IBAction func prfRunAheadAction(_ sender: NSSlider!) {

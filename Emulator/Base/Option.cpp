@@ -36,7 +36,7 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_C64_WARP_MODE:             return enumParser.template operator()<WarpModeEnum>();
         case OPT_C64_WARP_BOOT:             return numParser(" sec");
         case OPT_C64_VSYNC:                 return boolParser();
-        case OPT_C64_SPEED_ADJUST:          return numParser("%");
+        case OPT_C64_SPEED_BOOST:           return numParser("%");
         case OPT_C64_RUN_AHEAD:             return numParser(" frames");
 
         case OPT_C64_SNAP_AUTO:             return boolParser();

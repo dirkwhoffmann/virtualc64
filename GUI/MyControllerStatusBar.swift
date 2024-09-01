@@ -31,7 +31,7 @@ extension MyController {
             let running = c64state.running
             let tracking = c64state.tracking
             let warping = c64state.warping
-            let speedAdjust = emu.get(.C64_SPEED_ADJUST)
+            let boost = emu.get(.C64_SPEED_BOOST)
 
             let config8 = emu.drive8.config
             let config9 = emu.drive9.config
@@ -56,8 +56,8 @@ extension MyController {
             refreshStatusBarWarpIcon()
 
             // Speed adjust
-            speedStepper.integerValue = speedAdjust
-            speedStepper.toolTip = "\(speedAdjust) %"
+            speedStepper.integerValue = boost
+            speedStepper.toolTip = "\(boost) %"
 
             // Visibility
             let items: [NSView: Bool] = [
@@ -371,11 +371,11 @@ extension MyController {
         if value < 50 { value = 50 }
         if value > 200 { value = 200 }
 
-        emu?.set(.C64_SPEED_ADJUST, value: value)
+        emu?.set(.C64_SPEED_BOOST, value: value)
     }
 
     @IBAction func speedResetAction(_ sender: Any!) {
 
-        emu?.set(.C64_SPEED_ADJUST, value: 100)
+        emu?.set(.C64_SPEED_BOOST, value: 100)
     }
 }

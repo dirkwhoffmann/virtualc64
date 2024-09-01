@@ -880,8 +880,8 @@ extension DefaultsProxy {
         remove(.SID_POWER_SAVE, [0, 1, 2, 3])
         remove(.C64_WARP_MODE)
         remove(.C64_WARP_BOOT)
+        remove(.C64_SPEED_BOOST)
         remove(.C64_VSYNC)
-        remove(.C64_SPEED_ADJUST)
         remove(.C64_RUN_AHEAD)
     }
 }
@@ -906,8 +906,8 @@ extension Configuration {
             defaults.set(.VICII_SB_COLLISIONS, sbCollisions)
             defaults.set(.C64_WARP_MODE, warpMode)
             defaults.set(.C64_WARP_BOOT, warpBoot)
+            defaults.set(.C64_SPEED_BOOST, speedBoost)
             defaults.set(.C64_VSYNC, vsync)
-            defaults.set(.C64_SPEED_ADJUST, speedAdjust)
             defaults.set(.C64_RUN_AHEAD, runAhead)
 
             defaults.save()
@@ -934,8 +934,8 @@ extension Configuration {
             sbCollisions = defaults.get(.VICII_SB_COLLISIONS) != 0
             warpMode = defaults.get(.C64_WARP_MODE)
             warpBoot = defaults.get(.C64_WARP_BOOT)
+            speedBoost = defaults.get(.C64_SPEED_BOOST)
             vsync = defaults.get(.C64_VSYNC) != 0
-            speedAdjust = defaults.get(.C64_SPEED_ADJUST)
             runAhead = defaults.get(.C64_RUN_AHEAD)
 
             emu.resume()

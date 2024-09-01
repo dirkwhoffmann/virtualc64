@@ -270,9 +270,9 @@ class Configuration {
         get { return emu?.get(.C64_VSYNC) != 0 }
         set { emu?.set(.C64_VSYNC, enable: newValue) }
     }
-    var speedAdjust: Int {
-        get { return emu?.get(.C64_SPEED_ADJUST) ?? 0 }
-        set { emu?.set(.C64_SPEED_ADJUST, value: newValue) }
+    var speedBoost: Int {
+        get { return emu?.get(.C64_SPEED_BOOST) ?? 0 }
+        set { emu?.set(.C64_SPEED_BOOST, value: newValue) }
     }
 
     var runAhead: Int {

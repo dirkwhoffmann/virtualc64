@@ -186,8 +186,8 @@ C64::getOption(Option opt) const
 
         case OPT_C64_WARP_BOOT:         return config.warpBoot;
         case OPT_C64_WARP_MODE:         return config.warpMode;
+        case OPT_C64_SPEED_BOOST:      return config.speedBoost;
         case OPT_C64_VSYNC:             return config.vsync;
-        case OPT_C64_SPEED_ADJUST:      return config.speedAdjust;
         case OPT_C64_RUN_AHEAD:         return config.runAhead;
         case OPT_C64_SNAP_AUTO:         return config.snapshots;
         case OPT_C64_SNAP_DELAY:        return config.snapshotDelay;
@@ -214,15 +214,15 @@ C64::checkOption(Option opt, i64 value)
             }
             return;
 
-        case OPT_C64_VSYNC:
-
-            return;
-
-        case OPT_C64_SPEED_ADJUST:
+        case OPT_C64_SPEED_BOOST:
 
             if (value < 50 || value > 200) {
                 throw Error(VC64ERROR_OPT_INV_ARG, "50...200");
             }
+            return;
+
+        case OPT_C64_VSYNC:
+
             return;
 
         case OPT_C64_RUN_AHEAD:
@@ -274,9 +274,9 @@ C64::setOption(Option opt, i64 value)
             config.vsync = bool(value);
             return;
 
-        case OPT_C64_SPEED_ADJUST:
+        case OPT_C64_SPEED_BOOST:
 
-            config.speedAdjust = isize(value);
+            config.speedBoost = isize(value);
             updateClockFrequency();
             return;
 

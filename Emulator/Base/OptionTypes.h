@@ -34,7 +34,7 @@ enum_long(OPT)
     OPT_C64_WARP_BOOT,          ///< Warp-boot time in seconds
     OPT_C64_WARP_MODE,          ///< Warp activation mode
     OPT_C64_VSYNC,              ///< Derive the frame rate to the VSYNC signal
-    OPT_C64_SPEED_ADJUST,       ///< Speed adjustment in percent
+    OPT_C64_SPEED_BOOST,        ///< Speed adjustment in percent
     OPT_C64_RUN_AHEAD,          ///< Number of run-ahead frames
 
     // Snapshots
@@ -215,7 +215,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_C64_WARP_BOOT:         return "C64.WARP_BOOT";
             case OPT_C64_WARP_MODE:         return "C64.WARP_MODE";
             case OPT_C64_VSYNC:             return "C64.VSYNC";
-            case OPT_C64_SPEED_ADJUST:      return "C64.SPEED_ADJUST";
+            case OPT_C64_SPEED_BOOST:       return "C64.SPEED_BOOST";
             case OPT_C64_RUN_AHEAD:         return "C64.RUN_AHEAD";
             
             case OPT_C64_SNAP_AUTO:         return "C64.SNAP_AUTO";
@@ -369,7 +369,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_C64_WARP_BOOT:         return "Warp-boot duration";
             case OPT_C64_WARP_MODE:         return "Warp activation";
             case OPT_C64_VSYNC:             return "VSYNC mode";
-            case OPT_C64_SPEED_ADJUST:      return "Speed adjustment";
+            case OPT_C64_SPEED_BOOST:      return "Speed adjustment";
             case OPT_C64_RUN_AHEAD:         return "Run-ahead frames";
 
             case OPT_C64_SNAP_AUTO:         return "Automatically take snapshots";

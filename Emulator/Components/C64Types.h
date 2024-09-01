@@ -257,11 +257,11 @@ typedef struct
     //! Warp mode
     WarpMode warpMode;
 
+    //! Emulator speed in percent (100 is native speed)
+    isize speedBoost;
+
     //! Vertical Synchronization
     bool vsync;
-
-    //! Emulator speed in percent (100 is native speed)
-    isize speedAdjust;
 
     //! Number of run-ahead frames (0 = run-ahead is disabled)
     isize runAhead;
