@@ -30,7 +30,7 @@ extension ConfigurationController {
         prfVSync.state = config.vsync ? .on : .off
         prfSpeedBoost.integerValue = speedBoost
         prfSpeedBoostInfo.stringValue = "\(speedBoost) %"
-        prfRunAheadSlider.integerValue = runAhead
+        prfRunAhead.integerValue = runAhead
         prfRunAheadInfo.stringValue = "\(runAhead) frame" + (runAhead == 1 ? "" : "s")
         prfSpeedBoost.isEnabled = !config.vsync
         prfSpeedBoostInfo.textColor = config.vsync ? .tertiaryLabelColor : .labelColor

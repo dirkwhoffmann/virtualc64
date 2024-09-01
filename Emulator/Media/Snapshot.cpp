@@ -32,8 +32,8 @@ Thumbnail::take(const C64 &c64, isize dx, isize dy)
     isize xStart = PAL::FIRST_VISIBLE_PIXEL;
     isize yStart = PAL::FIRST_VISIBLE_LINE;
 
-    width = PAL::VISIBLE_PIXELS / dx;
-    height = c64.vic.numVisibleLines() / dy;
+    width = i32(PAL::VISIBLE_PIXELS / dx);
+    height = i32(c64.vic.numVisibleLines() / dy);
 
     u32 *target = screen;
     u32 *source = (u32 *)c64.videoPort.getTexture();
@@ -59,7 +59,8 @@ Snapshot::isCompatible(const fs::path &path)
 bool
 Snapshot::isCompatible(const u8 *buf, isize len)
 {
-    return len >= 0x15 && util::matchingBufferHeader(buf, string("VC64"));
+    if (len < isizeof(SnapshotHeader)) return false;
+    return util::matchingBufferHeader(buf, string("VC64"));
 }
 
 bool

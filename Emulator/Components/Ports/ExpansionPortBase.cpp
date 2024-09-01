@@ -25,7 +25,8 @@ ExpansionPort::operator= (const ExpansionPort& other)
     CLONE(crtType)
     CLONE(gameLine)
     CLONE(exromLine)
-
+    CLONE(config)
+    
     if (type != othertype) {
 
         // Create a new cartridge of the proper type

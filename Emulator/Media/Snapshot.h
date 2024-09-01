@@ -22,7 +22,7 @@ class C64;
 struct Thumbnail {
     
     // Image size
-    isize width, height;
+    i32 width, height;
     
     // Raw texture data
     u32 screen[Texture::height * Texture::width];

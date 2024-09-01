@@ -95,8 +95,8 @@
                 <outlet property="perPaddleOrientationText" destination="667-UV-oEt" id="V0x-4M-uY6"/>
                 <outlet property="perPowerButton" destination="NdD-36-auq" id="iwJ-Pz-V1l"/>
                 <outlet property="prefTabView" destination="baz-eW-A74" id="fgy-dU-alU"/>
+                <outlet property="prfRunAhead" destination="qYR-eZ-gM3" id="mzS-g4-Sqw"/>
                 <outlet property="prfRunAheadInfo" destination="7Gk-Yf-PBW" id="vcy-N8-4dH"/>
-                <outlet property="prfRunAheadSlider" destination="qYR-eZ-gM3" id="mzS-g4-Sqw"/>
                 <outlet property="prfSpeedBoost" destination="jG0-WW-g2Z" id="A9q-ck-1Ow"/>
                 <outlet property="prfSpeedBoostInfo" destination="KOV-eH-3s2" id="85r-j2-FqP"/>
                 <outlet property="prfVSync" destination="FHx-4K-dGQ" id="t0q-RM-Yzd"/>

@@ -50,7 +50,7 @@ static const char *smokeTestScript[] = {
     "c64 set WARP_MODE WARP_AUTO",
     "c64 set WARP_MODE WARP_NEVER",
     "c64 set VSYNC yes",
-    "c64 set SPEED_ADJUST 75",
+    "c64 set SPEED_BOOST 75",
     "c64 set RUN_AHEAD 2",
     "c64 init PAL",
     "c64 init PAL_II",

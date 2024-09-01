@@ -171,7 +171,8 @@ matchingBufferHeader(const u8 *buf, const u8 *header, isize hlen, isize offset)
     return true;
 }
 
-bool matchingBufferHeader(const u8 *buf, isize blen, const string &header, isize offset)
+bool 
+matchingBufferHeader(const u8 *buf, isize blen, const string &header, isize offset)
 {
     assert(buf != nullptr);
 
@@ -182,11 +183,11 @@ bool matchingBufferHeader(const u8 *buf, isize blen, const string &header, isize
                 return false;
         }
     }
-
     return true;
 }
 
-bool matchingBufferHeader(const u8 *buf, const string &header, isize offset)
+bool 
+matchingBufferHeader(const u8 *buf, const string &header, isize offset)
 {
     auto blen = std::numeric_limits<isize>::max();
     return matchingBufferHeader(buf, blen, header, offset);

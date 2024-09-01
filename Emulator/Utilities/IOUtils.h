@@ -59,7 +59,6 @@ std::vector<fs::path> files(const fs::path &path, std::vector <string> &suffixes
 bool matchingStreamHeader(std::istream &is, const u8 *header, isize len, isize offset = 0);
 bool matchingStreamHeader(std::istream &is, const string &header, isize offset = 0);
 bool matchingBufferHeader(const u8 *buf, const u8 *header, isize hlen, isize offset = 0);
-// bool matchingBufferHeader(const u8 *buf, isize blen, const u8 *header, isize hlen, isize offset = 0);
 bool matchingBufferHeader(const u8 *buf, const string &header, isize offset = 0);
 bool matchingBufferHeader(const u8 *buf, isize blen, const string &header, isize offset = 0);
 

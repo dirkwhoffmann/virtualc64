@@ -89,7 +89,9 @@ public:
 
         << crtType
         << gameLine
-        << exromLine;
+        << exromLine
+
+        << config.reuSpeed;
     }
     
     void operator << (SerResetter &worker) override;
