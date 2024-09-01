@@ -83,7 +83,8 @@ extension MyController {
                 warpIcon: running,
                 activityType: running,
                 activityInfo: running,
-                activityBar: running
+                activityBar: running,
+                speedStepper: running
             ]
 
             for (item, visible) in items {
@@ -377,5 +378,4 @@ extension MyController {
 
         emu?.set(.C64_SPEED_ADJUST, value: 100)
     }
-
 }
