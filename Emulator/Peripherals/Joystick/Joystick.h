@@ -58,6 +58,13 @@ class Joystick final : public SubComponent, public Inspectable<JoystickInfo> {
     // Vertical joystick position (-1 = up, 1 = down, 0 = released)
     int axisY = 0;
 
+    // Bullet counter used in autofire mode
+    isize bulletCounter = 0;
+
+    // Next frame to auto-press or auto-release the fire button
+    i64 nextAutofireFrame = 0;
+    i64 nextAutofireReleaseFrame = 0;
+
 
     //
     // Methods
@@ -69,11 +76,14 @@ public:
 
     Joystick& operator= (const Joystick& other) {
 
+        CLONE(config)
+
         CLONE(button)
         CLONE(axisX)
         CLONE(axisY)
-
-        CLONE(config)
+        CLONE(bulletCounter)
+        CLONE(nextAutofireFrame)
+        CLONE(nextAutofireReleaseFrame)
 
         return *this;
     }
@@ -87,14 +97,28 @@ public:
 
     template <class T> void serialize(T& worker) {
 
-        if (isResetter(worker)) return;
+        if (isResetter(worker)) {
 
-        worker 
+            worker
 
-        << config.autofire
-        << config.autofireBursts
-        << config.autofireBullets
-        << config.autofireDelay;
+            << button
+            << axisX
+            << axisY
+            << bulletCounter
+            << nextAutofireFrame
+            << nextAutofireReleaseFrame;
+
+        } else {
+            
+            /*
+            worker
+            
+            << config.autofire
+            << config.autofireBursts
+            << config.autofireBullets
+            << config.autofireDelay;
+            */
+        }
     }
     void operator << (SerChecker &worker) override { serialize(worker); }
     void operator << (SerCounter &worker) override { serialize(worker); }
@@ -150,25 +174,26 @@ public:
     // Triggers a gamepad event
     void trigger(GamePadAction event);
 
+    // To be called after each frame
+    void eofHandler();
+
 
     //
     // Auto fire
     //
 
-public:
-
-    // Processes an auto-fire event
-    void processEvent();
-
-private:
-    
-    // Indicates if the device is currently auto-firing
+    // Checks whether autofiring is active
     bool isAutofiring();
 
-    // Reloads the auto-fire gun
+    // Returns the maximum number of bullets to fire
+    isize magazineSize();
+
+    // Starts or stops autofire mode
+    void startAutofire();
+    void stopAutofire();
+
+    // Reloads the autofire magazine
     void reload();
-    void reload(isize bullets);
-    template <EventSlot Slot> void reload(isize bullets);
 };
 
 }

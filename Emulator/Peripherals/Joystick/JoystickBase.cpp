@@ -114,11 +114,13 @@ Joystick::setOption(Option opt, i64 value)
         case OPT_AUTOFIRE_BURSTS:
 
             config.autofireBursts = bool(value);
+            if (isAutofiring()) reload();
             return;
 
         case OPT_AUTOFIRE_BULLETS:
 
             config.autofireBullets = isize(value);
+            if (isAutofiring()) reload();
             return;
 
         case OPT_AUTOFIRE_DELAY:

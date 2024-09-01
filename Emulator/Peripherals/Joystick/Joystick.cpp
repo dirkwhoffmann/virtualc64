@@ -52,15 +52,33 @@ Joystick::trigger(GamePadAction event)
             
         case PRESS_FIRE:
             
-            button = true;
-            
+            // If autofire is enabled...
             if (config.autofire) {
 
-                if (isAutofiring() && !config.autofireBursts) {
-                    reload(0); // Stop shooting
+                // ...check if we are currently firing.
+                if (isAutofiring()) {
+
+                    // If yes, the required action depends on the autofire mode.
+                    if (config.autofireBursts) {
+
+                        // In burst mode, reload the magazine.
+                        reload();
+
+                    } else {
+
+                        // Otherwise, stop firing.
+                        stopAutofire();
+                    }
+
                 } else {
-                    reload();  // Start or continue shooting
+
+                    // We are currently not firing. Initiate the first shot.
+                    startAutofire();
                 }
+
+            } else {
+
+                button = true;
             }
             break;
 
@@ -77,71 +95,74 @@ Joystick::trigger(GamePadAction event)
 }
 
 void
-Joystick::processEvent()
+Joystick::eofHandler()
 {
-    // Get the number of remaining bullets
-    auto shots = objid == PORT_1 ? (isize)c64.data[SLOT_AFI1] : (isize)c64.data[SLOT_AFI2];
-    assert(shots > 0);
+    if (isAutofiring()) {
 
-    // Cancel the current event
-    objid == PORT_1 ? c64.cancel<SLOT_AFI1>() : c64.cancel<SLOT_AFI2>();
+        if (i64(c64.frame) == nextAutofireFrame) {
 
-    // Fire and reload
-    if (button) {
+            debug(JOY_DEBUG, "Autofire press\n");
+            button = true;
+            nextAutofireReleaseFrame = nextAutofireFrame + config.autofireDelay;
+        }
 
-        button = false;
-        reload(shots - 1);
+        if (i64(c64.frame) == nextAutofireReleaseFrame) {
 
-    } else {
-
-        button = true;
-        reload(shots);
+            debug(JOY_DEBUG, "Autofire release\n");
+            button = false;
+            if (--bulletCounter > 0) {
+                nextAutofireFrame = nextAutofireReleaseFrame + config.autofireDelay;
+            } else {
+                stopAutofire();
+            }
+        }
     }
 }
 
 bool
 Joystick::isAutofiring()
 {
-    return objid == PORT_1 ? c64.isPending<SLOT_AFI1>() : c64.isPending<SLOT_AFI2>();
+    return bulletCounter > 0;
+}
+
+isize 
+Joystick::magazineSize()
+{
+    return config.autofireBursts ? config.autofireBullets : INT_MAX;
+}
+
+void
+Joystick::startAutofire()
+{
+    debug(JOY_DEBUG, "startAutofire()\n");
+
+    // Load magazine
+    reload();
+
+    // Fire the first shot
+    button = true;
+
+    // Schedule the release event
+    nextAutofireReleaseFrame = c64.frame + config.autofireDelay;
+}
+
+void
+Joystick::stopAutofire()
+{
+    trace(JOY_DEBUG, "stopAutofire()\n");
+
+    // Release button and empty the bullet counter
+    button = false;
+    bulletCounter = 0;
+
+    // Clear all events
+    nextAutofireFrame = nextAutofireReleaseFrame = 0;
 }
 
 void
 Joystick::reload()
 {
-    reload(config.autofireBursts ? config.autofireBullets : LONG_MAX);
-}
-
-void
-Joystick::reload(isize bullets)
-{
-    objid == PORT_1 ? reload <SLOT_AFI1> (bullets) : reload <SLOT_AFI2> (bullets);
-}
-
-template <EventSlot Slot> void
-Joystick::reload(isize bullets)
-{
-    if (bullets > 0 && config.autofire) {
-
-        if (c64.isPending<Slot>()) {
-
-            // Just add bullets (shooting is in progress)
-            trace(JOY_DEBUG, "Filling up to %ld bullets\n", bullets);
-            c64.data[Slot] = bullets;
-
-        } else {
-
-            // Fire the first shot
-            auto cycle = config.autofireDelay * vic.getCyclesPerFrame();
-            trace(JOY_DEBUG, "Next auto-fire event in %ld cycles\n", cycle);
-            c64.scheduleRel<Slot>(cycle, AFI_FIRE, bullets);
-        }
-
-    } else {
-
-        // Release the fire button and cancel any pending event
-        c64.cancel<Slot>();
-        button = false;
-    }
+    bulletCounter = magazineSize();
 }
 
 }

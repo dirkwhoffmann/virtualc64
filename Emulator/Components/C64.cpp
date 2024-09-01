@@ -133,17 +133,6 @@ C64::eventName(EventSlot slot, EventID id)
             }
             break;
 
-        case SLOT_AFI1:
-        case SLOT_AFI2:
-
-            switch (id) {
-
-                case EVENT_NONE:    return "none";
-                case AFI_FIRE:      return "AFI_FIRE";
-                default:            return "*** INVALID ***";
-            }
-            break;
-
         case SLOT_MOT:
 
             switch (id) {
@@ -241,28 +230,26 @@ C64::eventName(EventSlot slot, EventID id)
 void
 C64::prefix(isize level, const char *component, isize line) const
 {
-    fprintf(stderr, "[%lld] (%3d,%3d) %04X ", frame, scanline, rasterCycle, cpu.getPC0());
-
     if (level) {
 
-        if (level >= 2) {
+        if (objid == 1) fprintf(stderr, "[Run-ahead] ");
 
-            if (objid == 1) fprintf(stderr, "[Run-ahead] ");
-            fprintf(stderr, "%s:%ld", component, line);
-        }
         if (level >= 3) {
 
-            fprintf(stderr, " [%lld] (%3d,%3d)", frame, scanline, rasterCycle);
+            fprintf(stderr, "[%lld] (%3d,%3d) ", frame, scanline, rasterCycle);
         }
         if (level >= 4) {
 
-            fprintf(stderr, " %04X", cpu.getPC0());
+            fprintf(stderr, "%04X ", cpu.getPC0());
         }
         if (level >= 5) {
 
-            fprintf(stderr, " %s%s", (cpu.irqLine ? "*" : "-"), (cpu.nmiLine ? "+" : "-"));
+            fprintf(stderr, "<%s%s> ", (cpu.irqLine ? "I" : "i"), (cpu.nmiLine ? "N" : "n"));
         }
-        fprintf(stderr, " ");
+        if (level >= 2) {
+
+            fprintf(stderr, "%s:%ld ", component, line);
+        }
     }
 }
 
@@ -1151,12 +1138,6 @@ C64::processEvents(Cycle cycle)
             }
             if (isDue<SLOT_RXD>(cycle)) {
                 userPort.rs232.processRxdEvent();
-            }
-            if (isDue<SLOT_AFI1>(cycle)) {
-                port1.joystick.processEvent();
-            }
-            if (isDue<SLOT_AFI2>(cycle)) {
-                port2.joystick.processEvent();
             }
             if (isDue<SLOT_MOT>(cycle)) {
                 datasette.processMotEvent(eventid[SLOT_MOT]);
