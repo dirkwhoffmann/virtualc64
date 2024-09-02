@@ -452,10 +452,10 @@ Reu::processEvent(EventID id)
     // Determine the number of bytes to transfer
     auto todo = std::min(remaining, i64(bytesPerDmaCycle()));
 
-    // Perform DMA if the bus is available
+    // Perform DMA if VICII does not block the bus
     if (!(cpu.getRdyLine() & INTSRC_VIC)) {
 
-        for (; todo && doDma(id); todo--) remaining--;
+        for (; todo; todo--, remaining--) doDma(id);
     }
 
     if (remaining) {

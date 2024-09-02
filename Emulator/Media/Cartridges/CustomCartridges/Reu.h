@@ -202,9 +202,7 @@ public:
     u8 spypeekIO2(u16 addr) const override;
     void pokeIO2(u16 addr, u8 value) override;
     void poke(u16 addr, u8 value) override;
-    void eraseRAM() override {
-        Cartridge::eraseRAM(0x00);
-    }
+    void eraseRAM() override { Cartridge::eraseRAM(0x00); }
 
 private:
 

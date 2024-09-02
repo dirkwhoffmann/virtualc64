@@ -72,16 +72,14 @@ CPU::_dump(Category category, std::ostream& os) const
         os << (str.empty() ? "-" : str) << std::endl;
         os << tab("Next microinstruction");
         os << dec(next) << std::endl;
-        os << tab("Rdy Line");
-        os << (rdyLine ? "low" : "high") << "(" << hex(rdyLine) << ")" << std::endl;
         os << tab("Nmi Line");
-        os << (nmiLine ? "low" : "high") << "(" << hex(nmiLine) << ")" << std::endl;
+        os << (nmiLine ? "low" : "high") << " (" << hex(nmiLine) << ")" << std::endl;
         os << tab("Edge detector");
         os << hex(edgeDetector.current()) << std::endl;
         os << tab("doNmi");
         os << bol(doNmi) << std::endl;
         os << tab("Irq Line");
-        os << (irqLine ? "low" : "high") << "(" << hex(irqLine) << ")" << std::endl;
+        os << (irqLine ? "low" : "high") << " (" << hex(irqLine) << ")" << std::endl;
         os << tab("Edge Detector");
         os << hex(levelDetector.current()) << std::endl;
         os << tab("doIrq");
@@ -90,6 +88,9 @@ CPU::_dump(Category category, std::ostream& os) const
         os << hex(HI_W_LO_W(readDasm(0xFFFF), readDasm(0xFFFE))) << std::endl;
         os << tab("NMI Routine");
         os << hex(HI_W_LO_W(readDasm(0xFFFB), readDasm(0xFFFA))) << std::endl;
+        os << tab("Rdy Line");
+        os << (rdyLine ? "low" : "high") << " (" << hex(rdyLine) << ")" << std::endl;
+
 
         if (hasProcessorPort()) {
 

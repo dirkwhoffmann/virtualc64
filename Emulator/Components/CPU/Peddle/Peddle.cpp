@@ -120,6 +120,13 @@ Peddle::pullDownIrqLine(IntSource source)
 }
 
 void
+Peddle::releaseIrqLine(IntSource source)
+{
+    irqLine &= ~source;
+    levelDetector.write(irqLine);
+}
+
+void
 Peddle::pullDownRdyLine(IntSource source)
 {
     assert(source != 0);
@@ -127,13 +134,6 @@ Peddle::pullDownRdyLine(IntSource source)
     auto old = rdyLine;
     rdyLine |= source;
     if (!old && rdyLine) rdyLineDown = clock;
-}
-
-void
-Peddle::releaseIrqLine(IntSource source)
-{
-    irqLine &= ~source;
-    levelDetector.write(irqLine);
 }
 
 void
