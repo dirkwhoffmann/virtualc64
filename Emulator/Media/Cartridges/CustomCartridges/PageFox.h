@@ -109,6 +109,7 @@ public:
     u8 peekIO1(u16 addr) override;
     u8 spypeekIO1(u16 addr) const override;
     void pokeIO1(u16 addr, u8 value) override;
+    void eraseRAM() override { Cartridge::eraseRAM(0x00); }
     void updatePeekPokeLookupTables() override;
 
 private:

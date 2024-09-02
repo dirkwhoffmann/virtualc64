@@ -379,7 +379,7 @@ Cartridge::setRamCapacity(isize size)
 
         externalRam = new u8[size];
         ramCapacity = (u64)size;
-        memset(externalRam, 0xFF, size);
+        eraseRAM();
     }
 }
 
@@ -401,9 +401,11 @@ Cartridge::pokeRAM(u32 addr, u8 value)
 void
 Cartridge::eraseRAM(u8 value)
 {
-    assert(externalRam != nullptr);
-    memset(externalRam, value, ramCapacity);
-    writes += ramCapacity;
+    if (externalRam) {
+     
+        memset(externalRam, value, ramCapacity);
+        writes += ramCapacity;
+    }
 }
 
 void

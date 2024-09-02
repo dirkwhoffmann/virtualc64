@@ -368,10 +368,18 @@ public:
      */
     void setRamCapacity(isize size);
 
+    /* Initializes the external RAM with the startup value. This function is
+     * called during a reset if the cartridge does not back up memory with a
+     * battery.
+     */
+    virtual void eraseRAM() { eraseRAM(0xFF); }
+
+    // Erases the external RAM with a specific startup value
+    void eraseRAM(u8 value);
+
     // Reads or write RAM cells
     u8 peekRAM(u32 addr) const;
     void pokeRAM(u32 addr, u8 value);
-    void eraseRAM(u8 value);
 
 
     //

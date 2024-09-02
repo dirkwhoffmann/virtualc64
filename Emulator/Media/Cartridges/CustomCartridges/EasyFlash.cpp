@@ -34,7 +34,7 @@ EasyFlash::resetCartConfig()
 void
 EasyFlash::_didReset(bool hard)
 {
-    eraseRAM(0);
+    // eraseRAM(0);
 
     // Make sure peekRomL() and peekRomH() conver the whole range
     mappedBytesL = 0x2000;

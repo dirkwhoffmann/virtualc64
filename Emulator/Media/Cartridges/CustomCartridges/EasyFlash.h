@@ -137,6 +137,8 @@ public:
     void pokeIO2(u16 addr, u8 value) override;
     void pokeBankReg(u8 value);
     void pokeModeReg(u8 value);
+
+    void eraseRAM() override { Cartridge::eraseRAM(0x00); }
 };
 
 }

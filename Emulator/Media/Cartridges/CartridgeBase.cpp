@@ -19,8 +19,8 @@ namespace vc64 {
 void
 Cartridge::operator << (SerResetter &worker)
 {
-    // Reset external RAM
-    if (externalRam && !getCartridgeTraits().battery) memset(externalRam, 0xFF, ramCapacity);
+    // Reset external RAM if no battery is present
+    if (!getCartridgeTraits().battery) eraseRAM();
 
     // Reset all chip packets
     for (isize i = 0; i < numPackets; i++) *packet[i] << worker;

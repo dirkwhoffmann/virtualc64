@@ -18,7 +18,7 @@ namespace vc64 {
 void
 KcsPower::_didReset(bool hard)
 {
-    eraseRAM(0xFF);
+    // eraseRAM(0xFF);
 }
 
 u8

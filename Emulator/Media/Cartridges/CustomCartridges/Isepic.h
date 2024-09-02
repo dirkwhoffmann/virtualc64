@@ -103,6 +103,7 @@ public:
     void poke(u16 addr, u8 value) override;
     void pokeIO1(u16 addr, u8 value) override;
     void pokeIO2(u16 addr, u8 value) override;
+    void eraseRAM() override { Cartridge::eraseRAM(0x00); }
 
 
     //

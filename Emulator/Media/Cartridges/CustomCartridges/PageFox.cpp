@@ -18,7 +18,7 @@ namespace vc64 {
 void
 PageFox::_didReset(bool hard)
 {
-    eraseRAM(0);
+    // eraseRAM(0);
 }
 
 void
