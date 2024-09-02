@@ -603,6 +603,21 @@ private:
     // CPU control and memory access
     //
     
+public:
+
+    /* Current value of the BA line. Remember: Each CPU cycle is split into two
+     * phases:
+     *
+     *     - phi1 (First phase, LOW): VICII gets access to the bus
+     *     - phi2 (Second phase, HIGH): CPU gets access to the bus
+     *
+     * In rare cases, VICII needs access in the HIGH phase, too. To block the
+     * CPU, the BA line is pulled down. Note that BA can be pulled down by
+     * multiple sources (wired AND) and this variable indicates which sources
+     * are holding the line low.
+     */
+    TimeDelayed <u16,3> baLine = TimeDelayed <u16,3> ();
+
 private:
     
     /* Memory source lookup table. If VICII is not running in Ultimax mode, it
@@ -633,20 +648,7 @@ private:
      * address is stored in this variable.
      */
     u16 addrBus;
-    
-    /* Current value of the BA line. Remember: Each CPU cycle is split into two
-     * phases:
-     *
-     *     - phi1 (First phase, LOW): VICII gets access to the bus
-     *     - phi2 (Second phase, HIGH): CPU gets access to the bus
-     *
-     * In rare cases, VICII needs access in the HIGH phase, too. To block the
-     * CPU, the BA line is pulled down. Note that BA can be pulled down by
-     * multiple sources (wired AND) and this variable indicates which sources
-     * are holding the line low.
-     */
-    TimeDelayed <u16,3> baLine = TimeDelayed <u16,3> ();
-    
+
     /* Start address of the currently selected memory bank. There are four
      * banks in total since the VICII chip can only 'see' 16 KB of memory at
      * the same time. Two bank select bits in the CIA I/O space determine which

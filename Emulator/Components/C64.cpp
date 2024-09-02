@@ -105,6 +105,7 @@ C64::eventName(EventSlot slot, EventID id)
 
                 case EVENT_NONE:        return "none";
                 case EXP_REU_PREPARE:   return "EXP_REU_PREPARE";
+                case EXP_REU_PREPARE2:  return "EXP_REU_PREPARE2";
                 case EXP_REU_STASH:     return "EXP_REU_STASH";
                 case EXP_REU_FETCH:     return "EXP_REU_FETCH";
                 case EXP_REU_SWAP:      return "EXP_REU_SWAP";
@@ -813,11 +814,14 @@ alwaysinline void C64::executeCycle()
 template <bool enable8, bool enable9> void 
 C64::finishInstruction()
 {
+    // TODO: UNCOMMENT ASAP
+    /*
     while (!cpu.inFetchPhase()) {
 
         executeCycle<enable8,enable9>();
         rasterCycle++;
     }
+    */
 }
 
 void
@@ -914,7 +918,7 @@ void
 C64::_run()
 {
     debug(RUN_DEBUG, "_run\n");
-    assert(cpu.inFetchPhase());
+    // assert(cpu.inFetchPhase());
 
     msgQueue.put(MSG_RUN);
 }
@@ -923,7 +927,7 @@ void
 C64::_pause()
 {
     debug(RUN_DEBUG, "_pause\n");
-    assert(cpu.inFetchPhase());
+    // assert(cpu.inFetchPhase());
 
     // Clear pending runloop flags
     flags = 0;

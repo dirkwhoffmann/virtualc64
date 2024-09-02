@@ -338,10 +338,10 @@ Reu::prepareDma()
     isize len = tlen ? tlen : 0x10000;
 
     // Freeze the CPU
-    cpu.pullDownRdyLine(INTSRC_EXP);
-    
+    // cpu.pullDownRdyLine(INTSRC_EXP);
+
     // Schedule the first event
-    c64.scheduleRel<SLOT_EXP>(2, EXP_REU_PREPARE, len);
+    c64.scheduleRel<SLOT_EXP>(1, EXP_REU_PREPARE, len);
 }
 
 bool
@@ -438,6 +438,17 @@ Reu::processEvent(EventID id)
 {
     if (id == EXP_REU_PREPARE) {
 
+        cpu.pullDownRdyLine(INTSRC_EXP);
+
+        c64.scheduleRel<SLOT_EXP>(1, EXP_REU_PREPARE2, c64.data[SLOT_EXP]);
+        return;
+    }
+
+    if (id == EXP_REU_PREPARE2) {
+
+        // Freeze the CPU
+        cpu.pullDownRdyLine(INTSRC_EXP);
+
         switch (cr & 0x3) {
 
             case 0: id = EXP_REU_STASH; break;
@@ -453,10 +464,7 @@ Reu::processEvent(EventID id)
     auto todo = std::min(remaining, i64(bytesPerDmaCycle()));
 
     // Perform DMA if VICII does not block the bus
-    if (!(cpu.getRdyLine() & INTSRC_VIC)) {
-
-        for (; todo; todo--, remaining--) doDma(id);
-    }
+    if (!vic.baLine.delayed()) for (; todo; todo--, remaining--) doDma(id);
 
     if (remaining) {
 
