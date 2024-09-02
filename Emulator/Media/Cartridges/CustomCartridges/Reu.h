@@ -193,7 +193,7 @@ public:
 
 
     //
-    // Accessing cartridge memory
+    // Accessing memory
     //
 
 public:
@@ -205,6 +205,9 @@ public:
     void eraseRAM() override { Cartridge::eraseRAM(0x00); }
 
 private:
+
+    u8 readFromC64Ram(u16 addr);
+    void writeToC64Ram(u16 addr, u8 value);
 
     u8 readFromReuRam(u32 addr);
     void writeToReuRam(u32 addr, u8 value);
