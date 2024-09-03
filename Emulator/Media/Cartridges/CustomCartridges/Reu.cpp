@@ -37,6 +37,9 @@ Reu::_didReset(bool hard)
 
     // Initialize the length register
     tlen = 0xFFFF;
+
+    // Experimental
+    bus = 0x00; // 0xFF;
 }
 
 void
@@ -98,7 +101,9 @@ Reu::_dump(Category category, std::ostream& os) const
 void
 Reu::eraseRAM()
 {
-    for (u32 i = 0; i < getRamCapacity(); i++) {
+    auto capacity = (u32)getRamCapacity();
+
+    for (u32 i = 0; i < capacity; i++) {
 
         u8 invert = (i & 0x20000) ? 0xFF : 0x00;
         pokeRAM(i, (((i + 1) & 0b10) ? 0x00 : 0xFF) ^ invert);
@@ -338,10 +343,6 @@ Reu::readFromReuRam(u32 addr)
     } else if (!floating(addr)) {
 
         bus = peekRAM(mapAddr(addr));
-
-    } else {
-
-        bus = 0xFF;
     }
 
     return bus;
@@ -352,15 +353,15 @@ Reu::writeToReuRam(u32 addr, u8 value)
 {
     addr |= upperBankBits;
 
-    bus = value;
-
     if (addr < u32(getRamCapacity())) {
 
         pokeRAM(addr, value);
+        bus = value;
 
     } else if (!floating(addr)) {
 
         pokeRAM(mapAddr(addr), value);
+        bus = value;
     }
 }
 
@@ -431,6 +432,8 @@ Reu::doDma(EventID id)
 
             if (memStep()) incMemAddr(c64Addr);
             if (reuStep()) incReuAddr(reuAddr);
+
+            prefetch(reuAddr);
             break;
 
         case EXP_REU_SWAP:
@@ -443,6 +446,8 @@ Reu::doDma(EventID id)
 
             if (memStep()) incMemAddr(c64Addr);
             if (reuStep()) incReuAddr(reuAddr);
+
+            prefetch(reuAddr);
             break;
 
         case EXP_REU_VERIFY:

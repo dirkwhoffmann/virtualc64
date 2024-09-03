@@ -212,6 +212,7 @@ private:
 
     u8 readFromReuRam(u32 addr);
     void writeToReuRam(u32 addr, u8 value);
+    void prefetch(u32 addr) { (void)readFromReuRam(addr); }
 
     // Checks whether a given address maps to a floating bus
     bool floating(u32 addr) const;
