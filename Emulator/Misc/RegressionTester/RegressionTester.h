@@ -113,16 +113,6 @@ public:
     void dumpTexture(C64 &c64);
     void dumpTexture(C64 &c64, const string &filename);
     void dumpTexture(C64 &c64, std::ostream& os);
-
-    
-    //
-    // Handling errors
-    //
-
-public:
-    
-    // Emulates the debugcart feature (used by VICE tests)
-    void debugcart(u8 value);
 };
 
 }

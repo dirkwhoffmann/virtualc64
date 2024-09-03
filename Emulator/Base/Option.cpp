@@ -68,6 +68,7 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_DMA_DEBUG_COLOR4:          return numParser();
         case OPT_DMA_DEBUG_COLOR5:          return numParser();
 
+        case OPT_EXP_DEBUGCART:             return boolParser();
         case OPT_EXP_REU_SPEED:             return numParser();
 
         case OPT_USR_DEVICE:                return enumParser.template operator()<UserPortDeviceEnum>();

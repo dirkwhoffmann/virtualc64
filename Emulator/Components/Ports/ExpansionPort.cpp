@@ -113,6 +113,18 @@ ExpansionPort::pokeIO2(u16 addr, u8 value)
     if (cartridge) cartridge->pokeIO2(addr, value);
 }
 
+void 
+ExpansionPort::pokeDebugCart(u16 addr, u8 value)
+{
+    if (!config.debugcart) return;
+
+    if (addr == 0xD7FF) {
+
+        // Exit the emulator with the provided value as return code
+        msgQueue.put(MSG_ABORT, value);
+    }
+}
+
 void
 ExpansionPort::setGameLine(bool value)
 {

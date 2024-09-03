@@ -105,10 +105,4 @@ RegressionTester::dumpTexture(C64 &c64, std::ostream& os)
     }
 }
 
-void
-RegressionTester::debugcart(u8 value)
-{
-    retValue = value;
-}
-
 }
