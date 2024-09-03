@@ -82,6 +82,9 @@ class MyApplication: NSApplication {
     // Information provider for connected HID devices
     var database = DeviceDatabase()
 
+    // Command line arguments
+    var argv: [String] = []
+
     // User activity token obtained in applicationDidFinishLaunching()
     var token: NSObjectProtocol!
 
@@ -97,8 +100,10 @@ class MyApplication: NSApplication {
 
         token = ProcessInfo.processInfo.beginActivity(options: [ .userInitiated ],
                                                       reason: "Running VirtualC64")
+
+        argv = Array(CommandLine.arguments.dropFirst())
     }
-    
+
     public func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
 
         debug(.shutdown, "Delay a bit to let audio fade out...")

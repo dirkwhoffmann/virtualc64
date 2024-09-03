@@ -226,6 +226,13 @@ extension MyController {
     
     func launch() {
 
+        // Pass in command line arguments as a RetroShell script
+        var script = ""
+        for arg in myAppDelegate.argv where arg.hasPrefix("-") {
+            script = script + arg.dropFirst() + "\n"
+        }
+        emu?.retroShell.execute(script)
+
         // Convert 'self' to a void pointer
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
         

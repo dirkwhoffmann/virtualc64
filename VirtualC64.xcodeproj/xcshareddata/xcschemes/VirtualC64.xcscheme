@@ -109,7 +109,19 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-debugcart "
+            argument = "-&quot;joshua&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-&quot;c64 set RUN_AHEAD 2&quot; "
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-&quot;c64&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-&quot;i c64&quot;"
             isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
