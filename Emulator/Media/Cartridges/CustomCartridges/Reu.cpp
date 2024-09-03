@@ -95,6 +95,16 @@ Reu::_dump(Category category, std::ostream& os) const
     }
 }
 
+void
+Reu::eraseRAM()
+{
+    for (u32 i = 0; i < getRamCapacity(); i++) {
+
+        u8 invert = (i & 0x20000) ? 0xFF : 0x00;
+        pokeRAM(i, (((i + 1) & 0b10) ? 0x00 : 0xFF) ^ invert);
+    }
+}
+
 u8
 Reu::peekIO2(u16 addr)
 {
