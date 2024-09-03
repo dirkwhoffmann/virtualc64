@@ -18,17 +18,17 @@ namespace vc64 {
 
 class Reu final : public Cartridge {
 
+    CartridgeTraits traits = {
+
+        .type       = CRT_REU,
+        .title      = "REU",
+        .memory     = 0,
+        .battery    = true
+    };
+
     virtual const CartridgeTraits &getCartridgeTraits() const override {
 
-        static CartridgeTraits traits = {
-
-            .type       = CRT_REU,
-            .title      = "REU",
-            .memory     = 0,
-            .battery    = true
-        };
-
-        traits.memory = KB(kb);
+        // traits.memory = KB(kb);
         return traits;
     }
 
@@ -211,6 +211,12 @@ private:
 
     u8 readFromReuRam(u32 addr);
     void writeToReuRam(u32 addr, u8 value);
+
+    // Checks whether a given address maps to a floating bus
+    bool floating(u32 addr) const;
+
+    // Maps an address to the (mirrored) physical REU address
+    u32 mapAddr(u32 addr) const;
 
 
     //

@@ -22,6 +22,7 @@ Reu::Reu(C64 &ref, isize kb) : Cartridge(ref), kb(kb)
         throw Error(VC64ERROR_OPT_INV_ARG, "128, 256, 512, ..., 16384");
     }
 
+    traits.memory = KB(kb);
     setRamCapacity(KB(kb));
 }
 
@@ -323,6 +324,14 @@ Reu::readFromReuRam(u32 addr)
     if (addr < u32(getRamCapacity())) {
 
         bus = peekRAM(addr);
+
+    } else if (!floating(addr)) {
+
+        bus = peekRAM(mapAddr(addr));
+
+    } else {
+
+        bus = 0xFF;
     }
 
     return bus;
@@ -333,10 +342,39 @@ Reu::writeToReuRam(u32 addr, u8 value)
 {
     addr |= upperBankBits;
 
+    bus = value;
+
     if (addr < u32(getRamCapacity())) {
 
-        bus = value;
         pokeRAM(addr, value);
+
+    } else if (!floating(addr)) {
+
+        pokeRAM(mapAddr(addr), value);
+    }
+}
+
+bool 
+Reu::floating(u32 addr) const
+{
+    auto bank = [&](u32 addr) { return addr >> 16; };
+
+    switch (getRamCapacity()) {
+
+        case KB(256):   return (bank(addr) % 8) >= 4;
+        default:        return false;
+    }
+}
+
+u32
+Reu::mapAddr(u32 addr) const
+{
+    auto capacity = getRamCapacity();
+
+    switch (capacity) {
+
+        case KB(256):   return addr & 0x07FFFF;
+        default:        return addr & (capacity - 1);
     }
 }
 
