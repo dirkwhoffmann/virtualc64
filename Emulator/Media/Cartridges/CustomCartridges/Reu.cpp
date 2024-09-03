@@ -129,7 +129,6 @@ Reu::peekIO2(u16 addr)
 
         default:
             break;
-
     }
 
     debug(REU_DEBUG, "peekIO2(%x) = %02X\n", addr, result);
@@ -397,9 +396,10 @@ Reu::prepareDma()
     c64Addr = c64Base;
     reuAddr = reuBase;
     isize len = tlen ? tlen : 0x10000;
+    tcnt = tlen; 
 
-    // Freeze the CPU
-    // cpu.pullDownRdyLine(INTSRC_EXP);
+    // Update control register bits
+    cr = (cr & ~CR::EXECUTE) | CR::FF00_DISABLE;
 
     // Schedule the first event
     c64.scheduleRel<SLOT_EXP>(1, EXP_REU_PREPARE, len);
@@ -455,6 +455,9 @@ Reu::doDma(EventID id)
             c64Val = readFromC64Ram(c64Addr);
             reuVal = readFromReuRam(reuAddr);
 
+            if (memStep()) incMemAddr(c64Addr);
+            if (reuStep()) incReuAddr(reuAddr);
+
             if (c64Val != reuVal) {
 
                 debug(REU_DEBUG, "Verify error: (%x,%02x) <-> (%x,%02x)\n",
@@ -468,9 +471,6 @@ Reu::doDma(EventID id)
 
                 return false;
             }
-
-            if (memStep()) incMemAddr(c64Addr);
-            if (reuStep()) incReuAddr(reuAddr);
             break;
 
         default:
@@ -483,9 +483,6 @@ Reu::doDma(EventID id)
 void 
 Reu::finalizeDma(EventID id)
 {
-    // Set the "End of Block" bit
-    SET_BIT(sr, 6);
-
     if (!autoloadEnabled()) {
 
         c64Base = c64Addr;
@@ -493,6 +490,8 @@ Reu::finalizeDma(EventID id)
     }
 
     triggerEndOfBlockIrq();
+
+    tlen = tcnt;
 
     // Release the CPU
     cpu.releaseRdyLine(INTSRC_EXP);
@@ -523,13 +522,42 @@ Reu::processEvent(EventID id)
         }
     }
 
-    auto remaining = c64.data[SLOT_EXP];
+    // auto remaining = c64.data[SLOT_EXP];
 
+    bool success = doDma(id);
+
+    if (tcnt == 1) {
+
+        finalizeDma(id);
+        c64.cancel<SLOT_EXP>();
+
+    } else {
+
+        U16_DEC(tcnt, 1);
+
+        if (success) {
+
+            c64.scheduleInc<SLOT_EXP>(1, id);
+
+        } else {
+
+            finalizeDma(id);
+            c64.cancel<SLOT_EXP>();
+        }
+    }
+
+    // Set or clear the END_OF_BLOCK_BIT
+    tcnt == 1 ? SET_BIT(sr, 6) : CLR_BIT(sr, 6);
+
+    /*
     // Determine the number of bytes to transfer
     auto todo = std::min(remaining, i64(bytesPerDmaCycle()));
 
     // Perform DMA if VICII does not block the bus
-    if (!vic.baLine.delayed()) for (; todo; todo--, remaining--) doDma(id);
+    if (!vic.baLine.delayed()) for (; todo; todo--, remaining--) {
+
+        if (!doDma(id)) { remaining = 0; break; }
+    }
 
     if (remaining) {
 
@@ -542,6 +570,8 @@ Reu::processEvent(EventID id)
         finalizeDma(id);
         c64.cancel<SLOT_EXP>();
     }
+    */
+
 }
 
 void

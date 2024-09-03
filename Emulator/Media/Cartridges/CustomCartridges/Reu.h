@@ -16,6 +16,24 @@
 
 namespace vc64 {
 
+// Status register bits
+namespace SR {
+constexpr u8 IRQ_PENDING  = 0b10000000;
+constexpr u8 END_OF_BLOCK = 0b01000000;
+constexpr u8 VERIFY_ERROR = 0b00100000;
+constexpr u8 CHIPS_256K   = 0b00010000;
+constexpr u8 VERSION      = 0b00001111;
+}
+
+// Control register bits
+namespace CR {
+constexpr u8 EXECUTE      = 0b10000000;
+constexpr u8 RESERVED     = 0b01001100;
+constexpr u8 AUTOLOAD     = 0b00100000;
+constexpr u8 FF00_DISABLE = 0b00010000;
+constexpr u8 TRANSFER     = 0b00000011;
+}
+
 class Reu final : public Cartridge {
 
     CartridgeTraits traits = {
@@ -60,6 +78,9 @@ private:
 
     // Transfer length register
     u16 tlen = 0;
+
+    // Transfer length counter (probably use tlen in the future)
+    u16 tcnt = 0;
 
     // Interrupt mask
     u8 imr = 0;
@@ -117,6 +138,7 @@ public:
         CLONE(reuAddr)
         CLONE(upperBankBits)
         CLONE(tlen)
+        CLONE(tcnt)
         CLONE(imr)
         CLONE(acr)
         CLONE(bus)
@@ -142,6 +164,7 @@ public:
         << reuAddr
         << upperBankBits
         << tlen
+        << tcnt
         << imr
         << acr
         << bus
