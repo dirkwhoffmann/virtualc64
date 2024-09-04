@@ -78,8 +78,8 @@ private:
     u8 reuBankLatched = 0;
 
     // Transfer length register (0x07 - 0x08)
-    u16 tlen = 0;
-    u16 tlenLatched = 0;
+    u16 tlength = 0;
+    u16 tlengthLatched = 0;
 
     // Interrupt mask register (0x09)
     u8 imr = 0;
@@ -141,8 +141,8 @@ public:
         CLONE(reuBaseLatched)
         CLONE(reuBank)
         CLONE(reuBankLatched)
-        CLONE(tlen)
-        CLONE(tlenLatched)
+        CLONE(tlength)
+        CLONE(tlengthLatched)
         CLONE(imr)
         CLONE(acr)
 
@@ -171,8 +171,8 @@ public:
         << reuBaseLatched
         << reuBank
         << reuBankLatched
-        << tlen
-        << tlenLatched
+        << tlength
+        << tlengthLatched
         << imr
         << acr
 

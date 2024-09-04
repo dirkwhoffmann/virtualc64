@@ -36,7 +36,7 @@ Reu::_didReset(bool hard)
     cr = 0x10;
 
     // Initialize the length register
-    tlenLatched = 0xFFFF;
+    tlengthLatched = 0xFFFF;
 
     // Experimental
     bus = 0x00; // 0xFF;
@@ -70,7 +70,7 @@ Reu::_dump(Category category, std::ostream& os) const
         os << tab("Bank register");
         os << hex(reuBank) << " (latched: " << hex(reuBankLatched) << ")" << std::endl;
         os << tab("Transfer Length Register");
-        os << hex(tlen) << " (latched: " <<  hex(tlenLatched) << ")" << std::endl;
+        os << hex(tlength) << " (latched: " <<  hex(tlengthLatched) << ")" << std::endl;
         os << tab("Interrupt Mask Register");
         os << hex(imr) << std::endl;
         os << tab("Address Control Register");
@@ -180,12 +180,12 @@ Reu::spypeekIO2(u16 addr) const
 
         case 0x07:  // Transfer Length (LSB)
 
-            result = LO_BYTE(tlen);
+            result = LO_BYTE(tlength);
             break;
 
         case 0x08:  // Transfer Length (MSB)
 
-            result = HI_BYTE(tlen);
+            result = HI_BYTE(tlength);
             break;
 
         case 0x09:  // Interrupt Mask
@@ -223,11 +223,11 @@ Reu::pokeIO2(u16 addr, u8 value)
 
             if (GET_BIT(cr,7) && ff00Enabled()) {
 
-                debug(REU_DEBUG, "Preparing for DMA...\n");
+                debug(REU_DEBUG, "Preparing for DMA [Mode %d]...\n", cr & 0x3);
             }
             if (GET_BIT(cr,7) && ff00Disabled()) {
 
-                debug(REU_DEBUG, "Initiating DMA...\n");
+                debug(REU_DEBUG, "Initiating DMA [Mode %d]...\n", cr & 0x3);
                 prepareDma();
             }
             break;
@@ -280,14 +280,14 @@ Reu::pokeIO2(u16 addr, u8 value)
 
         case 0x07:  // Transfer Length (LSB)
 
-            tlenLatched = (u16)REPLACE_LO(tlenLatched, value);
-            tlen = tlenLatched;
+            tlengthLatched = (u16)REPLACE_LO(tlengthLatched, value);
+            tlength = tlengthLatched;
             break;
 
         case 0x08:  // Transfer Length (MSB)
 
-            tlenLatched = (u16)REPLACE_HI(tlenLatched, value);
-            tlen = tlenLatched;
+            tlengthLatched = (u16)REPLACE_HI(tlengthLatched, value);
+            tlength = tlengthLatched;
             break;
 
         case 0x09:  // Interrupt Mask
@@ -414,18 +414,13 @@ Reu::incReuAddr()
 void
 Reu::prepareDma()
 {
-    if (REU_DEBUG) { dump(Category::Dma, std::cout); }
-
-    c64Base = c64BaseLatched; // OBSOLETE
-    reuBase = reuBaseLatched; // OBSOLETE
-    isize len = tlenLatched ? tlenLatched : 0x10000;
-    tlen = tlenLatched; 
+    // if (REU_DEBUG) { dump(Category::Dma, std::cout); }
 
     // Update control register bits
     cr = (cr & ~CR::EXECUTE) | CR::FF00_DISABLE;
 
     // Schedule the first event
-    c64.scheduleRel<SLOT_EXP>(1, EXP_REU_PREPARE, len);
+    c64.scheduleRel<SLOT_EXP>(1, EXP_REU_PREPARE);
 }
 
 bool
@@ -440,8 +435,6 @@ Reu::doDma(EventID id)
             c64Val = readFromC64Ram(c64Base);
             writeToReuRam((u32)reuBank << 16 | reuBase, c64Val);
 
-            // debug(REU_DEBUG,"(%x, %02x) -> %x\n", memAddr, c64Val, reuAddr);
-
             if (memStep()) incMemAddr();
             if (reuStep()) incReuAddr();
             break;
@@ -450,8 +443,6 @@ Reu::doDma(EventID id)
 
             reuVal = readFromReuRam((u32)reuBank << 16 | reuBase);
             writeToC64Ram(c64Base, reuVal);
-
-            // debug(REU_DEBUG,"%x <- (%x, %02x)\n", memAddr, reuAddr, reuVal);
 
             if (memStep()) incMemAddr();
             if (reuStep()) incReuAddr();
@@ -486,7 +477,7 @@ Reu::doDma(EventID id)
                 debug(REU_DEBUG, "Verify error: (%x,%02x) <-> (%x,%02x)\n",
                       c64Base, c64Val, (u32)reuBank << 16 | reuBase, reuVal);
 
-                // Set the "Fault" bit
+                // Set the Fault bit
                 SET_BIT(sr, 5);
 
                 // Trigger interrupt if enabled
@@ -511,12 +502,10 @@ Reu::finalizeDma(EventID id)
         c64Base = c64BaseLatched;
         reuBase = reuBaseLatched;
         reuBank = reuBankLatched;
-        tlen = tlenLatched;
+        tlength = tlengthLatched;
     }
 
     triggerEndOfBlockIrq();
-
-    // tlen = tcnt;
 
     // Release the CPU
     cpu.releaseRdyLine(INTSRC_EXP);
@@ -529,7 +518,7 @@ Reu::processEvent(EventID id)
 
         cpu.pullDownRdyLine(INTSRC_EXP);
 
-        c64.scheduleRel<SLOT_EXP>(1, EXP_REU_PREPARE2, c64.data[SLOT_EXP]);
+        c64.scheduleRel<SLOT_EXP>(1, EXP_REU_PREPARE2);
         return;
     }
 
@@ -557,14 +546,14 @@ Reu::processEvent(EventID id)
     // Perform a DMA cycle
     bool success = doDma(id);
 
-    if (tlen == 1) {
+    if (tlength == 1) {
 
         finalizeDma(id);
         c64.cancel<SLOT_EXP>();
 
     } else {
 
-        U16_DEC(tlen, 1);
+        U16_DEC(tlength, 1);
 
         if (success) {
 
@@ -578,31 +567,7 @@ Reu::processEvent(EventID id)
     }
 
     // Set or clear the END_OF_BLOCK_BIT
-    tlen == 1 ? SET_BIT(sr, 6) : CLR_BIT(sr, 6);
-
-    /*
-    // Determine the number of bytes to transfer
-    auto todo = std::min(remaining, i64(bytesPerDmaCycle()));
-
-    // Perform DMA if VICII does not block the bus
-    if (!vic.baLine.delayed()) for (; todo; todo--, remaining--) {
-
-        if (!doDma(id)) { remaining = 0; break; }
-    }
-
-    if (remaining) {
-
-        // Prepare the next event
-        c64.scheduleInc<SLOT_EXP>(1, id, remaining);
-
-    } else {
-
-        // Finalize DMA if this was the last cycle
-        finalizeDma(id);
-        c64.cancel<SLOT_EXP>();
-    }
-    */
-
+    tlength == 1 ? SET_BIT(sr, 6) : CLR_BIT(sr, 6);
 }
 
 void
