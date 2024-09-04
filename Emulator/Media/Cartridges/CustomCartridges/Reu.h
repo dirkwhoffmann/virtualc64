@@ -69,9 +69,13 @@ private:
     u16 c64Base = 0;
     u16 c64BaseLatched = 0;
 
-    // REU base address register (0x04 - 0x06)
-    u32 reuBase = 0;
-    u32 reuBaseLatched = 0;
+    // REU base address register (0x04 - 0x05)
+    u16 reuBase = 0;
+    u16 reuBaseLatched = 0;
+
+    // Bank register (0x06)
+    u8 reuBank = 0;
+    u8 reuBankLatched = 0;
 
     // Transfer length register (0x07 - 0x08)
     u16 tlen = 0;
@@ -135,6 +139,8 @@ public:
         CLONE(c64BaseLatched)
         CLONE(reuBase)
         CLONE(reuBaseLatched)
+        CLONE(reuBank)
+        CLONE(reuBankLatched)
         CLONE(tlen)
         CLONE(tlenLatched)
         CLONE(imr)
@@ -163,6 +169,8 @@ public:
         << c64BaseLatched
         << reuBase
         << reuBaseLatched
+        << reuBank
+        << reuBankLatched
         << tlen
         << tlenLatched
         << imr
@@ -252,8 +260,8 @@ private:
 
 private:
 
-    void incMemAddr(u16 &addr) { addr = U16_ADD(addr, 1); }
-    void incReuAddr(u32 &addr) { addr = U32_ADD(addr, 1) & wrapMask(); }
+    void incMemAddr();
+    void incReuAddr();
 
     void prepareDma();
     bool doDma(EventID id);
