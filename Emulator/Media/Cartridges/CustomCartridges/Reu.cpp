@@ -153,27 +153,27 @@ Reu::spypeekIO2(u16 addr) const
 
         case 0x02:  // C64 Base Address (LSB)
 
-            result = LO_BYTE(c64BaseLatched);
+            result = LO_BYTE(c64Base);
             break;
 
         case 0x03:  // C64 Base Address (MSB)
 
-            result = HI_BYTE(c64BaseLatched);
+            result = HI_BYTE(c64Base);
             break;
 
         case 0x04:  // REU Base Address (LSB)
 
-            result = LO_BYTE(reuBaseLatched);
+            result = LO_BYTE(reuBase);
             break;
 
         case 0x05:  // REU Base Address (MSB)
 
-            result = HI_BYTE(reuBaseLatched);
+            result = HI_BYTE(reuBase);
             break;
 
         case 0x06:  // REU Bank
 
-            result = (u8)HI_WORD(reuBaseLatched) | 0xF8;
+            result = (u8)HI_WORD(reuBase) | 0xF8;
             break;
 
         case 0x07:  // Transfer Length (LSB)
@@ -233,26 +233,31 @@ Reu::pokeIO2(u16 addr, u8 value)
         case 0x02:  // C64 Base Address (LSB)
 
             c64BaseLatched = (u16)REPLACE_LO(c64BaseLatched, value);
+            c64Base = c64BaseLatched;
             break;
 
         case 0x03:  // C64 Base Address (MSB)
 
             c64BaseLatched = (u16)REPLACE_HI(c64BaseLatched, value);
+            c64Base = c64BaseLatched;
             break;
 
         case 0x04:  // REU Base Address (LSB)
 
             reuBaseLatched = (u32)REPLACE_LO(reuBaseLatched, value);
+            reuBase = reuBaseLatched;
             break;
 
         case 0x05:  // REU Base Address (MSB)
 
             reuBaseLatched = (u32)REPLACE_HI(reuBaseLatched, value);
+            reuBase = reuBaseLatched;
             break;
 
         case 0x06:  // REU Bank
 
             reuBaseLatched = (u32)REPLACE_HI_WORD(reuBaseLatched, value & 0b111);
+            reuBase = reuBaseLatched;
 
             switch (getRamCapacity()) {
 
@@ -274,11 +279,13 @@ Reu::pokeIO2(u16 addr, u8 value)
         case 0x07:  // Transfer Length (LSB)
 
             tlenLatched = (u16)REPLACE_LO(tlenLatched, value);
+            tlen = tlenLatched;
             break;
 
         case 0x08:  // Transfer Length (MSB)
 
             tlenLatched = (u16)REPLACE_HI(tlenLatched, value);
+            tlen = tlenLatched;
             break;
 
         case 0x09:  // Interrupt Mask
