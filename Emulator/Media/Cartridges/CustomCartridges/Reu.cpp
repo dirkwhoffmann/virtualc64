@@ -36,7 +36,7 @@ Reu::_didReset(bool hard)
     cr = 0x10;
 
     // Initialize the length register
-    tlen = 0xFFFF;
+    tlenLatched = 0xFFFF;
 
     // Experimental
     bus = 0x00; // 0xFF;
@@ -67,16 +67,15 @@ Reu::_dump(Category category, std::ostream& os) const
         os << hex(c64Base) << " (latched: " << hex(c64BaseLatched) << ")" << std::endl;
         os << tab("REU Base Address");
         os << hex(reuBase) << " (latched: " << hex(reuBaseLatched) << ")" << std::endl;
-        os << tab("Upper bank bits" );
-        os << hex(upperBankBits) << std::endl;
-        os << tab("Transfer Length");
-        os << hex(tlen) << std::endl;
+        os << tab("Transfer Length Register");
+        os << hex(tlen) << " (latched: " <<  hex(tlenLatched) << ")" << std::endl;
         os << tab("Interrupt Mask Register");
         os << hex(imr) << std::endl;
         os << tab("Address Control Register");
         os << hex(acr) << std::endl;
-
         os << std::endl;
+        os << tab("Upper bank bits" );
+        os << hex(upperBankBits) << std::endl;
         os << tab("Wrap mask");
         os << hex(wrapMask()) << std::endl;
         os << tab("Mode");
@@ -179,12 +178,12 @@ Reu::spypeekIO2(u16 addr) const
 
         case 0x07:  // Transfer Length (LSB)
 
-            result = LO_BYTE(tcnt); // LO_BYTE(tlen);
+            result = LO_BYTE(tlen); // LO_BYTE(tlen);
             break;
 
         case 0x08:  // Transfer Length (MSB)
 
-            result = HI_BYTE(tcnt); // HI_BYTE(tlen);
+            result = HI_BYTE(tlen); // HI_BYTE(tlen);
             break;
 
         case 0x09:  // Interrupt Mask
@@ -274,12 +273,12 @@ Reu::pokeIO2(u16 addr, u8 value)
 
         case 0x07:  // Transfer Length (LSB)
 
-            tlen = (u16)REPLACE_LO(tlen, value);
+            tlenLatched = (u16)REPLACE_LO(tlenLatched, value);
             break;
 
         case 0x08:  // Transfer Length (MSB)
 
-            tlen = (u16)REPLACE_HI(tlen, value);
+            tlenLatched = (u16)REPLACE_HI(tlenLatched, value);
             break;
 
         case 0x09:  // Interrupt Mask
@@ -395,8 +394,8 @@ Reu::prepareDma()
 
     c64Base = c64BaseLatched;
     reuBase = reuBaseLatched;
-    isize len = tlen ? tlen : 0x10000;
-    tcnt = tlen; 
+    isize len = tlenLatched ? tlenLatched : 0x10000;
+    tlen = tlenLatched; 
 
     // Update control register bits
     cr = (cr & ~CR::EXECUTE) | CR::FF00_DISABLE;
@@ -532,14 +531,14 @@ Reu::processEvent(EventID id)
     // Perform a DMA cycle
     bool success = doDma(id);
 
-    if (tcnt == 1) {
+    if (tlen == 1) {
 
         finalizeDma(id);
         c64.cancel<SLOT_EXP>();
 
     } else {
 
-        U16_DEC(tcnt, 1);
+        U16_DEC(tlen, 1);
 
         if (success) {
 
@@ -553,7 +552,7 @@ Reu::processEvent(EventID id)
     }
 
     // Set or clear the END_OF_BLOCK_BIT
-    tcnt == 1 ? SET_BIT(sr, 6) : CLR_BIT(sr, 6);
+    tlen == 1 ? SET_BIT(sr, 6) : CLR_BIT(sr, 6);
 
     /*
     // Determine the number of bytes to transfer

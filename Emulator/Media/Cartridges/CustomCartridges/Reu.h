@@ -73,28 +73,26 @@ private:
     u32 reuBase = 0;
     u32 reuBaseLatched = 0;
 
-    // Upper bank bits (used by modded REUs with higher capacities)
-    u32 upperBankBits = 0;
-
-    // Transfer length register
+    // Transfer length register (0x07 - 0x08)
     u16 tlen = 0;
+    u16 tlenLatched = 0;
 
-    // Transfer length counter (probably use tlen in the future)
-    u16 tcnt = 0;
-
-    // Interrupt mask
+    // Interrupt mask register (0x09)
     u8 imr = 0;
 
-    // Address control register
+    // Address control register (0x0A)
     u8 acr = 0;
-
-    // Latest value on the data bus
-    u8 bus = 0;
 
 
     //
     // Emulation specific variables
     //
+
+    // Upper bank bits (used by modded REUs with higher capacities)
+    u32 upperBankBits = 0;
+
+    // Latest value on the data bus
+    u8 bus = 0;
 
     // Remembers the memory type of the uppermost memory bank
     MemoryType memTypeF = M_NONE;
@@ -130,17 +128,19 @@ public:
         Cartridge::operator=(other);
 
         CLONE(kb)
+
         CLONE(sr)
         CLONE(cr)
         CLONE(c64Base)
         CLONE(c64BaseLatched)
         CLONE(reuBase)
         CLONE(reuBaseLatched)
-        CLONE(upperBankBits)
         CLONE(tlen)
-        CLONE(tcnt)
+        CLONE(tlenLatched)
         CLONE(imr)
         CLONE(acr)
+
+        CLONE(upperBankBits)
         CLONE(bus)
         CLONE(memTypeF)
 
@@ -156,17 +156,19 @@ public:
         worker
 
         << kb
+
         << sr
         << cr
         << c64Base
         << c64BaseLatched
         << reuBase
         << reuBaseLatched
-        << upperBankBits
         << tlen
-        << tcnt
+        << tlenLatched
         << imr
         << acr
+
+        << upperBankBits
         << bus
         << memTypeF;
 

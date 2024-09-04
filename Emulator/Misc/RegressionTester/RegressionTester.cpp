@@ -74,7 +74,6 @@ RegressionTester::dumpTexture(C64 &c64, const std::filesystem::path &path)
     if (!filename.has_extension()) filename.replace_extension("raw");
 
     // Open output stream
-    printf("Saving %s\n", filename.c_str());
     file.open(filename.c_str());
 
     // Dump texture
