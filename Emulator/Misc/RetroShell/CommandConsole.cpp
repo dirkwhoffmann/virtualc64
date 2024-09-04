@@ -123,11 +123,11 @@ CommandConsole::initCommands(Command &root)
     root.add({"screenshot", "set"},
              "Configure the screenshot");
 
-    root.add({"screenshot", "set", "filename"}, { Arg::path },
-             "Assign the screen shot filename",
+    root.add({"screenshot", "set", "path"}, { Arg::path },
+             "Assign the save directory",
              [this](Arguments& argv, long value) {
 
-        regressionTester.dumpTexturePath = argv.front();
+        regressionTester.screenshotPath = argv.front();
     });
 
     root.add({"screenshot", "set", "cutout"}, { Arg::value, Arg::value, Arg::value, Arg::value },

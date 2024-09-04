@@ -48,31 +48,41 @@ RegressionTester::run(string path)
     keyboard.autoType("run\n");
 }
 
+/*
 void
 RegressionTester::dumpTexture(C64 &c64)
 {
     dumpTexture(c64, dumpTexturePath);
 }
+*/
 
 void
-RegressionTester::dumpTexture(C64 &c64, const string &filename)
+RegressionTester::dumpTexture(C64 &c64, const std::filesystem::path &path)
 {
     /* This function is used for automatic regression testing. It dumps the
      * visible portion of the texture into the /tmp directory and exits the
      * application. The regression test script picks up the texture and
      * compares it against a previously recorded reference image.
      */
+    std::filesystem::path filename = path;
     std::ofstream file;
 
-    // Open an output stream
-    file.open(("/tmp/" + filename + ".raw").c_str());
+    // Add the target directory if the path is relative
+    if (!filename.is_absolute()) filename = screenshotPath / filename;
+
+    // Add a filename extension if none is specified
+    if (!filename.has_extension()) filename.replace_extension("raw");
+
+    // Open output stream
+    printf("Saving %s\n", filename.c_str());
+    file.open(filename.c_str());
 
     // Dump texture
     dumpTexture(c64, file);
     file.close();
 
     // Ask the GUI to quit
-    msgQueue.put(MSG_ABORT, retValue);
+    // msgQueue.put(MSG_ABORT, retValue);
 }
 
 void

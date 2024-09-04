@@ -46,6 +46,11 @@ static const char *smokeTestScript[] = {
     "joshua",       // Test a hidden command
     "try joshu",    // Catch an error with 'try'
     
+    "regression set DEBUGCART true",
+    "regression set DEBUGCART false",
+    "regression set WATCHDOG 1000000",
+    "regression set WATCHDOG 0",
+
     "# ",
     "# Components",
     "# ",
@@ -210,8 +215,6 @@ static const char *smokeTestScript[] = {
     "video set WHITE_NOISE false",
 
     "expansion",
-    "expansion set DEBUGCART true",
-    "expansion set DEBUGCART false",
     "expansion set REU_SPEED 1",
     "expansion set REU_SPEED 2",
     "expansion attach reu 128",

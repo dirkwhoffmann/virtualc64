@@ -15,6 +15,7 @@
 #include "RegressionTesterTypes.h"
 #include "SubComponent.h"
 #include "C64Types.h"
+#include <filesystem>
 
 namespace vc64 {
 
@@ -46,8 +47,8 @@ class RegressionTester : public SubComponent {
 
 public:
 
-    // Filename of the test image
-    string dumpTexturePath = "texture";
+    // Path to the default screenshot directory
+    std::filesystem::path screenshotPath = "/tmp";
 
     // Pixel area that is written to the test image
     isize x1 = X1;
@@ -119,9 +120,11 @@ public:
     // Runs a test case
     void run(string path);
 
-    // Creates the test image and exits the emulator
-    void dumpTexture(C64 &c64);
-    void dumpTexture(C64 &c64, const string &filename);
+    // Saves a screenshot and exits the emulator
+    void dumpTexture(C64 &c64, const std::filesystem::path &path);
+
+private:
+
     void dumpTexture(C64 &c64, std::ostream& os);
 
 
