@@ -179,12 +179,12 @@ Reu::spypeekIO2(u16 addr) const
 
         case 0x07:  // Transfer Length (LSB)
 
-            result = LO_BYTE(tlen);
+            result = LO_BYTE(tcnt); // LO_BYTE(tlen);
             break;
 
         case 0x08:  // Transfer Length (MSB)
 
-            result = HI_BYTE(tlen);
+            result = HI_BYTE(tcnt); // HI_BYTE(tlen);
             break;
 
         case 0x09:  // Interrupt Mask
@@ -491,7 +491,7 @@ Reu::finalizeDma(EventID id)
 
     triggerEndOfBlockIrq();
 
-    tlen = tcnt;
+    // tlen = tcnt;
 
     // Release the CPU
     cpu.releaseRdyLine(INTSRC_EXP);
@@ -522,8 +522,14 @@ Reu::processEvent(EventID id)
         }
     }
 
-    // auto remaining = c64.data[SLOT_EXP];
+    // Only proceed if the bus is available
+    if (vic.baLine.delayed()) {
 
+        c64.scheduleRel<SLOT_EXP>(1, id);
+        return;
+    }
+
+    // Perform a DMA cycle
     bool success = doDma(id);
 
     if (tcnt == 1) {
@@ -537,7 +543,7 @@ Reu::processEvent(EventID id)
 
         if (success) {
 
-            c64.scheduleInc<SLOT_EXP>(1, id);
+            c64.scheduleRel<SLOT_EXP>(1, id);
 
         } else {
 

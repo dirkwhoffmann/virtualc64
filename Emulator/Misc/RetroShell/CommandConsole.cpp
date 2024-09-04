@@ -306,7 +306,7 @@ CommandConsole::initCommands(Command &root)
     // Components (SIDBridge)
     //
 
-    cmd = registerComponent(sidBridge);
+    // cmd = registerComponent(sidBridge);
 
 
     //
