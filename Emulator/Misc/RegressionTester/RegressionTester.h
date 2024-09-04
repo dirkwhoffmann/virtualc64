@@ -12,6 +12,7 @@
 
 #pragma once
 
+#include "RegressionTesterTypes.h"
 #include "SubComponent.h"
 #include "C64Types.h"
 
@@ -30,8 +31,13 @@ class RegressionTester : public SubComponent {
 
     Options options = {
 
+        OPT_DBG_DEBUGCART,
+        OPT_DBG_WATCHDOG
     };
-    
+
+    // Current configuration
+    RegressionTesterConfig config = { };
+
     // Pixel area ritten to the test image
     static constexpr isize X1 = 104;
     static constexpr isize Y1 = 17;
@@ -39,10 +45,10 @@ class RegressionTester : public SubComponent {
     static constexpr isize Y2 = 291;
 
 public:
-    
+
     // Filename of the test image
     string dumpTexturePath = "texture";
-    
+
     // Pixel area that is written to the test image
     isize x1 = X1;
     isize y1 = Y1;
@@ -54,13 +60,13 @@ private:
     // When the emulator exits, this value is returned to the test script
     u8 retValue = 0;
 
-    
+
     //
     // Methods
     //
-    
+
 public:
-    
+
     using SubComponent::SubComponent;
 
     RegressionTester& operator= (const RegressionTester& other) { return *this; }
@@ -85,7 +91,7 @@ public:
 
 private:
 
-    void _dump(Category category, std::ostream& os) const override { }
+    void _dump(Category category, std::ostream& os) const override;
 
 
     //
@@ -94,7 +100,11 @@ private:
 
 public:
 
+    const RegressionTesterConfig &getConfig() const { return config; }
     const Options &getOptions() const override { return options; }
+    i64 getOption(Option opt) const override;
+    void checkOption(Option opt, i64 value) override;
+    void setOption(Option opt, i64 value) override;
 
 
     //
@@ -113,6 +123,22 @@ public:
     void dumpTexture(C64 &c64);
     void dumpTexture(C64 &c64, const string &filename);
     void dumpTexture(C64 &c64, std::ostream& os);
+
+
+    //
+    // Debug features
+    //
+
+public:
+
+    // Processes an event in the DBG slot
+    void processEvent(EventID id);
+
+    // Emulates a write into the debugcart register
+    void pokeDebugCart(u16 addr, u8 value);
+
+    // Starts (value > 0) or stops (value == 0) a watchdog timer
+    void setWatchdog(isize value);
 };
 
 }

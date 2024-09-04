@@ -56,7 +56,6 @@ struct CRTModeEnum : util::Reflection<CRTModeEnum, CRTMode> {
 
 typedef struct
 {
-    bool debugcart;
     isize reuSpeed;
 }
 ExpansionPortConfig;

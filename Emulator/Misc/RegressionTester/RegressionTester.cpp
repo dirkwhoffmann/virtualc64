@@ -105,4 +105,37 @@ RegressionTester::dumpTexture(C64 &c64, std::ostream& os)
     }
 }
 
+void 
+RegressionTester::processEvent(EventID id)
+{
+    msg("Watchdog triggerd: Shutting down the emulator\n");
+    msgQueue.put(MSG_ABORT, 1);
+}
+
+void
+RegressionTester::pokeDebugCart(u16 addr, u8 value)
+{
+    if (!config.debugcart) return;
+
+    if (addr == 0xD7FF) {
+
+        // Exit the emulator with the provided value as return code
+        msgQueue.put(MSG_ABORT, value);
+    }
+}
+
+void 
+RegressionTester::setWatchdog(isize value)
+{
+    if (value) {
+
+        auto cycle = vic.getCyclesPerFrame() * value;
+        c64.scheduleRel<SLOT_DBG>(cycle, DBG_WATCHDOG);
+
+    } else {
+
+        c64.cancel<SLOT_DBG>();
+    }
+}
+
 }

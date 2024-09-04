@@ -47,7 +47,6 @@ class ExpansionPort final : public SubComponent, public Inspectable<CartridgeInf
 
     Options options = {
 
-        OPT_EXP_DEBUGCART,
         OPT_EXP_REU_SPEED
     };
     
@@ -157,8 +156,6 @@ public:
     void pokeIO1(u16 addr, u8 value);
     void pokeIO2(u16 addr, u8 value);
     
-    void pokeDebugCart(u16 addr, u8 value);
-
 
     //
     // Controlling the Game and Exrom lines

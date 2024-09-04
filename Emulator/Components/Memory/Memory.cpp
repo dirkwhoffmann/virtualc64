@@ -556,7 +556,7 @@ Memory::pokeIO(u16 addr, u8 value)
         case 0x7: // SID
 
             sidBridge.poke(addr, value);
-            expansionPort.pokeDebugCart(addr, value);
+            regressionTester.pokeDebugCart(addr, value);
             return;
             
         case 0x8: // Color RAM

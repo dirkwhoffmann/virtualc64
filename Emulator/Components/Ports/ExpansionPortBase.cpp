@@ -119,8 +119,7 @@ ExpansionPort::getOption(Option option) const
 {
     switch (option) {
 
-        case OPT_EXP_DEBUGCART:     return (i64)config.debugcart;
-        case OPT_EXP_REU_SPEED:     return (i64)config.reuSpeed;
+        case OPT_EXP_REU_SPEED: return (i64)config.reuSpeed;
 
         default:
             fatalError;
@@ -131,10 +130,6 @@ void
 ExpansionPort::checkOption(Option opt, i64 value)
 {
     switch (opt) {
-
-        case OPT_EXP_DEBUGCART:
-
-            return;
 
         case OPT_EXP_REU_SPEED:
 
@@ -154,11 +149,6 @@ ExpansionPort::setOption(Option opt, i64 value)
     checkOption(opt, value);
 
     switch (opt) {
-
-        case OPT_EXP_DEBUGCART:
-
-            config.debugcart = (bool)value;
-            return;
 
         case OPT_EXP_REU_SPEED:
 

@@ -410,6 +410,8 @@
 		50AE193C2633E9B0005A5898 /* RegressionTester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE193A2633E9B0005A5898 /* RegressionTester.cpp */; };
 		50AEEE7326305625001DED20 /* C64Key.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AEEE7126305625001DED20 /* C64Key.cpp */; };
 		50AF2F8226AFFE9A002DC43B /* PIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AF2F8026AFFE9A002DC43B /* PIA.cpp */; };
+		50B064EF2C888F2C0080FCA0 /* RegressionTesterBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B064EE2C888F2C0080FCA0 /* RegressionTesterBase.cpp */; };
+		50B064F02C888F2C0080FCA0 /* RegressionTesterBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B064EE2C888F2C0080FCA0 /* RegressionTesterBase.cpp */; };
 		50B165AE25B06A03009B576D /* TextureToolbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B165AD25B06A03009B576D /* TextureToolbox.swift */; };
 		50B1A61D25A2368D00201A2C /* DeviceDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1A61C25A2368D00201A2C /* DeviceDatabase.swift */; };
 		50B1A61F25A2386F00201A2C /* HIDExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1A61E25A2386F00201A2C /* HIDExtensions.swift */; };
@@ -996,6 +998,8 @@
 		50AEEE7226305625001DED20 /* C64Key.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Key.h; sourceTree = "<group>"; };
 		50AF2F8026AFFE9A002DC43B /* PIA.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PIA.cpp; sourceTree = "<group>"; };
 		50AF2F8126AFFE9A002DC43B /* PIA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PIA.h; sourceTree = "<group>"; };
+		50B064ED2C884AA90080FCA0 /* RegressionTesterTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegressionTesterTypes.h; sourceTree = "<group>"; };
+		50B064EE2C888F2C0080FCA0 /* RegressionTesterBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RegressionTesterBase.cpp; sourceTree = "<group>"; };
 		50B165AD25B06A03009B576D /* TextureToolbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureToolbox.swift; sourceTree = "<group>"; };
 		50B171051EE6AB840019E8D4 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		50B1A61525A2028B00201A2C /* MemoryTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemoryTypes.h; sourceTree = "<group>"; };
@@ -2220,7 +2224,9 @@
 			isa = PBXGroup;
 			children = (
 				50EF22342815929500440C4D /* CMakeLists.txt */,
+				50B064ED2C884AA90080FCA0 /* RegressionTesterTypes.h */,
 				50AE193B2633E9B0005A5898 /* RegressionTester.h */,
+				50B064EE2C888F2C0080FCA0 /* RegressionTesterBase.cpp */,
 				50AE193A2633E9B0005A5898 /* RegressionTester.cpp */,
 			);
 			path = RegressionTester;
@@ -2409,6 +2415,7 @@
 				50726F822961C9ED0031F2F5 /* C64Key.cpp in Sources */,
 				50726F942961CA0D0031F2F5 /* GeoRam.cpp in Sources */,
 				50726FB42961CA290031F2F5 /* Command.cpp in Sources */,
+				50B064F02C888F2C0080FCA0 /* RegressionTesterBase.cpp in Sources */,
 				508C1E612C0B4A6A0097473C /* DriveMemoryBase.cpp in Sources */,
 				50726F592961C9A10031F2F5 /* TOD.cpp in Sources */,
 				50726F972961CA0D0031F2F5 /* Dinamic.cpp in Sources */,
@@ -2826,6 +2833,7 @@
 				507A49A024C8D66A00DBF984 /* GuardTableView.swift in Sources */,
 				5016F02829574FDF00F2063B /* Reu.cpp in Sources */,
 				50A5B7D12C74E44C00D6DDAD /* RemoteServer.cpp in Sources */,
+				50B064EF2C888F2C0080FCA0 /* RegressionTesterBase.cpp in Sources */,
 				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
 				5077AC682B5ACC5100EFAC85 /* config.cpp in Sources */,
 				5036E0B7261AEF000048E66A /* Console.cpp in Sources */,

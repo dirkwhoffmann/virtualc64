@@ -68,7 +68,6 @@ Defaults::Defaults()
     setFallback(OPT_DMA_DEBUG_COLOR4,           GpuColor(0x00, 0xFF, 0x00).abgr);
     setFallback(OPT_DMA_DEBUG_COLOR5,           GpuColor(0x00, 0x80, 0xFF).abgr);
 
-    setFallback(OPT_EXP_DEBUGCART,              0);
     setFallback(OPT_EXP_REU_SPEED,              1);
 
     setFallback(OPT_USR_DEVICE,                 USR_RS232);
@@ -174,6 +173,9 @@ Defaults::Defaults()
     setFallback(OPT_SRV_PROTOCOL,               SRVPROT_DEFAULT,        { SERVER_RSH });
     setFallback(OPT_SRV_AUTORUN,                false,                  { SERVER_RSH });
     setFallback(OPT_SRV_VERBOSE,                true,                   { SERVER_RSH });
+
+    setFallback(OPT_DBG_DEBUGCART,              0);
+    setFallback(OPT_DBG_WATCHDOG,               0);
 
     setFallback("BASIC_PATH", "");
     setFallback("CHAR_PATH", "");

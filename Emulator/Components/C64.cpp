@@ -197,6 +197,16 @@ C64::eventName(EventSlot slot, EventID id)
             }
             break;
 
+        case SLOT_DBG:
+
+            switch (id) {
+
+                case EVENT_NONE:    return "none";
+                case DBG_WATCHDOG:  return "DBG_WATCHDOG";
+                default:            return "*** INVALID ***";
+            }
+            break;
+
         case SLOT_ALA:
 
             switch (id) {
@@ -1163,6 +1173,9 @@ C64::processEvents(Cycle cycle)
             }
             if (isDue<SLOT_SRV>(cycle)) {
                 remoteManager.serviceServerEvent();
+            }
+            if (isDue<SLOT_DBG>(cycle)) {
+                regressionTester.processEvent(eventid[SLOT_DBG]);
             }
             if (isDue<SLOT_ALA>(cycle)) {
                 processAlarmEvent();

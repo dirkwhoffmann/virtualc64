@@ -94,7 +94,10 @@ CommandConsole::initCommands(Command &root)
 
     Command::currentGroup = "Regression testing";
 
-    root.add({"regression"}, debugBuild ? "Runs the regression tester" : "");
+    auto cmd = registerComponent(regressionTester);
+    root.seek("regression")->hidden = releaseBuild;
+
+    // root.add({"regression"}, debugBuild ? "Runs the regression tester" : "");
 
     root.add({"regression", "setup"}, { C64ModelEnum::argList() },
              "Initialize the test environment",
@@ -160,7 +163,7 @@ CommandConsole::initCommands(Command &root)
     // Components (C64)
     //
 
-    auto cmd = registerComponent(c64);
+    cmd = registerComponent(c64);
 
     root.add({cmd, "defaults"},
              "Display the user defaults storage",

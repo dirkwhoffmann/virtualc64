@@ -70,7 +70,6 @@ enum_long(OPT)
     OPT_DMA_DEBUG_COLOR5,       ///< Color for channel 5
 
     // Expansion port
-    OPT_EXP_DEBUGCART,          ///< Emulate the VICE debug cartridge
     OPT_EXP_REU_SPEED,          ///< Transfer speed of the RAM Extension Unit
 
     // User port
@@ -194,6 +193,10 @@ enum_long(OPT)
     OPT_SRV_AUTORUN,
     OPT_SRV_VERBOSE,
 
+    // Regression tester
+    OPT_DBG_DEBUGCART,          ///< Emulate the VICE debug cartridge
+    OPT_DBG_WATCHDOG,           ///< Watchdog delay in frames
+
     OPT_COUNT
 };
 typedef OPT Option;
@@ -201,7 +204,7 @@ typedef OPT Option;
 struct OptionEnum : util::Reflection<OptionEnum, Option> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = OPT_AUTOFIRE_DELAY;
+    static constexpr long maxVal = OPT_DBG_WATCHDOG;
 
     static const char *prefix() { return "OPT"; }
     static const char *_key(long value)
@@ -248,7 +251,6 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_DMA_DEBUG_COLOR4:      return "DMA_DEBUG.COLOR4";
             case OPT_DMA_DEBUG_COLOR5:      return "DMA_DEBUG.COLOR5";
 
-            case OPT_EXP_DEBUGCART:         return "EXP.DEBUGCART";
             case OPT_EXP_REU_SPEED:         return "EXP.REU_SPEED";
 
             case OPT_USR_DEVICE:            return "USR.DEVICE";
@@ -354,6 +356,9 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_SRV_AUTORUN:           return "SRV.AUTORUN";
             case OPT_SRV_VERBOSE:           return "SRV.VERBOSE";
 
+            case OPT_DBG_DEBUGCART:         return "DBG.DEBUGCART";
+            case OPT_DBG_WATCHDOG:          return "DBG.WATCHDOG";
+
             case OPT_COUNT:                 return "???";
         }
         return "???";
@@ -403,7 +408,6 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_DMA_DEBUG_COLOR4:      return "Color of channel 4";
             case OPT_DMA_DEBUG_COLOR5:      return "Color of channel 5";
 
-            case OPT_EXP_DEBUGCART:         return "VICE debug cartridge";
             case OPT_EXP_REU_SPEED:         return "REU transfer speed";
 
             case OPT_USR_DEVICE:            return "User port device";
@@ -507,6 +511,9 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_SRV_PROTOCOL:          return "Server protocol";
             case OPT_SRV_AUTORUN:           return "Auto run";
             case OPT_SRV_VERBOSE:           return "Verbose mode";
+
+            case OPT_DBG_DEBUGCART:         return "VICE debug cartridge";
+            case OPT_DBG_WATCHDOG:          return "Watchdog delay (frames)";
 
             case OPT_COUNT:                 return "???";
         }

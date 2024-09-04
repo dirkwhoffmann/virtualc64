@@ -31,6 +31,7 @@ extension vc64.EventSlot: CustomStringConvertible {
         case ._RSH:     return "Retro Shell"
         case ._KEY:     return "Auto Typing"
         case ._SRV:     return "Server Daemon"
+        case ._DBG:     return "Debugger"
         case ._ALA:     return "Alarms"
         case ._INS:     return "Inspector"
 
