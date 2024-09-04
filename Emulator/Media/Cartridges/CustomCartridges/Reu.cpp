@@ -64,9 +64,9 @@ Reu::_dump(Category category, std::ostream& os) const
         os << tab("Command Register");
         os << hex(cr) << std::endl;
         os << tab("C64 Base Address");
-        os << hex(c64Base) << std::endl;
+        os << hex(c64Base) << " (latched: " << hex(c64BaseLatched) << ")" << std::endl;
         os << tab("REU Base Address");
-        os << hex(reuBase) << std::endl;
+        os << hex(reuBase) << " (latched: " << hex(reuBaseLatched) << ")" << std::endl;
         os << tab("Upper bank bits" );
         os << hex(upperBankBits) << std::endl;
         os << tab("Transfer Length");
@@ -154,27 +154,27 @@ Reu::spypeekIO2(u16 addr) const
 
         case 0x02:  // C64 Base Address (LSB)
 
-            result = LO_BYTE(c64Base);
+            result = LO_BYTE(c64BaseLatched);
             break;
 
         case 0x03:  // C64 Base Address (MSB)
 
-            result = HI_BYTE(c64Base);
+            result = HI_BYTE(c64BaseLatched);
             break;
 
         case 0x04:  // REU Base Address (LSB)
 
-            result = LO_BYTE(reuBase);
+            result = LO_BYTE(reuBaseLatched);
             break;
 
         case 0x05:  // REU Base Address (MSB)
 
-            result = HI_BYTE(reuBase);
+            result = HI_BYTE(reuBaseLatched);
             break;
 
         case 0x06:  // REU Bank
 
-            result = (u8)HI_WORD(reuBase) | 0xF8;
+            result = (u8)HI_WORD(reuBaseLatched) | 0xF8;
             break;
 
         case 0x07:  // Transfer Length (LSB)
@@ -233,27 +233,27 @@ Reu::pokeIO2(u16 addr, u8 value)
 
         case 0x02:  // C64 Base Address (LSB)
 
-            c64Base = (u16)REPLACE_LO(c64Base, value);
+            c64BaseLatched = (u16)REPLACE_LO(c64BaseLatched, value);
             break;
 
         case 0x03:  // C64 Base Address (MSB)
 
-            c64Base = (u16)REPLACE_HI(c64Base, value);
+            c64BaseLatched = (u16)REPLACE_HI(c64BaseLatched, value);
             break;
 
         case 0x04:  // REU Base Address (LSB)
 
-            reuBase = (u32)REPLACE_LO(reuBase, value);
+            reuBaseLatched = (u32)REPLACE_LO(reuBaseLatched, value);
             break;
 
         case 0x05:  // REU Base Address (MSB)
 
-            reuBase = (u32)REPLACE_HI(reuBase, value);
+            reuBaseLatched = (u32)REPLACE_HI(reuBaseLatched, value);
             break;
 
         case 0x06:  // REU Bank
 
-            reuBase = (u32)REPLACE_HI_WORD(reuBase, value & 0b111);
+            reuBaseLatched = (u32)REPLACE_HI_WORD(reuBaseLatched, value & 0b111);
 
             switch (getRamCapacity()) {
 
@@ -393,8 +393,8 @@ Reu::prepareDma()
 {
     if (REU_DEBUG) { dump(Category::Dma, std::cout); }
 
-    c64Addr = c64Base;
-    reuAddr = reuBase;
+    c64Base = c64BaseLatched;
+    reuBase = reuBaseLatched;
     isize len = tlen ? tlen : 0x10000;
     tcnt = tlen; 
 
@@ -414,54 +414,54 @@ Reu::doDma(EventID id)
 
         case EXP_REU_STASH:
 
-            c64Val = readFromC64Ram(c64Addr);
-            writeToReuRam(reuAddr, c64Val);
+            c64Val = readFromC64Ram(c64Base);
+            writeToReuRam(reuBase, c64Val);
 
             // debug(REU_DEBUG,"(%x, %02x) -> %x\n", memAddr, c64Val, reuAddr);
 
-            if (memStep()) incMemAddr(c64Addr);
-            if (reuStep()) incReuAddr(reuAddr);
+            if (memStep()) incMemAddr(c64Base);
+            if (reuStep()) incReuAddr(reuBase);
             break;
 
         case EXP_REU_FETCH:
 
-            reuVal = readFromReuRam(reuAddr);
-            writeToC64Ram(c64Addr, reuVal);
+            reuVal = readFromReuRam(reuBase);
+            writeToC64Ram(c64Base, reuVal);
 
             // debug(REU_DEBUG,"%x <- (%x, %02x)\n", memAddr, reuAddr, reuVal);
 
-            if (memStep()) incMemAddr(c64Addr);
-            if (reuStep()) incReuAddr(reuAddr);
+            if (memStep()) incMemAddr(c64Base);
+            if (reuStep()) incReuAddr(reuBase);
 
-            prefetch(reuAddr);
+            prefetch(reuBase);
             break;
 
         case EXP_REU_SWAP:
 
-            c64Val = readFromC64Ram(c64Addr);
-            reuVal = readFromReuRam(reuAddr);
+            c64Val = readFromC64Ram(c64Base);
+            reuVal = readFromReuRam(reuBase);
 
-            writeToC64Ram(c64Addr, reuVal);
-            writeToReuRam(reuAddr, c64Val);
+            writeToC64Ram(c64Base, reuVal);
+            writeToReuRam(reuBase, c64Val);
 
-            if (memStep()) incMemAddr(c64Addr);
-            if (reuStep()) incReuAddr(reuAddr);
+            if (memStep()) incMemAddr(c64Base);
+            if (reuStep()) incReuAddr(reuBase);
 
-            prefetch(reuAddr);
+            prefetch(reuBase);
             break;
 
         case EXP_REU_VERIFY:
 
-            c64Val = readFromC64Ram(c64Addr);
-            reuVal = readFromReuRam(reuAddr);
+            c64Val = readFromC64Ram(c64Base);
+            reuVal = readFromReuRam(reuBase);
 
-            if (memStep()) incMemAddr(c64Addr);
-            if (reuStep()) incReuAddr(reuAddr);
+            if (memStep()) incMemAddr(c64Base);
+            if (reuStep()) incReuAddr(reuBase);
 
             if (c64Val != reuVal) {
 
                 debug(REU_DEBUG, "Verify error: (%x,%02x) <-> (%x,%02x)\n",
-                      c64Addr, c64Val, reuAddr, reuVal);
+                      c64Base, c64Val, reuBase, reuVal);
 
                 // Set the "Fault" bit
                 SET_BIT(sr, 5);
@@ -485,8 +485,8 @@ Reu::finalizeDma(EventID id)
 {
     if (!autoloadEnabled()) {
 
-        c64Base = c64Addr;
-        reuBase = reuAddr;
+        c64BaseLatched = c64Base;
+        reuBaseLatched = reuBase;
     }
 
     triggerEndOfBlockIrq();

@@ -59,19 +59,19 @@ private:
     // REU registers
     //
 
-    // Status register
+    // Status register (0x00)
     u8 sr = 0;
 
-    // Command register
+    // Command register (0x01)
     u8 cr = 0;
 
-    // Base address registers
+    // C64 base address register (0x02 - 0x03)
     u16 c64Base = 0;
-    u32 reuBase = 0;
+    u16 c64BaseLatched = 0;
 
-    // Address registers used during DMA
-    u16 c64Addr = 0;
-    u32 reuAddr = 0;
+    // REU base address register (0x04 - 0x06)
+    u32 reuBase = 0;
+    u32 reuBaseLatched = 0;
 
     // Upper bank bits (used by modded REUs with higher capacities)
     u32 upperBankBits = 0;
@@ -133,9 +133,9 @@ public:
         CLONE(sr)
         CLONE(cr)
         CLONE(c64Base)
+        CLONE(c64BaseLatched)
         CLONE(reuBase)
-        CLONE(c64Addr)
-        CLONE(reuAddr)
+        CLONE(reuBaseLatched)
         CLONE(upperBankBits)
         CLONE(tlen)
         CLONE(tcnt)
@@ -159,9 +159,9 @@ public:
         << sr
         << cr
         << c64Base
+        << c64BaseLatched
         << reuBase
-        << c64Addr
-        << reuAddr
+        << reuBaseLatched
         << upperBankBits
         << tlen
         << tcnt
