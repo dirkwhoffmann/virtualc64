@@ -199,9 +199,8 @@ CommandConsole::initCommands(Command &root)
 
         std::stringstream ss;
         c64.exportDiff(ss);
+        printf("ss = %s\n", ss.str().c_str());
         retroShell << ss << '\n';
-
-        c64.exportConfig("/tmp/test.ini");
     });
 
 

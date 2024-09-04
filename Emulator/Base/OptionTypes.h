@@ -513,7 +513,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_SRV_VERBOSE:           return "Verbose mode";
 
             case OPT_DBG_DEBUGCART:         return "VICE debug cartridge";
-            case OPT_DBG_WATCHDOG:          return "Watchdog delay (frames)";
+            case OPT_DBG_WATCHDOG:          return "Watchdog delay in cycles";
 
             case OPT_COUNT:                 return "???";
         }

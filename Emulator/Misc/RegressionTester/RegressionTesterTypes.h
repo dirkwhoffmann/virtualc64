@@ -25,7 +25,7 @@ namespace vc64 {
 typedef struct
 {
     bool debugcart;
-    isize watchdog;
+    i64 watchdog;
 }
 RegressionTesterConfig;
 

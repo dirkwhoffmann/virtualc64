@@ -125,17 +125,16 @@ RegressionTester::pokeDebugCart(u16 addr, u8 value)
 }
 
 void 
-RegressionTester::setWatchdog(isize value)
+RegressionTester::setWatchdog(isize cycle)
 {
-    if (value) {
+    if (cycle == 0) {
 
-        auto cycle = vic.getCyclesPerFrame() * value;
-        c64.scheduleRel<SLOT_DBG>(cycle, DBG_WATCHDOG);
-
-    } else {
-
+        // Disable the watchdog
         c64.cancel<SLOT_DBG>();
+        return;
     }
+
+    c64.scheduleRel<SLOT_DBG>(cycle, DBG_WATCHDOG);
 }
 
 }
