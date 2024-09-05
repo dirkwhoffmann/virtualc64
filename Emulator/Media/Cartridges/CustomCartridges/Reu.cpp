@@ -241,7 +241,7 @@ Reu::pokeIO2(u16 addr, u8 value)
             if (GET_BIT(cr,7) && ff00Disabled()) {
 
                 // debug(REU_DEBUG, "Initiating DMA [Mode %d]...\n", cr & 0x3);
-                prepareDma();
+                initiateDma();
             }
             break;
 
@@ -330,7 +330,7 @@ Reu::poke(u16 addr, u8 value)
     if (addr == 0xFF00 && isArmed()) {
 
         // Initiate DMA
-        prepareDma();
+        initiateDma();
 
     } else {
 
@@ -425,18 +425,82 @@ Reu::incReuAddr()
 }
 
 void
-Reu::prepareDma()
+Reu::initiateDma()
 {
     if (REU_DEBUG) { dump(Category::Dma, std::cout); }
 
     // Update control register bits
     cr = (cr & ~CR::EXECUTE) | CR::FF00_DISABLE;
 
-    // Schedule the first event
-    c64.scheduleRel<SLOT_EXP>(1, EXP_REU_PREPARE);
-
     // Freeze the CPU
     cpu.pullDownRdyLine(INTSRC_EXP);
+
+    // Schedule the first DMA event
+    c64.scheduleRel<SLOT_EXP>(1, EXP_REU_PREPARE);
+}
+
+void
+Reu::processEvent(EventID id)
+{
+    switch (id) {
+
+        case EXP_REU_PREPARE:
+
+            switch (cr & 0x3) {
+
+                case 0: id = EXP_REU_STASH; break;
+                case 1: id = EXP_REU_FETCH; break;
+                case 2: id = EXP_REU_SWAP; break;
+                case 3: id = EXP_REU_VERIFY; break;
+            }
+            processEvent(id);
+            break;
+
+        case EXP_REU_STASH:
+        case EXP_REU_FETCH:
+        case EXP_REU_SWAP:
+        case EXP_REU_VERIFY:
+        {
+            // Only proceed if the bus is available
+            if (vic.baLine.readWithDelay(1)) {
+
+                // Process the event again in the next cycle
+                c64.rescheduleRel<SLOT_EXP>(1);
+                break;
+            }
+
+            // Perform a DMA cycle
+            bool success = doDma(id);
+
+            // Set or clear the END_OF_BLOCK_BIT
+            tlength == 1 ? SET_BIT(sr, 6) : CLR_BIT(sr, 6);
+
+            // Check if the counter fires
+            if (tlength != 1) {
+
+                U16_DEC(tlength, 1);
+
+                if (success) {
+
+                    // Process the event again in the next cycle
+                    c64.rescheduleRel<SLOT_EXP>(1);
+                    break;
+                }
+            }
+
+            finalizeDma(id);
+            c64.cancel<SLOT_EXP>();
+            break;
+        }
+
+        case EXP_REU_AUTOLOAD:
+
+            // TODO:
+            break;
+
+        default:
+            fatalError;
+    }
 }
 
 bool
@@ -530,66 +594,6 @@ Reu::finalizeDma(EventID id)
 
     // Release the CPU
     cpu.releaseRdyLine(INTSRC_EXP);
-}
-
-void 
-Reu::processEvent(EventID id)
-{
-    if (id == EXP_REU_PREPARE) {
-
-        cpu.pullDownRdyLine(INTSRC_EXP);
-
-        id = EXP_REU_PREPARE2;
-        // c64.scheduleRel<SLOT_EXP>(1, EXP_REU_PREPARE2);
-        // return;
-    }
-
-    if (id == EXP_REU_PREPARE2) {
-
-        // Freeze the CPU
-        cpu.pullDownRdyLine(INTSRC_EXP);
-
-        switch (cr & 0x3) {
-
-            case 0: id = EXP_REU_STASH; break;
-            case 1: id = EXP_REU_FETCH; break;
-            case 2: id = EXP_REU_SWAP; break;
-            case 3: id = EXP_REU_VERIFY; break;
-        }
-    }
-
-    // Only proceed if the bus is available
-    if (vic.baLine.readWithDelay(1)) {
-
-        c64.scheduleRel<SLOT_EXP>(1, id);
-        return;
-    }
-
-    // Perform a DMA cycle
-    bool success = doDma(id);
-
-    // Set or clear the END_OF_BLOCK_BIT
-    tlength == 1 ? SET_BIT(sr, 6) : CLR_BIT(sr, 6);
-
-    if (tlength == 1) {
-
-        finalizeDma(id);
-        c64.cancel<SLOT_EXP>();
-
-    } else {
-
-        U16_DEC(tlength, 1);
-
-        if (success) {
-
-            c64.scheduleRel<SLOT_EXP>(1, id);
-
-        } else {
-
-            finalizeDma(id);
-            c64.cancel<SLOT_EXP>();
-        }
-    }
 }
 
 void

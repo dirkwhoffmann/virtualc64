@@ -263,16 +263,16 @@ private:
     void incMemAddr();
     void incReuAddr();
 
-    void prepareDma();
-    bool doDma(EventID id);
-    void finalizeDma(EventID id);
+    // Initiates a DMA transfer
+    void initiateDma();
 
-    
-    //
-    // Processing events
-    //
-
+    // Processes a DMA event
     void processEvent(EventID id) override;
+
+    // Performs a single DMA cycle
+    bool doDma(EventID id);
+
+    void finalizeDma(EventID id);
 
 
     //
