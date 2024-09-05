@@ -373,15 +373,15 @@ Reu::writeToReuRam(u32 addr, u8 value)
 {
     addr |= upperBankBits;
 
+    bus = value;
+
     if (addr < u32(getRamCapacity())) {
 
         pokeRAM(addr, value);
-        bus = value;
 
     } else if (!floating(addr)) {
 
         pokeRAM(mapAddr(addr), value);
-        bus = value;
     }
 }
 
