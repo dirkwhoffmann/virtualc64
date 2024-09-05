@@ -36,7 +36,7 @@ Reu::_didReset(bool hard)
     cr = 0x10;
 
     // Initialize the length register
-    tlengthLatched = 0xFFFF;
+    tlength = tlengthLatched = 0xFFFF;
 
     // Experimental
     bus = 0x00; // 0xFF;
@@ -421,6 +421,9 @@ Reu::prepareDma()
 
     // Schedule the first event
     c64.scheduleRel<SLOT_EXP>(1, EXP_REU_PREPARE);
+
+    // Freeze the CPU
+    cpu.pullDownRdyLine(INTSRC_EXP);
 }
 
 bool
@@ -518,8 +521,9 @@ Reu::processEvent(EventID id)
 
         cpu.pullDownRdyLine(INTSRC_EXP);
 
-        c64.scheduleRel<SLOT_EXP>(1, EXP_REU_PREPARE2);
-        return;
+        id = EXP_REU_PREPARE2;
+        // c64.scheduleRel<SLOT_EXP>(1, EXP_REU_PREPARE2);
+        // return;
     }
 
     if (id == EXP_REU_PREPARE2) {
@@ -537,7 +541,7 @@ Reu::processEvent(EventID id)
     }
 
     // Only proceed if the bus is available
-    if (vic.baLine.delayed()) {
+    if (vic.baLine.readWithDelay(1)) {
 
         c64.scheduleRel<SLOT_EXP>(1, id);
         return;

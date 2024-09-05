@@ -819,6 +819,9 @@ alwaysinline void C64::executeCycle()
     cpu.execute<MOS_6510>();
     if constexpr (enable8) { if (drive8.needsEmulation) drive8.execute(durationOfOneCycle); }
     if constexpr (enable9) { if (drive9.needsEmulation) drive9.execute(durationOfOneCycle); }
+
+    // Experimental (REU)
+    if (isDue<SLOT_EXP>(cycle)) { expansionport.processEvent(eventid[SLOT_EXP]); }
 }
 
 template <bool enable8, bool enable9> void 
@@ -1145,7 +1148,7 @@ C64::processEvents(Cycle cycle)
             // Check tertiary slots
             //
             if (isDue<SLOT_EXP>(cycle)) {
-                expansionport.processEvent(eventid[SLOT_EXP]);
+                // expansionport.processEvent(eventid[SLOT_EXP]);
             }
             if (isDue<SLOT_TXD>(cycle)) {
                 userPort.rs232.processTxdEvent();
