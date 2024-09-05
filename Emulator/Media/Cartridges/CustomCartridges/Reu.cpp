@@ -47,14 +47,15 @@ Reu::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
+    string mode[4] = { "STASH", "FETCH", "SWAP", "VERIFY" };
+
     Cartridge::_dump(category, os);
-    os << std::endl;
 
     if (category == Category::State) {
 
-        string mode[4] = { "STASH", "FETCH", "SWAP", "VERIFY" };
         auto model = isREU1700() ? "1700" : isREU1764() ? "1764" : "1750";
 
+        os << std::endl;
         os << tab("Model");
         os << "REU " << model << std::endl;
         os << tab("Capacity");
@@ -96,6 +97,18 @@ Reu::_dump(Category category, std::ostream& os) const
         os << dec(memStep()) << std::endl;
         os << tab("REU address increment");
         os << dec(reuStep()) << std::endl;
+    }
+
+    if (category == Category::Dma) {
+
+        string symb[4] = { "->", "<-", "<->", "==" };
+
+        os << mode[cr & 3] << ": ";
+        os << "C64: " << hex(c64Base) << (memStep() ? "+ " : " ");
+        os << symb[cr & 3] << " ";
+        os << "REU: " << dec(reuBank) << ":" << hex(reuBase) << (reuStep() ? "+ " : " ");
+        os << "Len: " << dec(tlength);
+        os << std::endl;
     }
 }
 
@@ -223,11 +236,11 @@ Reu::pokeIO2(u16 addr, u8 value)
 
             if (GET_BIT(cr,7) && ff00Enabled()) {
 
-                debug(REU_DEBUG, "Preparing for DMA [Mode %d]...\n", cr & 0x3);
+                // debug(REU_DEBUG, "Preparing for DMA [Mode %d]...\n", cr & 0x3);
             }
             if (GET_BIT(cr,7) && ff00Disabled()) {
 
-                debug(REU_DEBUG, "Initiating DMA [Mode %d]...\n", cr & 0x3);
+                // debug(REU_DEBUG, "Initiating DMA [Mode %d]...\n", cr & 0x3);
                 prepareDma();
             }
             break;
@@ -311,7 +324,7 @@ Reu::pokeIO2(u16 addr, u8 value)
 void
 Reu::poke(u16 addr, u8 value)
 {
-    debug(REU_DEBUG, "poke(%x,%x)\n", addr, value);
+    // debug(REU_DEBUG, "poke(%x,%x)\n", addr, value);
     assert((addr & 0xF000) == 0xF000);
 
     if (addr == 0xFF00 && isArmed()) {
@@ -414,7 +427,7 @@ Reu::incReuAddr()
 void
 Reu::prepareDma()
 {
-    // if (REU_DEBUG) { dump(Category::Dma, std::cout); }
+    if (REU_DEBUG) { dump(Category::Dma, std::cout); }
 
     // Update control register bits
     cr = (cr & ~CR::EXECUTE) | CR::FF00_DISABLE;
@@ -502,10 +515,15 @@ Reu::finalizeDma(EventID id)
 {
     if (autoloadEnabled()) {
 
+        debug(REU_DEBUG, "Autoloading...\n");
         c64Base = c64BaseLatched;
         reuBase = reuBaseLatched;
         reuBank = reuBankLatched;
         tlength = tlengthLatched;
+
+    } else {
+
+        debug(REU_DEBUG, "No autoload\n");
     }
 
     triggerEndOfBlockIrq();
@@ -550,6 +568,9 @@ Reu::processEvent(EventID id)
     // Perform a DMA cycle
     bool success = doDma(id);
 
+    // Set or clear the END_OF_BLOCK_BIT
+    tlength == 1 ? SET_BIT(sr, 6) : CLR_BIT(sr, 6);
+
     if (tlength == 1) {
 
         finalizeDma(id);
@@ -569,9 +590,6 @@ Reu::processEvent(EventID id)
             c64.cancel<SLOT_EXP>();
         }
     }
-
-    // Set or clear the END_OF_BLOCK_BIT
-    tlength == 1 ? SET_BIT(sr, 6) : CLR_BIT(sr, 6);
 }
 
 void
@@ -581,6 +599,8 @@ Reu::triggerEndOfBlockIrq()
 
         sr |= 0x80;
         cpu.pullDownIrqLine(INTSRC_EXP);
+
+        debug(REU_DEBUG, "IRQ triggered (sr = %02x)\n", sr);
     }
 }
 

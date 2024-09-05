@@ -134,7 +134,7 @@ RegressionTester::pokeDebugCart(u16 addr, u8 value)
 }
 
 void 
-RegressionTester::setWatchdog(isize cycle)
+RegressionTester::setWatchdog(Cycle cycle)
 {
     if (cycle == 0) {
 

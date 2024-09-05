@@ -141,7 +141,7 @@ public:
     void pokeDebugCart(u16 addr, u8 value);
 
     // Starts (value > 0) or stops (value == 0) a watchdog timer
-    void setWatchdog(isize cycle);
+    void setWatchdog(Cycle cycle);
 };
 
 }
