@@ -196,6 +196,7 @@ enum_i8(EventID)
     EXP_REU_SWAP,
     EXP_REU_VERIFY,
     EXP_REU_AUTOLOAD,
+    EXP_REU_FINALIZE,
     EXP_EVENT_COUNT,
 
     // Serial data out (RS232)

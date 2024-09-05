@@ -453,8 +453,7 @@ Reu::processEvent(EventID id)
                 case 2: id = EXP_REU_SWAP; break;
                 case 3: id = EXP_REU_VERIFY; break;
             }
-            processEvent(id);
-            break;
+            [[fallthrough]];
 
         case EXP_REU_STASH:
         case EXP_REU_FETCH:
@@ -472,30 +471,59 @@ Reu::processEvent(EventID id)
             // Perform a DMA cycle
             bool success = doDma(id);
 
-            // Set or clear the END_OF_BLOCK_BIT
-            tlength == 1 ? SET_BIT(sr, 6) : CLR_BIT(sr, 6);
+            if (success) {
 
-            // Check if the counter fires
-            if (tlength != 1) {
+                // Continue if the counter has not reached 1
+                if (tlength != 1) {
 
-                U16_DEC(tlength, 1);
-
-                if (success) {
+                    U16_DEC(tlength, 1);
 
                     // Process the event again in the next cycle
                     c64.rescheduleRel<SLOT_EXP>(1);
                     break;
                 }
+
+            } else {
+
+                // We reach this line if a verification operation failed
+                if (tlength != 1) {
+
+                    U16_DEC(tlength, 1);
+                }
+
+                // Emulate a 1 cycle delay
+                c64.scheduleRel<SLOT_EXP>(1, EXP_REU_AUTOLOAD);
+                break;
             }
+            [[fallthrough]];
+        }
+        case EXP_REU_AUTOLOAD:
+
+            if (autoloadEnabled()) {
+
+                debug(REU_DEBUG, "Autoloading...\n");
+                c64Base = c64BaseLatched;
+                reuBase = reuBaseLatched;
+                reuBank = reuBankLatched;
+                tlength = tlengthLatched;
+
+                // Emulate a 4 cycle delay
+                c64.scheduleRel<SLOT_EXP>(4, EXP_REU_FINALIZE);
+                break;
+
+            } else {
+
+                debug(REU_DEBUG, "No autoload\n");
+            }
+            [[fallthrough]];
+
+        case EXP_REU_FINALIZE:
+
+            // Set or clear the END_OF_BLOCK_BIT
+            tlength == 1 ? SET_BIT(sr, 6) : CLR_BIT(sr, 6);
 
             finalizeDma(id);
             c64.cancel<SLOT_EXP>();
-            break;
-        }
-
-        case EXP_REU_AUTOLOAD:
-
-            // TODO:
             break;
 
         default:
@@ -577,19 +605,6 @@ Reu::doDma(EventID id)
 void 
 Reu::finalizeDma(EventID id)
 {
-    if (autoloadEnabled()) {
-
-        debug(REU_DEBUG, "Autoloading...\n");
-        c64Base = c64BaseLatched;
-        reuBase = reuBaseLatched;
-        reuBank = reuBankLatched;
-        tlength = tlengthLatched;
-
-    } else {
-
-        debug(REU_DEBUG, "No autoload\n");
-    }
-
     triggerEndOfBlockIrq();
 
     // Release the CPU

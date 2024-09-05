@@ -110,6 +110,7 @@ C64::eventName(EventSlot slot, EventID id)
                 case EXP_REU_SWAP:      return "EXP_REU_SWAP";
                 case EXP_REU_VERIFY:    return "EXP_REU_VERIFY";
                 case EXP_REU_AUTOLOAD:  return "EXP_REU_AUTOLOAD";
+                case EXP_REU_FINALIZE:  return "EXP_REU_FINALIZE";
                 default:                return "*** INVALID ***";
             }
             break;
