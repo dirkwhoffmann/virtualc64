@@ -486,7 +486,24 @@ Reu::processEvent(EventID id)
         case EXP_REU_SWAP:
         case EXP_REU_VERIFY:
         {
-            // Only proceed if the bus is available
+            /* Only proceed if the bus is available
+
+             * Note: The timing of the BA line is not accurately emulated yet.
+             * Emulation is tricky because of non-trivial timing constraints on
+             * VICII's BA line. E.g., in Denise, vicii.h states:
+             *
+             *  "of course expansion port sees the same BA state like CPU RDY
+             *   line. but there is a known case, when BA calculation takes more
+             *   time within cycle. for CPU it doesn't matter, because it checks
+             *   later in cycle. REU seems to check this sooner and can't
+             *   recognize BA in this special cycle.
+             *   auto reuBaLow() -> bool { return baLow && !sprite0DmaLateBA; }"
+             *
+             * TODO: Improve accuracy at a later point
+             *
+             * A good starting point is VICE test bonzai/spritetiming.prg
+             * Patch Denise to print out the values of the BA line for this test
+             */
             if (vic.baLine.readWithDelay(1)) {
 
                 // Process the event again in the next cycle
