@@ -449,6 +449,7 @@ Reu::processEvent(EventID id)
         case EXP_REU_PREPARE:
 
             verifyError = false;
+            cpu.pullDownRdyLine(INTSRC_EXP);
 
             switch (cr & 0x3) {
 
@@ -513,6 +514,8 @@ Reu::processEvent(EventID id)
                 debug(REU_DEBUG, "No autoload\n");
             }
 
+            cpu.releaseRdyLine(INTSRC_EXP);
+
             if (delay) { c64.scheduleRel<SLOT_EXP>(delay, EXP_REU_FINALIZE); break; }
             [[fallthrough]];
 
@@ -530,8 +533,6 @@ Reu::processEvent(EventID id)
 isize
 Reu::doDma(EventID id)
 {
-    u8 c64Val, reuVal;
-
     switch (id) {
 
         case EXP_REU_STASH:
@@ -562,11 +563,11 @@ Reu::doDma(EventID id)
                 c64Val = readFromC64Ram(c64Base);
                 reuVal = readFromReuRam((u32)reuBank << 16 | reuBase);
 
-                writeToC64Ram(c64Base, reuVal);
-                writeToReuRam((u32)reuBank << 16 | reuBase, c64Val);
-
                 return tlength;
             }
+
+            writeToC64Ram(c64Base, reuVal);
+            writeToReuRam((u32)reuBank << 16 | reuBase, c64Val);
 
             if (memStep()) incMemAddr();
             if (reuStep()) incReuAddr();

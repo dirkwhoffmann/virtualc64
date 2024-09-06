@@ -87,6 +87,11 @@ private:
     // Address control register (0x0A)
     u8 acr = 0;
 
+    // Data registers used during DMA operations
+    // TODO: Merge with 'bus' eventually
+    u8 c64Val = 0;
+    u8 reuVal = 0;
+
     // Signals a verify error
     bool verifyError = false;
     
