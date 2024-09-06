@@ -112,6 +112,12 @@ Reu::_dump(Category category, std::ostream& os) const
     }
 }
 
+bool 
+Reu::isActive() const
+{
+    return c64.hasEvent<SLOT_EXP>();
+}
+
 void
 Reu::eraseRAM()
 {
@@ -324,18 +330,33 @@ Reu::pokeIO2(u16 addr, u8 value)
 void
 Reu::poke(u16 addr, u8 value)
 {
-    // debug(REU_DEBUG, "poke(%x,%x)\n", addr, value);
     assert((addr & 0xF000) == 0xF000);
 
-    if (addr == 0xFF00 && isArmed()) {
+    if (addr != 0xFF00) {
 
-        // Initiate DMA
-        initiateDma();
+        mem.poke(addr, value, memTypeF);
 
     } else {
 
-        // Route the write access back
-        mem.poke(addr, value, memTypeF);
+        trace(REU_DEBUG, "poke($FF00,%02X)\n", value);
+
+        if (isActive()) {
+
+            debug(REU_DEBUG, "Ignoring write to $FF00. REU already active\n");
+            return;
+        }
+
+        if (!isArmed()) {
+
+            debug(REU_DEBUG, "Ignoring write to $FF00. REU not armed\n");
+            mem.poke(addr, value, memTypeF);
+            return;
+        }
+
+        debug(REU_DEBUG, "Starting REU via FF00 trigger\n");
+        if (memTypeF != M_RAM) mem.poke(addr, value, memTypeF);
+
+        initiateDma();
     }
 }
 

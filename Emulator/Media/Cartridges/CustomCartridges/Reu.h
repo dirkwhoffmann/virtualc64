@@ -210,6 +210,9 @@ public:
     // Returns the bitmask of the REU address register
     u32 wrapMask() const { return isREU1700() ? 0x1FFFF : 0x7FFFF; }
 
+    // Returns true if a DMA transfer has been initiated
+    bool isActive() const;
+
     /* Emulation speed
      *
      * This value indicates how many bytes are transfered during a single DMA
