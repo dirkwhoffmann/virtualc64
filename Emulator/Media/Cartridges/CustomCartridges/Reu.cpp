@@ -557,13 +557,16 @@ Reu::doDma(EventID id)
         case EXP_REU_SWAP:
 
             // Only proceed every second cycle
-            if ((swapff = !swapff) == true) return tlength;
+            if ((swapff = !swapff) == true) {
 
-            c64Val = readFromC64Ram(c64Base);
-            reuVal = readFromReuRam((u32)reuBank << 16 | reuBase);
+                c64Val = readFromC64Ram(c64Base);
+                reuVal = readFromReuRam((u32)reuBank << 16 | reuBase);
 
-            writeToC64Ram(c64Base, reuVal);
-            writeToReuRam((u32)reuBank << 16 | reuBase, c64Val);
+                writeToC64Ram(c64Base, reuVal);
+                writeToReuRam((u32)reuBank << 16 | reuBase, c64Val);
+
+                return tlength;
+            }
 
             if (memStep()) incMemAddr();
             if (reuStep()) incReuAddr();
