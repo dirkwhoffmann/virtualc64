@@ -469,32 +469,23 @@ Reu::processEvent(EventID id)
             }
 
             // Perform a DMA cycle
+            bool lastCycle = tlength == 1;
             bool success = doDma(id);
 
-            if (success) {
-
-                // Continue if the counter has not reached 1
-                if (tlength != 1) {
-
-                    U16_DEC(tlength, 1);
-
-                    // Process the event again in the next cycle
-                    c64.rescheduleRel<SLOT_EXP>(1);
-                    break;
-                }
-
-            } else {
-
-                // We reach this line if a verification operation failed
-                if (tlength != 1) {
-
-                    U16_DEC(tlength, 1);
-                }
+            if (!success) {
 
                 // Emulate a 1 cycle delay
                 c64.scheduleRel<SLOT_EXP>(1, EXP_REU_AUTOLOAD);
                 break;
             }
+
+            if (!lastCycle) {
+
+                // Process the event again in the next cycle
+                c64.rescheduleRel<SLOT_EXP>(1);
+                break;
+            }
+
             [[fallthrough]];
         }
         case EXP_REU_AUTOLOAD:
@@ -535,6 +526,7 @@ bool
 Reu::doDma(EventID id)
 {
     u8 c64Val, reuVal;
+    bool result = true;
 
     switch (id) {
 
@@ -591,7 +583,7 @@ Reu::doDma(EventID id)
                 // Trigger interrupt if enabled
                 triggerVerifyErrorIrq();
 
-                return false;
+                result = false;
             }
             break;
 
@@ -599,7 +591,9 @@ Reu::doDma(EventID id)
             fatalError;
     }
 
-    return true;
+    if (tlength != 1) U16_DEC(tlength, 1);
+
+    return result;
 }
 
 void 

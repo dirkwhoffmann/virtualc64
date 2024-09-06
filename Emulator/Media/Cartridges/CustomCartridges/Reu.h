@@ -87,6 +87,9 @@ private:
     // Address control register (0x0A)
     u8 acr = 0;
 
+    // Flipflop used to control the swap operation
+    // bool swapff = false;
+    
 
     //
     // Emulation specific variables
