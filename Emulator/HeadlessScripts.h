@@ -216,7 +216,6 @@ static const char *smokeTestScript[] = {
 
     "expansion",
     "expansion set REU_SPEED 1",
-    "expansion set REU_SPEED 2",
     "expansion attach reu 128",
     "expansion attach reu 256",
     "expansion attach reu 512",
