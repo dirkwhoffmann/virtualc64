@@ -469,17 +469,16 @@ Reu::processEvent(EventID id)
             }
 
             // Perform a DMA cycle
-            bool lastCycle = tlength == 1;
-            bool success = doDma(id);
+            auto remaining = doDma(id);
 
-            if (!success) {
+            if (remaining == -1) {
 
-                // Emulate a 1 cycle delay
+                // Verify error: Emulate a 1 cycle delay
                 c64.scheduleRel<SLOT_EXP>(1, EXP_REU_AUTOLOAD);
                 break;
             }
 
-            if (!lastCycle) {
+            if (remaining > 0) {
 
                 // Process the event again in the next cycle
                 c64.rescheduleRel<SLOT_EXP>(1);
@@ -499,8 +498,11 @@ Reu::processEvent(EventID id)
                 tlength = tlengthLatched;
 
                 // Emulate a 4 cycle delay
-                c64.scheduleRel<SLOT_EXP>(4, EXP_REU_FINALIZE);
-                break;
+                if (id != EXP_REU_SWAP) {
+
+                    c64.scheduleRel<SLOT_EXP>(4, EXP_REU_FINALIZE);
+                    break;
+                }
 
             } else {
 
@@ -522,11 +524,10 @@ Reu::processEvent(EventID id)
     }
 }
 
-bool
+isize
 Reu::doDma(EventID id)
 {
     u8 c64Val, reuVal;
-    bool result = true;
 
     switch (id) {
 
@@ -551,6 +552,9 @@ Reu::doDma(EventID id)
             break;
 
         case EXP_REU_SWAP:
+
+            // Only proceed every second cycle
+            if ((swapff = !swapff) == true) return tlength;
 
             c64Val = readFromC64Ram(c64Base);
             reuVal = readFromReuRam((u32)reuBank << 16 | reuBase);
@@ -583,7 +587,7 @@ Reu::doDma(EventID id)
                 // Trigger interrupt if enabled
                 triggerVerifyErrorIrq();
 
-                result = false;
+                return -1;
             }
             break;
 
@@ -591,9 +595,10 @@ Reu::doDma(EventID id)
             fatalError;
     }
 
-    if (tlength != 1) U16_DEC(tlength, 1);
+    if (tlength == 1) return 0;
 
-    return result;
+    U16_DEC(tlength, 1);
+    return tlength;
 }
 
 void 

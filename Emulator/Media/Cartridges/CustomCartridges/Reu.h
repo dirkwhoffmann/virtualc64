@@ -88,8 +88,8 @@ private:
     u8 acr = 0;
 
     // Flipflop used to control the swap operation
-    // bool swapff = false;
-    
+    bool swapff = false;
+
 
     //
     // Emulation specific variables
@@ -273,7 +273,7 @@ private:
     void processEvent(EventID id) override;
 
     // Performs a single DMA cycle
-    bool doDma(EventID id);
+    isize doDma(EventID id);
 
     void finalizeDma(EventID id);
 
