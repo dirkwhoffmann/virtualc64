@@ -87,8 +87,14 @@ private:
     // Address control register (0x0A)
     u8 acr = 0;
 
+    // Signals a verify error
+    bool verifyError = false;
+    
     // Flipflop used to control the swap operation
     bool swapff = false;
+
+    // Used inside processEvent() to emulate additional delay cycles
+    isize delay = 0;
 
 
     //

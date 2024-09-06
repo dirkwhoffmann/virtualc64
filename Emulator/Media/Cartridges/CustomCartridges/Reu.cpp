@@ -442,9 +442,13 @@ Reu::initiateDma()
 void
 Reu::processEvent(EventID id)
 {
+    delay = 0;
+
     switch (id) {
 
         case EXP_REU_PREPARE:
+
+            verifyError = false;
 
             switch (cr & 0x3) {
 
@@ -471,7 +475,10 @@ Reu::processEvent(EventID id)
             // Perform a DMA cycle
             auto remaining = doDma(id);
 
-            if (remaining == -1) {
+            // Set or clear the END_OF_BLOCK_BIT
+            tlength == 1 ? SET_BIT(sr, 6) : CLR_BIT(sr, 6);
+
+            if (remaining == -1 && tlength != 1) {
 
                 // Verify error: Emulate a 1 cycle delay
                 c64.scheduleRel<SLOT_EXP>(1, EXP_REU_AUTOLOAD);
@@ -485,6 +492,7 @@ Reu::processEvent(EventID id)
                 break;
             }
 
+            if (delay) { c64.scheduleRel<SLOT_EXP>(delay, EXP_REU_AUTOLOAD); break; }
             [[fallthrough]];
         }
         case EXP_REU_AUTOLOAD:
@@ -498,22 +506,17 @@ Reu::processEvent(EventID id)
                 tlength = tlengthLatched;
 
                 // Emulate a 4 cycle delay
-                if (id != EXP_REU_SWAP) {
-
-                    c64.scheduleRel<SLOT_EXP>(4, EXP_REU_FINALIZE);
-                    break;
-                }
+                if (id != EXP_REU_SWAP) delay = 4;
 
             } else {
 
                 debug(REU_DEBUG, "No autoload\n");
             }
+
+            if (delay) { c64.scheduleRel<SLOT_EXP>(delay, EXP_REU_FINALIZE); break; }
             [[fallthrough]];
 
         case EXP_REU_FINALIZE:
-
-            // Set or clear the END_OF_BLOCK_BIT
-            tlength == 1 ? SET_BIT(sr, 6) : CLR_BIT(sr, 6);
 
             finalizeDma(id);
             c64.cancel<SLOT_EXP>();
@@ -587,6 +590,9 @@ Reu::doDma(EventID id)
                 // Trigger interrupt if enabled
                 triggerVerifyErrorIrq();
 
+                verifyError = true;
+                delay = tlength == 1 ? 0 : 1;
+                if (tlength != 1) U16_DEC(tlength, 1);
                 return -1;
             }
             break;
@@ -595,7 +601,11 @@ Reu::doDma(EventID id)
             fatalError;
     }
 
-    if (tlength == 1) return 0;
+    if (tlength == 1) {
+
+        triggerEndOfBlockIrq();
+        return 0;
+    }
 
     U16_DEC(tlength, 1);
     return tlength;
@@ -604,7 +614,7 @@ Reu::doDma(EventID id)
 void 
 Reu::finalizeDma(EventID id)
 {
-    triggerEndOfBlockIrq();
+    // if (!verifyError) triggerEndOfBlockIrq();
 
     // Release the CPU
     cpu.releaseRdyLine(INTSRC_EXP);
@@ -618,7 +628,7 @@ Reu::triggerEndOfBlockIrq()
         sr |= 0x80;
         cpu.pullDownIrqLine(INTSRC_EXP);
 
-        debug(REU_DEBUG, "IRQ triggered (sr = %02x)\n", sr);
+        debug(REU_DEBUG, "End-of-block IRQ triggered (sr = %02x)\n", sr);
     }
 }
 
@@ -629,6 +639,8 @@ Reu::triggerVerifyErrorIrq()
 
         sr |= 0x80;
         cpu.pullDownIrqLine(INTSRC_EXP);
+
+        debug(REU_DEBUG, "Verify-error IRQ triggered (sr = %02x)\n", sr);
     }
 }
 
