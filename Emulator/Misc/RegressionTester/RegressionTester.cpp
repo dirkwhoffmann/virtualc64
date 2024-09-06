@@ -31,6 +31,13 @@ RegressionTester::prepare(C64 &c64, C64Model model)
     // Initialize the emulator according to the specified model
     emulator.set(model);
 
+    // Make sure we run with high emulation accuracy
+    emulator.set(OPT_DRV_POWER_SAVE, false);
+    emulator.set(OPT_SID_POWER_SAVE, false);
+    emulator.set(OPT_VICII_POWER_SAVE, false);
+    emulator.set(OPT_VICII_SS_COLLISIONS, true);
+    emulator.set(OPT_VICII_SB_COLLISIONS, true);
+
     // Choose a warp source that prevents the GUI from disabling warp mode
     constexpr isize warpSource = 1;
 
@@ -47,14 +54,6 @@ RegressionTester::run(string path)
     c64.flash(PRGFile(path), 0);
     keyboard.autoType("run\n");
 }
-
-/*
-void
-RegressionTester::dumpTexture(C64 &c64)
-{
-    dumpTexture(c64, dumpTexturePath);
-}
-*/
 
 void
 RegressionTester::dumpTexture(C64 &c64, const std::filesystem::path &path)
