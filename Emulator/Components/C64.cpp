@@ -728,19 +728,26 @@ C64::computeFrame(bool headless)
     cpu.debugger.watchpointPC = -1;
     cpu.debugger.breakpointPC = -1;
 
-    switch ((drive8.isPoweredOn() ? 2 : 0) + (drive9.isPoweredOn() ? 1 : 0)) {
-    
-        case 0b00: execute <false,false> (); break;
-        case 0b01: execute <false,true>  (); break;
-        case 0b10: execute <true,false>  (); break;
-        case 0b11: execute <true,true>   (); break;
+    // Dispatch
+    switch ((drive8.isPoweredOn()   ? 4 : 0) |
+            (drive9.isPoweredOn()   ? 2 : 0) |
+            (expansionport.hasReu() ? 1 : 0) ) {
+
+        case 0b000: execute <false, false, false> (); break;
+        case 0b001: execute <false, false, true>  (); break;
+        case 0b010: execute <false, true,  false> (); break;
+        case 0b011: execute <false, true,  true>  (); break;
+        case 0b100: execute <true,  false, false> (); break;
+        case 0b101: execute <true,  false, true>  (); break;
+        case 0b110: execute <true,  true,  false> (); break;
+        case 0b111: execute <true,  true,  true>  (); break;
 
         default:
             fatalError;
     }
 }
 
-template <bool enable8, bool enable9> void
+template <bool enable8, bool enable9, bool execExp> void
 C64::execute()
 {
     auto lastCycle = vic.getCyclesPerLine();
@@ -753,7 +760,7 @@ C64::execute()
             for (; rasterCycle <= lastCycle; rasterCycle++) {
 
                 // Execute one cycle
-                executeCycle<enable8, enable9>();
+                executeCycle<enable8, enable9, execExp>();
 
                 // Process all pending flags
                 if (flags) processFlags();
@@ -780,7 +787,7 @@ C64::execute()
     }
 }
 
-template <bool enable8, bool enable9>
+template <bool enable8, bool enable9, bool execExp>
 alwaysinline void C64::executeCycle()
 {
     //
@@ -820,9 +827,7 @@ alwaysinline void C64::executeCycle()
     cpu.execute<MOS_6510>();
     if constexpr (enable8) { if (drive8.needsEmulation) drive8.execute(durationOfOneCycle); }
     if constexpr (enable9) { if (drive9.needsEmulation) drive9.execute(durationOfOneCycle); }
-
-    // Experimental (REU)
-    if (isDue<SLOT_EXP>(cycle)) { expansionport.processEvent(eventid[SLOT_EXP]); }
+    if constexpr (execExp) { if (isDue<SLOT_EXP>(cycle)) expansionport.execute(); }
 }
 
 template <bool enable8, bool enable9> void 
@@ -1082,7 +1087,7 @@ C64::endFrame()
     sidBridge.endFrame();
     mem.endFrame();
     iec.execute();
-    expansionport.execute();
+    expansionport.endOfFrame();
     port1.execute();
     port2.execute();
     drive8.vsyncHandler();

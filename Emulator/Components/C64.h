@@ -512,9 +512,9 @@ private:
     void computeFrame();
     void computeFrame(bool headless);
     void computeFrameHeadless() { computeFrame(true); }
-    template <bool enable8, bool enable9> void execute();
-    template <bool enable8, bool enable9> alwaysinline void executeCycle();
-    template <bool enable8, bool enable9> void finishInstruction();
+    template <bool, bool, bool> void execute();
+    template <bool, bool, bool> alwaysinline void executeCycle();
+    template <bool, bool> void finishInstruction();
     void processFlags();
 
     // Fast-forward the run-ahead instance

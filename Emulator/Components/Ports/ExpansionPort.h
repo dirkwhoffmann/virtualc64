@@ -138,7 +138,9 @@ public:
     CartridgeRomInfo getRomInfo(isize nr) const;
     CartridgeType getCartridgeType() const;
 
+    bool hasReu() const { return getCartridgeType() == CRT_REU; }
 
+    
     //
     // Accessing cartrige memory
     //
@@ -226,6 +228,7 @@ public:
 
 public:
 
+    void execute();
     void processEvent(EventID id);
 
 
@@ -233,10 +236,10 @@ public:
     // Handling delegation calls
     //
     
-    /* Emulator thread callback. This function is invoked by the expansion port.
+    /* This function is invoked by the expansion port at the end of each frame.
      * Only a few cartridges such as EpyxFastLoader will do some action here.
      */
-    void execute();
+    void endOfFrame();
     
     /* Modifies the memory source lookup tables if required. This function is
      * called in C64::updatePeekPokeLookupTables() to allow cartridges to

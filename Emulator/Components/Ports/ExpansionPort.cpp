@@ -301,7 +301,13 @@ ExpansionPort::processCommand(const Cmd &cmd)
     }
 }
 
-void 
+void
+ExpansionPort::execute()
+{
+    processEvent(c64.eventid[SLOT_EXP]);
+}
+
+void
 ExpansionPort::processEvent(EventID id)
 {
     if (cartridge) {
@@ -312,7 +318,7 @@ ExpansionPort::processEvent(EventID id)
 }
 
 void
-ExpansionPort::execute()
+ExpansionPort::endOfFrame()
 {
     if (cartridge) cartridge->execute();
 }
