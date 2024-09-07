@@ -450,7 +450,32 @@ Reu::incReuAddr()
 void 
 Reu::execute()
 {
-    if (c64.isDue<SLOT_EXP>(cpu.clock)) processEvent(c64.eventid[SLOT_EXP]);
+    if ((action != EVENT_NONE) != c64.hasEvent<SLOT_EXP>()) {
+        printf("action = %d event = %d\n", action, c64.eventid[SLOT_EXP]);
+        assert(false);
+    }
+
+    if (action == EVENT_NONE) return;
+
+    if ((waitStates == 0) != c64.isDue<SLOT_EXP>(cpu.clock)) {
+        printf("waitStates = %ld isDue: %lld\n", waitStates, c64.trigger[SLOT_EXP] - cpu.clock);
+        assert(false);
+    }
+    if (c64.eventid[SLOT_EXP] != action) {
+        printf("action = %d event = %d\n", action, c64.eventid[SLOT_EXP]);
+        assert(false);
+    }
+
+    if (c64.isDue<SLOT_EXP>(cpu.clock)) {
+
+        processEvent(c64.eventid[SLOT_EXP]);
+
+    } else {
+
+        assert(waitStates > 0);
+        waitStates--;
+    }
+
 }
 
 bool
@@ -496,6 +521,7 @@ Reu::initiateDma()
 
     // Schedule the first DMA event
     c64.scheduleRel<SLOT_EXP>(1, EXP_REU_PREPARE);
+    schedule(EXP_REU_PREPARE, 1);
 }
 
 void
@@ -573,6 +599,7 @@ Reu::processEvent(EventID id)
             if (remaining == -1 && tlength != 1) {
 
                 // Verify error: Emulate a 1 cycle delay
+                schedule(EXP_REU_AUTOLOAD);
                 c64.scheduleRel<SLOT_EXP>(1, EXP_REU_AUTOLOAD);
                 break;
             }
@@ -584,7 +611,11 @@ Reu::processEvent(EventID id)
                 break;
             }
 
-            if (delay) { c64.scheduleRel<SLOT_EXP>(delay, EXP_REU_AUTOLOAD); break; }
+            if (delay) {
+
+                schedule(EXP_REU_AUTOLOAD, delay - 1);
+                c64.scheduleRel<SLOT_EXP>(delay, EXP_REU_AUTOLOAD); break;
+            }
             [[fallthrough]];
         }
         case EXP_REU_AUTOLOAD:
@@ -607,13 +638,18 @@ Reu::processEvent(EventID id)
 
             cpu.releaseRdyLine(INTSRC_EXP);
 
-            if (delay) { c64.scheduleRel<SLOT_EXP>(delay, EXP_REU_FINALIZE); break; }
+            if (delay) {
+
+                schedule(EXP_REU_FINALIZE, delay - 1);
+                c64.scheduleRel<SLOT_EXP>(delay, EXP_REU_FINALIZE); break;
+            }
             [[fallthrough]];
 
         case EXP_REU_FINALIZE:
 
             finalizeDma(id);
             c64.cancel<SLOT_EXP>();
+            schedule(EVENT_NONE);
             break;
 
         default:

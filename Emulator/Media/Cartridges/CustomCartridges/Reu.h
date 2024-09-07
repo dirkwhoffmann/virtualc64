@@ -120,6 +120,17 @@ private:
 
 
     //
+    // State machine
+    //
+
+    // The action to be performed next
+    EventID action = EVENT_NONE;
+
+    // Remainig wait states until the action is being performed
+    isize waitStates = 0;
+
+
+    //
     // Initializing
     //
 
@@ -282,13 +293,21 @@ private:
 
 
     //
+    //Emulating the device
+    //
+
+    // Executes pending actions
+    void execute() override;
+
+    // Schedules a new actions
+    void schedule(EventID id, isize ws = 0) { action = id; waitStates = ws; }
+
+
+    //
     // Performing DMA
     //
 
 public:
-
-    // Main execution function
-    void execute() override;
 
     // Reads the value of the BA line as it is seen by the REU
     bool ba();
