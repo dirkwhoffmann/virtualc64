@@ -447,7 +447,13 @@ Reu::incReuAddr()
     reuBase = LO_WORD(expanded);
 }
 
-bool 
+void 
+Reu::execute()
+{
+    if (c64.isDue<SLOT_EXP>(cpu.clock)) processEvent(c64.eventid[SLOT_EXP]);
+}
+
+bool
 Reu::ba()
 {
     static bool earlyDma = false;

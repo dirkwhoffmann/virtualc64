@@ -270,6 +270,8 @@ typedef struct
     const char *switchRight;
 
     isize leds;
+
+    bool needsExecution;
 }
 CartridgeTraits;
 

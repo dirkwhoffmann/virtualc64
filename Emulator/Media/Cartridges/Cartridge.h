@@ -32,7 +32,7 @@ class Cartridge : public SubComponent, public Inspectable<CartridgeInfo> {
     Options options = {
 
     };
-    
+
 public:
 
     virtual const CartridgeTraits &getCartridgeTraits() const {
@@ -266,7 +266,7 @@ public:
 public:
 
     const Options &getOptions() const override { return options; }
-    
+
 
     //
     // Analyzing
@@ -274,7 +274,7 @@ public:
 
 public:
 
-    // CartridgeInfo getInfo() const;
+    // Returns info about a particular Rom bank
     CartridgeRomInfo getRomInfo(isize nr) const;
 
     // Returns the cartridge type
@@ -445,10 +445,11 @@ public:
     // Handling delegation calls
     //
 
-    /* Emulator thread callback. This function is invoked by the expansion port.
-     * Only a few cartridges such as EpyxFastLoader will do some action here.
-     */
+    // Called after each cycle if the 'execution' flag is set in the traits
     virtual void execute() { };
+
+    // End of frame handler
+    virtual void endOfFrame() { };
 
     // Modifies the memory source lookup tables if required
     virtual void updatePeekPokeLookupTables() { };

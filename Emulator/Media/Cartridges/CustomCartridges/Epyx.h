@@ -97,7 +97,7 @@ public:
     u8 spypeekIO1(u16 addr) const override;
     u8 peekIO2(u16 addr) override;
     u8 spypeekIO2(u16 addr) const override ;
-    void execute() override;
+    void endOfFrame() override;
 
 private:
 

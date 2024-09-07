@@ -301,26 +301,22 @@ ExpansionPort::processCommand(const Cmd &cmd)
     }
 }
 
-void
-ExpansionPort::execute()
+bool 
+ExpansionPort::needsAccurateEmulation()
 {
-    processEvent(c64.eventid[SLOT_EXP]);
+    return cartridge ? cartridge->getCartridgeTraits().needsExecution : false;
 }
 
 void
-ExpansionPort::processEvent(EventID id)
+ExpansionPort::execute()
 {
-    if (cartridge) {
-        cartridge->processEvent(id);
-    } else {
-        c64.cancel<SLOT_EXP>();
-    }
+    if (cartridge) cartridge->execute();
 }
 
 void
 ExpansionPort::endOfFrame()
 {
-    if (cartridge) cartridge->execute();
+    if (cartridge) cartridge->endOfFrame();
 }
 
 void

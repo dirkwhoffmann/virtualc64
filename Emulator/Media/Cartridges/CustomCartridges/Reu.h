@@ -38,10 +38,11 @@ class Reu final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_REU,
-        .title      = "REU",
-        .memory     = 0,
-        .battery    = true
+        .type           = CRT_REU,
+        .title          = "REU",
+        .memory         = 0,
+        .battery        = true,
+        .needsExecution = true
     };
 
     virtual const CartridgeTraits &getCartridgeTraits() const override {
@@ -205,6 +206,8 @@ public:
     // Querying properties
     //
 
+public:
+
     bool isREU1700() const { return getRamCapacity() == KB(128); }
     bool isREU1764() const { return getRamCapacity() == KB(256); }
     bool isREU1750() const { return getRamCapacity() >= KB(512); }
@@ -230,6 +233,8 @@ public:
     // Accessing REU registers
     //
 
+private:
+
     bool autoloadEnabled() const { return GET_BIT(cr, 5); }
     bool ff00Enabled() const { return !GET_BIT(cr, 4); }
     bool ff00Disabled() const { return GET_BIT(cr, 4); }
@@ -242,6 +247,9 @@ public:
 
     isize memStep() const { return GET_BIT(acr,7) ? 0 : 1; }
     isize reuStep() const { return GET_BIT(acr,6) ? 0 : 1; }
+
+    void incMemAddr();
+    void incReuAddr();
 
 
     //
@@ -277,10 +285,10 @@ private:
     // Performing DMA
     //
 
-private:
+public:
 
-    void incMemAddr();
-    void incReuAddr();
+    // Main execution function
+    void execute() override;
 
     // Reads the value of the BA line as it is seen by the REU
     bool ba();
@@ -288,7 +296,7 @@ private:
     // Initiates a DMA transfer
     void initiateDma();
 
-    // Processes a DMA event
+    // Processes a DMA event (DEPRECATED)
     void processEvent(EventID id) override;
 
     // Performs a single DMA cycle
@@ -300,6 +308,8 @@ private:
     //
     // Managing interrupts
     //
+
+private:
 
     void triggerEndOfBlockIrq();
     void triggerVerifyErrorIrq();

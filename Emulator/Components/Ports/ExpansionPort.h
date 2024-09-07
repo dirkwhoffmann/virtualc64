@@ -228,8 +228,14 @@ public:
 
 public:
 
+    /* Indicates whether a cartridge is attached that needs cycle-accurate
+     * emulation. If such a cartridge is attached, the main execution routine
+     * calls execute() function in every cycle.
+     */
+    bool needsAccurateEmulation();
+
+    // Passes control to the cartridge in every cycle.
     void execute();
-    void processEvent(EventID id);
 
 
     //

@@ -83,7 +83,7 @@ Epyx::spypeekIO2(u16 addr) const
 }
 
 void
-Epyx::execute()
+Epyx::endOfFrame()
 {
     // Switch cartridge off when the capacitor is fully charged
     if (cpu.clock > cycle) {

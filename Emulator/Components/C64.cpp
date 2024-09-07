@@ -729,9 +729,9 @@ C64::computeFrame(bool headless)
     cpu.debugger.breakpointPC = -1;
 
     // Dispatch
-    switch ((drive8.isPoweredOn()   ? 4 : 0) |
-            (drive9.isPoweredOn()   ? 2 : 0) |
-            (expansionport.hasReu() ? 1 : 0) ) {
+    switch ((drive8.isPoweredOn()                   ? 4 : 0) |
+            (drive9.isPoweredOn()                   ? 2 : 0) |
+            (expansionport.needsAccurateEmulation() ? 1 : 0) ) {
 
         case 0b000: execute <false, false, false> (); break;
         case 0b001: execute <false, false, true>  (); break;
@@ -827,7 +827,7 @@ alwaysinline void C64::executeCycle()
     cpu.execute<MOS_6510>();
     if constexpr (enable8) { if (drive8.needsEmulation) drive8.execute(durationOfOneCycle); }
     if constexpr (enable9) { if (drive9.needsEmulation) drive9.execute(durationOfOneCycle); }
-    if constexpr (execExp) { if (isDue<SLOT_EXP>(cycle)) expansionport.execute(); }
+    if constexpr (execExp) { expansionport.execute(); }
 }
 
 template <bool enable8, bool enable9> void 
