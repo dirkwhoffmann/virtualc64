@@ -1154,7 +1154,7 @@ C64::processEvents(Cycle cycle)
             // Check tertiary slots
             //
             if (isDue<SLOT_EXP>(cycle)) {
-                // expansionport.processEvent(eventid[SLOT_EXP]);
+                expansionport.processEvent(eventid[SLOT_EXP]);
             }
             if (isDue<SLOT_TXD>(cycle)) {
                 userPort.rs232.processTxdEvent();

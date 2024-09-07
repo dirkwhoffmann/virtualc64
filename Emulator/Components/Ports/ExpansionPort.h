@@ -213,7 +213,7 @@ public:
     
 
     //
-    // Processing commands
+    // Processing commands and events
     //
 
 public:
@@ -221,9 +221,12 @@ public:
     // Processes a cartridge command
     void processCommand(const Cmd &cmd);
 
+    // Services an event in the EXP slot
+    void processEvent(EventID id);
+
 
     //
-    // Processing events
+    // Cycle-accurate execution
     //
 
 public:

@@ -301,6 +301,12 @@ ExpansionPort::processCommand(const Cmd &cmd)
     }
 }
 
+void 
+ExpansionPort::processEvent(EventID id)
+{
+    // No events so far
+}
+
 bool 
 ExpansionPort::needsAccurateEmulation()
 {

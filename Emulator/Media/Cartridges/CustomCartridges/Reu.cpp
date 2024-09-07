@@ -450,36 +450,20 @@ Reu::incReuAddr()
 void 
 Reu::execute()
 {
-    if ((action != EVENT_NONE) != c64.hasEvent<SLOT_EXP>()) {
-        printf("action = %d event = %d\n", action, c64.eventid[SLOT_EXP]);
-        assert(false);
-    }
+    // Sniff the BA line
+    sniffBA();
 
+    // Only proceed if an action is scheduled
     if (action == EVENT_NONE) return;
 
-    if ((waitStates == 0) != c64.isDue<SLOT_EXP>(cpu.clock)) {
-        printf("waitStates = %ld isDue: %lld\n", waitStates, c64.trigger[SLOT_EXP] - cpu.clock);
-        assert(false);
-    }
-    if (c64.eventid[SLOT_EXP] != action) {
-        printf("action = %d event = %d\n", action, c64.eventid[SLOT_EXP]);
-        assert(false);
-    }
+    // Emulate wait state if necessary
+    if (waitStates) { waitStates--; return; }
 
-    if (c64.isDue<SLOT_EXP>(cpu.clock)) {
-
-        processEvent(c64.eventid[SLOT_EXP]);
-
-    } else {
-
-        assert(waitStates > 0);
-        waitStates--;
-    }
-
+    processEvent(action);
 }
 
 bool
-Reu::ba()
+Reu::sniffBA()
 {
     static bool earlyDma = false;
 
@@ -568,7 +552,7 @@ Reu::processEvent(EventID id)
              * A good starting point is VICE test bonzai/spritetiming.prg
              * Patch Denise to print out the values of the BA line for this test
              */
-            (void)ba();
+            // (void)ba();
             if (id == EXP_REU_FETCH) {
                 static int tmp = 0;
                 trace(REU_DEBUG, "%d: FETCH BA: VICII=%x REU=(%d%d%d)%d",

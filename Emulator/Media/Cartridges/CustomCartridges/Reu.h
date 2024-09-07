@@ -309,8 +309,8 @@ private:
 
 public:
 
-    // Reads the value of the BA line as it is seen by the REU
-    bool ba();
+    // Records the current value of the BA line
+    bool sniffBA();
 
     // Initiates a DMA transfer
     void initiateDma();
