@@ -496,45 +496,8 @@ Reu::execute(EventID id)
         case EXP_REU_SWAP:
         case EXP_REU_VERIFY:
         {
-            /* Only proceed if the bus is available
-
-             * Note: The timing of the BA line is not accurately emulated yet.
-             * Emulation is tricky because of non-trivial timing constraints on
-             * VICII's BA line. E.g., in Denise, vicii.h states:
-             *
-             *  "of course expansion port sees the same BA state like CPU RDY
-             *   line. but there is a known case, when BA calculation takes more
-             *   time within cycle. for CPU it doesn't matter, because it checks
-             *   later in cycle. REU seems to check this sooner and can't
-             *   recognize BA in this special cycle.
-             *   auto reuBaLow() -> bool { return baLow && !sprite0DmaLateBA; }"
-             *
-             * TODO: Improve accuracy at a later point
-             *
-             * A good starting point is VICE test bonzai/spritetiming.prg
-             * Patch Denise to print out the values of the BA line for this test
-             */
-            // (void)ba();
-            if (id == EXP_REU_FETCH) {
-                static int tmp = 0;
-                trace(REU_DEBUG, "%d: FETCH BA: VICII=%x REU=(%d%d%d)%d",
-                      ++tmp,
-                      vic.baLine.current(),
-                      baLine.readWithDelay(3),
-                      baLine.readWithDelay(2),
-                      baLine.readWithDelay(1),
-                      baLine.readWithDelay(0)
-                      );
-            }
-            if (baLine.readWithDelay(0) && baLine.readWithDelay(1)) {
-
-                if (id == EXP_REU_FETCH && REU_DEBUG) printf(" BLOCKED\n");
-                // Process the event again in the next cycle
-                c64.rescheduleRel<SLOT_EXP>(1);
-                break;
-            }
-
-            if (id == EXP_REU_FETCH && REU_DEBUG) printf(" Fetching...\n");
+            // Only proceed if the bus is available
+            if (baLine.readWithDelay(0) && baLine.readWithDelay(1)) break;
 
             // Perform a DMA cycle
             auto remaining = doDma(id);
@@ -542,25 +505,29 @@ Reu::execute(EventID id)
             // Set or clear the END_OF_BLOCK_BIT
             tlength == 1 ? SET_BIT(sr, 6) : CLR_BIT(sr, 6);
 
-            if (remaining == -1 && tlength != 1) {
+            if (remaining == -1) {
 
-                // Verify error: Emulate a 1 cycle delay
-                schedule(EXP_REU_AUTOLOAD);
-                c64.scheduleRel<SLOT_EXP>(1, EXP_REU_AUTOLOAD);
-                break;
+                // delay = tlength == 1 ? 0 : 1;
+                // if (tlength != 1) U16_DEC(tlength, 1);
+
+                if (tlength != 1) {
+
+                    // Verify error: Emulate a 1 cycle delay
+                    schedule(EXP_REU_AUTOLOAD);
+                    break;
+                }
             }
 
             if (remaining > 0) {
 
                 // Process the event again in the next cycle
-                c64.rescheduleRel<SLOT_EXP>(1);
                 break;
             }
 
             if (delay) {
 
                 schedule(EXP_REU_AUTOLOAD, delay - 1);
-                c64.scheduleRel<SLOT_EXP>(delay, EXP_REU_AUTOLOAD); break;
+                break;
             }
             [[fallthrough]];
         }
@@ -587,7 +554,7 @@ Reu::execute(EventID id)
             if (delay) {
 
                 schedule(EXP_REU_FINALIZE, delay - 1);
-                c64.scheduleRel<SLOT_EXP>(delay, EXP_REU_FINALIZE); break;
+                break;
             }
             [[fallthrough]];
 
