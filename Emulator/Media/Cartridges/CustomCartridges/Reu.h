@@ -296,10 +296,17 @@ private:
     //Emulating the device
     //
 
+public:
+
     // Executes pending actions
     void execute() override;
 
-    // Schedules a new actions
+private:
+
+    // Called by execute()
+    void execute(EventID id);
+
+    // Schedules a new action
     void schedule(EventID id, isize ws = 0) { action = id; waitStates = ws; }
 
 
@@ -314,9 +321,6 @@ public:
 
     // Initiates a DMA transfer
     void initiateDma();
-
-    // Processes a DMA event (DEPRECATED)
-    void processEvent(EventID id) override;
 
     // Performs a single DMA cycle
     isize doDma(EventID id);

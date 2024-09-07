@@ -450,66 +450,28 @@ Reu::incReuAddr()
 void 
 Reu::execute()
 {
+    // Quick exit
+    if (action == EVENT_NONE) return;
+
     // Sniff the BA line
     sniffBA();
 
-    // Only proceed if an action is scheduled
-    if (action == EVENT_NONE) return;
+    assert(expansionPort.getConfig().reuSpeed == 1);
+    for (isize i = 0; i < expansionPort.getConfig().reuSpeed; i++) {
 
-    // Emulate wait state if necessary
-    if (waitStates) { waitStates--; return; }
+        // Emulate wait state if necessary
+        if (waitStates) { waitStates--; return; }
 
-    processEvent(action);
-}
+        // Only proceed if an action is scheduled
+        if (action == EVENT_NONE) return;
 
-bool
-Reu::sniffBA()
-{
-    static bool earlyDma = false;
-
-    // Scan the BA line
-    auto current = !!vic.baLine.current();
-
-    // Experimental
-    if (c64.rasterCycle == 54) earlyDma = !GET_BIT(vic.spriteDmaOnOff, 1);
-
-    /* From Denise's vicii.h:
-     *
-     * "of course expansion port sees the same BA state like CPU RDY line.
-     *  but there is a known case, when BA calculation takes more time within cycle.
-     *  for CPU it doesn't matter, because it checks later in cycle.
-     *  REU seems to check this sooner and can't recognize BA in this special cycle."
-     */
-    if (c64.rasterCycle == 55 && earlyDma) {
-
-        current = false;
+        // Execute the pending action
+        execute(action);
     }
-
-    // Feed the pipe
-    baLine.write(current);
-
-    // Return delayed value
-    return baLine.readWithDelay(1);
 }
 
-void
-Reu::initiateDma()
-{
-    if (REU_DEBUG) { dump(Category::Dma, std::cout); }
-
-    // Update control register bits
-    cr = (cr & ~CR::EXECUTE) | CR::FF00_DISABLE;
-
-    // Freeze the CPU
-    cpu.pullDownRdyLine(INTSRC_EXP);
-
-    // Schedule the first DMA event
-    c64.scheduleRel<SLOT_EXP>(1, EXP_REU_PREPARE);
-    schedule(EXP_REU_PREPARE, 1);
-}
-
-void
-Reu::processEvent(EventID id)
+void 
+Reu::execute(EventID id)
 {
     delay = 0;
 
@@ -639,6 +601,52 @@ Reu::processEvent(EventID id)
         default:
             fatalError;
     }
+}
+
+bool
+Reu::sniffBA()
+{
+    static bool earlyDma = false;
+
+    // Scan the BA line
+    auto current = !!vic.baLine.current();
+
+    // Experimental
+    if (c64.rasterCycle == 54) earlyDma = !GET_BIT(vic.spriteDmaOnOff, 1);
+
+    /* From Denise's vicii.h:
+     *
+     * "of course expansion port sees the same BA state like CPU RDY line.
+     *  but there is a known case, when BA calculation takes more time within cycle.
+     *  for CPU it doesn't matter, because it checks later in cycle.
+     *  REU seems to check this sooner and can't recognize BA in this special cycle."
+     */
+    if (c64.rasterCycle == 55 && earlyDma) {
+
+        current = false;
+    }
+
+    // Feed the pipe
+    baLine.write(current);
+
+    // Return delayed value
+    return baLine.readWithDelay(1);
+}
+
+void
+Reu::initiateDma()
+{
+    if (REU_DEBUG) { dump(Category::Dma, std::cout); }
+
+    // Update control register bits
+    cr = (cr & ~CR::EXECUTE) | CR::FF00_DISABLE;
+
+    // Freeze the CPU
+    cpu.pullDownRdyLine(INTSRC_EXP);
+
+    // Schedule the first DMA event
+    c64.scheduleRel<SLOT_EXP>(1, EXP_REU_PREPARE);
+    schedule(EXP_REU_PREPARE, 1);
 }
 
 isize
