@@ -92,15 +92,9 @@ private:
     // TODO: Merge with 'bus' eventually
     u8 c64Val = 0;
     u8 reuVal = 0;
-
-    // Signals a verify error
-    bool verifyError = false;
     
     // Flipflop used to control the swap operation
     bool swapff = false;
-
-    // Used inside processEvent() to emulate additional delay cycles
-    isize delay = 0;
 
     // Experimental
     TimeDelayed<bool,3> baLine = TimeDelayed <bool,3> ();
@@ -174,6 +168,11 @@ public:
         CLONE(imr)
         CLONE(acr)
 
+        CLONE(c64Val)
+        CLONE(reuVal)
+        CLONE(swapff)
+        CLONE(baLine)
+
         CLONE(upperBankBits)
         CLONE(bus)
         CLONE(memTypeF)
@@ -204,6 +203,11 @@ public:
         << imr
         << acr
 
+        << c64Val
+        << reuVal
+        << swapff
+        << baLine
+        
         << upperBankBits
         << bus
         << memTypeF;

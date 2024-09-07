@@ -473,13 +473,10 @@ Reu::execute()
 void 
 Reu::execute(EventID id)
 {
-    delay = 0;
-
     switch (id) {
 
         case EXP_REU_PREPARE:
 
-            verifyError = false;
             cpu.pullDownRdyLine(INTSRC_EXP);
 
             switch (cr & 0x3) {
@@ -514,28 +511,24 @@ Reu::execute(EventID id)
         }
         case EXP_REU_AUTOLOAD:
 
+            cpu.releaseRdyLine(INTSRC_EXP);
+
             if (autoloadEnabled()) {
 
                 debug(REU_DEBUG, "Autoloading...\n");
+
+                // Reload values from shadow registers
                 c64Base = c64BaseLatched;
                 reuBase = reuBaseLatched;
                 reuBank = reuBankLatched;
                 tlength = tlengthLatched;
 
-                // Emulate a 4 cycle delay
-                if (id != EXP_REU_SWAP) delay = 4;
+                // Emulate a proper delay
+                if (id != EXP_REU_SWAP) {
 
-            } else {
-
-                debug(REU_DEBUG, "No autoload\n");
-            }
-
-            cpu.releaseRdyLine(INTSRC_EXP);
-
-            if (delay) {
-
-                schedule(EXP_REU_FINALIZE, delay - 1);
-                break;
+                    schedule(EXP_REU_FINALIZE, 3);
+                    break;
+                }
             }
             [[fallthrough]];
 
@@ -661,9 +654,7 @@ Reu::doDma(EventID id)
                 // Trigger interrupt if enabled
                 triggerVerifyErrorIrq();
 
-                verifyError = true;
                 waitStates = tlength == 1 ? 0 : 1;
-                delay = tlength == 1 ? 0 : 1;
                 if (tlength != 1) U16_DEC(tlength, 1);
                 return -1;
             }
