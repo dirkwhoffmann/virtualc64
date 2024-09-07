@@ -24,6 +24,8 @@ Reu::Reu(C64 &ref, isize kb) : Cartridge(ref), kb(kb)
 
     traits.memory = KB(kb);
     setRamCapacity(KB(kb));
+
+    baLine.setClock(&cpu.clock);
 }
 
 void
@@ -445,6 +447,36 @@ Reu::incReuAddr()
     reuBase = LO_WORD(expanded);
 }
 
+bool 
+Reu::ba()
+{
+    static bool earlyDma = false;
+
+    // Scan the BA line
+    auto current = !!vic.baLine.current();
+
+    // Experimental
+    if (c64.rasterCycle == 54) earlyDma = !GET_BIT(vic.spriteDmaOnOff, 1);
+
+    /* From Denise's vicii.h:
+     *
+     * "of course expansion port sees the same BA state like CPU RDY line.
+     *  but there is a known case, when BA calculation takes more time within cycle.
+     *  for CPU it doesn't matter, because it checks later in cycle.
+     *  REU seems to check this sooner and can't recognize BA in this special cycle."
+     */
+    if (c64.rasterCycle == 55 && earlyDma) {
+
+        current = false;
+    }
+
+    // Feed the pipe
+    baLine.write(current);
+
+    // Return delayed value
+    return baLine.readWithDelay(1);
+}
+
 void
 Reu::initiateDma()
 {
@@ -504,12 +536,27 @@ Reu::processEvent(EventID id)
              * A good starting point is VICE test bonzai/spritetiming.prg
              * Patch Denise to print out the values of the BA line for this test
              */
-            if (vic.baLine.readWithDelay(1)) {
+            (void)ba();
+            if (id == EXP_REU_FETCH) {
+                static int tmp = 0;
+                trace(REU_DEBUG, "%d: FETCH BA: VICII=%x REU=(%d%d%d)%d",
+                      ++tmp,
+                      vic.baLine.current(),
+                      baLine.readWithDelay(3),
+                      baLine.readWithDelay(2),
+                      baLine.readWithDelay(1),
+                      baLine.readWithDelay(0)
+                      );
+            }
+            if (baLine.readWithDelay(0) && baLine.readWithDelay(1)) {
 
+                if (id == EXP_REU_FETCH && REU_DEBUG) printf(" BLOCKED\n");
                 // Process the event again in the next cycle
                 c64.rescheduleRel<SLOT_EXP>(1);
                 break;
             }
+
+            if (id == EXP_REU_FETCH && REU_DEBUG) printf(" Fetching...\n");
 
             // Perform a DMA cycle
             auto remaining = doDma(id);

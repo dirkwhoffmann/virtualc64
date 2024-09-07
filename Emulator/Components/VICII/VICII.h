@@ -109,6 +109,7 @@ class VICII final : public SubComponent, public Inspectable<VICIIInfo, VICIIStat
     friend class Memory;
     friend class DmaDebugger;
     friend class VideoPort;
+    friend class Reu;
     
     // REMOVE ASAP
     friend class Heatmap;

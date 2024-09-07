@@ -101,6 +101,8 @@ private:
     // Used inside processEvent() to emulate additional delay cycles
     isize delay = 0;
 
+    // Experimental
+    TimeDelayed<bool,3> baLine = TimeDelayed <bool,3> ();
 
     //
     // Emulation specific variables
@@ -279,6 +281,9 @@ private:
 
     void incMemAddr();
     void incReuAddr();
+
+    // Reads the value of the BA line as it is seen by the REU
+    bool ba();
 
     // Initiates a DMA transfer
     void initiateDma();
