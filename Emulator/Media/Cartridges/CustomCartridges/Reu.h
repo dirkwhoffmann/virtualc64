@@ -96,9 +96,7 @@ private:
     // Flipflop used to control the swap operation
     bool swapff = false;
 
-    // Experimental
-    TimeDelayed<bool,3> baLine = TimeDelayed <bool,3> ();
-
+    // Last to values of the BA line as seen by the REU
     bool ba[2];
 
     //
@@ -173,7 +171,7 @@ public:
         CLONE(c64Val)
         CLONE(reuVal)
         CLONE(swapff)
-        CLONE(baLine)
+        CLONE_ARRAY(ba)
 
         CLONE(upperBankBits)
         CLONE(bus)
@@ -208,7 +206,7 @@ public:
         << c64Val
         << reuVal
         << swapff
-        << baLine
+        << ba
         
         << upperBankBits
         << bus

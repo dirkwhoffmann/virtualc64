@@ -24,8 +24,6 @@ Reu::Reu(C64 &ref, isize kb) : Cartridge(ref), kb(kb)
 
     traits.memory = KB(kb);
     setRamCapacity(KB(kb));
-
-    baLine.setClock(&cpu.clock);
 }
 
 void
@@ -493,9 +491,10 @@ Reu::execute(EventID id)
         case EXP_REU_SWAP:
         case EXP_REU_VERIFY:
         {
-            trace(REU_DEBUG > 3, "%d%d%d : ", baLine.readWithDelay(2), baLine.readWithDelay(1), baLine.readWithDelay(3));
+            trace(REU_DEBUG > 3, "%d%d : ", ba[1], ba[0]);
+
             // Only proceed if the bus is available
-            if (!busIsAvailable(id)) { // baLine.readWithDelay(0) && baLine.readWithDelay(1)) {
+            if (!busIsAvailable(id)) {
 
                 if (REU_DEBUG > 3) printf("BLOCKED\n");
                 break;
@@ -555,10 +554,10 @@ Reu::execute(EventID id)
 void
 Reu::sniffBA()
 {
+    // TODO: Eliminate static variable. Will break multiple emulator instances
     static bool earlyDma = false;
 
     // Scan the BA line
-    auto current = !!vic.baLine.current();
     ba[0] = vic.baLine.readWithDelay(0);
     ba[1] = vic.baLine.readWithDelay(1);
 
@@ -572,13 +571,7 @@ Reu::sniffBA()
      *  for CPU it doesn't matter, because it checks later in cycle.
      *  REU seems to check this sooner and can't recognize BA in this special cycle."
      */
-    if (c64.rasterCycle == 55 && earlyDma) { current = false; ba[0] = false; }
-
-    // Feed the pipe
-    baLine.write(current);
-
-    // Return delayed value
-    // return baLine.readWithDelay(1);
+    if (c64.rasterCycle == 55 && earlyDma) { ba[0] = false; }
 }
 
 bool 
@@ -595,7 +588,7 @@ Reu::busIsAvailable(EventID id) const
         case EXP_REU_SWAP:
         case EXP_REU_VERIFY:
 
-            return !(baLine.readWithDelay(1));
+            return !ba[1];
 
         default:
             fatalError;
