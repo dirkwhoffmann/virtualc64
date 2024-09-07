@@ -99,6 +99,8 @@ private:
     // Experimental
     TimeDelayed<bool,3> baLine = TimeDelayed <bool,3> ();
 
+    bool ba[2];
+
     //
     // Emulation specific variables
     //
@@ -321,7 +323,10 @@ private:
 public:
 
     // Records the current value of the BA line
-    bool sniffBA();
+    void sniffBA();
+
+    // Checks whether the REU can use the bus
+    bool busIsAvailable(EventID id) const;
 
     // Initiates a DMA transfer
     void initiateDma();

@@ -153,7 +153,7 @@ Reu::peekIO2(u16 addr)
             break;
     }
 
-    debug(REU_DEBUG, "peekIO2(%x) = %02X\n", addr, result);
+    debug(REU_DEBUG >= 2, "peekIO2(%x) = %02X\n", addr, result);
     return result;
 }
 
@@ -230,7 +230,7 @@ Reu::spypeekIO2(u16 addr) const
 void
 Reu::pokeIO2(u16 addr, u8 value)
 {
-    debug(REU_DEBUG, "pokeIO2(%x,%x)\n", addr, value);
+    debug(REU_DEBUG >= 2, "pokeIO2(%x,%x)\n", addr, value);
 
     switch (addr & 0x1F) {
 
@@ -493,11 +493,19 @@ Reu::execute(EventID id)
         case EXP_REU_SWAP:
         case EXP_REU_VERIFY:
         {
+            trace(REU_DEBUG > 3, "%d%d%d : ", baLine.readWithDelay(2), baLine.readWithDelay(1), baLine.readWithDelay(3));
             // Only proceed if the bus is available
-            if (baLine.readWithDelay(0) && baLine.readWithDelay(1)) break;
+            if (!busIsAvailable(id)) { // baLine.readWithDelay(0) && baLine.readWithDelay(1)) {
+
+                if (REU_DEBUG > 3) printf("BLOCKED\n");
+                break;
+            }
 
             // Perform a DMA cycle
             auto remaining = doDma(id);
+
+            if (id == EXP_REU_STASH && REU_DEBUG > 3) printf("Stashing\n");
+            if (id == EXP_REU_FETCH && REU_DEBUG > 3) printf("Fetching %02x\n", reuVal);
 
             // Set or clear the END_OF_BLOCK_BIT
             tlength == 1 ? SET_BIT(sr, 6) : CLR_BIT(sr, 6);
@@ -544,15 +552,17 @@ Reu::execute(EventID id)
     }
 }
 
-bool
+void
 Reu::sniffBA()
 {
     static bool earlyDma = false;
 
     // Scan the BA line
     auto current = !!vic.baLine.current();
+    ba[0] = vic.baLine.readWithDelay(0);
+    ba[1] = vic.baLine.readWithDelay(1);
 
-    // Experimental
+    // Check if DMA for sprite 0 was off and has been switched on
     if (c64.rasterCycle == 54) earlyDma = !GET_BIT(vic.spriteDmaOnOff, 1);
 
     /* From Denise's vicii.h:
@@ -562,16 +572,34 @@ Reu::sniffBA()
      *  for CPU it doesn't matter, because it checks later in cycle.
      *  REU seems to check this sooner and can't recognize BA in this special cycle."
      */
-    if (c64.rasterCycle == 55 && earlyDma) {
-
-        current = false;
-    }
+    if (c64.rasterCycle == 55 && earlyDma) { current = false; ba[0] = false; }
 
     // Feed the pipe
     baLine.write(current);
 
     // Return delayed value
-    return baLine.readWithDelay(1);
+    // return baLine.readWithDelay(1);
+}
+
+bool 
+Reu::busIsAvailable(EventID id) const
+{
+    switch (id) {
+
+        case EXP_REU_FETCH:
+
+            // return !(baLine.readWithDelay(0) && baLine.readWithDelay(1));
+            return !(ba[0] && ba[1]);
+
+        case EXP_REU_STASH:
+        case EXP_REU_SWAP:
+        case EXP_REU_VERIFY:
+
+            return !(baLine.readWithDelay(1));
+
+        default:
+            fatalError;
+    }
 }
 
 void
