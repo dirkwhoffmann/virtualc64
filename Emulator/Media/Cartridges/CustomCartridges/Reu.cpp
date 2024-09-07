@@ -505,30 +505,11 @@ Reu::execute(EventID id)
             // Set or clear the END_OF_BLOCK_BIT
             tlength == 1 ? SET_BIT(sr, 6) : CLR_BIT(sr, 6);
 
-            if (remaining == -1) {
+            // Process the event again in the next cycle if DMA continues
+            if (remaining > 0) break;
 
-                // delay = tlength == 1 ? 0 : 1;
-                // if (tlength != 1) U16_DEC(tlength, 1);
-
-                if (tlength != 1) {
-
-                    // Verify error: Emulate a 1 cycle delay
-                    schedule(EXP_REU_AUTOLOAD);
-                    break;
-                }
-            }
-
-            if (remaining > 0) {
-
-                // Process the event again in the next cycle
-                break;
-            }
-
-            if (delay) {
-
-                schedule(EXP_REU_AUTOLOAD, delay - 1);
-                break;
-            }
+            // Delay for one cycle (if needed)
+            if (waitStates) { schedule(EXP_REU_AUTOLOAD); break; }
             [[fallthrough]];
         }
         case EXP_REU_AUTOLOAD:
@@ -681,6 +662,7 @@ Reu::doDma(EventID id)
                 triggerVerifyErrorIrq();
 
                 verifyError = true;
+                waitStates = tlength == 1 ? 0 : 1;
                 delay = tlength == 1 ? 0 : 1;
                 if (tlength != 1) U16_DEC(tlength, 1);
                 return -1;
