@@ -324,7 +324,7 @@ public:
     void sniffBA();
 
     // Checks whether the REU can use the bus
-    bool busIsAvailable(EventID id) const;
+    bool busIsBlocked(EventID id) const;
 
     // Initiates a DMA transfer
     void initiateDma();

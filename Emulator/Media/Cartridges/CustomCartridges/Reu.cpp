@@ -475,8 +475,6 @@ Reu::execute(EventID id)
 
         case EXP_REU_INITIATE:
 
-            // if (!busIsAvailable(EXP_REU_FETCH)) break;
-
             if (REU_DEBUG) { trace(true, ""); dump(Category::Dma, std::cout); }
 
             // Update control register bits
@@ -510,7 +508,7 @@ Reu::execute(EventID id)
             trace(REU_DEBUG > 3, "%d%d : ", ba[1], ba[0]);
 
             // Only proceed if the bus is available
-            if (!busIsAvailable(id)) {
+            if (busIsBlocked(id)) {
 
                 if (REU_DEBUG > 3) printf("BLOCKED\n");
                 break;
@@ -591,20 +589,20 @@ Reu::sniffBA()
 }
 
 bool 
-Reu::busIsAvailable(EventID id) const
+Reu::busIsBlocked(EventID id) const
 {
     switch (id) {
 
         case EXP_REU_FETCH:
 
-            // return !(baLine.readWithDelay(0) && baLine.readWithDelay(1));
-            return !(ba[0] && ba[1]);
+            if (tlength == 1) return ba[0];
+            return ba[0] && ba[1];
 
         case EXP_REU_STASH:
         case EXP_REU_SWAP:
         case EXP_REU_VERIFY:
 
-            return !ba[1];
+            return ba[0];
 
         default:
             fatalError;
@@ -615,19 +613,6 @@ void
 Reu::initiateDma()
 {
     schedule(EXP_REU_INITIATE);
-    /*
-    if (REU_DEBUG) { trace(true, ""); dump(Category::Dma, std::cout); }
-
-    // Update control register bits
-    cr = (cr & ~CR::EXECUTE) | CR::FF00_DISABLE;
-
-    // Freeze the CPU
-    cpu.pullDownRdyLine(INTSRC_EXP);
-
-    // Schedule the first DMA event
-    // c64.scheduleRel<SLOT_EXP>(1, EXP_REU_PREPARE);
-    schedule(EXP_REU_PREPARE, 1);
-    */
 }
 
 isize
