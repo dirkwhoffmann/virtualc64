@@ -35,6 +35,7 @@ extension Inspector {
                 cpuPortDir.assignFormatter(fmt8)
             }
 
+            cpuPcWarning.isHidden = cpuInfo.next == 0 || emu.running
             cpuPc.integerValue = Int(cpuInfo.pc)
             cpuSp.integerValue = Int(cpuInfo.sp)
             cpuA.integerValue = Int(cpuInfo.a)

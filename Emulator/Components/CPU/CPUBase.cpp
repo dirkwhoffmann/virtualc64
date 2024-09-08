@@ -145,6 +145,8 @@ CPU::cacheInfo(CPUInfo &result) const
         result.nmi = nmiLine;
         result.rdy = rdyLine;
 
+        result.next = next;
+        
         result.processorPort = readPort();
         result.processorPortDir = readPortDir();
     }

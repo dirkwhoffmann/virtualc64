@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -82,6 +83,7 @@
                 <outlet property="cpuNmiEXP" destination="EN8-Es-xR0" id="yEv-Rf-g5e"/>
                 <outlet property="cpuNmiKBD" destination="4dD-DS-o6b" id="3Ss-vY-mqu"/>
                 <outlet property="cpuPc" destination="WTx-hl-nUU" id="HbZ-w9-ee3"/>
+                <outlet property="cpuPcWarning" destination="j4a-i4-dZT" id="FcV-uc-tnN"/>
                 <outlet property="cpuPortDir" destination="hEW-MZ-A1x" id="Yc1-he-10f"/>
                 <outlet property="cpuPortReg" destination="OMH-xo-xni" id="3pD-DJ-lPE"/>
                 <outlet property="cpuRdy" destination="yLl-nJ-aNB" id="rJ7-7G-Mtx"/>
@@ -546,6 +548,15 @@
                                                             <action selector="refreshAction:" target="-2" id="clG-N3-uF1"/>
                                                         </connections>
                                                     </button>
+                                                    <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j4a-i4-dZT">
+                                                        <rect key="frame" x="13" y="48" width="92" height="22"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" controlSize="mini" selectable="YES" alignment="center" title="PC not in Fetch phase! " id="74A-tD-NoM">
+                                                            <font key="font" metaFont="miniSystem"/>
+                                                            <color key="textColor" name="warningColor"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
                                                 </subviews>
                                             </view>
                                         </box>
@@ -790,7 +801,7 @@
                                                                             </textFieldCell>
                                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                         </tableColumn>
-                                                                        <tableColumn identifier="delete" width="24" minWidth="24" maxWidth="1000" id="ao3-Di-49W">
+                                                                        <tableColumn identifier="delete" width="25" minWidth="24" maxWidth="1000" id="ao3-Di-49W">
                                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -871,7 +882,7 @@
                                                                             </textFieldCell>
                                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                         </tableColumn>
-                                                                        <tableColumn identifier="delete" width="24" minWidth="24" maxWidth="1000" id="sLf-F8-i7D">
+                                                                        <tableColumn identifier="delete" width="25" minWidth="24" maxWidth="1000" id="sLf-F8-i7D">
                                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -4304,5 +4315,8 @@
         <image name="pauseTemplate" width="36" height="36"/>
         <image name="stepIntoTemplate" width="177" height="177"/>
         <image name="stepOverTemplate" width="177" height="176"/>
+        <namedColor name="warningColor">
+            <color red="1" green="0.14900000393390656" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

@@ -45,6 +45,7 @@ class Inspector: DialogController {
     @IBOutlet weak var cpuBreakView: BreakTableView!
     @IBOutlet weak var cpuWatchView: WatchTableView!
     @IBOutlet weak var cpuPc: NSTextField!
+    @IBOutlet weak var cpuPcWarning: NSTextField!
     @IBOutlet weak var cpuSp: NSTextField!
     @IBOutlet weak var cpuA: NSTextField!
     @IBOutlet weak var cpuX: NSTextField!

@@ -36,9 +36,6 @@ class CPU final : public Peddle, public Inspectable<CPUInfo> {
 
     };
 
-    // Result of the latest inspection
-    // mutable CPUInfo info = { };
-
 public:
 
     /* Processor port

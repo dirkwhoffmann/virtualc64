@@ -16,6 +16,7 @@
 #include "OptionTypes.h"
 #include "Concurrency.h"
 #include "Synchronizable.h"
+#include <map>
 
 namespace vc64 {
 

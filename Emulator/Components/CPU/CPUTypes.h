@@ -73,6 +73,8 @@ typedef struct
     u8 nmi;
     bool rdy;
 
+    long next;
+
     u8 processorPort;
     u8 processorPortDir;
 }
