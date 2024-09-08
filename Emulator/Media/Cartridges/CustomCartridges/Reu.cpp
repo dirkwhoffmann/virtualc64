@@ -473,9 +473,25 @@ Reu::execute(EventID id)
 {
     switch (id) {
 
+        case EXP_REU_INITIATE:
+
+            // if (!busIsAvailable(EXP_REU_FETCH)) break;
+
+            if (REU_DEBUG) { trace(true, ""); dump(Category::Dma, std::cout); }
+
+            // Update control register bits
+            cr = (cr & ~CR::EXECUTE) | CR::FF00_DISABLE;
+
+            // Freeze the CPU
+            cpu.pullDownRdyLine(INTSRC_EXP);
+
+            // Schedule the first DMA event
+            schedule(EXP_REU_PREPARE);
+            break;
+
         case EXP_REU_PREPARE:
 
-            cpu.pullDownRdyLine(INTSRC_EXP);
+            // cpu.pullDownRdyLine(INTSRC_EXP);
 
             switch (cr & 0x3) {
 
@@ -598,7 +614,9 @@ Reu::busIsAvailable(EventID id) const
 void
 Reu::initiateDma()
 {
-    if (REU_DEBUG) { dump(Category::Dma, std::cout); }
+    schedule(EXP_REU_INITIATE);
+    /*
+    if (REU_DEBUG) { trace(true, ""); dump(Category::Dma, std::cout); }
 
     // Update control register bits
     cr = (cr & ~CR::EXECUTE) | CR::FF00_DISABLE;
@@ -607,8 +625,9 @@ Reu::initiateDma()
     cpu.pullDownRdyLine(INTSRC_EXP);
 
     // Schedule the first DMA event
-    c64.scheduleRel<SLOT_EXP>(1, EXP_REU_PREPARE);
+    // c64.scheduleRel<SLOT_EXP>(1, EXP_REU_PREPARE);
     schedule(EXP_REU_PREPARE, 1);
+    */
 }
 
 isize
