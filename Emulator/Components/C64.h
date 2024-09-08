@@ -514,7 +514,6 @@ private:
     void computeFrameHeadless() { computeFrame(true); }
     template <bool, bool, bool> void execute();
     template <bool, bool, bool> alwaysinline void executeCycle();
-    template <bool, bool> void finishInstruction();
     void processFlags();
 
     // Fast-forward the run-ahead instance

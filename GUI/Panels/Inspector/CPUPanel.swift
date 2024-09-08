@@ -35,7 +35,7 @@ extension Inspector {
                 cpuPortDir.assignFormatter(fmt8)
             }
 
-            cpuPc.integerValue = Int(cpuInfo.pc0)
+            cpuPc.integerValue = Int(cpuInfo.pc)
             cpuSp.integerValue = Int(cpuInfo.sp)
             cpuA.integerValue = Int(cpuInfo.a)
             cpuX.integerValue = Int(cpuInfo.x)

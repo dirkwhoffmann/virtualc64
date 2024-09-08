@@ -134,6 +134,7 @@ CPU::cacheInfo(CPUInfo &result) const
         result.cycle = clock;
 
         result.pc0 = reg.pc0;
+        result.pc = reg.pc;
         result.sp = reg.sp;
         result.a = reg.a;
         result.x = reg.x;

@@ -772,16 +772,10 @@ C64::execute()
 
         } while (scanline != 0);
 
-        // Finish the current instruction
-        finishInstruction<enable8, enable9>();
-
     } catch (StateChangeException &) {
 
         // Finish the scanline if needed
         if (++rasterCycle > lastCycle) endScanline();
-
-        // Finish the current instruction
-        finishInstruction<enable8, enable9>();
 
         // Rethrow the exception
         throw;
@@ -831,19 +825,6 @@ alwaysinline void C64::executeCycle()
     if constexpr (execExp) { expansionport.execute(); }
 }
 
-template <bool enable8, bool enable9> void 
-C64::finishInstruction()
-{
-    // TODO: UNCOMMENT ASAP
-    /*
-    while (!cpu.inFetchPhase()) {
-
-        executeCycle<enable8,enable9>();
-        rasterCycle++;
-    }
-    */
-}
-
 void
 C64::processFlags()
 {
@@ -878,7 +859,7 @@ C64::processFlags()
 
     if (flags & RL::SINGLE_STEP) {
 
-        if (!stepTo.has_value() || *stepTo == cpu.getPC0()) {
+        if ((!stepTo.has_value() && cpu.inFetchPhase()) || *stepTo == cpu.getPC0()) {
 
             clearFlag(RL::SINGLE_STEP);
             msgQueue.put(MSG_STEP);

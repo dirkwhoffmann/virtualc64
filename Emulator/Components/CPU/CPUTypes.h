@@ -62,6 +62,7 @@ typedef struct
     i64 cycle;
 
     u16 pc0;
+    u16 pc;
     u8 sp;
     u8 a;
     u8 x;
