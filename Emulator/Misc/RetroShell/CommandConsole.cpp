@@ -75,7 +75,7 @@ CommandConsole::pressReturn(bool shift)
 {
     if (!shift && input.empty()) {
 
-        printHelp();
+        retroShell.asyncExec("printhelp");
 
     } else {
 
@@ -687,7 +687,7 @@ CommandConsole::initCommands(Command &root)
         dump(remoteManager, Category::State);
     });
 
-    cmd = registerComponent(remoteManager.rshServer, *root.seek("server"));
+    cmd = registerComponent(remoteManager.rshServer, root / "server");
 
     root.add({"server", cmd, "start"},
              "Starts the retro shell server",

@@ -770,6 +770,15 @@ Console::initCommands(Command &root)
         welcome();
     });
 
+    root.add({"printhelp"},
+             "", // Prints the help message
+             [this](Arguments& argv, long value) {
+
+        *this << '\n';
+        printHelp();
+        *this << '\n';
+    });
+
     root.add({"."},
              "Enter or exit the debugger",
              [this](Arguments& argv, long value) {

@@ -135,6 +135,7 @@ struct Command {
     Command *seek(const string& token);
     const Command *seek(const std::vector<string> &tokens) const;
     Command *seek(const std::vector<string> &tokens);
+    Command &operator/(const string& token) { return *seek(token); }
 
     // Filters the argument list (used by auto-completion)
     std::vector<const Command *> filterPrefix(const string& prefix) const;
