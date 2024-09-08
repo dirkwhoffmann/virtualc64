@@ -568,15 +568,12 @@ Reu::execute(EventID id)
 void
 Reu::sniffBA()
 {
-    // TODO: Eliminate static variable. Will break multiple emulator instances
-    static bool earlyDma = false;
-
     // Scan the BA line
-    ba[0] = vic.baLine.readWithDelay(0);
+    ba[0] = vic.baLine.current();
     ba[1] = vic.baLine.readWithDelay(1);
 
     // Check if DMA for sprite 0 was off and has been switched on
-    if (c64.rasterCycle == 54) earlyDma = !GET_BIT(vic.spriteDmaOnOff, 1);
+    if (c64.rasterCycle == 54) lateBA = !GET_BIT(vic.spriteDmaOnOff, 1);
 
     /* From Denise's vicii.h:
      *
@@ -585,7 +582,7 @@ Reu::sniffBA()
      *  for CPU it doesn't matter, because it checks later in cycle.
      *  REU seems to check this sooner and can't recognize BA in this special cycle."
      */
-    if (c64.rasterCycle == 55 && earlyDma) { ba[0] = false; }
+    if (c64.rasterCycle == 55 && lateBA) { ba[0] = false; }
 }
 
 bool 

@@ -40,16 +40,11 @@ class Reu final : public Cartridge {
 
         .type           = CRT_REU,
         .title          = "REU",
-        .memory         = 0,
         .battery        = true,
         .needsExecution = true
     };
 
-    virtual const CartridgeTraits &getCartridgeTraits() const override {
-
-        // traits.memory = KB(kb);
-        return traits;
-    }
+    virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }
 
 private:
 
@@ -98,6 +93,10 @@ private:
 
     // Last to values of the BA line as seen by the REU
     bool ba[2];
+
+    // Indicates a condition where BA rises too late to be seen by the REU
+    bool lateBA;
+
 
     //
     // Emulation specific variables
@@ -172,6 +171,7 @@ public:
         CLONE(reuVal)
         CLONE(swapff)
         CLONE_ARRAY(ba)
+        CLONE(lateBA);
 
         CLONE(upperBankBits)
         CLONE(bus)
@@ -207,7 +207,8 @@ public:
         << reuVal
         << swapff
         << ba
-        
+        << lateBA
+
         << upperBankBits
         << bus
         << memTypeF;
