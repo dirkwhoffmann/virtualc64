@@ -79,20 +79,21 @@ template <class T, typename E> struct Reflection {
     }
 
     // Collects all key / value pairs
-    static std::map <string,long> pairs(std::function<bool(E)> filter = [](E){ return true; }) {
+    static std::vector <std::pair<string,long>> 
+    pairs(std::function<bool(E)> filter = [](E) { return true; }) {
 
-        std::map <string,long> result;
+        std::vector <std::pair<string,long>> result;
 
         if (isBitField()) {
 
             for (isize i = T::minVal; i <= T::maxVal; i *= 2) {
-                if (filter(E(i))) result.insert(std::make_pair(key(i), i));
+                if (filter(E(i))) result.push_back(std::make_pair(key(i), i));
             }
 
         } else {
 
             for (isize i = T::minVal; i <= T::maxVal; i++) {
-                if (filter(E(i))) result.insert(std::make_pair(key(i), i));
+                if (filter(E(i))) result.push_back(std::make_pair(key(i), i));
             }
         }
 

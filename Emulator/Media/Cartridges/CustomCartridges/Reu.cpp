@@ -454,7 +454,6 @@ Reu::execute()
     // Sniff the BA line
     sniffBA();
 
-    assert(expansionPort.getConfig().reuSpeed == 1);
     for (isize i = 0; i < expansionPort.getConfig().reuSpeed; i++) {
 
         // Emulate wait state if necessary
