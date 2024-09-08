@@ -96,7 +96,6 @@ template <class T, typename E> struct Reflection {
                 if (filter(E(i))) result.push_back(std::make_pair(key(i), i));
             }
         }
-
         return result;
     }
 
@@ -108,7 +107,6 @@ template <class T, typename E> struct Reflection {
         for (const auto &pair : pairs(filter)) {
             result += (result.empty() ? "" : delim) + pair.first;
         }
-
         return result;
     }
 

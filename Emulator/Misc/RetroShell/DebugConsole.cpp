@@ -292,213 +292,6 @@ DebugConsole::initCommands(Command &root)
         mem.debugger.write(addr, val, cnt);
     });
 
-    root.add({"i"},
-             "Inspect a component");
-
-    Command::currentGroup = "Components";
-
-    root.add({"i", "thread"},       "Emulator thread");
-
-    root.add({"i", "thread", ""},        "Displays the thread state",
-             [this](Arguments& argv, long value) {
-
-        dump(emulator, Category::State);
-    });
-
-    root.add({"i", "thread", "runahead"},    "Inspects the run-ahead instance",
-             [this](Arguments& argv, long value) {
-
-        dump(emulator, Category::RunAhead);
-    });
-
-    auto cmd = c64.shellName();
-    auto description = c64.description();
-    root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
-
-        dump(c64, { Category::Config, Category::State });
-    });
-
-    cmd = cpu.shellName();
-    description = cpu.description();
-    root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
-
-        dump(cpu, { Category::Config, Category::State });
-    });
-
-    cmd = mem.shellName();
-    description = mem.description();
-    root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
-
-        dump(mem, { Category::Config, Category::State });
-    });
-
-    cmd = cia1.shellName();
-    description = cia1.description();
-    root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
-
-        dump(cia1, { Category::Config, Category::State });
-    });
-
-    cmd = cia2.shellName();
-    description = cia2.description();
-    root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
-
-        dump(cia2, { Category::Config, Category::State });
-    });
-
-    cmd = vic.shellName();
-    description = vic.description();
-    root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
-
-        dump(vic, { Category::Config, Category::State });
-    });
-
-    root.add({"i", "sid"}, { }, { Arg::value }, "Primary SID",
-             [this](Arguments& argv, long value) {
-
-        isize nr = parseNum(argv, 0, 0);
-        if (nr < 0 || nr > 3) throw Error(VC64ERROR_OPT_INV_ARG, "0 ... 3");
-
-        dump(sidBridge.sid[nr], { Category::Config, Category::State });
-    });
-
-    cmd = sidBridge.shellName();
-    description = sidBridge.description();
-    root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
-
-        dump(sidBridge, { Category::Config, Category::State });
-    });
-
-    cmd = expansionPort.shellName();
-    description = expansionPort.description();
-    root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
-
-        dump(expansionPort, { Category::Config, Category::State });
-    });
-
-    Command::currentGroup = "Peripherals";
-
-    cmd = keyboard.shellName();
-    description = keyboard.description();
-    root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
-
-        dump(keyboard, { Category::Config, Category::State });
-    });
-
-    cmd = port1.shellName();
-    description = port1.description();
-    root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
-
-        dump(port1, { Category::Config, Category::State });
-    });
-
-    cmd = port2.shellName();
-    description = port2.description();
-    root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
-
-        dump(port2, { Category::Config, Category::State });
-    });
-
-    cmd = port1.joystick.shellName();
-    description = port1.joystick.description();
-    root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
-
-        dump(port1.joystick, { Category::Config, Category::State });
-    });
-
-    cmd = port2.joystick.shellName();
-    description = port2.joystick.description();
-    root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
-
-        dump(port2.joystick, { Category::Config, Category::State });
-    });
-
-    cmd = port1.mouse.shellName();
-    description = port1.mouse.description();
-    root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
-
-        dump(port1.mouse, { Category::Config, Category::State });
-    });
-
-    cmd = port2.mouse.shellName();
-    description = port2.mouse.description();
-    root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
-
-        dump(port2.mouse, { Category::Config, Category::State });
-    });
-
-    for (isize i = 0; i < 2; i++) {
-
-        auto &drive = i == 0 ? c64.drive8 : c64.drive9;
-
-        cmd = drive.shellName();
-        description = drive.description();
-
-        root.add({"i", cmd}, description);
-
-        root.add({"i", cmd, ""},
-                 "Inspects the internal state",
-                 [this](Arguments& argv, long value) {
-
-            auto &drive = value ? drive9 : drive8;
-            dump(drive, { Category::Config, Category::State });
-        }, i);
-
-        root.add({"i", cmd, "bankmap"},
-                 "Displays the memory layout",
-                 [this](Arguments& argv, long value) {
-
-            auto &drive = value ? drive9 : drive8;
-            dump(drive, Category::BankMap);
-        }, i);
-
-        root.add({"i", cmd, "disk"},
-                 "Inspects the current disk",
-                 [this](Arguments& argv, long value) {
-
-            auto &drive = value ? drive9 : drive8;
-            dump(drive, Category::Disk);
-        }, i);
-
-        root.add({"i", cmd, "layout"},
-                 "Displays the disk layout",
-                 [this](Arguments& argv, long value) {
-
-            auto &drive = value ? drive9 : drive8;
-            dump(drive, Category::Layout);
-        }, i);
-    }
-
-    cmd = serialPort.shellName();
-    description = serialPort.description();
-    root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
-
-        dump(serialPort, { Category::Config, Category::State });
-    });
-
-    cmd = datasette.shellName();
-    description = datasette.description();
-    root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
-
-        dump(datasette, { Category::Config, Category::State });
-    });
-
-    cmd = audioPort.shellName();
-    description = audioPort.description();
-    root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
-
-        dump(audioPort, { Category::Config, Category::State });
-    });
-
-    Command::currentGroup = "Miscellaneous";
-
-    cmd = host.shellName();
-    description = host.description();
-    root.add({"i", cmd}, description, [this](Arguments& argv, long value) {
-
-        dump(host, { Category::Config, Category::State });
-    });
-
     root.add({"r"},
              "Show registers");
 
@@ -524,6 +317,213 @@ DebugConsole::initCommands(Command &root)
              [this](Arguments& argv, long value) {
 
         dump(sidBridge.sid[0], Category::Registers);
+    });
+
+    root.add({"?"},
+             "Inspect a component");
+
+    Command::currentGroup = "Components";
+
+    root.add({"?", "thread"},       "Emulator thread");
+
+    root.add({"?", "thread", ""},        "Displays the thread state",
+             [this](Arguments& argv, long value) {
+
+        dump(emulator, Category::State);
+    });
+
+    root.add({"?", "thread", "runahead"},    "Inspects the run-ahead instance",
+             [this](Arguments& argv, long value) {
+
+        dump(emulator, Category::RunAhead);
+    });
+
+    auto cmd = c64.shellName();
+    auto description = c64.description();
+    root.add({"?", cmd}, description, [this](Arguments& argv, long value) {
+
+        dump(c64, { Category::Config, Category::State });
+    });
+
+    cmd = cpu.shellName();
+    description = cpu.description();
+    root.add({"?", cmd}, description, [this](Arguments& argv, long value) {
+
+        dump(cpu, { Category::Config, Category::State });
+    });
+
+    cmd = mem.shellName();
+    description = mem.description();
+    root.add({"?", cmd}, description, [this](Arguments& argv, long value) {
+
+        dump(mem, { Category::Config, Category::State });
+    });
+
+    cmd = cia1.shellName();
+    description = cia1.description();
+    root.add({"?", cmd}, description, [this](Arguments& argv, long value) {
+
+        dump(cia1, { Category::Config, Category::State });
+    });
+
+    cmd = cia2.shellName();
+    description = cia2.description();
+    root.add({"?", cmd}, description, [this](Arguments& argv, long value) {
+
+        dump(cia2, { Category::Config, Category::State });
+    });
+
+    cmd = vic.shellName();
+    description = vic.description();
+    root.add({"?", cmd}, description, [this](Arguments& argv, long value) {
+
+        dump(vic, { Category::Config, Category::State });
+    });
+
+    root.add({"?", "sid"}, { }, { Arg::value }, "Primary SID",
+             [this](Arguments& argv, long value) {
+
+        isize nr = parseNum(argv, 0, 0);
+        if (nr < 0 || nr > 3) throw Error(VC64ERROR_OPT_INV_ARG, "0 ... 3");
+
+        dump(sidBridge.sid[nr], { Category::Config, Category::State });
+    });
+
+    cmd = sidBridge.shellName();
+    description = sidBridge.description();
+    root.add({"?", cmd}, description, [this](Arguments& argv, long value) {
+
+        dump(sidBridge, { Category::Config, Category::State });
+    });
+
+    cmd = expansionPort.shellName();
+    description = expansionPort.description();
+    root.add({"?", cmd}, description, [this](Arguments& argv, long value) {
+
+        dump(expansionPort, { Category::Config, Category::State });
+    });
+
+    Command::currentGroup = "Peripherals";
+
+    cmd = keyboard.shellName();
+    description = keyboard.description();
+    root.add({"?", cmd}, description, [this](Arguments& argv, long value) {
+
+        dump(keyboard, { Category::Config, Category::State });
+    });
+
+    cmd = port1.shellName();
+    description = port1.description();
+    root.add({"?", cmd}, description, [this](Arguments& argv, long value) {
+
+        dump(port1, { Category::Config, Category::State });
+    });
+
+    cmd = port2.shellName();
+    description = port2.description();
+    root.add({"?", cmd}, description, [this](Arguments& argv, long value) {
+
+        dump(port2, { Category::Config, Category::State });
+    });
+
+    cmd = port1.joystick.shellName();
+    description = port1.joystick.description();
+    root.add({"?", cmd}, description, [this](Arguments& argv, long value) {
+
+        dump(port1.joystick, { Category::Config, Category::State });
+    });
+
+    cmd = port2.joystick.shellName();
+    description = port2.joystick.description();
+    root.add({"?", cmd}, description, [this](Arguments& argv, long value) {
+
+        dump(port2.joystick, { Category::Config, Category::State });
+    });
+
+    cmd = port1.mouse.shellName();
+    description = port1.mouse.description();
+    root.add({"?", cmd}, description, [this](Arguments& argv, long value) {
+
+        dump(port1.mouse, { Category::Config, Category::State });
+    });
+
+    cmd = port2.mouse.shellName();
+    description = port2.mouse.description();
+    root.add({"?", cmd}, description, [this](Arguments& argv, long value) {
+
+        dump(port2.mouse, { Category::Config, Category::State });
+    });
+
+    for (isize i = 0; i < 2; i++) {
+
+        auto &drive = i == 0 ? c64.drive8 : c64.drive9;
+
+        cmd = drive.shellName();
+        description = drive.description();
+
+        root.add({"?", cmd}, description);
+
+        root.add({"?", cmd, ""},
+                 "Inspects the internal state",
+                 [this](Arguments& argv, long value) {
+
+            auto &drive = value ? drive9 : drive8;
+            dump(drive, { Category::Config, Category::State });
+        }, i);
+
+        root.add({"?", cmd, "bankmap"},
+                 "Displays the memory layout",
+                 [this](Arguments& argv, long value) {
+
+            auto &drive = value ? drive9 : drive8;
+            dump(drive, Category::BankMap);
+        }, i);
+
+        root.add({"?", cmd, "disk"},
+                 "Inspects the current disk",
+                 [this](Arguments& argv, long value) {
+
+            auto &drive = value ? drive9 : drive8;
+            dump(drive, Category::Disk);
+        }, i);
+
+        root.add({"?", cmd, "layout"},
+                 "Displays the disk layout",
+                 [this](Arguments& argv, long value) {
+
+            auto &drive = value ? drive9 : drive8;
+            dump(drive, Category::Layout);
+        }, i);
+    }
+
+    cmd = serialPort.shellName();
+    description = serialPort.description();
+    root.add({"?", cmd}, description, [this](Arguments& argv, long value) {
+
+        dump(serialPort, { Category::Config, Category::State });
+    });
+
+    cmd = datasette.shellName();
+    description = datasette.description();
+    root.add({"?", cmd}, description, [this](Arguments& argv, long value) {
+
+        dump(datasette, { Category::Config, Category::State });
+    });
+
+    cmd = audioPort.shellName();
+    description = audioPort.description();
+    root.add({"?", cmd}, description, [this](Arguments& argv, long value) {
+
+        dump(audioPort, { Category::Config, Category::State });
+    });
+
+    Command::currentGroup = "Miscellaneous";
+
+    cmd = host.shellName();
+    description = host.description();
+    root.add({"?", cmd}, description, [this](Arguments& argv, long value) {
+
+        dump(host, { Category::Config, Category::State });
     });
 
 
