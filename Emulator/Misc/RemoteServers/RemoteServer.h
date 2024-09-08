@@ -28,7 +28,7 @@ class RemoteServer : public SubComponent {
 
         .name           = "RshServer",
         .description    = "Remote Shell Server",
-        .shell          = "server rshell"
+        .shell          = "rshell"
     }};
 
     Options options = {

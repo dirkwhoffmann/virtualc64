@@ -108,6 +108,7 @@ protected:
 
     virtual void initCommands(Command &root);
     const char *registerComponent(CoreComponent &c);
+    const char *registerComponent(CoreComponent &c, Command &root);
 
 
     //

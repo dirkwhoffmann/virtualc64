@@ -844,6 +844,12 @@ Console::initCommands(Command &root)
 const char *
 Console::registerComponent(CoreComponent &c)
 {
+    return registerComponent(c, root);
+}
+
+const char *
+Console::registerComponent(CoreComponent &c, Command &root)
+{
     // Get the shell name for this component
     auto cmd = c.shellName();
     assert(cmd != nullptr);

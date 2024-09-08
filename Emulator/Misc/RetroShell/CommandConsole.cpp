@@ -687,23 +687,23 @@ CommandConsole::initCommands(Command &root)
         dump(remoteManager, Category::State);
     });
 
-    cmd = registerComponent(remoteManager.rshServer);
+    cmd = registerComponent(remoteManager.rshServer, *root.seek("server"));
 
-    root.add({cmd, "start"},
+    root.add({"server", cmd, "start"},
              "Starts the retro shell server",
              [this](Arguments& argv, long value) {
 
         remoteManager.rshServer.start();
     });
 
-    root.add({cmd, "stop"},
+    root.add({"server", cmd, "stop"},
              "Stops the retro shell server",
              [this](Arguments& argv, long value) {
 
         remoteManager.rshServer.stop();
     });
 
-    root.add({cmd, "disconnect"},
+    root.add({"server", cmd, "disconnect"},
              "Disconnects a client",
              [this](Arguments& argv, long value) {
 
