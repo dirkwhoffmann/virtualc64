@@ -62,8 +62,8 @@ template <typename T> struct AudioVolume : Serializable {
     } SERIALIZERS(serialize);
 
     // Checks whether the volume is currently modulated
-    bool isFadingIn() const { return delta > 0 &&  current != maximum; }
-    bool isFadingOut() const { return delta < 0 && current != 0; }
+    bool isFadingIn() const { return delta > 0; } //  &&  current != maximum; }
+    bool isFadingOut() const { return delta < 0; } //  && current != 0; }
     bool isFading() const { return isFadingIn() || isFadingOut(); }
 
     // Sets the volume to a fixed value
@@ -75,7 +75,7 @@ template <typename T> struct AudioVolume : Serializable {
         if (steps == 0) {
             current = delta = 0;
         } else {
-            delta = -maximum / steps;
+            if (!isFadingOut()) delta = -maximum / steps;
         }
     }
 
@@ -85,7 +85,7 @@ template <typename T> struct AudioVolume : Serializable {
         if (steps == 0) {
             current = maximum; delta = 0;
         } else {
-            delta = maximum / steps;
+            if (!isFadingIn()) delta = maximum / steps;
         }
     }
 
@@ -96,11 +96,13 @@ template <typename T> struct AudioVolume : Serializable {
 
             if ((current += delta) > 0) return;
             current = 0;
+            delta = 0;
         }
         if (delta > 0 && current != maximum) {
             
             if ((current += delta) < maximum) return;
             current = maximum;
+            delta = 0;
         }
     }
 };

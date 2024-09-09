@@ -189,11 +189,6 @@ public:
     void put(const Cmd &cmd);
     void put(CmdType type, i64 payload) { put (Cmd(type, payload)); }
 
-private:
-
-    // Processes a command from the command queue
-    // void process(const Cmd &cmd);
-
 
     //
     // Debugging

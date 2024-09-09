@@ -93,7 +93,7 @@ AudioPort::_powerOn()
 void
 AudioPort::_run()
 {
-    unmute(10000);
+    if (!emulator.isWarping()) unmute(10000);
 }
 
 void
@@ -113,13 +113,13 @@ AudioPort::_warpOn()
 void
 AudioPort::_warpOff()
 {
-    unmute(10000);
+    if (emulator.isRunning()) unmute(10000);
 }
 
 void
 AudioPort::_focus()
 {
-    unmute(100000);
+    if (emulator.isRunning() && !emulator.isWarping()) unmute(100000);
 }
 
 void
