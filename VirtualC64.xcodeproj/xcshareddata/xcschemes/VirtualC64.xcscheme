@@ -110,7 +110,7 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "-&quot;expansion attach reu 512&quot;"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-&quot;c64 set RUN_AHEAD 2&quot; "
