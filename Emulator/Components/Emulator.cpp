@@ -236,9 +236,6 @@ Emulator::missingFrames() const
     // Compute the elapsed time
     auto elapsed = util::Time::now() - baseTime;
 
-    // Compute which clock cycle should be reached by now
-    // auto targetCycle = main.clockFrequency() * elapsed.asMilliseconds() / 1000;
-
     // Compute which frame should be reached by now
     auto target = elapsed.asNanoseconds() * i64(main.refreshRate()) / 1000000000;
 

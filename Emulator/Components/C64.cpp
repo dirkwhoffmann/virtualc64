@@ -356,14 +356,16 @@ C64::refreshRate() const
 
     } else {
 
-        return nativeRefreshRate() * config.speedBoost / 100.0;
+        auto boost = config.speedBoost ? config.speedBoost : 100;
+        return nativeRefreshRate() * boost / 100.0;
     }
 }
 
 i64
 C64::clockFrequency() const
 {
-    return nativeClockFrequency() * config.speedBoost / 100;
+    auto boost = config.speedBoost ? config.speedBoost : 100;
+    return nativeClockFrequency() * boost / 100;
 }
 
 void
