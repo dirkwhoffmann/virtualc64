@@ -204,8 +204,8 @@ VICII::delayedLightPenIrqs(VICIIRevision rev)
 double
 VICII::getFps(VICIIRevision rev)
 {
-    double result = (double)getFrequency(rev) / (double)getCyclesPerFrame(rev);
-    assert(result == traits[rev].fps);
+    double result = traits[rev].fps;
+    assert(result == (double)getFrequency(rev) / (double)getCyclesPerFrame(rev));
     return result;
 }
 

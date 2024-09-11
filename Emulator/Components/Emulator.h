@@ -143,7 +143,7 @@ private:
 
 public:
 
-    double refreshRate() const override;
+    //  double refreshRate() const override;
 
 
     //

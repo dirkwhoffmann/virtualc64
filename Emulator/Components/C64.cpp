@@ -335,20 +335,47 @@ C64::operator << (SerResetter &worker)
     rasterCycle = 1;
 }
 
+double
+C64::nativeRefreshRate() const
+{
+    return vic.getFps();
+}
+
+i64
+C64::nativeClockFrequency() const
+{
+    return vic.getFrequency();
+}
+
+double
+C64::refreshRate() const
+{
+    if (config.vsync) {
+
+        return double(host.getOption(OPT_HOST_REFRESH_RATE));
+
+    } else {
+
+        return nativeRefreshRate() * config.speedBoost / 100.0;
+    }
+}
+
+i64
+C64::clockFrequency() const
+{
+    return nativeClockFrequency() * config.speedBoost / 100;
+}
+
 void
 C64::updateClockFrequency()
 {
-    auto nativeFps = vic.getFps();
-    auto chosenFps = emulator.refreshRate();
+    auto frequency = clockFrequency();
 
-    auto nativeFrequency = vic.getFrequency();
-    auto chosenFrequency = nativeFrequency * chosenFps / nativeFps;
-
-    sidBridge.sid[0].setClockFrequency((u32)chosenFrequency);
-    sidBridge.sid[1].setClockFrequency((u32)chosenFrequency);
-    sidBridge.sid[2].setClockFrequency((u32)chosenFrequency);
-    sidBridge.sid[3].setClockFrequency((u32)chosenFrequency);
-    durationOfOneCycle = 10000000000 / vic.getFrequency();
+    sidBridge.sid[0].setClockFrequency((u32)frequency);
+    sidBridge.sid[1].setClockFrequency((u32)frequency);
+    sidBridge.sid[2].setClockFrequency((u32)frequency);
+    sidBridge.sid[3].setClockFrequency((u32)frequency);
+    durationOfOneCycle = 10000000000 / frequency;
 }
 
 void

@@ -113,7 +113,7 @@ private:
     virtual isize missingFrames() const = 0;
 
     // Target frame rate of this thread (provided by the subclass)
-    virtual double refreshRate() const = 0;
+    // virtual double refreshRate() const = 0;
 
     // The code to be executed in each iteration (implemented by the subclass)
     virtual void computeFrame() = 0;
