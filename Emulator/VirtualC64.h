@@ -341,7 +341,7 @@ struct KeyboardAPI : API {
      *  pass between two key presses. You need to give the C64 time to scan the
      *  keyboard matrix before another key can be pressed.
      */
-    void press(C64Key key, double delay = 0.0);
+    void press(C64Key key, double delay = 0.0, double duration = 0.0);
 
     /** @brief  Toggles a key
      *  @param  key     The key to press or release.
@@ -351,7 +351,7 @@ struct KeyboardAPI : API {
      *  C64's keyboard matrix. Otherwise, it will ask the event scheduler
      *  to modify the matrix with the specified delay.
      */
-    void toggle(C64Key key, double delay = 0.0);
+    void toggle(C64Key key, double delay = 0.0, double duration = 0.0);
 
     /** @brief  Releases a key
      *  @param  key     The key to release.

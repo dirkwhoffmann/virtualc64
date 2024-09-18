@@ -48,7 +48,7 @@ struct SnapshotHeader {
     u8 subminor;
     u8 beta;
 
-    // Indicates if the snapshot contents is stored as compressed data
+    // Indicates if the snapshot contents is stored in compressed form
     bool compressed;
 
     // Preview image

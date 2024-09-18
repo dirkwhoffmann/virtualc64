@@ -827,27 +827,40 @@ KeyboardAPI::isPressed(C64Key key) const
 }
 
 void
-KeyboardAPI::press(C64Key key, double delay)
+KeyboardAPI::press(C64Key key, double delay, double duration)
 {
-    if (delay > 0.0) {
+    if (delay == 0.0) {
 
+        keyboard->press(key);
+        emu->markAsDirty();
+
+    } else {
+        
         emu->put(Cmd(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
-        return;
     }
-    keyboard->press(key);
-    emu->markAsDirty();
+    if (duration != 0.0) {
+        
+        emu->put(Cmd(CMD_KEY_RELEASE, KeyCmd { .keycode = (u8)key.nr, .delay = delay + duration }));
+    }
 }
 
 void 
-KeyboardAPI::toggle(C64Key key, double delay)
+KeyboardAPI::toggle(C64Key key, double delay, double duration)
 {
-    if (delay > 0.0) {
+    if (delay == 0.0) {
+        
+        keyboard->toggle(key);
+        emu->markAsDirty();
+        
+    } else {
 
         emu->put(Cmd(CMD_KEY_TOGGLE, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
-        return;
     }
-    keyboard->toggle(key);
-    emu->markAsDirty();
+    if (duration != 0.0) {
+        
+        emu->put(Cmd(CMD_KEY_TOGGLE, KeyCmd { .keycode = (u8)key.nr, .delay = delay + duration }));
+    }
+
 }
 
 void
