@@ -18,14 +18,7 @@
 namespace vc64 {
 
 C64::C64(class Emulator& ref, isize id) : CoreComponent(ref, id)
-{
-    // REMOVE ASAP
-    /*
-    auto b = Buffer<u8>("/tmp/Combat.bin");
-    auto hash = b.md5();
-    printf("MD5 = %s\n", hash.c_str());
-    */
-    
+{    
     trace(RUN_DEBUG, "Creating virtual C64\n");
 
     subComponents = std::vector<CoreComponent *> {
