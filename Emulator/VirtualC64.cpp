@@ -50,51 +50,6 @@ VirtualC64::build()
 
 VirtualC64::VirtualC64() {
 
-    // REMOVE ASAP
-    /*
-    u8 payload[8][16] = {
-        { 1,2,2,3,3,3,4,4,4,4,5,5,5,5,5,4},
-        { 1,1,2,3,3,3,4,4,4,4,4,4,4,4,4,4},
-        { 1,1,1,3,3,3,4,4,4,4,5,5,5,5,4,4},
-        { 1,1,1,1,3,3,4,4,4,4,5,5,5,4,4,4},
-        { 0,2,2,3,3,3,4,4,4,4,5,5,5,5,5,4},
-        { 0,0,2,3,3,3,4,4,4,4,4,4,4,4,4,4},
-        { 0,0,0,3,3,3,4,4,4,4,5,5,5,5,4,4},
-        { 0,0,0,0,3,3,4,4,4,4,5,5,5,4,4,4},
-    };
-
-    Buffer<u8> b;
-
-    for (isize test = 0; test < 8; test++) {
-
-        b.alloc(16);
-
-        for (isize i = 0; i < 16; i++) b[i] = payload[test][i];
-
-        auto checksum = b.fnv32();
-
-        printf("%ld: { ", test);
-        for (isize i = 0; i < b.size; i++) {
-            printf("%d ", b.ptr[i]);
-        }
-        printf(" }\n");
-
-        b.compress(3);
-        printf("   { ");
-        for (isize i = 0; i < b.size; i++) {
-            printf("%d ", b.ptr[i]);
-        }
-        printf(" }\n");
-
-        b.uncompress(3);
-        printf("   { ");
-        for (isize i = 0; i < b.size; i++) {
-            printf("%d ", b.ptr[i]);
-        }
-        printf(" } %s\n\n", checksum == b.fnv32() ? "OK" : "*** ERRROR ***");
-    }
-    */
-    
     emu = new Emulator();
 
     c64.emu = emu;

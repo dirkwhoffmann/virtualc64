@@ -25,8 +25,8 @@ namespace vc64 {
 enum_long(OPT)
 {
     // Host
-    OPT_HOST_REFRESH_RATE,      ///< Refresh rate of the host display
-    OPT_HOST_SAMPLE_RATE,       ///< Refresh rate of the host display
+    OPT_HOST_REFRESH_RATE,      ///< Video refresh rate of the host display
+    OPT_HOST_SAMPLE_RATE,       ///< Audio sample rate of the host display
     OPT_HOST_FRAMEBUF_WIDTH,    ///< Current width of the emulator window
     OPT_HOST_FRAMEBUF_HEIGHT,   ///< Current height of the emulator window
 
