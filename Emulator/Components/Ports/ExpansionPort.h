@@ -113,8 +113,10 @@ private:
 
     void _dump(Category category, std::ostream& os) const override;
     void _didReset(bool hard) override;
+    void _didLoad() override;
+    void _didSave() override;
 
-
+    
     //
     // Methods from Configurable
     //

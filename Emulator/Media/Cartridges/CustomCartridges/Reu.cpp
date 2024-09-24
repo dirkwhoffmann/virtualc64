@@ -43,6 +43,12 @@ Reu::_didReset(bool hard)
 }
 
 void
+Reu::_didLoad()
+{
+    traits.memory = KB(kb);
+}
+
+void
 Reu::_dump(Category category, std::ostream& os) const
 {
     using namespace util;

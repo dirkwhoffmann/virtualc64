@@ -166,4 +166,16 @@ ExpansionPort::_didReset(bool hard)
     if (cartridge) cartridge->_didReset(hard);
 }
 
+void
+ExpansionPort::_didLoad()
+{
+    if (cartridge) cartridge->_didLoad();
+}
+
+void
+ExpansionPort::_didSave()
+{
+    if (cartridge) cartridge->_didSave();
+}
+
 }
