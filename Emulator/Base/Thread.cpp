@@ -89,7 +89,7 @@ Thread::sleep()
     if (warp && isRunning()) return;
 
     // Set a timeout to prevent the thread from stalling
-    auto timeout = util::Time(i64(2000000000.0 / refreshRate()));
+    auto timeout = util::Time::milliseconds(50);
 
     // Wait for the next pulse
     waitForWakeUp(timeout);

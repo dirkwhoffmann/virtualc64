@@ -236,26 +236,11 @@ Emulator::missingFrames() const
     // Compute the elapsed time
     auto elapsed = util::Time::now() - baseTime;
 
-    // Compute which slice should be reached by now
-    auto target = elapsed.asNanoseconds() * i64(refreshRate()) / 1000000000;
+    // Compute which frame should be reached by now
+    auto target = elapsed.asNanoseconds() * i64(main.refreshRate()) / 1000000000;
 
-    // Compute the number of missing slices
+    // Compute the number of missing frames
     return isize(target - frameCounter);
-}
-
-double
-Emulator::refreshRate() const
-{
-    auto &config = main.getConfig();
-
-    if (config.vsync) {
-
-        return double(main.host.getOption(OPT_HOST_REFRESH_RATE));
-
-    } else {
-
-        return main.vic.getFps() * config.speedBoost / 100.0;
-    }
 }
 
 void

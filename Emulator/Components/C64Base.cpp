@@ -18,7 +18,7 @@
 namespace vc64 {
 
 C64::C64(class Emulator& ref, isize id) : CoreComponent(ref, id)
-{
+{    
     trace(RUN_DEBUG, "Creating virtual C64\n");
 
     subComponents = std::vector<CoreComponent *> {

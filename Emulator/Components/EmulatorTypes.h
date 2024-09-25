@@ -307,7 +307,6 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
 typedef struct
 {
     ExecState state;        ///< The current emulator state
-    isize refreshRate;      ///< Screen refresh rate of the virtual C64
     bool powered;           ///< Indicates if the emulator is powered on
     bool paused;            ///< Indicates if emulation is paused
     bool running;           ///< Indicates if the emulator is running
