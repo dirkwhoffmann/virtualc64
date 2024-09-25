@@ -84,9 +84,9 @@ static const bool betaRelease = 1;
 #endif
 
 #ifdef __EMSCRIPTEN__
-static const bool emscripten = 1;
+static const bool emscript = 1;
 #else
-static const bool emscripten = 0;
+static const bool emscript = 0;
 #endif
 
 

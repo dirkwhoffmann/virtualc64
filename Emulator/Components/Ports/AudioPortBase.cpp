@@ -194,7 +194,7 @@ AudioPort::setOption(Option opt, i64 value)
 
             config.vol[channel] = std::clamp(value, 0LL, 100LL);
             vol[channel] = powf(config.vol[channel] / 100.0f, 1.4f) * 0.000025f;
-            if (emscripten) vol[channel] *= 0.15f;
+            if (emscript) vol[channel] *= 0.15f;
             return;
 
         case OPT_AUD_PAN3: channel++;
