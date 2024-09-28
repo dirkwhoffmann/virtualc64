@@ -381,7 +381,7 @@ Console::split(const string& userInput)
         if (c == '\\') { esc = true; continue; }
 
         // Switch between string mode and non-string mode if '"' is detected
-        if (c == '"' && !esc) { str = !str; continue; }
+        if (c == '"' && !esc) { str = !str; }
 
         // Check for special characters in escape mode
         if (esc && c == 'n') c = '\n';
@@ -390,7 +390,7 @@ Console::split(const string& userInput)
         if (c != ' ' || str) {
             token += c;
         } else {
-            if (!token.empty()) result.push_back(token);
+            if (!token.empty()) result.push_back(util::trim(token, "\""));
             token = "";
         }
         esc = false;

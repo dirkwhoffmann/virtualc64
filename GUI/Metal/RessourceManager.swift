@@ -176,7 +176,7 @@ class RessourceManager {
     
     internal func buildKernels() {
         
-        let uc = (TextureSize.upscaled.width, TextureSize.upscaled.width)
+        let uc = (TextureSize.upscaled.width, TextureSize.upscaled.height)
 
         // Create shader library
         library = device.makeDefaultLibrary()

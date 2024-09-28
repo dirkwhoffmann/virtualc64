@@ -127,7 +127,7 @@ CommandConsole::initCommands(Command &root)
              "Assign the save directory",
              [this](Arguments& argv, long value) {
 
-        regressionTester.screenshotPath = argv.front();
+        regressionTester.screenshotPath = argv.front() == "\"\"" ? "" : argv.front();
     });
 
     root.add({"screenshot", "set", "cutout"}, { Arg::value, Arg::value, Arg::value, Arg::value },

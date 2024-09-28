@@ -310,7 +310,7 @@ DebugConsole::initCommands(Command &root)
     root.add({"r", "vicii"},        "VICII",
              [this](Arguments& argv, long value) {
 
-        dump(cia2, Category::Registers);
+        dump(vic, Category::Registers);
     });
 
     root.add({"r", "sid"},          "Primary SID",

@@ -109,20 +109,24 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-&quot;expansion attach reu 512&quot;"
-            isEnabled = "NO">
+            argument = "-&quot;screenshot set path \&quot;\&quot;&quot;"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-&quot;c64 set RUN_AHEAD 2&quot; "
-            isEnabled = "NO">
+            argument = "-&quot;regression set DEBUGCART true&quot; "
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-&quot;c64&quot;"
-            isEnabled = "NO">
+            argument = "-&quot;regression  set WATCHDOG 10000000&quot;"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-&quot;i c64&quot;"
-            isEnabled = "NO">
+            argument = "-&quot;regression setup PAL&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-&quot;regression run /tmp/c64-pass.prg&quot;"
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>
