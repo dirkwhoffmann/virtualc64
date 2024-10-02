@@ -94,7 +94,7 @@ template u16 Peddle::addrMask<MOS_8502>() const;
 void
 Peddle::pullDownNmiLine(u8 mask)
 {
-    assert(bit != 0);
+    assert(mask != 0);
 
     // Check for falling edge on physical line
     if (!nmiLine) {
@@ -139,7 +139,7 @@ Peddle::pullDownRdyLine(u8 mask)
 void
 Peddle::releaseRdyLine(u8 mask)
 {
-    assert(source != 0);
+    assert(mask != 0);
     
     auto old = rdyLine;
     rdyLine &= ~mask;
