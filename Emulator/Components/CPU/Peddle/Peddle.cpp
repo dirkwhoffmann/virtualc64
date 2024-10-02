@@ -92,7 +92,7 @@ template u16 Peddle::addrMask<MOS_6510>() const;
 template u16 Peddle::addrMask<MOS_8502>() const;
 
 void
-Peddle::pullDownNmiLine(IntSource bit)
+Peddle::pullDownNmiLine(u8 mask)
 {
     assert(bit != 0);
 
@@ -101,48 +101,48 @@ Peddle::pullDownNmiLine(IntSource bit)
         edgeDetector.write(1);
     }
 
-    nmiLine |= bit;
+    nmiLine |= mask;
 }
 
 void
-Peddle::releaseNmiLine(IntSource source)
+Peddle::releaseNmiLine(u8 mask)
 {
-    nmiLine &= ~source;
+    nmiLine &= ~mask;
 }
 
 void
-Peddle::pullDownIrqLine(IntSource source)
+Peddle::pullDownIrqLine(u8 mask)
 {
-    assert(source != 0);
+    assert(mask != 0);
 
-    irqLine |= source;
+    irqLine |= mask;
     levelDetector.write(irqLine);
 }
 
 void
-Peddle::releaseIrqLine(IntSource source)
+Peddle::releaseIrqLine(u8 mask)
 {
-    irqLine &= ~source;
+    irqLine &= ~mask;
     levelDetector.write(irqLine);
 }
 
 void
-Peddle::pullDownRdyLine(IntSource source)
+Peddle::pullDownRdyLine(u8 mask)
 {
-    assert(source != 0);
+    assert(mask != 0);
 
     auto old = rdyLine;
-    rdyLine |= source;
+    rdyLine |= mask;
     if (!old && rdyLine) rdyLineDown = clock;
 }
 
 void
-Peddle::releaseRdyLine(IntSource source)
+Peddle::releaseRdyLine(u8 mask)
 {
     assert(source != 0);
     
     auto old = rdyLine;
-    rdyLine &= ~source;
+    rdyLine &= ~mask;
     if (old && !rdyLine) rdyLineUp = clock;
 }
 

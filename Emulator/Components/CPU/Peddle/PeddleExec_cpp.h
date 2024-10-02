@@ -305,26 +305,29 @@ Peddle::execute()
             
         case fetch:
 
-            // Check interrupt lines
-            if (unlikely(doNmi)) {
+            if constexpr (C != MOS_6507) {
 
-                nmiWillTrigger();
-                IDLE_FETCH
-                edgeDetector.clear();
-                next = nmi_2;
-                doNmi = false;
-                doIrq = false; // NMI wins
-                return;
-                
-            } else if (unlikely(doIrq)) {
+                // Check interrupt lines
+                if (unlikely(doNmi)) {
 
-                irqWillTrigger();
-                IDLE_FETCH
-                next = irq_2;
-                doIrq = false;
-                return;
+                    nmiWillTrigger();
+                    IDLE_FETCH
+                    edgeDetector.clear();
+                    next = nmi_2;
+                    doNmi = false;
+                    doIrq = false; // NMI wins
+                    return;
+
+                } else if (unlikely(doIrq)) {
+
+                    irqWillTrigger();
+                    IDLE_FETCH
+                    next = irq_2;
+                    doIrq = false;
+                    return;
+                }
             }
-            
+
             // Execute the Fetch phase
             FETCH_OPCODE
             next = actionFunc[instr];

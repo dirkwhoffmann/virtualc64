@@ -159,8 +159,8 @@ Expert::pressButton(isize nr)
             u8 oldLine = cpu.getNmiLine();
             u8 newLine = oldLine | INTSRC_EXP;
 
-            cpu.releaseNmiLine((IntSource)0xFF);
-            cpu.pullDownNmiLine((IntSource)newLine);
+            cpu.releaseNmiLine(0xFF);
+            cpu.pullDownNmiLine(newLine);
             cpu.releaseNmiLine(INTSRC_EXP);
             break;
     }

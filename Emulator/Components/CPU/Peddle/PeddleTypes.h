@@ -27,13 +27,6 @@ static constexpr isize V_FLAG = 0x40;
 static constexpr isize N_FLAG = 0x80;
 
 
-//
-// Bit fields
-//
-
-// Interrupt source
-typedef u8 IntSource;
-
 /* State flags
  *
  * CPU_LOG_INSTRUCTION:
