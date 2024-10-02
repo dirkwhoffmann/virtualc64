@@ -159,8 +159,8 @@ class ComputeKernel: NSObject {
         let groupH = kernel.maxTotalThreadsPerThreadgroup / groupW
         let threadsPerGroup = MTLSizeMake(groupW, groupH, 1)
         
-        let countW = (cutout.0) / groupW
-        let countH = (cutout.1) / groupH
+        let countW = (cutout.0 + groupW - 1) / groupW
+        let countH = (cutout.1 + groupH - 1) / groupH
         let threadgroupCount = MTLSizeMake(countW, countH, 1)
 
         // Finally, we're ready to dispatch

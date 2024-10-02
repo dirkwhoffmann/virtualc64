@@ -110,7 +110,7 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "-&quot;screenshot set path \&quot;\&quot;&quot;"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-&quot;regression set DEBUGCART true&quot; "
@@ -118,15 +118,15 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-&quot;regression  set WATCHDOG 10000000&quot;"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-&quot;regression setup PAL&quot;"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-&quot;regression run /tmp/c64-pass.prg&quot;"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>
