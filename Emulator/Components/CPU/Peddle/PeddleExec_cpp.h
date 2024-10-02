@@ -10,34 +10,49 @@
 #define loadX(v) { u8 u = (v); reg.x = u; reg.sr.n = u & 0x80; reg.sr.z = u == 0; }
 #define loadY(v) { u8 u = (v); reg.y = u; reg.sr.n = u & 0x80; reg.sr.z = u == 0; }
 
+//
 // Atomic CPU tasks
+//
+
+// Read
+
+#define LATCH_INSTR(x) instr = (x)
+#define LATCH_ADL(x) reg.adl = (x)
+#define LATCH_ADH(x) reg.adh = (x)
+#define LATCH_IDL(x) reg.idl = (x)
+#define LATCH_D(x) reg.d = (x)
+#define LATCH_PCL(x) reg.pc = (u16)((reg.pc & 0xff00) | (x))
+#define LATCH_PCH(x) reg.pc = (u16)((reg.pc & 0x00ff) | (x) << 8)
+#define LATCH_P(x) setPWithoutB(x)
+#define LATCH_A(x) loadA(x)
+
 #define FETCH_OPCODE \
-if (likely(!rdyLine)) instr = read<C>(reg.pc++); else return;
+if (likely(!rdyLine)) LATCH_INSTR(read<C>(reg.pc++)); else return;
 #define FETCH_ADDR_LO \
-if (likely(!rdyLine)) reg.adl = read<C>(reg.pc++); else return;
+if (likely(!rdyLine)) LATCH_ADL(reg.adl = read<C>(reg.pc++)); else return;
 #define FETCH_ADDR_HI \
-if (likely(!rdyLine)) reg.adh = read<C>(reg.pc++); else return;
+if (likely(!rdyLine)) LATCH_ADH(reg.adh = read<C>(reg.pc++)); else return;
 #define FETCH_POINTER_ADDR \
-if (likely(!rdyLine)) reg.idl = read<C>(reg.pc++); else return;
+if (likely(!rdyLine)) LATCH_IDL(read<C>(reg.pc++)); else return;
 #define FETCH_ADDR_LO_INDIRECT \
-if (likely(!rdyLine)) reg.adl = read<C>((u16)reg.idl++); else return;
+if (likely(!rdyLine)) LATCH_ADL(read<C>((u16)reg.idl++)); else return;
 #define FETCH_ADDR_HI_INDIRECT \
-if (likely(!rdyLine)) reg.adh = read<C>((u16)reg.idl++); else return;
+if (likely(!rdyLine)) LATCH_ADH(read<C>((u16)reg.idl++)); else return;
 #define IDLE_FETCH \
 if (likely(!rdyLine)) readIdle<C>(reg.pc); else return;
 
 #define READ_RELATIVE \
-if (likely(!rdyLine)) reg.d = read<C>(reg.pc); else return;
+if (likely(!rdyLine)) LATCH_D(read<C>(reg.pc)); else return;
 #define READ_IMMEDIATE \
-if (likely(!rdyLine)) reg.d = read<C>(reg.pc++); else return;
+if (likely(!rdyLine)) LATCH_D(read<C>(reg.pc++)); else return;
 #define READ_FROM(x) \
-if (likely(!rdyLine)) reg.d = read<C>(x); else return;
+if (likely(!rdyLine)) LATCH_D(read<C>(x)); else return;
 #define READ_FROM_ADDRESS \
-if (likely(!rdyLine)) reg.d = read<C>(HI_LO(reg.adh, reg.adl)); else return;
+if (likely(!rdyLine)) LATCH_D(read<C>(HI_LO(reg.adh, reg.adl))); else return;
 #define READ_FROM_ZERO_PAGE \
-if (likely(!rdyLine)) reg.d = readZeroPage<C>(reg.adl); else return;
+if (likely(!rdyLine)) LATCH_D(readZeroPage<C>(reg.adl)); else return;
 #define READ_FROM_ADDRESS_INDIRECT \
-if (likely(!rdyLine)) reg.d = readZeroPage<C>(reg.dl); else return;
+if (likely(!rdyLine)) LATCH_D(readZeroPage<C>(reg.dl)); else return;
 
 #define IDLE_READ_IMPLIED \
 if (likely(!rdyLine)) readIdle<C>(reg.pc); else return;
@@ -52,6 +67,19 @@ if (likely(!rdyLine)) readZeroPageIdle<C>(reg.adl); else return;
 #define IDLE_READ_FROM_ADDRESS_INDIRECT \
 if (likely(!rdyLine)) readZeroPageIdle<C>(reg.idl); else return;
 
+#define PULL_PCL if \
+(likely(!rdyLine)) { LATCH_PCL(readStack<C>(reg.sp)); } else return;
+#define PULL_PCH \
+if (likely(!rdyLine)) { LATCH_PCH(readStack<C>(reg.sp)); } else return;
+#define PULL_P \
+if (likely(!rdyLine)) { LATCH_P(readStack<C>(reg.sp)); } else return;
+#define PULL_A \
+if (likely(!rdyLine)) { LATCH_A(readStack<C>(reg.sp)); } else return;
+#define IDLE_PULL \
+if (likely(!rdyLine)) { readStackIdle<C>(reg.sp); } else return;
+
+// Write
+
 #define WRITE_TO_ADDRESS \
 write<C>(HI_LO(reg.adh, reg.adl), reg.d);
 #define WRITE_TO_ADDRESS_AND_SET_FLAGS \
@@ -61,32 +89,33 @@ writeZeroPage<C>(reg.adl, reg.d);
 #define WRITE_TO_ZERO_PAGE_AND_SET_FLAGS \
 writeZeroPage<C>(reg.adl, reg.d); setN(reg.d & 0x80); setZ(reg.d == 0);
 
-#define ADD_INDEX_X reg.ovl = ((int)reg.adl + (int)reg.x > 0xFF); reg.adl += reg.x;
-#define ADD_INDEX_Y reg.ovl = ((int)reg.adl + (int)reg.y > 0xFF); reg.adl += reg.y;
-#define ADD_INDEX_X_INDIRECT reg.idl += reg.x;
-#define ADD_INDEX_Y_INDIRECT reg.idl += reg.y;
-
-#define SET_PCL(lo) reg.pc = (u16)((reg.pc & 0xff00) | (lo));
-#define SET_PCH(hi) reg.pc = (u16)((reg.pc & 0x00ff) | (hi) << 8);
 #define PUSH_PCL writeStack<C>(reg.sp--, LO_BYTE(reg.pc));
 #define PUSH_PCH writeStack<C>(reg.sp--, HI_BYTE(reg.pc));
 #define PUSH_P writeStack<C>(reg.sp--, getP());
 #define PUSH_P_WITH_B_SET writeStack<C>(reg.sp--, getP() | B_FLAG);
 #define PUSH_A writeStack<C>(reg.sp--, reg.a);
-#define PULL_PCL if (likely(!rdyLine)) { SET_PCL(readStack<C>(reg.sp)); } else return;
-#define PULL_PCH if (likely(!rdyLine)) { SET_PCH(readStack<C>(reg.sp)); } else return;
-#define PULL_P if (likely(!rdyLine)) { setPWithoutB(readStack<C>(reg.sp)); } else return;
-#define PULL_A if (likely(!rdyLine)) { loadA(readStack<C>(reg.sp)); } else return;
-#define IDLE_PULL if (likely(!rdyLine)) { readStackIdle<C>(reg.sp); } else return;
 
-#define PAGE_BOUNDARY_CROSSED reg.ovl
-#define FIX_ADDR_HI reg.adh++;
+#define SET_PCL(lo) reg.pc = (u16)((reg.pc & 0xff00) | (lo));
+#define SET_PCH(hi) reg.pc = (u16)((reg.pc & 0x00ff) | (hi) << 8);
+
+// Interrupts
 
 #define POLL_IRQ doIrq = (levelDetector.delayed() && !getI());
 #define POLL_NMI doNmi = edgeDetector.delayed();
 #define POLL_INT POLL_IRQ POLL_NMI
 #define POLL_INT_AGAIN doIrq |= (levelDetector.delayed() != 0 && !getI()); \
 doNmi |= (edgeDetector.delayed() != 0);
+
+// Misc
+
+#define ADD_INDEX_X reg.ovl = ((int)reg.adl + (int)reg.x > 0xFF); reg.adl += reg.x;
+#define ADD_INDEX_Y reg.ovl = ((int)reg.adl + (int)reg.y > 0xFF); reg.adl += reg.y;
+#define ADD_INDEX_X_INDIRECT reg.idl += reg.x;
+#define ADD_INDEX_Y_INDIRECT reg.idl += reg.y;
+
+#define PAGE_BOUNDARY_CROSSED reg.ovl
+#define FIX_ADDR_HI reg.adh++;
+
 #define CONTINUE next = (MicroInstruction)((int)next+1); return;
 #define DONE     done<C>(); return;
 
