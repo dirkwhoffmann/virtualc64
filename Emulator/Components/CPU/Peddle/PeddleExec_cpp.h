@@ -16,7 +16,18 @@
 
 // Read
 
-#define LATCH_INSTR(x) instr = (x)
+void Peddle::latchIR(u8 value) { reg.ir = value; }
+void Peddle::latchADL(u8 value) { reg.adl = value; }
+void Peddle::latchADH(u8 value) { reg.adh = value; }
+void Peddle::latchIDL(u8 value) { reg.idl = value; }
+void Peddle::latchD(u8 value) { reg.d = value; }
+void Peddle::latchPCL(u8 value) { reg.pc = (u16)((reg.pc & 0xff00) | (value)); }
+void Peddle::latchPCH(u8 value) { reg.pc = (u16)((reg.pc & 0x00ff) | (value) << 8); }
+void Peddle::latchP(u8 value) { setPWithoutB(value); }
+void Peddle::latchA(u8 value) { loadA(value); }
+
+/*
+#define LATCH_INSTR(x) reg.ir = (x)
 #define LATCH_ADL(x) reg.adl = (x)
 #define LATCH_ADH(x) reg.adh = (x)
 #define LATCH_IDL(x) reg.idl = (x)
@@ -25,8 +36,18 @@
 #define LATCH_PCH(x) reg.pc = (u16)((reg.pc & 0x00ff) | (x) << 8)
 #define LATCH_P(x) setPWithoutB(x)
 #define LATCH_A(x) loadA(x)
+*/
+#define LATCH_INSTR(x) latchIR(x)
+#define LATCH_ADL(x) latchADL(x)
+#define LATCH_ADH(x) latchADH(x)
+#define LATCH_IDL(x) latchIDL(x)
+#define LATCH_D(x) latchD(x)
+#define LATCH_PCL(x) latchPCL(x)
+#define LATCH_PCH(x) latchPCH(x)
+#define LATCH_P(x) latchP(x)
+#define LATCH_A(x) latchA(x)
 
-#define FETCH_OPCODE \
+#define FETCH_IR \
 if (likely(!rdyLine)) LATCH_INSTR(read<C>(reg.pc++)); else return;
 #define FETCH_ADDR_LO \
 if (likely(!rdyLine)) LATCH_ADL(reg.adl = read<C>(reg.pc++)); else return;
@@ -328,8 +349,6 @@ Peddle::execute()
 template <CPURevision C> void
 Peddle::execute()
 {
-    u8 instr;
-    
     switch (next) {
             
         case fetch:
@@ -358,8 +377,8 @@ Peddle::execute()
             }
 
             // Execute the Fetch phase
-            FETCH_OPCODE
-            next = actionFunc[instr];
+            FETCH_IR
+            next = actionFunc[reg.ir];
             return;
             
             //

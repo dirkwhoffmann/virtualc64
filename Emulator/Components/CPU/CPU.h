@@ -122,6 +122,7 @@ public:
 
         << reg.pc
         << reg.pc0
+        << reg.ir
         << reg.sp
         << reg.a
         << reg.x

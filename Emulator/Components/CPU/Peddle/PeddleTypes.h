@@ -402,6 +402,7 @@ typedef struct
     u16 pc;   // Program counter
     u16 pc0;  // Frozen program counter (beginning of current instruction)
 
+    u8 ir;    // Instruction register
     u8 sp;    // Stack pointer
 
     u8 a;     // Accumulator

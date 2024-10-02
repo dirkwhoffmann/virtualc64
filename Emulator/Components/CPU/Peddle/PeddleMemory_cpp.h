@@ -144,3 +144,4 @@ Peddle::readPort() const
 {
     return (reg.pport.data & reg.pport.direction) | (externalPortBits() & ~reg.pport.direction);
 }
+
