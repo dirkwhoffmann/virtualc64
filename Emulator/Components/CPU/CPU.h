@@ -119,6 +119,7 @@ public:
 
         << flags
         << next
+        << pendingRead
 
         << reg.pc
         << reg.pc0

@@ -82,7 +82,10 @@ protected:
     // The next microinstruction to be executed
     MicroInstruction next;
 
+    // Pending read operation (used in PEDDLE_ASYNC_READS mode)
+    Async::ReadTarget pendingRead {};
 
+    
     //
     // Registers
     //
@@ -379,6 +382,9 @@ protected:
     virtual void write(u16 addr, u8 val) { };
     virtual u8 readDasm(u16 addr) const { return 0; }
     virtual u16 readResetVector();
+
+    // Feeds the result of an asynchronous read operation into the CPU
+    void concludeRead(u8 value);
 
 
     //

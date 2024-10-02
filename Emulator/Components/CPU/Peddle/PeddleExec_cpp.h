@@ -16,17 +16,38 @@
 
 // Read
 
-void Peddle::latchIR(u8 value) { reg.ir = value; }
-void Peddle::latchADL(u8 value) { reg.adl = value; }
-void Peddle::latchADH(u8 value) { reg.adh = value; }
-void Peddle::latchIDL(u8 value) { reg.idl = value; }
-void Peddle::latchD(u8 value) { reg.d = value; }
-void Peddle::latchPCL(u8 value) { reg.pc = (u16)((reg.pc & 0xff00) | (value)); }
-void Peddle::latchPCH(u8 value) { reg.pc = (u16)((reg.pc & 0x00ff) | (value) << 8); }
-void Peddle::latchP(u8 value) { setPWithoutB(value); }
-void Peddle::latchA(u8 value) { loadA(value); }
+#if PEDDLE_ASYNC_READS == true
 
-/*
+#define LATCH_INSTR(x) pendingRead = Async::IR; (void)x;
+#define LATCH_ADL(x) pendingRead = Async::ADL; (void)x;
+#define LATCH_ADH(x) pendingRead = Async::ADH; (void)x;
+#define LATCH_IDL(x) pendingRead = Async::IDL; (void)x;
+#define LATCH_D(x) pendingRead = Async::D; (void)x;
+#define LATCH_PCL(x) pendingRead = Async::PCL; (void)x;
+#define LATCH_PCH(x) pendingRead = Async::PCH; (void)x;
+#define LATCH_P(x) pendingRead = Async::P; (void)x;
+#define LATCH_A(x) pendingRead = Async::A; (void)x;
+
+void
+Peddle::concludeRead(u8 x)
+{
+    switch (pendingRead) {
+
+        case Async::IR:     reg.ir = x; break;
+        case Async::ADL:    reg.adl = x; break;
+        case Async::ADH:    reg.adh = x; break;
+        case Async::IDL:    reg.idl = x; break;
+        case Async::D:      reg.d = x; break;
+        case Async::PCL:    reg.pc = (u16)((reg.pc & 0xff00) | (x)); break;
+        case Async::PCH:    reg.pc = (u16)((reg.pc & 0x00ff) | (x) << 8); break;
+        case Async::P:      setPWithoutB(x); break;
+        case Async::A:      loadA(x); break;
+        default:            break;
+    }
+}
+
+#else
+
 #define LATCH_INSTR(x) reg.ir = (x)
 #define LATCH_ADL(x) reg.adl = (x)
 #define LATCH_ADH(x) reg.adh = (x)
@@ -36,44 +57,36 @@ void Peddle::latchA(u8 value) { loadA(value); }
 #define LATCH_PCH(x) reg.pc = (u16)((reg.pc & 0x00ff) | (x) << 8)
 #define LATCH_P(x) setPWithoutB(x)
 #define LATCH_A(x) loadA(x)
-*/
-#define LATCH_INSTR(x) latchIR(x)
-#define LATCH_ADL(x) latchADL(x)
-#define LATCH_ADH(x) latchADH(x)
-#define LATCH_IDL(x) latchIDL(x)
-#define LATCH_D(x) latchD(x)
-#define LATCH_PCL(x) latchPCL(x)
-#define LATCH_PCH(x) latchPCH(x)
-#define LATCH_P(x) latchP(x)
-#define LATCH_A(x) latchA(x)
+
+#endif
 
 #define FETCH_IR \
-if (likely(!rdyLine)) LATCH_INSTR(read<C>(reg.pc++)); else return;
+if (likely(!rdyLine)) { LATCH_INSTR(read<C>(reg.pc++)); } else return;
 #define FETCH_ADDR_LO \
-if (likely(!rdyLine)) LATCH_ADL(reg.adl = read<C>(reg.pc++)); else return;
+if (likely(!rdyLine)) { LATCH_ADL(read<C>(reg.pc++)); } else return;
 #define FETCH_ADDR_HI \
-if (likely(!rdyLine)) LATCH_ADH(reg.adh = read<C>(reg.pc++)); else return;
+if (likely(!rdyLine)) { LATCH_ADH(read<C>(reg.pc++)); } else return;
 #define FETCH_POINTER_ADDR \
-if (likely(!rdyLine)) LATCH_IDL(read<C>(reg.pc++)); else return;
+if (likely(!rdyLine)) { LATCH_IDL(read<C>(reg.pc++)); } else return;
 #define FETCH_ADDR_LO_INDIRECT \
-if (likely(!rdyLine)) LATCH_ADL(read<C>((u16)reg.idl++)); else return;
+if (likely(!rdyLine)) { LATCH_ADL(read<C>((u16)reg.idl++)); } else return;
 #define FETCH_ADDR_HI_INDIRECT \
-if (likely(!rdyLine)) LATCH_ADH(read<C>((u16)reg.idl++)); else return;
+if (likely(!rdyLine)) { LATCH_ADH(read<C>((u16)reg.idl++)); } else return;
 #define IDLE_FETCH \
 if (likely(!rdyLine)) readIdle<C>(reg.pc); else return;
 
 #define READ_RELATIVE \
-if (likely(!rdyLine)) LATCH_D(read<C>(reg.pc)); else return;
+if (likely(!rdyLine)) { LATCH_D(read<C>(reg.pc)); } else return;
 #define READ_IMMEDIATE \
-if (likely(!rdyLine)) LATCH_D(read<C>(reg.pc++)); else return;
+if (likely(!rdyLine)) { LATCH_D(read<C>(reg.pc++)); } else return;
 #define READ_FROM(x) \
-if (likely(!rdyLine)) LATCH_D(read<C>(x)); else return;
+if (likely(!rdyLine)) { LATCH_D(read<C>(x)); } else return;
 #define READ_FROM_ADDRESS \
-if (likely(!rdyLine)) LATCH_D(read<C>(HI_LO(reg.adh, reg.adl))); else return;
+if (likely(!rdyLine)) { LATCH_D(read<C>(HI_LO(reg.adh, reg.adl))); } else return;
 #define READ_FROM_ZERO_PAGE \
-if (likely(!rdyLine)) LATCH_D(readZeroPage<C>(reg.adl)); else return;
+if (likely(!rdyLine)) { LATCH_D(readZeroPage<C>(reg.adl)); } else return;
 #define READ_FROM_ADDRESS_INDIRECT \
-if (likely(!rdyLine)) LATCH_D(readZeroPage<C>(reg.dl)); else return;
+if (likely(!rdyLine)) { LATCH_D(readZeroPage<C>(reg.dl)); } else return;
 
 #define IDLE_READ_IMPLIED \
 if (likely(!rdyLine)) readIdle<C>(reg.pc); else return;

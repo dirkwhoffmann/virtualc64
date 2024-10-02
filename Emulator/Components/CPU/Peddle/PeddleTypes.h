@@ -373,6 +373,12 @@ enum_long(MICRO_INSTRUCTION) {
 };
 typedef MICRO_INSTRUCTION MicroInstruction;
 
+namespace Async {
+
+enum ReadTarget { IDLE, IR, ADL, ADH, IDL, D, PCL, PCH, P, A };
+
+}
+
 
 //
 // Structures
