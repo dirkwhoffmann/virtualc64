@@ -888,7 +888,7 @@ C64::processFlags()
 
     if (flags & RL::SINGLE_STEP) {
 
-        if ((!stepTo.has_value() && cpu.inFetchPhase()) || *stepTo == cpu.getPC0()) {
+        if ((!stepTo.has_value() && cpu.inFetchPhase()) || stepTo == cpu.getPC0()) {
 
             clearFlag(RL::SINGLE_STEP);
             msgQueue.put(MSG_STEP);

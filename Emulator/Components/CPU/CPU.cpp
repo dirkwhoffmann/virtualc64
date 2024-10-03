@@ -182,7 +182,7 @@ CPU::processCommand(const Cmd &cmd)
         case CMD_BP_ENABLE_AT:      cpu.enableBreakpoint(u32(cmd.value)); break;
         case CMD_BP_ENABLE_ALL:     cpu.enableAllBreakpoints(); break;
         case CMD_BP_DISABLE_NR:     cpu.disableBreakpoint(isize(cmd.value)); break;
-        case CMD_BP_DISABLE_AT:     cpu.disableBreakpoint(u32(cmd.value)); break;
+        case CMD_BP_DISABLE_AT:     cpu.disableBreakpointAt(u32(cmd.value)); break;
         case CMD_BP_DISABLE_ALL:    cpu.disableAllBreakpoints(); break;
 
         case CMD_WP_SET_AT:         cpu.setWatchpoint(u32(cmd.value)); break;

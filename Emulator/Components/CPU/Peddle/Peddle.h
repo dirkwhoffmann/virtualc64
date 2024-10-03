@@ -383,23 +383,10 @@ protected:
     virtual u8 readDasm(u16 addr) const { return 0; }
     virtual u16 readResetVector();
 
+public:
+
     // Feeds the result of an asynchronous read operation into the CPU
     void concludeRead(u8 value);
-
-
-    //
-    // Perforing atomic CPU operations
-    //
-
-    void latchIR(u8 value);
-    void latchADL(u8 value);
-    void latchADH(u8 value);
-    void latchIDL(u8 value);
-    void latchD(u8 value);
-    void latchPCL(u8 value);
-    void latchPCH(u8 value);
-    void latchP(u8 value);
-    void latchA(u8 value);
 
 
     //
