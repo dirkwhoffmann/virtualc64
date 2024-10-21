@@ -371,13 +371,13 @@ C64::clockFrequency() const
 void
 C64::updateClockFrequency()
 {
-    auto frequency = clockFrequency();
+    durationOfOneCycle = 10000000000 / nativeClockFrequency();
 
+    auto frequency = clockFrequency();
     sidBridge.sid[0].setClockFrequency((u32)frequency);
     sidBridge.sid[1].setClockFrequency((u32)frequency);
     sidBridge.sid[2].setClockFrequency((u32)frequency);
     sidBridge.sid[3].setClockFrequency((u32)frequency);
-    durationOfOneCycle = 10000000000 / frequency;
 }
 
 void
