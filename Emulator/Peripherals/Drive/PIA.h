@@ -97,6 +97,8 @@ public:
     template <class T>
     void serialize(T& worker)
     {
+        if (isSoftResetter(worker)) return;
+
         worker
 
         << pa

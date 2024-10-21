@@ -155,6 +155,8 @@ CPU::cacheInfo(CPUInfo &result) const
 void
 CPU::_didReset(bool hard)
 {
+    if (!hard) return;
+
     Peddle::reset();
 
     // Enable or disable CPU debugging

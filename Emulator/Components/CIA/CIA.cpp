@@ -38,6 +38,9 @@ CIA::_didReset(bool hard)
     
     updatePA();
     updatePB();
+
+    c64.scheduleAbs<SLOT_CIA1>(cpu.clock, CIA_EXECUTE);
+    c64.scheduleAbs<SLOT_CIA2>(cpu.clock, CIA_EXECUTE);
 }
 
 void

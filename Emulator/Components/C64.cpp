@@ -305,15 +305,15 @@ C64::initialize()
 void
 C64::operator << (SerResetter &worker)
 {
-    // Remember the current inspection event
-    auto insEvent = eventid[SLOT_INS];
-    auto insEventData = data[SLOT_INS];
+    if (isSoftResetter(worker)) return;
 
     // Reset all items
     serialize(worker);
 
     // Initialize all event slots
     for (isize i = 0; i < SLOT_COUNT; i++) {
+
+        if (i == SLOT_INS) continue;
 
         trigger[i] = NEVER;
         eventid[i] = (EventID)0;
@@ -324,7 +324,6 @@ C64::operator << (SerResetter &worker)
     scheduleAbs<SLOT_CIA1>(cpu.clock, CIA_EXECUTE);
     scheduleAbs<SLOT_CIA2>(cpu.clock, CIA_EXECUTE);
     scheduleRel<SLOT_SRV>(C64::sec(0.5), SRV_LAUNCH_DAEMON);
-    if (insEvent) scheduleRel <SLOT_INS> (0, insEvent, insEventData);
     scheduleNextSNPEvent();
 
     flags = 0;
