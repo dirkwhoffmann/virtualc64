@@ -72,6 +72,7 @@ void
 CIA::cacheInfo(CIAInfo &result) const
 {
     {   SYNCHRONIZED
+
         result.portA.port = computePA();
         result.portA.reg = PRA;
         result.portA.dir = DDRA;

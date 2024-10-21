@@ -25,6 +25,8 @@ CIA::CIA(C64 &ref, isize id) : SubComponent(ref, id)
 void
 CIA::_didReset(bool hard)
 {
+    assert(!sleeping);
+
     CNT = true;
     INT = 1;
     

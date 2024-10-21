@@ -186,7 +186,7 @@ C64::getOption(Option opt) const
 
         case OPT_C64_WARP_BOOT:         return config.warpBoot;
         case OPT_C64_WARP_MODE:         return config.warpMode;
-        case OPT_C64_SPEED_BOOST:      return config.speedBoost;
+        case OPT_C64_SPEED_BOOST:       return config.speedBoost;
         case OPT_C64_VSYNC:             return config.vsync;
         case OPT_C64_RUN_AHEAD:         return config.runAhead;
         case OPT_C64_SNAP_AUTO:         return config.snapshots;

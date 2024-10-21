@@ -243,13 +243,7 @@ enum_i8(EventID)
     ALA_EVENT_COUNT,
 
     // Inspector slot
-    INS_C64             = 1,
-    INS_CPU,
-    INS_MEM,
-    INS_CIA,
-    INS_VICII,
-    INS_SID,
-    INS_EVENTS,
+    INS_INSPECT         = 1,
     INS_EVENT_COUNT
 };
 

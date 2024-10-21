@@ -224,13 +224,7 @@ C64::eventName(EventSlot slot, EventID id)
             switch (id) {
 
                 case EVENT_NONE:    return "none";
-                case INS_C64:       return "INS_C64";
-                case INS_CPU:       return "INS_CPU";
-                case INS_MEM:       return "INS_MEM";
-                case INS_CIA:       return "INS_CIA";
-                case INS_VICII:     return "INS_VICII";
-                case INS_SID:       return "INS_SID";
-                case INS_EVENTS:    return "INS_EVENTS";
+                case INS_INSPECT:   return "INSPECT";
                 default:            return "*** INVALID ***";
             }
             break;
@@ -311,7 +305,9 @@ C64::initialize()
 void
 C64::operator << (SerResetter &worker)
 {
+    // Remember the current inspection event
     auto insEvent = eventid[SLOT_INS];
+    auto insEventData = data[SLOT_INS];
 
     // Reset all items
     serialize(worker);
@@ -328,7 +324,7 @@ C64::operator << (SerResetter &worker)
     scheduleAbs<SLOT_CIA1>(cpu.clock, CIA_EXECUTE);
     scheduleAbs<SLOT_CIA2>(cpu.clock, CIA_EXECUTE);
     scheduleRel<SLOT_SRV>(C64::sec(0.5), SRV_LAUNCH_DAEMON);
-    if (insEvent) scheduleRel <SLOT_INS> (0, insEvent);
+    if (insEvent) scheduleRel <SLOT_INS> (0, insEvent, insEventData);
     scheduleNextSNPEvent();
 
     flags = 0;
@@ -1245,7 +1241,7 @@ C64::processINSEvent()
     }
 
     // Reschedule the event
-    rescheduleRel<SLOT_INS>(Cycle(inspectionInterval * PAL::CYCLES_PER_SECOND));
+    scheduleRel<SLOT_INS>(Cycle(inspectionInterval * PAL::CYCLES_PER_SECOND), INS_INSPECT, mask);
 }
 
 void
