@@ -76,7 +76,7 @@ template <typename Enum> long parsePartialEnum(const string& key, std::function<
 
         if (!accept(i)) continue;
 
-        auto enumkey = string(Enum::key(i));
+        auto enumkey = string(Enum::rawkey(i));
 
         // Check if the full key matches
         if (enumkey == upper) return i;
