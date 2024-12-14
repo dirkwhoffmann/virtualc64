@@ -713,7 +713,7 @@ extension MyController: NSMenuItemValidation {
                         try self.mm.addMedia(url: url,
                                              allowedTypes: [ .D64, .T64, .PRG, .P00, .G64 ],
                                              drive: id,
-                                             options: [.force])
+                                             options: [.force, .remember])
 
                     } catch {
                         self.showAlert(.cantInsert, error: error, async: true)
