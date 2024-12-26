@@ -1873,9 +1873,10 @@ using namespace vc64;
     return [self emu]->isTracking();
 }
 
-- (void)run:(ExceptionWrapper *)e
+- (void)run:(ExceptionWrapper *)ex
 {
-    [self emu]->run();
+    try { [self emu]->run(); }
+    catch (Error &error) { [ex save:error]; }
 }
 
 - (void)pause

@@ -108,7 +108,7 @@ enum Failure {
         switch self {
 
         case .cantRecord: return NSImage(named: "FFmpegIcon")!
-        case .cantRun: return NSImage(named: "pref_transparent")!
+        // case .cantRun: return NSImage(named: "pref_transparent")!
         case .noFFmpegFound: return NSImage(named: "FFmpegIcon")!
         case .noFFmpegInstalled: return NSImage(named: "FFmpegIcon")!
         case .noMetalSupport: return NSImage(named: "metal")!
