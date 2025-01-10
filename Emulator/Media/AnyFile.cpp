@@ -49,6 +49,8 @@ AnyFile::init(const string &str)
 void
 AnyFile::init(const fs::path &path)
 {
+    if (!isCompatiblePath(path)) throw Error(VC64ERROR_FILE_TYPE_MISMATCH, path);
+    
     std::ifstream stream(path, std::ios::binary);
     if (!stream.is_open()) throw Error(VC64ERROR_FILE_NOT_FOUND, path);
 

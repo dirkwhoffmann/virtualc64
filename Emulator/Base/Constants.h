@@ -15,8 +15,6 @@
 
 #include "BasicTypes.h"
 
-/** VirtualC64 project namespace
- */
 namespace vc64 {
 
 /** PAL related constants

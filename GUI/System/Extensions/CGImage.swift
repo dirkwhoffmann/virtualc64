@@ -11,7 +11,6 @@ public extension CGImage {
     
     static func bitmapInfo() -> CGBitmapInfo {
         
-        // let noAlpha = CGImageAlphaInfo.noneSkipLast.rawValue
         let alpha = CGImageAlphaInfo.premultipliedLast.rawValue
         let bigEn32 = CGBitmapInfo.byteOrder32Big.rawValue
     
