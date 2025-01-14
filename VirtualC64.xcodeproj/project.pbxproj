@@ -44,11 +44,6 @@
 		501C46BE2965C54200C4B27B /* StrWriter.h in Sources */ = {isa = PBXBuildFile; fileRef = 501C46BC2965C54200C4B27B /* StrWriter.h */; };
 		501C46BF2965C54200C4B27B /* StrWriter.h in Sources */ = {isa = PBXBuildFile; fileRef = 501C46BC2965C54200C4B27B /* StrWriter.h */; };
 		501E2C1225B2DDED00B9C9C0 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E2C1125B2DDED00B9C9C0 /* AppIcon.icns */; };
-		501E427C20D975AD000BB48D /* IconD64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427720D975AC000BB48D /* IconD64.icns */; };
-		501E427D20D975AD000BB48D /* IconCRT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427820D975AC000BB48D /* IconCRT.icns */; };
-		501E427E20D975AD000BB48D /* IconT64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427920D975AD000BB48D /* IconT64.icns */; };
-		501E427F20D975AD000BB48D /* IconPRG.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427A20D975AD000BB48D /* IconPRG.icns */; };
-		501E428020D975AD000BB48D /* IconVirtualC64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427B20D975AD000BB48D /* IconVirtualC64.icns */; };
 		5020434C1EE71B47006C3FD3 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		50300AEE258B2C5400D261E3 /* FSDirEntry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50300AEC258B2C5400D261E3 /* FSDirEntry.cpp */; };
 		5031D59C200B81D20088C802 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D59B200B81D20088C802 /* Animation.swift */; };
@@ -593,11 +588,6 @@
 		501C46BC2965C54200C4B27B /* StrWriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StrWriter.h; sourceTree = "<group>"; };
 		501C46BD2965C54200C4B27B /* StrWriter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StrWriter.cpp; sourceTree = "<group>"; };
 		501E2C1125B2DDED00B9C9C0 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
-		501E427720D975AC000BB48D /* IconD64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconD64.icns; sourceTree = "<group>"; };
-		501E427820D975AC000BB48D /* IconCRT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconCRT.icns; sourceTree = "<group>"; };
-		501E427920D975AD000BB48D /* IconT64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconT64.icns; sourceTree = "<group>"; };
-		501E427A20D975AD000BB48D /* IconPRG.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconPRG.icns; sourceTree = "<group>"; };
-		501E427B20D975AD000BB48D /* IconVirtualC64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconVirtualC64.icns; sourceTree = "<group>"; };
 		5026118D259CACB60066E754 /* PETName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PETName.h; sourceTree = "<group>"; };
 		50300AEC258B2C5400D261E3 /* FSDirEntry.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSDirEntry.cpp; sourceTree = "<group>"; };
 		50300AED258B2C5400D261E3 /* FSDirEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSDirEntry.h; sourceTree = "<group>"; };
@@ -1915,11 +1905,6 @@
 				5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */,
 				8D15AC360486D014006FF6A4 /* Info.plist */,
 				501E2C1125B2DDED00B9C9C0 /* AppIcon.icns */,
-				501E427B20D975AD000BB48D /* IconVirtualC64.icns */,
-				501E427820D975AC000BB48D /* IconCRT.icns */,
-				501E427720D975AC000BB48D /* IconD64.icns */,
-				501E427A20D975AD000BB48D /* IconPRG.icns */,
-				501E427920D975AD000BB48D /* IconT64.icns */,
 				5051A1501B8842F100CBFB5A /* Sounds */,
 			);
 			path = Resources;
@@ -2341,18 +2326,14 @@
 				5098C57D2658D4DC00E05EFC /* VideoExporter.xib in Resources */,
 				50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */,
 				50D2A69E210F20CB00F13D43 /* VirtualKeyboard.xib in Resources */,
-				501E428020D975AD000BB48D /* IconVirtualC64.icns in Resources */,
 				5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */,
 				5058A91A281D041400C223C9 /* DiskExporter.xib in Resources */,
-				501E427E20D975AD000BB48D /* IconT64.icns in Resources */,
 				50A519411B8DA230006771E2 /* drive_click.aiff in Resources */,
 				5051A1521B88438800CBFB5A /* 1541_track_change_0.aiff in Resources */,
-				501E427C20D975AD000BB48D /* IconD64.icns in Resources */,
 				5058A918281D03D200C223C9 /* DiskInspector.xib in Resources */,
 				5051A15F1B885FDD00CBFB5A /* 1541_power_on_0.aiff in Resources */,
 				50D5F88824F556270062EF13 /* DiskErrors.xib in Resources */,
 				5051A1601B885FDD00CBFB5A /* 1541_track_change_2.aiff in Resources */,
-				501E427D20D975AD000BB48D /* IconCRT.icns in Resources */,
 				50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */,
 				50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */,
 				5058A91C281D042D00C223C9 /* VolumeInspector.xib in Resources */,
@@ -2361,7 +2342,6 @@
 				507E7A9E24FB864E00AB433C /* ScreenshotViewer.xib in Resources */,
 				5020434C1EE71B47006C3FD3 /* (null) in Resources */,
 				5051A15C1B885E1B00CBFB5A /* 1541_door_open_1.aiff in Resources */,
-				501E427F20D975AD000BB48D /* IconPRG.icns in Resources */,
 				50D3092224C714A200B92563 /* Inspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2913,7 +2893,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 241226;
+				CURRENT_PROJECT_VERSION = 250114;
 				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 3NG65ZLYW7;
@@ -2934,7 +2914,7 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				LLVM_LTO = NO;
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
-				MARKETING_VERSION = 5.1;
+				MARKETING_VERSION = 5.1.1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 c++20";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
@@ -2959,7 +2939,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 241226;
+				CURRENT_PROJECT_VERSION = 250114;
 				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 3NG65ZLYW7;
@@ -2981,7 +2961,7 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				LLVM_LTO = YES_THIN;
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
-				MARKETING_VERSION = 5.1;
+				MARKETING_VERSION = 5.1.1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 c++20";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";

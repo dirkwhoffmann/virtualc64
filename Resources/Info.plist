@@ -14,7 +14,9 @@
 				<string>VC64</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>IconV64</string>
+			<string>IconSnapshot</string>
+			<key>CFBundleTypeIconSystemGenerated</key>
+			<integer>1</integer>
 			<key>CFBundleTypeName</key>
 			<string>VC64</string>
 			<key>CFBundleTypeOSTypes</key>
@@ -236,7 +238,7 @@
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.entertainment</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2024 Dirk Hoffmann. All rights reserved.</string>
+	<string>Copyright © 2025 Dirk Hoffmann. All rights reserved.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -251,7 +253,10 @@
 			<key>UTTypeDescription</key>
 			<string>VirtualC64 Snapshot</string>
 			<key>UTTypeIcons</key>
-			<dict/>
+			<dict>
+				<key>UTTypeIconBadgeName</key>
+				<string>IconSnapshot</string>
+			</dict>
 			<key>UTTypeIdentifier</key>
 			<string>de.dirkwhoffmann.retro.vc64</string>
 			<key>UTTypeTagSpecification</key>
@@ -259,7 +264,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>vc64</string>
-					<string>VC64</string>
 				</array>
 			</dict>
 		</dict>
@@ -268,163 +272,6 @@
 			<array>
 				<string>public.data</string>
 			</array>
-			<key>UTTypeDescription</key>
-			<string>D64 image</string>
-			<key>UTTypeIcons</key>
-			<dict>
-				<key>UTTypeIconBadgeName</key>
-				<string>IconD64</string>
-			</dict>
-			<key>UTTypeIdentifier</key>
-			<string>de.dirkwhoffmann.retro.d64</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>d64</string>
-					<string>D64</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>G64 image</string>
-			<key>UTTypeIcons</key>
-			<dict>
-				<key>UTTypeIconBadgeName</key>
-				<string>IconD64</string>
-			</dict>
-			<key>UTTypeIdentifier</key>
-			<string>de.dirkwhoffmann.retro.g64</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>g64</string>
-					<string>G64</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>T64 image</string>
-			<key>UTTypeIcons</key>
-			<dict>
-				<key>UTTypeIconBadgeName</key>
-				<string>IconT64</string>
-			</dict>
-			<key>UTTypeIdentifier</key>
-			<string>de.dirkwhoffmann.retro.t64</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>t64</string>
-					<string>T64</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>PRG file</string>
-			<key>UTTypeIcons</key>
-			<dict>
-				<key>UTTypeIconBadgeName</key>
-				<string>IconPRG</string>
-			</dict>
-			<key>UTTypeIdentifier</key>
-			<string>de.dirkwhoffmann.retro.prg</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>prg</string>
-					<string>PRG</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>P00 file</string>
-			<key>UTTypeIcons</key>
-			<dict>
-				<key>UTTypeIconBadgeName</key>
-				<string>IconPRG</string>
-			</dict>
-			<key>UTTypeIdentifier</key>
-			<string>de.dirkwhoffmann.retro.p00</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>p00</string>
-					<string>P00</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>C64 Cartridge</string>
-			<key>UTTypeIcons</key>
-			<dict>
-				<key>UTTypeIconBadgeName</key>
-				<string>IconCRT</string>
-			</dict>
-			<key>UTTypeIdentifier</key>
-			<string>de.dirkwhoffmann.retro.crt</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>crt</string>
-					<string>CRT</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Tape image</string>
-			<key>UTTypeIcons</key>
-			<dict>
-				<key>UTTypeIconBadgeName</key>
-				<string>IconT64</string>
-			</dict>
-			<key>UTTypeIdentifier</key>
-			<string>de.dirkwhoffmann.retro.tap</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>tap</string>
-					<string>TAP</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
 			<key>UTTypeDescription</key>
 			<string>RetroShell script</string>
 			<key>UTTypeIcons</key>
@@ -436,7 +283,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>ini</string>
-					<string>INI</string>
 				</array>
 			</dict>
 		</dict>
@@ -449,26 +295,6 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>VirtualC64 Snapshot</string>
-			<key>UTTypeIcons</key>
-			<dict/>
-			<key>UTTypeIdentifier</key>
-			<string>de.dirkwhoffmann.retro.vc64</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>vc64</string>
-					<string>VC64</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeDescription</key>
 			<string>D64 image</string>
 			<key>UTTypeIcons</key>
 			<dict>
@@ -482,7 +308,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>d64</string>
-					<string>D64</string>
 				</array>
 			</dict>
 		</dict>
@@ -507,7 +332,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>g64</string>
-					<string>G64</string>
 				</array>
 			</dict>
 		</dict>
@@ -530,7 +354,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>t64</string>
-					<string>T64</string>
 				</array>
 			</dict>
 		</dict>
@@ -553,7 +376,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>prg</string>
-					<string>PRG</string>
 				</array>
 			</dict>
 		</dict>
@@ -576,7 +398,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>p00</string>
-					<string>P00</string>
 				</array>
 			</dict>
 		</dict>
@@ -599,7 +420,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>crt</string>
-					<string>CRT</string>
 				</array>
 			</dict>
 		</dict>
@@ -622,27 +442,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>tap</string>
-					<string>TAP</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>RetroShell script</string>
-			<key>UTTypeIcons</key>
-			<dict/>
-			<key>UTTypeIdentifier</key>
-			<string>de.dirkwhoffmann.retro.ini</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>ini</string>
-					<string>INI</string>
 				</array>
 			</dict>
 		</dict>
