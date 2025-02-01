@@ -59,6 +59,7 @@
 		503C1DD124FC10F400D91141 /* SnapshotViewer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 503C1DD024FC10F400D91141 /* SnapshotViewer.xib */; };
 		503C1DD324FCD1BF00D91141 /* SnapshotViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503C1DD224FCD1BF00D91141 /* SnapshotViewer.swift */; };
 		503E199020C42C6D007E91F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 503E198F20C42C6D007E91F1 /* Assets.xcassets */; };
+		5042FB112D4E121A00E4A167 /* FilePanels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5042FB102D4E121600E4A167 /* FilePanels.swift */; };
 		5044A03B2657A7A800C551C6 /* Recorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5044A0392657A7A800C551C6 /* Recorder.cpp */; };
 		50461BBE26B522450019CEDF /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50461BBC26B522450019CEDF /* Thread.cpp */; };
 		504C435924AF29AC00E69CAE /* Ocean.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C429124AF29AB00E69CAE /* Ocean.cpp */; };
@@ -610,6 +611,7 @@
 		503E198F20C42C6D007E91F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		504268AC24F0F76F006BB841 /* C64Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Types.h; sourceTree = "<group>"; };
 		504268AD24F12705006BB841 /* DiskTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskTypes.h; sourceTree = "<group>"; };
+		5042FB102D4E121600E4A167 /* FilePanels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePanels.swift; sourceTree = "<group>"; };
 		50441A872B93CE2600102A4D /* VirtualC64Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtualC64Types.h; sourceTree = "<group>"; };
 		50441A8A2B9495BE00102A4D /* communication.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = communication.md; sourceTree = "<group>"; };
 		50441A8C2B9495BE00102A4D /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
@@ -1347,6 +1349,7 @@
 		50157EF62825B01D000E9DDD /* System */ = {
 			isa = PBXGroup;
 			children = (
+				5042FB102D4E121600E4A167 /* FilePanels.swift */,
 				50ED5BF712DD99C000596417 /* Speedometer.swift */,
 				5052A7C025A0AC0700E62EDD /* Errors.swift */,
 				50E9B92E201FA92C00065A89 /* Alerts.swift */,
@@ -2672,6 +2675,7 @@
 				504C439C24AF29AC00E69CAE /* wave.cc in Sources */,
 				50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */,
 				5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */,
+				5042FB112D4E121A00E4A167 /* FilePanels.swift in Sources */,
 				50BE4B6224E7F8DE008F39C9 /* NSTableView.swift in Sources */,
 				50549B49257D288E006FE39C /* AudioPort.cpp in Sources */,
 				504C437524AF29AC00E69CAE /* PRGFile.cpp in Sources */,

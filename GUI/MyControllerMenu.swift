@@ -234,12 +234,26 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func importConfigAction(_ sender: Any!) {
 
-        let openPanel = NSOpenPanel()
+        // let openPanel = NSOpenPanel()
 
         // Power off the emulator if the user doesn't object
         if !askToPowerOff() { return }
 
+        myOpenPanel.configure(prompt: "Import", types: [ .ini ])
+        myOpenPanel.open(for: window, { result in
+            
+            if result == .OK, let url = self.myOpenPanel.url {
+
+                do {
+                    try self.mm.addMedia(url: url, allowedTypes: [.SCRIPT])
+                } catch {
+                    self.showAlert(.cantOpen(url: url), error: error, async: true)
+                }
+            }
+        })
+        
         // Show file panel
+        /*
         openPanel.allowsMultipleSelection = false
         openPanel.canChooseDirectories = true
         openPanel.canCreateDirectories = false
@@ -257,6 +271,7 @@ extension MyController: NSMenuItemValidation {
                 }
             }
         })
+        */
     }
 
     @IBAction func exportConfigAction(_ sender: Any!) {
@@ -696,18 +711,10 @@ extension MyController: NSMenuItemValidation {
             // Ask user to continue if the current disk contains modified data
             if !proceedWithUnsavedFloppyDisk(drive: drive) { return }
 
-            let openPanel = NSOpenPanel()
-            openPanel.allowsMultipleSelection = false
-            openPanel.canChooseDirectories = false
-            openPanel.canCreateDirectories = false
-            openPanel.canChooseFiles = true
-            openPanel.prompt = "Insert"
-            openPanel.allowedContentTypes = [ .t64, .prg, .p00, .d64, .g64, .zip, .gzip ]
-            openPanel.beginSheetModal(for: window!, completionHandler: { result in
+            myOpenPanel.configure(prompt: "Insert", types: [ .t64, .prg, .p00, .d64, .g64, .zip, .gzip ])
+            myOpenPanel.open(for: window, { result in
 
-                if result == .OK, let url = openPanel.url {
-
-                    print("url = \(url)")
+                if result == .OK, let url = self.myOpenPanel.url {
 
                     do {
                         try self.mm.addMedia(url: url,
@@ -890,19 +897,28 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func insertTapeAction(_ sender: Any!) {
         
+        myOpenPanel.configure(prompt: "Insert", types: [ .tap, .zip, .gzip ])
+        myOpenPanel.open(for: window, { result in
+
+            if result == .OK, let url = self.myOpenPanel.url {
+                self.insertTapeAction(from: url)
+            }
+        })
+
+        /*
         let openPanel = NSOpenPanel()
         openPanel.allowsMultipleSelection = false
         openPanel.canChooseDirectories = false
         openPanel.canCreateDirectories = false
         openPanel.canChooseFiles = true
         openPanel.prompt = "Insert"
-        // openPanel.allowedFileTypes = ["tap", "zip", "gz"]
-        openPanel.allowedContentTypes = [.tap, .zip, .gzip]
+        // openPanel.allowedContentTypes = [.tap, .zip, .gzip]
         openPanel.beginSheetModal(for: window!, completionHandler: { result in
             if result == .OK, let url = openPanel.url {
                 self.insertTapeAction(from: url)
             }
         })
+        */
     }
     
     @IBAction func insertRecentTapeAction(_ sender: NSMenuItem!) {
@@ -956,6 +972,20 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func attachCartridgeAction(_ sender: Any!) {
         
+        myOpenPanel.configure(prompt: "Insert", types: [ .crt, .zip, .gzip ])
+        myOpenPanel.open(for: window, { result in
+
+            if result == .OK, let url = self.myOpenPanel.url {
+                
+                do {
+                    try self.mm.addMedia(url: url, allowedTypes: [ .CRT ])
+                } catch {
+                    self.showAlert(.cantAttach, error: error, async: true)
+                }
+            }
+        })
+        
+        /*
         let openPanel = NSOpenPanel()
         openPanel.allowsMultipleSelection = false
         openPanel.canChooseDirectories = false
@@ -974,6 +1004,7 @@ extension MyController: NSMenuItemValidation {
                 }
             }
         })
+        */
     }
     
     @IBAction func attachRecentCartridgeAction(_ sender: NSMenuItem!) {

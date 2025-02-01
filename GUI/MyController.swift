@@ -18,6 +18,9 @@ class MyController: NSWindowController, MessageReceiver {
     // Reference to the connected document
     var mydocument: MyDocument!
     
+    // File panels
+    let myOpenPanel = MyOpenPanel()
+
     // Emulator proxy (bridge between the Swift frontend and the C++ backend)
     var emu: EmulatorProxy? { return mydocument.emu }
 
