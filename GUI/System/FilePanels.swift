@@ -9,28 +9,11 @@
 
 import UniformTypeIdentifiers
 
-class MyOpenPanel : NSObject, NSOpenSavePanelDelegate {
-    
-    let panel = NSOpenPanel()
+class MyFilePanel : NSObject, NSOpenSavePanelDelegate {
+
     var allowedExtensions: [String]?
-    var url: URL? { return panel.url }
-    
-    override init() {
-        
-        super.init()
-        panel.delegate = self
-    }
-    
-    func configure(prompt: String? = nil, types: [UTType]? = nil) {
- 
-        // Apply some standard settings
-        panel.allowsMultipleSelection = false
-        panel.canChooseDirectories = false
-        panel.canCreateDirectories = false
-        panel.canChooseFiles = true
-        
-        // Assign the prompt
-        panel.prompt = prompt ?? "Open"
+
+    func configure(types: [UTType]? = nil) {
         
         // Collect the file extensions of all allowed UTTypes
         if let types = types {
@@ -40,14 +23,6 @@ class MyOpenPanel : NSObject, NSOpenSavePanelDelegate {
         }
     }
     
-    func open(for window: NSWindow?,
-              _ handler: @escaping (NSApplication.ModalResponse) -> Void) {
-
-        if let window = window {
-            panel.beginSheetModal(for: window, completionHandler: handler)
-        }
-    }
-
     func panel(_ sender: Any, shouldEnable url: URL) -> Bool {
         
         // Allow directories
@@ -60,6 +35,65 @@ class MyOpenPanel : NSObject, NSOpenSavePanelDelegate {
             return extensions.contains(url.pathExtension.lowercased())
         } else {
             return true
+        }
+    }
+}
+
+class MyOpenPanel : MyFilePanel {
+    
+    let panel = NSOpenPanel()
+    var url: URL? { return panel.url }
+    
+    override init() {
+        
+        super.init()
+        panel.delegate = self
+    }
+    
+    func configure(prompt: String? = nil, types: [UTType]? = nil) {
+ 
+        super.configure(types: types)
+        
+        panel.allowsMultipleSelection = false
+        panel.canChooseDirectories = false
+        panel.canCreateDirectories = false
+        panel.canChooseFiles = true
+        panel.prompt = prompt ?? "Open"
+    }
+    
+    func open(for window: NSWindow?,
+              _ handler: @escaping (NSApplication.ModalResponse) -> Void) {
+
+        if let window = window {
+            panel.beginSheetModal(for: window, completionHandler: handler)
+        }
+    }
+}
+
+class MySavePanel : MyFilePanel {
+    
+    let panel = NSSavePanel()
+    var url: URL? { return panel.url }
+    
+    override init() {
+        
+        super.init()
+        panel.delegate = self
+    }
+    
+    func configure(prompt: String? = nil, types: [UTType]? = nil) {
+ 
+        super.configure(types: types)
+        
+        panel.canCreateDirectories = false
+        panel.prompt = prompt ?? "Save"
+    }
+    
+    func open(for window: NSWindow?,
+              _ handler: @escaping (NSApplication.ModalResponse) -> Void) {
+
+        if let window = window {
+            panel.beginSheetModal(for: window, completionHandler: handler)
         }
     }
 }

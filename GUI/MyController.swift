@@ -20,6 +20,7 @@ class MyController: NSWindowController, MessageReceiver {
     
     // File panels
     let myOpenPanel = MyOpenPanel()
+    let mySavePanel = MySavePanel()
 
     // Emulator proxy (bridge between the Swift frontend and the C++ backend)
     var emu: EmulatorProxy? { return mydocument.emu }
