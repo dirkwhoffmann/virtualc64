@@ -14,8 +14,11 @@ class MyDocumentController: NSDocumentController {
     override func makeDocument(withContentsOf url: URL,
                                ofType typeName: String) throws -> NSDocument {
         
+        debug(.lifetime)
+
         // For media files, attach the file to a new untitled document
-        if typeName != UTType.vc64.identifier {
+        if typeName.components(separatedBy: ".").last?.lowercased() != "vcsnap" {
+        // if typeName != UTType.vc64.identifier {
 
             let doc = try super.makeUntitledDocument(ofType: typeName)
 

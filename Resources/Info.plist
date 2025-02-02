@@ -9,40 +9,28 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>VC64</string>
-			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>IconSnapshot</string>
+			<string></string>
 			<key>CFBundleTypeIconSystemGenerated</key>
 			<integer>1</integer>
 			<key>CFBundleTypeName</key>
-			<string>VC64</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>VC64</string>
-			</array>
+			<string>VirtualC64 Snapshot</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSHandlerRank</key>
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>de.dirkwhoffmann.retro.vc64</string>
+				<string>de.dirkwhoffmann.retro.vcsnap</string>
 			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).MyDocument</string>
 		</dict>
 		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>D64</string>
-			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>IconD64</string>
+			<string></string>
+			<key>CFBundleTypeIconSystemGenerated</key>
+			<integer>1</integer>
 			<key>CFBundleTypeName</key>
 			<string>D64</string>
 			<key>CFBundleTypeRole</key>
@@ -53,168 +41,128 @@
 			<array>
 				<string>public.retro.d64</string>
 			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).MyDocument</string>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>Binary</string>
 		</dict>
 		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>G64</string>
-			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>IconD64</string>
+			<string></string>
+			<key>CFBundleTypeIconSystemGenerated</key>
+			<integer>1</integer>
 			<key>CFBundleTypeName</key>
 			<string>G64</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSHandlerRank</key>
-			<string>Owner</string>
+			<string>Default</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>public.retro.g64</string>
 			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).MyDocument</string>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>Binary</string>
 		</dict>
 		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>T64</string>
-			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>IconT64</string>
+			<string></string>
+			<key>CFBundleTypeIconSystemGenerated</key>
+			<integer>1</integer>
 			<key>CFBundleTypeName</key>
 			<string>T64</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSHandlerRank</key>
-			<string>Owner</string>
+			<string>Default</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>public.retro.t64</string>
 			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).MyDocument</string>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>Binary</string>
 		</dict>
 		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>PRG</string>
-			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>IconPRG</string>
+			<string></string>
 			<key>CFBundleTypeName</key>
 			<string>PRG</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSHandlerRank</key>
-			<string>Owner</string>
+			<string>Default</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>public.retro.prg</string>
 			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).MyDocument</string>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>Binary</string>
 		</dict>
 		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>P00</string>
-			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>IconPRG</string>
+			<string></string>
+			<key>CFBundleTypeIconSystemGenerated</key>
+			<integer>1</integer>
 			<key>CFBundleTypeName</key>
 			<string>P00</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSHandlerRank</key>
-			<string>Owner</string>
+			<string>Default</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>public.retro.p00</string>
 			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).MyDocument</string>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>Binary</string>
 		</dict>
 		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>CRT</string>
-			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>IconCRT</string>
+			<string></string>
+			<key>CFBundleTypeIconSystemGenerated</key>
+			<integer>1</integer>
 			<key>CFBundleTypeName</key>
 			<string>CRT</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSHandlerRank</key>
-			<string>Owner</string>
+			<string>Default</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>public.retro.crt</string>
 			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).MyDocument</string>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>Binary</string>
 		</dict>
 		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>TAP</string>
-			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>IconT64</string>
+			<string></string>
+			<key>CFBundleTypeIconSystemGenerated</key>
+			<integer>1</integer>
 			<key>CFBundleTypeName</key>
 			<string>TAP</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSHandlerRank</key>
-			<string>Owner</string>
+			<string>Default</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>public.tap</string>
 			</array>
-			<key>LSTypeIsPackage</key>
-			<integer>0</integer>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).MyDocument</string>
-			<key>NSPersistentStoreTypeKey</key>
-			<string>Binary</string>
 		</dict>
 		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>INI</string>
-			</array>
+			<key>CFBundleTypeIconSystemGenerated</key>
+			<integer>1</integer>
 			<key>CFBundleTypeName</key>
-			<string>INI</string>
+			<string>RETROSH</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSHandlerRank</key>
 			<string>Default</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>de.dirkwhoffmann.retro.retrosh</string>
+			</array>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).MyDocument</string>
 		</dict>
@@ -254,35 +202,46 @@
 			<string>VirtualC64 Snapshot</string>
 			<key>UTTypeIcons</key>
 			<dict>
+				<key>UTTypeIconBackgroundName</key>
+				<string>IconRed</string>
 				<key>UTTypeIconBadgeName</key>
-				<string>IconSnapshot</string>
+				<string>AppIcon</string>
+				<key>UTTypeIconText</key>
+				<string>SNAPSHOT</string>
 			</dict>
 			<key>UTTypeIdentifier</key>
-			<string>de.dirkwhoffmann.retro.vc64</string>
+			<string>de.dirkwhoffmann.retro.vcsnap</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
 				<array>
-					<string>vc64</string>
+					<string>vcsnap</string>
 				</array>
 			</dict>
 		</dict>
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.data</string>
+				<string>public.shell-script</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>RetroShell script</string>
 			<key>UTTypeIcons</key>
-			<dict/>
+			<dict>
+				<key>UTTypeIconBackgroundName</key>
+				<string>IconRainbow</string>
+				<key>UTTypeIconBadgeName</key>
+				<string>AppIcon</string>
+				<key>UTTypeIconText</key>
+				<string>RETROSHELL</string>
+			</dict>
 			<key>UTTypeIdentifier</key>
-			<string>de.dirkwhoffmann.retro.ini</string>
+			<string>de.dirkwhoffmann.retro.retrosh</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
 				<array>
-					<string>ini</string>
+					<string>retrosh</string>
 				</array>
 			</dict>
 		</dict>
@@ -296,8 +255,12 @@
 			<string>D64 image</string>
 			<key>UTTypeIcons</key>
 			<dict>
+				<key>UTTypeIconBackgroundName</key>
+				<string>IconRainbow</string>
 				<key>UTTypeIconBadgeName</key>
-				<string>IconD64</string>
+				<string>AppIcon</string>
+				<key>UTTypeIconText</key>
+				<string>D64</string>
 			</dict>
 			<key>UTTypeIdentifier</key>
 			<string>public.retro.d64</string>
@@ -319,9 +282,11 @@
 			<key>UTTypeIcons</key>
 			<dict>
 				<key>UTTypeIconBackgroundName</key>
-				<string></string>
+				<string>IconRainbow</string>
 				<key>UTTypeIconBadgeName</key>
-				<string>IconD64</string>
+				<string>AppIcon</string>
+				<key>UTTypeIconText</key>
+				<string>G64</string>
 			</dict>
 			<key>UTTypeIdentifier</key>
 			<string>public.retro.g64</string>
@@ -342,8 +307,12 @@
 			<string>T64 image</string>
 			<key>UTTypeIcons</key>
 			<dict>
+				<key>UTTypeIconBackgroundName</key>
+				<string>IconRainbow</string>
 				<key>UTTypeIconBadgeName</key>
-				<string>IconT64</string>
+				<string>AppIcon</string>
+				<key>UTTypeIconText</key>
+				<string>T64</string>
 			</dict>
 			<key>UTTypeIdentifier</key>
 			<string>public.retro.t64</string>
@@ -364,8 +333,12 @@
 			<string>PRG file</string>
 			<key>UTTypeIcons</key>
 			<dict>
+				<key>UTTypeIconBackgroundName</key>
+				<string>IconRainbow</string>
 				<key>UTTypeIconBadgeName</key>
-				<string>IconPRG</string>
+				<string>AppIcon</string>
+				<key>UTTypeIconText</key>
+				<string>PRG</string>
 			</dict>
 			<key>UTTypeIdentifier</key>
 			<string>public.retro.prg</string>
@@ -386,8 +359,12 @@
 			<string>P00</string>
 			<key>UTTypeIcons</key>
 			<dict>
+				<key>UTTypeIconBackgroundName</key>
+				<string>IconRainbow</string>
 				<key>UTTypeIconBadgeName</key>
-				<string>IconPRG</string>
+				<string>AppIcon</string>
+				<key>UTTypeIconText</key>
+				<string>P00</string>
 			</dict>
 			<key>UTTypeIdentifier</key>
 			<string>public.retro.p00</string>
@@ -408,8 +385,12 @@
 			<string>C64 Cartridge</string>
 			<key>UTTypeIcons</key>
 			<dict>
+				<key>UTTypeIconBackgroundName</key>
+				<string>IconRainbow</string>
 				<key>UTTypeIconBadgeName</key>
-				<string>IconCRT</string>
+				<string>AppIcon</string>
+				<key>UTTypeIconText</key>
+				<string>CRT</string>
 			</dict>
 			<key>UTTypeIdentifier</key>
 			<string>public.retro.crt</string>
@@ -430,8 +411,12 @@
 			<string>Tape image</string>
 			<key>UTTypeIcons</key>
 			<dict>
+				<key>UTTypeIconBackgroundName</key>
+				<string>IconRainbow</string>
 				<key>UTTypeIconBadgeName</key>
-				<string>IconT64</string>
+				<string>AppIcon</string>
+				<key>UTTypeIconText</key>
+				<string>TAP</string>
 			</dict>
 			<key>UTTypeIdentifier</key>
 			<string>public.retro.tap</string>

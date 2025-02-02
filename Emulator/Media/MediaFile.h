@@ -66,13 +66,13 @@ public:
     virtual u64 fnv64() const = 0;
     virtual u32 crc32() const = 0;
 
-    // Return a timestamp (if present)
+    // Returns a timestamp (if present)
     virtual time_t timestamp() const { return time_t(0); }
 
-    // Return the size of the preview image (only available for snapshot files)
+    // Returns the size of the preview image (only available for snapshot files)
     virtual std::pair <isize,isize> previewImageSize() const { return { 0, 0 }; }
 
-    // Return a preview image (only available for snapshot files)
+    // Returns a preview image (only available for snapshot files)
     virtual const u32 *previewImageData() const { return nullptr; }
 
     // Handels data compression (only implemented by snapshot files)

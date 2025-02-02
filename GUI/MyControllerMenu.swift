@@ -239,7 +239,7 @@ extension MyController: NSMenuItemValidation {
         // Power off the emulator if the user doesn't object
         if !askToPowerOff() { return }
 
-        myOpenPanel.configure(prompt: "Import", types: [ .ini ])
+        myOpenPanel.configure(types: [ .retrosh ], prompt: "Import")
         myOpenPanel.open(for: window, { result in
             
             if result == .OK, let url = self.myOpenPanel.url {
@@ -711,7 +711,7 @@ extension MyController: NSMenuItemValidation {
             // Ask user to continue if the current disk contains modified data
             if !proceedWithUnsavedFloppyDisk(drive: drive) { return }
 
-            myOpenPanel.configure(prompt: "Insert", types: [ .t64, .prg, .p00, .d64, .g64, .zip, .gzip ])
+            myOpenPanel.configure(types: [ .t64, .prg, .p00, .d64, .g64, .zip, .gzip ], prompt: "Insert")
             myOpenPanel.open(for: window, { result in
 
                 if result == .OK, let url = self.myOpenPanel.url {
@@ -897,28 +897,13 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func insertTapeAction(_ sender: Any!) {
         
-        myOpenPanel.configure(prompt: "Insert", types: [ .tap, .zip, .gzip ])
+        myOpenPanel.configure(types: [ .tap, .zip, .gzip ], prompt: "Insert")
         myOpenPanel.open(for: window, { result in
 
             if result == .OK, let url = self.myOpenPanel.url {
                 self.insertTapeAction(from: url)
             }
         })
-
-        /*
-        let openPanel = NSOpenPanel()
-        openPanel.allowsMultipleSelection = false
-        openPanel.canChooseDirectories = false
-        openPanel.canCreateDirectories = false
-        openPanel.canChooseFiles = true
-        openPanel.prompt = "Insert"
-        // openPanel.allowedContentTypes = [.tap, .zip, .gzip]
-        openPanel.beginSheetModal(for: window!, completionHandler: { result in
-            if result == .OK, let url = openPanel.url {
-                self.insertTapeAction(from: url)
-            }
-        })
-        */
     }
     
     @IBAction func insertRecentTapeAction(_ sender: NSMenuItem!) {
@@ -972,7 +957,7 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func attachCartridgeAction(_ sender: Any!) {
         
-        myOpenPanel.configure(prompt: "Insert", types: [ .crt, .zip, .gzip ])
+        myOpenPanel.configure(types: [ .crt, .zip, .gzip ], prompt: "Insert")
         myOpenPanel.open(for: window, { result in
 
             if result == .OK, let url = self.myOpenPanel.url {
@@ -983,28 +968,7 @@ extension MyController: NSMenuItemValidation {
                     self.showAlert(.cantAttach, error: error, async: true)
                 }
             }
-        })
-        
-        /*
-        let openPanel = NSOpenPanel()
-        openPanel.allowsMultipleSelection = false
-        openPanel.canChooseDirectories = false
-        openPanel.canCreateDirectories = false
-        openPanel.canChooseFiles = true
-        openPanel.prompt = "Attach"
-        // Note: macOS classifies CRT files as a .x509Certificate
-        openPanel.allowedContentTypes = [.crt, .zip, .gzip, .x509Certificate]
-        openPanel.beginSheetModal(for: window!, completionHandler: { result in
-            if result == .OK, let url = openPanel.url {
-
-                do {
-                    try self.mm.addMedia(url: url, allowedTypes: [ .CRT ])
-                } catch {
-                    self.showAlert(.cantAttach, error: error, async: true)
-                }
-            }
-        })
-        */
+        })        
     }
     
     @IBAction func attachRecentCartridgeAction(_ sender: NSMenuItem!) {

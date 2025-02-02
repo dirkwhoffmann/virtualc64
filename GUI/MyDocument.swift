@@ -11,8 +11,9 @@ import UniformTypeIdentifiers
 
 extension UTType {
 
-    static let vc64 = UTType("de.dirkwhoffmann.retro.vc64")!
-    static let ini = UTType("de.dirkwhoffmann.retro.ini")!
+    // static let workspace = UTType("de.dirkwhoffmann.retro.vc64")!
+    static let snapshot = UTType("de.dirkwhoffmann.retro.vcsnap")!
+    static let retrosh = UTType("de.dirkwhoffmann.retro.retrosh")!
     static let d64 = UTType("de.dirkwhoffmann.retro.d64")!
     static let g64 = UTType("de.dirkwhoffmann.retro.g64")!
     static let t64 = UTType("de.dirkwhoffmann.retro.t64")!
@@ -132,7 +133,7 @@ class MyDocument: NSDocument {
 
         debug(.media)
 
-        if typeName == UTType.vc64.identifier {
+        if typeName == UTType.snapshot.identifier {
 
             if let snapshot = MediaFileProxy.make(withC64: emu) {
 
