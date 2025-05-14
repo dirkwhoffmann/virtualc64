@@ -21,6 +21,7 @@
 		500634632C0EF1A400D60D96 /* DatasetteBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500634612C0EF1A400D60D96 /* DatasetteBase.cpp */; };
 		5007E1E826A70170000E7344 /* ParCable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5007E1E626A70170000E7344 /* ParCable.cpp */; };
 		5009CF3324C0B8EF00F674FF /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5009CF3224C0B8EF00F674FF /* Preferences.swift */; };
+		500A52B12DD4F93C00B06D23 /* BusPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500A52B02DD4F93800B06D23 /* BusPanel.swift */; };
 		500C1C752965D10F00071AF3 /* StrWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 501C46BD2965C54200C4B27B /* StrWriter.cpp */; };
 		500C1C762965D11000071AF3 /* StrWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 501C46BD2965C54200C4B27B /* StrWriter.cpp */; };
 		500C1C792965E7D300071AF3 /* PeddleDisassembler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500C1C772965E7D300071AF3 /* PeddleDisassembler.cpp */; };
@@ -560,6 +561,7 @@
 		5007E1E726A70170000E7344 /* ParCable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParCable.h; sourceTree = "<group>"; };
 		5007E1E926A7029A000E7344 /* ParCableTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParCableTypes.h; sourceTree = "<group>"; };
 		5009CF3224C0B8EF00F674FF /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		500A52B02DD4F93800B06D23 /* BusPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusPanel.swift; sourceTree = "<group>"; };
 		500C1C772965E7D300071AF3 /* PeddleDisassembler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PeddleDisassembler.cpp; sourceTree = "<group>"; };
 		500C1C782965E7D300071AF3 /* PeddleDisassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleDisassembler.h; sourceTree = "<group>"; };
 		500C7C43259FC09B00F5CC1F /* Error.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Error.h; sourceTree = "<group>"; };
@@ -1403,6 +1405,7 @@
 				50D3092324C7152700B92563 /* Inspector.swift */,
 				5038CA8E20B6C263000D9193 /* CPUPanel.swift */,
 				5038CA9020B6C281000D9193 /* MemoryPanel.swift */,
+				500A52B02DD4F93800B06D23 /* BusPanel.swift */,
 				5038CA9220B6C298000D9193 /* CIAPanel.swift */,
 				5038CA9420B6C2AC000D9193 /* VICPanel.swift */,
 				5038CA9620B6C2BE000D9193 /* SIDPanel.swift */,
@@ -2741,6 +2744,7 @@
 				504C43AA24AF29AC00E69CAE /* TOD.cpp in Sources */,
 				50726F2B295B61C50031F2F5 /* DebugConsole.cpp in Sources */,
 				50B7566C2617703100CE1865 /* RessourceManager.swift in Sources */,
+				500A52B12DD4F93C00B06D23 /* BusPanel.swift in Sources */,
 				506D4D0D20B331A00093C5C6 /* MyFormatter.swift in Sources */,
 				505A13382C35557100FF8D2C /* RS232Base.cpp in Sources */,
 				5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */,

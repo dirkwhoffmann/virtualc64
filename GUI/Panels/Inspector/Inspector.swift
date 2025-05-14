@@ -356,12 +356,13 @@ class Inspector: DialogController {
 
             switch id {
                 
-            case "CPU": refreshCPU(count: count, full: full)
-            case "CIA": refreshCIA(count: count, full: full)
-            case "Memory": refreshMemory(count: count, full: full)
-            case "VICII": refreshVIC(count: count, full: full)
-            case "SID": refreshSID(count: count, full: full)
-            case "Events": refreshEvents(count: count, full: full)
+            case "CPU":     refreshCPU(count: count, full: full)
+            case "Memory":  refreshMemory(count: count, full: full)
+            case "Bus":     refreshBus(count: count, full: full)
+            case "CIA":     refreshCIA(count: count, full: full)
+            case "VICII":   refreshVIC(count: count, full: full)
+            case "SID":     refreshSID(count: count, full: full)
+            case "Events":  refreshEvents(count: count, full: full)
 
             default:
                 break
@@ -517,6 +518,7 @@ extension Inspector: NSTabViewDelegate {
                 
             case "CPU":     c64?.autoInspectionMask = mask([.CPUClass])
             case "Memory":  c64?.autoInspectionMask = mask([.MemoryClass])
+            case "Bus":     c64?.autoInspectionMask = mask([.VICIIClass])
             case "CIA":     c64?.autoInspectionMask = mask([.CIAClass])
             case "VICII":   c64?.autoInspectionMask = mask([.VICIIClass])
             case "SID":     c64?.autoInspectionMask = mask([.SIDClass])
