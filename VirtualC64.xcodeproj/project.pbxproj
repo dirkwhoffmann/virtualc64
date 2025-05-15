@@ -1404,8 +1404,8 @@
 		50157EF92825B0EC000E9DDD /* Inspector */ = {
 			isa = PBXGroup;
 			children = (
-				50DA1BBB2DD5B80400004964 /* InspectorToolbar.swift */,
 				50D3092324C7152700B92563 /* Inspector.swift */,
+				50DA1BBB2DD5B80400004964 /* InspectorToolbar.swift */,
 				5038CA8E20B6C263000D9193 /* CPUPanel.swift */,
 				5038CA9020B6C281000D9193 /* MemoryPanel.swift */,
 				500A52B02DD4F93800B06D23 /* BusPanel.swift */,

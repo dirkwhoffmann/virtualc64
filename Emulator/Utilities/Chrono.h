@@ -13,6 +13,7 @@
 #pragma once
 
 #include "BasicTypes.h"
+#include <chrono>
 #include <ctime>
 
 namespace vc64::util {

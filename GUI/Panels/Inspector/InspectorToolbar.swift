@@ -37,10 +37,11 @@ class InspectorToolbar: NSToolbar {
     
     func updateToolbar(full: Bool) {
         
-        /*
-        let frame = inspector.agnusInfo.frame
-        let vpos = inspector.agnusInfo.vpos
-        let hpos = inspector.agnusInfo.hpos
+        let info = emu.c64.info
+        
+        let frame = info.frame
+        let vpos = info.vpos
+        let hpos = info.hpos
         
         if full {
                     
@@ -54,7 +55,6 @@ class InspectorToolbar: NSToolbar {
             format = inspector.padding ? "%d:%03d:%03d" : "%d:%d:%d"
         }
         timeStamp.title = String(format: format, frame, vpos, hpos)
-        */
     }
     
     //
@@ -65,11 +65,9 @@ class InspectorToolbar: NSToolbar {
     func panelAction(_ sender: Any) {
 
         print("panelAction")
-        /*
         if let popup = sender as? NSPopUpButton {
             inspector.selectPanel(popup.selectedTag())
         }
-        */
     }
  
     @IBAction
@@ -77,11 +75,9 @@ class InspectorToolbar: NSToolbar {
 
         print("formatAction")
 
-        /*
         if let popup = sender as? NSPopUpButton {
             inspector.format = popup.selectedTag()
         }
-        */
     }
 
     @IBAction
@@ -89,19 +85,17 @@ class InspectorToolbar: NSToolbar {
         
         print("execAction")
 
-        /*
         switch sender.selectedSegment {
             
         case 0: emu.running ? emu.pause() : try? emu.run()
         case 1: emu.stepOver()
         case 2: emu.stepInto()
-        case 3: emu.finishLine()
-        case 4: emu.finishFrame()
+        // case 3: emu.finishLine()
+        // case 4: emu.finishFrame()
             
         default:
             fatalError()
         }
-        */
     }
     
     @IBAction

@@ -392,6 +392,15 @@ class Inspector: DialogController {
         toolbar?.updateToolbar(full: full)
     }
     
+    func selectPanel(_ nr: Int) {
+        
+        if nr <  panel.numberOfTabViewItems {
+
+            panel.selectTabViewItem(at: nr)
+            fullRefresh()
+        }
+    }
+    
     func scrollToPC() {
 
         if cpuInfo != nil {
