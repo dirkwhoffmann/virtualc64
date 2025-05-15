@@ -1375,6 +1375,18 @@ public:
      */
     void stepOver();
 
+    /** @brief  Fnishes the current rasterline
+     *
+     *  Calling this functions runs the CPU until the end of the current rasterline.
+     */
+    void finishLine();
+    
+    /** @brief  Fnishes the current frame
+     *
+     *  Calling this functions runs the CPU until the end of the current frame.
+     */
+    void finishFrame();
+    
 
     /// @}
     /// @name Synchronizing the emulator thread

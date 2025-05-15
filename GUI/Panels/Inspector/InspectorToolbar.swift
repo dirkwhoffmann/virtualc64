@@ -90,8 +90,8 @@ class InspectorToolbar: NSToolbar {
         case 0: emu.running ? emu.pause() : try? emu.run()
         case 1: emu.stepOver()
         case 2: emu.stepInto()
-        // case 3: emu.finishLine()
-        // case 4: emu.finishFrame()
+        case 3: emu.finishLine()
+        case 4: emu.finishFrame()
             
         default:
             fatalError()

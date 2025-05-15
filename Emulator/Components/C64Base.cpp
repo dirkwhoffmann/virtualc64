@@ -97,6 +97,8 @@ C64::_dump(Category category, std::ostream& os) const
         if (flags & RL::WATCHPOINT)     str = append(str, "WATCHPOINT");
         if (flags & RL::CPU_JAM)        str = append(str, "CPU_JAM");
         if (flags & RL::SINGLE_STEP)    str = append(str, "SINGLE_STEP");
+        if (flags & RL::FINISH_LINE)    str = append(str, "FINISH_LINE");
+        if (flags & RL::FINISH_FRAME)   str = append(str, "FINISH_FRAME");
 
         os << tab("Runloop flags");
         os << (str.empty() ? "-" : str) << std::endl;

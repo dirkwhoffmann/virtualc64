@@ -891,6 +891,26 @@ C64::processFlags()
         }
     }
 
+    if (flags & RL::FINISH_LINE) {
+        
+        if (rasterCycle == vic.getCyclesPerLine()) {
+
+            clearFlag(RL::FINISH_LINE);
+            msgQueue.put(MSG_EOL_TRAP);
+            interrupt = true;
+        }
+    }
+    
+    if (flags & RL::FINISH_FRAME) {
+        
+        if (scanline + 1 == vic.getLinesPerFrame() && rasterCycle == vic.getCyclesPerLine()) {
+            
+            clearFlag(RL::FINISH_FRAME);
+            msgQueue.put(MSG_EOF_TRAP);
+            interrupt = true;
+        }
+    }
+
     if (interrupt) throw StateChangeException(STATE_PAUSED);
 }
 

@@ -294,7 +294,19 @@ VirtualC64::stepOver()
     emu->stepOver();
 }
 
-void 
+void
+VirtualC64::finishLine()
+{
+    emu->finishLine();
+}
+
+void
+VirtualC64::finishFrame()
+{
+    emu->finishFrame();
+}
+
+void
 VirtualC64::wakeUp()
 {
     emu->wakeUp();

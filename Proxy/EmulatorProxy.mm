@@ -2040,6 +2040,16 @@ using namespace vc64;
     [self emu]->stepOver();
 }
 
+- (void)finishLine
+{
+    [self emu]->finishLine();
+}
+
+- (void)finishFrame
+{
+    [self emu]->finishFrame();
+}
+
 - (BOOL) isRom:(RomType)type url:(NSURL *)url
 {
     auto fileType = MediaFile::type([url fileSystemRepresentation]);

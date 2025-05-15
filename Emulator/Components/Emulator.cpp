@@ -112,6 +112,22 @@ Emulator::stepOver()
 }
 
 void
+Emulator::finishLine()
+{
+    if (isRunning()) return;
+    main.setFlag(RL::FINISH_LINE);
+    run();
+}
+
+void
+Emulator::finishFrame()
+{
+    if (isRunning()) return;
+    main.setFlag(RL::FINISH_FRAME);
+    run();
+}
+
+void
 Emulator::revertToFactorySettings()
 {
     // Setup the default configuration

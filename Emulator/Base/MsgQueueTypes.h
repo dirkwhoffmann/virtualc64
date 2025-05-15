@@ -32,6 +32,8 @@ enum_long(MSG_TYPE)
     MSG_RUN,                ///< The emulator has entered STATE_RUNNING
     MSG_PAUSE,              ///< The emulator has entered STATE_PAUSED
     MSG_STEP,               ///< The emulator has stepped a single instruction
+    MSG_EOL_TRAP,           ///< The emulator has been paused at the end of the current line
+    MSG_EOF_TRAP,           ///< The emulator has been paused at the end of the current frame
     MSG_RESET,              ///< The emulator has been reset
     MSG_SHUTDOWN,           ///< The emulator has been shut down
     MSG_ABORT,              ///< The emulator requests the GUI to quit the app

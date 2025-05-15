@@ -184,6 +184,8 @@ using namespace vc64;
 
 - (void)stepInto;
 - (void)stepOver;
+- (void)finishLine;
+- (void)finishFrame;
 
 - (void)launch:(const void *)listener function:(Callback *)func;
 - (void)wakeUp;

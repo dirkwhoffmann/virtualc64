@@ -343,6 +343,9 @@ extension MyController {
             needsSaving = true
             inspector?.step()
 
+        case .EOL_TRAP, .EOF_TRAP:
+            inspector?.step()
+
         case .RESET:
             inspector?.reset()
 
