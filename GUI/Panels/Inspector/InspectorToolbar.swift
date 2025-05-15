@@ -22,7 +22,6 @@ class InspectorToolbar: NSToolbar {
     
     override func validateVisibleItems() {
 
-        /*
         // Update icons
         let running = emu.running
         let label = running ? "Pause" : "Run"
@@ -34,7 +33,6 @@ class InspectorToolbar: NSToolbar {
         // Disable shrinked popup buttons to prevent macOS from crashing
         selectorPopup.isEnabled = selectorToolbarItem.isVisible
         formatPopup.isEnabled = formatToolbarItem.isVisible
-        */
     }
     
     func updateToolbar(full: Bool) {
@@ -66,6 +64,7 @@ class InspectorToolbar: NSToolbar {
     @IBAction
     func panelAction(_ sender: Any) {
 
+        print("panelAction")
         /*
         if let popup = sender as? NSPopUpButton {
             inspector.selectPanel(popup.selectedTag())
@@ -75,6 +74,8 @@ class InspectorToolbar: NSToolbar {
  
     @IBAction
     func formatAction(_ sender: Any) {
+
+        print("formatAction")
 
         /*
         if let popup = sender as? NSPopUpButton {
@@ -86,6 +87,8 @@ class InspectorToolbar: NSToolbar {
     @IBAction
     func execAction(_ sender: NSSegmentedControl) {
         
+        print("execAction")
+
         /*
         switch sender.selectedSegment {
             
@@ -104,15 +107,17 @@ class InspectorToolbar: NSToolbar {
     @IBAction
     func plusAction(_ sender: NSButton) {
 
+        print("plusAction")
+
         /*
         inspector.parent.addInspector()
          */
     }
     
+    /*
     @IBAction
     func hexAction(_ sender: NSButton) {
         
-        /*
         if sender.state == .on {
             
             emu.set(.CPU_DASM_NUMBERS, value: DasmNumbers.HEX.rawValue)
@@ -123,6 +128,6 @@ class InspectorToolbar: NSToolbar {
             emu.set(.CPU_DASM_NUMBERS, value: DasmNumbers.DEC.rawValue)
             inspector.hex = false
         }
-        */
     }
+    */
 }

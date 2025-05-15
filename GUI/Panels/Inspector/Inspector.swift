@@ -7,28 +7,57 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-// Number formatters
-let fmt8b  = MyFormatter(radix: 2, min: 0, max: 0xFF)
-
-let fmt3d  = MyFormatter(radix: 10, min: 0, max: 0x7)
-let fmt4d  = MyFormatter(radix: 10, min: 0, max: 0xF)
-let fmt6d  = MyFormatter(radix: 10, min: 0, max: 0x3F)
-let fmt8d  = MyFormatter(radix: 10, min: 0, max: 0xFF)
-let fmt9d  = MyFormatter(radix: 10, min: 0, max: 0x1FF)
-let fmt10d = MyFormatter(radix: 10, min: 0, max: 0x3FF)
-let fmt12d = MyFormatter(radix: 10, min: 0, max: 0xFFF)
-let fmt16d = MyFormatter(radix: 10, min: 0, max: 0xFFFF)
-
-let fmt3x  = MyFormatter(radix: 16, min: 0, max: 0x7)
-let fmt4x  = MyFormatter(radix: 16, min: 0, max: 0xF)
-let fmt6x  = MyFormatter(radix: 16, min: 0, max: 0x3F)
-let fmt8x  = MyFormatter(radix: 16, min: 0, max: 0xFF)
-let fmt9x  = MyFormatter(radix: 16, min: 0, max: 0x1FF)
-let fmt10x = MyFormatter(radix: 16, min: 0, max: 0x3FF)
-let fmt12x = MyFormatter(radix: 16, min: 0, max: 0xFFF)
-let fmt16x = MyFormatter(radix: 16, min: 0, max: 0xFFFF)
-
 class Inspector: DialogController {
+
+    let fmt3  = MyFormatter(radix: 16, min: 0, max: 0x7)
+    let fmt4  = MyFormatter(radix: 16, min: 0, max: 0xF)
+    let fmt6  = MyFormatter(radix: 16, min: 0, max: 0x3F)
+    let fmt8  = MyFormatter(radix: 16, min: 0, max: 0xFF)
+    let fmt9  = MyFormatter(radix: 16, min: 0, max: 0x1FF)
+    let fmt10 = MyFormatter(radix: 16, min: 0, max: 0x3FF)
+    let fmt12 = MyFormatter(radix: 16, min: 0, max: 0xFFF)
+    let fmt16 = MyFormatter(radix: 16, min: 0, max: 0xFFFF)
+    let fmt8b = MyFormatter(radix: 2, min: 0, max: 0xFF)
+    let fmt16b = MyFormatter(radix: 2, min: 0, max: 0xFFFF)
+
+    var format = 0 {
+        didSet {
+            switch format {
+            case 0: hex = true; padding = false
+            case 1: hex = true; padding = true
+            case 2: hex = false; padding = false
+            case 3: hex = false; padding = true
+            default:
+                fatalError()
+            }
+        }
+    }
+    var hex = true {
+        didSet {
+            fmt3.radix = hex ? 16 : 10
+            fmt4.radix = hex ? 16 : 10
+            fmt6.radix = hex ? 16 : 10
+            fmt8.radix = hex ? 16 : 10
+            fmt9.radix = hex ? 16 : 10
+            fmt12.radix = hex ? 16 : 10
+            fmt16.radix = hex ? 16 : 10
+            // emu.set(.CPU_DASM_NUMBERS,
+            //         value: (hex ? DasmNumbers.HEX : DasmNumbers.DEC).rawValue)
+            fullRefresh()
+        }
+    }
+    var padding = false {
+        didSet {
+            fmt3.padding = padding
+            fmt4.padding = padding
+            fmt6.padding = padding
+            fmt8.padding = padding
+            fmt9.padding = padding
+            fmt12.padding = padding
+            fmt16.padding = padding
+            fullRefresh()
+        }
+    }
     
     // Commons
     @IBOutlet weak var panel: NSTabView!
@@ -295,17 +324,6 @@ class Inspector: DialogController {
     var isRunning = true
     
     var toolbar: InspectorToolbar? { return window?.toolbar as? InspectorToolbar }
-
-    // Number format selection (hexadecimal or decimal)
-    var hex = true
-    var fmt3: MyFormatter { return hex ? fmt3x : fmt3d }
-    var fmt4: MyFormatter { return hex ? fmt4x : fmt4d }
-    var fmt6: MyFormatter { return hex ? fmt6x : fmt6d }
-    var fmt8: MyFormatter { return hex ? fmt8x : fmt8d }
-    var fmt9: MyFormatter { return hex ? fmt9x : fmt9d }
-    var fmt10: MyFormatter { return hex ? fmt10x : fmt10d }
-    var fmt12: MyFormatter { return hex ? fmt12x : fmt12d }
-    var fmt16: MyFormatter { return hex ? fmt16x : fmt16d }
 
     // Used to determine the items to be refreshed
     var refreshCnt = 0

@@ -9,41 +9,93 @@
 
 class MyFormatter: Formatter {
     
-    var radix: Int
-    var minValue: Int
-    var maxValue: Int
-    var format: String
+    var radix = 0 { didSet { updateFormatString() } }
+    var padding = false { didSet { updateFormatString() } }
+    var minValue = 0
+    var maxValue = 0
+    var format = ""
+    
+    func toBinary(value: Int, digits: Int) -> String {
+        
+        var result = ""
+        
+        for i in (0 ..< digits).reversed() {
+        
+            result += (value & (1 << i)) != 0 ? "1" : "0"
+        }
+        
+        return result
+    }
     
     init(radix: Int, min: Int, max: Int) {
+
+        super.init()
 
         self.radix = radix
         self.minValue = min
         self.maxValue = max
         
-        if radix == 10 {
-
-            format =
-                (maxValue < 10) ? "%01d" :
-                (maxValue < 100) ? "%02d" :
-                (maxValue < 1000) ? "%03d" :
-                (maxValue < 10000) ? "%04d" :
-                (maxValue < 100000) ? "%05d" : "???"
-    
-        } else {
-            
-            format =
-                (maxValue < 0x10) ? "%01X" :
-                (maxValue < 0x100) ? "%02X" :
-                (maxValue < 0x1000) ? "%03X" :
-                (maxValue < 0x10000) ? "%04X" :
-                (maxValue < 0x100000) ? "%05X" : "???"
-        }
-  
-        super.init()
+        updateFormatString()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func updateFormatString() {
+    
+        if radix == 10 && padding == false {
+            
+            format =
+            (maxValue < 0x10) ? "%2u" :
+            (maxValue < 0x100) ? "%3u" :
+            (maxValue < 0x1000) ? "%4u" :
+            (maxValue < 0x10000) ? "%5u" :
+            (maxValue < 0x100000) ? "%7u" :
+            (maxValue < 0x1000000) ? "%8u" :
+            (maxValue < 0x10000000) ? "%9u" :
+            (maxValue < 0x100000000) ? "%10u" : "???"
+            
+        } else if radix == 10 && padding == true {
+            
+            format =
+            (maxValue < 0x10) ? "%02u" :
+            (maxValue < 0x100) ? "%03u" :
+            (maxValue < 0x1000) ? "%04u" :
+            (maxValue < 0x10000) ? "%05u" :
+            (maxValue < 0x100000) ? "%07u" :
+            (maxValue < 0x1000000) ? "%08u" :
+            (maxValue < 0x10000000) ? "%09u" :
+            (maxValue < 0x100000000) ? "%010u" : "???"
+
+        } else if radix == 16 && padding == false {
+            
+            format =
+            (maxValue < 0x10) ? "%1X" :
+            (maxValue < 0x100) ? "%2X" :
+            (maxValue < 0x1000) ? "%3X" :
+            (maxValue < 0x10000) ? "%4X" :
+            (maxValue < 0x100000) ? "%5X" :
+            (maxValue < 0x1000000) ? "%6X" :
+            (maxValue < 0x10000000) ? "%7X" :
+            (maxValue < 0x100000000) ? "%8X" : "???"
+
+        } else if radix == 16 && padding == true {
+            
+            format =
+            (maxValue < 0x10) ? "%01X" :
+            (maxValue < 0x100) ? "%02X" :
+            (maxValue < 0x1000) ? "%03X" :
+            (maxValue < 0x10000) ? "%04X" :
+            (maxValue < 0x100000) ? "%05X" :
+            (maxValue < 0x1000000) ? "%06X" :
+            (maxValue < 0x10000000) ? "%07X" :
+            (maxValue < 0x100000000) ? "%08X" : "???"
+            
+        } else {
+            
+            format = "Invalid"
+        }
     }
     
     override func isPartialStringValid(_ partialString: String, newEditingString newString: AutoreleasingUnsafeMutablePointer<NSString?>?, errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
@@ -62,35 +114,25 @@ class MyFormatter: Formatter {
         obj?.pointee = result as AnyObject?
         return true
     }
-        
+            
     override func string(for obj: Any?) -> String? {
     
-        if let number = obj as? Int { return string(for: number) }
-        if let text = obj as? String { return text }
-        
-        return nil
-    }
-    
-    func string(for number: Int) -> String? {
+        guard let number = obj as? Int else {
+            return nil
+        }
         
         switch radix {
-        case 2:
-            let bits: [Character] = [number & 0x80 != 0 ? "1" : "0",
-                                     number & 0x40 != 0 ? "1" : "0",
-                                     number & 0x20 != 0 ? "1" : "0",
-                                     number & 0x10 != 0 ? "1" : "0",
-                                     number & 0x08 != 0 ? "1" : "0",
-                                     number & 0x04 != 0 ? "1" : "0",
-                                     number & 0x02 != 0 ? "1" : "0",
-                                     number & 0x01 != 0 ? "1" : "0"]
-            return String(bits)
+        case 2 where maxValue == 0xFF:
+            return toBinary(value: number, digits: 8)
+                        
+        case 2 where maxValue == 0xFFFF:
+            return toBinary(value: number, digits: 16)
             
         case 10, 16:
             return String(format: format, number)
 
         default:
-            assert(false)
-            return "?"
+            fatalError()
         }
     }
 }
