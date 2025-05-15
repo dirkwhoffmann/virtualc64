@@ -294,6 +294,8 @@ class Inspector: DialogController {
     var eventInfo: vc64.C64Info!
     var isRunning = true
     
+    var toolbar: InspectorToolbar? { return window?.toolbar as? InspectorToolbar }
+
     // Number format selection (hexadecimal or decimal)
     var hex = true
     var fmt3: MyFormatter { return hex ? fmt3x : fmt3d }
@@ -368,6 +370,8 @@ class Inspector: DialogController {
                 break
             }
         }
+        
+        toolbar?.updateToolbar(full: full)
     }
     
     func scrollToPC() {
