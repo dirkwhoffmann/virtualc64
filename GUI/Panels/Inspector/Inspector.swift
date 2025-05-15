@@ -61,11 +61,7 @@ class Inspector: DialogController {
     
     // Commons
     @IBOutlet weak var panel: NSTabView!
-    @IBOutlet weak var stopAndGoButton: NSButton!
-    @IBOutlet weak var stepIntoButton: NSButton!
-    @IBOutlet weak var stepOverButton: NSButton!
     @IBOutlet weak var message: NSTextField!
-    @IBOutlet weak var hexDecSelector: NSMatrix!
 
     // CPU panel
     @IBOutlet weak var cpuTab: NSTabView!
@@ -356,20 +352,6 @@ class Inspector: DialogController {
         
         if full {
 
-            if emu?.running ?? false {
-
-                stopAndGoButton.image = NSImage(named: "pauseTemplate")
-                stopAndGoButton.toolTip = "Pause"
-                stepIntoButton.isEnabled = false
-                stepOverButton.isEnabled = false
-
-            } else {
-
-                stopAndGoButton.image = NSImage(named: "runTemplate")
-                stopAndGoButton.toolTip = "Run"
-                stepIntoButton.isEnabled = true
-                stepOverButton.isEnabled = true
-            }
         }
 
         if let id = panel.selectedTabViewItem?.label {
@@ -479,39 +461,6 @@ class Inspector: DialogController {
     @IBAction func refreshAction(_ sender: NSButton!) {
 
         refresh()
-    }
-
-    @IBAction func stopAndGoAction(_ sender: NSButton!) {
-
-        if let emu = emu {
-            if emu.running { emu.pause() } else { try? emu.run() }
-        }
-    }
-    
-    @IBAction func stepIntoAction(_ sender: NSButton!) {
-
-        if let emu = emu {
-            emu.stepInto()
-        }
-    }
-    
-    @IBAction func stepOverAction(_ sender: NSButton!) {
-
-        if let emu = emu {
-            emu.stepOver()
-        }
-    }
-    
-    @IBAction func hexAction(_ sender: NSButtonCell!) {
-        
-        hex = true
-        refresh(full: true)
-    }
-
-    @IBAction func decAction(_ sender: NSButtonCell!) {
-        
-        hex = false
-        refresh(full: true)
     }
 }
 

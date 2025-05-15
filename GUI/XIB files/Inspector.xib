@@ -99,7 +99,6 @@
                 <outlet property="evCpuProgress" destination="Ch7-St-52g" id="inm-3q-jjz"/>
                 <outlet property="evTableView" destination="igj-n2-UYG" id="9EN-Bz-pIm"/>
                 <outlet property="evVicProgress" destination="0Ps-Km-KKZ" id="Zif-yW-AsM"/>
-                <outlet property="hexDecSelector" destination="I8k-0V-ELF" id="yN0-mY-F0B"/>
                 <outlet property="latchedLPX" destination="HeV-9l-nvo" id="4nb-sl-IYm"/>
                 <outlet property="latchedLPY" destination="o0D-sk-T7O" id="VXR-hx-x5y"/>
                 <outlet property="memBankTableView" destination="Dol-9l-TFV" id="mIl-bO-l2b"/>
@@ -190,9 +189,6 @@
                 <outlet property="sprSelector" destination="EZb-5s-Pgg" id="AHm-np-2Eb"/>
                 <outlet property="sprX" destination="qpd-Tj-dnU" id="nBB-VU-SBZ"/>
                 <outlet property="sprY" destination="XJd-h2-TLR" id="ZzH-fB-s05"/>
-                <outlet property="stepIntoButton" destination="EYA-b4-jd8" id="X7c-oQ-vYS"/>
-                <outlet property="stepOverButton" destination="XcS-nk-XBp" id="Blq-Hv-IZy"/>
-                <outlet property="stopAndGoButton" destination="DQ4-Ah-ce3" id="hhb-ps-zLf"/>
                 <outlet property="vicBadLine" destination="rwy-dP-ExT" id="sxv-Tp-qqI"/>
                 <outlet property="vicBgColor0" destination="39J-Yj-f8L" id="gtk-bG-Nn0"/>
                 <outlet property="vicBgColor1" destination="1i7-gj-9fe" id="HdG-Av-j9s"/>
@@ -245,80 +241,16 @@
         <window title="Inspector" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" toolbarStyle="unified" titleVisibility="hidden" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="868" height="476"/>
+            <rect key="contentRect" x="196" y="240" width="868" height="440"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1728" height="1079"/>
-            <value key="minSize" type="size" width="868" height="468"/>
+            <value key="minSize" type="size" width="868" height="440"/>
             <value key="maxSize" type="size" width="868" height="4096"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="868" height="476"/>
+                <rect key="frame" x="0.0" y="0.0" width="868" height="440"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <button toolTip="Step Into" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EYA-b4-jd8">
-                        <rect key="frame" x="87" y="10" width="34" height="34"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="stepIntoTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="r8o-lg-ef1">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="stepIntoAction:" target="-2" id="bOg-cT-04x"/>
-                        </connections>
-                    </button>
-                    <button toolTip="Run / Pause" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DQ4-Ah-ce3">
-                        <rect key="frame" x="19" y="10" width="34" height="34"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="pauseTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="vTp-Cf-cv9">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="stopAndGoAction:" target="-2" id="oUg-06-RUz"/>
-                        </connections>
-                    </button>
-                    <button toolTip="Step Over" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XcS-nk-XBp">
-                        <rect key="frame" x="53" y="10" width="34" height="34"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="stepOverTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="BIq-PM-Ogu">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="stepOverAction:" target="-2" id="pzu-q5-a7c"/>
-                        </connections>
-                    </button>
-                    <matrix verticalHuggingPriority="750" fixedFrame="YES" allowsEmptySelection="NO" autosizesCells="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I8k-0V-ELF">
-                        <rect key="frame" x="750" y="16" width="98" height="22"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        <size key="cellSize" width="49" height="22"/>
-                        <size key="intercellSpacing" width="0.0" height="1"/>
-                        <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="hc3-wh-ttD">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <cells>
-                            <column>
-                                <buttonCell type="radio" title="Hex" imagePosition="left" alignment="left" controlSize="small" lineBreakMode="charWrapping" state="on" inset="2" id="z5F-yg-azq">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="controlContent" size="11"/>
-                                    <connections>
-                                        <action selector="hexAction:" target="-2" id="xYb-tw-vkA"/>
-                                    </connections>
-                                </buttonCell>
-                            </column>
-                            <column>
-                                <buttonCell type="radio" title="Dec" imagePosition="left" alignment="left" controlSize="small" inset="2" id="jcr-RG-rX5">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="controlContent" size="11"/>
-                                    <connections>
-                                        <action selector="decAction:" target="-2" id="092-os-S0x"/>
-                                    </connections>
-                                </buttonCell>
-                            </column>
-                        </cells>
-                    </matrix>
                     <tabView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QhJ-8A-HRo">
-                        <rect key="frame" x="13" y="39" width="842" height="428"/>
+                        <rect key="frame" x="13" y="3" width="842" height="428"/>
                         <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
@@ -4300,7 +4232,7 @@
                         </connections>
                     </tabView>
                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SRP-bu-eZG">
-                        <rect key="frame" x="121" y="20" width="576" height="16"/>
+                        <rect key="frame" x="121" y="-16" width="576" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" id="cMK-ob-Mzd">
                             <font key="font" metaFont="system"/>
@@ -4441,13 +4373,12 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="v3S-Mn-i2i"/>
             </connections>
-            <point key="canvasLocation" x="139" y="151"/>
+            <point key="canvasLocation" x="139" y="132.5"/>
         </window>
     </objects>
     <resources>
         <image name="NSListViewTemplate" width="21" height="15"/>
         <image name="monitorTemplate" width="36" height="36"/>
-        <image name="pauseTemplate" width="36" height="36"/>
         <image name="plus" catalog="system" width="14" height="13"/>
         <image name="runTemplate" width="177" height="177"/>
         <image name="stepFrameTemplate" width="242" height="241"/>
