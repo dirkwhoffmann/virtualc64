@@ -2040,6 +2040,11 @@ using namespace vc64;
     [self emu]->stepOver();
 }
 
+- (void)stepCycle
+{
+    [self emu]->stepCycle();
+}
+
 - (void)finishLine
 {
     [self emu]->finishLine();

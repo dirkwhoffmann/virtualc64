@@ -184,6 +184,7 @@ using namespace vc64;
 
 - (void)stepInto;
 - (void)stepOver;
+- (void)stepCycle;
 - (void)finishLine;
 - (void)finishFrame;
 

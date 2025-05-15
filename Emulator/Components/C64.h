@@ -548,9 +548,6 @@ public:
     void signalJammed() { setFlag(RL::CPU_JAM); }
     void signalStop() { setFlag(RL::STOP); }
 
-    // Executes a single clock cycle.
-    void executeOneCycle();
-
 private:
 
     // Invoked after executing the last cycle of a scanline

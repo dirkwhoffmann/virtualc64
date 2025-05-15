@@ -1375,6 +1375,12 @@ public:
      */
     void stepOver();
 
+    /** @brief  Steps one cycle
+     *
+     *  Calling this functions runs the CPU for a single cycle.
+     */
+    void stepCycle();
+    
     /** @brief  Fnishes the current rasterline
      *
      *  Calling this functions runs the CPU until the end of the current rasterline.

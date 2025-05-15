@@ -295,6 +295,12 @@ VirtualC64::stepOver()
 }
 
 void
+VirtualC64::stepCycle()
+{
+    emu->stepCycle();
+}
+
+void
 VirtualC64::finishLine()
 {
     emu->finishLine();

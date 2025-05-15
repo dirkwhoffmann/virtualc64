@@ -324,6 +324,38 @@ class Inspector: DialogController {
     // Used to determine the items to be refreshed
     var refreshCnt = 0
         
+    deinit {
+        debug(.lifetime)
+    }
+    
+    override func dialogWillShow() {
+        
+        super.dialogWillShow()
+        
+        // Hide the panel selector
+        // panel.tabPosition = .none
+   
+        // Enter debug mode
+        emu?.trackOn()
+        emu?.set(.MEM_HEATMAP, enable: true)
+        updateInspectionTarget()
+        
+        // Adjust window height to match what we see in interface builder
+        if let window = self.window {
+            
+            let contentHeight: CGFloat = 440
+            let toolbarHeight = window.frame.height - window.contentView!.frame.height
+            let totalHeight = contentHeight + toolbarHeight
+            
+            var frame = window.frame
+            frame.size.height = totalHeight
+            window.setFrame(frame, display: true)
+        }
+        
+        jumpTo(addr: 0)
+    }
+    
+    /*
     override func showWindow(_ sender: Any?) {
 
         super.showWindow(self)
@@ -333,7 +365,14 @@ class Inspector: DialogController {
         emu?.set(.MEM_HEATMAP, enable: true)
         updateInspectionTarget()
     }
+    */
+    
+    override func dialogDidShow() {
         
+        super.dialogDidShow()
+        refresh(full: true)
+    }
+    
     func fullRefresh() {
         
         refresh(full: true)

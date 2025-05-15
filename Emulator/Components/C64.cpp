@@ -891,6 +891,13 @@ C64::processFlags()
         }
     }
 
+    if (flags & RL::SINGLE_CYCLE) {
+        
+        clearFlag(RL::SINGLE_CYCLE);
+        msgQueue.put(MSG_STEP);
+        interrupt = true;
+    }
+    
     if (flags & RL::FINISH_LINE) {
         
         if (rasterCycle == vic.getCyclesPerLine()) {
@@ -1077,14 +1084,6 @@ C64::setAutoInspectionMask(u64 mask)
         data[SLOT_INS] = 0;
         cancel<SLOT_INS>();
     }
-}
-
-void
-C64::executeOneCycle()
-{
-    setFlag(RL::SINGLE_STEP);
-    computeFrame();
-    clearFlag(RL::SINGLE_STEP);
 }
 
 void

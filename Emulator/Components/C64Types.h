@@ -339,8 +339,9 @@ constexpr u32 BREAKPOINT    = (1 << 3);
 constexpr u32 WATCHPOINT    = (1 << 4);
 constexpr u32 CPU_JAM       = (1 << 5);
 constexpr u32 SINGLE_STEP   = (1 << 6);
-constexpr u32 FINISH_LINE   = (1 << 7);
-constexpr u32 FINISH_FRAME  = (1 << 8);
+constexpr u32 SINGLE_CYCLE  = (1 << 7);
+constexpr u32 FINISH_LINE   = (1 << 8);
+constexpr u32 FINISH_FRAME  = (1 << 9);
 }
 
 }

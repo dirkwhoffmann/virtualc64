@@ -112,6 +112,14 @@ Emulator::stepOver()
 }
 
 void
+Emulator::stepCycle()
+{
+    if (isRunning()) return;
+    main.setFlag(RL::SINGLE_CYCLE);
+    run();
+}
+
+void
 Emulator::finishLine()
 {
     if (isRunning()) return;
