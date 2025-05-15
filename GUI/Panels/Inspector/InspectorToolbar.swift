@@ -64,7 +64,6 @@ class InspectorToolbar: NSToolbar {
     @IBAction
     func panelAction(_ sender: Any) {
 
-        print("panelAction")
         if let popup = sender as? NSPopUpButton {
             inspector.selectPanel(popup.selectedTag())
         }
@@ -72,8 +71,6 @@ class InspectorToolbar: NSToolbar {
  
     @IBAction
     func formatAction(_ sender: Any) {
-
-        print("formatAction")
 
         if let popup = sender as? NSPopUpButton {
             inspector.format = popup.selectedTag()
@@ -83,8 +80,6 @@ class InspectorToolbar: NSToolbar {
     @IBAction
     func execAction(_ sender: NSSegmentedControl) {
         
-        print("execAction")
-
         switch sender.selectedSegment {
             
         case 0: emu.running ? emu.pause() : try? emu.run()
@@ -101,27 +96,6 @@ class InspectorToolbar: NSToolbar {
     @IBAction
     func plusAction(_ sender: NSButton) {
 
-        print("plusAction")
-
-        /*
         inspector.parent.addInspector()
-         */
     }
-    
-    /*
-    @IBAction
-    func hexAction(_ sender: NSButton) {
-        
-        if sender.state == .on {
-            
-            emu.set(.CPU_DASM_NUMBERS, value: DasmNumbers.HEX.rawValue)
-            inspector.hex = true
-            
-        } else {
-            
-            emu.set(.CPU_DASM_NUMBERS, value: DasmNumbers.DEC.rawValue)
-            inspector.hex = false
-        }
-    }
-    */
 }

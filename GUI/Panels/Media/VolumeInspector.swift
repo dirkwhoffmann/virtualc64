@@ -149,21 +149,21 @@ class VolumeInspector: DialogController {
             let drive = emu.drive(nr)
             vol = try FileSystemProxy.make(with: drive)
             
-            showWindow()
+            showAsWindow()
         }
     }
 
     func showSheet(fs: FileSystemProxy) {
 
         vol = fs
-        showWindow()
+        showAsWindow()
     }
 
     override func windowDidLoad() {
 
     }
 
-    override func sheetWillShow() {
+    override func dialogWillShow() {
 
         // Register to receive mouse click events
         previewTable.action = #selector(clickAction(_:))
@@ -185,7 +185,7 @@ class VolumeInspector: DialogController {
         update()
     }
 
-    override func sheetDidShow() {
+    override func dialogDidShow() {
 
     }
 

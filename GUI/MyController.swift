@@ -28,8 +28,12 @@ class MyController: NSWindowController, MessageReceiver {
     // Media manager (handles the import and export of media files)
     var mm: MediaManager { return mydocument.mm }
 
+    // Auxiliary windows of this emulator instance
+    var inspectors: [Inspector] = []
+    // var dashboards: [Dashboard] = []
+    
     // Inspector panel of this emulator instance
-    var inspector: Inspector?
+    // var inspector: Inspector?
     
     // Monitor panel of this emulator instance
     var monitor: Monitor?
@@ -258,9 +262,12 @@ extension MyController {
 
         if frames % 5 == 0 {
 
-            // Animate the inspector
-            if inspector?.window?.isVisible == true { inspector!.continuousRefresh() }
+            // Animate the inspectors
+            for inspector in inspectors { inspector.continuousRefresh() }
 
+            // Animate the dashboards
+            // for dashboard in dashboards { dashboard.continuousRefresh() }
+            
             // Update the cartridge LED
             if emu?.expansionport.traits.leds ?? 0 > 0 {
                 let led = emu!.expansionport.info.led ? 1 : 0
@@ -300,14 +307,21 @@ extension MyController {
         var vol: Int { return Int(msg.drive.volume) }
         var pan: Int { return Int(msg.drive.pan) }
 
+        /*
+        func passToInspector() {
+            for inspector in inspectors { inspector.processMessage(msg) }
+        }
+        func passToDashboard() {
+            // for dashboard in dashboards { dashboard.processMessage(msg) }
+        }
+        */
+        
         // Only proceed if the proxy object is still alive
         if emu == nil { return }
 
         switch msg.type {
 
         case .CONFIG:
-            inspector?.fullRefresh()
-            monitor?.refresh()
             configurator?.refresh()
             refreshStatusBar()
 
@@ -317,11 +331,9 @@ extension MyController {
 
                 renderer.canvas.open(delay: 2)
                 virtualKeyboard = nil
-                inspector?.powerOn()
 
             } else {
 
-                inspector?.powerOff()
             }
 
             toolbar.updateToolbar()
@@ -331,24 +343,21 @@ extension MyController {
             needsSaving = true
             jammed = false
             toolbar.updateToolbar()
-            inspector?.run()
             refreshStatusBar()
 
         case .PAUSE:
             toolbar.updateToolbar()
-            inspector?.pause()
             refreshStatusBar()
 
         case .STEP:
             needsSaving = true
-            inspector?.step()
-
+            
         case .EOL_TRAP, .EOF_TRAP:
-            inspector?.step()
-
+            break
+            
         case .RESET:
-            inspector?.reset()
-
+            break
+            
         case .SHUTDOWN:
             shutDown()
 
@@ -379,22 +388,21 @@ extension MyController {
             NSSound.beep()
             renderer.console.isDirty = true
 
-        case .BREAKPOINT_UPDATED, 
-                .WATCHPOINT_UPDATED:
-            inspector?.fullRefresh()
-
+        case .BREAKPOINT_UPDATED, .WATCHPOINT_UPDATED:
+            break
+            
         case .BREAKPOINT_REACHED:
-            inspector?.signalBreakPoint(pc: pc)
+            break
 
         case .WATCHPOINT_REACHED:
-            inspector?.signalWatchPoint(pc: pc)
+            break
 
         case .CPU_JAMMED:
             jammed = true
             refreshStatusBar()
 
         case .CPU_JUMPED:
-            inspector?.signalGoto(pc: pc)
+            break
 
         case .PAL, .NTSC:
             renderer.canvas.updateTextureRect()
@@ -406,12 +414,10 @@ extension MyController {
         case .DISK_INSERT:
             macAudio.playInsertSound(volume: vol, pan: pan)
             refreshStatusBarDiskIcons(drive: nr)
-            inspector?.fullRefresh()
 
         case .DISK_EJECT:
             macAudio.playEjectSound(volume: vol, pan: pan)
             refreshStatusBarDiskIcons(drive: nr)
-            inspector?.fullRefresh()
 
         case .FILE_FLASHED:
             break
@@ -474,7 +480,6 @@ extension MyController {
 
         case .SNAPSHOT_RESTORED:
             renderer.rotateRight()
-            // renderer.canvas.updateTextureRect()
             refreshStatusBar()
             hideOrShowDriveMenus()
 
@@ -522,6 +527,10 @@ extension MyController {
             warn("Unknown message: \(msg)")
             fatalError()
         }
+        
+        // Pass message to all open auxiliary windows
+        for inspector in inspectors { inspector.processMessage(msg) }
+        // for dashboard in dashboards { dashboard.processMessage(msg) }
     }
 
     //

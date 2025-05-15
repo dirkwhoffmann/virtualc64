@@ -314,12 +314,29 @@ extension MyController: NSMenuItemValidation {
         openConfigurator()
     }
 
+    func addInspector() {
+    
+        let count = inspectors.count
+        
+        // Allow 8 inspectors at a time
+        if count < 8, let inspector = Inspector(with: self, nibName: "Inspector") {
+            
+            inspectors.append(inspector)
+            inspector.showAsWindow()
+
+        } else {
+         
+            NSSound.beep();
+        }
+    }
+    
     @IBAction func inspectorAction(_ sender: Any!) {
         
-        if inspector == nil {
-            inspector = Inspector(with: self, nibName: "Inspector")
+        if inspectors.isEmpty {
+            addInspector()
+        } else {
+            inspectors[0].showAsWindow()
         }
-        inspector?.showWindow(self)
     }
     
     @IBAction func monitorAction(_ sender: Any!) {
@@ -362,7 +379,7 @@ extension MyController: NSMenuItemValidation {
         if snapshotBrowser == nil {
             snapshotBrowser = SnapshotViewer(with: self, nibName: "SnapshotViewer")
         }
-        snapshotBrowser?.showSheet()
+        snapshotBrowser?.showAsSheet()
     }
     
     @IBAction func takeScreenshotAction(_ sender: Any!) {
@@ -392,7 +409,7 @@ extension MyController: NSMenuItemValidation {
         if screenshotBrowser == nil {
             screenshotBrowser = ScreenshotViewer(with: self, nibName: "ScreenshotViewer")
         }
-        screenshotBrowser?.showSheet()
+        screenshotBrowser?.showAsSheet()
     }
 
     @IBAction func captureScreenAction(_ sender: Any!) {
@@ -435,7 +452,7 @@ extension MyController: NSMenuItemValidation {
     @IBAction func exportVideoAction(_ sender: Any!) {
 
         let exporter = VideoExporter(with: self, nibName: "VideoExporter")
-        exporter?.showSheet()
+        exporter?.showAsSheet()
     }
     
     //

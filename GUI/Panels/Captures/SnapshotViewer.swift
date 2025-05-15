@@ -39,7 +39,7 @@ class SnapshotViewer: DialogController {
    
     }
     
-    override func sheetDidShow() {
+    override func dialogDidShow() {
 
         now = Date()
         
@@ -150,7 +150,7 @@ class SnapshotViewer: DialogController {
 
         do {
             try parent.restoreSnapshot(item: currentItem)
-            hideSheet()
+            hide()
         } catch {
             NSSound.beep()
         }
@@ -158,7 +158,7 @@ class SnapshotViewer: DialogController {
         
     @IBAction override func cancelAction(_ sender: Any!) {
                                 
-        hideSheet()
+        hide()
 
         emu?.set(.C64_SNAP_AUTO, enable: takeSnapshots)
 

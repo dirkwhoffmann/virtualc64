@@ -37,14 +37,14 @@ class CartridgeInspector: DialogController {
             }
         }
 
-        showWindow()
+        showAsWindow()
     }
 
     //
     // Updating the displayed information
     //
 
-    override func sheetWillShow() {
+    override func dialogWillShow() {
 
         update()
     }

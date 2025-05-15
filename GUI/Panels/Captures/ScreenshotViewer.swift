@@ -59,12 +59,12 @@ class ScreenshotViewer: DialogController {
         debug(.media, "All screenshots saved")
     }
     
-    override func sheetWillShow() {
+    override func dialogWillShow() {
         
         loadScreenshots()
     }
     
-    override func sheetDidShow() {
+    override func dialogDidShow() {
 
         now = Date()
         
@@ -163,7 +163,7 @@ class ScreenshotViewer: DialogController {
     
     @IBAction override func cancelAction(_ sender: Any!) {
                                 
-        hideSheet()
+        hide()
                 
         carousel.isHidden = true
         leftButton.isHidden = true

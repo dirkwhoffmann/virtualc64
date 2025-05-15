@@ -31,7 +31,7 @@ class DiskCreator: DialogController {
     func showSheet(forDrive nr: Int) {
 
         self.nr = nr
-        super.showSheet()
+        super.showAsSheet()
     }
 
     override public func awakeFromNib() {
@@ -59,7 +59,7 @@ class DiskCreator: DialogController {
 
     }
 
-    override func sheetDidShow() {
+    override func dialogDidShow() {
 
     }
 
@@ -101,7 +101,7 @@ class DiskCreator: DialogController {
 
         drive?.insertBlankDisk(dos, name: name)
         parent.mm.clearRecentlyExportedDiskURLs(drive: nr)
-        hideSheet()
+        hide()
     }
 }
 

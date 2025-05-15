@@ -70,10 +70,20 @@ extension MyController: NSWindowDelegate {
         debug(.shutdown, "Shut down the audio unit...")
         macAudio.shutDown()
 
-        debug(.shutdown, "Close the inspector...")
-        inspector?.close()
-        inspector?.join()
+        debug(.shutdown, "Close all inspectors...")
+        for inspector in inspectors {
+            inspector.close()
+            inspector.join()
+        }
 
+        /*
+        debug(.shutdown, "Close all dashboards...")
+        for dashboard in dashboards {
+            dashboard.close()
+            dashboard.join()
+        }
+        */
+        
         debug(.shutdown, "Close the monitor...")
         monitor?.close()
         monitor?.join()

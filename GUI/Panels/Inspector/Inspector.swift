@@ -383,6 +383,73 @@ class Inspector: DialogController {
         }
     }
     
+    func processMessage(_ msg: vc64.Message) {
+    
+        var pc: Int { return Int(msg.cpu.pc) }
+        // var vector: Int { return Int(msg.cpu.vector) }
+        
+        switch msg.type {
+                        
+        case .CONFIG:
+            
+            fullRefresh()
+            
+        case .POWER:
+            
+            message.stringValue = ""
+            fullRefresh()
+            
+        case .RUN:
+            
+            message.stringValue = ""
+            cpuInstrView.alertAddr = nil
+            fullRefresh()
+
+        case .PAUSE:
+            
+            fullRefresh()
+            
+        case .STEP:
+            
+            message.stringValue = ""
+            cpuInstrView.alertAddr = nil
+            fullRefresh()
+            scrollToPC()
+            
+        case .RESET:
+            
+            message.stringValue = ""
+            cpuInstrView.alertAddr = nil
+            fullRefresh()
+
+        case .BREAKPOINT_REACHED:
+            
+            cpuInstrView.alertAddr = nil
+            scrollToPC(pc: pc)
+            
+        case .WATCHPOINT_REACHED:
+            
+            cpuInstrView.alertAddr = pc
+            scrollToPC(pc: pc)
+
+        case .CPU_JUMPED:
+            
+            fullRefresh()
+            scrollToPC()
+            
+        case .EOF_TRAP, .EOL_TRAP, .RSH_UPDATE:
+            
+            fullRefresh()
+            
+        case .DISK_INSERT, .DISK_EJECT:
+            
+            fullRefresh()
+            
+        default:
+            break
+        }
+    }
+    
     func scrollToPC() {
 
         if cpuInfo != nil {
@@ -434,6 +501,7 @@ class Inspector: DialogController {
         fullRefresh()
     }
 
+    /*
     func signalBreakPoint(pc: Int) {
 
         message.stringValue = String(format: "Breakpoint reached")
@@ -447,7 +515,9 @@ class Inspector: DialogController {
         cpuInstrView.alertAddr = pc
         scrollToPC(pc: pc)
     }
-
+    */
+    
+    /*
     func signalGoto(pc: Int) {
 
         if isRunning { return }
@@ -457,7 +527,8 @@ class Inspector: DialogController {
         fullRefresh()
         scrollToPC()
     }
-
+    */
+    
     @IBAction func refreshAction(_ sender: NSButton!) {
 
         refresh()
@@ -468,14 +539,19 @@ extension Inspector {
     
     override func windowWillClose(_ notification: Notification) {
                 
-        super.windowWillClose(notification)
+        // Unregister the inspector
+        if let index = parent.inspectors.firstIndex(where: { $0 === self }) {
+            
+            parent.inspectors.remove(at: index)
+        }
 
-        if let emu = emu {
+        // Leave debug mode if no more inspectors are open
+        if parent.inspectors.isEmpty {
 
             // Leave debug mode
-            emu.trackOff()
-            emu.set(.MEM_HEATMAP, enable: false)
-            emu.c64.autoInspectionMask = 0
+            emu?.trackOff()
+            emu?.set(.MEM_HEATMAP, enable: false)
+            emu?.c64.autoInspectionMask = 0
         }
     }
 }

@@ -147,7 +147,7 @@ class PreferencesController: DialogController {
     func showSheet(tab: String) {
 
         firstTab = tab
-        showSheet()
+        showAsSheet()
     }
 
     override func awakeFromNib() {
@@ -158,7 +158,7 @@ class PreferencesController: DialogController {
         refresh()
     }
 
-    override func sheetDidShow() {
+    override func dialogDidShow() {
 
         if let id = firstTab { tabView.selectTabViewItem(withIdentifier: id) }
     }
@@ -237,7 +237,7 @@ extension PreferencesController {
         cleanup()
     }
         
-    func windowDidBecomeKey(_ notification: Notification) {
+    override func windowDidBecomeKey(_ notification: Notification) {
         
         select()
     }

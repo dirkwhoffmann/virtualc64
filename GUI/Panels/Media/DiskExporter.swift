@@ -69,7 +69,7 @@ class DiskExporter: DialogController {
                 }
             }
 
-            super.showSheet()
+            super.showAsSheet()
         }
     }
 
@@ -101,7 +101,7 @@ class DiskExporter: DialogController {
 
     }
 
-    override func sheetDidShow() {
+    override func dialogDidShow() {
 
     }
 
@@ -186,7 +186,7 @@ class DiskExporter: DialogController {
             if result == .OK {
                 if let url = self.savePanel.url {
                     if self.export(url: url) {
-                        self.hideSheet()
+                        self.hide()
                     }                }
             }
         })
@@ -205,7 +205,7 @@ class DiskExporter: DialogController {
             if result == .OK {
                 if let url = self.openPanel.url {
                     if self.export(url: url) {
-                        self.hideSheet()
+                        self.hide()
                     }
                 }
             }

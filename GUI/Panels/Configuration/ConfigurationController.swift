@@ -250,7 +250,7 @@ class ConfigurationController: DialogController {
     func showSheet(tab: String) {
         
         firstTab = tab
-        showSheet()
+        showAsSheet()
         refresh()
     }
     
@@ -261,7 +261,7 @@ class ConfigurationController: DialogController {
         refresh()
     }
     
-    override func sheetWillShow() {
+    override func dialogWillShow() {
         
         if firstTab != "" { prefTabView?.selectTabViewItem(withIdentifier: firstTab) }
         refresh()
@@ -291,12 +291,12 @@ class ConfigurationController: DialogController {
     
     @IBAction override func okAction(_ sender: Any!) {
         
-        hideSheet()
+        hide()
     }
     
     @IBAction func powerAction(_ sender: Any!) {
         
-        hideSheet()
+        hide()
         try? emu?.run()
     }
 }

@@ -37,13 +37,13 @@ class VirtualKeyboardController: DialogController {
     func showSheet() {
         
         autoClose = true
-        super.showSheet()
+        super.showAsSheet()
     }
     
     func showWindow() {
         
         autoClose = false
-        super.showWindow()
+        super.showAsWindow()
     }
     
     override func windowDidLoad() {
@@ -52,7 +52,7 @@ class VirtualKeyboardController: DialogController {
         refresh()
     }
 
-    override func sheetWillShow() {
+    override func dialogWillShow() {
 
         // Collect references to all buttons
         for tag in 0 ... 65 {
@@ -60,7 +60,7 @@ class VirtualKeyboardController: DialogController {
         }
     }
 
-    override func sheetDidShow() {
+    override func dialogDidShow() {
 
         refresh()
     }

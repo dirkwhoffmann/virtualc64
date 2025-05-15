@@ -74,11 +74,11 @@ class DiskInspector: DialogController {
             debug(.lifetime)
 
             drive = nr == DRIVE8 ? emu.drive8 : emu.drive9
-            showWindow()
+            showAsWindow()
         }
     }
 
-    override func sheetWillShow() {
+    override func dialogWillShow() {
 
         debug(.lifetime)
 
