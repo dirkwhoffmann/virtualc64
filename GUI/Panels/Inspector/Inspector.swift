@@ -122,6 +122,9 @@ class Inspector: DialogController {
     var layoutIsDirty = true
     var nextLayoutRefresh = 0
 
+    // Bus panel
+    @IBOutlet weak var busDmaView: DmaView!
+    
     // CIA panel
     @IBOutlet weak var ciaSelector: NSSegmentedControl!
     @IBOutlet weak var ciaPRA: NSTextField!

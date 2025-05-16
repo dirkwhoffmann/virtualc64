@@ -34,8 +34,12 @@ class CPU final : public Peddle, public Inspectable<CPUInfo> {
 
     Options options = {
 
+        OPT_DASM_NUMBERS
     };
 
+    // Current configuration
+    CPUConfig config = { };
+    
 public:
 
     /* Processor port
@@ -196,7 +200,11 @@ public:
 
 public:
 
+    const CPUConfig &getConfig() const { return config; }
     const Options &getOptions() const override { return options; }
+    i64 getOption(Option opt) const override;
+    void checkOption(Option opt, i64 value) override;
+    void setOption(Option opt, i64 value) override;
     
 
     //

@@ -397,6 +397,7 @@
 		50A5B7D42C74E44C00D6DDAD /* RshServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A5B7C92C74E44C00D6DDAD /* RshServer.cpp */; };
 		50A5B7D52C74E44C00D6DDAD /* Socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A5B7CB2C74E44C00D6DDAD /* Socket.cpp */; };
 		50A5B7D62C74E44C00D6DDAD /* Socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A5B7CB2C74E44C00D6DDAD /* Socket.cpp */; };
+		50A9443B2DD7594700A242B0 /* DmaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A9443A2DD7594300A242B0 /* DmaView.swift */; };
 		50A9A088250DE90900723D32 /* PageFox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A9A086250DE90900723D32 /* PageFox.cpp */; };
 		50AA3EC12616F62500C96EDB /* MemUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AA3EC02616F62500C96EDB /* MemUtils.cpp */; };
 		50AA48B2292F8EC30084401D /* Peddle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AA48B0292F8EC30084401D /* Peddle.cpp */; };
@@ -969,6 +970,7 @@
 		50A5B7CA2C74E44C00D6DDAD /* RshServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RshServer.h; sourceTree = "<group>"; };
 		50A5B7CB2C74E44C00D6DDAD /* Socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Socket.cpp; sourceTree = "<group>"; };
 		50A5B7CC2C74E44C00D6DDAD /* Socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Socket.h; sourceTree = "<group>"; };
+		50A9443A2DD7594300A242B0 /* DmaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmaView.swift; sourceTree = "<group>"; };
 		50A9A086250DE90900723D32 /* PageFox.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PageFox.cpp; sourceTree = "<group>"; };
 		50A9A087250DE90900723D32 /* PageFox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageFox.h; sourceTree = "<group>"; };
 		50AA3EBF2616F60800C96EDB /* MemUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemUtils.h; sourceTree = "<group>"; };
@@ -1418,6 +1420,7 @@
 				507A499F24C8D66A00DBF984 /* GuardTableView.swift */,
 				507A49A124C8D71400DBF984 /* BankTableView.swift */,
 				507887CB20B1858B00941F7E /* MemTableView.swift */,
+				50A9443A2DD7594300A242B0 /* DmaView.swift */,
 				50FBB62C28294C29001366F9 /* WaveformView.swift */,
 				50BD64212C077610007CD347 /* HeatmapView.swift */,
 				50726F30295C27470031F2F5 /* EventTableView.swift */,
@@ -2599,6 +2602,7 @@
 				5052A7C125A0AC0700E62EDD /* Errors.swift in Sources */,
 				50AE19392632B787005A5898 /* Script.cpp in Sources */,
 				5044A03B2657A7A800C551C6 /* Recorder.cpp in Sources */,
+				50A9443B2DD7594700A242B0 /* DmaView.swift in Sources */,
 				50A5B7CF2C74E44C00D6DDAD /* RemoteManager.cpp in Sources */,
 				5085D89D25B848940043B15C /* Joystick.cpp in Sources */,
 				500E2D662824EC140015C46F /* CartridgeInspector.swift in Sources */,

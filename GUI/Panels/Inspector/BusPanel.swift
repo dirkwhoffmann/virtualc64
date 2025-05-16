@@ -11,5 +11,6 @@ extension Inspector {
     
     func refreshBus(count: Int = 0, full: Bool = false) {
   
+        busDmaView.update()
     }
 }

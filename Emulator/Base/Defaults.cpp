@@ -35,6 +35,8 @@ Defaults::Defaults()
     setFallback(OPT_C64_SNAP_DELAY,             10);
     setFallback(OPT_C64_SNAP_COMPRESS,          true);
 
+    setFallback(OPT_DASM_NUMBERS,               DASM_HEX);
+    
     setFallback(OPT_POWER_GRID,                 GRID_STABLE_50HZ);
 
     setFallback(OPT_GLUE_LOGIC,                 GLUE_LOGIC_DISCRETE);

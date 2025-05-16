@@ -52,10 +52,44 @@ struct CPURevisionEnum : util::Reflection<CPURevisionEnum, vc64::peddle::CPURevi
     }
 };
 
+enum_long(DASM_NUMBERS)
+{
+    DASM_HEX,
+    DASM_HEX0,
+    DASM_DEC,
+    DASM_DEC0,
+};
+typedef DASM_NUMBERS DasmNumbers;
+
+struct DasmNumbersEnum : util::Reflection<DasmNumbersEnum, DasmNumbers>
+{
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = DASM_DEC0;
+
+    static const char *prefix() { return "DASM"; }
+    static const char *_key(long value)
+    {
+        switch (value) {
+
+            case DASM_HEX:     return "DASM_HEX";
+            case DASM_HEX0:    return "DASM_HEX0";
+            case DASM_DEC:     return "DASM_DEC";
+            case DASM_DEC0:    return "DASM_DEC0";
+        }
+        return "???";
+    }
+};
+
 
 //
 // Structures
 //
+
+typedef struct
+{
+    DasmNumbers dasmNumbers;    
+}
+CPUConfig;
 
 typedef struct
 {

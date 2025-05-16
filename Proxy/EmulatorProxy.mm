@@ -570,6 +570,11 @@ using namespace vc64;
     return [self port]->getTexture();
 }
 
+- (u32 *)dmaTexture
+{
+    return [self port]->getDmaTexture();
+}
+
 @end
 
 

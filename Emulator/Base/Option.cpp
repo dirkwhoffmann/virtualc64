@@ -43,6 +43,8 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_C64_SNAP_DELAY:            return numParser(" sec");
         case OPT_C64_SNAP_COMPRESS:         return boolParser();
 
+        case OPT_DASM_NUMBERS:              return enumParser.template operator()<DasmNumbersEnum>();
+            
         case OPT_VICII_REVISION:            return enumParser.template operator()<VICIIRevisionEnum>();
         case OPT_VICII_GRAY_DOT_BUG:        return boolParser();
         case OPT_VICII_POWER_SAVE:          return boolParser();

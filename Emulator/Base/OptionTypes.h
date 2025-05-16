@@ -42,6 +42,9 @@ enum_long(OPT)
     OPT_C64_SNAP_DELAY,         ///< Delay between two snapshots in seconds
     OPT_C64_SNAP_COMPRESS,      ///< Compress snapshot data
 
+    // CPU
+    OPT_DASM_NUMBERS,           ///< Disassembler number format
+    
     // VICII
     OPT_VICII_REVISION,         ///< Chip revision
     OPT_VICII_GRAY_DOT_BUG,     ///< Emulate gray-dot bug
@@ -226,6 +229,8 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_C64_SNAP_DELAY:        return "C64.SNAP_DELAY";
             case OPT_C64_SNAP_COMPRESS:     return "C64.SNAP_COMPRESS";
 
+            case OPT_DASM_NUMBERS:          return "CPU.DASM_NUMBERS";
+                
             case OPT_VICII_REVISION:        return "VICII.REVISION";
             case OPT_VICII_GRAY_DOT_BUG:    return "VICII.GRAY_DOT_BUG";
             case OPT_VICII_POWER_SAVE:      return "VICII.POWER_SAVE";
@@ -383,6 +388,8 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_C64_SNAP_DELAY:        return "Time span between two snapshots";
             case OPT_C64_SNAP_COMPRESS:     return "Compress snapshot data";
 
+            case OPT_DASM_NUMBERS:          return "Disassembler number format";
+                
             case OPT_VICII_REVISION:        return "Chip revision";
             case OPT_VICII_GRAY_DOT_BUG:    return "Emulate gray-dot bug";
             case OPT_VICII_POWER_SAVE:      return "Take fast paths";
