@@ -123,6 +123,25 @@ class Inspector: DialogController {
     var nextLayoutRefresh = 0
 
     // Bus panel
+    @IBOutlet weak var busDebug: NSButton!
+    @IBOutlet weak var busChannelR: NSButton!
+    @IBOutlet weak var busChannelI: NSButton!
+    @IBOutlet weak var busChannelC: NSButton!
+    @IBOutlet weak var busChannelG: NSButton!
+    @IBOutlet weak var busChannelP: NSButton!
+    @IBOutlet weak var busChannelS: NSButton!
+    
+    @IBOutlet weak var busColorR: NSColorWell!
+    @IBOutlet weak var busColorI: NSColorWell!
+    @IBOutlet weak var busColorC: NSColorWell!
+    @IBOutlet weak var busColorG: NSColorWell!
+    @IBOutlet weak var busColorP: NSColorWell!
+    @IBOutlet weak var busColorS: NSColorWell!
+
+    @IBOutlet weak var busOverlay: NSButton!
+    @IBOutlet weak var busDisplayMode: NSPopUpButton!
+    @IBOutlet weak var busOpacity: NSSlider!
+
     @IBOutlet weak var busDmaView: DmaView!
     
     // CIA panel

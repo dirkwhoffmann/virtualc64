@@ -57,6 +57,7 @@ enum_long(OPT)
 
     // DMA Debugger
     OPT_DMA_DEBUG_ENABLE,       ///< Global on/off switch for the DMA debugger
+    OPT_DMA_DEBUG_OVERLAY,      ///< Overlay DMA texture onto emulator texture
     OPT_DMA_DEBUG_MODE,         ///< DMA texture overlay mode
     OPT_DMA_DEBUG_OPACITY,      ///< DMA texture opacity
     OPT_DMA_DEBUG_CHANNEL0,     ///< Enable or disable channel 0
@@ -241,6 +242,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_VICII_SB_COLLISIONS:   return "VICII.SB_COLLISIONS";
 
             case OPT_DMA_DEBUG_ENABLE:      return "DMA_DEBUG.ENABLE";
+            case OPT_DMA_DEBUG_OVERLAY:     return "DMA_DEBUG.OVERLAY";
             case OPT_DMA_DEBUG_MODE:        return "DMA_DEBUG.MODE";
             case OPT_DMA_DEBUG_OPACITY:     return "DMA_DEBUG.OPACITY";
             case OPT_DMA_DEBUG_CHANNEL0:    return "DMA_DEBUG.CHANNEL0";
@@ -400,8 +402,9 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_VICII_SB_COLLISIONS:   return "Sprite-background collisions";
 
             case OPT_DMA_DEBUG_ENABLE:      return "DMA Debugger";
-            case OPT_DMA_DEBUG_MODE:        return "DMA Debugger style";
-            case OPT_DMA_DEBUG_OPACITY:     return "Opacity";
+            case OPT_DMA_DEBUG_OVERLAY:     return "Enable DMA Overlay";
+            case OPT_DMA_DEBUG_MODE:        return "Overlay style";
+            case OPT_DMA_DEBUG_OPACITY:     return "Overlay opacity";
             case OPT_DMA_DEBUG_CHANNEL0:    return "Refresh cycles";
             case OPT_DMA_DEBUG_CHANNEL1:    return "Idle reads";
             case OPT_DMA_DEBUG_CHANNEL2:    return "Character accesses";

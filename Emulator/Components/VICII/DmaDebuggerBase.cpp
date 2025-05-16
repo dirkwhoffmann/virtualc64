@@ -34,6 +34,7 @@ DmaDebugger::getOption(Option option) const
     switch (option) {
 
         case OPT_DMA_DEBUG_ENABLE:      return config.dmaDebug;
+        case OPT_DMA_DEBUG_OVERLAY:     return config.dmaOverlay;
         case OPT_DMA_DEBUG_MODE:        return config.dmaDisplayMode;
         case OPT_DMA_DEBUG_OPACITY:     return config.dmaOpacity;
 
@@ -64,7 +65,8 @@ DmaDebugger::checkOption(Option opt, i64 value)
     switch (opt) {
 
         case OPT_DMA_DEBUG_ENABLE:
-
+        case OPT_DMA_DEBUG_OVERLAY:
+            
             return;
 
         case OPT_DMA_DEBUG_MODE:
@@ -111,9 +113,14 @@ DmaDebugger::setOption(Option opt, i64 value)
             config.dmaDebug = value;
             vic.resetDmaTextures();
             vic.resetEmuTextures();
-            msgQueue.put(MSG_DMA_DEBUG, value);
             return;
 
+        case OPT_DMA_DEBUG_OVERLAY:
+            
+            config.dmaOverlay = value;
+            msgQueue.put(MSG_DMA_DEBUG, value);
+            return;
+            
         case OPT_DMA_DEBUG_MODE:
 
             config.dmaDisplayMode = (DmaDisplayMode)value;

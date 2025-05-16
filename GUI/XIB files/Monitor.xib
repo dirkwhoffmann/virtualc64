@@ -157,7 +157,7 @@
                                 <slider horizontalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TLp-7k-J8u">
                                     <rect key="frame" x="19" y="25" width="13" height="200"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <sliderCell key="cell" controlSize="small" continuous="YES" alignment="left" maxValue="255" doubleValue="128" tickMarkPosition="right" sliderType="linear" id="kFq-LQ-Ky6"/>
+                                    <sliderCell key="cell" controlSize="small" continuous="YES" alignment="left" maxValue="255" doubleValue="166.68522135416669" tickMarkPosition="right" sliderType="linear" id="kFq-LQ-Ky6"/>
                                     <connections>
                                         <action selector="busOpacityAction:" target="-2" id="oyi-pQ-TSb"/>
                                     </connections>

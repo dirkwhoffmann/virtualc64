@@ -55,6 +55,7 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_VICII_CUT_LAYERS:          return numParser();
         case OPT_VICII_CUT_OPACITY:         return numParser("%");
         case OPT_DMA_DEBUG_ENABLE:          return boolParser();
+        case OPT_DMA_DEBUG_OVERLAY:         return boolParser();
         case OPT_DMA_DEBUG_MODE:            return enumParser.template operator()<DmaDisplayModeEnum>();
         case OPT_DMA_DEBUG_OPACITY:         return numParser("%");
         case OPT_DMA_DEBUG_CHANNEL0:        return boolParser();

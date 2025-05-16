@@ -58,6 +58,7 @@ typedef struct
 {
     // DMA debugger
     bool dmaDebug;
+    bool dmaOverlay;
     bool dmaChannel[6];
     u32 dmaColor[6];
     DmaDisplayMode dmaDisplayMode;

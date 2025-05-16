@@ -63,66 +63,69 @@ DmaDebugger::computeOverlay(u32 *emuTexture, u32 *dmaTexture)
 {
     double weight = config.dmaOpacity / 255.0;
     
-    switch (config.dmaDisplayMode) {
-
-        case DMA_DISPLAY_MODE_FG_LAYER:
-
-            for (isize y = 0; y < Texture::height; y++) {
-
-                u32 *emu = emuTexture + (y * Texture::width);
-                u32 *dma = dmaTexture + (y * Texture::width);
-
-                for (isize x = 0; x < Texture::width; x++) {
-
-                    if ((dma[x] & 0xFFFFFF) == 0) continue;
+    if (config.dmaOverlay) {
+        
+        switch (config.dmaDisplayMode) {
+                
+            case DMA_DISPLAY_MODE_FG_LAYER:
+                
+                for (isize y = 0; y < Texture::height; y++) {
                     
-                    GpuColor emuColor = emu[x];
-                    GpuColor dmaColor = dma[x];
-                    GpuColor mixColor = emuColor.mix(dmaColor, weight);
-                    emu[x] = mixColor.abgr;
-                }
-            }
-            break;
-
-        case DMA_DISPLAY_MODE_BG_LAYER:
-            
-            for (isize y = 0; y < Texture::height; y++) {
-
-                u32 *emu = emuTexture + (y * Texture::width);
-                u32 *dma = dmaTexture + (y * Texture::width);
-
-                for (isize x = 0; x < Texture::width; x++) {
-
-                    if ((dma[x] & 0xFFFFFF) != 0) {
-                        emu[x] = dma[x];
-                    } else {
+                    u32 *emu = emuTexture + (y * Texture::width);
+                    u32 *dma = dmaTexture + (y * Texture::width);
+                    
+                    for (isize x = 0; x < Texture::width; x++) {
+                        
+                        if ((dma[x] & 0xFFFFFF) == 0) continue;
+                        
                         GpuColor emuColor = emu[x];
-                        GpuColor mixColor = emuColor.shade(weight);
+                        GpuColor dmaColor = dma[x];
+                        GpuColor mixColor = emuColor.mix(dmaColor, weight);
                         emu[x] = mixColor.abgr;
                     }
                 }
-            }
-            break;
-
-        case DMA_DISPLAY_MODE_ODD_EVEN_LAYERS:
-            
-            for (isize y = 0; y < Texture::height; y++) {
-
-                u32 *emu = emuTexture + (y * Texture::width);
-                u32 *dma = dmaTexture + (y * Texture::width);
-
-                for (isize x = 0; x < Texture::width; x++) {
-
-                    GpuColor emuColor = emu[x];
-                    GpuColor dmaColor = dma[x];
-                    GpuColor mixColor = dmaColor.mix(emuColor, weight);
-                    emu[x] = mixColor.abgr;
+                break;
+                
+            case DMA_DISPLAY_MODE_BG_LAYER:
+                
+                for (isize y = 0; y < Texture::height; y++) {
+                    
+                    u32 *emu = emuTexture + (y * Texture::width);
+                    u32 *dma = dmaTexture + (y * Texture::width);
+                    
+                    for (isize x = 0; x < Texture::width; x++) {
+                        
+                        if ((dma[x] & 0xFFFFFF) != 0) {
+                            emu[x] = dma[x];
+                        } else {
+                            GpuColor emuColor = emu[x];
+                            GpuColor mixColor = emuColor.shade(weight);
+                            emu[x] = mixColor.abgr;
+                        }
+                    }
                 }
-            }
-            break;
-            
-        default:
-            fatalError;
+                break;
+                
+            case DMA_DISPLAY_MODE_ODD_EVEN_LAYERS:
+                
+                for (isize y = 0; y < Texture::height; y++) {
+                    
+                    u32 *emu = emuTexture + (y * Texture::width);
+                    u32 *dma = dmaTexture + (y * Texture::width);
+                    
+                    for (isize x = 0; x < Texture::width; x++) {
+                        
+                        GpuColor emuColor = emu[x];
+                        GpuColor dmaColor = dma[x];
+                        GpuColor mixColor = dmaColor.mix(emuColor, weight);
+                        emu[x] = mixColor.abgr;
+                    }
+                }
+                break;
+                
+            default:
+                fatalError;
+        }
     }
 }
 

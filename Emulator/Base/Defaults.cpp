@@ -55,6 +55,7 @@ Defaults::Defaults()
     setFallback(OPT_VICII_CUT_OPACITY,          0xFF);
 
     setFallback(OPT_DMA_DEBUG_ENABLE,           false);
+    setFallback(OPT_DMA_DEBUG_OVERLAY,          false);
     setFallback(OPT_DMA_DEBUG_MODE,             DMA_DISPLAY_MODE_FG_LAYER);
     setFallback(OPT_DMA_DEBUG_OPACITY,          0x80);
     setFallback(OPT_DMA_DEBUG_CHANNEL0,         true);

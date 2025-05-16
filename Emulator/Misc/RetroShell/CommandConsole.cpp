@@ -279,6 +279,7 @@ CommandConsole::initCommands(Command &root)
 
     cmd = registerComponent(vic.dmaDebugger);
 
+    /*
     root.add({cmd, "open"},
              "Opens the DMA debugger",
              [this](Arguments& argv, long value) {
@@ -292,7 +293,8 @@ CommandConsole::initCommands(Command &root)
 
         emulator.set(OPT_DMA_DEBUG_ENABLE, false);
     });
-
+    */
+    
 
     //
     // Components (SID)

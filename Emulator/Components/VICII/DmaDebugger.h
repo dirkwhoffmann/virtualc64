@@ -32,6 +32,7 @@ class DmaDebugger final : public SubComponent {
     Options options = {
 
         OPT_DMA_DEBUG_ENABLE,
+        OPT_DMA_DEBUG_OVERLAY,
         OPT_DMA_DEBUG_MODE,
         OPT_DMA_DEBUG_OPACITY,
         OPT_VICII_CUT_LAYERS,
