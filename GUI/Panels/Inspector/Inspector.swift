@@ -30,6 +30,7 @@ class Inspector: DialogController {
             default:
                 fatalError()
             }
+            emu?.set(.DASM_NUMBERS, value: format)
         }
     }
     var hex = true {
@@ -41,8 +42,6 @@ class Inspector: DialogController {
             fmt9.radix = hex ? 16 : 10
             fmt12.radix = hex ? 16 : 10
             fmt16.radix = hex ? 16 : 10
-            // emu.set(.CPU_DASM_NUMBERS,
-            //         value: (hex ? DasmNumbers.HEX : DasmNumbers.DEC).rawValue)
             fullRefresh()
         }
     }

@@ -47,7 +47,7 @@ extension Inspector {
                 latchedLPX.assignFormatter(fmt8)
                 latchedLPY.assignFormatter(fmt8)
                 sprX.assignFormatter(fmt9)
-                sprY.assignFormatter(fmt8)
+                sprY.assignFormatter(fmt9)
             }
 
             vicScanline.integerValue = Int(vicInfo.scanline)

@@ -25,7 +25,7 @@ extension Inspector {
 
             if full {
 
-                if hex { emu.cpu.setHex() } else { emu.cpu.setDec() }
+                // if hex { emu.cpu.setHex() } else { emu.cpu.setDec() }
                 cpuPc.assignFormatter(fmt16)
                 cpuSp.assignFormatter(fmt8)
                 cpuA.assignFormatter(fmt8)

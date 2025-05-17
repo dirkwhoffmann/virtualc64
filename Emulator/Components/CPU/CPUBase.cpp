@@ -214,14 +214,43 @@ void
 CPU::setOption(Option opt, i64 value)
 {
     checkOption(opt, value);
-
+    
     switch (opt) {
-
+            
         case OPT_DASM_NUMBERS:
-
+        {
             config.dasmNumbers = (DasmNumbers)value;
+            
+            u8 radix; char fill;
+            
+            switch (config.dasmNumbers) {
+                    
+                case DASM_HEX:  radix = 16; fill = '\0'; break;
+                case DASM_HEX0: radix = 16; fill = '0';  break;
+                case DASM_DEC:  radix = 10; fill = '\0'; break;
+                case DASM_DEC0: radix = 10; fill = '0';  break;
+            }
+            
+            DasmNumberFormat instrFormat = {
+                
+                .prefix = "",
+                .radix = radix,
+                .upperCase = true,
+                .fill = fill,
+                .plainZero = false
+            };
+            DasmNumberFormat dataFormat = {
+                
+                .prefix = "",
+                .radix = radix,
+                .upperCase = true,
+                .fill = fill,
+                .plainZero = false
+            };
+            
+            disassembler.setNumberFormat(instrFormat, dataFormat);
             return;
-
+        }
         default:
             fatalError;
     }

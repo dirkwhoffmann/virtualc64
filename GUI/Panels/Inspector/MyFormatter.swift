@@ -47,51 +47,57 @@ class MyFormatter: Formatter {
         if radix == 10 && padding == false {
             
             format =
-            (maxValue < 0x10) ? "%2u" :
-            (maxValue < 0x100) ? "%3u" :
-            (maxValue < 0x1000) ? "%4u" :
-            (maxValue < 0x10000) ? "%5u" :
-            (maxValue < 0x100000) ? "%7u" :
-            (maxValue < 0x1000000) ? "%8u" :
-            (maxValue < 0x10000000) ? "%9u" :
-            (maxValue < 0x100000000) ? "%10u" : "???"
-            
+            (maxValue <= 9) ? "%1u" :
+            (maxValue <= 99) ? "%2u" :
+            (maxValue <= 999) ? "%3u" :
+            (maxValue <= 9999) ? "%4u" :
+            (maxValue <= 99999) ? "%5u" :
+            (maxValue <= 999999) ? "%6u" :
+            (maxValue <= 9999999) ? "%7u" :
+            (maxValue <= 99999999) ? "%8u" :
+            (maxValue <= 999999999) ? "%9u" :
+            (maxValue <= 9999999999) ? "%10u" : "???"
+
         } else if radix == 10 && padding == true {
             
             format =
-            (maxValue < 0x10) ? "%02u" :
-            (maxValue < 0x100) ? "%03u" :
-            (maxValue < 0x1000) ? "%04u" :
-            (maxValue < 0x10000) ? "%05u" :
-            (maxValue < 0x100000) ? "%07u" :
-            (maxValue < 0x1000000) ? "%08u" :
-            (maxValue < 0x10000000) ? "%09u" :
-            (maxValue < 0x100000000) ? "%010u" : "???"
+            (maxValue <= 9) ? "%01u" :
+            (maxValue <= 99) ? "%02u" :
+            (maxValue <= 999) ? "%03u" :
+            (maxValue <= 9999) ? "%04u" :
+            (maxValue <= 99999) ? "%05u" :
+            (maxValue <= 999999) ? "%06u" :
+            (maxValue <= 9999999) ? "%07u" :
+            (maxValue <= 99999999) ? "%08u" :
+            (maxValue <= 999999999) ? "%09u" :
+            (maxValue <= 9999999999) ? "%010u" : "???"
 
         } else if radix == 16 && padding == false {
             
             format =
-            (maxValue < 0x10) ? "%1X" :
-            (maxValue < 0x100) ? "%2X" :
-            (maxValue < 0x1000) ? "%3X" :
-            (maxValue < 0x10000) ? "%4X" :
-            (maxValue < 0x100000) ? "%5X" :
-            (maxValue < 0x1000000) ? "%6X" :
-            (maxValue < 0x10000000) ? "%7X" :
-            (maxValue < 0x100000000) ? "%8X" : "???"
+            (maxValue <= 0xF) ? "%1X" :
+            (maxValue <= 0xFF) ? "%2X" :
+            (maxValue <= 0xFFF) ? "%3X" :
+            (maxValue <= 0xFFFF) ? "%4X" :
+            (maxValue <= 0xFFFFF) ? "%5X" :
+            (maxValue <= 0xFFFFFF) ? "%6X" :
+            (maxValue <= 0xFFFFFFF) ? "%7X" :
+            (maxValue <= 0xFFFFFFFF) ? "%8X" :
+            (maxValue <= 0xFFFFFFFFF) ? "%9X" : "???"
 
         } else if radix == 16 && padding == true {
             
             format =
-            (maxValue < 0x10) ? "%01X" :
-            (maxValue < 0x100) ? "%02X" :
-            (maxValue < 0x1000) ? "%03X" :
-            (maxValue < 0x10000) ? "%04X" :
-            (maxValue < 0x100000) ? "%05X" :
-            (maxValue < 0x1000000) ? "%06X" :
-            (maxValue < 0x10000000) ? "%07X" :
-            (maxValue < 0x100000000) ? "%08X" : "???"
-            
+            (maxValue <= 0xF) ? "%01X" :
+            (maxValue <= 0xFF) ? "%02X" :
+            (maxValue <= 0xFFF) ? "%03X" :
+            (maxValue <= 0xFFFF) ? "%04X" :
+            (maxValue <= 0xFFFFF) ? "%05X" :
+            (maxValue <= 0xFFFFFF) ? "%06X" :
+            (maxValue <= 0xFFFFFFF) ? "%07X" :
+            (maxValue <= 0xFFFFFFFF) ? "%08X" :
+            (maxValue <= 0xFFFFFFFFF) ? "%09X" : "???"
+
         } else {
             
             format = "Invalid"

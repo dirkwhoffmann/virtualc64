@@ -202,6 +202,7 @@ using namespace vc64;
     [self cpu]->clearLog();
 }
 
+// DEPPRECATED
 - (void)setHex
 {
     DasmNumberFormat instrFormat = {
