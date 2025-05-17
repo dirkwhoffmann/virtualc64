@@ -312,7 +312,7 @@ extension MyController {
                 setColor(color: [.systemGreen, .systemGreen, .systemGreen, .systemYellow, .systemRed])
 
             case 3:
-                let fps = speedometer.gpsFps
+                let fps = speedometer.gpuFps
                 activityBar.maxValue = 120
                 activityBar.doubleValue = fps
                 activityInfo.stringValue = String(format: "%d FPS", Int(fps))

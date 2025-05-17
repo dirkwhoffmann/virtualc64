@@ -15,7 +15,7 @@ class Speedometer {
 
     // GPU performance in frames per second
     private var _gpuFps = 0.0
-    var gpsFps: Double { return _gpuFps.truncate(digits: 0) }
+    var gpuFps: Double { return _gpuFps.truncate(digits: 0) }
 
     // Latched values from the previous update
     private var latchedTimestamp = Date().timeIntervalSince1970

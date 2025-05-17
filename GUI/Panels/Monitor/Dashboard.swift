@@ -51,8 +51,10 @@ class Dashboard: DialogController {
         if let viewController = contentViewController as? DashboardViewController {
             viewController.myController = controller
             viewController.emu = emu
-            // viewController.waveformLPanel.audioPort = emu.audioPort
-            // viewController.waveformRPanel.audioPort = emu.audioPort
+            viewController.waveformLPanel.audioPort = emu?.audioPort
+            viewController.waveformLPanel.sid = emu?.sid
+            // viewController.waveformRPanel.audioPort = emu?.audioPort
+            // viewController.waveformRPanel.sid = emu?.sid
         }
     }
     

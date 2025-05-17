@@ -19,7 +19,7 @@ class WaveformView: NSImageView {
     var size: NSSize!
     var wordCount: Int { return Int(size.width) * Int(size.height) }
 
-    // Waveform buffer
+    // Image buffer
     var buffer: UnsafeMutablePointer<UInt32>!
 
     // Remembers the highest amplitude (used for auto scaling)

@@ -12,40 +12,21 @@ import SwiftUI
 enum PanelType: Int {
     
     case Combined       = 0
-    case ChipRam        = 1
-    case SlowRam        = 2
-    case FastRam        = 3
-    case Rom            = 4
-    case CopperDma      = 5
-    case BlitterDma     = 6
-    case DiskDma        = 7
-    case AudioDma       = 8
-    case SpriteDma      = 9
-    case BitplaneDma    = 10
-    case CIAA           = 11
-    case CIAB           = 12
-    case AmigaMhz       = 13
-    case AmigaFps       = 14
-    case HostLoad       = 15
-    case HostFps        = 16
-    case AudioFillLevel = 17
-    case WaveformL      = 18
-    case WaveformR      = 19
+    case CIAA           = 1
+    case CIAB           = 2
+    case AmigaMhz       = 3
+    case AmigaFps       = 4
+    case HostLoad       = 5
+    case HostFps        = 6
+    case AudioFillLevel = 7
+    case WaveformL      = 8
+    // case WaveformR      = 9
 }
 
 @MainActor
 class OverviewController : NSViewController {
     
-    @IBOutlet weak var chipRamBox: NSBox!
-    @IBOutlet weak var slowRamBox: NSBox!
-    @IBOutlet weak var fastRamBox: NSBox!
-    @IBOutlet weak var romBox: NSBox!
-    @IBOutlet weak var copperDmaBox: NSBox!
-    @IBOutlet weak var blitterDmaBox: NSBox!
-    @IBOutlet weak var diskDmaBox: NSBox!
-    @IBOutlet weak var audioDmaBox: NSBox!
-    @IBOutlet weak var spriteDmaBox: NSBox!
-    @IBOutlet weak var bitplaneDmaBox: NSBox!
+ 
     @IBOutlet weak var ciaABox: NSBox!
     @IBOutlet weak var ciaBBox: NSBox!
     @IBOutlet weak var hostLoadBox: NSBox!
@@ -54,7 +35,7 @@ class OverviewController : NSViewController {
     @IBOutlet weak var amigaMhzBox: NSBox!
     @IBOutlet weak var fillLevelBox: NSBox!
     @IBOutlet weak var waveformLBox: NSBox!
-    @IBOutlet weak var waveformRBox: NSBox!
+    // @IBOutlet weak var waveformRBox: NSBox!
 }
 
 class DashboardViewController: NSViewController {
@@ -73,25 +54,15 @@ class DashboardViewController: NSViewController {
     var multiPanelController: NSViewController!
     var singlePanelController: NSViewController!
     
-    let chipRamPanel = ChipRamPanel(frame: NSRect.zero)
-    let slowRamPanel = SlowRamPanel(frame: NSRect.zero)
-    let fastRamPanel = FastRamPanel(frame: NSRect.zero)
-    let romPanel = RomPanel(frame: NSRect.zero)
-    let copperDmaPanel = CopperDmaPanel(frame: NSRect.zero)
-    let blitterDmaPanel = BlitterDmaPanel(frame: NSRect.zero)
-    let diskDmaPanel = DiskDmaPanel(frame: NSRect.zero)
-    let audioDmaPanel = AudioDmaPanel(frame: NSRect.zero)
-    let spriteDmaPanel = SpriteDmaPanel(frame: NSRect.zero)
-    let bitplaneDmaPanel = BitplaneDmaPanel(frame: NSRect.zero)
     let ciaAPanel = CIAAPanel(frame: NSRect.zero)
     let ciaBPanel = CIABPanel(frame: NSRect.zero)
-    let amigaFpsPanel = AmigaFpsPanel(frame: NSRect.zero)
-    let amigaMhzPanel = AmigaMhzPanel(frame: NSRect.zero)
+    let amigaFpsPanel = C64FpsPanel(frame: NSRect.zero)
+    let amigaMhzPanel = C64MhzPanel(frame: NSRect.zero)
     let hostLoadPanel = HostLoadPanel(frame: NSRect.zero)
     let hostFpsPanel = HostFpsPanel(frame: NSRect.zero)
     let fillLevelPanel = AudioFillLevelPanel(frame: NSRect.zero)
     let waveformLPanel = WaveformPanel(frame: NSRect.zero, channel: 0)
-    let waveformRPanel = WaveformPanel(frame: NSRect.zero, channel: 1)
+    // let waveformRPanel = WaveformPanel(frame: NSRect.zero, channel: 1)
     
     override func viewDidLoad() {
 
@@ -149,16 +120,6 @@ class DashboardViewController: NSViewController {
             
             if let controller = children.first as? OverviewController {
                 
-                add(chipRamPanel, to: controller.chipRamBox)
-                add(slowRamPanel, to: controller.slowRamBox)
-                add(fastRamPanel, to: controller.fastRamBox)
-                add(romPanel, to: controller.romBox)
-                add(copperDmaPanel, to: controller.copperDmaBox)
-                add(blitterDmaPanel, to: controller.blitterDmaBox)
-                add(diskDmaPanel, to: controller.diskDmaBox)
-                add(audioDmaPanel, to: controller.audioDmaBox)
-                add(spriteDmaPanel, to: controller.spriteDmaBox)
-                add(bitplaneDmaPanel, to: controller.bitplaneDmaBox)
                 add(ciaAPanel, to: controller.ciaABox)
                 add(ciaBPanel, to: controller.ciaBBox)
                 add(amigaMhzPanel, to: controller.amigaMhzBox)
@@ -167,7 +128,7 @@ class DashboardViewController: NSViewController {
                 add(hostFpsPanel, to: controller.hostFpsBox)
                 add(fillLevelPanel, to: controller.fillLevelBox)
                 add(waveformLPanel, to: controller.waveformLBox)
-                add(waveformRPanel, to: controller.waveformRBox)
+                // add(waveformRPanel, to: controller.waveformRBox)
             }
         default:
             
@@ -182,16 +143,6 @@ class DashboardViewController: NSViewController {
                 
                 switch type {
                     
-                case .ChipRam: add(chipRamPanel, to: view)
-                case .SlowRam: add(slowRamPanel, to: view)
-                case .FastRam: add(fastRamPanel, to: view)
-                case .Rom: add(romPanel, to: view)
-                case .CopperDma: add(copperDmaPanel, to: view)
-                case .BlitterDma: add(blitterDmaPanel, to: view)
-                case .DiskDma: add(diskDmaPanel, to: view)
-                case .AudioDma: add(audioDmaPanel, to: view)
-                case .SpriteDma: add(spriteDmaPanel, to: view)
-                case .BitplaneDma: add(bitplaneDmaPanel, to: view)
                 case .CIAA: add(ciaAPanel, to: view)
                 case .CIAB: add(ciaBPanel, to: view)
                 case .AmigaMhz: add(amigaMhzPanel, to: view)
@@ -200,7 +151,7 @@ class DashboardViewController: NSViewController {
                 case .HostFps: add(hostFpsPanel, to: view)
                 case .AudioFillLevel: add(fillLevelPanel, to: view)
                 case .WaveformL: add(waveformLPanel, to: view)
-                case .WaveformR: add(waveformRPanel, to: view)
+                // case .WaveformR: add(waveformRPanel, to: view)
                 
                 default:
                     fatalError()
@@ -243,43 +194,12 @@ class DashboardViewController: NSViewController {
         guard let emu = emu else { return }
         guard let myController = myController else { return }
         
-        // Memory
-        // let mem = emu.mem.stats
-        let chipR = Double.random(in: 1..<100) // Double(mem.chipReads.accumulated)
-        let chipW = Double.random(in: 1..<100) // Double(mem.chipWrites.accumulated)
-        let slowR = Double.random(in: 1..<100) // Double(mem.slowReads.accumulated)
-        let slowW = Double.random(in: 1..<100) // Double(mem.slowWrites.accumulated)
-        let fastR = Double.random(in: 1..<100) // Double(mem.fastReads.accumulated)
-        let fastW = Double.random(in: 1..<100) // Double(mem.fastWrites.accumulated)
-        let kickR = Double.random(in: 1..<100) // Double(mem.kickReads.accumulated)
-        let kickW = Double.random(in: 1..<100) // Double(mem.kickWrites.accumulated)
-        chipRamPanel.model.add(chipR, chipW)
-        slowRamPanel.model.add(slowR, slowW)
-        fastRamPanel.model.add(fastR, fastW)
-        romPanel.model.add(kickR, kickW)
-        
-        // DMA
-        // let dma = emu.agnus.stats
-        let copperDma = Double.random(in: 0..<1.0) // Double(dma.copperActivity)
-        let blitterDma = Double.random(in: 0..<1.0) //Double(dma.blitterActivity)
-        let diskDma = Double.random(in: 0..<1.0) //Double(dma.diskActivity)
-        let audioDma = Double.random(in: 0..<1.0) //Double(dma.audioActivity)
-        let spriteDma = Double.random(in: 0..<1.0) //Double(dma.spriteActivity)
-        let bitplaneDma = Double.random(in: 0..<1.0) //Double(dma.bitplaneActivity)
-        
-        copperDmaPanel.model.add(copperDma)
-        blitterDmaPanel.model.add(blitterDma)
-        diskDmaPanel.model.add(diskDma)
-        audioDmaPanel.model.add(audioDma)
-        spriteDmaPanel.model.add(spriteDma)
-        bitplaneDmaPanel.model.add(bitplaneDma)
-        
         // Host
         let stats = emu.stats
         hostLoadPanel.model.add(stats.cpuLoad)
-        hostFpsPanel.model.add(0) // myController.speedometer.gpuFps)
+        hostFpsPanel.model.add(myController.speedometer.gpuFps)
 
-        // Amiga
+        // Emulator
         amigaFpsPanel.model.add(0) // myController.speedometer.emuFps)
         amigaMhzPanel.model.add(myController.speedometer.mhz)
         
@@ -290,6 +210,6 @@ class DashboardViewController: NSViewController {
         // Audio
         fillLevelPanel.model.add(emu.audioPort.stats.fillLevel)
         waveformLPanel.update()
-        waveformRPanel.update()
+        // waveformRPanel.update()
     }
 }

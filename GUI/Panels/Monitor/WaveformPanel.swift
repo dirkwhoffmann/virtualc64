@@ -11,17 +11,24 @@
 class WaveformPanel: NSImageView {
 
     var audioPort: AudioPortProxy?
-
+    var sid: SIDProxy?
+    
+    // Waveform source
+    var source = -1
+    
     // Waveform size
-    var imageSize: NSSize!
-    var wordCount: Int { return Int(imageSize.width) * Int(imageSize.height) }
+    var size: NSSize!
+    var wordCount: Int { return Int(size.width) * Int(size.height) }
 
-    // Waveform buffer
+    // Image buffer
     var buffer: UnsafeMutablePointer<UInt32>!
 
+    // Remembers the highest amplitude (used for auto scaling)
+    var maxAmp: Float = 0.001
+    
     // Foreground color
-    var color = UInt32(0xFF888888)
-
+    var color = UInt32(NSColor.gray.usingColorSpace(.sRGB)!.gpuColor)
+    
     required init?(coder decoder: NSCoder) {
 
         super.init(coder: decoder)
@@ -42,7 +49,7 @@ class WaveformPanel: NSImageView {
 
     func commonInit() {
                         
-        imageSize = NSSize(width: 300, height: 100)
+        size = NSSize(width: 300, height: 100)
         buffer = UnsafeMutablePointer<UInt32>.allocate(capacity: wordCount)
         imageScaling = .scaleAxesIndependently
         
@@ -61,15 +68,8 @@ class WaveformPanel: NSImageView {
     
     override func draw(_ dirtyRect: NSRect) {
 
-        /*
-        if tag == 0 {
-            audioPort?.drawWaveformL(buffer, size: imageSize, color: color)
-        } else {
-            audioPort?.drawWaveformR(buffer, size: imageSize, color: color)
-        }
-        */
-        
-        image = NSImage.make(data: buffer, rect: CGSize(width: imageSize.width, height: imageSize.height))
+        maxAmp = sid?.drawWaveform(buffer, size: size, scale: maxAmp, color: color, source: source) ?? 0
+        image = NSImage.make(data: buffer, rect: CGSize(width: size.width, height: size.height))
         super.draw(dirtyRect)
     }
 }

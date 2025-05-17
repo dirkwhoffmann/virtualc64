@@ -274,250 +274,6 @@ class DashboardPanel: NSView {
 //
 
 @MainActor
-class ChipRamPanel: DashboardPanel {
-
-    required init?(coder aDecoder: NSCoder) {
-        
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
-    required init(frame frameRect: NSRect) {
-        
-        super.init(frame: frameRect)
-        setup()
-    }
-    
-    func setup() {
-        
-        configure(title: "Chip Ram",
-                  subtitle: "Memory Accesses",
-                  range: 0...100)
-        
-        latest = { String(Int(self.model.latest().rounded())) }
-    }
-}
-
-@MainActor
-class SlowRamPanel: DashboardPanel {
-
-    required init?(coder aDecoder: NSCoder) {
-        
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
-    required init(frame frameRect: NSRect) {
-        
-        super.init(frame: frameRect)
-        setup()
-    }
-    
-    func setup() {
-        
-        configure(title: "Slow Ram",
-                  subtitle: "Memory Accesses",
-                  range: 0...100)
-
-        latest = { String(Int(self.model.latest().rounded())) }
-    }
-}
-
-@MainActor
-class FastRamPanel: DashboardPanel {
-
-    required init?(coder aDecoder: NSCoder) {
-        
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
-    required init(frame frameRect: NSRect) {
-        
-        super.init(frame: frameRect)
-        setup()
-    }
-    
-    func setup() {
-        
-        configure(title: "Fast Ram",
-                  subtitle: "Memory Accesses",
-                  range: 0...100)
-
-        latest = { String(Int(self.model.latest().rounded())) }
-    }
-}
-
-@MainActor
-class RomPanel: DashboardPanel {
-
-    required init?(coder aDecoder: NSCoder) {
-        
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
-    required init(frame frameRect: NSRect) {
-        
-        super.init(frame: frameRect)
-        setup()
-    }
-    
-    func setup() {
-        
-        configure(title: "Kickstart Rom",
-                  subtitle: "Memory Accesses",
-                  range: 0...100)
-
-        latest = { String(Int(self.model.latest().rounded())) }
-    }
-}
-
-@MainActor
-class CopperDmaPanel: DashboardPanel {
-
-    required init?(coder aDecoder: NSCoder) {
-        
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
-    required init(frame frameRect: NSRect) {
-        
-        super.init(frame: frameRect)
-        setup()
-    }
-    
-    func setup() {
-        
-        configure(title: "Copper DMA",
-                  subtitle: "Memory Accesses",
-                  range: 0...(313 * 120),
-                  logScale: true)
-
-        latest = { String(Int(self.model.latest().rounded())) }
-    }
-}
-
-@MainActor
-class BlitterDmaPanel: DashboardPanel {
-
-    required init?(coder aDecoder: NSCoder) {
-        
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
-    required init(frame frameRect: NSRect) {
-        
-        super.init(frame: frameRect)
-        setup()
-    }
-    
-    func setup() {
-        
-        configure(title: "Blitter DMA",
-                  subtitle: "Memory Accesses",
-                  range: 0...(313 * 120),
-                  logScale: true)
-        
-        latest = { String(Int(self.model.latest().rounded())) }
-    }
-}
-
-@MainActor
-class DiskDmaPanel: DashboardPanel {
-
-    required init?(coder aDecoder: NSCoder) {
-        
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
-    required init(frame frameRect: NSRect) {
-        
-        super.init(frame: frameRect)
-        setup()
-    }
-    
-    func setup() {
-        
-        configure(title: "Disk DMA", subtitle: "Memory Accesses", range: 0...(313 * 3))
-
-        latest = { String(Int(self.model.latest().rounded())) }
-    }
-}
-
-@MainActor
-class AudioDmaPanel: DashboardPanel {
-
-    required init?(coder aDecoder: NSCoder) {
-        
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
-    required init(frame frameRect: NSRect) {
-        
-        super.init(frame: frameRect)
-        setup()
-    }
-    
-    func setup() {
-        
-        configure(title: "Audio DMA", subtitle: "Memory Accesses", range: 0...(313 * 4))
-
-        latest = { String(Int(self.model.latest().rounded())) }
-    }
-}
-
-@MainActor
-class SpriteDmaPanel: DashboardPanel {
-
-    required init?(coder aDecoder: NSCoder) {
-        
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
-    required init(frame frameRect: NSRect) {
-        
-        super.init(frame: frameRect)
-        setup()
-    }
-    
-    func setup() {
-        
-        configure(title: "Sprite DMA", subtitle: "Memory Accesses", range: 0...(313 * 16))
-
-        latest = { String(Int(self.model.latest().rounded())) }
-    }
-}
-
-@MainActor
-class BitplaneDmaPanel: DashboardPanel {
-    
-    required init?(coder aDecoder: NSCoder) {
-        
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
-    required init(frame frameRect: NSRect) {
-        
-        super.init(frame: frameRect)
-        setup()
-    }
-    
-    func setup() {
-        
-        configure(title: "Bitplane DMA", subtitle: "Memory Accesses", range: 0...39330)
-
-        latest = { String(Int(self.model.latest().rounded())) }
-    }
-}
-
-@MainActor
 class HostLoadPanel: DashboardPanel {
     
     required init?(coder aDecoder: NSCoder) {
@@ -568,7 +324,7 @@ class HostFpsPanel: DashboardPanel {
 }
 
 @MainActor
-class AmigaMhzPanel: DashboardPanel {
+class C64MhzPanel: DashboardPanel {
     
     required init?(coder aDecoder: NSCoder) {
         
@@ -584,7 +340,7 @@ class AmigaMhzPanel: DashboardPanel {
     
     func setup() {
         
-        configure(title: "Amiga", subtitle: "CPU Frequency", range: 0...14, unit: "Mhz")
+        configure(title: "C64", subtitle: "CPU Frequency", range: 0...14, unit: "Mhz")
         switchStyle()
 
         gaugeGradient = Gradient(colors: [.red, .orange, .yellow, .green, .yellow, .orange, .red])
@@ -594,7 +350,7 @@ class AmigaMhzPanel: DashboardPanel {
 }
 
 @MainActor
-class AmigaFpsPanel: DashboardPanel {
+class C64FpsPanel: DashboardPanel {
     
     required init?(coder aDecoder: NSCoder) {
         
@@ -610,7 +366,7 @@ class AmigaFpsPanel: DashboardPanel {
     
     func setup() {
         
-        configure(title: "Amiga", subtitle: "Refresh Rate", range: 0...120, unit: "Fps")
+        configure(title: "C64", subtitle: "Refresh Rate", range: 0...120, unit: "Fps")
         switchStyle()
 
         gaugeGradient = Gradient(colors: [.red, .orange, .yellow, .green, .yellow, .orange, .red])
