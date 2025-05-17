@@ -91,7 +91,7 @@ class Monitor: DialogController {
             // Layer debugger
             let layers = config.vicCutLayers
             cutEnable.state = (layers & 0x1000) != 0 ? .on : .off
-            cutBackground.state = (layers & 0x800) != 0 ? .on : .off
+            cutBorder.state = (layers & 0x800) != 0 ? .on : .off
             cutForeground.state = (layers & 0x400) != 0 ? .on : .off
             cutBackground.state = (layers & 0x200) != 0 ? .on : .off
             cutSprites.state = (layers & 0x100) != 0 ? .on : .off

@@ -203,8 +203,6 @@ class Inspector: DialogController {
     @IBOutlet weak var ciaIdleLevel: NSLevelIndicator!
     
     // VICII panel
-    @IBOutlet weak var vicScanline: NSTextField!
-    @IBOutlet weak var vicRasterCycle: NSTextField!
     @IBOutlet weak var vicYCounter: NSTextField!
     @IBOutlet weak var vicXCounter: NSTextField!
     @IBOutlet weak var vicVC: NSTextField!
@@ -264,6 +262,21 @@ class Inspector: DialogController {
     @IBOutlet weak var sprExtra1: NSColorWell!
     @IBOutlet weak var sprExtra2: NSColorWell!
 
+    @IBOutlet weak var cutEnable: NSButton!
+    @IBOutlet weak var cutBorder: NSButton!
+    @IBOutlet weak var cutForeground: NSButton!
+    @IBOutlet weak var cutBackground: NSButton!
+    @IBOutlet weak var cutSprites: NSButton!
+    @IBOutlet weak var cutSprite0: NSButton!
+    @IBOutlet weak var cutSprite1: NSButton!
+    @IBOutlet weak var cutSprite2: NSButton!
+    @IBOutlet weak var cutSprite3: NSButton!
+    @IBOutlet weak var cutSprite4: NSButton!
+    @IBOutlet weak var cutSprite5: NSButton!
+    @IBOutlet weak var cutSprite6: NSButton!
+    @IBOutlet weak var cutSprite7: NSButton!
+    @IBOutlet weak var cutOpacity: NSSlider!
+    
     // SID panel
     @IBOutlet weak var sidSelector: NSSegmentedControl!
     @IBOutlet weak var sidWaveform1: NSPopUpButton!
@@ -341,7 +354,8 @@ class Inspector: DialogController {
     var isRunning = true
     
     var toolbar: InspectorToolbar? { return window?.toolbar as? InspectorToolbar }
-
+    var config: Configuration { return parent.config }
+    
     // Used to determine the items to be refreshed
     var refreshCnt = 0
         

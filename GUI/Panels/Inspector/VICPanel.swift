@@ -28,8 +28,6 @@ extension Inspector {
 
             if full {
 
-                vicScanline.assignFormatter(fmt9)
-                vicRasterCycle.assignFormatter(fmt9)
                 vicYCounter.assignFormatter(fmt9)
                 vicXCounter.assignFormatter(fmt9)
                 vicVC.assignFormatter(fmt10)
@@ -50,8 +48,6 @@ extension Inspector {
                 sprY.assignFormatter(fmt9)
             }
 
-            vicScanline.integerValue = Int(vicInfo.scanline)
-            vicRasterCycle.integerValue = Int(vicInfo.rasterCycle)
             vicYCounter.integerValue = Int(vicInfo.yCounter)
             vicXCounter.integerValue = Int(vicInfo.xCounter)
             vicVC.integerValue = Int(vicInfo.vc)
@@ -109,11 +105,89 @@ extension Inspector {
             sprColor.color = emu.vic.color(Int(sprInfo.color))
             sprExtra1.color = emu.vic.color(Int(sprInfo.extraColor1))
             sprExtra2.color = emu.vic.color(Int(sprInfo.extraColor2))
+            
+            // Stencils
+            let layers = config.vicCutLayers
+            cutEnable.state = (layers & 0x1000) != 0 ? .on : .off
+            cutBorder.state = (layers & 0x800) != 0 ? .on : .off
+            cutForeground.state = (layers & 0x400) != 0 ? .on : .off
+            cutBackground.state = (layers & 0x200) != 0 ? .on : .off
+            cutSprites.state = (layers & 0x100) != 0 ? .on : .off
+            cutSprite7.state = (layers & 0x80) != 0 ? .on : .off
+            cutSprite6.state = (layers & 0x40) != 0 ? .on : .off
+            cutSprite5.state = (layers & 0x20) != 0 ? .on : .off
+            cutSprite4.state = (layers & 0x10) != 0 ? .on : .off
+            cutSprite3.state = (layers & 0x08) != 0 ? .on : .off
+            cutSprite2.state = (layers & 0x04) != 0 ? .on : .off
+            cutSprite1.state = (layers & 0x02) != 0 ? .on : .off
+            cutSprite0.state = (layers & 0x01) != 0 ? .on : .off
+            cutOpacity.integerValue = config.vicCutOpacity
+
+            cutOpacity.isEnabled = (layers & 0x1000) != 0
+            cutBorder.isEnabled = (layers & 0x1000) != 0
+            cutForeground.isEnabled = (layers & 0x1000) != 0
+            cutBackground.isEnabled = (layers & 0x1000) != 0
+            cutSprites.isEnabled = (layers & 0x1000) != 0
+            cutSprite7.isEnabled = (layers & 0x1100) == 0x1100
+            cutSprite6.isEnabled = (layers & 0x1100) == 0x1100
+            cutSprite5.isEnabled = (layers & 0x1100) == 0x1100
+            cutSprite4.isEnabled = (layers & 0x1100) == 0x1100
+            cutSprite3.isEnabled = (layers & 0x1100) == 0x1100
+            cutSprite2.isEnabled = (layers & 0x1100) == 0x1100
+            cutSprite1.isEnabled = (layers & 0x1100) == 0x1100
+            cutSprite0.isEnabled = (layers & 0x1100) == 0x1100
         }
     }
     
     @IBAction func selectSpriteAction(_ sender: Any!) {
 
         fullRefresh()
+    }
+    
+    //
+    // Action methods
+    //
+        
+    @IBAction func cutOpacityAction(_ sender: NSSlider!) {
+        
+        config.vicCutOpacity = sender.integerValue
+    }
+    
+    func addLayer(_ mask: Int) {
+        config.vicCutLayers = config.vicCutLayers | mask
+    }
+    func removeLayer(_ mask: Int) {
+        config.vicCutLayers = config.vicCutLayers & ~mask
+    }
+
+    @IBAction func cutEnableAction(_ sender: NSButton!) {
+
+        if sender.state == .on { addLayer(0x1000) } else { removeLayer(0x1000) }
+    }
+    
+    @IBAction func cutBorderAction(_ sender: NSButton!) {
+    
+        if sender.state == .on { addLayer(0x800) } else { removeLayer(0x800) }
+    }
+
+    @IBAction func cutForegroundAction(_ sender: NSButton!) {
+    
+        if sender.state == .on { addLayer(0x400) } else { removeLayer(0x400) }
+    }
+
+    @IBAction func cutBackgroundAction(_ sender: NSButton!) {
+    
+        if sender.state == .on { addLayer(0x200) } else { removeLayer(0x200) }
+    }
+
+    @IBAction func cutSpritesAction(_ sender: NSButton!) {
+    
+        if sender.state == .on { addLayer(0x100) } else { removeLayer(0x100) }
+    }
+
+    @IBAction func cutSingleSpriteAction(_ sender: NSButton!) {
+    
+        let sprite = sender.tag
+        if sender.state == .on { addLayer(1 << sprite) } else { removeLayer(1 << sprite) }
     }
 }
