@@ -200,7 +200,7 @@ class DashboardViewController: NSViewController {
         hostFpsPanel.model.add(myController.speedometer.gpuFps)
 
         // Emulator
-        amigaFpsPanel.model.add(0) // myController.speedometer.emuFps)
+        amigaFpsPanel.model.add(myController.speedometer.emuFps)
         amigaMhzPanel.model.add(myController.speedometer.mhz)
         
         // CIAs

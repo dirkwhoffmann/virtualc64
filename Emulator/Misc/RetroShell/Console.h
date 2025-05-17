@@ -252,7 +252,7 @@ protected:
     // Auto-completes an argument list
     void autoComplete(Arguments &argv);
 
-    // Parses an argument of a certain type
+    // Checks or parses an argument of a certain type
     bool isBool(const string &argv);
     bool parseBool(const string  &argv);
     bool parseBool(const string  &argv, bool fallback);

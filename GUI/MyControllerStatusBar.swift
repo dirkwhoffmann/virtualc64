@@ -286,7 +286,9 @@ extension MyController {
 
             let state = emu.cpu.info
 
-            speedometer.updateWith(cycle: state.cycle, gpuFrame: renderer.frames)
+            speedometer.updateWith(cycle: state.cycle,
+                                   emuFrame: Int64(emu.c64.info.frame),
+                                   gpuFrame: renderer.frames)
 
             switch activityType.selectedTag() {
 

@@ -381,7 +381,7 @@ Console::split(const string& userInput)
         if (c == '\\') { esc = true; continue; }
 
         // Switch between string mode and non-string mode if '"' is detected
-        if (c == '"' && !esc) { str = !str; }
+        if (c == '"' && !esc) { str = !str; continue; }
 
         // Check for special characters in escape mode
         if (esc && c == 'n') c = '\n';
@@ -390,7 +390,7 @@ Console::split(const string& userInput)
         if (c != ' ' || str) {
             token += c;
         } else {
-            if (!token.empty()) result.push_back(util::trim(token, "\""));
+            if (!token.empty()) result.push_back(token);
             token = "";
         }
         esc = false;
@@ -414,8 +414,14 @@ Console::autoComplete(const string& userInput)
     // Recreate the command string
     for (const auto &it : tokens) { result += (result == "" ? "" : " ") + it; }
 
-    // Add a space if the command has been fully completed
-    if (!tokens.empty() && getRoot().seek(tokens)) result += " ";
+    // Add a space if the command has been fully completed ...
+    if (auto cmd = getRoot().seek(tokens); cmd != nullptr && !tokens.empty()) {
+        
+        // ... and there are additional subcommands or arguments
+        if (cmd->subCommands.size() > 0 ||
+            cmd->requiredArgs.size() > 0 ||
+            cmd->optionalArgs.size()) { result += " "; }
+    }
 
     return result;
 }
@@ -572,7 +578,7 @@ Console::exec(const Arguments &argv, bool verbose)
     if ((isize)args.size() > current->maxArgs()) throw TooManyArgumentsError(current->fullName);
 
     // Call the command handler
-    current->callback(args, current->param);
+    current->callback(args, current->param.empty() ? 0 : current->param.front());
 }
 
 void
@@ -627,7 +633,7 @@ Console::help(const Command& current)
     for (auto &it : current.subCommands) {
 
         // Only proceed if the command is visible
-        if (it.hidden) continue;
+        if (it.hidden || it.help.empty() || it.help[0] == "") continue;
 
         // Print the group (if present)
         if (!it.groupName.empty()) {
@@ -646,7 +652,7 @@ Console::help(const Command& current)
         *this << it.fullName;
         (*this).tab(tab);
         *this << " : ";
-        *this << it.help.second;
+        *this << it.help[0];
         *this << '\n';
     }
 
@@ -732,8 +738,6 @@ Console::dump(CoreObject &component, std::vector <Category> categories)
 void
 Console::_dump(CoreObject &component, Category category)
 {
-    // assert(isEmulatorThread());
-
     std::stringstream ss;
 
     switch (category) {

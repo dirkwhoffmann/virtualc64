@@ -87,9 +87,9 @@ Command::add(const std::vector<string> &rawtokens,
     d.groupName = currentGroup;
     d.requiredArgs = requiredArgs;
     d.optionalArgs = optionalArgs;
-    d.help = help;
+    d.help = { help.first };
     d.callback = func;
-    d.param = param;
+    d.param = { param };
     d.hidden = help.second.empty();
 
     if (!d.hidden) currentGroup = "";

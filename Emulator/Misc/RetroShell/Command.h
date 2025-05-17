@@ -56,12 +56,15 @@ struct Command {
     // Name of this command (e.g., "eject")
     string name;
 
-    // Full name of this command (e.g., "df0 eject")
+    // Full name of this command (e.g., "drive8 eject")
     string fullName;
 
-    // Help description for this command
-    std::pair<string, string> help;
+    // Name of this command as displayed in help messages (e.g., "[g]oto")
+    string helpName;
 
+    // Help description of this command (e.g., "Eject disk")
+    std::vector<string> help;
+    
     // List of required arguments
     std::vector<string> requiredArgs;
 
@@ -75,8 +78,8 @@ struct Command {
     std::function<void (Arguments&, long)> callback = nullptr;
 
     // Additional argument passed to the command handler
-    long param = 0;
-
+    std::vector<isize> param;
+    
     // Indicates if this command appears in help descriptions
     bool hidden = false;
 

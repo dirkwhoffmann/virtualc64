@@ -37,7 +37,7 @@
 
 namespace vc64 {
 
-class RetroShell : public SubComponent {
+class RetroShell final : public SubComponent {
 
     friend class RshServer;
 
@@ -72,6 +72,10 @@ private:
     bool inCommandShell() { return current == &commander; }
     bool inDebugShell() { return current == &debugger; }
 
+    
+    //
+    // Initializing
+    //
 
 public:
 
