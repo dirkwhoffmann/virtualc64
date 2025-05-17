@@ -125,8 +125,6 @@ static const char *smokeTestScript[] = {
     "vic set SB_COLLISIONS false",
 
     "dmadebugger",
-    "dmadebugger open",
-    "dmadebugger close",
     "dmadebugger set ENABLE true",
     "dmadebugger set ENABLE false",
     "dmadebugger set MODE BG_LAYER",
