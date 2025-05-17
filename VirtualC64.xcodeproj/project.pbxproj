@@ -402,6 +402,13 @@
 		50AA3EC12616F62500C96EDB /* MemUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AA3EC02616F62500C96EDB /* MemUtils.cpp */; };
 		50AA48B2292F8EC30084401D /* Peddle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AA48B0292F8EC30084401D /* Peddle.cpp */; };
 		50AB70762721B8EE004ABB2B /* DiskAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AB70742721B8EE004ABB2B /* DiskAnalyzer.cpp */; };
+		50ABD2872DD88EAC00456555 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50ABD2862DD88EAC00456555 /* Dashboard.storyboard */; };
+		50ABD28E2DD8907000456555 /* DashboardToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ABD28B2DD8907000456555 /* DashboardToolbar.swift */; };
+		50ABD28F2DD8907000456555 /* DashboardDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ABD2892DD8907000456555 /* DashboardDataProvider.swift */; };
+		50ABD2902DD8907000456555 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ABD2882DD8907000456555 /* Dashboard.swift */; };
+		50ABD2912DD8907000456555 /* DashboardPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ABD28A2DD8907000456555 /* DashboardPanel.swift */; };
+		50ABD2922DD8907000456555 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ABD28C2DD8907000456555 /* DashboardViewController.swift */; };
+		50ABD2932DD8907000456555 /* WaveformPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ABD28D2DD8907000456555 /* WaveformPanel.swift */; };
 		50ACF4DB256EB43B003B5690 /* PowerPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACF4D9256EB43B003B5690 /* PowerPort.cpp */; };
 		50AD303C28141F0B00D9A7A6 /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD303A28141F0B00D9A7A6 /* Buffer.cpp */; };
 		50AE19392632B787005A5898 /* Script.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE19372632B787005A5898 /* Script.cpp */; };
@@ -983,6 +990,13 @@
 		50AB70742721B8EE004ABB2B /* DiskAnalyzer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DiskAnalyzer.cpp; sourceTree = "<group>"; };
 		50AB70752721B8EE004ABB2B /* DiskAnalyzer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskAnalyzer.h; sourceTree = "<group>"; };
 		50AB70772721B92D004ABB2B /* DiskAnalyzerTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskAnalyzerTypes.h; sourceTree = "<group>"; };
+		50ABD2862DD88EAC00456555 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
+		50ABD2882DD8907000456555 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
+		50ABD2892DD8907000456555 /* DashboardDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDataProvider.swift; sourceTree = "<group>"; };
+		50ABD28A2DD8907000456555 /* DashboardPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPanel.swift; sourceTree = "<group>"; };
+		50ABD28B2DD8907000456555 /* DashboardToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardToolbar.swift; sourceTree = "<group>"; };
+		50ABD28C2DD8907000456555 /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
+		50ABD28D2DD8907000456555 /* WaveformPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformPanel.swift; sourceTree = "<group>"; };
 		50ACF4D9256EB43B003B5690 /* PowerPort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PowerPort.cpp; sourceTree = "<group>"; };
 		50ACF4DA256EB43B003B5690 /* PowerPort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerPort.h; sourceTree = "<group>"; };
 		50AD303A28141F0B00D9A7A6 /* Buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Buffer.cpp; sourceTree = "<group>"; usesTabs = 0; };
@@ -2156,6 +2170,7 @@
 				5098C57C2658D4DC00E05EFC /* VideoExporter.xib */,
 				50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */,
 				50F99563203AEC80004C4856 /* KeyViewItem.xib */,
+				50ABD2862DD88EAC00456555 /* Dashboard.storyboard */,
 			);
 			path = "XIB files";
 			sourceTree = "<group>";
@@ -2179,6 +2194,12 @@
 			isa = PBXGroup;
 			children = (
 				50D3092724C71B0A00B92563 /* Monitor.swift */,
+				50ABD2882DD8907000456555 /* Dashboard.swift */,
+				50ABD2892DD8907000456555 /* DashboardDataProvider.swift */,
+				50ABD28A2DD8907000456555 /* DashboardPanel.swift */,
+				50ABD28B2DD8907000456555 /* DashboardToolbar.swift */,
+				50ABD28C2DD8907000456555 /* DashboardViewController.swift */,
+				50ABD28D2DD8907000456555 /* WaveformPanel.swift */,
 			);
 			path = Monitor;
 			sourceTree = "<group>";
@@ -2343,6 +2364,7 @@
 				50A519411B8DA230006771E2 /* drive_click.aiff in Resources */,
 				5051A1521B88438800CBFB5A /* 1541_track_change_0.aiff in Resources */,
 				5058A918281D03D200C223C9 /* DiskInspector.xib in Resources */,
+				50ABD2872DD88EAC00456555 /* Dashboard.storyboard in Resources */,
 				5051A15F1B885FDD00CBFB5A /* 1541_power_on_0.aiff in Resources */,
 				50D5F88824F556270062EF13 /* DiskErrors.xib in Resources */,
 				5051A1601B885FDD00CBFB5A /* 1541_track_change_2.aiff in Resources */,
@@ -2591,6 +2613,12 @@
 				506A8A882B88D00200B95383 /* Configurable.cpp in Sources */,
 				50E5BF732BA81E710004712B /* Monitor.cpp in Sources */,
 				504C43A424AF29AC00E69CAE /* Keyboard.cpp in Sources */,
+				50ABD28E2DD8907000456555 /* DashboardToolbar.swift in Sources */,
+				50ABD28F2DD8907000456555 /* DashboardDataProvider.swift in Sources */,
+				50ABD2902DD8907000456555 /* Dashboard.swift in Sources */,
+				50ABD2912DD8907000456555 /* DashboardPanel.swift in Sources */,
+				50ABD2922DD8907000456555 /* DashboardViewController.swift in Sources */,
+				50ABD2932DD8907000456555 /* WaveformPanel.swift in Sources */,
 				50A1948A2BDA5EED0046849E /* VICIIBase.cpp in Sources */,
 				504C439924AF29AC00E69CAE /* filter.cc in Sources */,
 				504C439824AF29AC00E69CAE /* sid.cc in Sources */,

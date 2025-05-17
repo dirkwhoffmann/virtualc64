@@ -339,12 +339,35 @@ extension MyController: NSMenuItemValidation {
         }
     }
     
-    @IBAction func monitorAction(_ sender: Any!) {
+    func addDashboard(type: PanelType = .Combined) {
+    
+        let count = dashboards.count
         
-        if monitor == nil {
-            monitor = Monitor(with: self, nibName: "Monitor")
+        // Allow 24 dashboards at a time
+        if count < 24 {
+            
+            let myStoryboard = NSStoryboard(name: "Dashboard", bundle: nil)
+            
+            if let newDashboard = myStoryboard.instantiateController(withIdentifier: "MyWindowController") as? Dashboard {
+                
+                dashboards.append(newDashboard)
+                newDashboard.setController(self)
+                newDashboard.showWindow(self)
+                newDashboard.viewController?.type = type
+                return
+            }
         }
-        monitor?.showWindow(self)
+
+        NSSound.beep();
+    }
+    
+    @IBAction func dashboardAction(_ sender: Any!) {
+        
+        if dashboards.isEmpty {
+            addDashboard()
+        } else {
+            dashboards[0].showWindow(self)
+        }
     }
     
     @IBAction func consoleAction(_ sender: Any!) {

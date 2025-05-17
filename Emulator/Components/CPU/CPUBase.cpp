@@ -229,6 +229,9 @@ CPU::setOption(Option opt, i64 value)
                 case DASM_HEX0: radix = 16; fill = '0';  break;
                 case DASM_DEC:  radix = 10; fill = '\0'; break;
                 case DASM_DEC0: radix = 10; fill = '0';  break;
+                    
+                default:
+                    fatalError;
             }
             
             DasmNumberFormat instrFormat = {

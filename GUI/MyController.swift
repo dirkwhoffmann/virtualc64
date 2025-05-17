@@ -30,10 +30,7 @@ class MyController: NSWindowController, MessageReceiver {
 
     // Auxiliary windows of this emulator instance
     var inspectors: [Inspector] = []
-    // var dashboards: [Dashboard] = []
-    
-    // Inspector panel of this emulator instance
-    // var inspector: Inspector?
+    var dashboards: [Dashboard] = []
     
     // Monitor panel of this emulator instance
     var monitor: Monitor?
@@ -266,7 +263,7 @@ extension MyController {
             for inspector in inspectors { inspector.continuousRefresh() }
 
             // Animate the dashboards
-            // for dashboard in dashboards { dashboard.continuousRefresh() }
+            for dashboard in dashboards { dashboard.continuousRefresh() }
             
             // Update the cartridge LED
             if emu?.expansionport.traits.leds ?? 0 > 0 {

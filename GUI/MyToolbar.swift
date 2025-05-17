@@ -79,7 +79,7 @@ class MyToolbar: NSToolbar {
         switch sender.selectedSegment {
             
         case 0: parent.inspectorAction(sender)
-        case 1: parent.monitorAction(sender)
+        case 1: parent.dashboardAction(sender)
         case 2: parent.consoleAction(sender)
             
         default: assert(false)

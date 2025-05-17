@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="qNz-Gs-wX5">
+            <objects>
+                <windowController storyboardIdentifier="MyWindowController" id="pY4-EW-Sco" customClass="Dashboard" customModule="VirtualC64" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="Dashboard" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="8ha-YH-oax">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="255" y="323" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1728" height="1079"/>
+                        <view key="contentView" id="axK-ob-lcB">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </view>
+                        <toolbar key="toolbar" implicitIdentifier="9B58E0A2-7DCF-4D58-A0BE-EA5342B935E3" autosavesConfiguration="NO" showsBaselineSeparator="NO" displayMode="iconAndLabel" sizeMode="regular" id="nKA-vg-sXv" customClass="DashboardToolbar" customModule="VirtualC64" customModuleProvider="target">
+                            <allowedToolbarItems>
+                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="HJ8-Bt-Scm"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="Jyf-xG-HJz"/>
+                                <toolbarItem implicitItemIdentifier="D2FA3722-DCFA-48BB-A96B-41CAACF45863" label="Inspection Target" paletteLabel="Inspection Target" image="toolbarItem:H9A-TU-iNO:image" bordered="YES" title="Overview" sizingBehavior="auto" id="H9A-TU-iNO">
+                                    <nil key="toolTip"/>
+                                    <popUpButton key="view" verticalHuggingPriority="750" id="3y4-Ya-wBR">
+                                        <rect key="frame" x="19" y="14" width="61" height="40"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <popUpButtonCell key="cell" type="roundTextured" title="Overview" bezelStyle="texturedRounded" imagePosition="only" alignment="left" controlSize="large" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="1B7-nq-2dX" id="TjR-I5-QOw">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="message"/>
+                                            <menu key="menu" id="x3T-rU-CJO">
+                                                <items>
+                                                    <menuItem title="Overview" state="on" image="toolbarItem:H9A-TU-iNO:image" id="1B7-nq-2dX"/>
+                                                    <menuItem isSeparatorItem="YES" id="xze-9W-kYI"/>
+                                                    <menuItem title="Chip RAM" image="toolbarItem:H9A-TU-iNO:image" tag="1" id="g4L-Po-SFI"/>
+                                                    <menuItem title="Slow RAM" image="toolbarItem:H9A-TU-iNO:image" tag="2" id="xUW-pj-FG7"/>
+                                                    <menuItem title="Fast RAM" image="toolbarItem:H9A-TU-iNO:image" tag="3" id="mqe-SS-Ppd"/>
+                                                    <menuItem title="Kickstart ROM" image="toolbarItem:H9A-TU-iNO:image" tag="4" id="wt5-UL-Bkb"/>
+                                                    <menuItem isSeparatorItem="YES" id="3H0-in-ssH"/>
+                                                    <menuItem title="Copper DMA" image="toolbarItem:H9A-TU-iNO:image" tag="5" id="lEQ-dn-pRn"/>
+                                                    <menuItem title="Blitter DMA" image="toolbarItem:H9A-TU-iNO:image" tag="6" id="TDe-BQ-Ipc"/>
+                                                    <menuItem title="Disk DMA" image="toolbarItem:H9A-TU-iNO:image" tag="7" id="KCR-HY-BBM"/>
+                                                    <menuItem title="Audio DMA" image="toolbarItem:H9A-TU-iNO:image" tag="8" id="rSc-dE-5pd"/>
+                                                    <menuItem title="Sprite DMA" image="toolbarItem:H9A-TU-iNO:image" tag="9" id="CTD-Wx-LBo"/>
+                                                    <menuItem title="Bitplane DMA" image="toolbarItem:H9A-TU-iNO:image" tag="10" id="M7Z-2r-VcP"/>
+                                                    <menuItem isSeparatorItem="YES" id="mCv-BO-ozI"/>
+                                                    <menuItem title="CIA1 Activity" image="toolbarItem:H9A-TU-iNO:image" tag="11" id="tpT-GZ-ilc"/>
+                                                    <menuItem title="CIA2 Activity" image="toolbarItem:H9A-TU-iNO:image" tag="12" id="ki3-nh-qoE"/>
+                                                    <menuItem title="Amiga Clock Frequency" image="toolbarItem:H9A-TU-iNO:image" tag="13" id="xbb-A8-Djm"/>
+                                                    <menuItem title="Amiga Refresh Rate" image="toolbarItem:H9A-TU-iNO:image" tag="14" id="zY4-AY-Avz"/>
+                                                    <menuItem isSeparatorItem="YES" id="269-B3-nzS"/>
+                                                    <menuItem title="Host CPU Load" image="toolbarItem:H9A-TU-iNO:image" tag="15" id="dqd-FO-HEh"/>
+                                                    <menuItem title="Host Refresh Rate" image="toolbarItem:H9A-TU-iNO:image" tag="16" id="aDB-PO-DWc"/>
+                                                    <menuItem isSeparatorItem="YES" id="YGN-lv-6oQ"/>
+                                                    <menuItem title="Audio Buffer Fill Level" image="toolbarItem:H9A-TU-iNO:image" tag="17" id="XdH-V8-yZ1"/>
+                                                    <menuItem title="Left Waveform" image="toolbarItem:H9A-TU-iNO:image" tag="18" id="F8u-Lo-ESi"/>
+                                                    <menuItem title="Right Waveform" image="toolbarItem:H9A-TU-iNO:image" tag="19" id="bhd-a0-udH"/>
+                                                </items>
+                                            </menu>
+                                        </popUpButtonCell>
+                                        <connections>
+                                            <action selector="panelAction:" target="nKA-vg-sXv" id="inE-Ek-svV"/>
+                                        </connections>
+                                    </popUpButton>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="582BAAA6-AEC2-4802-91D1-3F904D4CB5F9" label="New" paletteLabel="New" image="toolbarItem:Sb4-Th-GgO:image" sizingBehavior="auto" id="Sb4-Th-GgO">
+                                    <nil key="toolTip"/>
+                                    <button key="view" id="Wf1-UF-zgX">
+                                        <rect key="frame" x="8" y="14.5" width="14.5" height="13"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="toolbarItem:Sb4-Th-GgO:image" imagePosition="overlaps" alignment="center" inset="2" id="Vou-6c-ppu">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="plusAction:" target="nKA-vg-sXv" id="0Js-wW-lg2"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
+                            </allowedToolbarItems>
+                            <defaultToolbarItems>
+                                <toolbarItem reference="Jyf-xG-HJz"/>
+                            </defaultToolbarItems>
+                            <connections>
+                                <outlet property="selectorPopup" destination="3y4-Ya-wBR" id="k9J-71-nbg"/>
+                                <outlet property="selectorPopupItem" destination="H9A-TU-iNO" id="Vjr-st-269"/>
+                            </connections>
+                        </toolbar>
+                        <connections>
+                            <outlet property="delegate" destination="pY4-EW-Sco" id="naD-5E-vsD"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="Go2-Z3-3Aa" kind="relationship" relationship="window.shadowedContentViewController" id="7rM-Cy-KqH"/>
+                    </connections>
+                </windowController>
+                <customObject id="RXT-Ij-peO" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1114" y="144"/>
+        </scene>
+        <!--Dashboard View Controller-->
+        <scene sceneID="nZp-QB-dwv">
+            <objects>
+                <viewController id="Go2-Z3-3Aa" customClass="DashboardViewController" customModule="VirtualC64" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="MmD-Ai-crE">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <containerView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WmY-pq-lBg">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <connections>
+                                    <segue destination="3Vb-4c-Tsz" kind="embed" id="ATR-2f-42w"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="containerView" destination="WmY-pq-lBg" id="mq7-NK-Ndv"/>
+                    </connections>
+                </viewController>
+                <customObject id="hg1-DB-5QP" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1821" y="113"/>
+        </scene>
+        <!--Overview Controller-->
+        <scene sceneID="Cy5-6D-N07">
+            <objects>
+                <viewController storyboardIdentifier="ViewController1" id="3Vb-4c-Tsz" customClass="OverviewController" customModule="VirtualC64" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="1Du-0G-H7d">
+                        <rect key="frame" x="0.0" y="0.0" width="612" height="722"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <box title="Chip Ram" titlePosition="noTitle" id="oin-Xx-Tog">
+                                <rect key="frame" x="17" y="574" width="139" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="Sad-Oq-CDW">
+                                    <rect key="frame" x="4" y="5" width="131" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </box>
+                            <box title="Copper DMA" titlePosition="noTitle" id="amh-hY-O59">
+                                <rect key="frame" x="17" y="432" width="139" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="TNW-QI-tat">
+                                    <rect key="frame" x="4" y="5" width="131" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </box>
+                            <box title="Sprite DMA" titlePosition="noTitle" id="D2i-pW-8SO">
+                                <rect key="frame" x="163" y="290" width="140" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="o6G-Av-Hnf">
+                                    <rect key="frame" x="4" y="5" width="132" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </box>
+                            <box title="Left Audio" titlePosition="noTitle" id="Q47-RT-twk">
+                                <rect key="frame" x="17" y="6" width="210" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="Mxk-Gf-fo6">
+                                    <rect key="frame" x="4" y="5" width="202" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </box>
+                            <box title="CPU Load" titlePosition="noTitle" id="SG0-Yn-4va">
+                                <rect key="frame" x="17" y="148" width="139" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="N6D-Sc-d2i">
+                                    <rect key="frame" x="4" y="5" width="131" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </box>
+                            <box title="GPU Refresh Rate" titlePosition="noTitle" id="0F7-Mg-R5k">
+                                <rect key="frame" x="163" y="148" width="140" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="yuY-c6-5UG">
+                                    <rect key="frame" x="4" y="5" width="132" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </box>
+                            <box title="Amiga Fps" titlePosition="noTitle" id="ID4-Om-2NI">
+                                <rect key="frame" x="309" y="148" width="139" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="IW7-JV-LM3">
+                                    <rect key="frame" x="4" y="5" width="131" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </box>
+                            <box title="Amiga Frequency" titlePosition="noTitle" id="eqI-BG-PUg">
+                                <rect key="frame" x="453" y="148" width="140" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="e5l-N1-ya5">
+                                    <rect key="frame" x="4" y="5" width="132" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </box>
+                            <box title="CIA A" titlePosition="noTitle" id="IDe-Kq-5VK">
+                                <rect key="frame" x="453" y="432" width="140" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="rFN-P3-QUV">
+                                    <rect key="frame" x="4" y="5" width="132" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </box>
+                            <box title="CIA B" titlePosition="noTitle" id="zSw-uF-aUE">
+                                <rect key="frame" x="453" y="290" width="140" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="Vzq-FK-cbi">
+                                    <rect key="frame" x="4" y="5" width="132" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </box>
+                            <box title="Disk DMA" titlePosition="noTitle" id="YpX-6M-ZHD">
+                                <rect key="frame" x="309" y="432" width="139" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="Nxz-nG-aZy">
+                                    <rect key="frame" x="4" y="5" width="131" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </box>
+                            <box title="Blitter DMA" titlePosition="noTitle" id="NFJ-ew-T8U">
+                                <rect key="frame" x="163" y="432" width="140" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="V8m-yC-fZ1">
+                                    <rect key="frame" x="4" y="5" width="132" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </box>
+                            <box title="Bitplane DMA" titlePosition="noTitle" id="dcA-ux-Jme">
+                                <rect key="frame" x="309" y="290" width="139" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="KmC-ag-5Va">
+                                    <rect key="frame" x="4" y="5" width="131" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </box>
+                            <box title="Audio DMA" titlePosition="noTitle" id="W7P-Ta-V51">
+                                <rect key="frame" x="17" y="290" width="139" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="AxT-dO-Ghl">
+                                    <rect key="frame" x="4" y="5" width="131" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </box>
+                            <box title="Rom" titlePosition="noTitle" id="hdm-wi-56U">
+                                <rect key="frame" x="453" y="574" width="140" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="Cjp-Vx-f5B">
+                                    <rect key="frame" x="4" y="5" width="132" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </box>
+                            <box title="Fast Ram" titlePosition="noTitle" id="Xe6-1H-2lm">
+                                <rect key="frame" x="309" y="574" width="139" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="S3w-Xu-n41">
+                                    <rect key="frame" x="4" y="5" width="131" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </box>
+                            <box title="Slow Ram" titlePosition="noTitle" id="BhN-fZ-qlK">
+                                <rect key="frame" x="163" y="574" width="140" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="QkD-gm-Euj">
+                                    <rect key="frame" x="4" y="5" width="132" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </box>
+                            <box title="Audio Fill Level" titlePosition="noTitle" id="jo1-Nm-oa2">
+                                <rect key="frame" x="235" y="6" width="139" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="H98-Ya-Loh">
+                                    <rect key="frame" x="4" y="5" width="131" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </box>
+                            <box title="Right Audio" titlePosition="noTitle" id="8jE-PW-vn7">
+                                <rect key="frame" x="381" y="6" width="213" height="140"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="qqE-5g-wz1">
+                                    <rect key="frame" x="4" y="5" width="205" height="132"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </box>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="amigaFpsBox" destination="ID4-Om-2NI" id="cZT-H1-26k"/>
+                        <outlet property="amigaMhzBox" destination="eqI-BG-PUg" id="Zld-Ds-ixE"/>
+                        <outlet property="audioDmaBox" destination="W7P-Ta-V51" id="NAF-mE-YyC"/>
+                        <outlet property="bitplaneDmaBox" destination="dcA-ux-Jme" id="eyI-NV-L6Y"/>
+                        <outlet property="blitterDmaBox" destination="NFJ-ew-T8U" id="YUR-QB-yxw"/>
+                        <outlet property="chipRamBox" destination="oin-Xx-Tog" id="WJ2-aQ-chV"/>
+                        <outlet property="ciaABox" destination="IDe-Kq-5VK" id="6vB-Z6-MVI"/>
+                        <outlet property="ciaBBox" destination="zSw-uF-aUE" id="f4H-9A-X4l"/>
+                        <outlet property="copperDmaBox" destination="amh-hY-O59" id="znU-sC-O0r"/>
+                        <outlet property="diskDmaBox" destination="YpX-6M-ZHD" id="XCp-Ey-uZe"/>
+                        <outlet property="fastRamBox" destination="Xe6-1H-2lm" id="feL-gi-Aib"/>
+                        <outlet property="fillLevelBox" destination="jo1-Nm-oa2" id="lEj-TZ-WiV"/>
+                        <outlet property="hostFpsBox" destination="0F7-Mg-R5k" id="yVa-gc-iSw"/>
+                        <outlet property="hostLoadBox" destination="SG0-Yn-4va" id="ktN-7V-P44"/>
+                        <outlet property="romBox" destination="hdm-wi-56U" id="6ik-Xu-QBM"/>
+                        <outlet property="slowRamBox" destination="BhN-fZ-qlK" id="Lua-hZ-OsV"/>
+                        <outlet property="spriteDmaBox" destination="D2i-pW-8SO" id="YSY-HG-iez"/>
+                        <outlet property="waveformLBox" destination="Q47-RT-twk" id="bzg-qk-sul"/>
+                        <outlet property="waveformRBox" destination="8jE-PW-vn7" id="BrA-qX-G2z"/>
+                    </connections>
+                </viewController>
+                <customObject id="O3r-bP-hCi" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1591" y="822"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="xAQ-2M-GO5">
+            <objects>
+                <viewController storyboardIdentifier="ViewController2" id="eVN-Ng-vsg" sceneMemberID="viewController">
+                    <view key="view" id="xHb-d8-g4M">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="130"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                </viewController>
+                <customObject id="6cH-RA-1KB" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2059" y="526"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="toolbarItem:H9A-TU-iNO:image" width="18" height="17">
+            <mutableData key="keyedArchiveRepresentation">
+YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMSAAGGoF8QD05T
+S2V5ZWRBcmNoaXZlctEICVRyb290gAGvEBALDB8gJSssLS40PkZHS05PVSRudWxs2Q0ODxAREhMUFRYX
+GBkaGxwdHlZOU1NpemVcTlNJbWFnZUZsYWdzVk5TUmVwc1tOU1RpbnRDb2xvclYkY2xhc3NXTlNDb2xv
+cl5OU1Jlc2l6aW5nTW9kZVxOU0lzVGVtcGxhdGVfECZOU0FsaWdubWVudFJlY3RJbk5vcm1hbGl6ZWRD
+b29yZGluYXRlc4ACEiDAAACAA4AAgA+ACRAACYAOWHsxOCwgMTd90iERIiRaTlMub2JqZWN0c6EjgASA
+CNIhESYkoycoKYAFgAaAB4AIEAZfEB53YXZlZm9ybS5iYWRnZS5tYWduaWZ5aW5nZ2xhc3MI0i8wMTJa
+JGNsYXNzbmFtZVgkY2xhc3Nlc1dOU0FycmF5ojEzWE5TT2JqZWN01TU2NzgROTo7PD1XTlNXaGl0ZVxO
+U0NvbXBvbmVudHNcTlNDb2xvclNwYWNlXxASTlNDdXN0b21Db2xvclNwYWNlRDAgMABDMCAwEAOACoAN
+1D9AQRFCQ0RFVE5TSURVTlNJQ0NXTlNNb2RlbBAJgAsQAIAMTxERnAAAEZxhcHBsAgAAAG1udHJHUkFZ
+WFlaIAfcAAgAFwAPAC4AD2Fjc3BBUFBMAAAAAG5vbmUAAAAAAAAAAAAAAAAAAAAAAAD21gABAAAAANMt
+YXBwbAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABWRlc2MAAADA
+AAAAeWRzY20AAAE8AAAIGmNwcnQAAAlYAAAAI3d0cHQAAAl8AAAAFGtUUkMAAAmQAAAIDGRlc2MAAAAA
+AAAAH0dlbmVyaWMgR3JheSBHYW1tYSAyLjIgUHJvZmlsZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABtbHVj
+AAAAAAAAAB8AAAAMc2tTSwAAAC4AAAGEZGFESwAAADoAAAGyY2FFUwAAADgAAAHsdmlWTgAAAEAAAAIk
+cHRCUgAAAEoAAAJkdWtVQQAAACwAAAKuZnJGVQAAAD4AAALaaHVIVQAAADQAAAMYemhUVwAAABoAAANM
+a29LUgAAACIAAANmbmJOTwAAADoAAAOIY3NDWgAAACgAAAPCaGVJTAAAACQAAAPqcm9STwAAACoAAAQO
+ZGVERQAAAE4AAAQ4aXRJVAAAAE4AAASGc3ZTRQAAADgAAATUemhDTgAAABoAAAUMamFKUAAAACYAAAUm
+ZWxHUgAAACoAAAVMcHRQTwAAAFIAAAV2bmxOTAAAAEAAAAXIZXNFUwAAAEwAAAYIdGhUSAAAADIAAAZU
+dHJUUgAAACQAAAaGZmlGSQAAAEYAAAaqaHJIUgAAAD4AAAbwcGxQTAAAAEoAAAcuYXJFRwAAACwAAAd4
+cnVSVQAAADoAAAekZW5VUwAAADwAAAfeAFYBYQBlAG8AYgBlAGMAbgDhACAAcwBpAHYA4QAgAGcAYQBt
+AGEAIAAyACwAMgBHAGUAbgBlAHIAaQBzAGsAIABnAHIA5QAgADIALAAyACAAZwBhAG0AbQBhAC0AcABy
+AG8AZgBpAGwARwBhAG0AbQBhACAAZABlACAAZwByAGkAcwBvAHMAIABnAGUAbgDoAHIAaQBjAGEAIAAy
+AC4AMgBDHqUAdQAgAGgA7ABuAGgAIABNAOAAdQAgAHgA4QBtACAAQwBoAHUAbgBnACAARwBhAG0AbQBh
+ACAAMgAuADIAUABlAHIAZgBpAGwAIABHAGUAbgDpAHIAaQBjAG8AIABkAGEAIABHAGEAbQBhACAAZABl
+ACAAQwBpAG4AegBhAHMAIAAyACwAMgQXBDAEMwQwBDsETAQ9BDAAIABHAHIAYQB5AC0EMwQwBDwEMAAg
+ADIALgAyAFAAcgBvAGYAaQBsACAAZwDpAG4A6QByAGkAcQB1AGUAIABnAHIAaQBzACAAZwBhAG0AbQBh
+ACAAMgAsADIAwQBsAHQAYQBsAOEAbgBvAHMAIABzAHoA/AByAGsAZQAgAGcAYQBtAG0AYQAgADIALgAy
+kBp1KHBwlo5RSV6mADIALgAygnJfaWPPj/DHfLwYACDWjMDJACCsELnIACAAMgAuADIAINUEuFzTDMd8
+AEcAZQBuAGUAcgBpAHMAawAgAGcAcgDlACAAZwBhAG0AbQBhACAAMgAsADIALQBwAHIAbwBmAGkAbABP
+AGIAZQBjAG4A4QAgAWEAZQBkAOEAIABnAGEAbQBhACAAMgAuADIF0gXQBd4F1AAgBdAF5AXVBegAIAXb
+BdwF3AXZACAAMgAuADIARwBhAG0AYQAgAGcAcgBpACAAZwBlAG4AZQByAGkAYwEDACAAMgAsADIAQQBs
+AGwAZwBlAG0AZQBpAG4AZQBzACAARwByAGEAdQBzAHQAdQBmAGUAbgAtAFAAcgBvAGYAaQBsACAARwBh
+AG0AbQBhACAAMgAsADIAUAByAG8AZgBpAGwAbwAgAGcAcgBpAGcAaQBvACAAZwBlAG4AZQByAGkAYwBv
+ACAAZABlAGwAbABhACAAZwBhAG0AbQBhACAAMgAsADIARwBlAG4AZQByAGkAcwBrACAAZwByAOUAIAAy
+ACwAMgAgAGcAYQBtAG0AYQBwAHIAbwBmAGkAbGZukBpwcF6mfPtlcAAyAC4AMmPPj/Blh072TgCCLDCw
+MOwwpDCsMPMw3gAgADIALgAyACAw1zDtMNUwoTCkMOsDkwO1A70DuQO6A8wAIAOTA7oDwQO5ACADkwOs
+A7wDvAOxACAAMgAuADIAUABlAHIAZgBpAGwAIABnAGUAbgDpAHIAaQBjAG8AIABkAGUAIABjAGkAbgB6
+AGUAbgB0AG8AcwAgAGQAYQAgAEcAYQBtAG0AYQAgADIALAAyAEEAbABnAGUAbQBlAGUAbgAgAGcAcgBp
+AGoAcwAgAGcAYQBtAG0AYQAgADIALAAyAC0AcAByAG8AZgBpAGUAbABQAGUAcgBmAGkAbAAgAGcAZQBu
+AOkAcgBpAGMAbwAgAGQAZQAgAGcAYQBtAG0AYQAgAGQAZQAgAGcAcgBpAHMAZQBzACAAMgAsADIOIw4x
+DgcOKg41DkEOAQ4hDiEOMg5ADgEOIw4iDkwOFw4xDkgOJw5EDhsAIAAyAC4AMgBHAGUAbgBlAGwAIABH
+AHIAaQAgAEcAYQBtAGEAIAAyACwAMgBZAGwAZQBpAG4AZQBuACAAaABhAHIAbQBhAGEAbgAgAGcAYQBt
+AG0AYQAgADIALAAyACAALQBwAHIAbwBmAGkAaQBsAGkARwBlAG4AZQByAGkBDQBrAGkAIABHAHIAYQB5
+ACAARwBhAG0AbQBhACAAMgAuADIAIABwAHIAbwBmAGkAbABVAG4AaQB3AGUAcgBzAGEAbABuAHkAIABw
+AHIAbwBmAGkAbAAgAHMAegBhAHIAbwFbAGMAaQAgAGcAYQBtAG0AYQAgADIALAAyBjoGJwZFBicAIAAy
+AC4AMgAgBkQGSAZGACAGMQZFBicGLwZKACAGOQYnBkUEHgQxBEkEMARPACAEQQQ1BEAEMARPACAEMwQw
+BDwEPAQwACAAMgAsADIALQQ/BEAEPgREBDgEOwRMAEcAZQBuAGUAcgBpAGMAIABHAHIAYQB5ACAARwBh
+AG0AbQBhACAAMgAuADIAIABQAHIAbwBmAGkAbABlAAB0ZXh0AAAAAENvcHlyaWdodCBBcHBsZSBJbmMu
+LCAyMDEyAABYWVogAAAAAAAA81EAAQAAAAEWzGN1cnYAAAAAAAAEAAAAAAUACgAPABQAGQAeACMAKAAt
+ADIANwA7AEAARQBKAE8AVABZAF4AYwBoAG0AcgB3AHwAgQCGAIsAkACVAJoAnwCkAKkArgCyALcAvADB
+AMYAywDQANUA2wDgAOUA6wDwAPYA+wEBAQcBDQETARkBHwElASsBMgE4AT4BRQFMAVIBWQFgAWcBbgF1
+AXwBgwGLAZIBmgGhAakBsQG5AcEByQHRAdkB4QHpAfIB+gIDAgwCFAIdAiYCLwI4AkECSwJUAl0CZwJx
+AnoChAKOApgCogKsArYCwQLLAtUC4ALrAvUDAAMLAxYDIQMtAzgDQwNPA1oDZgNyA34DigOWA6IDrgO6
+A8cD0wPgA+wD+QQGBBMEIAQtBDsESARVBGMEcQR+BIwEmgSoBLYExATTBOEE8AT+BQ0FHAUrBToFSQVY
+BWcFdwWGBZYFpgW1BcUF1QXlBfYGBgYWBicGNwZIBlkGagZ7BowGnQavBsAG0QbjBvUHBwcZBysHPQdP
+B2EHdAeGB5kHrAe/B9IH5Qf4CAsIHwgyCEYIWghuCIIIlgiqCL4I0gjnCPsJEAklCToJTwlkCXkJjwmk
+CboJzwnlCfsKEQonCj0KVApqCoEKmAquCsUK3ArzCwsLIgs5C1ELaQuAC5gLsAvIC+EL+QwSDCoMQwxc
+DHUMjgynDMAM2QzzDQ0NJg1ADVoNdA2ODakNww3eDfgOEw4uDkkOZA5/DpsOtg7SDu4PCQ8lD0EPXg96
+D5YPsw/PD+wQCRAmEEMQYRB+EJsQuRDXEPURExExEU8RbRGMEaoRyRHoEgcSJhJFEmQShBKjEsMS4xMD
+EyMTQxNjE4MTpBPFE+UUBhQnFEkUahSLFK0UzhTwFRIVNBVWFXgVmxW9FeAWAxYmFkkWbBaPFrIW1hb6
+Fx0XQRdlF4kXrhfSF/cYGxhAGGUYihivGNUY+hkgGUUZaxmRGbcZ3RoEGioaURp3Gp4axRrsGxQbOxtj
+G4obshvaHAIcKhxSHHscoxzMHPUdHh1HHXAdmR3DHeweFh5AHmoelB6+HukfEx8+H2kflB+/H+ogFSBB
+IGwgmCDEIPAhHCFIIXUhoSHOIfsiJyJVIoIiryLdIwojOCNmI5QjwiPwJB8kTSR8JKsk2iUJJTglaCWX
+Jccl9yYnJlcmhya3JugnGCdJJ3onqyfcKA0oPyhxKKIo1CkGKTgpaymdKdAqAio1KmgqmyrPKwIrNitp
+K50r0SwFLDksbiyiLNctDC1BLXYtqy3hLhYuTC6CLrcu7i8kL1ovkS/HL/4wNTBsMKQw2zESMUoxgjG6
+MfIyKjJjMpsy1DMNM0YzfzO4M/E0KzRlNJ402DUTNU01hzXCNf02NzZyNq426TckN2A3nDfXOBQ4UDiM
+OMg5BTlCOX85vDn5OjY6dDqyOu87LTtrO6o76DwnPGU8pDzjPSI9YT2hPeA+ID5gPqA+4D8hP2E/oj/i
+QCNAZECmQOdBKUFqQaxB7kIwQnJCtUL3QzpDfUPARANER0SKRM5FEkVVRZpF3kYiRmdGq0bwRzVHe0fA
+SAVIS0iRSNdJHUljSalJ8Eo3Sn1KxEsMS1NLmkviTCpMcky6TQJNSk2TTdxOJU5uTrdPAE9JT5NP3VAn
+UHFQu1EGUVBRm1HmUjFSfFLHUxNTX1OqU/ZUQlSPVNtVKFV1VcJWD1ZcVqlW91dEV5JX4FgvWH1Yy1ka
+WWlZuFoHWlZaplr1W0VblVvlXDVchlzWXSddeF3JXhpebF69Xw9fYV+zYAVgV2CqYPxhT2GiYfViSWKc
+YvBjQ2OXY+tkQGSUZOllPWWSZedmPWaSZuhnPWeTZ+loP2iWaOxpQ2maafFqSGqfavdrT2una/9sV2yv
+bQhtYG25bhJua27Ebx5veG/RcCtwhnDgcTpxlXHwcktypnMBc11zuHQUdHB0zHUodYV14XY+dpt2+HdW
+d7N4EXhueMx5KnmJeed6RnqlewR7Y3vCfCF8gXzhfUF9oX4BfmJ+wn8jf4R/5YBHgKiBCoFrgc2CMIKS
+gvSDV4O6hB2EgITjhUeFq4YOhnKG14c7h5+IBIhpiM6JM4mZif6KZIrKizCLlov8jGOMyo0xjZiN/45m
+js6PNo+ekAaQbpDWkT+RqJIRknqS45NNk7aUIJSKlPSVX5XJljSWn5cKl3WX4JhMmLiZJJmQmfyaaJrV
+m0Kbr5wcnImc951kndKeQJ6unx2fi5/6oGmg2KFHobaiJqKWowajdqPmpFakx6U4pammGqaLpv2nbqfg
+qFKoxKk3qamqHKqPqwKrdavprFys0K1ErbiuLa6hrxavi7AAsHWw6rFgsdayS7LCszizrrQltJy1E7WK
+tgG2ebbwt2i34LhZuNG5SrnCuju6tbsuu6e8IbybvRW9j74KvoS+/796v/XAcMDswWfB48JfwtvDWMPU
+xFHEzsVLxcjGRsbDx0HHv8g9yLzJOsm5yjjKt8s2y7bMNcy1zTXNtc42zrbPN8+40DnQutE80b7SP9LB
+00TTxtRJ1MvVTtXR1lXW2Ndc1+DYZNjo2WzZ8dp22vvbgNwF3IrdEN2W3hzeot8p36/gNuC94UThzOJT
+4tvjY+Pr5HPk/OWE5g3mlucf56noMui86Ubp0Opb6uXrcOv77IbtEe2c7ijutO9A78zwWPDl8XLx//KM
+8xnzp/Q09ML1UPXe9m32+/eK+Bn4qPk4+cf6V/rn+3f8B/yY/Sn9uv5L/tz/bf//0i8wSElcTlNDb2xv
+clNwYWNlokozXE5TQ29sb3JTcGFjZdIvMExNV05TQ29sb3KiTDNfEEZ7ezAsIDAuMjM1Mjk0MTE3NjQ3
+MDU4ODJ9LCB7MC44MzMzMzMzMzMzMzMzMzMzNywgMC41Mjk0MTE3NjQ3MDU4ODIzNn190i8wUFFXTlNJ
+bWFnZaJQMwAIABEAGgAkACkAMgA3AEkATABRAFMAZgBsAH8AhgCTAJoApgCtALUAxADRAPoA/AEBAQMB
+BQEHAQkBCwEMAQ4BFwEcAScBKQErAS0BMgE2ATgBOgE8AT4BQAFhAWIBZwFyAXsBgwGGAY8BmgGiAa8B
+vAHRAdYB2gHcAd4B4AHpAe4B9AH8Af4CAAICAgQTpBOpE7YTuRPGE8sT0xPWFB8UJBQsAAAAAAAAAgEA
+AAAAAAAAUgAAAAAAAAAAAAAAAAAAFC8
+</mutableData>
+        </image>
+        <image name="toolbarItem:Sb4-Th-GgO:image" width="14" height="13">
+            <mutableData key="keyedArchiveRepresentation">
+YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMSAAGGoF8QD05T
+S2V5ZWRBcmNoaXZlctEICVRyb290gAGvEBALDB8gJSssLS40PkZHS05PVSRudWxs2Q0ODxAREhMUFRYX
+GBkaGxwdHlZOU1NpemVcTlNJbWFnZUZsYWdzVk5TUmVwc1tOU1RpbnRDb2xvclYkY2xhc3NXTlNDb2xv
+cl5OU1Jlc2l6aW5nTW9kZVxOU0lzVGVtcGxhdGVfECZOU0FsaWdubWVudFJlY3RJbk5vcm1hbGl6ZWRD
+b29yZGluYXRlc4ACEiDAAACAA4AAgA+ACRAACYAOWHsxNCwgMTN90iERIiRaTlMub2JqZWN0c6EjgASA
+CNIhESYkoycoKYAFgAaAB4AIEAZUcGx1cwjSLzAxMlokY2xhc3NuYW1lWCRjbGFzc2VzV05TQXJyYXmi
+MTNYTlNPYmplY3TVNTY3OBE5Ojs8PVdOU1doaXRlXE5TQ29tcG9uZW50c1xOU0NvbG9yU3BhY2VfEBJO
+U0N1c3RvbUNvbG9yU3BhY2VEMCAwAEMwIDAQA4AKgA3UP0BBEUJDREVUTlNJRFVOU0lDQ1dOU01vZGVs
+EAmACxAAgAxPERGcAAARnGFwcGwCAAAAbW50ckdSQVlYWVogB9wACAAXAA8ALgAPYWNzcEFQUEwAAAAA
+bm9uZQAAAAAAAAAAAAAAAAAAAAAAAPbWAAEAAAAA0y1hcHBsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFZGVzYwAAAMAAAAB5ZHNjbQAAATwAAAgaY3BydAAACVgAAAAj
+d3RwdAAACXwAAAAUa1RSQwAACZAAAAgMZGVzYwAAAAAAAAAfR2VuZXJpYyBHcmF5IEdhbW1hIDIuMiBQ
+cm9maWxlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG1sdWMAAAAAAAAAHwAAAAxza1NLAAAALgAAAYRkYURL
+AAAAOgAAAbJjYUVTAAAAOAAAAex2aVZOAAAAQAAAAiRwdEJSAAAASgAAAmR1a1VBAAAALAAAAq5mckZV
+AAAAPgAAAtpodUhVAAAANAAAAxh6aFRXAAAAGgAAA0xrb0tSAAAAIgAAA2ZuYk5PAAAAOgAAA4hjc0Na
+AAAAKAAAA8JoZUlMAAAAJAAAA+pyb1JPAAAAKgAABA5kZURFAAAATgAABDhpdElUAAAATgAABIZzdlNF
+AAAAOAAABNR6aENOAAAAGgAABQxqYUpQAAAAJgAABSZlbEdSAAAAKgAABUxwdFBPAAAAUgAABXZubE5M
+AAAAQAAABchlc0VTAAAATAAABgh0aFRIAAAAMgAABlR0clRSAAAAJAAABoZmaUZJAAAARgAABqpockhS
+AAAAPgAABvBwbFBMAAAASgAABy5hckVHAAAALAAAB3hydVJVAAAAOgAAB6RlblVTAAAAPAAAB94AVgFh
+AGUAbwBiAGUAYwBuAOEAIABzAGkAdgDhACAAZwBhAG0AYQAgADIALAAyAEcAZQBuAGUAcgBpAHMAawAg
+AGcAcgDlACAAMgAsADIAIABnAGEAbQBtAGEALQBwAHIAbwBmAGkAbABHAGEAbQBtAGEAIABkAGUAIABn
+AHIAaQBzAG8AcwAgAGcAZQBuAOgAcgBpAGMAYQAgADIALgAyAEMepQB1ACAAaADsAG4AaAAgAE0A4AB1
+ACAAeADhAG0AIABDAGgAdQBuAGcAIABHAGEAbQBtAGEAIAAyAC4AMgBQAGUAcgBmAGkAbAAgAEcAZQBu
+AOkAcgBpAGMAbwAgAGQAYQAgAEcAYQBtAGEAIABkAGUAIABDAGkAbgB6AGEAcwAgADIALAAyBBcEMAQz
+BDAEOwRMBD0EMAAgAEcAcgBhAHkALQQzBDAEPAQwACAAMgAuADIAUAByAG8AZgBpAGwAIABnAOkAbgDp
+AHIAaQBxAHUAZQAgAGcAcgBpAHMAIABnAGEAbQBtAGEAIAAyACwAMgDBAGwAdABhAGwA4QBuAG8AcwAg
+AHMAegD8AHIAawBlACAAZwBhAG0AbQBhACAAMgAuADKQGnUocHCWjlFJXqYAMgAuADKCcl9pY8+P8Md8
+vBgAINaMwMkAIKwQucgAIAAyAC4AMgAg1QS4XNMMx3wARwBlAG4AZQByAGkAcwBrACAAZwByAOUAIABn
+AGEAbQBtAGEAIAAyACwAMgAtAHAAcgBvAGYAaQBsAE8AYgBlAGMAbgDhACABYQBlAGQA4QAgAGcAYQBt
+AGEAIAAyAC4AMgXSBdAF3gXUACAF0AXkBdUF6AAgBdsF3AXcBdkAIAAyAC4AMgBHAGEAbQBhACAAZwBy
+AGkAIABnAGUAbgBlAHIAaQBjAQMAIAAyACwAMgBBAGwAbABnAGUAbQBlAGkAbgBlAHMAIABHAHIAYQB1
+AHMAdAB1AGYAZQBuAC0AUAByAG8AZgBpAGwAIABHAGEAbQBtAGEAIAAyACwAMgBQAHIAbwBmAGkAbABv
+ACAAZwByAGkAZwBpAG8AIABnAGUAbgBlAHIAaQBjAG8AIABkAGUAbABsAGEAIABnAGEAbQBtAGEAIAAy
+ACwAMgBHAGUAbgBlAHIAaQBzAGsAIABnAHIA5QAgADIALAAyACAAZwBhAG0AbQBhAHAAcgBvAGYAaQBs
+Zm6QGnBwXqZ8+2VwADIALgAyY8+P8GWHTvZOAIIsMLAw7DCkMKww8zDeACAAMgAuADIAIDDXMO0w1TCh
+MKQw6wOTA7UDvQO5A7oDzAAgA5MDugPBA7kAIAOTA6wDvAO8A7EAIAAyAC4AMgBQAGUAcgBmAGkAbAAg
+AGcAZQBuAOkAcgBpAGMAbwAgAGQAZQAgAGMAaQBuAHoAZQBuAHQAbwBzACAAZABhACAARwBhAG0AbQBh
+ACAAMgAsADIAQQBsAGcAZQBtAGUAZQBuACAAZwByAGkAagBzACAAZwBhAG0AbQBhACAAMgAsADIALQBw
+AHIAbwBmAGkAZQBsAFAAZQByAGYAaQBsACAAZwBlAG4A6QByAGkAYwBvACAAZABlACAAZwBhAG0AbQBh
+ACAAZABlACAAZwByAGkAcwBlAHMAIAAyACwAMg4jDjEOBw4qDjUOQQ4BDiEOIQ4yDkAOAQ4jDiIOTA4X
+DjEOSA4nDkQOGwAgADIALgAyAEcAZQBuAGUAbAAgAEcAcgBpACAARwBhAG0AYQAgADIALAAyAFkAbABl
+AGkAbgBlAG4AIABoAGEAcgBtAGEAYQBuACAAZwBhAG0AbQBhACAAMgAsADIAIAAtAHAAcgBvAGYAaQBp
+AGwAaQBHAGUAbgBlAHIAaQENAGsAaQAgAEcAcgBhAHkAIABHAGEAbQBtAGEAIAAyAC4AMgAgAHAAcgBv
+AGYAaQBsAFUAbgBpAHcAZQByAHMAYQBsAG4AeQAgAHAAcgBvAGYAaQBsACAAcwB6AGEAcgBvAVsAYwBp
+ACAAZwBhAG0AbQBhACAAMgAsADIGOgYnBkUGJwAgADIALgAyACAGRAZIBkYAIAYxBkUGJwYvBkoAIAY5
+BicGRQQeBDEESQQwBE8AIARBBDUEQAQwBE8AIAQzBDAEPAQ8BDAAIAAyACwAMgAtBD8EQAQ+BEQEOAQ7
+BEwARwBlAG4AZQByAGkAYwAgAEcAcgBhAHkAIABHAGEAbQBtAGEAIAAyAC4AMgAgAFAAcgBvAGYAaQBs
+AGUAAHRleHQAAAAAQ29weXJpZ2h0IEFwcGxlIEluYy4sIDIwMTIAAFhZWiAAAAAAAADzUQABAAAAARbM
+Y3VydgAAAAAAAAQAAAAABQAKAA8AFAAZAB4AIwAoAC0AMgA3ADsAQABFAEoATwBUAFkAXgBjAGgAbQBy
+AHcAfACBAIYAiwCQAJUAmgCfAKQAqQCuALIAtwC8AMEAxgDLANAA1QDbAOAA5QDrAPAA9gD7AQEBBwEN
+ARMBGQEfASUBKwEyATgBPgFFAUwBUgFZAWABZwFuAXUBfAGDAYsBkgGaAaEBqQGxAbkBwQHJAdEB2QHh
+AekB8gH6AgMCDAIUAh0CJgIvAjgCQQJLAlQCXQJnAnECegKEAo4CmAKiAqwCtgLBAssC1QLgAusC9QMA
+AwsDFgMhAy0DOANDA08DWgNmA3IDfgOKA5YDogOuA7oDxwPTA+AD7AP5BAYEEwQgBC0EOwRIBFUEYwRx
+BH4EjASaBKgEtgTEBNME4QTwBP4FDQUcBSsFOgVJBVgFZwV3BYYFlgWmBbUFxQXVBeUF9gYGBhYGJwY3
+BkgGWQZqBnsGjAadBq8GwAbRBuMG9QcHBxkHKwc9B08HYQd0B4YHmQesB78H0gflB/gICwgfCDIIRgha
+CG4IggiWCKoIvgjSCOcI+wkQCSUJOglPCWQJeQmPCaQJugnPCeUJ+woRCicKPQpUCmoKgQqYCq4KxQrc
+CvMLCwsiCzkLUQtpC4ALmAuwC8gL4Qv5DBIMKgxDDFwMdQyODKcMwAzZDPMNDQ0mDUANWg10DY4NqQ3D
+Dd4N+A4TDi4OSQ5kDn8Omw62DtIO7g8JDyUPQQ9eD3oPlg+zD88P7BAJECYQQxBhEH4QmxC5ENcQ9RET
+ETERTxFtEYwRqhHJEegSBxImEkUSZBKEEqMSwxLjEwMTIxNDE2MTgxOkE8UT5RQGFCcUSRRqFIsUrRTO
+FPAVEhU0FVYVeBWbFb0V4BYDFiYWSRZsFo8WshbWFvoXHRdBF2UXiReuF9IX9xgbGEAYZRiKGK8Y1Rj6
+GSAZRRlrGZEZtxndGgQaKhpRGncanhrFGuwbFBs7G2MbihuyG9ocAhwqHFIcexyjHMwc9R0eHUcdcB2Z
+HcMd7B4WHkAeah6UHr4e6R8THz4faR+UH78f6iAVIEEgbCCYIMQg8CEcIUghdSGhIc4h+yInIlUigiKv
+It0jCiM4I2YjlCPCI/AkHyRNJHwkqyTaJQklOCVoJZclxyX3JicmVyaHJrcm6CcYJ0kneierJ9woDSg/
+KHEooijUKQYpOClrKZ0p0CoCKjUqaCqbKs8rAis2K2krnSvRLAUsOSxuLKIs1y0MLUEtdi2rLeEuFi5M
+LoIuty7uLyQvWi+RL8cv/jA1MGwwpDDbMRIxSjGCMbox8jIqMmMymzLUMw0zRjN/M7gz8TQrNGU0njTY
+NRM1TTWHNcI1/TY3NnI2rjbpNyQ3YDecN9c4FDhQOIw4yDkFOUI5fzm8Ofk6Njp0OrI67zstO2s7qjvo
+PCc8ZTykPOM9Ij1hPaE94D4gPmA+oD7gPyE/YT+iP+JAI0BkQKZA50EpQWpBrEHuQjBCckK1QvdDOkN9
+Q8BEA0RHRIpEzkUSRVVFmkXeRiJGZ0arRvBHNUd7R8BIBUhLSJFI10kdSWNJqUnwSjdKfUrESwxLU0ua
+S+JMKkxyTLpNAk1KTZNN3E4lTm5Ot08AT0lPk0/dUCdQcVC7UQZRUFGbUeZSMVJ8UsdTE1NfU6pT9lRC
+VI9U21UoVXVVwlYPVlxWqVb3V0RXklfgWC9YfVjLWRpZaVm4WgdaVlqmWvVbRVuVW+VcNVyGXNZdJ114
+XcleGl5sXr1fD19hX7NgBWBXYKpg/GFPYaJh9WJJYpxi8GNDY5dj62RAZJRk6WU9ZZJl52Y9ZpJm6Gc9
+Z5Nn6Wg/aJZo7GlDaZpp8WpIap9q92tPa6dr/2xXbK9tCG1gbbluEm5rbsRvHm94b9FwK3CGcOBxOnGV
+cfByS3KmcwFzXXO4dBR0cHTMdSh1hXXhdj52m3b4d1Z3s3gReG54zHkqeYl553pGeqV7BHtje8J8IXyB
+fOF9QX2hfgF+Yn7CfyN/hH/lgEeAqIEKgWuBzYIwgpKC9INXg7qEHYSAhOOFR4Wrhg6GcobXhzuHn4gE
+iGmIzokziZmJ/opkisqLMIuWi/yMY4zKjTGNmI3/jmaOzo82j56QBpBukNaRP5GokhGSepLjk02TtpQg
+lIqU9JVflcmWNJaflwqXdZfgmEyYuJkkmZCZ/JpomtWbQpuvnByciZz3nWSd0p5Anq6fHZ+Ln/qgaaDY
+oUehtqImopajBqN2o+akVqTHpTilqaYapoum/adup+CoUqjEqTepqaocqo+rAqt1q+msXKzQrUStuK4t
+rqGvFq+LsACwdbDqsWCx1rJLssKzOLOutCW0nLUTtYq2AbZ5tvC3aLfguFm40blKucK6O7q1uy67p7wh
+vJu9Fb2Pvgq+hL7/v3q/9cBwwOzBZ8Hjwl/C28NYw9TEUcTOxUvFyMZGxsPHQce/yD3IvMk6ybnKOMq3
+yzbLtsw1zLXNNc21zjbOts83z7jQOdC60TzRvtI/0sHTRNPG1EnUy9VO1dHWVdbY11zX4Nhk2OjZbNnx
+2nba+9uA3AXcit0Q3ZbeHN6i3ynfr+A24L3hROHM4lPi2+Nj4+vkc+T85YTmDeaW5x/nqegy6LzpRunQ
+6lvq5etw6/vshu0R7ZzuKO6070DvzPBY8OXxcvH/8ozzGfOn9DT0wvVQ9d72bfb794r4Gfio+Tj5x/pX
++uf7d/wH/Jj9Kf26/kv+3P9t///SLzBISVxOU0NvbG9yU3BhY2WiSjNcTlNDb2xvclNwYWNl0i8wTE1X
+TlNDb2xvcqJMM18QRXt7MCwgMC4xMTUzODQ2MTUzODQ2MTUzOX0sIHswLjk2NDI4NTcxNDI4NTcxNDMs
+IDAuNjkyMzA3NjkyMzA3NjkyMjl9fdIvMFBRV05TSW1hZ2WiUDMACAARABoAJAApADIANwBJAEwAUQBT
+AGYAbAB/AIYAkwCaAKYArQC1AMQA0QD6APwBAQEDAQUBBwEJAQsBDAEOARcBHAEnASkBKwEtATIBNgE4
+AToBPAE+AUABRQFGAUsBVgFfAWcBagFzAX4BhgGTAaABtQG6Ab4BwAHCAcQBzQHSAdgB4AHiAeQB5gHo
+E4gTjROaE50TqhOvE7cTuhQCFAcUDwAAAAAAAAIBAAAAAAAAAFIAAAAAAAAAAAAAAAAAABQSA
+</mutableData>
+        </image>
+    </resources>
+</document>

@@ -76,13 +76,11 @@ extension MyController: NSWindowDelegate {
             inspector.join()
         }
 
-        /*
         debug(.shutdown, "Close all dashboards...")
         for dashboard in dashboards {
             dashboard.close()
             dashboard.join()
         }
-        */
         
         debug(.shutdown, "Close the monitor...")
         monitor?.close()
