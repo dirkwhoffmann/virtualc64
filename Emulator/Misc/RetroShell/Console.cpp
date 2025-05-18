@@ -578,7 +578,12 @@ Console::exec(const Arguments &argv, bool verbose)
     if ((isize)args.size() > current->maxArgs()) throw TooManyArgumentsError(current->fullName);
 
     // Call the command handler
-    current->callback(args, current->param.empty() ? 0 : current->param.front());
+    if (current->param.empty()) {
+        current->callback(args, { 0 });
+    } else {
+        current->callback(args, current->param);
+
+    }
 }
 
 void
@@ -769,14 +774,14 @@ Console::initCommands(RetroShellCmd &root)
 
     root.add({"welcome"},
              "", // Prints the welcome message
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         welcome();
     });
 
     root.add({"printhelp"},
              "", // Prints the help message
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         *this << '\n';
         printHelp();
@@ -785,35 +790,35 @@ Console::initCommands(RetroShellCmd &root)
 
     root.add({"."},
              "Enter or exit the debugger",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         retroShell.switchConsole();
     });
 
     root.add({"clear"},
              "Clear the console window",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         clear();
     });
 
     root.add({"close"},
              "Hide the console window",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         msgQueue.put(MSG_RSH_CLOSE);
     });
 
     root.add({"help"}, { }, {Arg::command},
              "Print usage information",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         help(argv.empty() ? "" : argv.front());
     });
 
     root.add({"state"},
              "", // Prints the welcome message
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         printState();
     });
@@ -821,7 +826,7 @@ Console::initCommands(RetroShellCmd &root)
 
     root.add({"joshua"},
              "",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         *this << "\nGREETINGS PROFESSOR HOFFMANN.\n";
         *this << "THE ONLY WINNING MOVE IS NOT TO PLAY.\n";
@@ -830,7 +835,7 @@ Console::initCommands(RetroShellCmd &root)
 
     root.add({"source"}, {Arg::path},
              "Process a command script",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         auto stream = std::ifstream(argv.front());
         if (!stream.is_open()) throw Error(VC64ERROR_FILE_NOT_FOUND, argv.front());
@@ -839,7 +844,7 @@ Console::initCommands(RetroShellCmd &root)
 
     root.add({"wait"}, {Arg::value, Arg::seconds},
              "", // Pause the execution of a command script",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         auto seconds = parseNum(argv[0]);
         c64.scheduleRel<SLOT_RSH>(C64::sec(seconds), RSH_WAKEUP);
@@ -848,7 +853,7 @@ Console::initCommands(RetroShellCmd &root)
 
     root.add({"shutdown"},
              "Terminates the application",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         msgQueue.put(MSG_ABORT, 0);
     });
@@ -876,7 +881,7 @@ Console::registerComponent(CoreComponent &c, RetroShellCmd &root)
         // ...register a command for querying the current configuration
         root.add({cmd, ""},
                  "Display the current configuration",
-                 [this, &c](Arguments& argv, long value) {
+                 [this, &c](Arguments& argv, const std::vector<isize> &values) {
 
             retroShell.commander.dump(c, Category::Config);
         });
@@ -888,9 +893,9 @@ Console::registerComponent(CoreComponent &c, RetroShellCmd &root)
             root.add({cmd, "set", OptionEnum::key(opt)},
                      {OptionParser::argList(opt)},
                      OptionEnum::help(opt),
-                     [this](Arguments& argv, long value) {
+                     [this](Arguments& argv, const std::vector<isize> &values) {
 
-                emulator.set(Option(HI_WORD(value)), argv[0], { LO_WORD(value) });
+                emulator.set(Option(HI_WORD(values.front())), argv[0], { LO_WORD(values.front()) });
 
             }, HI_W_LO_W(opt, c.objid));
         }

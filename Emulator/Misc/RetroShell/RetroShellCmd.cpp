@@ -23,7 +23,7 @@ string RetroShellCmd::currentGroup;
 void
 RetroShellCmd::add(const std::vector<string> &tokens,
              const string &help,
-             std::function<void (Arguments&, long)> func, long param)
+             RetroShellCallback func, long param)
 {
     add(tokens, { }, { }, { tokens.back(), help }, func, param);
 }
@@ -31,7 +31,7 @@ RetroShellCmd::add(const std::vector<string> &tokens,
 void
 RetroShellCmd::add(const std::vector<string> &tokens,
              std::pair<const string &, const string &> help,
-             std::function<void (Arguments&, long)> func, long param)
+             RetroShellCallback func, long param)
 {
     add(tokens, { }, { }, help, func, param);
 }
@@ -40,7 +40,7 @@ void
 RetroShellCmd::add(const std::vector<string> &tokens,
              const std::vector<string> &arguments,
              const string &help,
-             std::function<void (Arguments&, long)> func, long param)
+             RetroShellCallback func, long param)
 {
     add(tokens, arguments, { }, { tokens.back(), help }, func, param);
 }
@@ -49,7 +49,7 @@ void
 RetroShellCmd::add(const std::vector<string> &tokens,
              const std::vector<string> &arguments,
              std::pair<const string &, const string &> help,
-             std::function<void (Arguments&, long)> func, long param)
+             RetroShellCallback func, long param)
 {
     add(tokens, arguments, { }, help, func, param);
 }
@@ -59,7 +59,7 @@ RetroShellCmd::add(const std::vector<string> &tokens,
              const std::vector<string> &requiredArgs,
              const std::vector<string> &optionalArgs,
              const string &help,
-             std::function<void (Arguments&, long)> func, long param)
+             RetroShellCallback func, long param)
 {
     add(tokens, requiredArgs, optionalArgs, { tokens.back(), help }, func, param);
 }
@@ -69,7 +69,7 @@ RetroShellCmd::add(const std::vector<string> &rawtokens,
              const std::vector<string> &requiredArgs,
              const std::vector<string> &optionalArgs,
              std::pair<const string &, const string &> help,
-             std::function<void (Arguments&, long)> func, long param)
+             RetroShellCallback func, long param)
 {
     assert(!rawtokens.empty());
 

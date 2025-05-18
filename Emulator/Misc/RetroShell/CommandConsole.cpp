@@ -101,7 +101,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     root.add({"regression", "setup"}, { C64ModelEnum::argList() },
              "Initialize the test environment",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         auto model = parseEnum <C64Model, C64ModelEnum> (argv[0]);
         regressionTester.prepare(c64, model);
@@ -113,7 +113,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     root.add({"regression", "run"}, { Arg::path },
              "Launch a regression test",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         regressionTester.run(argv.front());
     });
@@ -125,14 +125,14 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     root.add({"screenshot", "set", "path"}, { Arg::path },
              "Assign the save directory",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         regressionTester.screenshotPath = argv.front() == "\"\"" ? "" : argv.front();
     });
 
     root.add({"screenshot", "set", "cutout"}, { Arg::value, Arg::value, Arg::value, Arg::value },
              "Adjust the texture cutout",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         isize x1 = parseNum(argv[0]);
         isize y1 = parseNum(argv[1]);
@@ -147,7 +147,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     root.add({"screenshot", "save"}, { Arg::path },
              "Save a screenshot and exits the emulator",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         regressionTester.dumpTexture(c64, argv.front());
     });
@@ -167,35 +167,35 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     root.add({cmd, "defaults"},
              "Display the user defaults storage",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         dump(emulator, Category::Defaults);
     });
 
     root.add({cmd, "power"}, { Arg::onoff },
              "Switch the C64 on or off",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         parseOnOff(argv[0]) ? c64.emulator.run() : c64.emulator.powerOff();
     });
 
     root.add({cmd, "reset"},
              "Perform a hard reset",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         c64.hardReset();
     });
 
     root.add({cmd, "init"}, { C64ModelEnum::argList() },
              "Initialize the emulator with factory defaults",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         emulator.set(parseEnum<C64Model, C64ModelEnum>(argv[0]));
     });
 
     root.add({cmd, "diff"},
              "Reports all differences to the default configuration",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         std::stringstream ss;
         c64.exportDiff(ss);
@@ -212,7 +212,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     root.add({cmd, "flash"}, { Arg::path },
              "Flash a file into memory",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         auto path = argv.front();
         if (!util::fileExists(path)) throw Error(VC64ERROR_FILE_NOT_FOUND, path);
@@ -226,14 +226,14 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     root.add({cmd, "load", "rom"}, { Arg::path },
              "Load a Rom image from disk",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         c64.loadRom(argv.front());
     });
 
     root.add({cmd, "load", "ram"}, { Arg::path, Arg::address },
              "Load a chunk of RAM",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         fs::path path(argv[0]);
         mem.debugger.load(path, parseAddr(argv[1]));
@@ -241,7 +241,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     root.add({cmd, "load", "openroms"},
              "Install MEGA65 OpenROMs",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         c64.installOpenRoms();
     });
@@ -251,7 +251,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     root.add({cmd, "save", "ram"}, { Arg::path, Arg::address, Arg::count },
              "Save a chunk of RAM",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         fs::path path(argv[0]);
         mem.debugger.save(path, parseAddr(argv[1]), parseNum(argv[2]));
@@ -282,14 +282,14 @@ CommandConsole::initCommands(RetroShellCmd &root)
     /*
     root.add({cmd, "open"},
              "Opens the DMA debugger",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         emulator.set(OPT_DMA_DEBUG_ENABLE, true);
     });
 
     root.add({cmd, "close"},
              "Closes the DMA debugger",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         emulator.set(OPT_DMA_DEBUG_ENABLE, false);
     });
@@ -359,7 +359,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     root.add({cmd, "attach", "cartridge"}, { Arg::path },
              "Attaches a cartridge from a CRT file",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         auto path = argv.front();
         if (!util::fileExists(path)) throw Error(VC64ERROR_FILE_NOT_FOUND, path);
@@ -368,14 +368,14 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     root.add({cmd, "attach", "reu"}, { "<KB>" },
              "Attaches a REU expansion cartridge",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         expansionPort.attachReu(parseNum(argv[0]));
     });
 
     root.add({cmd, "attach", "georam"}, { "<KB>" },
              "Attaches a GeoRAM expansion cartridge",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         expansionPort.attachGeoRam(parseNum(argv[0]));
     });
@@ -403,14 +403,14 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     root.add({cmd, "press"}, { Arg::value },
              "Presses a key",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         keyboard.press(C64Key(parseNum(argv[0])));
     });
 
     root.add({cmd, "release"}, { Arg::value },
              "Presses a key",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         keyboard.release(C64Key(parseNum(argv[0])));
     });
@@ -420,21 +420,21 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     root.add({cmd, "type", "text"}, { Arg::string },
              "Types arbitrary text",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         keyboard.autoType(argv.front());
     });
 
     root.add({cmd, "type", "load"},
              "Types \"LOAD\"*\",8,1",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         keyboard.autoType("load \"*\",8,1\n");
     });
 
     root.add({cmd, "type", "run"},
              "Types RUN",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         keyboard.autoType("run\n");
     });
@@ -459,18 +459,18 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
         root.add({cmd, "press"},
                  "Presses the joystick button",
-                 [this](Arguments& argv, long value) {
+                 [this](Arguments& argv, const std::vector<isize> &values) {
 
-            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
             port.joystick.trigger(PRESS_FIRE);
 
         }, i);
 
         root.add({cmd, "unpress"},
                  "Releases a joystick button",
-                 [this](Arguments& argv, long value) {
+                 [this](Arguments& argv, const std::vector<isize> &values) {
 
-            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
             port.joystick.trigger(RELEASE_FIRE);
 
         }, i);
@@ -480,36 +480,36 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
         root.add({cmd, "pull", "left"},
                  "Pulls the joystick left",
-                 [this](Arguments& argv, long value) {
+                 [this](Arguments& argv, const std::vector<isize> &values) {
 
-            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
             port.joystick.trigger(PULL_LEFT);
 
         }, i);
 
         root.add({cmd, "pull", "right"},
                  "Pulls the joystick right",
-                 [this](Arguments& argv, long value) {
+                 [this](Arguments& argv, const std::vector<isize> &values) {
 
-            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
             port.joystick.trigger(PULL_RIGHT);
 
         }, i);
 
         root.add({cmd, "pull", "up"},
                  "Pulls the joystick up",
-                 [this](Arguments& argv, long value) {
+                 [this](Arguments& argv, const std::vector<isize> &values) {
 
-            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
             port.joystick.trigger(PULL_UP);
 
         }, i);
 
         root.add({cmd, "pull", "down"},
                  "Pulls the joystick down",
-                 [this](Arguments& argv, long value) {
+                 [this](Arguments& argv, const std::vector<isize> &values) {
 
-            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
             port.joystick.trigger(PULL_DOWN);
 
         }, i);
@@ -519,18 +519,18 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
         root.add({cmd, "release", "x"},
                  "Releases the x-axis",
-                 [this](Arguments& argv, long value) {
+                 [this](Arguments& argv, const std::vector<isize> &values) {
 
-            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
             port.joystick.trigger(RELEASE_X);
 
         }, i);
 
         root.add({cmd, "release", "y"},
                  "Releases the y-axis",
-                 [this](Arguments& argv, long value) {
+                 [this](Arguments& argv, const std::vector<isize> &values) {
 
-            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
             port.joystick.trigger(RELEASE_Y);
 
         }, i);
@@ -553,28 +553,28 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     root.add({cmd, "connect"},
              "Connects the datasette",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         emulator.set(OPT_DAT_CONNECT, true);
     });
 
     root.add({cmd, "disconnect"},
              "Disconnects the datasette",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         emulator.set(OPT_DAT_CONNECT, false);
     });
 
     root.add({cmd, "rewind"},
              "Rewinds the tape",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         datasette.rewind();
     });
 
     root.add({cmd, "rewind", "to"}, { Arg::value },
              "Rewinds the tape to a specific position",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         datasette.rewind(parseNum(argv[0]));
     });
@@ -591,58 +591,58 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
         root.add({cmd, "bankmap"},
                  "Displays the memory layout",
-                 [this](Arguments& argv, long value) {
+                 [this](Arguments& argv, const std::vector<isize> &values) {
 
-            auto &drive = value ? drive9 : drive8;
+            auto &drive = values.front() ? drive9 : drive8;
             dump(drive, Category::BankMap);
 
         }, i);
 
         root.add({cmd, "connect"},
                  "Connects the drive",
-                 [this](Arguments& argv, long value) {
+                 [this](Arguments& argv, const std::vector<isize> &values) {
 
-            auto id = value ? DRIVE9 : DRIVE8;
+            auto id = values.front() ? DRIVE9 : DRIVE8;
             emulator.set(OPT_DRV_CONNECT, true, { id });
 
         }, i);
 
         root.add({cmd, "disconnect"},
                  "Disconnects the drive",
-                 [this](Arguments& argv, long value) {
+                 [this](Arguments& argv, const std::vector<isize> &values) {
 
-            auto id = value ? DRIVE9 : DRIVE8;
+            auto id = values.front() ? DRIVE9 : DRIVE8;
             emulator.set(OPT_DRV_CONNECT, false, { id });
 
         }, i);
 
         root.add({cmd, "eject"},
                  "Ejects a floppy disk",
-                 [this](Arguments& argv, long value) {
+                 [this](Arguments& argv, const std::vector<isize> &values) {
 
-            auto &drive = value ? drive9 : drive8;
+            auto &drive = values.front() ? drive9 : drive8;
             drive.ejectDisk();
 
         }, i);
 
         root.add({cmd, "insert"}, { Arg::path },
                  "Inserts a floppy disk",
-                 [this](Arguments& argv, long value) {
+                 [this](Arguments& argv, const std::vector<isize> &values) {
 
             auto path = argv.front();
             if (!util::fileExists(path)) throw Error(VC64ERROR_FILE_NOT_FOUND, path);
 
-            auto &drive = value ? drive9 : drive8;
+            auto &drive = values.front() ? drive9 : drive8;
             drive.insertDisk(path, false);
 
         }, i);
 
         root.add({cmd, "newdisk"}, { DOSTypeEnum::argList() },
                  "Inserts a new blank disk",
-                 [this](Arguments& argv, long value) {
+                 [this](Arguments& argv, const std::vector<isize> &values) {
 
             auto type = util::parseEnum <DOSType, DOSTypeEnum> (argv.front());
-            auto &drive = value ? drive9 : drive8;
+            auto &drive = values.front() ? drive9 : drive8;
             drive.insertNewDisk(type, "NEW DISK");
 
         }, i);
@@ -657,7 +657,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     root.add({cmd, "send"}, {Arg::string},
              "Feeds text into the RS232 adapter",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         userPort.rs232 << argv[0];
     });
@@ -684,7 +684,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     root.add({"server", ""},
              "Displays a server status summary",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         dump(remoteManager, Category::State);
     });
@@ -693,21 +693,21 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     root.add({"server", cmd, "start"},
              "Starts the retro shell server",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         remoteManager.rshServer.start();
     });
 
     root.add({"server", cmd, "stop"},
              "Stops the retro shell server",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         remoteManager.rshServer.stop();
     });
 
     root.add({"server", cmd, "disconnect"},
              "Disconnects a client",
-             [this](Arguments& argv, long value) {
+             [this](Arguments& argv, const std::vector<isize> &values) {
 
         remoteManager.rshServer.disconnect();
     });
