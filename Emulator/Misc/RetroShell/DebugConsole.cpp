@@ -126,468 +126,717 @@ DebugConsole::initCommands(RetroShellCmd &root)
 
     RetroShellCmd::currentGroup = "Program execution";
 
-    root.add({"goto"}, { }, { Arg::value },
-             std::pair <string, string>("g[oto]", "Goto address"),
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        argv.empty() ? emulator.run() : cpu.jump(parseAddr(argv[0]));
+    root.add({
+        
+        .tokens = { "goto" },
+        .extra  = { Arg::value },
+        .help   = { "Goto address", "g[oto]" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            argv.empty() ? emulator.run() : cpu.jump(parseAddr(argv[0]));
+        }
     });
-    root.clone("g", {"goto"});
+    
+    root.clone({ "goto" }, "g");
 
-    root.add({"step"}, { }, { },
-             std::pair <string, string>("s[tep]", "Step into the next instruction"),
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        emulator.stepInto();
+    root.add({
+        
+        .tokens = { "step" },
+        .help   = { "Step into the next instruction", "s[tep]" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            emulator.stepInto();
+        }
     });
-    root.clone("s", {"step"});
+    
+    root.clone({ "step" }, "s");
 
-    root.add({"next"}, { }, { },
-             std::pair <string, string>("n[next]", "Step over the next instruction"),
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        emulator.stepOver();
+    root.add({
+        
+        .tokens = { "next" },
+        .help   = { "Step over the next instruction", "n[next]" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            emulator.stepOver();
+        }
     });
-    root.clone("n", {"next"});
+    
+    root.clone({ "next" }, "n");
 
-    root.add({"break"},     "Manage CPU breakpoints");
-
-    root.add({"break", ""},
-             "List all breakpoints",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(cpu, Category::Breakpoints);
-    });
-
-    root.add({"break", "at"}, { Arg::address }, { Arg::ignores },
-             "Set a breakpoint",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        cpu.setBreakpoint(parseAddr(argv[0]), parseNum(argv, 1, 0));
-    });
-
-    root.add({"break", "delete"}, { Arg::nr },
-             "Delete breakpoints",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        cpu.deleteBreakpoint(parseNum(argv[0]));
-    });
-
-    root.add({"break", "toggle"}, { Arg::nr },
-             "Enable or disable breakpoints",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        cpu.toggleBreakpoint(parseNum(argv[0]));
+    root.add({
+        
+        .tokens = { "eol" },
+        .help   = { "Complete the current line" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            emulator.finishLine();
+        }
     });
 
-    root.add({"watch"},     "Manage CPU watchpoints");
-
-    root.add({"watch", ""},
-             "List all watchpoints",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(cpu, Category::Watchpoints);
+    root.add({
+        
+        .tokens = { "eof" },
+        .help   = { "Complete the current frame" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            emulator.finishFrame();
+        }
     });
-
-    root.add({"watch", "at"}, { Arg::address }, { Arg::ignores },
-             "Set a watchpoint",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        cpu.setWatchpoint(parseAddr(argv[0]), parseNum(argv, 1, 0));
+    
+    //
+    // Breakpoints
+    //
+    
+    root.add({
+        
+        .tokens = { "break" },
+        .help   = { "Manage CPU breakpoints" }
     });
-
-    root.add({"watch", "delete"}, { Arg::nr },
-             "Delete watchpoints",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        cpu.deleteWatchpoint(parseNum(argv[0]));
+    
+    root.add({
+        
+        .tokens = { "break", "" },
+        .help   = { "List all breakpoints" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(cpu, Category::Breakpoints);
+        }
     });
-
-    root.add({"watch", "toggle"}, { Arg::nr },
-             "Enable or disable watchpoints",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        cpu.toggleWatchpoint(parseNum(argv[0]));
+    
+    root.add({
+        
+        .tokens = { "break", "at" },
+        .args   = { Arg::address },
+        .extra  = { Arg::ignores },
+        .help   = { "Set a breakpoint" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            cpu.setBreakpoint(parseAddr(argv[0]), parseNum(argv, 1, 0));
+        }
     });
-
-
+ 
+    root.add({
+        
+        .tokens = { "break", "delete" },
+        .args   = { Arg::nr },
+        .help   = { "Delete breakpoints" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            cpu.deleteBreakpoint(parseNum(argv[0]));
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { "break", "toggle" },
+        .args   = { Arg::nr },
+        .help   = { "Enable or disable breakpoints" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            cpu.toggleBreakpoint(parseNum(argv[0]));
+        }
+    });
+    
+    //
+    // Watchpoints
+    //
+    
+    root.add({
+        
+        .tokens = { "watch" },
+        .help   = { "Manage CPU watchpoints" }
+    });
+    
+    root.add({
+        
+        .tokens = { "watch", "" },
+        .help   = { "Lists all watchpoints" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(cpu, Category::Watchpoints);
+        }
+    });
+ 
+    root.add({
+        
+        .tokens = { "watch", "at" },
+        .args   = { Arg::address },
+        .extra  = { Arg::ignores },
+        .help   = { "Set a watchpoint at the specified address" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            cpu.setWatchpoint(parseAddr(argv[0]), parseNum(argv, 1, 0));
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { "watch", "delete" },
+        .args   = { Arg::address },
+        .help   = { "Delete a watchpoint" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            cpu.deleteWatchpoint(parseNum(argv[0]));
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { "watch", "toggle" },
+        .args   = { Arg::address },
+        .help   = { "Enable or disable a watchpoint" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            cpu.toggleWatchpoint(parseNum(argv[0]));
+        }
+    });
+    
     //
     // Monitoring
     //
 
     RetroShellCmd::currentGroup = "Monitoring";
 
-    root.add({"d"}, { }, { Arg::address },
-             "Disassemble instructions",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        std::stringstream ss;
-        cpu.disassembler.disassembleRange(ss, parseAddr(argv, 0, cpu.getPC0()), 16);
-        retroShell << '\n' << ss << '\n';
+    root.add({
+        
+        .tokens = { "d" },
+        .extra  = { Arg::address },
+        .help   = { "Disassemble instructions" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            std::stringstream ss;
+            cpu.disassembler.disassembleRange(ss, parseAddr(argv, 0, cpu.getPC0()), 16);
+            retroShell << '\n' << ss << '\n';
+        }
     });
-
-    root.add({"a"}, { }, { Arg::address },
-             "Dump memory in ASCII",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        std::stringstream ss;
-        mem.debugger.ascDump(ss, parseAddr(argv, 0, mem.debugger.current), 16);
-        retroShell << '\n' << ss << '\n';
-    });
-
-    root.add({"m"}, { }, { Arg::address },
-             std::pair<string, string>("m", "Dump memory"),
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        std::stringstream ss;
-        mem.debugger.memDump(ss, parseAddr(argv, 0, mem.debugger.current), 16);
-        retroShell << '\n' << ss << '\n';
-    });
-
-    root.add({"w"}, { Arg::value }, { Arg::address },
-             std::pair<string, string>("w", "Write into memory"),
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        u16 addr = mem.debugger.current;
-        if (argv.size() > 1) { addr = parseAddr(argv[1]); }
-        mem.debugger.write(addr, u8(parseNum(argv[0])));
-    });
-
-    root.add({"c"}, { Arg::src, Arg::dst, Arg::count },
-             std::pair<string, string>("c", "Copy a chunk of memory"),
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        mem.debugger.copy(u16(parseNum(argv[0])), u16(parseNum(argv[1])), parseNum(argv[2]));
-    });
-
-    root.add({"f"}, { Arg::sequence }, { Arg::address },
-             std::pair<string, string>("f", "Find a sequence in memory"),
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        auto pattern = parseSeq(argv[0]);
-        auto addr = parseAddr(argv, 1, mem.debugger.current);
-        auto found = mem.debugger.memSearch(pattern, addr);
-
-        if (found >= 0) {
+    
+    root.add({
+        
+        .tokens = { "a" },
+        .extra  = { Arg::address },
+        .help   = { "Dump memory in ASCII" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
 
             std::stringstream ss;
-            mem.debugger.memDump(ss, u16(found), 16);
-            retroShell << ss;
-
-        } else {
-
-            std::stringstream ss;
-            ss << "Not found";
-            retroShell << ss;
+            mem.debugger.ascDump(ss, parseAddr(argv, 0, mem.debugger.current), 16);
+            retroShell << '\n' << ss << '\n';
         }
     });
 
-    root.add({"e"}, { Arg::address, Arg::count }, { Arg::value },
-             std::pair<string, string>("e", "Erase memory"),
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        auto addr = parseAddr(argv[0]);
-        auto cnt = parseNum(argv[1]);
-        auto val = u8(parseNum(argv, 2, 0));
+    root.add({
         
-        mem.debugger.write(addr, val, cnt);
+        .tokens = {"m"},
+        .extra  = { Arg::address },
+        .help   = { "Dump memory" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                        
+            std::stringstream ss;
+            mem.debugger.memDump(ss, parseAddr(argv, 0, mem.debugger.current), 16);
+            retroShell << '\n' << ss << '\n';
+        }
     });
 
-    root.add({"r"},
-             "Show registers");
+    root.add({
+        
+        .tokens = { "w" },
+        .args   = { Arg::value },
+        .extra  = { Arg::address },
+        .help   = { "Write into memory" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            u16 addr = mem.debugger.current;
+            if (argv.size() > 1) { addr = parseAddr(argv[1]); }
+            mem.debugger.write(addr, u8(parseNum(argv[0])));
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { "c" },
+        .args   = { Arg::src, Arg::dst, Arg::count },
+        .help   = { "Copy a chunk of memory" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            mem.debugger.copy(u16(parseNum(argv[0])), u16(parseNum(argv[1])), parseNum(argv[2]));
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { "f" },
+        .args   = { Arg::sequence },
+        .extra  = { Arg::address },
+        .help   = { "Find a sequence in memory" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            auto pattern = parseSeq(argv[0]);
+            auto addr = parseAddr(argv, 1, mem.debugger.current);
+            auto found = mem.debugger.memSearch(pattern, addr);
 
-    root.add({"r", "cia1"},         "CIA1",
-             [this](Arguments& argv, const std::vector<isize> &values) {
+            if (found >= 0) {
 
-        dump(cia1, Category::Registers);
+                std::stringstream ss;
+                mem.debugger.memDump(ss, u16(found), 16);
+                retroShell << ss;
+
+            } else {
+
+                std::stringstream ss;
+                ss << "Not found";
+                retroShell << ss;
+            }
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { "e" },
+        .args   = { Arg::address, Arg::count },
+        .extra  = { Arg::value },
+        .help   = { "Erase memory" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            auto addr = parseAddr(argv[0]);
+            auto cnt = parseNum(argv[1]);
+            auto val = u8(parseNum(argv, 2, 0));
+            
+            mem.debugger.write(addr, val, cnt);
+        }
     });
 
-    root.add({"r", "cia2"},         "CIA2",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(cia2, Category::Registers);
+    root.add({
+        
+        .tokens = { "r" },
+        .help   = { "Show registers" }
+    });
+ 
+    root.add({
+        
+        .tokens = { "r", "cia1" },
+        .help   = { "CIA1" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(cia1, Category::Registers);
+        }
     });
 
-    root.add({"r", "vicii"},        "VICII",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(vic, Category::Registers);
+    root.add({
+        
+        .tokens = { "r", "cia2" },
+        .help   = { "CIA2" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(cia2, Category::Registers);
+        }
     });
 
-    root.add({"r", "sid"},          "Primary SID",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(sidBridge.sid[0], Category::Registers);
+    root.add({
+        
+        .tokens = { "r", "vicii" },
+        .help   = { "VICII" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(vic, Category::Registers);
+        }
     });
-
-    root.add({"?"},
-             "Inspect a component");
-
+ 
+    root.add({
+        
+        .tokens = { "r", "sid" },
+        .help   = { "Primary SID" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(sidBridge.sid[0], Category::Registers);
+        }
+    });
+    
+    //
+    // Components
+    //
+    
     RetroShellCmd::currentGroup = "Components";
 
-    root.add({"?", "thread"},       "Emulator thread");
-
-    root.add({"?", "thread", ""},        "Displays the thread state",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(emulator, Category::State);
+    root.add({
+        
+        .tokens = { "?" },
+        .help   = { "Inspect a component" }
+    });
+    
+    root.add({
+        
+        .tokens = { "?", "thread" },
+        .help   = { "Emulator thread" }
+    });
+    
+    root.add({
+        
+        .tokens = { "?", "thread", "" },
+        .help   = { "Emulator thread" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(emulator, Category::State);
+        }
     });
 
-    root.add({"?", "thread", "runahead"},    "Inspects the run-ahead instance",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(emulator, Category::RunAhead);
+    root.add({
+        
+        .tokens = { "?", "thread", "runahead" },
+        .help   = { "Run-ahead instance" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(emulator, Category::RunAhead);
+        }
     });
 
-    auto cmd = c64.shellName();
-    auto description = c64.description();
-    root.add({"?", cmd}, description, [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(c64, { Category::Config, Category::State });
+    root.add({
+        
+        .tokens = { "?", c64.shellName() },
+        .help   = { c64.description() },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(c64, { Category::Config, Category::State });
+        }
     });
 
-    cmd = cpu.shellName();
-    description = cpu.description();
-    root.add({"?", cmd}, description, [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(cpu, { Category::Config, Category::State });
+    root.add({
+        
+        .tokens = { "?", cpu.shellName() },
+        .help   = { cpu.description() },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(cpu, { Category::Config, Category::State });
+        }
     });
 
-    cmd = mem.shellName();
-    description = mem.description();
-    root.add({"?", cmd}, description, [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(mem, { Category::Config, Category::State });
+    root.add({
+        
+        .tokens = { "?", mem.shellName() },
+        .help   = { mem.description() },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(mem, { Category::Config, Category::State });
+        }
     });
 
-    cmd = cia1.shellName();
-    description = cia1.description();
-    root.add({"?", cmd}, description, [this](Arguments& argv, const std::vector<isize> &values) {
+    root.add({
+        
+        .tokens = { "?", cia1.shellName() },
+        .help   = { cia1.description() },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(cia1, { Category::Config, Category::State });
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { "?", cia2.shellName() },
+        .help   = { cia2.description() },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(cia2, { Category::Config, Category::State });
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { "?", vic.shellName() },
+        .help   = { vic.description() },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(vic, { Category::Config, Category::State });
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { "?", "sid" },
+        .extra  = { "Arg::value" },
+        .help   = { "SID" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            isize nr = parseNum(argv, 0, 0);
+            if (nr < 0 || nr > 3) throw Error(VC64ERROR_OPT_INV_ARG, "0 ... 3");
 
-        dump(cia1, { Category::Config, Category::State });
+            dump(sidBridge.sid[nr], { Category::Config, Category::State });
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { "?", sidBridge.shellName() },
+        .help   = { sidBridge.description() },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(sidBridge, { Category::Config, Category::State });
+        }
     });
 
-    cmd = cia2.shellName();
-    description = cia2.description();
-    root.add({"?", cmd}, description, [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(cia2, { Category::Config, Category::State });
+    root.add({
+        
+        .tokens = { "?", expansionPort.shellName() },
+        .help   = { expansionPort.description() },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(expansionPort, { Category::Config, Category::State });
+        }
     });
-
-    cmd = vic.shellName();
-    description = vic.description();
-    root.add({"?", cmd}, description, [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(vic, { Category::Config, Category::State });
-    });
-
-    root.add({"?", "sid"}, { }, { Arg::value }, "Primary SID",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        isize nr = parseNum(argv, 0, 0);
-        if (nr < 0 || nr > 3) throw Error(VC64ERROR_OPT_INV_ARG, "0 ... 3");
-
-        dump(sidBridge.sid[nr], { Category::Config, Category::State });
-    });
-
-    cmd = sidBridge.shellName();
-    description = sidBridge.description();
-    root.add({"?", cmd}, description, [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(sidBridge, { Category::Config, Category::State });
-    });
-
-    cmd = expansionPort.shellName();
-    description = expansionPort.description();
-    root.add({"?", cmd}, description, [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(expansionPort, { Category::Config, Category::State });
-    });
-
+    
+    //
+    // Peripherals
+    //
+    
     RetroShellCmd::currentGroup = "Peripherals";
 
-    cmd = keyboard.shellName();
-    description = keyboard.description();
-    root.add({"?", cmd}, description, [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(keyboard, { Category::Config, Category::State });
+    root.add({
+        
+        .tokens = { "?", keyboard.shellName() },
+        .help   = { keyboard.description() },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(keyboard, { Category::Config, Category::State });
+        }
     });
 
-    cmd = port1.shellName();
-    description = port1.description();
-    root.add({"?", cmd}, description, [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(port1, { Category::Config, Category::State });
+    root.add({
+        
+        .tokens = { "?", port1.shellName() },
+        .help   = { port1.description() },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(port1, { Category::Config, Category::State });
+        }
     });
 
-    cmd = port2.shellName();
-    description = port2.description();
-    root.add({"?", cmd}, description, [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(port2, { Category::Config, Category::State });
+    root.add({
+        
+        .tokens = { "?", port2.shellName() },
+        .help   = { port2.description() },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(port2, { Category::Config, Category::State });
+        }
     });
-
-    cmd = port1.joystick.shellName();
-    description = port1.joystick.description();
-    root.add({"?", cmd}, description, [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(port1.joystick, { Category::Config, Category::State });
+    
+    root.add({
+        
+        .tokens = { "?", port1.joystick.shellName() },
+        .help   = { port1.joystick.description() },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(port1.joystick, { Category::Config, Category::State });
+        }
     });
-
-    cmd = port2.joystick.shellName();
-    description = port2.joystick.description();
-    root.add({"?", cmd}, description, [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(port2.joystick, { Category::Config, Category::State });
+    
+    root.add({
+        
+        .tokens = { "?", port2.joystick.shellName() },
+        .help   = { port2.joystick.description() },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(port2.joystick, { Category::Config, Category::State });
+        }
     });
-
-    cmd = port1.mouse.shellName();
-    description = port1.mouse.description();
-    root.add({"?", cmd}, description, [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(port1.mouse, { Category::Config, Category::State });
+    
+    root.add({
+        
+        .tokens = { "?", port1.mouse.shellName() },
+        .help   = { port1.mouse.description() },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(port1.mouse, { Category::Config, Category::State });
+        }
     });
-
-    cmd = port2.mouse.shellName();
-    description = port2.mouse.description();
-    root.add({"?", cmd}, description, [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(port2.mouse, { Category::Config, Category::State });
+    
+    root.add({
+        
+        .tokens = { "?", port2.mouse.shellName() },
+        .help   = { port2.mouse.description() },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(port2.mouse, { Category::Config, Category::State });
+        }
     });
-
+    
     for (isize i = 0; i < 2; i++) {
-
+        
         auto &drive = i == 0 ? c64.drive8 : c64.drive9;
-
-        cmd = drive.shellName();
-        description = drive.description();
-
-        root.add({"?", cmd}, description);
-
-        root.add({"?", cmd, ""},
-                 "Inspects the internal state",
-                 [this](Arguments& argv, const std::vector<isize> &values) {
-
-            auto &drive = values.front() ? drive9 : drive8;
-            dump(drive, { Category::Config, Category::State });
-        }, i);
-
-        root.add({"?", cmd, "bankmap"},
-                 "Displays the memory layout",
-                 [this](Arguments& argv, const std::vector<isize> &values) {
-
-            auto &drive = values.front() ? drive9 : drive8;
-            dump(drive, Category::BankMap);
-        }, i);
-
-        root.add({"?", cmd, "disk"},
-                 "Inspects the current disk",
-                 [this](Arguments& argv, const std::vector<isize> &values) {
-
-            auto &drive = values.front() ? drive9 : drive8;
-            dump(drive, Category::Disk);
-        }, i);
-
-        root.add({"?", cmd, "layout"},
-                 "Displays the disk layout",
-                 [this](Arguments& argv, const std::vector<isize> &values) {
-
-            auto &drive = values.front() ? drive9 : drive8;
-            dump(drive, Category::Layout);
-        }, i);
+        
+        root.add({
+            
+            .tokens = { "?", drive.shellName() },
+            .help   = { drive.description() }
+        });
+        
+        root.add({
+            
+            .tokens = { "?", drive.shellName(), "" },
+            .help   = { "Inspects the internal state" },
+            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                
+                auto &drive = values.front() ? drive9 : drive8;
+                dump(drive, { Category::Config, Category::State });
+                
+            }, .values = {i}
+        });
+        
+        root.add({
+            
+            .tokens = { "?", drive.shellName(), "bankmap" },
+            .help   = { "Displays the memory layout" },
+            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                
+                auto &drive = values.front() ? drive9 : drive8;
+                dump(drive, Category::BankMap);
+                
+            }, .values = {i}
+        });
+        
+        root.add({
+            
+            .tokens = { "?", drive.shellName(), "disk" },
+            .help   = { "Inspects the current disk" },
+            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                
+                auto &drive = values.front() ? drive9 : drive8;
+                dump(drive, Category::Disk);
+                
+            }, .values = {i}
+        });
+        
+        root.add({
+            
+            .tokens = { "?", drive.shellName(), "layout" },
+            .help   = { "Displays the disk layout" },
+            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                
+                auto &drive = values.front() ? drive9 : drive8;
+                dump(drive, Category::Layout);
+                
+            }, .values = {i}
+        });
     }
-
-    cmd = serialPort.shellName();
-    description = serialPort.description();
-    root.add({"?", cmd}, description, [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(serialPort, { Category::Config, Category::State });
+        
+    root.add({
+        
+        .tokens = { "?", serialPort.shellName() },
+        .help   = { serialPort.description() },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(serialPort, { Category::Config, Category::State });
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { "?", datasette.shellName() },
+        .help   = { datasette.description() },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(datasette, { Category::Config, Category::State });
+        }
     });
 
-    cmd = datasette.shellName();
-    description = datasette.description();
-    root.add({"?", cmd}, description, [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(datasette, { Category::Config, Category::State });
+    root.add({
+        
+        .tokens = { "?", audioPort.shellName() },
+        .help   = { audioPort.description() },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(audioPort, { Category::Config, Category::State });
+        }
     });
 
-    cmd = audioPort.shellName();
-    description = audioPort.description();
-    root.add({"?", cmd}, description, [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(audioPort, { Category::Config, Category::State });
+    root.add({
+        
+        .tokens = { "?", host.shellName() },
+        .help   = { host.description() },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(host, { Category::Config, Category::State });
+        }
     });
 
-    RetroShellCmd::currentGroup = "Miscellaneous";
-
-    cmd = host.shellName();
-    description = host.description();
-    root.add({"?", cmd}, description, [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(host, { Category::Config, Category::State });
-    });
-
-
+    
     //
     // Miscellaneous
     //
 
     RetroShellCmd::currentGroup = "Miscellaneous";
 
-    root.add({"checksums"},
-             "Displays checksum of various components",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(c64, Category::Checksums);
+    root.add({
+        
+        .tokens = { "checksums" },
+        .help   = { "Displays checksum of various components" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(c64, Category::Checksums);
+        }
     });
-
-    root.add({"debug"}, "Debug variables");
-
-    root.add({"debug", ""}, {},
-             "Display all debug variables",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(emulator, Category::Debug);
+    
+    root.add({
+        
+        .tokens = { "debug" },
+        .help   = { "Debug variables" },
+    });
+    
+    root.add({
+        
+        .tokens = { "debug", "" },
+        .help   = { "Display all debug variables" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(emulator, Category::Debug);
+        }
     });
 
     if (debugBuild) {
 
-        // for (isize i = DebugFlagEnum::minVal; i < DebugFlagEnum::maxVal; i++) {
         for (auto i : DebugFlagEnum::elements()) {
+            
+            root.add({
                 
-            root.add({"debug", DebugFlagEnum::key(i)}, { Arg::boolean },
-                     DebugFlagEnum::help(i),
-                     [](Arguments& argv, const std::vector<isize> &values) {
-
-                Emulator::setDebugVariable(DebugFlag(values.front()), int(util::parseNum(argv[0])));
-
-            }, i);
+                .tokens = { "debug", DebugFlagEnum::key(i) },
+                .args   = { Arg::boolean },
+                .help   = { DebugFlagEnum::help(i) },
+                .func   = [] (Arguments& argv, const std::vector<isize> &values) {
+                    
+                    Emulator::setDebugVariable(DebugFlag(values[0]), int(util::parseNum(argv[0])));
+                    
+                }, .values = { isize(i) }
+            });
         }
-
-        root.add({"debug", "verbosity"}, { Arg::value },
-                 "Set the verbosity level for generated debug output",
-                 [](Arguments& argv, const std::vector<isize> &values) {
-
-            CoreObject::verbosity = isize(util::parseNum(argv[0]));
+            
+        root.add({
+            
+            .tokens = { "debug", "verbosity" },
+            .args   = { Arg::value },
+            .help   = { "Set the verbosity level for generated debug output" },
+            .func   = [] (Arguments& argv, const std::vector<isize> &values) {
+                
+                CoreObject::verbosity = isize(util::parseNum(argv[0]));
+            }
         });
     }
 
-    root.add({"%"}, { Arg::value },
-             "Convert a value into different formats",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        std::stringstream ss;
-
-        if (isNum(argv[0])) {
-            mem.debugger.convertNumeric(ss, u32(parseNum(argv[0])));
-        } else {
-            mem.debugger.convertNumeric(ss, argv.front());
+    root.add({
+        
+        .tokens = {"%"},
+        .args   = { Arg::value },
+        .help   = { "Convert a value into different formats" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            std::stringstream ss;
+            
+            if (isNum(argv[0])) {
+                mem.debugger.convertNumeric(ss, (u32)parseNum(argv[0]));
+            } else {
+                mem.debugger.convertNumeric(ss, argv.front());
+            }
+            
+            retroShell << '\n' << ss << '\n';
         }
-
-        retroShell << '\n' << ss << '\n';
     });
 }
-
-
 
 }
