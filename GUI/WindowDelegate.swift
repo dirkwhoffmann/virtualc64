@@ -82,10 +82,6 @@ extension MyController: NSWindowDelegate {
             dashboard.join()
         }
         
-        debug(.shutdown, "Close the monitor...")
-        monitor?.close()
-        monitor?.join()
-
         debug(.shutdown, "Stop the renderer...")
         renderer.halt()
 

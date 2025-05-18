@@ -31,10 +31,7 @@ class MyController: NSWindowController, MessageReceiver {
     // Auxiliary windows of this emulator instance
     var inspectors: [Inspector] = []
     var dashboards: [Dashboard] = []
-    
-    // Monitor panel of this emulator instance
-    var monitor: Monitor?
-    
+        
     // Configuration panel of this emulator instance
     var configurator: ConfigurationController?
 

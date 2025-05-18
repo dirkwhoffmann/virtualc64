@@ -481,8 +481,6 @@
 		50D3092024C625B200B92563 /* ProxyExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3091F24C625B200B92563 /* ProxyExtensions.swift */; };
 		50D3092224C714A200B92563 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D3092124C714A200B92563 /* Inspector.xib */; };
 		50D3092424C7152700B92563 /* Inspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3092324C7152700B92563 /* Inspector.swift */; };
-		50D3092624C71AD300B92563 /* Monitor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D3092524C71AD300B92563 /* Monitor.xib */; };
-		50D3092824C71B0A00B92563 /* Monitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3092724C71B0A00B92563 /* Monitor.swift */; };
 		50D5F88024F4F12F0062EF13 /* TrackTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D5F87F24F4F12F0062EF13 /* TrackTableView.swift */; };
 		50D5F88424F4FE9C0062EF13 /* SectorTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D5F88324F4FE9C0062EF13 /* SectorTableView.swift */; };
 		50D5F88624F52A300062EF13 /* DiskDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D5F88524F52A300062EF13 /* DiskDataView.swift */; };
@@ -1095,8 +1093,6 @@
 		50D3091F24C625B200B92563 /* ProxyExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyExtensions.swift; sourceTree = "<group>"; };
 		50D3092124C714A200B92563 /* Inspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Inspector.xib; sourceTree = "<group>"; };
 		50D3092324C7152700B92563 /* Inspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inspector.swift; sourceTree = "<group>"; };
-		50D3092524C71AD300B92563 /* Monitor.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Monitor.xib; sourceTree = "<group>"; };
-		50D3092724C71B0A00B92563 /* Monitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Monitor.swift; sourceTree = "<group>"; };
 		50D5F87F24F4F12F0062EF13 /* TrackTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackTableView.swift; sourceTree = "<group>"; };
 		50D5F88324F4FE9C0062EF13 /* SectorTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectorTableView.swift; sourceTree = "<group>"; };
 		50D5F88524F52A300062EF13 /* DiskDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskDataView.swift; sourceTree = "<group>"; };
@@ -1252,7 +1248,7 @@
 			children = (
 				50763276202989D300575110 /* DialogController.swift */,
 				5098C57E2658E1F400E05EFC /* DragImageView.swift */,
-				50CD36992817BA6600E40BFC /* Monitor */,
+				50CD36992817BA6600E40BFC /* Dashboard */,
 				50157EF92825B0EC000E9DDD /* Inspector */,
 				50769B8824BB1B38006FE743 /* Preferences */,
 				50769B8724BB1A7A006FE743 /* Configuration */,
@@ -2158,7 +2154,6 @@
 				50A0B48C24C1CAEB00FF0B0B /* Preferences.xib */,
 				506A724721C033EF00DA0AC3 /* Configuration.xib */,
 				50D3092124C714A200B92563 /* Inspector.xib */,
-				50D3092524C71AD300B92563 /* Monitor.xib */,
 				503C1DD024FC10F400D91141 /* SnapshotViewer.xib */,
 				507E7A9D24FB864E00AB433C /* ScreenshotViewer.xib */,
 				500F7CC5281EAB64003F1A7C /* DiskCreator.xib */,
@@ -2190,10 +2185,9 @@
 			path = Recorder;
 			sourceTree = "<group>";
 		};
-		50CD36992817BA6600E40BFC /* Monitor */ = {
+		50CD36992817BA6600E40BFC /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
-				50D3092724C71B0A00B92563 /* Monitor.swift */,
 				50ABD2882DD8907000456555 /* Dashboard.swift */,
 				50ABD2892DD8907000456555 /* DashboardDataProvider.swift */,
 				50ABD28A2DD8907000456555 /* DashboardPanel.swift */,
@@ -2201,7 +2195,7 @@
 				50ABD28C2DD8907000456555 /* DashboardViewController.swift */,
 				50ABD28D2DD8907000456555 /* WaveformPanel.swift */,
 			);
-			path = Monitor;
+			path = Dashboard;
 			sourceTree = "<group>";
 		};
 		50E56AF529D489EA00EBCE76 /* Components */ = {
@@ -2352,7 +2346,6 @@
 				503E199020C42C6D007E91F1 /* Assets.xcassets in Resources */,
 				503C1DD124FC10F400D91141 /* SnapshotViewer.xib in Resources */,
 				50A0B48D24C1CAEB00FF0B0B /* Preferences.xib in Resources */,
-				50D3092624C71AD300B92563 /* Monitor.xib in Resources */,
 				50A5B7CE2C74E44C00D6DDAD /* CMakeLists.txt in Resources */,
 				500F7CC6281EAB64003F1A7C /* DiskCreator.xib in Resources */,
 				501E2C1225B2DDED00B9C9C0 /* AppIcon.icns in Resources */,
@@ -2794,7 +2787,6 @@
 				508C1E692C0C507D0097473C /* CartridgeBase.cpp in Sources */,
 				50AF2F8226AFFE9A002DC43B /* PIA.cpp in Sources */,
 				50CD3695281681D000E40BFC /* NamedPipe.cpp in Sources */,
-				50D3092824C71B0A00B92563 /* Monitor.swift in Sources */,
 				504C436C24AF29AC00E69CAE /* Isepic.cpp in Sources */,
 				50A194932BDA709D0046849E /* CPUBase.cpp in Sources */,
 				506F30472B7692180083EAEA /* VirtualC64.cpp in Sources */,
