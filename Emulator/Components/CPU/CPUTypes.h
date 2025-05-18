@@ -50,6 +50,11 @@ struct CPURevisionEnum : util::Reflection<CPURevisionEnum, vc64::peddle::CPURevi
         }
         return "???";
     }
+    
+    static const char *help(vc64::peddle::CPURevision value)
+    {
+        return "";
+    }
 };
 
 enum_long(DASM_NUMBERS)
@@ -77,6 +82,11 @@ struct DasmNumbersEnum : util::Reflection<DasmNumbersEnum, DasmNumbers>
             case DASM_DEC0:    return "DASM_DEC0";
         }
         return "???";
+    }
+    
+    static const char *help(DasmNumbers value)
+    {
+        return "";
     }
 };
 

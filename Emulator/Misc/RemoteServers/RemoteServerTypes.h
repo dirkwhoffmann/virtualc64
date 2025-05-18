@@ -51,6 +51,11 @@ struct SrvStateEnum : util::Reflection<SrvStateEnum, SrvState>
         }
         return "???";
     }
+    
+    static const char *help(SrvState value)
+    {
+        return "";
+    }
 };
 #endif
 
@@ -74,6 +79,11 @@ struct ServerProtocolEnum : util::Reflection<ServerProtocolEnum, ServerProtocol>
             case SRVPROT_DEFAULT:   return "DEFAULT";
         }
         return "???";
+    }
+    
+    static const char *help(ServerProtocol value)
+    {
+        return "";
     }
 };
 #endif

@@ -45,6 +45,11 @@ struct DOSTypeEnum : util::Reflection<DOSTypeEnum, DOSType> {
         }
         return "???";
     }
+    
+    static const char *help(DOSType value)
+    {
+        return "";
+    }
 };
 
 enum_long(FS_FILETYPE)
@@ -75,6 +80,11 @@ struct FSFileTypeEnum : util::Reflection<FSFileTypeEnum, FSFileType> {
         }
         return "???";
     }
+    
+    static const char *help(FSFileType value)
+    {
+        return "";
+    }
 };
 
 enum_long(FS_BLOCKTYPE)
@@ -104,6 +114,11 @@ struct FSBlockTypeEnum : util::Reflection<FSBlockTypeEnum, FSBlockType> {
             case FS_BLOCKTYPE_DATA:     return "DATA";
         }
         return "???";
+    }
+    
+    static const char *help(FSBlockType value)
+    {
+        return "";
     }
 };
 
@@ -140,7 +155,40 @@ struct FSUsageEnum : util::Reflection<FSUsageEnum, FSUsage> {
     static constexpr long maxVal = FS_USAGE_DATA;
 
     static const char *prefix() { return "FS_USAGE"; }
-    static const char *_key(long value) { return "???"; }
+    static const char *_key(long value)
+    {
+        switch (value) {
+
+            case FS_USAGE_UNKNOWN:              return "FS_USAGE.UNKNOWN";
+            case FS_USAGE_UNUSED:               return "FS_USAGE.UNUSED";
+            case FS_USAGE_DOS_VERSION:          return "FS_USAGE.DOS_VERSION";
+            case FS_USAGE_DOS_TYPE:             return "FS_USAGE.DOS_TYPE";
+            case FS_USAGE_ALLOCATION_BITS:      return "FS_USAGE.ALLOCATION_BITS";
+            case FS_USAGE_DISK_ID:              return "FS_USAGE.DISK_ID";
+            case FS_USAGE_DISK_NAME:            return "FS_USAGE.DISK_NAME";
+            case FS_USAGE_TRACK_LINK:           return "FS_USAGE.TRACK_LINK";
+            case FS_USAGE_SECTOR_LINK:          return "FS_USAGE.SECTOR_LINK";
+            case FS_USAGE_FIRST_FILE_TRACK:     return "FS_USAGE.FIRST_FILE_TRACK";
+            case FS_USAGE_FIRST_FILE_SECTOR:    return "FS_USAGE.FIRST_FILE_SECTOR";
+            case FS_USAGE_FIRST_REL_TRACK:      return "FS_USAGE.FIRST_REL_TRACK";
+            case FS_USAGE_FIRST_REL_SECTOR:     return "FS_USAGE.FIRST_REL_SECTOR";
+            case FS_USAGE_FIRST_DIR_TRACK:      return "FS_USAGE.FIRST_DIR_TRACK";
+            case FS_USAGE_FIRST_DIR_SECTOR:     return "FS_USAGE.FIRST_DIR_SECTOR";
+            case FS_USAGE_FILE_TYPE:            return "FS_USAGE.FILE_TYPE";
+            case FS_USAGE_FILE_NAME:            return "FS_USAGE.FILE_NAME";
+            case FS_USAGE_FILE_LENGTH_LO:       return "FS_USAGE.FILE_LENGTH_LO";
+            case FS_USAGE_FILE_LENGTH_HI:       return "FS_USAGE.FILE_LENGTH_HI";
+            case FS_USAGE_REL_RECORD_LENGTH:    return "FS_USAGE.REL_RECORD_LENGTH";
+            case FS_USAGE_GEOS:                 return "FS_USAGE.GEOS";
+            case FS_USAGE_DATA:                 return "FS_USAGE.DATA";
+        }
+        return "???";
+    }
+    
+    static const char *help(FSUsage value)
+    {
+        return "";
+    }
 };
 
 //

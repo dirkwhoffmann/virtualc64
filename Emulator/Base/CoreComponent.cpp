@@ -45,6 +45,13 @@ CoreComponent::shellName() const
     return getDescriptions().at(objid).shell;
 }
 
+const std::vector<string> &
+CoreComponent::shellHelp() const
+{
+    assert(isize(getDescriptions().size()) > objid);
+    return getDescriptions().at(objid).help;
+}
+
 bool
 CoreComponent::isInitialized() const
 {

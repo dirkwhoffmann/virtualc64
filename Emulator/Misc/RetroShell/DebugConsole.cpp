@@ -106,7 +106,8 @@ DebugConsole::initCommands(RetroShellCmd &root)
 
     if (debugBuild) {
 
-        for (isize i = DebugFlagEnum::minVal; i < DebugFlagEnum::maxVal; i++) {
+        for (auto i : DebugFlagEnum::elements()) {
+        // for (isize i = DebugFlagEnum::minVal; i < DebugFlagEnum::maxVal; i++) {
 
             root.add({"debug", DebugFlagEnum::key(i)}, { Arg::boolean },
                      DebugFlagEnum::help(i),
@@ -551,8 +552,9 @@ DebugConsole::initCommands(RetroShellCmd &root)
 
     if (debugBuild) {
 
-        for (isize i = DebugFlagEnum::minVal; i < DebugFlagEnum::maxVal; i++) {
-
+        // for (isize i = DebugFlagEnum::minVal; i < DebugFlagEnum::maxVal; i++) {
+        for (auto i : DebugFlagEnum::elements()) {
+                
             root.add({"debug", DebugFlagEnum::key(i)}, { Arg::boolean },
                      DebugFlagEnum::help(i),
                      [](Arguments& argv, const std::vector<isize> &values) {

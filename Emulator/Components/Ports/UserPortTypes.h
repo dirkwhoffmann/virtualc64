@@ -47,6 +47,11 @@ struct UserPortDeviceEnum : util::Reflection<UserPortDeviceEnum, UserPortDevice>
         }
         return "???";
     }
+    
+    static const char *help(UserPortDevice value)
+    {
+        return "";
+    }
 };
 #endif
 

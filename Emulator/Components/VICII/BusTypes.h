@@ -49,6 +49,11 @@ struct MemAccessEnum : util::Reflection<MemAccessEnum, MemAccess> {
         }
         return "???";
     }
+    
+    static const char *help(MemAccess value)
+    {
+        return "";
+    }
 };
 
 }

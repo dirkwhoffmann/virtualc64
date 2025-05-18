@@ -46,6 +46,11 @@ struct ParCableTypeEnum : util::Reflection<ParCableTypeEnum, ParCableType> {
         }
         return "???";
     }
+    
+    static const char *help(ParCableType value)
+    {
+        return "";
+    }
 };
 
 }

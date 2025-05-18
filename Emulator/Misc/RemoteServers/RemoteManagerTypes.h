@@ -41,6 +41,11 @@ struct ServerTypeEnum : util::Reflection<ServerTypeEnum, ServerType>
         }
         return "???";
     }
+    
+    static const char *help(ServerType value)
+    {
+        return "";
+    }
 };
 #endif
 

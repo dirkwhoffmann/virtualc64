@@ -47,6 +47,11 @@ struct DmaDisplayModeEnum : util::Reflection<DmaDisplayModeEnum, DmaDisplayMode>
         }
         return "???";
     }
+    
+    static const char *help(DmaDisplayMode value)
+    {
+        return "";
+    }
 };
 
 

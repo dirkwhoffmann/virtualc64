@@ -48,6 +48,11 @@ struct PowerGridEnum : util::Reflection<PowerGridEnum, PowerGrid> {
         }
         return "???";
     }
+    
+    static const char *help(PowerGrid value)
+    {
+        return "";
+    }
 };
 
 //

@@ -40,7 +40,7 @@ CommandConsole::_pause()
 string
 CommandConsole::getPrompt()
 {
-    return "vc64% ";
+    return "C64% ";
 }
 
 void
@@ -75,7 +75,7 @@ CommandConsole::pressReturn(bool shift)
 {
     if (!shift && input.empty()) {
 
-        retroShell.asyncExec("printhelp");
+        printHelp();
 
     } else {
 
@@ -89,16 +89,70 @@ CommandConsole::initCommands(RetroShellCmd &root)
     Console::initCommands(root);
 
     //
+    // Workspace management
+    //
+    
+    root.add({
+        
+        .tokens = { "workspace" },
+        .hidden = releaseBuild,
+        .help   = { "Workspace management" }
+    });
+    
+    root.add({
+        
+        .tokens = { "workspace init" },
+        .hidden = releaseBuild,
+        .help   = { "First command of a workspace script" },
+        .func   = [] (Arguments& argv, const std::vector<isize> &values) {
+            
+            // c64.initWorkspace();
+        }
+    });
+
+    root.add({
+        
+        .tokens = { "workspace activate" },
+        .hidden = releaseBuild,
+        .help   = { "Last command of a workspace script" },
+        .func   = [] (Arguments& argv, const std::vector<isize> &values) {
+            
+            // c64.activateWorkspace();
+        }
+    });
+
+    
+    //
     // Regression tester
     //
 
     RetroShellCmd::currentGroup = "Regression testing";
 
-    auto cmd = registerComponent(regressionTester);
-    root.seek("regression")->hidden = releaseBuild;
+    root.add({
+        
+        .tokens = { "regression" },
+        .hidden = releaseBuild,
+        .help   = { "Runs the regression tester" }
+    });
+    
+    root.add({
+        
+        .tokens = { "regression", "setup" },
+        .args   = { C64ModelEnum::argList() },
+        .extra  = { Arg::path, Arg::path },
+        .help   = { "Initializes the test environment" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            auto model = parseEnum <C64Model, C64ModelEnum> (argv[0]);
+            regressionTester.prepare(c64, model);
 
-    // root.add({"regression"}, debugBuild ? "Runs the regression tester" : "");
-
+            // Pause the script to give the C64 some time to boot
+            c64.scheduleRel<SLOT_RSH>(3 * vic.getFrequency(), RSH_WAKEUP);
+            throw ScriptInterruption("");
+        }
+    });
+    
+    /*
     root.add({"regression", "setup"}, { C64ModelEnum::argList() },
              "Initialize the test environment",
              [this](Arguments& argv, const std::vector<isize> &values) {
@@ -110,14 +164,83 @@ CommandConsole::initCommands(RetroShellCmd &root)
         c64.scheduleRel<SLOT_RSH>(3 * vic.getFrequency(), RSH_WAKEUP);
         throw ScriptInterruption("");
     });
+    */
+    
+    root.add({
+        
+        .tokens = { "regression", "run" },
+        .args   = { Arg::path },
+        .help   = { "Launches a regression test" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            regressionTester.run(argv.front());
+        }
+    });
 
+    /*
     root.add({"regression", "run"}, { Arg::path },
              "Launch a regression test",
              [this](Arguments& argv, const std::vector<isize> &values) {
 
         regressionTester.run(argv.front());
     });
-
+    */
+    
+    root.add({
+        
+        .tokens = { "screenshot" },
+        .hidden = releaseBuild,
+        .help   = { "Manages screenshots" }
+    });
+    
+    root.add({
+        
+        .tokens = { "screenshot", "set" },
+        .help   = { "Configure the screenshot" }
+    });
+    
+    root.add({
+        
+        .tokens = { "screenshot", "set", "path" },
+        .args   = { Arg::path },
+        .help   = { "Assign the save directory" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            regressionTester.screenshotPath = argv.front() == "\"\"" ? "" : argv.front();
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { "screenshot", "set", "cutout" },
+        .args   = { Arg::value, Arg::value, Arg::value, Arg::value },
+        .help   = { "Adjust the texture cutout" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            isize x1 = parseNum(argv[0]);
+            isize y1 = parseNum(argv[1]);
+            isize x2 = parseNum(argv[2]);
+            isize y2 = parseNum(argv[3]);
+            
+            regressionTester.x1 = x1;
+            regressionTester.y1 = y1;
+            regressionTester.x2 = x2;
+            regressionTester.y2 = y2;
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { "screenshot", "save" },
+        .args   = { Arg::path },
+        .help   = { "Saves a screenshot and exits the emulator" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            regressionTester.dumpTexture(c64, argv.front());
+        }
+    });
+    
+    /*
     root.add({"screenshot"}, debugBuild ? "Manages screenshots" : "");
 
     root.add({"screenshot", "set"},
@@ -151,7 +274,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
         regressionTester.dumpTexture(c64, argv.front());
     });
-
+    */
 
     //
     // Components
@@ -163,36 +286,87 @@ CommandConsole::initCommands(RetroShellCmd &root)
     // Components (C64)
     //
 
-    cmd = registerComponent(c64);
+    auto cmd = registerComponent(c64);
 
+    root.add({
+        
+        .tokens = { cmd, "defaults" },
+        .help   = { "Displays the user defaults storage" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(emulator, Category::Defaults);
+        }
+    });
+    
+    /*
     root.add({cmd, "defaults"},
              "Display the user defaults storage",
              [this](Arguments& argv, const std::vector<isize> &values) {
 
         dump(emulator, Category::Defaults);
     });
-
+    */
+    
+    root.add({
+        
+        .tokens = { cmd, "power" },
+        .args   = { Arg::onoff },
+        .help   = { "Switches the C64 on or off" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            parseOnOff(argv[0]) ? emulator.run() : emulator.powerOff();
+        }
+    });
+   
+    /*
     root.add({cmd, "power"}, { Arg::onoff },
              "Switch the C64 on or off",
              [this](Arguments& argv, const std::vector<isize> &values) {
 
         parseOnOff(argv[0]) ? c64.emulator.run() : c64.emulator.powerOff();
     });
+    */
+    
+    root.add({
+        
+        .tokens = { cmd, "reset" },
+        .help   = { "Performs a hard reset" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
 
+            c64.hardReset();
+        }
+    });
+    
+    /*
     root.add({cmd, "reset"},
              "Perform a hard reset",
              [this](Arguments& argv, const std::vector<isize> &values) {
 
         c64.hardReset();
     });
+    */
 
+    root.add({
+        
+        .tokens = { cmd, "init" },
+        .args   = { C64ModelEnum::argList() },
+        .help   = { "Initializes the C64 with a predefined scheme" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            emulator.set(parseEnum<C64Model, C64ModelEnum>(argv[0]));
+        }
+    });
+    
+    /*
     root.add({cmd, "init"}, { C64ModelEnum::argList() },
              "Initialize the emulator with factory defaults",
              [this](Arguments& argv, const std::vector<isize> &values) {
 
         emulator.set(parseEnum<C64Model, C64ModelEnum>(argv[0]));
     });
-
+    */
+        
+    /*
     root.add({cmd, "diff"},
              "Reports all differences to the default configuration",
              [this](Arguments& argv, const std::vector<isize> &values) {
@@ -202,7 +376,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
         printf("ss = %s\n", ss.str().c_str());
         retroShell << ss << '\n';
     });
-
+    */
 
     //
     // Components (Memory)
@@ -675,6 +849,41 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     cmd = registerComponent(host);
 
+    
+    //
+    // Miscellaneous (Config)
+    //
+    
+    root.add({
+        
+        .tokens = { "config" },
+        .help   = { "Virtual machine configuration" }
+    });
+    
+    root.add({
+        
+        .tokens = { "config", "" },
+        .help   = { "Displays the current configuration" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            std::stringstream ss;
+            c64.exportConfig(ss);
+            *this << ss;
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { "config", "diff" },
+        .help   = { "Displays the difference to the default configuration" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            std::stringstream ss;
+            c64.exportDiff(ss);
+            *this << ss;
+        }
+    });
+    
 
     //
     // Miscellaneous (Remote server)

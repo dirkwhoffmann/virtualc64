@@ -42,6 +42,11 @@ struct CIARevisionEnum : util::Reflection<CIARevisionEnum, CIARevision> {
         }
         return "";
     }
+    
+    static const char *help(CIARevision value)
+    {
+        return "";
+    }
 };
 
 enum_long(CIAREG)
@@ -93,6 +98,11 @@ struct CIARegEnum : util::Reflection<CIARegEnum, CIAReg> {
             case CIAREG_CRB:     return "CRB";
         }
         return "???";
+    }
+    
+    static const char *help(CIAReg value)
+    {
+        return "";
     }
 };
 

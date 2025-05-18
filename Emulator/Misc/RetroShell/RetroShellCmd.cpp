@@ -21,6 +21,70 @@ namespace vc64 {
 string RetroShellCmd::currentGroup;
 
 void
+RetroShellCmd::add(const RetroShellCmdDescriptor &descriptor)
+{
+    assert(!descriptor.tokens.empty());
+
+    // Cleanse the token list (convert { "aaa bbb" } into { "aaa", "bbb" }
+    auto tokens = util::split(descriptor.tokens, ' ');
+
+    // The last entry in the token list is the command name
+    auto name = tokens.back();
+    
+    // Determine how the token is displayed in help messages
+    auto helpName = descriptor.help.size() > 1 ? descriptor.help[1] : name;
+
+    // Traversing the command tree
+    RetroShellCmd *node = seek(std::vector<string> { tokens.begin(), tokens.end() - 1 });
+    assert(node != nullptr);
+    
+    // Create the instruction
+    RetroShellCmd cmd;
+    cmd.name = name;
+    cmd.fullName = (node->fullName.empty() ? "" : node->fullName + " ") + helpName;
+    cmd.helpName = helpName;
+    cmd.groupName = currentGroup;
+    cmd.requiredArgs = descriptor.args;
+    cmd.optionalArgs = descriptor.extra;
+    cmd.help = descriptor.help;
+    cmd.callback = descriptor.func;
+    cmd.param = descriptor.values;
+    cmd.hidden = descriptor.hidden; //  || descriptor.help.empty();
+
+    if (!cmd.hidden) currentGroup = "";
+
+    // Register the instruction at the proper location
+    node->subCommands.push_back(cmd);
+}
+
+void
+RetroShellCmd::clone(const std::vector<string> &tokens,
+                     const string &alias,
+                     const std::vector<isize> &values)
+{
+    assert(!tokens.empty());
+
+    // Find the command to clone
+    RetroShellCmd *cmd = seek(std::vector<string> { tokens.begin(), tokens.end() });
+    assert(cmd != nullptr);
+    
+    // Assemble the new token list
+    auto newTokens = std::vector<string> { tokens.begin(), tokens.end() - 1 };
+    newTokens.push_back(alias);
+    
+    // Create the instruction
+    add(RetroShellCmdDescriptor {
+        
+        .tokens = newTokens,
+        .hidden = true,
+        .args   = cmd->requiredArgs,
+        .extra  = cmd->optionalArgs,
+        .func   = cmd->callback,
+        .values = values
+    });
+}
+
+void
 RetroShellCmd::add(const std::vector<string> &tokens,
              const string &help,
              RetroShellCallback func, long param)

@@ -49,6 +49,11 @@ struct RecStateEnum : util::Reflection<RecStateEnum, RecState> {
         }
         return "???";
     }
+    
+    static const char *help(RecState value)
+    {
+        return "";
+    }
 };
 
 

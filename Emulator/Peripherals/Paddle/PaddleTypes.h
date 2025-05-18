@@ -48,6 +48,11 @@ struct PaddleOrientationEnum : util::Reflection<PaddleOrientationEnum, PaddleOri
         }
         return "???";
     }
+    
+    static const char *help(PaddleOrientation value)
+    {
+        return "";
+    }
 };
 
 //

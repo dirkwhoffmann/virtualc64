@@ -217,6 +217,11 @@ struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
         }
         return "???";
     }
+    
+    static const char *help(ErrorCode value)
+    {
+        return "";
+    }
 };
 
 }

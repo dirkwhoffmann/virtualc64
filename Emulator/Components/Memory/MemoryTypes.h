@@ -58,6 +58,11 @@ struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
         }
         return "???";
     }
+    
+    static const char *help(MemoryType value)
+    {
+        return "";
+    }
 };
 
 /// Ram startup pattern
@@ -89,6 +94,11 @@ struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
         }
         return "???";
     }
+    
+    static const char *help(RamPattern value)
+    {
+        return "";
+    }
 };
 
 enum_long(ROM_TYPE)
@@ -117,6 +127,11 @@ struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
         }
         return "???";
     }
+    
+    static const char *help(RomType value)
+    {
+        return "";
+    }
 };
 
 enum_long(ROM_VENDOR)
@@ -142,6 +157,11 @@ struct RomVendorEnum : util::Reflection<RomVendorEnum, RomVendor> {
             case ROM_VENDOR_OTHER:      return "OTHER";
         }
         return "???";
+    }
+    
+    static const char *help(RomVendor value)
+    {
+        return "";
     }
 };
 

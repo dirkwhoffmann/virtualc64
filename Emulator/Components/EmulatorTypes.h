@@ -207,7 +207,7 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
         return "???";
     }
 
-    static const char *help(long value)
+    static const char *help(DebugFlag value)
     {
         switch (value) {
 
@@ -252,7 +252,8 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
             case FLAG_SID_EXEC:                 return "Sound Interface Device (Execution)";
             case FLAG_SIDREG_DEBUG:             return "Sound Interface Device (Registers)";
             case FLAG_AUDBUF_DEBUG:             return "Audio buffers";
-
+            case FLAG_AUDVOL_DEBUG:             return "Audio volumes";
+                
                 // Drive
             case FLAG_VIA_DEBUG:                return "Versatile Interface Adapter";
             case FLAG_PIA_DEBUG:                return "Peripheral Interface Adapter";
@@ -295,7 +296,7 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
             case FLAG_FORCE_NO_FFMPEG:          return "";
         }
         return "???";
-    }
+    }    
 };
 
 

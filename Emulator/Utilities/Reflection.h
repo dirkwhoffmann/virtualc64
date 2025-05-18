@@ -56,6 +56,18 @@ template <class T, typename E> struct Reflection {
         return p;
     }
     
+    // Collects all elements
+    static constexpr std::vector<E> elements(std::function<bool(E)> filter = [](E){ return true; }) {
+        
+        std::vector<E> result;
+        
+        for (long i = T::minVal; i <= T::maxVal; i += isBitField() ? i : 1) {
+            if (filter(E(i))) result.push_back(E(i));
+        }
+        
+        return result;
+    }
+    
     // Returns a textual representation for a bit mask
     static const char *mask(isize mask) {
 

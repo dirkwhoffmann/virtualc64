@@ -52,6 +52,11 @@ struct SIDRevisionEnum : util::Reflection<SIDRevisionEnum, SIDRevision> {
         }
         return "???";
     }
+    
+    static const char *help(SIDRevision value)
+    {
+        return "";
+    }
 };
 
 /// SID backend
@@ -74,6 +79,11 @@ struct SIDEngineEnum : util::Reflection<SIDEngineEnum, SIDEngine> {
             case SIDENGINE_RESID:    return "RESID";
         }
         return "???";
+    }
+    
+    static const char *help(SIDEngine value)
+    {
+        return "";
     }
 };
 
@@ -103,6 +113,11 @@ struct SamplingMethodEnum : util::Reflection<SamplingMethodEnum, SamplingMethod>
             case SAMPLING_RESAMPLE_FASTMEM:  return "RESAMPLE_FASTMEM";
         }
         return "???";
+    }
+    
+    static const char *help(SamplingMethod value)
+    {
+        return "";
     }
 };
 

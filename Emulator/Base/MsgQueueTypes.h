@@ -211,6 +211,11 @@ struct MsgTypeEnum : util::Reflection<MsgTypeEnum, MsgType> {
         }
         return "???";
     }
+    
+    static const char *help(MsgType value)
+    {
+        return "";
+    }
 };
 
 //

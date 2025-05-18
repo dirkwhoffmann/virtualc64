@@ -116,6 +116,11 @@ struct VICIIRevisionEnum : util::Reflection<VICIIRevisionEnum, VICIIRevision> {
         }
         return "???";
     }
+    
+    static const char *help(VICIIRevision value)
+    {
+        return "";
+    }    
 };
 
 /// Glue logic implementation
@@ -140,6 +145,11 @@ struct GlueLogicEnum : util::Reflection<GlueLogicEnum, GlueLogic> {
             case GLUE_LOGIC_IC:        return "IC";
         }
         return "???";
+    }
+    
+    static const char *help(GlueLogic value)
+    {
+        return "";
     }
 };
 
@@ -170,6 +180,11 @@ struct ScreenGeometryEnum : util::Reflection<ScreenGeometryEnum, ScreenGeometry>
             case SCREEN_GEOMETRY_24_38:  return "24_38";
         }
         return "???";
+    }
+    
+    static const char *help(ScreenGeometry value)
+    {
+        return "";
     }
 };
 
@@ -208,6 +223,11 @@ struct DisplayModeEnum : util::Reflection<DisplayModeEnum, DisplayMode> {
         }
         return "???";
     }
+    
+    static const char *help(DisplayMode value)
+    {
+        return "";
+    }
 };
 
 enum_long(COLSRC)
@@ -245,6 +265,11 @@ struct ColorSourceEnum : util::Reflection<ColorSourceEnum, ColorSource> {
             case COLSRC_ZERO:     return "ZERO";
         }
         return "???";
+    }
+    
+    static const char *help(ColorSource value)
+    {
+        return "";
     }
 };
 

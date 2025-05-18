@@ -43,18 +43,22 @@ protected:
     virtual i64 parse(const string &arg) { return 0; }
 
     // Data providers
+    virtual std::vector <std::pair<string,long>> pairs() { return {}; }
     virtual string asPlainString() { return asString(); }
     virtual string asString() = 0;
     virtual string keyList() = 0;
     virtual string argList() = 0;
+    virtual string help(isize item) { return ""; }
 
 public:
 
     static i64 parse(Option opt, const string &arg);
+    static std::vector<std::pair<string, long>> pairs(Option opt);
     static string asPlainString(Option opt, i64 arg);
     static string asString(Option opt, i64 arg);
     static string keyList(Option opt);
     static string argList(Option opt);
+    static string help(Option opt, isize item);
 };
 
 class BoolParser : public OptionParser {
@@ -95,15 +99,17 @@ public:
     virtual string argList() override { return "<value>"; }
 };
 
-template <typename T>
+template <typename T, typename E>
 class EnumParser : public OptionParser {
 
     using OptionParser::OptionParser;
 
     virtual i64 parse(const string &s) override { return (arg = util::parseEnum<T>(s)); }
+    std::vector <std::pair<string,long>> pairs() override { return T::pairs(); }
     virtual string asString() override { return T::key(isize(arg)); }
     virtual string keyList() override { return T::keyList(); }
     virtual string argList() override { return T::argList(); }
+    virtual string help(isize item) override { return T::help(E(item)); }
 };
 
 }

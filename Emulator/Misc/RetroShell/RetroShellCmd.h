@@ -21,7 +21,6 @@ namespace vc64 {
 
 class RetroShell;
 
-// typedef std::vector<string> Arguments;
 using Arguments = std::vector<string>;
 using RetroShellCallback = std::function<void (Arguments&, const std::vector<isize> &values)>;
 
@@ -45,6 +44,17 @@ static const std::string src        = "<source>";
 static const std::string volume     = "<volume>";
 static const std::string string     = "<string>";
 
+};
+
+struct RetroShellCmdDescriptor {
+    
+    const std::vector<string> &tokens = {};
+    bool hidden = false;
+    const std::vector<string> &args = {};
+    const std::vector<string> &extra = {};
+    const std::vector<string> help = {};
+    RetroShellCallback func = nullptr;
+    const std::vector<isize> &values = {};
 };
 
 struct RetroShellCmd {
@@ -91,6 +101,16 @@ struct RetroShellCmd {
     //
 
     // Creates a new node in the command tree
+    void add(const RetroShellCmdDescriptor &descriptor);
+    
+    // Registers an alias name for an existing command
+    void clone(const std::vector<string> &tokens,
+               const string &alias,
+               const std::vector<isize> &values = { });
+    
+    /* BEGIN DEPRECATED */
+    
+    // Creates a new node in the command tree
     void add(const std::vector<string> &tokens,
              const string &help,
              RetroShellCallback func = nullptr, long param = 0);
@@ -129,6 +149,8 @@ struct RetroShellCmd {
                const std::vector<string> &tokens,
                const string &help,
                long param = 0);
+
+    /* END DEPRECATED */
 
     // Returns arguments counts
     isize minArgs() const { return isize(requiredArgs.size()); }

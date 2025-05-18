@@ -48,6 +48,11 @@ struct CommunicationDeviceEnum : util::Reflection<CommunicationDeviceEnum, Commu
         }
         return "???";
     }
+    
+    static const char *help(CommunicationDevice value)
+    {
+        return "";
+    }
 };
 #endif
 

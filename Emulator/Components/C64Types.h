@@ -59,6 +59,11 @@ struct C64ModelEnum : util::Reflection<C64ModelEnum, C64Model> {
         }
         return "???";
     }
+    
+    static const char *help(C64Model value)
+    {
+        return "";
+    }
 };
 
 enum_long(WARP_MODE)
@@ -84,6 +89,11 @@ struct WarpModeEnum : util::Reflection<WarpModeEnum, WarpMode>
             case WARP_ALWAYS:   return "WARP_ALWAYS";
         }
         return "???";
+    }
+    
+    static const char *help(WarpMode value)
+    {
+        return "";
     }
 };
 
@@ -149,6 +159,11 @@ struct EventSlotEnum : util::Reflection<EventSlotEnum, EventSlot>
             case SLOT_COUNT:    return "???";
         }
         return "???";
+    }
+    
+    static const char *help(EventSlot value)
+    {
+        return "";
     }
 };
 

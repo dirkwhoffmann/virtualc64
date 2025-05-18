@@ -131,6 +131,11 @@ struct DiskTypeEnum : util::Reflection<DiskTypeEnum, DiskType> {
         }
         return "???";
     }
+    
+    static const char *help(DiskType value)
+    {
+        return "";
+    }
 };
 
 enum_long(CBM_FILE_TYPE)
@@ -158,6 +163,11 @@ struct CBMFileTypeEnum : util::Reflection<CBMFileTypeEnum, CBMFileType> {
             case CBM_FILE_REL:    return "REL";
         }
         return "???";
+    }
+    
+    static const char *help(CBMFileType value)
+    {
+        return "";
     }
 };
 

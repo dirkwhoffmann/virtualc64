@@ -200,6 +200,11 @@ struct CartridgeTypeEnum : util::Reflection<CartridgeTypeEnum, CartridgeType> {
         }
         return "???";
     }
+    
+    static const char *help(CartridgeType value)
+    {
+        return "";
+    }
 };
 
 enum_long(FLASH_STATE)
@@ -245,6 +250,11 @@ struct FlashStateEnum : util::Reflection<FlashStateEnum, FlashState> {
             case FLASH_SECTOR_ERASE_SUSPEND: return "SECTOR_ERASE_SUSPEND";
         }
         return "???";
+    }
+    
+    static const char *help(FlashState value)
+    {
+        return "";
     }
 };
 

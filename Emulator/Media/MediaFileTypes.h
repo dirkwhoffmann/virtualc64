@@ -69,6 +69,11 @@ struct FileTypeEnum : util::Reflection<FileTypeEnum, FileType> {
         }
         return "???";
     }
+    
+    static const char *help(FileType value)
+    {
+        return "";
+    }
 };
 
 enum_long(TAP_VERSION)
@@ -92,6 +97,11 @@ struct TAPVersionEnum : util::Reflection<TAPVersionEnum, TAPVersion> {
             case TAP_VERSION_ADVANCED:  return "ADVANCED";
             default:                    return "???";
         }
+    }
+    
+    static const char *help(TAPVersion value)
+    {
+        return "";
     }
 };
 

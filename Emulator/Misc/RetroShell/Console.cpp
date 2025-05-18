@@ -873,11 +873,83 @@ Console::registerComponent(CoreComponent &c, RetroShellCmd &root)
     assert(cmd != nullptr);
 
     // Register a command with the proper name
-    root.add({cmd}, c.description());
+    if (c.shellHelp().empty()) {
+        root.add( { .tokens = { cmd }, .help = { c.description() } } );
+    } else {
+        root.add( {.tokens = { cmd }, .help = c.shellHelp() } );
+    }
 
-    // If this component has options...
+    // In case this component has options...
     if (auto &options = c.getOptions(); !options.empty()) {
+        
+        // Register a command for querying the current configuration
+        root.add({
+            
+            .tokens = { cmd, ""},
+            .help   = { "Display the current configuration" },
+            .func   = [this, &c] (Arguments& argv, const std::vector<isize> &values) {
+                
+                retroShell.commander.dump(c, Category::Config);
+            }
+        });
 
+        // Register a setter for every option
+        root.add({
+            
+            .tokens = { cmd, "set" },
+            .help   = { "Configure the component" }
+        });
+        
+        for (auto &opt : options) {
+
+            // Get the key value pairs
+            auto pairs = OptionParser::pairs(opt);
+            
+            if (pairs.empty()) {
+                
+                // The argument is not an enum. Register a single setter
+                root.add({
+                    
+                    .tokens = { cmd, "set", OptionEnum::key(opt) },
+                    .args   = { OptionParser::argList(opt) },
+                    .help   = { OptionEnum::help(opt) },
+                    .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                        
+                        emulator.set(Option(values[0]), argv[0], { values[1] });
+                        // msgQueue.put(MSG_CONFIG);
+                        
+                    }, .values = { isize(opt), c.objid }
+                });
+
+            } else {
+                
+                // Register a setter for every enum
+                root.add({
+                    
+                    .tokens = { cmd, "set", OptionEnum::key(opt) },
+                    .args   = { OptionParser::argList(opt) },
+                    .help   = { OptionEnum::help(opt) }
+                });
+                
+                for (const auto& [first, second] : pairs) {
+                    
+                    auto help = OptionParser::help(opt, second);
+                    root.add({
+                        
+                        .tokens = { cmd, "set", OptionEnum::key(opt), first },
+                        .help   = { help.empty() ? "Set to " + first : help },
+                        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                            
+                            emulator.set(Option(values[0]), values[1], { values[2] });
+                            // msgQueue.put(MSG_CONFIG);
+                            
+                        },  .values = { isize(opt), isize(second), c.objid }
+                    });
+                }
+            }
+        }
+
+        /*
         // ...register a command for querying the current configuration
         root.add({cmd, ""},
                  "Display the current configuration",
@@ -899,6 +971,7 @@ Console::registerComponent(CoreComponent &c, RetroShellCmd &root)
 
             }, HI_W_LO_W(opt, c.objid));
         }
+        */
     }
 
     return cmd;

@@ -48,6 +48,11 @@ struct CRTModeEnum : util::Reflection<CRTModeEnum, CRTMode> {
         }
         return "???";
     }
+    
+    static const char *help(CRTMode value)
+    {
+        return "";
+    }
 };
 
 //

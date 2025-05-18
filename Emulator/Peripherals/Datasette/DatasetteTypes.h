@@ -42,6 +42,11 @@ struct DatasetteModelEnum : util::Reflection<DatasetteModelEnum, DatasetteModel>
         }
         return "???";
     }
+    
+    static const char *help(DatasetteModel value)
+    {
+        return "";
+    }
 };
 
 //

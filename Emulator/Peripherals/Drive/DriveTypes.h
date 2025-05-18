@@ -68,6 +68,11 @@ struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveType> {
         }
         return "???";
     }
+    
+    static const char *help(DriveType value)
+    {
+        return "";
+    }
 };
 
 enum_long(DRVRAM)
@@ -93,6 +98,11 @@ struct DriveRamEnum : util::Reflection<DriveRamEnum, DriveRam> {
             case DRVRAM_6000_7FFF:  return "DRVRAM_6000_7FFF";
         }
         return "???";
+    }
+    
+    static const char *help(DriveRam value)
+    {
+        return "";
     }
 };
 
@@ -128,6 +138,11 @@ struct DrvMemTypeEnum : util::Reflection<DrvMemTypeEnum, DrvMemType> {
         }
         return "???";
     }
+    
+    static const char *help(DrvMemType value)
+    {
+        return "";
+    }
 };
 
 enum_long(DISK_INSERTION_STATUS)
@@ -155,6 +170,11 @@ struct InsertionStatusEnum : util::Reflection<InsertionStatusEnum, InsertionStat
             case DISK_PARTIALLY_EJECTED:       return "PARTIALLY_EJECTED";
         }
         return "???";
+    }
+    
+    static const char *help(InsertionStatus value)
+    {
+        return "";
     }
 };
 

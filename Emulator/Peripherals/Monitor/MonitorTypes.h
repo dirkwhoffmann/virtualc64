@@ -52,6 +52,11 @@ struct PaletteEnum : util::Reflection<PaletteEnum, Palette> {
         }
         return "???";
     }
+    
+    static const char *help(Palette value)
+    {
+        return "";
+    }
 };
 
 /// Pixel upscaler
@@ -78,6 +83,11 @@ struct UpscalerEnum : util::Reflection<UpscalerEnum, Upscaler> {
             case UPSCALER_XBR_4X:   return "XBR_4X";
         }
         return "???";
+    }
+    
+    static const char *help(Upscaler value)
+    {
+        return "";
     }
 };
 
@@ -110,6 +120,11 @@ struct DotmaskEnum : util::Reflection<DotmaskEnum, Dotmask> {
         }
         return "???";
     }
+    
+    static const char *help(Dotmask value)
+    {
+        return "";
+    }
 };
 
 /// Scanlines
@@ -136,6 +151,11 @@ struct ScanlinesEnum : util::Reflection<ScanlinesEnum, Scanlines> {
             case SCANLINES_SUPERIMPOSE:     return "SUPERIMPOSE";
         }
         return "???";
+    }
+    
+    static const char *help(Scanlines value)
+    {
+        return "";
     }
 };
 

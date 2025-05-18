@@ -52,6 +52,11 @@ struct MouseModelEnum : util::Reflection<MouseModelEnum, MouseModel> {
         }
         return "???";
     }
+    
+    static const char *help(MouseModel value)
+    {
+        return "";
+    }
 };
 
 //
