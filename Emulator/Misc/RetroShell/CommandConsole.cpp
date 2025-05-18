@@ -361,7 +361,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     root.add({
         
-        .tokens = { cmd, "load" },
+        .tokens = { cmd, "load", "rom" },
         .args   = { Arg::path },
         .help   = { "Loads a Rom image" },
         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
@@ -507,32 +507,47 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     cmd = registerComponent(expansionPort);
 
-    root.add({cmd, "attach"},
-             "Attaches a cartridge");
-
-    root.add({cmd, "attach", "cartridge"}, { Arg::path },
-             "Attaches a cartridge from a CRT file",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        auto path = argv.front();
-        if (!util::fileExists(path)) throw Error(VC64ERROR_FILE_NOT_FOUND, path);
-        expansionPort.attachCartridge(path);
+    root.add({
+        
+        .tokens = { cmd, "attach" },
+        .help   = { "Attaches a cartridge" }
     });
 
-    root.add({cmd, "attach", "reu"}, { "<KB>" },
-             "Attaches a REU expansion cartridge",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        expansionPort.attachReu(parseNum(argv[0]));
+    root.add({
+        
+        .tokens = { cmd, "attach", "cartridge" },
+        .args   = { Arg::path },
+        .help   = { "Attaches a cartridge from a CRT file" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            auto path = argv.front();
+            if (!util::fileExists(path)) throw Error(VC64ERROR_FILE_NOT_FOUND, path);
+            expansionPort.attachCartridge(path);
+        }
     });
 
-    root.add({cmd, "attach", "georam"}, { "<KB>" },
-             "Attaches a GeoRAM expansion cartridge",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        expansionPort.attachGeoRam(parseNum(argv[0]));
+    root.add({
+        
+        .tokens = { cmd, "attach", "reu" },
+        .args   = { "<KB>" },
+        .help   = { "Attaches a REU expansion cartridge" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            expansionPort.attachReu(parseNum(argv[0]));
+        }
     });
 
+    root.add({
+        
+        .tokens = { cmd, "attach", "georam" },
+        .args   = { "<KB>" },
+        .help   = { "Attaches a GeoRAM expansion cartridge" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            expansionPort.attachGeoRam(parseNum(argv[0]));
+        }
+    });
+    
 
     //
     // Peripherals
@@ -554,42 +569,63 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     cmd = registerComponent(keyboard);
 
-    root.add({cmd, "press"}, { Arg::value },
-             "Presses a key",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        keyboard.press(C64Key(parseNum(argv[0])));
+    root.add({
+        
+        .tokens = { cmd, "press" },
+        .args   = { Arg::value },
+        .help   = { "Presses a key" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            keyboard.press(C64Key(parseNum(argv[0])));
+        }
     });
 
-    root.add({cmd, "release"}, { Arg::value },
-             "Presses a key",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        keyboard.release(C64Key(parseNum(argv[0])));
+    root.add({
+        
+        .tokens = { cmd, "release" },
+        .args   = { Arg::value },
+        .help   = { "Releases a key" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            keyboard.release(C64Key(parseNum(argv[0])));
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { cmd, "type" },
+        .help   = { "Types text on the keyboard" }
+    });
+    
+    root.add({
+        
+        .tokens = { cmd, "type", "text" },
+        .args   = { Arg::string },
+        .help   = { "Types text on the keyboard" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            keyboard.autoType(argv.front());
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { cmd, "type", "load" },
+        .help   = { "Types \"LOAD\"*\",8,1" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            keyboard.autoType("load \"*\",8,1\n");
+        }
     });
 
-    root.add({cmd, "type"},
-             "Types text on the keyboard");
-
-    root.add({cmd, "type", "text"}, { Arg::string },
-             "Types arbitrary text",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        keyboard.autoType(argv.front());
-    });
-
-    root.add({cmd, "type", "load"},
-             "Types \"LOAD\"*\",8,1",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        keyboard.autoType("load \"*\",8,1\n");
-    });
-
-    root.add({cmd, "type", "run"},
-             "Types RUN",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        keyboard.autoType("run\n");
+    root.add({
+        
+        .tokens = { cmd, "type", "run" },
+        .help   = { "Types RUN" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            keyboard.autoType("run\n");
+        }
     });
 
 
@@ -606,89 +642,119 @@ CommandConsole::initCommands(RetroShellCmd &root)
     //
 
     for (isize i = 0; i <= 1; i++) {
-
+        
         if (i == 0) cmd = registerComponent(port1.joystick);
         if (i == 1) cmd = registerComponent(port2.joystick);
-
-        root.add({cmd, "press"},
-                 "Presses the joystick button",
-                 [this](Arguments& argv, const std::vector<isize> &values) {
-
-            auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
-            port.joystick.trigger(PRESS_FIRE);
-
-        }, i);
-
-        root.add({cmd, "unpress"},
-                 "Releases a joystick button",
-                 [this](Arguments& argv, const std::vector<isize> &values) {
-
-            auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
-            port.joystick.trigger(RELEASE_FIRE);
-
-        }, i);
-
-        root.add({cmd, "pull"},
-                 "Pulls the joystick");
-
-        root.add({cmd, "pull", "left"},
-                 "Pulls the joystick left",
-                 [this](Arguments& argv, const std::vector<isize> &values) {
-
-            auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
-            port.joystick.trigger(PULL_LEFT);
-
-        }, i);
-
-        root.add({cmd, "pull", "right"},
-                 "Pulls the joystick right",
-                 [this](Arguments& argv, const std::vector<isize> &values) {
-
-            auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
-            port.joystick.trigger(PULL_RIGHT);
-
-        }, i);
-
-        root.add({cmd, "pull", "up"},
-                 "Pulls the joystick up",
-                 [this](Arguments& argv, const std::vector<isize> &values) {
-
-            auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
-            port.joystick.trigger(PULL_UP);
-
-        }, i);
-
-        root.add({cmd, "pull", "down"},
-                 "Pulls the joystick down",
-                 [this](Arguments& argv, const std::vector<isize> &values) {
-
-            auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
-            port.joystick.trigger(PULL_DOWN);
-
-        }, i);
-
-        root.add({cmd, "release"},
-                 "Release a joystick axis");
-
-        root.add({cmd, "release", "x"},
-                 "Releases the x-axis",
-                 [this](Arguments& argv, const std::vector<isize> &values) {
-
-            auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
-            port.joystick.trigger(RELEASE_X);
-
-        }, i);
-
-        root.add({cmd, "release", "y"},
-                 "Releases the y-axis",
-                 [this](Arguments& argv, const std::vector<isize> &values) {
-
-            auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
-            port.joystick.trigger(RELEASE_Y);
-
-        }, i);
+        
+        root.add({
+            
+            .tokens = { cmd, "press" },
+            .help   = { "Presses a joystick button" },
+            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                
+                auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
+                port.joystick.trigger(PRESS_FIRE);
+                
+            }, .values = {i}
+        });
+        
+        root.add({
+            
+            .tokens = { cmd, "unpress" },
+            .help   = { "Releases a joystick button" },
+            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                
+                auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
+                port.joystick.trigger(RELEASE_FIRE);
+                
+            }, .values = {i}
+        });
+        
+        root.add({
+            
+            .tokens = { cmd, "pull" },
+            .help   = { "Pulls the joystick" }
+        });
+        
+        root.add({
+            
+            .tokens = { cmd, "pull", "left" },
+            .help   = { "Pulls the joystick left" },
+            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                
+                auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
+                port.joystick.trigger(PULL_LEFT);
+                
+            }, .values = {i}
+        });
+        
+        root.add({
+            
+            .tokens = { cmd, "pull", "right" },
+            .help   = { "Pulls the joystick right" },
+            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                
+                auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
+                port.joystick.trigger(PULL_RIGHT);
+                
+            }, .values = {i}
+        });
+        
+        root.add({
+            
+            .tokens = { cmd, "pull", "up" },
+            .help   = { "Pulls the joystick up" },
+            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                
+                auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
+                port.joystick.trigger(PULL_UP);
+                
+            }, .values = {i}
+        });
+        
+        root.add({
+            
+            .tokens = { cmd, "pull", "down" },
+            .help   = { "Pulls the joystick down" },
+            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                
+                auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
+                port.joystick.trigger(PULL_DOWN);
+                
+            }, .values = {i}
+        });
+        
+        root.add({
+            
+            .tokens = { cmd, "release" },
+            .help   = { "Release a joystick axis" }
+        });
+        
+        root.add({
+            
+            .tokens = { cmd, "release", "x" },
+            .help   = { "Releases the x-axis" },
+            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                
+                auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
+                port.joystick.trigger(RELEASE_X);
+                
+            }, .values = {i}
+        });
+        
+        root.add({
+            
+            .tokens = { cmd, "release", "y" },
+            .help   = { "Releases the y-axis" },
+            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                
+                auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
+                port.joystick.trigger(RELEASE_Y);
+                
+            }, .values = {i}
+        });
     }
-
+    
 
     //
     // Peripherals (Paddles)
@@ -704,101 +770,133 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     cmd = registerComponent(datasette);
 
-    root.add({cmd, "connect"},
-             "Connects the datasette",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        emulator.set(OPT_DAT_CONNECT, true);
+    root.add({
+        
+        .tokens = { cmd, "connect" },
+        .help   = { "Connects the datasette" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            emulator.set(OPT_DAT_CONNECT, true);
+        }
     });
 
-    root.add({cmd, "disconnect"},
-             "Disconnects the datasette",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        emulator.set(OPT_DAT_CONNECT, false);
+    root.add({
+        
+        .tokens = { cmd, "disconnect" },
+        .help   = { "Disconnects the datasette" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            emulator.set(OPT_DAT_CONNECT, false);
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { cmd, "rewind" },
+        .help   = { "Rewinds the tape" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            datasette.rewind();
+        }
     });
 
-    root.add({cmd, "rewind"},
-             "Rewinds the tape",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        datasette.rewind();
+    root.add({
+        
+        .tokens = { cmd, "rewind", "to" },
+        .args   = { Arg::value },
+        .help   = { "Rewinds the tape to a specific position" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            datasette.rewind(parseNum(argv[0]));
+        }
     });
-
-    root.add({cmd, "rewind", "to"}, { Arg::value },
-             "Rewinds the tape to a specific position",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        datasette.rewind(parseNum(argv[0]));
-    });
-
+    
 
     //
     // Peripherals (Drives)
     //
 
     for (isize i = 0; i < 2; i++) {
-
+        
         if (i == 0) cmd = registerComponent(drive8);
         if (i == 1) cmd = registerComponent(drive9);
-
-        root.add({cmd, "bankmap"},
-                 "Displays the memory layout",
-                 [this](Arguments& argv, const std::vector<isize> &values) {
-
-            auto &drive = values.front() ? drive9 : drive8;
-            dump(drive, Category::BankMap);
-
-        }, i);
-
-        root.add({cmd, "connect"},
-                 "Connects the drive",
-                 [this](Arguments& argv, const std::vector<isize> &values) {
-
-            auto id = values.front() ? DRIVE9 : DRIVE8;
-            emulator.set(OPT_DRV_CONNECT, true, { id });
-
-        }, i);
-
-        root.add({cmd, "disconnect"},
-                 "Disconnects the drive",
-                 [this](Arguments& argv, const std::vector<isize> &values) {
-
-            auto id = values.front() ? DRIVE9 : DRIVE8;
-            emulator.set(OPT_DRV_CONNECT, false, { id });
-
-        }, i);
-
-        root.add({cmd, "eject"},
-                 "Ejects a floppy disk",
-                 [this](Arguments& argv, const std::vector<isize> &values) {
-
-            auto &drive = values.front() ? drive9 : drive8;
-            drive.ejectDisk();
-
-        }, i);
-
-        root.add({cmd, "insert"}, { Arg::path },
-                 "Inserts a floppy disk",
-                 [this](Arguments& argv, const std::vector<isize> &values) {
-
-            auto path = argv.front();
-            if (!util::fileExists(path)) throw Error(VC64ERROR_FILE_NOT_FOUND, path);
-
-            auto &drive = values.front() ? drive9 : drive8;
-            drive.insertDisk(path, false);
-
-        }, i);
-
-        root.add({cmd, "newdisk"}, { DOSTypeEnum::argList() },
-                 "Inserts a new blank disk",
-                 [this](Arguments& argv, const std::vector<isize> &values) {
-
-            auto type = util::parseEnum <DOSType, DOSTypeEnum> (argv.front());
-            auto &drive = values.front() ? drive9 : drive8;
-            drive.insertNewDisk(type, "NEW DISK");
-
-        }, i);
+        
+        root.add({
+            
+            .tokens = { cmd, "bankmap" },
+            .help   = { "Displays the memory layout" },
+            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                
+                datasette.rewind(parseNum(argv[0]));
+                
+            }, .values = {i}
+        });
+        
+        root.add({
+            
+            .tokens = { cmd, "connect" },
+            .help   = { "Connects the drive" },
+            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                
+                auto id = values.front() ? DRIVE9 : DRIVE8;
+                emulator.set(OPT_DRV_CONNECT, true, { id });
+                
+            }, .values = {i}
+        });
+        
+        root.add({
+            
+            .tokens = { cmd, "disconnect" },
+            .help   = { "Disconnects the drive" },
+            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                
+                auto id = values.front() ? DRIVE9 : DRIVE8;
+                emulator.set(OPT_DRV_CONNECT, false, { id });
+                
+            }, .values = {i}
+        });
+        
+        root.add({
+            
+            .tokens = { cmd, "eject" },
+            .help   = { "Ejects a floppy disk" },
+            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                
+                auto &drive = values.front() ? drive9 : drive8;
+                drive.ejectDisk();
+                
+            }, .values = {i}
+        });
+        
+        root.add({
+            
+            .tokens = { cmd, "insert" },
+            .args   = { Arg::path },
+            .help   = { "Inserts a floppy disk" },
+            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                
+                auto path = argv.front();
+                if (!util::fileExists(path)) throw Error(VC64ERROR_FILE_NOT_FOUND, path);
+                
+                auto &drive = values.front() ? drive9 : drive8;
+                drive.insertDisk(path, false);
+                
+            }, .values = {i}
+        });
+        
+        root.add({
+            
+            .tokens = { cmd, "newdisk" },
+            .args   = { DOSTypeEnum::argList() },
+            .help   = { "Inserts a new blank disk" },
+            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                
+                auto type = util::parseEnum <DOSType, DOSTypeEnum> (argv.front());
+                auto &drive = values.front() ? drive9 : drive8;
+                drive.insertNewDisk(type, "NEW DISK");
+                
+            }, .values = {i}
+        });
     }
 
 
@@ -808,13 +906,17 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     cmd = registerComponent(userPort.rs232);
 
-    root.add({cmd, "send"}, {Arg::string},
-             "Feeds text into the RS232 adapter",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        userPort.rs232 << argv[0];
+    root.add({
+        
+        .tokens = { cmd, "send" },
+        .args   = { Arg::string },
+        .help   = { "Feeds text into the RS232 adapter" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            userPort.rs232 << argv[0];
+        },
     });
-
+    
 
     //
     // Miscellaneous
@@ -848,7 +950,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
             std::stringstream ss;
             c64.exportConfig(ss);
             *this << ss;
-        }
+        },
     });
     
     root.add({
@@ -868,38 +970,54 @@ CommandConsole::initCommands(RetroShellCmd &root)
     // Miscellaneous (Remote server)
     //
 
-    root.add({"server"}, "Remote connections");
-
-    root.add({"server", ""},
-             "Displays a server status summary",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(remoteManager, Category::State);
+    root.add({
+        
+        .tokens = { "server" },
+        .help   = { "Remote connections" }
     });
-
+    
+    root.add({
+        
+        .tokens = { "server", "" },
+        .help   = { "Displays a server status summary" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            dump(remoteManager, Category::State);
+        }
+    });
+    
     cmd = registerComponent(remoteManager.rshServer, root / "server");
 
-    root.add({"server", cmd, "start"},
-             "Starts the retro shell server",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        remoteManager.rshServer.start();
+    root.add({
+        
+        .tokens = { "server", cmd, "start" },
+        .help   = { "Starts the retro shell server" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            remoteManager.rshServer.start();
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { "server", cmd, "stop" },
+        .help   = { "Stops the retro shell server" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            remoteManager.rshServer.stop();
+        }
     });
 
-    root.add({"server", cmd, "stop"},
-             "Stops the retro shell server",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        remoteManager.rshServer.stop();
+    root.add({
+        
+        .tokens = { "server", cmd, "disconnect" },
+        .help   = { "Disconnects a client" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            remoteManager.rshServer.disconnect();
+        }
     });
-
-    root.add({"server", cmd, "disconnect"},
-             "Disconnects a client",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        remoteManager.rshServer.disconnect();
-    });
-
+    
 
     //
     // Miscellaneous (Recorder)
