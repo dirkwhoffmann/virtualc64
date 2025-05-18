@@ -772,90 +772,115 @@ Console::initCommands(RetroShellCmd &root)
 
     RetroShellCmd::currentGroup = "Shell commands";
 
-    root.add({"welcome"},
-             "", // Prints the welcome message
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        welcome();
+    root.add({
+        
+        .tokens = { "welcome" },
+        .hidden = true,
+        .help   = { "Prints the welcome message" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            welcome();
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { "." },
+        .help   = { "Enter or exit the debugger" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            retroShell.switchConsole();
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { "clear" },
+        .help   = { "Clear the console window" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            clear();
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { "close" },
+        .help   = { "Hide the console window" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            msgQueue.put(MSG_RSH_CLOSE);
+        }
     });
 
-    root.add({"printhelp"},
-             "", // Prints the help message
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        *this << '\n';
-        printHelp();
-        *this << '\n';
+    root.add({
+        
+        .tokens = { "help" },
+        .extra  = { Arg::command },
+        .help   = { "Print usage information" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            help(argv.empty() ? "" : argv.front());
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { "state" },
+        .hidden = true,
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            printState();
+        }
     });
 
-    root.add({"."},
-             "Enter or exit the debugger",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        retroShell.switchConsole();
+    root.add({
+        
+        .tokens = { "joshua" },
+        .hidden = true,
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            *this << "\nGREETINGS PROFESSOR HOFFMANN.\n";
+            *this << "THE ONLY WINNING MOVE IS NOT TO PLAY.\n";
+            *this << "HOW ABOUT A NICE GAME OF CHESS?\n\n";
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { "source" },
+        .args   = { Arg::path },
+        .help   = { "Process a command script" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            auto stream = std::ifstream(argv.front());
+                    if (!stream.is_open()) throw Error(VC64ERROR_FILE_NOT_FOUND, argv.front());
+                    retroShell.asyncExecScript(stream);
+        }
     });
 
-    root.add({"clear"},
-             "Clear the console window",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        clear();
+    root.add({
+             
+        .tokens = { "wait" },
+        .hidden = true,
+        .args   = { Arg::value, Arg::seconds },
+        .help   = { "Pause the execution of a command script" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            auto seconds = parseNum(argv[0]);
+            c64.scheduleRel<SLOT_RSH>(C64::sec(seconds), RSH_WAKEUP);
+            throw ScriptInterruption();
+        }
     });
-
-    root.add({"close"},
-             "Hide the console window",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        msgQueue.put(MSG_RSH_CLOSE);
-    });
-
-    root.add({"help"}, { }, {Arg::command},
-             "Print usage information",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        help(argv.empty() ? "" : argv.front());
-    });
-
-    root.add({"state"},
-             "", // Prints the welcome message
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        printState();
-    });
-
-
-    root.add({"joshua"},
-             "",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        *this << "\nGREETINGS PROFESSOR HOFFMANN.\n";
-        *this << "THE ONLY WINNING MOVE IS NOT TO PLAY.\n";
-        *this << "HOW ABOUT A NICE GAME OF CHESS?\n\n";
-    });
-
-    root.add({"source"}, {Arg::path},
-             "Process a command script",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        auto stream = std::ifstream(argv.front());
-        if (!stream.is_open()) throw Error(VC64ERROR_FILE_NOT_FOUND, argv.front());
-        retroShell.asyncExecScript(stream);
-    });
-
-    root.add({"wait"}, {Arg::value, Arg::seconds},
-             "", // Pause the execution of a command script",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        auto seconds = parseNum(argv[0]);
-        c64.scheduleRel<SLOT_RSH>(C64::sec(seconds), RSH_WAKEUP);
-        throw ScriptInterruption();
-    });
-
-    root.add({"shutdown"},
-             "Terminates the application",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        msgQueue.put(MSG_ABORT, 0);
+    
+    root.add({
+             
+        .tokens = { "shutdown" },
+        .help   = { "Terminates the application" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            msgQueue.put(MSG_ABORT, 0);
+        }
     });
 }
 

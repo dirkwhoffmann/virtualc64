@@ -84,6 +84,7 @@ RetroShellCmd::clone(const std::vector<string> &tokens,
     });
 }
 
+/*
 void
 RetroShellCmd::add(const std::vector<string> &tokens,
              const string &help,
@@ -191,6 +192,7 @@ RetroShellCmd::clone(const string &alias, const std::vector<string> &tokens, con
         cmd->callback,
         param);
 }
+*/
 
 const RetroShellCmd *
 RetroShellCmd::seek(const string& token) const

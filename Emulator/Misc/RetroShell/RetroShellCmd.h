@@ -110,6 +110,7 @@ struct RetroShellCmd {
     
     /* BEGIN DEPRECATED */
     
+    /*
     // Creates a new node in the command tree
     void add(const std::vector<string> &tokens,
              const string &help,
@@ -149,7 +150,7 @@ struct RetroShellCmd {
                const std::vector<string> &tokens,
                const string &help,
                long param = 0);
-
+    */
     /* END DEPRECATED */
 
     // Returns arguments counts

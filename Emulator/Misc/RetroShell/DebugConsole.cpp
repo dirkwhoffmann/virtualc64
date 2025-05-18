@@ -92,35 +92,6 @@ DebugConsole::initCommands(RetroShellCmd &root)
     Console::initCommands(root);
 
     //
-    // Debug variables
-    //
-
-    root.add({"debug"}, "Debug variables");
-
-    root.add({"debug", ""}, {},
-             "Display all debug variables",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(emulator, Category::Debug);
-    });
-
-    if (debugBuild) {
-
-        for (auto i : DebugFlagEnum::elements()) {
-        // for (isize i = DebugFlagEnum::minVal; i < DebugFlagEnum::maxVal; i++) {
-
-            root.add({"debug", DebugFlagEnum::key(i)}, { Arg::boolean },
-                     DebugFlagEnum::help(i),
-                     [](Arguments& argv, const std::vector<isize> &values) {
-
-                Emulator::setDebugVariable(DebugFlag(values.front()), util::parseBool(argv[0]));
-
-            }, i);
-        }
-    }
-
-
-    //
     // Program execution
     //
 
