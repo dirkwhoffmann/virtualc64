@@ -77,7 +77,6 @@ static const char *smokeTestScript[] = {
     "c64 init NTSC",
     "c64 init NTSC_II",
     "c64 init NTSC_OLD",
-    "c64 diff",
 
     "memory",
     "memory set INIT_PATTERN VICE",
@@ -352,6 +351,9 @@ static const char *smokeTestScript[] = {
     "rs232 set DEVICE LOOPBACK",
     "rs232 set DEVICE RETROSHELL",
     "rs232 set BAUD 300",
+
+    "config",
+    "config diff",
 
     "host",
     "host set REFRESH_RATE 60",

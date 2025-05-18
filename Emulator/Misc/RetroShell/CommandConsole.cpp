@@ -128,6 +128,8 @@ CommandConsole::initCommands(RetroShellCmd &root)
 
     RetroShellCmd::currentGroup = "Regression testing";
 
+    auto cmd = registerComponent(regressionTester);
+    
     root.add({
         
         .tokens = { "regression" },
@@ -286,7 +288,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
     // Components (C64)
     //
 
-    auto cmd = registerComponent(c64);
+    cmd = registerComponent(c64);
 
     root.add({
         
@@ -297,16 +299,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
             dump(emulator, Category::Defaults);
         }
     });
-    
-    /*
-    root.add({cmd, "defaults"},
-             "Display the user defaults storage",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        dump(emulator, Category::Defaults);
-    });
-    */
-    
+        
     root.add({
         
         .tokens = { cmd, "power" },
@@ -317,16 +310,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
             parseOnOff(argv[0]) ? emulator.run() : emulator.powerOff();
         }
     });
-   
-    /*
-    root.add({cmd, "power"}, { Arg::onoff },
-             "Switch the C64 on or off",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        parseOnOff(argv[0]) ? c64.emulator.run() : c64.emulator.powerOff();
-    });
-    */
-    
+       
     root.add({
         
         .tokens = { cmd, "reset" },
@@ -337,15 +321,6 @@ CommandConsole::initCommands(RetroShellCmd &root)
         }
     });
     
-    /*
-    root.add({cmd, "reset"},
-             "Perform a hard reset",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        c64.hardReset();
-    });
-    */
-
     root.add({
         
         .tokens = { cmd, "init" },
@@ -357,81 +332,92 @@ CommandConsole::initCommands(RetroShellCmd &root)
         }
     });
     
-    /*
-    root.add({cmd, "init"}, { C64ModelEnum::argList() },
-             "Initialize the emulator with factory defaults",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        emulator.set(parseEnum<C64Model, C64ModelEnum>(argv[0]));
-    });
-    */
-        
-    /*
-    root.add({cmd, "diff"},
-             "Reports all differences to the default configuration",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        std::stringstream ss;
-        c64.exportDiff(ss);
-        printf("ss = %s\n", ss.str().c_str());
-        retroShell << ss << '\n';
-    });
-    */
-
     //
     // Components (Memory)
     //
 
     cmd = registerComponent(mem);
+    
+    root.add({
+        
+        .tokens = { cmd, "flash" },
+        .args   = { Arg::path },
+        .help   = { "Flashes a file into memory" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            auto path = argv.front();
+            if (!util::fileExists(path)) throw Error(VC64ERROR_FILE_NOT_FOUND, path);
 
-    root.add({cmd, "flash"}, { Arg::path },
-             "Flash a file into memory",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        auto path = argv.front();
-        if (!util::fileExists(path)) throw Error(VC64ERROR_FILE_NOT_FOUND, path);
-
-        auto file = PRGFile(path);
-        c64.flash(file, 0);
+            auto file = PRGFile(path);
+            c64.flash(file, 0);
+        }
     });
 
-    root.add({cmd, "load"},
-             "Load memory contents from a file");
-
-    root.add({cmd, "load", "rom"}, { Arg::path },
-             "Load a Rom image from disk",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        c64.loadRom(argv.front());
+    root.add({
+        
+        .tokens = { cmd, "load" },
+        .help   = { "Loads memory contents from a file" }
     });
 
-    root.add({cmd, "load", "ram"}, { Arg::path, Arg::address },
-             "Load a chunk of RAM",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        fs::path path(argv[0]);
-        mem.debugger.load(path, parseAddr(argv[1]));
+    root.add({
+        
+        .tokens = { cmd, "load" },
+        .args   = { Arg::path },
+        .help   = { "Loads a Rom image" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            c64.loadRom(argv.front());
+        }
+    });
+    
+    root.add({
+        
+        .tokens = { cmd, "load", "ram" },
+        .args   = { Arg::path, Arg::address },
+        .help   = { "Loads a chunk of RAM" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            fs::path path(argv[0]);
+            mem.debugger.load(path, parseAddr(argv[1]));
+        }
     });
 
-    root.add({cmd, "load", "openroms"},
-             "Install MEGA65 OpenROMs",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        c64.installOpenRoms();
+    root.add({
+        
+        .tokens = { cmd, "load", "openroms" },
+        .args   = { Arg::path, Arg::address },
+        .help   = { "Installs the MEGA65 OpenROMs" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            c64.installOpenRoms();
+        }
     });
-
-    root.add({cmd, "save"},
-             "Save memory contents to a file");
-
-    root.add({cmd, "save", "ram"}, { Arg::path, Arg::address, Arg::count },
-             "Save a chunk of RAM",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        fs::path path(argv[0]);
-        mem.debugger.save(path, parseAddr(argv[1]), parseNum(argv[2]));
+    
+    root.add({
+        
+        .tokens = { cmd, "save" },
+        .help   = { "Save memory contents to a file" }
     });
-
-
+    
+    root.add({
+        
+        .tokens = { cmd, "save", "ram" },
+        .args   = { Arg::path, Arg::address, Arg::count },
+        .help   = { "Saves a chunk of RAM" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            
+            fs::path path(argv[0]);
+            mem.debugger.save(path, parseAddr(argv[1]), parseNum(argv[2]));
+        }
+    });
+    
+    //
+    // Components (CPU)
+    //
+    
+    cmd = registerComponent(cpu);
+    
+    
     //
     // Components (CIA)
     //
@@ -478,13 +464,6 @@ CommandConsole::initCommands(RetroShellCmd &root)
     cmd = registerComponent(sid1);
     cmd = registerComponent(sid2);
     cmd = registerComponent(sid3);
-
-
-    //
-    // Components (SIDBridge)
-    //
-
-    // cmd = registerComponent(sidBridge);
 
 
     //
