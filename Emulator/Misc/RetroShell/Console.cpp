@@ -429,7 +429,7 @@ Console::autoComplete(const string& userInput)
 void
 Console::autoComplete(Arguments &argv)
 {
-    Command *current = &getRoot();
+    RetroShellCmd *current = &getRoot();
     string prefix, token;
 
     for (auto it = argv.begin(); current && it != argv.end(); it++) {
@@ -555,7 +555,7 @@ Console::exec(const Arguments &argv, bool verbose)
     if (argv.empty()) return;
 
     // Seek the command in the command tree
-    Command *current = &getRoot(), *next;
+    RetroShellCmd *current = &getRoot(), *next;
     Arguments args = argv;
 
     while (!args.empty() && ((next = current->seek(args.front())) != nullptr)) {
@@ -582,7 +582,7 @@ Console::exec(const Arguments &argv, bool verbose)
 }
 
 void
-Console::usage(const Command& current)
+Console::usage(const RetroShellCmd& current)
 {
     *this << '\r' << "Usage: " << current.usage() << '\n';
 }
@@ -603,7 +603,7 @@ Console::help(const string& userInput)
 void
 Console::help(const Arguments &argv)
 {
-    Command *current = &getRoot();
+    RetroShellCmd *current = &getRoot();
     string prefix, token;
 
     for (auto &it : argv) {
@@ -614,7 +614,7 @@ Console::help(const Arguments &argv)
 }
 
 void
-Console::help(const Command& current)
+Console::help(const RetroShellCmd& current)
 {
     auto indent = string("    ");
 
@@ -759,13 +759,13 @@ Console::_dump(CoreObject &component, Category category)
 }
 
 void
-Console::initCommands(Command &root)
+Console::initCommands(RetroShellCmd &root)
 {
     //
     // Common commands
     //
 
-    Command::currentGroup = "Shell commands";
+    RetroShellCmd::currentGroup = "Shell commands";
 
     root.add({"welcome"},
              "", // Prints the welcome message
@@ -861,7 +861,7 @@ Console::registerComponent(CoreComponent &c)
 }
 
 const char *
-Console::registerComponent(CoreComponent &c, Command &root)
+Console::registerComponent(CoreComponent &c, RetroShellCmd &root)
 {
     // Get the shell name for this component
     auto cmd = c.shellName();

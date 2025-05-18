@@ -21,7 +21,9 @@ namespace vc64 {
 
 class RetroShell;
 
-typedef std::vector<string> Arguments;
+// typedef std::vector<string> Arguments;
+using Arguments = std::vector<string>;
+using RetroShellCallback = std::function<void(Arguments&, long)>;
 
 namespace Arg {
 

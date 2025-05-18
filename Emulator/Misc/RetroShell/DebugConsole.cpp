@@ -87,7 +87,7 @@ DebugConsole::pressReturn(bool shift)
 }
 
 void
-DebugConsole::initCommands(Command &root)
+DebugConsole::initCommands(RetroShellCmd &root)
 {
     Console::initCommands(root);
 
@@ -123,7 +123,7 @@ DebugConsole::initCommands(Command &root)
     // Program execution
     //
 
-    Command::currentGroup = "Program execution";
+    RetroShellCmd::currentGroup = "Program execution";
 
     root.add({"goto"}, { }, { Arg::value },
              std::pair <string, string>("g[oto]", "Goto address"),
@@ -214,7 +214,7 @@ DebugConsole::initCommands(Command &root)
     // Monitoring
     //
 
-    Command::currentGroup = "Monitoring";
+    RetroShellCmd::currentGroup = "Monitoring";
 
     root.add({"d"}, { }, { Arg::address },
              "Disassemble instructions",
@@ -322,7 +322,7 @@ DebugConsole::initCommands(Command &root)
     root.add({"?"},
              "Inspect a component");
 
-    Command::currentGroup = "Components";
+    RetroShellCmd::currentGroup = "Components";
 
     root.add({"?", "thread"},       "Emulator thread");
 
@@ -403,7 +403,7 @@ DebugConsole::initCommands(Command &root)
         dump(expansionPort, { Category::Config, Category::State });
     });
 
-    Command::currentGroup = "Peripherals";
+    RetroShellCmd::currentGroup = "Peripherals";
 
     cmd = keyboard.shellName();
     description = keyboard.description();
@@ -517,7 +517,7 @@ DebugConsole::initCommands(Command &root)
         dump(audioPort, { Category::Config, Category::State });
     });
 
-    Command::currentGroup = "Miscellaneous";
+    RetroShellCmd::currentGroup = "Miscellaneous";
 
     cmd = host.shellName();
     description = host.description();
@@ -531,7 +531,7 @@ DebugConsole::initCommands(Command &root)
     // Miscellaneous
     //
 
-    Command::currentGroup = "Miscellaneous";
+    RetroShellCmd::currentGroup = "Miscellaneous";
 
     root.add({"checksums"},
              "Displays checksum of various components",

@@ -11,17 +11,17 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Command.h"
+#include "RetroShellCmd.h"
 #include "StringUtils.h"
 #include <algorithm>
 #include <utility>
 
 namespace vc64 {
 
-string Command::currentGroup;
+string RetroShellCmd::currentGroup;
 
 void
-Command::add(const std::vector<string> &tokens,
+RetroShellCmd::add(const std::vector<string> &tokens,
              const string &help,
              std::function<void (Arguments&, long)> func, long param)
 {
@@ -29,7 +29,7 @@ Command::add(const std::vector<string> &tokens,
 }
 
 void
-Command::add(const std::vector<string> &tokens,
+RetroShellCmd::add(const std::vector<string> &tokens,
              std::pair<const string &, const string &> help,
              std::function<void (Arguments&, long)> func, long param)
 {
@@ -37,7 +37,7 @@ Command::add(const std::vector<string> &tokens,
 }
 
 void
-Command::add(const std::vector<string> &tokens,
+RetroShellCmd::add(const std::vector<string> &tokens,
              const std::vector<string> &arguments,
              const string &help,
              std::function<void (Arguments&, long)> func, long param)
@@ -46,7 +46,7 @@ Command::add(const std::vector<string> &tokens,
 }
 
 void
-Command::add(const std::vector<string> &tokens,
+RetroShellCmd::add(const std::vector<string> &tokens,
              const std::vector<string> &arguments,
              std::pair<const string &, const string &> help,
              std::function<void (Arguments&, long)> func, long param)
@@ -55,7 +55,7 @@ Command::add(const std::vector<string> &tokens,
 }
 
 void
-Command::add(const std::vector<string> &tokens,
+RetroShellCmd::add(const std::vector<string> &tokens,
              const std::vector<string> &requiredArgs,
              const std::vector<string> &optionalArgs,
              const string &help,
@@ -65,7 +65,7 @@ Command::add(const std::vector<string> &tokens,
 }
 
 void
-Command::add(const std::vector<string> &rawtokens,
+RetroShellCmd::add(const std::vector<string> &rawtokens,
              const std::vector<string> &requiredArgs,
              const std::vector<string> &optionalArgs,
              std::pair<const string &, const string &> help,
@@ -77,11 +77,11 @@ Command::add(const std::vector<string> &rawtokens,
     auto tokens = util::split(rawtokens, ' ');
 
     // Traverse the node tree
-    Command *cmd = seek(std::vector<string> { tokens.begin(), tokens.end() - 1 });
+    RetroShellCmd *cmd = seek(std::vector<string> { tokens.begin(), tokens.end() - 1 });
     assert(cmd != nullptr);
 
     // Create the instruction
-    Command d;
+    RetroShellCmd d;
     d.name = tokens.back();
     d.fullName = (cmd->fullName.empty() ? "" : cmd->fullName + " ") + help.first;
     d.groupName = currentGroup;
@@ -99,7 +99,7 @@ Command::add(const std::vector<string> &rawtokens,
 }
 
 void 
-Command::clone(const string &alias,
+RetroShellCmd::clone(const string &alias,
            const std::vector<string> &tokens,
            long param)
 {
@@ -107,12 +107,12 @@ Command::clone(const string &alias,
 }
 
 void
-Command::clone(const string &alias, const std::vector<string> &tokens, const string &help, long param)
+RetroShellCmd::clone(const string &alias, const std::vector<string> &tokens, const string &help, long param)
 {
     assert(!tokens.empty());
 
     // Find the command to clone
-    Command *cmd = seek(std::vector<string> { tokens.begin(), tokens.end() });
+    RetroShellCmd *cmd = seek(std::vector<string> { tokens.begin(), tokens.end() });
     assert(cmd != nullptr);
 
     // Assemble the new token list
@@ -128,8 +128,8 @@ Command::clone(const string &alias, const std::vector<string> &tokens, const str
         param);
 }
 
-const Command *
-Command::seek(const string& token) const
+const RetroShellCmd *
+RetroShellCmd::seek(const string& token) const
 {
     for (auto &it : subCommands) {
         if (it.name == token) return &it;
@@ -137,16 +137,16 @@ Command::seek(const string& token) const
     return nullptr;
 }
 
-Command *
-Command::seek(const string& token)
+RetroShellCmd *
+RetroShellCmd::seek(const string& token)
 {
-    return const_cast<Command *>(std::as_const(*this).seek(token));
+    return const_cast<RetroShellCmd *>(std::as_const(*this).seek(token));
 }
 
-const Command *
-Command::seek(const std::vector<string> &tokens) const
+const RetroShellCmd *
+RetroShellCmd::seek(const std::vector<string> &tokens) const
 {
-    const Command *result = this;
+    const RetroShellCmd *result = this;
     
     for (auto &it : tokens) {
         if ((result = result->seek(it)) == nullptr) break;
@@ -155,16 +155,16 @@ Command::seek(const std::vector<string> &tokens) const
     return result;
 }
 
-Command *
-Command::seek(const std::vector<string> &tokens)
+RetroShellCmd *
+RetroShellCmd::seek(const std::vector<string> &tokens)
 {
-    return const_cast<Command *>(std::as_const(*this).seek(tokens));
+    return const_cast<RetroShellCmd *>(std::as_const(*this).seek(tokens));
 }
 
-std::vector<const Command *>
-Command::filterPrefix(const string& prefix) const
+std::vector<const RetroShellCmd *>
+RetroShellCmd::filterPrefix(const string& prefix) const
 {
-    std::vector<const Command *> result;
+    std::vector<const RetroShellCmd *> result;
     auto uprefix = util::uppercased(prefix);
 
     for (auto &it : subCommands) {
@@ -178,14 +178,14 @@ Command::filterPrefix(const string& prefix) const
 }
 
 string
-Command::autoComplete(const string& token)
+RetroShellCmd::autoComplete(const string& token)
 {
     string result;
 
     auto matches = filterPrefix(token);
     if (!matches.empty()) {
         
-        const Command *first = matches.front();
+        const RetroShellCmd *first = matches.front();
         for (usize i = 0;; i++) {
 
             for (auto m: matches) {
@@ -201,7 +201,7 @@ Command::autoComplete(const string& token)
 }
 
 string
-Command::usage() const
+RetroShellCmd::usage() const
 {
     string arguments;
 

@@ -14,7 +14,7 @@
 
 #include "RetroShellTypes.h"
 #include "SubComponent.h"
-#include "Command.h"
+#include "RetroShellCmd.h"
 #include "Parser.h"
 #include "TextStorage.h"
 
@@ -60,7 +60,7 @@ class Console : public SubComponent
 protected:
 
     // Root node of the command tree
-    Command root;
+    RetroShellCmd root;
 
 
     //
@@ -106,9 +106,9 @@ public:
 
 protected:
 
-    virtual void initCommands(Command &root);
+    virtual void initCommands(RetroShellCmd &root);
     const char *registerComponent(CoreComponent &c);
-    const char *registerComponent(CoreComponent &c, Command &root);
+    const char *registerComponent(CoreComponent &c, RetroShellCmd &root);
 
 
     //
@@ -296,7 +296,7 @@ protected:
 public:
 
     // Returns the root node of the instruction tree
-    Command &getRoot() { return root; }
+    RetroShellCmd &getRoot() { return root; }
 
 protected:
 
@@ -305,12 +305,12 @@ protected:
     void exec(const Arguments &argv, bool verbose = false) throws;
 
     // Prints a usage string for a command
-    void usage(const Command &command);
+    void usage(const RetroShellCmd &command);
 
     // Displays a help text for a (partially typed in) command
     void help(const string &userInput);
     void help(const Arguments &argv);
-    void help(const Command &command);
+    void help(const RetroShellCmd &command);
 
     // Prints a textual description of an error in the console
     void describe(const std::exception &exception, isize line = 0, const string &cmd = "");
@@ -334,7 +334,7 @@ class CommandConsole : public Console
 {
     using Console::Console;
 
-    virtual void initCommands(Command &root) override;
+    virtual void initCommands(RetroShellCmd &root) override;
     void _enter() override;
     void _pause() override;
     string getPrompt() override;
@@ -347,7 +347,7 @@ class DebugConsole : public Console
 {
     using Console::Console;
 
-    virtual void initCommands(Command &root) override;
+    virtual void initCommands(RetroShellCmd &root) override;
     void _enter() override;
     void _pause() override;
     string getPrompt() override;

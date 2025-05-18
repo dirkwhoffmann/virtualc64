@@ -114,7 +114,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-&quot;regression set DEBUGCART true&quot; "
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-&quot;regression  set WATCHDOG 10000000&quot;"

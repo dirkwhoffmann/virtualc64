@@ -84,7 +84,7 @@ CommandConsole::pressReturn(bool shift)
 }
 
 void
-CommandConsole::initCommands(Command &root)
+CommandConsole::initCommands(RetroShellCmd &root)
 {
     Console::initCommands(root);
 
@@ -92,7 +92,7 @@ CommandConsole::initCommands(Command &root)
     // Regression tester
     //
 
-    Command::currentGroup = "Regression testing";
+    RetroShellCmd::currentGroup = "Regression testing";
 
     auto cmd = registerComponent(regressionTester);
     root.seek("regression")->hidden = releaseBuild;
@@ -157,7 +157,7 @@ CommandConsole::initCommands(Command &root)
     // Components
     //
 
-    Command::currentGroup = "Components";
+    RetroShellCmd::currentGroup = "Components";
 
     //
     // Components (C64)
@@ -317,7 +317,7 @@ CommandConsole::initCommands(Command &root)
     // Ports
     //
 
-    Command::currentGroup = "Ports";
+    RetroShellCmd::currentGroup = "Ports";
 
 
     //
@@ -385,7 +385,7 @@ CommandConsole::initCommands(Command &root)
     // Peripherals
     //
 
-    Command::currentGroup = "Peripherals";
+    RetroShellCmd::currentGroup = "Peripherals";
 
 
     //
@@ -667,7 +667,7 @@ CommandConsole::initCommands(Command &root)
     // Miscellaneous
     //
 
-    Command::currentGroup = "Miscellaneous";
+    RetroShellCmd::currentGroup = "Miscellaneous";
 
     //
     // Miscellaneous (Host)
