@@ -110,9 +110,18 @@ CIA::cacheStats(CIAStats &result) const
 {
     {   SYNCHRONIZED
         
+        auto total = cpu.clock;
+        auto idle = idleTotal() + idleSince();
+        
+        auto totalDiff = total - result.totalCycles;
+        auto idleDiff = idle - result.idleCycles;
+        
+        result.totalCycles = total;
+        result.idleCycles = idle;
         result.idleSince = idleSince();
-        result.idleTotal = idleTotal() + result.idleSince;
-        result.idlePercentage =  cpu.clock ? (double)result.idleTotal / (double)cpu.clock : 100.0;
+
+        // debug(true, "totalDiff: %lld idleDiff: %lld\n", totalDiff, idleDiff);
+        result.idlePercentage =  totalDiff ? double(idleDiff) / double(totalDiff) : 1.0;
     }
 }
 

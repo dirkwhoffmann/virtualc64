@@ -12,8 +12,8 @@ import SwiftUI
 enum PanelType: Int {
     
     case Combined       = 0
-    case CIAA           = 1
-    case CIAB           = 2
+    case CIA1           = 1
+    case CIA2           = 2
     case AmigaMhz       = 3
     case AmigaFps       = 4
     case HostLoad       = 5
@@ -31,8 +31,8 @@ class OverviewController : NSViewController {
     @IBOutlet weak var ciaBBox: NSBox!
     @IBOutlet weak var hostLoadBox: NSBox!
     @IBOutlet weak var hostFpsBox: NSBox!
-    @IBOutlet weak var amigaFpsBox: NSBox!
-    @IBOutlet weak var amigaMhzBox: NSBox!
+    @IBOutlet weak var emuFpsBox: NSBox!
+    @IBOutlet weak var emuMhzBox: NSBox!
     @IBOutlet weak var fillLevelBox: NSBox!
     @IBOutlet weak var waveformLBox: NSBox!
     // @IBOutlet weak var waveformRBox: NSBox!
@@ -54,10 +54,10 @@ class DashboardViewController: NSViewController {
     var multiPanelController: NSViewController!
     var singlePanelController: NSViewController!
     
-    let ciaAPanel = CIAAPanel(frame: NSRect.zero)
-    let ciaBPanel = CIABPanel(frame: NSRect.zero)
-    let amigaFpsPanel = C64FpsPanel(frame: NSRect.zero)
-    let amigaMhzPanel = C64MhzPanel(frame: NSRect.zero)
+    let cia1Panel = CIA1Panel(frame: NSRect.zero)
+    let cia2Panel = CIA2Panel(frame: NSRect.zero)
+    let emuFpsPanel = C64FpsPanel(frame: NSRect.zero)
+    let emuMhzPanel = C64MhzPanel(frame: NSRect.zero)
     let hostLoadPanel = HostLoadPanel(frame: NSRect.zero)
     let hostFpsPanel = HostFpsPanel(frame: NSRect.zero)
     let fillLevelPanel = AudioFillLevelPanel(frame: NSRect.zero)
@@ -120,10 +120,10 @@ class DashboardViewController: NSViewController {
             
             if let controller = children.first as? OverviewController {
                 
-                add(ciaAPanel, to: controller.ciaABox)
-                add(ciaBPanel, to: controller.ciaBBox)
-                add(amigaMhzPanel, to: controller.amigaMhzBox)
-                add(amigaFpsPanel, to: controller.amigaFpsBox)
+                add(cia1Panel, to: controller.ciaABox)
+                add(cia2Panel, to: controller.ciaBBox)
+                add(emuMhzPanel, to: controller.emuMhzBox)
+                add(emuFpsPanel, to: controller.emuFpsBox)
                 add(hostLoadPanel, to: controller.hostLoadBox)
                 add(hostFpsPanel, to: controller.hostFpsBox)
                 add(fillLevelPanel, to: controller.fillLevelBox)
@@ -143,10 +143,10 @@ class DashboardViewController: NSViewController {
                 
                 switch type {
                     
-                case .CIAA: add(ciaAPanel, to: view)
-                case .CIAB: add(ciaBPanel, to: view)
-                case .AmigaMhz: add(amigaMhzPanel, to: view)
-                case .AmigaFps: add(amigaFpsPanel, to: view)
+                case .CIA1: add(cia1Panel, to: view)
+                case .CIA2: add(cia2Panel, to: view)
+                case .AmigaMhz: add(emuMhzPanel, to: view)
+                case .AmigaFps: add(emuFpsPanel, to: view)
                 case .HostLoad: add(hostLoadPanel, to: view)
                 case .HostFps: add(hostFpsPanel, to: view)
                 case .AudioFillLevel: add(fillLevelPanel, to: view)
@@ -200,12 +200,14 @@ class DashboardViewController: NSViewController {
         hostFpsPanel.model.add(myController.speedometer.gpuFps)
 
         // Emulator
-        amigaFpsPanel.model.add(myController.speedometer.emuFps)
-        amigaMhzPanel.model.add(myController.speedometer.mhz)
+        emuFpsPanel.model.add(myController.speedometer.emuFps)
+        emuMhzPanel.model.add(myController.speedometer.mhz)
         
         // CIAs
-        ciaAPanel.model.add(1.0 - emu.cia1.stats.idlePercentage)
-        ciaBPanel.model.add(1.0 - emu.cia2.stats.idlePercentage)
+        cia1Panel.model.add(1.0 - emu.cia1.stats.idlePercentage)
+        cia2Panel.model.add(1.0 - emu.cia2.stats.idlePercentage)
+        cia1Panel.model.range = 0...(2 * emu.vic.traits.fps)
+        cia2Panel.model.range = 0...(2 * emu.vic.traits.fps)
 
         // Audio
         fillLevelPanel.model.add(emu.audioPort.stats.fillLevel)

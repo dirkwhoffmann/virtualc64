@@ -159,8 +159,10 @@ CIAInfo;
 
 typedef struct
 {
+    Cycle totalCycles;
+    Cycle idleCycles;
     Cycle idleSince;
-    Cycle idleTotal;
+    
     double idlePercentage;
 }
 CIAStats;

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -203,10 +202,10 @@
                         </subviews>
                     </view>
                     <connections>
-                        <outlet property="amigaFpsBox" destination="ID4-Om-2NI" id="cZT-H1-26k"/>
-                        <outlet property="amigaMhzBox" destination="eqI-BG-PUg" id="Zld-Ds-ixE"/>
                         <outlet property="ciaABox" destination="IDe-Kq-5VK" id="6vB-Z6-MVI"/>
                         <outlet property="ciaBBox" destination="zSw-uF-aUE" id="f4H-9A-X4l"/>
+                        <outlet property="emuFpsBox" destination="ID4-Om-2NI" id="cZT-H1-26k"/>
+                        <outlet property="emuMhzBox" destination="eqI-BG-PUg" id="Zld-Ds-ixE"/>
                         <outlet property="fillLevelBox" destination="jo1-Nm-oa2" id="lEj-TZ-WiV"/>
                         <outlet property="hostFpsBox" destination="0F7-Mg-R5k" id="yVa-gc-iSw"/>
                         <outlet property="hostLoadBox" destination="SG0-Yn-4va" id="ktN-7V-P44"/>

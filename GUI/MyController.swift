@@ -527,7 +527,7 @@ extension MyController {
         
         // Pass message to all open auxiliary windows
         for inspector in inspectors { inspector.processMessage(msg) }
-        // for dashboard in dashboards { dashboard.processMessage(msg) }
+        for dashboard in dashboards { dashboard.processMessage(msg) }
     }
 
     //

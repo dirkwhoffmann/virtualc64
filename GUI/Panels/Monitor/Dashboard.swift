@@ -51,6 +51,7 @@ class Dashboard: DialogController {
         if let viewController = contentViewController as? DashboardViewController {
             viewController.myController = controller
             viewController.emu = emu
+            viewController.emuFpsPanel.model.range = 0...(2 * emu!.vic.traits.fps)
             viewController.waveformLPanel.audioPort = emu?.audioPort
             viewController.waveformLPanel.sid = emu?.sid
             // viewController.waveformRPanel.audioPort = emu?.audioPort
@@ -75,6 +76,13 @@ class Dashboard: DialogController {
     
     func processMessage(_ msg: vc64.Message) {
      
+        /*
+        switch msg.type {
+
+        default:
+            break
+        }
+        */
     }
 }
 

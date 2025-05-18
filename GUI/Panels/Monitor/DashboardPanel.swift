@@ -340,7 +340,7 @@ class C64MhzPanel: DashboardPanel {
     
     func setup() {
         
-        configure(title: "C64", subtitle: "CPU Frequency", range: 0...14, unit: "Mhz")
+        configure(title: "C64", subtitle: "CPU Frequency", range: 0...2, unit: "Mhz")
         switchStyle()
 
         gaugeGradient = Gradient(colors: [.red, .orange, .yellow, .green, .yellow, .orange, .red])
@@ -376,7 +376,7 @@ class C64FpsPanel: DashboardPanel {
 }
 
 @MainActor
-class CIAAPanel: DashboardPanel {
+class CIA1Panel: DashboardPanel {
     
    required init?(coder aDecoder: NSCoder) {
         
@@ -392,7 +392,7 @@ class CIAAPanel: DashboardPanel {
     
     func setup() {
         
-        configure(title: "CIA A", subtitle: "Activity", unit: "%")
+        configure(title: "CIA 1", subtitle: "Activity", unit: "%")
         switchStyle()
 
         latest = { String(format: "%.2f", self.model.latest() * 100) }
@@ -400,7 +400,7 @@ class CIAAPanel: DashboardPanel {
 }
 
 @MainActor
-class CIABPanel: DashboardPanel {
+class CIA2Panel: DashboardPanel {
     
     required init?(coder aDecoder: NSCoder) {
         
@@ -416,7 +416,7 @@ class CIABPanel: DashboardPanel {
     
     func setup() {
         
-        configure(title: "CIA B", subtitle: "Activity", unit: "%")
+        configure(title: "CIA 2", subtitle: "Activity", unit: "%")
         switchStyle()
         
         latest = { String(format: "%.2f", self.model.latest() * 100) }
