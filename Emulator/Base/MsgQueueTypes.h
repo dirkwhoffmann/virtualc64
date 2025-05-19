@@ -29,8 +29,8 @@ enum_long(MSG_TYPE)
     // Execution state
     MSG_CONFIG,             ///< The configuration has changed
     MSG_POWER,              ///< The emulator has been powered on or off
-    MSG_RUN,                ///< The emulator has entered STATE_RUNNING
-    MSG_PAUSE,              ///< The emulator has entered STATE_PAUSED
+    MSG_RUN,                ///< The emulator has entered ExecState::RUNNING
+    MSG_PAUSE,              ///< The emulator has entered ExecState::PAUSED
     MSG_STEP,               ///< The emulator has stepped a single instruction
     MSG_EOL_TRAP,           ///< The emulator has been paused at the end of the current line
     MSG_EOF_TRAP,           ///< The emulator has been paused at the end of the current frame

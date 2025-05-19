@@ -18,33 +18,31 @@
 namespace vc64 {
 
 /// Execution state
-enum_long(EXEC_STATE)
+enum class ExecState : long
 {
-    STATE_UNINIT,       ///< Not yet initialized
-    STATE_OFF,          ///< Powered off
-    STATE_PAUSED,       ///< Powered on, but currently paused
-    STATE_RUNNING,      ///< Up and running
-    STATE_SUSPENDED,    ///< Shortly paused for an internal state change
-    STATE_HALTED        ///< Shut down
+    UNINIT,       ///< Not yet initialized
+    OFF,          ///< Powered off
+    PAUSED,       ///< Powered on, but currently paused
+    RUNNING,      ///< Up and running
+    SUSPEND,      ///< Shortly paused for an internal state change
+    HALTED        ///< Shut down
 };
-typedef EXEC_STATE ExecState;
 
 struct ExecStateEnum : util::Reflection<ExecStateEnum, ExecState>
 {
     static constexpr long minVal = 0;
-    static constexpr long maxVal = STATE_HALTED;
+    static constexpr long maxVal = long(ExecState::HALTED);
 
-    static const char *prefix() { return "STATE"; }
-    static const char *_key(long value)
+    static const char *_key(ExecState value)
     {
         switch (value) {
 
-            case STATE_UNINIT:       return "UNINIT";
-            case STATE_OFF:          return "OFF";
-            case STATE_PAUSED:       return "PAUSED";
-            case STATE_RUNNING:      return "RUNNING";
-            case STATE_SUSPENDED:    return "SUSPENDED";
-            case STATE_HALTED:       return "HALTED";
+            case ExecState::UNINIT:       return "UNINIT";
+            case ExecState::OFF:          return "OFF";
+            case ExecState::PAUSED:       return "PAUSED";
+            case ExecState::RUNNING:      return "RUNNING";
+            case ExecState::SUSPEND:      return "SUSPENDED";
+            case ExecState::HALTED:       return "HALTED";
         }
         return "???";
     }

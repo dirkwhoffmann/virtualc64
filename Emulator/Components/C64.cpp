@@ -918,7 +918,7 @@ C64::processFlags()
         }
     }
 
-    if (interrupt) throw StateChangeException(STATE_PAUSED);
+    if (interrupt) throw StateChangeException((long)ExecState::PAUSED);
 }
 
 void 
