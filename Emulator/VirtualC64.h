@@ -1461,7 +1461,7 @@ public:
      *
      *  @param model    The C64 model to emulate
      */
-    void set(C64Model model);
+    void set(ConfigScheme model);
 
     /** @brief  Configures a component.
      *

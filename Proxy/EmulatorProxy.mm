@@ -2025,7 +2025,7 @@ NSString *EventSlotName(EventSlot slot)
     }
 }
 
-- (void)set:(C64Model)model
+- (void)set:(ConfigScheme)model
 {
     [self emu]->set(model);
 }

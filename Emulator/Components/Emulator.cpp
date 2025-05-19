@@ -208,7 +208,7 @@ Emulator::set(const string &opt, const string &value, const std::vector<isize> o
 }
 
 void
-Emulator::set(C64Model model)
+Emulator::set(ConfigScheme model)
 {
     main.set(model);
 }

@@ -477,9 +477,9 @@ C64::set(const string &opt, const string &value, const std::vector<isize> objids
 }
 
 void
-C64::set(C64Model model)
+C64::set(ConfigScheme model)
 {
-    assert_enum(C64Model, model);
+    assert_enum(ConfigScheme, model);
 
     {   SUSPENDED
 
@@ -488,7 +488,7 @@ C64::set(C64Model model)
 
         switch(model) {
 
-            case C64_MODEL_PAL:
+            case ConfigScheme::PAL:
 
                 set(OPT_VICII_REVISION, VICII_PAL_6569_R3);
                 set(OPT_VICII_GRAY_DOT_BUG, false);
@@ -501,7 +501,7 @@ C64::set(C64Model model)
                 set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
                 break;
 
-            case C64_MODEL_PAL_II:
+            case ConfigScheme::PAL_II:
 
                 set(OPT_VICII_REVISION, VICII_PAL_8565);
                 set(OPT_VICII_GRAY_DOT_BUG, true);
@@ -514,7 +514,7 @@ C64::set(C64Model model)
                 set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
                 break;
 
-            case C64_MODEL_PAL_OLD:
+            case ConfigScheme::PAL_OLD:
 
                 set(OPT_VICII_REVISION, VICII_PAL_6569_R1);
                 set(OPT_VICII_GRAY_DOT_BUG, false);
@@ -527,7 +527,7 @@ C64::set(C64Model model)
                 set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
                 break;
 
-            case C64_MODEL_NTSC:
+            case ConfigScheme::NTSC:
 
                 set(OPT_VICII_REVISION, VICII_NTSC_6567);
                 set(OPT_VICII_GRAY_DOT_BUG, false);
@@ -540,7 +540,7 @@ C64::set(C64Model model)
                 set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
                 break;
 
-            case C64_MODEL_NTSC_II:
+            case ConfigScheme::NTSC_II:
 
                 set(OPT_VICII_REVISION, VICII_NTSC_8562);
                 set(OPT_VICII_GRAY_DOT_BUG, true);
@@ -553,7 +553,7 @@ C64::set(C64Model model)
                 set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
                 break;
 
-            case C64_MODEL_NTSC_OLD:
+            case ConfigScheme::NTSC_OLD:
 
                 set(OPT_VICII_REVISION, VICII_NTSC_6567_R56A);
                 set(OPT_VICII_GRAY_DOT_BUG, false);

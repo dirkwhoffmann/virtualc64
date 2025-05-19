@@ -140,12 +140,12 @@ CommandConsole::initCommands(RetroShellCmd &root)
     root.add({
         
         .tokens = { "regression", "setup" },
-        .args   = { C64ModelEnum::argList() },
+        .args   = { ConfigSchemeEnum::argList() },
         .extra  = { Arg::path, Arg::path },
         .help   = { "Initializes the test environment" },
         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
             
-            auto model = parseEnum <C64Model, C64ModelEnum> (argv[0]);
+            auto model = parseEnum <ConfigScheme, ConfigSchemeEnum> (argv[0]);
             regressionTester.prepare(c64, model);
 
             // Pause the script to give the C64 some time to boot
@@ -155,11 +155,11 @@ CommandConsole::initCommands(RetroShellCmd &root)
     });
     
     /*
-    root.add({"regression", "setup"}, { C64ModelEnum::argList() },
+    root.add({"regression", "setup"}, { ConfigSchemeEnum::argList() },
              "Initialize the test environment",
              [this](Arguments& argv, const std::vector<isize> &values) {
 
-        auto model = parseEnum <C64Model, C64ModelEnum> (argv[0]);
+        auto model = parseEnum <C64Model, ConfigSchemeEnum> (argv[0]);
         regressionTester.prepare(c64, model);
 
         // Pause the script to give the C64 some time to boot
@@ -324,11 +324,11 @@ CommandConsole::initCommands(RetroShellCmd &root)
     root.add({
         
         .tokens = { cmd, "init" },
-        .args   = { C64ModelEnum::argList() },
+        .args   = { ConfigSchemeEnum::argList() },
         .help   = { "Initializes the C64 with a predefined scheme" },
         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
             
-            emulator.set(parseEnum<C64Model, C64ModelEnum>(argv[0]));
+            emulator.set(parseEnum<ConfigScheme, ConfigSchemeEnum>(argv[0]));
         }
     });
     

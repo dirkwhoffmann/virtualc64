@@ -115,7 +115,7 @@ public:
 public:
 
     // Reverts to factory settings
-    void prepare(C64 &c64, C64Model model);
+    void prepare(C64 &c64, ConfigScheme model);
 
     // Runs a test case
     void run(string path);

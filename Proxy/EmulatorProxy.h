@@ -202,7 +202,7 @@ NSString *EventSlotName(EventSlot slot);
 - (BOOL)set:(Option)opt id:(NSInteger)id enable:(BOOL)val;
 - (BOOL)set:(Option)opt drive:(NSInteger)id value:(NSInteger)val;
 - (BOOL)set:(Option)opt drive:(NSInteger)id enable:(BOOL)val;
-- (void)set:(C64Model)value;
+- (void)set:(ConfigScheme)value;
 - (void)exportConfig:(NSURL *)url exception:(ExceptionWrapper *)ex;
 
 - (void)put:(CmdType)cmd;

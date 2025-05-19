@@ -343,7 +343,7 @@ VirtualC64::get(Option option, long id) const
 }
 
 void
-VirtualC64::set(C64Model model)
+VirtualC64::set(ConfigScheme model)
 {
     emu->set(model);
     emu->markAsDirty();

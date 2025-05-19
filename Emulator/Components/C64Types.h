@@ -28,39 +28,77 @@ typedef i64 Cycle;
 // Enumerations
 //
 
-/// C64 model
-enum_long(C64_MODEL)
+enum class Compressor : long
 {
-    C64_MODEL_PAL,      ///< C64 (PAL)
-    C64_MODEL_PAL_II,   ///< C64 II (PAL)
-    C64_MODEL_PAL_OLD,  ///< Early C64 (PAL)
-    C64_MODEL_NTSC,     ///< C64 (NTSC)
-    C64_MODEL_NTSC_II,  ///< C64 II (NTSC)
-    C64_MODEL_NTSC_OLD  ///< Early C64 (NTSC)
+    NONE,
+    GZIP,
+    LZ4,
+    RLE2,
+    RLE3
 };
-typedef C64_MODEL C64Model;
 
-struct C64ModelEnum : util::Reflection<C64ModelEnum, C64Model> {
-
+struct CompressorEnum : util::Reflection<CompressorEnum, Compressor>
+{
     static constexpr long minVal = 0;
-    static constexpr long maxVal = C64_MODEL_NTSC_OLD;
+    static constexpr long maxVal = long(Compressor::RLE3);
 
-    static const char *prefix() { return "C64_MODEL"; }
-    static const char *_key(long value)
+    static const char *_key(Compressor value)
     {
         switch (value) {
 
-            case C64_MODEL_PAL:       return "PAL";
-            case C64_MODEL_PAL_II:    return "PAL_II";
-            case C64_MODEL_PAL_OLD:   return "PAL_OLD";
-            case C64_MODEL_NTSC:      return "NTSC";
-            case C64_MODEL_NTSC_II:   return "NTSC_II";
-            case C64_MODEL_NTSC_OLD:  return "NTSC_OLD";
+            case Compressor::NONE:  return "NONE";
+            case Compressor::GZIP:  return "GZIP";
+            case Compressor::RLE2:  return "RLE2";
+            case Compressor::RLE3:  return "RLE3";
+            case Compressor::LZ4:   return "LZ4";
+        }
+        return "???";
+    }
+    static const char *help(Compressor value)
+    {
+        switch (value) {
+
+            case Compressor::NONE:  return "No compression";
+            case Compressor::GZIP:  return "Gzip compression";
+            case Compressor::RLE2:  return "Run-length encoding (2)";
+            case Compressor::RLE3:  return "Run-length encoding (3)";
+            case Compressor::LZ4:   return "LZ4 compression";
+        }
+        return "???";
+    }
+};
+
+/// C64 model
+enum class ConfigScheme : long
+{
+    PAL,      ///< C64 (PAL)
+    PAL_II,   ///< C64 II (PAL)
+    PAL_OLD,  ///< Early C64 (PAL)
+    NTSC,     ///< C64 (NTSC)
+    NTSC_II,  ///< C64 II (NTSC)
+    NTSC_OLD  ///< Early C64 (NTSC)
+};
+
+struct ConfigSchemeEnum : util::Reflection<ConfigSchemeEnum, ConfigScheme> {
+
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = long(ConfigScheme::NTSC_OLD);
+
+    static const char *_key(ConfigScheme value)
+    {
+        switch (value) {
+
+            case ConfigScheme::PAL:       return "PAL";
+            case ConfigScheme::PAL_II:    return "PAL_II";
+            case ConfigScheme::PAL_OLD:   return "PAL_OLD";
+            case ConfigScheme::NTSC:      return "NTSC";
+            case ConfigScheme::NTSC_II:   return "NTSC_II";
+            case ConfigScheme::NTSC_OLD:  return "NTSC_OLD";
         }
         return "???";
     }
     
-    static const char *help(C64Model value)
+    static const char *help(ConfigScheme value)
     {
         return "";
     }

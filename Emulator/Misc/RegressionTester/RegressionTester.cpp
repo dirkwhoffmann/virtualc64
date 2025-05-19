@@ -20,7 +20,7 @@
 namespace vc64 {
 
 void
-RegressionTester::prepare(C64 &c64, C64Model model)
+RegressionTester::prepare(C64 &c64, ConfigScheme model)
 {
     // Only proceed if the /tmp folder exisits
     if (!util::fileExists(fs::path("/tmp"))) throw Error(Fault::DIR_NOT_FOUND, "/tmp");
