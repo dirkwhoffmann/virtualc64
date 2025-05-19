@@ -11,7 +11,7 @@ extension MyController {
 
     var hourglassIcon: NSImage? {
 
-        if vc64.WarpMode(rawValue: config.warpMode) == .AUTO {
+        if vc64.Warp(rawValue: config.warpMode) == .AUTO {
 
             return NSImage(named: emu?.info.warping == true ? "hourglass3Template" : "hourglass1Template")
 
@@ -345,11 +345,11 @@ extension MyController {
 
     @IBAction func warpAction(_ sender: Any!) {
 
-        switch vc64.WarpMode(rawValue: config.warpMode) {
+        switch vc64.Warp(rawValue: config.warpMode) {
 
-        case .AUTO: config.warpMode = vc64.WarpMode.NEVER.rawValue
-        case .NEVER: config.warpMode = vc64.WarpMode.ALWAYS.rawValue
-        case .ALWAYS: config.warpMode = vc64.WarpMode.AUTO.rawValue
+        case .AUTO: config.warpMode = vc64.Warp.NEVER.rawValue
+        case .NEVER: config.warpMode = vc64.Warp.ALWAYS.rawValue
+        case .ALWAYS: config.warpMode = vc64.Warp.AUTO.rawValue
 
         default:
             fatalError()

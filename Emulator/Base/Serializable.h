@@ -278,7 +278,7 @@ public:
     template <class E, class = std::enable_if_t<std::is_enum<E>{}>>
     SerChecker& operator<<(E &v)
     {
-        hash = util::fnvIt64(hash, v);
+        hash = util::fnvIt64(hash, u64(v));
         return *this;
     }
 

@@ -104,32 +104,30 @@ struct ConfigSchemeEnum : util::Reflection<ConfigSchemeEnum, ConfigScheme> {
     }
 };
 
-enum_long(WARP_MODE)
+enum class Warp : long
 {
-    WARP_AUTO,
-    WARP_NEVER,
-    WARP_ALWAYS
+    AUTO,
+    NEVER,
+    ALWAYS
 };
-typedef WARP_MODE WarpMode;
 
-struct WarpModeEnum : util::Reflection<WarpModeEnum, WarpMode>
+struct WarpEnum : util::Reflection<WarpEnum, Warp>
 {
     static constexpr long minVal = 0;
-    static constexpr long maxVal = WARP_ALWAYS;
+    static constexpr long maxVal = long(Warp::ALWAYS);
 
-    static const char *prefix() { return "WARP"; }
-    static const char *_key(long value)
+    static const char *_key(Warp value)
     {
         switch (value) {
 
-            case WARP_AUTO:     return "WARP_AUTO";
-            case WARP_NEVER:    return "WARP_NEVER";
-            case WARP_ALWAYS:   return "WARP_ALWAYS";
+            case Warp::AUTO:     return "AUTO";
+            case Warp::NEVER:    return "NEVER";
+            case Warp::ALWAYS:   return "ALWAYS";
         }
         return "???";
     }
     
-    static const char *help(WarpMode value)
+    static const char *help(Warp value)
     {
         return "";
     }
@@ -343,7 +341,7 @@ typedef struct
     isize warpBoot;
 
     //! Warp mode
-    WarpMode warpMode;
+    Warp warpMode;
 
     //! Emulator speed in percent (100 is native speed)
     isize speedBoost;

@@ -26,7 +26,7 @@ Defaults::Defaults()
     setFallback(OPT_HOST_FRAMEBUF_HEIGHT,       0);
 
     setFallback(OPT_C64_WARP_BOOT,              0);
-    setFallback(OPT_C64_WARP_MODE,              WARP_NEVER);
+    setFallback(OPT_C64_WARP_MODE,              (i64)Warp::NEVER);
     setFallback(OPT_C64_VSYNC,                  false);
     setFallback(OPT_C64_SPEED_BOOST,            100);
     setFallback(OPT_C64_RUN_AHEAD,              0);

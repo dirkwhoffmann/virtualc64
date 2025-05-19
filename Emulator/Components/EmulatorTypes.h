@@ -23,186 +23,184 @@ namespace vc64 {
 // Enumerations
 //
 
-enum_long(DEBUG_FLAG)
+enum class DebugFlag
 {
     // General
-    FLAG_XFILES,            ///< Report paranormal activity
-    FLAG_CNF_DEBUG,         ///< Debug configuration code
-    FLAG_DEF_DEBUG,         ///< Debug the user defaults storage
+    XFILES,            ///< Report paranormal activity
+    CNF_DEBUG,         ///< Debug configuration code
+    DEF_DEBUG,         ///< Debug the user defaults storage
 
     // Emulator
-    FLAG_RUN_DEBUG,         ///< Debug the run loop and component states
-    FLAG_TIM_DEBUG,         ///< Debug thread synchronization
-    FLAG_WARP_DEBUG,        ///< Debug warp mode
-    FLAG_CMD_DEBUG,         ///< Debug the command queue
-    FLAG_MSG_DEBUG,         ///< Debug the message queue
-    FLAG_SNP_DEBUG,         ///< Debug snapshots
+    RUN_DEBUG,         ///< Debug the run loop and component states
+    TIM_DEBUG,         ///< Debug thread synchronization
+    WARP_DEBUG,        ///< Debug warp mode
+    CMD_DEBUG,         ///< Debug the command queue
+    MSG_DEBUG,         ///< Debug the message queue
+    SNP_DEBUG,         ///< Debug snapshots
 
     // Run ahead
-    FLAG_RUA_DEBUG,         ///< Inform about run-ahead activity
-    FLAG_RUA_CHECKSUM,      ///< Verify the integrity of the run-ahead instance
-    FLAG_RUA_ON_STEROIDS,   ///< Update the run-ahead instance in every frame
+    RUA_DEBUG,         ///< Inform about run-ahead activity
+    RUA_CHECKSUM,      ///< Verify the integrity of the run-ahead instance
+    RUA_ON_STEROIDS,   ///< Update the run-ahead instance in every frame
 
     // CPU
-    FLAG_CPU_DEBUG,         ///< Debug the CPU
-    FLAG_IRQ_DEBUG,         ///< Debug interrupts
+    CPU_DEBUG,         ///< Debug the CPU
+    IRQ_DEBUG,         ///< Debug interrupts
 
     // Memory
-    FLAG_MEM_DEBUG,         ///< Debug memory accesses
+    MEM_DEBUG,         ///< Debug memory accesses
 
     // CIAs
-    FLAG_CIA_DEBUG,         ///< Debug the Complex Interface Adapters
-    FLAG_CIAREG_DEBUG,      ///< Debug the CIA register accesses
+    CIA_DEBUG,         ///< Debug the Complex Interface Adapters
+    CIAREG_DEBUG,      ///< Debug the CIA register accesses
 
     // VICII
-    FLAG_VICII_DEBUG,       ///< Debug the Video Interface Controller
-    FLAG_VICII_REG_DEBUG,   ///< Debug VICII register accesses
-    FLAG_VICII_SAFE_MODE,   ///< Disable performance optimizations
-    FLAG_VICII_STATS,       ///< Collect statistical information
-    FLAG_RASTERIRQ_DEBUG,   ///< Debug raster interrupts
+    VICII_DEBUG,       ///< Debug the Video Interface Controller
+    VICII_REG_DEBUG,   ///< Debug VICII register accesses
+    VICII_SAFE_MODE,   ///< Disable performance optimizations
+    VICII_STATS,       ///< Collect statistical information
+    RASTERIRQ_DEBUG,   ///< Debug raster interrupts
 
     // SID
-    FLAG_SID_DEBUG,         ///< Debug the Sound Interface Device
-    FLAG_SID_EXEC,          ///< Debug SID execution
-    FLAG_SIDREG_DEBUG,      ///< Debug SID register accesses
-    FLAG_AUDBUF_DEBUG,      ///< Debug the audio buffers
-    FLAG_AUDVOL_DEBUG,      ///< Debug the audio volumes
+    SID_DEBUG,         ///< Debug the Sound Interface Device
+    SID_EXEC,          ///< Debug SID execution
+    SIDREG_DEBUG,      ///< Debug SID register accesses
+    AUDBUF_DEBUG,      ///< Debug the audio buffers
+    AUDVOL_DEBUG,      ///< Debug the audio volumes
 
     // Drive
-    FLAG_VIA_DEBUG,         ///< Debug the Versatile Interface Adapter
-    FLAG_PIA_DEBUG,         ///< Debug the Peripheral Interface Adapter
-    FLAG_SER_DEBUG,         ///< Debug the serial port (IEC bus)
-    FLAG_DSK_DEBUG,         ///< Debug the disk controller execution
-    FLAG_DSKCHG_DEBUG,      ///< Debug the disk change procedure
-    FLAG_GCR_DEBUG,         ///< Debug the GCR encoder and decoder
-    FLAG_FS_DEBUG,          ///< Debug files system related code
-    FLAG_PAR_DEBUG,         ///< Debug the parallel drive cable
+    VIA_DEBUG,         ///< Debug the Versatile Interface Adapter
+    PIA_DEBUG,         ///< Debug the Peripheral Interface Adapter
+    SER_DEBUG,         ///< Debug the serial port (IEC bus)
+    DSK_DEBUG,         ///< Debug the disk controller execution
+    DSKCHG_DEBUG,      ///< Debug the disk change procedure
+    GCR_DEBUG,         ///< Debug the GCR encoder and decoder
+    FS_DEBUG,          ///< Debug files system related code
+    PAR_DEBUG,         ///< Debug the parallel drive cable
 
     // Media
-    FLAG_CRT_DEBUG,         ///< Debug cartridges
-    FLAG_FILE_DEBUG,        ///< Debug the handling of media files
+    CRT_DEBUG,         ///< Debug cartridges
+    FILE_DEBUG,        ///< Debug the handling of media files
 
     // Peripherals
-    FLAG_JOY_DEBUG,         ///< Debug the joysticks
-    FLAG_DRV_DEBUG,         ///< Debug the floppy drives
-    FLAG_TAP_DEBUG,         ///< Debug the datasette
-    FLAG_KBD_DEBUG,         ///< Debug the keyboard
-    FLAG_PRT_DEBUG,         ///< Debug the control port and connected devices
-    FLAG_EXP_DEBUG,         ///< Debug the expansion port
-    FLAG_USR_DEBUG,         ///< User port
+    JOY_DEBUG,         ///< Debug the joysticks
+    DRV_DEBUG,         ///< Debug the floppy drives
+    TAP_DEBUG,         ///< Debug the datasette
+    KBD_DEBUG,         ///< Debug the keyboard
+    PRT_DEBUG,         ///< Debug the control port and connected devices
+    EXP_DEBUG,         ///< Debug the expansion port
+    USR_DEBUG,         ///< User port
 
     // Other components
-    FLAG_REC_DEBUG,         ///< Debug the screen recorder
-    FLAG_REU_DEBUG,         ///< Debug the REU memory expansion
-    FLAG_SCK_DEBUG,         ///< Debug the socket interface
-    FLAG_SRV_DEBUG,         ///< Debug the remote servers
+    REC_DEBUG,         ///< Debug the screen recorder
+    REU_DEBUG,         ///< Debug the REU memory expansion
+    SCK_DEBUG,         ///< Debug the socket interface
+    SRV_DEBUG,         ///< Debug the remote servers
 
     //! Forced error condition
-    FLAG_FORCE_ROM_MISSING,
-    FLAG_FORCE_MEGA64_MISMATCH,
-    FLAG_FORCE_SNAP_TOO_OLD,
-    FLAG_FORCE_SNAP_TOO_NEW,
-    FLAG_FORCE_SNAP_IS_BETA,
-    FLAG_FORCE_SNAP_CORRUPTED,
-    FLAG_FORCE_CRT_UNKNOWN,
-    FLAG_FORCE_CRT_UNSUPPORTED,
-    FLAG_FORCE_RECORDING_ERROR,
-    FLAG_FORCE_NO_FFMPEG
+    FORCE_ROM_MISSING,
+    FORCE_MEGA64_MISMATCH,
+    FORCE_SNAP_TOO_OLD,
+    FORCE_SNAP_TOO_NEW,
+    FORCE_SNAP_IS_BETA,
+    FORCE_SNAP_CORRUPTED,
+    FORCE_CRT_UNKNOWN,
+    FORCE_CRT_UNSUPPORTED,
+    FORCE_RECORDING_ERROR,
+    FORCE_NO_FFMPEG
 };
-typedef DEBUG_FLAG DebugFlag;
 
 struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
 {
     static constexpr long minVal = 0;
-    static constexpr long maxVal = long(FLAG_FORCE_NO_FFMPEG);
+    static constexpr long maxVal = long(DebugFlag::FORCE_NO_FFMPEG);
 
-    static const char *prefix() { return "FLAG"; }
     static const char *_key(DebugFlag value)
     {
         switch (value) {
 
-            case FLAG_XFILES:                   return "XFILES";
-            case FLAG_CNF_DEBUG:                return "CNF_DEBUG";
-            case FLAG_DEF_DEBUG:                return "DEF_DEBUG";
+            case DebugFlag::XFILES:                   return "XFILES";
+            case DebugFlag::CNF_DEBUG:                return "CNF_DEBUG";
+            case DebugFlag::DEF_DEBUG:                return "DEF_DEBUG";
 
                 // Emulator
-            case FLAG_RUN_DEBUG:                return "RUN_DEBUG";
-            case FLAG_TIM_DEBUG:                return "TIM_DEBUG";
-            case FLAG_WARP_DEBUG:               return "WARP_DEBUG";
-            case FLAG_CMD_DEBUG:                return "CMD_DEBUG";
-            case FLAG_MSG_DEBUG:                return "MSG_DEBUG";
-            case FLAG_SNP_DEBUG:                return "SNP_DEBUG";
+            case DebugFlag::RUN_DEBUG:                return "RUN_DEBUG";
+            case DebugFlag::TIM_DEBUG:                return "TIM_DEBUG";
+            case DebugFlag::WARP_DEBUG:               return "WARP_DEBUG";
+            case DebugFlag::CMD_DEBUG:                return "CMD_DEBUG";
+            case DebugFlag::MSG_DEBUG:                return "MSG_DEBUG";
+            case DebugFlag::SNP_DEBUG:                return "SNP_DEBUG";
 
                 // Run-ahead
-            case FLAG_RUA_DEBUG:                return "RUA_DEBUG";
-            case FLAG_RUA_CHECKSUM:             return "RUA_CHECKSUM";
-            case FLAG_RUA_ON_STEROIDS:          return "RUA_ON_STEROIDS";
+            case DebugFlag::RUA_DEBUG:                return "RUA_DEBUG";
+            case DebugFlag::RUA_CHECKSUM:             return "RUA_CHECKSUM";
+            case DebugFlag::RUA_ON_STEROIDS:          return "RUA_ON_STEROIDS";
 
                 // CPU
-            case FLAG_CPU_DEBUG:                return "CPU_DEBUG";
-            case FLAG_IRQ_DEBUG:                return "IRQ_DEBUG";
+            case DebugFlag::CPU_DEBUG:                return "CPU_DEBUG";
+            case DebugFlag::IRQ_DEBUG:                return "IRQ_DEBUG";
 
                 // Memory
-            case FLAG_MEM_DEBUG:                return "MEM_DEBUG";
+            case DebugFlag::MEM_DEBUG:                return "MEM_DEBUG";
 
                 // CIAs
-            case FLAG_CIA_DEBUG:                return "CIA_DEBUG";
-            case FLAG_CIAREG_DEBUG:             return "CIAREG_DEBUG";
+            case DebugFlag::CIA_DEBUG:                return "CIA_DEBUG";
+            case DebugFlag::CIAREG_DEBUG:             return "CIAREG_DEBUG";
 
                 // VICII
-            case FLAG_VICII_DEBUG:              return "VICII_DEBUG";
-            case FLAG_VICII_REG_DEBUG:          return "VICII_REG_DEBUG";
-            case FLAG_VICII_SAFE_MODE:          return "VICII_SAFE_MODE";
-            case FLAG_VICII_STATS:              return "VICII_STATS";
-            case FLAG_RASTERIRQ_DEBUG:          return "RASTERIRQ_DEBUG";
+            case DebugFlag::VICII_DEBUG:              return "VICII_DEBUG";
+            case DebugFlag::VICII_REG_DEBUG:          return "VICII_REG_DEBUG";
+            case DebugFlag::VICII_SAFE_MODE:          return "VICII_SAFE_MODE";
+            case DebugFlag::VICII_STATS:              return "VICII_STATS";
+            case DebugFlag::RASTERIRQ_DEBUG:          return "RASTERIRQ_DEBUG";
 
                 // SID
-            case FLAG_SID_DEBUG:                return "SID_DEBUG";
-            case FLAG_SID_EXEC:                 return "SID_EXEC";
-            case FLAG_SIDREG_DEBUG:             return "SIDREG_DEBUG";
-            case FLAG_AUDBUF_DEBUG:             return "AUDBUF_DEBUG";
-            case FLAG_AUDVOL_DEBUG:             return "AUDVOL_DEBUG";
+            case DebugFlag::SID_DEBUG:                return "SID_DEBUG";
+            case DebugFlag::SID_EXEC:                 return "SID_EXEC";
+            case DebugFlag::SIDREG_DEBUG:             return "SIDREG_DEBUG";
+            case DebugFlag::AUDBUF_DEBUG:             return "AUDBUF_DEBUG";
+            case DebugFlag::AUDVOL_DEBUG:             return "AUDVOL_DEBUG";
 
                 // Drive
-            case FLAG_VIA_DEBUG:                return "VIA_DEBUG";
-            case FLAG_PIA_DEBUG:                return "PIA_DEBUG";
-            case FLAG_SER_DEBUG:                return "SER_DEBUG";
-            case FLAG_DSK_DEBUG:                return "DSK_DEBUG";
-            case FLAG_DSKCHG_DEBUG:             return "DSKCHG_DEBUG";
-            case FLAG_GCR_DEBUG:                return "GCR_DEBUG";
-            case FLAG_FS_DEBUG:                 return "FS_DEBUG";
-            case FLAG_PAR_DEBUG:                return "PAR_DEBUG";
+            case DebugFlag::VIA_DEBUG:                return "VIA_DEBUG";
+            case DebugFlag::PIA_DEBUG:                return "PIA_DEBUG";
+            case DebugFlag::SER_DEBUG:                return "SER_DEBUG";
+            case DebugFlag::DSK_DEBUG:                return "DSK_DEBUG";
+            case DebugFlag::DSKCHG_DEBUG:             return "DSKCHG_DEBUG";
+            case DebugFlag::GCR_DEBUG:                return "GCR_DEBUG";
+            case DebugFlag::FS_DEBUG:                 return "FS_DEBUG";
+            case DebugFlag::PAR_DEBUG:                return "PAR_DEBUG";
 
                 // Media
-            case FLAG_CRT_DEBUG:                return "CRT_DEBUG";
-            case FLAG_FILE_DEBUG:               return "FILE_DEBUG";
+            case DebugFlag::CRT_DEBUG:                return "CRT_DEBUG";
+            case DebugFlag::FILE_DEBUG:               return "FILE_DEBUG";
 
                 // Peripherals
-            case FLAG_JOY_DEBUG:                return "JOY_DEBUG";
-            case FLAG_DRV_DEBUG:                return "DRV_DEBUG";
-            case FLAG_TAP_DEBUG:                return "TAP_DEBUG";
-            case FLAG_KBD_DEBUG:                return "KBD_DEBUG";
-            case FLAG_PRT_DEBUG:                return "PRT_DEBUG";
-            case FLAG_EXP_DEBUG:                return "EXP_DEBUG";
-            case FLAG_USR_DEBUG:                return "USR_DEBUG";
+            case DebugFlag::JOY_DEBUG:                return "JOY_DEBUG";
+            case DebugFlag::DRV_DEBUG:                return "DRV_DEBUG";
+            case DebugFlag::TAP_DEBUG:                return "TAP_DEBUG";
+            case DebugFlag::KBD_DEBUG:                return "KBD_DEBUG";
+            case DebugFlag::PRT_DEBUG:                return "PRT_DEBUG";
+            case DebugFlag::EXP_DEBUG:                return "EXP_DEBUG";
+            case DebugFlag::USR_DEBUG:                return "USR_DEBUG";
 
                 // Other components
-            case FLAG_REC_DEBUG:                return "REC_DEBUG";
-            case FLAG_REU_DEBUG:                return "REU_DEBUG";
-            case FLAG_SCK_DEBUG:                return "SCK_DEBUG";
-            case FLAG_SRV_DEBUG:                return "SRV_DEBUG";
+            case DebugFlag::REC_DEBUG:                return "REC_DEBUG";
+            case DebugFlag::REU_DEBUG:                return "REU_DEBUG";
+            case DebugFlag::SCK_DEBUG:                return "SCK_DEBUG";
+            case DebugFlag::SRV_DEBUG:                return "SRV_DEBUG";
 
                 // Forced error conditions
-            case FLAG_FORCE_ROM_MISSING:        return "FORCE_ROM_MISSING";
-            case FLAG_FORCE_MEGA64_MISMATCH:    return "FORCE_MEGA64_MISMATCH";
-            case FLAG_FORCE_SNAP_TOO_OLD:       return "FORCE_SNAP_TOO_OLD";
-            case FLAG_FORCE_SNAP_TOO_NEW:       return "FORCE_SNAP_TOO_NEW";
-            case FLAG_FORCE_SNAP_IS_BETA:       return "FORCE_SNAP_IS_BETA";
-            case FLAG_FORCE_SNAP_CORRUPTED:     return "FORCE_SNAP_CORRUPTE";
-            case FLAG_FORCE_CRT_UNKNOWN:        return "FORCE_CRT_UNKNOWN";
-            case FLAG_FORCE_CRT_UNSUPPORTED:    return "FORCE_CRT_UNSUPPORTED";
-            case FLAG_FORCE_RECORDING_ERROR:    return "FORCE_RECORDING_ERROR";
-            case FLAG_FORCE_NO_FFMPEG:          return "FORCE_NO_FFMPEG";
+            case DebugFlag::FORCE_ROM_MISSING:        return "FORCE_ROM_MISSING";
+            case DebugFlag::FORCE_MEGA64_MISMATCH:    return "FORCE_MEGA64_MISMATCH";
+            case DebugFlag::FORCE_SNAP_TOO_OLD:       return "FORCE_SNAP_TOO_OLD";
+            case DebugFlag::FORCE_SNAP_TOO_NEW:       return "FORCE_SNAP_TOO_NEW";
+            case DebugFlag::FORCE_SNAP_IS_BETA:       return "FORCE_SNAP_IS_BETA";
+            case DebugFlag::FORCE_SNAP_CORRUPTED:     return "FORCE_SNAP_CORRUPTE";
+            case DebugFlag::FORCE_CRT_UNKNOWN:        return "FORCE_CRT_UNKNOWN";
+            case DebugFlag::FORCE_CRT_UNSUPPORTED:    return "FORCE_CRT_UNSUPPORTED";
+            case DebugFlag::FORCE_RECORDING_ERROR:    return "FORCE_RECORDING_ERROR";
+            case DebugFlag::FORCE_NO_FFMPEG:          return "FORCE_NO_FFMPEG";
         }
         return "???";
     }
@@ -212,88 +210,88 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
         switch (value) {
 
                 //General
-            case FLAG_XFILES:                   return "Report paranormal activity";
-            case FLAG_CNF_DEBUG:                return "Configuration";
-            case FLAG_DEF_DEBUG:                return "User defaults";
+            case DebugFlag::XFILES:                   return "Report paranormal activity";
+            case DebugFlag::CNF_DEBUG:                return "Configuration";
+            case DebugFlag::DEF_DEBUG:                return "User defaults";
 
                 // Emulator
-            case FLAG_RUN_DEBUG:                return "Run loop, component states";
-            case FLAG_TIM_DEBUG:                return "Thread synchronization";
-            case FLAG_WARP_DEBUG:               return "Warp mode";
-            case FLAG_CMD_DEBUG:                return "Command queue";
-            case FLAG_MSG_DEBUG:                return "Message queue";
-            case FLAG_SNP_DEBUG:                return "Serializing (snapshots)";
+            case DebugFlag::RUN_DEBUG:                return "Run loop, component states";
+            case DebugFlag::TIM_DEBUG:                return "Thread synchronization";
+            case DebugFlag::WARP_DEBUG:               return "Warp mode";
+            case DebugFlag::CMD_DEBUG:                return "Command queue";
+            case DebugFlag::MSG_DEBUG:                return "Message queue";
+            case DebugFlag::SNP_DEBUG:                return "Serializing (snapshots)";
 
                 // Run ahead
-            case FLAG_RUA_DEBUG:                return "Inform about run-ahead activity";
-            case FLAG_RUA_CHECKSUM:             return "Verify the integrity of the run-ahead instance";
-            case FLAG_RUA_ON_STEROIDS:          return "Update the run-ahead instance in every frame";
+            case DebugFlag::RUA_DEBUG:                return "Inform about run-ahead activity";
+            case DebugFlag::RUA_CHECKSUM:             return "Verify the integrity of the run-ahead instance";
+            case DebugFlag::RUA_ON_STEROIDS:          return "Update the run-ahead instance in every frame";
 
                 // CPU
-            case FLAG_CPU_DEBUG:                return "CPU";
-            case FLAG_IRQ_DEBUG:                return "Interrupts";
+            case DebugFlag::CPU_DEBUG:                return "CPU";
+            case DebugFlag::IRQ_DEBUG:                return "Interrupts";
 
                 // Memory
-            case FLAG_MEM_DEBUG:                return "RAM and ROM";
+            case DebugFlag::MEM_DEBUG:                return "RAM and ROM";
 
                 // CIAs
-            case FLAG_CIA_DEBUG:                return "Complex Interface Adapter";
-            case FLAG_CIAREG_DEBUG:             return "CIA registers";
+            case DebugFlag::CIA_DEBUG:                return "Complex Interface Adapter";
+            case DebugFlag::CIAREG_DEBUG:             return "CIA registers";
 
                 // VICII
-            case FLAG_VICII_DEBUG:              return "Video Interface Controller";
-            case FLAG_VICII_REG_DEBUG:          return "VICII registers";
-            case FLAG_VICII_SAFE_MODE:          return "Disable performance optimizations";
-            case FLAG_VICII_STATS:              return "Collect statistical information";
-            case FLAG_RASTERIRQ_DEBUG:          return "Raster interrupt";
+            case DebugFlag::VICII_DEBUG:              return "Video Interface Controller";
+            case DebugFlag::VICII_REG_DEBUG:          return "VICII registers";
+            case DebugFlag::VICII_SAFE_MODE:          return "Disable performance optimizations";
+            case DebugFlag::VICII_STATS:              return "Collect statistical information";
+            case DebugFlag::RASTERIRQ_DEBUG:          return "Raster interrupt";
 
                 // SID
-            case FLAG_SID_DEBUG:                return "Sound Interface Device";
-            case FLAG_SID_EXEC:                 return "Sound Interface Device (Execution)";
-            case FLAG_SIDREG_DEBUG:             return "Sound Interface Device (Registers)";
-            case FLAG_AUDBUF_DEBUG:             return "Audio buffers";
-            case FLAG_AUDVOL_DEBUG:             return "Audio volumes";
+            case DebugFlag::SID_DEBUG:                return "Sound Interface Device";
+            case DebugFlag::SID_EXEC:                 return "Sound Interface Device (Execution)";
+            case DebugFlag::SIDREG_DEBUG:             return "Sound Interface Device (Registers)";
+            case DebugFlag::AUDBUF_DEBUG:             return "Audio buffers";
+            case DebugFlag::AUDVOL_DEBUG:             return "Audio volumes";
                 
                 // Drive
-            case FLAG_VIA_DEBUG:                return "Versatile Interface Adapter";
-            case FLAG_PIA_DEBUG:                return "Peripheral Interface Adapter";
-            case FLAG_SER_DEBUG:                return "Serial port (IEC bus)";
-            case FLAG_DSK_DEBUG:                return "Disk controller execution";
-            case FLAG_DSKCHG_DEBUG:             return "Disk change procedure";
-            case FLAG_GCR_DEBUG:                return "Disk encoding / decoding";
-            case FLAG_FS_DEBUG:                 return "File System Classes";
-            case FLAG_PAR_DEBUG:                return "Parallel cable";
+            case DebugFlag::VIA_DEBUG:                return "Versatile Interface Adapter";
+            case DebugFlag::PIA_DEBUG:                return "Peripheral Interface Adapter";
+            case DebugFlag::SER_DEBUG:                return "Serial port (IEC bus)";
+            case DebugFlag::DSK_DEBUG:                return "Disk controller execution";
+            case DebugFlag::DSKCHG_DEBUG:             return "Disk change procedure";
+            case DebugFlag::GCR_DEBUG:                return "Disk encoding / decoding";
+            case DebugFlag::FS_DEBUG:                 return "File System Classes";
+            case DebugFlag::PAR_DEBUG:                return "Parallel cable";
 
                 // Media
-            case FLAG_CRT_DEBUG:                return "Cartridges";
-            case FLAG_FILE_DEBUG:               return "Media files (D64,T64,...)";
+            case DebugFlag::CRT_DEBUG:                return "Cartridges";
+            case DebugFlag::FILE_DEBUG:               return "Media files (D64,T64,...)";
 
                 // Peripherals
-            case FLAG_JOY_DEBUG:                return "Joystick";
-            case FLAG_DRV_DEBUG:                return "Floppy drives";
-            case FLAG_TAP_DEBUG:                return "Datasette";
-            case FLAG_KBD_DEBUG:                return "Keyboard";
-            case FLAG_PRT_DEBUG:                return "Control ports and connected devices";
-            case FLAG_EXP_DEBUG:                return "Expansion port";
-            case FLAG_USR_DEBUG:                return "User port";
+            case DebugFlag::JOY_DEBUG:                return "Joystick";
+            case DebugFlag::DRV_DEBUG:                return "Floppy drives";
+            case DebugFlag::TAP_DEBUG:                return "Datasette";
+            case DebugFlag::KBD_DEBUG:                return "Keyboard";
+            case DebugFlag::PRT_DEBUG:                return "Control ports and connected devices";
+            case DebugFlag::EXP_DEBUG:                return "Expansion port";
+            case DebugFlag::USR_DEBUG:                return "User port";
 
                 // Other components
-            case FLAG_REC_DEBUG:                return "Screen recorder";
-            case FLAG_REU_DEBUG:                return "REU memory expansion";
-            case FLAG_SCK_DEBUG:                return "Sockets";
-            case FLAG_SRV_DEBUG:                return "Remote servers";
+            case DebugFlag::REC_DEBUG:                return "Screen recorder";
+            case DebugFlag::REU_DEBUG:                return "REU memory expansion";
+            case DebugFlag::SCK_DEBUG:                return "Sockets";
+            case DebugFlag::SRV_DEBUG:                return "Remote servers";
 
                 // Forced error conditions
-            case FLAG_FORCE_ROM_MISSING:        return "";
-            case FLAG_FORCE_MEGA64_MISMATCH:    return "";
-            case FLAG_FORCE_SNAP_TOO_OLD:       return "";
-            case FLAG_FORCE_SNAP_TOO_NEW:       return "";
-            case FLAG_FORCE_SNAP_IS_BETA:       return "";
-            case FLAG_FORCE_SNAP_CORRUPTED:     return "";
-            case FLAG_FORCE_CRT_UNKNOWN:        return "";
-            case FLAG_FORCE_CRT_UNSUPPORTED:    return "";
-            case FLAG_FORCE_RECORDING_ERROR:    return "";
-            case FLAG_FORCE_NO_FFMPEG:          return "";
+            case DebugFlag::FORCE_ROM_MISSING:        return "";
+            case DebugFlag::FORCE_MEGA64_MISMATCH:    return "";
+            case DebugFlag::FORCE_SNAP_TOO_OLD:       return "";
+            case DebugFlag::FORCE_SNAP_TOO_NEW:       return "";
+            case DebugFlag::FORCE_SNAP_IS_BETA:       return "";
+            case DebugFlag::FORCE_SNAP_CORRUPTED:     return "";
+            case DebugFlag::FORCE_CRT_UNKNOWN:        return "";
+            case DebugFlag::FORCE_CRT_UNSUPPORTED:    return "";
+            case DebugFlag::FORCE_RECORDING_ERROR:    return "";
+            case DebugFlag::FORCE_NO_FFMPEG:          return "";
         }
         return "???";
     }    

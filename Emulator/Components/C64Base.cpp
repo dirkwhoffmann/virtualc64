@@ -187,14 +187,14 @@ C64::getOption(Option opt) const
 {
     switch (opt) {
 
-        case OPT_C64_WARP_BOOT:         return config.warpBoot;
-        case OPT_C64_WARP_MODE:         return config.warpMode;
-        case OPT_C64_SPEED_BOOST:       return config.speedBoost;
-        case OPT_C64_VSYNC:             return config.vsync;
-        case OPT_C64_RUN_AHEAD:         return config.runAhead;
-        case OPT_C64_SNAP_AUTO:         return config.snapshots;
-        case OPT_C64_SNAP_DELAY:        return config.snapshotDelay;
-        case OPT_C64_SNAP_COMPRESS:     return config.compressSnapshots;
+        case OPT_C64_WARP_BOOT:         return (i64)config.warpBoot;
+        case OPT_C64_WARP_MODE:         return (i64)config.warpMode;
+        case OPT_C64_SPEED_BOOST:       return (i64)config.speedBoost;
+        case OPT_C64_VSYNC:             return (i64)config.vsync;
+        case OPT_C64_RUN_AHEAD:         return (i64)config.runAhead;
+        case OPT_C64_SNAP_AUTO:         return (i64)config.snapshots;
+        case OPT_C64_SNAP_DELAY:        return (i64)config.snapshotDelay;
+        case OPT_C64_SNAP_COMPRESS:     return (i64)config.compressSnapshots;
 
         default:
             fatalError;
@@ -212,8 +212,8 @@ C64::checkOption(Option opt, i64 value)
 
         case OPT_C64_WARP_MODE:
 
-            if (!WarpModeEnum::isValid(value)) {
-                throw Error(Fault::OPT_INV_ARG, WarpModeEnum::keyList());
+            if (!WarpEnum::isValid(value)) {
+                throw Error(Fault::OPT_INV_ARG, WarpEnum::keyList());
             }
             return;
 
@@ -269,7 +269,7 @@ C64::setOption(Option opt, i64 value)
 
         case OPT_C64_WARP_MODE:
 
-            config.warpMode = WarpMode(value);
+            config.warpMode = Warp(value);
             return;
 
         case OPT_C64_VSYNC:

@@ -33,7 +33,7 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_HOST_FRAMEBUF_WIDTH:       return numParser(" pixels");
         case OPT_HOST_FRAMEBUF_HEIGHT:      return numParser(" pixels");
 
-        case OPT_C64_WARP_MODE:             return enumParser.template operator()<WarpModeEnum,WarpMode>();
+        case OPT_C64_WARP_MODE:             return enumParser.template operator()<WarpEnum,Warp>();
         case OPT_C64_WARP_BOOT:             return numParser(" sec");
         case OPT_C64_VSYNC:                 return boolParser();
         case OPT_C64_SPEED_BOOST:           return numParser("%");
