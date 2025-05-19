@@ -153,7 +153,7 @@ extension vc64.FSUsage: CustomStringConvertible {
     }
 }
 
-extension vc64.ErrorCode {
+extension vc64.Fault {
 
     func description(expected exp: Int = 0) -> String {
         

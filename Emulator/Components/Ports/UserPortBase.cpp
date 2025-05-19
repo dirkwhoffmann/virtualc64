@@ -58,12 +58,12 @@ UserPort::checkOption(Option opt, i64 value)
         case OPT_USR_DEVICE:
 
             if (!UserPortDeviceEnum::isValid(value)) {
-                throw Error(VC64ERROR_OPT_INV_ARG, UserPortDeviceEnum::keyList());
+                throw Error(Fault::OPT_INV_ARG, UserPortDeviceEnum::keyList());
             }
             return;
 
         default:
-            throw Error(VC64ERROR_OPT_UNSUPPORTED);
+            throw Error(Fault::OPT_UNSUPPORTED);
     }
 }
 

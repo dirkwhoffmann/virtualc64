@@ -64,7 +64,7 @@
 #define SCROLL_SPEED_THRESHOLD 2.0
 #define SCROLL_DISTANCE_THRESHOLD 0.1
 #define DECELERATION_MULTIPLIER 30.0
-#define FLOAT_VC64ERROR_MARGIN 0.000001
+#define FLOAT_ERROR_MARGIN 0.000001
 
 #ifdef ICAROUSEL_MACOS
 #define MAX_VISIBLE_ITEMS 50
@@ -1595,7 +1595,7 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
     [self insertView:nil atIndex:index];
     [self loadViewAtIndex:index];
     
-    if (fabs(_itemWidth) < FLOAT_VC64ERROR_MARGIN)
+    if (fabs(_itemWidth) < FLOAT_ERROR_MARGIN)
     {
         [self updateItemWidth];
     }
@@ -1792,15 +1792,15 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
         CGFloat distance = _startVelocity * time + 0.5 * acceleration * pow(time, 2.0);
         _scrollOffset = _startOffset + distance;
         [self didScroll];
-        if (fabs(time - _scrollDuration) < FLOAT_VC64ERROR_MARGIN)
+        if (fabs(time - _scrollDuration) < FLOAT_ERROR_MARGIN)
         {
             _decelerating = NO;
             [self pushAnimationState:YES];
             [_delegate carouselDidEndDecelerating:self];
             [self popAnimationState];
-            if ((_scrollToItemBoundary || fabs(_scrollOffset - [self clampedOffset:_scrollOffset]) > FLOAT_VC64ERROR_MARGIN) && !_autoscroll)
+            if ((_scrollToItemBoundary || fabs(_scrollOffset - [self clampedOffset:_scrollOffset]) > FLOAT_ERROR_MARGIN) && !_autoscroll)
             {
-                if (fabs(_scrollOffset - self.currentItemIndex) < FLOAT_VC64ERROR_MARGIN)
+                if (fabs(_scrollOffset - self.currentItemIndex) < FLOAT_ERROR_MARGIN)
                 {
                     //call scroll to trigger events for legacy support reasons
                     //even though technically we don't need to scroll at all
@@ -1832,7 +1832,7 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
         //autoscroll goes backwards from what you'd expect, for historical reasons
         self.scrollOffset = [self clampedOffset:_scrollOffset - delta * _autoscroll];
     }
-    else if (fabs(_toggle) > FLOAT_VC64ERROR_MARGIN)
+    else if (fabs(_toggle) > FLOAT_ERROR_MARGIN)
     {
         NSTimeInterval toggleDuration = _startVelocity? MIN(1.0, MAX(0.0, 1.0 / fabs(_startVelocity))): 1.0;
         toggleDuration = MIN_TOGGLE_DURATION + (MAX_TOGGLE_DURATION - MIN_TOGGLE_DURATION) * toggleDuration;
@@ -1916,7 +1916,7 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
     [self transformItemViews];
     
     //notify delegate of offset change
-    if (fabs(_scrollOffset - _previousScrollOffset) > FLOAT_VC64ERROR_MARGIN)
+    if (fabs(_scrollOffset - _previousScrollOffset) > FLOAT_ERROR_MARGIN)
     {
         [self pushAnimationState:YES];
         [_delegate carouselDidScroll:self];
@@ -2141,9 +2141,9 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
                 
                 if (!_decelerating)
                 {
-                    if ((_scrollToItemBoundary || fabs(_scrollOffset - [self clampedOffset:_scrollOffset]) > FLOAT_VC64ERROR_MARGIN) && !_autoscroll)
+                    if ((_scrollToItemBoundary || fabs(_scrollOffset - [self clampedOffset:_scrollOffset]) > FLOAT_ERROR_MARGIN) && !_autoscroll)
                     {
-                        if (fabs(_scrollOffset - self.currentItemIndex) < FLOAT_VC64ERROR_MARGIN)
+                        if (fabs(_scrollOffset - self.currentItemIndex) < FLOAT_ERROR_MARGIN)
                         {
                             //call scroll to trigger events for legacy support reasons
                             //even though technically we don't need to scroll at all

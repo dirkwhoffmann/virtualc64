@@ -49,11 +49,11 @@ using namespace vc64;
 
 @interface ExceptionWrapper : NSObject {
     
-    ErrorCode errorCode;
+    Fault errorCode;
     NSString *what;
 }
 
-@property ErrorCode errorCode;
+@property Fault errorCode;
 @property NSString *what;
 
 @end
@@ -717,7 +717,7 @@ struct GuardInfo {
 - (FSBlockType)blockType:(NSInteger)blockNr;
 - (FSUsage)itemType:(NSInteger)blockNr pos:(NSInteger)pos;
 - (FSErrorReport)check:(BOOL)strict;
-- (ErrorCode)check:(NSInteger)nr pos:(NSInteger)pos expected:(unsigned char *)exp strict:(BOOL)strict;
+- (Fault)check:(NSInteger)nr pos:(NSInteger)pos expected:(unsigned char *)exp strict:(BOOL)strict;
 - (BOOL)isCorrupted:(NSInteger)blockNr;
 - (NSInteger)getCorrupted:(NSInteger)blockNr;
 - (NSInteger)nextCorrupted:(NSInteger)blockNr;

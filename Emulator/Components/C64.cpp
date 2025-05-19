@@ -381,7 +381,7 @@ C64::exportConfig(const fs::path &path) const
     auto fs = std::ofstream(path, std::ofstream::binary);
 
     if (!fs.is_open()) {
-        throw Error(VC64ERROR_FILE_CANT_WRITE);
+        throw Error(Fault::FILE_CANT_WRITE);
     }
 
     exportConfig(fs);
@@ -404,7 +404,7 @@ C64::get(Option opt, isize objid) const
     debug(CNF_DEBUG, "get(%s, %ld)\n", OptionEnum::key(opt), objid);
 
     auto target = routeOption(opt, objid);
-    if (target == nullptr) throw Error(VC64ERROR_OPT_INV_ID);
+    if (target == nullptr) throw Error(Fault::OPT_INV_ID);
     return target->getOption(opt);
 }
 
@@ -429,7 +429,7 @@ C64::check(Option opt, i64 value, const std::vector<isize> objids)
         debug(CNF_DEBUG, "check(%s, %lld, %ld)\n", OptionEnum::key(opt), value, objid);
 
         auto target = routeOption(opt, objid);
-        if (target == nullptr) throw Error(VC64ERROR_OPT_INV_ID);
+        if (target == nullptr) throw Error(Fault::OPT_INV_ID);
 
         target->checkOption(opt, value);
     }
@@ -458,7 +458,7 @@ C64::set(Option opt, i64 value, const std::vector<isize> objids)
         debug(CNF_DEBUG, "set(%s, %lld, %ld)\n", OptionEnum::key(opt), value, objid);
 
         auto target = routeOption(opt, objid);
-        if (target == nullptr) throw Error(VC64ERROR_OPT_INV_ID);
+        if (target == nullptr) throw Error(Fault::OPT_INV_ID);
 
         target->setOption(opt, value);
     }
@@ -936,16 +936,16 @@ C64::_isReady() const
     bool mega = hasMega65Rom(ROM_TYPE_BASIC) && hasMega65Rom(ROM_TYPE_KERNAL);
     
     if (!hasRom(ROM_TYPE_BASIC)) {
-        throw Error(VC64ERROR_ROM_BASIC_MISSING);
+        throw Error(Fault::ROM_BASIC_MISSING);
     }
     if (!hasRom(ROM_TYPE_CHAR)) {
-        throw Error(VC64ERROR_ROM_CHAR_MISSING);
+        throw Error(Fault::ROM_CHAR_MISSING);
     }
     if (!hasRom(ROM_TYPE_KERNAL) || FORCE_ROM_MISSING) {
-        throw Error(VC64ERROR_ROM_KERNAL_MISSING);
+        throw Error(Fault::ROM_KERNAL_MISSING);
     }
     if (FORCE_MEGA64_MISMATCH || (mega && string(mega65BasicRev()) != string(mega65KernalRev()))) {
-        throw Error(VC64ERROR_ROM_MEGA65_MISMATCH);
+        throw Error(Fault::ROM_MEGA65_MISMATCH);
     }
 }
 
@@ -1340,7 +1340,7 @@ C64::loadSnapshot(const MediaFile &file)
 
     } catch (...) {
 
-        throw Error(VC64ERROR_FILE_TYPE_MISMATCH);
+        throw Error(Fault::FILE_TYPE_MISMATCH);
     }
 }
 
@@ -1580,7 +1580,7 @@ C64::loadRom(const MediaFile &file)
             
         default:
             
-            throw Error(VC64ERROR_FILE_TYPE_MISMATCH);
+            throw Error(Fault::FILE_TYPE_MISMATCH);
     }
 }
 
@@ -1794,7 +1794,7 @@ C64::flash(const MediaFile &file, isize nr)
 
     } catch (...) {
 
-        throw Error(VC64ERROR_FILE_TYPE_MISMATCH);
+        throw Error(Fault::FILE_TYPE_MISMATCH);
     }
 }
 

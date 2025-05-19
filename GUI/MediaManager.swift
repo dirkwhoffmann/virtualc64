@@ -408,7 +408,7 @@ class MediaManager {
             file = try MediaFileProxy.make(with: fs, type: .P00)
 
         default:
-            throw VC64Error(vc64.ErrorCode.FILE_TYPE_MISMATCH)
+            throw VC64Error(vc64.Fault.FILE_TYPE_MISMATCH)
         }
 
         try export(file: file!, to: url)

@@ -29,7 +29,7 @@ using namespace vc64;
 
     if (self = [super init]) {
         
-        errorCode = VC64ERROR_OK;
+        errorCode = Fault::OK;
         what = @"";
     }
     return self;
@@ -37,7 +37,7 @@ using namespace vc64;
 
 - (void)save:(const Error &)exception
 {
-    errorCode = ErrorCode(exception.data);
+    errorCode = Fault(exception.data);
     what = @(exception.what());
 }
 
@@ -1502,7 +1502,7 @@ using namespace vc64;
     return [self fs]->check(strict);
 }
 
-- (ErrorCode)check:(NSInteger)blockNr
+- (Fault)check:(NSInteger)blockNr
                pos:(NSInteger)pos
           expected:(unsigned char *)exp
             strict:(BOOL)strict

@@ -23,8 +23,8 @@ Emulator::_dump(Category category, std::ostream& os) const
 
     if (category == Category::Debug) {
 
-        for (isize i = DebugFlagEnum::minVal; i < DebugFlagEnum::maxVal; i++) {
-
+        for (const auto &i : DebugFlagEnum::elements()) {
+            
             os << tab(DebugFlagEnum::key(i));
             os << bol(getDebugVariable(DebugFlag(i))) << std::endl;
         }

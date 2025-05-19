@@ -250,7 +250,7 @@ public:
     FSErrorReport check(bool strict);
 
     // Checks a single byte in a certain block
-    ErrorCode check(isize blockNr, u32 pos, u8 *expected, bool strict);
+    Fault check(isize blockNr, u32 pos, u8 *expected, bool strict);
 
     // Checks if the block with the given number is part of the volume
     bool isBlockNumber(isize nr) const { return nr >= 0 && nr < getNumBlocks(); }
@@ -287,18 +287,18 @@ public:
 
     // Imports the volume from a buffer
     void importVolume(const u8 *src, isize size) throws;
-    bool importVolume(const u8 *src, isize size, ErrorCode *err);
+    bool importVolume(const u8 *src, isize size, Fault *err);
     
     // Imports a folder from the host file system
     void importDirectory(const fs::path &path) throws;
     void importDirectory(const fs::directory_entry &dir) throws;
 
     // Exports the volume to a buffer
-    bool exportVolume(u8 *dst, isize size, ErrorCode *err = nullptr) const;
+    bool exportVolume(u8 *dst, isize size, Fault *err = nullptr) const;
 
     // Exports a single block or a range of blocks
-    bool exportBlock(isize nr, u8 *dst, isize size, ErrorCode *err = nullptr) const;
-    bool exportBlocks(isize first, isize last, u8 *dst, isize size, ErrorCode *err = nullptr) const;
+    bool exportBlock(isize nr, u8 *dst, isize size, Fault *err = nullptr) const;
+    bool exportBlocks(isize first, isize last, u8 *dst, isize size, Fault *err = nullptr) const;
 
     // Exports all files or a single file to a folder in the host file system
     void exportDirectory(const fs::path &path, bool createDir = true) throws;

@@ -22,11 +22,11 @@ namespace vc64 {
 /// Emulator exception
 struct Error : public util::Exception
 {
-    Error(ErrorCode code, const string &s);
-    Error(ErrorCode code, const char *s) : Error(code, string(s)) { };
-    Error(ErrorCode code, const std::filesystem::path &path) : Error(code, path.string()) { };
-    Error(ErrorCode code, long v) : Error(code, std::to_string(v)) { };
-    Error(ErrorCode code) : Error(code, "") { }
+    Error(Fault code, const string &s);
+    Error(Fault code, const char *s) : Error(code, string(s)) { };
+    Error(Fault code, const std::filesystem::path &path) : Error(code, path.string()) { };
+    Error(Fault code, long v) : Error(code, std::to_string(v)) { };
+    Error(Fault code) : Error(code, "") { }
 
     /// Returns a textual description of this error
     const char *what() const throw() override;    

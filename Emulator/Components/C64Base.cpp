@@ -213,14 +213,14 @@ C64::checkOption(Option opt, i64 value)
         case OPT_C64_WARP_MODE:
 
             if (!WarpModeEnum::isValid(value)) {
-                throw Error(VC64ERROR_OPT_INV_ARG, WarpModeEnum::keyList());
+                throw Error(Fault::OPT_INV_ARG, WarpModeEnum::keyList());
             }
             return;
 
         case OPT_C64_SPEED_BOOST:
 
             if (value < 50 || value > 200) {
-                throw Error(VC64ERROR_OPT_INV_ARG, "50...200");
+                throw Error(Fault::OPT_INV_ARG, "50...200");
             }
             return;
 
@@ -231,7 +231,7 @@ C64::checkOption(Option opt, i64 value)
         case OPT_C64_RUN_AHEAD:
 
             if (value < 0 || value > 12) {
-                throw Error(VC64ERROR_OPT_INV_ARG, "0...12");
+                throw Error(Fault::OPT_INV_ARG, "0...12");
             }
             return;
 
@@ -242,7 +242,7 @@ C64::checkOption(Option opt, i64 value)
         case OPT_C64_SNAP_DELAY:
 
             if (value < 10 || value > 3600) {
-                throw Error(VC64ERROR_OPT_INV_ARG, "10...3600");
+                throw Error(Fault::OPT_INV_ARG, "10...3600");
             }
             return;
 
@@ -251,7 +251,7 @@ C64::checkOption(Option opt, i64 value)
             return;
 
         default:
-            throw Error(VC64ERROR_OPT_UNSUPPORTED);
+            throw Error(Fault::OPT_UNSUPPORTED);
     }
 }
 

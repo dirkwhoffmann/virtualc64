@@ -166,7 +166,7 @@ FSBlock::itemType(u32 byte) const
     }
 }
 
-ErrorCode
+Fault
 FSBlock::check(u32 byte, u8 *expected, bool strict) const
 {
     assert(byte < 256);
@@ -194,7 +194,7 @@ FSBlock::check(u32 byte, u8 *expected, bool strict) const
             
             if (strict && byte >= 0xAB && byte <= 0xFF) EXPECT_BYTE(0x00);
 
-            return VC64ERROR_OK;
+            return Fault::OK;
             
         case FS_BLOCKTYPE_DIR:
             
@@ -213,14 +213,14 @@ FSBlock::check(u32 byte, u8 *expected, bool strict) const
                 }
             }
             
-            return VC64ERROR_OK;
+            return Fault::OK;
             
         case FS_BLOCKTYPE_DATA:
             
             if (byte == 0 && strict) EXPECT_TRACK_REF (data[byte + 1]);
             if (byte == 1 && strict) EXPECT_SECTOR_REF(data[byte - 1]);
 
-            return VC64ERROR_OK;
+            return Fault::OK;
             
         default:
             fatalError;
@@ -235,11 +235,11 @@ FSBlock::check(bool strict) const
     
     for (u32 i = 0; i < 256; i++) {
         
-        ErrorCode err = check(i, &expected, strict);
-        if (err != VC64ERROR_OK) {
+        Fault err = check(i, &expected, strict);
+        if (err != Fault::OK) {
             count++;
             debug(FS_DEBUG, "Block %ld [%d.%d]: %s\n",
-                  nr, i / 4, i % 4, ErrorCodeEnum::key(err));
+                  nr, i / 4, i % 4, FaultEnum::key(err));
         }
     }
     

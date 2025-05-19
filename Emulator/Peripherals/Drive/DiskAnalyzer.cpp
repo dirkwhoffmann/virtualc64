@@ -27,7 +27,7 @@ DiskAnalyzer::DiskAnalyzer(const Disk &disk)
 DiskAnalyzer::DiskAnalyzer(const class Drive &drive)
 {
     auto disk = drive.disk.get();
-    if (disk == nullptr) throw Error(VC64ERROR_DRV_NO_DISK);
+    if (disk == nullptr) throw Error(Fault::DRV_NO_DISK);
 
     init(*disk);
 }

@@ -46,15 +46,29 @@ template <class T, typename E> struct Reflection {
     static constexpr bool isValid(auto value) { return long(value) >= T::minVal && long(value) <= T::maxVal; }
 
     // Returns the key as a C string (including the section prefix)
-    static const char *rawkey(isize value) { return T::_key((E)value); }
+    static const char *rawkey(isize value) { return T::_key((E)value); } // DEPRECATED
 
-    // Returns the key as a C string (excluding the section prefix)
+    // Returns the key as a C string, including the section prefix
+    static const char *fullKey(E value) { return T::_key(value); }
+
+    // Returns the key as a C string, excluding the section prefix
+    static const char *key(E value, bool withPrefix = false) {
+
+        auto *p = fullKey(value);
+        
+        if (!withPrefix) {
+            for (isize i = 0; p[i]; i++) if (p[i] == '.') return p + i + 1;
+        }
+        return p;
+    }
+    /*
     static const char *key(isize value) {
 
         auto *p = rawkey(value);
         for (isize i = 0; p[i]; i++) if (p[i] == '.') return p + i + 1;
         return p;
     }
+    */
     
     // Collects all elements
     static constexpr std::vector<E> elements(std::function<bool(E)> filter = [](E){ return true; }) {
@@ -69,6 +83,7 @@ template <class T, typename E> struct Reflection {
     }
     
     // Returns a textual representation for a bit mask
+    /*
     static const char *mask(isize mask) {
 
         static string result;
@@ -89,43 +104,53 @@ template <class T, typename E> struct Reflection {
 
         return result.c_str();
     }
-
+    */
+    
     // Collects all key / value pairs
-    static std::vector <std::pair<string,long>> 
-    pairs(std::function<bool(E)> filter = [](E) { return true; }) {
+    static std::vector < std::pair<string,long> >
+    pairs(bool withPrefix = false, std::function<bool(E)> filter = [](E){ return true; }) {
 
-        std::vector <std::pair<string,long>> result;
+        std::vector < std::pair<string,long> > result;
 
-        if (isBitField()) {
-
-            for (isize i = T::minVal; i <= T::maxVal; i *= 2) {
-                if (filter(E(i))) result.push_back(std::make_pair(key(i), i));
-            }
-
-        } else {
-
-            for (isize i = T::minVal; i <= T::maxVal; i++) {
-                if (filter(E(i))) result.push_back(std::make_pair(key(i), i));
-            }
+        for (long i = T::minVal; i <= T::maxVal; i += isBitField() ? i : 1) {
+            if (filter(E(i))) result.push_back(std::make_pair(key(E(i), withPrefix), i));
         }
+        
         return result;
     }
 
     // Returns all keys in form of a textual list representation
-    static string keyList(std::function<bool(E)> filter = [](E){ return true; }, const string &delim = ", ") {
+    static string
+    keyList(bool withPrefix = false, std::function<bool(E)> filter = [](E){ return true; }, const string &delim = ", ") {
 
         string result;
 
-        for (const auto &pair : pairs(filter)) {
+        for (const auto &pair : pairs(withPrefix, filter)) {
             result += (result.empty() ? "" : delim) + pair.first;
         }
+
         return result;
     }
 
     // Convenience wrapper
-    static string argList(std::function<bool(E)> filter = [](E){ return true; }) {
+    static string argList(bool withPrefix = false, std::function<bool(E)> filter = [](E){ return true; }) {
 
-        return "{ " + keyList(filter, " | ") + " }";
+        return "{ " + keyList(withPrefix, filter, " | ") + " }";
+    }
+    
+    // Returns a textual representation for a bit mask
+    static const char *mask(isize mask, bool withPrefix = false) {
+
+        static string result;
+        result = "";
+    
+        for (isize i = T::minVal; i <= T::maxVal; i += isBitField() ? i : 1) {
+            if (mask & (isBitField() ? i : 1 << i)) {
+                result += (result.empty() ? "" : " | ") + string(key(E(i), withPrefix));
+            }
+        }
+        
+        return result.c_str();
     }
 };
 

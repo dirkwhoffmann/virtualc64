@@ -50,7 +50,7 @@ RegressionTester::checkOption(Option opt, i64 value)
             return;
 
         default:
-            throw Error(VC64ERROR_OPT_UNSUPPORTED);
+            throw Error(Fault::OPT_UNSUPPORTED);
     }
 }
 

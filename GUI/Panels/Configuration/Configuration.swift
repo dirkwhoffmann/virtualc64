@@ -599,7 +599,7 @@ class Configuration {
 
         func save(_ type: vc64.RomType) throws {
 
-            if url == nil { throw VC64Error(vc64.ErrorCode.FILE_CANT_WRITE) }
+            if url == nil { throw VC64Error(vc64.Fault.FILE_CANT_WRITE) }
             try? FileManager.default.removeItem(at: url!)
             try emu?.saveRom(type, url: url!)
         }

@@ -854,7 +854,7 @@ Console::initCommands(RetroShellCmd &root)
         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
             
             auto stream = std::ifstream(argv.front());
-                    if (!stream.is_open()) throw Error(VC64ERROR_FILE_NOT_FOUND, argv.front());
+                    if (!stream.is_open()) throw Error(Fault::FILE_NOT_FOUND, argv.front());
                     retroShell.asyncExecScript(stream);
         }
     });

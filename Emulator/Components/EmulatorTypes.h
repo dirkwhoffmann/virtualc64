@@ -114,10 +114,10 @@ typedef DEBUG_FLAG DebugFlag;
 struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
 {
     static constexpr long minVal = 0;
-    static constexpr long maxVal = FLAG_FORCE_NO_FFMPEG;
+    static constexpr long maxVal = long(FLAG_FORCE_NO_FFMPEG);
 
     static const char *prefix() { return "FLAG"; }
-    static const char *_key(long value)
+    static const char *_key(DebugFlag value)
     {
         switch (value) {
 

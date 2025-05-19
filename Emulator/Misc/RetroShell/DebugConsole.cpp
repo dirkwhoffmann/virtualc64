@@ -527,7 +527,7 @@ DebugConsole::initCommands(RetroShellCmd &root)
         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
             
             isize nr = parseNum(argv, 0, 0);
-            if (nr < 0 || nr > 3) throw Error(VC64ERROR_OPT_INV_ARG, "0 ... 3");
+            if (nr < 0 || nr > 3) throw Error(Fault::OPT_INV_ARG, "0 ... 3");
 
             dump(sidBridge.sid[nr], { Category::Config, Category::State });
         }
