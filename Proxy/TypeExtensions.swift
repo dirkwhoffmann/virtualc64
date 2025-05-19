@@ -7,10 +7,16 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+typealias ErrorCode = vc64.Fault
+typealias EventSlot = vc64.EventSlot
+typealias EventSlotEnum = vc64.EventSlotEnum
+typealias EventSlotInfo = vc64.EventSlotInfo
+
 extension vc64.EventSlot: CustomStringConvertible {
 
-    public var description: String {
+    public var description: String { return EventSlotName(self) }
 
+    /*
         switch self {
 
         case ._CIA1:    return "CIA 1"
@@ -40,6 +46,7 @@ extension vc64.EventSlot: CustomStringConvertible {
         default:        fatalError()
         }
     }
+    */
 }
 
 extension vc64.FileType {

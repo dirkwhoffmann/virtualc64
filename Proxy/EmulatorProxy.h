@@ -43,6 +43,8 @@ using namespace vc64;
 @class VICIIProxy;
 @class VideoPortProxy;
 
+NSString *EventSlotName(EventSlot slot);
+
 //
 // Exception wrapper
 //

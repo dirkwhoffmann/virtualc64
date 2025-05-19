@@ -13,7 +13,7 @@ class EventTableView: NSTableView {
 
     var emu: EmulatorProxy? { return inspector.emu }
 
-    var slotInfo = [vc64.EventSlotInfo?](repeating: nil, count: vc64.EventSlot._COUNT.rawValue)
+    var slotInfo = [EventSlotInfo?](repeating: nil, count: EventSlotEnum.count())
 
     override func awakeFromNib() {
 
@@ -26,7 +26,7 @@ class EventTableView: NSTableView {
 
         if let emu = emu {
 
-            for row in 0 ..< vc64.EventSlot._COUNT.rawValue {
+            for row in 0 ..< EventSlotEnum.count() {
                 slotInfo[row] = emu.c64.cachedSlotInfo(row)
             }
         }
@@ -43,7 +43,7 @@ extension EventTableView: NSTableViewDataSource {
 
     func numberOfRows(in tableView: NSTableView) -> Int {
 
-        return vc64.EventSlot._COUNT.rawValue
+        return EventSlotEnum.count()
     }
 
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {

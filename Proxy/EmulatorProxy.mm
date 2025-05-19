@@ -16,6 +16,11 @@
 
 using namespace vc64;
 
+NSString *EventSlotName(EventSlot slot)
+{
+    return @(EventSlotEnum::help(slot));
+}
+
 //
 // Exception wrapper
 //

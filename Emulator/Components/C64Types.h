@@ -97,7 +97,7 @@ struct WarpModeEnum : util::Reflection<WarpModeEnum, WarpMode>
     }
 };
 
-enum_long(SLOT)
+enum EventSlot : long
 {
     // Primary slots
     SLOT_CIA1,                      // CIA 1 execution
@@ -126,14 +126,16 @@ enum_long(SLOT)
 
     SLOT_COUNT
 };
-typedef SLOT EventSlot;
+// typedef SLOT EventSlot;
 
 struct EventSlotEnum : util::Reflection<EventSlotEnum, EventSlot>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = SLOT_COUNT - 1;
 
-    static const char *prefix() { return "SLOT"; }
+    static long count() { return maxVal; }
+    
+    // static const char *prefix() { return "SLOT"; }
     static const char *_key(long value)
     {
         switch (value) {
@@ -146,6 +148,10 @@ struct EventSlotEnum : util::Reflection<EventSlotEnum, EventSlot>
             case SLOT_DAT:      return "DAT";
             case SLOT_TER:      return "TER";
 
+            case SLOT_EXP:      return "EXP";
+            case SLOT_TXD:      return "TXD";
+            case SLOT_RXD:      return "RXD";
+            case SLOT_MOT:      return "MOT";
             case SLOT_DC8:      return "DC8";
             case SLOT_DC9:      return "DC9";
             case SLOT_SNP:      return "SNP";
@@ -163,7 +169,33 @@ struct EventSlotEnum : util::Reflection<EventSlotEnum, EventSlot>
     
     static const char *help(EventSlot value)
     {
-        return "";
+        switch (value) {
+
+            case SLOT_CIA1:     return "CIA 1";
+            case SLOT_CIA2:     return "CIA 2";
+            case SLOT_SEC:      return "Next Secondary Event";
+
+            case SLOT_SER:      return "Serial Port";
+            case SLOT_DAT:      return "Datasette Data";
+            case SLOT_TER:      return "Next Tertiary Event";
+
+            case SLOT_EXP:      return "Expansion Port";
+            case SLOT_TXD:      return "RS232 Out";
+            case SLOT_RXD:      return "RS232 In";
+            case SLOT_MOT:      return "Datasette Motor";
+            case SLOT_DC8:      return "Disk Change Drive 8";
+            case SLOT_DC9:      return "Disk Change Drive 9";
+            case SLOT_SNP:      return "Snapshots";
+            case SLOT_RSH:      return "Retro Shell";
+            case SLOT_KEY:      return "Auto Typing";
+            case SLOT_SRV:      return "Server Daemon";
+            case SLOT_DBG:      return "Debugger";
+            case SLOT_ALA:      return "Alarms";
+            case SLOT_INS:      return "Inspector";
+
+            case SLOT_COUNT:    return "???";
+        }
+        return "???";
     }
 };
 
