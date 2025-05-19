@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "Configurable.h"
-#include "Opt.h"
+#include "Option.h"
 #include "Parser.h"
 #include "IOUtils.h"
 #include <algorithm>

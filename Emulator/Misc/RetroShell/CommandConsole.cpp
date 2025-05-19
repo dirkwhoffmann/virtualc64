@@ -13,7 +13,7 @@
 #include "config.h"
 #include "Console.h"
 #include "Emulator.h"
-#include "Opt.h"
+#include "Option.h"
 
 namespace vc64 {
 

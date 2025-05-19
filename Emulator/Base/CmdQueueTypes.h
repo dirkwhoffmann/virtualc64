@@ -15,7 +15,7 @@
 
 #include "JoystickTypes.h"
 #include "Reflection.h"
-#include "Opt.h"
+#include "Option.h"
 
 namespace vc64 {
 

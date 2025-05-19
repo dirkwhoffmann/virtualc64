@@ -14,7 +14,7 @@
 #include "CoreComponent.h"
 #include "Emulator.h"
 #include "Checksum.h"
-#include "Opt.h"
+#include "Option.h"
 
 namespace vc64 {
 

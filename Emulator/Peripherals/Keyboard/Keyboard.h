@@ -24,7 +24,7 @@ class Keyboard final : public SubComponent {
 
     Descriptions descriptions = {{
 
-        .type           = KeyboardClass,
+        .type           = Class::Keyboard,
         .name           = "Keyboard",
         .description    = "Keyboard",
         .shell          = "keyboard"

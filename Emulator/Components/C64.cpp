@@ -1248,13 +1248,13 @@ C64::processINSEvent()
     u64 mask = data[SLOT_INS];
 
     // Analyze bit mask
-    if (mask & 1LL << C64Class)             { record(); }
-    if (mask & 1LL << CPUClass)             { cpu.record(); }
-    if (mask & 1LL << MemoryClass)          { mem.record(); }
-    if (mask & 1LL << CIAClass)             { cia1.record(); cia2.record(); }
-    if (mask & 1LL << VICIIClass)           { vic.record(); }
+    if (mask & 1LL << long(Class::C64))             { record(); }
+    if (mask & 1LL << long(Class::CPU))             { cpu.record(); }
+    if (mask & 1LL << long(Class::Memory))          { mem.record(); }
+    if (mask & 1LL << long(Class::CIA))             { cia1.record(); cia2.record(); }
+    if (mask & 1LL << long(Class::VICII))           { vic.record(); }
     
-    if (mask & 1LL << SIDClass) {
+    if (mask & 1LL << long(Class::SID)) {
         for (isize i = 0; i < 4; i++) sidBridge.sid[i].record();
     }
 

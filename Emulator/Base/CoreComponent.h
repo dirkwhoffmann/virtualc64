@@ -29,7 +29,7 @@ namespace vc64 {
 
 struct Description {
     
-    const CType type;               // Class identifier
+    const Class type;               // Class identifier
     const char *name;               // Short name
     const char *description;        // Textual descripiton
     const char *shell;              // RetroShell access

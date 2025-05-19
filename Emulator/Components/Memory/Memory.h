@@ -25,7 +25,7 @@ class Memory final : public SubComponent, public Inspectable<MemInfo, MemStats> 
 
     Descriptions descriptions = {{
 
-        .type           = MemoryClass,
+        .type           = Class::Memory,
         .name           = "Memory",
         .description    = "C64 Memory",
         .shell          = "memory"

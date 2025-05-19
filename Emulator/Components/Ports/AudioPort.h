@@ -29,7 +29,7 @@ public util::RingBuffer <SamplePair, 12288> {
 
     Descriptions descriptions = {{
 
-        .type           = AudioPortClass,
+        .type           = Class::AudioPort,
         .name           = "Audio",
         .description    = "Audio Port",
         .shell          = "audio"

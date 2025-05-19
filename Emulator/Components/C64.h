@@ -92,13 +92,13 @@ class C64 final : public CoreComponent, public Inspectable<C64Info> {
 
     Descriptions descriptions = {
         {
-            .type           = C64Class,
+            .type           = Class::C64,
             .name           = "C64",
             .description    = "Commodore 64",
             .shell          = "c64"
         },
         {
-            .type           = C64Class,
+            .type           = Class::C64,
             .name           = "C64[run-ahead]",
             .description    = "Commodore 64",
             .shell          = ""

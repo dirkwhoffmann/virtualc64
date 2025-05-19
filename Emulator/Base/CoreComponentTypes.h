@@ -14,48 +14,50 @@
 
 #include "BasicTypes.h"
 
+namespace vc64 {
 
 //
 // Enumerations
 //
 
-enum_long(COMP_TYPE)
+enum class Class : long
 {
-    GenericClass,
-
+    Generic,
+    
     // Components
-    C64Class,
-    CPUClass,
-    CIAClass,
-    HostClass,
-    MemoryClass,
-    PIAClass,
-    SIDClass,
-    SIDBridgeClass,
-    TODClass,
-    VIAClass,
-    VICIIClass,
-
+    C64,
+    CPU,
+    CIA,
+    Host,
+    Memory,
+    PIA,
+    SID,
+    SIDBridge,
+    TOD,
+    VIA,
+    VICII,
+    
     // Ports
-    AudioPortClass,
-    ControlPortClass,
-    ExpansionPortClass,
-    PowerPortClass,
-    RS232Class,
-    SerialPortClass,
-    UserPortClass,
-    VideoPortClass,
-
+    AudioPort,
+    ControlPort,
+    ExpansionPort,
+    PowerPort,
+    RS232,
+    SerialPort,
+    UserPort,
+    VideoPort,
+    
     // Peripherals
-    CartridgeClass,
-    DatasetteClass,
-    DriveClass,
-    DriveMemoryClass,
-    JoystickClass,
-    KeyboardClass,
-    MonitorClass,
-    MouseClass,
-    PaddleClass,
-    ParCableClass
+    Cartridge,
+    Datasette,
+    Drive,
+    DriveMemory,
+    Joystick,
+    Keyboard,
+    Monitor,
+    Mouse,
+    Paddle,
+    ParCable
 };
-typedef COMP_TYPE CType;
+
+}

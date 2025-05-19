@@ -21,7 +21,7 @@ class VideoPort final : public SubComponent {
 
     Descriptions descriptions = {{
 
-        .type           = VideoPortClass,
+        .type           = Class::VideoPort,
         .name           = "Video",
         .description    = "Video Port",
         .shell          = "video"

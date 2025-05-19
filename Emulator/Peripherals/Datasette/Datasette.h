@@ -39,7 +39,7 @@ class Datasette final : public SubComponent, public Inspectable<DatasetteInfo> {
 
     Descriptions descriptions = {{
 
-        .type           = DatasetteClass,
+        .type           = Class::Datasette,
         .name           = "Datasette",
         .description    = "Datasette",
         .shell          = "datasette"

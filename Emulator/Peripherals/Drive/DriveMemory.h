@@ -21,7 +21,7 @@ class DriveMemory final : public SubComponent {
     
     Descriptions descriptions = {{
 
-        .type           = DriveMemoryClass,
+        .type           = Class::DriveMemory,
         .name           = "DriveMemory",
         .description    = "Drive Memory",
         .shell          = ""

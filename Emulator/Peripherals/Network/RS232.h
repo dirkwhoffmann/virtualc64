@@ -21,7 +21,7 @@ class RS232 final : public SubComponent {
 
     Descriptions descriptions = {{
 
-        .type           = RS232Class,
+        .type           = Class::RS232,
         .name           = "RS232",
         .description    = "RS232 User-Port Adapter",
         .shell          = "rs232"

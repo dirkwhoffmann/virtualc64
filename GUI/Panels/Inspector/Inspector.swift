@@ -634,25 +634,25 @@ extension Inspector: NSTabViewDelegate {
     
     func updateInspectionTarget() {
 
-        func mask(_ types: [CType]) -> Int {
+        func mask(_ types: [Class]) -> Int {
 
             var result = 0
             for type in types { result = result | 1 << type.rawValue }
             return result
         }
-        func mask(_ type: CType) -> Int { return mask([type]) }
+        func mask(_ type: Class) -> Int { return mask([type]) }
 
         if let id = panel.selectedTabViewItem?.label {
                     
             switch id {
                 
-            case "CPU":     c64?.autoInspectionMask = mask([.CPUClass])
-            case "Memory":  c64?.autoInspectionMask = mask([.MemoryClass])
-            case "Bus":     c64?.autoInspectionMask = mask([.VICIIClass])
-            case "CIA":     c64?.autoInspectionMask = mask([.CIAClass])
-            case "VICII":   c64?.autoInspectionMask = mask([.VICIIClass])
-            case "SID":     c64?.autoInspectionMask = mask([.SIDClass])
-            case "Events":  c64?.autoInspectionMask = mask([.C64Class])
+            case "CPU":     c64?.autoInspectionMask = mask([.CPU])
+            case "Memory":  c64?.autoInspectionMask = mask([.Memory])
+            case "Bus":     c64?.autoInspectionMask = mask([.VICII])
+            case "CIA":     c64?.autoInspectionMask = mask([.CIA])
+            case "VICII":   c64?.autoInspectionMask = mask([.VICII])
+            case "SID":     c64?.autoInspectionMask = mask([.SID])
+            case "Events":  c64?.autoInspectionMask = mask([.C64])
 
             default:
                 break

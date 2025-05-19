@@ -37,13 +37,13 @@ class Drive final : public SubComponent, public Inspectable<DriveInfo> {
 
     Descriptions descriptions = {
         {
-            .type           = DriveClass,
+            .type           = Class::Drive,
             .name           = "Drive8",
             .description    = "First Floppy Drive",
             .shell          = "drive8"
         },
         {
-            .type           = DriveClass,
+            .type           = Class::Drive,
             .name           = "Drive9",
             .description    = "Second Floppy Drive",
             .shell          = "drive9"

@@ -60,7 +60,7 @@ class VIA6522 : public SubComponent {
     
     Descriptions descriptions = {{
 
-        .type           = VIAClass,
+        .type           = Class::VIA,
         .name           = "VIA",
         .description    = "VIA 6522",
         .shell          = "via"

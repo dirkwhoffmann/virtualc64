@@ -26,7 +26,7 @@ class CPU final : public Peddle, public Inspectable<CPUInfo> {
 
     Descriptions descriptions = {{
 
-        .type           = CPUClass,
+        .type           = Class::CPU,
         .name           = "CPU",
         .description    = "Central Processing Unit",
         .shell          = "cpu"

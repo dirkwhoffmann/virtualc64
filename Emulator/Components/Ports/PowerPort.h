@@ -22,7 +22,7 @@ class PowerPort final : public SubComponent {
 
     Descriptions descriptions = {{
 
-        .type           = PowerPortClass,
+        .type           = Class::PowerPort,
         .name           = "Power",
         .description    = "Power Port",
         .shell          = "power"

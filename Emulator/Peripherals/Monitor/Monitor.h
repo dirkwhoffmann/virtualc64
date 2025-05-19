@@ -22,7 +22,7 @@ class Monitor final : public SubComponent {
 
     Descriptions descriptions = {
         {
-            .type           = MonitorClass,
+            .type           = Class::Monitor,
             .name           = "Monitor",
             .description    = "Computer Monitor",
             .shell          = "monitor"

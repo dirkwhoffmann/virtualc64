@@ -116,7 +116,7 @@ class VICII final : public SubComponent, public Inspectable<VICIIInfo, VICIIStat
     
     Descriptions descriptions = {{
 
-        .type           = VICIIClass,
+        .type           = Class::VICII,
         .name           = "VIC",
         .description    = "Video Interface Controller",
         .shell          = "vic"

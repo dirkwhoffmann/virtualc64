@@ -22,7 +22,7 @@ class ParCable final : public SubComponent {
         
     Descriptions descriptions = {{
 
-        .type           = ParCableClass,
+        .type           = Class::ParCable,
         .name           = "ParCable",
         .description    = "Parallel Drive Cable",
         .shell          = "parcable"

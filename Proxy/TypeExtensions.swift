@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+typealias Class = vc64.Class
 typealias ErrorCode = vc64.Fault
 typealias EventSlot = vc64.EventSlot
 typealias EventSlotEnum = vc64.EventSlotEnum

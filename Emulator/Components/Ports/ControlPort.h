@@ -29,13 +29,13 @@ class ControlPort final : public SubComponent {
 
     Descriptions descriptions = {
         {
-            .type           = ControlPortClass,
+            .type           = Class::ControlPort,
             .name           = "Port1",
             .description    = "Control Port 1",
             .shell          = "port1"
         },
         {
-            .type           = ControlPortClass,
+            .type           = Class::ControlPort,
             .name           = "Port2",
             .description    = "Control Port 2",
             .shell          = "port2"

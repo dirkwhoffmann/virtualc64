@@ -21,7 +21,7 @@ class SerialPort final : public SubComponent, public Inspectable<Void, SerialPor
 
     Descriptions descriptions = {{
 
-        .type           = SerialPortClass,
+        .type           = Class::SerialPort,
         .name           = "Serial",
         .description    = "Serial Port (IEC Bus)",
         .shell          = "serial"
