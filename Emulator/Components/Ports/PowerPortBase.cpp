@@ -27,11 +27,11 @@ PowerPort::_dump(Category category, std::ostream& os) const
 }
 
 i64
-PowerPort::getOption(Option option) const
+PowerPort::getOption(Opt option) const
 {
     switch (option) {
 
-        case OPT_POWER_GRID:  return config.powerGrid;
+        case Opt::POWER_GRID:  return config.powerGrid;
 
         default:
             fatalError;
@@ -39,11 +39,11 @@ PowerPort::getOption(Option option) const
 }
 
 void
-PowerPort::checkOption(Option opt, i64 value)
+PowerPort::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_POWER_GRID:
+        case Opt::POWER_GRID:
 
             if (!PowerGridEnum::isValid(value)) {
                 throw Error(Fault::OPT_INV_ARG, PowerGridEnum::keyList());
@@ -56,13 +56,13 @@ PowerPort::checkOption(Option opt, i64 value)
 }
 
 void
-PowerPort::setOption(Option opt, i64 value)
+PowerPort::setOption(Opt opt, i64 value)
 {
     checkOption(opt, value);
 
     switch (opt) {
 
-        case OPT_POWER_GRID:
+        case Opt::POWER_GRID:
 
             config.powerGrid = (PowerGrid)value;
             return;

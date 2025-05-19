@@ -45,9 +45,6 @@ template <class T, typename E> struct Reflection {
     // Checks if the provides value is inside the valid range
     static constexpr bool isValid(auto value) { return long(value) >= T::minVal && long(value) <= T::maxVal; }
 
-    // Returns the key as a C string (including the section prefix)
-    static const char *rawkey(isize value) { return T::_key((E)value); } // DEPRECATED
-
     // Returns the key as a C string, including the section prefix
     static const char *fullKey(E value) { return T::_key(value); }
 
@@ -61,14 +58,6 @@ template <class T, typename E> struct Reflection {
         }
         return p;
     }
-    /*
-    static const char *key(isize value) {
-
-        auto *p = rawkey(value);
-        for (isize i = 0; p[i]; i++) if (p[i] == '.') return p + i + 1;
-        return p;
-    }
-    */
     
     // Collects all elements
     static constexpr std::vector<E> elements(std::function<bool(E)> filter = [](E){ return true; }) {

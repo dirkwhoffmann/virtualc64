@@ -66,9 +66,9 @@ class Mouse final : public SubComponent {
 
     Options options = {
 
-        OPT_MOUSE_MODEL,
-        OPT_MOUSE_SHAKE_DETECT,
-        OPT_MOUSE_VELOCITY
+        Opt::MOUSE_MODEL,
+        Opt::MOUSE_SHAKE_DETECT,
+        Opt::MOUSE_VELOCITY
     };
 
     // Reference to the control port this device belongs to
@@ -170,9 +170,9 @@ public:
 
     const MouseConfig &getConfig() const { return config; }
     const Options &getOptions() const override { return options; }
-    i64 getOption(Option opt) const override;
-    void checkOption(Option opt, i64 value) override;
-    void setOption(Option opt, i64 value) override;
+    i64 getOption(Opt opt) const override;
+    void checkOption(Opt opt, i64 value) override;
+    void setOption(Opt opt, i64 value) override;
 
 private:
     

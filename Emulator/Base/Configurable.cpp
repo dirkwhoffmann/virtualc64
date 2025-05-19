@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "Configurable.h"
-#include "Option.h"
+#include "Opt.h"
 #include "Parser.h"
 #include "IOUtils.h"
 #include <algorithm>
@@ -22,7 +22,7 @@ namespace vc64 {
 using namespace util;
 
 bool
-Configurable::isValidOption(Option opt) const
+Configurable::isValidOption(Opt opt) const
 {
     for (auto &it: getOptions()) {
         if (it == opt) return true;
@@ -31,7 +31,7 @@ Configurable::isValidOption(Option opt) const
 }
 
 void
-Configurable::checkOption(Option opt, const string &value)
+Configurable::checkOption(Opt opt, const string &value)
 {
     checkOption(opt, OptionParser::parse(opt, value));
 }
@@ -39,11 +39,11 @@ Configurable::checkOption(Option opt, const string &value)
 void
 Configurable::checkOption(const string &opt, const string &value)
 {
-    checkOption(Option(util::parseEnum<OptionEnum>(opt)), value);
+    checkOption(Opt(util::parseEnum<OptionEnum>(opt)), value);
 }
 
 void
-Configurable::setOption(Option opt, const string &value) 
+Configurable::setOption(Opt opt, const string &value) 
 {
     setOption(opt, OptionParser::parse(opt, value));
 }
@@ -51,7 +51,7 @@ Configurable::setOption(Option opt, const string &value)
 void
 Configurable::setOption(const string &opt, const string &value)
 {
-    setOption(Option(util::parseEnum<OptionEnum>(opt)), value);
+    setOption(Opt(util::parseEnum<OptionEnum>(opt)), value);
 }
 
 void

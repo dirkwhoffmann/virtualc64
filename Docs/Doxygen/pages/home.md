@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 	c64.launch(this, messageReceiver);
 
 	// Configure the emulator
-	c64.set(OPT_VICII_REVISION, VICII_PAL_6569_R3);
+	c64.set(Opt::VICII_REVISION, VICII_PAL_6569_R3);
 
 	// Start the emulator
 	c64.run() 

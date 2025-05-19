@@ -52,22 +52,22 @@ class Drive final : public SubComponent, public Inspectable<DriveInfo> {
 
     Options options = {
 
-        OPT_DRV_AUTO_CONFIG,
-        OPT_DRV_TYPE,
-        OPT_DRV_RAM,
-        OPT_DRV_SAVE_ROMS,
-        OPT_DRV_PARCABLE,
-        OPT_DRV_CONNECT,
-        OPT_DRV_POWER_SWITCH,
-        OPT_DRV_POWER_SAVE,
-        OPT_DRV_EJECT_DELAY,
-        OPT_DRV_SWAP_DELAY,
-        OPT_DRV_INSERT_DELAY,
-        OPT_DRV_PAN,
-        OPT_DRV_POWER_VOL,
-        OPT_DRV_STEP_VOL,
-        OPT_DRV_INSERT_VOL,
-        OPT_DRV_EJECT_VOL
+        Opt::DRV_AUTO_CONFIG,
+        Opt::DRV_TYPE,
+        Opt::DRV_RAM,
+        Opt::DRV_SAVE_ROMS,
+        Opt::DRV_PARCABLE,
+        Opt::DRV_CONNECT,
+        Opt::DRV_POWER_SWITCH,
+        Opt::DRV_POWER_SAVE,
+        Opt::DRV_EJECT_DELAY,
+        Opt::DRV_SWAP_DELAY,
+        Opt::DRV_INSERT_DELAY,
+        Opt::DRV_PAN,
+        Opt::DRV_POWER_VOL,
+        Opt::DRV_STEP_VOL,
+        Opt::DRV_INSERT_VOL,
+        Opt::DRV_EJECT_VOL
     };
 
     friend class DriveMemory;
@@ -399,10 +399,10 @@ public:
 
     const DriveConfig &getConfig() const { return config; }
     const Options &getOptions() const override { return options; }
-    i64 getFallback(Option opt) const override;
-    i64 getOption(Option opt) const override;
-    void checkOption(Option opt, i64 value) override;
-    void setOption(Option opt, i64 value) override;
+    i64 getFallback(Opt opt) const override;
+    i64 getOption(Opt opt) const override;
+    void checkOption(Opt opt, i64 value) override;
+    void setOption(Opt opt, i64 value) override;
     void resetConfig() override;
 
     // Updates the current configuration according to the installed ROM

@@ -27,12 +27,12 @@ RegressionTester::_dump(Category category, std::ostream& os) const
 }
 
 i64
-RegressionTester::getOption(Option option) const
+RegressionTester::getOption(Opt option) const
 {
     switch (option) {
 
-        case OPT_DBG_DEBUGCART:     return (i64)config.debugcart;
-        case OPT_DBG_WATCHDOG:      return (i64)config.watchdog;
+        case Opt::DBG_DEBUGCART:     return (i64)config.debugcart;
+        case Opt::DBG_WATCHDOG:      return (i64)config.watchdog;
 
         default:
             fatalError;
@@ -40,12 +40,12 @@ RegressionTester::getOption(Option option) const
 }
 
 void
-RegressionTester::checkOption(Option opt, i64 value)
+RegressionTester::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_DBG_DEBUGCART:
-        case OPT_DBG_WATCHDOG:
+        case Opt::DBG_DEBUGCART:
+        case Opt::DBG_WATCHDOG:
 
             return;
 
@@ -55,18 +55,18 @@ RegressionTester::checkOption(Option opt, i64 value)
 }
 
 void
-RegressionTester::setOption(Option opt, i64 value)
+RegressionTester::setOption(Opt opt, i64 value)
 {
     checkOption(opt, value);
 
     switch (opt) {
 
-        case OPT_DBG_DEBUGCART:
+        case Opt::DBG_DEBUGCART:
 
             config.debugcart = (bool)value;
             return;
 
-        case OPT_DBG_WATCHDOG:
+        case Opt::DBG_WATCHDOG:
 
             config.watchdog = (isize)value;
             setWatchdog(config.watchdog);

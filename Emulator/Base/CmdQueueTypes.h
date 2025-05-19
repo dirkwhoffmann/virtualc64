@@ -15,7 +15,7 @@
 
 #include "JoystickTypes.h"
 #include "Reflection.h"
-#include "Option.h"
+#include "Opt.h"
 
 namespace vc64 {
 
@@ -195,7 +195,7 @@ struct CmdTypeEnum : util::Reflection<CmdTypeEnum, CmdType> {
 
 typedef struct
 {
-    Option option;
+    Opt option;
     i64 value;
     isize id;
 }

@@ -74,18 +74,18 @@ SID::cacheInfo(SIDInfo &info) const
 }
 
 i64
-SID::getOption(Option option) const
+SID::getOption(Opt option) const
 {
 
     switch (option) {
 
-        case OPT_SID_ENABLE:        return config.enabled;
-        case OPT_SID_ADDRESS:       return config.address;
-        case OPT_SID_REVISION:      return config.revision;
-        case OPT_SID_FILTER:        return config.filter;
-        case OPT_SID_ENGINE:        return config.engine;
-        case OPT_SID_SAMPLING:      return config.sampling;
-        case OPT_SID_POWER_SAVE:    return config.powerSave;
+        case Opt::SID_ENABLE:        return config.enabled;
+        case Opt::SID_ADDRESS:       return config.address;
+        case Opt::SID_REVISION:      return config.revision;
+        case Opt::SID_FILTER:        return config.filter;
+        case Opt::SID_ENGINE:        return config.engine;
+        case Opt::SID_SAMPLING:      return config.sampling;
+        case Opt::SID_POWER_SAVE:    return config.powerSave;
 
         default:
             fatalError;
@@ -93,24 +93,24 @@ SID::getOption(Option option) const
 }
 
 i64
-SID::getFallback(Option opt) const
+SID::getFallback(Opt opt) const
 {
     return emulator.defaults.getFallback(opt, objid);
 }
 
 void
-SID::checkOption(Option opt, i64 value)
+SID::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_SID_ENABLE:
+        case Opt::SID_ENABLE:
 
             if (objid == 0 && value == false) {
                 throw Error(Fault::OPT_INV_ARG, "SID 0 can't be disabled");
             }
             return;
 
-        case OPT_SID_ADDRESS:
+        case Opt::SID_ADDRESS:
 
             if (objid == 0 && value != 0xD400) {
                 throw Error(Fault::OPT_INV_ARG, "SID 0 can't be remapped");
@@ -120,32 +120,32 @@ SID::checkOption(Option opt, i64 value)
             }
             return;
 
-        case OPT_SID_REVISION:
+        case Opt::SID_REVISION:
 
             if (!SIDRevisionEnum::isValid(value)) {
                 throw Error(Fault::OPT_INV_ARG, SIDRevisionEnum::keyList());
             }
             return;
 
-        case OPT_SID_FILTER:
+        case Opt::SID_FILTER:
 
             return;
 
-        case OPT_SID_ENGINE:
+        case Opt::SID_ENGINE:
 
             if (!SIDEngineEnum::isValid(value)) {
                 throw Error(Fault::OPT_INV_ARG, SIDEngineEnum::keyList());
             }
             return;
 
-        case OPT_SID_SAMPLING:
+        case Opt::SID_SAMPLING:
 
             if (!SamplingMethodEnum::isValid(value)) {
                 throw Error(Fault::OPT_INV_ARG, SamplingMethodEnum::keyList());
             }
             return;
 
-        case OPT_SID_POWER_SAVE:
+        case Opt::SID_POWER_SAVE:
 
             return;
 
@@ -155,13 +155,13 @@ SID::checkOption(Option opt, i64 value)
 }
 
 void
-SID::setOption(Option opt, i64 value)
+SID::setOption(Opt opt, i64 value)
 {    
     checkOption(opt, value);
 
     switch (opt) {
 
-        case OPT_SID_ENABLE:
+        case Opt::SID_ENABLE:
 
             if (config.enabled != bool(value)) {
 
@@ -171,7 +171,7 @@ SID::setOption(Option opt, i64 value)
             }
             return;
 
-        case OPT_SID_ADDRESS:
+        case Opt::SID_ADDRESS:
 
             if (config.address != value) {
 
@@ -180,7 +180,7 @@ SID::setOption(Option opt, i64 value)
             }
             return;
 
-        case OPT_SID_REVISION:
+        case Opt::SID_REVISION:
 
             if (config.revision != value) {
 
@@ -189,7 +189,7 @@ SID::setOption(Option opt, i64 value)
             }
             return;
 
-        case OPT_SID_FILTER:
+        case Opt::SID_FILTER:
 
             if (config.filter != bool(value)) {
 
@@ -198,7 +198,7 @@ SID::setOption(Option opt, i64 value)
             }
             return;
 
-        case OPT_SID_ENGINE:
+        case Opt::SID_ENGINE:
 
             if (config.engine != value) {
 
@@ -206,7 +206,7 @@ SID::setOption(Option opt, i64 value)
             }
             return;
 
-        case OPT_SID_SAMPLING:
+        case Opt::SID_SAMPLING:
 
             if (config.sampling != value) {
 
@@ -215,7 +215,7 @@ SID::setOption(Option opt, i64 value)
             }
             return;
 
-        case OPT_SID_POWER_SAVE:
+        case Opt::SID_POWER_SAVE:
 
             config.powerSave = bool(value);
             return;

@@ -30,7 +30,7 @@ class PowerPort final : public SubComponent {
 
     Options options = {
 
-        OPT_POWER_GRID
+        Opt::POWER_GRID
     };
 
     PowerPortConfig config = { };
@@ -76,9 +76,9 @@ public:
 
     const PowerPortConfig &getConfig() const { return config; }
     const Options &getOptions() const override { return options; }
-    i64 getOption(Option opt) const override;
-    void checkOption(Option opt, i64 value) override;
-    void setOption(Option opt, i64 value) override;
+    i64 getOption(Opt opt) const override;
+    void checkOption(Opt opt, i64 value) override;
+    void setOption(Opt opt, i64 value) override;
 
 
     //

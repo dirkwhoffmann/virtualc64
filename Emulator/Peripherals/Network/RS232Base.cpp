@@ -36,12 +36,12 @@ RS232::_dump(Category category, std::ostream& os) const
 }
 
 i64
-RS232::getOption(Option option) const
+RS232::getOption(Opt option) const
 {
     switch (option) {
 
-        case OPT_RS232_DEVICE:  return (i64)config.device;
-        case OPT_RS232_BAUD:    return (i64)config.baud;
+        case Opt::RS232_DEVICE:  return (i64)config.device;
+        case Opt::RS232_BAUD:    return (i64)config.baud;
 
         default:
             fatalError;
@@ -49,17 +49,17 @@ RS232::getOption(Option option) const
 }
 
 void
-RS232::checkOption(Option opt, i64 value)
+RS232::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_RS232_DEVICE:
+        case Opt::RS232_DEVICE:
             if (!CommunicationDeviceEnum::isValid(value)) {
                 throw Error(Fault::OPT_INV_ARG, CommunicationDeviceEnum::keyList());
             }
             return;
 
-        case OPT_RS232_BAUD:
+        case Opt::RS232_BAUD:
             return;
 
         default:
@@ -68,16 +68,16 @@ RS232::checkOption(Option opt, i64 value)
 }
 
 void
-RS232::setOption(Option opt, i64 value)
+RS232::setOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_RS232_DEVICE:
+        case Opt::RS232_DEVICE:
 
             config.device = CommunicationDevice(value);
             return;
 
-        case OPT_RS232_BAUD:
+        case Opt::RS232_BAUD:
 
             config.baud = isize(value);
             return;

@@ -107,14 +107,14 @@ class C64 final : public CoreComponent, public Inspectable<C64Info> {
 
     Options options = {
 
-        OPT_C64_WARP_BOOT,
-        OPT_C64_WARP_MODE,
-        OPT_C64_SPEED_BOOST,
-        OPT_C64_VSYNC,
-        OPT_C64_RUN_AHEAD,
-        OPT_C64_SNAP_AUTO,
-        OPT_C64_SNAP_DELAY,
-        OPT_C64_SNAP_COMPRESS
+        Opt::C64_WARP_BOOT,
+        Opt::C64_WARP_MODE,
+        Opt::C64_SPEED_BOOST,
+        Opt::C64_VSYNC,
+        Opt::C64_RUN_AHEAD,
+        Opt::C64_SNAP_AUTO,
+        Opt::C64_SNAP_DELAY,
+        Opt::C64_SNAP_COMPRESS
     };
     
 private:
@@ -435,9 +435,9 @@ public:
     const C64Config &getConfig() const { return config; }
     const Options &getOptions() const override { return options; }
     
-    i64 getOption(Option opt) const override;
-    void checkOption(Option opt, i64 value) override;
-    void setOption(Option opt, i64 value) override;
+    i64 getOption(Opt opt) const override;
+    void checkOption(Opt opt, i64 value) override;
+    void setOption(Opt opt, i64 value) override;
     
     // Exports the current configuration to a script file
     void exportConfig(const fs::path &path) const;
@@ -451,16 +451,16 @@ public:
 public:
 
     // Queries an option
-    i64 get(Option opt, isize objid = 0) const throws;
+    i64 get(Opt opt, isize objid = 0) const throws;
 
     // Checks an option
-    void check(Option opt, i64 value, const std::vector<isize> objids = { }) throws;
+    void check(Opt opt, i64 value, const std::vector<isize> objids = { }) throws;
 
     // Sets an option
-    void set(Option opt, i64 value, const std::vector<isize> objids = { }) throws;
+    void set(Opt opt, i64 value, const std::vector<isize> objids = { }) throws;
 
     // Convenience wrappers
-    void set(Option opt, const string &value, const std::vector<isize> objids = { }) throws;
+    void set(Opt opt, const string &value, const std::vector<isize> objids = { }) throws;
     void set(const string &opt, const string &value, const std::vector<isize> objids = { }) throws;
 
     // Configures the emulator to match a specific C64 model
@@ -469,11 +469,11 @@ public:
 public: // private
 
     // Returns the target component for an option
-    Configurable *routeOption(Option opt, isize objid);
-    const Configurable *routeOption(Option opt, isize objid) const;
+    Configurable *routeOption(Opt opt, isize objid);
+    const Configurable *routeOption(Opt opt, isize objid) const;
 
     // Overrides a config option if the corresponding debug option is enabled
-    i64 overrideOption(Option opt, i64 value) const;
+    i64 overrideOption(Opt opt, i64 value) const;
 
 
     //

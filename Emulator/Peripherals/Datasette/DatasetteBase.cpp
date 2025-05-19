@@ -161,12 +161,12 @@ Datasette::operator << (SerWriter &worker)
 }
 
 i64
-Datasette::getOption(Option option) const
+Datasette::getOption(Opt option) const
 {
     switch (option) {
 
-        case OPT_DAT_MODEL:     return config.model;
-        case OPT_DAT_CONNECT:   return config.connected;
+        case Opt::DAT_MODEL:     return config.model;
+        case Opt::DAT_CONNECT:   return config.connected;
 
         default:
             fatalError;
@@ -174,12 +174,12 @@ Datasette::getOption(Option option) const
 }
 
 void
-Datasette::checkOption(Option opt, i64 value)
+Datasette::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_DAT_MODEL:
-        case OPT_DAT_CONNECT:
+        case Opt::DAT_MODEL:
+        case Opt::DAT_CONNECT:
 
             return;
 
@@ -189,18 +189,18 @@ Datasette::checkOption(Option opt, i64 value)
 }
 
 void
-Datasette::setOption(Option opt, i64 value)
+Datasette::setOption(Opt opt, i64 value)
 {
     checkOption(opt, value);
 
     switch (opt) {
 
-        case OPT_DAT_MODEL:
+        case Opt::DAT_MODEL:
 
             config.model = DatasetteModel(value);
             return;
 
-        case OPT_DAT_CONNECT:
+        case Opt::DAT_CONNECT:
 
             if (config.connected != bool(value)) {
 

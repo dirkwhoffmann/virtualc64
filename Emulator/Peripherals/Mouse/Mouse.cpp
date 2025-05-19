@@ -35,13 +35,13 @@ void Mouse::_didReset(bool hard)
 }
 
 i64
-Mouse::getOption(Option option) const
+Mouse::getOption(Opt option) const
 {
     switch (option) {
 
-        case OPT_MOUSE_MODEL:           return config.model;
-        case OPT_MOUSE_SHAKE_DETECT:    return config.shakeDetection;
-        case OPT_MOUSE_VELOCITY:        return config.velocity;
+        case Opt::MOUSE_MODEL:           return config.model;
+        case Opt::MOUSE_SHAKE_DETECT:    return config.shakeDetection;
+        case Opt::MOUSE_VELOCITY:        return config.velocity;
 
         default:
             fatalError;
@@ -49,22 +49,22 @@ Mouse::getOption(Option option) const
 }
 
 void
-Mouse::checkOption(Option opt, i64 value)
+Mouse::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_MOUSE_MODEL:
+        case Opt::MOUSE_MODEL:
 
             if (!MouseModelEnum::isValid(value)) {
                 throw Error(Fault::OPT_INV_ARG, MouseModelEnum::keyList());
             }
             return;
 
-        case OPT_MOUSE_SHAKE_DETECT:
+        case Opt::MOUSE_SHAKE_DETECT:
 
             return;
 
-        case OPT_MOUSE_VELOCITY:
+        case Opt::MOUSE_VELOCITY:
 
             if (value < 0 || value > 255) {
                 throw Error(Fault::OPT_INV_ARG, "0 ... 255");
@@ -77,25 +77,25 @@ Mouse::checkOption(Option opt, i64 value)
 }
 
 void
-Mouse::setOption(Option opt, i64 value)
+Mouse::setOption(Opt opt, i64 value)
 {    
     checkOption(opt, value);
 
     switch (opt) {
             
-        case OPT_MOUSE_MODEL:
+        case Opt::MOUSE_MODEL:
             
             config.model = MouseModel(value);
             targetX = 0;
             targetY = 0;
             return;
             
-        case OPT_MOUSE_SHAKE_DETECT:
+        case Opt::MOUSE_SHAKE_DETECT:
             
             config.shakeDetection = bool(value);
             return;
             
-        case OPT_MOUSE_VELOCITY:
+        case Opt::MOUSE_VELOCITY:
 
             if (value < 0 || value > 255) {
                 throw Error(Fault::OPT_INV_ARG, "0 ... 255");

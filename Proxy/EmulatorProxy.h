@@ -193,15 +193,15 @@ NSString *EventSlotName(EventSlot slot);
 - (void)launch:(const void *)listener function:(Callback *)func;
 - (void)wakeUp;
 
-- (NSInteger)get:(Option)opt;
-- (NSInteger)get:(Option)opt id:(NSInteger)id;
-- (NSInteger)get:(Option)opt drive:(NSInteger)id;
-- (BOOL)set:(Option)opt value:(NSInteger)val;
-- (BOOL)set:(Option)opt enable:(BOOL)val;
-- (BOOL)set:(Option)opt id:(NSInteger)id value:(NSInteger)val;
-- (BOOL)set:(Option)opt id:(NSInteger)id enable:(BOOL)val;
-- (BOOL)set:(Option)opt drive:(NSInteger)id value:(NSInteger)val;
-- (BOOL)set:(Option)opt drive:(NSInteger)id enable:(BOOL)val;
+- (NSInteger)get:(Opt)opt;
+- (NSInteger)get:(Opt)opt id:(NSInteger)id;
+- (NSInteger)get:(Opt)opt drive:(NSInteger)id;
+- (BOOL)set:(Opt)opt value:(NSInteger)val;
+- (BOOL)set:(Opt)opt enable:(BOOL)val;
+- (BOOL)set:(Opt)opt id:(NSInteger)id value:(NSInteger)val;
+- (BOOL)set:(Opt)opt id:(NSInteger)id enable:(BOOL)val;
+- (BOOL)set:(Opt)opt drive:(NSInteger)id value:(NSInteger)val;
+- (BOOL)set:(Opt)opt drive:(NSInteger)id enable:(BOOL)val;
 - (void)set:(ConfigScheme)value;
 - (void)exportConfig:(NSURL *)url exception:(ExceptionWrapper *)ex;
 
@@ -239,17 +239,17 @@ NSString *EventSlotName(EventSlot slot);
 
 - (NSString *)getString:(NSString *)key;
 - (NSInteger)getInt:(NSString *)key;
-- (NSInteger)getOpt:(Option)option;
-- (NSInteger)getOpt:(Option)option nr:(NSInteger)nr;
+- (NSInteger)getOpt:(Opt)option;
+- (NSInteger)getOpt:(Opt)option nr:(NSInteger)nr;
 
 - (void)setKey:(NSString *)key value:(NSString *)value;
-- (void)setOpt:(Option)option value:(NSInteger)value;
-- (void)setOpt:(Option)option nr:(NSInteger)nr value:(NSInteger)value;
+- (void)setOpt:(Opt)option value:(NSInteger)value;
+- (void)setOpt:(Opt)option nr:(NSInteger)nr value:(NSInteger)value;
 
 - (void)removeAll;
 - (void)removeKey:(NSString *)key;
-- (void)remove:(Option)option;
-- (void)remove:(Option) option nr:(NSInteger)nr;
+- (void)remove:(Opt)option;
+- (void)remove:(Opt) option nr:(NSInteger)nr;
 
 @end
 

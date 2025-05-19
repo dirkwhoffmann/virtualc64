@@ -122,10 +122,10 @@ public:
     virtual void resetConfig();
 
     // Returns the target component for a given configuration option
-    Configurable *routeOption(Option opt, isize objid);
+    Configurable *routeOption(Opt opt, isize objid);
 
     // Returns the fallback value for a config option
-    i64 getFallback(Option opt) const override;
+    i64 getFallback(Opt opt) const override;
 
 
     //

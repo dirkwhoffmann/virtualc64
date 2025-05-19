@@ -75,13 +75,13 @@ Memory::cacheInfo(MemInfo &result) const
 }
 
 i64
-Memory::getOption(Option option) const
+Memory::getOption(Opt option) const
 {
     switch (option) {
 
-        case OPT_MEM_INIT_PATTERN:  return config.ramPattern;
-        case OPT_MEM_HEATMAP:       return config.heatmap;
-        case OPT_MEM_SAVE_ROMS:     return config.saveRoms;
+        case Opt::MEM_INIT_PATTERN:  return config.ramPattern;
+        case Opt::MEM_HEATMAP:       return config.heatmap;
+        case Opt::MEM_SAVE_ROMS:     return config.saveRoms;
 
         default:
             fatalError;
@@ -89,19 +89,19 @@ Memory::getOption(Option option) const
 }
 
 void
-Memory::checkOption(Option opt, i64 value)
+Memory::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_MEM_INIT_PATTERN:
+        case Opt::MEM_INIT_PATTERN:
 
             if (!RamPatternEnum::isValid(value)) {
                 throw Error(Fault::OPT_INV_ARG, RamPatternEnum::keyList());
             }
             return;
 
-        case OPT_MEM_HEATMAP:
-        case OPT_MEM_SAVE_ROMS:
+        case Opt::MEM_HEATMAP:
+        case Opt::MEM_SAVE_ROMS:
 
             return;
 
@@ -111,23 +111,23 @@ Memory::checkOption(Option opt, i64 value)
 }
 
 void
-Memory::setOption(Option opt, i64 value)
+Memory::setOption(Opt opt, i64 value)
 {
     checkOption(opt, value);
     
     switch (opt) {
 
-        case OPT_MEM_INIT_PATTERN:
+        case Opt::MEM_INIT_PATTERN:
 
             config.ramPattern = (RamPattern)value;
             return;
 
-        case OPT_MEM_HEATMAP:
+        case Opt::MEM_HEATMAP:
 
             config.heatmap = (bool)value;
             return;
 
-        case OPT_MEM_SAVE_ROMS:
+        case Opt::MEM_SAVE_ROMS:
 
             config.saveRoms = (bool)value;
             return;

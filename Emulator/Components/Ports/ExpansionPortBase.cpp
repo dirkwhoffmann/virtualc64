@@ -115,11 +115,11 @@ ExpansionPort::_dump(Category category, std::ostream& os) const
 }
 
 i64
-ExpansionPort::getOption(Option option) const
+ExpansionPort::getOption(Opt option) const
 {
     switch (option) {
 
-        case OPT_EXP_REU_SPEED: return (i64)config.reuSpeed;
+        case Opt::EXP_REU_SPEED: return (i64)config.reuSpeed;
 
         default:
             fatalError;
@@ -127,11 +127,11 @@ ExpansionPort::getOption(Option option) const
 }
 
 void
-ExpansionPort::checkOption(Option opt, i64 value)
+ExpansionPort::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_EXP_REU_SPEED:
+        case Opt::EXP_REU_SPEED:
 
             if (value < 1 || value > 65535) {
                 throw Error(Fault::OPT_INV_ARG, "1...65535");
@@ -144,13 +144,13 @@ ExpansionPort::checkOption(Option opt, i64 value)
 }
 
 void
-ExpansionPort::setOption(Option opt, i64 value)
+ExpansionPort::setOption(Opt opt, i64 value)
 {
     checkOption(opt, value);
 
     switch (opt) {
 
-        case OPT_EXP_REU_SPEED:
+        case Opt::EXP_REU_SPEED:
 
             config.reuSpeed = (isize)value;
             return;

@@ -53,13 +53,13 @@ class SID final : public SubComponent, public Inspectable<SIDInfo>
 
     Options options = {
 
-        OPT_SID_ENABLE,
-        OPT_SID_ADDRESS,
-        OPT_SID_REVISION,
-        OPT_SID_FILTER,
-        OPT_SID_ENGINE,
-        OPT_SID_SAMPLING,
-        OPT_SID_POWER_SAVE
+        Opt::SID_ENABLE,
+        Opt::SID_ADDRESS,
+        Opt::SID_REVISION,
+        Opt::SID_FILTER,
+        Opt::SID_ENGINE,
+        Opt::SID_SAMPLING,
+        Opt::SID_POWER_SAVE
     };
 
     // Current configuration
@@ -165,10 +165,10 @@ public:
 
     const SIDConfig &getConfig() const { return config; }
     const Options &getOptions() const override { return options; }
-    i64 getFallback(Option opt) const override;
-    i64 getOption(Option opt) const override;
-    void checkOption(Option opt, i64 value) override;
-    void setOption(Option opt, i64 value) override;
+    i64 getFallback(Opt opt) const override;
+    i64 getOption(Opt opt) const override;
+    void checkOption(Opt opt, i64 value) override;
+    void setOption(Opt opt, i64 value) override;
 
 
     //

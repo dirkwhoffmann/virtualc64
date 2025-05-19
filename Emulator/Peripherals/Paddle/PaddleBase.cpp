@@ -67,11 +67,11 @@ Paddle::cacheInfo(PaddleInfo &result) const
 }
 
 i64
-Paddle::getOption(Option option) const
+Paddle::getOption(Opt option) const
 {
     switch (option) {
 
-        case OPT_PADDLE_ORIENTATION:    return config.orientation;
+        case Opt::PADDLE_ORIENTATION:    return config.orientation;
 
         default:
             fatalError;
@@ -79,11 +79,11 @@ Paddle::getOption(Option option) const
 }
 
 void
-Paddle::checkOption(Option opt, i64 value)
+Paddle::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_PADDLE_ORIENTATION:
+        case Opt::PADDLE_ORIENTATION:
 
             if (!PaddleOrientationEnum::isValid(value)) {
                 throw Error(Fault::OPT_INV_ARG, PaddleOrientationEnum::keyList());
@@ -96,11 +96,11 @@ Paddle::checkOption(Option opt, i64 value)
 }
 
 void
-Paddle::setOption(Option opt, i64 value)
+Paddle::setOption(Opt opt, i64 value)
 {
     switch (opt) {
             
-        case OPT_PADDLE_ORIENTATION:
+        case Opt::PADDLE_ORIENTATION:
             
             config.orientation = PaddleOrientation(value);
             return;

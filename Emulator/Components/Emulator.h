@@ -99,16 +99,16 @@ public:
 public:
 
     // Queries an option
-    i64 get(Option opt, isize objid = 0) const throws;
+    i64 get(Opt opt, isize objid = 0) const throws;
 
     // Checks an option
-    void check(Option opt, i64 value, const std::vector<isize> objids = { }) throws;
+    void check(Opt opt, i64 value, const std::vector<isize> objids = { }) throws;
 
     // Sets an option
-    void set(Option opt, i64 value, const std::vector<isize> objids = { }) throws;
+    void set(Opt opt, i64 value, const std::vector<isize> objids = { }) throws;
 
     // Convenience wrappers
-    void set(Option opt, const string &value, const std::vector<isize> objids = { }) throws;
+    void set(Opt opt, const string &value, const std::vector<isize> objids = { }) throws;
     void set(const string &opt, const string &value, const std::vector<isize> objids = { }) throws;
 
     // Configures the emulator to match a specific C64 model

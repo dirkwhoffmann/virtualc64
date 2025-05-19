@@ -78,12 +78,12 @@ public:
     // Queries a key-value pair
     string getRaw(const string &key) const throws;
     i64 get(const string &key) const throws;
-    i64 get(Option option, isize nr = 0) const throws;
+    i64 get(Opt option, isize nr = 0) const throws;
 
     // Queries a fallback key-value pair
     string getFallbackRaw(const string &key) const;
     i64 getFallback(const string &key) const;
-    i64 getFallback(Option option, isize nr = 0) const;
+    i64 getFallback(Opt option, isize nr = 0) const;
 
 
     //
@@ -92,17 +92,17 @@ public:
 
     // Writes a key-value pair into the user storage
     void set(const string &key, const string &value);
-    void set(Option option, const string &value);
-    void set(Option option, const string &value, std::vector<isize> objids);
-    void set(Option option, i64 value);
-    void set(Option option, i64 value, std::vector<isize> objids);
+    void set(Opt option, const string &value);
+    void set(Opt option, const string &value, std::vector<isize> objids);
+    void set(Opt option, i64 value);
+    void set(Opt option, i64 value, std::vector<isize> objids);
 
     // Writes a key-value pair into the fallback storage
     void setFallback(const string &key, const string &value);
-    void setFallback(Option option, const string &value);
-    void setFallback(Option option, const string &value, std::vector<isize> objids);
-    void setFallback(Option option, i64 value);
-    void setFallback(Option option, i64 value, std::vector<isize> objids);
+    void setFallback(Opt option, const string &value);
+    void setFallback(Opt option, const string &value, std::vector<isize> objids);
+    void setFallback(Opt option, i64 value);
+    void setFallback(Opt option, i64 value, std::vector<isize> objids);
 
 
     //
@@ -114,8 +114,8 @@ public:
 
     // Deletes selected key-value pairs
     void remove(const string &key) throws;
-    void remove(Option option) throws;
-    void remove(Option option, std::vector <isize> objids) throws;
+    void remove(Opt option) throws;
+    void remove(Opt option, std::vector <isize> objids) throws;
 };
 
 }

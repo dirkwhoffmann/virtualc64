@@ -31,11 +31,11 @@ VideoPort::_dump(Category category, std::ostream& os) const
 }
 
 i64
-VideoPort::getOption(Option option) const
+VideoPort::getOption(Opt option) const
 {
     switch (option) {
 
-        case OPT_VID_WHITE_NOISE:   return config.whiteNoise;
+        case Opt::VID_WHITE_NOISE:   return config.whiteNoise;
 
         default:
             fatalError;
@@ -43,11 +43,11 @@ VideoPort::getOption(Option option) const
 }
 
 void
-VideoPort::checkOption(Option opt, i64 value)
+VideoPort::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_VID_WHITE_NOISE:
+        case Opt::VID_WHITE_NOISE:
 
             return;
 
@@ -57,13 +57,13 @@ VideoPort::checkOption(Option opt, i64 value)
 }
 
 void
-VideoPort::setOption(Option opt, i64 value)
+VideoPort::setOption(Opt opt, i64 value)
 {
     checkOption(opt, value);
 
     switch (opt) {
 
-        case OPT_VID_WHITE_NOISE:
+        case Opt::VID_WHITE_NOISE:
 
             config.whiteNoise = (bool)value;
             return;

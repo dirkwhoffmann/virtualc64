@@ -39,11 +39,11 @@ UserPort::_dump(Category category, std::ostream& os) const
 }
 
 i64
-UserPort::getOption(Option option) const
+UserPort::getOption(Opt option) const
 {
     switch (option) {
 
-        case OPT_USR_DEVICE:    return config.device;
+        case Opt::USR_DEVICE:    return config.device;
 
         default:
             fatalError;
@@ -51,11 +51,11 @@ UserPort::getOption(Option option) const
 }
 
 void
-UserPort::checkOption(Option opt, i64 value)
+UserPort::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_USR_DEVICE:
+        case Opt::USR_DEVICE:
 
             if (!UserPortDeviceEnum::isValid(value)) {
                 throw Error(Fault::OPT_INV_ARG, UserPortDeviceEnum::keyList());
@@ -68,13 +68,13 @@ UserPort::checkOption(Option opt, i64 value)
 }
 
 void
-UserPort::setOption(Option opt, i64 value)
+UserPort::setOption(Opt opt, i64 value)
 {
     checkOption(opt, value);
 
     switch (opt) {
 
-        case OPT_USR_DEVICE:
+        case Opt::USR_DEVICE:
 
             config.device = (UserPortDevice)value;
             return;

@@ -52,15 +52,15 @@ Recorder::_dump(Category category, std::ostream& os) const
 }
 
 i64
-Recorder::getOption(Option option) const
+Recorder::getOption(Opt option) const
 {
     switch (option) {
 
-        case OPT_REC_FRAME_RATE:    return config.frameRate;
-        case OPT_REC_BIT_RATE:      return config.bitRate;
-        case OPT_REC_SAMPLE_RATE:   return config.sampleRate;
-        case OPT_REC_ASPECT_X:      return config.aspectRatio.x;
-        case OPT_REC_ASPECT_Y:      return config.aspectRatio.y;
+        case Opt::REC_FRAME_RATE:    return config.frameRate;
+        case Opt::REC_BIT_RATE:      return config.bitRate;
+        case Opt::REC_SAMPLE_RATE:   return config.sampleRate;
+        case Opt::REC_ASPECT_X:      return config.aspectRatio.x;
+        case Opt::REC_ASPECT_Y:      return config.aspectRatio.y;
 
         default:
             fatalError;
@@ -68,15 +68,15 @@ Recorder::getOption(Option option) const
 }
 
 void
-Recorder::checkOption(Option opt, i64 value)
+Recorder::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_REC_FRAME_RATE:
-        case OPT_REC_BIT_RATE:
-        case OPT_REC_SAMPLE_RATE:
-        case OPT_REC_ASPECT_X:
-        case OPT_REC_ASPECT_Y:
+        case Opt::REC_FRAME_RATE:
+        case Opt::REC_BIT_RATE:
+        case Opt::REC_SAMPLE_RATE:
+        case Opt::REC_ASPECT_X:
+        case Opt::REC_ASPECT_Y:
 
             return;
 
@@ -86,33 +86,33 @@ Recorder::checkOption(Option opt, i64 value)
 }
 
 void
-Recorder::setOption(Option opt, i64 value)
+Recorder::setOption(Opt opt, i64 value)
 {
     checkOption(opt, value);
 
     switch (opt) {
 
-        case OPT_REC_FRAME_RATE:
+        case Opt::REC_FRAME_RATE:
 
             config.frameRate = isize(value);
             return;
 
-        case OPT_REC_BIT_RATE:
+        case Opt::REC_BIT_RATE:
 
             config.bitRate = isize(value);
             return;
 
-        case OPT_REC_SAMPLE_RATE:
+        case Opt::REC_SAMPLE_RATE:
 
             config.sampleRate = isize(value);
             return;
 
-        case OPT_REC_ASPECT_X:
+        case Opt::REC_ASPECT_X:
 
             config.aspectRatio.x = isize(value);
             return;
 
-        case OPT_REC_ASPECT_Y:
+        case Opt::REC_ASPECT_Y:
 
             config.aspectRatio.y = isize(value);
             return;
@@ -398,10 +398,10 @@ Recorder::prepare()
      * and 735 for NTSC).
      */
     if (vic.pal()) {
-        host.setOption(OPT_HOST_SAMPLE_RATE, i64(config.sampleRate * 50.125 / 50.0));
+        host.setOption(Opt::HOST_SAMPLE_RATE, i64(config.sampleRate * 50.125 / 50.0));
         samplesPerFrame = 882;
     } else {
-        host.setOption(OPT_HOST_SAMPLE_RATE, i64(config.sampleRate * 59.827 / 60.0));
+        host.setOption(Opt::HOST_SAMPLE_RATE, i64(config.sampleRate * 59.827 / 60.0));
         samplesPerFrame = 735;
     }
     

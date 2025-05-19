@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "Emulator.h"
-#include "Option.h"
+#include "Opt.h"
 
 namespace vc64 {
 
@@ -178,25 +178,25 @@ Emulator::process(const Cmd &cmd)
 */
 
 i64
-Emulator::get(Option opt, isize objid) const
+Emulator::get(Opt opt, isize objid) const
 {
     return main.get(opt, objid);
 }
 
 void
-Emulator::check(Option opt, i64 value, const std::vector<isize> objids)
+Emulator::check(Opt opt, i64 value, const std::vector<isize> objids)
 {
     return main.check(opt, value, objids);
 }
 
 void
-Emulator::set(Option opt, i64 value, const std::vector<isize> objids)
+Emulator::set(Opt opt, i64 value, const std::vector<isize> objids)
 {
     return main.set(opt, value, objids);
 }
 
 void
-Emulator::set(Option opt, const string &value, const std::vector<isize> objids)
+Emulator::set(Opt opt, const string &value, const std::vector<isize> objids)
 {
     return main.set(opt, value, objids);
 }

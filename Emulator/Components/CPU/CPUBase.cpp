@@ -182,11 +182,11 @@ CPU::_trackOff()
 }
 
 i64
-CPU::getOption(Option option) const
+CPU::getOption(Opt option) const
 {
     switch (option) {
 
-        case OPT_DASM_NUMBERS:      return (i64)config.dasmNumbers;
+        case Opt::DASM_NUMBERS:      return (i64)config.dasmNumbers;
 
         default:
             fatalError;
@@ -194,11 +194,11 @@ CPU::getOption(Option option) const
 }
 
 void
-CPU::checkOption(Option opt, i64 value)
+CPU::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_DASM_NUMBERS:
+        case Opt::DASM_NUMBERS:
 
             if (!DasmNumbersEnum::isValid(value)) {
                 throw Error(Fault::OPT_INV_ARG, DasmNumbersEnum::keyList());
@@ -211,13 +211,13 @@ CPU::checkOption(Option opt, i64 value)
 }
 
 void
-CPU::setOption(Option opt, i64 value)
+CPU::setOption(Opt opt, i64 value)
 {
     checkOption(opt, value);
     
     switch (opt) {
             
-        case OPT_DASM_NUMBERS:
+        case Opt::DASM_NUMBERS:
         {
             config.dasmNumbers = (DasmNumbers)value;
             

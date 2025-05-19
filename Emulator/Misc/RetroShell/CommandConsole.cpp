@@ -13,7 +13,7 @@
 #include "config.h"
 #include "Console.h"
 #include "Emulator.h"
-#include "Option.h"
+#include "Opt.h"
 
 namespace vc64 {
 
@@ -444,14 +444,14 @@ CommandConsole::initCommands(RetroShellCmd &root)
              "Opens the DMA debugger",
              [this](Arguments& argv, const std::vector<isize> &values) {
 
-        emulator.set(OPT_DMA_DEBUG_ENABLE, true);
+        emulator.set(Opt::DMA_DEBUG_ENABLE, true);
     });
 
     root.add({cmd, "close"},
              "Closes the DMA debugger",
              [this](Arguments& argv, const std::vector<isize> &values) {
 
-        emulator.set(OPT_DMA_DEBUG_ENABLE, false);
+        emulator.set(Opt::DMA_DEBUG_ENABLE, false);
     });
     */
     
@@ -776,7 +776,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
         .help   = { "Connects the datasette" },
         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
             
-            emulator.set(OPT_DAT_CONNECT, true);
+            emulator.set(Opt::DAT_CONNECT, true);
         }
     });
 
@@ -786,7 +786,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
         .help   = { "Disconnects the datasette" },
         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
             
-            emulator.set(OPT_DAT_CONNECT, false);
+            emulator.set(Opt::DAT_CONNECT, false);
         }
     });
     
@@ -839,7 +839,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
             .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
                 
                 auto id = values.front() ? DRIVE9 : DRIVE8;
-                emulator.set(OPT_DRV_CONNECT, true, { id });
+                emulator.set(Opt::DRV_CONNECT, true, { id });
                 
             }, .values = {i}
         });
@@ -851,7 +851,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
             .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
                 
                 auto id = values.front() ? DRIVE9 : DRIVE8;
-                emulator.set(OPT_DRV_CONNECT, false, { id });
+                emulator.set(Opt::DRV_CONNECT, false, { id });
                 
             }, .values = {i}
         });

@@ -27,17 +27,17 @@ public:
 
 protected:
 
-    Option opt;
+    Opt opt;
     i64 arg;
     string unit;
 
-    OptionParser(Option opt) : opt(opt), arg(0) { };
-    OptionParser(Option opt, const string &unit) : opt(opt), arg(0), unit(unit) { };
-    OptionParser(Option opt, i64 arg) : opt(opt), arg(arg) { };
-    OptionParser(Option opt, i64 arg, const string &unit) : opt(opt), arg(arg), unit(unit) { };
+    OptionParser(Opt opt) : opt(opt), arg(0) { };
+    OptionParser(Opt opt, const string &unit) : opt(opt), arg(0), unit(unit) { };
+    OptionParser(Opt opt, i64 arg) : opt(opt), arg(arg) { };
+    OptionParser(Opt opt, i64 arg, const string &unit) : opt(opt), arg(arg), unit(unit) { };
 
     // Factory method for creating the proper parser instance for an option
-    static std::unique_ptr<OptionParser> create(Option opt, i64 arg = 0);
+    static std::unique_ptr<OptionParser> create(Opt opt, i64 arg = 0);
 
     // Parses an argument provides as string
     virtual i64 parse(const string &arg) { return 0; }
@@ -52,13 +52,13 @@ protected:
 
 public:
 
-    static i64 parse(Option opt, const string &arg);
-    static std::vector<std::pair<string, long>> pairs(Option opt);
-    static string asPlainString(Option opt, i64 arg);
-    static string asString(Option opt, i64 arg);
-    static string keyList(Option opt);
-    static string argList(Option opt);
-    static string help(Option opt, isize item);
+    static i64 parse(Opt opt, const string &arg);
+    static std::vector<std::pair<string, long>> pairs(Opt opt);
+    static string asPlainString(Opt opt, i64 arg);
+    static string asString(Opt opt, i64 arg);
+    static string keyList(Opt opt);
+    static string argList(Opt opt);
+    static string help(Opt opt, isize item);
 };
 
 class BoolParser : public OptionParser {

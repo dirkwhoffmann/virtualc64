@@ -347,7 +347,7 @@ C64::refreshRate() const
 {
     if (config.vsync) {
 
-        return double(host.getOption(OPT_HOST_REFRESH_RATE));
+        return double(host.getOption(Opt::HOST_REFRESH_RATE));
 
     } else {
 
@@ -399,7 +399,7 @@ C64::exportConfig(std::ostream &stream) const
 }
 
 i64
-C64::get(Option opt, isize objid) const
+C64::get(Opt opt, isize objid) const
 {
     debug(CNF_DEBUG, "get(%s, %ld)\n", OptionEnum::key(opt), objid);
 
@@ -409,7 +409,7 @@ C64::get(Option opt, isize objid) const
 }
 
 void
-C64::check(Option opt, i64 value, const std::vector<isize> objids)
+C64::check(Opt opt, i64 value, const std::vector<isize> objids)
 {
     value = overrideOption(opt, value);
 
@@ -436,7 +436,7 @@ C64::check(Option opt, i64 value, const std::vector<isize> objids)
 }
 
 void
-C64::set(Option opt, i64 value, const std::vector<isize> objids)
+C64::set(Opt opt, i64 value, const std::vector<isize> objids)
 {
     if (!isInitialized()) initialize();
 
@@ -465,7 +465,7 @@ C64::set(Option opt, i64 value, const std::vector<isize> objids)
 }
 
 void
-C64::set(Option opt, const string &value, const std::vector<isize> objids)
+C64::set(Opt opt, const string &value, const std::vector<isize> objids)
 {
     set(opt, OptionParser::parse(opt, value), objids);
 }
@@ -473,7 +473,7 @@ C64::set(Option opt, const string &value, const std::vector<isize> objids)
 void
 C64::set(const string &opt, const string &value, const std::vector<isize> objids)
 {
-    set(Option(util::parseEnum<OptionEnum>(opt)), value, objids);
+    set(Opt(util::parseEnum<OptionEnum>(opt)), value, objids);
 }
 
 void
@@ -490,80 +490,80 @@ C64::set(ConfigScheme model)
 
             case ConfigScheme::PAL:
 
-                set(OPT_VICII_REVISION, VICII_PAL_6569_R3);
-                set(OPT_VICII_GRAY_DOT_BUG, false);
-                set(OPT_CIA_REVISION, MOS_6526);
-                set(OPT_CIA_TIMER_B_BUG, true);
-                set(OPT_SID_REVISION, MOS_6581);
-                set(OPT_SID_FILTER, true);
-                set(OPT_POWER_GRID, GRID_STABLE_50HZ);
-                set(OPT_GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
-                set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
+                set(Opt::VICII_REVISION, VICII_PAL_6569_R3);
+                set(Opt::VICII_GRAY_DOT_BUG, false);
+                set(Opt::CIA_REVISION, MOS_6526);
+                set(Opt::CIA_TIMER_B_BUG, true);
+                set(Opt::SID_REVISION, MOS_6581);
+                set(Opt::SID_FILTER, true);
+                set(Opt::POWER_GRID, GRID_STABLE_50HZ);
+                set(Opt::GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
+                set(Opt::MEM_INIT_PATTERN, RAM_PATTERN_VICE);
                 break;
 
             case ConfigScheme::PAL_II:
 
-                set(OPT_VICII_REVISION, VICII_PAL_8565);
-                set(OPT_VICII_GRAY_DOT_BUG, true);
-                set(OPT_CIA_REVISION, MOS_8521);
-                set(OPT_CIA_TIMER_B_BUG, false);
-                set(OPT_SID_REVISION, MOS_8580);
-                set(OPT_SID_FILTER, true);
-                set(OPT_POWER_GRID, GRID_STABLE_50HZ);
-                set(OPT_GLUE_LOGIC, GLUE_LOGIC_IC);
-                set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
+                set(Opt::VICII_REVISION, VICII_PAL_8565);
+                set(Opt::VICII_GRAY_DOT_BUG, true);
+                set(Opt::CIA_REVISION, MOS_8521);
+                set(Opt::CIA_TIMER_B_BUG, false);
+                set(Opt::SID_REVISION, MOS_8580);
+                set(Opt::SID_FILTER, true);
+                set(Opt::POWER_GRID, GRID_STABLE_50HZ);
+                set(Opt::GLUE_LOGIC, GLUE_LOGIC_IC);
+                set(Opt::MEM_INIT_PATTERN, RAM_PATTERN_VICE);
                 break;
 
             case ConfigScheme::PAL_OLD:
 
-                set(OPT_VICII_REVISION, VICII_PAL_6569_R1);
-                set(OPT_VICII_GRAY_DOT_BUG, false);
-                set(OPT_CIA_REVISION, MOS_6526);
-                set(OPT_CIA_TIMER_B_BUG, true);
-                set(OPT_SID_REVISION, MOS_6581);
-                set(OPT_SID_FILTER, true);
-                set(OPT_POWER_GRID, GRID_STABLE_50HZ);
-                set(OPT_GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
-                set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
+                set(Opt::VICII_REVISION, VICII_PAL_6569_R1);
+                set(Opt::VICII_GRAY_DOT_BUG, false);
+                set(Opt::CIA_REVISION, MOS_6526);
+                set(Opt::CIA_TIMER_B_BUG, true);
+                set(Opt::SID_REVISION, MOS_6581);
+                set(Opt::SID_FILTER, true);
+                set(Opt::POWER_GRID, GRID_STABLE_50HZ);
+                set(Opt::GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
+                set(Opt::MEM_INIT_PATTERN, RAM_PATTERN_VICE);
                 break;
 
             case ConfigScheme::NTSC:
 
-                set(OPT_VICII_REVISION, VICII_NTSC_6567);
-                set(OPT_VICII_GRAY_DOT_BUG, false);
-                set(OPT_CIA_REVISION, MOS_6526);
-                set(OPT_CIA_TIMER_B_BUG, false);
-                set(OPT_SID_REVISION, MOS_6581);
-                set(OPT_SID_FILTER, true);
-                set(OPT_POWER_GRID, GRID_STABLE_60HZ);
-                set(OPT_GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
-                set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
+                set(Opt::VICII_REVISION, VICII_NTSC_6567);
+                set(Opt::VICII_GRAY_DOT_BUG, false);
+                set(Opt::CIA_REVISION, MOS_6526);
+                set(Opt::CIA_TIMER_B_BUG, false);
+                set(Opt::SID_REVISION, MOS_6581);
+                set(Opt::SID_FILTER, true);
+                set(Opt::POWER_GRID, GRID_STABLE_60HZ);
+                set(Opt::GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
+                set(Opt::MEM_INIT_PATTERN, RAM_PATTERN_VICE);
                 break;
 
             case ConfigScheme::NTSC_II:
 
-                set(OPT_VICII_REVISION, VICII_NTSC_8562);
-                set(OPT_VICII_GRAY_DOT_BUG, true);
-                set(OPT_CIA_REVISION, MOS_8521);
-                set(OPT_CIA_TIMER_B_BUG, true);
-                set(OPT_SID_REVISION, MOS_8580);
-                set(OPT_SID_FILTER, true);
-                set(OPT_POWER_GRID, GRID_STABLE_60HZ);
-                set(OPT_GLUE_LOGIC, GLUE_LOGIC_IC);
-                set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
+                set(Opt::VICII_REVISION, VICII_NTSC_8562);
+                set(Opt::VICII_GRAY_DOT_BUG, true);
+                set(Opt::CIA_REVISION, MOS_8521);
+                set(Opt::CIA_TIMER_B_BUG, true);
+                set(Opt::SID_REVISION, MOS_8580);
+                set(Opt::SID_FILTER, true);
+                set(Opt::POWER_GRID, GRID_STABLE_60HZ);
+                set(Opt::GLUE_LOGIC, GLUE_LOGIC_IC);
+                set(Opt::MEM_INIT_PATTERN, RAM_PATTERN_VICE);
                 break;
 
             case ConfigScheme::NTSC_OLD:
 
-                set(OPT_VICII_REVISION, VICII_NTSC_6567_R56A);
-                set(OPT_VICII_GRAY_DOT_BUG, false);
-                set(OPT_CIA_REVISION, MOS_6526);
-                set(OPT_CIA_TIMER_B_BUG, false);
-                set(OPT_SID_REVISION, MOS_6581);
-                set(OPT_SID_FILTER, true);
-                set(OPT_POWER_GRID, GRID_STABLE_60HZ);
-                set(OPT_GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
-                set(OPT_MEM_INIT_PATTERN, RAM_PATTERN_VICE);
+                set(Opt::VICII_REVISION, VICII_NTSC_6567_R56A);
+                set(Opt::VICII_GRAY_DOT_BUG, false);
+                set(Opt::CIA_REVISION, MOS_6526);
+                set(Opt::CIA_TIMER_B_BUG, false);
+                set(Opt::SID_REVISION, MOS_6581);
+                set(Opt::SID_FILTER, true);
+                set(Opt::POWER_GRID, GRID_STABLE_60HZ);
+                set(Opt::GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
+                set(Opt::MEM_INIT_PATTERN, RAM_PATTERN_VICE);
                 break;
 
             default:
@@ -573,22 +573,22 @@ C64::set(ConfigScheme model)
 }
 
 Configurable *
-C64::routeOption(Option opt, isize objid)
+C64::routeOption(Opt opt, isize objid)
 {
     return CoreComponent::routeOption(opt, objid);
 }
 
 const Configurable *
-C64::routeOption(Option opt, isize objid) const
+C64::routeOption(Opt opt, isize objid) const
 {
     auto result = const_cast<C64 *>(this)->routeOption(opt, objid);
     return const_cast<const Configurable *>(result);
 }
 
 i64
-C64::overrideOption(Option opt, i64 value) const
+C64::overrideOption(Opt opt, i64 value) const
 {
-    static std::map<Option,i64> overrides = OVERRIDES;
+    static std::map<Opt,i64> overrides = OVERRIDES;
 
     if (overrides.find(opt) != overrides.end()) {
 
@@ -738,7 +738,7 @@ C64::update(CmdQueue &queue)
 void
 C64::computeFrame()
 {
-    if (emulator.get(OPT_VICII_POWER_SAVE)) {
+    if (emulator.get(Opt::VICII_POWER_SAVE)) {
         computeFrame(emulator.isWarping() && (frame & 7) != 0);
     } else {
         computeFrame(false);
@@ -1361,8 +1361,8 @@ C64::processSNPEvent(EventID eventId)
 void 
 C64::scheduleNextSNPEvent()
 {
-    auto snapshots = emulator.get(OPT_C64_SNAP_AUTO);
-    auto delay = emulator.get(OPT_C64_SNAP_DELAY);
+    auto snapshots = emulator.get(Opt::C64_SNAP_AUTO);
+    auto delay = emulator.get(Opt::C64_SNAP_DELAY);
 
     if (snapshots) {
         scheduleRel<SLOT_SNP>(C64::sec(double(delay)), SNP_TAKE);

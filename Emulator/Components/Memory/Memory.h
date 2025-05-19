@@ -33,9 +33,9 @@ class Memory final : public SubComponent, public Inspectable<MemInfo, MemStats> 
 
     Options options = {
 
-        OPT_MEM_INIT_PATTERN,
-        OPT_MEM_HEATMAP,
-        OPT_MEM_SAVE_ROMS
+        Opt::MEM_INIT_PATTERN,
+        Opt::MEM_HEATMAP,
+        Opt::MEM_SAVE_ROMS
     };
 
     // Current configuration
@@ -166,9 +166,9 @@ public:
 
     const MemConfig &getConfig() const { return config; }
     const Options &getOptions() const override { return options; }
-    i64 getOption(Option opt) const override;
-    void checkOption(Option opt, i64 value) override;
-    void setOption(Option opt, i64 value) override;
+    i64 getOption(Opt opt) const override;
+    void checkOption(Opt opt, i64 value) override;
+    void setOption(Opt opt, i64 value) override;
 
 
     //

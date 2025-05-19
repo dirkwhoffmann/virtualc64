@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "C64.h"
-#include "Option.h"
+#include "Opt.h"
 #include "Emulator.h"
 
 namespace vc64 {
@@ -121,10 +121,10 @@ C64::_dump(Category category, std::ostream& os) const
 
     if (category == Category::Summary) {
 
-        auto vicRev = (VICIIRevision)emulator.get(OPT_VICII_REVISION);
-        auto sidRev = (SIDRevision)emulator.get(OPT_SID_REVISION);
-        auto cia1Rev = (CIARevision)cia1.getOption(OPT_CIA_REVISION);
-        auto cia2Rev = (CIARevision)cia2.getOption(OPT_CIA_REVISION);
+        auto vicRev = (VICIIRevision)emulator.get(Opt::VICII_REVISION);
+        auto sidRev = (SIDRevision)emulator.get(Opt::SID_REVISION);
+        auto cia1Rev = (CIARevision)cia1.getOption(Opt::CIA_REVISION);
+        auto cia2Rev = (CIARevision)cia2.getOption(Opt::CIA_REVISION);
 
         os << tab("Model");
         os << (vic.pal() ? "PAL" : "NTSC") << std::endl;
@@ -183,18 +183,18 @@ C64::_dump(Category category, std::ostream& os) const
 //
 
 i64
-C64::getOption(Option opt) const
+C64::getOption(Opt opt) const
 {
     switch (opt) {
 
-        case OPT_C64_WARP_BOOT:         return (i64)config.warpBoot;
-        case OPT_C64_WARP_MODE:         return (i64)config.warpMode;
-        case OPT_C64_SPEED_BOOST:       return (i64)config.speedBoost;
-        case OPT_C64_VSYNC:             return (i64)config.vsync;
-        case OPT_C64_RUN_AHEAD:         return (i64)config.runAhead;
-        case OPT_C64_SNAP_AUTO:         return (i64)config.snapshots;
-        case OPT_C64_SNAP_DELAY:        return (i64)config.snapshotDelay;
-        case OPT_C64_SNAP_COMPRESS:     return (i64)config.compressSnapshots;
+        case Opt::C64_WARP_BOOT:         return (i64)config.warpBoot;
+        case Opt::C64_WARP_MODE:         return (i64)config.warpMode;
+        case Opt::C64_SPEED_BOOST:       return (i64)config.speedBoost;
+        case Opt::C64_VSYNC:             return (i64)config.vsync;
+        case Opt::C64_RUN_AHEAD:         return (i64)config.runAhead;
+        case Opt::C64_SNAP_AUTO:         return (i64)config.snapshots;
+        case Opt::C64_SNAP_DELAY:        return (i64)config.snapshotDelay;
+        case Opt::C64_SNAP_COMPRESS:     return (i64)config.compressSnapshots;
 
         default:
             fatalError;
@@ -202,51 +202,51 @@ C64::getOption(Option opt) const
 }
 
 void
-C64::checkOption(Option opt, i64 value)
+C64::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_C64_WARP_BOOT:
+        case Opt::C64_WARP_BOOT:
 
             return;
 
-        case OPT_C64_WARP_MODE:
+        case Opt::C64_WARP_MODE:
 
             if (!WarpEnum::isValid(value)) {
                 throw Error(Fault::OPT_INV_ARG, WarpEnum::keyList());
             }
             return;
 
-        case OPT_C64_SPEED_BOOST:
+        case Opt::C64_SPEED_BOOST:
 
             if (value < 50 || value > 200) {
                 throw Error(Fault::OPT_INV_ARG, "50...200");
             }
             return;
 
-        case OPT_C64_VSYNC:
+        case Opt::C64_VSYNC:
 
             return;
 
-        case OPT_C64_RUN_AHEAD:
+        case Opt::C64_RUN_AHEAD:
 
             if (value < 0 || value > 12) {
                 throw Error(Fault::OPT_INV_ARG, "0...12");
             }
             return;
 
-        case OPT_C64_SNAP_AUTO:
+        case Opt::C64_SNAP_AUTO:
 
             return;
 
-        case OPT_C64_SNAP_DELAY:
+        case Opt::C64_SNAP_DELAY:
 
             if (value < 10 || value > 3600) {
                 throw Error(Fault::OPT_INV_ARG, "10...3600");
             }
             return;
 
-        case OPT_C64_SNAP_COMPRESS:
+        case Opt::C64_SNAP_COMPRESS:
 
             return;
 
@@ -256,51 +256,51 @@ C64::checkOption(Option opt, i64 value)
 }
 
 void
-C64::setOption(Option opt, i64 value)
+C64::setOption(Opt opt, i64 value)
 {
     checkOption(opt, value);
 
     switch (opt) {
 
-        case OPT_C64_WARP_BOOT:
+        case Opt::C64_WARP_BOOT:
 
             config.warpBoot = isize(value);
             return;
 
-        case OPT_C64_WARP_MODE:
+        case Opt::C64_WARP_MODE:
 
             config.warpMode = Warp(value);
             return;
 
-        case OPT_C64_VSYNC:
+        case Opt::C64_VSYNC:
 
             config.vsync = bool(value);
             return;
 
-        case OPT_C64_SPEED_BOOST:
+        case Opt::C64_SPEED_BOOST:
 
             config.speedBoost = isize(value);
             updateClockFrequency();
             return;
 
-        case OPT_C64_RUN_AHEAD:
+        case Opt::C64_RUN_AHEAD:
 
             config.runAhead = isize(value);
             return;
 
-        case OPT_C64_SNAP_AUTO:
+        case Opt::C64_SNAP_AUTO:
 
             config.snapshots = bool(value);
             scheduleNextSNPEvent();
             return;
 
-        case OPT_C64_SNAP_DELAY:
+        case Opt::C64_SNAP_DELAY:
 
             config.snapshotDelay = isize(value);
             scheduleNextSNPEvent();
             return;
 
-        case OPT_C64_SNAP_COMPRESS:
+        case Opt::C64_SNAP_COMPRESS:
 
             config.compressSnapshots = bool(value);
             return;

@@ -63,14 +63,14 @@ RemoteServer::_didLoad()
 }
 
 i64
-RemoteServer::getOption(Option option) const
+RemoteServer::getOption(Opt option) const
 {
     switch (option) {
             
-        case OPT_SRV_PORT: return config.port;
-        case OPT_SRV_PROTOCOL: return config.protocol;
-        case OPT_SRV_AUTORUN: return config.autoRun;
-        case OPT_SRV_VERBOSE: return config.verbose;
+        case Opt::SRV_PORT: return config.port;
+        case Opt::SRV_PROTOCOL: return config.protocol;
+        case Opt::SRV_AUTORUN: return config.autoRun;
+        case Opt::SRV_VERBOSE: return config.verbose;
 
         default:
             fatalError;
@@ -78,14 +78,14 @@ RemoteServer::getOption(Option option) const
 }
 
 void
-RemoteServer::checkOption(Option opt, i64 value)
+RemoteServer::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_SRV_PORT:
-        case OPT_SRV_PROTOCOL:
-        case OPT_SRV_AUTORUN:
-        case OPT_SRV_VERBOSE:
+        case Opt::SRV_PORT:
+        case Opt::SRV_PROTOCOL:
+        case Opt::SRV_AUTORUN:
+        case Opt::SRV_VERBOSE:
 
             return;
 
@@ -95,11 +95,11 @@ RemoteServer::checkOption(Option opt, i64 value)
 }
 
 void
-RemoteServer::setOption(Option option, i64 value)
+RemoteServer::setOption(Opt option, i64 value)
 {
     switch (option) {
 
-        case OPT_SRV_PORT:
+        case Opt::SRV_PORT:
             
             if (config.port != (u16)value) {
                 
@@ -116,17 +116,17 @@ RemoteServer::setOption(Option option, i64 value)
             }
             return;
             
-        case OPT_SRV_PROTOCOL:
+        case Opt::SRV_PROTOCOL:
             
             config.protocol = (ServerProtocol)value;
             return;
             
-        case OPT_SRV_AUTORUN:
+        case Opt::SRV_AUTORUN:
             
             config.autoRun = (bool)value;
             return;
 
-        case OPT_SRV_VERBOSE:
+        case Opt::SRV_VERBOSE:
             
             config.verbose = (bool)value;
             return;

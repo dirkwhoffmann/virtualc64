@@ -72,18 +72,18 @@ template <typename Enum> long parsePartialEnum(const string& key, std::function<
     for (auto c : key) { upper += (char)std::toupper(c); }
 
     // Search all keys
-    for (isize i = Enum::minVal; i <= Enum::maxVal; i++) {
+    for (const auto &i : Enum::elements()) {
 
-        if (!accept(i)) continue;
+        if (!accept(long(i))) continue;
 
-        auto enumkey = string(Enum::rawkey(i));
+        auto enumkey = string(Enum::fullKey(i));
 
         // Check if the full key matches
-        if (enumkey == upper) return i;
+        if (enumkey == upper) return long(i);
 
         // If a section marker is present, check the plain key, too
         if (auto pos = enumkey.find('.'); pos != std::string::npos) {
-            if (enumkey.substr(pos + 1, string::npos) == upper) return i;
+            if (enumkey.substr(pos + 1, string::npos) == upper) return long(i);
         }
     }
 

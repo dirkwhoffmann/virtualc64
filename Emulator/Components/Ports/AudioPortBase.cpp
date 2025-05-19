@@ -129,20 +129,20 @@ AudioPort::_unfocus()
 }
 
 i64
-AudioPort::getOption(Option option) const
+AudioPort::getOption(Opt option) const
 {
     switch (option) {
 
-        case OPT_AUD_VOL0:      return config.vol[0];
-        case OPT_AUD_VOL1:      return config.vol[1];
-        case OPT_AUD_VOL2:      return config.vol[2];
-        case OPT_AUD_VOL3:      return config.vol[3];
-        case OPT_AUD_PAN0:      return config.pan[0];
-        case OPT_AUD_PAN1:      return config.pan[1];
-        case OPT_AUD_PAN2:      return config.pan[2];
-        case OPT_AUD_PAN3:      return config.pan[3];
-        case OPT_AUD_VOL_L:     return config.volL;
-        case OPT_AUD_VOL_R:     return config.volR;
+        case Opt::AUD_VOL0:      return config.vol[0];
+        case Opt::AUD_VOL1:      return config.vol[1];
+        case Opt::AUD_VOL2:      return config.vol[2];
+        case Opt::AUD_VOL3:      return config.vol[3];
+        case Opt::AUD_PAN0:      return config.pan[0];
+        case Opt::AUD_PAN1:      return config.pan[1];
+        case Opt::AUD_PAN2:      return config.pan[2];
+        case Opt::AUD_PAN3:      return config.pan[3];
+        case Opt::AUD_VOL_L:     return config.volL;
+        case Opt::AUD_VOL_R:     return config.volR;
 
         default:
             fatalError;
@@ -150,26 +150,26 @@ AudioPort::getOption(Option option) const
 }
 
 void
-AudioPort::checkOption(Option opt, i64 value)
+AudioPort::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_AUD_VOL3:
-        case OPT_AUD_VOL2:
-        case OPT_AUD_VOL1:
-        case OPT_AUD_VOL0:
+        case Opt::AUD_VOL3:
+        case Opt::AUD_VOL2:
+        case Opt::AUD_VOL1:
+        case Opt::AUD_VOL0:
 
             return;
 
-        case OPT_AUD_PAN3:
-        case OPT_AUD_PAN2:
-        case OPT_AUD_PAN1:
-        case OPT_AUD_PAN0:
+        case Opt::AUD_PAN3:
+        case Opt::AUD_PAN2:
+        case Opt::AUD_PAN1:
+        case Opt::AUD_PAN0:
 
             return;
 
-        case OPT_AUD_VOL_L:
-        case OPT_AUD_VOL_R:
+        case Opt::AUD_VOL_L:
+        case Opt::AUD_VOL_R:
 
             return;
 
@@ -179,7 +179,7 @@ AudioPort::checkOption(Option opt, i64 value)
 }
 
 void
-AudioPort::setOption(Option opt, i64 value)
+AudioPort::setOption(Opt opt, i64 value)
 {
     checkOption(opt, value);
 
@@ -187,32 +187,32 @@ AudioPort::setOption(Option opt, i64 value)
 
     switch (opt) {
 
-        case OPT_AUD_VOL3: channel++;
-        case OPT_AUD_VOL2: channel++;
-        case OPT_AUD_VOL1: channel++;
-        case OPT_AUD_VOL0:
+        case Opt::AUD_VOL3: channel++;
+        case Opt::AUD_VOL2: channel++;
+        case Opt::AUD_VOL1: channel++;
+        case Opt::AUD_VOL0:
 
             config.vol[channel] = std::clamp(value, 0LL, 100LL);
             vol[channel] = powf(config.vol[channel] / 100.0f, 1.4f) * 0.000025f;
             if (emscript) vol[channel] *= 0.15f;
             return;
 
-        case OPT_AUD_PAN3: channel++;
-        case OPT_AUD_PAN2: channel++;
-        case OPT_AUD_PAN1: channel++;
-        case OPT_AUD_PAN0:
+        case Opt::AUD_PAN3: channel++;
+        case Opt::AUD_PAN2: channel++;
+        case Opt::AUD_PAN1: channel++;
+        case Opt::AUD_PAN0:
 
             config.pan[channel] = value;
             pan[channel] = float(0.5 * (sin(config.pan[channel] * M_PI / 200.0) + 1));
             return;
 
-        case OPT_AUD_VOL_L:
+        case Opt::AUD_VOL_L:
 
             config.volL = std::clamp(value, 0LL, 100LL);
             volL.maximum = powf((float)config.volL / 50, 1.4f);
             return;
 
-        case OPT_AUD_VOL_R:
+        case Opt::AUD_VOL_R:
 
             config.volR = std::clamp(value, 0LL, 100LL);
             volR.maximum = powf((float)config.volR / 50, 1.4f);

@@ -20,165 +20,165 @@ namespace vc64 {
 
 Defaults::Defaults()
 {
-    setFallback(OPT_HOST_REFRESH_RATE,          60);
-    setFallback(OPT_HOST_SAMPLE_RATE,           44100);
-    setFallback(OPT_HOST_FRAMEBUF_WIDTH,        0);
-    setFallback(OPT_HOST_FRAMEBUF_HEIGHT,       0);
+    setFallback(Opt::HOST_REFRESH_RATE,          60);
+    setFallback(Opt::HOST_SAMPLE_RATE,           44100);
+    setFallback(Opt::HOST_FRAMEBUF_WIDTH,        0);
+    setFallback(Opt::HOST_FRAMEBUF_HEIGHT,       0);
 
-    setFallback(OPT_C64_WARP_BOOT,              0);
-    setFallback(OPT_C64_WARP_MODE,              (i64)Warp::NEVER);
-    setFallback(OPT_C64_VSYNC,                  false);
-    setFallback(OPT_C64_SPEED_BOOST,            100);
-    setFallback(OPT_C64_RUN_AHEAD,              0);
+    setFallback(Opt::C64_WARP_BOOT,              0);
+    setFallback(Opt::C64_WARP_MODE,              (i64)Warp::NEVER);
+    setFallback(Opt::C64_VSYNC,                  false);
+    setFallback(Opt::C64_SPEED_BOOST,            100);
+    setFallback(Opt::C64_RUN_AHEAD,              0);
 
-    setFallback(OPT_C64_SNAP_AUTO,              false);
-    setFallback(OPT_C64_SNAP_DELAY,             10);
-    setFallback(OPT_C64_SNAP_COMPRESS,          true);
+    setFallback(Opt::C64_SNAP_AUTO,              false);
+    setFallback(Opt::C64_SNAP_DELAY,             10);
+    setFallback(Opt::C64_SNAP_COMPRESS,          true);
 
-    setFallback(OPT_DASM_NUMBERS,               DASM_HEX0);
+    setFallback(Opt::DASM_NUMBERS,               DASM_HEX0);
     
-    setFallback(OPT_POWER_GRID,                 GRID_STABLE_50HZ);
+    setFallback(Opt::POWER_GRID,                 GRID_STABLE_50HZ);
 
-    setFallback(OPT_GLUE_LOGIC,                 GLUE_LOGIC_DISCRETE);
+    setFallback(Opt::GLUE_LOGIC,                 GLUE_LOGIC_DISCRETE);
 
-    setFallback(OPT_CIA_REVISION,               MOS_6526);
-    setFallback(OPT_CIA_TIMER_B_BUG,            true);
-    setFallback(OPT_CIA_IDLE_SLEEP,             true);
+    setFallback(Opt::CIA_REVISION,               MOS_6526);
+    setFallback(Opt::CIA_TIMER_B_BUG,            true);
+    setFallback(Opt::CIA_IDLE_SLEEP,             true);
 
-    setFallback(OPT_VICII_REVISION,             VICII_PAL_8565);
-    setFallback(OPT_VICII_POWER_SAVE,           true);
-    setFallback(OPT_VICII_GRAY_DOT_BUG,         true);
-    setFallback(OPT_VICII_HIDE_SPRITES,         false);
-    setFallback(OPT_VICII_SB_COLLISIONS,        true);
-    setFallback(OPT_VICII_SS_COLLISIONS,        true);
-    setFallback(OPT_VICII_CUT_LAYERS,           0xFF);
-    setFallback(OPT_VICII_CUT_OPACITY,          0xFF);
+    setFallback(Opt::VICII_REVISION,             VICII_PAL_8565);
+    setFallback(Opt::VICII_POWER_SAVE,           true);
+    setFallback(Opt::VICII_GRAY_DOT_BUG,         true);
+    setFallback(Opt::VICII_HIDE_SPRITES,         false);
+    setFallback(Opt::VICII_SB_COLLISIONS,        true);
+    setFallback(Opt::VICII_SS_COLLISIONS,        true);
+    setFallback(Opt::VICII_CUT_LAYERS,           0xFF);
+    setFallback(Opt::VICII_CUT_OPACITY,          0xFF);
 
-    setFallback(OPT_DMA_DEBUG_ENABLE,           false);
-    setFallback(OPT_DMA_DEBUG_OVERLAY,          false);
-    setFallback(OPT_DMA_DEBUG_MODE,             DMA_DISPLAY_MODE_FG_LAYER);
-    setFallback(OPT_DMA_DEBUG_OPACITY,          0x80);
-    setFallback(OPT_DMA_DEBUG_CHANNEL0,         true);
-    setFallback(OPT_DMA_DEBUG_CHANNEL1,         true);
-    setFallback(OPT_DMA_DEBUG_CHANNEL2,         true);
-    setFallback(OPT_DMA_DEBUG_CHANNEL3,         true);
-    setFallback(OPT_DMA_DEBUG_CHANNEL4,         true);
-    setFallback(OPT_DMA_DEBUG_CHANNEL5,         true);
-    setFallback(OPT_DMA_DEBUG_COLOR0,           GpuColor(0xFF, 0x00, 0x00).abgr);
-    setFallback(OPT_DMA_DEBUG_COLOR1,           GpuColor(0xFF, 0xC0, 0x00).abgr);
-    setFallback(OPT_DMA_DEBUG_COLOR2,           GpuColor(0xFF, 0xFF, 0x00).abgr);
-    setFallback(OPT_DMA_DEBUG_COLOR3,           GpuColor(0x00, 0xFF, 0xFF).abgr);
-    setFallback(OPT_DMA_DEBUG_COLOR4,           GpuColor(0x00, 0xFF, 0x00).abgr);
-    setFallback(OPT_DMA_DEBUG_COLOR5,           GpuColor(0x00, 0x80, 0xFF).abgr);
+    setFallback(Opt::DMA_DEBUG_ENABLE,           false);
+    setFallback(Opt::DMA_DEBUG_OVERLAY,          false);
+    setFallback(Opt::DMA_DEBUG_MODE,             DMA_DISPLAY_MODE_FG_LAYER);
+    setFallback(Opt::DMA_DEBUG_OPACITY,          0x80);
+    setFallback(Opt::DMA_DEBUG_CHANNEL0,         true);
+    setFallback(Opt::DMA_DEBUG_CHANNEL1,         true);
+    setFallback(Opt::DMA_DEBUG_CHANNEL2,         true);
+    setFallback(Opt::DMA_DEBUG_CHANNEL3,         true);
+    setFallback(Opt::DMA_DEBUG_CHANNEL4,         true);
+    setFallback(Opt::DMA_DEBUG_CHANNEL5,         true);
+    setFallback(Opt::DMA_DEBUG_COLOR0,           GpuColor(0xFF, 0x00, 0x00).abgr);
+    setFallback(Opt::DMA_DEBUG_COLOR1,           GpuColor(0xFF, 0xC0, 0x00).abgr);
+    setFallback(Opt::DMA_DEBUG_COLOR2,           GpuColor(0xFF, 0xFF, 0x00).abgr);
+    setFallback(Opt::DMA_DEBUG_COLOR3,           GpuColor(0x00, 0xFF, 0xFF).abgr);
+    setFallback(Opt::DMA_DEBUG_COLOR4,           GpuColor(0x00, 0xFF, 0x00).abgr);
+    setFallback(Opt::DMA_DEBUG_COLOR5,           GpuColor(0x00, 0x80, 0xFF).abgr);
 
-    setFallback(OPT_EXP_REU_SPEED,              1);
+    setFallback(Opt::EXP_REU_SPEED,              1);
 
-    setFallback(OPT_USR_DEVICE,                 USR_RS232);
+    setFallback(Opt::USR_DEVICE,                 USR_RS232);
 
-    setFallback(OPT_VID_WHITE_NOISE,            true);
+    setFallback(Opt::VID_WHITE_NOISE,            true);
 
-    setFallback(OPT_MON_PALETTE,                PALETTE_COLOR);
-    setFallback(OPT_MON_BRIGHTNESS,             50);
-    setFallback(OPT_MON_CONTRAST,               100);
-    setFallback(OPT_MON_SATURATION,             50);
-    setFallback(OPT_MON_HCENTER,                0);
-    setFallback(OPT_MON_VCENTER,                0);
-    setFallback(OPT_MON_HZOOM,                  0);
-    setFallback(OPT_MON_VZOOM,                  46);
-    setFallback(OPT_MON_UPSCALER,               UPSCALER_NONE);
-    setFallback(OPT_MON_BLUR,                   true);
-    setFallback(OPT_MON_BLUR_RADIUS,            0);
-    setFallback(OPT_MON_BLOOM,                  false);
-    setFallback(OPT_MON_BLOOM_RADIUS,           1000);
-    setFallback(OPT_MON_BLOOM_BRIGHTNESS,       400);
-    setFallback(OPT_MON_BLOOM_WEIGHT,           1210);
-    setFallback(OPT_MON_DOTMASK,                DOTMASK_NONE);
-    setFallback(OPT_MON_DOTMASK_BRIGHTNESS,     700);
-    setFallback(OPT_MON_SCANLINES,              SCANLINES_NONE);
-    setFallback(OPT_MON_SCANLINE_BRIGHTNESS,    550);
-    setFallback(OPT_MON_SCANLINE_WEIGHT,        110);
-    setFallback(OPT_MON_DISALIGNMENT,           0);
-    setFallback(OPT_MON_DISALIGNMENT_H,         1000);
-    setFallback(OPT_MON_DISALIGNMENT_V,         1000);
+    setFallback(Opt::MON_PALETTE,                PALETTE_COLOR);
+    setFallback(Opt::MON_BRIGHTNESS,             50);
+    setFallback(Opt::MON_CONTRAST,               100);
+    setFallback(Opt::MON_SATURATION,             50);
+    setFallback(Opt::MON_HCENTER,                0);
+    setFallback(Opt::MON_VCENTER,                0);
+    setFallback(Opt::MON_HZOOM,                  0);
+    setFallback(Opt::MON_VZOOM,                  46);
+    setFallback(Opt::MON_UPSCALER,               UPSCALER_NONE);
+    setFallback(Opt::MON_BLUR,                   true);
+    setFallback(Opt::MON_BLUR_RADIUS,            0);
+    setFallback(Opt::MON_BLOOM,                  false);
+    setFallback(Opt::MON_BLOOM_RADIUS,           1000);
+    setFallback(Opt::MON_BLOOM_BRIGHTNESS,       400);
+    setFallback(Opt::MON_BLOOM_WEIGHT,           1210);
+    setFallback(Opt::MON_DOTMASK,                DOTMASK_NONE);
+    setFallback(Opt::MON_DOTMASK_BRIGHTNESS,     700);
+    setFallback(Opt::MON_SCANLINES,              SCANLINES_NONE);
+    setFallback(Opt::MON_SCANLINE_BRIGHTNESS,    550);
+    setFallback(Opt::MON_SCANLINE_WEIGHT,        110);
+    setFallback(Opt::MON_DISALIGNMENT,           0);
+    setFallback(Opt::MON_DISALIGNMENT_H,         1000);
+    setFallback(Opt::MON_DISALIGNMENT_V,         1000);
 
-    setFallback(OPT_AUD_VOL0,                   100);
-    setFallback(OPT_AUD_VOL1,                   100);
-    setFallback(OPT_AUD_VOL2,                   100);
-    setFallback(OPT_AUD_VOL3,                   100);
-    setFallback(OPT_AUD_PAN0,                   0);
-    setFallback(OPT_AUD_PAN1,                   0);
-    setFallback(OPT_AUD_PAN2,                   0);
-    setFallback(OPT_AUD_PAN3,                   0);
-    setFallback(OPT_AUD_VOL_L,                  50);
-    setFallback(OPT_AUD_VOL_R,                  50);
+    setFallback(Opt::AUD_VOL0,                   100);
+    setFallback(Opt::AUD_VOL1,                   100);
+    setFallback(Opt::AUD_VOL2,                   100);
+    setFallback(Opt::AUD_VOL3,                   100);
+    setFallback(Opt::AUD_PAN0,                   0);
+    setFallback(Opt::AUD_PAN1,                   0);
+    setFallback(Opt::AUD_PAN2,                   0);
+    setFallback(Opt::AUD_PAN3,                   0);
+    setFallback(Opt::AUD_VOL_L,                  50);
+    setFallback(Opt::AUD_VOL_R,                  50);
 
-    setFallback(OPT_SID_ENABLE,                 true,                   {0});
-    setFallback(OPT_SID_ENABLE,                 false,                  {1, 2, 3});
-    setFallback(OPT_SID_ADDRESS,                0xD400,                 {0});
-    setFallback(OPT_SID_ADDRESS,                0xD420,                 {1});
-    setFallback(OPT_SID_ADDRESS,                0xD440,                 {2});
-    setFallback(OPT_SID_ADDRESS,                0xD460,                 {3});
-    setFallback(OPT_SID_REVISION,               MOS_8580,               {0, 1, 2, 3});
-    setFallback(OPT_SID_FILTER,                 false,                  {0, 1, 2, 3});
-    setFallback(OPT_SID_ENGINE,                 SIDENGINE_RESID,        {0, 1, 2, 3});
-    setFallback(OPT_SID_SAMPLING,               SAMPLING_INTERPOLATE,   {0, 1, 2, 3});
-    setFallback(OPT_SID_POWER_SAVE,             false,                  {0, 1, 2, 3});
+    setFallback(Opt::SID_ENABLE,                 true,                   {0});
+    setFallback(Opt::SID_ENABLE,                 false,                  {1, 2, 3});
+    setFallback(Opt::SID_ADDRESS,                0xD400,                 {0});
+    setFallback(Opt::SID_ADDRESS,                0xD420,                 {1});
+    setFallback(Opt::SID_ADDRESS,                0xD440,                 {2});
+    setFallback(Opt::SID_ADDRESS,                0xD460,                 {3});
+    setFallback(Opt::SID_REVISION,               MOS_8580,               {0, 1, 2, 3});
+    setFallback(Opt::SID_FILTER,                 false,                  {0, 1, 2, 3});
+    setFallback(Opt::SID_ENGINE,                 SIDENGINE_RESID,        {0, 1, 2, 3});
+    setFallback(Opt::SID_SAMPLING,               SAMPLING_INTERPOLATE,   {0, 1, 2, 3});
+    setFallback(Opt::SID_POWER_SAVE,             false,                  {0, 1, 2, 3});
 
-    setFallback(OPT_MEM_INIT_PATTERN,           RAM_PATTERN_VICE);
-    setFallback(OPT_MEM_HEATMAP,                false);
-    setFallback(OPT_MEM_SAVE_ROMS,              true);
+    setFallback(Opt::MEM_INIT_PATTERN,           RAM_PATTERN_VICE);
+    setFallback(Opt::MEM_HEATMAP,                false);
+    setFallback(Opt::MEM_SAVE_ROMS,              true);
 
-    setFallback(OPT_DRV_AUTO_CONFIG,            true,               {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_TYPE,                   DRIVE_VC1541II,     {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_RAM,                    DRVRAM_NONE,        {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_SAVE_ROMS,              true,               {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_PARCABLE,               PAR_CABLE_NONE,     {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_CONNECT,                true,               {DRIVE8});
-    setFallback(OPT_DRV_CONNECT,                false,              {DRIVE9});
-    setFallback(OPT_DRV_POWER_SWITCH,           true,               {DRIVE8});
-    setFallback(OPT_DRV_POWER_SWITCH,           true,               {DRIVE9});
-    setFallback(OPT_DRV_POWER_SAVE,             true,               {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_EJECT_DELAY,            30,                 {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_SWAP_DELAY,             30,                 {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_INSERT_DELAY,           30,                 {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_PAN,                    0,                  {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_POWER_VOL,              50,                 {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_STEP_VOL,               50,                 {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_INSERT_VOL,             50,                 {DRIVE8, DRIVE9});
-    setFallback(OPT_DRV_EJECT_VOL,              50,                 {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_AUTO_CONFIG,            true,               {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_TYPE,                   DRIVE_VC1541II,     {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_RAM,                    DRVRAM_NONE,        {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_SAVE_ROMS,              true,               {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_PARCABLE,               PAR_CABLE_NONE,     {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_CONNECT,                true,               {DRIVE8});
+    setFallback(Opt::DRV_CONNECT,                false,              {DRIVE9});
+    setFallback(Opt::DRV_POWER_SWITCH,           true,               {DRIVE8});
+    setFallback(Opt::DRV_POWER_SWITCH,           true,               {DRIVE9});
+    setFallback(Opt::DRV_POWER_SAVE,             true,               {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_EJECT_DELAY,            30,                 {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_SWAP_DELAY,             30,                 {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_INSERT_DELAY,           30,                 {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_PAN,                    0,                  {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_POWER_VOL,              50,                 {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_STEP_VOL,               50,                 {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_INSERT_VOL,             50,                 {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_EJECT_VOL,              50,                 {DRIVE8, DRIVE9});
 
-    setFallback(OPT_DAT_MODEL,                  DATASETTE_C1530);
-    setFallback(OPT_DAT_CONNECT,                true);
+    setFallback(Opt::DAT_MODEL,                  DATASETTE_C1530);
+    setFallback(Opt::DAT_CONNECT,                true);
 
-    setFallback(OPT_MOUSE_MODEL,                MOUSE_C1350);
-    setFallback(OPT_MOUSE_SHAKE_DETECT,         true);
-    setFallback(OPT_MOUSE_VELOCITY,             100);
+    setFallback(Opt::MOUSE_MODEL,                MOUSE_C1350);
+    setFallback(Opt::MOUSE_SHAKE_DETECT,         true);
+    setFallback(Opt::MOUSE_VELOCITY,             100);
 
-    setFallback(OPT_AUTOFIRE,                   false);
-    setFallback(OPT_AUTOFIRE_BURSTS,            false);
-    setFallback(OPT_AUTOFIRE_BULLETS,           3);
-    setFallback(OPT_AUTOFIRE_DELAY,             5);
+    setFallback(Opt::AUTOFIRE,                   false);
+    setFallback(Opt::AUTOFIRE_BURSTS,            false);
+    setFallback(Opt::AUTOFIRE_BULLETS,           3);
+    setFallback(Opt::AUTOFIRE_DELAY,             5);
 
-    setFallback(OPT_RS232_DEVICE,               COMDEV_NONE);
-    setFallback(OPT_RS232_BAUD,                 600);
+    setFallback(Opt::RS232_DEVICE,               COMDEV_NONE);
+    setFallback(Opt::RS232_BAUD,                 600);
 
-    setFallback(OPT_PADDLE_ORIENTATION,         PADDLE_HORIZONTAL);
+    setFallback(Opt::PADDLE_ORIENTATION,         PADDLE_HORIZONTAL);
 
-    setFallback(OPT_RS232_BAUD,                 600);
+    setFallback(Opt::RS232_BAUD,                 600);
 
-    setFallback(OPT_REC_FRAME_RATE,             50);
-    setFallback(OPT_REC_BIT_RATE,               512);
-    setFallback(OPT_REC_SAMPLE_RATE,            44100);
-    setFallback(OPT_REC_ASPECT_X,               768);
-    setFallback(OPT_REC_ASPECT_Y,               702);
+    setFallback(Opt::REC_FRAME_RATE,             50);
+    setFallback(Opt::REC_BIT_RATE,               512);
+    setFallback(Opt::REC_SAMPLE_RATE,            44100);
+    setFallback(Opt::REC_ASPECT_X,               768);
+    setFallback(Opt::REC_ASPECT_Y,               702);
 
-    setFallback(OPT_SRV_PORT,                   8081,                   { SERVER_RSH });
-    setFallback(OPT_SRV_PROTOCOL,               SRVPROT_DEFAULT,        { SERVER_RSH });
-    setFallback(OPT_SRV_AUTORUN,                false,                  { SERVER_RSH });
-    setFallback(OPT_SRV_VERBOSE,                true,                   { SERVER_RSH });
+    setFallback(Opt::SRV_PORT,                   8081,                   { SERVER_RSH });
+    setFallback(Opt::SRV_PROTOCOL,               SRVPROT_DEFAULT,        { SERVER_RSH });
+    setFallback(Opt::SRV_AUTORUN,                false,                  { SERVER_RSH });
+    setFallback(Opt::SRV_VERBOSE,                true,                   { SERVER_RSH });
 
-    setFallback(OPT_DBG_DEBUGCART,              0);
-    setFallback(OPT_DBG_WATCHDOG,               0);
+    setFallback(Opt::DBG_DEBUGCART,              0);
+    setFallback(Opt::DBG_WATCHDOG,               0);
 
     setFallback("BASIC_PATH", "");
     setFallback("CHAR_PATH", "");
@@ -394,15 +394,15 @@ Defaults::get(const string &key) const
 }
 
 i64
-Defaults::get(Option option, isize nr) const
+Defaults::get(Opt option, isize nr) const
 {
     try {
 
-        return get(string(OptionEnum::rawkey(option)) + std::to_string(nr));
+        return get(string(OptionEnum::fullKey(option)) + std::to_string(nr));
 
     } catch (...) {
 
-        return get(string(OptionEnum::rawkey(option)));
+        return get(string(OptionEnum::fullKey(option)));
     }
 }
 
@@ -431,15 +431,15 @@ Defaults::getFallback(const string &key) const
 }
 
 i64
-Defaults::getFallback(Option option, isize nr) const
+Defaults::getFallback(Opt option, isize nr) const
 {
     try {
 
-        return getFallback(string(OptionEnum::rawkey(option)) + std::to_string(nr));
+        return getFallback(string(OptionEnum::fullKey(option)) + std::to_string(nr));
 
     } catch (...) {
 
-        return getFallback(string(OptionEnum::rawkey(option)));
+        return getFallback(string(OptionEnum::fullKey(option)));
     }
 }
 
@@ -462,15 +462,15 @@ Defaults::set(const string &key, const string &value)
 }
 
 void
-Defaults::set(Option option, const string &value)
+Defaults::set(Opt option, const string &value)
 {
-    set(OptionEnum::rawkey(option), value);
+    set(OptionEnum::fullKey(option), value);
 }
 
 void
-Defaults::set(Option option, const string &value, std::vector <isize> objids)
+Defaults::set(Opt option, const string &value, std::vector <isize> objids)
 {
-    auto key = string(OptionEnum::rawkey(option));
+    auto key = string(OptionEnum::fullKey(option));
 
     for (auto &nr : objids) {
         set(key + std::to_string(nr), value);
@@ -478,13 +478,13 @@ Defaults::set(Option option, const string &value, std::vector <isize> objids)
 }
 
 void 
-Defaults::set(Option option, i64 value)
+Defaults::set(Opt option, i64 value)
 {
     set(option, std::to_string(value));
 }
 
 void
-Defaults::set(Option option, i64 value, std::vector <isize> objids)
+Defaults::set(Opt option, i64 value, std::vector <isize> objids)
 {
     set(option, std::to_string(value), objids);
 }
@@ -500,15 +500,15 @@ Defaults::setFallback(const string &key, const string &value)
 }
 
 void
-Defaults::setFallback(Option option, const string &value)
+Defaults::setFallback(Opt option, const string &value)
 {
-    setFallback(OptionEnum::rawkey(option), value);
+    setFallback(OptionEnum::fullKey(option), value);
 }
 
 void
-Defaults::setFallback(Option option, const string &value, std::vector <isize> objids)
+Defaults::setFallback(Opt option, const string &value, std::vector <isize> objids)
 {
-    auto key = string(OptionEnum::rawkey(option));
+    auto key = string(OptionEnum::fullKey(option));
 
     for (auto &nr : objids) {
         setFallback(key + std::to_string(nr), value);
@@ -516,13 +516,13 @@ Defaults::setFallback(Option option, const string &value, std::vector <isize> ob
 }
 
 void
-Defaults::setFallback(Option option, i64 value)
+Defaults::setFallback(Opt option, i64 value)
 {
     setFallback(option, std::to_string(value));
 }
 
 void
-Defaults::setFallback(Option option, i64 value, std::vector <isize> objids)
+Defaults::setFallback(Opt option, i64 value, std::vector <isize> objids)
 {
     setFallback(option, std::to_string(value), objids);
 }
@@ -551,16 +551,16 @@ Defaults::remove(const string &key)
 }
 
 void
-Defaults::remove(Option option)
+Defaults::remove(Opt option)
 {
-    remove(string(OptionEnum::rawkey(option)));
+    remove(string(OptionEnum::fullKey(option)));
 }
 
 void
-Defaults::remove(Option option, std::vector <isize> nrs)
+Defaults::remove(Opt option, std::vector <isize> nrs)
 {
     for (auto &nr : nrs) {
-        remove(string(OptionEnum::rawkey(option)) + std::to_string(nr));
+        remove(string(OptionEnum::fullKey(option)) + std::to_string(nr));
     }
 }
 

@@ -201,17 +201,17 @@ VICII::getSpriteInfo(isize nr)
 }
 
 i64
-VICII::getOption(Option option) const
+VICII::getOption(Opt option) const
 {
     switch (option) {
 
-        case OPT_VICII_REVISION:        return config.awaiting;
-        case OPT_VICII_POWER_SAVE:      return config.powerSave;
-        case OPT_VICII_GRAY_DOT_BUG:    return config.grayDotBug;
-        case OPT_GLUE_LOGIC:            return config.glueLogic;
-        case OPT_VICII_HIDE_SPRITES:    return config.hideSprites;
-        case OPT_VICII_SS_COLLISIONS:   return config.checkSSCollisions;
-        case OPT_VICII_SB_COLLISIONS:   return config.checkSBCollisions;
+        case Opt::VICII_REVISION:        return config.awaiting;
+        case Opt::VICII_POWER_SAVE:      return config.powerSave;
+        case Opt::VICII_GRAY_DOT_BUG:    return config.grayDotBug;
+        case Opt::GLUE_LOGIC:            return config.glueLogic;
+        case Opt::VICII_HIDE_SPRITES:    return config.hideSprites;
+        case Opt::VICII_SS_COLLISIONS:   return config.checkSSCollisions;
+        case Opt::VICII_SB_COLLISIONS:   return config.checkSBCollisions;
 
         default:
             fatalError;
@@ -219,26 +219,26 @@ VICII::getOption(Option option) const
 }
 
 void
-VICII::checkOption(Option opt, i64 value)
+VICII::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_VICII_REVISION:
+        case Opt::VICII_REVISION:
 
             if (!VICIIRevisionEnum::isValid(value)) {
                 throw Error(Fault::OPT_INV_ARG, VICIIRevisionEnum::keyList());
             }
             return;
 
-        case OPT_VICII_POWER_SAVE:
-        case OPT_VICII_GRAY_DOT_BUG:
-        case OPT_VICII_HIDE_SPRITES:
-        case OPT_VICII_SS_COLLISIONS:
-        case OPT_VICII_SB_COLLISIONS:
+        case Opt::VICII_POWER_SAVE:
+        case Opt::VICII_GRAY_DOT_BUG:
+        case Opt::VICII_HIDE_SPRITES:
+        case Opt::VICII_SS_COLLISIONS:
+        case Opt::VICII_SB_COLLISIONS:
 
             return;
 
-        case OPT_GLUE_LOGIC:
+        case Opt::GLUE_LOGIC:
 
             if (!GlueLogicEnum::isValid(value)) {
                 throw Error(Fault::OPT_INV_ARG, GlueLogicEnum::keyList());
@@ -251,13 +251,13 @@ VICII::checkOption(Option opt, i64 value)
 }
 
 void
-VICII::setOption(Option opt, i64 value)
+VICII::setOption(Opt opt, i64 value)
 {
     checkOption(opt, value);
     
     switch (opt) {
 
-        case OPT_VICII_REVISION:
+        case Opt::VICII_REVISION:
 
             config.awaiting = VICIIRevision(value);
 
@@ -266,32 +266,32 @@ VICII::setOption(Option opt, i64 value)
 
             return;
 
-        case OPT_VICII_POWER_SAVE:
+        case Opt::VICII_POWER_SAVE:
 
             config.powerSave = bool(value);
             return;
 
-        case OPT_VICII_GRAY_DOT_BUG:
+        case Opt::VICII_GRAY_DOT_BUG:
 
             config.grayDotBug = bool(value);
             return;
 
-        case OPT_VICII_HIDE_SPRITES:
+        case Opt::VICII_HIDE_SPRITES:
 
             config.hideSprites = bool(value);
             return;
 
-        case OPT_VICII_SS_COLLISIONS:
+        case Opt::VICII_SS_COLLISIONS:
 
             config.checkSSCollisions = bool(value);
             return;
 
-        case OPT_VICII_SB_COLLISIONS:
+        case Opt::VICII_SB_COLLISIONS:
 
             config.checkSBCollisions = bool(value);
             return;
 
-        case OPT_GLUE_LOGIC:
+        case Opt::GLUE_LOGIC:
 
             config.glueLogic = GlueLogic(value);
             return;

@@ -940,7 +940,7 @@ Console::registerComponent(CoreComponent &c, RetroShellCmd &root)
                     .help   = { OptionEnum::help(opt) },
                     .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
                         
-                        emulator.set(Option(values[0]), argv[0], { values[1] });
+                        emulator.set(Opt(values[0]), argv[0], { values[1] });
                         // msgQueue.put(MSG_CONFIG);
                         
                     }, .values = { isize(opt), c.objid }
@@ -965,7 +965,7 @@ Console::registerComponent(CoreComponent &c, RetroShellCmd &root)
                         .help   = { help.empty() ? "Set to " + first : help },
                         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
                             
-                            emulator.set(Option(values[0]), values[1], { values[2] });
+                            emulator.set(Opt(values[0]), values[1], { values[2] });
                             // msgQueue.put(MSG_CONFIG);
                             
                         },  .values = { isize(opt), isize(second), c.objid }

@@ -128,12 +128,12 @@ NSString *EventSlotName(EventSlot slot)
     return [self props]->get([key UTF8String]);
 }
 
-- (NSInteger)getOpt:(Option)option
+- (NSInteger)getOpt:(Opt)option
 {
     return [self props]->get(option);
 }
 
-- (NSInteger)getOpt:(Option)option nr:(NSInteger)nr
+- (NSInteger)getOpt:(Opt)option nr:(NSInteger)nr
 {
     return [self props]->get(option, nr);
 }
@@ -143,12 +143,12 @@ NSString *EventSlotName(EventSlot slot)
     [self props]->set(string([key UTF8String]), string([value UTF8String]));
 }
 
-- (void)setOpt:(Option)option value:(NSInteger)value
+- (void)setOpt:(Opt)option value:(NSInteger)value
 {
     [self props]->set(option, value);
 }
 
-- (void)setOpt:(Option)option nr:(NSInteger)nr value:(NSInteger)value
+- (void)setOpt:(Opt)option nr:(NSInteger)nr value:(NSInteger)value
 {
     [self props]->set(option, value, {nr});
 }
@@ -163,12 +163,12 @@ NSString *EventSlotName(EventSlot slot)
     [self props]->remove(string([key UTF8String]));
 }
 
-- (void)remove:(Option)option
+- (void)remove:(Opt)option
 {
     [self props]->remove(option);
 }
 
-- (void)remove:(Option) option nr:(NSInteger)nr
+- (void)remove:(Opt) option nr:(NSInteger)nr
 {
     [self props]->remove(option, {nr});
 }
@@ -1950,22 +1950,22 @@ NSString *EventSlotName(EventSlot slot)
     [self emu]->trackOff(source);
 }
 
-- (NSInteger)get:(Option)opt
+- (NSInteger)get:(Opt)opt
 {
     return [self emu]->get(opt);
 }
 
-- (NSInteger)get:(Option)opt id:(NSInteger)id
+- (NSInteger)get:(Opt)opt id:(NSInteger)id
 {
     return [self emu]->get(opt, id);
 }
 
-- (NSInteger)get:(Option)opt drive:(NSInteger)id
+- (NSInteger)get:(Opt)opt drive:(NSInteger)id
 {
     return [self emu]->get(opt, (long)id);
 }
 
-- (BOOL)set:(Option)opt value:(NSInteger)val
+- (BOOL)set:(Opt)opt value:(NSInteger)val
 {
     try {
         [self emu]->set(opt, val);
@@ -1975,7 +1975,7 @@ NSString *EventSlotName(EventSlot slot)
     }
 }
 
-- (BOOL)set:(Option)opt enable:(BOOL)val
+- (BOOL)set:(Opt)opt enable:(BOOL)val
 {
     try {
         [self emu]->set(opt, val ? 1 : 0);
@@ -1985,7 +1985,7 @@ NSString *EventSlotName(EventSlot slot)
     }
 }
 
-- (BOOL)set:(Option)opt id:(NSInteger)id value:(NSInteger)val
+- (BOOL)set:(Opt)opt id:(NSInteger)id value:(NSInteger)val
 {
     try {
         [self emu]->set(opt, val, id);
@@ -1995,7 +1995,7 @@ NSString *EventSlotName(EventSlot slot)
     }
 }
 
-- (BOOL)set:(Option)opt id:(NSInteger)id enable:(BOOL)val
+- (BOOL)set:(Opt)opt id:(NSInteger)id enable:(BOOL)val
 {
     try {
         [self emu]->set(opt, val ? 1 : 0, id);
@@ -2005,7 +2005,7 @@ NSString *EventSlotName(EventSlot slot)
     }
 }
 
-- (BOOL)set:(Option)opt drive:(NSInteger)id value:(NSInteger)val
+- (BOOL)set:(Opt)opt drive:(NSInteger)id value:(NSInteger)val
 {
     try {
         [self emu]->set(opt, val, (long)id);
@@ -2015,7 +2015,7 @@ NSString *EventSlotName(EventSlot slot)
     }
 }
 
-- (BOOL)set:(Option)opt drive:(NSInteger)id enable:(BOOL)val
+- (BOOL)set:(Opt)opt drive:(NSInteger)id enable:(BOOL)val
 {
     try {
         [self emu]->set(opt, val ? 1 : 0, (long)id);

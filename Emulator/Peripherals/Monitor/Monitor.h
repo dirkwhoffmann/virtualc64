@@ -31,29 +31,29 @@ class Monitor final : public SubComponent {
 
     Options options = {
 
-        OPT_MON_PALETTE,
-        OPT_MON_BRIGHTNESS,
-        OPT_MON_CONTRAST,
-        OPT_MON_SATURATION,
-        OPT_MON_HCENTER,
-        OPT_MON_VCENTER,
-        OPT_MON_HZOOM,
-        OPT_MON_VZOOM,
-        OPT_MON_UPSCALER,
-        OPT_MON_BLUR,
-        OPT_MON_BLUR_RADIUS,
-        OPT_MON_BLOOM,
-        OPT_MON_BLOOM_RADIUS,
-        OPT_MON_BLOOM_BRIGHTNESS,
-        OPT_MON_BLOOM_WEIGHT,
-        OPT_MON_DOTMASK,
-        OPT_MON_DOTMASK_BRIGHTNESS,
-        OPT_MON_SCANLINES,
-        OPT_MON_SCANLINE_BRIGHTNESS,
-        OPT_MON_SCANLINE_WEIGHT,
-        OPT_MON_DISALIGNMENT,
-        OPT_MON_DISALIGNMENT_H,
-        OPT_MON_DISALIGNMENT_V
+        Opt::MON_PALETTE,
+        Opt::MON_BRIGHTNESS,
+        Opt::MON_CONTRAST,
+        Opt::MON_SATURATION,
+        Opt::MON_HCENTER,
+        Opt::MON_VCENTER,
+        Opt::MON_HZOOM,
+        Opt::MON_VZOOM,
+        Opt::MON_UPSCALER,
+        Opt::MON_BLUR,
+        Opt::MON_BLUR_RADIUS,
+        Opt::MON_BLOOM,
+        Opt::MON_BLOOM_RADIUS,
+        Opt::MON_BLOOM_BRIGHTNESS,
+        Opt::MON_BLOOM_WEIGHT,
+        Opt::MON_DOTMASK,
+        Opt::MON_DOTMASK_BRIGHTNESS,
+        Opt::MON_SCANLINES,
+        Opt::MON_SCANLINE_BRIGHTNESS,
+        Opt::MON_SCANLINE_WEIGHT,
+        Opt::MON_DISALIGNMENT,
+        Opt::MON_DISALIGNMENT_H,
+        Opt::MON_DISALIGNMENT_V
     };
 
     // Current configuration
@@ -143,9 +143,9 @@ public:
 
     const MonitorConfig &getConfig() const { return config; }
     const Options &getOptions() const override { return options; }
-    i64 getOption(Option opt) const override;
-    void checkOption(Option opt, i64 value) override;
-    void setOption(Option opt, i64 value) override;
+    i64 getOption(Opt opt) const override;
+    void checkOption(Opt opt, i64 value) override;
+    void setOption(Opt opt, i64 value) override;
 
 
     //

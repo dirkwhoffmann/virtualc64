@@ -37,16 +37,16 @@ public util::RingBuffer <SamplePair, 12288> {
 
     Options options = {
 
-        OPT_AUD_VOL0,
-        OPT_AUD_VOL1,
-        OPT_AUD_VOL2,
-        OPT_AUD_VOL3,
-        OPT_AUD_PAN0,
-        OPT_AUD_PAN1,
-        OPT_AUD_PAN2,
-        OPT_AUD_PAN3,
-        OPT_AUD_VOL_L,
-        OPT_AUD_VOL_R
+        Opt::AUD_VOL0,
+        Opt::AUD_VOL1,
+        Opt::AUD_VOL2,
+        Opt::AUD_VOL3,
+        Opt::AUD_PAN0,
+        Opt::AUD_PAN1,
+        Opt::AUD_PAN2,
+        Opt::AUD_PAN3,
+        Opt::AUD_VOL_L,
+        Opt::AUD_VOL_R
     };
 
     // Current configuration
@@ -149,9 +149,9 @@ public:
 
     const AudioPortConfig &getConfig() const { return config; }
     const Options &getOptions() const override { return options; }
-    i64 getOption(Option opt) const override;
-    void checkOption(Option opt, i64 value) override;
-    void setOption(Option opt, i64 value) override;
+    i64 getOption(Opt opt) const override;
+    void checkOption(Opt opt, i64 value) override;
+    void setOption(Opt opt, i64 value) override;
 
 
     //

@@ -32,11 +32,11 @@ RegressionTester::prepare(C64 &c64, ConfigScheme model)
     emulator.set(model);
 
     // Make sure we run with high emulation accuracy
-    emulator.set(OPT_DRV_POWER_SAVE, false);
-    emulator.set(OPT_SID_POWER_SAVE, false);
-    emulator.set(OPT_VICII_POWER_SAVE, false);
-    emulator.set(OPT_VICII_SS_COLLISIONS, true);
-    emulator.set(OPT_VICII_SB_COLLISIONS, true);
+    emulator.set(Opt::DRV_POWER_SAVE, false);
+    emulator.set(Opt::SID_POWER_SAVE, false);
+    emulator.set(Opt::VICII_POWER_SAVE, false);
+    emulator.set(Opt::VICII_SS_COLLISIONS, true);
+    emulator.set(Opt::VICII_SB_COLLISIONS, true);
 
     // Choose a warp source that prevents the GUI from disabling warp mode
     constexpr isize warpSource = 1;

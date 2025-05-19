@@ -150,7 +150,7 @@ SIDBridge::beginFrame()
     c64.updateClockFrequency();
 
     // Update the audio sample rate
-    setSampleRate(host.getOption(OPT_HOST_SAMPLE_RATE) + audioPort.getSampleRateCorrection());
+    setSampleRate(host.getOption(Opt::HOST_SAMPLE_RATE) + audioPort.getSampleRateCorrection());
 }
 
 void 

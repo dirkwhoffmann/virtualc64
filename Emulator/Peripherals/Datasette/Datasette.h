@@ -47,8 +47,8 @@ class Datasette final : public SubComponent, public Inspectable<DatasetteInfo> {
 
     Options options = {
 
-        OPT_DAT_MODEL,
-        OPT_DAT_CONNECT
+        Opt::DAT_MODEL,
+        Opt::DAT_CONNECT
     };
 
     // Current configuration
@@ -175,9 +175,9 @@ public:
 
     const DatasetteConfig &getConfig() const { return config; }
     const Options &getOptions() const override { return options; }
-    i64 getOption(Option opt) const override;
-    void checkOption(Option opt, i64 value) override;
-    void setOption(Option opt, i64 value) override;
+    i64 getOption(Opt opt) const override;
+    void checkOption(Opt opt, i64 value) override;
+    void setOption(Opt opt, i64 value) override;
 
 
     //

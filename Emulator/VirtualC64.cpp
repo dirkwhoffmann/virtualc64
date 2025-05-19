@@ -331,13 +331,13 @@ VirtualC64::isLaunched() const
 }
 
 i64
-VirtualC64::get(Option option) const
+VirtualC64::get(Opt option) const
 {
     return emu->get(option);
 }
 
 i64
-VirtualC64::get(Option option, long id) const
+VirtualC64::get(Opt option, long id) const
 {
     return emu->get(option, id);
 }
@@ -350,7 +350,7 @@ VirtualC64::set(ConfigScheme model)
 }
 
 void
-VirtualC64::set(Option opt, i64 value) throws
+VirtualC64::set(Opt opt, i64 value) throws
 {
     emu->check(opt, value);
     put(CMD_CONFIG_ALL, ConfigCmd { .option = opt, .value = value });
@@ -358,7 +358,7 @@ VirtualC64::set(Option opt, i64 value) throws
 }
 
 void
-VirtualC64::set(Option opt, i64 value, long id)
+VirtualC64::set(Opt opt, i64 value, long id)
 {
     emu->check(opt, value, { id });
     put(CMD_CONFIG, ConfigCmd { .option = opt, .value = value, .id = id });
@@ -1314,7 +1314,7 @@ DefaultsAPI::get(const string &key) const
 }
 
 i64
-DefaultsAPI::get(Option option, isize nr) const
+DefaultsAPI::get(Opt option, isize nr) const
 {
     return defaults->get(option, nr);
 }
@@ -1332,7 +1332,7 @@ DefaultsAPI::getFallback(const string &key) const
 }
 
 i64
-DefaultsAPI::getFallback(Option option, isize nr) const
+DefaultsAPI::getFallback(Opt option, isize nr) const
 {
     return defaults->getFallback(option, nr);
 }
@@ -1344,25 +1344,25 @@ DefaultsAPI::set(const string &key, const string &value)
 }
 
 void
-DefaultsAPI::set(Option opt, const string &value)
+DefaultsAPI::set(Opt opt, const string &value)
 {
     defaults->set(opt, value);
 }
 
 void
-DefaultsAPI::set(Option opt, const string &value, std::vector<isize> objids)
+DefaultsAPI::set(Opt opt, const string &value, std::vector<isize> objids)
 {
     defaults->set(opt, value, objids);
 }
 
 void
-DefaultsAPI::set(Option opt, i64 value)
+DefaultsAPI::set(Opt opt, i64 value)
 {
     defaults->set(opt, value);
 }
 
 void
-DefaultsAPI::set(Option opt, i64 value, std::vector<isize> objids)
+DefaultsAPI::set(Opt opt, i64 value, std::vector<isize> objids)
 {
     defaults->set(opt, value, objids);
 }
@@ -1374,25 +1374,25 @@ DefaultsAPI::setFallback(const string &key, const string &value)
 }
 
 void
-DefaultsAPI::setFallback(Option opt, const string &value)
+DefaultsAPI::setFallback(Opt opt, const string &value)
 {
     defaults->setFallback(opt, value);
 }
 
 void
-DefaultsAPI::setFallback(Option opt, const string &value, std::vector<isize> objids)
+DefaultsAPI::setFallback(Opt opt, const string &value, std::vector<isize> objids)
 {
     defaults->setFallback(opt, value, objids);
 }
 
 void
-DefaultsAPI::setFallback(Option opt, i64 value)
+DefaultsAPI::setFallback(Opt opt, i64 value)
 {
     defaults->setFallback(opt, value);
 }
 
 void
-DefaultsAPI::setFallback(Option opt, i64 value, std::vector<isize> objids)
+DefaultsAPI::setFallback(Opt opt, i64 value, std::vector<isize> objids)
 {
     defaults->setFallback(opt, value, objids);
 }
@@ -1410,13 +1410,13 @@ DefaultsAPI::remove(const string &key)
 }
 
 void
-DefaultsAPI::remove(Option option)
+DefaultsAPI::remove(Opt option)
 {
     defaults->remove(option);
 }
 
 void
-DefaultsAPI::remove(Option option, std::vector <isize> objids)
+DefaultsAPI::remove(Opt option, std::vector <isize> objids)
 {
     defaults->remove(option, objids);
 }

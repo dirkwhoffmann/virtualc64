@@ -70,14 +70,14 @@ Joystick::cacheInfo(JoystickInfo &result) const
 }
 
 i64
-Joystick::getOption(Option option) const
+Joystick::getOption(Opt option) const
 {
     switch (option) {
 
-        case OPT_AUTOFIRE:          return (i64)config.autofire;
-        case OPT_AUTOFIRE_BURSTS:   return (i64)config.autofireBursts;
-        case OPT_AUTOFIRE_BULLETS:  return (i64)config.autofireBullets;
-        case OPT_AUTOFIRE_DELAY:    return (i64)config.autofireDelay;
+        case Opt::AUTOFIRE:          return (i64)config.autofire;
+        case Opt::AUTOFIRE_BURSTS:   return (i64)config.autofireBursts;
+        case Opt::AUTOFIRE_BULLETS:  return (i64)config.autofireBullets;
+        case Opt::AUTOFIRE_DELAY:    return (i64)config.autofireDelay;
 
         default:
             fatalError;
@@ -85,14 +85,14 @@ Joystick::getOption(Option option) const
 }
 
 void
-Joystick::checkOption(Option opt, i64 value)
+Joystick::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_AUTOFIRE:
-        case OPT_AUTOFIRE_BURSTS:
-        case OPT_AUTOFIRE_BULLETS:
-        case OPT_AUTOFIRE_DELAY:
+        case Opt::AUTOFIRE:
+        case Opt::AUTOFIRE_BURSTS:
+        case Opt::AUTOFIRE_BULLETS:
+        case Opt::AUTOFIRE_DELAY:
 
             return;
 
@@ -102,28 +102,28 @@ Joystick::checkOption(Option opt, i64 value)
 }
 
 void
-Joystick::setOption(Option opt, i64 value)
+Joystick::setOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_AUTOFIRE:
+        case Opt::AUTOFIRE:
 
             config.autofire = bool(value);
             return;
 
-        case OPT_AUTOFIRE_BURSTS:
+        case Opt::AUTOFIRE_BURSTS:
 
             config.autofireBursts = bool(value);
             if (isAutofiring()) reload();
             return;
 
-        case OPT_AUTOFIRE_BULLETS:
+        case Opt::AUTOFIRE_BULLETS:
 
             config.autofireBullets = isize(value);
             if (isAutofiring()) reload();
             return;
 
-        case OPT_AUTOFIRE_DELAY:
+        case Opt::AUTOFIRE_DELAY:
 
             config.autofireDelay = isize(value);
             return;

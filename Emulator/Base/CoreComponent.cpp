@@ -14,7 +14,7 @@
 #include "CoreComponent.h"
 #include "Emulator.h"
 #include "Checksum.h"
-#include "Option.h"
+#include "Opt.h"
 
 namespace vc64 {
 
@@ -135,13 +135,13 @@ CoreComponent::resetConfig()
 }
 
 i64
-CoreComponent::getFallback(Option opt) const
+CoreComponent::getFallback(Opt opt) const
 {
     return emulator.defaults.get(opt);
 }
 
 Configurable *
-CoreComponent::routeOption(Option opt, isize objid)
+CoreComponent::routeOption(Opt opt, isize objid)
 {
     if (this->objid == objid) {
         for (auto &o : getOptions()) if (o == opt) return this;

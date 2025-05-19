@@ -31,24 +31,24 @@ class DmaDebugger final : public SubComponent {
 
     Options options = {
 
-        OPT_DMA_DEBUG_ENABLE,
-        OPT_DMA_DEBUG_OVERLAY,
-        OPT_DMA_DEBUG_MODE,
-        OPT_DMA_DEBUG_OPACITY,
-        OPT_VICII_CUT_LAYERS,
-        OPT_VICII_CUT_OPACITY,
-        OPT_DMA_DEBUG_CHANNEL0,
-        OPT_DMA_DEBUG_CHANNEL1,
-        OPT_DMA_DEBUG_CHANNEL2,
-        OPT_DMA_DEBUG_CHANNEL3,
-        OPT_DMA_DEBUG_CHANNEL4,
-        OPT_DMA_DEBUG_CHANNEL5,
-        OPT_DMA_DEBUG_COLOR0,
-        OPT_DMA_DEBUG_COLOR1,
-        OPT_DMA_DEBUG_COLOR2,
-        OPT_DMA_DEBUG_COLOR3,
-        OPT_DMA_DEBUG_COLOR4,
-        OPT_DMA_DEBUG_COLOR5
+        Opt::DMA_DEBUG_ENABLE,
+        Opt::DMA_DEBUG_OVERLAY,
+        Opt::DMA_DEBUG_MODE,
+        Opt::DMA_DEBUG_OPACITY,
+        Opt::VICII_CUT_LAYERS,
+        Opt::VICII_CUT_OPACITY,
+        Opt::DMA_DEBUG_CHANNEL0,
+        Opt::DMA_DEBUG_CHANNEL1,
+        Opt::DMA_DEBUG_CHANNEL2,
+        Opt::DMA_DEBUG_CHANNEL3,
+        Opt::DMA_DEBUG_CHANNEL4,
+        Opt::DMA_DEBUG_CHANNEL5,
+        Opt::DMA_DEBUG_COLOR0,
+        Opt::DMA_DEBUG_COLOR1,
+        Opt::DMA_DEBUG_COLOR2,
+        Opt::DMA_DEBUG_COLOR3,
+        Opt::DMA_DEBUG_COLOR4,
+        Opt::DMA_DEBUG_COLOR5
     };
 
     // Current configuration
@@ -120,9 +120,9 @@ public:
 
     const DmaDebuggerConfig &getConfig() const { return config; }
     const Options &getOptions() const override { return options; }
-    i64 getOption(Option opt) const override;
-    void checkOption(Option opt, i64 value) override;
-    void setOption(Option opt, i64 value) override;
+    i64 getOption(Opt opt) const override;
+    void checkOption(Opt opt, i64 value) override;
+    void setOption(Opt opt, i64 value) override;
 
 
     //

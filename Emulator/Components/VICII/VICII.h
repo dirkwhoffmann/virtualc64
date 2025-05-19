@@ -199,13 +199,13 @@ class VICII final : public SubComponent, public Inspectable<VICIIInfo, VICIIStat
 
     Options options = {
 
-        OPT_VICII_REVISION,
-        OPT_VICII_POWER_SAVE,
-        OPT_VICII_GRAY_DOT_BUG,
-        OPT_GLUE_LOGIC,
-        OPT_VICII_HIDE_SPRITES,
-        OPT_VICII_SS_COLLISIONS,
-        OPT_VICII_SB_COLLISIONS
+        Opt::VICII_REVISION,
+        Opt::VICII_POWER_SAVE,
+        Opt::VICII_GRAY_DOT_BUG,
+        Opt::GLUE_LOGIC,
+        Opt::VICII_HIDE_SPRITES,
+        Opt::VICII_SS_COLLISIONS,
+        Opt::VICII_SB_COLLISIONS
     };
 
     // Current configuration
@@ -982,9 +982,9 @@ public:
 
     const VICIIConfig &getConfig() const { return config; }
     const Options &getOptions() const override { return options; }
-    i64 getOption(Option opt) const override;
-    void checkOption(Option opt, i64 value) override;
-    void setOption(Option opt, i64 value) override;
+    i64 getOption(Opt opt) const override;
+    void checkOption(Opt opt, i64 value) override;
+    void setOption(Opt opt, i64 value) override;
 
     bool dmaDebug() const { return dmaDebugger.config.dmaDebug; }
 

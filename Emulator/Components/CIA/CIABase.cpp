@@ -126,13 +126,13 @@ CIA::cacheStats(CIAStats &result) const
 }
 
 i64
-CIA::getOption(Option option) const
+CIA::getOption(Opt option) const
 {
     switch (option) {
 
-        case OPT_CIA_REVISION:      return config.revision;
-        case OPT_CIA_TIMER_B_BUG:   return config.timerBBug;
-        case OPT_CIA_IDLE_SLEEP:    return config.idleSleep;
+        case Opt::CIA_REVISION:      return config.revision;
+        case Opt::CIA_TIMER_B_BUG:   return config.timerBBug;
+        case Opt::CIA_IDLE_SLEEP:    return config.idleSleep;
 
 
         default:
@@ -141,19 +141,19 @@ CIA::getOption(Option option) const
 }
 
 void
-CIA::checkOption(Option opt, i64 value)
+CIA::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case OPT_CIA_REVISION:
+        case Opt::CIA_REVISION:
 
             if (!CIARevisionEnum::isValid(value)) {
                 throw Error(Fault::OPT_INV_ARG, CIARevisionEnum::keyList());
             }
             return;
 
-        case OPT_CIA_TIMER_B_BUG:
-        case OPT_CIA_IDLE_SLEEP:
+        case Opt::CIA_TIMER_B_BUG:
+        case Opt::CIA_IDLE_SLEEP:
 
             return;
 
@@ -163,23 +163,23 @@ CIA::checkOption(Option opt, i64 value)
 }
 
 void
-CIA::setOption(Option opt, i64 value)
+CIA::setOption(Opt opt, i64 value)
 {
     checkOption(opt, value);
 
     switch (opt) {
 
-        case OPT_CIA_REVISION:
+        case Opt::CIA_REVISION:
 
             config.revision = (CIARevision)value;
             return;
 
-        case OPT_CIA_TIMER_B_BUG:
+        case Opt::CIA_TIMER_B_BUG:
 
             config.timerBBug = value;
             return;
 
-        case OPT_CIA_IDLE_SLEEP:
+        case Opt::CIA_IDLE_SLEEP:
 
             config.idleSleep = value;
             return;

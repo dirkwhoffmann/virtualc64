@@ -895,7 +895,7 @@ public:
      *  @result The value as an integer.
      *  @throw  VC64Error (#ERROR\_INVALID\_KEY)
      */
-    i64 get(Option option, isize nr = 0) const;
+    i64 get(Opt option, isize nr = 0) const;
 
     /** @brief  Queries a fallback key-value pair.
      *  @param  key     The key.
@@ -917,7 +917,7 @@ public:
      *  @result The value as an integer.
      *  @throw  VC64Error (#ERROR\_INVALID\_KEY)
      */
-    i64 getFallback(Option option, isize nr = 0) const;
+    i64 getFallback(Opt option, isize nr = 0) const;
 
 
     /// @}
@@ -936,7 +936,7 @@ public:
      *  @param  value   The value, given as a string.
      *  @throw  VC64Error (#INVALID_KEY)
      */
-    void set(Option opt, const string &value);
+    void set(Opt opt, const string &value);
 
     /** @brief  Writes multiple key-value pairs into the user storage.
      *  @param  opt     The option's name forms the prefix of the keys.
@@ -944,14 +944,14 @@ public:
      *  @param  objids  The keys are parameterized by adding the vector values as suffixes.
      *  @throw  VC64Error (#INVALID_KEY)
      */
-    void set(Option opt, const string &value, std::vector<isize> objids);
+    void set(Opt opt, const string &value, std::vector<isize> objids);
 
     /** @brief  Writes a key-value pair into the user storage.
      *  @param  opt     The option's name forms the prefix of the keys.
      *  @param  value   The value, given as an integer.
      *  @throw  VC64Error (#INVALID_KEY)
      */
-    void set(Option opt, i64 value);
+    void set(Opt opt, i64 value);
 
     /** @brief  Writes multiple key-value pairs into the user storage.
      *  @param  opt     The option's name forms the prefix of the keys.
@@ -959,7 +959,7 @@ public:
      *  @param  objids  The keys are parameterized by adding the vector values as suffixes.
      *  @throw  VC64Error (#INVALID_KEY)
      */
-    void set(Option opt, i64 value, std::vector<isize> objids);
+    void set(Opt opt, i64 value, std::vector<isize> objids);
 
     /** @brief  Writes a key-value pair into the fallback storage.
      *  @param  key     The key, given as a string.
@@ -972,28 +972,28 @@ public:
      *  @param  value   The value, given as an integer.
      *  @throw  VC64Error (#INVALID_KEY)
      */
-    void setFallback(Option opt, const string &value);
+    void setFallback(Opt opt, const string &value);
 
     /** @brief  Writes multiple key-value pairs into the fallback storage.
      *  @param  opt     The option's name forms the prefix of the keys.
      *  @param  value   The shared value for all pairs, given as a string.
      *  @param  objids  The keys are parameterized by adding the vector values as suffixes.
      */
-    void setFallback(Option opt, const string &value, std::vector<isize> objids);
+    void setFallback(Opt opt, const string &value, std::vector<isize> objids);
 
     /** @brief  Writes a key-value pair into the fallback storage.
      *  @param  opt     The option's name forms the prefix of the keys.
      *  @param  value   The value, given as an integer.
      *  @throw  VC64Error (#INVALID_KEY)
      */
-    void setFallback(Option opt, i64 value);
+    void setFallback(Opt opt, i64 value);
 
     /** @brief  Writes multiple key-value pairs into the fallback storage.
      *  @param  opt     The option's name forms the prefix of the keys.
      *  @param  value   The shared value for all pairs, given as an integer.
      *  @param  objids  The keys are parameterized by adding the vector values as suffixes.
      */
-    void setFallback(Option opt, i64 value, std::vector<isize> objids);
+    void setFallback(Opt opt, i64 value, std::vector<isize> objids);
 
 
     /// @}
@@ -1014,14 +1014,14 @@ public:
      *  @param  option  The option's name forms the key.
      *  @throw  VC64Error (#INVALID_KEY)
      */
-    void remove(Option option) throws;
+    void remove(Opt option) throws;
 
     /** @brief  Deletes multiple key-value pairs.
      *  @param  option  The option's name forms the prefix of the keys.
      *  @param  objids  The keys are parameterized by adding the vector values as suffixes.
      *  @throw  VC64Error (#INVALID_KEY)
      */
-    void remove(Option option, std::vector <isize> objids) throws;
+    void remove(Opt option, std::vector <isize> objids) throws;
 
     /// @}
 };
@@ -1443,7 +1443,7 @@ public:
      *  determine the configured component. For those options, this function
      *  must not be called.
      */
-    i64 get(Option option) const;
+    i64 get(Opt option) const;
 
     /** @brief  Queries a configuration option.
      *
@@ -1455,7 +1455,7 @@ public:
      *  @note This function must only be called for those options that require
      *  an additional parameter to uniquely determine the configured component.
      */
-    i64 get(Option option, long id) const;
+    i64 get(Opt option, long id) const;
 
     /** Configures the emulator to match a specific C64 model
      *
@@ -1473,7 +1473,7 @@ public:
      *  @note If this function is called for an options that applies to multiple
      *  components, all components are configured with the specified value.
      */
-    void set(Option opt, i64 value) throws;
+    void set(Opt opt, i64 value) throws;
 
     /** @brief  Configures a component.
      *
@@ -1486,7 +1486,7 @@ public:
      *  @note This function must only be called for those options that require
      *  an additional parameter to uniquely determine the configured component.
      */
-    void set(Option opt, i64 value, long id);
+    void set(Opt opt, i64 value, long id);
 
 
     /** @brief  Exports the current configuration.
