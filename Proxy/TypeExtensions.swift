@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 typealias Class = vc64.Class
+typealias ControlPortDevice = vc64.ControlPortDevice
 typealias ErrorCode = vc64.Fault
 typealias EventSlot = vc64.EventSlot
 typealias EventSlotEnum = vc64.EventSlotEnum

@@ -30,27 +30,25 @@ static constexpr auto PORT_2 = 1;
 //
 
 /// Control port device
-enum_long(CPDEVICE)
+enum class ControlPortDevice
 {
-    CPDEVICE_NONE,      ///< No device
-    CPDEVICE_MOUSE,     ///< Mouse
-    CPDEVICE_JOYSTICK   ///< Joystick
+    NONE,      ///< No device
+    MOUSE,     ///< Mouse
+    JOYSTICK   ///< Joystick
 };
-typedef CPDEVICE ControlPortDevice;
 
 struct ControlPortDeviceEnum : util::Reflection<ControlPortDeviceEnum, ControlPortDevice> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = CPDEVICE_JOYSTICK;
+    static constexpr long maxVal = long(ControlPortDevice::JOYSTICK);
 
-    static const char *prefix() { return "CPDEVICE"; }
-    static const char *_key(long value)
+    static const char *_key(ControlPortDevice value)
     {
         switch (value) {
 
-            case CPDEVICE_NONE:      return "NONE";
-            case CPDEVICE_MOUSE:     return "MOUSE";
-            case CPDEVICE_JOYSTICK:  return "JOYSTICK";
+            case ControlPortDevice::NONE:      return "NONE";
+            case ControlPortDevice::MOUSE:     return "MOUSE";
+            case ControlPortDevice::JOYSTICK:  return "JOYSTICK";
         }
         return "???";
     }

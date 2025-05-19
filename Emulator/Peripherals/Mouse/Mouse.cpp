@@ -184,7 +184,7 @@ Mouse::setXY(double x, double y)
             break;
     }
 
-    port.device = CPDEVICE_MOUSE;
+    port.device = ControlPortDevice::MOUSE;
 }
 
 void
@@ -217,7 +217,7 @@ Mouse::setDxDy(double dx, double dy)
             break;
     }
 
-    port.device = CPDEVICE_MOUSE;
+    port.device = ControlPortDevice::MOUSE;
 }
 
 void
@@ -237,7 +237,7 @@ Mouse::setLeftButton(bool value)
         default:
             fatalError;
     }
-    port.device = CPDEVICE_MOUSE;
+    port.device = ControlPortDevice::MOUSE;
 }
 
 void
@@ -254,7 +254,7 @@ Mouse::setRightButton(bool value)
         default:
             break;
     }
-    port.device = CPDEVICE_MOUSE;
+    port.device = ControlPortDevice::MOUSE;
 }
 
 void

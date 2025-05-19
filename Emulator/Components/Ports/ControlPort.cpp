@@ -22,8 +22,8 @@ ControlPort::execute()
 {
     switch (device) {
             
-        case CPDEVICE_MOUSE:    mouse.execute(); break;
-        case CPDEVICE_JOYSTICK: joystick.eofHandler(); break;
+        case ControlPortDevice::MOUSE:    mouse.execute(); break;
+        case ControlPortDevice::JOYSTICK: joystick.eofHandler(); break;
 
         default:
             break;
@@ -33,7 +33,7 @@ ControlPort::execute()
 void
 ControlPort::updateControlPort()
 {
-    if (device == CPDEVICE_MOUSE) mouse.updateControlPort();
+    if (device == ControlPortDevice::MOUSE) mouse.updateControlPort();
 }
 
 u8
@@ -41,8 +41,8 @@ ControlPort::getControlPort() const
 {
     switch (device) {
             
-        case CPDEVICE_JOYSTICK: return joystick.getControlPort();
-        case CPDEVICE_MOUSE: return mouse.getControlPort();
+        case ControlPortDevice::JOYSTICK: return joystick.getControlPort();
+        case ControlPortDevice::MOUSE: return mouse.getControlPort();
 
         default:
             return 0xFF;
@@ -54,7 +54,7 @@ ControlPort::updatePotX()
 {
     switch (device) {
 
-        case CPDEVICE_MOUSE: mouse.updatePotX(); break;
+        case ControlPortDevice::MOUSE: mouse.updatePotX(); break;
 
         default:
             break;
@@ -66,7 +66,7 @@ ControlPort::updatePotY()
 {
     switch (device) {
 
-        case CPDEVICE_MOUSE: mouse.updatePotY(); break;
+        case ControlPortDevice::MOUSE: mouse.updatePotY(); break;
 
         default:
             break;
@@ -78,7 +78,7 @@ ControlPort::readPotX() const
 {
     switch (device) {
 
-        case CPDEVICE_MOUSE: return mouse.readPotX();
+        case ControlPortDevice::MOUSE: return mouse.readPotX();
 
         default:
             return 0xFF;
@@ -90,7 +90,7 @@ ControlPort::readPotY() const
 {
     switch (device) {
 
-        case CPDEVICE_MOUSE: return mouse.readPotY();
+        case ControlPortDevice::MOUSE: return mouse.readPotY();
 
         default:
             return 0xFF;

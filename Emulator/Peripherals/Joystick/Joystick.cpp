@@ -91,7 +91,7 @@ Joystick::trigger(GamePadAction event)
             fatalError;
     }
     
-    port.device = CPDEVICE_JOYSTICK;
+    port.device = ControlPortDevice::JOYSTICK;
 }
 
 void

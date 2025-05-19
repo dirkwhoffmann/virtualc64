@@ -47,7 +47,7 @@ class ControlPort final : public SubComponent {
     };
     
     // The connected device
-    ControlPortDevice device = CPDEVICE_NONE;
+    ControlPortDevice device = ControlPortDevice::NONE;
 
 
     //
