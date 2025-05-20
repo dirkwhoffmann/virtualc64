@@ -35,13 +35,13 @@ Kingsoft::updatePeekPokeLookupTables()
 
         for (isize bank = 0x1; bank <= 0x7; bank++) {
 
-            MemoryType type = mem.bankMap[index][bank];
+            MemType type = mem.bankMap[index][bank];
             mem.peekSrc[bank] = mem.pokeTarget[bank] = type;
         }
 
         for (isize bank = 0xC; bank <= 0xD; bank++) {
 
-            MemoryType type = mem.bankMap[index][bank];
+            MemType type = mem.bankMap[index][bank];
             mem.peekSrc[bank] = mem.pokeTarget[bank] = type;
         }
     }

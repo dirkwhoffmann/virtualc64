@@ -109,7 +109,7 @@ private:
     u8 bus = 0;
 
     // Remembers the memory type of the uppermost memory bank
-    MemoryType memTypeF = M_NONE;
+    MemType memTypeF = MemType::NONE;
 
 
     //

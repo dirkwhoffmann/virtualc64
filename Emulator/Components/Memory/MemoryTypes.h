@@ -22,44 +22,42 @@ namespace vc64 {
 //
 
 /// Memory type
-enum_long(M_TYPE)
+enum class MemType : long
 {
-    M_NONE,         ///< Unmapped
-    M_RAM,          ///< Ram
-    M_CHAR,         ///< Character Rom
-    M_KERNAL,       ///< Kernal Rom
-    M_BASIC,        ///< Basic Rom
-    M_IO,           ///< IO space
-    M_CRTLO,        ///< Cartridge Rom (low bank)
-    M_CRTHI,        ///< Cartridge Rom (high bank)
-    M_PP,           ///< Processor port
+    NONE,         ///< Unmapped
+    RAM,          ///< Ram
+    CHAR,         ///< Character Rom
+    KERNAL,       ///< Kernal Rom
+    BASIC,        ///< Basic Rom
+    IO,           ///< IO space
+    CRTLO,        ///< Cartridge Rom (low bank)
+    CRTHI,        ///< Cartridge Rom (high bank)
+    PP,           ///< Processor port
 };
-typedef M_TYPE MemoryType;
 
-struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
+struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemType> {
 
     static constexpr long minVal = 1;
-    static constexpr long maxVal = M_NONE;
+    static constexpr long maxVal = long(MemType::NONE);
 
-    static const char *prefix() { return "M"; }
-    static const char *_key(long value)
+    static const char *_key(MemType value)
     {
         switch (value) {
 
-            case M_NONE:    return "NONE";
-            case M_RAM:     return "RAM";
-            case M_CHAR:    return "CHAR";
-            case M_KERNAL:  return "KERNAL";
-            case M_BASIC:   return "BASIC";
-            case M_IO:      return "IO";
-            case M_CRTLO:   return "CRTLO";
-            case M_CRTHI:   return "CRTHI";
-            case M_PP:      return "PP";
+            case MemType::NONE:    return "NONE";
+            case MemType::RAM:     return "RAM";
+            case MemType::CHAR:    return "CHAR";
+            case MemType::KERNAL:  return "KERNAL";
+            case MemType::BASIC:   return "BASIC";
+            case MemType::IO:      return "IO";
+            case MemType::CRTLO:   return "CRTLO";
+            case MemType::CRTHI:   return "CRTHI";
+            case MemType::PP:      return "PP";
         }
         return "???";
     }
     
-    static const char *help(MemoryType value)
+    static const char *help(MemType value)
     {
         return "";
     }
@@ -191,8 +189,8 @@ typedef struct
     bool charen;
     u8   bankMap;
 
-    MemoryType peekSrc[16];
-    MemoryType vicPeekSrc[16];
+    MemType peekSrc[16];
+    MemType vicPeekSrc[16];
 }
 MemInfo;
 

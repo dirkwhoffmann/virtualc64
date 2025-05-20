@@ -186,8 +186,8 @@ Isepic::updatePeekPokeLookupTables()
     oldPeekSource = mem.peekSrc[0xF];
     oldPokeTarget = mem.pokeTarget[0xF];
 
-    mem.peekSrc[0xF] = M_CRTHI;
-    mem.pokeTarget[0xF] = M_CRTHI;
+    mem.peekSrc[0xF] = MemType::CRTHI;
+    mem.pokeTarget[0xF] = MemType::CRTHI;
 }
 
 }

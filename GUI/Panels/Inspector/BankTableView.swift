@@ -17,7 +17,7 @@ class BankTableView: NSTableView, NSTableViewDelegate {
     var bank = 0
 
     // Data caches
-    var bankCache: [Int: vc64.MemoryType] = [:]
+    var bankCache: [Int: vc64.MemType] = [:]
 
     override func awakeFromNib() {
 
@@ -84,7 +84,7 @@ extension BankTableView: NSTableViewDataSource {
         
         if let cell = cell as? NSTextFieldCell {
 
-            if inspector.memBank[row] == M_NONE {
+            if inspector.memBank[row] == MemType::NONE {
                 cell.textColor = .gray
             } else {
                 cell.textColor = nil

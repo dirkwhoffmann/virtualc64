@@ -34,48 +34,48 @@ Memory::Memory(C64 &ref) : SubComponent(ref)
      *   map[x][4] == mapping for range $D000 - $DFFF
      *   map[x][5] == mapping for range $E000 - $FFFF
      */
-    MemoryType map[32][6] = {
+    MemType map[32][6] = {
         
-        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM    },
-        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM    },
-        { M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_CHAR, M_KERNAL },
-        { M_RAM,  M_CRTLO, M_CRTHI, M_RAM,  M_CHAR, M_KERNAL },
-        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM    },
-        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM    },
-        { M_RAM,  M_RAM,   M_CRTHI, M_RAM,  M_IO,   M_KERNAL },
-        { M_RAM,  M_CRTLO, M_CRTHI, M_RAM,  M_IO,   M_KERNAL },
+        { MemType::RAM,  MemType::RAM,   MemType::RAM,   MemType::RAM,  MemType::RAM,  MemType::RAM    },
+        { MemType::RAM,  MemType::RAM,   MemType::RAM,   MemType::RAM,  MemType::RAM,  MemType::RAM    },
+        { MemType::RAM,  MemType::RAM,   MemType::CRTHI, MemType::RAM,  MemType::CHAR, MemType::KERNAL },
+        { MemType::RAM,  MemType::CRTLO, MemType::CRTHI, MemType::RAM,  MemType::CHAR, MemType::KERNAL },
+        { MemType::RAM,  MemType::RAM,   MemType::RAM,   MemType::RAM,  MemType::RAM,  MemType::RAM    },
+        { MemType::RAM,  MemType::RAM,   MemType::RAM,   MemType::RAM,  MemType::IO,   MemType::RAM    },
+        { MemType::RAM,  MemType::RAM,   MemType::CRTHI, MemType::RAM,  MemType::IO,   MemType::KERNAL },
+        { MemType::RAM,  MemType::CRTLO, MemType::CRTHI, MemType::RAM,  MemType::IO,   MemType::KERNAL },
         
-        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM    },
-        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_RAM    },
-        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_KERNAL },
-        { M_RAM,  M_CRTLO, M_BASIC, M_RAM,  M_CHAR, M_KERNAL },
-        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM    },
-        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM    },
-        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNAL },
-        { M_RAM,  M_CRTLO, M_BASIC, M_RAM,  M_IO,   M_KERNAL },
+        { MemType::RAM,  MemType::RAM,   MemType::RAM,   MemType::RAM,  MemType::RAM,  MemType::RAM    },
+        { MemType::RAM,  MemType::RAM,   MemType::RAM,   MemType::RAM,  MemType::CHAR, MemType::RAM    },
+        { MemType::RAM,  MemType::RAM,   MemType::RAM,   MemType::RAM,  MemType::CHAR, MemType::KERNAL },
+        { MemType::RAM,  MemType::CRTLO, MemType::BASIC, MemType::RAM,  MemType::CHAR, MemType::KERNAL },
+        { MemType::RAM,  MemType::RAM,   MemType::RAM,   MemType::RAM,  MemType::RAM,  MemType::RAM    },
+        { MemType::RAM,  MemType::RAM,   MemType::RAM,   MemType::RAM,  MemType::IO,   MemType::RAM    },
+        { MemType::RAM,  MemType::RAM,   MemType::RAM,   MemType::RAM,  MemType::IO,   MemType::KERNAL },
+        { MemType::RAM,  MemType::CRTLO, MemType::BASIC, MemType::RAM,  MemType::IO,   MemType::KERNAL },
         
-        { M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI  },
-        { M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI  },
-        { M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI  },
-        { M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI  },
-        { M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI  },
-        { M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI  },
-        { M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI  },
-        { M_NONE, M_CRTLO, M_NONE,  M_NONE, M_IO,   M_CRTHI  },
+        { MemType::NONE, MemType::CRTLO, MemType::NONE,  MemType::NONE, MemType::IO,   MemType::CRTHI  },
+        { MemType::NONE, MemType::CRTLO, MemType::NONE,  MemType::NONE, MemType::IO,   MemType::CRTHI  },
+        { MemType::NONE, MemType::CRTLO, MemType::NONE,  MemType::NONE, MemType::IO,   MemType::CRTHI  },
+        { MemType::NONE, MemType::CRTLO, MemType::NONE,  MemType::NONE, MemType::IO,   MemType::CRTHI  },
+        { MemType::NONE, MemType::CRTLO, MemType::NONE,  MemType::NONE, MemType::IO,   MemType::CRTHI  },
+        { MemType::NONE, MemType::CRTLO, MemType::NONE,  MemType::NONE, MemType::IO,   MemType::CRTHI  },
+        { MemType::NONE, MemType::CRTLO, MemType::NONE,  MemType::NONE, MemType::IO,   MemType::CRTHI  },
+        { MemType::NONE, MemType::CRTLO, MemType::NONE,  MemType::NONE, MemType::IO,   MemType::CRTHI  },
         
-        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM    },
-        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_RAM    },
-        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_CHAR, M_KERNAL },
-        { M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_CHAR, M_KERNAL },
-        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_RAM,  M_RAM    },
-        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_RAM    },
-        { M_RAM,  M_RAM,   M_RAM,   M_RAM,  M_IO,   M_KERNAL },
-        { M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_IO,   M_KERNAL }
+        { MemType::RAM,  MemType::RAM,   MemType::RAM,   MemType::RAM,  MemType::RAM,  MemType::RAM    },
+        { MemType::RAM,  MemType::RAM,   MemType::RAM,   MemType::RAM,  MemType::CHAR, MemType::RAM    },
+        { MemType::RAM,  MemType::RAM,   MemType::RAM,   MemType::RAM,  MemType::CHAR, MemType::KERNAL },
+        { MemType::RAM,  MemType::RAM,   MemType::BASIC, MemType::RAM,  MemType::CHAR, MemType::KERNAL },
+        { MemType::RAM,  MemType::RAM,   MemType::RAM,   MemType::RAM,  MemType::RAM,  MemType::RAM    },
+        { MemType::RAM,  MemType::RAM,   MemType::RAM,   MemType::RAM,  MemType::IO,   MemType::RAM    },
+        { MemType::RAM,  MemType::RAM,   MemType::RAM,   MemType::RAM,  MemType::IO,   MemType::KERNAL },
+        { MemType::RAM,  MemType::RAM,   MemType::BASIC, MemType::RAM,  MemType::IO,   MemType::KERNAL }
     };
     
     for (isize i = 0; i < 32; i++) {
         
-        bankMap[i][0x0] = M_PP;
+        bankMap[i][0x0] = MemType::PP;
         bankMap[i][0x1] = map[i][0];
         bankMap[i][0x2] = map[i][0];
         bankMap[i][0x3] = map[i][0];
@@ -94,9 +94,9 @@ Memory::Memory(C64 &ref) : SubComponent(ref)
     }
     
     // Initialize peekSource and pokeTarket tables
-    peekSrc[0x0] = pokeTarget[0x0] = M_PP;
+    peekSrc[0x0] = pokeTarget[0x0] = MemType::PP;
     for (isize i = 0x1; i <= 0xF; i++) {
-        peekSrc[i] = pokeTarget[i] = M_RAM;
+        peekSrc[i] = pokeTarget[i] = MemType::RAM;
     }
 }
 
@@ -227,32 +227,32 @@ Memory::updatePeekPokeLookupTables()
 }
 
 u8
-Memory::peek(u16 addr, MemoryType source)
+Memory::peek(u16 addr, MemType source)
 {
     if (config.heatmap) stats.reads[addr]++;
 
     switch(source) {
             
-        case M_RAM:
+        case MemType::RAM:
             
             return ram[addr];
             
-        case M_BASIC:
-        case M_CHAR:
-        case M_KERNAL:
+        case MemType::BASIC:
+        case MemType::CHAR:
+        case MemType::KERNAL:
             
             return rom[addr];
             
-        case M_IO:
+        case MemType::IO:
             
             return peekIO(addr);
             
-        case M_CRTLO:
-        case M_CRTHI:
+        case MemType::CRTLO:
+        case MemType::CRTHI:
             
             return expansionPort.peek(addr);
             
-        case M_PP:
+        case MemType::PP:
             
             if (likely(addr >= 0x02)) {
                 return ram[addr];
@@ -260,7 +260,7 @@ Memory::peek(u16 addr, MemoryType source)
                 return addr ? cpu.readPort() : cpu.readPortDir();
             }
             
-        case M_NONE:
+        case MemType::NONE:
             
             return vic.getDataBusPhi1();
             
@@ -354,30 +354,30 @@ Memory::peekIO(u16 addr)
 }
 
 u8
-Memory::spypeek(u16 addr, MemoryType source) const
+Memory::spypeek(u16 addr, MemType source) const
 {
     switch(source) {
             
-        case M_RAM:
+        case MemType::RAM:
             
             return ram[addr];
             
-        case M_BASIC:
-        case M_CHAR:
-        case M_KERNAL:
+        case MemType::BASIC:
+        case MemType::CHAR:
+        case MemType::KERNAL:
             
             return rom[addr];
             
-        case M_IO:
+        case MemType::IO:
             
             return spypeekIO(addr);
             
-        case M_CRTLO:
-        case M_CRTHI:
+        case MemType::CRTLO:
+        case MemType::CRTHI:
             
             return expansionPort.spypeek(addr);
             
-        case M_PP:
+        case MemType::PP:
             
             if (addr >= 0x02) {
                 return ram[addr];
@@ -385,12 +385,12 @@ Memory::spypeek(u16 addr, MemoryType source) const
                 return addr ? cpu.readPort() : cpu.readPortDir();
             }
             
-        case M_NONE:
+        case MemType::NONE:
             
             return ram[addr];
             
         default:
-            fatal("Invalid mem source: %ld\n", source);
+            fatalError;
     }
 }
 
@@ -452,32 +452,32 @@ Memory::spypeekColor(u16 addr) const
 }
 
 void
-Memory::poke(u16 addr, u8 value, MemoryType target)
+Memory::poke(u16 addr, u8 value, MemType target)
 {
     if (config.heatmap) stats.writes[addr]++;
 
     switch(target) {
             
-        case M_RAM:
-        case M_BASIC:
-        case M_CHAR:
-        case M_KERNAL:
+        case MemType::RAM:
+        case MemType::BASIC:
+        case MemType::CHAR:
+        case MemType::KERNAL:
             
             ram[addr] = value;
             return;
             
-        case M_IO:
+        case MemType::IO:
             
             pokeIO(addr, value);
             return;
             
-        case M_CRTLO:
-        case M_CRTHI:
+        case MemType::CRTLO:
+        case MemType::CRTHI:
             
             expansionPort.poke(addr, value);
             return;
             
-        case M_PP:
+        case MemType::PP:
             
             if (likely(addr >= 0x02)) {
                 ram[addr] = value;
@@ -486,7 +486,7 @@ Memory::poke(u16 addr, u8 value, MemoryType target)
             }
             return;
             
-        case M_NONE:
+        case MemType::NONE:
             
             return;
             
@@ -596,7 +596,7 @@ Memory::pokeIO(u16 addr, u8 value)
 u16
 Memory::nmiVector() const {
     
-    if (peekSrc[0xF] != M_KERNAL || c64.hasRom(RomType::KERNAL)) {
+    if (peekSrc[0xF] != MemType::KERNAL || c64.hasRom(RomType::KERNAL)) {
         return LO_HI(spypeek(0xFFFA), spypeek(0xFFFB));
     } else {
         return 0xFE43;
@@ -606,7 +606,7 @@ Memory::nmiVector() const {
 u16
 Memory::irqVector() const {
     
-    if (peekSrc[0xF] != M_KERNAL || c64.hasRom(RomType::KERNAL)) {
+    if (peekSrc[0xF] != MemType::KERNAL || c64.hasRom(RomType::KERNAL)) {
         return LO_HI(spypeek(0xFFFE), spypeek(0xFFFF));
     } else {
         return 0xFF48;
@@ -618,7 +618,7 @@ Memory::resetVector() {
 
     updatePeekPokeLookupTables();
     
-    if (peekSrc[0xF] != M_KERNAL || c64.hasRom(RomType::KERNAL)) {
+    if (peekSrc[0xF] != MemType::KERNAL || c64.hasRom(RomType::KERNAL)) {
         return LO_HI(spypeek(0xFFFC), spypeek(0xFFFD));
     } else {
         return 0xFCE2;
@@ -626,14 +626,14 @@ Memory::resetVector() {
 }
 
 string
-Memory::memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const
+Memory::memdump(u16 addr, isize num, bool hex, isize pads, MemType src) const
 {
     char result[128];
     char *p = result;
     
     assert(num <= 16);
     
-    if (src == M_NONE) {
+    if (src == MemType::NONE) {
         
         for (isize i = 0; i < num; i++) {
 
@@ -662,26 +662,26 @@ Memory::memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const
 }
 
 string
-Memory::hexdump(u16 addr, isize num, isize pads, MemoryType src) const
+Memory::hexdump(u16 addr, isize num, isize pads, MemType src) const
 {
     return memdump(addr, num, true, pads, src);
 }
 
 string
-Memory::decdump(u16 addr, isize num, isize pads, MemoryType src) const
+Memory::decdump(u16 addr, isize num, isize pads, MemType src) const
 {
     return memdump(addr, num, false, pads, src);
 }
 
 string
-Memory::txtdump(u16 addr, isize num, MemoryType src) const
+Memory::txtdump(u16 addr, isize num, MemType src) const
 {
     char result[17];
     char *p = result;
     
     assert(num <= 16);
     
-    if (src != M_NONE) {
+    if (src != MemType::NONE) {
         
         for (isize i = 0; i < num; i++) {
             

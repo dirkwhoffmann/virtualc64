@@ -360,7 +360,7 @@ Reu::poke(u16 addr, u8 value)
         }
 
         debug(REU_DEBUG, "Starting REU via FF00 trigger\n");
-        if (memTypeF != M_RAM) mem.poke(addr, value, memTypeF);
+        if (memTypeF != MemType::RAM) mem.poke(addr, value, memTypeF);
 
         initiateDma();
     }
@@ -369,13 +369,13 @@ Reu::poke(u16 addr, u8 value)
 u8
 Reu::readFromC64Ram(u16 addr)
 {
-    return addr <= 2 ? mem.peek(addr, M_RAM) : mem.peek(addr);
+    return addr <= 2 ? mem.peek(addr, MemType::RAM) : mem.peek(addr);
 }
 
 void
 Reu::writeToC64Ram(u16 addr, u8 value)
 {
-    addr <= 2 ? mem.poke(addr, value, M_RAM) : mem.poke(addr, value);
+    addr <= 2 ? mem.poke(addr, value, MemType::RAM) : mem.poke(addr, value);
 }
 
 u8
@@ -757,7 +757,7 @@ Reu::updatePeekPokeLookupTables()
     memTypeF = mem.pokeTarget[0xF];
 
     // Reroute accesses to this cartridge
-    mem.pokeTarget[0xF] = M_CRTHI;
+    mem.pokeTarget[0xF] = MemType::CRTHI;
 }
 
 }

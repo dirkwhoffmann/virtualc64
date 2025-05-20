@@ -53,7 +53,7 @@ public:
      *             index = (EXROM, GAME, CHAREN, HIRAM, LORAM)
      *             range = upper four bits of address
      */
-    MemoryType bankMap[32][16];
+    MemType bankMap[32][16];
 
     // Random Access Memory
     u8 ram[65536];
@@ -74,10 +74,10 @@ public:
     u8 rom[65536];
 
     // Peek source lookup table
-    MemoryType peekSrc[16];
+    MemType peekSrc[16];
 
     // Poke target lookup table
-    MemoryType pokeTarget[16];
+    MemType pokeTarget[16];
 
     // Indicates if watchpoints should be checked
     bool checkWatchpoints = false;
@@ -195,13 +195,13 @@ public:
     void updatePeekPokeLookupTables();
 
     // Returns the current peek source of the specified memory address
-    MemoryType getPeekSource(u16 addr) { return peekSrc[addr >> 12]; }
+    MemType getPeekSource(u16 addr) { return peekSrc[addr >> 12]; }
 
     // Returns the current poke target of the specified memory address
-    MemoryType getPokeTarget(u16 addr) { return pokeTarget[addr >> 12]; }
+    MemType getPokeTarget(u16 addr) { return pokeTarget[addr >> 12]; }
 
     // Reads a value from memory
-    u8 peek(u16 addr, MemoryType source);
+    u8 peek(u16 addr, MemType source);
     u8 peek(u16 addr, bool gameLine, bool exromLine);
     u8 peek(u16 addr) { return peek(addr, peekSrc[addr >> 12]); }
     u8 peekZP(u8 addr);
@@ -215,13 +215,13 @@ public:
     void peekIOIdle(u16 addr) { (void)peekIO(addr); }
 
     // Reads a value from memory without side effects
-    u8 spypeek(u16 addr, MemoryType source) const;
+    u8 spypeek(u16 addr, MemType source) const;
     u8 spypeek(u16 addr) const { return spypeek(addr, peekSrc[addr >> 12]); }
     u8 spypeekIO(u16 addr) const;
     u8 spypeekColor(u16 addr) const;
 
     // Writing a value into memory
-    void poke(u16 addr, u8 value, MemoryType target);
+    void poke(u16 addr, u8 value, MemType target);
     void poke(u16 addr, u8 value, bool gameLine, bool exromLine);
     void poke(u16 addr, u8 value) { poke(addr, value, pokeTarget[addr >> 12]); }
     void pokeZP(u8 addr, u8 value);
@@ -234,10 +234,10 @@ public:
     u16 resetVector();
 
     // Returns a string representations for a portion of memory
-    string memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const;
-    string hexdump(u16 addr, isize num, isize pads, MemoryType src) const;
-    string decdump(u16 addr, isize num, isize pads, MemoryType src) const;
-    string txtdump(u16 addr, isize num, MemoryType src) const;
+    string memdump(u16 addr, isize num, bool hex, isize pads, MemType src) const;
+    string hexdump(u16 addr, isize num, isize pads, MemType src) const;
+    string decdump(u16 addr, isize num, isize pads, MemType src) const;
+    string txtdump(u16 addr, isize num, MemType src) const;
 
     // Convenience wrappers
     string memdump(u16 addr, isize num, bool hex) { return memdump(addr, num, hex, 1, peekSrc[addr >> 12]); }

@@ -171,8 +171,8 @@ void
 PageFox::updatePeekPokeLookupTables()
 {
     if (ramIsVisible()) {
-        mem.pokeTarget[0x8] = mem.pokeTarget[0x9] = M_CRTLO;
-        mem.pokeTarget[0xA] = mem.pokeTarget[0xB] = M_CRTHI;
+        mem.pokeTarget[0x8] = mem.pokeTarget[0x9] = MemType::CRTLO;
+        mem.pokeTarget[0xA] = mem.pokeTarget[0xB] = MemType::CRTHI;
     }
 }
 

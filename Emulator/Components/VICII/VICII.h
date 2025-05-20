@@ -625,7 +625,7 @@ private:
      * has access to RAM and the character Rom. In ultimax mode, VICII has
      * access to ROMH and some portions of RAM.
      */
-    MemoryType memSrc[16];
+    MemType memSrc[16];
     
     /* Indicates whether VICII is running in ultimax mode. Ultimax mode can be
      * enabled by external cartridges by pulling the game line low and keeping

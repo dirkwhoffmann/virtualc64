@@ -610,13 +610,13 @@ MemoryAPI::getCachedInfo() const
 }
 
 string
-MemoryAPI::memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const
+MemoryAPI::memdump(u16 addr, isize num, bool hex, isize pads, MemType src) const
 {
     return mem->memdump(addr, num, hex, pads, src);
 }
 
 string
-MemoryAPI::txtdump(u16 addr, isize num, MemoryType src) const
+MemoryAPI::txtdump(u16 addr, isize num, MemType src) const
 {
     return mem->txtdump(addr, num, src);
 }

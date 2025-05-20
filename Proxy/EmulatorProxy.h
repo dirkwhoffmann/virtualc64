@@ -341,8 +341,8 @@ struct GuardInfo {
 @property (readonly) MemInfo info;
 @property (readonly) MemInfo cachedInfo;
 
-- (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src;
-- (NSString *)txtdump:(NSInteger)addr num:(NSInteger)num src:(MemoryType)src;
+- (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemType)src;
+- (NSString *)txtdump:(NSInteger)addr num:(NSInteger)num src:(MemType)src;
 
 - (void)drawHeatmap:(u32 *)buffer w:(NSInteger)w h:(NSInteger)h;
 

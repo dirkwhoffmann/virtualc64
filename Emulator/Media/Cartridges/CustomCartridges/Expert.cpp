@@ -203,12 +203,12 @@ Expert::updatePeekPokeLookupTables()
      */
 
     // Reroute ROML
-    mem.peekSrc[0x8] = mem.pokeTarget[0x8] = M_CRTLO;
-    mem.peekSrc[0x9] = mem.pokeTarget[0x9] = M_CRTLO;
+    mem.peekSrc[0x8] = mem.pokeTarget[0x8] = MemType::CRTLO;
+    mem.peekSrc[0x9] = mem.pokeTarget[0x9] = MemType::CRTLO;
 
     // Reroute ROMH
-    mem.peekSrc[0xE] = mem.pokeTarget[0xE] = M_CRTLO;
-    mem.peekSrc[0xF] = mem.pokeTarget[0xF] = M_CRTLO;
+    mem.peekSrc[0xE] = mem.pokeTarget[0xE] = MemType::CRTLO;
+    mem.peekSrc[0xF] = mem.pokeTarget[0xF] = MemType::CRTLO;
 }
 
 void

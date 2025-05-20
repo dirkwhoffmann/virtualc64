@@ -79,8 +79,8 @@ GameKiller::updatePeekPokeLookupTables()
     
     if (control <= 1) {
         
-        mem.peekSrc[0xE] = M_CRTHI;
-        mem.peekSrc[0xF] = M_CRTHI;
+        mem.peekSrc[0xE] = MemType::CRTHI;
+        mem.peekSrc[0xF] = MemType::CRTHI;
     }
 }
 

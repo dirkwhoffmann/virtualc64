@@ -62,8 +62,8 @@ struct MemoryAPI : API {
 
     /** @brief  Returns a string representations for a portion of memory.
      */
-    string memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const;
-    string txtdump(u16 addr, isize num, MemoryType src) const;
+    string memdump(u16 addr, isize num, bool hex, isize pads, MemType src) const;
+    string txtdump(u16 addr, isize num, MemType src) const;
 
     /** @brief Experimental
      */
@@ -1118,7 +1118,7 @@ struct C64API : public API {
     /** @brief  Loads a ROM from a file
      *          The ROM type is determined automatically.
      *
-     *  @throw  VC64Error (ROM_BASIC_MISSING)
+     *  @throw  VC64Error (ROMemType::BASIC_MISSING)
      *          VC64Error (FILE_TYPE_MISMATCH)
      */
     void loadRom(const fs::path &path);
@@ -1256,10 +1256,10 @@ public:
      *  emulator. On success, the functions returns. Otherwise, an exception
      *  is thrown.
      *
-     *  @throw  Error (ROM_BASIC_MISSING)
-     *  @throw  Error (ROM_CHAR_MISSING)
-     *  @throw  Error (ROM_KERNAL_MISSING)
-     *  @throw  Error (ROM_CHAR_MISSING)
+     *  @throw  Error (ROMemType::BASIC_MISSING)
+     *  @throw  Error (ROMemType::CHAR_MISSING)
+     *  @throw  Error (ROMemType::KERNAL_MISSING)
+     *  @throw  Error (ROMemType::CHAR_MISSING)
      *  @throw  Error (ROM_MEGA65_MISMATCH)
      */
     void isReady() const;

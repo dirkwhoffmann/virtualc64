@@ -352,12 +352,12 @@ NSString *EventSlotName(EventSlot slot)
     return [self mem]->getCachedInfo();
 }
 
-- (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src
+- (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemType)src
 {
     return @([self mem]->memdump((u16)addr, num, hex, hex ? 2 : 1, src).c_str());
 }
 
-- (NSString *)txtdump:(NSInteger)addr num:(NSInteger)num src:(MemoryType)src
+- (NSString *)txtdump:(NSInteger)addr num:(NSInteger)num src:(MemType)src
 {
     return @([self mem]->txtdump((u16)addr, num, src).c_str());
 }

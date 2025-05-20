@@ -34,8 +34,8 @@ class Isepic final : public Cartridge {
     isize page;
 
     // Original mapping of the uppermost memory page
-    MemoryType oldPeekSource;
-    MemoryType oldPokeTarget;
+    MemType oldPeekSource;
+    MemType oldPokeTarget;
 
 
     //

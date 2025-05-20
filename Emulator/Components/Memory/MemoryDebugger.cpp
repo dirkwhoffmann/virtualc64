@@ -180,7 +180,7 @@ MemoryDebugger::load(std::istream& is, u16 addr)
         auto val = is.get();
         if (val == EOF) return;
 
-        mem.poke(addr, u8(val), M_RAM);
+        mem.poke(addr, u8(val), MemType::RAM);
         
         if (addr == 0xFFFF) break;
     }
@@ -201,7 +201,7 @@ MemoryDebugger::save(std::ostream& os, u16 addr, isize count)
     for (isize i = 0; i < count; i++) {
 
         u16 a = u16(addr + i);
-        auto val = mem.peek(a, M_RAM);
+        auto val = mem.peek(a, MemType::RAM);
         os.put(val);
 
         if (a == 0xFFFF) break;

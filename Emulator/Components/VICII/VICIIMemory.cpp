@@ -25,41 +25,41 @@ VICII::setUltimax(bool value) {
     
     if (value) {
         
-        memSrc[0x0] = M_RAM;
-        memSrc[0x1] = M_RAM;
-        memSrc[0x2] = M_RAM;
-        memSrc[0x3] = M_CRTHI;
-        memSrc[0x4] = M_RAM;
-        memSrc[0x5] = M_RAM;
-        memSrc[0x6] = M_RAM;
-        memSrc[0x7] = M_CRTHI;
-        memSrc[0x8] = M_RAM;
-        memSrc[0x9] = M_RAM;
-        memSrc[0xA] = M_RAM;
-        memSrc[0xB] = M_CRTHI;
-        memSrc[0xC] = M_RAM;
-        memSrc[0xD] = M_RAM;
-        memSrc[0xE] = M_RAM;
-        memSrc[0xF] = M_CRTHI;
+        memSrc[0x0] = MemType::RAM;
+        memSrc[0x1] = MemType::RAM;
+        memSrc[0x2] = MemType::RAM;
+        memSrc[0x3] = MemType::CRTHI;
+        memSrc[0x4] = MemType::RAM;
+        memSrc[0x5] = MemType::RAM;
+        memSrc[0x6] = MemType::RAM;
+        memSrc[0x7] = MemType::CRTHI;
+        memSrc[0x8] = MemType::RAM;
+        memSrc[0x9] = MemType::RAM;
+        memSrc[0xA] = MemType::RAM;
+        memSrc[0xB] = MemType::CRTHI;
+        memSrc[0xC] = MemType::RAM;
+        memSrc[0xD] = MemType::RAM;
+        memSrc[0xE] = MemType::RAM;
+        memSrc[0xF] = MemType::CRTHI;
 
     } else {
         
-        memSrc[0x0] = M_RAM;
-        memSrc[0x1] = M_CHAR;
-        memSrc[0x2] = M_RAM;
-        memSrc[0x3] = M_RAM;
-        memSrc[0x4] = M_RAM;
-        memSrc[0x5] = M_RAM;
-        memSrc[0x6] = M_RAM;
-        memSrc[0x7] = M_RAM;
-        memSrc[0x8] = M_RAM;
-        memSrc[0x9] = M_CHAR;
-        memSrc[0xA] = M_RAM;
-        memSrc[0xB] = M_RAM;
-        memSrc[0xC] = M_RAM;
-        memSrc[0xD] = M_RAM;
-        memSrc[0xE] = M_RAM;
-        memSrc[0xF] = M_RAM;
+        memSrc[0x0] = MemType::RAM;
+        memSrc[0x1] = MemType::CHAR;
+        memSrc[0x2] = MemType::RAM;
+        memSrc[0x3] = MemType::RAM;
+        memSrc[0x4] = MemType::RAM;
+        memSrc[0x5] = MemType::RAM;
+        memSrc[0x6] = MemType::RAM;
+        memSrc[0x7] = MemType::RAM;
+        memSrc[0x8] = MemType::RAM;
+        memSrc[0x9] = MemType::CHAR;
+        memSrc[0xA] = MemType::RAM;
+        memSrc[0xB] = MemType::RAM;
+        memSrc[0xC] = MemType::RAM;
+        memSrc[0xD] = MemType::RAM;
+        memSrc[0xE] = MemType::RAM;
+        memSrc[0xF] = MemType::RAM;
     }
 }
 
@@ -624,13 +624,13 @@ VICII::memAccess(u16 addr)
     addrBus = bankAddr | addr;
     switch (memSrc[addrBus >> 12]) {
             
-        case M_RAM:
+        case MemType::RAM:
             return mem.ram[addrBus];
             
-        case M_CHAR:
+        case MemType::CHAR:
             return mem.rom[0xC000 + addr];
 
-        case M_CRTHI:
+        case MemType::CRTHI:
             return expansionPort.peek(addrBus | 0xF000);
             
         default:

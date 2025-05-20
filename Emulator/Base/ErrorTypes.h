@@ -175,8 +175,8 @@ struct FaultEnum : util::Reflection<FaultEnum, Fault> {
 
             case Fault::SNAP_TOO_OLD:            return "SNAP_TOO_OLD";
             case Fault::SNAP_TOO_NEW:            return "SNAP_TOO_NEW";
-            case Fault::SNAP_IS_BETA:		    return "SNAP_IS_BETA";
-            case Fault::SNAP_CORRUPTED:		    return "SNAP_CORRUPTED";
+            case Fault::SNAP_IS_BETA:		     return "SNAP_IS_BETA";
+            case Fault::SNAP_CORRUPTED:		     return "SNAP_CORRUPTED";
 
             case Fault::DRV_UNCONNECTED:         return "DRV_UNCONNECTED";
             case Fault::DRV_NO_DISK:             return "DRV_NO_DISK";
