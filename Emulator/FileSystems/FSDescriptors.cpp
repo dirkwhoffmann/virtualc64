@@ -18,7 +18,7 @@ namespace vc64 {
 
 FSDeviceDescriptor::FSDeviceDescriptor(DiskType type, DOSType dos)
 {
-    assert(dos == DOS_TYPE_CBM);
+    assert(dos == DOSType::CBM);
 
     this->dos = dos;
     
@@ -43,7 +43,7 @@ FSDeviceDescriptor::FSDeviceDescriptor(DiskType type, DOSType dos)
 
 FSDeviceDescriptor::FSDeviceDescriptor(const D64File &d64)
 {    
-    this->dos = DOS_TYPE_CBM;
+    this->dos = DOSType::CBM;
     numCyls = d64.numTracks();
     numHeads = 1;
 }

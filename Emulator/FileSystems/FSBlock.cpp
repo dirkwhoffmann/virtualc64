@@ -27,9 +27,9 @@ FSBlock::type() const
     TSLink ts = device.layout.tsLink(nr);
 
     if (ts.t == 18) {
-        return ts.s == 0 ? FS_BLOCKTYPE_BAM : FS_BLOCKTYPE_DIR;
+        return ts.s == 0 ? FSBlockType::BAM : FSBlockType::DIR;
     } else {
-        return FS_BLOCKTYPE_DATA;
+        return FSBlockType::DATA;
     }
 }
 
@@ -113,7 +113,7 @@ FSBlock::itemType(u32 byte) const
 {
     switch (type()) {
             
-        case FS_BLOCKTYPE_BAM:
+        case FSBlockType::BAM:
             
             switch (byte) {
                     
@@ -130,7 +130,7 @@ FSBlock::itemType(u32 byte) const
 
             return FS_USAGE_UNUSED;
 
-        case FS_BLOCKTYPE_DIR:
+        case FSBlockType::DIR:
             
             if (byte == 0) return FS_USAGE_TRACK_LINK;
             if (byte == 1) return FS_USAGE_SECTOR_LINK;
@@ -154,7 +154,7 @@ FSBlock::itemType(u32 byte) const
 
             return FS_USAGE_UNUSED;
             
-        case FS_BLOCKTYPE_DATA:
+        case FSBlockType::DATA:
             
             if (byte == 0) return FS_USAGE_TRACK_LINK;
             if (byte == 1) return FS_USAGE_SECTOR_LINK;
@@ -174,7 +174,7 @@ FSBlock::check(u32 byte, u8 *expected, bool strict) const
 
     switch (type()) {
             
-        case FS_BLOCKTYPE_BAM:
+        case FSBlockType::BAM:
             
             switch (byte) {
                     
@@ -196,7 +196,7 @@ FSBlock::check(u32 byte, u8 *expected, bool strict) const
 
             return Fault::OK;
             
-        case FS_BLOCKTYPE_DIR:
+        case FSBlockType::DIR:
             
             if (byte == 0) EXPECT_TRACK_REF (data[byte + 1]);
             if (byte == 1) EXPECT_SECTOR_REF(data[byte - 1]);
@@ -215,7 +215,7 @@ FSBlock::check(u32 byte, u8 *expected, bool strict) const
             
             return Fault::OK;
             
-        case FS_BLOCKTYPE_DATA:
+        case FSBlockType::DATA:
             
             if (byte == 0 && strict) EXPECT_TRACK_REF (data[byte + 1]);
             if (byte == 1 && strict) EXPECT_SECTOR_REF(data[byte - 1]);

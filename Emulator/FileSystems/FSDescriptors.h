@@ -32,7 +32,7 @@ namespace vc64 {
 struct FSDeviceDescriptor : CoreObject {
     
     // DOS type
-    DOSType dos = DOS_TYPE_NODOS;
+    DOSType dos = DOSType::NODOS;
     
     // Number of cylinders
     isize numCyls = 0;
@@ -48,7 +48,7 @@ struct FSDeviceDescriptor : CoreObject {
     FSDeviceDescriptor() { }
 
     // Creates a device descriptor for a standard disk
-    FSDeviceDescriptor(DiskType type, DOSType dos = DOS_TYPE_CBM);
+    FSDeviceDescriptor(DiskType type, DOSType dos = DOSType::CBM);
 
     // Creates a device descriptor from a D64 file
     FSDeviceDescriptor(const class D64File &d64);

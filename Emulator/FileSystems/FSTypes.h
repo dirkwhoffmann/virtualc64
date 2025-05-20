@@ -23,25 +23,23 @@ namespace vc64 {
 //
 
 /// File system type
-enum_long(DOS_TYPE)
+enum class DOSType : long
 {
-    DOS_TYPE_NODOS, ///< No file system
-    DOS_TYPE_CBM    ///< C64 CBM file system
+    NODOS, ///< No file system
+    CBM    ///< C64 CBM file system
 };
-typedef DOS_TYPE DOSType;
 
 struct DOSTypeEnum : util::Reflection<DOSTypeEnum, DOSType> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = DOS_TYPE_CBM;
+    static constexpr long maxVal = long(DOSType::CBM);
 
-    static const char *prefix() { return "DOS_TYPE"; }
-    static const char *_key(long value)
+    static const char *_key(DOSType value)
     {
         switch (value) {
 
-            case DOS_TYPE_NODOS:  return "NODOS";
-            case DOS_TYPE_CBM:    return "CBM";
+            case DOSType::NODOS:  return "NODOS";
+            case DOSType::CBM:    return "CBM";
         }
         return "???";
     }
@@ -52,31 +50,30 @@ struct DOSTypeEnum : util::Reflection<DOSTypeEnum, DOSType> {
     }
 };
 
-enum_long(FS_FILETYPE)
+enum class FSFileType : long
 {
-    FS_FILETYPE_DEL,
-    FS_FILETYPE_SEQ,
-    FS_FILETYPE_PRG,
-    FS_FILETYPE_USR,
-    FS_FILETYPE_REL
+    DEL,
+    SEQ,
+    PRG,
+    USR,
+    REL
 };
-typedef FS_FILETYPE FSFileType;
 
 struct FSFileTypeEnum : util::Reflection<FSFileTypeEnum, FSFileType> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = FS_FILETYPE_REL;
+    static constexpr long maxVal = long(FSFileType::REL);
 
     static const char *prefix() { return "FS_FILETYPE"; }
-    static const char *_key(long value)
+    static const char *_key(FSFileType value)
     {
         switch (value) {
 
-            case FS_FILETYPE_DEL:    return "DEL";
-            case FS_FILETYPE_SEQ:    return "SEQ";
-            case FS_FILETYPE_PRG:    return "PRG";
-            case FS_FILETYPE_USR:    return "USR";
-            case FS_FILETYPE_REL:    return "REL";
+            case FSFileType::DEL:    return "DEL";
+            case FSFileType::SEQ:    return "SEQ";
+            case FSFileType::PRG:    return "PRG";
+            case FSFileType::USR:    return "USR";
+            case FSFileType::REL:    return "REL";
         }
         return "???";
     }
@@ -87,31 +84,29 @@ struct FSFileTypeEnum : util::Reflection<FSFileTypeEnum, FSFileType> {
     }
 };
 
-enum_long(FS_BLOCKTYPE)
+enum class FSBlockType : long
 {
-    FS_BLOCKTYPE_UNKNOWN,
-    FS_BLOCKTYPE_EMPTY,
-    FS_BLOCKTYPE_BAM,
-    FS_BLOCKTYPE_DIR,
-    FS_BLOCKTYPE_DATA
+    UNKNOWN,
+    EMPTY,
+    BAM,
+    DIR,
+    DATA
 };
-typedef FS_BLOCKTYPE FSBlockType;
 
 struct FSBlockTypeEnum : util::Reflection<FSBlockTypeEnum, FSBlockType> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = FS_BLOCKTYPE_DATA;
+    static constexpr long maxVal = long(FSBlockType::DATA);
 
-    static const char *prefix() { return "FS_BLOCKTYPE"; }
-    static const char *_key(long value)
+    static const char *_key(FSBlockType value)
     {
         switch (value) {
 
-            case FS_BLOCKTYPE_UNKNOWN:  return "UNKNOWN";
-            case FS_BLOCKTYPE_EMPTY:    return "EMPTY";
-            case FS_BLOCKTYPE_BAM:      return "BAM";
-            case FS_BLOCKTYPE_DIR:      return "DIR";
-            case FS_BLOCKTYPE_DATA:     return "DATA";
+            case FSBlockType::UNKNOWN:  return "UNKNOWN";
+            case FSBlockType::EMPTY:    return "EMPTY";
+            case FSBlockType::BAM:      return "BAM";
+            case FSBlockType::DIR:      return "DIR";
+            case FSBlockType::DATA:     return "DATA";
         }
         return "???";
     }

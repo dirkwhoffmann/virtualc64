@@ -73,7 +73,7 @@ FileSystem::init(DiskType type, DOSType vType)
     FSDeviceDescriptor layout = FSDeviceDescriptor(type);
     init(layout);
     
-    if (vType != DOS_TYPE_NODOS) {
+    if (vType != DOSType::NODOS) {
         bamPtr()->writeBAM();
     }
 }
@@ -138,7 +138,7 @@ void
 FileSystem::init(AnyCollection &collection)
 {
     // Create the device
-    init(DISK_TYPE_SS_SD, DOS_TYPE_CBM);
+    init(DISK_TYPE_SS_SD, DOSType::CBM);
     
     // Write BAM
     auto name = PETName<16>(collection.collectionName());
@@ -171,7 +171,7 @@ FileSystem::init(const fs::path &path)
     if (Folder::isCompatible(path)) {
 
         // Create the device
-        init(DISK_TYPE_SS_SD, DOS_TYPE_NODOS);
+        init(DISK_TYPE_SS_SD, DOSType::NODOS);
         
         // Write BAM
         auto name = PETName<16>(path.filename().string());
@@ -284,7 +284,7 @@ FileSystem::usedBlocks() const
 FSBlockType
 FileSystem::blockType(Block b) const
 {
-    return blockPtr(b) ? blocks[b]->type() : FS_BLOCKTYPE_UNKNOWN;
+    return blockPtr(b) ? blocks[b]->type() : FSBlockType::UNKNOWN;
 }
 
 FSUsage
@@ -943,7 +943,7 @@ FileSystem::exportDirectory(const fs::path &path, bool createDir)
     // Export all items
     for (auto const& entry : dir) {
 
-        if (entry->getFileType() != FS_FILETYPE_PRG) {
+        if (entry->getFileType() != FSFileType::PRG) {
             debug(FS_DEBUG, "Skipping file %s\n", entry->getName().c_str());
             continue;
         }
@@ -1000,23 +1000,23 @@ FileSystem::getDisplayType(isize column)
     if (column == 0) {
 
         // Start from scratch
-        for (isize i = 0; i < width; i++) cache[i] = FS_BLOCKTYPE_UNKNOWN;
+        for (isize i = 0; i < width; i++) cache[i] = FSBlockType::UNKNOWN;
 
         // Setup block priorities
         i8 pri[12];
-        pri[FS_BLOCKTYPE_UNKNOWN]   = 0;
-        pri[FS_BLOCKTYPE_EMPTY]     = 1;
-        pri[FS_BLOCKTYPE_BAM]       = 4;
-        pri[FS_BLOCKTYPE_DIR]       = 3;
-        pri[FS_BLOCKTYPE_DATA]      = 2;
+        pri[(long)FSBlockType::UNKNOWN]   = 0;
+        pri[(long)FSBlockType::EMPTY]     = 1;
+        pri[(long)FSBlockType::BAM]       = 4;
+        pri[(long)FSBlockType::DIR]       = 3;
+        pri[(long)FSBlockType::DATA]      = 2;
 
         // Analyze blocks
         for (isize i = 0; i < getNumBlocks(); i++) {
 
-            auto type = isFree(i) ? FS_BLOCKTYPE_EMPTY : blocks[i]->type();
+            auto type = isFree(i) ? FSBlockType::EMPTY : blocks[i]->type();
 
             auto pos = i * (width - 1) / (getNumBlocks() - 1);
-            if (pri[cache[pos]] < pri[type]) {
+            if (pri[(long)cache[pos]] < pri[(long)type]) {
                 cache[pos] = type;
             }
         }
@@ -1024,7 +1024,7 @@ FileSystem::getDisplayType(isize column)
         // Fill gaps
         for (isize pos = 1; pos < width; pos++) {
 
-            if (cache[pos] == FS_BLOCKTYPE_UNKNOWN) {
+            if (cache[pos] == FSBlockType::UNKNOWN) {
                 cache[pos] = cache[pos - 1];
             }
         }
@@ -1054,7 +1054,7 @@ FileSystem::diagnoseImageSlice(isize column)
             auto pos = i * width / (getNumBlocks() - 1);
             if (blocks[i]->corrupted) {
                 cache[pos] = 2;
-            } else if (blocks[i]->type() == FS_BLOCKTYPE_UNKNOWN) {
+            } else if (blocks[i]->type() == FSBlockType::UNKNOWN) {
                 cache[pos] = 0;
             } else {
                 cache[pos] = 1;

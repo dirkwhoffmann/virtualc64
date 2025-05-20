@@ -135,9 +135,9 @@ Disk::init(DOSType type, PETName<16> name, bool wp)
 {
     assert_enum(DOSType, type);
     
-    if (type == DOS_TYPE_CBM) {
+    if (type == DOSType::CBM) {
         
-        auto fs = FileSystem(DISK_TYPE_SS_SD, DOS_TYPE_CBM);
+        auto fs = FileSystem(DISK_TYPE_SS_SD, DOSType::CBM);
         fs.setName(name);
         init(fs, wp);
 
