@@ -24,7 +24,7 @@ class ActionReplay3 final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_ACTION_REPLAY3,
+        .type       = CartridgeType::ACTION_REPLAY3,
         .title      = "Action Replay 3",
 
         .buttons    = 2,
@@ -37,7 +37,7 @@ class ActionReplay3 final : public Cartridge {
 public:
 
     using Cartridge::Cartridge;
-    CartridgeType getCartridgeType() const override { return CRT_ACTION_REPLAY3; }
+    CartridgeType getCartridgeType() const override { return CartridgeType::ACTION_REPLAY3; }
 
 
     //
@@ -79,7 +79,7 @@ class ActionReplay : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_ACTION_REPLAY,
+        .type       = CartridgeType::ACTION_REPLAY,
         .title      = "Action Replay",
         .memory     = KB(8),
         .buttons    = 2,
@@ -142,7 +142,7 @@ class AtomicPower final : public ActionReplay {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_ATOMIC_POWER,
+        .type       = CartridgeType::ATOMIC_POWER,
         .title      = "Atomic Power",
         .memory     = KB(8),
         .buttons    = 2,
@@ -155,7 +155,7 @@ class AtomicPower final : public ActionReplay {
 public:
 
     using ActionReplay::ActionReplay;
-    CartridgeType getCartridgeType() const override { return CRT_ATOMIC_POWER; }
+    CartridgeType getCartridgeType() const override { return CartridgeType::ATOMIC_POWER; }
 
     /* Indicates if special ROM / RAM config has to be used. In contrast to
      * the Action Replay cartridge, Atomic Power has the ability to map the

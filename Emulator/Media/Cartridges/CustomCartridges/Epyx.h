@@ -20,7 +20,7 @@ class Epyx final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_EPYX_FASTLOAD,
+        .type       = CartridgeType::EPYX_FASTLOAD,
         .title      = "Epyx Fastload"
     };
 

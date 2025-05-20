@@ -20,7 +20,7 @@ class MikroAss final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_MIKRO_ASSEMBLER,
+        .type       = CartridgeType::MIKRO_ASSEMBLER,
         .title      = "Mikro Assembler",
     };
 

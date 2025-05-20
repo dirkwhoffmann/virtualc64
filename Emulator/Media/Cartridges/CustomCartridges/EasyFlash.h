@@ -21,7 +21,7 @@ class EasyFlash final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_EASYFLASH,
+        .type       = CartridgeType::EASYFLASH,
         .title      = "EasyFlash",
         .memory     = 256,
         .leds       = 1

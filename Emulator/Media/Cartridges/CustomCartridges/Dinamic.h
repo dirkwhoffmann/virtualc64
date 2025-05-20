@@ -20,7 +20,7 @@ class Dinamic final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_DINAMIC,
+        .type       = CartridgeType::DINAMIC,
         .title      = "Dinamic",
     };
 

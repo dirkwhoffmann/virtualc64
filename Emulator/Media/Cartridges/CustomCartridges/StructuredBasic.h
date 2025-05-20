@@ -20,7 +20,7 @@ class StructuredBasic final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_STRUCTURED_BASIC,
+        .type       = CartridgeType::STRUCTURED_BASIC,
         .title      = "Structured Basic",
     };
 

@@ -20,7 +20,7 @@ class Funplay final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_FUNPLAY,
+        .type       = CartridgeType::FUNPLAY,
         .title      = "Fun Play",
     };
 

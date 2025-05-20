@@ -942,7 +942,7 @@ VIA1::portAexternal() const
     u8 result = 0xFF;
     
     // Emulate the VC1541C track sensor
-    if (drive.config.type == DRIVE_VC1541C) {
+    if (drive.config.type == DriveType::VC1541C) {
         if (drive.halftrack != 1) CLR_BIT(result, 0);
     }
     

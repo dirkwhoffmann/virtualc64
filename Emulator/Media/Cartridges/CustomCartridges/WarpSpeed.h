@@ -20,7 +20,7 @@ class WarpSpeed final : public Cartridge {
   
     CartridgeTraits traits = {
 
-        .type       = CRT_WARPSPEED,
+        .type       = CartridgeType::WARPSPEED,
         .title      = "WarpSpeed",
     };
 

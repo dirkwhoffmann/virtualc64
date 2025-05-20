@@ -20,7 +20,7 @@ class SuperGames final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_SUPER_GAMES,
+        .type       = CartridgeType::SUPER_GAMES,
         .title      = "Super Games",
     };
 

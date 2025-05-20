@@ -129,7 +129,7 @@ Defaults::Defaults()
     setFallback(Opt::MEM_SAVE_ROMS,              true);
 
     setFallback(Opt::DRV_AUTO_CONFIG,            true,               {DRIVE8, DRIVE9});
-    setFallback(Opt::DRV_TYPE,                   DRIVE_VC1541II,     {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_TYPE,                   (i64)(i64)DriveType::VC1541II, {DRIVE8, DRIVE9});
     setFallback(Opt::DRV_RAM,                    DRVRAM_NONE,        {DRIVE8, DRIVE9});
     setFallback(Opt::DRV_SAVE_ROMS,              true,               {DRIVE8, DRIVE9});
     setFallback(Opt::DRV_PARCABLE,               (i64)ParCableType::NONE,{DRIVE8, DRIVE9});
@@ -162,7 +162,7 @@ Defaults::Defaults()
     setFallback(Opt::RS232_DEVICE,               COMDEV_NONE);
     setFallback(Opt::RS232_BAUD,                 600);
 
-    setFallback(Opt::PADDLE_ORIENTATION,         PADDLE_HORIZONTAL);
+    setFallback(Opt::PADDLE_ORIENTATION,         (i64)PaddleOrientation::HORIZONTAL);
 
     setFallback(Opt::RS232_BAUD,                 600);
 

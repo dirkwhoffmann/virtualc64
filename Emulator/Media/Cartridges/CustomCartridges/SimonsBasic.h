@@ -20,7 +20,7 @@ class SimonsBasic final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_SIMONS_BASIC,
+        .type       = CartridgeType::SIMONS_BASIC,
         .title      = "Simons Basic",
     };
 

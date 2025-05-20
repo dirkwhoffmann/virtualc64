@@ -20,7 +20,7 @@ class FreezeFrame final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_FREEZE_FRAME,
+        .type       = CartridgeType::FREEZE_FRAME,
         .title      = "Freeze Frame",
 
         .buttons    = 1,

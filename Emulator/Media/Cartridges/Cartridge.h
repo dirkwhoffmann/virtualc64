@@ -39,7 +39,7 @@ public:
 
         static CartridgeTraits traits = {
 
-            .type       = CRT_NORMAL,
+            .type       = CartridgeType::NORMAL,
             .title      = "Cartridge",
         };
 

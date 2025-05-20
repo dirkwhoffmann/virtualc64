@@ -20,7 +20,7 @@ class Ocean final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_OCEAN,
+        .type       = CartridgeType::OCEAN,
         .title      = "Ocean",
     };
 

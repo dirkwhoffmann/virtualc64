@@ -20,7 +20,7 @@ class MagicDesk final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_MAGIC_DESK,
+        .type       = CartridgeType::MAGIC_DESK,
         .title      = "Magic Desk",
     };
 

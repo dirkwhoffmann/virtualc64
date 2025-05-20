@@ -370,7 +370,7 @@ Drive::autoConfigure()
         case 0xB938E2DA07F4FE40: // VC1541C_02
 
             debug(CNF_DEBUG, "autoConfigure: VC1541C\n");
-            setOption(Opt::DRV_TYPE, DRIVE_VC1541C);
+            setOption(Opt::DRV_TYPE, (i64)DriveType::VC1541C);
             setOption(Opt::DRV_RAM, DRVRAM_NONE);
             setOption(Opt::DRV_PARCABLE, ParCableType::NONE);
             break;
@@ -383,7 +383,7 @@ Drive::autoConfigure()
         case 0xB4027D6D9D61378A: // VC1541_64ER_V3
 
             debug(CNF_DEBUG, "autoConfigure: VC1541 II\n");
-            setOption(Opt::DRV_TYPE, DRIVE_VC1541II);
+            setOption(Opt::DRV_TYPE, (i64)DriveType::VC1541II);
             setOption(Opt::DRV_RAM, DRVRAM_NONE);
             setOption(Opt::DRV_PARCABLE, ParCableType::NONE);
             break;
@@ -392,7 +392,7 @@ Drive::autoConfigure()
         case 0x92ADEBA1BCCD8D31: // VC1541_SPEEDDOS_27
 
             debug(CNF_DEBUG, "autoConfigure: VC1541 SpeedDOS\n");
-            setOption(Opt::DRV_TYPE, DRIVE_VC1541II);
+            setOption(Opt::DRV_TYPE, (i64)DriveType::VC1541II);
             setOption(Opt::DRV_RAM, DRVRAM_NONE);
             setOption(Opt::DRV_PARCABLE, ParCableType::STANDARD);
             break;
@@ -401,7 +401,7 @@ Drive::autoConfigure()
         case 0x1C1DDD64E02CAD32: // VC1541_DOLPHIN_20_SLVDR
 
             debug(CNF_DEBUG, "autoConfig: Dolphin DOS\n");
-            setOption(Opt::DRV_TYPE, DRIVE_VC1541II);
+            setOption(Opt::DRV_TYPE, (i64)DriveType::VC1541II);
             setOption(Opt::DRV_RAM, DRVRAM_8000_9FFF);
             setOption(Opt::DRV_PARCABLE, ParCableType::STANDARD);
             break;
@@ -410,7 +410,7 @@ Drive::autoConfigure()
         case 0xF684F72388EE5364: // VC1541_DOLPHIN_30_SLVDR
 
             debug(CNF_DEBUG, "autoConfig: Dolphin DOS 3\n");
-            setOption(Opt::DRV_TYPE, DRIVE_VC1541II);
+            setOption(Opt::DRV_TYPE, (i64)DriveType::VC1541II);
             setOption(Opt::DRV_RAM, DRVRAM_6000_7FFF);
             setOption(Opt::DRV_PARCABLE, ParCableType::DOLPHIN3);
             break;

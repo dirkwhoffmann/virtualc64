@@ -20,7 +20,7 @@ class PageFox final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_PAGEFOX,
+        .type       = CartridgeType::PAGEFOX,
         .title      = "Pagefox",
 
         .memory     = KB(32)

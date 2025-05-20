@@ -21,7 +21,7 @@ namespace vc64 {
 string
 CRTFile::cartridgeTypeName(CartridgeType type)
 {
-    return std::to_string(type) + " (" + CartridgeTypeEnum::key(type) + ")";
+    return std::to_string((long)type) + " (" + CartridgeTypeEnum::key(type) + ")";
 }
 
 bool

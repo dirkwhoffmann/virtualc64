@@ -20,7 +20,7 @@ class KcsPower final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_KCS_POWER,
+        .type       = CartridgeType::KCS_POWER,
         .title      = "KCS Power",
         .memory     = 128,
         .buttons    = 1,

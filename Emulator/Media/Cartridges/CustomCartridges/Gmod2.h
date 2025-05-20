@@ -20,7 +20,7 @@ class Gmod2 final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_GMOD2,
+        .type       = CartridgeType::GMOD2,
         .title      = "Gmod2",
     };
 

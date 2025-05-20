@@ -20,7 +20,7 @@ class Comal80 final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_COMAL80,
+        .type       = CartridgeType::COMAL80,
         .title      = "Comal 80",
     };
 

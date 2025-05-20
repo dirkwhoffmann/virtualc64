@@ -57,7 +57,7 @@ class ExpansionPort final : public SubComponent, public Inspectable<CartridgeInf
     std::unique_ptr<Cartridge> cartridge;
     
     // Type of the attached cartridge
-    CartridgeType crtType = CRT_NONE;
+    CartridgeType crtType = CartridgeType::NONE;
     
     // Values of the Game and the Exrom line (true if no cartridge is attached)
     bool gameLine = 1;
@@ -140,7 +140,7 @@ public:
     CartridgeRomInfo getRomInfo(isize nr) const;
     CartridgeType getCartridgeType() const;
 
-    bool hasReu() const { return getCartridgeType() == CRT_REU; }
+    bool hasReu() const { return getCartridgeType() == CartridgeType::REU; }
 
     
     //

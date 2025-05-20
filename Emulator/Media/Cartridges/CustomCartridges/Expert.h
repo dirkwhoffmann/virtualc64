@@ -20,7 +20,7 @@ class Expert final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type           = CRT_EXPERT,
+        .type           = CartridgeType::EXPERT,
         .title          = "Expert",
 
         .memory         = KB(8),

@@ -20,7 +20,7 @@ class Mach5 final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_MACH5,
+        .type       = CartridgeType::MACH5,
         .title      = "Mach5",
     };
 

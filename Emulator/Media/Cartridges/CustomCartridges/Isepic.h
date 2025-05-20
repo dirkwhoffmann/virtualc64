@@ -20,7 +20,7 @@ class Isepic final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type           = CRT_ISEPIC,
+        .type           = CartridgeType::ISEPIC,
         .title          = "Isepic",
         .memory         = KB(2),
         .switches       = 1,

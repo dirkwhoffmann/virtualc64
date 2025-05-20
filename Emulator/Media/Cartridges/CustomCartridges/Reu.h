@@ -38,7 +38,7 @@ class Reu final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type           = CRT_REU,
+        .type           = CartridgeType::REU,
         .title          = "REU",
         .battery        = true,
         .needsExecution = true

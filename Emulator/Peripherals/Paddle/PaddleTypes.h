@@ -22,29 +22,28 @@ namespace vc64 {
 //
 
 /// Value mapping scheme
-enum_long(PADDLE_ORIENTATION)
+enum class PaddleOrientation : long
 {
-    PADDLE_HORIZONTAL,          ///< Horizontal
-    PADDLE_HORIZONTAL_FLIPPED,  ///< Horizontal, reverse direction
-    PADDLE_VERTICAL,            ///< Vertical
-    PADDLE_VERTICAL_FLIPPED     ///< Vertical, reverse direction
+    HORIZONTAL,          ///< Horizontal
+    HORIZONTAL_FLIPPED,  ///< Horizontal, reverse direction
+    VERTICAL,            ///< Vertical
+    VERTICAL_FLIPPED     ///< Vertical, reverse direction
 };
-typedef PADDLE_ORIENTATION PaddleOrientation;
 
 struct PaddleOrientationEnum : util::Reflection<PaddleOrientationEnum, PaddleOrientation> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = PADDLE_VERTICAL_FLIPPED;
+    static constexpr long maxVal = long(PaddleOrientation::VERTICAL_FLIPPED);
 
     static const char *prefix() { return nullptr; }
-    static const char *_key(long value)
+    static const char *_key(PaddleOrientation value)
     {
         switch (value) {
 
-            case PADDLE_HORIZONTAL:         return "HORIZONTAL";
-            case PADDLE_HORIZONTAL_FLIPPED: return "HORIZONTAL_FLIPPED";
-            case PADDLE_VERTICAL:           return "VERTICAL";
-            case PADDLE_VERTICAL_FLIPPED:   return "VERTICAL_FLIPPED";
+            case PaddleOrientation::HORIZONTAL:         return "HORIZONTAL";
+            case PaddleOrientation::HORIZONTAL_FLIPPED: return "HORIZONTAL_FLIPPED";
+            case PaddleOrientation::VERTICAL:           return "VERTICAL";
+            case PaddleOrientation::VERTICAL_FLIPPED:   return "VERTICAL_FLIPPED";
         }
         return "???";
     }

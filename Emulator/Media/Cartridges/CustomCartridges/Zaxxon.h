@@ -20,7 +20,7 @@ class Zaxxon final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_ZAXXON,
+        .type       = CartridgeType::ZAXXON,
         .title      = "Zaxxon",
     };
 

@@ -69,7 +69,7 @@ ExpansionPort::operator << (SerReader &worker)
     cartridge = nullptr;
 
     // Load cartridge (if any)
-    if (crtType != CRT_NONE) {
+    if (crtType != CartridgeType::NONE) {
 
         cartridge = std::unique_ptr<Cartridge>(Cartridge::makeWithType(c64, crtType));
         *cartridge << worker;
@@ -82,7 +82,7 @@ ExpansionPort::operator << (SerWriter &worker)
     serialize(worker);
 
     // Save cartridge (if any)
-    if (crtType != CRT_NONE) *cartridge << worker;
+    if (crtType != CartridgeType::NONE) *cartridge << worker;
 }
 
 void
@@ -97,7 +97,7 @@ ExpansionPort::_dump(Category category, std::ostream& os) const
 
     if (category == Category::State) {
 
-        auto type = cartridge ? cartridge->getCartridgeType() : CRT_NONE;
+        auto type = cartridge ? cartridge->getCartridgeType() : CartridgeType::NONE;
 
         os << tab("Game line");
         os << bol(gameLine) << std::endl;

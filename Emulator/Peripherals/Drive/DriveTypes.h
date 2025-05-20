@@ -44,27 +44,26 @@ static const isize DRIVE9 = 1;
 //
 
 /// Drive model
-enum_long(DRIVE_TYPE)
+enum class DriveType : long
 {
-    DRIVE_VC1541,
-    DRIVE_VC1541C,
-    DRIVE_VC1541II,
+    VC1541,
+    VC1541C,
+    VC1541II,
 };
-typedef DRIVE_TYPE DriveType;
 
 struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveType> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = DRIVE_VC1541II;
+    static constexpr long maxVal = long(DriveType::VC1541II);
 
     static const char *prefix() { return "DRIVE"; }
-    static const char *_key(long value)
+    static const char *_key(DriveType value)
     {
         switch (value) {
 
-            case DRIVE_VC1541:    return "VC1541";
-            case DRIVE_VC1541C:   return "VC1541C";
-            case DRIVE_VC1541II:  return "VC1541II";
+            case DriveType::VC1541:    return "VC1541";
+            case DriveType::VC1541C:   return "VC1541C";
+            case DriveType::VC1541II:  return "VC1541II";
         }
         return "???";
     }

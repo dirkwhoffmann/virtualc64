@@ -22,7 +22,7 @@ class GeoRAM final : public Cartridge {
 
         static CartridgeTraits traits = {
 
-            .type       = CRT_GEO_RAM,
+            .type       = CartridgeType::GEO_RAM,
             .title      = "GeoRam",
             .memory     = 0,
             .battery    = true

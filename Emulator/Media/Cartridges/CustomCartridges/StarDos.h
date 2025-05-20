@@ -20,7 +20,7 @@ class StarDos final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_STARDOS,
+        .type       = CartridgeType::STARDOS,
         .title      = "StarDOS",
     };
 

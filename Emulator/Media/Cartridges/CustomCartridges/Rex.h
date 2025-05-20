@@ -20,7 +20,7 @@ class Rex final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_REX,
+        .type       = CartridgeType::REX,
         .title      = "REX",
     };
 

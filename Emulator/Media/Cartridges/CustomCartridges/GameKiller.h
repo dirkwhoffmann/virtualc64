@@ -20,7 +20,7 @@ class GameKiller final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_GAME_KILLER,
+        .type       = CartridgeType::GAME_KILLER,
         .title      = "Game Killer",
 
         .buttons    = 1,

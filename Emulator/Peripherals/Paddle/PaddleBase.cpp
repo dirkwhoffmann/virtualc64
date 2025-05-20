@@ -71,7 +71,7 @@ Paddle::getOption(Opt option) const
 {
     switch (option) {
 
-        case Opt::PADDLE_ORIENTATION:    return config.orientation;
+        case Opt::PADDLE_ORIENTATION:    return (i64)config.orientation;
 
         default:
             fatalError;

@@ -20,7 +20,7 @@ class Kingsoft final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_KINGSOFT,
+        .type       = CartridgeType::KINGSOFT,
         .title      = "Kingsoft",
     };
 

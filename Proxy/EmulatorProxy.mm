@@ -733,7 +733,7 @@ NSString *EventSlotName(EventSlot slot)
 
 - (BOOL)cartridgeAttached
 {
-    return [self eport]->getCartridgeTraits().type != CRT_NONE;
+    return [self eport]->getCartridgeTraits().type != CartridgeType::NONE;
 }
  
 - (void)attachCartridge:(MediaFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex

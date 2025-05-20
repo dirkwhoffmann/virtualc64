@@ -20,7 +20,7 @@ class Westermann final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_WESTERMANN,
+        .type       = CartridgeType::WESTERMANN,
         .title      = "Westermann",
     };
 

@@ -20,7 +20,7 @@ class FinalIII final : public Cartridge {
 
     CartridgeTraits traits = {
 
-        .type       = CRT_FINAL_III,
+        .type       = CartridgeType::FINAL_III,
         .title      = "Final Cartridge III",
 
         .buttons    = 2,

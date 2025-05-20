@@ -19,7 +19,7 @@ namespace vc64 {
 const CartridgeTraits &
 ExpansionPort::getCartridgeTraits() const
 {
-    static CartridgeTraits none = CartridgeTraits { .type = CRT_NONE };
+    static CartridgeTraits none = CartridgeTraits { .type = CartridgeType::NONE };
 
     return cartridge ? cartridge->getCartridgeTraits() : none;
 }
@@ -41,7 +41,7 @@ ExpansionPort::getRomInfo(isize nr) const
 CartridgeType
 ExpansionPort::getCartridgeType() const
 {
-    return cartridge ? cartridge->getCartridgeType() : CRT_NONE;
+    return cartridge ? cartridge->getCartridgeType() : CartridgeType::NONE;
 }
 
 u8
@@ -255,7 +255,7 @@ ExpansionPort::detachCartridge()
         if (cartridge) {
             
             cartridge = nullptr;
-            crtType = CRT_NONE;
+            crtType = CartridgeType::NONE;
             
             setCartridgeMode(CRTMode::OFF);
             
