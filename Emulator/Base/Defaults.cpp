@@ -39,7 +39,7 @@ Defaults::Defaults()
     
     setFallback(Opt::POWER_GRID,                 (i64)PowerGrid::STABLE_50HZ);
 
-    setFallback(Opt::GLUE_LOGIC,                 GLUE_LOGIC_DISCRETE);
+    setFallback(Opt::GLUE_LOGIC,                 (i64)GlueLogic::DISCRETE);
 
     setFallback(Opt::CIA_REVISION,               (i64)CIARev::MOS_6526);
     setFallback(Opt::CIA_TIMER_B_BUG,            true);
@@ -56,7 +56,7 @@ Defaults::Defaults()
 
     setFallback(Opt::DMA_DEBUG_ENABLE,           false);
     setFallback(Opt::DMA_DEBUG_OVERLAY,          false);
-    setFallback(Opt::DMA_DEBUG_MODE,             DMA_DISPLAY_MODE_FG_LAYER);
+    setFallback(Opt::DMA_DEBUG_MODE,             (i64)DmaDisplayMode::FG_LAYER);
     setFallback(Opt::DMA_DEBUG_OPACITY,          0x80);
     setFallback(Opt::DMA_DEBUG_CHANNEL0,         true);
     setFallback(Opt::DMA_DEBUG_CHANNEL1,         true);
@@ -121,10 +121,10 @@ Defaults::Defaults()
     setFallback(Opt::SID_REV,                    (i64)SIDRevision::MOS_8580, {0, 1, 2, 3});
     setFallback(Opt::SID_FILTER,                 false,                  {0, 1, 2, 3});
     setFallback(Opt::SID_ENGINE,                 (i64)SIDEngine::RESID,  {0, 1, 2, 3});
-    setFallback(Opt::SID_SAMPLING,               SAMPLING_INTERPOLATE,   {0, 1, 2, 3});
+    setFallback(Opt::SID_SAMPLING,               (i64)SamplingMethod::INTERPOLATE, {0, 1, 2, 3});
     setFallback(Opt::SID_POWER_SAVE,             false,                  {0, 1, 2, 3});
 
-    setFallback(Opt::MEM_INIT_PATTERN,           RAM_PATTERN_VICE);
+    setFallback(Opt::MEM_INIT_PATTERN,           (i64)RamPattern::VICE);
     setFallback(Opt::MEM_HEATMAP,                false);
     setFallback(Opt::MEM_SAVE_ROMS,              true);
 

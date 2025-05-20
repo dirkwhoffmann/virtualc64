@@ -208,7 +208,7 @@ SID::setOption(Opt opt, i64 value)
 
         case Opt::SID_SAMPLING:
 
-            if (config.sampling != value) {
+            if (config.sampling != SamplingMethod(value)) {
 
                 config.sampling = SamplingMethod(value);
                 setSamplingMethod(SamplingMethod(value));

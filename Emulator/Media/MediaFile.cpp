@@ -63,10 +63,10 @@ MediaFile::type(const fs::path &path)
         TAPFile::isCompatible(buffer)) return FILETYPE_TAP;
 
     if (RomFile::isCompatible(path)) {
-        if (RomFile::isRomBuffer(ROM_TYPE_BASIC, buffer)) return FILETYPE_BASIC_ROM;
-        if (RomFile::isRomBuffer(ROM_TYPE_CHAR, buffer)) return FILETYPE_CHAR_ROM;
-        if (RomFile::isRomBuffer(ROM_TYPE_KERNAL, buffer)) return FILETYPE_KERNAL_ROM;
-        if (RomFile::isRomBuffer(ROM_TYPE_VC1541, buffer)) return FILETYPE_VC1541_ROM;
+        if (RomFile::isRomBuffer(RomType::BASIC, buffer)) return FILETYPE_BASIC_ROM;
+        if (RomFile::isRomBuffer(RomType::CHAR, buffer)) return FILETYPE_CHAR_ROM;
+        if (RomFile::isRomBuffer(RomType::KERNAL, buffer)) return FILETYPE_KERNAL_ROM;
+        if (RomFile::isRomBuffer(RomType::VC1541, buffer)) return FILETYPE_VC1541_ROM;
     }
 
     if (Folder::isCompatible(path)) return FILETYPE_FOLDER;

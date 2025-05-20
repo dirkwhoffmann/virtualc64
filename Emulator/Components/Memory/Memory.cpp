@@ -156,7 +156,7 @@ Memory::eraseWithPattern(RamPattern pattern)
     
     switch (pattern) {
             
-        case RAM_PATTERN_VICE:
+        case RamPattern::VICE:
             
             // $00 $00 $FF $FF $FF $FF $00 $00 ...
             for (isize i = 0; i < isizeof(ram); i++)
@@ -168,7 +168,7 @@ Memory::eraseWithPattern(RamPattern pattern)
             
             break;
             
-        case RAM_PATTERN_CCS:
+        case RamPattern::CCS:
             
             // (64 x $FF) (64 x $00) ...
             for (isize i = 0; i < isizeof(ram); i++)
@@ -176,21 +176,21 @@ Memory::eraseWithPattern(RamPattern pattern)
             
             break;
             
-        case RAM_PATTERN_ZEROES:
+        case RamPattern::ZEROES:
             
             for (isize i = 0; i < isizeof(ram); i++)
                 ram[i] = 0;
             
             break;
             
-        case RAM_PATTERN_ONES:
+        case RamPattern::ONES:
             
             for (isize i = 0; i < isizeof(ram); i++)
                 ram[i] = 0xFF;
             
             break;
             
-        case RAM_PATTERN_RANDOM:
+        case RamPattern::RANDOM:
         {
             std::random_device rd;
             std::mt19937 gen(rd());
@@ -596,7 +596,7 @@ Memory::pokeIO(u16 addr, u8 value)
 u16
 Memory::nmiVector() const {
     
-    if (peekSrc[0xF] != M_KERNAL || c64.hasRom(ROM_TYPE_KERNAL)) {
+    if (peekSrc[0xF] != M_KERNAL || c64.hasRom(RomType::KERNAL)) {
         return LO_HI(spypeek(0xFFFA), spypeek(0xFFFB));
     } else {
         return 0xFE43;
@@ -606,7 +606,7 @@ Memory::nmiVector() const {
 u16
 Memory::irqVector() const {
     
-    if (peekSrc[0xF] != M_KERNAL || c64.hasRom(ROM_TYPE_KERNAL)) {
+    if (peekSrc[0xF] != M_KERNAL || c64.hasRom(RomType::KERNAL)) {
         return LO_HI(spypeek(0xFFFE), spypeek(0xFFFF));
     } else {
         return 0xFF48;
@@ -618,7 +618,7 @@ Memory::resetVector() {
 
     updatePeekPokeLookupTables();
     
-    if (peekSrc[0xF] != M_KERNAL || c64.hasRom(ROM_TYPE_KERNAL)) {
+    if (peekSrc[0xF] != M_KERNAL || c64.hasRom(RomType::KERNAL)) {
         return LO_HI(spypeek(0xFFFC), spypeek(0xFFFD));
     } else {
         return 0xFCE2;

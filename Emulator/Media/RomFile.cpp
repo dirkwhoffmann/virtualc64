@@ -19,28 +19,28 @@ namespace vc64 {
 
 const RomSignature RomFile::signatures[] = {
 
-    { ROM_TYPE_BASIC,  0x2000, 0x0000, { 0x94, 0xE3, 0x7B } }, // Commodore
-    { ROM_TYPE_BASIC,  0x2000, 0x0000, { 0x63, 0xA6, 0xC1 } }, // MEGA65
-    { ROM_TYPE_BASIC,  0x2000, 0x0000, { 0x94, 0xE3, 0xB7 } }, // MEGA65
+    { RomType::BASIC,  0x2000, 0x0000, { 0x94, 0xE3, 0x7B } }, // Commodore
+    { RomType::BASIC,  0x2000, 0x0000, { 0x63, 0xA6, 0xC1 } }, // MEGA65
+    { RomType::BASIC,  0x2000, 0x0000, { 0x94, 0xE3, 0xB7 } }, // MEGA65
     
-    { ROM_TYPE_CHAR,   0x1000, 0x0000, { 0x3C, 0x66, 0x6E } }, // Commodore
-    { ROM_TYPE_CHAR,   0x1000, 0x0000, { 0x00, 0x3C, 0x66 } }, // Atari800
-    { ROM_TYPE_CHAR,   0x1000, 0x0000, { 0x70, 0x88, 0x08 } }, // MSX
-    { ROM_TYPE_CHAR,   0x1000, 0x0000, { 0x00, 0x3C, 0x4A } }, // Speccy
-    { ROM_TYPE_CHAR,   0x1000, 0x0000, { 0x7C, 0xC6, 0xDE } }, // Amstrad, Amiga
-    { ROM_TYPE_CHAR,   0x1000, 0x0000, { 0x38, 0x44, 0x5C } }, // Speccy
+    { RomType::CHAR,   0x1000, 0x0000, { 0x3C, 0x66, 0x6E } }, // Commodore
+    { RomType::CHAR,   0x1000, 0x0000, { 0x00, 0x3C, 0x66 } }, // Atari800
+    { RomType::CHAR,   0x1000, 0x0000, { 0x70, 0x88, 0x08 } }, // MSX
+    { RomType::CHAR,   0x1000, 0x0000, { 0x00, 0x3C, 0x4A } }, // Speccy
+    { RomType::CHAR,   0x1000, 0x0000, { 0x7C, 0xC6, 0xDE } }, // Amstrad, Amiga
+    { RomType::CHAR,   0x1000, 0x0000, { 0x38, 0x44, 0x5C } }, // Speccy
 
-    { ROM_TYPE_KERNAL, 0x2000, 0x0000, { 0x85, 0x56, 0x20 } }, // Commodore
-    { ROM_TYPE_KERNAL, 0x2000, 0x0000, { 0xA9, 0x93, 0x20 } }, // MEGA65
-    { ROM_TYPE_KERNAL, 0x2000, 0x0000, { 0x20, 0x2E, 0xBA } }, // MEGA65
-    { ROM_TYPE_KERNAL, 0x2000, 0x0000, { 0x20, 0x02, 0xBE } }, // MEGA65
+    { RomType::KERNAL, 0x2000, 0x0000, { 0x85, 0x56, 0x20 } }, // Commodore
+    { RomType::KERNAL, 0x2000, 0x0000, { 0xA9, 0x93, 0x20 } }, // MEGA65
+    { RomType::KERNAL, 0x2000, 0x0000, { 0x20, 0x2E, 0xBA } }, // MEGA65
+    { RomType::KERNAL, 0x2000, 0x0000, { 0x20, 0x02, 0xBE } }, // MEGA65
 
-    { ROM_TYPE_VC1541, 0x4000, 0x0000, { 0x97, 0xAA, 0xAA } }, // Commodore
-    { ROM_TYPE_VC1541, 0x4000, 0x0000, { 0x97, 0xE0, 0x43 } }, // Commodore
-    { ROM_TYPE_VC1541, 0x4000, 0x0000, { 0x97, 0x46, 0xAD } }, // Commodore
-    { ROM_TYPE_VC1541, 0x4000, 0x0000, { 0x97, 0xDB, 0x43 } }, // Commodore
-    { ROM_TYPE_VC1541, 0x6000, 0x0000, { 0x4C, 0x4B, 0xA3 } }, // Dolphin
-    { ROM_TYPE_VC1541, 0x8000, 0x2000, { 0x4C, 0x4B, 0xA3 } }, // Dolphin
+    { RomType::VC1541, 0x4000, 0x0000, { 0x97, 0xAA, 0xAA } }, // Commodore
+    { RomType::VC1541, 0x4000, 0x0000, { 0x97, 0xE0, 0x43 } }, // Commodore
+    { RomType::VC1541, 0x4000, 0x0000, { 0x97, 0x46, 0xAD } }, // Commodore
+    { RomType::VC1541, 0x4000, 0x0000, { 0x97, 0xDB, 0x43 } }, // Commodore
+    { RomType::VC1541, 0x6000, 0x0000, { 0x4C, 0x4B, 0xA3 } }, // Dolphin
+    { RomType::VC1541, 0x8000, 0x2000, { 0x4C, 0x4B, 0xA3 } }, // Dolphin
     
     { RomType(0),      0x0000, 0x0000, { 0x00, 0x00, 0x00 } }
 };
@@ -93,25 +93,25 @@ RomFile::isRomBuffer(RomType type, const u8 *buf, isize len)
 bool
 RomFile::isBasicRomBuffer(const u8 *buf, isize len)
 {
-    return isRomBuffer(ROM_TYPE_BASIC, buf, len);
+    return isRomBuffer(RomType::BASIC, buf, len);
 }
 
 bool
 RomFile::isCharRomBuffer(const u8 *buf, isize len)
 {
-    return isRomBuffer(ROM_TYPE_CHAR, buf, len);
+    return isRomBuffer(RomType::CHAR, buf, len);
 }
 
 bool
 RomFile::isKernalRomBuffer(const u8 *buf, isize len)
 {
-    return isRomBuffer(ROM_TYPE_KERNAL, buf, len);
+    return isRomBuffer(RomType::KERNAL, buf, len);
 }
 
 bool
 RomFile::isVC1541RomBuffer(const u8 *buf, isize len)
 {
-    return isRomBuffer(ROM_TYPE_VC1541, buf, len);
+    return isRomBuffer(RomType::VC1541, buf, len);
 }
 
 bool
@@ -123,25 +123,25 @@ RomFile::isRomBuffer(RomType type, const Buffer<u8> &buf)
 bool
 RomFile::isBasicRomBuffer(const Buffer<u8> &buf)
 {
-    return isRomBuffer(ROM_TYPE_BASIC, buf.ptr, buf.size);
+    return isRomBuffer(RomType::BASIC, buf.ptr, buf.size);
 }
 
 bool
 RomFile::isCharRomBuffer(const Buffer<u8> &buf)
 {
-    return isRomBuffer(ROM_TYPE_CHAR, buf.ptr, buf.size);
+    return isRomBuffer(RomType::CHAR, buf.ptr, buf.size);
 }
 
 bool
 RomFile::isKernalRomBuffer(const Buffer<u8> &buf)
 {
-    return isRomBuffer(ROM_TYPE_KERNAL, buf.ptr, buf.size);
+    return isRomBuffer(RomType::KERNAL, buf.ptr, buf.size);
 }
 
 bool
 RomFile::isVC1541RomBuffer(const Buffer<u8> &buf)
 {
-    return isRomBuffer(ROM_TYPE_VC1541, buf.ptr, buf.size);
+    return isRomBuffer(RomType::VC1541, buf.ptr, buf.size);
 }
 
 void

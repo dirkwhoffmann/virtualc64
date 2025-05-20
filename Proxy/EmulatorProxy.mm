@@ -1665,22 +1665,22 @@ NSString *EventSlotName(EventSlot slot)
 
 - (RomTraits)basicRom
 {
-    return [self getRomTraits:ROM_TYPE_BASIC];
+    return [self getRomTraits:RomType::BASIC];
 }
 
 - (RomTraits)charRom
 {
-    return [self getRomTraits:ROM_TYPE_CHAR];
+    return [self getRomTraits:RomType::CHAR];
 }
 
 - (RomTraits)kernalRom
 {
-    return [self getRomTraits:ROM_TYPE_KERNAL];
+    return [self getRomTraits:RomType::KERNAL];
 }
 
 - (RomTraits)vc1541Rom
 {
-    return [self getRomTraits:ROM_TYPE_VC1541];
+    return [self getRomTraits:RomType::VC1541];
 }
 
 - (void)hardReset
@@ -2071,10 +2071,10 @@ NSString *EventSlotName(EventSlot slot)
     auto fileType = MediaFile::type([url fileSystemRepresentation]);
 
     return 
-    (fileType == FILETYPE_BASIC_ROM && type == ROM_TYPE_BASIC) ||
-    (fileType == FILETYPE_CHAR_ROM && type == ROM_TYPE_CHAR) ||
-    (fileType == FILETYPE_KERNAL_ROM && type == ROM_TYPE_KERNAL) ||
-    (fileType == FILETYPE_VC1541_ROM && type == ROM_TYPE_VC1541);
+    (fileType == FILETYPE_BASIC_ROM && type == RomType::BASIC) ||
+    (fileType == FILETYPE_CHAR_ROM && type == RomType::CHAR) ||
+    (fileType == FILETYPE_KERNAL_ROM && type == RomType::KERNAL) ||
+    (fileType == FILETYPE_VC1541_ROM && type == RomType::VC1541);
 }
 
 - (void)installOpenRoms

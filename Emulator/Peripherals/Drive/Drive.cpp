@@ -45,7 +45,7 @@ Drive::_initialize()
 bool
 Drive::canConnect()
 {
-    return c64.hasRom(ROM_TYPE_VC1541);
+    return c64.hasRom(RomType::VC1541);
 }
 
 void

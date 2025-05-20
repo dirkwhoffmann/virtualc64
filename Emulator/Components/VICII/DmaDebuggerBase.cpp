@@ -33,26 +33,26 @@ DmaDebugger::getOption(Opt option) const
 {
     switch (option) {
 
-        case Opt::DMA_DEBUG_ENABLE:      return config.dmaDebug;
-        case Opt::DMA_DEBUG_OVERLAY:     return config.dmaOverlay;
-        case Opt::DMA_DEBUG_MODE:        return config.dmaDisplayMode;
-        case Opt::DMA_DEBUG_OPACITY:     return config.dmaOpacity;
+        case Opt::DMA_DEBUG_ENABLE:      return (i64)config.dmaDebug;
+        case Opt::DMA_DEBUG_OVERLAY:     return (i64)config.dmaOverlay;
+        case Opt::DMA_DEBUG_MODE:        return (i64)config.dmaDisplayMode;
+        case Opt::DMA_DEBUG_OPACITY:     return (i64)config.dmaOpacity;
 
-        case Opt::VICII_CUT_LAYERS:      return config.cutLayers;
-        case Opt::VICII_CUT_OPACITY:     return config.cutOpacity;
+        case Opt::VICII_CUT_LAYERS:      return (i64)config.cutLayers;
+        case Opt::VICII_CUT_OPACITY:     return (i64)config.cutOpacity;
 
-        case Opt::DMA_DEBUG_CHANNEL0:    return config.dmaChannel[0];
-        case Opt::DMA_DEBUG_CHANNEL1:    return config.dmaChannel[1];
-        case Opt::DMA_DEBUG_CHANNEL2:    return config.dmaChannel[2];
-        case Opt::DMA_DEBUG_CHANNEL3:    return config.dmaChannel[3];
-        case Opt::DMA_DEBUG_CHANNEL4:    return config.dmaChannel[4];
-        case Opt::DMA_DEBUG_CHANNEL5:    return config.dmaChannel[5];
-        case Opt::DMA_DEBUG_COLOR0:      return config.dmaColor[0];
-        case Opt::DMA_DEBUG_COLOR1:      return config.dmaColor[1];
-        case Opt::DMA_DEBUG_COLOR2:      return config.dmaColor[2];
-        case Opt::DMA_DEBUG_COLOR3:      return config.dmaColor[3];
-        case Opt::DMA_DEBUG_COLOR4:      return config.dmaColor[4];
-        case Opt::DMA_DEBUG_COLOR5:      return config.dmaColor[5];
+        case Opt::DMA_DEBUG_CHANNEL0:    return (i64)config.dmaChannel[0];
+        case Opt::DMA_DEBUG_CHANNEL1:    return (i64)config.dmaChannel[1];
+        case Opt::DMA_DEBUG_CHANNEL2:    return (i64)config.dmaChannel[2];
+        case Opt::DMA_DEBUG_CHANNEL3:    return (i64)config.dmaChannel[3];
+        case Opt::DMA_DEBUG_CHANNEL4:    return (i64)config.dmaChannel[4];
+        case Opt::DMA_DEBUG_CHANNEL5:    return (i64)config.dmaChannel[5];
+        case Opt::DMA_DEBUG_COLOR0:      return (i64)config.dmaColor[0];
+        case Opt::DMA_DEBUG_COLOR1:      return (i64)config.dmaColor[1];
+        case Opt::DMA_DEBUG_COLOR2:      return (i64)config.dmaColor[2];
+        case Opt::DMA_DEBUG_COLOR3:      return (i64)config.dmaColor[3];
+        case Opt::DMA_DEBUG_COLOR4:      return (i64)config.dmaColor[4];
+        case Opt::DMA_DEBUG_COLOR5:      return (i64)config.dmaColor[5];
 
         default:
             fatalError;

@@ -21,10 +21,10 @@ VICII::drawBorder()
 {
     if (flipflops.delayed.main) {
         
-        SET_FRAME_PIXEL(0, reg.delayed.colors[COLREG_BORDER]);
+        SET_FRAME_PIXEL(0, reg.delayed.colors[VICIIColorReg::BORDER]);
         
         for (isize pixel = 1; pixel <= 7; pixel++) {
-            SET_FRAME_PIXEL(pixel, reg.current.colors[COLREG_BORDER]);
+            SET_FRAME_PIXEL(pixel, reg.current.colors[VICIIColorReg::BORDER]);
         }
     }
 }
@@ -35,9 +35,9 @@ VICII::drawBorder17()
     if (flipflops.delayed.main && !flipflops.current.main) {
         
         // 38 column mode (only pixels 0...6 are drawn)
-        SET_FRAME_PIXEL(0, reg.delayed.colors[COLREG_BORDER]);
+        SET_FRAME_PIXEL(0, reg.delayed.colors[VICIIColorReg::BORDER]);
         for (isize pixel = 1; pixel <= 6; pixel++) {
-            SET_FRAME_PIXEL(pixel, reg.current.colors[COLREG_BORDER]);
+            SET_FRAME_PIXEL(pixel, reg.current.colors[VICIIColorReg::BORDER]);
         }
         
     } else {
@@ -53,7 +53,7 @@ VICII::drawBorder55()
     if (!flipflops.delayed.main && flipflops.current.main) {
         
         // 38 column mode (border starts at pixel 7)
-        SET_FRAME_PIXEL(7, reg.delayed.colors[COLREG_BORDER]);
+        SET_FRAME_PIXEL(7, reg.delayed.colors[VICIIColorReg::BORDER]);
         
     } else {
         
@@ -80,7 +80,7 @@ VICII::drawCanvasFastPath()
     
     switch (reg.delayed.mode) {
             
-        case DISPLAY_MODE_STANDARD_TEXT:
+        case DisplayMode::STANDARD_TEXT:
             
             for (isize i = 0; i < 8; i++) {
                 
@@ -90,7 +90,7 @@ VICII::drawCanvasFastPath()
                 if (sr.colorbits) {
                     SET_FG_PIXEL(i, sr.latchedCol);
                 } else {
-                    SET_BG_PIXEL(i, reg.delayed.colors[COLREG_BG0]);
+                    SET_BG_PIXEL(i, reg.delayed.colors[VICIIColorReg::BG_0]);
                 }
                 
                 sr.data <<= 1;
@@ -98,7 +98,7 @@ VICII::drawCanvasFastPath()
             }
             return;
             
-        case DISPLAY_MODE_MULTICOLOR_TEXT:
+        case DisplayMode::MULTICOLOR_TEXT:
             
             for (isize i = 0; i < 8; i++) {
                 
@@ -110,9 +110,9 @@ VICII::drawCanvasFastPath()
                     if (sr.mcFlop) sr.colorbits = sr.data >> 6;
                     
                     switch (sr.colorbits) {
-                        case 0: SET_BG_PIXEL(i, reg.delayed.colors[COLREG_BG0]); break;
-                        case 1: SET_BG_PIXEL(i, reg.delayed.colors[COLREG_BG1]); break;
-                        case 2: SET_FG_PIXEL(i, reg.delayed.colors[COLREG_BG2]); break;
+                        case 0: SET_BG_PIXEL(i, reg.delayed.colors[VICIIColorReg::BG_0]); break;
+                        case 1: SET_BG_PIXEL(i, reg.delayed.colors[VICIIColorReg::BG_1]); break;
+                        case 2: SET_FG_PIXEL(i, reg.delayed.colors[VICIIColorReg::BG_2]); break;
                         case 3: SET_FG_PIXEL(i, sr.latchedCol & 0x07); break;
                     }
                     
@@ -123,7 +123,7 @@ VICII::drawCanvasFastPath()
                     if (sr.colorbits) {
                         SET_FG_PIXEL(i, sr.latchedCol);
                     } else {
-                        SET_BG_PIXEL(i, reg.delayed.colors[COLREG_BG0]);
+                        SET_BG_PIXEL(i, reg.delayed.colors[VICIIColorReg::BG_0]);
                     }
                 }
                 
@@ -132,7 +132,7 @@ VICII::drawCanvasFastPath()
             }
             return;
             
-        case DISPLAY_MODE_STANDARD_BITMAP:
+        case DisplayMode::STANDARD_BITMAP:
             
             for (isize i = 0; i < 8; i++) {
                 
@@ -150,7 +150,7 @@ VICII::drawCanvasFastPath()
             }
             return;
             
-        case DISPLAY_MODE_MULTICOLOR_BITMAP:
+        case DisplayMode::MULTICOLOR_BITMAP:
             
             for (isize i = 0; i < 8; i++) {
                 
@@ -158,7 +158,7 @@ VICII::drawCanvasFastPath()
                 if (sr.mcFlop) sr.colorbits = sr.data >> 6;
                 
                 switch (sr.colorbits) {
-                    case 0: SET_BG_PIXEL(i, reg.delayed.colors[COLREG_BG0]); break;
+                    case 0: SET_BG_PIXEL(i, reg.delayed.colors[VICIIColorReg::BG_0]); break;
                     case 1: SET_BG_PIXEL(i, HI_NIBBLE(sr.latchedChr)); break;
                     case 2: SET_FG_PIXEL(i, LO_NIBBLE(sr.latchedChr)); break;
                     case 3: SET_FG_PIXEL(i, sr.latchedCol); break;
@@ -169,7 +169,7 @@ VICII::drawCanvasFastPath()
             }
             return;
             
-        case DISPLAY_MODE_EXTENDED_BG_COLOR:
+        case DisplayMode::EXTENDED_BG_COLOR:
             
             for (isize i = 0; i < 8; i++) {
                 
@@ -179,7 +179,7 @@ VICII::drawCanvasFastPath()
                 if (sr.colorbits) {
                     SET_FG_PIXEL(i, sr.latchedCol);
                 } else {
-                    isize regnr = COLREG_BG0 + (sr.latchedChr >> 6);
+                    isize regnr = VICIIColorReg::BG_0 + (sr.latchedChr >> 6);
                     SET_BG_PIXEL(i, reg.delayed.colors[regnr]);
                 }
                 
@@ -218,10 +218,10 @@ VICII::drawCanvasSlowPath()
     drawCanvasPixel(0, mode, d016);
     
     // After the first pixel, color register changes show up
-    reg.delayed.colors[COLREG_BG0] = reg.current.colors[COLREG_BG0];
-    reg.delayed.colors[COLREG_BG1] = reg.current.colors[COLREG_BG1];
-    reg.delayed.colors[COLREG_BG2] = reg.current.colors[COLREG_BG2];
-    reg.delayed.colors[COLREG_BG3] = reg.current.colors[COLREG_BG3];
+    reg.delayed.colors[VICIIColorReg::BG_0] = reg.current.colors[VICIIColorReg::BG_0];
+    reg.delayed.colors[VICIIColorReg::BG_1] = reg.current.colors[VICIIColorReg::BG_1];
+    reg.delayed.colors[VICIIColorReg::BG_2] = reg.current.colors[VICIIColorReg::BG_2];
+    reg.delayed.colors[VICIIColorReg::BG_3] = reg.current.colors[VICIIColorReg::BG_3];
     
     //
     // Pixel 1, 2, 3
@@ -311,21 +311,21 @@ VICII::drawCanvasPixel(u8 pixel, u8 mode, u8 d016)
     switch ((mode | mcBit) >> 1 | sr.colorbits) {
             
             // DISPLAY_MODE_STANDARD_TEXT
-        case 0x00: case 0x04: color = reg.delayed.colors[COLREG_BG0]; break;
+        case 0x00: case 0x04: color = reg.delayed.colors[VICIIColorReg::BG_0]; break;
         case 0x01: case 0x05: color = sr.latchedCol; break;
-        case 0x02: case 0x06: color = reg.delayed.colors[COLREG_BG0];  break;
+        case 0x02: case 0x06: color = reg.delayed.colors[VICIIColorReg::BG_0];  break;
         case 0x03: case 0x07: color = sr.latchedCol; break;
             
             // DISPLAY_MODE_MULTICOLOR_TEXT (MC = 0)
-        case 0x08: color = reg.delayed.colors[COLREG_BG0]; break;
+        case 0x08: color = reg.delayed.colors[VICIIColorReg::BG_0]; break;
         case 0x09: color = sr.latchedCol; break;
-        case 0x0A: color = reg.delayed.colors[COLREG_BG0]; break;
+        case 0x0A: color = reg.delayed.colors[VICIIColorReg::BG_0]; break;
         case 0x0B: color = sr.latchedCol; break;
             
             // DISPLAY_MODE_MULTICOLOR_TEXT (MC = 1)
-        case 0x0C: color = reg.delayed.colors[COLREG_BG0]; break;
-        case 0x0D: color = reg.delayed.colors[COLREG_BG1]; break;
-        case 0x0E: color = reg.delayed.colors[COLREG_BG2]; break;
+        case 0x0C: color = reg.delayed.colors[VICIIColorReg::BG_0]; break;
+        case 0x0D: color = reg.delayed.colors[VICIIColorReg::BG_1]; break;
+        case 0x0E: color = reg.delayed.colors[VICIIColorReg::BG_2]; break;
         case 0x0F: color = sr.latchedCol & 0x07; break;
             
             // DISPLAY_MODE_STANDARD_BITMAP
@@ -335,15 +335,15 @@ VICII::drawCanvasPixel(u8 pixel, u8 mode, u8 d016)
         case 0x13: case 0x17: color = HI_NIBBLE(sr.latchedChr); break;
             
             // DISPLAY_MODE_MULTICOLOR_BITMAP
-        case 0x18: case 0x1C: color = reg.delayed.colors[COLREG_BG0]; break;
+        case 0x18: case 0x1C: color = reg.delayed.colors[VICIIColorReg::BG_0]; break;
         case 0x19: case 0x1D: color = HI_NIBBLE(sr.latchedChr); break;
         case 0x1A: case 0x1E: color = LO_NIBBLE(sr.latchedChr); break;
         case 0x1B: case 0x1F: color = sr.latchedCol; break;
             
             // DISPLAY_MODE_EXTENDED_BG_COLOR
-        case 0x20: case 0x24: color = reg.delayed.colors[COLREG_BG0 + (sr.latchedChr >> 6)]; break;
+        case 0x20: case 0x24: color = reg.delayed.colors[VICIIColorReg::BG_0 + (sr.latchedChr >> 6)]; break;
         case 0x21: case 0x25: color = sr.latchedCol; break;
-        case 0x22: case 0x26: color = reg.delayed.colors[COLREG_BG0 + (sr.latchedChr >> 6)]; break;
+        case 0x22: case 0x26: color = reg.delayed.colors[VICIIColorReg::BG_0 + (sr.latchedChr >> 6)]; break;
         case 0x23: case 0x27: color = sr.latchedCol; break;
             
             // INVALID VIDEO MODES

@@ -44,13 +44,13 @@ Memory::_dump(Category category, std::ostream& os) const
             }
         };
 
-        info("Basic ROM", ROM_TYPE_BASIC);
+        info("Basic ROM", RomType::BASIC);
         os << std::endl;
-        info("Character ROM", ROM_TYPE_CHAR);
+        info("Character ROM", RomType::CHAR);
         os << std::endl;
-        info("Kernal ROM", ROM_TYPE_KERNAL);
+        info("Kernal ROM", RomType::KERNAL);
         os << std::endl;
-        info("Drive ROM", ROM_TYPE_VC1541);
+        info("Drive ROM", RomType::VC1541);
     }
 }
 
@@ -79,9 +79,9 @@ Memory::getOption(Opt option) const
 {
     switch (option) {
 
-        case Opt::MEM_INIT_PATTERN:  return config.ramPattern;
-        case Opt::MEM_HEATMAP:       return config.heatmap;
-        case Opt::MEM_SAVE_ROMS:     return config.saveRoms;
+        case Opt::MEM_INIT_PATTERN:  return (i64)config.ramPattern;
+        case Opt::MEM_HEATMAP:       return (i64)config.heatmap;
+        case Opt::MEM_SAVE_ROMS:     return (i64)config.saveRoms;
 
         default:
             fatalError;

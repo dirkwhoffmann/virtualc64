@@ -66,7 +66,7 @@ VICII::setUltimax(bool value) {
 void
 VICII::switchBank(u16 addr) {
 
-    if (config.glueLogic == GLUE_LOGIC_DISCRETE) {
+    if (config.glueLogic == GlueLogic::DISCRETE) {
         
         // Models with discrete glue logic switch banks immediately
         updateBankAddr();
@@ -247,37 +247,37 @@ VICII::peek(u16 addr)
             
         case 0x20: // Border color
             
-            result = reg.current.colors[COLREG_BORDER] | 0xF0;
+            result = reg.current.colors[VICIIColorReg::BORDER] | 0xF0;
             break;
             
         case 0x21: // Background color 0
             
-            result = reg.current.colors[COLREG_BG0] | 0xF0;
+            result = reg.current.colors[VICIIColorReg::BG_0] | 0xF0;
             break;
             
         case 0x22: // Background color 1
             
-            result = reg.current.colors[COLREG_BG1] | 0xF0;
+            result = reg.current.colors[VICIIColorReg::BG_1] | 0xF0;
             break;
             
         case 0x23: // Background color 2
             
-            result = reg.current.colors[COLREG_BG2] | 0xF0;
+            result = reg.current.colors[VICIIColorReg::BG_2] | 0xF0;
             break;
             
         case 0x24: // Background color 3
             
-            result = reg.current.colors[COLREG_BG3] | 0xF0;
+            result = reg.current.colors[VICIIColorReg::BG_3] | 0xF0;
             break;
             
         case 0x25: // Sprite extra color 1 (for multicolor sprites)
             
-            result = reg.current.colors[COLREG_SPR_EX1] | 0xF0;
+            result = reg.current.colors[VICIIColorReg::SPR_EX1] | 0xF0;
             break;
             
         case 0x26: // Sprite extra color 2 (for multicolor sprites)
             
-            result = reg.current.colors[COLREG_SPR_EX2] | 0xF0;
+            result = reg.current.colors[VICIIColorReg::SPR_EX2] | 0xF0;
             break;
             
         case 0x27: // Sprite color 1
@@ -289,7 +289,7 @@ VICII::peek(u16 addr)
         case 0x2D: // Sprite color 7
         case 0x2E: // Sprite color 8
 
-            result = reg.current.colors[COLREG_SPR0 + addr - 0x27] | 0xF0;
+            result = reg.current.colors[VICIIColorReg::SPR_0 + addr - 0x27] | 0xF0;
             break;
             
         default:
@@ -407,31 +407,31 @@ VICII::spypeek(u16 addr) const
             
         case 0x20: // Border color
             
-            return reg.current.colors[COLREG_BORDER] | 0xF0;
+            return reg.current.colors[VICIIColorReg::BORDER] | 0xF0;
             
         case 0x21: // Background color 0
             
-            return reg.current.colors[COLREG_BG0] | 0xF0;
+            return reg.current.colors[VICIIColorReg::BG_0] | 0xF0;
             
         case 0x22: // Background color 1
             
-            return reg.current.colors[COLREG_BG1] | 0xF0;
+            return reg.current.colors[VICIIColorReg::BG_1] | 0xF0;
             
         case 0x23: // Background color 2
             
-            return reg.current.colors[COLREG_BG2] | 0xF0;
+            return reg.current.colors[VICIIColorReg::BG_2] | 0xF0;
             
         case 0x24: // Background color 3
             
-            return reg.current.colors[COLREG_BG3] | 0xF0;
+            return reg.current.colors[VICIIColorReg::BG_3] | 0xF0;
             
         case 0x25: // Sprite extra color 1 (for multicolor sprites)
             
-            return reg.current.colors[COLREG_SPR_EX1] | 0xF0;
+            return reg.current.colors[VICIIColorReg::SPR_EX1] | 0xF0;
             
         case 0x26: // Sprite extra color 2 (for multicolor sprites)
             
-            return reg.current.colors[COLREG_SPR_EX2] | 0xF0;
+            return reg.current.colors[VICIIColorReg::SPR_EX2] | 0xF0;
             
         case 0x27: // Sprite color 1
         case 0x28: // Sprite color 2
@@ -442,7 +442,7 @@ VICII::spypeek(u16 addr) const
         case 0x2D: // Sprite color 7
         case 0x2E: // Sprite color 8
             
-            return reg.current.colors[COLREG_SPR0 + addr - 0x27] | 0xF0;
+            return reg.current.colors[VICIIColorReg::SPR_0 + addr - 0x27] | 0xF0;
             
         default:
             

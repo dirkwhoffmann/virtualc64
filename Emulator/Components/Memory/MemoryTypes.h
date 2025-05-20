@@ -66,31 +66,29 @@ struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
 };
 
 /// Ram startup pattern
-enum_long(RAM_PATTERN)
+enum class RamPattern : long
 {
-    RAM_PATTERN_VICE,       ///< Pattern used by the VICE emulator
-    RAM_PATTERN_CCS,        ///< Pattern used by the CCS emulator
-    RAM_PATTERN_ZEROES,     ///< Initialize with all zeroes
-    RAM_PATTERN_ONES,       ///< Initialize with all ones
-    RAM_PATTERN_RANDOM      ///< Initialize with pseudo-random values
+    VICE,       ///< Pattern used by the VICE emulator
+    CCS,        ///< Pattern used by the CCS emulator
+    ZEROES,     ///< Initialize with all zeroes
+    ONES,       ///< Initialize with all ones
+    RANDOM      ///< Initialize with pseudo-random values
 };
-typedef RAM_PATTERN RamPattern;
 
 struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = RAM_PATTERN_RANDOM;
+    static constexpr long maxVal = long(RamPattern::RANDOM);
 
-    static const char *prefix() { return "RAM_PATTERN"; }
-    static const char *_key(long value)
+    static const char *_key(RamPattern value)
     {
         switch (value) {
 
-            case RAM_PATTERN_VICE:   return "VICE";
-            case RAM_PATTERN_CCS:    return "CCS";
-            case RAM_PATTERN_ZEROES: return "ZEROES";
-            case RAM_PATTERN_ONES:   return "ONES";
-            case RAM_PATTERN_RANDOM: return "RANDOM";
+            case RamPattern::VICE:   return "VICE";
+            case RamPattern::CCS:    return "CCS";
+            case RamPattern::ZEROES: return "ZEROES";
+            case RamPattern::ONES:   return "ONES";
+            case RamPattern::RANDOM: return "RANDOM";
         }
         return "???";
     }
@@ -101,35 +99,41 @@ struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
     }
 };
 
-enum_long(ROM_TYPE)
+enum class RomType : long
 {
-    ROM_TYPE_BASIC,
-    ROM_TYPE_CHAR,
-    ROM_TYPE_KERNAL,
-    ROM_TYPE_VC1541
+    BASIC,
+    CHAR,
+    KERNAL,
+    VC1541
 };
-typedef ROM_TYPE RomType;
 
 struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = ROM_TYPE_VC1541;
+    static constexpr long maxVal = long(RomType::VC1541);
 
     static const char *prefix() { return "ROM_TYPE"; }
-    static const char *_key(long value)
+    static const char *_key(RomType value)
     {
         switch (value) {
 
-            case ROM_TYPE_BASIC:   return "BASIC";
-            case ROM_TYPE_CHAR:    return "CHAR";
-            case ROM_TYPE_KERNAL:  return "KERNAL";
-            case ROM_TYPE_VC1541:  return "VC1541";
+            case RomType::BASIC:   return "BASIC";
+            case RomType::CHAR:    return "CHAR";
+            case RomType::KERNAL:  return "KERNAL";
+            case RomType::VC1541:  return "VC1541";
         }
         return "???";
     }
     
     static const char *help(RomType value)
     {
+        switch (value) {
+
+            case RomType::BASIC:   return "Basic ROM";
+            case RomType::CHAR:    return "Character ROM";
+            case RomType::KERNAL:  return "Kernal ROM";
+            case RomType::VC1541:  return "Floppy Drive ROM";
+        }
         return "";
     }
 };

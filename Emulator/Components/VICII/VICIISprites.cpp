@@ -125,9 +125,9 @@ VICII::drawSpriteNr(isize nr, bool enable, bool active)
                 if (!collision[pixel]) {
                     
                     u8 color =
-                    spriteSr[nr].colBits == 1 ? reg.delayed.colors[COLREG_SPR_EX1] :
-                    spriteSr[nr].colBits == 2 ? reg.delayed.colors[COLREG_SPR0 + nr] :
-                    reg.delayed.colors[COLREG_SPR_EX2];
+                    spriteSr[nr].colBits == 1 ? reg.delayed.colors[VICIIColorReg::SPR_EX1] :
+                    spriteSr[nr].colBits == 2 ? reg.delayed.colors[VICIIColorReg::SPR_0 + nr] :
+                    reg.delayed.colors[VICIIColorReg::SPR_EX2];
                     
                     SET_SPRITE_PIXEL(nr, pixel, color);
                 }
@@ -159,10 +159,10 @@ VICII::drawSpritesSlowPath()
     drawSpritePixel(0, spriteDisplayDelayed, secondDMA);
     
     // After the first pixel, color register changes show up
-    reg.delayed.colors[COLREG_SPR_EX1] = reg.current.colors[COLREG_SPR_EX1];
-    reg.delayed.colors[COLREG_SPR_EX2] = reg.current.colors[COLREG_SPR_EX2];
+    reg.delayed.colors[VICIIColorReg::SPR_EX1] = reg.current.colors[VICIIColorReg::SPR_EX1];
+    reg.delayed.colors[VICIIColorReg::SPR_EX2] = reg.current.colors[VICIIColorReg::SPR_EX2];
     for (isize i = 0; i < 8; i++) {
-        reg.delayed.colors[COLREG_SPR0 + i] = reg.current.colors[COLREG_SPR0 + i];
+        reg.delayed.colors[VICIIColorReg::SPR_0 + i] = reg.current.colors[VICIIColorReg::SPR_0 + i];
     }
     
     //
@@ -309,9 +309,9 @@ VICII::drawSpritePixel(isize pixel, u8 enableBits, u8 freezeBits)
                 if (!collision[pixel]) {
                     
                     u8 color =
-                    spriteSr[sprite].colBits == 1 ? reg.delayed.colors[COLREG_SPR_EX1] :
-                    spriteSr[sprite].colBits == 2 ? reg.delayed.colors[COLREG_SPR0 + sprite] :
-                    reg.delayed.colors[COLREG_SPR_EX2];
+                    spriteSr[sprite].colBits == 1 ? reg.delayed.colors[VICIIColorReg::SPR_EX1] :
+                    spriteSr[sprite].colBits == 2 ? reg.delayed.colors[VICIIColorReg::SPR_0 + sprite] :
+                    reg.delayed.colors[VICIIColorReg::SPR_EX2];
                     
                     SET_SPRITE_PIXEL(sprite, pixel, color);
                 }

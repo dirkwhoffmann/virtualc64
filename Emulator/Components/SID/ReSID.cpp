@@ -244,18 +244,18 @@ ReSID::setSamplingMethod(SamplingMethod value)
     if (samplingMethod != value) {
         
         switch(value) {
-            case SAMPLING_FAST:
+            case SamplingMethod::FAST:
                 trace(SID_DEBUG, "Using sampling method SAMPLE_FAST.\n");
                 break;
-            case SAMPLING_INTERPOLATE:
+            case SamplingMethod::INTERPOLATE:
                 trace(SID_DEBUG, "Using sampling method SAMPLE_INTERPOLATE.\n");
                 break;
-            case SAMPLING_RESAMPLE:
+            case SamplingMethod::RESAMPLE:
                 trace(SID_DEBUG, "Using sampling method SAMPLE_RESAMPLE.\n");
                 break;
-            case SAMPLING_RESAMPLE_FASTMEM:
+            case SamplingMethod::RESAMPLE_FASTMEM:
                 warn("SAMPLE_RESAMPLE_FASTMEM not supported. Using SAMPLE_INTERPOLATE.\n");
-                value = SAMPLING_INTERPOLATE;
+                value = SamplingMethod::INTERPOLATE;
                 break;
             default:
                 warn("Unknown sampling method: %ld\n", value);

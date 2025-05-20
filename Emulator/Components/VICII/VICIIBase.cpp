@@ -44,11 +44,11 @@ VICII::cacheInfo(VICIIInfo &result) const
         result.screenGeometry = getScreenGeometry();
         result.frameFF = flipflops.current;
         result.displayMode = reg.current.mode;
-        result.borderColor = reg.current.colors[COLREG_BORDER];
-        result.bgColor0 = reg.current.colors[COLREG_BG0];
-        result.bgColor1 = reg.current.colors[COLREG_BG1];
-        result.bgColor2 = reg.current.colors[COLREG_BG2];
-        result.bgColor3 = reg.current.colors[COLREG_BG3];
+        result.borderColor = reg.current.colors[VICIIColorReg::BORDER];
+        result.bgColor0 = reg.current.colors[VICIIColorReg::BG_0];
+        result.bgColor1 = reg.current.colors[VICIIColorReg::BG_1];
+        result.bgColor2 = reg.current.colors[VICIIColorReg::BG_2];
+        result.bgColor3 = reg.current.colors[VICIIColorReg::BG_3];
 
         result.memSelect = memSelect;
         result.ultimax = ultimax;
@@ -70,9 +70,9 @@ VICII::cacheInfo(VICIIInfo &result) const
             spriteInfo[i].enabled = GET_BIT(reg.current.sprEnable, i);
             spriteInfo[i].x = reg.current.sprX[i];
             spriteInfo[i].y = reg.current.sprY[i];
-            spriteInfo[i].color = reg.current.colors[COLREG_SPR0 + i];
-            spriteInfo[i].extraColor1 = reg.current.colors[COLREG_SPR_EX1];
-            spriteInfo[i].extraColor2 = reg.current.colors[COLREG_SPR_EX2];
+            spriteInfo[i].color = reg.current.colors[VICIIColorReg::SPR_0 + i];
+            spriteInfo[i].extraColor1 = reg.current.colors[VICIIColorReg::SPR_EX1];
+            spriteInfo[i].extraColor2 = reg.current.colors[VICIIColorReg::SPR_EX2];
             spriteInfo[i].multicolor = GET_BIT(reg.current.sprMC, i);
             spriteInfo[i].expandX = GET_BIT(reg.current.sprExpandX, i);
             spriteInfo[i].expandY = GET_BIT(reg.current.sprExpandY, i);

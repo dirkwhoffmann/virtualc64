@@ -123,25 +123,23 @@ struct VICIIRevEnum : util::Reflection<VICIIRevEnum, VICIIRev> {
 };
 
 /// Glue logic implementation
-enum_long(GLUE_LOGIC)
+enum class GlueLogic : long
 {
-    GLUE_LOGIC_DISCRETE,                ///< Discrete logic
-    GLUE_LOGIC_IC                       ///< Integrated Circuit (PLA)
+    DISCRETE,                ///< Discrete logic
+    IC                       ///< Integrated Circuit (PLA)
 };
-typedef GLUE_LOGIC GlueLogic;
 
 struct GlueLogicEnum : util::Reflection<GlueLogicEnum, GlueLogic> {
     
 	static constexpr long minVal = 0;
-    static constexpr long maxVal = GLUE_LOGIC_IC;
+    static constexpr long maxVal = long(GlueLogic::IC);
 
-    static const char *prefix() { return "GLUE_LOGIC"; }
-    static const char *_key(long value)
+    static const char *_key(GlueLogic value)
     {
         switch (value) {
                 
-            case GLUE_LOGIC_DISCRETE:  return "DISCRETE";
-            case GLUE_LOGIC_IC:        return "IC";
+            case GlueLogic::DISCRETE:  return "DISCRETE";
+            case GlueLogic::IC:        return "IC";
         }
         return "???";
     }
@@ -153,30 +151,27 @@ struct GlueLogicEnum : util::Reflection<GlueLogicEnum, GlueLogic> {
 };
 
 /// C64 canvas size
-enum_long(SCREEN_GEOMETRY)
+enum class ScreenGeometry : long
 {
-    SCREEN_GEOMETRY_25_40,              ///< 25 rows x 40 columns
-    SCREEN_GEOMETRY_25_38,              ///< 25 rows x 38 columns
-    SCREEN_GEOMETRY_24_40,              ///< 24 rows x 40 columns
-    SCREEN_GEOMETRY_24_38               ///< 24 rows x 38 columns
+    GEOMETRY_25_40,              ///< 25 rows x 40 columns
+    GEOMETRY_25_38,              ///< 25 rows x 38 columns
+    GEOMETRY_24_40,              ///< 24 rows x 40 columns
+    GEOMETRY_24_38               ///< 24 rows x 38 columns
 };
-/// Type alias
-typedef SCREEN_GEOMETRY ScreenGeometry;
 
 struct ScreenGeometryEnum : util::Reflection<ScreenGeometryEnum, ScreenGeometry> {
     
 	static constexpr long minVal = 0;
-    static constexpr long maxVal = SCREEN_GEOMETRY_24_38;
+    static constexpr long maxVal = long(ScreenGeometry::GEOMETRY_24_38);
 
-    static const char *prefix() { return "SCREEN_GEOMETRY"; }
-    static const char *_key(long value)
+    static const char *_key(ScreenGeometry value)
     {
         switch (value) {
                 
-            case SCREEN_GEOMETRY_25_40:  return "25_40";
-            case SCREEN_GEOMETRY_25_38:  return "25_38";
-            case SCREEN_GEOMETRY_24_40:  return "24_40";
-            case SCREEN_GEOMETRY_24_38:  return "24_38";
+            case ScreenGeometry::GEOMETRY_25_40:  return "25_40";
+            case ScreenGeometry::GEOMETRY_25_38:  return "25_38";
+            case ScreenGeometry::GEOMETRY_24_40:  return "24_40";
+            case ScreenGeometry::GEOMETRY_24_38:  return "24_38";
         }
         return "???";
     }
@@ -188,37 +183,35 @@ struct ScreenGeometryEnum : util::Reflection<ScreenGeometryEnum, ScreenGeometry>
 };
 
 /// C64 display mode
-enum_long(DISPLAY_MODE)
+enum class DisplayMode : long
 {
-    DISPLAY_MODE_STANDARD_TEXT,         ///< Standard Character Mode
-    DISPLAY_MODE_MULTICOLOR_TEXT,       ///< Multicolor Character Mode
-    DISPLAY_MODE_STANDARD_BITMAP,       ///< Standard Bitmap Mode
-    DISPLAY_MODE_MULTICOLOR_BITMAP,     ///< Multicolor Bitmap Mode
-    DISPLAY_MODE_EXTENDED_BG_COLOR,     ///< Extended Background Color Mode
-    DISPLAY_MODE_INVALID_TEXT,          ///< Extended Background Color Multicolor Character Mode
-    DISPLAY_MODE_INV_STANDARD_BITMAP,   ///< Extended Background Color Standard Bitmap Mode
-    DISPLAY_MODE_INV_MULTICOL_BITMAP    ///< Extended Background Color Multicolor Bitmap Mode
+    STANDARD_TEXT,         ///< Standard Character Mode
+    MULTICOLOR_TEXT,       ///< Multicolor Character Mode
+    STANDARD_BITMAP,       ///< Standard Bitmap Mode
+    MULTICOLOR_BITMAP,     ///< Multicolor Bitmap Mode
+    EXTENDED_BG_COLOR,     ///< Extended Background Color Mode
+    INVALID_TEXT,          ///< Extended Background Color Multicolor Character Mode
+    INV_STANDARD_BITMAP,   ///< Extended Background Color Standard Bitmap Mode
+    INV_MULTICOL_BITMAP    ///< Extended Background Color Multicolor Bitmap Mode
 };
-typedef DISPLAY_MODE DisplayMode;
 
 struct DisplayModeEnum : util::Reflection<DisplayModeEnum, DisplayMode> {
     
     static constexpr long minVal = 0;
-    static constexpr long maxVal = DISPLAY_MODE_INV_MULTICOL_BITMAP;
+    static constexpr long maxVal = long(DisplayMode::INV_MULTICOL_BITMAP);
 
-    static const char *prefix() { return "DISPLAY_MODE"; }
-    static const char *_key(long value)
+    static const char *_key(DisplayMode value)
     {
         switch (value) {
                 
-            case DISPLAY_MODE_STANDARD_TEXT:        return "STANDARD_TEXT";
-            case DISPLAY_MODE_MULTICOLOR_TEXT:      return "MULTICOLOR_TEXT";
-            case DISPLAY_MODE_STANDARD_BITMAP:      return "STANDARD_BITMAP";
-            case DISPLAY_MODE_MULTICOLOR_BITMAP:    return "MULTICOLOR_BITMAP";
-            case DISPLAY_MODE_EXTENDED_BG_COLOR:    return "EXTENDED_BG_COLOR";
-            case DISPLAY_MODE_INVALID_TEXT:         return "INVALID_TEXT";
-            case DISPLAY_MODE_INV_STANDARD_BITMAP:  return "INV_STANDARD_BITMAP";
-            case DISPLAY_MODE_INV_MULTICOL_BITMAP:  return "INV_MULTICOL_BITMAP";
+            case DisplayMode::STANDARD_TEXT:        return "STANDARD_TEXT";
+            case DisplayMode::MULTICOLOR_TEXT:      return "MULTICOLOR_TEXT";
+            case DisplayMode::STANDARD_BITMAP:      return "STANDARD_BITMAP";
+            case DisplayMode::MULTICOLOR_BITMAP:    return "MULTICOLOR_BITMAP";
+            case DisplayMode::EXTENDED_BG_COLOR:    return "EXTENDED_BG_COLOR";
+            case DisplayMode::INVALID_TEXT:         return "INVALID_TEXT";
+            case DisplayMode::INV_STANDARD_BITMAP:  return "INV_STANDARD_BITMAP";
+            case DisplayMode::INV_MULTICOL_BITMAP:  return "INV_MULTICOL_BITMAP";
         }
         return "???";
     }
@@ -229,39 +222,37 @@ struct DisplayModeEnum : util::Reflection<DisplayModeEnum, DisplayMode> {
     }
 };
 
-enum_long(COLSRC)
+enum class ColorSource : long
 {
-    COLSRC_D021,     // Color comes from background color register
-    COLSRC_D022,     // Color comes from first extended color register
-    COLSRC_D023,     // Color comes from second extended color register
-    COLSRC_CHAR_LO,  // Color comes from the low byte of the fetched character
-    COLSRC_CHAR_HI,  // Color comes from the high byte of the fetched character
-    COLSRC_COLRAM3,  // Color comes from the color RAM (lower three 3 bits)
-    COLSRC_COLRAM4,  // Color comes from the color RAM (all 4 bits)
-    COLSRC_INDEXED,  // Color comes from a color register
-    COLSRC_ZERO      // Invalid display modes
+    D021,     // Color comes from background color register
+    D022,     // Color comes from first extended color register
+    D023,     // Color comes from second extended color register
+    CHAR_LO,  // Color comes from the low byte of the fetched character
+    CHAR_HI,  // Color comes from the high byte of the fetched character
+    COLRAM3,  // Color comes from the color RAM (lower three 3 bits)
+    COLRAM4,  // Color comes from the color RAM (all 4 bits)
+    INDEXED,  // Color comes from a color register
+    ZERO      // Invalid display modes
 };
-typedef COLSRC ColorSource;
 
 struct ColorSourceEnum : util::Reflection<ColorSourceEnum, ColorSource> {
     
 	static constexpr long minVal = 0;
-    static constexpr long maxVal = COLSRC_ZERO;
+    static constexpr long maxVal = long(ColorSource::ZERO);
 
-    static const char *prefix() { return "COLSRC"; }
-    static const char *_key(long value)
+    static const char *_key(ColorSource value)
     {
         switch (value) {
                 
-            case COLSRC_D021:     return "D021";
-            case COLSRC_D022:     return "D022";
-            case COLSRC_D023:     return "D023";
-            case COLSRC_CHAR_LO:  return "CHAR_LO";
-            case COLSRC_CHAR_HI:  return "CHAR_HI";
-            case COLSRC_COLRAM3:  return "COLRAM3";
-            case COLSRC_COLRAM4:  return "COLRAM4";
-            case COLSRC_INDEXED:  return "INDEXED";
-            case COLSRC_ZERO:     return "ZERO";
+            case ColorSource::D021:     return "D021";
+            case ColorSource::D022:     return "D022";
+            case ColorSource::D023:     return "D023";
+            case ColorSource::CHAR_LO:  return "CHAR_LO";
+            case ColorSource::CHAR_HI:  return "CHAR_HI";
+            case ColorSource::COLRAM3:  return "COLRAM3";
+            case ColorSource::COLRAM4:  return "COLRAM4";
+            case ColorSource::INDEXED:  return "INDEXED";
+            case ColorSource::ZERO:     return "ZERO";
         }
         return "???";
     }
@@ -272,44 +263,44 @@ struct ColorSourceEnum : util::Reflection<ColorSourceEnum, ColorSource> {
     }
 };
 
-enum VICIIColors
+enum class VICIIColor : long
 {
-    VICII_BLACK       = 0x0,
-    VICII_WHITE       = 0x1,
-    VICII_RED         = 0x2,
-    VICII_CYAN        = 0x3,
-    VICII_PURPLE      = 0x4,
-    VICII_GREEN       = 0x5,
-    VICII_BLUE        = 0x6,
-    VICII_YELLOW      = 0x7,
-    VICII_ORANGE      = 0x8,
-    VICII_BROWN       = 0x9,
-    VICII_LIGHT_RED   = 0xA,
-    VICII_DARK_GREY   = 0xB,
-    VICII_GREY        = 0xC,
-    VICII_LIGHT_GREEN = 0xD,
-    VICII_LIGHT_BLUE  = 0xE,
-    VICII_LIGHT_GREY  = 0xF
+    BLACK       = 0x0,
+    WHITE       = 0x1,
+    RED         = 0x2,
+    CYAN        = 0x3,
+    PURPLE      = 0x4,
+    GREEN       = 0x5,
+    BLUE        = 0x6,
+    YELLOW      = 0x7,
+    ORANGE      = 0x8,
+    BROWN       = 0x9,
+    LIGHT_RED   = 0xA,
+    DARK_GREY   = 0xB,
+    GREY        = 0xC,
+    LIGHT_GREEN = 0xD,
+    LIGHT_BLUE  = 0xE,
+    LIGHT_GREY  = 0xF
 };
 
-enum VICIIColorRegs
+namespace VICIIColorReg
 {
-    COLREG_BORDER     = 0x0,
-    COLREG_BG0        = 0x1,
-    COLREG_BG1        = 0x2,
-    COLREG_BG2        = 0x3,
-    COLREG_BG3        = 0x4,
-    COLREG_SPR_EX1    = 0x5,
-    COLREG_SPR_EX2    = 0x6,
-    COLREG_SPR0       = 0x7,
-    COLREG_SPR1       = 0x8,
-    COLREG_SPR2       = 0x9,
-    COLREG_SPR3       = 0xA,
-    COLREG_SPR4       = 0xB,
-    COLREG_SPR5       = 0xC,
-    COLREG_SPR6       = 0xD,
-    COLREG_SPR7       = 0xE
-};
+const isize BORDER     = 0x0;
+const isize BG_0       = 0x1;
+const isize BG_1       = 0x2;
+const isize BG_2       = 0x3;
+const isize BG_3       = 0x4;
+const isize SPR_EX1    = 0x5;
+const isize SPR_EX2    = 0x6;
+const isize SPR_0      = 0x7;
+const isize SPR_1      = 0x8;
+const isize SPR_2      = 0x9;
+const isize SPR_3      = 0xA;
+const isize SPR_4      = 0xB;
+const isize SPR_5      = 0xC;
+const isize SPR_6      = 0xD;
+const isize SPR_7      = 0xE;
+}
 
 
 //

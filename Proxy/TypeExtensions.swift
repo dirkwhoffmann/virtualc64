@@ -13,6 +13,7 @@ typealias ErrorCode = vc64.Fault
 typealias EventSlot = vc64.EventSlot
 typealias EventSlotEnum = vc64.EventSlotEnum
 typealias EventSlotInfo = vc64.EventSlotInfo
+typealias RomType = vc64.RomType
 
 extension vc64.EventSlot: CustomStringConvertible {
 

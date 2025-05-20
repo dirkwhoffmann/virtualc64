@@ -14,10 +14,10 @@
 
 namespace vc64 {
 
-#define BASIC       ROM_TYPE_BASIC
-#define KERNAL      ROM_TYPE_KERNAL
-#define CHAR        ROM_TYPE_CHAR
-#define VC1541      ROM_TYPE_VC1541
+#define BASIC       RomType::BASIC
+#define KERNAL      RomType::KERNAL
+#define CHAR        RomType::CHAR
+#define VC1541      RomType::VC1541
 
 #define COMMODORE   ROM_VENDOR_COMMODORE
 #define MEGA65      ROM_VENDOR_MEGA65

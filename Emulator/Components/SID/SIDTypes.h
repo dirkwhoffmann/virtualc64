@@ -84,30 +84,29 @@ struct SIDEngineEnum : util::Reflection<SIDEngineEnum, SIDEngine> {
     }
 };
 
-enum_long(SAMPLING)
+enum class SamplingMethod
 {
     // Elements must appear in the same order as in resid::sampling_method
-    SAMPLING_FAST,
-    SAMPLING_INTERPOLATE,
-    SAMPLING_RESAMPLE,
-    SAMPLING_RESAMPLE_FASTMEM
+    FAST,
+    INTERPOLATE,
+    RESAMPLE,
+    RESAMPLE_FASTMEM
 };
-typedef SAMPLING SamplingMethod;
 
 struct SamplingMethodEnum : util::Reflection<SamplingMethodEnum, SamplingMethod> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = SAMPLING_RESAMPLE_FASTMEM;
+    static constexpr long maxVal = long(SamplingMethod::RESAMPLE_FASTMEM);
 
     static const char *prefix() { return "SAMPLING"; }
-    static const char *_key(long value)
+    static const char *_key(SamplingMethod value)
     {
         switch (value) {
 
-            case SAMPLING_FAST:              return "FAST";
-            case SAMPLING_INTERPOLATE:       return "INTERPOLATE";
-            case SAMPLING_RESAMPLE:          return "RESAMPLE";
-            case SAMPLING_RESAMPLE_FASTMEM:  return "RESAMPLE_FASTMEM";
+            case SamplingMethod::FAST:              return "FAST";
+            case SamplingMethod::INTERPOLATE:       return "INTERPOLATE";
+            case SamplingMethod::RESAMPLE:          return "RESAMPLE";
+            case SamplingMethod::RESAMPLE_FASTMEM:  return "RESAMPLE_FASTMEM";
         }
         return "???";
     }

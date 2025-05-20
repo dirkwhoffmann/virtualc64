@@ -128,7 +128,7 @@ extension ConfigurationController {
         if let emu = emu {
 
             emu.powerOff()
-            emu.deleteRom(.BASIC)
+            emu.delete(.BASIC)
             refresh()
         }
     }
@@ -138,7 +138,7 @@ extension ConfigurationController {
         if let emu = emu {
 
             emu.powerOff()
-            emu.deleteRom(.CHAR)
+            emu.delete(.CHAR)
             refresh()
         }
     }
@@ -148,7 +148,7 @@ extension ConfigurationController {
         if let emu = emu {
 
             emu.powerOff()
-            emu.deleteRom(.KERNAL)
+            emu.delete(.KERNAL)
             refresh()
         }
     }
@@ -158,7 +158,7 @@ extension ConfigurationController {
         if let emu = emu {
 
             emu.powerOff()
-            emu.deleteRom(.VC1541)
+            emu.delete(.VC1541)
             refresh()
         }
     }

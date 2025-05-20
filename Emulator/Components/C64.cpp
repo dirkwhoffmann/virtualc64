@@ -490,80 +490,80 @@ C64::set(ConfigScheme model)
 
             case ConfigScheme::PAL:
 
-                set(Opt::VICII_REVISION, (i64)VICIIRev::PAL_6569_R3);
-                set(Opt::VICII_GRAY_DOT_BUG, false);
-                set(Opt::CIA_REVISION, (i64)CIARev::MOS_6526);
-                set(Opt::CIA_TIMER_B_BUG, true);
-                set(Opt::SID_REV, (i64)SIDRevision::MOS_6581);
-                set(Opt::SID_FILTER, true);
-                set(Opt::POWER_GRID, (i64)PowerGrid::STABLE_50HZ);
-                set(Opt::GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
-                set(Opt::MEM_INIT_PATTERN, RAM_PATTERN_VICE);
+                set(Opt::VICII_REVISION,        (i64)VICIIRev::PAL_6569_R3);
+                set(Opt::VICII_GRAY_DOT_BUG,    false);
+                set(Opt::CIA_REVISION,          (i64)CIARev::MOS_6526);
+                set(Opt::CIA_TIMER_B_BUG,       true);
+                set(Opt::SID_REV,               (i64)SIDRevision::MOS_6581);
+                set(Opt::SID_FILTER,            true);
+                set(Opt::POWER_GRID,            (i64)PowerGrid::STABLE_50HZ);
+                set(Opt::GLUE_LOGIC,            (i64)GlueLogic::DISCRETE);
+                set(Opt::MEM_INIT_PATTERN,      (i64)RamPattern::VICE);
                 break;
 
             case ConfigScheme::PAL_II:
 
-                set(Opt::VICII_REVISION, (i64)VICIIRev::PAL_8565);
-                set(Opt::VICII_GRAY_DOT_BUG, true);
-                set(Opt::CIA_REVISION, (i64)CIARev::MOS_8521);
-                set(Opt::CIA_TIMER_B_BUG, false);
-                set(Opt::SID_REV, (i64)SIDRevision::MOS_8580);
-                set(Opt::SID_FILTER, true);
-                set(Opt::POWER_GRID, (i64)PowerGrid::STABLE_50HZ);
-                set(Opt::GLUE_LOGIC, GLUE_LOGIC_IC);
-                set(Opt::MEM_INIT_PATTERN, RAM_PATTERN_VICE);
+                set(Opt::VICII_REVISION,        (i64)VICIIRev::PAL_8565);
+                set(Opt::VICII_GRAY_DOT_BUG,    true);
+                set(Opt::CIA_REVISION,          (i64)CIARev::MOS_8521);
+                set(Opt::CIA_TIMER_B_BUG,       false);
+                set(Opt::SID_REV,               (i64)SIDRevision::MOS_8580);
+                set(Opt::SID_FILTER,            true);
+                set(Opt::POWER_GRID,            (i64)PowerGrid::STABLE_50HZ);
+                set(Opt::GLUE_LOGIC,            (i64)GlueLogic::IC);
+                set(Opt::MEM_INIT_PATTERN,      (i64)RamPattern::VICE);
                 break;
 
             case ConfigScheme::PAL_OLD:
 
-                set(Opt::VICII_REVISION, (i64)VICIIRev::PAL_6569_R1);
-                set(Opt::VICII_GRAY_DOT_BUG, false);
-                set(Opt::CIA_REVISION, (i64)CIARev::MOS_6526);
-                set(Opt::CIA_TIMER_B_BUG, true);
-                set(Opt::SID_REV, (i64)SIDRevision::MOS_6581);
-                set(Opt::SID_FILTER, true);
-                set(Opt::POWER_GRID, (i64)PowerGrid::STABLE_50HZ);
-                set(Opt::GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
-                set(Opt::MEM_INIT_PATTERN, RAM_PATTERN_VICE);
+                set(Opt::VICII_REVISION,        (i64)VICIIRev::PAL_6569_R1);
+                set(Opt::VICII_GRAY_DOT_BUG,    false);
+                set(Opt::CIA_REVISION,          (i64)CIARev::MOS_6526);
+                set(Opt::CIA_TIMER_B_BUG,       true);
+                set(Opt::SID_REV,               (i64)SIDRevision::MOS_6581);
+                set(Opt::SID_FILTER,            true);
+                set(Opt::POWER_GRID,            (i64)PowerGrid::STABLE_50HZ);
+                set(Opt::GLUE_LOGIC,            (i64)GlueLogic::DISCRETE);
+                set(Opt::MEM_INIT_PATTERN,      (i64)RamPattern::VICE);
                 break;
 
             case ConfigScheme::NTSC:
 
-                set(Opt::VICII_REVISION, (i64)VICIIRev::NTSC_6567);
-                set(Opt::VICII_GRAY_DOT_BUG, false);
-                set(Opt::CIA_REVISION, (i64)CIARev::MOS_6526);
-                set(Opt::CIA_TIMER_B_BUG, false);
-                set(Opt::SID_REV, (i64)SIDRevision::MOS_6581);
-                set(Opt::SID_FILTER, true);
-                set(Opt::POWER_GRID, (i64)PowerGrid::STABLE_60HZ);
-                set(Opt::GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
-                set(Opt::MEM_INIT_PATTERN, RAM_PATTERN_VICE);
+                set(Opt::VICII_REVISION,        (i64)VICIIRev::NTSC_6567);
+                set(Opt::VICII_GRAY_DOT_BUG,    false);
+                set(Opt::CIA_REVISION,          (i64)CIARev::MOS_6526);
+                set(Opt::CIA_TIMER_B_BUG,       false);
+                set(Opt::SID_REV,               (i64)SIDRevision::MOS_6581);
+                set(Opt::SID_FILTER,            true);
+                set(Opt::POWER_GRID,            (i64)PowerGrid::STABLE_60HZ);
+                set(Opt::GLUE_LOGIC,            (i64)GlueLogic::DISCRETE);
+                set(Opt::MEM_INIT_PATTERN,      (i64)RamPattern::VICE);
                 break;
 
             case ConfigScheme::NTSC_II:
 
-                set(Opt::VICII_REVISION, (i64)VICIIRev::NTSC_8562);
-                set(Opt::VICII_GRAY_DOT_BUG, true);
-                set(Opt::CIA_REVISION, (i64)CIARev::MOS_8521);
-                set(Opt::CIA_TIMER_B_BUG, true);
-                set(Opt::SID_REV, (i64)SIDRevision::MOS_8580);
-                set(Opt::SID_FILTER, true);
-                set(Opt::POWER_GRID, (i64)PowerGrid::STABLE_60HZ);
-                set(Opt::GLUE_LOGIC, GLUE_LOGIC_IC);
-                set(Opt::MEM_INIT_PATTERN, RAM_PATTERN_VICE);
+                set(Opt::VICII_REVISION,        (i64)VICIIRev::NTSC_8562);
+                set(Opt::VICII_GRAY_DOT_BUG,    true);
+                set(Opt::CIA_REVISION,          (i64)CIARev::MOS_8521);
+                set(Opt::CIA_TIMER_B_BUG,       true);
+                set(Opt::SID_REV,               (i64)SIDRevision::MOS_8580);
+                set(Opt::SID_FILTER,            true);
+                set(Opt::POWER_GRID,            (i64)PowerGrid::STABLE_60HZ);
+                set(Opt::GLUE_LOGIC,            (i64)GlueLogic::IC);
+                set(Opt::MEM_INIT_PATTERN,      (i64)RamPattern::VICE);
                 break;
 
             case ConfigScheme::NTSC_OLD:
 
-                set(Opt::VICII_REVISION, (i64)VICIIRev::NTSC_6567_R56A);
-                set(Opt::VICII_GRAY_DOT_BUG, false);
-                set(Opt::CIA_REVISION, (i64)CIARev::MOS_6526);
-                set(Opt::CIA_TIMER_B_BUG, false);
-                set(Opt::SID_REV, (i64)SIDRevision::MOS_6581);
-                set(Opt::SID_FILTER, true);
-                set(Opt::POWER_GRID, (i64)PowerGrid::STABLE_60HZ);
-                set(Opt::GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
-                set(Opt::MEM_INIT_PATTERN, RAM_PATTERN_VICE);
+                set(Opt::VICII_REVISION,        (i64)VICIIRev::NTSC_6567_R56A);
+                set(Opt::VICII_GRAY_DOT_BUG,    false);
+                set(Opt::CIA_REVISION,          (i64)CIARev::MOS_6526);
+                set(Opt::CIA_TIMER_B_BUG,       false);
+                set(Opt::SID_REV,               (i64)SIDRevision::MOS_6581);
+                set(Opt::SID_FILTER,            true);
+                set(Opt::POWER_GRID,            (i64)PowerGrid::STABLE_60HZ);
+                set(Opt::GLUE_LOGIC,            (i64)GlueLogic::DISCRETE);
+                set(Opt::MEM_INIT_PATTERN,      (i64)RamPattern::VICE);
                 break;
 
             default:
@@ -933,15 +933,15 @@ C64::fastForward(isize frames)
 void
 C64::_isReady() const
 {
-    bool mega = hasMega65Rom(ROM_TYPE_BASIC) && hasMega65Rom(ROM_TYPE_KERNAL);
+    bool mega = hasMega65Rom(RomType::BASIC) && hasMega65Rom(RomType::KERNAL);
     
-    if (!hasRom(ROM_TYPE_BASIC)) {
+    if (!hasRom(RomType::BASIC)) {
         throw Error(Fault::ROM_BASIC_MISSING);
     }
-    if (!hasRom(ROM_TYPE_CHAR)) {
+    if (!hasRom(RomType::CHAR)) {
         throw Error(Fault::ROM_CHAR_MISSING);
     }
-    if (!hasRom(ROM_TYPE_KERNAL) || FORCE_ROM_MISSING) {
+    if (!hasRom(RomType::KERNAL) || FORCE_ROM_MISSING) {
         throw Error(Fault::ROM_KERNAL_MISSING);
     }
     if (FORCE_MEGA64_MISMATCH || (mega && string(mega65BasicRev()) != string(mega65KernalRev()))) {
@@ -1401,18 +1401,18 @@ C64::getRomTraits(RomType type) const
 
         switch (type) {
 
-            case ROM_TYPE_BASIC:
+            case RomType::BASIC:
 
                 result.subtitle = "Free Basic Replacement";
                 result.revision =  mega65BasicRev();
                 break;
 
-            case ROM_TYPE_CHAR:
+            case RomType::CHAR:
 
                 result.subtitle = "Free Charset Replacement";
                 break;
 
-            case ROM_TYPE_KERNAL:
+            case RomType::KERNAL:
 
                 result.subtitle = "Free Kernal Replacement";
                 result.revision = mega65KernalRev();
@@ -1433,10 +1433,10 @@ C64::romCRC32(RomType type) const
     
     switch (type) {
             
-        case ROM_TYPE_BASIC:  return util::crc32(mem.rom + 0xA000, 0x2000);
-        case ROM_TYPE_CHAR:   return util::crc32(mem.rom + 0xD000, 0x1000);
-        case ROM_TYPE_KERNAL: return util::crc32(mem.rom + 0xE000, 0x2000);
-        case ROM_TYPE_VC1541: return drive8.mem.romCRC32();
+        case RomType::BASIC:  return util::crc32(mem.rom + 0xA000, 0x2000);
+        case RomType::CHAR:   return util::crc32(mem.rom + 0xD000, 0x1000);
+        case RomType::KERNAL: return util::crc32(mem.rom + 0xE000, 0x2000);
+        case RomType::VC1541: return drive8.mem.romCRC32();
 
         default:
             fatalError;
@@ -1450,10 +1450,10 @@ C64::romFNV64(RomType type) const
     
     switch (type) {
             
-        case ROM_TYPE_BASIC:  return util::fnv64(mem.rom + 0xA000, 0x2000);
-        case ROM_TYPE_CHAR:   return util::fnv64(mem.rom + 0xD000, 0x1000);
-        case ROM_TYPE_KERNAL: return util::fnv64(mem.rom + 0xE000, 0x2000);
-        case ROM_TYPE_VC1541: return drive8.mem.romFNV64();
+        case RomType::BASIC:  return util::fnv64(mem.rom + 0xA000, 0x2000);
+        case RomType::CHAR:   return util::fnv64(mem.rom + 0xD000, 0x1000);
+        case RomType::KERNAL: return util::fnv64(mem.rom + 0xE000, 0x2000);
+        case RomType::VC1541: return drive8.mem.romFNV64();
 
         default:
             fatalError;
@@ -1465,19 +1465,19 @@ C64::hasRom(RomType type) const
 {
     switch (type) {
             
-        case ROM_TYPE_BASIC:
+        case RomType::BASIC:
 
             return (mem.rom[0xA000] | mem.rom[0xA001]) != 0x00;
 
-        case ROM_TYPE_CHAR:
+        case RomType::CHAR:
 
             return (mem.rom[0xD000] | mem.rom[0xD001]) != 0x00;
 
-        case ROM_TYPE_KERNAL:
+        case RomType::KERNAL:
 
             return (mem.rom[0xE000] | mem.rom[0xE001]) != 0x00;
 
-        case ROM_TYPE_VC1541:
+        case RomType::VC1541:
 
             assert(drive8.mem.hasRom() == drive9.mem.hasRom());
             return drive8.mem.hasRom();
@@ -1492,19 +1492,19 @@ C64::hasMega65Rom(RomType type) const
 {
     switch (type) {
             
-        case ROM_TYPE_BASIC:
+        case RomType::BASIC:
 
             return mem.rom[0xBF52] == 'O' && mem.rom[0xBF53] == 'R';
 
-        case ROM_TYPE_CHAR:
+        case RomType::CHAR:
 
-            return getRomTraits(romFNV64(ROM_TYPE_CHAR)).vendor == ROM_VENDOR_MEGA65;
+            return getRomTraits(romFNV64(RomType::CHAR)).vendor == ROM_VENDOR_MEGA65;
 
-        case ROM_TYPE_KERNAL:
+        case RomType::KERNAL:
 
             return mem.rom[0xE4B9] == 'O' && mem.rom[0xE4BA] == 'R';
 
-        case ROM_TYPE_VC1541:
+        case RomType::VC1541:
 
             return false;
 
@@ -1519,7 +1519,7 @@ C64::mega65BasicRev() const
     static char rev[17];
     rev[0] = 0;
     
-    if (hasMega65Rom(ROM_TYPE_BASIC)) std::memcpy(rev, &mem.rom[0xBF55], 16);
+    if (hasMega65Rom(RomType::BASIC)) std::memcpy(rev, &mem.rom[0xBF55], 16);
     rev[16] = 0;
     
     return rev;
@@ -1531,7 +1531,7 @@ C64::mega65KernalRev() const
     static char rev[17];
     rev[0] = 0;
     
-    if (hasMega65Rom(ROM_TYPE_KERNAL)) std::memcpy(rev, &mem.rom[0xE4BC], 16);
+    if (hasMega65Rom(RomType::KERNAL)) std::memcpy(rev, &mem.rom[0xE4BC], 16);
     rev[16] = 0;
     
     return rev;
@@ -1553,7 +1553,7 @@ C64::loadRom(const MediaFile &file)
             
             file.flash(mem.rom, 0xA000);
             debug(MEM_DEBUG, "Basic Rom flashed\n");
-            debug(MEM_DEBUG, "hasMega65Rom() = %d\n", hasMega65Rom(ROM_TYPE_BASIC));
+            debug(MEM_DEBUG, "hasMega65Rom() = %d\n", hasMega65Rom(RomType::BASIC));
             debug(MEM_DEBUG, "mega65BasicRev() = %s\n", mega65BasicRev());
             break;
             
@@ -1567,7 +1567,7 @@ C64::loadRom(const MediaFile &file)
             
             file.flash(mem.rom, 0xE000);
             debug(MEM_DEBUG, "Kernal Rom flashed\n");
-            debug(MEM_DEBUG, "hasMega65Rom() = %d\n", hasMega65Rom(ROM_TYPE_KERNAL));
+            debug(MEM_DEBUG, "hasMega65Rom() = %d\n", hasMega65Rom(RomType::KERNAL));
             debug(MEM_DEBUG, "mega65KernalRev() = %s\n", mega65KernalRev());
             break;
             
@@ -1591,22 +1591,22 @@ C64::deleteRom(RomType type)
 
         switch (type) {
 
-            case ROM_TYPE_BASIC:
+            case RomType::BASIC:
 
                 memset(mem.rom + 0xA000, 0, 0x2000);
                 break;
 
-            case ROM_TYPE_CHAR:
+            case RomType::CHAR:
 
                 memset(mem.rom + 0xD000, 0, 0x1000);
                 break;
 
-            case ROM_TYPE_KERNAL:
+            case RomType::KERNAL:
 
                 memset(mem.rom + 0xE000, 0, 0x2000);
                 break;
 
-            case ROM_TYPE_VC1541:
+            case RomType::VC1541:
 
                 drive8.mem.deleteRom();
                 drive9.mem.deleteRom();
@@ -1623,10 +1623,10 @@ C64::deleteRoms()
 {
     {   SUSPENDED
 
-        deleteRom(ROM_TYPE_BASIC);
-        deleteRom(ROM_TYPE_KERNAL);
-        deleteRom(ROM_TYPE_CHAR);
-        deleteRom(ROM_TYPE_VC1541);
+        deleteRom(RomType::BASIC);
+        deleteRom(RomType::KERNAL);
+        deleteRom(RomType::CHAR);
+        deleteRom(RomType::VC1541);
     }
 }
 
@@ -1635,33 +1635,33 @@ C64::saveRom(RomType type, const fs::path &path)
 {
     switch (type) {
             
-        case ROM_TYPE_BASIC:
+        case RomType::BASIC:
 
-            if (hasRom(ROM_TYPE_BASIC)) {
+            if (hasRom(RomType::BASIC)) {
                 RomFile file(mem.rom + 0xA000, 0x2000);
                 file.writeToFile(path);
             }
             break;
 
-        case ROM_TYPE_CHAR:
+        case RomType::CHAR:
 
-            if (hasRom(ROM_TYPE_CHAR)) {
+            if (hasRom(RomType::CHAR)) {
                 RomFile file(mem.rom + 0xD000, 0x1000);
                 file.writeToFile(path);
             }
             break;
 
-        case ROM_TYPE_KERNAL:
+        case RomType::KERNAL:
 
-            if (hasRom(ROM_TYPE_KERNAL)) {
+            if (hasRom(RomType::KERNAL)) {
                 RomFile file(mem.rom + 0xE000, 0x2000);
                 file.writeToFile(path);
             }
             break;
 
-        case ROM_TYPE_VC1541:
+        case RomType::VC1541:
 
-            if (hasRom(ROM_TYPE_VC1541)) {
+            if (hasRom(RomType::VC1541)) {
                 drive8.mem.saveRom(path);
             }
             break;
@@ -1676,9 +1676,9 @@ C64::installOpenRoms()
 {
     {   SUSPENDED
 
-        installOpenRom(ROM_TYPE_BASIC);
-        installOpenRom(ROM_TYPE_KERNAL);
-        installOpenRom(ROM_TYPE_CHAR);
+        installOpenRom(RomType::BASIC);
+        installOpenRom(RomType::KERNAL);
+        installOpenRom(RomType::CHAR);
     }
 }
 
@@ -1689,19 +1689,19 @@ C64::installOpenRom(RomType type)
 
         switch (type) {
 
-            case ROM_TYPE_BASIC:
+            case RomType::BASIC:
 
                 assert(sizeof(basic_generic) == 0x2000);
                 memcpy(mem.rom + 0xA000, basic_generic, 0x2000);
                 break;
 
-            case ROM_TYPE_CHAR:
+            case RomType::CHAR:
 
                 assert(sizeof(chargen_openroms) == 0x1000);
                 memcpy(mem.rom + 0xD000, chargen_openroms, 0x1000);
                 break;
 
-            case ROM_TYPE_KERNAL:
+            case RomType::KERNAL:
 
                 assert(sizeof(kernel_generic) == 0x2000);
                 memcpy(mem.rom + 0xE000, kernel_generic, 0x2000);

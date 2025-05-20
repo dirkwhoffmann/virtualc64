@@ -23,34 +23,37 @@ namespace vc64 {
 //
 
 /// DMA debugger display mode
-enum_long(DMA_DISPLAY_MODE)
+enum class DmaDisplayMode : long
 {
-    DMA_DISPLAY_MODE_FG_LAYER,          ///< Modulate the foreground layer
-    DMA_DISPLAY_MODE_BG_LAYER,          ///< Modulate the background layer
-    DMA_DISPLAY_MODE_ODD_EVEN_LAYERS    ///< Modulate both layers
+    FG_LAYER,
+    BG_LAYER,
+    ODD_EVEN_LAYERS
 };
-typedef DMA_DISPLAY_MODE DmaDisplayMode;
 
 struct DmaDisplayModeEnum : util::Reflection<DmaDisplayModeEnum, DmaDisplayMode> {
     
     static constexpr long minVal = 0;
-    static constexpr long maxVal = DMA_DISPLAY_MODE_ODD_EVEN_LAYERS;
+    static constexpr long maxVal = long(DmaDisplayMode::ODD_EVEN_LAYERS);
     
-    static const char *prefix() { return "DMA_DISPLAY_MODE"; }
-    static const char *_key(long value)
+    static const char *_key(DmaDisplayMode value)
     {
         switch (value) {
                 
-            case DMA_DISPLAY_MODE_FG_LAYER:         return "FG_LAYER";
-            case DMA_DISPLAY_MODE_BG_LAYER:         return "BG_LAYER";
-            case DMA_DISPLAY_MODE_ODD_EVEN_LAYERS:  return "ODD_EVEN_LAYERS";
+            case DmaDisplayMode::FG_LAYER:        return "FG_LAYER";
+            case DmaDisplayMode::BG_LAYER:        return "BG_LAYER";
+            case DmaDisplayMode::ODD_EVEN_LAYERS: return "ODD_EVEN_LAYERS";
         }
         return "???";
     }
-    
     static const char *help(DmaDisplayMode value)
     {
-        return "";
+        switch (value) {
+                
+            case DmaDisplayMode::FG_LAYER:        return "Foreground layer";
+            case DmaDisplayMode::BG_LAYER:        return "Background layer";
+            case DmaDisplayMode::ODD_EVEN_LAYERS: return "Mixed layers";
+        }
+        return "???";
     }
 };
 

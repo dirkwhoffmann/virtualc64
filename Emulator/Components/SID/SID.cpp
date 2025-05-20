@@ -101,7 +101,7 @@ SID::powerSave() const
          * skip sample synthesis if SAMPLE_FAST and MOS8580 are selected both.
          * As a workaround, we ignore the power-saving setting in this case.
          */
-        return config.revision != SIDRevision::MOS_8580 || config.sampling != SAMPLING_FAST;
+        return config.revision != SIDRevision::MOS_8580 || config.sampling != SamplingMethod::FAST;
     }
 
     return false;

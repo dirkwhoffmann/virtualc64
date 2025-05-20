@@ -70,7 +70,7 @@ DmaDebugger::computeOverlay(u32 *emuTexture, u32 *dmaTexture)
         
         switch (config.dmaDisplayMode) {
                 
-            case DMA_DISPLAY_MODE_FG_LAYER:
+            case DmaDisplayMode::FG_LAYER:
                 
                 for (isize y = 0; y < Texture::height; y++) {
                     
@@ -89,7 +89,7 @@ DmaDebugger::computeOverlay(u32 *emuTexture, u32 *dmaTexture)
                 }
                 break;
                 
-            case DMA_DISPLAY_MODE_BG_LAYER:
+            case DmaDisplayMode::BG_LAYER:
                 
                 for (isize y = 0; y < Texture::height; y++) {
                     
@@ -109,7 +109,7 @@ DmaDebugger::computeOverlay(u32 *emuTexture, u32 *dmaTexture)
                 }
                 break;
                 
-            case DMA_DISPLAY_MODE_ODD_EVEN_LAYERS:
+            case DmaDisplayMode::ODD_EVEN_LAYERS:
                 
                 for (isize y = 0; y < Texture::height; y++) {
                     
