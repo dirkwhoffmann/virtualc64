@@ -38,7 +38,7 @@
 #include "MsgQueueTypes.h"
 #include "OptionTypes.h"
 #include "PaddleTypes.h"
-#include "ParCableTypes.h"
+#include "ParallelCableTypes.h"
 #include "PowerPortTypes.h"
 #include "RecorderTypes.h"
 #include "RemoteManagerTypes.h"

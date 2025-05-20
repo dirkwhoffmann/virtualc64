@@ -136,27 +136,25 @@ struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
     }
 };
 
-enum_long(ROM_VENDOR)
+enum class RomVendor
 {
-    ROM_VENDOR_COMMODORE,
-    ROM_VENDOR_MEGA65,
-    ROM_VENDOR_OTHER
+    COMMODORE,
+    MEGA65,
+    OTHER
 };
-typedef ROM_VENDOR RomVendor;
 
 struct RomVendorEnum : util::Reflection<RomVendorEnum, RomVendor> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = ROM_VENDOR_OTHER;
+    static constexpr long maxVal = long(RomVendor::OTHER);
 
-    static const char *prefix() { return "ROM_VENDOR"; }
-    static const char *_key(long value)
+    static const char *_key(RomVendor value)
     {
         switch (value) {
 
-            case ROM_VENDOR_COMMODORE:  return "COMMODORE";
-            case ROM_VENDOR_MEGA65:     return "MEGA65";
-            case ROM_VENDOR_OTHER:      return "OTHER";
+            case RomVendor::COMMODORE:  return "COMMODORE";
+            case RomVendor::MEGA65:     return "MEGA65";
+            case RomVendor::OTHER:      return "OTHER";
         }
         return "???";
     }

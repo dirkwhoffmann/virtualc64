@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "ParCableTypes.h"
+#include "ParallelCableTypes.h"
 #include "DriveTypes.h"
 #include "SubComponent.h"
 

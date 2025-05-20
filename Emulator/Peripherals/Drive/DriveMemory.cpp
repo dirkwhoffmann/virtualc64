@@ -310,7 +310,7 @@ DriveMemory::updateBankMap()
     }
     
     // Map the PIA (Dolphin DOS 3) $5000 - $5FFF
-    if (config.parCable == PAR_CABLE_DOLPHIN3) {
+    if (config.parCable == ParCableType::DOLPHIN3) {
         
         for (isize i = 20; i < 24; i++) usage[i] = DRVMEM_PIA;
     }

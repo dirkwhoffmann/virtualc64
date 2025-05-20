@@ -22,23 +22,22 @@ namespace vc64 {
 //
 
 /// Datasette model
-enum_long(DATASETTE_MODEL)
+enum class DatasetteModel
 {
-    DATASETTE_C1530     ///< Standard datasette (Commodore)
+    C1530     ///< Standard datasette (Commodore)
 };
-typedef DATASETTE_MODEL DatasetteModel;
 
 struct DatasetteModelEnum : util::Reflection<DatasetteModelEnum, DatasetteModel> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = DATASETTE_C1530;
+    static constexpr long maxVal = long(DatasetteModel::C1530);
 
     static const char *prefix() { return "DATASETTE"; }
-    static const char *_key(long value)
+    static const char *_key(DatasetteModel value)
     {
         switch (value) {
 
-            case DATASETTE_C1530:  return "C1530";
+            case DatasetteModel::C1530:  return "C1530";
         }
         return "???";
     }

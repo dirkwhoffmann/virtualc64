@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "PIA.h"
-#include "ParCable.h"
+#include "ParallelCable.h"
 #include "Drive.h"
 
 namespace vc64 {
@@ -392,7 +392,7 @@ PiaDolphin::updatePA()
 {
     switch (drive.getParCableType()) {
             
-        case PAR_CABLE_DOLPHIN3:
+        case ParCableType::DOLPHIN3:
             
             pa = parCable.getValue();
             break;

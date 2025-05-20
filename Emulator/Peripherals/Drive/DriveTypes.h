@@ -14,7 +14,7 @@
 #pragma once
 
 #include "Reflection.h"
-#include "ParCableTypes.h"
+#include "ParallelCableTypes.h"
 
 namespace vc64 {
 

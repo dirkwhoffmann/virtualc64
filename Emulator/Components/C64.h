@@ -39,7 +39,7 @@
 
 // Peripherals
 #include "Drive.h"
-#include "ParCable.h"
+#include "ParallelCable.h"
 #include "Datasette.h"
 #include "Mouse.h"
 #include "Monitor.h"

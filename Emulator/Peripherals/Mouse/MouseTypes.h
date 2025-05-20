@@ -22,33 +22,31 @@ namespace vc64 {
 //
 
 /// Mouse model
-enum_long(MOUSE_MODEL)
+enum class MouseModel : long
 {
-    MOUSE_C1350,    ///< Joystick mouse (Commodore)
-    MOUSE_C1351,    ///< Analog mouse (Commodore)
-    MOUSE_NEOS,     ///< Analog mouse (Neos)
-    MOUSE_PADDLE_X, ///< Paddle (POTX)
-    MOUSE_PADDLE_Y, ///< Paddle (POTY)
-    MOUSE_PADDLE_XY ///< Paddle (POTX + POTX)
+    C1350,    ///< Joystick mouse (Commodore)
+    C1351,    ///< Analog mouse (Commodore)
+    NEOS,     ///< Analog mouse (Neos)
+    PADDLE_X, ///< Paddle (POTX)
+    PADDLE_Y, ///< Paddle (POTY)
+    PADDLE_XY ///< Paddle (POTX + POTX)
 };
-typedef MOUSE_MODEL MouseModel;
 
 struct MouseModelEnum : util::Reflection<MouseModelEnum, MouseModel> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = MOUSE_PADDLE_XY;
+    static constexpr long maxVal = long(MouseModel::PADDLE_XY);
 
-    static const char *prefix() { return "MOUSE"; }
-    static const char *_key(long value)
+    static const char *_key(MouseModel value)
     {
         switch (value) {
 
-            case MOUSE_C1350:       return "C1350";
-            case MOUSE_C1351:       return "C1351";
-            case MOUSE_NEOS:        return "NEOS";
-            case MOUSE_PADDLE_X:    return "PADDLE_X";
-            case MOUSE_PADDLE_Y:    return "PADDLE_Y";
-            case MOUSE_PADDLE_XY:   return "PADDLE_XY";
+            case MouseModel::C1350:       return "C1350";
+            case MouseModel::C1351:       return "C1351";
+            case MouseModel::NEOS:        return "NEOS";
+            case MouseModel::PADDLE_X:    return "PADDLE_X";
+            case MouseModel::PADDLE_Y:    return "PADDLE_Y";
+            case MouseModel::PADDLE_XY:   return "PADDLE_XY";
         }
         return "???";
     }

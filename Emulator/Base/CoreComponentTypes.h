@@ -57,7 +57,7 @@ enum class Class : long
     Monitor,
     Mouse,
     Paddle,
-    ParCable
+    ParallelCable
 };
 
 }

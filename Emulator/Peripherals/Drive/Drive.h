@@ -421,7 +421,7 @@ public:
     // Convenience wrappers
     bool isDrive8() { return objid == DRIVE8; }
     bool isDrive9() { return objid == DRIVE9; }
-    bool hasParCable() { return config.parCable != PAR_CABLE_NONE; }
+    bool hasParCable() { return config.parCable != ParCableType::NONE; }
     ParCableType getParCableType() const { return config.parCable; }
 
     // Checks whether the drive is ready to be connected

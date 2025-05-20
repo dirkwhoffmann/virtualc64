@@ -19,9 +19,9 @@ namespace vc64 {
 #define CHAR        RomType::CHAR
 #define VC1541      RomType::VC1541
 
-#define COMMODORE   ROM_VENDOR_COMMODORE
-#define MEGA65      ROM_VENDOR_MEGA65
-#define OTHER       ROM_VENDOR_OTHER
+#define COMMODORE   RomVendor::COMMODORE
+#define MEGA65      RomVendor::MEGA65
+#define OTHER       RomVendor::OTHER
 
 static std::vector<RomTraits> roms = {
 

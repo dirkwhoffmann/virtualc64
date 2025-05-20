@@ -132,7 +132,7 @@ Defaults::Defaults()
     setFallback(Opt::DRV_TYPE,                   DRIVE_VC1541II,     {DRIVE8, DRIVE9});
     setFallback(Opt::DRV_RAM,                    DRVRAM_NONE,        {DRIVE8, DRIVE9});
     setFallback(Opt::DRV_SAVE_ROMS,              true,               {DRIVE8, DRIVE9});
-    setFallback(Opt::DRV_PARCABLE,               PAR_CABLE_NONE,     {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_PARCABLE,               (i64)ParCableType::NONE,{DRIVE8, DRIVE9});
     setFallback(Opt::DRV_CONNECT,                true,               {DRIVE8});
     setFallback(Opt::DRV_CONNECT,                false,              {DRIVE9});
     setFallback(Opt::DRV_POWER_SWITCH,           true,               {DRIVE8});
@@ -147,10 +147,10 @@ Defaults::Defaults()
     setFallback(Opt::DRV_INSERT_VOL,             50,                 {DRIVE8, DRIVE9});
     setFallback(Opt::DRV_EJECT_VOL,              50,                 {DRIVE8, DRIVE9});
 
-    setFallback(Opt::DAT_MODEL,                  DATASETTE_C1530);
+    setFallback(Opt::DAT_MODEL,                  (i64)DatasetteModel::C1530);
     setFallback(Opt::DAT_CONNECT,                true);
 
-    setFallback(Opt::MOUSE_MODEL,                MOUSE_C1350);
+    setFallback(Opt::MOUSE_MODEL,                (i64)MouseModel::C1350);
     setFallback(Opt::MOUSE_SHAKE_DETECT,         true);
     setFallback(Opt::MOUSE_VELOCITY,             100);
 

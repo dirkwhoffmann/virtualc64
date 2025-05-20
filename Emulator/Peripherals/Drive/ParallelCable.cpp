@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "ParCable.h"
+#include "ParallelCable.h"
 #include "C64.h"
 #include "IOUtils.h"
 
@@ -40,14 +40,14 @@ ParCable::getValue() const
 
     switch (drive8.getParCableType()) {
             
-        case PAR_CABLE_STANDARD: result &= getVIA(drive8); break;
-        case PAR_CABLE_DOLPHIN3: result &= getPIA(drive8); break;
+        case ParCableType::STANDARD: result &= getVIA(drive8); break;
+        case ParCableType::DOLPHIN3: result &= getPIA(drive8); break;
         default: break;
     }
     switch (drive9.getParCableType()) {
             
-        case PAR_CABLE_STANDARD: result &= getVIA(drive9); break;
-        case PAR_CABLE_DOLPHIN3: result &= getPIA(drive9); break;
+        case ParCableType::STANDARD: result &= getVIA(drive9); break;
+        case ParCableType::DOLPHIN3: result &= getPIA(drive9); break;
         default: break;
     }
 
@@ -75,12 +75,12 @@ ParCable::c64Handshake(Drive &drive)
     
     switch (drive.getParCableType()) {
             
-        case PAR_CABLE_STANDARD:
+        case ParCableType::STANDARD:
             
             drive.via1.setInterruptFlag_CB1();
             break;
             
-        case PAR_CABLE_DOLPHIN3:
+        case ParCableType::DOLPHIN3:
             
             drive.pia.pulseCA1External();
             break;

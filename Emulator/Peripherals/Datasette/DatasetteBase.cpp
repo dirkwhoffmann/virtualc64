@@ -165,8 +165,8 @@ Datasette::getOption(Opt option) const
 {
     switch (option) {
 
-        case Opt::DAT_MODEL:     return config.model;
-        case Opt::DAT_CONNECT:   return config.connected;
+        case Opt::DAT_MODEL:     return (i64)config.model;
+        case Opt::DAT_CONNECT:   return (i64)config.connected;
 
         default:
             fatalError;

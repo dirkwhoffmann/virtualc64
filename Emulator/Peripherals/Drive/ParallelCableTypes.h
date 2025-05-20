@@ -22,27 +22,25 @@ namespace vc64 {
 //
 
 /// Parallel cable type
-enum_long(PAR_CABLE_TYPE)
+enum ParCableType : long
 {
-    PAR_CABLE_NONE,         ///< No parallel cable attached
-    PAR_CABLE_STANDARD,     ///< Standard parallel cable
-    PAR_CABLE_DOLPHIN3      ///< DolphinDOS cable
+    NONE,         ///< No parallel cable attached
+    STANDARD,     ///< Standard parallel cable
+    DOLPHIN3      ///< DolphinDOS cable
 };
-typedef PAR_CABLE_TYPE ParCableType;
 
 struct ParCableTypeEnum : util::Reflection<ParCableTypeEnum, ParCableType> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = PAR_CABLE_DOLPHIN3;
+    static constexpr long maxVal = long(ParCableType::DOLPHIN3);
 
-    static const char *prefix() { return "PAR_CABLE"; }
-    static const char *_key(long value)
+    static const char *_key(ParCableType value)
     {
         switch (value) {
 
-            case PAR_CABLE_NONE:     return "PAR_CABLE_NONE";
-            case PAR_CABLE_STANDARD: return "PAR_CABLE_STANDARD";
-            case PAR_CABLE_DOLPHIN3: return "PAR_CABLE_DOLPHIN3";
+            case ParCableType::NONE:     return "NONE";
+            case ParCableType::STANDARD: return "STANDARD";
+            case ParCableType::DOLPHIN3: return "DOLPHIN3";
         }
         return "???";
     }

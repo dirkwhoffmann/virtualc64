@@ -1381,7 +1381,7 @@ C64::getRomTraits(u64 fnv)
         .title = "Unknown ROM",
         .subtitle = "",
         .revision = "",
-        .vendor = ROM_VENDOR_OTHER
+        .vendor = RomVendor::OTHER
     };
 }
 
@@ -1396,7 +1396,7 @@ C64::getRomTraits(RomType type) const
     if (hasMega65Rom(type)) {
 
         result.title = "M.E.G.A. C64 OpenROM";
-        result.vendor = ROM_VENDOR_MEGA65;
+        result.vendor = RomVendor::MEGA65;
         result.patched = false;
 
         switch (type) {
@@ -1498,7 +1498,7 @@ C64::hasMega65Rom(RomType type) const
 
         case RomType::CHAR:
 
-            return getRomTraits(romFNV64(RomType::CHAR)).vendor == ROM_VENDOR_MEGA65;
+            return getRomTraits(romFNV64(RomType::CHAR)).vendor == RomVendor::MEGA65;
 
         case RomType::KERNAL:
 

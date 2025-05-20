@@ -906,7 +906,7 @@ VIA1::peekORA(bool handshake)
     // Signal a handshake if a parallel cable is attached
     switch (drive.getParCableType()) {
             
-        case PAR_CABLE_STANDARD:
+        case ParCableType::STANDARD:
 
             if (handshake && ca2Control() == 5) parCable.driveHandshake();
             break;
@@ -926,7 +926,7 @@ VIA1::pokeORA(u8 value, bool handshake)
     // Signal a handshake if a parallel cable is attached
     switch (drive.getParCableType()) {
             
-        case PAR_CABLE_STANDARD:
+        case ParCableType::STANDARD:
 
             if (handshake && ca2Control() == 5) parCable.driveHandshake();
             break;
@@ -975,7 +975,7 @@ VIA1::updatePA()
 {
     switch (drive.getParCableType()) {
             
-        case PAR_CABLE_STANDARD:
+        case ParCableType::STANDARD:
             
             pa = parCable.getValue();
             break;

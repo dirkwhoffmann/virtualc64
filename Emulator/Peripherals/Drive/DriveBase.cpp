@@ -372,7 +372,7 @@ Drive::autoConfigure()
             debug(CNF_DEBUG, "autoConfigure: VC1541C\n");
             setOption(Opt::DRV_TYPE, DRIVE_VC1541C);
             setOption(Opt::DRV_RAM, DRVRAM_NONE);
-            setOption(Opt::DRV_PARCABLE, PAR_CABLE_NONE);
+            setOption(Opt::DRV_PARCABLE, ParCableType::NONE);
             break;
 
         case 0x44BBA0EAC5898597: // VC1541_II_1987
@@ -385,7 +385,7 @@ Drive::autoConfigure()
             debug(CNF_DEBUG, "autoConfigure: VC1541 II\n");
             setOption(Opt::DRV_TYPE, DRIVE_VC1541II);
             setOption(Opt::DRV_RAM, DRVRAM_NONE);
-            setOption(Opt::DRV_PARCABLE, PAR_CABLE_NONE);
+            setOption(Opt::DRV_PARCABLE, ParCableType::NONE);
             break;
 
         case 0xC50EAFCBA50C4B63: // VC1541_SPEEDDOS_PLUS
@@ -394,7 +394,7 @@ Drive::autoConfigure()
             debug(CNF_DEBUG, "autoConfigure: VC1541 SpeedDOS\n");
             setOption(Opt::DRV_TYPE, DRIVE_VC1541II);
             setOption(Opt::DRV_RAM, DRVRAM_NONE);
-            setOption(Opt::DRV_PARCABLE, PAR_CABLE_STANDARD);
+            setOption(Opt::DRV_PARCABLE, ParCableType::STANDARD);
             break;
 
         case 0x28CD4E47A40C41CA: // VC1541_DOLPHIN_20
@@ -403,7 +403,7 @@ Drive::autoConfigure()
             debug(CNF_DEBUG, "autoConfig: Dolphin DOS\n");
             setOption(Opt::DRV_TYPE, DRIVE_VC1541II);
             setOption(Opt::DRV_RAM, DRVRAM_8000_9FFF);
-            setOption(Opt::DRV_PARCABLE, PAR_CABLE_STANDARD);
+            setOption(Opt::DRV_PARCABLE, ParCableType::STANDARD);
             break;
 
         case 0x09D8FBAB61E59FF0: // VC1541_DOLPHIN_30
@@ -412,7 +412,7 @@ Drive::autoConfigure()
             debug(CNF_DEBUG, "autoConfig: Dolphin DOS 3\n");
             setOption(Opt::DRV_TYPE, DRIVE_VC1541II);
             setOption(Opt::DRV_RAM, DRVRAM_6000_7FFF);
-            setOption(Opt::DRV_PARCABLE, PAR_CABLE_DOLPHIN3);
+            setOption(Opt::DRV_PARCABLE, ParCableType::DOLPHIN3);
             break;
 
         default:
