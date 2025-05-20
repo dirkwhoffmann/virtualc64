@@ -22,49 +22,46 @@ namespace vc64 {
 //
 
 /// RetroShell special key
-enum_long(RSKEY_KEY)
+enum class RetroShellKey
 {
-    RSKEY_UP,
-    RSKEY_DOWN,
-    RSKEY_LEFT,
-    RSKEY_RIGHT,
-    RSKEY_DEL,
-    RSKEY_CUT,
-    RSKEY_BACKSPACE,
-    RSKEY_HOME,
-    RSKEY_END,
-    RSKEY_TAB,
-    RSKEY_RETURN,
-    RSKEY_CR
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT,
+    DEL,
+    CUT,
+    BACKSPACE,
+    HOME,
+    END,
+    TAB,
+    RETURN,
+    CR
 };
-typedef RSKEY_KEY RetroShellKey;
 
 struct RetroShellKeyEnum : util::Reflection<RetroShellKeyEnum, RetroShellKey>
 {
     static constexpr long minVal = 0;
-    static constexpr long maxVal = RSKEY_CR;
-
-    static const char *prefix() { return "RSKEY"; }
-    static const char *_key(long value)
+    static constexpr long maxVal = long(RetroShellKey::CR);
+    
+    static const char *_key(RetroShellKey value)
     {
         switch (value) {
-
-            case RSKEY_UP:              return "UP";
-            case RSKEY_DOWN:            return "DOWN";
-            case RSKEY_LEFT:            return "LEFT";
-            case RSKEY_RIGHT:           return "RIGHT";
-            case RSKEY_DEL:             return "DEL";
-            case RSKEY_CUT:             return "CUT";
-            case RSKEY_BACKSPACE:       return "BACKSPACE";
-            case RSKEY_HOME:            return "HOME";
-            case RSKEY_END:             return "END";
-            case RSKEY_TAB:             return "TAB";
-            case RSKEY_RETURN:          return "RETURN";
-            case RSKEY_CR:              return "CR";
+                
+            case RetroShellKey::UP:          return "UP";
+            case RetroShellKey::DOWN:        return "DOWN";
+            case RetroShellKey::LEFT:        return "LEFT";
+            case RetroShellKey::RIGHT:       return "RIGHT";
+            case RetroShellKey::DEL:         return "DEL";
+            case RetroShellKey::CUT:         return "CUT";
+            case RetroShellKey::BACKSPACE:   return "BACKSPACE";
+            case RetroShellKey::HOME:        return "HOME";
+            case RetroShellKey::END:         return "END";
+            case RetroShellKey::TAB:         return "TAB";
+            case RetroShellKey::RETURN:      return "RETURN";
+            case RetroShellKey::CR:          return "CR";
         }
         return "???";
     }
-    
     static const char *help(RetroShellKey value)
     {
         return "";

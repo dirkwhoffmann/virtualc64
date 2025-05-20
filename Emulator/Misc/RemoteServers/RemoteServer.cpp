@@ -67,10 +67,10 @@ RemoteServer::getOption(Opt option) const
 {
     switch (option) {
             
-        case Opt::SRV_PORT: return config.port;
-        case Opt::SRV_PROTOCOL: return config.protocol;
-        case Opt::SRV_AUTORUN: return config.autoRun;
-        case Opt::SRV_VERBOSE: return config.verbose;
+        case Opt::SRV_PORT:     return (i64)config.port;
+        case Opt::SRV_PROTOCOL: return (i64)config.protocol;
+        case Opt::SRV_AUTORUN:  return (i64)config.autoRun;
+        case Opt::SRV_VERBOSE:  return (i64)config.verbose;
 
         default:
             fatalError;
@@ -142,7 +142,7 @@ RemoteServer::_start()
     if (isOff()) {
         
         debug(SRV_DEBUG, "Starting server...\n");
-        switchState(SRV_STATE_STARTING);
+        switchState(SrvState::STARTING);
         
         // Make sure we continue with a terminated server thread
         if (serverThread.joinable()) serverThread.join();
@@ -158,7 +158,7 @@ RemoteServer::_stop()
     if (!isOff()) {
         
         debug(SRV_DEBUG, "Stopping server...\n");
-        switchState(SRV_STATE_STOPPING);
+        switchState(SrvState::STOPPING);
         
         // Interrupt the server thread
         _disconnect();
@@ -166,7 +166,7 @@ RemoteServer::_stop()
         // Wait until the server thread has terminated
         if (serverThread.joinable()) serverThread.join();
         
-        switchState(SRV_STATE_OFF);
+        switchState(SrvState::OFF);
     }
 }
 
@@ -197,7 +197,7 @@ RemoteServer::switchState(SrvState newState)
         didSwitch(oldState, newState);
         
         // Inform the GUI
-        msgQueue.put(Msg::SRV_STATE, newState);
+        msgQueue.put(Msg::SRV_STATE, (i64)newState);
     }
 }
 
@@ -276,7 +276,7 @@ RemoteServer::main()
 void
 RemoteServer::mainLoop()
 {
-    switchState(SRV_STATE_LISTENING);
+    switchState(SrvState::LISTENING);
 
     while (isListening()) {
         
@@ -316,13 +316,13 @@ RemoteServer::mainLoop()
         }
     }
     
-    switchState(SRV_STATE_OFF);
+    switchState(SrvState::OFF);
 }
 
 void
 RemoteServer::sessionLoop()
 {
-    switchState(SRV_STATE_CONNECTED);
+    switchState(SrvState::CONNECTED);
     
     numReceived = 0;
     numSent = 0;
@@ -340,7 +340,7 @@ RemoteServer::sessionLoop()
         if (!isStopping()) {
             
             handleError(err.what());
-            switchState(SRV_STATE_LISTENING);
+            switchState(SrvState::LISTENING);
         }
     }
 
@@ -353,23 +353,23 @@ RemoteServer::sessionLoop()
 void
 RemoteServer::handleError(const char *description)
 {
-    switchState(SRV_STATE_ERROR);
+    switchState(SrvState::INVALID);
     retroShell << "Server Error: " << string(description) << '\n';
 }
 
 void
 RemoteServer::didSwitch(SrvState from, SrvState to)
 {
-    if (from == SRV_STATE_STARTING && to == SRV_STATE_LISTENING) {
+    if (from == SrvState::STARTING && to == SrvState::LISTENING) {
         didStart();
     }
-    if (to == SRV_STATE_OFF) {
+    if (to == SrvState::OFF) {
         didStop();
     }
-    if (to == SRV_STATE_CONNECTED) {
+    if (to == SrvState::CONNECTED) {
         didConnect();
     }
-    if (from == SRV_STATE_CONNECTED) {
+    if (from == SrvState::CONNECTED) {
         didDisconnect();
     }
 }

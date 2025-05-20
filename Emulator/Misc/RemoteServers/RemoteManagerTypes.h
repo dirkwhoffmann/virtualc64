@@ -20,34 +20,33 @@ namespace vc64 {
 // Enumerations
 //
 
-enum_long(SERVER_TYPE)
+enum class ServerType : long
 {
-    SERVER_RSH
+    RSH
 };
-typedef SERVER_TYPE ServerType;
 
-#ifdef __cplusplus
 struct ServerTypeEnum : util::Reflection<ServerTypeEnum, ServerType>
 {
     static constexpr long minVal = 0;
-    static constexpr long maxVal = SERVER_RSH;
-
-    static const char *prefix() { return "SERVER"; }
-    static const char *_key(long value)
+    static constexpr long maxVal = long(ServerType::RSH);
+    
+    static const char *_key(ServerType value)
     {
         switch (value) {
-
-            case SERVER_RSH:    return "RSH";
+                
+            case ServerType::RSH:    return "RSH";
         }
         return "???";
     }
-    
     static const char *help(ServerType value)
     {
-        return "";
+        switch (value) {
+                
+            case ServerType::RSH:    return "Remote shell server";
+        }
+        return "???";
     }
 };
-#endif
 
 
 //

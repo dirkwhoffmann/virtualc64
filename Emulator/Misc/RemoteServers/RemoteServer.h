@@ -52,7 +52,7 @@ protected:
     std::thread serverThread;
 
     // The current server state
-    SrvState state = SRV_STATE_OFF;
+    SrvState state = SrvState::OFF;
     
     // The number of sent and received packets
     isize numSent = 0;
@@ -133,12 +133,12 @@ public:
     
 public:
 
-    bool isOff() const { return state == SRV_STATE_OFF; }
-    bool isStarting() const { return state == SRV_STATE_STARTING; }
-    bool isListening() const { return state == SRV_STATE_LISTENING; }
-    bool isConnected() const { return state == SRV_STATE_CONNECTED; }
-    bool isStopping() const { return state == SRV_STATE_STOPPING; }
-    bool isErroneous() const { return state == SRV_STATE_ERROR; }
+    bool isOff() const { return state == SrvState::OFF; }
+    bool isStarting() const { return state == SrvState::STARTING; }
+    bool isListening() const { return state == SrvState::LISTENING; }
+    bool isConnected() const { return state == SrvState::CONNECTED; }
+    bool isStopping() const { return state == SrvState::STOPPING; }
+    bool isErroneous() const { return state == SrvState::INVALID; }
 
     
     //

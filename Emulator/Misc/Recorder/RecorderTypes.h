@@ -21,36 +21,33 @@ namespace vc64 {
 // Enumerations
 //
 
-enum_long(REC_STATE)
+enum class RecState : long
 {
-    REC_STATE_WAIT,                     ///< The recorder is ready
-    REC_STATE_PREPARE,                  ///< The recorder is preparing to record
-    REC_STATE_RECORD,                   ///< Recording in progress
-    REC_STATE_FINALIZE,                 ///< The recorder is finalizing the video
-    REC_STATE_ABORT                     ///< Recording has been aborted
+    WAIT,
+    PREPARE,
+    RECORD,
+    FINALIZE,
+    ABORT
 };
-typedef REC_STATE RecState;
 
-struct RecStateEnum : util::Reflection<RecStateEnum, RecState> {
-
+struct RecStateEnum : util::Reflection<RecStateEnum, RecState>
+{
     static constexpr long minVal = 0;
-    static constexpr long maxVal = REC_STATE_ABORT;
+    static constexpr long maxVal = long(RecState::ABORT);
 
-    static const char *prefix() { return "REC_STATE"; }
-    static const char *_key(long value)
+    static const char *_key(RecState value)
     {
         switch (value) {
-
-            case REC_STATE_WAIT:        return "REC_STATE.WAIT";
-            case REC_STATE_PREPARE:     return "REC_STATE.PREPARE";
-            case REC_STATE_RECORD:      return "REC_STATE.RECORD";
-            case REC_STATE_FINALIZE:    return "REC_STATE.FINALIZE";
-            case REC_STATE_ABORT:       return "REC_STATE.ABORT";
+                
+            case RecState::WAIT:      return "WAIT";
+            case RecState::PREPARE:   return "PREPARE";
+            case RecState::RECORD:    return "RECORD";
+            case RecState::FINALIZE:  return "FINALIZE";
+            case RecState::ABORT:     return "ABORT";
         }
         return "???";
     }
-    
-    static const char *help(RecState value)
+    static const char *help(long value)
     {
         return "";
     }

@@ -184,7 +184,7 @@ Console::press(RetroShellKey key, bool shift)
 
     switch(key) {
 
-        case RSKEY_UP:
+        case RetroShellKey::UP:
 
             if (ipos > 0) {
 
@@ -197,7 +197,7 @@ Console::press(RetroShellKey key, bool shift)
             }
             break;
 
-        case RSKEY_DOWN:
+        case RetroShellKey::DOWN:
 
             if (ipos < historyLength() - 1) {
 
@@ -207,48 +207,48 @@ Console::press(RetroShellKey key, bool shift)
             }
             break;
 
-        case RSKEY_LEFT:
+        case RetroShellKey::LEFT:
 
             if (cursor > 0) cursor--;
             break;
 
-        case RSKEY_RIGHT:
+        case RetroShellKey::RIGHT:
 
             if (cursor < (isize)input.size()) cursor++;
             break;
 
-        case RSKEY_DEL:
+        case RetroShellKey::DEL:
 
             if (cursor < inputLength()) {
                 input.erase(input.begin() + cursor);
             }
             break;
 
-        case RSKEY_CUT:
+        case RetroShellKey::CUT:
 
             if (cursor < inputLength()) {
                 input.erase(input.begin() + cursor, input.end());
             }
             break;
 
-        case RSKEY_BACKSPACE:
+        case RetroShellKey::BACKSPACE:
 
             if (cursor > 0) {
                 input.erase(input.begin() + --cursor);
             }
             break;
 
-        case RSKEY_HOME:
+        case RetroShellKey::HOME:
 
             cursor = 0;
             break;
 
-        case RSKEY_END:
+        case RetroShellKey::END:
 
             cursor = (isize)input.length();
             break;
 
-        case RSKEY_TAB:
+        case RetroShellKey::TAB:
 
             if (tabPressed) {
 
@@ -263,19 +263,19 @@ Console::press(RetroShellKey key, bool shift)
             }
             break;
 
-        case RSKEY_RETURN:
+        case RetroShellKey::RETURN:
 
             pressReturn(shift);
             break;
 
-        case RSKEY_CR:
+        case RetroShellKey::CR:
 
             input = "";
             cursor = 0;
             break;
     }
 
-    tabPressed = key == RSKEY_TAB;
+    tabPressed = key == RetroShellKey::TAB;
     needsDisplay();
 
     assert(ipos >= 0 && ipos < historyLength());
@@ -289,17 +289,17 @@ Console::press(char c)
 
         case '\n':
 
-            press(RSKEY_RETURN);
+            press(RetroShellKey::RETURN);
             break;
 
         case '\r':
 
-            press(RSKEY_CR);
+            press(RetroShellKey::CR);
             break;
 
         case '\t':
 
-            press(RSKEY_TAB);
+            press(RetroShellKey::TAB);
             break;
 
         default:

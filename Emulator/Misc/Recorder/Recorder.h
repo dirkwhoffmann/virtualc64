@@ -60,7 +60,7 @@ class Recorder final : public SubComponent, public Inspectable<RecorderInfo> {
     //
 
     // The current recorder state
-    RecState state = REC_STATE_WAIT;
+    RecState state = RecState::WAIT;
 
     
     //
@@ -161,7 +161,7 @@ private:
 public:
 
     // Checks whether the screen is currently recorded
-    bool isRecording() const { return state != REC_STATE_WAIT; }
+    bool isRecording() const { return state != RecState::WAIT; }
 
     // Starts the screen recorder
     void startRecording(isize x1, isize y1, isize x2, isize y2);

@@ -308,7 +308,7 @@ Recorder::startRecording(isize x1, isize y1, isize x2, isize y2)
     }
 
     debug(REC_DEBUG, "Success\n");
-    state = REC_STATE_PREPARE;
+    state = RecState::PREPARE;
 }
 
 void
@@ -319,7 +319,7 @@ Recorder::stopRecording()
     {   SYNCHRONIZED
 
         if (isRecording()) {
-            state = REC_STATE_FINALIZE;
+            state = RecState::FINALIZE;
         }
     }
 }
@@ -366,17 +366,17 @@ void
 Recorder::vsyncHandler()
 {
     // Quick-exit if the recorder is not active
-    if (state == REC_STATE_WAIT) return;
+    if (state == RecState::WAIT) return;
 
     {   SYNCHRONIZED
         
         switch (state) {
                 
-            case REC_STATE_WAIT:     break;
-            case REC_STATE_PREPARE:  prepare(); break;
-            case REC_STATE_RECORD:   recordVideo(); recordAudio(); break;
-            case REC_STATE_FINALIZE: finalize(); break;
-            case REC_STATE_ABORT:    abort(); break;
+            case RecState::WAIT:     break;
+            case RecState::PREPARE:  prepare(); break;
+            case RecState::RECORD:   recordVideo(); recordAudio(); break;
+            case RecState::FINALIZE: finalize(); break;
+            case RecState::ABORT:    abort(); break;
         }
     }
 }
@@ -409,7 +409,7 @@ Recorder::prepare()
     audioPort.clamp(1);
 
     // Switch state and inform the GUI
-    state = REC_STATE_RECORD;
+    state = RecState::RECORD;
     recStart = util::Time::now();
     msgQueue.put(Msg::RECORDING_STARTED);
 }
@@ -439,7 +439,7 @@ Recorder::recordVideo()
     isize written = videoPipe.write((u8 *)data, length);
 
     if (written != length || FORCE_RECORDING_ERROR) {
-        state = REC_STATE_ABORT;
+        state = RecState::ABORT;
     }
 }
 
@@ -465,7 +465,7 @@ Recorder::recordAudio()
         written += audioPipe.write((u8 *)&pair.r, sizeof(float));
 
         if (written != 2 * sizeof(float) || FORCE_RECORDING_ERROR) {
-            state = REC_STATE_ABORT;
+            state = RecState::ABORT;
         }
     }
     
@@ -484,7 +484,7 @@ Recorder::finalize()
     audioFFmpeg.join();
 
     // Switch state and inform the GUI
-    state = REC_STATE_WAIT;
+    state = RecState::WAIT;
     recStop = util::Time::now();
     msgQueue.put(Msg::RECORDING_STOPPED);
 }

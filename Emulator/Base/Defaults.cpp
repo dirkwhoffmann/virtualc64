@@ -172,10 +172,10 @@ Defaults::Defaults()
     setFallback(Opt::REC_ASPECT_X,               768);
     setFallback(Opt::REC_ASPECT_Y,               702);
 
-    setFallback(Opt::SRV_PORT,                   8081,                   { SERVER_RSH });
-    setFallback(Opt::SRV_PROTOCOL,               SRVPROT_DEFAULT,        { SERVER_RSH });
-    setFallback(Opt::SRV_AUTORUN,                false,                  { SERVER_RSH });
-    setFallback(Opt::SRV_VERBOSE,                true,                   { SERVER_RSH });
+    setFallback(Opt::SRV_PORT,                   8081,                   { (i64)ServerType::RSH });
+    setFallback(Opt::SRV_PROTOCOL,               (i64)ServerProtocol::DEFAULT, { (i64)ServerType::RSH });
+    setFallback(Opt::SRV_AUTORUN,                false,                  { (i64)ServerType::RSH });
+    setFallback(Opt::SRV_VERBOSE,                true,                   { (i64)ServerType::RSH });
 
     setFallback(Opt::DBG_DEBUGCART,              0);
     setFallback(Opt::DBG_WATCHDOG,               0);

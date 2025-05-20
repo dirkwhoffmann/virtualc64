@@ -1092,7 +1092,7 @@ NSString *EventSlotName(EventSlot slot)
 
 - (BOOL)recording
 {
-    return [self recorder]->getInfo().state != REC_STATE_WAIT;
+    return [self recorder]->getInfo().state != RecState::WAIT;
 }
 
 - (void)startRecording:(NSRect)rect exception:(ExceptionWrapper *)ex
