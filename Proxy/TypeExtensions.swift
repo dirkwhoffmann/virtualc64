@@ -15,6 +15,9 @@ typealias EventSlotEnum = vc64.EventSlotEnum
 typealias EventSlotInfo = vc64.EventSlotInfo
 typealias RomType = vc64.RomType
 
+let DRIVE8 = vc64.DRIVE8
+let DRIVE9 = vc64.DRIVE9
+
 extension vc64.EventSlot: CustomStringConvertible {
 
     public var description: String { return EventSlotName(self) }

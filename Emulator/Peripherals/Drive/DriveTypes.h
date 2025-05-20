@@ -35,8 +35,8 @@ typedef isize HeadPos;
 // Constants
 //
 
-#define DRIVE8  0L  // TODO: DON'T USE PREPROCESSOR DIRECTIVE
-#define DRIVE9  1L  // TODO: DON'T USE PREPROCESSOR DIRECTIVE
+static const isize DRIVE8 = 0;
+static const isize DRIVE9 = 1;
 
 
 //
