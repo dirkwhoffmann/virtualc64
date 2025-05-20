@@ -143,10 +143,10 @@ ExpansionPort::getCartridgeMode() const
 {
     switch ((exromLine ? 0b10 : 0) | (gameLine ? 0b01 : 0)) {
             
-        case 0b00: return CRTMODE_16K;
-        case 0b01: return CRTMODE_8K;
-        case 0b10: return CRTMODE_ULTIMAX;
-        default:   return CRTMODE_OFF;
+        case 0b00: return CRTMode::MODE16K;
+        case 0b01: return CRTMode::MODE8K;
+        case 0b10: return CRTMode::ULTIMAX;
+        default:   return CRTMode::OFF;
     }
 }
 
@@ -155,9 +155,9 @@ ExpansionPort::setCartridgeMode(CRTMode mode)
 {
     switch (mode) {
             
-        case CRTMODE_16K:     setGameAndExrom(0,0); return;
-        case CRTMODE_8K:      setGameAndExrom(1,0); return;
-        case CRTMODE_ULTIMAX: setGameAndExrom(0,1); return;
+        case CRTMode::MODE16K:     setGameAndExrom(0,0); return;
+        case CRTMode::MODE8K:      setGameAndExrom(1,0); return;
+        case CRTMode::ULTIMAX: setGameAndExrom(0,1); return;
         default:              setGameAndExrom(1,1);
     }
 }
@@ -165,7 +165,7 @@ ExpansionPort::setCartridgeMode(CRTMode mode)
 void
 ExpansionPort::resetCartConfig()
 {
-    cartridge ? cartridge->resetCartConfig() : setCartridgeMode(CRTMODE_OFF);
+    cartridge ? cartridge->resetCartConfig() : setCartridgeMode(CRTMode::OFF);
 }
 
 void
@@ -257,7 +257,7 @@ ExpansionPort::detachCartridge()
             cartridge = nullptr;
             crtType = CRT_NONE;
             
-            setCartridgeMode(CRTMODE_OFF);
+            setCartridgeMode(CRTMode::OFF);
             
             debug(EXP_DEBUG, "Cartridge detached from expansion port");
             msgQueue.put(Msg::CRT_ATTACHED, 0);

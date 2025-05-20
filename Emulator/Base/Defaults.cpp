@@ -118,9 +118,9 @@ Defaults::Defaults()
     setFallback(Opt::SID_ADDRESS,                0xD420,                 {1});
     setFallback(Opt::SID_ADDRESS,                0xD440,                 {2});
     setFallback(Opt::SID_ADDRESS,                0xD460,                 {3});
-    setFallback(Opt::SID_REVISION,               MOS_8580,               {0, 1, 2, 3});
+    setFallback(Opt::SID_REVISION,               (i64)SIDRevision::MOS_8580, {0, 1, 2, 3});
     setFallback(Opt::SID_FILTER,                 false,                  {0, 1, 2, 3});
-    setFallback(Opt::SID_ENGINE,                 SIDENGINE_RESID,        {0, 1, 2, 3});
+    setFallback(Opt::SID_ENGINE,                 (i64)SIDEngine::RESID,  {0, 1, 2, 3});
     setFallback(Opt::SID_SAMPLING,               SAMPLING_INTERPOLATE,   {0, 1, 2, 3});
     setFallback(Opt::SID_POWER_SAVE,             false,                  {0, 1, 2, 3});
 

@@ -51,7 +51,7 @@ u8
 Kingsoft::peekIO1(u16 addr)
 {
     // Switch to 16KB game mode
-    expansionPort.setCartridgeMode(CRTMODE_16K);
+    expansionPort.setCartridgeMode(CRTMode::MODE16K);
 
     // Bank in second packet to ROMH
     bankInROMH(1, 0x2000, 0);
@@ -69,7 +69,7 @@ void
 Kingsoft::pokeIO1(u16 addr, u8 value)
 {
     // Switch to (faked) Ultimax mode
-    expansionPort.setCartridgeMode(CRTMODE_ULTIMAX);
+    expansionPort.setCartridgeMode(CRTMode::ULTIMAX);
 
     // Bank in third packet to ROMH
     bankInROMH(2, 0x2000, 0);

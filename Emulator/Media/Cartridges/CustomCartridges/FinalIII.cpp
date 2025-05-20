@@ -36,7 +36,7 @@ FinalIII::_dump(Category category, std::ostream& os) const
 void
 FinalIII::resetCartConfig()
 {
-    expansionPort.setCartridgeMode(CRTMODE_16K);
+    expansionPort.setCartridgeMode(CRTMode::MODE16K);
 }
 
 void

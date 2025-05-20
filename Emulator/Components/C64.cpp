@@ -494,7 +494,7 @@ C64::set(ConfigScheme model)
                 set(Opt::VICII_GRAY_DOT_BUG, false);
                 set(Opt::CIA_REVISION, MOS_6526);
                 set(Opt::CIA_TIMER_B_BUG, true);
-                set(Opt::SID_REVISION, MOS_6581);
+                set(Opt::SID_REVISION, (i64)SIDRevision::MOS_6581);
                 set(Opt::SID_FILTER, true);
                 set(Opt::POWER_GRID, GRID_STABLE_50HZ);
                 set(Opt::GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
@@ -507,7 +507,7 @@ C64::set(ConfigScheme model)
                 set(Opt::VICII_GRAY_DOT_BUG, true);
                 set(Opt::CIA_REVISION, MOS_8521);
                 set(Opt::CIA_TIMER_B_BUG, false);
-                set(Opt::SID_REVISION, MOS_8580);
+                set(Opt::SID_REVISION, (i64)SIDRevision::MOS_8580);
                 set(Opt::SID_FILTER, true);
                 set(Opt::POWER_GRID, GRID_STABLE_50HZ);
                 set(Opt::GLUE_LOGIC, GLUE_LOGIC_IC);
@@ -520,7 +520,7 @@ C64::set(ConfigScheme model)
                 set(Opt::VICII_GRAY_DOT_BUG, false);
                 set(Opt::CIA_REVISION, MOS_6526);
                 set(Opt::CIA_TIMER_B_BUG, true);
-                set(Opt::SID_REVISION, MOS_6581);
+                set(Opt::SID_REVISION, (i64)SIDRevision::MOS_6581);
                 set(Opt::SID_FILTER, true);
                 set(Opt::POWER_GRID, GRID_STABLE_50HZ);
                 set(Opt::GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
@@ -533,7 +533,7 @@ C64::set(ConfigScheme model)
                 set(Opt::VICII_GRAY_DOT_BUG, false);
                 set(Opt::CIA_REVISION, MOS_6526);
                 set(Opt::CIA_TIMER_B_BUG, false);
-                set(Opt::SID_REVISION, MOS_6581);
+                set(Opt::SID_REVISION, (i64)SIDRevision::MOS_6581);
                 set(Opt::SID_FILTER, true);
                 set(Opt::POWER_GRID, GRID_STABLE_60HZ);
                 set(Opt::GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
@@ -546,7 +546,7 @@ C64::set(ConfigScheme model)
                 set(Opt::VICII_GRAY_DOT_BUG, true);
                 set(Opt::CIA_REVISION, MOS_8521);
                 set(Opt::CIA_TIMER_B_BUG, true);
-                set(Opt::SID_REVISION, MOS_8580);
+                set(Opt::SID_REVISION, (i64)SIDRevision::MOS_8580);
                 set(Opt::SID_FILTER, true);
                 set(Opt::POWER_GRID, GRID_STABLE_60HZ);
                 set(Opt::GLUE_LOGIC, GLUE_LOGIC_IC);
@@ -559,7 +559,7 @@ C64::set(ConfigScheme model)
                 set(Opt::VICII_GRAY_DOT_BUG, false);
                 set(Opt::CIA_REVISION, MOS_6526);
                 set(Opt::CIA_TIMER_B_BUG, false);
-                set(Opt::SID_REVISION, MOS_6581);
+                set(Opt::SID_REVISION, (i64)SIDRevision::MOS_6581);
                 set(Opt::SID_FILTER, true);
                 set(Opt::POWER_GRID, GRID_STABLE_60HZ);
                 set(Opt::GLUE_LOGIC, GLUE_LOGIC_DISCRETE);

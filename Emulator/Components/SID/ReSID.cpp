@@ -19,7 +19,7 @@ namespace vc64 {
 
 ReSID::ReSID(C64 &ref, isize id) : SubComponent(ref, id)
 {
-    model = MOS_6581;
+    model = SIDRevision::MOS_6581;
     emulateFilter = true;
     sampleRate = 44100;
 
@@ -194,7 +194,7 @@ ReSID::getRevision() const
 void
 ReSID::setRevision(SIDRevision revision)
 {
-    assert(revision == 0 || revision == 1);
+    assert_enum(SIDRevision, revision);
 
     if (model != revision) {
 

@@ -30,25 +30,24 @@ typedef util::RingBuffer<short, 2048> SampleStream;
 //
 
 /// Chip revision
-enum_long(SIDREV)
+enum class SIDRevision : long
 {
     MOS_6581,
     MOS_8580
 };
-typedef SIDREV SIDRevision;
 
 struct SIDRevisionEnum : util::Reflection<SIDRevisionEnum, SIDRevision> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = MOS_8580;
+    static constexpr long maxVal = long(SIDRevision::MOS_8580);
 
     static const char *prefix() { return nullptr; }
-    static const char *_key(long value)
+    static const char *_key(SIDRevision value)
     {
         switch (value) {
 
-            case MOS_6581:      return "MOS_6581";
-            case MOS_8580:      return "MOS_8580";
+            case SIDRevision::MOS_6581:      return "MOS_6581";
+            case SIDRevision::MOS_8580:      return "MOS_8580";
         }
         return "???";
     }
@@ -60,23 +59,21 @@ struct SIDRevisionEnum : util::Reflection<SIDRevisionEnum, SIDRevision> {
 };
 
 /// SID backend
-enum_long(SIDENGINE)
+enum class SIDEngine : long
 {
-    SIDENGINE_RESID
+    RESID
 };
-typedef SIDENGINE SIDEngine;
 
 struct SIDEngineEnum : util::Reflection<SIDEngineEnum, SIDEngine> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = SIDENGINE_RESID;
+    static constexpr long maxVal = long(SIDEngine::RESID);
 
-    static const char *prefix() { return "SIDENGINE"; }
-    static const char *_key(long value)
+    static const char *_key(SIDEngine value)
     {
         switch (value) {
 
-            case SIDENGINE_RESID:    return "RESID";
+            case SIDEngine::RESID:    return "RESID";
         }
         return "???";
     }

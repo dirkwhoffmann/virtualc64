@@ -40,7 +40,7 @@ SuperGames::pokeIO2(u16 addr, u8 value)
         protect = value & 0b1000;
 
         // Bit 2: Exrom / Game control
-        expansionPort.setCartridgeMode(value & 0b100 ? CRTMODE_OFF : CRTMODE_16K);
+        expansionPort.setCartridgeMode(value & 0b100 ? CRTMode::OFF : CRTMode::MODE16K);
 
         // Bit 0 and 1: Bank select
         bankIn(value & 0b11);

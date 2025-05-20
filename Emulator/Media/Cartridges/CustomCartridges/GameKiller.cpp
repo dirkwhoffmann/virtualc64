@@ -21,7 +21,7 @@ GameKiller::resetCartConfig()
     debug(CRT_DEBUG, "Starting GameKiller cartridge in NOCART mode\n");
     
     control = 0;
-    expansionPort.setCartridgeMode(CRTMODE_OFF);
+    expansionPort.setCartridgeMode(CRTMode::OFF);
 }
 
 u8
@@ -36,7 +36,7 @@ GameKiller::pokeIO1(u16 addr, u8 value)
     debug(CRT_DEBUG, "GameKiller::pokeIO1(%x, %d)\n", addr, control);
     
     if (++control > 1) {
-        expansionPort.setCartridgeMode(CRTMODE_OFF);
+        expansionPort.setCartridgeMode(CRTMode::OFF);
     }
 }
 
@@ -46,7 +46,7 @@ GameKiller::pokeIO2(u16 addr, u8 value)
     debug(CRT_DEBUG, "GameKiller::pokeIO2(%x, %d)\n", addr, control);
     
     if (++control > 1) {
-        expansionPort.setCartridgeMode(CRTMODE_OFF);
+        expansionPort.setCartridgeMode(CRTMode::OFF);
     }
 }
 
@@ -90,7 +90,7 @@ GameKiller::nmiWillTrigger()
     debug(CRT_DEBUG, "nmiWillTrigger");
     
     control = 0;
-    expansionPort.setCartridgeMode(CRTMODE_OFF);
+    expansionPort.setCartridgeMode(CRTMode::OFF);
 }
 
 }

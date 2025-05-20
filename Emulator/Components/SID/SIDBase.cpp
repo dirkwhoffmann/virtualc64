@@ -79,13 +79,13 @@ SID::getOption(Opt option) const
 
     switch (option) {
 
-        case Opt::SID_ENABLE:        return config.enabled;
-        case Opt::SID_ADDRESS:       return config.address;
-        case Opt::SID_REVISION:      return config.revision;
-        case Opt::SID_FILTER:        return config.filter;
-        case Opt::SID_ENGINE:        return config.engine;
-        case Opt::SID_SAMPLING:      return config.sampling;
-        case Opt::SID_POWER_SAVE:    return config.powerSave;
+        case Opt::SID_ENABLE:        return (i64)config.enabled;
+        case Opt::SID_ADDRESS:       return (i64)config.address;
+        case Opt::SID_REVISION:      return (i64)config.revision;
+        case Opt::SID_FILTER:        return (i64)config.filter;
+        case Opt::SID_ENGINE:        return (i64)config.engine;
+        case Opt::SID_SAMPLING:      return (i64)config.sampling;
+        case Opt::SID_POWER_SAVE:    return (i64)config.powerSave;
 
         default:
             fatalError;
@@ -160,29 +160,29 @@ SID::setOption(Opt opt, i64 value)
     checkOption(opt, value);
 
     switch (opt) {
-
+            
         case Opt::SID_ENABLE:
-
+            
             if (config.enabled != bool(value)) {
-
+                
                 config.enabled = bool(value);
                 stream.clear(0);
                 c64.sidBridge.hardReset();
             }
             return;
-
+            
         case Opt::SID_ADDRESS:
-
+            
             if (config.address != value) {
-
+                
                 config.address = (u16)value;
                 stream.clear(0);
             }
             return;
-
+            
         case Opt::SID_REVISION:
-
-            if (config.revision != value) {
+            
+        if (config.revision != SIDRevision(value)) {
 
                 config.revision = SIDRevision(value);
                 setRevision(SIDRevision(value));
@@ -200,7 +200,7 @@ SID::setOption(Opt opt, i64 value)
 
         case Opt::SID_ENGINE:
 
-            if (config.engine != value) {
+            if (config.engine != SIDEngine(value)) {
 
                 config.engine = SIDEngine(value);
             }

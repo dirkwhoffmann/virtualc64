@@ -18,7 +18,7 @@ namespace vc64 {
 void
 StructuredBasic::resetCartConfig()
 {
-    expansionPort.setCartridgeMode(CRTMODE_8K);
+    expansionPort.setCartridgeMode(CRTMode::MODE8K);
 }
 
 u8
@@ -30,17 +30,17 @@ StructuredBasic::peekIO1(u16 addr)
 
         case 0:
         case 1:
-            expansionPort.setCartridgeMode(CRTMODE_8K);
+            expansionPort.setCartridgeMode(CRTMode::MODE8K);
             bankIn(0);
             break;
 
         case 2:
-            expansionPort.setCartridgeMode(CRTMODE_8K);
+            expansionPort.setCartridgeMode(CRTMode::MODE8K);
             bankIn(1);
             break;
 
         case 3:
-            expansionPort.setCartridgeMode(CRTMODE_OFF);
+            expansionPort.setCartridgeMode(CRTMode::OFF);
             break;
     }
     return 0;

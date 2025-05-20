@@ -84,7 +84,7 @@ KcsPower::pressButton(isize nr)
 {
     if (nr == 1) {
 
-        expansionPort.setCartridgeMode(CRTMODE_ULTIMAX);
+        expansionPort.setCartridgeMode(CRTMode::ULTIMAX);
         cpu.pullDownNmiLine(INTSRC_EXP);
     }
 };

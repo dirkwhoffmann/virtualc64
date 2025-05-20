@@ -22,29 +22,27 @@ namespace vc64 {
 //
 
 /// Cartridge mode
-enum_long(CRTMODE)
+enum class CRTMode : long
 {
-    CRTMODE_16K,        //! 16KB cartridge
-    CRTMODE_8K,         //! 8KB cartridge
-    CRTMODE_ULTIMAX,    //! Ultimax cartridge
-    CRTMODE_OFF         //! No cartridge
+    MODE16K,    //! 16KB cartridge
+    MODE8K,     //! 8KB cartridge
+    ULTIMAX,    //! Ultimax cartridge
+    OFF         //! No cartridge
 };
-typedef CRTMODE CRTMode;
 
 struct CRTModeEnum : util::Reflection<CRTModeEnum, CRTMode> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = CRTMODE_OFF;
+    static constexpr long maxVal = long(CRTMode::OFF);
 
-    static const char *prefix() { return "CRTMODE"; }
-    static const char *_key(long value)
+    static const char *_key(CRTMode value)
     {
         switch (value) {
 
-            case CRTMODE_16K:      return "16K";
-            case CRTMODE_8K:       return "8K";
-            case CRTMODE_ULTIMAX:  return "ULTIMAX";
-            case CRTMODE_OFF:      return "OFF";
+            case CRTMode::MODE16K:  return "16K";
+            case CRTMode::MODE8K:   return "8K";
+            case CRTMode::ULTIMAX:  return "ULTIMAX";
+            case CRTMode::OFF:      return "OFF";
         }
         return "???";
     }

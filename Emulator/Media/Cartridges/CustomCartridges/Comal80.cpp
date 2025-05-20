@@ -19,7 +19,7 @@ void
 Comal80::operator << (SerResetter &worker)
 {
     Cartridge::operator << (worker);
-    expansionPort.setCartridgeMode(CRTMODE_16K);
+    expansionPort.setCartridgeMode(CRTMode::MODE16K);
     bankIn(0);
 }
 
@@ -34,15 +34,15 @@ Comal80::pokeIO1(u16 addr, u8 value)
         switch (value & 0xE0) {
 
             case 0xe0:
-                expansionPort.setCartridgeMode(CRTMODE_OFF);
+                expansionPort.setCartridgeMode(CRTMode::OFF);
                 break;
 
             case 0x40:
-                expansionPort.setCartridgeMode(CRTMODE_8K);
+                expansionPort.setCartridgeMode(CRTMode::MODE8K);
                 break;
 
             default:
-                expansionPort.setCartridgeMode(CRTMODE_16K);
+                expansionPort.setCartridgeMode(CRTMode::MODE16K);
                 break;
         }
     }

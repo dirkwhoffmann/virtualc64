@@ -39,7 +39,7 @@ SID::peek(u16 addr)
 {
     switch (config.engine) {
 
-        case SIDENGINE_RESID:   return resid.peek(addr);
+        case SIDEngine::RESID:   return resid.peek(addr);
 
         default:
             fatalError;
@@ -53,7 +53,7 @@ SID::poke(u16 addr, u8 value)
     
     switch (config.engine) {
 
-        case SIDENGINE_RESID:   resid.poke(addr & 0x1F, value); break;
+        case SIDEngine::RESID:   resid.poke(addr & 0x1F, value); break;
 
         default:
             fatalError;
@@ -101,7 +101,7 @@ SID::powerSave() const
          * skip sample synthesis if SAMPLE_FAST and MOS8580 are selected both.
          * As a workaround, we ignore the power-saving setting in this case.
          */
-        return config.revision != MOS_8580 || config.sampling != SAMPLING_FAST;
+        return config.revision != SIDRevision::MOS_8580 || config.sampling != SAMPLING_FAST;
     }
 
     return false;

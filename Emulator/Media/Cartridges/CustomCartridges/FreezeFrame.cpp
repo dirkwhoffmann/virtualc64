@@ -28,7 +28,7 @@ u8
 FreezeFrame::peekIO1(u16 addr)
 {
     // Reading from IO1 switched to 8K game mode
-    expansionPort.setCartridgeMode(CRTMODE_8K);
+    expansionPort.setCartridgeMode(CRTMode::MODE8K);
     return 0;
 }
 
@@ -42,7 +42,7 @@ u8
 FreezeFrame::peekIO2(u16 addr)
 {
     // Reading from IO2 disables the cartridge
-    expansionPort.setCartridgeMode(CRTMODE_OFF);
+    expansionPort.setCartridgeMode(CRTMode::OFF);
     return 0;
 }
 
@@ -63,7 +63,7 @@ FreezeFrame::pressButton(isize nr)
 {
     if (nr == 1) {
 
-        expansionPort.setCartridgeMode(CRTMODE_ULTIMAX);
+        expansionPort.setCartridgeMode(CRTMode::ULTIMAX);
         cpu.pullDownNmiLine(INTSRC_EXP);
     }
 }
