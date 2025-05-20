@@ -225,10 +225,10 @@ CPU::setOption(Opt opt, i64 value)
             
             switch (config.dasmNumbers) {
                     
-                case DASM_HEX:  radix = 16; fill = '\0'; break;
-                case DASM_HEX0: radix = 16; fill = '0';  break;
-                case DASM_DEC:  radix = 10; fill = '\0'; break;
-                case DASM_DEC0: radix = 10; fill = '0';  break;
+                case DasmNumbers::HEX:  radix = 16; fill = '\0'; break;
+                case DasmNumbers::HEX0: radix = 16; fill = '0';  break;
+                case DasmNumbers::DEC:  radix = 10; fill = '\0'; break;
+                case DasmNumbers::DEC0: radix = 10; fill = '0';  break;
                     
                 default:
                     fatalError;

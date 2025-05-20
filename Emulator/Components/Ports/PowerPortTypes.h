@@ -22,29 +22,28 @@ namespace vc64 {
 //
 
 /// Power grip characteristics
-enum_long(GRID)
+enum class PowerGrid : long
 {
-    GRID_STABLE_50HZ,   ///< 50Hz constant
-    GRID_UNSTABLE_50HZ, ///< 50Hz with jitter
-    GRID_STABLE_60HZ,   ///< 60Hz constant
-    GRID_UNSTABLE_60HZ  ///< 60Hz with jitter
+    STABLE_50HZ,   ///< 50Hz constant
+    UNSTABLE_50HZ, ///< 50Hz with jitter
+    STABLE_60HZ,   ///< 60Hz constant
+    UNSTABLE_60HZ  ///< 60Hz with jitter
 };
-typedef GRID PowerGrid;
 
 struct PowerGridEnum : util::Reflection<PowerGridEnum, PowerGrid> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = GRID_UNSTABLE_60HZ;
+    static constexpr long maxVal = long(PowerGrid::UNSTABLE_60HZ);
 
     static const char *prefix() { return "GRID"; }
-    static const char *_key(long value)
+    static const char *_key(PowerGrid value)
     {
         switch (value) {
 
-            case GRID_STABLE_50HZ:    return "STABLE_50HZ";
-            case GRID_UNSTABLE_50HZ:  return "UNSTABLE_50HZ";
-            case GRID_STABLE_60HZ:    return "STABLE_60HZ";
-            case GRID_UNSTABLE_60HZ:  return "UNSTABLE_60HZ";
+            case PowerGrid::STABLE_50HZ:    return "STABLE_50HZ";
+            case PowerGrid::UNSTABLE_50HZ:  return "UNSTABLE_50HZ";
+            case PowerGrid::STABLE_60HZ:    return "STABLE_60HZ";
+            case PowerGrid::UNSTABLE_60HZ:  return "UNSTABLE_60HZ";
         }
         return "???";
     }

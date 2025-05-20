@@ -20,30 +20,29 @@
 namespace vc64 {
 
 /// Chip revision
-enum_long(CIAREV)
+enum class CIARev : long
 {
     MOS_6526,
     MOS_8521
 };
-typedef CIAREV CIARevision;
 
-struct CIARevisionEnum : util::Reflection<CIARevisionEnum, CIARevision> {
+struct CIARevisionEnum : util::Reflection<CIARevisionEnum, CIARev> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = MOS_8521;
+    static constexpr long maxVal = long(CIARev::MOS_8521);
 
     static const char *prefix() { return nullptr; }
-    static const char *_key(long value)
+    static const char *_key(CIARev value)
     {
         switch (value) {
 
-            case MOS_6526:      return "MOS_6526";
-            case MOS_8521:      return "MOS_8521";
+            case CIARev::MOS_6526:      return "MOS_6526";
+            case CIARev::MOS_8521:      return "MOS_8521";
         }
         return "";
     }
     
-    static const char *help(CIARevision value)
+    static const char *help(CIARev value)
     {
         return "";
     }
@@ -113,7 +112,7 @@ struct CIARegEnum : util::Reflection<CIARegEnum, CIAReg> {
 
 typedef struct
 {
-    CIARevision revision;
+    CIARev revision;
     bool timerBBug;
     bool idleSleep;
 }

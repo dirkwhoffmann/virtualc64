@@ -664,7 +664,7 @@ extension DefaultsProxy {
         remove(.CIA_REVISION)
         remove(.CIA_TIMER_B_BUG)
 
-        remove(.SID_REVISION)
+        remove(.SID_REV)
         remove(.SID_FILTER)
         remove(.SID_ENABLE, [0, 1, 2, 3])
         remove(.SID_ADDRESS, [0, 1, 2, 3])
@@ -694,7 +694,7 @@ extension Configuration {
             defaults.set(.CIA_REVISION, ciaRevision)
             defaults.set(.CIA_TIMER_B_BUG, ciaTimerBBug)
 
-            defaults.set(.SID_REVISION, [0, 1, 2, 3], sidRevision)
+            defaults.set(.SID_REV, [0, 1, 2, 3], sidRevision)
             defaults.set(.SID_FILTER, [0, 1, 2, 3], sidFilter)
             defaults.set(.SID_ENABLE, 1, sidEnable1)
             defaults.set(.SID_ENABLE, 2, sidEnable2)
@@ -730,7 +730,7 @@ extension Configuration {
             ciaRevision = defaults.get(.CIA_REVISION)
             ciaTimerBBug = defaults.get(.CIA_TIMER_B_BUG) != 0
 
-            sidRevision = defaults.get(.SID_REVISION, 0)
+            sidRevision = defaults.get(.SID_REV, 0)
             sidFilter = defaults.get(.SID_FILTER, 0) != 0
             sidEnable1 = defaults.get(.SID_ENABLE, 1) != 0
             sidEnable2 = defaults.get(.SID_ENABLE, 2) != 0

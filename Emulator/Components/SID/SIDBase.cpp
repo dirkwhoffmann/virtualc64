@@ -81,7 +81,7 @@ SID::getOption(Opt option) const
 
         case Opt::SID_ENABLE:        return (i64)config.enabled;
         case Opt::SID_ADDRESS:       return (i64)config.address;
-        case Opt::SID_REVISION:      return (i64)config.revision;
+        case Opt::SID_REV:      return (i64)config.revision;
         case Opt::SID_FILTER:        return (i64)config.filter;
         case Opt::SID_ENGINE:        return (i64)config.engine;
         case Opt::SID_SAMPLING:      return (i64)config.sampling;
@@ -120,7 +120,7 @@ SID::checkOption(Opt opt, i64 value)
             }
             return;
 
-        case Opt::SID_REVISION:
+        case Opt::SID_REV:
 
             if (!SIDRevisionEnum::isValid(value)) {
                 throw Error(Fault::OPT_INV_ARG, SIDRevisionEnum::keyList());
@@ -180,7 +180,7 @@ SID::setOption(Opt opt, i64 value)
             }
             return;
             
-        case Opt::SID_REVISION:
+        case Opt::SID_REV:
             
         if (config.revision != SIDRevision(value)) {
 

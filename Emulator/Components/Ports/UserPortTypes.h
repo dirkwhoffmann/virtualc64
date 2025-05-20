@@ -20,30 +20,29 @@ namespace vc64 {
 // Enumerations
 //
 
-enum_long(USR)
+enum class UserPortDevice : long
 {
-    USR_NONE,
-    USR_PARCABLE,
-    USR_PARCABLE_DOLPHIN,
-    USR_RS232
+    NONE,
+    PARCABLE,
+    PARCABLE_DOLPHIN,
+    RS232
 };
-typedef USR UserPortDevice;
 
 #ifdef __cplusplus
 struct UserPortDeviceEnum : util::Reflection<UserPortDeviceEnum, UserPortDevice>
 {
     static constexpr long minVal = 0;
-    static constexpr long maxVal = USR_RS232;
+    static constexpr long maxVal = long(UserPortDevice::RS232);
 
     static const char *prefix() { return "USR"; }
-    static const char *_key(long value)
+    static const char *_key(UserPortDevice value)
     {
         switch (value) {
 
-            case USR_NONE:              return "NONE";
-            case USR_PARCABLE:          return "PARCABLE";
-            case USR_PARCABLE_DOLPHIN:  return "PARCABLE_DOLPHIN";
-            case USR_RS232:             return "RS232";
+            case UserPortDevice::NONE:              return "NONE";
+            case UserPortDevice::PARCABLE:          return "PARCABLE";
+            case UserPortDevice::PARCABLE_DOLPHIN:  return "PARCABLE_DOLPHIN";
+            case UserPortDevice::RS232:             return "RS232";
         }
         return "???";
     }

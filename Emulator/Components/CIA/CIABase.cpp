@@ -130,9 +130,9 @@ CIA::getOption(Opt option) const
 {
     switch (option) {
 
-        case Opt::CIA_REVISION:      return config.revision;
-        case Opt::CIA_TIMER_B_BUG:   return config.timerBBug;
-        case Opt::CIA_IDLE_SLEEP:    return config.idleSleep;
+        case Opt::CIA_REVISION:      return (i64)config.revision;
+        case Opt::CIA_TIMER_B_BUG:   return (i64)config.timerBBug;
+        case Opt::CIA_IDLE_SLEEP:    return (i64)config.idleSleep;
 
 
         default:
@@ -171,7 +171,7 @@ CIA::setOption(Opt opt, i64 value)
 
         case Opt::CIA_REVISION:
 
-            config.revision = (CIARevision)value;
+            config.revision = (CIARev)value;
             return;
 
         case Opt::CIA_TIMER_B_BUG:

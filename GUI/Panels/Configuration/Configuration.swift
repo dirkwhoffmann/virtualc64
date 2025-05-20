@@ -62,8 +62,8 @@ class Configuration {
     }
     
     var sidRevision: Int {
-        get { return emu?.get(.SID_REVISION, id: 0) ?? 0 }
-        set { emu?.set(.SID_REVISION, value: newValue) }
+        get { return emu?.get(.SID_REV, id: 0) ?? 0 }
+        set { emu?.set(.SID_REV, value: newValue) }
     }
     
     var sidFilter: Bool {

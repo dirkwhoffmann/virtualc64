@@ -97,7 +97,7 @@ CIA::peek(u16 addr)
         case 0x0D: // CIA_INTERRUPT_CONTROL
 
             // For new CIAs, set upper bit if an IRQ is being triggered
-            if ((delay & CIASetInt1) && (icr & 0x1F) && config.revision == MOS_8521) {
+            if ((delay & CIASetInt1) && (icr & 0x1F) && config.revision == CIARev::MOS_8521) {
                 icr |= 0x80;
             }
             
@@ -113,7 +113,7 @@ CIA::peek(u16 addr)
             delay &= ~(CIASetInt0 | CIASetInt1);
 
             // Schedule the ICR bits to be cleared
-            if (config.revision == MOS_8521) {
+            if (config.revision == CIARev::MOS_8521) {
                 delay |= CIAClearIcr0; // Uppermost bit
                 delay |= CIAAckIcr0;   // Other bits
                 icrAck = icr;
@@ -340,7 +340,7 @@ CIA::poke(u16 addr, u8 value)
             
             // Raise an interrupt in the next cycle if conditions match
             if ((imr & icr & 0x1F) && INT) {
-                if (config.revision == MOS_8521) {
+                if (config.revision == CIARev::MOS_8521) {
                     if (!(delay & CIAReadIcr1)) {
                         delay |= (CIASetInt1 | CIASetIcr1);
                     }
@@ -352,7 +352,7 @@ CIA::poke(u16 addr, u8 value)
             // Clear pending interrupt if a write has occurred in the previous cycle
             // Solution is taken from Hoxs64. It fixes dd0dtest (11)
             else if (delay & CIAClearIcr2) {
-                if (config.revision == MOS_6526) {
+                if (config.revision == CIARev::MOS_6526) {
                     delay &= ~(CIASetInt1 | CIASetIcr1);
                 }
             }

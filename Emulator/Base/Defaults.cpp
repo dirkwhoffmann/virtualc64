@@ -35,13 +35,13 @@ Defaults::Defaults()
     setFallback(Opt::C64_SNAP_DELAY,             10);
     setFallback(Opt::C64_SNAP_COMPRESS,          true);
 
-    setFallback(Opt::DASM_NUMBERS,               DASM_HEX0);
+    setFallback(Opt::DASM_NUMBERS,               (i64)DasmNumbers::HEX0);
     
-    setFallback(Opt::POWER_GRID,                 GRID_STABLE_50HZ);
+    setFallback(Opt::POWER_GRID,                 (i64)PowerGrid::STABLE_50HZ);
 
     setFallback(Opt::GLUE_LOGIC,                 GLUE_LOGIC_DISCRETE);
 
-    setFallback(Opt::CIA_REVISION,               MOS_6526);
+    setFallback(Opt::CIA_REVISION,               (i64)CIARev::MOS_6526);
     setFallback(Opt::CIA_TIMER_B_BUG,            true);
     setFallback(Opt::CIA_IDLE_SLEEP,             true);
 
@@ -73,7 +73,7 @@ Defaults::Defaults()
 
     setFallback(Opt::EXP_REU_SPEED,              1);
 
-    setFallback(Opt::USR_DEVICE,                 USR_RS232);
+    setFallback(Opt::USR_DEVICE,                 (i64)UserPortDevice::RS232);
 
     setFallback(Opt::VID_WHITE_NOISE,            true);
 
@@ -118,7 +118,7 @@ Defaults::Defaults()
     setFallback(Opt::SID_ADDRESS,                0xD420,                 {1});
     setFallback(Opt::SID_ADDRESS,                0xD440,                 {2});
     setFallback(Opt::SID_ADDRESS,                0xD460,                 {3});
-    setFallback(Opt::SID_REVISION,               (i64)SIDRevision::MOS_8580, {0, 1, 2, 3});
+    setFallback(Opt::SID_REV,               (i64)SIDRevision::MOS_8580, {0, 1, 2, 3});
     setFallback(Opt::SID_FILTER,                 false,                  {0, 1, 2, 3});
     setFallback(Opt::SID_ENGINE,                 (i64)SIDEngine::RESID,  {0, 1, 2, 3});
     setFallback(Opt::SID_SAMPLING,               SAMPLING_INTERPOLATE,   {0, 1, 2, 3});

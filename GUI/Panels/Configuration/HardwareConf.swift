@@ -157,7 +157,7 @@ extension ConfigurationController {
             case 0: // C64_PAL
                 config.vicRevision = vc64.VICIIRevision.PAL_6569_R3.rawValue
                 config.vicGrayDotBug = false
-                config.ciaRevision = vc64.CIARevision.MOS_6526.rawValue
+                config.ciaRevision = vc64.CIARev.MOS_6526.rawValue
                 config.ciaTimerBBug = true
                 config.sidRevision = vc64.SIDRevision.MOS_6581.rawValue
                 config.glueLogic = vc64.GlueLogic.DISCRETE.rawValue
@@ -166,7 +166,7 @@ extension ConfigurationController {
             case 1: // C64_II_PAL
                 config.vicRevision = vc64.VICIIRevision.PAL_8565.rawValue
                 config.vicGrayDotBug = true
-                config.ciaRevision = vc64.CIARevision.MOS_8521.rawValue
+                config.ciaRevision = vc64.CIARev.MOS_8521.rawValue
                 config.ciaTimerBBug = false
                 config.sidRevision = vc64.SIDRevision.MOS_8580.rawValue
                 config.glueLogic = vc64.GlueLogic.IC.rawValue
@@ -175,7 +175,7 @@ extension ConfigurationController {
             case 2: // C64_OLD_PAL
                 config.vicRevision = vc64.VICIIRevision.PAL_6569_R1.rawValue
                 config.vicGrayDotBug = false
-                config.ciaRevision = vc64.CIARevision.MOS_6526.rawValue
+                config.ciaRevision = vc64.CIARev.MOS_6526.rawValue
                 config.ciaTimerBBug = true
                 config.sidRevision = vc64.SIDRevision.MOS_6581.rawValue
                 config.glueLogic = vc64.GlueLogic.DISCRETE.rawValue
@@ -184,7 +184,7 @@ extension ConfigurationController {
             case 3: // C64_NTSC
                 config.vicRevision = vc64.VICIIRevision.NTSC_6567.rawValue
                 config.vicGrayDotBug = false
-                config.ciaRevision = vc64.CIARevision.MOS_6526.rawValue
+                config.ciaRevision = vc64.CIARev.MOS_6526.rawValue
                 config.ciaTimerBBug = false
                 config.sidRevision = vc64.SIDRevision.MOS_6581.rawValue
                 config.glueLogic = vc64.GlueLogic.DISCRETE.rawValue
@@ -193,7 +193,7 @@ extension ConfigurationController {
             case 4: // C64_II_NTSC
                 config.vicRevision = vc64.VICIIRevision.NTSC_8562.rawValue
                 config.vicGrayDotBug = true
-                config.ciaRevision = vc64.CIARevision.MOS_8521.rawValue
+                config.ciaRevision = vc64.CIARev.MOS_8521.rawValue
                 config.ciaTimerBBug = true
                 config.sidRevision = vc64.SIDRevision.MOS_8580.rawValue
                 config.glueLogic = vc64.GlueLogic.IC.rawValue
@@ -202,7 +202,7 @@ extension ConfigurationController {
             case 5: // C64_OLD_NTSC
                 config.vicRevision = vc64.VICIIRevision.NTSC_6567_R56A.rawValue
                 config.vicGrayDotBug = false
-                config.ciaRevision = vc64.CIARevision.MOS_6526.rawValue
+                config.ciaRevision = vc64.CIARev.MOS_6526.rawValue
                 config.ciaTimerBBug = false
                 config.sidRevision = vc64.SIDRevision.MOS_6581.rawValue
                 config.glueLogic = vc64.GlueLogic.DISCRETE.rawValue

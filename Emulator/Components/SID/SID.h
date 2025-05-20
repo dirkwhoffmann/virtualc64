@@ -55,7 +55,7 @@ class SID final : public SubComponent, public Inspectable<SIDInfo>
 
         Opt::SID_ENABLE,
         Opt::SID_ADDRESS,
-        Opt::SID_REVISION,
+        Opt::SID_REV,
         Opt::SID_FILTER,
         Opt::SID_ENGINE,
         Opt::SID_SAMPLING,

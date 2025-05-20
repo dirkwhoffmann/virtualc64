@@ -29,25 +29,25 @@ PowerPort::todTickDelay(u8 cra)
 
     switch (config.powerGrid) {
 
-        case GRID_STABLE_50HZ:
+        case PowerGrid::STABLE_50HZ:
             
             delay = (cra & 0x80) ? frequency / 10 : frequency * 6/50;
             jitter = 0;
             break;
             
-        case GRID_UNSTABLE_50HZ:
+        case PowerGrid::UNSTABLE_50HZ:
             
             delay = (cra & 0x80) ? frequency / 10 : frequency * 6/50;
             jitter = (c64.random() % 1000) - 500;
             break;
 
-        case GRID_STABLE_60HZ:
+        case PowerGrid::STABLE_60HZ:
             
             delay = (cra & 0x80) ? frequency * 5/60 : frequency / 10;
             jitter = 0;
             break;
             
-        case GRID_UNSTABLE_60HZ:
+        case PowerGrid::UNSTABLE_60HZ:
             
             delay = (cra & 0x80) ? frequency * 5/60 : frequency / 10;
             jitter = (c64.random() % 1000) - 500;

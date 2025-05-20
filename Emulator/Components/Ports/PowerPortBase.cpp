@@ -31,7 +31,7 @@ PowerPort::getOption(Opt option) const
 {
     switch (option) {
 
-        case Opt::POWER_GRID:  return config.powerGrid;
+        case Opt::POWER_GRID:  return (i64)config.powerGrid;
 
         default:
             fatalError;

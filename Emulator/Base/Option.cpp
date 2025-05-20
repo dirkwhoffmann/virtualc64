@@ -103,13 +103,13 @@ OptionParser::create(Opt opt, i64 arg)
 
         case Opt::POWER_GRID:                return enumParser.template operator()<PowerGridEnum,PowerGrid>();
 
-        case Opt::CIA_REVISION:              return enumParser.template operator()<CIARevisionEnum,CIARevision>();
+        case Opt::CIA_REVISION:              return enumParser.template operator()<CIARevisionEnum,CIARev>();
         case Opt::CIA_TIMER_B_BUG:           return boolParser();
         case Opt::CIA_IDLE_SLEEP:            return boolParser();
 
         case Opt::SID_ENABLE:                return boolParser();
         case Opt::SID_ADDRESS:               return hexParser();
-        case Opt::SID_REVISION:              return enumParser.template operator()<SIDRevisionEnum,SIDRevision>();
+        case Opt::SID_REV:              return enumParser.template operator()<SIDRevisionEnum,SIDRevision>();
         case Opt::SID_FILTER:                return boolParser();
         case Opt::SID_ENGINE:                return enumParser.template operator()<SIDEngineEnum,SIDEngine>();
         case Opt::SID_SAMPLING:              return enumParser.template operator()<SamplingMethodEnum,SamplingMethod>();

@@ -20,7 +20,7 @@ UserPort::getPB() const
 {
     switch (config.device) {
 
-        case USR_RS232: 
+        case UserPortDevice::RS232:
             return rs232.getPB();
 
         default:
@@ -33,7 +33,7 @@ UserPort::setPA2(bool value)
 {
     switch (config.device) {
 
-        case USR_RS232:
+        case UserPortDevice::RS232:
 
             rs232.setPA2(value);
             break;

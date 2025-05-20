@@ -43,7 +43,7 @@ UserPort::getOption(Opt option) const
 {
     switch (option) {
 
-        case Opt::USR_DEVICE:    return config.device;
+        case Opt::USR_DEVICE:    return (i64)config.device;
 
         default:
             fatalError;

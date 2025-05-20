@@ -122,9 +122,9 @@ C64::_dump(Category category, std::ostream& os) const
     if (category == Category::Summary) {
 
         auto vicRev = (VICIIRevision)emulator.get(Opt::VICII_REVISION);
-        auto sidRev = (SIDRevision)emulator.get(Opt::SID_REVISION);
-        auto cia1Rev = (CIARevision)cia1.getOption(Opt::CIA_REVISION);
-        auto cia2Rev = (CIARevision)cia2.getOption(Opt::CIA_REVISION);
+        auto sidRev = (SIDRevision)emulator.get(Opt::SID_REV);
+        auto cia1Rev = (CIARev)cia1.getOption(Opt::CIA_REVISION);
+        auto cia2Rev = (CIARev)cia2.getOption(Opt::CIA_REVISION);
 
         os << tab("Model");
         os << (vic.pal() ? "PAL" : "NTSC") << std::endl;

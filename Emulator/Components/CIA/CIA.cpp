@@ -82,13 +82,13 @@ CIA::triggerTimerIrq(u64 *delay)
 {
     switch (config.revision) {
             
-        case MOS_6526:
+        case CIARev::MOS_6526:
             
             *delay |= CIASetInt0;
             *delay |= CIASetIcr0;
             return;
             
-        case MOS_8521:
+        case CIARev::MOS_8521:
             
             // Test cases:  (?)
             // testprogs\interrupts\irqnmi\cia-int-irq-new.prg
