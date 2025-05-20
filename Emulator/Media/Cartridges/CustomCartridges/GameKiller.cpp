@@ -60,7 +60,7 @@ void
 GameKiller::pressButton(isize nr)
 {
     if (nr == 1) {
-        emulator.put(CMD_CPU_NMI, 1);
+        emulator.put(Cmd::CPU_NMI, 1);
     }
 }
 
@@ -68,7 +68,7 @@ void
 GameKiller::releaseButton(isize nr)
 {
     if (nr == 1) {
-        emulator.put(CMD_CPU_NMI, 0);
+        emulator.put(Cmd::CPU_NMI, 0);
     }
 }
 

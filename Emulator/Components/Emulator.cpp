@@ -164,7 +164,7 @@ Emulator::getDmaTexture() const
 }
 
 void
-Emulator::put(const Cmd &cmd)
+Emulator::put(const Command &cmd)
 {
     cmdQueue.put(cmd);
 }

@@ -77,7 +77,7 @@ RetroShell::asyncExec(const string &command, bool append)
     }
 
     // Process the command queue in the next update cycle
-    emulator.put(Cmd(CMD_RSH_EXECUTE));
+    emulator.put(Command(Cmd::RSH_EXECUTE));
 }
 
 void
@@ -93,7 +93,7 @@ RetroShell::asyncExecScript(std::stringstream &ss)
         commands.push_back({ nr++, line });
     }
 
-    emulator.put(Cmd(CMD_RSH_EXECUTE));
+    emulator.put(Command(Cmd::RSH_EXECUTE));
 }
 
 void
@@ -311,7 +311,7 @@ RetroShell::setStream(std::ostream &os)
 void
 RetroShell::serviceEvent()
 {
-    emulator.put(Cmd(CMD_RSH_EXECUTE));
+    emulator.put(Command(Cmd::RSH_EXECUTE));
     c64.cancel<SLOT_RSH>();
 }
 

@@ -602,81 +602,81 @@ C64::overrideOption(Opt opt, i64 value) const
 void
 C64::update(CmdQueue &queue)
 {
-    Cmd cmd;
+    Command cmd;
     bool cmdConfig = false;
 
     auto drive = [&]() -> Drive& { return cmd.value == 0 ? drive8 : drive9; };
 
     while (queue.poll(cmd)) {
 
-        debug(CMD_DEBUG, "Command: %s\n", CmdTypeEnum::key(cmd.type));
+        debug(CMD_DEBUG, "Command: %s\n", CmdEnum::key(cmd.type));
 
         switch (cmd.type) {
 
-            case CMD_CONFIG:
+            case Cmd::CONFIG:
 
                 cmdConfig = true;
                 emulator.set(cmd.config.option, cmd.config.value, { cmd.config.id });
                 break;
 
-            case CMD_CONFIG_ALL:
+            case Cmd::CONFIG_ALL:
 
                 cmdConfig = true;
                 emulator.set(cmd.config.option, cmd.config.value, { });
                 break;
 
-            case CMD_ALARM_ABS:
-            case CMD_ALARM_REL:
-            case CMD_INSPECTION_TARGET:
+            case Cmd::ALARM_ABS:
+            case Cmd::ALARM_REL:
+            case Cmd::INSPECTION_TARGET:
 
                 processCommand(cmd);
                 break;
 
-            case CMD_CPU_BRK:
-            case CMD_CPU_NMI:
-            case CMD_BP_SET_AT:
-            case CMD_BP_MOVE_TO:
-            case CMD_BP_REMOVE_NR:
-            case CMD_BP_REMOVE_AT:
-            case CMD_BP_REMOVE_ALL:
-            case CMD_BP_ENABLE_NR:
-            case CMD_BP_ENABLE_AT:
-            case CMD_BP_ENABLE_ALL:
-            case CMD_BP_DISABLE_NR:
-            case CMD_BP_DISABLE_AT:
-            case CMD_BP_DISABLE_ALL:
-            case CMD_WP_SET_AT:
-            case CMD_WP_MOVE_TO:
-            case CMD_WP_REMOVE_NR:
-            case CMD_WP_REMOVE_AT:
-            case CMD_WP_REMOVE_ALL:
-            case CMD_WP_ENABLE_NR:
-            case CMD_WP_ENABLE_AT:
-            case CMD_WP_ENABLE_ALL:
-            case CMD_WP_DISABLE_NR:
-            case CMD_WP_DISABLE_AT:
-            case CMD_WP_DISABLE_ALL:
+            case Cmd::CPU_BRK:
+            case Cmd::CPU_NMI:
+            case Cmd::BP_SET_AT:
+            case Cmd::BP_MOVE_TO:
+            case Cmd::BP_REMOVE_NR:
+            case Cmd::BP_REMOVE_AT:
+            case Cmd::BP_REMOVE_ALL:
+            case Cmd::BP_ENABLE_NR:
+            case Cmd::BP_ENABLE_AT:
+            case Cmd::BP_ENABLE_ALL:
+            case Cmd::BP_DISABLE_NR:
+            case Cmd::BP_DISABLE_AT:
+            case Cmd::BP_DISABLE_ALL:
+            case Cmd::WP_SET_AT:
+            case Cmd::WP_MOVE_TO:
+            case Cmd::WP_REMOVE_NR:
+            case Cmd::WP_REMOVE_AT:
+            case Cmd::WP_REMOVE_ALL:
+            case Cmd::WP_ENABLE_NR:
+            case Cmd::WP_ENABLE_AT:
+            case Cmd::WP_ENABLE_ALL:
+            case Cmd::WP_DISABLE_NR:
+            case Cmd::WP_DISABLE_AT:
+            case Cmd::WP_DISABLE_ALL:
 
                 cpu.processCommand(cmd);
                 break;
 
-            case CMD_KEY_PRESS:
-            case CMD_KEY_RELEASE:
-            case CMD_KEY_RELEASE_ALL:
-            case CMD_KEY_TOGGLE:
+            case Cmd::KEY_PRESS:
+            case Cmd::KEY_RELEASE:
+            case Cmd::KEY_RELEASE_ALL:
+            case Cmd::KEY_TOGGLE:
 
                 keyboard.processCommand(cmd);
                 break;
 
-            case CMD_DSK_TOGGLE_WP:
-            case CMD_DSK_MODIFIED:
-            case CMD_DSK_UNMODIFIED:
+            case Cmd::DSK_TOGGLE_WP:
+            case Cmd::DSK_MODIFIED:
+            case Cmd::DSK_UNMODIFIED:
 
                 drive().processCommand(cmd);
                 break;
 
-            case CMD_MOUSE_MOVE_ABS:
-            case CMD_MOUSE_MOVE_REL:
+            case Cmd::MOUSE_MOVE_ABS:
+            case Cmd::MOUSE_MOVE_REL:
 
                 switch (cmd.coord.port) {
 
@@ -686,8 +686,8 @@ C64::update(CmdQueue &queue)
                 }
                 break;
 
-            case CMD_MOUSE_EVENT:
-            case CMD_JOY_EVENT:
+            case Cmd::MOUSE_EVENT:
+            case Cmd::JOY_EVENT:
 
                 switch (cmd.action.port) {
 
@@ -697,34 +697,34 @@ C64::update(CmdQueue &queue)
                 }
                 break;
 
-            case CMD_DATASETTE_PLAY:
-            case CMD_DATASETTE_STOP:
-            case CMD_DATASETTE_REWIND:
+            case Cmd::DATASETTE_PLAY:
+            case Cmd::DATASETTE_STOP:
+            case Cmd::DATASETTE_REWIND:
 
                 datasette.processCommand(cmd);
                 break;
 
-            case CMD_CRT_BUTTON_PRESS:
-            case CMD_CRT_BUTTON_RELEASE:
-            case CMD_CRT_SWITCH_LEFT:
-            case CMD_CRT_SWITCH_NEUTRAL:
-            case CMD_CRT_SWITCH_RIGHT:
+            case Cmd::CRT_BUTTON_PRESS:
+            case Cmd::CRT_BUTTON_RELEASE:
+            case Cmd::CRT_SWITCH_LEFT:
+            case Cmd::CRT_SWITCH_NEUTRAL:
+            case Cmd::CRT_SWITCH_RIGHT:
 
                 expansionport.processCommand(cmd);
                 break;
 
-            case CMD_RSH_EXECUTE:
+            case Cmd::RSH_EXECUTE:
 
                 retroShell.exec();
                 break;
 
-            case CMD_FOCUS:
+            case Cmd::FOCUS:
 
                 cmd.value ? focus() : unfocus();
                 break;
 
             default:
-                fatal("Unhandled command: %s\n", CmdTypeEnum::key(cmd.type));
+                fatal("Unhandled command: %s\n", CmdEnum::key(cmd.type));
         }
     }
 
@@ -1121,21 +1121,21 @@ C64::endFrame()
 }
 
 void
-C64::processCommand(const Cmd &cmd)
+C64::processCommand(const Command &cmd)
 {
     switch (cmd.type) {
 
-        case CMD_ALARM_ABS:
+        case Cmd::ALARM_ABS:
 
             setAlarmAbs(cmd.alarm.cycle, cmd.alarm.value);
             break;
 
-        case CMD_ALARM_REL:
+        case Cmd::ALARM_REL:
 
             setAlarmRel(cmd.alarm.cycle, cmd.alarm.value);
             break;
             
-        case CMD_INSPECTION_TARGET:
+        case Cmd::INSPECTION_TARGET:
 
             setAutoInspectionMask(cmd.value);
             break;

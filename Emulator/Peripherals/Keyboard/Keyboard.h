@@ -46,7 +46,7 @@ class Keyboard final : public SubComponent {
     bool shiftLock = false;
 
     // Delayed keyboard commands (used, e.g., for auto-typing)
-    util::SortedRingBuffer<Cmd, 1024> pending;
+    util::SortedRingBuffer<Command, 1024> pending;
 
 
     //
@@ -156,7 +156,7 @@ public:
 public:
 
     // Processes a command from the command queue
-    void processCommand(const Cmd &cmd);
+    void processCommand(const Command &cmd);
 
     // Processes the next auto-type event
     void processKeyEvent(EventID id);

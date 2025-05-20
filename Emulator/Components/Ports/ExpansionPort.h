@@ -221,7 +221,7 @@ public:
 public:
 
     // Processes a cartridge command
-    void processCommand(const Cmd &cmd);
+    void processCommand(const Command &cmd);
 
     // Services an event in the EXP slot
     void processEvent(EventID id);

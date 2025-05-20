@@ -946,17 +946,17 @@ NSString *EventSlotName(EventSlot slot)
 
 - (void)pressPlay
 {
-    [self emu]->put(CMD_DATASETTE_PLAY);
+    [self emu]->put(Cmd::DATASETTE_PLAY);
 }
 
 - (void)pressStop
 {
-    [self emu]->put(CMD_DATASETTE_STOP);
+    [self emu]->put(Cmd::DATASETTE_STOP);
 }
 
 - (void)rewind
 {
-    [self emu]->put(CMD_DATASETTE_REWIND);
+    [self emu]->put(Cmd::DATASETTE_REWIND);
 }
 
 - (void)insertTape:(MediaFileProxy *)proxy
@@ -2116,32 +2116,32 @@ NSString *EventSlotName(EventSlot slot)
     catch (Error &error) { [ex save:error]; }
 }
 
-- (void)put:(CmdType)type
+- (void)put:(Cmd)type
 {
     [self emu]->put(type, 0);
 }
 
-- (void)put:(CmdType)type value:(NSInteger)value
+- (void)put:(Cmd)type value:(NSInteger)value
 {
     [self emu]->put(type, value);
 }
 
-- (void)put:(CmdType)type value:(NSInteger)value value2:(NSInteger)value2
+- (void)put:(Cmd)type value:(NSInteger)value value2:(NSInteger)value2
 {
     [self emu]->put(type, value, value2);
 }
 
-- (void)put:(CmdType)type key:(KeyCmd)cmd
+- (void)put:(Cmd)type key:(KeyCmd)cmd
 {
     [self emu]->put(type, cmd);
 }
 
-- (void)put:(CmdType)type coord:(CoordCmd)cmd
+- (void)put:(Cmd)type coord:(CoordCmd)cmd
 {
     [self emu]->put(type, cmd);
 }
 
-- (void)put:(CmdType)type action:(GamePadCmd)cmd
+- (void)put:(Cmd)type action:(GamePadCmd)cmd
 {
     [self emu]->put(type, cmd);
 }

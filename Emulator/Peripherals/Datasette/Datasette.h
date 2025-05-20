@@ -261,7 +261,7 @@ private:
 public:
 
     // Processes a datasette command
-    void processCommand(const Cmd &cmd);
+    void processCommand(const Command &cmd);
 
     // Processes a datesette event
     void processMotEvent(EventID event);

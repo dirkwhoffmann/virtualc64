@@ -586,7 +586,7 @@ public:
 public:
 
     // Processes a datasette command
-    void processCommand(const Cmd &cmd);
+    void processCommand(const Command &cmd);
 
     // Initiates the disk change procedure
     void scheduleFirstDiskChangeEvent(EventID id);

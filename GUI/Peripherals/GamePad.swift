@@ -579,7 +579,7 @@ class GamePad {
 
         if let id = port {
 
-            let type  = isMouse ? vc64.CmdType.MOUSE_EVENT : vc64.CmdType.JOY_EVENT
+            let type  = isMouse ? vc64.Cmd.MOUSE_EVENT : vc64.Cmd.JOY_EVENT
 
             for e in events {
                 c64.put(type, action: vc64.GamePadCmd(port: id, action: e))

@@ -353,7 +353,7 @@ void
 VirtualC64::set(Opt opt, i64 value) throws
 {
     emu->check(opt, value);
-    put(CMD_CONFIG_ALL, ConfigCmd { .option = opt, .value = value });
+    put(Cmd::CONFIG_ALL, ConfigCmd { .option = opt, .value = value });
     emu->markAsDirty();
 }
 
@@ -361,7 +361,7 @@ void
 VirtualC64::set(Opt opt, i64 value, long id)
 {
     emu->check(opt, value, { id });
-    put(CMD_CONFIG, ConfigCmd { .option = opt, .value = value, .id = id });
+    put(Cmd::CONFIG, ConfigCmd { .option = opt, .value = value, .id = id });
     emu->markAsDirty();
 }
 
@@ -378,7 +378,7 @@ VirtualC64::exportConfig(std::ostream& stream) const
 }
 
 void
-VirtualC64::put(const Cmd &cmd)
+VirtualC64::put(const Command &cmd)
 {
     emu->put(cmd);
 }
@@ -809,11 +809,11 @@ KeyboardAPI::press(C64Key key, double delay, double duration)
 
     } else {
         
-        emu->put(Cmd(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
+        emu->put(Command(Cmd::KEY_PRESS, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
     }
     if (duration != 0.0) {
         
-        emu->put(Cmd(CMD_KEY_RELEASE, KeyCmd { .keycode = (u8)key.nr, .delay = delay + duration }));
+        emu->put(Command(Cmd::KEY_RELEASE, KeyCmd { .keycode = (u8)key.nr, .delay = delay + duration }));
     }
 }
 
@@ -827,11 +827,11 @@ KeyboardAPI::toggle(C64Key key, double delay, double duration)
         
     } else {
 
-        emu->put(Cmd(CMD_KEY_TOGGLE, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
+        emu->put(Command(Cmd::KEY_TOGGLE, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
     }
     if (duration != 0.0) {
         
-        emu->put(Cmd(CMD_KEY_TOGGLE, KeyCmd { .keycode = (u8)key.nr, .delay = delay + duration }));
+        emu->put(Command(Cmd::KEY_TOGGLE, KeyCmd { .keycode = (u8)key.nr, .delay = delay + duration }));
     }
 
 }
@@ -841,7 +841,7 @@ KeyboardAPI::release(C64Key key, double delay)
 {
     if (delay > 0.0) {
 
-        emu->put(Cmd(CMD_KEY_RELEASE, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
+        emu->put(Command(Cmd::KEY_RELEASE, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
         return;
     }
     keyboard->release(key);
@@ -853,7 +853,7 @@ KeyboardAPI::releaseAll(double delay)
 {
     if (delay > 0.0) {
 
-        emu->put(Cmd(CMD_KEY_RELEASE_ALL, KeyCmd { .delay = delay }));
+        emu->put(Command(Cmd::KEY_RELEASE_ALL, KeyCmd { .delay = delay }));
         return;
     }
     keyboard->releaseAll();

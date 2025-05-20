@@ -211,14 +211,14 @@ Keyboard::autoType(const string &text)
 
             // Schedule key presses
             for (C64Key &k : keys) {
-                pending.insert(trigger, Cmd(CMD_KEY_PRESS, KeyCmd { .keycode = u8(k.nr) }));
+                pending.insert(trigger, Command(Cmd::KEY_PRESS, KeyCmd { .keycode = u8(k.nr) }));
             }
 
             trigger += C64::msec(30);
 
             // Schedule key releases
             for (C64Key &k : keys) {
-                pending.insert(trigger, Cmd(CMD_KEY_RELEASE, KeyCmd { .keycode = u8(k.nr) }));
+                pending.insert(trigger, Command(Cmd::KEY_RELEASE, KeyCmd { .keycode = u8(k.nr) }));
             }
             trigger += C64::msec(30);
         }
@@ -242,22 +242,22 @@ Keyboard::abortAutoTyping()
 }
 
 void
-Keyboard::processCommand(const Cmd &cmd)
+Keyboard::processCommand(const Command &cmd)
 {
     if (cmd.key.delay > 0) {
 
         pending.insert(cpu.clock + C64::sec(cmd.key.delay),
-                       Cmd(cmd.type, KeyCmd { .keycode = cmd.key.keycode }));
+                       Command(cmd.type, KeyCmd { .keycode = cmd.key.keycode }));
         c64.scheduleImm<SLOT_KEY>(KEY_AUTO_TYPE);
         return;
     }
 
     switch (cmd.type) {
 
-        case CMD_KEY_PRESS:         press(C64Key(cmd.key.keycode)); break;
-        case CMD_KEY_RELEASE:       release(C64Key(cmd.key.keycode)); break;
-        case CMD_KEY_RELEASE_ALL:   releaseAll(); break;
-        case CMD_KEY_TOGGLE:        toggle(C64Key(cmd.key.keycode)); break;
+        case Cmd::KEY_PRESS:         press(C64Key(cmd.key.keycode)); break;
+        case Cmd::KEY_RELEASE:       release(C64Key(cmd.key.keycode)); break;
+        case Cmd::KEY_RELEASE_ALL:   releaseAll(); break;
+        case Cmd::KEY_TOGGLE:        toggle(C64Key(cmd.key.keycode)); break;
 
         default:
             fatalError;

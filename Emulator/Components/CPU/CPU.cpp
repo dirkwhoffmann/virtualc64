@@ -154,17 +154,17 @@ CPU::jump(u16 addr)
 }
 
 void 
-CPU::processCommand(const Cmd &cmd)
+CPU::processCommand(const Command &cmd)
 {
     switch (cmd.type) {
             
-        case CMD_CPU_BRK:
+        case Cmd::CPU_BRK:
             
             cpu.next = BRK;
             cpu.reg.pc0 = cpu.reg.pc - 1;
             break;
             
-        case CMD_CPU_NMI:
+        case Cmd::CPU_NMI:
             
             if (cmd.value) {
                 cpu.pullDownNmiLine(INTSRC_EXP);
@@ -173,29 +173,29 @@ CPU::processCommand(const Cmd &cmd)
             }
             break;
             
-        case CMD_BP_SET_AT:         cpu.setBreakpoint(u32(cmd.value)); break;
-        case CMD_BP_MOVE_TO:        cpu.moveBreakpoint(isize(cmd.value), u32(cmd.value2)); break;
-        case CMD_BP_REMOVE_NR:      cpu.deleteBreakpoint(isize(cmd.value)); break;
-        case CMD_BP_REMOVE_AT:      cpu.deleteBreakpointAt(u32(cmd.value)); break;
-        case CMD_BP_REMOVE_ALL:     cpu.deleteAllBreakpoints(); break;
-        case CMD_BP_ENABLE_NR:      cpu.enableBreakpoint(isize(cmd.value)); break;
-        case CMD_BP_ENABLE_AT:      cpu.enableBreakpoint(u32(cmd.value)); break;
-        case CMD_BP_ENABLE_ALL:     cpu.enableAllBreakpoints(); break;
-        case CMD_BP_DISABLE_NR:     cpu.disableBreakpoint(isize(cmd.value)); break;
-        case CMD_BP_DISABLE_AT:     cpu.disableBreakpointAt(u32(cmd.value)); break;
-        case CMD_BP_DISABLE_ALL:    cpu.disableAllBreakpoints(); break;
+        case Cmd::BP_SET_AT:         cpu.setBreakpoint(u32(cmd.value)); break;
+        case Cmd::BP_MOVE_TO:        cpu.moveBreakpoint(isize(cmd.value), u32(cmd.value2)); break;
+        case Cmd::BP_REMOVE_NR:      cpu.deleteBreakpoint(isize(cmd.value)); break;
+        case Cmd::BP_REMOVE_AT:      cpu.deleteBreakpointAt(u32(cmd.value)); break;
+        case Cmd::BP_REMOVE_ALL:     cpu.deleteAllBreakpoints(); break;
+        case Cmd::BP_ENABLE_NR:      cpu.enableBreakpoint(isize(cmd.value)); break;
+        case Cmd::BP_ENABLE_AT:      cpu.enableBreakpoint(u32(cmd.value)); break;
+        case Cmd::BP_ENABLE_ALL:     cpu.enableAllBreakpoints(); break;
+        case Cmd::BP_DISABLE_NR:     cpu.disableBreakpoint(isize(cmd.value)); break;
+        case Cmd::BP_DISABLE_AT:     cpu.disableBreakpointAt(u32(cmd.value)); break;
+        case Cmd::BP_DISABLE_ALL:    cpu.disableAllBreakpoints(); break;
 
-        case CMD_WP_SET_AT:         cpu.setWatchpoint(u32(cmd.value)); break;
-        case CMD_WP_MOVE_TO:        cpu.moveWatchpoint(isize(cmd.value), u32(cmd.value2)); break;
-        case CMD_WP_REMOVE_NR:      cpu.deleteWatchpoint(isize(cmd.value)); break;
-        case CMD_WP_REMOVE_AT:      cpu.deleteWatchpointAt(u32(cmd.value)); break;
-        case CMD_WP_REMOVE_ALL:     cpu.deleteAllWatchpoints(); break;
-        case CMD_WP_ENABLE_NR:      cpu.enableWatchpoint(isize(cmd.value)); break;
-        case CMD_WP_ENABLE_AT:      cpu.enableWatchpoint(u32(cmd.value)); break;
-        case CMD_WP_ENABLE_ALL:     cpu.enableAllWatchpoints(); break;
-        case CMD_WP_DISABLE_NR:     cpu.disableWatchpoint(isize(cmd.value)); break;
-        case CMD_WP_DISABLE_AT:     cpu.disableWatchpoint(u32(cmd.value)); break;
-        case CMD_WP_DISABLE_ALL:    cpu.disableAllWatchpoints(); break;
+        case Cmd::WP_SET_AT:         cpu.setWatchpoint(u32(cmd.value)); break;
+        case Cmd::WP_MOVE_TO:        cpu.moveWatchpoint(isize(cmd.value), u32(cmd.value2)); break;
+        case Cmd::WP_REMOVE_NR:      cpu.deleteWatchpoint(isize(cmd.value)); break;
+        case Cmd::WP_REMOVE_AT:      cpu.deleteWatchpointAt(u32(cmd.value)); break;
+        case Cmd::WP_REMOVE_ALL:     cpu.deleteAllWatchpoints(); break;
+        case Cmd::WP_ENABLE_NR:      cpu.enableWatchpoint(isize(cmd.value)); break;
+        case Cmd::WP_ENABLE_AT:      cpu.enableWatchpoint(u32(cmd.value)); break;
+        case Cmd::WP_ENABLE_ALL:     cpu.enableAllWatchpoints(); break;
+        case Cmd::WP_DISABLE_NR:     cpu.disableWatchpoint(isize(cmd.value)); break;
+        case Cmd::WP_DISABLE_AT:     cpu.disableWatchpoint(u32(cmd.value)); break;
+        case Cmd::WP_DISABLE_ALL:    cpu.disableAllWatchpoints(); break;
 
         default:
             fatalError;

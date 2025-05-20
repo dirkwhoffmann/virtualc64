@@ -1504,14 +1504,14 @@ public:
 
     /** @brief  Feeds a command into the command queue.
      */
-    void put(const Cmd &cmd);
-    void put(CmdType type, i64 payload = 0, i64 payload2 = 0) { put(Cmd(type, payload, payload2)); }
-    void put(CmdType type, ConfigCmd payload)  { put(Cmd(type, payload)); }
-    void put(CmdType type, KeyCmd payload)  { put(Cmd(type, payload)); }
-    void put(CmdType type, CoordCmd payload)  { put(Cmd(type, payload)); }
-    void put(CmdType type, GamePadCmd payload)  { put(Cmd(type, payload)); }
-    void put(CmdType type, TapeCmd payload)  { put(Cmd(type, payload)); }
-    void put(CmdType type, AlarmCmd payload)  { put(Cmd(type, payload)); }
+    void put(const Command &cmd);
+    void put(Cmd type, i64 payload = 0, i64 payload2 = 0) { put(Command(type, payload, payload2)); }
+    void put(Cmd type, ConfigCmd payload)  { put(Command(type, payload)); }
+    void put(Cmd type, KeyCmd payload)  { put(Command(type, payload)); }
+    void put(Cmd type, CoordCmd payload)  { put(Command(type, payload)); }
+    void put(Cmd type, GamePadCmd payload)  { put(Command(type, payload)); }
+    void put(Cmd type, TapeCmd payload)  { put(Command(type, payload)); }
+    void put(Cmd type, AlarmCmd payload)  { put(Command(type, payload)); }
     /// @}
 
 

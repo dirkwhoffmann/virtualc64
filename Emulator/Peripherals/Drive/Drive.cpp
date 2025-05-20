@@ -480,13 +480,13 @@ Drive::vsyncHandler()
 }
 
 void
-Drive::processCommand(const Cmd &cmd)
+Drive::processCommand(const Command &cmd)
 {
     switch (cmd.type) {
 
-        case CMD_DSK_TOGGLE_WP:     toggleProtection(); break;
-        case CMD_DSK_MODIFIED:      markDiskAsModified(); break;
-        case CMD_DSK_UNMODIFIED:    markDiskAsUnmodified(); break;
+        case Cmd::DSK_TOGGLE_WP:     toggleProtection(); break;
+        case Cmd::DSK_MODIFIED:      markDiskAsModified(); break;
+        case Cmd::DSK_UNMODIFIED:    markDiskAsUnmodified(); break;
 
         default:
             fatalError;

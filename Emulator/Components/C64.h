@@ -564,7 +564,7 @@ private:
 public:
 
     // Processes a command from the command queue
-    void processCommand(const Cmd &cmd);
+    void processCommand(const Command &cmd);
 
     // Processes all pending events
     void processEvents(Cycle cycle);

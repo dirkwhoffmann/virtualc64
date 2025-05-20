@@ -213,13 +213,13 @@ Datasette::setMotor(bool value)
 }
 
 void
-Datasette::processCommand(const Cmd &cmd)
+Datasette::processCommand(const Command &cmd)
 {
     switch (cmd.type) {
 
-        case CMD_DATASETTE_PLAY:    pressPlay(); break;
-        case CMD_DATASETTE_STOP:    pressStop(); break;
-        case CMD_DATASETTE_REWIND:  rewind(); break;
+        case Cmd::DATASETTE_PLAY:    pressPlay(); break;
+        case Cmd::DATASETTE_STOP:    pressStop(); break;
+        case Cmd::DATASETTE_REWIND:  rewind(); break;
 
         default:
             fatalError;
