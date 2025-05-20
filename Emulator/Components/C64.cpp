@@ -279,7 +279,7 @@ C64::_didReset(bool hard)
     cpu.reg.pc = cpu.reg.pc0 = mem.resetVector();
 
     // Inform the GUI
-    msgQueue.put(MSG_RESET);
+    msgQueue.put(Msg::RESET);
 }
 
 void
@@ -729,10 +729,10 @@ C64::update(CmdQueue &queue)
     }
 
     // Inform the GUI about a changed machine configuration
-    if (cmdConfig) { msgQueue.put(MSG_CONFIG); }
+    if (cmdConfig) { msgQueue.put(Msg::CONFIG); }
 
     // Inform the GUI about new RetroShell content
-    if (retroShell.isDirty) { retroShell.isDirty = false; msgQueue.put(MSG_RSH_UPDATE); }
+    if (retroShell.isDirty) { retroShell.isDirty = false; msgQueue.put(Msg::RSH_UPDATE); }
 }
 
 void
@@ -857,14 +857,14 @@ C64::processFlags()
     if (flags & RL::BREAKPOINT) {
 
         clearFlag(RL::BREAKPOINT);
-        msgQueue.put(MSG_BREAKPOINT_REACHED, CpuMsg {u16(cpu.debugger.breakpointPC)});
+        msgQueue.put(Msg::BREAKPOINT_REACHED, CpuMsg {u16(cpu.debugger.breakpointPC)});
         interrupt = true;
     }
 
     if (flags & RL::WATCHPOINT) {
 
         clearFlag(RL::WATCHPOINT);
-        msgQueue.put(MSG_WATCHPOINT_REACHED, CpuMsg {u16(cpu.debugger.watchpointPC)});
+        msgQueue.put(Msg::WATCHPOINT_REACHED, CpuMsg {u16(cpu.debugger.watchpointPC)});
         interrupt = true;
     }
 
@@ -877,7 +877,7 @@ C64::processFlags()
     if (flags & RL::CPU_JAM) {
 
         clearFlag(RL::CPU_JAM);
-        msgQueue.put(MSG_CPU_JAMMED);
+        msgQueue.put(Msg::CPU_JAMMED);
         interrupt = true;
     }
 
@@ -886,7 +886,7 @@ C64::processFlags()
         if ((!stepTo.has_value() && cpu.inFetchPhase()) || stepTo == cpu.getPC0()) {
 
             clearFlag(RL::SINGLE_STEP);
-            msgQueue.put(MSG_STEP);
+            msgQueue.put(Msg::STEP);
             interrupt = true;
         }
     }
@@ -894,7 +894,7 @@ C64::processFlags()
     if (flags & RL::SINGLE_CYCLE) {
         
         clearFlag(RL::SINGLE_CYCLE);
-        msgQueue.put(MSG_STEP);
+        msgQueue.put(Msg::STEP);
         interrupt = true;
     }
     
@@ -903,7 +903,7 @@ C64::processFlags()
         if (rasterCycle == vic.getCyclesPerLine()) {
 
             clearFlag(RL::FINISH_LINE);
-            msgQueue.put(MSG_EOL_TRAP);
+            msgQueue.put(Msg::EOL_TRAP);
             interrupt = true;
         }
     }
@@ -913,7 +913,7 @@ C64::processFlags()
         if (scanline + 1 == vic.getLinesPerFrame() && rasterCycle == vic.getCyclesPerLine()) {
             
             clearFlag(RL::FINISH_FRAME);
-            msgQueue.put(MSG_EOF_TRAP);
+            msgQueue.put(Msg::EOF_TRAP);
             interrupt = true;
         }
     }
@@ -955,7 +955,7 @@ C64::_powerOn()
     debug(RUN_DEBUG, "_powerOn\n");
     
     hardReset();
-    msgQueue.put(MSG_POWER, 1);
+    msgQueue.put(Msg::POWER, 1);
 }
 
 void
@@ -963,7 +963,7 @@ C64::_powerOff()
 {
     debug(RUN_DEBUG, "_powerOff\n");
 
-    msgQueue.put(MSG_POWER, 0);
+    msgQueue.put(Msg::POWER, 0);
 }
 
 void
@@ -972,7 +972,7 @@ C64::_run()
     debug(RUN_DEBUG, "_run\n");
     // assert(cpu.inFetchPhase());
 
-    msgQueue.put(MSG_RUN);
+    msgQueue.put(Msg::RUN);
 }
 
 void
@@ -984,7 +984,7 @@ C64::_pause()
     // Clear pending runloop flags
     flags = 0;
 
-    msgQueue.put(MSG_PAUSE);
+    msgQueue.put(Msg::PAUSE);
 }
 
 void
@@ -992,7 +992,7 @@ C64::_halt()
 {
     debug(RUN_DEBUG, "_halt\n");
 
-    msgQueue.put(MSG_SHUTDOWN);
+    msgQueue.put(Msg::SHUTDOWN);
 }
 
 void
@@ -1000,7 +1000,7 @@ C64::_warpOn()
 {
     debug(RUN_DEBUG, "_warpOn\n");
 
-    msgQueue.put(MSG_WARP, 1);
+    msgQueue.put(Msg::WARP, 1);
 }
 
 void
@@ -1008,7 +1008,7 @@ C64::_warpOff()
 {
     debug(RUN_DEBUG, "_warpOff\n");
 
-    msgQueue.put(MSG_WARP, 0);
+    msgQueue.put(Msg::WARP, 0);
 }
 
 void
@@ -1016,7 +1016,7 @@ C64::_trackOn()
 {
     debug(RUN_DEBUG, "_trackOn\n");
 
-    msgQueue.put(MSG_TRACK, 1);
+    msgQueue.put(Msg::TRACK, 1);
 }
 
 void
@@ -1024,7 +1024,7 @@ C64::_trackOff()
 {
     debug(RUN_DEBUG, "_trackOff\n");
 
-    msgQueue.put(MSG_TRACK, 0);
+    msgQueue.put(Msg::TRACK, 0);
 }
 
 void
@@ -1335,8 +1335,8 @@ C64::loadSnapshot(const MediaFile &file)
         }
 
         // Inform the GUI
-        msgQueue.put(vic.pal() ? MSG_PAL : MSG_NTSC);
-        msgQueue.put(MSG_SNAPSHOT_RESTORED);
+        msgQueue.put(vic.pal() ? Msg::PAL : Msg::NTSC);
+        msgQueue.put(Msg::SNAPSHOT_RESTORED);
 
     } catch (...) {
 
@@ -1351,7 +1351,7 @@ C64::processSNPEvent(EventID eventId)
     if (objid == 0) {
 
         // Take snapshot and hand it over to GUI
-        msgQueue.put( Message { .type = MSG_SNAPSHOT_TAKEN, .snapshot = { new Snapshot(*this) } } );
+        msgQueue.put( Message { .type = Msg::SNAPSHOT_TAKEN, .snapshot = { new Snapshot(*this) } } );
     }
 
     // Schedule the next event
@@ -1790,7 +1790,7 @@ C64::flash(const MediaFile &file, isize nr)
             }
         }
 
-        msgQueue.put(MSG_FILE_FLASHED);
+        msgQueue.put(Msg::FILE_FLASHED);
 
     } catch (...) {
 
@@ -1819,7 +1819,7 @@ C64::flash(const FileSystem &fs, isize nr)
         mem.ram[0x2E] = HI_BYTE(addr + size);   // VARTAB (high byte)
     }
     
-    msgQueue.put(MSG_FILE_FLASHED);
+    msgQueue.put(Msg::FILE_FLASHED);
 }
 
 void
@@ -1848,7 +1848,7 @@ C64::processAlarmEvent()
     for (auto it = alarms.begin(); it != alarms.end(); ) {
 
         if (it->trigger <= cpu.clock) {
-            msgQueue.put(MSG_ALARM, it->payload);
+            msgQueue.put(Msg::ALARM, it->payload);
             it = alarms.erase(it);
         } else {
             it++;

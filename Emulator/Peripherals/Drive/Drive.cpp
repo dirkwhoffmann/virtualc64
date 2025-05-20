@@ -244,7 +244,7 @@ Drive::setRedLED(bool b)
 
         redLED = b;
         wakeUp();
-        msgQueue.put(MSG_DRIVE_LED, DriveMsg { .nr = i16(objid), .value = b } );
+        msgQueue.put(Msg::DRIVE_LED, DriveMsg { .nr = i16(objid), .value = b } );
         return;
     }
 }
@@ -255,7 +255,7 @@ Drive::setRotating(bool b)
     if (spinning != b) {
 
         spinning = b;
-        msgQueue.put(MSG_DRIVE_MOTOR, DriveMsg { .nr = i16(objid), .value = b } );
+        msgQueue.put(Msg::DRIVE_MOTOR, DriveMsg { .nr = i16(objid), .value = b } );
         serialPort.updateTransferStatus();
     }
 }
@@ -266,7 +266,7 @@ Drive::wakeUp(isize awakeness)
     if (isIdle()) {
         
         trace(DRV_DEBUG, "Exiting power-safe mode\n");
-        msgQueue.put(MSG_DRIVE_POWER_SAVE, DriveMsg { .nr = i16(objid), .value = 0 } );
+        msgQueue.put(Msg::DRIVE_POWER_SAVE, DriveMsg { .nr = i16(objid), .value = 0 } );
         needsEmulation = true;
     }
 
@@ -296,7 +296,7 @@ Drive::moveHeadUp()
               halftrack, (halftrack + 1) / 2.0, offset);
     }
 
-    msgQueue.put(MSG_DRIVE_STEP, DriveMsg {
+    msgQueue.put(Msg::DRIVE_STEP, DriveMsg {
         i16(objid), i16(halftrack), config.stepVolume, config.pan
     });
 }
@@ -324,7 +324,7 @@ Drive::moveHeadDown()
               halftrack, (halftrack + 1) / 2.0);
     }
 
-    msgQueue.put(MSG_DRIVE_STEP, DriveMsg {
+    msgQueue.put(Msg::DRIVE_STEP, DriveMsg {
         i16(objid), i16(halftrack), config.stepVolume, config.pan
     });
 }
@@ -349,7 +349,7 @@ Drive::setModificationFlag(bool value)
     if (hasDisk() && value != disk->isModified()) {
 
         disk->setModified(value);
-        msgQueue.put(MSG_DISK_MODIFIED);
+        msgQueue.put(Msg::DISK_MODIFIED);
     }
 }
 
@@ -359,7 +359,7 @@ Drive::setProtection(bool value)
     if (hasDisk() && value != disk->isWriteProtected()) {
 
         disk->setWriteProtection(value);
-        msgQueue.put(MSG_DISK_PROTECTED);
+        msgQueue.put(Msg::DISK_PROTECTED);
     }
 }
 
@@ -474,7 +474,7 @@ Drive::vsyncHandler()
 
             trace(DRV_DEBUG, "Entering power-save mode\n");
             needsEmulation = false;
-            msgQueue.put(MSG_DRIVE_POWER_SAVE, DriveMsg { .nr = i16(objid), .value = 1 } );
+            msgQueue.put(Msg::DRIVE_POWER_SAVE, DriveMsg { .nr = i16(objid), .value = 1 } );
         }
     }
 }
@@ -545,7 +545,7 @@ Drive::processDiskChangeEvent(EventID id)
             insertionStatus = DISK_FULLY_EJECTED;
 
             // Inform the GUI
-            msgQueue.put(MSG_DISK_EJECT, DriveMsg {
+            msgQueue.put(Msg::DISK_EJECT, DriveMsg {
                 i16(objid), i16(halftrack), config.stepVolume, config.pan
             });
 
@@ -576,7 +576,7 @@ Drive::processDiskChangeEvent(EventID id)
             disk = std::move(diskToInsert);
 
             // Inform the GUI
-            msgQueue.put(MSG_DISK_INSERT, DriveMsg {
+            msgQueue.put(Msg::DISK_INSERT, DriveMsg {
                 i16(objid), i16(halftrack), config.stepVolume, config.pan
             });
             break;

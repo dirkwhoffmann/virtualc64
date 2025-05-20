@@ -80,7 +80,7 @@ RegressionTester::dumpTexture(C64 &c64, const std::filesystem::path &path)
     file.close();
 
     // Ask the GUI to quit
-    // msgQueue.put(MSG_ABORT, retValue);
+    // msgQueue.put(Msg::ABORT, retValue);
 }
 
 void
@@ -117,7 +117,7 @@ void
 RegressionTester::processEvent(EventID id)
 {
     msg("Watchdog triggerd: Shutting down the emulator\n");
-    msgQueue.put(MSG_ABORT, 1);
+    msgQueue.put(Msg::ABORT, 1);
 }
 
 void
@@ -128,7 +128,7 @@ RegressionTester::pokeDebugCart(u16 addr, u8 value)
     if (addr == 0xD7FF) {
 
         // Exit the emulator with the provided value as return code
-        msgQueue.put(MSG_ABORT, value);
+        msgQueue.put(Msg::ABORT, value);
     }
 }
 

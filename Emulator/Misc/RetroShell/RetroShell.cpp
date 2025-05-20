@@ -165,14 +165,14 @@ RetroShell::exec()
 
     } catch (ScriptInterruption &) {
 
-        msgQueue.put(MSG_RSH_WAIT);
+        msgQueue.put(Msg::RSH_WAIT);
 
     } catch (...) {
 
         // Remove all remaining commands
         commands = { };
 
-        msgQueue.put(MSG_RSH_ERROR);
+        msgQueue.put(Msg::RSH_ERROR);
     }
 
     // Print prompt

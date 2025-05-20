@@ -138,7 +138,7 @@ bool
 Mouse::detectShakeXY(double x, double y)
 {
     if (config.shakeDetection && shakeDetector.isShakingAbs(x)) {
-        msgQueue.put(MSG_SHAKING);
+        msgQueue.put(Msg::SHAKING);
         return true;
     }
     return false;
@@ -148,7 +148,7 @@ bool
 Mouse::detectShakeDxDy(double dx, double dy)
 {
     if (config.shakeDetection && shakeDetector.isShakingRel(dx)) {
-        msgQueue.put(MSG_SHAKING);
+        msgQueue.put(Msg::SHAKING);
         return true;
     }
     return false;

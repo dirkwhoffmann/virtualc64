@@ -20,7 +20,7 @@ namespace vc64 {
 void
 CommandConsole::_enter()
 {
-    msgQueue.put(MSG_RSH_DEBUGGER, false);
+    msgQueue.put(Msg::RSH_DEBUGGER, false);
 
     // If the console is entered the first time...
     if (isEmpty()) {

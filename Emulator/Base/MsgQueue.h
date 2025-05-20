@@ -57,10 +57,10 @@ public:
 
     // Sends a message
     void put(const Message &msg);
-    void put(MsgType type, i64 payload = 0);
-    void put(MsgType type, CpuMsg payload);
-    void put(MsgType type, DriveMsg payload);
-    void put(MsgType type, ScriptMsg payload);
+    void put(Msg type, i64 payload = 0);
+    void put(Msg type, CpuMsg payload);
+    void put(Msg type, DriveMsg payload);
+    void put(Msg type, ScriptMsg payload);
 
     // Reads a message
     bool get(Message &msg);

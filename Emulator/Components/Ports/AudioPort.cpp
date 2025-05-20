@@ -170,7 +170,7 @@ AudioPort::mixSingleSID(isize numSamples)
             for (isize i = 0; i < numSamples; i++) write(SamplePair { 0, 0 } );
 
             // Send a MUTE message if applicable
-            if (!muted) { muted = true; msgQueue.put(MSG_MUTE, true); }
+            if (!muted) { muted = true; msgQueue.put(Msg::MUTE, true); }
             return;
         }
     }
@@ -201,7 +201,7 @@ AudioPort::mixSingleSID(isize numSamples)
     }
 
     // Send a MUTE message if applicable
-    if (muted) { muted = false; msgQueue.put(MSG_MUTE, false); }
+    if (muted) { muted = false; msgQueue.put(Msg::MUTE, false); }
 }
 
 template <bool fading> void
@@ -233,7 +233,7 @@ AudioPort::mixMultiSID(isize numSamples)
             for (isize i = 0; i < numSamples; i++) write(SamplePair { 0, 0 } );
 
             // Send a MUTE message if applicable
-            if (!muted) { muted = true; msgQueue.put(MSG_MUTE, true); }
+            if (!muted) { muted = true; msgQueue.put(Msg::MUTE, true); }
             return;
         }
     }
@@ -268,7 +268,7 @@ AudioPort::mixMultiSID(isize numSamples)
     }
 
     // Send a MUTE message if applicable
-    if (muted) { muted = false; msgQueue.put(MSG_MUTE, false); }
+    if (muted) { muted = false; msgQueue.put(Msg::MUTE, false); }
 }
 
 isize

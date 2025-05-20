@@ -46,7 +46,7 @@ MsgQueue::put(const Message &msg)
 
         SYNCHRONIZED
 
-        debug(MSG_DEBUG, "%s [%llx]\n", MsgTypeEnum::key(msg.type), msg.value);
+        debug(MSG_DEBUG, "%s [%llx]\n", MsgEnum::key(msg.type), msg.value);
 
         if (listener) {
 
@@ -59,39 +59,39 @@ MsgQueue::put(const Message &msg)
             if (!queue.isFull()) {
                 queue.write(msg);
             } else {
-                debug(MSG_DEBUG, "Message lost: %s [%llx]\n", MsgTypeEnum::key(msg.type), msg.value);
+                debug(MSG_DEBUG, "Message lost: %s [%llx]\n", MsgEnum::key(msg.type), msg.value);
             }
         }
     }
 }
 
 void
-MsgQueue::put(MsgType type, i64 payload)
+MsgQueue::put(Msg type, i64 payload)
 {
     put( Message { .type = type, .value = payload } );
 }
 
 void
-MsgQueue::put(MsgType type, CpuMsg payload)
+MsgQueue::put(Msg type, CpuMsg payload)
 {
     put( Message { .type = type, .cpu = payload } );
 }
 
 void
-MsgQueue::put(MsgType type, DriveMsg payload)
+MsgQueue::put(Msg type, DriveMsg payload)
 {
     put( Message { .type = type, .drive = payload } );
 }
 
 void
-MsgQueue::put(MsgType type, ScriptMsg payload)
+MsgQueue::put(Msg type, ScriptMsg payload)
 {
     put( Message { .type = type, .script = payload } );
 }
 
 /*
 void
-MsgQueue::put(MsgType type, Snapshot *payload)
+MsgQueue::put(Msg type, Snapshot *payload)
 {
     put( Message { .type = type, .snapshot = payload } );
 }

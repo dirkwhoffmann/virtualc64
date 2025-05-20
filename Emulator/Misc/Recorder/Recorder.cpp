@@ -411,7 +411,7 @@ Recorder::prepare()
     // Switch state and inform the GUI
     state = REC_STATE_RECORD;
     recStart = util::Time::now();
-    msgQueue.put(MSG_RECORDING_STARTED);
+    msgQueue.put(Msg::RECORDING_STARTED);
 }
 
 void
@@ -486,14 +486,14 @@ Recorder::finalize()
     // Switch state and inform the GUI
     state = REC_STATE_WAIT;
     recStop = util::Time::now();
-    msgQueue.put(MSG_RECORDING_STOPPED);
+    msgQueue.put(Msg::RECORDING_STOPPED);
 }
 
 void
 Recorder::abort()
 {
     finalize();
-    msgQueue.put(MSG_RECORDING_ABORTED);
+    msgQueue.put(Msg::RECORDING_ABORTED);
 }
 
 }

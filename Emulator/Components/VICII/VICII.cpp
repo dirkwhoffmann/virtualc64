@@ -178,7 +178,7 @@ VICII::setRevision(VICIIRevision revision)
     vic.updateVicFunctionTable();
     c64.updateClockFrequency();
     
-    msgQueue.put(isPAL ? MSG_PAL : MSG_NTSC);
+    msgQueue.put(isPAL ? Msg::PAL : Msg::NTSC);
 }
 
 void

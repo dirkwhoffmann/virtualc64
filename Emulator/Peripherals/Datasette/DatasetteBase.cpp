@@ -206,7 +206,7 @@ Datasette::setOption(Opt opt, i64 value)
 
                 config.connected = bool(value);
                 updateDatEvent();
-                msgQueue.put(MSG_VC1530_CONNECT, value);
+                msgQueue.put(Msg::VC1530_CONNECT, value);
             }
             return;
 

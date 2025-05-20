@@ -141,7 +141,7 @@ CPU::instructionLogged() const
 void
 CPU::jumpedTo(u16 addr) const
 {
-    msgQueue.put(MSG_CPU_JUMPED, CpuMsg { .pc = addr } );
+    msgQueue.put(Msg::CPU_JUMPED, CpuMsg { .pc = addr } );
 }
 
 void
@@ -208,7 +208,7 @@ CPU::setBreakpoint(u32 addr, isize ignores)
     if (debugger.breakpoints.isSetAt(addr)) throw Error(Fault::BP_ALREADY_SET, addr);
 
     debugger.breakpoints.setAt(addr, ignores);
-    msgQueue.put(MSG_BREAKPOINT_UPDATED);
+    msgQueue.put(Msg::BREAKPOINT_UPDATED);
 }
 
 void 
@@ -217,7 +217,7 @@ CPU::moveBreakpoint(isize nr, u32 newAddr)
     if (!debugger.breakpoints.guardNr(nr)) throw Error(Fault::BP_NOT_FOUND, nr);
 
     debugger.breakpoints.moveTo(nr, newAddr);
-    msgQueue.put(MSG_BREAKPOINT_UPDATED);
+    msgQueue.put(Msg::BREAKPOINT_UPDATED);
 }
 
 void
@@ -226,7 +226,7 @@ CPU::deleteBreakpoint(isize nr)
     if (!debugger.breakpoints.guardNr(nr)) throw Error(Fault::BP_NOT_FOUND, nr);
 
     debugger.breakpoints.remove(nr);
-    msgQueue.put(MSG_BREAKPOINT_UPDATED);
+    msgQueue.put(Msg::BREAKPOINT_UPDATED);
 }
 
 void
@@ -235,14 +235,14 @@ CPU::deleteBreakpointAt(u32 addr)
     if (!debugger.breakpoints.guardAt(addr)) throw Error(Fault::BP_NOT_FOUND, addr);
 
     debugger.breakpoints.removeAt(addr);
-    msgQueue.put(MSG_BREAKPOINT_UPDATED);
+    msgQueue.put(Msg::BREAKPOINT_UPDATED);
 }
 
 void
 CPU::deleteAllBreakpoints()
 {
     debugger.breakpoints.removeAll();
-    msgQueue.put(MSG_BREAKPOINT_UPDATED);
+    msgQueue.put(Msg::BREAKPOINT_UPDATED);
 }
 
 void
@@ -257,7 +257,7 @@ CPU::setEnableBreakpoint(isize nr, bool value)
     if (!debugger.breakpoints.guardNr(nr)) throw Error(Fault::BP_NOT_FOUND, nr);
 
     debugger.breakpoints.setEnable(nr, value);
-    msgQueue.put(MSG_BREAKPOINT_UPDATED);
+    msgQueue.put(Msg::BREAKPOINT_UPDATED);
 }
 
 void 
@@ -266,14 +266,14 @@ CPU::setEnableBreakpointAt(u32 addr, bool value)
     if (!debugger.breakpoints.guardAt(addr)) throw Error(Fault::BP_NOT_FOUND, addr);
 
     debugger.breakpoints.setEnableAt(addr, value);
-    msgQueue.put(MSG_BREAKPOINT_UPDATED);
+    msgQueue.put(Msg::BREAKPOINT_UPDATED);
 }
 
 void
 CPU::setEnableAllBreakpoints(bool value)
 {
     debugger.breakpoints.setEnableAll(value);
-    msgQueue.put(MSG_BREAKPOINT_UPDATED);
+    msgQueue.put(Msg::BREAKPOINT_UPDATED);
 }
 
 void
@@ -282,7 +282,7 @@ CPU::setWatchpoint(u32 addr, isize ignores)
     if (debugger.watchpoints.isSetAt(addr)) throw Error(Fault::WP_ALREADY_SET, addr);
 
     debugger.watchpoints.setAt(addr, ignores);
-    msgQueue.put(MSG_WATCHPOINT_UPDATED);
+    msgQueue.put(Msg::WATCHPOINT_UPDATED);
 }
 
 void
@@ -291,7 +291,7 @@ CPU::moveWatchpoint(isize nr, u32 newAddr)
     if (!debugger.watchpoints.guardNr(nr)) throw Error(Fault::WP_NOT_FOUND, nr);
 
     debugger.watchpoints.moveTo(nr, newAddr);
-    msgQueue.put(MSG_WATCHPOINT_UPDATED);
+    msgQueue.put(Msg::WATCHPOINT_UPDATED);
 }
 
 void
@@ -300,7 +300,7 @@ CPU::deleteWatchpoint(isize nr)
     if (!debugger.watchpoints.guardNr(nr)) throw Error(Fault::WP_NOT_FOUND, nr);
 
     debugger.watchpoints.remove(nr);
-    msgQueue.put(MSG_WATCHPOINT_UPDATED);
+    msgQueue.put(Msg::WATCHPOINT_UPDATED);
 }
 
 void
@@ -309,14 +309,14 @@ CPU::deleteWatchpointAt(u32 addr)
     if (!debugger.watchpoints.guardAt(addr)) throw Error(Fault::WP_NOT_FOUND, addr);
 
     debugger.watchpoints.removeAt(addr);
-    msgQueue.put(MSG_WATCHPOINT_UPDATED);
+    msgQueue.put(Msg::WATCHPOINT_UPDATED);
 }
 
 void
 CPU::deleteAllWatchpoints()
 {
     debugger.watchpoints.removeAll();
-    msgQueue.put(MSG_WATCHPOINT_UPDATED);
+    msgQueue.put(Msg::WATCHPOINT_UPDATED);
 }
 
 void
@@ -331,7 +331,7 @@ CPU::setEnableWatchpoint(isize nr, bool value)
     if (!debugger.watchpoints.guardNr(nr)) throw Error(Fault::WP_NOT_FOUND, nr);
 
     debugger.watchpoints.setEnable(nr, value);
-    msgQueue.put(MSG_WATCHPOINT_UPDATED);
+    msgQueue.put(Msg::WATCHPOINT_UPDATED);
 }
 
 void
@@ -340,14 +340,14 @@ CPU::setEnableWatchpointAt(u32 addr, bool value)
     if (!debugger.watchpoints.guardAt(addr)) throw Error(Fault::WP_NOT_FOUND, addr);
 
     debugger.watchpoints.setEnableAt(addr, value);
-    msgQueue.put(MSG_WATCHPOINT_UPDATED);
+    msgQueue.put(Msg::WATCHPOINT_UPDATED);
 }
 
 void
 CPU::setEnableAllWatchpoints(bool value)
 {
     debugger.watchpoints.setEnableAll(value);
-    msgQueue.put(MSG_WATCHPOINT_UPDATED);
+    msgQueue.put(Msg::WATCHPOINT_UPDATED);
 }
 
 

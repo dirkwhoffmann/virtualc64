@@ -118,7 +118,7 @@ DmaDebugger::setOption(Opt opt, i64 value)
         case Opt::DMA_DEBUG_OVERLAY:
             
             config.dmaOverlay = value;
-            msgQueue.put(MSG_DMA_DEBUG, value);
+            msgQueue.put(Msg::DMA_DEBUG, value);
             return;
             
         case Opt::DMA_DEBUG_MODE:

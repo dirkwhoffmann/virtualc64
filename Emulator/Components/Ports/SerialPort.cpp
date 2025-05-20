@@ -160,7 +160,7 @@ SerialPort::updateTransferStatus()
     if (transferring != newValue) {
 
         transferring = newValue;
-        msgQueue.put(newValue ? MSG_SER_BUSY : MSG_SER_IDLE);
+        msgQueue.put(newValue ? Msg::SER_BUSY : Msg::SER_IDLE);
     }
 }
 

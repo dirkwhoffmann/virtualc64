@@ -64,7 +64,7 @@ Datasette::insertTape(MediaFile &file)
             updateDatEvent();
 
             // Inform the GUI
-            msgQueue.put(MSG_VC1530_TAPE, 1);
+            msgQueue.put(Msg::VC1530_TAPE, 1);
         }
 
     } catch (...) {
@@ -87,7 +87,7 @@ Datasette::ejectTape()
         rewind();
         dealloc();
         
-        msgQueue.put(MSG_VC1530_TAPE, 0);
+        msgQueue.put(Msg::VC1530_TAPE, 0);
     }
 }
 
@@ -107,7 +107,7 @@ Datasette::rewind(isize seconds)
     
     // Inform the GUI
     if (old != (i64)counter.asSeconds()) {
-        msgQueue.put(MSG_VC1530_COUNTER, (i64)counter.asSeconds());
+        msgQueue.put(Msg::VC1530_COUNTER, (i64)counter.asSeconds());
     }
 }
 
@@ -123,7 +123,7 @@ Datasette::advanceHead()
     
     // Inform the GUI
     if (old != (i64)counter.asSeconds()) {
-        msgQueue.put(MSG_VC1530_COUNTER, (i64)counter.asSeconds());
+        msgQueue.put(Msg::VC1530_COUNTER, (i64)counter.asSeconds());
     }
 }
 
@@ -157,7 +157,7 @@ Datasette::play()
         updateDatEvent();
 
         // Inform the GUI
-        msgQueue.put(MSG_VC1530_PLAY, 1);
+        msgQueue.put(Msg::VC1530_PLAY, 1);
     }
 }
 
@@ -184,7 +184,7 @@ Datasette::stop()
         // Update the execution event slot
         scheduleNextDatEvent();
 
-        msgQueue.put(MSG_VC1530_PLAY, 0);
+        msgQueue.put(Msg::VC1530_PLAY, 0);
     }
 }
 
@@ -231,8 +231,8 @@ Datasette::processMotEvent(EventID event)
 {
     switch (event) {
 
-        case MOT_START: msgQueue.put(MSG_VC1530_MOTOR, true);
-        case MOT_STOP:  msgQueue.put(MSG_VC1530_MOTOR, false);
+        case MOT_START: msgQueue.put(Msg::VC1530_MOTOR, true);
+        case MOT_STOP:  msgQueue.put(Msg::VC1530_MOTOR, false);
 
         default:
             break;

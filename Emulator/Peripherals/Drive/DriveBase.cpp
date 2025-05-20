@@ -295,14 +295,14 @@ Drive::setOption(Opt opt, i64 value)
 
             config.connected = bool(value);
             hardReset();
-            msgQueue.put(MSG_DRIVE_CONNECT, DriveMsg { i16(objid), i16(value), 0, 0 } );
+            msgQueue.put(Msg::DRIVE_CONNECT, DriveMsg { i16(objid), i16(value), 0, 0 } );
             return;
 
         case Opt::DRV_POWER_SWITCH:
 
             config.switchedOn = bool(value);
             softReset();
-            msgQueue.put(MSG_DRIVE_POWER, DriveMsg { .nr = i16(objid), .value = i16(value) } );
+            msgQueue.put(Msg::DRIVE_POWER, DriveMsg { .nr = i16(objid), .value = i16(value) } );
             return;
 
         case Opt::DRV_POWER_SAVE:

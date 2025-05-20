@@ -809,7 +809,7 @@ Console::initCommands(RetroShellCmd &root)
         .help   = { "Hide the console window" },
         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
             
-            msgQueue.put(MSG_RSH_CLOSE);
+            msgQueue.put(Msg::RSH_CLOSE);
         }
     });
 
@@ -879,7 +879,7 @@ Console::initCommands(RetroShellCmd &root)
         .help   = { "Terminates the application" },
         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
             
-            msgQueue.put(MSG_ABORT, 0);
+            msgQueue.put(Msg::ABORT, 0);
         }
     });
 }
@@ -941,7 +941,7 @@ Console::registerComponent(CoreComponent &c, RetroShellCmd &root)
                     .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
                         
                         emulator.set(Opt(values[0]), argv[0], { values[1] });
-                        // msgQueue.put(MSG_CONFIG);
+                        // msgQueue.put(Msg::CONFIG);
                         
                     }, .values = { isize(opt), c.objid }
                 });
@@ -966,7 +966,7 @@ Console::registerComponent(CoreComponent &c, RetroShellCmd &root)
                         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
                             
                             emulator.set(Opt(values[0]), values[1], { values[2] });
-                            // msgQueue.put(MSG_CONFIG);
+                            // msgQueue.put(Msg::CONFIG);
                             
                         },  .values = { isize(opt), isize(second), c.objid }
                     });

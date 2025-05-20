@@ -214,7 +214,7 @@ RS232::recordIncomingPacket(u16 packet)
         incoming += packet;
 
         // Inform the GUI if the record buffer had been empty
-        if (incoming.length() == 1) msgQueue.put(MSG_RS232_IN);
+        if (incoming.length() == 1) msgQueue.put(Msg::RS232_IN);
 
         // Inform RetroShell
         dumpPacket(packet);
@@ -236,7 +236,7 @@ RS232::recordOutgoingPacket(u16 packet)
         outgoing += packet;
 
         // Inform the GUI if the record buffer had been empty
-        if (outgoing.length() == 1) msgQueue.put(MSG_RS232_OUT);
+        if (outgoing.length() == 1) msgQueue.put(Msg::RS232_OUT);
 
         // Inform RetroShell
         dumpPacket(packet);
