@@ -48,53 +48,52 @@ struct CIARevisionEnum : util::Reflection<CIARevisionEnum, CIARev> {
     }
 };
 
-enum_long(CIAREG)
+enum class CIAReg : long
 {
-    CIAREG_PRA,
-    CIAREG_PRB,
-    CIAREG_DDRA,
-    CIAREG_DDRB,
-    CIAREG_TALO,
-    CIAREG_TAHI,
-    CIAREG_TBLO,
-    CIAREG_TBHI,
-    CIAREG_TODTHS,
-    CIAREG_TODSEC,
-    CIAREG_TODMIN,
-    CIAREG_TODHR,
-    CIAREG_SDR,
-    CIAREG_ICR,
-    CIAREG_CRA,
-    CIAREG_CRB
+    PRA,
+    PRB,
+    DDRA,
+    DDRB,
+    TALO,
+    TAHI,
+    TBLO,
+    TBHI,
+    TODTHS,
+    TODSEC,
+    TODMIN,
+    TODHR,
+    SDR,
+    ICR,
+    CRA,
+    CRB
 };
-typedef CIAREG CIAReg;
 
 struct CIARegEnum : util::Reflection<CIARegEnum, CIAReg> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = CIAREG_CRB;
+    static constexpr long maxVal = long(CIAReg::CRB);
 
     static const char *prefix() { return "CIAREG"; }
-    static const char *_key(long value)
+    static const char *_key(CIAReg value)
     {
         switch (value) {
 
-            case CIAREG_PRA:     return "PRA";
-            case CIAREG_PRB:     return "PRB";
-            case CIAREG_DDRA:    return "DDRA";
-            case CIAREG_DDRB:    return "DDRB";
-            case CIAREG_TALO:    return "TALO";
-            case CIAREG_TAHI:    return "TAHI";
-            case CIAREG_TBLO:    return "TBLO";
-            case CIAREG_TBHI:    return "TBHI";
-            case CIAREG_TODTHS:  return "TODTHS";
-            case CIAREG_TODSEC:  return "TODSEC";
-            case CIAREG_TODMIN:  return "TODMIN";
-            case CIAREG_TODHR:   return "TODHR";
-            case CIAREG_SDR:     return "SDR";
-            case CIAREG_ICR:     return "ICR";
-            case CIAREG_CRA:     return "CRA";
-            case CIAREG_CRB:     return "CRB";
+            case CIAReg::PRA:     return "PRA";
+            case CIAReg::PRB:     return "PRB";
+            case CIAReg::DDRA:    return "DDRA";
+            case CIAReg::DDRB:    return "DDRB";
+            case CIAReg::TALO:    return "TALO";
+            case CIAReg::TAHI:    return "TAHI";
+            case CIAReg::TBLO:    return "TBLO";
+            case CIAReg::TBHI:    return "TBHI";
+            case CIAReg::TODTHS:  return "TODTHS";
+            case CIAReg::TODSEC:  return "TODSEC";
+            case CIAReg::TODMIN:  return "TODMIN";
+            case CIAReg::TODHR:   return "TODHR";
+            case CIAReg::SDR:     return "SDR";
+            case CIAReg::ICR:     return "ICR";
+            case CIAReg::CRA:     return "CRA";
+            case CIAReg::CRB:     return "CRB";
         }
         return "???";
     }

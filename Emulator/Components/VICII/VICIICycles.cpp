@@ -836,7 +836,7 @@ VICII::sAccess1()
             dataBusPhi2 = memAccess(spritePtr[sprite] | mc[sprite]);
             
             if constexpr (bool(flags & DEBUG_CYCLE)) {
-                dmaDebugger.visualizeDma(bufferoffset, dataBusPhi2, MEMACCESS_S);
+                dmaDebugger.visualizeDma(bufferoffset, dataBusPhi2, MemAccess::S);
             }
         }
         
@@ -861,7 +861,7 @@ VICII::sAccess2()
         mc[sprite] = (mc[sprite] + 1) & 0x3F;
         
         if constexpr (bool(flags & DEBUG_CYCLE)) {
-            dmaDebugger.visualizeDma(bufferoffset, dataBusPhi1, MEMACCESS_S);
+            dmaDebugger.visualizeDma(bufferoffset, dataBusPhi1, MemAccess::S);
         }
 
 
@@ -885,7 +885,7 @@ VICII::sAccess3()
         mc[sprite] = (mc[sprite] + 1) & 0x3F;
 
         if constexpr (bool(flags & DEBUG_CYCLE)) {
-            dmaDebugger.visualizeDma(bufferoffset, dataBusPhi2, MEMACCESS_S);
+            dmaDebugger.visualizeDma(bufferoffset, dataBusPhi2, MemAccess::S);
         }
     }
     
@@ -898,7 +898,7 @@ VICII::rAccess()
     dataBusPhi1 = memAccess(0x3F00 | refreshCounter--);
     
     if constexpr (bool(flags & DEBUG_CYCLE)) {
-        dmaDebugger.visualizeDma(bufferoffset, dataBusPhi1, MEMACCESS_R);
+        dmaDebugger.visualizeDma(bufferoffset, dataBusPhi1, MemAccess::R);
     }
 }
 
@@ -908,7 +908,7 @@ VICII::iAccess()
     dataBusPhi1 = memAccess(0x3FFF);
     
     if constexpr (bool(flags & DEBUG_CYCLE)) {
-        dmaDebugger.visualizeDma(bufferoffset, dataBusPhi1, MEMACCESS_I);
+        dmaDebugger.visualizeDma(bufferoffset, dataBusPhi1, MemAccess::I);
     }
 }
 
@@ -926,7 +926,7 @@ VICII::cAccess()
         colorLine[vmli] = mem.colorRam[vc] & 0x0F;
         
         if constexpr (bool(flags & DEBUG_CYCLE)) {
-            dmaDebugger.visualizeDma(bufferoffset, dataBusPhi2, MEMACCESS_C);
+            dmaDebugger.visualizeDma(bufferoffset, dataBusPhi2, MemAccess::C);
         }
     }
     
@@ -1007,7 +1007,7 @@ VICII::gAccess()
     }
     
     if constexpr (bool(flags & DEBUG_CYCLE)) {
-        dmaDebugger.visualizeDma(bufferoffset, dataBusPhi1, MEMACCESS_G);
+        dmaDebugger.visualizeDma(bufferoffset, dataBusPhi1, MemAccess::G);
     }
 }
 
@@ -1082,7 +1082,7 @@ VICII::pAccess(isize sprite)
     spritePtr[sprite] = (u16)(dataBusPhi1 << 6);
     
     if constexpr (bool(flags & DEBUG_CYCLE)) {
-        dmaDebugger.visualizeDma(bufferoffset, dataBusPhi1, MEMACCESS_P);
+        dmaDebugger.visualizeDma(bufferoffset, dataBusPhi1, MemAccess::P);
     }
 }
 

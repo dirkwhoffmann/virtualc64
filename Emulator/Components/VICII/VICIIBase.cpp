@@ -205,13 +205,13 @@ VICII::getOption(Opt option) const
 {
     switch (option) {
 
-        case Opt::VICII_REVISION:        return config.awaiting;
-        case Opt::VICII_POWER_SAVE:      return config.powerSave;
-        case Opt::VICII_GRAY_DOT_BUG:    return config.grayDotBug;
-        case Opt::GLUE_LOGIC:            return config.glueLogic;
-        case Opt::VICII_HIDE_SPRITES:    return config.hideSprites;
-        case Opt::VICII_SS_COLLISIONS:   return config.checkSSCollisions;
-        case Opt::VICII_SB_COLLISIONS:   return config.checkSBCollisions;
+        case Opt::VICII_REVISION:        return (i64)config.awaiting;
+        case Opt::VICII_POWER_SAVE:      return (i64)config.powerSave;
+        case Opt::VICII_GRAY_DOT_BUG:    return (i64)config.grayDotBug;
+        case Opt::GLUE_LOGIC:            return (i64)config.glueLogic;
+        case Opt::VICII_HIDE_SPRITES:    return (i64)config.hideSprites;
+        case Opt::VICII_SS_COLLISIONS:   return (i64)config.checkSSCollisions;
+        case Opt::VICII_SB_COLLISIONS:   return (i64)config.checkSBCollisions;
 
         default:
             fatalError;
@@ -225,8 +225,8 @@ VICII::checkOption(Opt opt, i64 value)
 
         case Opt::VICII_REVISION:
 
-            if (!VICIIRevisionEnum::isValid(value)) {
-                throw Error(Fault::OPT_INV_ARG, VICIIRevisionEnum::keyList());
+            if (!VICIIRevEnum::isValid(value)) {
+                throw Error(Fault::OPT_INV_ARG, VICIIRevEnum::keyList());
             }
             return;
 
@@ -259,7 +259,7 @@ VICII::setOption(Opt opt, i64 value)
 
         case Opt::VICII_REVISION:
 
-            config.awaiting = VICIIRevision(value);
+            config.awaiting = VICIIRev(value);
 
             // If the emulator is powered off, perform the change immediately
             if (isPoweredOff()) updateRevision();

@@ -45,7 +45,7 @@ OptionParser::create(Opt opt, i64 arg)
 
         case Opt::DASM_NUMBERS:              return enumParser.template operator()<DasmNumbersEnum,DasmNumbers>();
             
-        case Opt::VICII_REVISION:            return enumParser.template operator()<VICIIRevisionEnum,VICIIRevision>();
+        case Opt::VICII_REVISION:            return enumParser.template operator()<VICIIRevEnum,VICIIRev>();
         case Opt::VICII_GRAY_DOT_BUG:        return boolParser();
         case Opt::VICII_POWER_SAVE:          return boolParser();
         case Opt::VICII_HIDE_SPRITES:        return boolParser();

@@ -17,7 +17,7 @@
 namespace vc64 {
 
 void
-VICII::initFuncTable(VICIIRevision revision)
+VICII::initFuncTable(VICIIRev revision)
 {
     initFuncTable(revision, 0);
     initFuncTable(revision, DEBUG_CYCLE);
@@ -25,22 +25,22 @@ VICII::initFuncTable(VICIIRevision revision)
 }
 
 void
-VICII::initFuncTable(VICIIRevision revision, u16 flags)
+VICII::initFuncTable(VICIIRev revision, u16 flags)
 {
-    auto *table = functable[revision][flags];
+    auto *table = functable[(long)revision][flags];
 
     switch (revision) {
 
-        case VICII_PAL_6569_R1:
-        case VICII_PAL_6569_R3:
-        case VICII_PAL_8565:
+        case VICIIRev::PAL_6569_R1:
+        case VICIIRev::PAL_6569_R3:
+        case VICIIRev::PAL_8565:
 
             for (isize i = 1; i <= 63; i++) {
                 table[i] = getViciiFunc(PAL_CYCLE | flags, i);
             }
             break;
 
-        case VICII_NTSC_6567_R56A:
+        case VICIIRev::NTSC_6567_R56A:
 
             for (isize i = 1; i <= 11; i++) {
                 table[i] = getViciiFunc(PAL_CYCLE | flags, i);
@@ -50,8 +50,8 @@ VICII::initFuncTable(VICIIRevision revision, u16 flags)
             }
             break;
 
-        case VICII_NTSC_6567:
-        case VICII_NTSC_8562:
+        case VICIIRev::NTSC_6567:
+        case VICIIRev::NTSC_8562:
 
             for (isize i = 1; i <= 65; i++) {
                 table[i] = getViciiFunc(flags, i);
@@ -73,7 +73,7 @@ VICII::updateVicFunctionTable()
     
     for (isize i = 1; i < 66; i++) {
 
-        vicfunc[i] = functable[config.revision][flags][i];
+        vicfunc[i] = functable[(long)config.revision][flags][i];
         if (i <= 63) assert(vicfunc[i] != nullptr);
     }
 }

@@ -76,7 +76,7 @@ enum class Cmd : long
     // Mouse
     MOUSE_MOVE_ABS,         ///< Signal a mouse movement (absolute)
     MOUSE_MOVE_REL,         ///< Signal a mouse movement (relative)
-    MOUSE_EVENT,            ///< Signal a mouse button event
+    MOUSE_BUTTON,           ///< Signal a mouse button event
 
     // Joystick
     JOY_EVENT,              ///< Signal a joystick button event
@@ -158,7 +158,7 @@ struct CmdEnum : util::Reflection<CmdEnum, Cmd> {
 
             case Cmd::MOUSE_MOVE_ABS:        return "MOUSE_MOVE_ABS";
             case Cmd::MOUSE_MOVE_REL:        return "MOUSE_MOVE_REL";
-            case Cmd::MOUSE_EVENT:           return "MOUSE_EVENT";
+            case Cmd::MOUSE_BUTTON:          return "MOUSE_BUTTON";
 
             case Cmd::JOY_EVENT:             return "JOY_EVENT";
 

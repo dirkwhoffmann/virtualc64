@@ -104,7 +104,7 @@ ControlPort::processCommand(const Command &cmd)
 
         case Cmd::MOUSE_MOVE_ABS:    mouse.setXY(cmd.coord.x, cmd.coord.y); break;
         case Cmd::MOUSE_MOVE_REL:    mouse.setDxDy(cmd.coord.x, cmd.coord.y); break;
-        case Cmd::MOUSE_EVENT:       mouse.trigger(cmd.action.action); break;
+        case Cmd::MOUSE_BUTTON:       mouse.trigger(cmd.action.action); break;
         case Cmd::JOY_EVENT:         joystick.trigger(cmd.action.action); break;
 
         default:

@@ -26,12 +26,13 @@ DmaDebugger::setDmaDebugColor(MemAccess type, GpuColor color)
 {
     assert_enum(MemAccess, type);
     
-    config.dmaColor[type] = color.abgr;
+    auto channel = (long)type;
+    config.dmaColor[channel] = color.abgr;
 
-    debugColor[type][0] = color.shade(0.3).abgr;
-    debugColor[type][1] = color.shade(0.1).abgr;
-    debugColor[type][2] = color.tint(0.1).abgr;
-    debugColor[type][3] = color.tint(0.3).abgr;
+    debugColor[channel][0] = color.shade(0.3).abgr;
+    debugColor[channel][1] = color.shade(0.1).abgr;
+    debugColor[channel][2] = color.tint(0.1).abgr;
+    debugColor[channel][3] = color.tint(0.3).abgr;
 }
 
 void
@@ -49,12 +50,14 @@ DmaDebugger::visualizeDma(isize offset, u8 data, MemAccess type)
 void
 DmaDebugger::visualizeDma(u32 *p, u8 data, MemAccess type)
 {
-    if (config.dmaChannel[type]) {
+    auto channel = (long)type;
+    
+    if (config.dmaChannel[channel]) {
         
-        p[3] = debugColor[type][data & 0b11]; data >>= 2;
-        p[2] = debugColor[type][data & 0b11]; data >>= 2;
-        p[1] = debugColor[type][data & 0b11]; data >>= 2;
-        p[0] = debugColor[type][data & 0b11];
+        p[3] = debugColor[channel][data & 0b11]; data >>= 2;
+        p[2] = debugColor[channel][data & 0b11]; data >>= 2;
+        p[1] = debugColor[channel][data & 0b11]; data >>= 2;
+        p[0] = debugColor[channel][data & 0b11];
     }
 }
 

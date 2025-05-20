@@ -490,7 +490,7 @@ C64::set(ConfigScheme model)
 
             case ConfigScheme::PAL:
 
-                set(Opt::VICII_REVISION, VICII_PAL_6569_R3);
+                set(Opt::VICII_REVISION, (i64)VICIIRev::PAL_6569_R3);
                 set(Opt::VICII_GRAY_DOT_BUG, false);
                 set(Opt::CIA_REVISION, (i64)CIARev::MOS_6526);
                 set(Opt::CIA_TIMER_B_BUG, true);
@@ -503,7 +503,7 @@ C64::set(ConfigScheme model)
 
             case ConfigScheme::PAL_II:
 
-                set(Opt::VICII_REVISION, VICII_PAL_8565);
+                set(Opt::VICII_REVISION, (i64)VICIIRev::PAL_8565);
                 set(Opt::VICII_GRAY_DOT_BUG, true);
                 set(Opt::CIA_REVISION, (i64)CIARev::MOS_8521);
                 set(Opt::CIA_TIMER_B_BUG, false);
@@ -516,7 +516,7 @@ C64::set(ConfigScheme model)
 
             case ConfigScheme::PAL_OLD:
 
-                set(Opt::VICII_REVISION, VICII_PAL_6569_R1);
+                set(Opt::VICII_REVISION, (i64)VICIIRev::PAL_6569_R1);
                 set(Opt::VICII_GRAY_DOT_BUG, false);
                 set(Opt::CIA_REVISION, (i64)CIARev::MOS_6526);
                 set(Opt::CIA_TIMER_B_BUG, true);
@@ -529,7 +529,7 @@ C64::set(ConfigScheme model)
 
             case ConfigScheme::NTSC:
 
-                set(Opt::VICII_REVISION, VICII_NTSC_6567);
+                set(Opt::VICII_REVISION, (i64)VICIIRev::NTSC_6567);
                 set(Opt::VICII_GRAY_DOT_BUG, false);
                 set(Opt::CIA_REVISION, (i64)CIARev::MOS_6526);
                 set(Opt::CIA_TIMER_B_BUG, false);
@@ -542,7 +542,7 @@ C64::set(ConfigScheme model)
 
             case ConfigScheme::NTSC_II:
 
-                set(Opt::VICII_REVISION, VICII_NTSC_8562);
+                set(Opt::VICII_REVISION, (i64)VICIIRev::NTSC_8562);
                 set(Opt::VICII_GRAY_DOT_BUG, true);
                 set(Opt::CIA_REVISION, (i64)CIARev::MOS_8521);
                 set(Opt::CIA_TIMER_B_BUG, true);
@@ -555,7 +555,7 @@ C64::set(ConfigScheme model)
 
             case ConfigScheme::NTSC_OLD:
 
-                set(Opt::VICII_REVISION, VICII_NTSC_6567_R56A);
+                set(Opt::VICII_REVISION, (i64)VICIIRev::NTSC_6567_R56A);
                 set(Opt::VICII_GRAY_DOT_BUG, false);
                 set(Opt::CIA_REVISION, (i64)CIARev::MOS_6526);
                 set(Opt::CIA_TIMER_B_BUG, false);
@@ -686,7 +686,7 @@ C64::update(CmdQueue &queue)
                 }
                 break;
 
-            case Cmd::MOUSE_EVENT:
+            case Cmd::MOUSE_BUTTON:
             case Cmd::JOY_EVENT:
 
                 switch (cmd.action.port) {

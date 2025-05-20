@@ -45,7 +45,7 @@ Defaults::Defaults()
     setFallback(Opt::CIA_TIMER_B_BUG,            true);
     setFallback(Opt::CIA_IDLE_SLEEP,             true);
 
-    setFallback(Opt::VICII_REVISION,             VICII_PAL_8565);
+    setFallback(Opt::VICII_REVISION,             (i64)VICIIRev::PAL_8565);
     setFallback(Opt::VICII_POWER_SAVE,           true);
     setFallback(Opt::VICII_GRAY_DOT_BUG,         true);
     setFallback(Opt::VICII_HIDE_SPRITES,         false);
@@ -118,7 +118,7 @@ Defaults::Defaults()
     setFallback(Opt::SID_ADDRESS,                0xD420,                 {1});
     setFallback(Opt::SID_ADDRESS,                0xD440,                 {2});
     setFallback(Opt::SID_ADDRESS,                0xD460,                 {3});
-    setFallback(Opt::SID_REV,               (i64)SIDRevision::MOS_8580, {0, 1, 2, 3});
+    setFallback(Opt::SID_REV,                    (i64)SIDRevision::MOS_8580, {0, 1, 2, 3});
     setFallback(Opt::SID_FILTER,                 false,                  {0, 1, 2, 3});
     setFallback(Opt::SID_ENGINE,                 (i64)SIDEngine::RESID,  {0, 1, 2, 3});
     setFallback(Opt::SID_SAMPLING,               SAMPLING_INTERPOLATE,   {0, 1, 2, 3});

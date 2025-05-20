@@ -113,28 +113,28 @@ Monitor::getColor(isize nr, Palette palette)
     double *luma;
     switch(vic.getConfig().revision) {
 
-        case VICII_PAL_6569_R1:
+        case VICIIRev::PAL_6569_R1:
 
             luma = luma_vice_6569_r1;
             break;
 
-        case VICII_PAL_6569_R3:
+        case VICIIRev::PAL_6569_R3:
 
             luma = luma_vice_6569_r3;
             break;
 
-        case VICII_NTSC_6567:
+        case VICIIRev::NTSC_6567:
 
             luma = luma_vice_6567;
             break;
 
-        case VICII_NTSC_6567_R56A:
+        case VICIIRev::NTSC_6567_R56A:
 
             luma = luma_vice_6567_r65a;
             break;
 
-        case VICII_PAL_8565:
-        case VICII_NTSC_8562:
+        case VICIIRev::PAL_8565:
+        case VICIIRev::NTSC_8562:
 
             luma = luma_pepto;
             break;

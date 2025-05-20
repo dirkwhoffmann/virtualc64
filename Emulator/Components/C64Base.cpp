@@ -121,7 +121,7 @@ C64::_dump(Category category, std::ostream& os) const
 
     if (category == Category::Summary) {
 
-        auto vicRev = (VICIIRevision)emulator.get(Opt::VICII_REVISION);
+        auto vicRev = (VICIIRev)emulator.get(Opt::VICII_REVISION);
         auto sidRev = (SIDRevision)emulator.get(Opt::SID_REV);
         auto cia1Rev = (CIARev)cia1.getOption(Opt::CIA_REVISION);
         auto cia2Rev = (CIARev)cia2.getOption(Opt::CIA_REVISION);
@@ -129,7 +129,7 @@ C64::_dump(Category category, std::ostream& os) const
         os << tab("Model");
         os << (vic.pal() ? "PAL" : "NTSC") << std::endl;
         os << tab("VICII");
-        os << VICIIRevisionEnum::key(vicRev) << std::endl;
+        os << VICIIRevEnum::key(vicRev) << std::endl;
         os << tab("SID");
         os << SIDRevisionEnum::key(sidRev) << std::endl;
         os << tab("CIA 1");

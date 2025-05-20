@@ -17,35 +17,33 @@
 
 namespace vc64 {
 
-enum_long(MEMACCESS)
+enum class MemAccess : long
 {
-    MEMACCESS_R,     // Memory Refresh
-    MEMACCESS_I,     // Idle read
-    MEMACCESS_C,     // Character access
-    MEMACCESS_G,     // Graphics access
-    MEMACCESS_P,     // Sprite pointer access
-    MEMACCESS_S,     // Sprite data access
-    MEMACCESS_COUNT
+    R,     // Memory Refresh
+    I,     // Idle read
+    C,     // Character access
+    G,     // Graphics access
+    P,     // Sprite pointer access
+    S,     // Sprite data access
+    COUNT
 };
-typedef MEMACCESS MemAccess;
 
 struct MemAccessEnum : util::Reflection<MemAccessEnum, MemAccess> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = MEMACCESS_S;
+    static constexpr long maxVal = long(MemAccess::S);
 
-    static const char *prefix() { return "MEMACCESS"; }
-    static const char *_key(long value)
+    static const char *_key(MemAccess value)
     {
         switch (value) {
 
-            case MEMACCESS_R:      return "R";
-            case MEMACCESS_I:      return "I";
-            case MEMACCESS_C:      return "C";
-            case MEMACCESS_G:      return "G";
-            case MEMACCESS_P:      return "P";
-            case MEMACCESS_S:      return "S";
-            case MEMACCESS_COUNT:  return "???";
+            case MemAccess::R:      return "R";
+            case MemAccess::I:      return "I";
+            case MemAccess::C:      return "C";
+            case MemAccess::G:      return "G";
+            case MemAccess::P:      return "P";
+            case MemAccess::S:      return "S";
+            case MemAccess::COUNT:  return "???";
         }
         return "???";
     }

@@ -991,7 +991,7 @@ public:
 private:
     
     void updateRevision();
-    void setRevision(VICIIRevision revision);
+    void setRevision(VICIIRev revision);
 
 
     //
@@ -1006,8 +1006,8 @@ private:
     void resetDmaTextures() { resetDmaTexture(1); resetDmaTexture(2); }
     void resetTexture(u32 *p);
 
-    void initFuncTable(VICIIRevision revision);
-    void initFuncTable(VICIIRevision revision, u16 flags);
+    void initFuncTable(VICIIRev revision);
+    void initFuncTable(VICIIRev revision, u16 flags);
     ViciiFunc getViciiFunc(u16 flags, isize cycle);
     template <u16 flags> ViciiFunc getViciiFunc(isize cycle);
 
@@ -1023,42 +1023,42 @@ public:
 public:
     
     // Returns properties about the currently selected VICII revision
-    const VICIITraits &getTraits() const { return traits[config.revision]; }
+    const VICIITraits &getTraits() const { return traits[(long)config.revision]; }
 
     // Returns true if a PAL or an NTSC chip is plugged in
     bool pal() const { return isPAL; }
     bool ntsc() const { return isNTSC; }
 
     // Returns true if light pen interrupts are triggered with a delay
-    static bool delayedLightPenIrqs(VICIIRevision rev);
+    static bool delayedLightPenIrqs(VICIIRev rev);
     bool delayedLightPenIrqs() { return delayedLightPenIrqs(config.revision); }
 
     // Returns the display refresh rate
-    static double getFps(VICIIRevision rev);
+    static double getFps(VICIIRev rev);
     double getFps() const { return getFps(config.revision); }
 
     // Returns the clock frequency
-    static isize getFrequency(VICIIRevision rev);
+    static isize getFrequency(VICIIRev rev);
     isize getFrequency() const { return getFrequency(config.revision); }
     
     // Returns the number of CPU cycles performed per scanline
-    static isize getCyclesPerLine(VICIIRevision rev);
+    static isize getCyclesPerLine(VICIIRev rev);
     isize getCyclesPerLine() const { return getCyclesPerLine(config.revision); }
 
     // Returns the number of scanline drawn per frame
-    static isize getLinesPerFrame(VICIIRevision rev);
+    static isize getLinesPerFrame(VICIIRev rev);
     isize getLinesPerFrame() const { return getLinesPerFrame(config.revision); }
 
     // Returns the number of CPU cycles executed in one frame
-    static isize getCyclesPerFrame(VICIIRevision rev);
+    static isize getCyclesPerFrame(VICIIRev rev);
     isize getCyclesPerFrame() const { return getCyclesPerFrame(config.revision); }
 
     // Returns the number of visible scanlines in a single frame
-    static isize numVisibleLines(VICIIRevision rev);
+    static isize numVisibleLines(VICIIRev rev);
     long numVisibleLines() const { return numVisibleLines(config.revision); }
     
     // Indicates if VICII is affected by the gray-dot bug
-    static bool hasGrayCodeBug(VICIIRevision rev);
+    static bool hasGrayCodeBug(VICIIRev rev);
     bool hasGrayCodeBug() const { return hasGrayCodeBug(config.revision); }
 
     // Returns true if the end of the scanline has been reached

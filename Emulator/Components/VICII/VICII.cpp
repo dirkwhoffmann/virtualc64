@@ -30,12 +30,12 @@ VICII::VICII(C64 &ref) : SubComponent(ref), dmaDebugger(ref)
 {    
     subComponents = std::vector<CoreComponent *> { &dmaDebugger };
 
-    initFuncTable(VICII_PAL_6569_R1);
-    initFuncTable(VICII_PAL_6569_R3);
-    initFuncTable(VICII_PAL_8565);
-    initFuncTable(VICII_NTSC_6567_R56A);
-    initFuncTable(VICII_NTSC_6567);
-    initFuncTable(VICII_NTSC_8562);
+    initFuncTable(VICIIRev::PAL_6569_R1);
+    initFuncTable(VICIIRev::PAL_6569_R3);
+    initFuncTable(VICIIRev::PAL_8565);
+    initFuncTable(VICIIRev::NTSC_6567_R56A);
+    initFuncTable(VICIIRev::NTSC_6567);
+    initFuncTable(VICIIRev::NTSC_8562);
 
     // Assign reference clock to all time delayed variables
     baLine.setClock(&cpu.clock);
@@ -134,9 +134,9 @@ VICII::updateRevision()
 }
 
 void
-VICII::setRevision(VICIIRevision revision)
+VICII::setRevision(VICIIRev revision)
 {
-    assert_enum(VICIIRevision, revision);
+    assert_enum(VICIIRev, revision);
 
     /* Changing the VICII revision is only allowed in certain emulator states.
      * If the emulator is powered off, the operation is harmless and can be
@@ -164,13 +164,13 @@ VICII::setRevision(VICIIRevision revision)
     resetDmaTextures();
 
     isPAL =
-    revision == VICII_PAL_6569_R1 ||
-    revision == VICII_PAL_6569_R3 ||
-    revision == VICII_PAL_8565;
+    revision == VICIIRev::PAL_6569_R1 ||
+    revision == VICIIRev::PAL_6569_R3 ||
+    revision == VICIIRev::PAL_8565;
 
     is856x =
-    revision == VICII_PAL_8565 ||
-    revision == VICII_NTSC_8562;
+    revision == VICIIRev::PAL_8565 ||
+    revision == VICIIRev::NTSC_8562;
 
     isNTSC = !isPAL;
     is656x = !is856x;
@@ -194,51 +194,51 @@ VICII::_trackOff()
 }
 
 bool
-VICII::delayedLightPenIrqs(VICIIRevision rev)
+VICII::delayedLightPenIrqs(VICIIRev rev)
 {
-    return traits[rev].delayedLpIrqs;
+    return traits[(long)rev].delayedLpIrqs;
 }
 
 double
-VICII::getFps(VICIIRevision rev)
+VICII::getFps(VICIIRev rev)
 {
-    return traits[rev].fps;
+    return traits[(long)rev].fps;
 }
 
 isize
-VICII::getFrequency(VICIIRevision rev)
+VICII::getFrequency(VICIIRev rev)
 {
-    return traits[rev].frequency;
+    return traits[(long)rev].frequency;
 }
 
 isize
-VICII::getCyclesPerLine(VICIIRevision rev)
+VICII::getCyclesPerLine(VICIIRev rev)
 {
-    return traits[rev].cyclesPerLine;
+    return traits[(long)rev].cyclesPerLine;
 }
 
 isize
-VICII::getLinesPerFrame(VICIIRevision rev)
+VICII::getLinesPerFrame(VICIIRev rev)
 {
-    return traits[rev].linesPerFrame;
+    return traits[(long)rev].linesPerFrame;
 }
 
 isize
-VICII::getCyclesPerFrame(VICIIRevision rev)
+VICII::getCyclesPerFrame(VICIIRev rev)
 {
-    return traits[rev].cyclesPerFrame;
+    return traits[(long)rev].cyclesPerFrame;
 }
 
 isize
-VICII::numVisibleLines(VICIIRevision rev)
+VICII::numVisibleLines(VICIIRev rev)
 {
-    return traits[rev].visibleLines;
+    return traits[(long)rev].visibleLines;
 }
 
 bool
-VICII::hasGrayCodeBug(VICIIRevision rev)
+VICII::hasGrayCodeBug(VICIIRev rev)
 {
-    return traits[rev].grayCodeBug;
+    return traits[(long)rev].grayCodeBug;
 }
 
 bool
@@ -252,11 +252,11 @@ VICII::isVBlankLine(isize line) const
 {
     switch (config.revision) {
             
-        case VICII_NTSC_6567_R56A:
+        case VICIIRev::NTSC_6567_R56A:
             return line < 16 || line >= 16 + 234;
             
-        case VICII_NTSC_6567:
-        case VICII_NTSC_8562:
+        case VICIIRev::NTSC_6567:
+        case VICIIRev::NTSC_8562:
             return line < 16 || line >= 16 + 235;
             
         default:
@@ -441,21 +441,21 @@ VICII::lightpenX() const
     
     switch (config.revision) {
             
-        case VICII_PAL_6569_R1:
-        case VICII_PAL_6569_R3:
+        case VICIIRev::PAL_6569_R1:
+        case VICIIRev::PAL_6569_R3:
 
             return 4 + (cycle < 14 ? 392 + (8 * cycle) : (cycle - 14) * 8);
 
-        case VICII_PAL_8565:
+        case VICIIRev::PAL_8565:
             
             return 2 + (cycle < 14 ? 392 + (8 * cycle) : (cycle - 14) * 8);
             
-        case VICII_NTSC_6567:
-        case VICII_NTSC_6567_R56A:
+        case VICIIRev::NTSC_6567:
+        case VICIIRev::NTSC_6567_R56A:
             
             return 4 + (cycle < 14 ? 400 + (8 * cycle) : (cycle - 14) * 8);
             
-        case VICII_NTSC_8562:
+        case VICIIRev::NTSC_8562:
             
             return 2 + (cycle < 14 ? 400 + (8 * cycle) : (cycle - 14) * 8);
             
@@ -515,17 +515,17 @@ VICII::checkForLightpenIrqAtStartOfFrame()
     // Latch coordinate (values according to VICE 3.1)
     switch (config.revision) {
             
-        case VICII_PAL_6569_R1:
-        case VICII_PAL_6569_R3:
-        case VICII_PAL_8565:
+        case VICIIRev::PAL_6569_R1:
+        case VICIIRev::PAL_6569_R3:
+        case VICIIRev::PAL_8565:
             
             latchedLPX = 209;
             latchedLPY = 0;
             break;
             
-        case VICII_NTSC_6567:
-        case VICII_NTSC_6567_R56A:
-        case VICII_NTSC_8562:
+        case VICIIRev::NTSC_6567:
+        case VICIIRev::NTSC_6567_R56A:
+        case VICIIRev::NTSC_8562:
             
             latchedLPX = 213;
             latchedLPY = 0;

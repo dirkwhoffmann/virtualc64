@@ -86,38 +86,37 @@ VICClrSprBgCollReg);
 //
 
 /// VICII chip revision
-enum_long(VICII_REV)
+enum class VICIIRev : long
 {
-    VICII_PAL_6569_R1,                  ///< Early C64 PAL models
-    VICII_PAL_6569_R3,                  ///< Later C64 PAL models
-    VICII_PAL_8565,                     ///< C64 II PAL models
-    VICII_NTSC_6567_R56A,               ///< Early C64 NTSC models
-    VICII_NTSC_6567,                    ///< Later C64 NTSC models
-    VICII_NTSC_8562                     ///< C64 II NTSC models
+    PAL_6569_R1,                  ///< Early C64 PAL models
+    PAL_6569_R3,                  ///< Later C64 PAL models
+    PAL_8565,                     ///< C64 II PAL models
+    NTSC_6567_R56A,               ///< Early C64 NTSC models
+    NTSC_6567,                    ///< Later C64 NTSC models
+    NTSC_8562                     ///< C64 II NTSC models
 };
-typedef VICII_REV VICIIRevision;
 
-struct VICIIRevisionEnum : util::Reflection<VICIIRevisionEnum, VICIIRevision> {
+struct VICIIRevEnum : util::Reflection<VICIIRevEnum, VICIIRev> {
     
 	static constexpr long minVal = 0;
-    static constexpr long maxVal = VICII_NTSC_8562;
+    static constexpr long maxVal = long(VICIIRev::NTSC_8562);
 
     static const char *prefix() { return "VICII"; }
-    static const char *_key(long value)
+    static const char *_key(VICIIRev value)
     {
         switch (value) {
                 
-            case VICII_PAL_6569_R1:    return "PAL_6569_R1";
-            case VICII_PAL_6569_R3:    return "PAL_6569_R3";
-            case VICII_PAL_8565:       return "PAL_8565";
-            case VICII_NTSC_6567:      return "NTSC_6567";
-            case VICII_NTSC_6567_R56A: return "NTSC_6567_R56A";
-            case VICII_NTSC_8562:      return "NTSC_8562";
+            case VICIIRev::PAL_6569_R1:    return "PAL_6569_R1";
+            case VICIIRev::PAL_6569_R3:    return "PAL_6569_R3";
+            case VICIIRev::PAL_8565:       return "PAL_8565";
+            case VICIIRev::NTSC_6567:      return "NTSC_6567";
+            case VICIIRev::NTSC_6567_R56A: return "NTSC_6567_R56A";
+            case VICIIRev::NTSC_8562:      return "NTSC_8562";
         }
         return "???";
     }
     
-    static const char *help(VICIIRevision value)
+    static const char *help(VICIIRev value)
     {
         return "";
     }    
@@ -339,8 +338,8 @@ VICIITraits;
 typedef struct
 {
     // Silicon
-    VICIIRevision revision;
-    VICIIRevision awaiting;
+    VICIIRev revision;
+    VICIIRev awaiting;
     bool powerSave;
     bool grayDotBug;
     GlueLogic glueLogic;
