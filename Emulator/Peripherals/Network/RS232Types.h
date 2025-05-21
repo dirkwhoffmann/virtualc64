@@ -21,30 +21,28 @@ namespace vc64 {
 // Enumerations
 //
 
-enum_long(COMDEV)
+enum class CommunicationDevice : long
 {
-    COMDEV_NONE,
-    COMDEV_LOOPBACK,
-    COMDEV_RETROSHELL,
-    COMDEV_COMMANDER
+    NONE,
+    LOOPBACK,
+    RETROSHELL,
+    COMMANDER
 };
-typedef COMDEV CommunicationDevice;
 
-#ifdef __cplusplus
 struct CommunicationDeviceEnum : util::Reflection<CommunicationDeviceEnum, CommunicationDevice>
 {
     static constexpr long minVal = 0;
-    static constexpr long maxVal = COMDEV_COMMANDER;
+    static constexpr long maxVal = long(CommunicationDevice::COMMANDER);
 
     static const char *prefix() { return "COMDEV"; }
-    static const char *_key(long value)
+    static const char *_key(CommunicationDevice value)
     {
         switch (value) {
 
-            case COMDEV_NONE:       return "NONE";
-            case COMDEV_LOOPBACK:   return "LOOPBACK";
-            case COMDEV_RETROSHELL: return "RETROSHELL";
-            case COMDEV_COMMANDER:  return "COMMANDER";
+            case CommunicationDevice::NONE:       return "NONE";
+            case CommunicationDevice::LOOPBACK:   return "LOOPBACK";
+            case CommunicationDevice::RETROSHELL: return "RETROSHELL";
+            case CommunicationDevice::COMMANDER:  return "COMMANDER";
         }
         return "???";
     }
@@ -54,7 +52,6 @@ struct CommunicationDeviceEnum : util::Reflection<CommunicationDeviceEnum, Commu
         return "";
     }
 };
-#endif
 
 
 //

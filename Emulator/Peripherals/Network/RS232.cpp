@@ -56,7 +56,7 @@ RS232::setPort(u32 mask, bool value)
      *                     B: 4 - 5 - 6   (RTS - CTS - DSR)
      *                     C: 8 - 20 - 22 (CD - DTR - RI)
      */
-    if (config.device == COMDEV_LOOPBACK) {
+    if (config.device == CommunicationDevice::LOOPBACK) {
 
         u32 maskA = TXD_MASK | RXD_MASK;
         u32 maskB = RTS_MASK | CTS_MASK | DSR_MASK;
@@ -248,7 +248,7 @@ RS232::dumpPacket(u16 packet)
 {
     char c = char(packet);
 
-    if (config.device == COMDEV_RETROSHELL) {
+    if (config.device == CommunicationDevice::RETROSHELL) {
 
         if (isprint(c) || c == '\n') {
             retroShell << c;
@@ -259,7 +259,7 @@ RS232::dumpPacket(u16 packet)
         }
     }
 
-    if (config.device == COMDEV_COMMANDER) {
+    if (config.device == CommunicationDevice::COMMANDER) {
 
         switch (c) {
 

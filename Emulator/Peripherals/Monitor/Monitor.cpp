@@ -201,33 +201,33 @@ Monitor::getColor(isize nr, Palette palette)
     // Translate to monochrome if applicable
     switch(palette) {
 
-        case PALETTE_BLACK_WHITE:
+        case Palette::BLACK_WHITE:
             u = 0.0;
             v = 0.0;
             break;
 
-        case PALETTE_PAPER_WHITE:
+        case Palette::PAPER_WHITE:
             u = -128.0 + 120.0;
             v = -128.0 + 133.0;
             break;
 
-        case PALETTE_GREEN:
+        case Palette::GREEN:
             u = -128.0 + 29.0;
             v = -128.0 + 64.0;
             break;
 
-        case PALETTE_AMBER:
+        case Palette::AMBER:
             u = -128.0 + 24.0;
             v = -128.0 + 178.0;
             break;
 
-        case PALETTE_SEPIA:
+        case Palette::SEPIA:
             u = -128.0 + 97.0;
             v = -128.0 + 154.0;
             break;
 
         default:
-            assert(palette == PALETTE_COLOR);
+            assert(palette == Palette::COLOR);
     }
 
     // Convert YUV value to RGB

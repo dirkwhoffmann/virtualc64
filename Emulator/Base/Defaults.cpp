@@ -77,7 +77,7 @@ Defaults::Defaults()
 
     setFallback(Opt::VID_WHITE_NOISE,            true);
 
-    setFallback(Opt::MON_PALETTE,                PALETTE_COLOR);
+    setFallback(Opt::MON_PALETTE,                (i64)Palette::COLOR);
     setFallback(Opt::MON_BRIGHTNESS,             50);
     setFallback(Opt::MON_CONTRAST,               100);
     setFallback(Opt::MON_SATURATION,             50);
@@ -85,16 +85,16 @@ Defaults::Defaults()
     setFallback(Opt::MON_VCENTER,                0);
     setFallback(Opt::MON_HZOOM,                  0);
     setFallback(Opt::MON_VZOOM,                  46);
-    setFallback(Opt::MON_UPSCALER,               UPSCALER_NONE);
+    setFallback(Opt::MON_UPSCALER,               (i64)Upscaler::NONE);
     setFallback(Opt::MON_BLUR,                   true);
     setFallback(Opt::MON_BLUR_RADIUS,            0);
     setFallback(Opt::MON_BLOOM,                  false);
     setFallback(Opt::MON_BLOOM_RADIUS,           1000);
     setFallback(Opt::MON_BLOOM_BRIGHTNESS,       400);
     setFallback(Opt::MON_BLOOM_WEIGHT,           1210);
-    setFallback(Opt::MON_DOTMASK,                DOTMASK_NONE);
+    setFallback(Opt::MON_DOTMASK,                (i64)Dotmask::NONE);
     setFallback(Opt::MON_DOTMASK_BRIGHTNESS,     700);
-    setFallback(Opt::MON_SCANLINES,              SCANLINES_NONE);
+    setFallback(Opt::MON_SCANLINES,              (i64)Scanlines::NONE);
     setFallback(Opt::MON_SCANLINE_BRIGHTNESS,    550);
     setFallback(Opt::MON_SCANLINE_WEIGHT,        110);
     setFallback(Opt::MON_DISALIGNMENT,           0);
@@ -159,7 +159,7 @@ Defaults::Defaults()
     setFallback(Opt::AUTOFIRE_BULLETS,           3);
     setFallback(Opt::AUTOFIRE_DELAY,             5);
 
-    setFallback(Opt::RS232_DEVICE,               COMDEV_NONE);
+    setFallback(Opt::RS232_DEVICE,               (i64)CommunicationDevice::NONE);
     setFallback(Opt::RS232_BAUD,                 600);
 
     setFallback(Opt::PADDLE_ORIENTATION,         (i64)PaddleOrientation::HORIZONTAL);

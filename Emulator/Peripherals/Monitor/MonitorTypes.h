@@ -22,65 +22,69 @@ namespace vc64 {
 //
 
 /// Color palette
-enum_long(PALETTE)
+enum class Palette : long
 {
-    PALETTE_COLOR,                      ///< Standard C64 color palette
-    PALETTE_BLACK_WHITE,                ///< Black and white monochrome palette
-    PALETTE_PAPER_WHITE,                ///< Paper white monochrome palette
-    PALETTE_GREEN,                      ///< Green monochrome palette
-    PALETTE_AMBER,                      ///< Amber monochrome palette
-    PALETTE_SEPIA                       ///< Sepia monochrome palette
+    COLOR,                      ///< Standard C64 color palette
+    BLACK_WHITE,                ///< Black and white monochrome palette
+    PAPER_WHITE,                ///< Paper white monochrome palette
+    GREEN,                      ///< Green monochrome palette
+    AMBER,                      ///< Amber monochrome palette
+    SEPIA                       ///< Sepia monochrome palette
 };
-typedef PALETTE Palette;
 
 struct PaletteEnum : util::Reflection<PaletteEnum, Palette> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = PALETTE_SEPIA;
+    static constexpr long maxVal = long(Palette::SEPIA);
 
-    static const char *prefix() { return "PALETTE"; }
-    static const char *_key(long value)
+    static const char *_key(Palette value)
     {
         switch (value) {
-
-            case PALETTE_COLOR:        return "COLOR";
-            case PALETTE_BLACK_WHITE:  return "BLACK_WHITE";
-            case PALETTE_PAPER_WHITE:  return "PAPER_WHITE";
-            case PALETTE_GREEN:        return "GREEN";
-            case PALETTE_AMBER:        return "AMBER";
-            case PALETTE_SEPIA:        return "SEPIA";
+                
+            case Palette::COLOR:        return "COLOR";
+            case Palette::BLACK_WHITE:  return "BLACK_WHITE";
+            case Palette::PAPER_WHITE:  return "PAPER_WHITE";
+            case Palette::GREEN:        return "GREEN";
+            case Palette::AMBER:        return "AMBER";
+            case Palette::SEPIA:        return "SEPIA";
         }
         return "???";
     }
-    
     static const char *help(Palette value)
     {
-        return "";
+        switch (value) {
+                
+            case Palette::COLOR:        return "Color palette";
+            case Palette::BLACK_WHITE:  return "Black and white palette";
+            case Palette::PAPER_WHITE:  return "Paper white palette";
+            case Palette::GREEN:        return "Green palette";
+            case Palette::AMBER:        return "Amber palette";
+            case Palette::SEPIA:        return "Sepia palette";
+        }
+        return "???";
     }
 };
 
 /// Pixel upscaler
-enum_long(UPSCALER)
+enum class Upscaler : long
 {
-    UPSCALER_NONE,                      ///< No upscaler
-    UPSCALER_EPX_2X,                    ///< EPX upscaler (2x)
-    UPSCALER_XBR_4X                     ///< XBR upscaler (4x)
+    NONE,                      ///< No upscaler
+    EPX_2X,                    ///< EPX upscaler (2x)
+    XBR_4X                     ///< XBR upscaler (4x)
 };
-typedef UPSCALER Upscaler;
 
 struct UpscalerEnum : util::Reflection<UpscalerEnum, Upscaler> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = UPSCALER_XBR_4X;
+    static constexpr long maxVal = long(Upscaler::XBR_4X);
 
-    static const char *prefix() { return "UPSCALER"; }
-    static const char *_key(long value)
+    static const char *_key(Upscaler value)
     {
         switch (value) {
 
-            case UPSCALER_NONE:     return "NONE";
-            case UPSCALER_EPX_2X:   return "EPX_2X";
-            case UPSCALER_XBR_4X:   return "XBR_4X";
+            case Upscaler::NONE:     return "NONE";
+            case Upscaler::EPX_2X:   return "EPX_2X";
+            case Upscaler::XBR_4X:   return "XBR_4X";
         }
         return "???";
     }
@@ -92,31 +96,29 @@ struct UpscalerEnum : util::Reflection<UpscalerEnum, Upscaler> {
 };
 
 /// Dotmask
-enum_long(DOTMASK)
+enum class Dotmask : long
 {
-    DOTMASK_NONE,                       ///< No dotmask
-    DOTMASK_BISECTED,                   ///< Dotmask pattern 1
-    DOTMASK_TRISECTED,                  ///< Dotmask pattern 2
-    DOTMASK_BISECTED_SHIFTED,           ///< Dotmask pattern 3
-    DOTMASK_TRISECTED_SHIFTED           ///< Dotmask pattern 4
+    NONE,                       ///< No dotmask
+    BISECTED,                   ///< Dotmask pattern 1
+    TRISECTED,                  ///< Dotmask pattern 2
+    BISECTED_SHIFTED,           ///< Dotmask pattern 3
+    TRISECTED_SHIFTED           ///< Dotmask pattern 4
 };
-typedef DOTMASK Dotmask;
 
 struct DotmaskEnum : util::Reflection<DotmaskEnum, Dotmask> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = DOTMASK_TRISECTED_SHIFTED;
+    static constexpr long maxVal = long(Dotmask::TRISECTED_SHIFTED);
 
-    static const char *prefix() { return "DOTMASK"; }
-    static const char *_key(long value)
+    static const char *_key(Dotmask value)
     {
         switch (value) {
 
-            case DOTMASK_NONE:              return "NONE";
-            case DOTMASK_BISECTED:          return "BISECTED";
-            case DOTMASK_TRISECTED:         return "TRISECTED";
-            case DOTMASK_BISECTED_SHIFTED:  return "BISECTED_SHIFTED";
-            case DOTMASK_TRISECTED_SHIFTED: return "TRISECTED_SHIFTED";
+            case Dotmask::NONE:              return "NONE";
+            case Dotmask::BISECTED:          return "BISECTED";
+            case Dotmask::TRISECTED:         return "TRISECTED";
+            case Dotmask::BISECTED_SHIFTED:  return "BISECTED_SHIFTED";
+            case Dotmask::TRISECTED_SHIFTED: return "TRISECTED_SHIFTED";
         }
         return "???";
     }
@@ -128,27 +130,25 @@ struct DotmaskEnum : util::Reflection<DotmaskEnum, Dotmask> {
 };
 
 /// Scanlines
-enum_long(SCANLINES)
+enum class Scanlines : long
 {
-    SCANLINES_NONE,                     ///< No scanlines
-    SCANLINES_EMBEDDED,                 ///< Embed scanlines in the emulator texture
-    SCANLINES_SUPERIMPOSE               ///< Emulate scanlines in the fragment shader
+    NONE,                     ///< No scanlines
+    EMBEDDED,                 ///< Embed scanlines in the emulator texture
+    SUPERIMPOSE               ///< Emulate scanlines in the fragment shader
 };
-typedef SCANLINES Scanlines;
 
 struct ScanlinesEnum : util::Reflection<ScanlinesEnum, Scanlines> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = SCANLINES_SUPERIMPOSE;
+    static constexpr long maxVal = long(Scanlines::SUPERIMPOSE);
 
-    static const char *prefix() { return "SCANLINES"; }
-    static const char *_key(long value)
+    static const char *_key(Scanlines value)
     {
         switch (value) {
 
-            case SCANLINES_NONE:            return "NONE";
-            case SCANLINES_EMBEDDED:        return "EMBEDDED";
-            case SCANLINES_SUPERIMPOSE:     return "SUPERIMPOSE";
+            case Scanlines::NONE:            return "NONE";
+            case Scanlines::EMBEDDED:        return "EMBEDDED";
+            case Scanlines::SUPERIMPOSE:     return "SUPERIMPOSE";
         }
         return "???";
     }

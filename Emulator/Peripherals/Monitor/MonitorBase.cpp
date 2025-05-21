@@ -22,29 +22,29 @@ Monitor::getOption(Opt option) const
 {
     switch (option) {
             
-        case Opt::MON_PALETTE:               return config.palette;
-        case Opt::MON_BRIGHTNESS:            return config.brightness;
-        case Opt::MON_CONTRAST:              return config.contrast;
-        case Opt::MON_SATURATION:            return config.saturation;
-        case Opt::MON_HCENTER:               return config.hCenter;
-        case Opt::MON_VCENTER:               return config.vCenter;
-        case Opt::MON_HZOOM:                 return config.hZoom;
-        case Opt::MON_VZOOM:                 return config.vZoom;
-        case Opt::MON_UPSCALER:              return config.upscaler;
-        case Opt::MON_BLUR:                  return config.blur;
-        case Opt::MON_BLUR_RADIUS:           return config.blurRadius;
-        case Opt::MON_BLOOM:                 return config.bloom;
-        case Opt::MON_BLOOM_RADIUS:          return config.bloomRadius;
-        case Opt::MON_BLOOM_BRIGHTNESS:      return config.bloomBrightness;
-        case Opt::MON_BLOOM_WEIGHT:          return config.bloomWeight;
-        case Opt::MON_DOTMASK:               return config.dotmask;
-        case Opt::MON_DOTMASK_BRIGHTNESS:    return config.dotMaskBrightness;
-        case Opt::MON_SCANLINES:             return config.scanlines;
-        case Opt::MON_SCANLINE_BRIGHTNESS:   return config.scanlineBrightness;
-        case Opt::MON_SCANLINE_WEIGHT:       return config.scanlineWeight;
-        case Opt::MON_DISALIGNMENT:          return config.disalignment;
-        case Opt::MON_DISALIGNMENT_H:        return config.disalignmentH;
-        case Opt::MON_DISALIGNMENT_V:        return config.disalignmentV;
+        case Opt::MON_PALETTE:               return (i64)config.palette;
+        case Opt::MON_BRIGHTNESS:            return (i64)config.brightness;
+        case Opt::MON_CONTRAST:              return (i64)config.contrast;
+        case Opt::MON_SATURATION:            return (i64)config.saturation;
+        case Opt::MON_HCENTER:               return (i64)config.hCenter;
+        case Opt::MON_VCENTER:               return (i64)config.vCenter;
+        case Opt::MON_HZOOM:                 return (i64)config.hZoom;
+        case Opt::MON_VZOOM:                 return (i64)config.vZoom;
+        case Opt::MON_UPSCALER:              return (i64)config.upscaler;
+        case Opt::MON_BLUR:                  return (i64)config.blur;
+        case Opt::MON_BLUR_RADIUS:           return (i64)config.blurRadius;
+        case Opt::MON_BLOOM:                 return (i64)config.bloom;
+        case Opt::MON_BLOOM_RADIUS:          return (i64)config.bloomRadius;
+        case Opt::MON_BLOOM_BRIGHTNESS:      return (i64)config.bloomBrightness;
+        case Opt::MON_BLOOM_WEIGHT:          return (i64)config.bloomWeight;
+        case Opt::MON_DOTMASK:               return (i64)config.dotmask;
+        case Opt::MON_DOTMASK_BRIGHTNESS:    return (i64)config.dotMaskBrightness;
+        case Opt::MON_SCANLINES:             return (i64)config.scanlines;
+        case Opt::MON_SCANLINE_BRIGHTNESS:   return (i64)config.scanlineBrightness;
+        case Opt::MON_SCANLINE_WEIGHT:       return (i64)config.scanlineWeight;
+        case Opt::MON_DISALIGNMENT:          return (i64)config.disalignment;
+        case Opt::MON_DISALIGNMENT_H:        return (i64)config.disalignmentH;
+        case Opt::MON_DISALIGNMENT_V:        return (i64)config.disalignmentV;
             
         default:
             fatalError;
