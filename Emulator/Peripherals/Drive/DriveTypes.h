@@ -140,29 +140,27 @@ struct DrvMemTypeEnum : util::Reflection<DrvMemTypeEnum, DrvMemType> {
     }
 };
 
-enum_long(DISK_INSERTION_STATUS)
+enum class InsertionStatus : long
 {
-    DISK_FULLY_EJECTED,
-    DISK_PARTIALLY_INSERTED,
-    DISK_FULLY_INSERTED,
-    DISK_PARTIALLY_EJECTED
+    FULLY_EJECTED,
+    PARTIALLY_INSERTED,
+    FULLY_INSERTED,
+    PARTIALLY_EJECTED
 };
-typedef DISK_INSERTION_STATUS InsertionStatus;
 
 struct InsertionStatusEnum : util::Reflection<InsertionStatusEnum, InsertionStatus> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = DISK_PARTIALLY_EJECTED;
+    static constexpr long maxVal = long(InsertionStatus::PARTIALLY_EJECTED);
 
-    static const char *prefix() { return "DISK"; }
-    static const char *_key(long value)
+    static const char *_key(InsertionStatus value)
     {
         switch (value) {
 
-            case DISK_FULLY_EJECTED:           return "FULLY_EJECTED";
-            case DISK_PARTIALLY_INSERTED:      return "PARTIALLY_INSERTED";
-            case DISK_FULLY_INSERTED:          return "FULLY_INSERTED";
-            case DISK_PARTIALLY_EJECTED:       return "PARTIALLY_EJECTED";
+            case InsertionStatus::FULLY_EJECTED:        return "FULLY_EJECTED";
+            case InsertionStatus::PARTIALLY_INSERTED:   return "PARTIALLY_INSERTED";
+            case InsertionStatus::FULLY_INSERTED:       return "FULLY_INSERTED";
+            case InsertionStatus::PARTIALLY_EJECTED:    return "PARTIALLY_EJECTED";
         }
         return "???";
     }

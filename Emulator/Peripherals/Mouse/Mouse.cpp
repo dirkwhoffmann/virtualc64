@@ -262,14 +262,14 @@ Mouse::trigger(GamePadAction event)
 {
     assert_enum(GamePadAction, event);
 
-    debug(PRT_DEBUG, "trigger(%ld)\n", event);
+    debug(PRT_DEBUG, "trigger(%s)\n", GamePadActionEnum::key(event));
     
     switch (event) {
 
-        case PRESS_LEFT: setLeftButton(true); break;
-        case RELEASE_LEFT: setLeftButton(false); break;
-        case PRESS_RIGHT: setRightButton(true); break;
-        case RELEASE_RIGHT: setRightButton(false); break;
+        case GamePadAction::PRESS_LEFT: setLeftButton(true); break;
+        case GamePadAction::RELEASE_LEFT: setLeftButton(false); break;
+        case GamePadAction::PRESS_RIGHT: setRightButton(true); break;
+        case GamePadAction::RELEASE_RIGHT: setRightButton(false); break;
             
         default:
             break;

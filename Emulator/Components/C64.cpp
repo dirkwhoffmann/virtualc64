@@ -1549,7 +1549,7 @@ C64::loadRom(const MediaFile &file)
 {
     switch (file.type()) {
             
-        case FILETYPE_BASIC_ROM:
+        case FileType::BASIC_ROM:
             
             file.flash(mem.rom, 0xA000);
             debug(MEM_DEBUG, "Basic Rom flashed\n");
@@ -1557,13 +1557,13 @@ C64::loadRom(const MediaFile &file)
             debug(MEM_DEBUG, "mega65BasicRev() = %s\n", mega65BasicRev());
             break;
             
-        case FILETYPE_CHAR_ROM:
+        case FileType::CHAR_ROM:
             
             file.flash(mem.rom, 0xD000);
             debug(MEM_DEBUG, "Character Rom flashed\n");
             break;
             
-        case FILETYPE_KERNAL_ROM:
+        case FileType::KERNAL_ROM:
             
             file.flash(mem.rom, 0xE000);
             debug(MEM_DEBUG, "Kernal Rom flashed\n");
@@ -1571,7 +1571,7 @@ C64::loadRom(const MediaFile &file)
             debug(MEM_DEBUG, "mega65KernalRev() = %s\n", mega65KernalRev());
             break;
             
-        case FILETYPE_VC1541_ROM:
+        case FileType::VC1541_ROM:
             
             drive8.mem.loadRom(file.getData(), file.getSize());
             drive9.mem.loadRom(file.getData(), file.getSize());
@@ -1720,32 +1720,32 @@ C64::flash(const MediaFile &file)
         
         switch (file.type()) {
                 
-            case FILETYPE_BASIC_ROM:
+            case FileType::BASIC_ROM:
                 file.flash(mem.rom, 0xA000);
                 break;
                 
-            case FILETYPE_CHAR_ROM:
+            case FileType::CHAR_ROM:
                 file.flash(mem.rom, 0xD000);
                 break;
                 
-            case FILETYPE_KERNAL_ROM:
+            case FileType::KERNAL_ROM:
                 file.flash(mem.rom, 0xE000);
                 break;
                 
-            case FILETYPE_VC1541_ROM:
+            case FileType::VC1541_ROM:
                 drive8.mem.loadRom(dynamic_cast<const RomFile &>(file));
                 drive9.mem.loadRom(dynamic_cast<const RomFile &>(file));
                 break;
 
-            case FILETYPE_SNAPSHOT:
+            case FileType::SNAPSHOT:
                 loadSnapshot(dynamic_cast<const Snapshot &>(file));
                 break;
                 
-            case FILETYPE_D64:
-            case FILETYPE_T64:
-            case FILETYPE_P00:
-            case FILETYPE_PRG:
-            case FILETYPE_FOLDER:
+            case FileType::D64:
+            case FileType::T64:
+            case FileType::P00:
+            case FileType::PRG:
+            case FileType::FOLDER:
 
                 flash(file, 0);
                 break;
@@ -1770,11 +1770,11 @@ C64::flash(const MediaFile &file, isize nr)
 
             switch (collection.type()) {
 
-                case FILETYPE_D64:
-                case FILETYPE_T64:
-                case FILETYPE_P00:
-                case FILETYPE_PRG:
-                case FILETYPE_FOLDER:
+                case FileType::D64:
+                case FileType::T64:
+                case FileType::P00:
+                case FileType::PRG:
+                case FileType::FOLDER:
 
                     // Flash data into memory
                     size = std::min(size - 2, isize(0x10000 - addr));

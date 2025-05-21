@@ -2071,10 +2071,10 @@ NSString *EventSlotName(EventSlot slot)
     auto fileType = MediaFile::type([url fileSystemRepresentation]);
 
     return 
-    (fileType == FILETYPE_BASIC_ROM && type == RomType::BASIC) ||
-    (fileType == FILETYPE_CHAR_ROM && type == RomType::CHAR) ||
-    (fileType == FILETYPE_KERNAL_ROM && type == RomType::KERNAL) ||
-    (fileType == FILETYPE_VC1541_ROM && type == RomType::VC1541);
+    (fileType == FileType::BASIC_ROM && type == RomType::BASIC) ||
+    (fileType == FileType::CHAR_ROM && type == RomType::CHAR) ||
+    (fileType == FileType::KERNAL_ROM && type == RomType::KERNAL) ||
+    (fileType == FileType::VC1541_ROM && type == RomType::VC1541);
 }
 
 - (void)installOpenRoms

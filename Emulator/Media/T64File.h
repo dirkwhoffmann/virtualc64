@@ -52,7 +52,7 @@ private:
     // Methods from AnyFile
     //
     
-    FileType type() const override { return FILETYPE_T64; }
+    FileType type() const override { return FileType::T64; }
     PETName<16> getName() const override;
     bool isCompatiblePath(const fs::path &path) override { return isCompatible(path); }
     bool isCompatibleBuffer(const u8 *buf, isize len) override { return isCompatible(buf, len); }

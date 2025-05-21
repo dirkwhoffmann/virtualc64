@@ -42,15 +42,15 @@ Joystick::trigger(GamePadAction event)
 
     switch (event) {
 
-        case PULL_UP:    axisY = -1; break;
-        case PULL_DOWN:  axisY =  1; break;
-        case PULL_LEFT:  axisX = -1; break;
-        case PULL_RIGHT: axisX =  1; break;
-        case RELEASE_X:  axisX =  0; break;
-        case RELEASE_Y:  axisY =  0; break;
-        case RELEASE_XY: axisX = axisY = 0; break;
+        case GamePadAction::PULL_UP:    axisY = -1; break;
+        case GamePadAction::PULL_DOWN:  axisY =  1; break;
+        case GamePadAction::PULL_LEFT:  axisX = -1; break;
+        case GamePadAction::PULL_RIGHT: axisX =  1; break;
+        case GamePadAction::RELEASE_X:  axisX =  0; break;
+        case GamePadAction::RELEASE_Y:  axisY =  0; break;
+        case GamePadAction::RELEASE_XY: axisX = axisY = 0; break;
             
-        case PRESS_FIRE:
+        case GamePadAction::PRESS_FIRE:
             
             // If autofire is enabled...
             if (config.autofire) {
@@ -82,7 +82,7 @@ Joystick::trigger(GamePadAction event)
             }
             break;
 
-        case RELEASE_FIRE:
+        case GamePadAction::RELEASE_FIRE:
             
             if (!config.autofire) button = false;
             break;

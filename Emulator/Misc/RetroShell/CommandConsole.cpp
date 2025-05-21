@@ -653,7 +653,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
             .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
                 
                 auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
-                port.joystick.trigger(PRESS_FIRE);
+                port.joystick.trigger(GamePadAction::PRESS_FIRE);
                 
             }, .values = {i}
         });
@@ -665,7 +665,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
             .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
                 
                 auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
-                port.joystick.trigger(RELEASE_FIRE);
+                port.joystick.trigger(GamePadAction::RELEASE_FIRE);
                 
             }, .values = {i}
         });
@@ -683,7 +683,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
             .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
                 
                 auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
-                port.joystick.trigger(PULL_LEFT);
+                port.joystick.trigger(GamePadAction::PULL_LEFT);
                 
             }, .values = {i}
         });
@@ -695,7 +695,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
             .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
                 
                 auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
-                port.joystick.trigger(PULL_RIGHT);
+                port.joystick.trigger(GamePadAction::PULL_RIGHT);
                 
             }, .values = {i}
         });
@@ -707,7 +707,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
             .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
                 
                 auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
-                port.joystick.trigger(PULL_UP);
+                port.joystick.trigger(GamePadAction::PULL_UP);
                 
             }, .values = {i}
         });
@@ -719,7 +719,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
             .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
                 
                 auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
-                port.joystick.trigger(PULL_DOWN);
+                port.joystick.trigger(GamePadAction::PULL_DOWN);
                 
             }, .values = {i}
         });
@@ -737,7 +737,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
             .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
                 
                 auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
-                port.joystick.trigger(RELEASE_X);
+                port.joystick.trigger(GamePadAction::RELEASE_X);
                 
             }, .values = {i}
         });
@@ -749,7 +749,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
             .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
                 
                 auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
-                port.joystick.trigger(RELEASE_Y);
+                port.joystick.trigger(GamePadAction::RELEASE_Y);
                 
             }, .values = {i}
         });

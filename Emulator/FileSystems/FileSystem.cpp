@@ -290,7 +290,7 @@ FileSystem::blockType(Block b) const
 FSUsage
 FileSystem::usage(Block b, u32 pos) const
 {
-    return blockPtr(b) ? blocks[b]->itemType(pos) : FS_USAGE_UNUSED;
+    return blockPtr(b) ? blocks[b]->itemType(pos) : FSUsage::UNUSED;
 }
 
 u8

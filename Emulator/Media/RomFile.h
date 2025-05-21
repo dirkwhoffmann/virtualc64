@@ -28,7 +28,7 @@ private:
     static const RomSignature signatures[];
     
     // Rom type (Basic, Character, Kernal, or VC1541)
-    FileType romFileType = FILETYPE_UNKNOWN;
+    FileType romFileType = FileType::UNKNOWN;
 
 public:
     

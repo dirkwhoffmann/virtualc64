@@ -117,49 +117,49 @@ FSBlock::itemType(u32 byte) const
             
             switch (byte) {
                     
-                case 0x00: return FS_USAGE_FIRST_DIR_TRACK;
-                case 0x01: return FS_USAGE_FIRST_DIR_SECTOR;
-                case 0x02: return FS_USAGE_DOS_VERSION;
-                case 0xA2: return FS_USAGE_DISK_ID;
-                case 0xA3: return FS_USAGE_DISK_ID;
-                case 0xA5: return FS_USAGE_DOS_TYPE;
-                case 0xA6: return FS_USAGE_DOS_TYPE;
+                case 0x00: return FSUsage::FIRST_DIR_TRACK;
+                case 0x01: return FSUsage::FIRST_DIR_SECTOR;
+                case 0x02: return FSUsage::DOS_VERSION;
+                case 0xA2: return FSUsage::DISK_ID;
+                case 0xA3: return FSUsage::DISK_ID;
+                case 0xA5: return FSUsage::DOS_TYPE;
+                case 0xA6: return FSUsage::DOS_TYPE;
             }
-            if (byte >= 0x04 && byte <= 0x8F) return FS_USAGE_ALLOCATION_BITS;
-            if (byte >= 0x90 && byte <= 0x9F) return FS_USAGE_DISK_NAME;
+            if (byte >= 0x04 && byte <= 0x8F) return FSUsage::ALLOCATION_BITS;
+            if (byte >= 0x90 && byte <= 0x9F) return FSUsage::DISK_NAME;
 
-            return FS_USAGE_UNUSED;
+            return FSUsage::UNUSED;
 
         case FSBlockType::DIR:
             
-            if (byte == 0) return FS_USAGE_TRACK_LINK;
-            if (byte == 1) return FS_USAGE_SECTOR_LINK;
+            if (byte == 0) return FSUsage::TRACK_LINK;
+            if (byte == 1) return FSUsage::SECTOR_LINK;
 
             byte &= 0x1F;
             
             switch (byte) {
                     
-                case 0x02: return FS_USAGE_FILE_TYPE;
-                case 0x03: return FS_USAGE_FIRST_FILE_TRACK;
-                case 0x04: return FS_USAGE_FIRST_FILE_SECTOR;
-                case 0x15: return FS_USAGE_FIRST_REL_TRACK;
-                case 0x16: return FS_USAGE_FIRST_REL_SECTOR;
-                case 0x17: return FS_USAGE_REL_RECORD_LENGTH;
-                case 0x1E: return FS_USAGE_FILE_LENGTH_LO;
-                case 0x1F: return FS_USAGE_FILE_LENGTH_HI;
+                case 0x02: return FSUsage::FILE_TYPE;
+                case 0x03: return FSUsage::FIRST_FILE_TRACK;
+                case 0x04: return FSUsage::FIRST_FILE_SECTOR;
+                case 0x15: return FSUsage::FIRST_REL_TRACK;
+                case 0x16: return FSUsage::FIRST_REL_SECTOR;
+                case 0x17: return FSUsage::REL_RECORD_LENGTH;
+                case 0x1E: return FSUsage::FILE_LENGTH_LO;
+                case 0x1F: return FSUsage::FILE_LENGTH_HI;
             }
             
-            if (byte >= 0x05 && byte <= 0x14) return FS_USAGE_FILE_NAME;
-            if (byte >= 0x18 && byte <= 0x1D) return FS_USAGE_GEOS;
+            if (byte >= 0x05 && byte <= 0x14) return FSUsage::FILE_NAME;
+            if (byte >= 0x18 && byte <= 0x1D) return FSUsage::GEOS;
 
-            return FS_USAGE_UNUSED;
+            return FSUsage::UNUSED;
             
         case FSBlockType::DATA:
             
-            if (byte == 0) return FS_USAGE_TRACK_LINK;
-            if (byte == 1) return FS_USAGE_SECTOR_LINK;
+            if (byte == 0) return FSUsage::TRACK_LINK;
+            if (byte == 1) return FSUsage::SECTOR_LINK;
             
-            return FS_USAGE_DATA;
+            return FSUsage::DATA;
             
         default:
             fatalError;

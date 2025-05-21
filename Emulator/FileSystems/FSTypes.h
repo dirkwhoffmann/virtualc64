@@ -117,65 +117,63 @@ struct FSBlockTypeEnum : util::Reflection<FSBlockTypeEnum, FSBlockType> {
     }
 };
 
-enum_long(FS_USAGE)
+enum class FSUsage
 {
-    FS_USAGE_UNKNOWN,
-    FS_USAGE_UNUSED,
-    FS_USAGE_DOS_VERSION,
-    FS_USAGE_DOS_TYPE,
-    FS_USAGE_ALLOCATION_BITS,
-    FS_USAGE_DISK_ID,
-    FS_USAGE_DISK_NAME,
-    FS_USAGE_TRACK_LINK,
-    FS_USAGE_SECTOR_LINK,
-    FS_USAGE_FIRST_FILE_TRACK,
-    FS_USAGE_FIRST_FILE_SECTOR,
-    FS_USAGE_FIRST_REL_TRACK,
-    FS_USAGE_FIRST_REL_SECTOR,
-    FS_USAGE_FIRST_DIR_TRACK,
-    FS_USAGE_FIRST_DIR_SECTOR,
-    FS_USAGE_FILE_TYPE,
-    FS_USAGE_FILE_NAME,
-    FS_USAGE_FILE_LENGTH_LO,
-    FS_USAGE_FILE_LENGTH_HI,
-    FS_USAGE_REL_RECORD_LENGTH,
-    FS_USAGE_GEOS,
-    FS_USAGE_DATA
+    UNKNOWN,
+    UNUSED,
+    DOS_VERSION,
+    DOS_TYPE,
+    ALLOCATION_BITS,
+    DISK_ID,
+    DISK_NAME,
+    TRACK_LINK,
+    SECTOR_LINK,
+    FIRST_FILE_TRACK,
+    FIRST_FILE_SECTOR,
+    FIRST_REL_TRACK,
+    FIRST_REL_SECTOR,
+    FIRST_DIR_TRACK,
+    FIRST_DIR_SECTOR,
+    FILE_TYPE,
+    FILE_NAME,
+    FILE_LENGTH_LO,
+    FILE_LENGTH_HI,
+    REL_RECORD_LENGTH,
+    GEOS,
+    DATA
 };
-typedef FS_USAGE FSUsage;
 
 struct FSUsageEnum : util::Reflection<FSUsageEnum, FSUsage> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = FS_USAGE_DATA;
+    static constexpr long maxVal = long(FSUsage::DATA);
 
-    static const char *prefix() { return "FS_USAGE"; }
-    static const char *_key(long value)
+    static const char *_key(FSUsage value)
     {
         switch (value) {
 
-            case FS_USAGE_UNKNOWN:              return "FS_USAGE.UNKNOWN";
-            case FS_USAGE_UNUSED:               return "FS_USAGE.UNUSED";
-            case FS_USAGE_DOS_VERSION:          return "FS_USAGE.DOS_VERSION";
-            case FS_USAGE_DOS_TYPE:             return "FS_USAGE.DOS_TYPE";
-            case FS_USAGE_ALLOCATION_BITS:      return "FS_USAGE.ALLOCATION_BITS";
-            case FS_USAGE_DISK_ID:              return "FS_USAGE.DISK_ID";
-            case FS_USAGE_DISK_NAME:            return "FS_USAGE.DISK_NAME";
-            case FS_USAGE_TRACK_LINK:           return "FS_USAGE.TRACK_LINK";
-            case FS_USAGE_SECTOR_LINK:          return "FS_USAGE.SECTOR_LINK";
-            case FS_USAGE_FIRST_FILE_TRACK:     return "FS_USAGE.FIRST_FILE_TRACK";
-            case FS_USAGE_FIRST_FILE_SECTOR:    return "FS_USAGE.FIRST_FILE_SECTOR";
-            case FS_USAGE_FIRST_REL_TRACK:      return "FS_USAGE.FIRST_REL_TRACK";
-            case FS_USAGE_FIRST_REL_SECTOR:     return "FS_USAGE.FIRST_REL_SECTOR";
-            case FS_USAGE_FIRST_DIR_TRACK:      return "FS_USAGE.FIRST_DIR_TRACK";
-            case FS_USAGE_FIRST_DIR_SECTOR:     return "FS_USAGE.FIRST_DIR_SECTOR";
-            case FS_USAGE_FILE_TYPE:            return "FS_USAGE.FILE_TYPE";
-            case FS_USAGE_FILE_NAME:            return "FS_USAGE.FILE_NAME";
-            case FS_USAGE_FILE_LENGTH_LO:       return "FS_USAGE.FILE_LENGTH_LO";
-            case FS_USAGE_FILE_LENGTH_HI:       return "FS_USAGE.FILE_LENGTH_HI";
-            case FS_USAGE_REL_RECORD_LENGTH:    return "FS_USAGE.REL_RECORD_LENGTH";
-            case FS_USAGE_GEOS:                 return "FS_USAGE.GEOS";
-            case FS_USAGE_DATA:                 return "FS_USAGE.DATA";
+            case FSUsage::UNKNOWN:              return "UNKNOWN";
+            case FSUsage::UNUSED:               return "UNUSED";
+            case FSUsage::DOS_VERSION:          return "DOS_VERSION";
+            case FSUsage::DOS_TYPE:             return "DOS_TYPE";
+            case FSUsage::ALLOCATION_BITS:      return "ALLOCATION_BITS";
+            case FSUsage::DISK_ID:              return "DISK_ID";
+            case FSUsage::DISK_NAME:            return "DISK_NAME";
+            case FSUsage::TRACK_LINK:           return "TRACK_LINK";
+            case FSUsage::SECTOR_LINK:          return "SECTOR_LINK";
+            case FSUsage::FIRST_FILE_TRACK:     return "FIRST_FILE_TRACK";
+            case FSUsage::FIRST_FILE_SECTOR:    return "FIRST_FILE_SECTOR";
+            case FSUsage::FIRST_REL_TRACK:      return "FIRST_REL_TRACK";
+            case FSUsage::FIRST_REL_SECTOR:     return "FIRST_REL_SECTOR";
+            case FSUsage::FIRST_DIR_TRACK:      return "FIRST_DIR_TRACK";
+            case FSUsage::FIRST_DIR_SECTOR:     return "FIRST_DIR_SECTOR";
+            case FSUsage::FILE_TYPE:            return "FILE_TYPE";
+            case FSUsage::FILE_NAME:            return "FILE_NAME";
+            case FSUsage::FILE_LENGTH_LO:       return "FILE_LENGTH_LO";
+            case FSUsage::FILE_LENGTH_HI:       return "FILE_LENGTH_HI";
+            case FSUsage::REL_RECORD_LENGTH:    return "REL_RECORD_LENGTH";
+            case FSUsage::GEOS:                 return "GEOS";
+            case FSUsage::DATA:                 return "DATA";
         }
         return "???";
     }

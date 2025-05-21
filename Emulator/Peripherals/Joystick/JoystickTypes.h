@@ -22,7 +22,7 @@ namespace vc64 {
 //
 
 /// Gamepad / Joystick event
-enum_long(GAME_PAD_ACTION)
+enum class GamePadAction : long
 {
     PULL_UP,       ///< Pull the joystick up
     PULL_DOWN,     ///< Pull the joystick down
@@ -38,31 +38,30 @@ enum_long(GAME_PAD_ACTION)
     RELEASE_LEFT,  ///< Release the left mouse button
     RELEASE_RIGHT  ///< Release the right mouse button
 };
-typedef GAME_PAD_ACTION GamePadAction;
 
 struct GamePadActionEnum : util::Reflection<GamePadActionEnum, GamePadAction> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = RELEASE_RIGHT;
+    static constexpr long maxVal = long(GamePadAction::RELEASE_RIGHT);
 
     static const char *prefix() { return nullptr; }
-    static const char *_key(long value)
+    static const char *_key(GamePadAction value)
     {
         switch (value) {
 
-            case PULL_UP:        return "PULL_UP";
-            case PULL_DOWN:      return "PULL_DOWN";
-            case PULL_LEFT:      return "PULL_LEFT";
-            case PULL_RIGHT:     return "PULL_RIGHT";
-            case PRESS_FIRE:     return "PRESS_FIRE";
-            case PRESS_LEFT:     return "PRESS_LEFT";
-            case PRESS_RIGHT:    return "PRESS_RIGHT";
-            case RELEASE_X:      return "RELEASE_X";
-            case RELEASE_Y:      return "RELEASE_Y";
-            case RELEASE_XY:     return "RELEASE_XY";
-            case RELEASE_FIRE:   return "RELEASE_FIRE";
-            case RELEASE_LEFT:   return "RELEASE_LEFT";
-            case RELEASE_RIGHT:  return "RELEASE_RIGHT";
+            case GamePadAction::PULL_UP:        return "PULL_UP";
+            case GamePadAction::PULL_DOWN:      return "PULL_DOWN";
+            case GamePadAction::PULL_LEFT:      return "PULL_LEFT";
+            case GamePadAction::PULL_RIGHT:     return "PULL_RIGHT";
+            case GamePadAction::PRESS_FIRE:     return "PRESS_FIRE";
+            case GamePadAction::PRESS_LEFT:     return "PRESS_LEFT";
+            case GamePadAction::PRESS_RIGHT:    return "PRESS_RIGHT";
+            case GamePadAction::RELEASE_X:      return "RELEASE_X";
+            case GamePadAction::RELEASE_Y:      return "RELEASE_Y";
+            case GamePadAction::RELEASE_XY:     return "RELEASE_XY";
+            case GamePadAction::RELEASE_FIRE:   return "RELEASE_FIRE";
+            case GamePadAction::RELEASE_LEFT:   return "RELEASE_LEFT";
+            case GamePadAction::RELEASE_RIGHT:  return "RELEASE_RIGHT";
         }
         return "???";
     }

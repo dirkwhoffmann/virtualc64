@@ -58,7 +58,7 @@ private:
 
     bool isCompatiblePath(const fs::path &path) override { return isCompatible(path); }
     bool isCompatibleBuffer(const u8 *buf, isize len) override { return isCompatible(buf, len); }
-    FileType type() const override { return FILETYPE_PRG; }
+    FileType type() const override { return FileType::PRG; }
 
     
     //

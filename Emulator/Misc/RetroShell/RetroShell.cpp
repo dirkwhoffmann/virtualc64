@@ -119,7 +119,7 @@ RetroShell::asyncExecScript(const MediaFile &file)
 
     switch (file.type()) {
 
-        case FILETYPE_SCRIPT:
+        case FileType::SCRIPT:
 
             s = string((char *)file.getData(), file.getSize());
             asyncExecScript(s);

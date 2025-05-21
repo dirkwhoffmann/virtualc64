@@ -13,6 +13,7 @@ typealias ErrorCode = vc64.Fault
 typealias EventSlot = vc64.EventSlot
 typealias EventSlotEnum = vc64.EventSlotEnum
 typealias EventSlotInfo = vc64.EventSlotInfo
+typealias GamePadAction = vc64.GamePadAction
 typealias RomType = vc64.RomType
 
 let DRIVE8 = vc64.DRIVE8

@@ -38,7 +38,7 @@ Drive::Drive(C64 &ref, isize id) : SubComponent(ref, id)
 void
 Drive::_initialize()
 {    
-    insertionStatus = DISK_FULLY_EJECTED;
+    insertionStatus = InsertionStatus::FULLY_EJECTED;
     if (disk) disk->clearDisk();
 }
 
@@ -332,15 +332,15 @@ Drive::moveHeadDown()
 bool
 Drive::hasDisk() const
 {
-    return insertionStatus == DISK_FULLY_INSERTED;
+    return insertionStatus == InsertionStatus::FULLY_INSERTED;
 }
 
 bool
 Drive::hasPartiallyRemovedDisk() const
 {
     return
-    insertionStatus == DISK_PARTIALLY_INSERTED ||
-    insertionStatus == DISK_PARTIALLY_EJECTED;
+    insertionStatus == InsertionStatus::PARTIALLY_INSERTED ||
+    insertionStatus == InsertionStatus::PARTIALLY_EJECTED;
 }
 
 void
@@ -453,7 +453,7 @@ Drive::ejectDisk()
 
     {   SUSPENDED
         
-        if (insertionStatus == DISK_FULLY_INSERTED && !diskToInsert) {
+        if (insertionStatus == InsertionStatus::FULLY_INSERTED && !diskToInsert) {
 
             // Initiate the disk change procedure
             scheduleFirstDiskChangeEvent(DCH_EJECT);
@@ -523,12 +523,12 @@ Drive::processDiskChangeEvent(EventID id)
 
     switch (insertionStatus) {
 
-        case DISK_FULLY_INSERTED:
+        case InsertionStatus::FULLY_INSERTED:
 
             trace(DSKCHG_DEBUG, "FULLY_INSERTED -> PARTIALLY_EJECTED\n");
 
             // Pull the disk half out (blocks the light barrier)
-            insertionStatus = DISK_PARTIALLY_EJECTED;
+            insertionStatus = InsertionStatus::PARTIALLY_EJECTED;
 
             // Make sure the drive can no longer read from this disk
             disk->clearDisk();
@@ -537,12 +537,12 @@ Drive::processDiskChangeEvent(EventID id)
             reschedule(config.ejectDelay);
             return;
 
-        case DISK_PARTIALLY_EJECTED:
+        case InsertionStatus::PARTIALLY_EJECTED:
 
             trace(DSKCHG_DEBUG, "PARTIALLY_EJECTED -> FULLY_EJECTED\n");
 
             // Take the disk out (unblocks the light barrier)
-            insertionStatus = DISK_FULLY_EJECTED;
+            insertionStatus = InsertionStatus::FULLY_EJECTED;
 
             // Inform the GUI
             msgQueue.put(Msg::DISK_EJECT, DriveMsg {
@@ -553,7 +553,7 @@ Drive::processDiskChangeEvent(EventID id)
             reschedule(config.swapDelay);
             return;
 
-        case DISK_FULLY_EJECTED:
+        case InsertionStatus::FULLY_EJECTED:
 
             trace(DSKCHG_DEBUG, "FULLY_EJECTED -> PARTIALLY_INSERTED\n");
 
@@ -561,18 +561,18 @@ Drive::processDiskChangeEvent(EventID id)
             if (!diskToInsert) break;
 
             // Push the new disk half in (blocks the light barrier)
-            insertionStatus = DISK_PARTIALLY_INSERTED;
+            insertionStatus = InsertionStatus::PARTIALLY_INSERTED;
 
             // Schedule the next transition
             reschedule(config.insertDelay);
             return;
 
-        case DISK_PARTIALLY_INSERTED:
+        case InsertionStatus::PARTIALLY_INSERTED:
 
             trace(DSKCHG_DEBUG, "PARTIALLY_INSERTED -> FULLY_INSERTED\n");
 
             // Fully insert the disk (unblocks the light barrier)
-            insertionStatus = DISK_FULLY_INSERTED;
+            insertionStatus = InsertionStatus::FULLY_INSERTED;
             disk = std::move(diskToInsert);
 
             // Inform the GUI

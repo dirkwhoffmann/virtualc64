@@ -21,51 +21,50 @@ namespace vc64 {
 // Enumerations
 //
 
-enum_long(FILETYPE)
+enum class FileType : long
 {
-    FILETYPE_UNKNOWN,
-    FILETYPE_SNAPSHOT,
-    FILETYPE_SCRIPT,
-    FILETYPE_CRT,
-    FILETYPE_T64,
-    FILETYPE_P00,
-    FILETYPE_PRG,
-    FILETYPE_FOLDER,
-    FILETYPE_D64,
-    FILETYPE_G64,
-    FILETYPE_TAP,
-    FILETYPE_BASIC_ROM,
-    FILETYPE_CHAR_ROM,
-    FILETYPE_KERNAL_ROM,
-    FILETYPE_VC1541_ROM
+    UNKNOWN,
+    SNAPSHOT,
+    SCRIPT,
+    CRT,
+    T64,
+    P00,
+    PRG,
+    FOLDER,
+    D64,
+    G64,
+    TAP,
+    BASIC_ROM,
+    CHAR_ROM,
+    KERNAL_ROM,
+    VC1541_ROM
 };
-typedef FILETYPE FileType;
 
 struct FileTypeEnum : util::Reflection<FileTypeEnum, FileType> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = FILETYPE_VC1541_ROM;
+    static constexpr long maxVal = long(FileType::VC1541_ROM);
 
     static const char *prefix() { return "FILETYPE"; }
-    static const char *_key(long value)
+    static const char *_key(FileType value)
     {
         switch (value) {
 
-            case FILETYPE_UNKNOWN:    return "UNKNOWN";
-            case FILETYPE_SNAPSHOT:   return "SNAPSHOT";
-            case FILETYPE_SCRIPT:     return "SCRIPT";
-            case FILETYPE_CRT:        return "CRT";
-            case FILETYPE_T64:        return "T64";
-            case FILETYPE_PRG:        return "PRG";
-            case FILETYPE_FOLDER:     return "FOLDER";
-            case FILETYPE_P00:        return "P00";
-            case FILETYPE_D64:        return "D64";
-            case FILETYPE_G64:        return "G64";
-            case FILETYPE_TAP:        return "TAP";
-            case FILETYPE_BASIC_ROM:  return "BASIC_ROM";
-            case FILETYPE_CHAR_ROM:   return "CHAR_ROM";
-            case FILETYPE_KERNAL_ROM: return "KERNAL_ROM";
-            case FILETYPE_VC1541_ROM: return "VC1541_ROM";
+            case FileType::UNKNOWN:    return "UNKNOWN";
+            case FileType::SNAPSHOT:   return "SNAPSHOT";
+            case FileType::SCRIPT:     return "SCRIPT";
+            case FileType::CRT:        return "CRT";
+            case FileType::T64:        return "T64";
+            case FileType::PRG:        return "PRG";
+            case FileType::FOLDER:     return "FOLDER";
+            case FileType::P00:        return "P00";
+            case FileType::D64:        return "D64";
+            case FileType::G64:        return "G64";
+            case FileType::TAP:        return "TAP";
+            case FileType::BASIC_ROM:  return "BASIC_ROM";
+            case FileType::CHAR_ROM:   return "CHAR_ROM";
+            case FileType::KERNAL_ROM: return "KERNAL_ROM";
+            case FileType::VC1541_ROM: return "VC1541_ROM";
         }
         return "???";
     }

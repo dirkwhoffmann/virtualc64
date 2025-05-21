@@ -143,7 +143,7 @@ private:
     bool redLED = false;
     
     // Indicates if or how a disk is inserted
-    InsertionStatus insertionStatus = DISK_FULLY_EJECTED;
+    InsertionStatus insertionStatus = InsertionStatus::FULLY_EJECTED;
 
     
     //

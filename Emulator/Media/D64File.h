@@ -69,7 +69,7 @@ public:
     
     bool isCompatiblePath(const fs::path &path) override { return isCompatible(path); }
     bool isCompatibleBuffer(const u8 *buf, isize len) override { return isCompatible(buf, len); }
-    FileType type() const override { return FILETYPE_D64; }
+    FileType type() const override { return FileType::D64; }
     PETName<16> getName() const override;
     void finalizeRead() throws override;
 

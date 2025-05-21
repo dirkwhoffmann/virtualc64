@@ -48,7 +48,7 @@ public:
     //
 
     // Returns the media type of this file
-    virtual FileType type() const { return FILETYPE_UNKNOWN; }
+    virtual FileType type() const { return FileType::UNKNOWN; }
 
     // Returns the size of this file
     virtual isize getSize() const = 0;

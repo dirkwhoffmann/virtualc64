@@ -149,11 +149,11 @@ RomFile::finalizeRead()
 {
     // Determine the ROM type
     romFileType =
-    isBasicRomBuffer(data.ptr, data.size) ? FILETYPE_BASIC_ROM :
-    isCharRomBuffer(data.ptr, data.size) ? FILETYPE_CHAR_ROM :
-    isKernalRomBuffer(data.ptr, data.size) ? FILETYPE_KERNAL_ROM :
-    isVC1541RomBuffer(data.ptr, data.size) ? FILETYPE_VC1541_ROM :
-    FILETYPE_UNKNOWN;
+    isBasicRomBuffer(data.ptr, data.size) ? FileType::BASIC_ROM :
+    isCharRomBuffer(data.ptr, data.size) ? FileType::CHAR_ROM :
+    isKernalRomBuffer(data.ptr, data.size) ? FileType::KERNAL_ROM :
+    isVC1541RomBuffer(data.ptr, data.size) ? FileType::VC1541_ROM :
+    FileType::UNKNOWN;
 
     // Count the number of 0xFF bytes at the beginning of the file
     isize pads = 0; for (; data[pads] == 0xFF; pads++);
