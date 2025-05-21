@@ -60,20 +60,20 @@ enum class CPURevision
 
 enum class AddrMode : long
 {
-    IMPLIED,
-    ACCUMULATOR,
-    IMMEDIATE,
-    ZERO_PAGE,
-    ZERO_PAGE_X,
-    ZERO_PAGE_Y,
-    ABSOLUTE,
-    ABSOLUTE_X,
-    ABSOLUTE_Y,
-    INDIRECT_X,
-    INDIRECT_Y,
-    RELATIVE,
-    DIRECT,
-    INDIRECT
+    ADDR_IMPLIED,
+    ADDR_ACCUMULATOR,
+    ADDR_IMMEDIATE,
+    ADDR_ZERO_PAGE,
+    ADDR_ZERO_PAGE_X,
+    ADDR_ZERO_PAGE_Y,
+    ADDR_ABSOLUTE,
+    ADDR_ABSOLUTE_X,
+    ADDR_ABSOLUTE_Y,
+    ADDR_INDIRECT_X,
+    ADDR_INDIRECT_Y,
+    ADDR_RELATIVE,
+    ADDR_DIRECT,
+    ADDR_INDIRECT
 };
 
 enum MicroInstruction {

@@ -266,20 +266,20 @@ Peddle::getLengthOfInstruction(u8 opcode) const
 {
     switch(addressingMode[opcode]) {
 
-        case AddrMode::IMPLIED:
-        case AddrMode::ACCUMULATOR:  return 1;
-        case AddrMode::IMMEDIATE:
-        case AddrMode::ZERO_PAGE:
-        case AddrMode::ZERO_PAGE_X:
-        case AddrMode::ZERO_PAGE_Y:
-        case AddrMode::INDIRECT_X:
-        case AddrMode::INDIRECT_Y:
-        case AddrMode::RELATIVE:     return 2;
-        case AddrMode::ABSOLUTE:
-        case AddrMode::ABSOLUTE_X:
-        case AddrMode::ABSOLUTE_Y:
-        case AddrMode::DIRECT:
-        case AddrMode::INDIRECT:     return 3;
+        case AddrMode::ADDR_IMPLIED:
+        case AddrMode::ADDR_ACCUMULATOR:  return 1;
+        case AddrMode::ADDR_IMMEDIATE:
+        case AddrMode::ADDR_ZERO_PAGE:
+        case AddrMode::ADDR_ZERO_PAGE_X:
+        case AddrMode::ADDR_ZERO_PAGE_Y:
+        case AddrMode::ADDR_INDIRECT_X:
+        case AddrMode::ADDR_INDIRECT_Y:
+        case AddrMode::ADDR_RELATIVE:     return 2;
+        case AddrMode::ADDR_ABSOLUTE:
+        case AddrMode::ADDR_ABSOLUTE_X:
+        case AddrMode::ADDR_ABSOLUTE_Y:
+        case AddrMode::ADDR_DIRECT:
+        case AddrMode::ADDR_INDIRECT:     return 3;
 
         default:
             fatalError;
