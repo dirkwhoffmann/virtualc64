@@ -79,7 +79,7 @@ TAPFile::read()
             result = 8 * data[fp];
             fp += 1;
 
-        } else if (version() == 0) {
+        } else if (version() == TAPVersion::ORIGINAL) {
 
             // TAP0 with a zero pulse byte
             result = 8 * 256;

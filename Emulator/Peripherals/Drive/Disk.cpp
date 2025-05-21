@@ -137,7 +137,7 @@ Disk::init(DOSType type, PETName<16> name, bool wp)
     
     if (type == DOSType::CBM) {
         
-        auto fs = FileSystem(DISK_TYPE_SS_SD, DOSType::CBM);
+        auto fs = FileSystem(DiskType::SS_SD, DOSType::CBM);
         fs.setName(name);
         init(fs, wp);
 

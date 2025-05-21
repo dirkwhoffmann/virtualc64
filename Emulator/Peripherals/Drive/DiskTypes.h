@@ -109,25 +109,23 @@ static const isize dataBlockSize = 325 * 8;
 //
 
 /// Disk type
-enum_long(DISK_TYPE)
+enum class DiskType : long
 {
-    DISK_TYPE_SS_SD,   ///< Single-sided, single density (VC1541)
-    DISK_TYPE_DS_SD    ///< Double-sided, single density (VC1571) (unsupported)
+    SS_SD,   ///< Single-sided, single density (VC1541)
+    DS_SD    ///< Double-sided, single density (VC1571) (unsupported)
 };
-typedef DISK_TYPE DiskType;
 
 struct DiskTypeEnum : util::Reflection<DiskTypeEnum, DiskType> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = DISK_TYPE_DS_SD;
+    static constexpr long maxVal = long(DiskType::DS_SD);
 
-    static const char *prefix() { return "DISK_TYPE"; }
-    static const char *_key(long value)
+    static const char *_key(DiskType value)
     {
         switch (value) {
 
-            case DISK_TYPE_SS_SD:  return "SS_SD";
-            case DISK_TYPE_DS_SD:  return "DS_SD";
+            case DiskType::SS_SD:  return "SS_SD";
+            case DiskType::DS_SD:  return "DS_SD";
         }
         return "???";
     }
@@ -138,29 +136,28 @@ struct DiskTypeEnum : util::Reflection<DiskTypeEnum, DiskType> {
     }
 };
 
-enum_long(CBM_FILE_TYPE)
+enum class CBMFileType
 {
-    CBM_FILE_PRG,
-    CBM_FILE_SEQ,
-    CBM_FILE_USR,
-    CBM_FILE_REL
+    PRG,
+    SEQ,
+    USR,
+    REL
 };
-typedef CBM_FILE_TYPE CBMFileType;
 
 struct CBMFileTypeEnum : util::Reflection<CBMFileTypeEnum, CBMFileType> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = CBM_FILE_REL;
+    static constexpr long maxVal = long(CBMFileType::REL);
 
     static const char *prefix() { return "CBM"; }
-    static const char *_key(long value)
+    static const char *_key(CBMFileType value)
     {
         switch (value) {
 
-            case CBM_FILE_PRG:    return "PRG";
-            case CBM_FILE_SEQ:    return "SEQ";
-            case CBM_FILE_USR:    return "USR";
-            case CBM_FILE_REL:    return "REL";
+            case CBMFileType::PRG:    return "PRG";
+            case CBMFileType::SEQ:    return "SEQ";
+            case CBMFileType::USR:    return "USR";
+            case CBMFileType::REL:    return "REL";
         }
         return "???";
     }

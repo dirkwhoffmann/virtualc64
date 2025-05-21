@@ -114,7 +114,7 @@ extension DiskCreator: NSFilePromiseProviderDelegate {
 
     func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, writePromiseTo url: URL, completionHandler: @escaping (Error?) -> Void) {
 
-        if let fs = FileSystemProxy.make(withDiskType: .SS_SD, dosType: dos) {
+        if let fs = FileSystemProxy.make(with: .SS_SD, dosType: dos) {
 
             do {
                 fs.name = name

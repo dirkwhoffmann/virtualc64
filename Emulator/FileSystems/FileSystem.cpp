@@ -110,7 +110,7 @@ FileSystem::init(class Disk &disk)
     isize len = disk.decodeDisk(buffer);
     
     // Create a suitable device descriptor
-    FSDeviceDescriptor descriptor = FSDeviceDescriptor(DISK_TYPE_SS_SD);
+    FSDeviceDescriptor descriptor = FSDeviceDescriptor(DiskType::SS_SD);
     switch (len) {
             
         case D64File::D64_683_SECTORS: descriptor.numCyls = 35; break;
@@ -138,7 +138,7 @@ void
 FileSystem::init(AnyCollection &collection)
 {
     // Create the device
-    init(DISK_TYPE_SS_SD, DOSType::CBM);
+    init(DiskType::SS_SD, DOSType::CBM);
     
     // Write BAM
     auto name = PETName<16>(collection.collectionName());
@@ -171,7 +171,7 @@ FileSystem::init(const fs::path &path)
     if (Folder::isCompatible(path)) {
 
         // Create the device
-        init(DISK_TYPE_SS_SD, DOSType::NODOS);
+        init(DiskType::SS_SD, DOSType::NODOS);
         
         // Write BAM
         auto name = PETName<16>(path.filename().string());

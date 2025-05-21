@@ -75,25 +75,23 @@ struct FileTypeEnum : util::Reflection<FileTypeEnum, FileType> {
     }
 };
 
-enum_long(TAP_VERSION)
+enum class TAPVersion : long
 {
-    TAP_VERSION_ORIGINAL,
-    TAP_VERSION_ADVANCED
+    ORIGINAL,
+    ADVANCED
 };
-typedef TAP_VERSION TAPVersion;
 
 struct TAPVersionEnum : util::Reflection<TAPVersionEnum, TAPVersion> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = TAP_VERSION_ADVANCED;
+    static constexpr long maxVal = long(TAPVersion::ADVANCED);
 
-    static const char *prefix() { return "TAP_VERSION"; }
-    static const char *_key(long value)
+    static const char *_key(TAPVersion value)
     {
         switch (value) {
 
-            case TAP_VERSION_ORIGINAL:  return "ORIGINAL";
-            case TAP_VERSION_ADVANCED:  return "ADVANCED";
+            case TAPVersion::ORIGINAL:  return "ORIGINAL";
+            case TAPVersion::ADVANCED:  return "ADVANCED";
             default:                    return "???";
         }
     }
