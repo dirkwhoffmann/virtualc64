@@ -16,7 +16,7 @@ class Canvas: Layer {
     var scanlineFilter: ComputeKernel! { return ressourceManager.scanlineFilter }
 
     // Used to determine if the GPU texture needs to be updated
-    var prevBuffer: UnsafeMutablePointer<u32>?
+    var prevBuffer: UnsafeMutablePointer<UInt32>?
 
     //
     // Textures

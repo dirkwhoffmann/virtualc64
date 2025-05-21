@@ -14,6 +14,8 @@
 
 #include "BasicTypes.h"
 
+namespace vc64 {
+
 //
 // Structures
 //
@@ -37,3 +39,5 @@ typedef struct
     TimeOfDay alarm;
 }
 TODInfo;
+
+}

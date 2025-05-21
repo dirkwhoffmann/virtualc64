@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
         std::cout << "       <script>            Execute this script instead of the default" << std::endl;
         std::cout << std::endl;
 
-        if (auto what = string(e.what()); !what.empty()) {
+        if (auto what = std::string(e.what()); !what.empty()) {
             std::cout << what << std::endl;
         }
 

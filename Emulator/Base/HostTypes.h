@@ -1,12 +1,37 @@
+// -----------------------------------------------------------------------------
+// This file is part of VirtualC64
 //
-//  HostTypes.h
-//  VirtualC64
+// Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
+// This FILE is dual-licensed. You are free to choose between:
 //
-//  Created by Dirk Hoffmann on 21.06.24.
+//     - The GNU General Public License v3 (or any later version)
+//     - The Mozilla Public License v2
+//
+// SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
+// -----------------------------------------------------------------------------
+
+#pragma once
+
+#include "BasicTypes.h"
+
+namespace vc64 {
+
+//
+// Structures
 //
 
-#ifndef HostTypes_h
-#define HostTypes_h
+typedef struct
+{
+    // Refresh rate of the host display
+    isize refreshRate;
+    
+    // Audio sample rate of the host computer
+    isize sampleRate;
+    
+    // Framebuffer dimensions
+    isize frameBufferWidth;
+    isize frameBufferHeight;
+}
+HostConfig;
 
-
-#endif /* HostTypes_h */
+}

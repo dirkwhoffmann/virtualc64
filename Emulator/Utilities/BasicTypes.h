@@ -19,6 +19,8 @@
 // Integers
 //
 
+namespace vc64 {
+
 // Signed integers
 typedef signed char        i8;
 typedef signed short       i16;
@@ -33,6 +35,8 @@ typedef unsigned int       u32;
 typedef unsigned long long u64;
 typedef unsigned long      usize;
 
+}
+
 
 //
 // Strings
@@ -40,7 +44,7 @@ typedef unsigned long      usize;
 
 #include <string>
 #include <cstring>
-using std::string;
+namespace vc64 { using std::string; }
 
 
 //
@@ -56,7 +60,7 @@ namespace vamiga { using std::vector; }
 //
 
 #include <optional>
-using std::optional;
+namespace vc64 { using std::optional; }
 
 
 //

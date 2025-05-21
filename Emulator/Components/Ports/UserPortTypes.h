@@ -28,7 +28,6 @@ enum class UserPortDevice : long
     RS232
 };
 
-#ifdef __cplusplus
 struct UserPortDeviceEnum : util::Reflection<UserPortDeviceEnum, UserPortDevice>
 {
     static constexpr long minVal = 0;
@@ -52,7 +51,6 @@ struct UserPortDeviceEnum : util::Reflection<UserPortDeviceEnum, UserPortDevice>
         return "";
     }
 };
-#endif
 
 
 //

@@ -15,20 +15,6 @@
 #include "HostTypes.h"
 #include "SubComponent.h"
 
-typedef struct
-{
-    // Refresh rate of the host display
-    isize refreshRate;
-
-    // Audio sample rate of the host computer
-    isize sampleRate;
-
-    // Framebuffer dimensions
-    isize frameBufferWidth;
-    isize frameBufferHeight;
-}
-HostConfig;
-
 namespace vc64 {
 
 /* This class stores some information about the host system. The values have
