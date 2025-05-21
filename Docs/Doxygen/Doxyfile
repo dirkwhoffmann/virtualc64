@@ -2425,9 +2425,7 @@ INCLUDE_FILE_PATTERNS  =
 # recursively expanded use the := operator instead of the = operator.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-PREDEFINED             = "__cplusplus=true" \
-                         "enum_long(x)=enum x" \
-                         "enum_i8(x)=enum x" \
+PREDEFINED             = "__cplusplus=true"
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then this
 # tag can be used to specify a list of macro names that should be expanded. The

@@ -235,7 +235,7 @@ struct EventSlotEnum : util::Reflection<EventSlotEnum, EventSlot>
     }
 };
 
-enum_i8(EventID)
+enum EventID : u8 // _i8(EventID)
 {
     EVENT_NONE          = 0,
 

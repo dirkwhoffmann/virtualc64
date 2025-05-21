@@ -76,8 +76,8 @@ enum class AddrMode : long
     INDIRECT
 };
 
-enum_long(MICRO_INSTRUCTION) {
-
+enum MicroInstruction {
+    
     fetch,
 
     JAM, JAM_2,
@@ -369,7 +369,6 @@ enum_long(MICRO_INSTRUCTION) {
 
     TAS_abs_y, TAS_abs_y_2, TAS_abs_y_3, TAS_abs_y_4
 };
-typedef MICRO_INSTRUCTION MicroInstruction;
 
 namespace Async {
 
