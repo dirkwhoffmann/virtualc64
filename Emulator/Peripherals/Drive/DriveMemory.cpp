@@ -135,37 +135,37 @@ DriveMemory::peek(u16 addr)
     
     switch (usage[addr >> 10]) {
             
-        case DRVMEM_NONE:
+        case DrvMemType::NONE:
             
             result = addr >> 8 & 0x1F;
             break;
             
-        case DRVMEM_RAM:
+        case DrvMemType::RAM:
             
             result = ram[addr & 0x07FF];
             break;
             
-        case DRVMEM_EXP:
+        case DrvMemType::EXP:
             
             result = ram[addr];
             break;
             
-        case DRVMEM_ROM:
+        case DrvMemType::ROM:
             
             result = rom[addr & 0x7FFF];
             break;
 
-        case DRVMEM_VIA1:
+        case DrvMemType::VIA1:
             
             result = drive.via1.peek(addr & 0xF);
             break;
             
-        case DRVMEM_VIA2:
+        case DrvMemType::VIA2:
             
             result = drive.via2.peek(addr & 0xF);
             break;
 
-        case DRVMEM_PIA:
+        case DrvMemType::PIA:
             
             result = drive.pia.peek(addr);
             break;
@@ -184,37 +184,37 @@ DriveMemory::spypeek(u16 addr) const
     
     switch (usage[addr >> 10]) {
             
-        case DRVMEM_NONE:
+        case DrvMemType::NONE:
             
             result = addr >> 8 & 0x1F;
             break;
             
-        case DRVMEM_RAM:
+        case DrvMemType::RAM:
             
             result = ram[addr & 0x07FF];
             break;
             
-        case DRVMEM_EXP:
+        case DrvMemType::EXP:
             
             result = ram[addr];
             break;
             
-        case DRVMEM_ROM:
+        case DrvMemType::ROM:
             
             result = rom[addr & 0x7FFF];
             break;
 
-        case DRVMEM_VIA1:
+        case DrvMemType::VIA1:
             
             result = drive.via1.spypeek(addr & 0xF);
             break;
             
-        case DRVMEM_VIA2:
+        case DrvMemType::VIA2:
             
             result = drive.via2.spypeek(addr & 0xF);
             break;
             
-        case DRVMEM_PIA:
+        case DrvMemType::PIA:
             
             result = drive.pia.spypeek(addr);
             break;
@@ -231,27 +231,27 @@ DriveMemory::poke(u16 addr, u8 value)
 {
     switch (usage[addr >> 10]) {
 
-        case DRVMEM_RAM:
+        case DrvMemType::RAM:
             
             ram[addr & 0x07FF] = value;
             break;
             
-        case DRVMEM_EXP:
+        case DrvMemType::EXP:
             
             ram[addr] = value;
             break;
             
-        case DRVMEM_VIA1:
+        case DrvMemType::VIA1:
             
             drive.via1.poke(addr & 0xF, value);
             break;
             
-        case DRVMEM_VIA2:
+        case DrvMemType::VIA2:
             
             drive.via2.poke(addr & 0xF, value);
             break;
             
-        case DRVMEM_PIA:
+        case DrvMemType::PIA:
             
             drive.pia.poke(addr, value);
             break;
@@ -267,42 +267,42 @@ DriveMemory::updateBankMap()
     auto config = drive.getConfig();
     
     // Start from scratch
-    for (isize i = 0; i < 64; i++) usage[i] = DRVMEM_NONE;
+    for (isize i = 0; i < 64; i++) usage[i] = DrvMemType::NONE;
     
     // Add built-in RAM and IO chips
     for (isize bank = 0; bank < 32; bank += 8) {
         
-        usage[bank + 0] = DRVMEM_RAM;
-        usage[bank + 1] = DRVMEM_RAM;
-        usage[bank + 6] = DRVMEM_VIA1;
-        usage[bank + 7] = DRVMEM_VIA2;
+        usage[bank + 0] = DrvMemType::RAM;
+        usage[bank + 1] = DrvMemType::RAM;
+        usage[bank + 6] = DrvMemType::VIA1;
+        usage[bank + 7] = DrvMemType::VIA2;
     }
     
     // Add ROMs
     switch (romSize()) {
             
         case 0x4000: // 16KB (ROM is mirrored)
-            for (isize i = 32; i < 64; i++) usage[i] = DRVMEM_ROM;
+            for (isize i = 32; i < 64; i++) usage[i] = DrvMemType::ROM;
             break;
             
         case 0x6000: // 24KB
-            for (isize i = 40; i < 64; i++) usage[i] = DRVMEM_ROM;
+            for (isize i = 40; i < 64; i++) usage[i] = DrvMemType::ROM;
             break;
             
         case 0x8000: // 32KB
-            for (isize i = 32; i < 64; i++) usage[i] = DRVMEM_ROM;
+            for (isize i = 32; i < 64; i++) usage[i] = DrvMemType::ROM;
             break;
     }
     
     // Add expansion RAM
     switch (config.ram) {
             
-        case DRVRAM_8000_9FFF:
-            for (isize i = 32; i < 40; i++) usage[i] = DRVMEM_EXP;
+        case DriveRam::RANGE_8000_9FFF:
+            for (isize i = 32; i < 40; i++) usage[i] = DrvMemType::EXP;
             break;
 
-        case DRVRAM_6000_7FFF:
-            for (isize i = 24; i < 32; i++) usage[i] = DRVMEM_EXP;
+        case DriveRam::RANGE_6000_7FFF:
+            for (isize i = 24; i < 32; i++) usage[i] = DrvMemType::EXP;
             break;
 
         default:
@@ -312,7 +312,7 @@ DriveMemory::updateBankMap()
     // Map the PIA (Dolphin DOS 3) $5000 - $5FFF
     if (config.parCable == ParCableType::DOLPHIN3) {
         
-        for (isize i = 20; i < 24; i++) usage[i] = DRVMEM_PIA;
+        for (isize i = 20; i < 24; i++) usage[i] = DrvMemType::PIA;
     }
 }
 

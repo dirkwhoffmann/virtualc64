@@ -129,8 +129,8 @@ Defaults::Defaults()
     setFallback(Opt::MEM_SAVE_ROMS,              true);
 
     setFallback(Opt::DRV_AUTO_CONFIG,            true,               {DRIVE8, DRIVE9});
-    setFallback(Opt::DRV_TYPE,                   (i64)(i64)DriveType::VC1541II, {DRIVE8, DRIVE9});
-    setFallback(Opt::DRV_RAM,                    DRVRAM_NONE,        {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_TYPE,                   (i64)DriveType::VC1541II, {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_RAM,                    (i64)DriveRam::NONE, {DRIVE8, DRIVE9});
     setFallback(Opt::DRV_SAVE_ROMS,              true,               {DRIVE8, DRIVE9});
     setFallback(Opt::DRV_PARCABLE,               (i64)ParCableType::NONE,{DRIVE8, DRIVE9});
     setFallback(Opt::DRV_CONNECT,                true,               {DRIVE8});

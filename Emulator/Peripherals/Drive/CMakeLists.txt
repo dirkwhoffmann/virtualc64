@@ -8,7 +8,7 @@ DriveMemory.cpp
 DriveMemoryBase.cpp
 VIA.cpp
 PIA.cpp
-ParCable.cpp
+ParallelCable.cpp
 Disk.cpp
 DiskAnalyzer.cpp
 

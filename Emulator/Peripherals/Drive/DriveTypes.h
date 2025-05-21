@@ -74,27 +74,25 @@ struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveType> {
     }
 };
 
-enum_long(DRVRAM)
+enum class DriveRam : long
 {
-    DRVRAM_NONE,
-    DRVRAM_8000_9FFF,
-    DRVRAM_6000_7FFF
+    NONE,
+    RANGE_8000_9FFF,
+    RANGE_6000_7FFF
 };
-typedef DRVRAM DriveRam;
 
 struct DriveRamEnum : util::Reflection<DriveRamEnum, DriveRam> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = DRVRAM_6000_7FFF;
+    static constexpr long maxVal = long(DriveRam::RANGE_6000_7FFF);
 
-    static const char *prefix() { return "DRVRAM"; }
-    static const char *_key(long value)
+    static const char *_key(DriveRam value)
     {
         switch (value) {
 
-            case DRVRAM_NONE:       return "DRVRAM_NONE";
-            case DRVRAM_8000_9FFF:  return "DRVRAM_8000_9FFF";
-            case DRVRAM_6000_7FFF:  return "DRVRAM_6000_7FFF";
+            case DriveRam::NONE:            return "NONE";
+            case DriveRam::RANGE_8000_9FFF: return "8000_9FFF";
+            case DriveRam::RANGE_6000_7FFF: return "6000_7FFF";
         }
         return "???";
     }
@@ -105,35 +103,33 @@ struct DriveRamEnum : util::Reflection<DriveRamEnum, DriveRam> {
     }
 };
 
-enum_long(DRVMEM_TYPE)
+enum class DrvMemType : long
 {
-    DRVMEM_NONE,      // Unmapped
-    DRVMEM_RAM,
-    DRVMEM_EXP,       // Expansion RAM
-    DRVMEM_ROM,
-    DRVMEM_VIA1,
-    DRVMEM_VIA2,
-    DRVMEM_PIA        // Peripheral Interface Adapter (Dolphin3)
+    NONE,      // Unmapped
+    RAM,
+    EXP,       // Expansion RAM
+    ROM,
+    VIA1,
+    VIA2,
+    PIA        // Peripheral Interface Adapter (Dolphin3)
 };
-typedef DRVMEM_TYPE DrvMemType;
 
 struct DrvMemTypeEnum : util::Reflection<DrvMemTypeEnum, DrvMemType> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = DRVMEM_PIA;
+    static constexpr long maxVal = long(DrvMemType::PIA);
 
-    static const char *prefix() { return "DRVMEM"; }
-    static const char *_key(long value)
+    static const char *_key(DrvMemType value)
     {
         switch (value) {
 
-            case DRVMEM_NONE:       return "DRVMEM_NONE";
-            case DRVMEM_RAM:        return "DRVMEM_RAM";
-            case DRVMEM_EXP:        return "DRVMEM_EXP";
-            case DRVMEM_ROM:        return "DRVMEM_ROM";
-            case DRVMEM_VIA1:       return "DRVMEM_VIA1";
-            case DRVMEM_VIA2:       return "DRVMEM_VIA2";
-            case DRVMEM_PIA:        return "DRVMEM_PIA";
+            case DrvMemType::NONE:       return "NONE";
+            case DrvMemType::RAM:        return "RAM";
+            case DrvMemType::EXP:        return "EXP";
+            case DrvMemType::ROM:        return "ROM";
+            case DrvMemType::VIA1:       return "VIA1";
+            case DrvMemType::VIA2:       return "VIA2";
+            case DrvMemType::PIA:        return "PIA";
         }
         return "???";
     }
