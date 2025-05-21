@@ -113,7 +113,7 @@ class Drive final : public SubComponent, public Inspectable<DriveInfo> {
 public:
     
     DriveMemory mem = DriveMemory(c64, *this);
-    CPU cpu = CPU(MOS_6502, c64);
+    CPU cpu = CPU(CPURevision::MOS_6502, c64);
     VIA1 via1 = VIA1(c64, *this);
     VIA2 via2 = VIA2(c64, *this);
     PiaDolphin pia = PiaDolphin(c64, *this);

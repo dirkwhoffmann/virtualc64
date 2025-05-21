@@ -79,8 +79,8 @@ public:
     CPU(C64& ref);
     CPU(CPURevision cpuModel, C64& ref);
 
-    bool isC64CPU() const { return cpuModel == MOS_6510; }
-    bool isDriveCPU() const { return cpuModel == MOS_6502; }
+    bool isC64CPU() const { return cpuModel == CPURevision::MOS_6510; }
+    bool isDriveCPU() const { return cpuModel == CPURevision::MOS_6502; }
 
     void setID(isize id) { this->id = id; }
 

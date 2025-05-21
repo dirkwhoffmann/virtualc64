@@ -50,33 +50,31 @@ static constexpr int CPU_CHECK_CP           = (1 << 3);
 //
 
 /// CPU revision
-enum_long(CPUREV)
+enum class CPURevision
 {
     MOS_6502,       ///< PET 2001, VC 20, Atari 800, Apple I/II, BBC Micro
     MOS_6507,       ///< Atari 2600
     MOS_6510,       ///< C64
     MOS_8502        ///< C128
 };
-typedef CPUREV CPURevision;
 
-enum_long(ADDR_MODE)
+enum class AddrMode : long
 {
-    ADDR_IMPLIED,
-    ADDR_ACCUMULATOR,
-    ADDR_IMMEDIATE,
-    ADDR_ZERO_PAGE,
-    ADDR_ZERO_PAGE_X,
-    ADDR_ZERO_PAGE_Y,
-    ADDR_ABSOLUTE,
-    ADDR_ABSOLUTE_X,
-    ADDR_ABSOLUTE_Y,
-    ADDR_INDIRECT_X,
-    ADDR_INDIRECT_Y,
-    ADDR_RELATIVE,
-    ADDR_DIRECT,
-    ADDR_INDIRECT
+    IMPLIED,
+    ACCUMULATOR,
+    IMMEDIATE,
+    ZERO_PAGE,
+    ZERO_PAGE_X,
+    ZERO_PAGE_Y,
+    ABSOLUTE,
+    ABSOLUTE_X,
+    ABSOLUTE_Y,
+    INDIRECT_X,
+    INDIRECT_Y,
+    RELATIVE,
+    DIRECT,
+    INDIRECT
 };
-typedef ADDR_MODE AddressingMode;
 
 enum_long(MICRO_INSTRUCTION) {
 

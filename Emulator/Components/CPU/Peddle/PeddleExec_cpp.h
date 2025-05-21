@@ -266,20 +266,20 @@ Peddle::getLengthOfInstruction(u8 opcode) const
 {
     switch(addressingMode[opcode]) {
 
-        case ADDR_IMPLIED:
-        case ADDR_ACCUMULATOR:  return 1;
-        case ADDR_IMMEDIATE:
-        case ADDR_ZERO_PAGE:
-        case ADDR_ZERO_PAGE_X:
-        case ADDR_ZERO_PAGE_Y:
-        case ADDR_INDIRECT_X:
-        case ADDR_INDIRECT_Y:
-        case ADDR_RELATIVE:     return 2;
-        case ADDR_ABSOLUTE:
-        case ADDR_ABSOLUTE_X:
-        case ADDR_ABSOLUTE_Y:
-        case ADDR_DIRECT:
-        case ADDR_INDIRECT:     return 3;
+        case AddrMode::IMPLIED:
+        case AddrMode::ACCUMULATOR:  return 1;
+        case AddrMode::IMMEDIATE:
+        case AddrMode::ZERO_PAGE:
+        case AddrMode::ZERO_PAGE_X:
+        case AddrMode::ZERO_PAGE_Y:
+        case AddrMode::INDIRECT_X:
+        case AddrMode::INDIRECT_Y:
+        case AddrMode::RELATIVE:     return 2;
+        case AddrMode::ABSOLUTE:
+        case AddrMode::ABSOLUTE_X:
+        case AddrMode::ABSOLUTE_Y:
+        case AddrMode::DIRECT:
+        case AddrMode::INDIRECT:     return 3;
 
         default:
             fatalError;
@@ -309,10 +309,10 @@ Peddle::reset()
 {
     switch (cpuModel) {
 
-        case MOS_6502: reset<MOS_6502>(); break;
-        case MOS_6507: reset<MOS_6507>(); break;
-        case MOS_6510: reset<MOS_6510>(); break;
-        case MOS_8502: reset<MOS_8502>(); break;
+        case CPURevision::MOS_6502: reset<CPURevision::MOS_6502>(); break;
+        case CPURevision::MOS_6507: reset<CPURevision::MOS_6507>(); break;
+        case CPURevision::MOS_6510: reset<CPURevision::MOS_6510>(); break;
+        case CPURevision::MOS_8502: reset<CPURevision::MOS_8502>(); break;
 
         default:
             fatalError;
@@ -349,10 +349,10 @@ Peddle::execute()
 {
     switch (cpuModel) {
 
-        case MOS_6502: execute<MOS_6502>(); break;
-        case MOS_6507: execute<MOS_6507>(); break;
-        case MOS_6510: execute<MOS_6510>(); break;
-        case MOS_8502: execute<MOS_8502>(); break;
+        case CPURevision::MOS_6502: execute<CPURevision::MOS_6502>(); break;
+        case CPURevision::MOS_6507: execute<CPURevision::MOS_6507>(); break;
+        case CPURevision::MOS_6510: execute<CPURevision::MOS_6510>(); break;
+        case CPURevision::MOS_8502: execute<CPURevision::MOS_8502>(); break;
 
         default:
             fatalError;
@@ -366,7 +366,7 @@ Peddle::execute()
             
         case fetch:
 
-            if constexpr (C != MOS_6507) {
+            if constexpr (C != CPURevision::MOS_6507) {
 
                 // Check interrupt lines
                 if (unlikely(doNmi)) {
@@ -3097,10 +3097,10 @@ Peddle::execute(int count)
 {
     switch (cpuModel) {
 
-        case MOS_6502: execute<MOS_6502>(count); break;
-        case MOS_6507: execute<MOS_6507>(count); break;
-        case MOS_6510: execute<MOS_6510>(count); break;
-        case MOS_8502: execute<MOS_8502>(count); break;
+        case CPURevision::MOS_6502: execute<CPURevision::MOS_6502>(count); break;
+        case CPURevision::MOS_6507: execute<CPURevision::MOS_6507>(count); break;
+        case CPURevision::MOS_6510: execute<CPURevision::MOS_6510>(count); break;
+        case CPURevision::MOS_8502: execute<CPURevision::MOS_8502>(count); break;
 
         default:
             fatalError;
@@ -3118,10 +3118,10 @@ Peddle::executeInstruction()
 {
     switch (cpuModel) {
 
-        case MOS_6502: executeInstruction<MOS_6502>(); break;
-        case MOS_6507: executeInstruction<MOS_6507>(); break;
-        case MOS_6510: executeInstruction<MOS_6510>(); break;
-        case MOS_8502: executeInstruction<MOS_8502>(); break;
+        case CPURevision::MOS_6502: executeInstruction<CPURevision::MOS_6502>(); break;
+        case CPURevision::MOS_6507: executeInstruction<CPURevision::MOS_6507>(); break;
+        case CPURevision::MOS_6510: executeInstruction<CPURevision::MOS_6510>(); break;
+        case CPURevision::MOS_8502: executeInstruction<CPURevision::MOS_8502>(); break;
 
         default:
             fatalError;
@@ -3143,10 +3143,10 @@ Peddle::executeInstruction(int count)
 {
     switch (cpuModel) {
 
-        case MOS_6502: executeInstruction<MOS_6502>(count); break;
-        case MOS_6507: executeInstruction<MOS_6507>(count); break;
-        case MOS_6510: executeInstruction<MOS_6510>(count); break;
-        case MOS_8502: executeInstruction<MOS_8502>(count); break;
+        case CPURevision::MOS_6502: executeInstruction<CPURevision::MOS_6502>(count); break;
+        case CPURevision::MOS_6507: executeInstruction<CPURevision::MOS_6507>(count); break;
+        case CPURevision::MOS_6510: executeInstruction<CPURevision::MOS_6510>(count); break;
+        case CPURevision::MOS_8502: executeInstruction<CPURevision::MOS_8502>(count); break;
 
         default:
             fatalError;
@@ -3164,10 +3164,10 @@ Peddle::finishInstruction()
 {
     switch (cpuModel) {
 
-        case MOS_6502: finishInstruction<MOS_6502>(); break;
-        case MOS_6507: finishInstruction<MOS_6507>(); break;
-        case MOS_6510: finishInstruction<MOS_6510>(); break;
-        case MOS_8502: finishInstruction<MOS_8502>(); break;
+        case CPURevision::MOS_6502: finishInstruction<CPURevision::MOS_6502>(); break;
+        case CPURevision::MOS_6507: finishInstruction<CPURevision::MOS_6507>(); break;
+        case CPURevision::MOS_6510: finishInstruction<CPURevision::MOS_6510>(); break;
+        case CPURevision::MOS_8502: finishInstruction<CPURevision::MOS_8502>(); break;
 
         default:
             fatalError;

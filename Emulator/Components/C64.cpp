@@ -843,7 +843,7 @@ alwaysinline void C64::executeCycle()
     // Second clock phase (o2 high)
     //
 
-    cpu.execute<MOS_6510>();
+    cpu.execute<CPURevision::MOS_6510>();
     if constexpr (enable8) { if (drive8.needsEmulation) drive8.execute(durationOfOneCycle); }
     if constexpr (enable9) { if (drive9.needsEmulation) drive9.execute(durationOfOneCycle); }
     if constexpr (execExp) { expansionport.execute(); }

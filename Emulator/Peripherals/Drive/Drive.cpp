@@ -59,7 +59,7 @@ Drive::execute(u64 duration)
             
             // Execute CPU and VIAs
             i64 cycle = ++cpu.clock;
-            cpu.execute<MOS_6502>();
+            cpu.execute<CPURevision::MOS_6502>();
             if (cycle >= via1.wakeUpCycle) via1.execute(); else via1.idleCounter++;
             if (cycle >= via2.wakeUpCycle) via2.execute(); else via2.idleCounter++;
             updateByteReady();

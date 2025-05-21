@@ -39,7 +39,7 @@ public:
     static const char *mnemonic[256];
 
     // Table storing the adressing mode for each opcode
-    static AddressingMode addressingMode[256];
+    static AddrMode addressingMode[256];
 
 
     //
@@ -52,7 +52,7 @@ protected:
     isize id;
 
     // Emulated CPU model
-    CPURevision cpuModel = MOS_6510;
+    CPURevision cpuModel = CPURevision::MOS_6510;
 
 
     //
@@ -198,7 +198,7 @@ private:
     // Registers a single instruction
     void registerCallback(u8 opcode,
                           const char *mnemonic,
-                          AddressingMode mode,
+                          AddrMode mode,
                           MicroInstruction mInstr);
 
 

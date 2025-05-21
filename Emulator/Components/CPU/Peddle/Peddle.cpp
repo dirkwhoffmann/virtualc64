@@ -13,7 +13,7 @@ namespace vc64::peddle {
 // Static lookup tables
 MicroInstruction Peddle::actionFunc[256] = { };
 const char *Peddle::mnemonic[256] = { };
-AddressingMode Peddle::addressingMode[256] = { };
+AddrMode Peddle::addressingMode[256] = { };
 
 Peddle::Peddle(C64 &ref) : SubComponent(ref)
 {
@@ -41,10 +41,10 @@ Peddle::hasProcessorPort() const
 {
     switch (cpuModel) {
 
-        case MOS_6502:  return hasProcessorPort<MOS_6502>();
-        case MOS_6507:  return hasProcessorPort<MOS_6507>();
-        case MOS_6510:  return hasProcessorPort<MOS_6510>();
-        case MOS_8502:  return hasProcessorPort<MOS_8502>();
+        case CPURevision::MOS_6502:  return hasProcessorPort<CPURevision::MOS_6502>();
+        case CPURevision::MOS_6507:  return hasProcessorPort<CPURevision::MOS_6507>();
+        case CPURevision::MOS_6510:  return hasProcessorPort<CPURevision::MOS_6510>();
+        case CPURevision::MOS_8502:  return hasProcessorPort<CPURevision::MOS_8502>();
 
         default:
             fatalError;
@@ -55,22 +55,22 @@ Peddle::hasProcessorPort() const
 template <CPURevision C> u16
 Peddle::hasProcessorPort() const
 {
-    return C == MOS_6510 || C == MOS_8502;
+    return C == CPURevision::MOS_6510 || C == CPURevision::MOS_8502;
 }
-template u16 Peddle::hasProcessorPort<MOS_6502>() const;
-template u16 Peddle::hasProcessorPort<MOS_6507>() const;
-template u16 Peddle::hasProcessorPort<MOS_6510>() const;
-template u16 Peddle::hasProcessorPort<MOS_8502>() const;
+template u16 Peddle::hasProcessorPort<CPURevision::MOS_6502>() const;
+template u16 Peddle::hasProcessorPort<CPURevision::MOS_6507>() const;
+template u16 Peddle::hasProcessorPort<CPURevision::MOS_6510>() const;
+template u16 Peddle::hasProcessorPort<CPURevision::MOS_8502>() const;
 
 u16
 Peddle::addrMask() const
 {
     switch (cpuModel) {
 
-        case MOS_6502:  return addrMask<MOS_6502>();
-        case MOS_6507:  return addrMask<MOS_6507>();
-        case MOS_6510:  return addrMask<MOS_6510>();
-        case MOS_8502:  return addrMask<MOS_8502>();
+        case CPURevision::MOS_6502:  return addrMask<CPURevision::MOS_6502>();
+        case CPURevision::MOS_6507:  return addrMask<CPURevision::MOS_6507>();
+        case CPURevision::MOS_6510:  return addrMask<CPURevision::MOS_6510>();
+        case CPURevision::MOS_8502:  return addrMask<CPURevision::MOS_8502>();
 
         default:
             fatalError;
@@ -82,14 +82,14 @@ Peddle::addrMask() const
 {
     switch (C) {
 
-        case MOS_6507:  return 0x1FFF;
-        default:        return 0xFFFF;
+        case CPURevision::MOS_6507: return 0x1FFF;
+        default:                    return 0xFFFF;
     }
 }
-template u16 Peddle::addrMask<MOS_6502>() const;
-template u16 Peddle::addrMask<MOS_6507>() const;
-template u16 Peddle::addrMask<MOS_6510>() const;
-template u16 Peddle::addrMask<MOS_8502>() const;
+template u16 Peddle::addrMask<CPURevision::MOS_6502>() const;
+template u16 Peddle::addrMask<CPURevision::MOS_6507>() const;
+template u16 Peddle::addrMask<CPURevision::MOS_6510>() const;
+template u16 Peddle::addrMask<CPURevision::MOS_8502>() const;
 
 void
 Peddle::pullDownNmiLine(u8 mask)

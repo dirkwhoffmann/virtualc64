@@ -33,20 +33,22 @@ namespace vc64 {
 // Enumerations
 //
 
-struct CPURevisionEnum : util::Reflection<CPURevisionEnum, vc64::peddle::CPURevision> {
+using vc64::peddle::CPURevision;
+
+struct CPURevisionEnum : util::Reflection<CPURevisionEnum, CPURevision> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = vc64::peddle::MOS_8502;
+    static constexpr long maxVal = long(CPURevision::MOS_8502);
 
     static const char *prefix() { return nullptr; }
-    static const char *_key(long value)
+    static const char *_key(CPURevision value)
     {
         switch (value) {
 
-            case vc64::peddle::MOS_6502:  return "MOS_6502";
-            case vc64::peddle::MOS_6507:  return "MOS_6507";
-            case vc64::peddle::MOS_6510:  return "MOS_6510";
-            case vc64::peddle::MOS_8502:  return "MOS_8502";
+            case CPURevision::MOS_6502: return "MOS_6502";
+            case CPURevision::MOS_6507: return "MOS_6507";
+            case CPURevision::MOS_6510: return "MOS_6510";
+            case CPURevision::MOS_8502: return "MOS_8502";
         }
         return "???";
     }

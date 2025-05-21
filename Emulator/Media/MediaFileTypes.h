@@ -102,21 +102,20 @@ struct TAPVersionEnum : util::Reflection<TAPVersionEnum, TAPVersion> {
     }
 };
 
-enum_long(FILE_ERROR)
+enum class FileError : long
 {
-    ERR_FILE_OK,
+    FILE_OK,
 
     // General
-    ERR_FILE_NOT_FOUND,
-    ERR_INVALID_TYPE,
-    ERR_CANT_READ,
-    ERR_CANT_WRITE,
-    ERR_OUT_OF_MEMORY,
-    ERR_UNKNOWN,
+    FILE_NOT_FOUND,
+    INVALID_TYPE,
+    CANT_READ,
+    CANT_WRITE,
+    OUT_OF_MEMORY,
+    UNKNOWN,
 
     // Snapshots
-    ERR_UNSUPPORTED_SNAPSHOT
+    UNSUPPORTED_SNAPSHOT
 };
-typedef FILE_ERROR FileError;
 
 }

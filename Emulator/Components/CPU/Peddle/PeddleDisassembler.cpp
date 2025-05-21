@@ -194,18 +194,18 @@ Disassembler::disassI(u16 addr, u8 byte1, u8 byte2, u8 byte3, char *dst, isize t
     // Write operand
     switch (cpu.addressingMode[byte1]) {
 
-        case ADDR_IMMEDIATE:    writer << Tab{} << Imm  { byte2 }; break;
-        case ADDR_ZERO_PAGE:    writer << Tab{} << Zp   { byte2 }; break;
-        case ADDR_ZERO_PAGE_X:  writer << Tab{} << Zpx  { byte2 }; break;
-        case ADDR_ZERO_PAGE_Y:  writer << Tab{} << Zpy  { byte2 }; break;
-        case ADDR_ABSOLUTE:     writer << Tab{} << Abs  { LO_HI(byte2, byte3) }; break;
-        case ADDR_ABSOLUTE_X:   writer << Tab{} << Absx { LO_HI(byte2, byte3) }; break;
-        case ADDR_ABSOLUTE_Y:   writer << Tab{} << Absy { LO_HI(byte2, byte3) }; break;
-        case ADDR_DIRECT:       writer << Tab{} << Dir  { LO_HI(byte2, byte3) }; break;
-        case ADDR_INDIRECT:     writer << Tab{} << Ind  { LO_HI(byte2, byte3) }; break;
-        case ADDR_INDIRECT_X:   writer << Tab{} << Indx { byte2 }; break;
-        case ADDR_INDIRECT_Y:   writer << Tab{} << Indy { byte2 }; break;
-        case ADDR_RELATIVE:     writer << Tab{} << Rel  { (u16)(addr + 2 + (i8)byte2) }; break;
+        case AddrMode::IMMEDIATE:    writer << Tab{} << Imm  { byte2 }; break;
+        case AddrMode::ZERO_PAGE:    writer << Tab{} << Zp   { byte2 }; break;
+        case AddrMode::ZERO_PAGE_X:  writer << Tab{} << Zpx  { byte2 }; break;
+        case AddrMode::ZERO_PAGE_Y:  writer << Tab{} << Zpy  { byte2 }; break;
+        case AddrMode::ABSOLUTE:     writer << Tab{} << Abs  { LO_HI(byte2, byte3) }; break;
+        case AddrMode::ABSOLUTE_X:   writer << Tab{} << Absx { LO_HI(byte2, byte3) }; break;
+        case AddrMode::ABSOLUTE_Y:   writer << Tab{} << Absy { LO_HI(byte2, byte3) }; break;
+        case AddrMode::DIRECT:       writer << Tab{} << Dir  { LO_HI(byte2, byte3) }; break;
+        case AddrMode::INDIRECT:     writer << Tab{} << Ind  { LO_HI(byte2, byte3) }; break;
+        case AddrMode::INDIRECT_X:   writer << Tab{} << Indx { byte2 }; break;
+        case AddrMode::INDIRECT_Y:   writer << Tab{} << Indy { byte2 }; break;
+        case AddrMode::RELATIVE:     writer << Tab{} << Rel  { (u16)(addr + 2 + (i8)byte2) }; break;
 
         default:
             break;
@@ -253,18 +253,18 @@ Disassembler::disassemble(char *str, u16 pc, u8 byte1, u8 byte2, u8 byte3) const
     // Write operand
     switch (cpu.addressingMode[byte1]) {
 
-        case ADDR_IMMEDIATE:    writer << Tab{} << Imm  { byte2 }; break;
-        case ADDR_ZERO_PAGE:    writer << Tab{} << Zp   { byte2 }; break;
-        case ADDR_ZERO_PAGE_X:  writer << Tab{} << Zpx  { byte2 }; break;
-        case ADDR_ZERO_PAGE_Y:  writer << Tab{} << Zpy  { byte2 }; break;
-        case ADDR_ABSOLUTE:     writer << Tab{} << Abs  { LO_HI(byte2, byte3) }; break;
-        case ADDR_ABSOLUTE_X:   writer << Tab{} << Absx { LO_HI(byte2, byte3) }; break;
-        case ADDR_ABSOLUTE_Y:   writer << Tab{} << Absy { LO_HI(byte2, byte3) }; break;
-        case ADDR_DIRECT:       writer << Tab{} << Dir  { LO_HI(byte2, byte3) }; break;
-        case ADDR_INDIRECT:     writer << Tab{} << Ind  { LO_HI(byte2, byte3) }; break;
-        case ADDR_INDIRECT_X:   writer << Tab{} << Indx { byte2 }; break;
-        case ADDR_INDIRECT_Y:   writer << Tab{} << Indy { byte2 }; break;
-        case ADDR_RELATIVE:     writer << Tab{} << Rel  { (u16)(pc + 2 + (i8)byte2) }; break;
+        case AddrMode::IMMEDIATE:    writer << Tab{} << Imm  { byte2 }; break;
+        case AddrMode::ZERO_PAGE:    writer << Tab{} << Zp   { byte2 }; break;
+        case AddrMode::ZERO_PAGE_X:  writer << Tab{} << Zpx  { byte2 }; break;
+        case AddrMode::ZERO_PAGE_Y:  writer << Tab{} << Zpy  { byte2 }; break;
+        case AddrMode::ABSOLUTE:     writer << Tab{} << Abs  { LO_HI(byte2, byte3) }; break;
+        case AddrMode::ABSOLUTE_X:   writer << Tab{} << Absx { LO_HI(byte2, byte3) }; break;
+        case AddrMode::ABSOLUTE_Y:   writer << Tab{} << Absy { LO_HI(byte2, byte3) }; break;
+        case AddrMode::DIRECT:       writer << Tab{} << Dir  { LO_HI(byte2, byte3) }; break;
+        case AddrMode::INDIRECT:     writer << Tab{} << Ind  { LO_HI(byte2, byte3) }; break;
+        case AddrMode::INDIRECT_X:   writer << Tab{} << Indx { byte2 }; break;
+        case AddrMode::INDIRECT_Y:   writer << Tab{} << Indy { byte2 }; break;
+        case AddrMode::RELATIVE:     writer << Tab{} << Rel  { (u16)(pc + 2 + (i8)byte2) }; break;
 
         default:
             break;
