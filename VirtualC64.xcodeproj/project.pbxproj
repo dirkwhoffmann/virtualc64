@@ -1135,6 +1135,7 @@
 		50EAF5292C7A101E005AC890 /* HeadlessScripts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeadlessScripts.h; sourceTree = "<group>"; };
 		50EAF52A2C7A5DC5005AC890 /* OpenRoms.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenRoms.h; sourceTree = "<group>"; };
 		50EAFFE924B2600D00024CD2 /* MyToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyToolbar.swift; sourceTree = "<group>"; };
+		50EB45B22DDF2A7200BEC06F /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50ED5BF712DD99C000596417 /* Speedometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speedometer.swift; sourceTree = "<group>"; };
 		50EF22322815927D00440C4D /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50EF22342815929500440C4D /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -2200,11 +2201,6 @@
 				504C42F624AF29AB00E69CAE /* C64.h */,
 				500375052C23F26000979A1B /* C64Base.cpp */,
 				504C42F724AF29AB00E69CAE /* C64.cpp */,
-				506F30442B7578870083EAEA /* EmulatorTypes.h */,
-				506F30392B729CE80083EAEA /* Emulator.h */,
-				50A1948C2BDA6F490046849E /* EmulatorBase.cpp */,
-				506F30382B729CE80083EAEA /* Emulator.cpp */,
-				50ACF4DC256EB451003B5690 /* Ports */,
 				504C42E524AF29AB00E69CAE /* CPU */,
 				504C435224AF29AC00E69CAE /* CIA */,
 				504C430424AF29AB00E69CAE /* VICII */,
@@ -2229,9 +2225,15 @@
 		50EB45B12DDF20B300BEC06F /* VC64Core */ = {
 			isa = PBXGroup;
 			children = (
+				50EB45B22DDF2A7200BEC06F /* CMakeLists.txt */,
+				506F30442B7578870083EAEA /* EmulatorTypes.h */,
+				506F30392B729CE80083EAEA /* Emulator.h */,
+				50A1948C2BDA6F490046849E /* EmulatorBase.cpp */,
+				506F30382B729CE80083EAEA /* Emulator.cpp */,
 				500FAA62261376980062488E /* Utilities */,
 				50A2D7AF24AF945200671F38 /* Base */,
 				50E56AF529D489EA00EBCE76 /* Components */,
+				50ACF4DC256EB451003B5690 /* Ports */,
 				504C42F924AF29AB00E69CAE /* Peripherals */,
 				504C42C624AF29AB00E69CAE /* Media */,
 				5080501C2587A177004FE1F5 /* FileSystems */,

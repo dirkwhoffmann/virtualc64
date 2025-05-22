@@ -48,13 +48,7 @@ endif()
 target_include_directories(VC64Core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Add sub directories
-add_subdirectory(VC64Core/Base)
-add_subdirectory(VC64Core/Components)
-add_subdirectory(VC64Core/FileSystems)
-add_subdirectory(VC64Core/Media)
-add_subdirectory(VC64Core/Misc)
-add_subdirectory(VC64Core/Peripherals)
-add_subdirectory(VC64Core/Utilities)
+add_subdirectory(VC64Core)
 
 # Add libraries
 set(THREADS_PREFER_PTHREAD_FLAG ON)
