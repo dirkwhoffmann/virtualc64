@@ -1555,13 +1555,7 @@
 				50726FBC2961CA5A0031F2F5 /* Headless.h */,
 				50726FBB2961CA5A0031F2F5 /* Headless.cpp */,
 				50EAF5292C7A101E005AC890 /* HeadlessScripts.h */,
-				500FAA62261376980062488E /* Utilities */,
-				50A2D7AF24AF945200671F38 /* Base */,
-				50E56AF529D489EA00EBCE76 /* Components */,
-				504C42F924AF29AB00E69CAE /* Peripherals */,
-				504C42C624AF29AB00E69CAE /* Media */,
-				5080501C2587A177004FE1F5 /* FileSystems */,
-				50EF22312815925100440C4D /* Misc */,
+				50EB45B12DDF20B300BEC06F /* VC64Core */,
 			);
 			path = Emulator;
 			sourceTree = "<group>";
@@ -2230,6 +2224,20 @@
 				50E5BF712BA81E710004712B /* Monitor.cpp */,
 			);
 			path = Monitor;
+			sourceTree = "<group>";
+		};
+		50EB45B12DDF20B300BEC06F /* VC64Core */ = {
+			isa = PBXGroup;
+			children = (
+				500FAA62261376980062488E /* Utilities */,
+				50A2D7AF24AF945200671F38 /* Base */,
+				50E56AF529D489EA00EBCE76 /* Components */,
+				504C42F924AF29AB00E69CAE /* Peripherals */,
+				504C42C624AF29AB00E69CAE /* Media */,
+				5080501C2587A177004FE1F5 /* FileSystems */,
+				50EF22312815925100440C4D /* Misc */,
+			);
+			path = VC64Core;
 			sourceTree = "<group>";
 		};
 		50EF22302815922300440C4D /* RegressionTester */ = {
