@@ -1216,7 +1216,7 @@
 			isa = PBXGroup;
 			children = (
 				504C428D24AF29AB00E69CAE /* Emulator */,
-				5070D72224AF3330005862D0 /* Proxy */,
+				5070D72224AF3330005862D0 /* ObjCProxy */,
 				50176C6D0A6F7357009E80BD /* GUI */,
 				50441A882B9495BE00102A4D /* Docs */,
 				5070D72124AF2EB1005862D0 /* Resources */,
@@ -1243,7 +1243,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5002FA7921C264C100DA4BBC /* Panels */ = {
+		5002FA7921C264C100DA4BBC /* Dialogs */ = {
 			isa = PBXGroup;
 			children = (
 				50763276202989D300575110 /* DialogController.swift */,
@@ -1255,7 +1255,7 @@
 				50157EF22825AD49000E9DDD /* Captures */,
 				50157EF32825AD6D000E9DDD /* Media */,
 			);
-			path = Panels;
+			path = Dialogs;
 			sourceTree = "<group>";
 		};
 		5007E1DD26A6FFDC000E7344 /* Joystick */ = {
@@ -1399,7 +1399,7 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		50157EF82825B08B000E9DDD /* Peripherals */ = {
+		50157EF82825B08B000E9DDD /* Input */ = {
 			isa = PBXGroup;
 			children = (
 				50B1A61E25A2386F00201A2C /* HIDExtensions.swift */,
@@ -1410,7 +1410,7 @@
 				50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */,
 				50FE5B352039B3B7006CE7C7 /* MacKey.swift */,
 			);
-			path = Peripherals;
+			path = Input;
 			sourceTree = "<group>";
 		};
 		50157EF92825B0EC000E9DDD /* Inspector */ = {
@@ -1456,9 +1456,8 @@
 				50B9F2802826392400BDFE7B /* MediaManager.swift */,
 				50157EF62825B01D000E9DDD /* System */,
 				506CE96621998C4500B70A3A /* Metal */,
-				50A22A1E261871EC00C9FB1E /* Layers */,
-				5002FA7921C264C100DA4BBC /* Panels */,
-				50157EF82825B08B000E9DDD /* Peripherals */,
+				5002FA7921C264C100DA4BBC /* Dialogs */,
+				50157EF82825B08B000E9DDD /* Input */,
 				50C4F055202D8B37004C5F21 /* XIB files */,
 			);
 			path = GUI;
@@ -1914,6 +1913,7 @@
 				50DEAD8E2008E615008A8761 /* Shaders.swift */,
 				50C72DE51BC7F42100F1863B /* Shaders.metal */,
 				50B165AD25B06A03009B576D /* TextureToolbox.swift */,
+				50A22A1E261871EC00C9FB1E /* Layers */,
 			);
 			path = Metal;
 			sourceTree = "<group>";
@@ -1932,7 +1932,7 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		5070D72224AF3330005862D0 /* Proxy */ = {
+		5070D72224AF3330005862D0 /* ObjCProxy */ = {
 			isa = PBXGroup;
 			children = (
 				50B171051EE6AB840019E8D4 /* Bridging-Header.h */,
@@ -1941,7 +1941,7 @@
 				50F062E2258DE564009A6B21 /* TypeExtensions.swift */,
 				50D3091F24C625B200B92563 /* ProxyExtensions.swift */,
 			);
-			path = Proxy;
+			path = ObjCProxy;
 			sourceTree = "<group>";
 		};
 		50769B8724BB1A7A006FE743 /* Configuration */ = {
@@ -2956,7 +2956,7 @@
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.dirkwhoffmann.VC64;
 				PRODUCT_NAME = VirtualC64;
-				SWIFT_OBJC_BRIDGING_HEADER = "Proxy/Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "ObjCProxy/Bridging-Header.h";
 				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
@@ -3004,7 +3004,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = de.dirkwhoffmann.VC64;
 				PRODUCT_NAME = VirtualC64;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OBJC_BRIDGING_HEADER = "Proxy/Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "ObjCProxy/Bridging-Header.h";
 				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
