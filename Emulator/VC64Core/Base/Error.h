@@ -14,13 +14,29 @@
 #pragma once
 
 #include "ErrorTypes.h"
-#include "Exception.h"
+// #include "Exception.h"
 #include <filesystem>
 
 namespace vc64 {
 
+struct EmulatorException : public std::exception {
+    
+    // Payload
+    i64 data;
+
+    // Auxiliary information about the thrown errow
+    string description;
+    
+    EmulatorException(i64 d, const string &s) : data(d), description(s) { }
+    EmulatorException(i64 d) : data(d), description("") { }
+    EmulatorException(const string &s) : data(0), description(s) { }
+    EmulatorException() : data(0) { }
+    
+    const char *what() const noexcept override { return description.c_str(); }
+};
+
 /// Emulator exception
-struct Error : public util::Exception
+struct Error : public EmulatorException
 {
     Error(Fault code, const string &s);
     Error(Fault code, const char *s) : Error(code, string(s)) { };

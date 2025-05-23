@@ -10,32 +10,20 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#if 0
+//
+// Compiler directives
+//
 
-#pragma once
+#if defined(__clang__)
+    #define alwaysinline __attribute__((always_inline))
+#elif defined(__GNUC__) || defined(__GNUG__)
+    #define alwaysinline __attribute__((always_inline))
+#elif defined(_MSC_VER)
+    #define alwaysinline __forceinline
+#elif
+    #define alwaysinline inline
+#endif
 
-#include "BasicTypes.h"
-#include <exception>
-
-namespace vc64::util {
-
-/** @brief  Base class for all emulator exceptions
- */
-struct Exception : public std::exception {
-    
-    //! @brief Error code
-    i64 data;
-
-    //! @brief Auxiliary information about the thrown errow
-    string description;
-    
-    Exception(i64 d, const string &s) : data(d), description(s) { }
-    Exception(i64 d) : data(d), description("") { }
-    Exception(const string &s) : data(0), description(s) { }
-    Exception() : data(0) { }
-    
-    const char *what() const noexcept override { return description.c_str(); }
-};
 
 //
 // Syntactic sugar
@@ -50,8 +38,3 @@ struct Exception : public std::exception {
  *          the compiler to embed unwanted runtime checks in the code.
  */
 #define throws noexcept(false)
-
-}
-
-#endif
-

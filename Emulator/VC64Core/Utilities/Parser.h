@@ -13,7 +13,6 @@
 #pragma once
 
 #include "BasicTypes.h"
-#include "Exception.h"
 #include <functional>
 
 namespace vc64::util {

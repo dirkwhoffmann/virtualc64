@@ -30,8 +30,8 @@ struct TooManyArgumentsError : public util::ParseError {
     using ParseError::ParseError;
 };
 
-struct ScriptInterruption: util::Exception {
-    using Exception::Exception;
+struct ScriptInterruption: EmulatorException {
+    using EmulatorException::EmulatorException;
 };
 
 class Console : public SubComponent
