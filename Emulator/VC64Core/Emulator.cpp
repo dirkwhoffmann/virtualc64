@@ -72,7 +72,7 @@ Emulator::initialize()
     revertToFactorySettings();
 
     // Switch state
-    state = newState = ExecState::OFF;
+    state = ExecState::OFF;
     assert(isInitialized());
 }
 

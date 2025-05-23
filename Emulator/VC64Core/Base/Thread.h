@@ -39,10 +39,8 @@ protected:
     // The thread object
     std::thread thread;
     
-    // The current thread state and a change request
+    // The current thread state
     ExecState state = ExecState::UNINIT;
-    ExecState newState = ExecState::UNINIT;
-    std::atomic_flag stateChangeRequest {};
 
     // Synchronization mutex
     mutable util::ReentrantMutex lock;
@@ -91,9 +89,6 @@ protected:
 
     // Launches the emulator thread
     void launch();
-
-    // Sanity check
-    void assertLaunched();
 
 
     //
@@ -198,7 +193,7 @@ public:
 private:
 
     // Initiates a state change
-    void changeStateTo(ExecState requestedState);
+    // void changeStateTo(ExecState requestedState);
 
     // Returns if the emulator is ready to runs, throws an exception otherwise
     virtual void isReady() throws = 0;

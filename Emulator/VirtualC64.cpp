@@ -467,7 +467,7 @@ VirtualC64::put(const Command &cmd)
 
 
 //
-// C64
+// C64API
 //
 
 void
@@ -487,42 +487,49 @@ C64API::softReset()
 u64
 C64API::getAutoInspectionMask() const
 {
+    VC64_PUBLIC
     return c64->getAutoInspectionMask();
 }
 
 void
 C64API::setAutoInspectionMask(u64 mask)
 {
+    VC64_PUBLIC_SUSPEND
     c64->setAutoInspectionMask(mask);
 }
 
 const C64Info &
 C64API::getInfo() const
 {
+    VC64_PUBLIC
     return c64->getInfo();
 }
 
 const C64Info &
 C64API::getCachedInfo() const
 {
+    VC64_PUBLIC
     return c64->getCachedInfo();
 }
 
 RomTraits
 C64API::getRomTraits(RomType type) const
 {
+    VC64_PUBLIC
     return c64->getRomTraits(type);
 }
 
 MediaFile *
 C64API::takeSnapshot()
 {
+    VC64_PUBLIC_SUSPEND
     return c64->takeSnapshot();
 }
 
 void
 C64API::loadSnapshot(const MediaFile &snapshot)
 {
+    VC64_PUBLIC_SUSPEND
     c64->loadSnapshot(snapshot);
     emu->markAsDirty();
 }
@@ -530,6 +537,7 @@ C64API::loadSnapshot(const MediaFile &snapshot)
 void
 C64API::loadRom(const fs::path &path)
 {
+    VC64_PUBLIC_SUSPEND
     c64->loadRom(path);
     emu->markAsDirty();
 }
@@ -537,6 +545,7 @@ C64API::loadRom(const fs::path &path)
 void 
 C64API::loadRom(const MediaFile &file)
 {
+    VC64_PUBLIC_SUSPEND
     c64->loadRom(file);
     emu->markAsDirty();
 }
@@ -544,6 +553,7 @@ C64API::loadRom(const MediaFile &file)
 void 
 C64API::deleteRom(RomType type)
 {
+    VC64_PUBLIC_SUSPEND
     c64->deleteRom(type);
     emu->markAsDirty();
 }
@@ -551,6 +561,7 @@ C64API::deleteRom(RomType type)
 void 
 C64API::deleteRoms()
 {
+    VC64_PUBLIC_SUSPEND
     c64->deleteRoms();
     emu->markAsDirty();
 }
@@ -558,6 +569,7 @@ C64API::deleteRoms()
 void
 C64API::saveRom(RomType rom, const std::filesystem::path &path)
 {
+    VC64_PUBLIC_SUSPEND
     c64->saveRom(rom, path);
     emu->markAsDirty();
 }
@@ -565,6 +577,7 @@ C64API::saveRom(RomType rom, const std::filesystem::path &path)
 void
 C64API::installOpenRom(RomType type)
 {
+    VC64_PUBLIC_SUSPEND
     c64->installOpenRom(type);
     emu->markAsDirty();
 }
@@ -572,6 +585,7 @@ C64API::installOpenRom(RomType type)
 void
 C64API::installOpenRoms()
 {
+    VC64_PUBLIC_SUSPEND
     c64->installOpenRoms();
     emu->markAsDirty();
 }
@@ -579,6 +593,7 @@ C64API::installOpenRoms()
 void
 C64API::flash(const MediaFile &file)
 {
+    VC64_PUBLIC_SUSPEND
     c64->flash(file);
     emu->markAsDirty();
 }
@@ -586,6 +601,7 @@ C64API::flash(const MediaFile &file)
 void 
 C64API::flash(const MediaFile &file, isize item)
 {
+    VC64_PUBLIC_SUSPEND
     c64->flash(file, item);
     emu->markAsDirty();
 }
@@ -593,6 +609,7 @@ C64API::flash(const MediaFile &file, isize item)
 void 
 C64API::flash(const FileSystem &fs, isize item)
 {
+    VC64_PUBLIC_SUSPEND
     c64->flash(fs, item);
     emu->markAsDirty();
 }

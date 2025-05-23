@@ -28,19 +28,10 @@ Thread::launch()
     assert(isLaunched());
 }
 
-void 
-Thread::assertLaunched()
-{
-    if (!isLaunched()) {
-
-        throw std::runtime_error(string("The emulator thread hasn't been lauchend yet. "
-                                        "Missing call to launch()."));
-    }
-}
-
 void
 Thread::resync()
 {
+    resyncs++;
     baseTime = util::Time::now();
     frameCounter = 0;
 }
@@ -58,26 +49,32 @@ Thread::execute()
 
         lock.lock();
         loadClock.go();
+
         try {
-
+            
             // Execute all missing frames
-            for (isize i = 0; i < missing; i++, frameCounter++) computeFrame();
-
+            for (isize i = 0; i < missing; i++, frameCounter++) {
+                
+                // Execute a single frame
+                computeFrame();
+            }
+            
         } catch (StateChangeException &exc) {
-
-            // Interruption
+            
+            // Serve a state change request
             switchState((ExecState)exc.data);
         }
+        
         loadClock.stop();
         lock.unlock();
-        
+
     } else {
 
-        // The emulator got out of sync
+        // The emulator is out of sync
         if (missing > 0) {
-            warn("Emulation is way too slow (%ld frames behind)\n", missing);
+            debug(TIM_DEBUG, "Emulation is way too slow (%ld frames behind)\n", missing);
         } else {
-            warn("Emulation is way too fast (%ld time slices ahead)\n", -missing);
+            debug(TIM_DEBUG, "Emulation is way too fast (%ld time slices ahead)\n", -missing);
         }
 
         resync();
@@ -87,9 +84,13 @@ Thread::execute()
 void
 Thread::sleep()
 {
-    // Don't sleep if the emulator is running in warp mode
-    if (warp && isRunning()) return;
-
+    // Don't sleep if the emulator is running in warp mode and no suspension is pending
+    if (warp && isRunning() && suspensionLock.tryLock()) {
+        
+        suspensionLock.unlock();
+        return;
+    }
+    
     // Set a timeout to prevent the thread from stalling
     auto timeout = util::Time::milliseconds(50);
 
@@ -129,14 +130,6 @@ Thread::runLoop()
         // Compute missing frames
         execute();
 
-        // Change state if requested
-        if (stateChangeRequest.test()) {
-
-            switchState(newState);
-            stateChangeRequest.clear();
-            stateChangeRequest.notify_one();
-        }
-
         // Synchronize timing
         sleep();
 
@@ -148,7 +141,7 @@ Thread::runLoop()
 void
 Thread::switchState(ExecState newState)
 {
-    assert(isEmulatorThread());
+    assert(isEmulatorThread() || !isRunning());
 
     auto invalid = [&]() {
         
@@ -244,7 +237,7 @@ Thread::powerOn()
 
     if (isPoweredOff()) {
 
-        changeStateTo(ExecState::PAUSED);
+        switchState(ExecState::PAUSED);
     }
 }
 
@@ -255,7 +248,7 @@ Thread::powerOff()
 
     if (!isPoweredOff()) {
 
-        changeStateTo(ExecState::OFF);
+        switchState(ExecState::OFF);
     }
 }
 
@@ -269,7 +262,7 @@ Thread::run()
         // Throw an exception if the emulator is not ready to run
         isReady();
 
-        changeStateTo(ExecState::RUNNING);
+        switchState(ExecState::RUNNING);
     }
 }
 
@@ -280,7 +273,7 @@ Thread::pause()
 
     if (isRunning()) {
 
-        changeStateTo(ExecState::PAUSED);
+        switchState(ExecState::PAUSED);
     }
 }
 
@@ -368,11 +361,10 @@ Thread::trackOff(isize source)
     }
 }
 
+/*
 void
 Thread::changeStateTo(ExecState requestedState)
 {
-    assertLaunched();
-
     if (isEmulatorThread()) {
 
         // Switch immediately
@@ -397,6 +389,7 @@ Thread::changeStateTo(ExecState requestedState)
         }
     }
 }
+*/
 
 void
 Thread::wakeUp()

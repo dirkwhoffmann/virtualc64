@@ -480,95 +480,92 @@ void
 C64::set(ConfigScheme model)
 {
     assert_enum(ConfigScheme, model);
-
-    {   SUSPENDED
-
-        powerOff();
-        emulator.revertToFactorySettings();
-
-        switch(model) {
-
-            case ConfigScheme::PAL:
-
-                set(Opt::VICII_REVISION,        (i64)VICIIRev::PAL_6569_R3);
-                set(Opt::VICII_GRAY_DOT_BUG,    false);
-                set(Opt::CIA_REVISION,          (i64)CIARev::MOS_6526);
-                set(Opt::CIA_TIMER_B_BUG,       true);
-                set(Opt::SID_REV,               (i64)SIDRevision::MOS_6581);
-                set(Opt::SID_FILTER,            true);
-                set(Opt::POWER_GRID,            (i64)PowerGrid::STABLE_50HZ);
-                set(Opt::GLUE_LOGIC,            (i64)GlueLogic::DISCRETE);
-                set(Opt::MEM_INIT_PATTERN,      (i64)RamPattern::VICE);
-                break;
-
-            case ConfigScheme::PAL_II:
-
-                set(Opt::VICII_REVISION,        (i64)VICIIRev::PAL_8565);
-                set(Opt::VICII_GRAY_DOT_BUG,    true);
-                set(Opt::CIA_REVISION,          (i64)CIARev::MOS_8521);
-                set(Opt::CIA_TIMER_B_BUG,       false);
-                set(Opt::SID_REV,               (i64)SIDRevision::MOS_8580);
-                set(Opt::SID_FILTER,            true);
-                set(Opt::POWER_GRID,            (i64)PowerGrid::STABLE_50HZ);
-                set(Opt::GLUE_LOGIC,            (i64)GlueLogic::IC);
-                set(Opt::MEM_INIT_PATTERN,      (i64)RamPattern::VICE);
-                break;
-
-            case ConfigScheme::PAL_OLD:
-
-                set(Opt::VICII_REVISION,        (i64)VICIIRev::PAL_6569_R1);
-                set(Opt::VICII_GRAY_DOT_BUG,    false);
-                set(Opt::CIA_REVISION,          (i64)CIARev::MOS_6526);
-                set(Opt::CIA_TIMER_B_BUG,       true);
-                set(Opt::SID_REV,               (i64)SIDRevision::MOS_6581);
-                set(Opt::SID_FILTER,            true);
-                set(Opt::POWER_GRID,            (i64)PowerGrid::STABLE_50HZ);
-                set(Opt::GLUE_LOGIC,            (i64)GlueLogic::DISCRETE);
-                set(Opt::MEM_INIT_PATTERN,      (i64)RamPattern::VICE);
-                break;
-
-            case ConfigScheme::NTSC:
-
-                set(Opt::VICII_REVISION,        (i64)VICIIRev::NTSC_6567);
-                set(Opt::VICII_GRAY_DOT_BUG,    false);
-                set(Opt::CIA_REVISION,          (i64)CIARev::MOS_6526);
-                set(Opt::CIA_TIMER_B_BUG,       false);
-                set(Opt::SID_REV,               (i64)SIDRevision::MOS_6581);
-                set(Opt::SID_FILTER,            true);
-                set(Opt::POWER_GRID,            (i64)PowerGrid::STABLE_60HZ);
-                set(Opt::GLUE_LOGIC,            (i64)GlueLogic::DISCRETE);
-                set(Opt::MEM_INIT_PATTERN,      (i64)RamPattern::VICE);
-                break;
-
-            case ConfigScheme::NTSC_II:
-
-                set(Opt::VICII_REVISION,        (i64)VICIIRev::NTSC_8562);
-                set(Opt::VICII_GRAY_DOT_BUG,    true);
-                set(Opt::CIA_REVISION,          (i64)CIARev::MOS_8521);
-                set(Opt::CIA_TIMER_B_BUG,       true);
-                set(Opt::SID_REV,               (i64)SIDRevision::MOS_8580);
-                set(Opt::SID_FILTER,            true);
-                set(Opt::POWER_GRID,            (i64)PowerGrid::STABLE_60HZ);
-                set(Opt::GLUE_LOGIC,            (i64)GlueLogic::IC);
-                set(Opt::MEM_INIT_PATTERN,      (i64)RamPattern::VICE);
-                break;
-
-            case ConfigScheme::NTSC_OLD:
-
-                set(Opt::VICII_REVISION,        (i64)VICIIRev::NTSC_6567_R56A);
-                set(Opt::VICII_GRAY_DOT_BUG,    false);
-                set(Opt::CIA_REVISION,          (i64)CIARev::MOS_6526);
-                set(Opt::CIA_TIMER_B_BUG,       false);
-                set(Opt::SID_REV,               (i64)SIDRevision::MOS_6581);
-                set(Opt::SID_FILTER,            true);
-                set(Opt::POWER_GRID,            (i64)PowerGrid::STABLE_60HZ);
-                set(Opt::GLUE_LOGIC,            (i64)GlueLogic::DISCRETE);
-                set(Opt::MEM_INIT_PATTERN,      (i64)RamPattern::VICE);
-                break;
-
-            default:
-                fatalError;
-        }
+    
+    powerOff();
+    emulator.revertToFactorySettings();
+    
+    switch(model) {
+            
+        case ConfigScheme::PAL:
+            
+            set(Opt::VICII_REVISION,        (i64)VICIIRev::PAL_6569_R3);
+            set(Opt::VICII_GRAY_DOT_BUG,    false);
+            set(Opt::CIA_REVISION,          (i64)CIARev::MOS_6526);
+            set(Opt::CIA_TIMER_B_BUG,       true);
+            set(Opt::SID_REV,               (i64)SIDRevision::MOS_6581);
+            set(Opt::SID_FILTER,            true);
+            set(Opt::POWER_GRID,            (i64)PowerGrid::STABLE_50HZ);
+            set(Opt::GLUE_LOGIC,            (i64)GlueLogic::DISCRETE);
+            set(Opt::MEM_INIT_PATTERN,      (i64)RamPattern::VICE);
+            break;
+            
+        case ConfigScheme::PAL_II:
+            
+            set(Opt::VICII_REVISION,        (i64)VICIIRev::PAL_8565);
+            set(Opt::VICII_GRAY_DOT_BUG,    true);
+            set(Opt::CIA_REVISION,          (i64)CIARev::MOS_8521);
+            set(Opt::CIA_TIMER_B_BUG,       false);
+            set(Opt::SID_REV,               (i64)SIDRevision::MOS_8580);
+            set(Opt::SID_FILTER,            true);
+            set(Opt::POWER_GRID,            (i64)PowerGrid::STABLE_50HZ);
+            set(Opt::GLUE_LOGIC,            (i64)GlueLogic::IC);
+            set(Opt::MEM_INIT_PATTERN,      (i64)RamPattern::VICE);
+            break;
+            
+        case ConfigScheme::PAL_OLD:
+            
+            set(Opt::VICII_REVISION,        (i64)VICIIRev::PAL_6569_R1);
+            set(Opt::VICII_GRAY_DOT_BUG,    false);
+            set(Opt::CIA_REVISION,          (i64)CIARev::MOS_6526);
+            set(Opt::CIA_TIMER_B_BUG,       true);
+            set(Opt::SID_REV,               (i64)SIDRevision::MOS_6581);
+            set(Opt::SID_FILTER,            true);
+            set(Opt::POWER_GRID,            (i64)PowerGrid::STABLE_50HZ);
+            set(Opt::GLUE_LOGIC,            (i64)GlueLogic::DISCRETE);
+            set(Opt::MEM_INIT_PATTERN,      (i64)RamPattern::VICE);
+            break;
+            
+        case ConfigScheme::NTSC:
+            
+            set(Opt::VICII_REVISION,        (i64)VICIIRev::NTSC_6567);
+            set(Opt::VICII_GRAY_DOT_BUG,    false);
+            set(Opt::CIA_REVISION,          (i64)CIARev::MOS_6526);
+            set(Opt::CIA_TIMER_B_BUG,       false);
+            set(Opt::SID_REV,               (i64)SIDRevision::MOS_6581);
+            set(Opt::SID_FILTER,            true);
+            set(Opt::POWER_GRID,            (i64)PowerGrid::STABLE_60HZ);
+            set(Opt::GLUE_LOGIC,            (i64)GlueLogic::DISCRETE);
+            set(Opt::MEM_INIT_PATTERN,      (i64)RamPattern::VICE);
+            break;
+            
+        case ConfigScheme::NTSC_II:
+            
+            set(Opt::VICII_REVISION,        (i64)VICIIRev::NTSC_8562);
+            set(Opt::VICII_GRAY_DOT_BUG,    true);
+            set(Opt::CIA_REVISION,          (i64)CIARev::MOS_8521);
+            set(Opt::CIA_TIMER_B_BUG,       true);
+            set(Opt::SID_REV,               (i64)SIDRevision::MOS_8580);
+            set(Opt::SID_FILTER,            true);
+            set(Opt::POWER_GRID,            (i64)PowerGrid::STABLE_60HZ);
+            set(Opt::GLUE_LOGIC,            (i64)GlueLogic::IC);
+            set(Opt::MEM_INIT_PATTERN,      (i64)RamPattern::VICE);
+            break;
+            
+        case ConfigScheme::NTSC_OLD:
+            
+            set(Opt::VICII_REVISION,        (i64)VICIIRev::NTSC_6567_R56A);
+            set(Opt::VICII_GRAY_DOT_BUG,    false);
+            set(Opt::CIA_REVISION,          (i64)CIARev::MOS_6526);
+            set(Opt::CIA_TIMER_B_BUG,       false);
+            set(Opt::SID_REV,               (i64)SIDRevision::MOS_6581);
+            set(Opt::SID_FILTER,            true);
+            set(Opt::POWER_GRID,            (i64)PowerGrid::STABLE_60HZ);
+            set(Opt::GLUE_LOGIC,            (i64)GlueLogic::DISCRETE);
+            set(Opt::MEM_INIT_PATTERN,      (i64)RamPattern::VICE);
+            break;
+            
+        default:
+            fatalError;
     }
 }
 
@@ -1184,7 +1181,7 @@ C64::processCommand(const Command &cmd)
             if (cmd.value == 0) {
                 throw std::runtime_error("Source 0 is reserved for implementing config.warpMode.");
             }
-            emulator.warpOn(cmd.value);
+            emulator.warpOn(isize(cmd.value));
             break;
             
         case Cmd::WARP_OFF:
@@ -1192,7 +1189,7 @@ C64::processCommand(const Command &cmd)
             if (cmd.value == 0) {
                 throw std::runtime_error("Source 0 is reserved for implementing config.warpMode.");
             }
-            emulator.warpOff(cmd.value);
+            emulator.warpOff(isize(cmd.value));
             break;
 
         case Cmd::HALT:
@@ -1344,7 +1341,7 @@ C64::takeSnapshot()
     Snapshot *result;
 
     // Take the snapshot
-    { SUSPENDED result = new Snapshot(*this); }
+    result = new Snapshot(*this);
 
     // Compress the snapshot if requested
     if (config.compressSnapshots) result->compress();
