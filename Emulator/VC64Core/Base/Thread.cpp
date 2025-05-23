@@ -287,6 +287,13 @@ Thread::pause()
 void
 Thread::halt()
 {
+    debug(RUN_DEBUG, "halt()\n");
+
+    if (state != ExecState::UNINIT && state != ExecState::HALTED) {
+
+        switchState(ExecState::HALTED);
+    }
+    /*
     if (state != ExecState::UNINIT && state != ExecState::HALTED) {
         
         debug(RUN_DEBUG, "Switching to HALT state...\n");
@@ -298,6 +305,7 @@ Thread::halt()
         debug(RUN_DEBUG, "Emulator is halted.\n");
         assert(state == ExecState::HALTED);
     }
+    */
 }
 
 void

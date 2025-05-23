@@ -44,24 +44,20 @@ struct SuspendResume {
 };
 
 #define VC64_PUBLIC assert(!emu || emu->isUserThread());
-#define VC64_PUBLIC_SUSPEND VAMIGA_PUBLIC SuspendResume _sr(this);
+#define VC64_PUBLIC_SUSPEND VC64_PUBLIC SuspendResume _sr(this);
 
 void 
 API::suspend() const
 {
+    VC64_PUBLIC
     emu->suspend();
 }
 
 void 
 API::resume() const
 {
+    VC64_PUBLIC
     emu->resume();
-}
-
-bool 
-API::isUserThread() const
-{
-    return !emu->isEmulatorThread();
 }
 
 string
@@ -80,6 +76,8 @@ VirtualC64::VirtualC64() {
 
     emu = new Emulator();
 
+    // Wire all APIs...
+    
     c64.emu = emu;
     c64.c64 = &emu->main;
 
@@ -168,211 +166,262 @@ VirtualC64::VirtualC64() {
 
 VirtualC64::~VirtualC64()
 {
+    VC64_PUBLIC
+    halt();
     delete emu;
-    emu = nullptr;
 }
 
 const EmulatorInfo &
 VirtualC64::getInfo() const 
 {
+    VC64_PUBLIC
     return emu->getInfo();
 }
 
 const EmulatorInfo &
 VirtualC64::getCachedInfo() const
 {
+    VC64_PUBLIC
     return emu->getCachedInfo();
 }
 
 const EmulatorStats &
 VirtualC64::getStats() const 
 {
+    VC64_PUBLIC
     return emu->getStats();
 }
 
 bool
 VirtualC64::isPoweredOn() const
 {
+    VC64_PUBLIC
     return emu->isPoweredOn();
 }
 
 bool
 VirtualC64::isPoweredOff() const
 {
+    VC64_PUBLIC
     return emu->isPoweredOff();
 }
 
 bool
 VirtualC64::isPaused() const
 {
+    VC64_PUBLIC
     return emu->isPaused();
 }
 
 bool
 VirtualC64::isRunning() const
 {
+    VC64_PUBLIC
     return emu->isRunning();
 }
 
 bool
 VirtualC64::isSuspended() const
 {
+    VC64_PUBLIC
     return emu->isSuspended();
 }
 
 bool
 VirtualC64::isHalted() const
 {
+    VC64_PUBLIC
     return emu->isHalted();
 }
 
 bool
 VirtualC64::isWarping() const
 {
+    VC64_PUBLIC
     return emu->isWarping();
 }
 
 bool
 VirtualC64::isTracking() const
 {
+    VC64_PUBLIC
     return emu->isTracking();
 }
 
 void 
 VirtualC64::isReady() const
 {
+    VC64_PUBLIC
     return emu->isReady();
 }
 
 void 
 VirtualC64::powerOn() 
 {
-    emu->Thread::powerOn();
+    VC64_PUBLIC
+    emu->put(Cmd::POWER_ON);
+    // emu->Thread::powerOn();
 }
 
 void 
 VirtualC64::powerOff() 
 {
-    emu->Thread::powerOff();
+    VC64_PUBLIC
+    emu->put(Cmd::POWER_OFF);
+    // emu->Thread::powerOff();
 }
 
 void 
 VirtualC64::run() 
 {
-    emu->run();
+    VC64_PUBLIC
+    
+    // Throw an exception if the emulator is not ready to run
+    isReady();
+    
+    emu->put(Cmd::RUN);
+    
+    // emu->run();
 }
 
 void 
 VirtualC64::pause() 
 {
-    emu->pause();
+    VC64_PUBLIC
+    emu->put(Cmd::PAUSE);
+    // emu->pause();
 }
 
 void 
 VirtualC64::halt() 
 {
-    emu->halt();
+    VC64_PUBLIC
+    // Signal the emulator to halt
+    emu->put(Cmd::HALT);
+    
+    // Wait for the thread to terminate
+    emu->join();
+    // emu->halt();
 }
 
 void 
 VirtualC64::suspend() 
 {
+    VC64_PUBLIC
     emu->suspend();
 }
 
 void 
 VirtualC64::resume() 
 {
+    VC64_PUBLIC
     emu->resume();
 }
 
 void 
 VirtualC64::warpOn(isize source)
 {
-    emu->warpOn(source);
+    VC64_PUBLIC
+    emu->put(Cmd::WARP_ON, source);
+    // emu->warpOn(source);
 }
 
 void 
 VirtualC64::warpOff(isize source)
 {
-    emu->warpOff(source);
+    VC64_PUBLIC
+    emu->put(Cmd::WARP_OFF, source);
+    // emu->warpOff(source);
 }
 
 void 
 VirtualC64::trackOn(isize source)
 {
+    VC64_PUBLIC_SUSPEND
     emu->trackOn(source);
 }
 
 void 
 VirtualC64::trackOff(isize source)
 {
+    VC64_PUBLIC_SUSPEND
     emu->trackOff(source);
 }
 
 void
 VirtualC64::stepInto()
 {
+    VC64_PUBLIC
     emu->stepInto();
 }
 
 void
 VirtualC64::stepOver()
 {
+    VC64_PUBLIC
     emu->stepOver();
 }
 
 void
 VirtualC64::stepCycle()
 {
+    VC64_PUBLIC
     emu->stepCycle();
 }
 
 void
 VirtualC64::finishLine()
 {
+    VC64_PUBLIC
     emu->finishLine();
 }
 
 void
 VirtualC64::finishFrame()
 {
+    VC64_PUBLIC
     emu->finishFrame();
 }
 
 void
 VirtualC64::wakeUp()
 {
+    VC64_PUBLIC
     emu->wakeUp();
 }
 
 void
 VirtualC64::launch(const void *listener, Callback *func)
 {
+    VC64_PUBLIC
     emu->launch(listener, func);
 }
 
 bool
 VirtualC64::isLaunched() const
 {
+    VC64_PUBLIC
     return emu->isLaunched();
 }
 
 i64
 VirtualC64::get(Opt option) const
 {
+    VC64_PUBLIC
     return emu->get(option);
 }
 
 i64
 VirtualC64::get(Opt option, long id) const
 {
+    VC64_PUBLIC
     return emu->get(option, id);
 }
 
 void
 VirtualC64::set(ConfigScheme model)
 {
+    VC64_PUBLIC_SUSPEND
     emu->set(model);
     emu->markAsDirty();
 }
@@ -380,6 +429,7 @@ VirtualC64::set(ConfigScheme model)
 void
 VirtualC64::set(Opt opt, i64 value) throws
 {
+    VC64_PUBLIC
     emu->check(opt, value);
     put(Cmd::CONFIG_ALL, ConfigCmd { .option = opt, .value = value });
     emu->markAsDirty();
@@ -388,6 +438,7 @@ VirtualC64::set(Opt opt, i64 value) throws
 void
 VirtualC64::set(Opt opt, i64 value, long id)
 {
+    VC64_PUBLIC
     emu->check(opt, value, { id });
     put(Cmd::CONFIG, ConfigCmd { .option = opt, .value = value, .id = id });
     emu->markAsDirty();
@@ -396,18 +447,21 @@ VirtualC64::set(Opt opt, i64 value, long id)
 void
 VirtualC64::exportConfig(const fs::path &path) const
 {
+    VC64_PUBLIC_SUSPEND
     emu->main.exportConfig(path);
 }
 
 void
 VirtualC64::exportConfig(std::ostream& stream) const
 {
+    VC64_PUBLIC_SUSPEND
     emu->main.exportConfig(stream);
 }
 
 void
 VirtualC64::put(const Command &cmd)
 {
+    VC64_PUBLIC
     emu->put(cmd);
 }
 

@@ -38,6 +38,7 @@ struct AutoResume {
     ~AutoResume() { s->resume(); }
 };
 
-#define SUSPENDED AutoResume _ar(this);
+// #define SUSPENDED AutoResume _ar(this);
+#define SUSPENDED
 
 }
