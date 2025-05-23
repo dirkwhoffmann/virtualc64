@@ -56,6 +56,7 @@ Thread::execute()
 
     if (std::abs(missing) <= 5) {
 
+        lock.lock();
         loadClock.go();
         try {
 
@@ -68,7 +69,8 @@ Thread::execute()
             switchState((ExecState)exc.data);
         }
         loadClock.stop();
-
+        lock.unlock();
+        
     } else {
 
         // The emulator got out of sync
@@ -396,6 +398,37 @@ Thread::wakeUp()
 }
 
 void
+Thread::suspend() // const
+{
+    debug(RUN_DEBUG, "Suspending (%ld)...\n", suspendCounter);
+    assert(isUserThread());
+
+    if (suspendCounter++ == 0) {
+        
+        suspensionLock.lock();
+        lock.lock();
+    }
+}
+
+void
+Thread::resume() // const
+{
+    debug(RUN_DEBUG, "Resuming (%ld)...\n", suspendCounter);
+    assert(isUserThread());
+
+    if (suspendCounter <= 0) {
+        
+        fatal("resume() called with no call to suspend()\n");
+        
+    } else if (--suspendCounter == 0) {
+        
+        suspensionLock.unlock();
+        lock.unlock();
+    }
+}
+
+/*
+void
 Thread::suspend()
 {
     if (!isEmulatorThread()) {
@@ -432,5 +465,6 @@ Thread::resume()
         debug(RUN_DEBUG, "Skipping resume (%ld)...\n", suspendCounter);
     }
 }
+*/
 
 }

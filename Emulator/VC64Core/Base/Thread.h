@@ -44,6 +44,10 @@ protected:
     ExecState newState = ExecState::UNINIT;
     std::atomic_flag stateChangeRequest {};
 
+    // Synchronization mutex
+    mutable util::ReentrantMutex lock;
+    mutable util::ReentrantMutex suspensionLock;
+    
     // Warp and track state
     u8 warp = 0;
     u8 track = 0;
