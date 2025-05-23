@@ -37,8 +37,8 @@ public:
     API() { }
     API(Emulator *emu) : emu(emu) { }
 
-    void suspend();
-    void resume();
+    void suspend() const;
+    void resume() const;
 
 protected:
 

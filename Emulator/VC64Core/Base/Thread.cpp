@@ -398,7 +398,7 @@ Thread::wakeUp()
 }
 
 void
-Thread::suspend() // const
+Thread::suspend() const
 {
     debug(RUN_DEBUG, "Suspending (%ld)...\n", suspendCounter);
     assert(isUserThread());
@@ -411,7 +411,7 @@ Thread::suspend() // const
 }
 
 void
-Thread::resume() // const
+Thread::resume() const
 {
     debug(RUN_DEBUG, "Resuming (%ld)...\n", suspendCounter);
     assert(isUserThread());

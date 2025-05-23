@@ -25,10 +25,10 @@ public:
     virtual ~Suspendable() = default;
 
     /** @brief  Suspends the thread */
-    virtual void suspend() = 0;
+    virtual void suspend() const = 0;
 
     /** @brief  Resumes the thread */
-    virtual void resume() = 0;
+    virtual void resume() const = 0;
 };
 
 struct AutoResume {

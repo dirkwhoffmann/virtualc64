@@ -108,8 +108,8 @@ public:
     //
 
     // Suspends or resumes the emulator thread
-    void suspend() override;
-    void resume() override;
+    void suspend() const override;
+    void resume() const override;
 
 
     //

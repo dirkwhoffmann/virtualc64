@@ -18,14 +18,42 @@ namespace vc64 {
 
 DefaultsAPI VirtualC64::defaults(&Emulator::defaults);
 
+/* All main API functions are annotated with one of the following keywords:
+ *
+ *   VC64_PUBLIC:
+ *
+ *     This macro performs a sanity check in debug builds by assuring
+ *     that the function is called from outside the emulator thread.
+ *
+ *   VC64_PUBLIC_SUSPEND:
+ *
+ *     The macro additionally ensures that the emulator is in suspended
+ *     state before the function body is executed. The emulator can suspend
+ *     only after the current frame has been completed. Thus, calling
+ *     an API function with this annotation may cause a noticable lag.
+ */
+
+
+struct SuspendResume {
+    const API *api;
+    SuspendResume(const API *api) : api(api) {
+        assert(!api->emu || api->emu->isUserThread());
+        api->suspend();
+    }
+    ~SuspendResume() { api->resume(); }
+};
+
+#define VC64_PUBLIC assert(!emu || emu->isUserThread());
+#define VC64_PUBLIC_SUSPEND VAMIGA_PUBLIC SuspendResume _sr(this);
+
 void 
-API::suspend()
+API::suspend() const
 {
     emu->suspend();
 }
 
 void 
-API::resume()
+API::resume() const
 {
     emu->resume();
 }

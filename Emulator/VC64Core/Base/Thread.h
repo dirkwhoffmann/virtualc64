@@ -53,7 +53,7 @@ protected:
     u8 track = 0;
 
     // Counters
-    isize suspendCounter = 0;
+    mutable isize suspendCounter = 0;
     isize frameCounter = 0;
     isize statsCounter = 0;
 
@@ -156,12 +156,12 @@ public:
     /** Suspends the thread.
      *  The thread is temporarily suspended
      */
-    void suspend() override;
+    void suspend() const override;
 
     /** Resumes the thread.
      *  The thread is put back in running state
      */
-    void resume() override;
+    void resume() const override;
 
     bool isInitialized() const { return state != ExecState::UNINIT; }
     bool isPoweredOn() const { return state != ExecState::UNINIT && state != ExecState::OFF; }
