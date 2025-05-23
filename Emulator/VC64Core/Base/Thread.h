@@ -148,6 +148,10 @@ private:
 
 public:
 
+    /** Returns the current suspension state.
+     */
+    bool isSuspended() const { return suspendCounter > 0; }
+    
     /** Suspends the thread.
      *  The thread is temporarily suspended
      */
@@ -163,7 +167,6 @@ public:
     bool isPoweredOff() const { return state == ExecState::UNINIT || state == ExecState::OFF; }
     bool isPaused() const { return state == ExecState::PAUSED; }
     bool isRunning() const { return state == ExecState::RUNNING; }
-    bool isSuspended() const { return state == ExecState::SUSPEND; }
     bool isHalted() const { return state == ExecState::HALTED; }
     bool isWarping() const { return warp != 0; }
     bool isTracking() const { return track != 0; }

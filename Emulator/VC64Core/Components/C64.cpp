@@ -1361,34 +1361,31 @@ C64::loadSnapshot(const MediaFile &file)
 
         // Uncompress the snapshot
         snapshot.uncompress();
-
-        {   SUSPENDED
-
-            try {
-
-                // Restore the saved state
-                load(snapshot.getSnapshotData());
-
-                // Rectify the VICII function table (varies between PAL and NTSC)
-                vic.updateVicFunctionTable();
-
-                // Clear the keyboard matrix to avoid constantly pressed keys
-                keyboard.releaseAll();
-
-                // Print some debug info if requested
-                if (SNP_DEBUG) dump(Category::State);
-
-            } catch (Error &error) {
-
-                /* If we reach this point, the emulator has been put into an
-                 * inconsistent state due to corrupted snapshot data. We cannot
-                 * continue emulation, because it would likely crash the
-                 * application. Because we cannot revert to the old state either,
-                 * we perform a hard reset to eliminate the inconsistency.
-                 */
-                hardReset();
-                throw error;
-            }
+        
+        try {
+            
+            // Restore the saved state
+            load(snapshot.getSnapshotData());
+            
+            // Rectify the VICII function table (varies between PAL and NTSC)
+            vic.updateVicFunctionTable();
+            
+            // Clear the keyboard matrix to avoid constantly pressed keys
+            keyboard.releaseAll();
+            
+            // Print some debug info if requested
+            if (SNP_DEBUG) dump(Category::State);
+            
+        } catch (Error &error) {
+            
+            /* If we reach this point, the emulator has been put into an
+             * inconsistent state due to corrupted snapshot data. We cannot
+             * continue emulation, because it would likely crash the
+             * application. Because we cannot revert to the old state either,
+             * we perform a hard reset to eliminate the inconsistency.
+             */
+            hardReset();
+            throw error;
         }
 
         // Inform the GUI

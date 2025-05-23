@@ -154,6 +154,12 @@ Thread::switchState(ExecState newState)
           "switchState: %s -> %s\n",
           ExecStateEnum::key(state), ExecStateEnum::key(newState));
 
+    if (!isLaunched()) {
+
+        throw std::runtime_error(string("The emulator thread hasn't been lauchend yet. "
+                                        "Missing call to launch()."));
+    }
+
     while (state != newState) {
 
         switch (newState) {
@@ -162,9 +168,8 @@ Thread::switchState(ExecState newState)
 
                 switch (state) {
 
-                    case ExecState::PAUSED:      state = ExecState::OFF; _powerOff(); break;
-                    case ExecState::RUNNING:
-                    case ExecState::SUSPEND:     state = ExecState::PAUSED; _pause(); break;
+                    case ExecState::PAUSED:     state = ExecState::OFF; _powerOff(); break;
+                    case ExecState::RUNNING:    state = ExecState::PAUSED; _pause(); break;
 
                     default:
                         invalid();
@@ -175,9 +180,8 @@ Thread::switchState(ExecState newState)
 
                 switch (state) {
 
-                    case ExecState::OFF:         state = ExecState::PAUSED; _powerOn(); break;
-                    case ExecState::RUNNING:
-                    case ExecState::SUSPEND:   state = ExecState::PAUSED; _pause(); break;
+                    case ExecState::OFF:        state = ExecState::PAUSED; _powerOn(); break;
+                    case ExecState::RUNNING:    state = ExecState::PAUSED; _pause(); break;
 
                     default:
                         invalid();
@@ -188,21 +192,8 @@ Thread::switchState(ExecState newState)
 
                 switch (state) {
 
-                    case ExecState::OFF:         state = ExecState::PAUSED; _powerOn(); break;
-                    case ExecState::PAUSED:      state = ExecState::RUNNING; _run(); break;
-                    case ExecState::SUSPEND:   state = ExecState::PAUSED; break;
-
-                    default:
-                        invalid();
-                }
-                break;
-
-            case ExecState::SUSPEND:
-
-                switch (state) {
-
-                    case ExecState::RUNNING:     state = ExecState::SUSPEND; break;
-                    case ExecState::PAUSED:      break;
+                    case ExecState::OFF:        state = ExecState::PAUSED; _powerOn(); break;
+                    case ExecState::PAUSED:     state = ExecState::RUNNING; _run(); break;
 
                     default:
                         invalid();
@@ -213,9 +204,9 @@ Thread::switchState(ExecState newState)
 
                 switch (state) {
 
-                    case ExecState::OFF:     state = ExecState::HALTED; _halt(); break;
-                    case ExecState::PAUSED:  state = ExecState::OFF; _powerOff(); break;
-                    case ExecState::RUNNING: state = ExecState::PAUSED; _pause(); break;
+                    case ExecState::OFF:        state = ExecState::HALTED; _halt(); break;
+                    case ExecState::PAUSED:     state = ExecState::OFF; _powerOff(); break;
+                    case ExecState::RUNNING:    state = ExecState::PAUSED; _pause(); break;
 
                     default:
                         invalid();
@@ -228,6 +219,7 @@ Thread::switchState(ExecState newState)
     }
 
     debug(RUN_DEBUG, "switchState: %s\n", ExecStateEnum::key(state));
+    assert(state == newState);
 }
 
 void
@@ -286,19 +278,6 @@ Thread::halt()
 
         switchState(ExecState::HALTED);
     }
-    /*
-    if (state != ExecState::UNINIT && state != ExecState::HALTED) {
-        
-        debug(RUN_DEBUG, "Switching to HALT state...\n");
-        changeStateTo(ExecState::HALTED);
-
-        debug(RUN_DEBUG, "Waiting for the emulator thread to terminate...\n");
-        join();
-
-        debug(RUN_DEBUG, "Emulator is halted.\n");
-        assert(state == ExecState::HALTED);
-    }
-    */
 }
 
 void
@@ -307,8 +286,6 @@ Thread::warpOn(isize source)
     assert(source < 7);
 
     if (!GET_BIT(warp, source)) {
-
-        SUSPENDED
 
         auto old = warp;
         SET_BIT(warp, source);
@@ -323,8 +300,6 @@ Thread::warpOff(isize source)
 
     if (GET_BIT(warp, source)) {
 
-        SUSPENDED
-
         auto old = warp;
         CLR_BIT(warp, source);
         if (!!old != !!warp) _warpOff();
@@ -337,8 +312,6 @@ Thread::trackOn(isize source)
     assert(source < 7);
 
     if (!GET_BIT(track, source)) {
-
-        SUSPENDED
 
         auto old = track;
         SET_BIT(track, source);
@@ -353,43 +326,11 @@ Thread::trackOff(isize source)
 
     if (GET_BIT(track, source)) {
 
-        SUSPENDED
-
         auto old = track;
         CLR_BIT(track, source);
         if (!!old != !!track) _trackOff();
     }
 }
-
-/*
-void
-Thread::changeStateTo(ExecState requestedState)
-{
-    if (isEmulatorThread()) {
-
-        // Switch immediately
-        switchState(requestedState);
-        assert(state == requestedState);
-
-    } else {
-
-        // Remember the requested state
-        newState = requestedState;
-
-        // Request the change
-        assert(stateChangeRequest.test() == false);
-        stateChangeRequest.test_and_set();
-        assert(stateChangeRequest.test() == true);
-
-        if (!isEmulatorThread()) {
-
-            // Wait until the change has been performed
-            stateChangeRequest.wait(true);
-            assert(stateChangeRequest.test() == false);
-        }
-    }
-}
-*/
 
 void
 Thread::wakeUp()
@@ -427,45 +368,5 @@ Thread::resume() const
         lock.unlock();
     }
 }
-
-/*
-void
-Thread::suspend()
-{
-    if (!isEmulatorThread()) {
-
-        debug(RUN_DEBUG, "Suspending (%ld)...\n", suspendCounter);
-
-        if (suspendCounter || isRunning()) {
-
-            suspendCounter++;
-            changeStateTo(ExecState::SUSPEND);
-        }
-
-    } else {
-
-        debug(RUN_DEBUG, "Skipping suspend (%ld)...\n", suspendCounter);
-    }
-}
-
-void
-Thread::resume()
-{
-    if (!isEmulatorThread()) {
-
-        debug(RUN_DEBUG, "Resuming (%ld)...\n", suspendCounter);
-
-        if (suspendCounter && --suspendCounter == 0) {
-
-            changeStateTo(ExecState::RUNNING);
-            run();
-        }
-
-    } else {
-
-        debug(RUN_DEBUG, "Skipping resume (%ld)...\n", suspendCounter);
-    }
-}
-*/
 
 }

@@ -24,7 +24,6 @@ enum class ExecState : long
     OFF,          ///< Powered off
     PAUSED,       ///< Powered on, but currently paused
     RUNNING,      ///< Up and running
-    SUSPEND,      ///< Shortly paused for an internal state change
     HALTED        ///< Shut down
 };
 
@@ -41,7 +40,6 @@ struct ExecStateEnum : util::Reflection<ExecStateEnum, ExecState>
             case ExecState::OFF:          return "OFF";
             case ExecState::PAUSED:       return "PAUSED";
             case ExecState::RUNNING:      return "RUNNING";
-            case ExecState::SUSPEND:      return "SUSPENDED";
             case ExecState::HALTED:       return "HALTED";
         }
         return "???";
