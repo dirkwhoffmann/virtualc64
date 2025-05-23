@@ -17,10 +17,10 @@ set(CMAKE_BUILD_TYPE Release)
 endif()
 
 # Add the emulator library
-add_library(VC64Core VirtualC64.cpp config.cpp)
+add_library(VC64Core VirtualC64.cpp VirtualC64Config.cpp)
 
-# Add the console app (VirtualC64 Headless)
-add_executable(vc64Console Headless.cpp config.cpp)
+# Add the console app (VirtualC64 VirtualC64Diagnose)
+add_executable(vc64Console VirtualC64Diagnose.cpp VirtualC64Config.cpp)
 target_link_libraries(vc64Console VC64Core)
 
 # Specify compile options

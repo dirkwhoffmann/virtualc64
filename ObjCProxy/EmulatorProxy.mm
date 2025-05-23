@@ -7,7 +7,6 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#import "config.h"
 #import "EmulatorProxy.h"
 #import "VirtualC64.h"
 #import "DiskAnalyzer.h"

@@ -13,7 +13,7 @@
 
 #include "VirtualC64Config.h"
 #include "VirtualC64Diagnose.h"
-#include "HeadlessScripts.h"
+#include "DiagnoseScripts.h"
 #include "C64.h"
 #include "Script.h"
 #include <chrono>
