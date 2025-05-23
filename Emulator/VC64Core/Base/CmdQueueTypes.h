@@ -31,6 +31,15 @@ enum class Cmd : long
     // Emulator
     CONFIG,                 ///< Configure the emulator
     CONFIG_ALL,             ///< Configure the emulator
+    HARD_RESET,             ///< Perform a hard reset
+    SOFT_RESET,             ///< Perform a soft reset
+    POWER_ON,               ///< Switch power on
+    POWER_OFF,              ///< Switch power off
+    RUN,                    ///< Start emulation
+    PAUSE,                  ///< Pause emulation
+    WARP_ON,                ///< Switch on warp mode
+    WARP_OFF,               ///< Switch off warp mode
+    HALT,                   ///< Terminate the emulator thread
 
     // C64
     ALARM_ABS,              ///< Schedule an alarm (absolute cycle)
@@ -118,6 +127,15 @@ struct CmdEnum : util::Reflection<CmdEnum, Cmd> {
 
             case Cmd::CONFIG:                return "CONFIG";
             case Cmd::CONFIG_ALL:            return "CONFIG_ALL";
+            case Cmd::HARD_RESET:            return "HARD_RESET";
+            case Cmd::SOFT_RESET:            return "SOFT_RESET";
+            case Cmd::POWER_ON:              return "POWER_ON";
+            case Cmd::POWER_OFF:             return "POWER_OFF";
+            case Cmd::RUN:                   return "RUN";
+            case Cmd::PAUSE:                 return "PAUSE";
+            case Cmd::WARP_ON:               return "WARP_ON";
+            case Cmd::WARP_OFF:              return "WARP_OFF";
+            case Cmd::HALT:                  return "HALT";
 
             case Cmd::ALARM_ABS:             return "ALARM_ABS";
             case Cmd::ALARM_REL:             return "ALARM_REL";

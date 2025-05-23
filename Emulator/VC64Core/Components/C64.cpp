@@ -625,6 +625,15 @@ C64::update(CmdQueue &queue)
                 emulator.set(cmd.config.option, cmd.config.value, { });
                 break;
 
+            case Cmd::HARD_RESET:
+            case Cmd::SOFT_RESET:
+            case Cmd::POWER_ON:
+            case Cmd::POWER_OFF:
+            case Cmd::RUN:
+            case Cmd::PAUSE:
+            case Cmd::WARP_ON:
+            case Cmd::WARP_OFF:
+            case Cmd::HALT:
             case Cmd::ALARM_ABS:
             case Cmd::ALARM_REL:
             case Cmd::INSPECTION_TARGET:
@@ -1140,6 +1149,57 @@ C64::processCommand(const Command &cmd)
             setAutoInspectionMask(cmd.value);
             break;
 
+        case Cmd::HARD_RESET:
+            
+            emulator.hardReset();
+            break;
+            
+        case Cmd::SOFT_RESET:
+            
+            emulator.softReset();
+            break;
+            
+        case Cmd::POWER_ON:
+            
+            emulator.powerOn();
+            break;
+            
+        case Cmd::POWER_OFF:
+            
+            emulator.powerOff();
+            break;
+            
+        case Cmd::RUN:
+            
+            emulator.run();
+            break;
+            
+        case Cmd::PAUSE:
+            
+            emulator.pause();
+            break;
+            
+        case Cmd::WARP_ON:
+            
+            if (cmd.value == 0) {
+                throw std::runtime_error("Source 0 is reserved for implementing config.warpMode.");
+            }
+            emulator.warpOn(cmd.value);
+            break;
+            
+        case Cmd::WARP_OFF:
+
+            if (cmd.value == 0) {
+                throw std::runtime_error("Source 0 is reserved for implementing config.warpMode.");
+            }
+            emulator.warpOff(cmd.value);
+            break;
+
+        case Cmd::HALT:
+
+            emulator.halt();
+            break;
+            
         default:
             fatalError;
     }
