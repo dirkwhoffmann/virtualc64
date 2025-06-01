@@ -2012,7 +2012,7 @@
 			path = Layers;
 			sourceTree = "<group>";
 		};
-		50A2D7AF24AF945200671F38 /* Base */ = {
+		50A2D7AF24AF945200671F38 /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
 				5078BEAC264D72C000EDA161 /* CMakeLists.txt */,
@@ -2062,7 +2062,7 @@
 				50F5B6A12959C44E000457A0 /* Host.h */,
 				50F5B6A02959C44E000457A0 /* Host.cpp */,
 			);
-			path = Base;
+			path = Infrastructure;
 			sourceTree = "<group>";
 		};
 		50A5B7CD2C74E44C00D6DDAD /* RemoteServers */ = {
@@ -2233,7 +2233,7 @@
 				50A1948C2BDA6F490046849E /* EmulatorBase.cpp */,
 				506F30382B729CE80083EAEA /* Emulator.cpp */,
 				500FAA62261376980062488E /* Utilities */,
-				50A2D7AF24AF945200671F38 /* Base */,
+				50A2D7AF24AF945200671F38 /* Infrastructure */,
 				50E56AF529D489EA00EBCE76 /* Components */,
 				50ACF4DC256EB451003B5690 /* Ports */,
 				504C42F924AF29AB00E69CAE /* Peripherals */,
@@ -3094,6 +3094,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = Emulator;
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				ONLY_ACTIVE_ARCH = YES;
@@ -3181,6 +3182,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = Emulator;
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				OTHER_CFLAGS = (

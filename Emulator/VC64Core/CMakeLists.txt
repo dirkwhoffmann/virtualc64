@@ -7,7 +7,7 @@ EmulatorBase.cpp
 
 )
 
-add_subdirectory(Base)
+add_subdirectory(Infrastructure)
 add_subdirectory(Components)
 add_subdirectory(Ports)
 add_subdirectory(FileSystems)

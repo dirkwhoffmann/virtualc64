@@ -13,9 +13,8 @@
 
 #pragma once
 
-// #include "Reflection.h"
-#include "ThreadTypes.h"
-#include "C64Types.h"
+#include "VC64Core/Infrastructure/ThreadTypes.h"
+#include "VC64Core/Components/C64Types.h"
 
 namespace vc64 {
 
