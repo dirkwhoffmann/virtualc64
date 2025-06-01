@@ -28,9 +28,6 @@ static constexpr int SNP_MINOR      = 2;
 static constexpr int SNP_SUBMINOR   = 0;
 static constexpr int SNP_BETA       = 0;
 
-// Uncomment these settings in a release build
-// #define RELEASEBUILD
-
 
 //
 // Configuration overrides
@@ -60,6 +57,8 @@ static constexpr bool emscripten = 1;
 #else
 static constexpr bool emscripten = 0;
 #endif
+
+namespace vc64 {
 
 // General
 extern debugflag XFILES;
@@ -149,5 +148,7 @@ extern debugflag FORCE_CRT_UNKNOWN;
 extern debugflag FORCE_CRT_UNSUPPORTED;
 extern debugflag FORCE_RECORDING_ERROR;
 extern debugflag FORCE_NO_FFMPEG;
+
+}
 
 #include <assert.h>

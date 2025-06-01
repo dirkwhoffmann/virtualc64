@@ -17,7 +17,7 @@
 #include "C64.h"
 #include "Script.h"
 #include <chrono>
-#include <iostream>
+// #include <iostream>
 
 int main(int argc, char *argv[])
 {
@@ -27,12 +27,12 @@ int main(int argc, char *argv[])
 
     } catch (vc64::SyntaxError &e) {
 
-        std::cout << "Usage: vAmigaCore [-fsdvm] [<script>]" << std::endl;
+        std::cout << "Usage: VirtualC64Headless [-fsdvm] [<script>]" << std::endl;
         std::cout << std::endl;
-        std::cout << "       -f or --footprint   Report the size of certain objects" << std::endl;
-        std::cout << "       -s or --smoke       Run some smoke tests to test the build" << std::endl;
+        std::cout << "       -f or --footprint   Report the size of objects" << std::endl;
+        std::cout << "       -s or --smoke       Run smoke tests to test the build" << std::endl;
         std::cout << "       -d or --diagnose    Launch the emulator thread" << std::endl;
-        std::cout << "       -v or --verbose     Print all executed script lines" << std::endl;
+        std::cout << "       -v or --verbose     Print the executed script lines" << std::endl;
         std::cout << "       -m or --messages    Observe the message queue" << std::endl;
         std::cout << "       <script>            Execute a custom script" << std::endl;
         std::cout << std::endl;
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 
     } catch (vc64::AppError &e) {
 
-        std::cout << "VAError: " << e.what() << std::endl;
+        std::cout << "Emulator Error: " << e.what() << std::endl;
 
     } catch (std::exception &e) {
 
@@ -144,7 +144,7 @@ Headless::runScript(const char **script)
 }
 
 void
-Headless::runScript(const std::filesystem::path &path)
+Headless::runScript(const fs::path &path)
 {
     // Read the input script
     Script script(path);

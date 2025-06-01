@@ -258,7 +258,7 @@ ReSID::setSamplingMethod(SamplingMethod value)
                 value = SamplingMethod::INTERPOLATE;
                 break;
             default:
-                warn("Unknown sampling method: %ld\n", value);
+                warn("Unknown sampling method: %ld\n", (long)value);
         }
 
         samplingMethod = value;
