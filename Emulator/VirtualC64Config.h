@@ -17,40 +17,19 @@
 //
 
 // Version number
-#define VER_MAJOR 5
-#define VER_MINOR 2
-#define VER_SUBMINOR 0
-#define VER_BETA 0
+static constexpr int VER_MAJOR      = 5;
+static constexpr int VER_MINOR      = 2;
+static constexpr int VER_SUBMINOR   = 0;
+static constexpr int VER_BETA       = 0;
 
 // Snapshot version number
-#define SNP_MAJOR 5
-#define SNP_MINOR 2
-#define SNP_SUBMINOR 0
-#define SNP_BETA 0
+static constexpr int SNP_MAJOR      = 5;
+static constexpr int SNP_MINOR      = 2;
+static constexpr int SNP_SUBMINOR   = 0;
+static constexpr int SNP_BETA       = 0;
 
 // Uncomment these settings in a release build
-#define RELEASEBUILD
-
-
-//
-// Build settings
-//
-
-#if defined(__clang__)
-
-#define alwaysinline __attribute__((always_inline))
-#pragma GCC diagnostic ignored "-Wgnu-anonymous-struct"
-#pragma GCC diagnostic ignored "-Wnested-anon-types"
-
-#elif defined(__GNUC__) || defined(__GNUG__)
-
-#define alwaysinline __attribute__((always_inline))
-
-#elif defined(_MSC_VER)
-
-#define alwaysinline __forceinline
-
-#endif
+// #define RELEASEBUILD
 
 
 //
@@ -64,31 +43,23 @@
 // Debug settings
 //
 
-#ifdef RELEASEBUILD
-#ifndef NDEBUG
-#define NDEBUG
-#endif
-static const bool releaseBuild = 1;
-static const bool debugBuild = 0;
+static constexpr bool betaRelease = VER_BETA != 0;
+
+#ifdef NDEBUG
+static constexpr bool releaseBuild = 1;
+static constexpr bool debugBuild = 0;
 typedef const int debugflag;
 #else
-static const bool releaseBuild = 0;
-static const bool debugBuild = 1;
+static constexpr bool releaseBuild = 0;
+static constexpr bool debugBuild = 1;
 typedef int debugflag;
 #endif
 
-#if VER_BETA == 0
-static const bool betaRelease = 0;
-#else
-static const bool betaRelease = 1;
-#endif
-
 #ifdef __EMSCRIPTEN__
-static const bool emscript = 1;
+static constexpr bool emscripten = 1;
 #else
-static const bool emscript = 0;
+static constexpr bool emscripten = 0;
 #endif
-
 
 // General
 extern debugflag XFILES;

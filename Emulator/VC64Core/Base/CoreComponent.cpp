@@ -381,6 +381,12 @@ CoreComponent::isEmulatorThread() const
     return emulator.isEmulatorThread();
 }
 
+bool
+CoreComponent::isUserThread() const
+{
+    return emulator.isUserThread();
+}
+
 void
 CoreComponent::diff(CoreComponent &other)
 {

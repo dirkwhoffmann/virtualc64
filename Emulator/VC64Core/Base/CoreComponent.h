@@ -221,7 +221,9 @@ public:
 
 public:
     
+    // Performs sanity checks
     bool isEmulatorThread() const;
+    bool isUserThread() const;
 
     // Compares two components and reports differences (for debugging)
     void diff(CoreComponent &other);
