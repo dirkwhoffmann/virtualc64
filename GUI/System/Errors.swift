@@ -299,6 +299,27 @@ extension MyDocument {
         alert.runSheet(for: windowForSheet!)
     }
 
+    func showLaunchAlert(error: Error) {
+             
+        var reason: String
+        if let error = error as? VC64Error {
+            reason = error.what
+        } else {
+            reason = error.localizedDescription
+        }
+        
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.icon = NSImage(named: "biohazard")
+        alert.messageText = "The emulator failed to launch."
+        alert.informativeText = "An unexpected exception interrupted the startup procedure:\n\n\(reason)"
+        alert.addButton(withTitle: "Exit")
+        
+        if alert.runSheet(for: windowForSheet!) == .alertFirstButtonReturn {
+            NSApp.terminate(self)
+        }
+    }
+    
     func showIsUnsavedAlert(msg: String, icon: String) -> NSApplication.ModalResponse {
 
         let alert = NSAlert()

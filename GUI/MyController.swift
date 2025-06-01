@@ -228,23 +228,32 @@ extension MyController {
     
     func launch() {
 
-        // Pass in command line arguments as a RetroShell script
-        var script = ""
-        for arg in myAppDelegate.argv where arg.hasPrefix("-") {
-            script = script + arg.dropFirst() + "\n"
-        }
-        emu?.retroShell.execute(script)
+        do {
+            
+            // Pass in command line arguments as a RetroShell script
+            var script = ""
+            for arg in myAppDelegate.argv where arg.hasPrefix("-") {
+                script = script + arg.dropFirst() + "\n"
+            }
+            emu!.retroShell.execute(script)
+            
+            // Convert 'self' to a void pointer
+            let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
+            
+            try emu!.launch(myself) { (ptr, msg: vc64.Message) in
+                
+                // Convert void pointer back to 'self'
+                let myself = Unmanaged<MyController>.fromOpaque(ptr!).takeUnretainedValue()
+                
+                // Process message in the main thread
+                Task { @MainActor in myself.processMessage(msg) }
+                // DispatchQueue.main.async { myself.processMessage(msg) }
+            }
+        } catch {
 
-        // Convert 'self' to a void pointer
-        let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
-        
-        emu!.launch(myself) { (ptr, msg: vc64.Message) in
-
-            // Convert void pointer back to 'self'
-            let myself = Unmanaged<MyController>.fromOpaque(ptr!).takeUnretainedValue()
-
-            // Process message in the main thread
-            DispatchQueue.main.async { myself.processMessage(msg) }
+            // In theory, we should never be here
+            shutDown()
+            mydocument.showLaunchAlert(error: error)
         }
     }
     
@@ -424,6 +433,9 @@ extension MyController {
                 .DRIVE_MOTOR:
             refreshStatusBar()
 
+        case .MON_SETTING:
+            renderer.processMessage(msg)
+            
         case .DRIVE_CONNECT,
                 .DRIVE_POWER where drive.value == 0:
             hideOrShowDriveMenus()

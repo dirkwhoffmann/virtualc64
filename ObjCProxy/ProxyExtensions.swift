@@ -95,6 +95,22 @@ extension FileSystemProxy {
 
 extension EmulatorProxy {
 
+    /*
+    func launch() throws {
+        
+        let exception = ExceptionWrapper()
+        launch(exception)
+        if exception.errorCode != .OK { throw VC64Error(exception) }
+    }
+    */
+    
+    func launch(_ listener: UnsafeRawPointer, _ callback: @escaping @convention(c) (UnsafeRawPointer?, Message) -> Void) throws
+    {
+        let exception = ExceptionWrapper()
+        launch(listener, function: callback, exception: exception)
+        if exception.errorCode != .OK { throw VC64Error(exception) }
+    }
+    
     func isReady() throws {
         
         let exception = ExceptionWrapper()

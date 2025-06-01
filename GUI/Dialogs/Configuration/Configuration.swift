@@ -403,96 +403,125 @@ class Configuration {
 
     var hCenter: Int {
         get { return emu?.get(.MON_HCENTER) ?? 0 }
+        set { emu?.set(.MON_HCENTER, value: newValue) }
+        /*
         set {
             emu?.set(.MON_HCENTER, value: newValue)
             renderer.canvas.updateTextureRect()
         }
+        */
     }
     var vCenter: Int {
         get { return emu?.get(.MON_VCENTER) ?? 0 }
+        set { emu?.set(.MON_VCENTER, value: newValue) }
+        /*
         set {
             emu?.set(.MON_VCENTER, value: newValue)
             renderer.canvas.updateTextureRect()
         }
+        */
     }
 
     var hZoom: Int {
         get { return emu?.get(.MON_HZOOM) ?? 0 }
+        set { emu?.set(.MON_HZOOM, value: newValue) }
+        /*
         set {
             emu?.set(.MON_HZOOM, value: newValue)
             renderer.canvas.updateTextureRect()
         }
+        */
     }
 
     var vZoom: Int {
         get { return emu?.get(.MON_VZOOM) ?? 0 }
+        set { emu?.set(.MON_VZOOM, value: newValue) }
+        /*
         set {
             emu?.set(.MON_VZOOM, value: newValue)
             renderer.canvas.updateTextureRect()
         }
+        */
     }
 
     var upscaler: Int {
         get { return emu?.get(.MON_UPSCALER) ?? 0 }
+        set { emu?.set(.MON_UPSCALER, value: newValue) }
+        /*
         set {
             if ressourceManager.selectUpscaler(newValue) {
                 emu?.set(.MON_UPSCALER, value: newValue)
             }
         }
+        */
     }
 
     var blur: Int {
         get { return emu?.get(.MON_BLUR) ?? 0 }
+        set { emu?.set(.MON_BLUR, value: newValue) }
+        /*
         set {
             emu?.set(.MON_BLUR, value: newValue)
             renderer.shaderOptions.blur = Int32(newValue)
         }
+        */
     }
 
     var blurRadius: Int {
         get { return emu?.get(.MON_BLUR_RADIUS) ?? 0 }
+        set { emu?.set(.MON_BLUR_RADIUS, value: newValue) }
+        /*
         set {
             emu?.set(.MON_BLUR_RADIUS, value: newValue)
             renderer.shaderOptions.blurRadius = Float(newValue) / 1000.0
         }
+        */
     }
 
     var bloom: Int {
         get { return emu?.get(.MON_BLOOM) ?? 0 }
+        set { emu?.set(.MON_BLOOM, value: newValue) }
+        /*
         set {
             if ressourceManager.selectBloomFilter(newValue) {
                 emu?.set(.MON_BLOOM, value: newValue)
                 renderer.shaderOptions.bloom = Int32(bloom)
             }
         }
+        */
     }
 
     var bloomRadius: Int {
         get { return emu?.get(.MON_BLOOM_RADIUS) ?? 0 }
+        set { emu?.set(.MON_BLOOM_RADIUS, value: newValue) }
+        /*
         set {
             emu?.set(.MON_BLOOM_RADIUS, value: newValue)
             renderer.shaderOptions.bloomRadius = Float(newValue) / 1000.0
         }
+        */
     }
 
     var bloomBrightness: Int {
         get { return emu?.get(.MON_BLOOM_BRIGHTNESS) ?? 0 }
+        set { emu?.set(.MON_BLOOM_BRIGHTNESS, value: newValue) }
+        /*
         set {
             emu?.set(.MON_BLOOM_BRIGHTNESS, value: newValue)
             renderer.shaderOptions.bloomBrightness = Float(newValue) / 1000.0
         }
+        */
     }
 
     var bloomWeight: Int {
         get { return emu?.get(.MON_BLOOM_WEIGHT) ?? 0 }
-        set {
-            emu?.set(.MON_BLOOM_WEIGHT, value: newValue)
-            renderer.shaderOptions.bloomWeight = Float(newValue) / 1000.0
-        }
+        set { emu?.set(.MON_BLOOM_WEIGHT, value: newValue) }
     }
 
     var dotMask: Int {
         get { return emu?.get(.MON_DOTMASK) ?? 0 }
+        set { emu?.set(.MON_DOTMASK, value: newValue) }
+        /*
         set {
             renderer.shaderOptions.dotMask = Int32(newValue)
             ressourceManager.buildDotMasks()
@@ -500,66 +529,88 @@ class Configuration {
                 emu?.set(.MON_DOTMASK, value: newValue)
             }
         }
+        */
     }
 
     var dotMaskBrightness: Int {
         get { return emu?.get(.MON_DOTMASK_BRIGHTNESS) ?? 0 }
+        set { emu?.set(.MON_DOTMASK_BRIGHTNESS, value: newValue) }
+        /*
         set {
             emu?.set(.MON_DOTMASK_BRIGHTNESS, value: newValue)
             renderer.shaderOptions.dotMaskBrightness = Float(newValue) / 1000.0
             ressourceManager.buildDotMasks()
             ressourceManager.selectDotMask(dotMask)
         }
+        */
     }
 
     var scanlines: Int {
         get { return emu?.get(.MON_SCANLINES) ?? 0 }
+        set { emu?.set(.MON_SCANLINES, value: newValue) }
+        /*
         set {
             renderer.shaderOptions.scanlines = Int32(newValue)
             if ressourceManager.selectScanlineFilter(newValue) {
                 emu?.set(.MON_SCANLINES, value: newValue)
             }
         }
+        */
     }
 
     var scanlineBrightness: Int {
         get { return emu?.get(.MON_SCANLINE_BRIGHTNESS) ?? 0 }
+        set { emu?.set(.MON_SCANLINE_BRIGHTNESS, value: newValue) }
+        /*
         set {
             emu?.set(.MON_SCANLINE_BRIGHTNESS, value: newValue)
             renderer.shaderOptions.scanlineBrightness = Float(newValue) / 1000.0
         }
+        */
     }
 
     var scanlineWeight: Int {
         get { return emu?.get(.MON_SCANLINE_WEIGHT) ?? 0 }
+        set { emu?.set(.MON_SCANLINE_WEIGHT, value: newValue) }
+        /*
         set {
             emu?.set(.MON_SCANLINE_WEIGHT, value: newValue)
             renderer.shaderOptions.scanlineWeight = Float(newValue) / 1000.0
         }
+        */
     }
 
     var disalignment: Int {
         get { return emu?.get(.MON_DISALIGNMENT) ?? 0 }
+        set { emu?.set(.MON_DISALIGNMENT, value: newValue) }
+        /*
         set {
             emu?.set(.MON_DISALIGNMENT, value: newValue)
             renderer.shaderOptions.disalignment = Int32(newValue)
         }
+        */
     }
 
     var disalignmentH: Int {
         get { return emu?.get(.MON_DISALIGNMENT_H) ?? 0 }
+        set { emu?.set(.MON_DISALIGNMENT_H, value: newValue) }
+        /*
         set {
             emu?.set(.MON_DISALIGNMENT_H, value: newValue)
             renderer.shaderOptions.disalignmentH = Float(newValue) / 1000000.0
         }
+        */
     }
     
     var disalignmentV: Int {
         get { return emu?.get(.MON_DISALIGNMENT_V) ?? 0 }
+        set { emu?.set(.MON_DISALIGNMENT_V, value: newValue) }
+        /*
         set {
             emu?.set(.MON_DISALIGNMENT_V, value: newValue)
             renderer.shaderOptions.disalignmentV = Float(newValue) / 1000000.0
         }
+        */
     }
     init(with controller: MyController) { parent = controller }
 

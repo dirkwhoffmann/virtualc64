@@ -42,6 +42,8 @@ Emulator::~Emulator()
 void
 Emulator::launch(const void *listener, Callback *func)
 {
+    if (FORCE_LAUNCH_ERROR) throw AppError(Fault::LAUNCH);
+    
     // Initialize the emulator if needed
     if (!isInitialized()) initialize();
 
@@ -415,6 +417,7 @@ Emulator::getDebugVariable(DebugFlag flag)
         case DebugFlag::SCK_DEBUG:        return SCK_DEBUG;
         case DebugFlag::SRV_DEBUG:        return SRV_DEBUG;
 
+        case DebugFlag::FORCE_LAUNCH_ERROR:       return FORCE_LAUNCH_ERROR;
         case DebugFlag::FORCE_ROM_MISSING:        return FORCE_ROM_MISSING;
         case DebugFlag::FORCE_MEGA64_MISMATCH:    return FORCE_MEGA64_MISMATCH;
         case DebugFlag::FORCE_SNAP_TOO_OLD:       return FORCE_SNAP_TOO_OLD;
@@ -505,6 +508,7 @@ Emulator::setDebugVariable(DebugFlag flag, bool val)
         case DebugFlag::SCK_DEBUG:        SCK_DEBUG       = val; break;
         case DebugFlag::SRV_DEBUG:        SRV_DEBUG       = val; break;
 
+        case DebugFlag::FORCE_LAUNCH_ERROR:       FORCE_LAUNCH_ERROR = val; break;
         case DebugFlag::FORCE_ROM_MISSING:        FORCE_ROM_MISSING = val; break;
         case DebugFlag::FORCE_MEGA64_MISMATCH:    FORCE_MEGA64_MISMATCH = val; break;
         case DebugFlag::FORCE_SNAP_TOO_OLD:       FORCE_SNAP_TOO_OLD = val; break;

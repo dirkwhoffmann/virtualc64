@@ -65,7 +65,7 @@ extension MyController: NSWindowDelegate {
         debug(.lifetime)
 
         debug(.shutdown, "Pause emulation...")
-        emu!.pause()
+        emu?.pause()
 
         debug(.shutdown, "Shut down the audio unit...")
         macAudio.shutDown()
@@ -89,7 +89,7 @@ extension MyController: NSWindowDelegate {
         gamePadManager.shutDown()
 
         debug(.shutdown, "Shut down the emulator...")
-        emu!.halt()
+        emu?.halt()
 
         debug(.shutdown, "Done")
     }

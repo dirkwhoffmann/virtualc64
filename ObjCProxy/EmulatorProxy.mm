@@ -1806,9 +1806,18 @@ NSString *EventSlotName(EventSlot slot)
     return [self emu]->isTracking();
 }
 
-- (void)launch:(const void *)listener function:(Callback *)func
+/*
+- (void)launch:(ExceptionWrapper *)ex
 {
-    [self emu]->launch(listener, func);
+    try { [self emu]->launch(); }
+    catch (AppError &error) { [ex save:error]; }
+}
+*/
+
+- (void)launch:(const void *)listener function:(Callback *)func exception:(ExceptionWrapper *)ex
+{
+    try { [self emu]->launch(listener, func); }
+    catch (AppError &error) { [ex save:error]; }
 }
 
 - (void)isReady:(ExceptionWrapper *)ex

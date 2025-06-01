@@ -98,6 +98,7 @@ enum class DebugFlag
     SRV_DEBUG,         ///< Debug the remote servers
 
     //! Forced error condition
+    FORCE_LAUNCH_ERROR,
     FORCE_ROM_MISSING,
     FORCE_MEGA64_MISMATCH,
     FORCE_SNAP_TOO_OLD,
@@ -191,6 +192,7 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
             case DebugFlag::SRV_DEBUG:                return "SRV_DEBUG";
 
                 // Forced error conditions
+            case DebugFlag::FORCE_LAUNCH_ERROR:       return "FORCE_LAUNCH_ERROR";
             case DebugFlag::FORCE_ROM_MISSING:        return "FORCE_ROM_MISSING";
             case DebugFlag::FORCE_MEGA64_MISMATCH:    return "FORCE_MEGA64_MISMATCH";
             case DebugFlag::FORCE_SNAP_TOO_OLD:       return "FORCE_SNAP_TOO_OLD";
@@ -282,6 +284,7 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
             case DebugFlag::SRV_DEBUG:                return "Remote servers";
 
                 // Forced error conditions
+            case DebugFlag::FORCE_LAUNCH_ERROR:       return "";
             case DebugFlag::FORCE_ROM_MISSING:        return "";
             case DebugFlag::FORCE_MEGA64_MISMATCH:    return "";
             case DebugFlag::FORCE_SNAP_TOO_OLD:       return "";

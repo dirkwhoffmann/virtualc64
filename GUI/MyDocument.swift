@@ -86,7 +86,7 @@ class MyDocument: NSDocument {
 
         debug(.shutdown, "Remove proxy...")
 
-        emu!.kill()
+        emu?.kill()
         emu = nil
 
         debug(.shutdown, "Done")

@@ -89,17 +89,17 @@ Defaults::Defaults()
     setFallback(Opt::MON_BLUR,                   true);
     setFallback(Opt::MON_BLUR_RADIUS,            0);
     setFallback(Opt::MON_BLOOM,                  false);
-    setFallback(Opt::MON_BLOOM_RADIUS,           1000);
-    setFallback(Opt::MON_BLOOM_BRIGHTNESS,       400);
-    setFallback(Opt::MON_BLOOM_WEIGHT,           1210);
+    setFallback(Opt::MON_BLOOM_RADIUS,           200);
+    setFallback(Opt::MON_BLOOM_BRIGHTNESS,       200);
+    setFallback(Opt::MON_BLOOM_WEIGHT,           100);
     setFallback(Opt::MON_DOTMASK,                (i64)Dotmask::NONE);
-    setFallback(Opt::MON_DOTMASK_BRIGHTNESS,     700);
+    setFallback(Opt::MON_DOTMASK_BRIGHTNESS,     550);
     setFallback(Opt::MON_SCANLINES,              (i64)Scanlines::NONE);
     setFallback(Opt::MON_SCANLINE_BRIGHTNESS,    550);
     setFallback(Opt::MON_SCANLINE_WEIGHT,        110);
     setFallback(Opt::MON_DISALIGNMENT,           0);
-    setFallback(Opt::MON_DISALIGNMENT_H,         1000);
-    setFallback(Opt::MON_DISALIGNMENT_V,         1000);
+    setFallback(Opt::MON_DISALIGNMENT_H,         250);
+    setFallback(Opt::MON_DISALIGNMENT_V,         250);
 
     setFallback(Opt::AUD_VOL0,                   100);
     setFallback(Opt::AUD_VOL1,                   100);

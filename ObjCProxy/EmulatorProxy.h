@@ -191,7 +191,7 @@ NSString *EventSlotName(EventSlot slot);
 - (void)finishLine;
 - (void)finishFrame;
 
-- (void)launch:(const void *)listener function:(Callback *)func;
+- (void)launch:(const void *)listener function:(Callback *)func exception:(ExceptionWrapper *)ex;
 - (void)wakeUp;
 
 - (NSInteger)get:(Opt)opt;

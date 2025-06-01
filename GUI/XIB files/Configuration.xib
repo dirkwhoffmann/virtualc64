@@ -447,7 +447,7 @@ Gw
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eyT-7E-Fac">
                                             <rect key="frame" x="12" y="73" width="48" height="48"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="lockIcon" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="qox-C1-uyr">
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="alertIcon" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="qox-C1-uyr">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -3105,7 +3105,7 @@ Gw
                                                             <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="64h-x0-mSk">
                                                                 <rect key="frame" x="149" y="34" width="120" height="15"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="5000" doubleValue="1500" tickMarkPosition="above" sliderType="linear" id="ERa-RL-eUz"/>
+                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1000" doubleValue="500" tickMarkPosition="above" sliderType="linear" id="ERa-RL-eUz"/>
                                                                 <connections>
                                                                     <action selector="vidBlurRadiusAction:" target="-2" id="J5K-yq-PiT"/>
                                                                 </connections>
@@ -3208,7 +3208,7 @@ Gw
                                                             <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VJ1-QU-G8y">
                                                                 <rect key="frame" x="439" y="134" width="120" height="15"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="5000" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="A1Z-on-qGp"/>
+                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1000" doubleValue="500" tickMarkPosition="above" sliderType="linear" id="A1Z-on-qGp"/>
                                                                 <connections>
                                                                     <action selector="vidBloomRadiusAction:" target="-2" id="vod-rL-wIy"/>
                                                                 </connections>
@@ -3237,7 +3237,7 @@ Gw
                                                             <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KkN-hN-xfa">
                                                                 <rect key="frame" x="439" y="201" width="120" height="15"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="-4000" maxValue="4000" doubleValue="2000" tickMarkPosition="above" sliderType="linear" id="LLv-BX-2wL"/>
+                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1000" doubleValue="500" tickMarkPosition="above" sliderType="linear" id="LLv-BX-2wL"/>
                                                                 <connections>
                                                                     <action selector="vidDisalignmentVAction:" target="-2" id="tUp-HI-lBz"/>
                                                                 </connections>
@@ -3245,7 +3245,7 @@ Gw
                                                             <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F6O-Zb-pow">
                                                                 <rect key="frame" x="439" y="226" width="120" height="15"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="-4000" maxValue="4000" doubleValue="2000" tickMarkPosition="above" sliderType="linear" id="EOd-8a-Dd3"/>
+                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1000" doubleValue="500" tickMarkPosition="above" sliderType="linear" id="EOd-8a-Dd3"/>
                                                                 <connections>
                                                                     <action selector="vidDisalignmentHAction:" target="-2" id="jmN-Wb-HeM"/>
                                                                 </connections>
@@ -3289,7 +3289,7 @@ Gw
                                                             <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V7J-CX-bpc">
                                                                 <rect key="frame" x="442" y="84" width="120" height="15"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="1000" maxValue="3000" doubleValue="1000" tickMarkPosition="above" sliderType="linear" id="Fku-vE-aZx"/>
+                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1000" doubleValue="500" tickMarkPosition="above" sliderType="linear" id="Fku-vE-aZx"/>
                                                                 <connections>
                                                                     <action selector="vidBloomWeightAction:" target="-2" id="jdX-Zd-kHr"/>
                                                                 </connections>
@@ -3306,7 +3306,7 @@ Gw
                                                             <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tcf-i4-M9e">
                                                                 <rect key="frame" x="441" y="109" width="120" height="15"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="2000" doubleValue="1000" tickMarkPosition="above" sliderType="linear" id="oY0-wC-4Hb"/>
+                                                                <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="1000" doubleValue="500" tickMarkPosition="above" sliderType="linear" id="oY0-wC-4Hb"/>
                                                                 <connections>
                                                                     <action selector="vidBloomBrightnessAction:" target="-2" id="nVA-DM-eFB"/>
                                                                 </connections>
@@ -3338,13 +3338,13 @@ Gw
     </objects>
     <resources>
         <image name="NSTouchBarDeleteTemplate" width="19" height="22"/>
+        <image name="alertIcon" width="1024" height="1024"/>
         <image name="devGamepad1Template" width="20" height="21"/>
         <image name="devGamepad2Template" width="20" height="21"/>
         <image name="devKeyset1Template" width="20" height="20"/>
         <image name="devKeyset2Template" width="20" height="20"/>
         <image name="devMouseTemplate" width="20" height="20"/>
         <image name="devNoneTemplate" width="20" height="20"/>
-        <image name="lockIcon" width="121" height="171"/>
         <image name="mega65" width="399" height="347"/>
         <image name="pref_cia" width="514" height="514"/>
         <image name="pref_glue3" width="258" height="258"/>

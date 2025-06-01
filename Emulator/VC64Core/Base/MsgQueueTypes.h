@@ -64,6 +64,9 @@ enum class Msg : long
     SER_BUSY,           ///< The IEC bus is transferring data
     SER_IDLE,           ///< The IEC bus has returned to idle state
 
+    // Monitor
+    MON_SETTING,        ///< The monitor configuration has changed
+    
     // Floppy drives
     DRIVE_CONNECT,      ///< A floppy drive has been connected or disconnected
     DRIVE_POWER,        ///< The emulator has been powered on
@@ -79,21 +82,21 @@ enum class Msg : long
     DISK_MODIFIED,      ///< The disk needs saving
     FILE_FLASHED,       ///< A file has been flashed into memory
 
-    // Peripherals (Datasette)
+    // Datasette
     VC1530_CONNECT,     ///< A datasette has been connected or disconnected
     VC1530_TAPE,        ///< A tape has been inserted or ejected
     VC1530_PLAY,        ///< The play key has been pressed
     VC1530_MOTOR,       ///< The drive motor has started or stopped
     VC1530_COUNTER,     ///< The tape counter has stepped
 
-    // Peripherals (Expansion port)
+    // Expansion port
     CRT_ATTACHED,       ///< A cartridge has been plugged into the expansion port
 
-    // Peripherals (Keyboard)
+    // Keyboard
     KB_AUTO_PRESS,      ///< The auto-typing daemon has pressed a key
     KB_AUTO_RELEASE,    ///< The auto-typing daemon has released a key
 
-    // Peripherals (Mouse)
+    // Mouse
     SHAKING,            ///< A shaking mouse has been detected
 
     // Snapshots
@@ -163,6 +166,8 @@ struct MsgEnum : util::Reflection<MsgEnum, Msg> {
 
             case Msg::SER_BUSY:              return "SER_BUSY";
             case Msg::SER_IDLE:              return "SER_IDLE";
+
+            case Msg::MON_SETTING:           return "MON_SETTING";
 
             case Msg::DRIVE_CONNECT:         return "DRIVE_CONNECT";
             case Msg::DRIVE_POWER:           return "DRIVE_POWER";
@@ -234,7 +239,7 @@ typedef struct
 
     // Payload
     union {
-        i64 value;
+        struct { i64 value; i64 value2; };
         CpuMsg cpu;
         DriveMsg drive;
         ScriptMsg script;
