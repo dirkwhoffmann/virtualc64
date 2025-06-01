@@ -78,18 +78,6 @@ C64::_dump(Category category, std::ostream& os) const
 
     if (category == Category::State) {
 
-        os << tab("Power");
-        os << bol(isPoweredOn()) << std::endl;
-        os << tab("Running");
-        os << bol(isRunning()) << std::endl;
-        os << tab("Suspended");
-        os << bol(isSuspended()) << std::endl;
-        os << tab("Warping");
-        os << bol(emulator.isWarping()) << std::endl;
-        os << tab("Tracking");
-        os << bol(emulator.isTracking()) << std::endl;
-        os << std::endl;
-
         string str = "";
         if (flags & RL::WARP_ON)        str = append(str, "WARP_ON");
         if (flags & RL::WARP_OFF)       str = append(str, "WARP_OFF");

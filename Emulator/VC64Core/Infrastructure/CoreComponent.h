@@ -15,13 +15,11 @@
 #include "CoreComponentTypes.h"
 #include "EmulatorTypes.h"
 #include "CoreObject.h"
-#include "Synchronizable.h"
-#include "Serializable.h"
+#include "Concurrency.h"
 #include "Configurable.h"
 #include "Inspectable.h"
-#include "Concurrency.h"
-#include "ThreadTypes.h"
-#include <vector>
+#include "Serializable.h"
+#include "Synchronizable.h"
 #include <functional>
 
 namespace vc64 {
@@ -92,7 +90,6 @@ public:
     virtual bool isPoweredOn() const;
     virtual bool isPaused() const;
     virtual bool isRunning() const;
-    virtual bool isSuspended() const;
     virtual bool isHalted() const;
 
     // Throws an exception if the emulator is not ready to power on
@@ -101,15 +98,10 @@ public:
     // Computes a checksum
     u64 checksum(bool recursive);
 
-
-    //
-    // Suspending and Resuming
-    //
-
-    // Suspends or resumes the emulator thread
-    // void suspend() const override;
-    // void resume() const override;
-
+    // Performs sanity checks
+    bool isEmulatorThread() const;
+    bool isUserThread() const;
+ 
 
     //
     // Configuring
@@ -220,18 +212,16 @@ public:
 
 public:
     
-    // Performs sanity checks
-    bool isEmulatorThread() const;
-    bool isUserThread() const;
-
     // Compares two components and reports differences (for debugging)
     void diff(CoreComponent &other);
 
-    // Exports the current configuration to a script file
-    void exportConfig(std::ostream& ss, bool diff = false) const;
+    // Exports the current configuration as a script
+    void exportConfig(const fs::path &path, bool diff = false, std::vector<Class> exclude = {}) const;
+    void exportConfig(std::ostream &ss, bool diff = false, std::vector<Class> exclude = {}) const;
 
     // Exports only those options that differ from the default config
-    void exportDiff(std::ostream& ss) const { exportConfig(ss, true); }
+    void exportDiff(const fs::path &path, std::vector<Class> exclude = {}) const;
+    void exportDiff(std::ostream &ss, std::vector<Class> exclude = {}) const;
 };
 
 }
