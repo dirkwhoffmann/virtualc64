@@ -25,7 +25,7 @@ struct SyntaxError : public std::runtime_error {
 // The message listener
 void process(const void *listener, Message msg);
 
-class VirtualC64Diagnose : Wakeable {
+class Headless : Wakeable {
 
     // Parsed command line arguments
     std::map<string,string> keys;

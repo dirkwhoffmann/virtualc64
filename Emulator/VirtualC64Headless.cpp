@@ -12,7 +12,7 @@
 /// @file
 
 #include "VirtualC64Config.h"
-#include "VirtualC64Diagnose.h"
+#include "VirtualC64Headless.h"
 #include "DiagnoseScripts.h"
 #include "C64.h"
 #include "Script.h"
@@ -23,18 +23,18 @@ int main(int argc, char *argv[])
 {
     try {
 
-        return vc64::VirtualC64Diagnose().main(argc, argv);
+        return vc64::Headless().main(argc, argv);
 
     } catch (vc64::SyntaxError &e) {
 
         std::cout << "Usage: vAmigaCore [-fsdvm] [<script>]" << std::endl;
         std::cout << std::endl;
-        std::cout << "       -f or --footprint   Reports the size of certain objects" << std::endl;
-        std::cout << "       -s or --smoke       Runs some smoke tests to test the build" << std::endl;
-        std::cout << "       -d or --diagnose    Launches the emulator thread" << std::endl;
-        std::cout << "       -v or --verbose     Print executed script lines" << std::endl;
+        std::cout << "       -f or --footprint   Report the size of certain objects" << std::endl;
+        std::cout << "       -s or --smoke       Run some smoke tests to test the build" << std::endl;
+        std::cout << "       -d or --diagnose    Launch the emulator thread" << std::endl;
+        std::cout << "       -v or --verbose     Print all executed script lines" << std::endl;
         std::cout << "       -m or --messages    Observe the message queue" << std::endl;
-        std::cout << "       <script>            Execute this script instead of the default" << std::endl;
+        std::cout << "       <script>            Execute a custom script" << std::endl;
         std::cout << std::endl;
 
         if (auto what = std::string(e.what()); !what.empty()) {
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 namespace vc64 {
 
 int
-VirtualC64Diagnose::main(int argc, char *argv[])
+Headless::main(int argc, char *argv[])
 {
     std::cout << "VirtualC64 Headless v" << VirtualC64::version();
     std::cout << " - (C)opyright Dirk W. Hoffmann" << std::endl << std::endl;
@@ -78,7 +78,7 @@ VirtualC64Diagnose::main(int argc, char *argv[])
 }
 
 void
-VirtualC64Diagnose::parseArguments(int argc, char *argv[])
+Headless::parseArguments(int argc, char *argv[])
 {
     // Remember the execution path
     keys["exec"] = std::filesystem::absolute(std::filesystem::path(argv[0])).string();
@@ -108,7 +108,7 @@ VirtualC64Diagnose::parseArguments(int argc, char *argv[])
 }
 
 void
-VirtualC64Diagnose::checkArguments()
+Headless::checkArguments()
 {
     // At most one file must be specified
     if (keys.find("arg2") != keys.end()) {
@@ -132,7 +132,7 @@ VirtualC64Diagnose::checkArguments()
 }
 
 void
-VirtualC64Diagnose::runScript(const char **script)
+Headless::runScript(const char **script)
 {
     auto path = std::filesystem::temp_directory_path() / "script.ini";
     auto file = std::ofstream(path, std::ios::binary);
@@ -144,7 +144,7 @@ VirtualC64Diagnose::runScript(const char **script)
 }
 
 void
-VirtualC64Diagnose::runScript(const std::filesystem::path &path)
+Headless::runScript(const std::filesystem::path &path)
 {
     // Read the input script
     Script script(path);
@@ -171,11 +171,11 @@ VirtualC64Diagnose::runScript(const std::filesystem::path &path)
 void
 process(const void *listener, Message msg)
 {
-    ((VirtualC64Diagnose *)listener)->process(msg);
+    ((Headless *)listener)->process(msg);
 }
 
 void
-VirtualC64Diagnose::process(Message msg)
+Headless::process(Message msg)
 {
     static bool messages = keys.find("messages") != keys.end();
     
@@ -205,7 +205,7 @@ VirtualC64Diagnose::process(Message msg)
 }
 
 void
-VirtualC64Diagnose::reportSize()
+Headless::reportSize()
 {
     msg("               C64 : %zu bytes\n", sizeof(C64));
     msg("            Memory : %zu bytes\n", sizeof(Memory));

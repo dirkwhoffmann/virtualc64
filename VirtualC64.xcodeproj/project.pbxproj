@@ -311,7 +311,7 @@
 		50726FB82961CA290031F2F5 /* CommandConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B5261AEF000048E66A /* CommandConsole.cpp */; };
 		50726FB92961CA290031F2F5 /* TextStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B7E26A2813F8C400A405A3 /* TextStorage.cpp */; };
 		50726FBA2961CA2F0031F2F5 /* RegressionTester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE193A2633E9B0005A5898 /* RegressionTester.cpp */; };
-		50726FBD2961CA5A0031F2F5 /* VirtualC64Diagnose.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50726FBB2961CA5A0031F2F5 /* VirtualC64Diagnose.cpp */; };
+		50726FBD2961CA5A0031F2F5 /* VirtualC64Headless.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50726FBB2961CA5A0031F2F5 /* VirtualC64Headless.cpp */; };
 		50763277202989D300575110 /* DialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50763276202989D300575110 /* DialogController.swift */; };
 		50769B8A24BB1B87006FE743 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50769B8924BB1B87006FE743 /* Configuration.swift */; };
 		5077AC682B5ACC5100EFAC85 /* VirtualC64Config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5077AC672B5ACC5100EFAC85 /* VirtualC64Config.cpp */; };
@@ -871,8 +871,8 @@
 		50726F2E295C27360031F2F5 /* EventPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPanel.swift; sourceTree = "<group>"; };
 		50726F30295C27470031F2F5 /* EventTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableView.swift; sourceTree = "<group>"; };
 		50726F362961C86B0031F2F5 /* VirtualC64Core */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = VirtualC64Core; sourceTree = BUILT_PRODUCTS_DIR; };
-		50726FBB2961CA5A0031F2F5 /* VirtualC64Diagnose.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualC64Diagnose.cpp; sourceTree = "<group>"; };
-		50726FBC2961CA5A0031F2F5 /* VirtualC64Diagnose.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtualC64Diagnose.h; sourceTree = "<group>"; };
+		50726FBB2961CA5A0031F2F5 /* VirtualC64Headless.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualC64Headless.cpp; sourceTree = "<group>"; };
+		50726FBC2961CA5A0031F2F5 /* VirtualC64Headless.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtualC64Headless.h; sourceTree = "<group>"; };
 		50763276202989D300575110 /* DialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogController.swift; sourceTree = "<group>"; };
 		50769B8924BB1B87006FE743 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		5077AC672B5ACC5100EFAC85 /* VirtualC64Config.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualC64Config.cpp; sourceTree = "<group>"; };
@@ -1555,8 +1555,8 @@
 				50441A872B93CE2600102A4D /* VirtualC64Types.h */,
 				506F30452B768DE30083EAEA /* VirtualC64.h */,
 				506F30462B7692180083EAEA /* VirtualC64.cpp */,
-				50726FBC2961CA5A0031F2F5 /* VirtualC64Diagnose.h */,
-				50726FBB2961CA5A0031F2F5 /* VirtualC64Diagnose.cpp */,
+				50726FBC2961CA5A0031F2F5 /* VirtualC64Headless.h */,
+				50726FBB2961CA5A0031F2F5 /* VirtualC64Headless.cpp */,
 				50EAF5292C7A101E005AC890 /* DiagnoseScripts.h */,
 				50EB45B12DDF20B300BEC06F /* VC64Core */,
 			);
@@ -2461,7 +2461,7 @@
 				50726F572961C9A10031F2F5 /* CIA.cpp in Sources */,
 				50726F3F2961C97B0031F2F5 /* StringUtils.cpp in Sources */,
 				50726F682961C9B80031F2F5 /* ReSID.cpp in Sources */,
-				50726FBD2961CA5A0031F2F5 /* VirtualC64Diagnose.cpp in Sources */,
+				50726FBD2961CA5A0031F2F5 /* VirtualC64Headless.cpp in Sources */,
 				50726F5F2961C9AC0031F2F5 /* VICIIMemory.cpp in Sources */,
 				50726F7F2961C9E80031F2F5 /* Mouse1350.cpp in Sources */,
 				50726FAF2961CA1C0031F2F5 /* Script.cpp in Sources */,
