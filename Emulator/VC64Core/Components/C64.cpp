@@ -401,7 +401,7 @@ C64::exportConfig(std::ostream &stream) const
 i64
 C64::get(Opt opt, isize objid) const
 {
-    debug(CNF_DEBUG, "get(%s, %ld)\n", OptionEnum::key(opt), objid);
+    debug(CNF_DEBUG, "get(%s, %ld)\n", OptEnum::key(opt), objid);
 
     auto target = routeOption(opt, objid);
     if (target == nullptr) throw AppError(Fault::OPT_INV_ID);
@@ -420,13 +420,13 @@ C64::check(Opt opt, i64 value, const std::vector<isize> objids)
             auto target = routeOption(opt, objid);
             if (target == nullptr) break;
 
-            debug(CNF_DEBUG, "check(%s, %lld, %ld)\n", OptionEnum::key(opt), value, objid);
+            debug(CNF_DEBUG, "check(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
             target->checkOption(opt, value);
         }
     }
     for (auto &objid : objids) {
 
-        debug(CNF_DEBUG, "check(%s, %lld, %ld)\n", OptionEnum::key(opt), value, objid);
+        debug(CNF_DEBUG, "check(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
 
         auto target = routeOption(opt, objid);
         if (target == nullptr) throw AppError(Fault::OPT_INV_ID);
@@ -449,13 +449,13 @@ C64::set(Opt opt, i64 value, const std::vector<isize> objids)
             auto target = routeOption(opt, objid);
             if (target == nullptr) break;
 
-            debug(CNF_DEBUG, "set(%s, %lld, %ld)\n", OptionEnum::key(opt), value, objid);
+            debug(CNF_DEBUG, "set(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
             target->setOption(opt, value);
         }
     }
     for (auto &objid : objids) {
 
-        debug(CNF_DEBUG, "set(%s, %lld, %ld)\n", OptionEnum::key(opt), value, objid);
+        debug(CNF_DEBUG, "set(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
 
         auto target = routeOption(opt, objid);
         if (target == nullptr) throw AppError(Fault::OPT_INV_ID);
@@ -473,7 +473,7 @@ C64::set(Opt opt, const string &value, const std::vector<isize> objids)
 void
 C64::set(const string &opt, const string &value, const std::vector<isize> objids)
 {
-    set(Opt(util::parseEnum<OptionEnum>(opt)), value, objids);
+    set(Opt(util::parseEnum<OptEnum>(opt)), value, objids);
 }
 
 void
@@ -589,7 +589,7 @@ C64::overrideOption(Opt opt, i64 value) const
 
     if (overrides.find(opt) != overrides.end()) {
 
-        msg("Overriding option: %s = %lld\n", OptionEnum::key(opt), value);
+        msg("Overriding option: %s = %lld\n", OptEnum::key(opt), value);
         return overrides[opt];
     }
 

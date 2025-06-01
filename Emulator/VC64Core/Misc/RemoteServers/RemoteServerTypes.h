@@ -30,7 +30,7 @@ enum class SrvState : long
     INVALID     // The server is in an error state
 };
 
-struct SrvStateEnum : util::Reflection<SrvStateEnum, SrvState>
+struct SrvStateEnum : Reflection<SrvStateEnum, SrvState>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(SrvState::INVALID);
@@ -59,7 +59,7 @@ enum class ServerProtocol
     DEFAULT
 };
 
-struct ServerProtocolEnum : util::Reflection<ServerProtocolEnum, ServerProtocol>
+struct ServerProtocolEnum : Reflection<ServerProtocolEnum, ServerProtocol>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(ServerProtocol::DEFAULT);

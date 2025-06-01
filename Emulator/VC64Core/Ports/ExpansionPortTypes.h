@@ -30,7 +30,7 @@ enum class CRTMode : long
     OFF         //! No cartridge
 };
 
-struct CRTModeEnum : util::Reflection<CRTModeEnum, CRTMode> {
+struct CRTModeEnum : Reflection<CRTModeEnum, CRTMode> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(CRTMode::OFF);

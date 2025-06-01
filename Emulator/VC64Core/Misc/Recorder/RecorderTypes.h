@@ -30,7 +30,7 @@ enum class RecState : long
     ABORT
 };
 
-struct RecStateEnum : util::Reflection<RecStateEnum, RecState>
+struct RecStateEnum : Reflection<RecStateEnum, RecState>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(RecState::ABORT);

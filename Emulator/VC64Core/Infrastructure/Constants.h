@@ -100,10 +100,10 @@ static const long FIRST_VISIBLE_LINE    = 16;       ///< First line after VBLANK
 namespace Texture {
 
 /// Height of the emulator texture in texels
-static const long height                    = 312;
+static const long height                = 312;
 
 /// Width of the emulator texture in texels
-static const long width                     = 520;
+static const long width                 = 520;
 
 }
 

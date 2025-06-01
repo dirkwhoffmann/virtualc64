@@ -30,7 +30,7 @@ enum class DmaDisplayMode : long
     ODD_EVEN_LAYERS
 };
 
-struct DmaDisplayModeEnum : util::Reflection<DmaDisplayModeEnum, DmaDisplayMode> {
+struct DmaDisplayModeEnum : Reflection<DmaDisplayModeEnum, DmaDisplayMode> {
     
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(DmaDisplayMode::ODD_EVEN_LAYERS);

@@ -123,7 +123,7 @@ enum class Msg : long
     SRV_SEND
 };
 
-struct MsgEnum : util::Reflection<MsgEnum, Msg> {
+struct MsgEnum : Reflection<MsgEnum, Msg> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Msg::SRV_SEND);

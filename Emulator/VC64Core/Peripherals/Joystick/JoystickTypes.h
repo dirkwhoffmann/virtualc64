@@ -39,7 +39,7 @@ enum class GamePadAction : long
     RELEASE_RIGHT  ///< Release the right mouse button
 };
 
-struct GamePadActionEnum : util::Reflection<GamePadActionEnum, GamePadAction> {
+struct GamePadActionEnum : Reflection<GamePadActionEnum, GamePadAction> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(GamePadAction::RELEASE_RIGHT);

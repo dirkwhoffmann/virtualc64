@@ -32,7 +32,7 @@ enum class Palette : long
     SEPIA                       ///< Sepia monochrome palette
 };
 
-struct PaletteEnum : util::Reflection<PaletteEnum, Palette> {
+struct PaletteEnum : Reflection<PaletteEnum, Palette> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Palette::SEPIA);
@@ -73,7 +73,7 @@ enum class Upscaler : long
     XBR_4X                     ///< XBR upscaler (4x)
 };
 
-struct UpscalerEnum : util::Reflection<UpscalerEnum, Upscaler> {
+struct UpscalerEnum : Reflection<UpscalerEnum, Upscaler> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Upscaler::XBR_4X);
@@ -105,7 +105,7 @@ enum class Dotmask : long
     TRISECTED_SHIFTED           ///< Dotmask pattern 4
 };
 
-struct DotmaskEnum : util::Reflection<DotmaskEnum, Dotmask> {
+struct DotmaskEnum : Reflection<DotmaskEnum, Dotmask> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Dotmask::TRISECTED_SHIFTED);
@@ -137,7 +137,7 @@ enum class Scanlines : long
     SUPERIMPOSE               ///< Emulate scanlines in the fragment shader
 };
 
-struct ScanlinesEnum : util::Reflection<ScanlinesEnum, Scanlines> {
+struct ScanlinesEnum : Reflection<ScanlinesEnum, Scanlines> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Scanlines::SUPERIMPOSE);

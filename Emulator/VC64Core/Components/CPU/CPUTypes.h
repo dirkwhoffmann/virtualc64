@@ -35,7 +35,7 @@ namespace vc64 {
 
 using vc64::peddle::CPURevision;
 
-struct CPURevisionEnum : util::Reflection<CPURevisionEnum, CPURevision> {
+struct CPURevisionEnum : Reflection<CPURevisionEnum, CPURevision> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(CPURevision::MOS_8502);
@@ -66,7 +66,7 @@ enum class DasmNumbers : long
     DEC0,
 };
 
-struct DasmNumbersEnum : util::Reflection<DasmNumbersEnum, DasmNumbers>
+struct DasmNumbersEnum : Reflection<DasmNumbersEnum, DasmNumbers>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(DasmNumbers::DEC0);

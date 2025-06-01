@@ -30,7 +30,7 @@ enum class PaddleOrientation : long
     VERTICAL_FLIPPED     ///< Vertical, reverse direction
 };
 
-struct PaddleOrientationEnum : util::Reflection<PaddleOrientationEnum, PaddleOrientation> {
+struct PaddleOrientationEnum : Reflection<PaddleOrientationEnum, PaddleOrientation> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(PaddleOrientation::VERTICAL_FLIPPED);

@@ -39,7 +39,7 @@ Configurable::checkOption(Opt opt, const string &value)
 void
 Configurable::checkOption(const string &opt, const string &value)
 {
-    checkOption(Opt(util::parseEnum<OptionEnum>(opt)), value);
+    checkOption(Opt(util::parseEnum<OptEnum>(opt)), value);
 }
 
 void
@@ -51,7 +51,7 @@ Configurable::setOption(Opt opt, const string &value)
 void
 Configurable::setOption(const string &opt, const string &value)
 {
-    setOption(Opt(util::parseEnum<OptionEnum>(opt)), value);
+    setOption(Opt(util::parseEnum<OptEnum>(opt)), value);
 }
 
 void
@@ -69,8 +69,8 @@ Configurable::dumpConfig(std::ostream& os) const
 
     for (auto &opt: getOptions()) {
 
-        auto name = OptionEnum::key(opt);
-        auto help = OptionEnum::help(opt);
+        auto name = OptEnum::key(opt);
+        auto help = OptEnum::help(opt);
         auto arg  = OptionParser::asString(opt, getOption(opt));
 
         os << tab(name);

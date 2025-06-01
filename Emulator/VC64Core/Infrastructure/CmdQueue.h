@@ -25,7 +25,7 @@ namespace vc64 {
 class CmdQueue final : CoreObject, Synchronizable {
 
     /// Ring buffer storing all pending commands
-    util::RingBuffer <Command, 128> queue;
+    util::RingBuffer <Command, 256> queue;
 
 public:
     
@@ -49,7 +49,6 @@ public:
 
     // Sends a command
     void put(const Command &cmd);
-    // void put(Cmd type, KeyCmd payload);
 
     // Polls a command
     bool poll(Command &cmd);

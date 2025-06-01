@@ -28,7 +28,7 @@ enum class UserPortDevice : long
     RS232
 };
 
-struct UserPortDeviceEnum : util::Reflection<UserPortDeviceEnum, UserPortDevice>
+struct UserPortDeviceEnum : Reflection<UserPortDeviceEnum, UserPortDevice>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(UserPortDevice::RS232);

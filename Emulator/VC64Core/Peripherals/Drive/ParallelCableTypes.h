@@ -29,7 +29,7 @@ enum ParCableType : long
     DOLPHIN3      ///< DolphinDOS cable
 };
 
-struct ParCableTypeEnum : util::Reflection<ParCableTypeEnum, ParCableType> {
+struct ParCableTypeEnum : Reflection<ParCableTypeEnum, ParCableType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(ParCableType::DOLPHIN3);

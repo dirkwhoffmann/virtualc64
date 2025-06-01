@@ -37,7 +37,7 @@ enum class ControlPortDevice
     JOYSTICK   ///< Joystick
 };
 
-struct ControlPortDeviceEnum : util::Reflection<ControlPortDeviceEnum, ControlPortDevice> {
+struct ControlPortDeviceEnum : Reflection<ControlPortDeviceEnum, ControlPortDevice> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(ControlPortDevice::JOYSTICK);

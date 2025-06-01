@@ -935,9 +935,9 @@ Console::registerComponent(CoreComponent &c, RetroShellCmd &root)
                 // The argument is not an enum. Register a single setter
                 root.add({
                     
-                    .tokens = { cmd, "set", OptionEnum::key(opt) },
+                    .tokens = { cmd, "set", OptEnum::key(opt) },
                     .args   = { OptionParser::argList(opt) },
-                    .help   = { OptionEnum::help(opt) },
+                    .help   = { OptEnum::help(opt) },
                     .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
                         
                         emulator.set(Opt(values[0]), argv[0], { values[1] });
@@ -951,9 +951,9 @@ Console::registerComponent(CoreComponent &c, RetroShellCmd &root)
                 // Register a setter for every enum
                 root.add({
                     
-                    .tokens = { cmd, "set", OptionEnum::key(opt) },
+                    .tokens = { cmd, "set", OptEnum::key(opt) },
                     .args   = { OptionParser::argList(opt) },
-                    .help   = { OptionEnum::help(opt) }
+                    .help   = { OptEnum::help(opt) }
                 });
                 
                 for (const auto& [first, second] : pairs) {
@@ -961,7 +961,7 @@ Console::registerComponent(CoreComponent &c, RetroShellCmd &root)
                     auto help = OptionParser::help(opt, second);
                     root.add({
                         
-                        .tokens = { cmd, "set", OptionEnum::key(opt), first },
+                        .tokens = { cmd, "set", OptEnum::key(opt), first },
                         .help   = { help.empty() ? "Set to " + first : help },
                         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
                             
@@ -987,9 +987,9 @@ Console::registerComponent(CoreComponent &c, RetroShellCmd &root)
         root.add({cmd, "set"}, "Configure the component");
         for (auto &opt : options) {
 
-            root.add({cmd, "set", OptionEnum::key(opt)},
+            root.add({cmd, "set", OptEnum::key(opt)},
                      {OptionParser::argList(opt)},
-                     OptionEnum::help(opt),
+                     OptEnum::help(opt),
                      [this](Arguments& argv, const std::vector<isize> &values) {
 
                 emulator.set(Option(HI_WORD(values.front())), argv[0], { LO_WORD(values.front()) });

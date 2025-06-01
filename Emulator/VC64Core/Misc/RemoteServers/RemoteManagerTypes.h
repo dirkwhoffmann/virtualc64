@@ -25,7 +25,7 @@ enum class ServerType : long
     RSH
 };
 
-struct ServerTypeEnum : util::Reflection<ServerTypeEnum, ServerType>
+struct ServerTypeEnum : Reflection<ServerTypeEnum, ServerType>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(ServerType::RSH);

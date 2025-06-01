@@ -110,7 +110,7 @@ enum class DebugFlag
     FORCE_NO_FFMPEG
 };
 
-struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
+struct DebugFlagEnum : Reflection<DebugFlagEnum, DebugFlag>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(DebugFlag::FORCE_NO_FFMPEG);

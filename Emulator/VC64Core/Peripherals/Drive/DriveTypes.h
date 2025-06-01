@@ -51,7 +51,7 @@ enum class DriveType : long
     VC1541II,
 };
 
-struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveType> {
+struct DriveTypeEnum : Reflection<DriveTypeEnum, DriveType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(DriveType::VC1541II);
@@ -80,7 +80,7 @@ enum class DriveRam : long
     RANGE_6000_7FFF
 };
 
-struct DriveRamEnum : util::Reflection<DriveRamEnum, DriveRam> {
+struct DriveRamEnum : Reflection<DriveRamEnum, DriveRam> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(DriveRam::RANGE_6000_7FFF);
@@ -113,7 +113,7 @@ enum class DrvMemType : long
     PIA        // Peripheral Interface Adapter (Dolphin3)
 };
 
-struct DrvMemTypeEnum : util::Reflection<DrvMemTypeEnum, DrvMemType> {
+struct DrvMemTypeEnum : Reflection<DrvMemTypeEnum, DrvMemType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(DrvMemType::PIA);
@@ -147,7 +147,7 @@ enum class InsertionStatus : long
     PARTIALLY_EJECTED
 };
 
-struct InsertionStatusEnum : util::Reflection<InsertionStatusEnum, InsertionStatus> {
+struct InsertionStatusEnum : Reflection<InsertionStatusEnum, InsertionStatus> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(InsertionStatus::PARTIALLY_EJECTED);
