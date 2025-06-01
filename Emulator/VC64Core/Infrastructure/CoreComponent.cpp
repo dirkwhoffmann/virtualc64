@@ -115,6 +115,7 @@ CoreComponent::checksum(bool recursive)
     return checker.hash;
 }
 
+/*
 void
 CoreComponent::suspend() const
 {
@@ -126,7 +127,7 @@ CoreComponent::resume() const
 {
     return emulator.resume();
 }
-
+*/
 void
 CoreComponent::resetConfig()
 {
@@ -173,18 +174,15 @@ void
 CoreComponent::reset(bool hard)
 {
     SerResetter resetter(hard);
-
-    {   SUSPENDED
-
-        // Call the pre-reset delegate
-        postorderWalk([hard](CoreComponent *c) { c->_willReset(hard); });
-
-        // Revert to a clean state
-        postorderWalk([&resetter](CoreComponent *c) { *c << resetter; });
-
-        // Call the post-reset delegate
-        postorderWalk([hard](CoreComponent *c) { c->_didReset(hard); });
-    }
+    
+    // Call the pre-reset delegate
+    postorderWalk([hard](CoreComponent *c) { c->_willReset(hard); });
+    
+    // Revert to a clean state
+    postorderWalk([&resetter](CoreComponent *c) { *c << resetter; });
+    
+    // Call the post-reset delegate
+    postorderWalk([hard](CoreComponent *c) { c->_didReset(hard); });
 }
 
 void

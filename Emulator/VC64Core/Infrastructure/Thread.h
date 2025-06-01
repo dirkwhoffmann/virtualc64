@@ -32,7 +32,7 @@ typedef AppException StateChangeException;
  *  the basic functionality to manage the execution state. It provides functions
  *  to launch the emulator thread, to query it's current state, and to switch
  *  to another state. */
-class Thread : public CoreObject, public Suspendable, public Wakeable {
+class Thread : public CoreObject, public Wakeable {
 
 protected:
 
@@ -156,12 +156,12 @@ public:
     /** Suspends the thread.
      *  The thread is temporarily suspended
      */
-    void suspend() const override;
+    void suspend() const;
 
     /** Resumes the thread.
      *  The thread is put back in running state
      */
-    void resume() const override;
+    void resume() const;
 
     bool isInitialized() const { return state != ExecState::UNINIT; }
     bool isPoweredOn() const { return state != ExecState::UNINIT && state != ExecState::OFF; }

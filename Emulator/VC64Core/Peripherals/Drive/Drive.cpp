@@ -379,16 +379,13 @@ void
 Drive::insertDisk(std::unique_ptr<Disk> disk)
 {
     debug(DSKCHG_DEBUG, "insertDisk\n");
-
-    {   SUSPENDED
+    
+    if (!diskToInsert) {
         
-        if (!diskToInsert) {
-
-            diskToInsert = std::move(disk);
-
-            // Initiate the disk change procedure
-            scheduleFirstDiskChangeEvent(DCH_INSERT);
-        }
+        diskToInsert = std::move(disk);
+        
+        // Initiate the disk change procedure
+        scheduleFirstDiskChangeEvent(DCH_INSERT);
     }
 }
 
@@ -450,14 +447,11 @@ void
 Drive::ejectDisk()
 {
     debug(DSKCHG_DEBUG, "ejectDisk()\n");
-
-    {   SUSPENDED
+    
+    if (insertionStatus == InsertionStatus::FULLY_INSERTED && !diskToInsert) {
         
-        if (insertionStatus == InsertionStatus::FULLY_INSERTED && !diskToInsert) {
-
-            // Initiate the disk change procedure
-            scheduleFirstDiskChangeEvent(DCH_EJECT);
-        }
+        // Initiate the disk change procedure
+        scheduleFirstDiskChangeEvent(DCH_EJECT);
     }
 }
 

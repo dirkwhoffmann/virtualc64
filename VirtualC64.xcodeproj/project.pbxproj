@@ -180,8 +180,6 @@
 		506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54CB2032255A0026D8B4 /* RomDropView.swift */; };
 		506F303A2B729CE80083EAEA /* Emulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30382B729CE80083EAEA /* Emulator.cpp */; };
 		506F303B2B729CE80083EAEA /* Emulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30382B729CE80083EAEA /* Emulator.cpp */; };
-		506F303E2B7364270083EAEA /* Suspendable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F303C2B7364270083EAEA /* Suspendable.cpp */; };
-		506F303F2B7364270083EAEA /* Suspendable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F303C2B7364270083EAEA /* Suspendable.cpp */; };
 		506F30422B74C1C70083EAEA /* Wakeable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30402B74C1C70083EAEA /* Wakeable.cpp */; };
 		506F30432B74C1C70083EAEA /* Wakeable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30402B74C1C70083EAEA /* Wakeable.cpp */; };
 		506F30472B7692180083EAEA /* VirtualC64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30462B7692180083EAEA /* VirtualC64.cpp */; };
@@ -860,8 +858,6 @@
 		506D54CB2032255A0026D8B4 /* RomDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomDropView.swift; sourceTree = "<group>"; };
 		506F30382B729CE80083EAEA /* Emulator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Emulator.cpp; sourceTree = "<group>"; };
 		506F30392B729CE80083EAEA /* Emulator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Emulator.h; sourceTree = "<group>"; };
-		506F303C2B7364270083EAEA /* Suspendable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Suspendable.cpp; sourceTree = "<group>"; };
-		506F303D2B7364270083EAEA /* Suspendable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Suspendable.h; sourceTree = "<group>"; };
 		506F30402B74C1C70083EAEA /* Wakeable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Wakeable.cpp; sourceTree = "<group>"; };
 		506F30412B74C1C70083EAEA /* Wakeable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Wakeable.h; sourceTree = "<group>"; };
 		506F30442B7578870083EAEA /* EmulatorTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmulatorTypes.h; sourceTree = "<group>"; };
@@ -2030,8 +2026,6 @@
 				50BB3E982B7A50F600B2D87B /* Synchronizable.cpp */,
 				5093D6A824B19E9200BDF924 /* Serializable.h */,
 				50FFB54C2B8262BA00042771 /* Serializable.cpp */,
-				506F303D2B7364270083EAEA /* Suspendable.h */,
-				506F303C2B7364270083EAEA /* Suspendable.cpp */,
 				506A8A872B88D00200B95383 /* Configurable.h */,
 				506A8A862B88D00200B95383 /* Configurable.cpp */,
 				50EFB0C32C18D6200013B73C /* Dumpable.h */,
@@ -2498,7 +2492,6 @@
 				505A13342C35551D00FF8D2C /* RS232.cpp in Sources */,
 				50726F512961C9940031F2F5 /* ExpansionPort.cpp in Sources */,
 				50726F932961CA0D0031F2F5 /* Zaxxon.cpp in Sources */,
-				506F303F2B7364270083EAEA /* Suspendable.cpp in Sources */,
 				50726F4E2961C9940031F2F5 /* Host.cpp in Sources */,
 				50726F9E2961CA0D0031F2F5 /* StructuredBasic.cpp in Sources */,
 				50726F772961C9DC0031F2F5 /* Datasette.cpp in Sources */,
@@ -2805,7 +2798,6 @@
 				50AB70762721B8EE004ABB2B /* DiskAnalyzer.cpp in Sources */,
 				5018BFB324B48DD500551848 /* RendererSetup.swift in Sources */,
 				506F30422B74C1C70083EAEA /* Wakeable.cpp in Sources */,
-				506F303E2B7364270083EAEA /* Suspendable.cpp in Sources */,
 				50F0EB7A25CC33B3002D0D72 /* GameKiller.cpp in Sources */,
 				504C437D24AF29AC00E69CAE /* CRTFile.cpp in Sources */,
 				50FFB54D2B8262BA00042771 /* Serializable.cpp in Sources */,

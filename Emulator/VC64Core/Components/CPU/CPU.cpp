@@ -147,10 +147,7 @@ CPU::jumpedTo(u16 addr) const
 void
 CPU::jump(u16 addr)
 {
-    {   SUSPENDED
-
-        debugger.jump(addr);
-    }
+    debugger.jump(addr);
 }
 
 void 

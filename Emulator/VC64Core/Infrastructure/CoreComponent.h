@@ -20,7 +20,6 @@
 #include "Configurable.h"
 #include "Inspectable.h"
 #include "Concurrency.h"
-#include "Suspendable.h"
 #include "ThreadTypes.h"
 #include <vector>
 #include <functional>
@@ -39,7 +38,7 @@ struct Description {
 typedef std::vector<Description> Descriptions;
 
 class CoreComponent :
-public CoreObject, public Serializable, public Suspendable, public Synchronizable, public Configurable {
+public CoreObject, public Serializable, public Synchronizable, public Configurable {
 
 public:
 
@@ -108,8 +107,8 @@ public:
     //
 
     // Suspends or resumes the emulator thread
-    void suspend() const override;
-    void resume() const override;
+    // void suspend() const override;
+    // void resume() const override;
 
 
     //
