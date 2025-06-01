@@ -97,7 +97,7 @@ Joystick::checkOption(Opt opt, i64 value)
             return;
 
         default:
-            throw Error(Fault::OPT_UNSUPPORTED);
+            throw AppError(Fault::OPT_UNSUPPORTED);
     }
 }
 

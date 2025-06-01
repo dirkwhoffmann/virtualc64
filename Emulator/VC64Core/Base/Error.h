@@ -14,12 +14,11 @@
 #pragma once
 
 #include "ErrorTypes.h"
-// #include "Exception.h"
 #include <filesystem>
 
 namespace vc64 {
 
-struct EmulatorException : public std::exception {
+struct AppException : public std::exception {
     
     // Payload
     i64 data;
@@ -27,25 +26,25 @@ struct EmulatorException : public std::exception {
     // Auxiliary information about the thrown errow
     string description;
     
-    EmulatorException(i64 d, const string &s) : data(d), description(s) { }
-    EmulatorException(i64 d) : data(d), description("") { }
-    EmulatorException(const string &s) : data(0), description(s) { }
-    EmulatorException() : data(0) { }
+    AppException(i64 d, const string &s) : data(d), description(s) { }
+    AppException(i64 d) : data(d), description("") { }
+    AppException(const string &s) : data(0), description(s) { }
+    AppException() : data(0) { }
     
     const char *what() const noexcept override { return description.c_str(); }
 };
 
 /// Emulator exception
-struct Error : public EmulatorException
+struct AppError : public AppException
 {
-    Error(Fault code, const string &s);
-    Error(Fault code, const char *s) : Error(code, string(s)) { };
-    Error(Fault code, const std::filesystem::path &path) : Error(code, path.string()) { };
-    Error(Fault code, long v) : Error(code, std::to_string(v)) { };
-    Error(Fault code) : Error(code, "") { }
+    AppError(Fault code, const string &s);
+    AppError(Fault code, const char *s) : AppError(code, string(s)) { };
+    AppError(Fault code, const std::filesystem::path &path) : AppError(code, path.string()) { };
+    AppError(Fault code, long v) : AppError(code, std::to_string(v)) { };
+    AppError(Fault code) : AppError(code, "") { }
 
     /// Returns a textual description of this error
-    const char *what() const throw() override;    
+    const char *what() const throw() override;
 };
 
 }

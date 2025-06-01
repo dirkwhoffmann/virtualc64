@@ -381,7 +381,7 @@ C64::exportConfig(const fs::path &path) const
     auto fs = std::ofstream(path, std::ofstream::binary);
 
     if (!fs.is_open()) {
-        throw Error(Fault::FILE_CANT_WRITE);
+        throw AppError(Fault::FILE_CANT_WRITE);
     }
 
     exportConfig(fs);
@@ -404,7 +404,7 @@ C64::get(Opt opt, isize objid) const
     debug(CNF_DEBUG, "get(%s, %ld)\n", OptionEnum::key(opt), objid);
 
     auto target = routeOption(opt, objid);
-    if (target == nullptr) throw Error(Fault::OPT_INV_ID);
+    if (target == nullptr) throw AppError(Fault::OPT_INV_ID);
     return target->getOption(opt);
 }
 
@@ -429,7 +429,7 @@ C64::check(Opt opt, i64 value, const std::vector<isize> objids)
         debug(CNF_DEBUG, "check(%s, %lld, %ld)\n", OptionEnum::key(opt), value, objid);
 
         auto target = routeOption(opt, objid);
-        if (target == nullptr) throw Error(Fault::OPT_INV_ID);
+        if (target == nullptr) throw AppError(Fault::OPT_INV_ID);
 
         target->checkOption(opt, value);
     }
@@ -458,7 +458,7 @@ C64::set(Opt opt, i64 value, const std::vector<isize> objids)
         debug(CNF_DEBUG, "set(%s, %lld, %ld)\n", OptionEnum::key(opt), value, objid);
 
         auto target = routeOption(opt, objid);
-        if (target == nullptr) throw Error(Fault::OPT_INV_ID);
+        if (target == nullptr) throw AppError(Fault::OPT_INV_ID);
 
         target->setOption(opt, value);
     }
@@ -942,16 +942,16 @@ C64::_isReady() const
     bool mega = hasMega65Rom(RomType::BASIC) && hasMega65Rom(RomType::KERNAL);
     
     if (!hasRom(RomType::BASIC)) {
-        throw Error(Fault::ROM_BASIC_MISSING);
+        throw AppError(Fault::ROM_BASIC_MISSING);
     }
     if (!hasRom(RomType::CHAR)) {
-        throw Error(Fault::ROM_CHAR_MISSING);
+        throw AppError(Fault::ROM_CHAR_MISSING);
     }
     if (!hasRom(RomType::KERNAL) || FORCE_ROM_MISSING) {
-        throw Error(Fault::ROM_KERNAL_MISSING);
+        throw AppError(Fault::ROM_KERNAL_MISSING);
     }
     if (FORCE_MEGA64_MISMATCH || (mega && string(mega65BasicRev()) != string(mega65KernalRev()))) {
-        throw Error(Fault::ROM_MEGA65_MISMATCH);
+        throw AppError(Fault::ROM_MEGA65_MISMATCH);
     }
 }
 
@@ -1376,7 +1376,7 @@ C64::loadSnapshot(const MediaFile &file)
             // Print some debug info if requested
             if (SNP_DEBUG) dump(Category::State);
             
-        } catch (Error &error) {
+        } catch (AppError &error) {
             
             /* If we reach this point, the emulator has been put into an
              * inconsistent state due to corrupted snapshot data. We cannot
@@ -1394,7 +1394,7 @@ C64::loadSnapshot(const MediaFile &file)
 
     } catch (...) {
 
-        throw Error(Fault::FILE_TYPE_MISMATCH);
+        throw AppError(Fault::FILE_TYPE_MISMATCH);
     }
 }
 
@@ -1634,7 +1634,7 @@ C64::loadRom(const MediaFile &file)
             
         default:
             
-            throw Error(Fault::FILE_TYPE_MISMATCH);
+            throw AppError(Fault::FILE_TYPE_MISMATCH);
     }
 }
 
@@ -1848,7 +1848,7 @@ C64::flash(const MediaFile &file, isize nr)
 
     } catch (...) {
 
-        throw Error(Fault::FILE_TYPE_MISMATCH);
+        throw AppError(Fault::FILE_TYPE_MISMATCH);
     }
 }
 

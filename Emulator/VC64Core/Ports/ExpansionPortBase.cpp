@@ -134,12 +134,12 @@ ExpansionPort::checkOption(Opt opt, i64 value)
         case Opt::EXP_REU_SPEED:
 
             if (value < 1 || value > 65535) {
-                throw Error(Fault::OPT_INV_ARG, "1...65535");
+                throw AppError(Fault::OPT_INV_ARG, "1...65535");
             }
             return;
 
         default:
-            throw Error(Fault::OPT_UNSUPPORTED);
+            throw AppError(Fault::OPT_UNSUPPORTED);
     }
 }
 

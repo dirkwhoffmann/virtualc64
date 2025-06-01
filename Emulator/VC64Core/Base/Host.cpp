@@ -44,7 +44,7 @@ Host::checkOption(Opt opt, i64 value)
             return;
 
         default:
-            throw Error(Fault::OPT_UNSUPPORTED);
+            throw AppError(Fault::OPT_UNSUPPORTED);
     }
 }
 
@@ -112,7 +112,7 @@ Host::tmp() const
 
             if (!logfile.is_open()) {
 
-                throw Error(Fault::DIR_NOT_FOUND);
+                throw AppError(Fault::DIR_NOT_FOUND);
             }
         }
 

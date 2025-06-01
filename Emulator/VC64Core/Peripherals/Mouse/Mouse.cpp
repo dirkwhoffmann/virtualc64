@@ -56,7 +56,7 @@ Mouse::checkOption(Opt opt, i64 value)
         case Opt::MOUSE_MODEL:
 
             if (!MouseModelEnum::isValid(value)) {
-                throw Error(Fault::OPT_INV_ARG, MouseModelEnum::keyList());
+                throw AppError(Fault::OPT_INV_ARG, MouseModelEnum::keyList());
             }
             return;
 
@@ -67,12 +67,12 @@ Mouse::checkOption(Opt opt, i64 value)
         case Opt::MOUSE_VELOCITY:
 
             if (value < 0 || value > 255) {
-                throw Error(Fault::OPT_INV_ARG, "0 ... 255");
+                throw AppError(Fault::OPT_INV_ARG, "0 ... 255");
             }
             return;
 
         default:
-            throw Error(Fault::OPT_UNSUPPORTED);
+            throw AppError(Fault::OPT_UNSUPPORTED);
     }
 }
 
@@ -98,7 +98,7 @@ Mouse::setOption(Opt opt, i64 value)
         case Opt::MOUSE_VELOCITY:
 
             if (value < 0 || value > 255) {
-                throw Error(Fault::OPT_INV_ARG, "0 ... 255");
+                throw AppError(Fault::OPT_INV_ARG, "0 ... 255");
             }
             config.velocity = isize(value);
             updateScalingFactors();

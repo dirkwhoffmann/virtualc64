@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
             std::cout << what << std::endl;
         }
 
-    } catch (vc64::Error &e) {
+    } catch (vc64::AppError &e) {
 
         std::cout << "VAError: " << e.what() << std::endl;
 

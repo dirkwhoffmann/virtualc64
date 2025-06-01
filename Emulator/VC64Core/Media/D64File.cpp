@@ -88,7 +88,7 @@ D64File::init(const FileSystem &volume)
 
     Fault err;
     if (!volume.exportVolume(data.ptr, data.size, &err)) {
-        throw Error(err);
+        throw AppError(err);
     }
 }
 

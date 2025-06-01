@@ -55,7 +55,7 @@ RS232::checkOption(Opt opt, i64 value)
 
         case Opt::RS232_DEVICE:
             if (!CommunicationDeviceEnum::isValid(value)) {
-                throw Error(Fault::OPT_INV_ARG, CommunicationDeviceEnum::keyList());
+                throw AppError(Fault::OPT_INV_ARG, CommunicationDeviceEnum::keyList());
             }
             return;
 
@@ -63,7 +63,7 @@ RS232::checkOption(Opt opt, i64 value)
             return;
 
         default:
-            throw Error(Fault::OPT_UNSUPPORTED);
+            throw AppError(Fault::OPT_UNSUPPORTED);
     }
 }
 

@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "50726F352961C86B0031F2F5"
-               BuildableName = "VirtualC64Core"
-               BlueprintName = "VirtualC64Core"
+               BuildableName = "Headless"
+               BlueprintName = "Headless"
                ReferencedContainer = "container:VirtualC64.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,8 +46,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "50726F352961C86B0031F2F5"
-            BuildableName = "VirtualC64Core"
-            BlueprintName = "VirtualC64Core"
+            BuildableName = "Headless"
+            BlueprintName = "Headless"
             ReferencedContainer = "container:VirtualC64.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -85,8 +85,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "50726F352961C86B0031F2F5"
-            BuildableName = "VirtualC64Core"
-            BlueprintName = "VirtualC64Core"
+            BuildableName = "Headless"
+            BlueprintName = "Headless"
             ReferencedContainer = "container:VirtualC64.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

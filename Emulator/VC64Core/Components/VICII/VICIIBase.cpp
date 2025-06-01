@@ -226,7 +226,7 @@ VICII::checkOption(Opt opt, i64 value)
         case Opt::VICII_REVISION:
 
             if (!VICIIRevEnum::isValid(value)) {
-                throw Error(Fault::OPT_INV_ARG, VICIIRevEnum::keyList());
+                throw AppError(Fault::OPT_INV_ARG, VICIIRevEnum::keyList());
             }
             return;
 
@@ -241,12 +241,12 @@ VICII::checkOption(Opt opt, i64 value)
         case Opt::GLUE_LOGIC:
 
             if (!GlueLogicEnum::isValid(value)) {
-                throw Error(Fault::OPT_INV_ARG, GlueLogicEnum::keyList());
+                throw AppError(Fault::OPT_INV_ARG, GlueLogicEnum::keyList());
             }
             return;
 
         default:
-            throw Error(Fault::OPT_UNSUPPORTED);
+            throw AppError(Fault::OPT_UNSUPPORTED);
     }
 }
 

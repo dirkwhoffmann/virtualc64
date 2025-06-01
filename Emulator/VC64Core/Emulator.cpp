@@ -62,7 +62,7 @@ void
 Emulator::initialize()
 {
     // Make sure this function is only called once
-    if (isInitialized()) throw Error(Fault::LAUNCH, "The emulator is already initialized.");
+    if (isInitialized()) throw AppError(Fault::LAUNCH, "The emulator is already initialized.");
 
     // Initialize all components
     main.initialize();
@@ -349,7 +349,7 @@ Emulator::getDebugVariable(DebugFlag flag)
 {
 #ifdef RELEASEBUILD
 
-    throw Error(Fault::OPT_UNSUPPORTED, "Debug variables are only accessible in debug builds.");
+    throw AppError(Fault::OPT_UNSUPPORTED, "Debug variables are only accessible in debug builds.");
 
 #else
 
@@ -427,7 +427,7 @@ Emulator::getDebugVariable(DebugFlag flag)
         case DebugFlag::FORCE_NO_FFMPEG:          return FORCE_NO_FFMPEG;
 
         default:
-            throw Error(Fault::OPT_UNSUPPORTED,
+            throw AppError(Fault::OPT_UNSUPPORTED,
                         "Unhandled debug variable: " + string(DebugFlagEnum::key(flag)));
     }
 
@@ -439,7 +439,7 @@ Emulator::setDebugVariable(DebugFlag flag, bool val)
 {
 #ifdef RELEASEBUILD
 
-    throw Error(Fault::OPT_UNSUPPORTED, "Debug variables are only accessible in debug builds.");
+    throw AppError(Fault::OPT_UNSUPPORTED, "Debug variables are only accessible in debug builds.");
 
 #else
 
@@ -517,7 +517,7 @@ Emulator::setDebugVariable(DebugFlag flag, bool val)
         case DebugFlag::FORCE_NO_FFMPEG:          FORCE_NO_FFMPEG = val; break;
 
         default:
-            throw Error(Fault::OPT_UNSUPPORTED,
+            throw AppError(Fault::OPT_UNSUPPORTED,
                         "Unhandled debug variable: " + string(DebugFlagEnum::key(flag)));
     }
 #endif

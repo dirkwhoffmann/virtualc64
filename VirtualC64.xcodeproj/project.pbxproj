@@ -146,7 +146,7 @@
 		5052A7C125A0AC0700E62EDD /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5052A7C025A0AC0700E62EDD /* Errors.swift */; };
 		50549B49257D288E006FE39C /* AudioPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50549B47257D288E006FE39C /* AudioPort.cpp */; };
 		5055A83F1BC7996900399A20 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5055A83E1BC7996900399A20 /* MetalKit.framework */; };
-		5055D5B42615886E005D3DA6 /* Error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B32615886E005D3DA6 /* Error.cpp */; };
+		5055D5B42615886E005D3DA6 /* AppError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B32615886E005D3DA6 /* AppError.cpp */; };
 		5055D5B726158ABC005D3DA6 /* Checksum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B526158ABC005D3DA6 /* Checksum.cpp */; };
 		5058A918281D03D200C223C9 /* DiskInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5058A917281D03D200C223C9 /* DiskInspector.xib */; };
 		5058A91A281D041400C223C9 /* DiskExporter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5058A919281D041400C223C9 /* DiskExporter.xib */; };
@@ -198,7 +198,7 @@
 		50726F432961C97B0031F2F5 /* Checksum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B526158ABC005D3DA6 /* Checksum.cpp */; };
 		50726F442961C97B0031F2F5 /* MemUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AA3EC02616F62500C96EDB /* MemUtils.cpp */; };
 		50726F452961C97B0031F2F5 /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD303A28141F0B00D9A7A6 /* Buffer.cpp */; };
-		50726F462961C9940031F2F5 /* Error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B32615886E005D3DA6 /* Error.cpp */; };
+		50726F462961C9940031F2F5 /* AppError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B32615886E005D3DA6 /* AppError.cpp */; };
 		50726F472961C9940031F2F5 /* SubComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EA6C524B09037009AA7D7 /* SubComponent.cpp */; };
 		50726F482961C9940031F2F5 /* Defaults.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD369A2817D69000E40BFC /* Defaults.cpp */; };
 		50726F492961C9940031F2F5 /* MsgQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42F124AF29AB00E69CAE /* MsgQueue.cpp */; };
@@ -823,7 +823,7 @@
 		5055A83E1BC7996900399A20 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		5055D5B0261585EA005D3DA6 /* Exception.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Exception.h; sourceTree = "<group>"; };
 		5055D5B226158849005D3DA6 /* ErrorTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ErrorTypes.h; sourceTree = "<group>"; };
-		5055D5B32615886E005D3DA6 /* Error.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Error.cpp; sourceTree = "<group>"; };
+		5055D5B32615886E005D3DA6 /* AppError.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AppError.cpp; sourceTree = "<group>"; };
 		5055D5B526158ABC005D3DA6 /* Checksum.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Checksum.cpp; sourceTree = "<group>"; };
 		5055D5B626158ABC005D3DA6 /* Checksum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Checksum.h; sourceTree = "<group>"; };
 		5058A917281D03D200C223C9 /* DiskInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskInspector.xib; sourceTree = "<group>"; };
@@ -870,7 +870,7 @@
 		50726F2A295B61C50031F2F5 /* DebugConsole.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DebugConsole.cpp; sourceTree = "<group>"; };
 		50726F2E295C27360031F2F5 /* EventPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPanel.swift; sourceTree = "<group>"; };
 		50726F30295C27470031F2F5 /* EventTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableView.swift; sourceTree = "<group>"; };
-		50726F362961C86B0031F2F5 /* VirtualC64Core */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = VirtualC64Core; sourceTree = BUILT_PRODUCTS_DIR; };
+		50726F362961C86B0031F2F5 /* Headless */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Headless; sourceTree = BUILT_PRODUCTS_DIR; };
 		50726FBB2961CA5A0031F2F5 /* VirtualC64Headless.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualC64Headless.cpp; sourceTree = "<group>"; };
 		50726FBC2961CA5A0031F2F5 /* VirtualC64Headless.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtualC64Headless.h; sourceTree = "<group>"; };
 		50763276202989D300575110 /* DialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogController.swift; sourceTree = "<group>"; };
@@ -1209,7 +1209,7 @@
 			isa = PBXGroup;
 			children = (
 				8D15AC370486D014006FF6A4 /* VirtualC64.app */,
-				50726F362961C86B0031F2F5 /* VirtualC64Core */,
+				50726F362961C86B0031F2F5 /* Headless */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2022,7 +2022,7 @@
 				50E17E1F2B8B26AC0029747D /* Option.cpp */,
 				5055D5B226158849005D3DA6 /* ErrorTypes.h */,
 				500C7C43259FC09B00F5CC1F /* Error.h */,
-				5055D5B32615886E005D3DA6 /* Error.cpp */,
+				5055D5B32615886E005D3DA6 /* AppError.cpp */,
 				50F420C9250BA3460043DE56 /* Colors.h */,
 				50F420C8250BA3460043DE56 /* Colors.cpp */,
 				504C42F024AF29AB00E69CAE /* TimeDelayed.h */,
@@ -2271,9 +2271,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		50726F352961C86B0031F2F5 /* VirtualC64Core */ = {
+		50726F352961C86B0031F2F5 /* Headless */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 50726F3C2961C86B0031F2F5 /* Build configuration list for PBXNativeTarget "VirtualC64Core" */;
+			buildConfigurationList = 50726F3C2961C86B0031F2F5 /* Build configuration list for PBXNativeTarget "Headless" */;
 			buildPhases = (
 				50726F322961C86B0031F2F5 /* Sources */,
 				50726F332961C86B0031F2F5 /* Frameworks */,
@@ -2283,9 +2283,9 @@
 			);
 			dependencies = (
 			);
-			name = VirtualC64Core;
+			name = Headless;
 			productName = VirtualC64Core;
-			productReference = 50726F362961C86B0031F2F5 /* VirtualC64Core */;
+			productReference = 50726F362961C86B0031F2F5 /* Headless */;
 			productType = "com.apple.product-type.tool";
 		};
 		8D15AC270486D014006FF6A4 /* VirtualC64 */ = {
@@ -2341,7 +2341,7 @@
 			projectRoot = "";
 			targets = (
 				8D15AC270486D014006FF6A4 /* VirtualC64 */,
-				50726F352961C86B0031F2F5 /* VirtualC64Core */,
+				50726F352961C86B0031F2F5 /* Headless */,
 			);
 		};
 /* End PBXProject section */
@@ -2451,7 +2451,7 @@
 				50726F842961C9F10031F2F5 /* Cartridge.cpp in Sources */,
 				506F30482B7692180083EAEA /* VirtualC64.cpp in Sources */,
 				50726F542961C99A0031F2F5 /* PeddleDebugger.cpp in Sources */,
-				50726F462961C9940031F2F5 /* Error.cpp in Sources */,
+				50726F462961C9940031F2F5 /* AppError.cpp in Sources */,
 				50726F452961C97B0031F2F5 /* Buffer.cpp in Sources */,
 				50726F4B2961C9940031F2F5 /* Thread.cpp in Sources */,
 				50726FA02961CA0D0031F2F5 /* Rex.cpp in Sources */,
@@ -2673,7 +2673,7 @@
 				5002FA7B21C2650600DA4BBC /* HardwareConf.swift in Sources */,
 				50A22A252618723200C9FB1E /* Canvas.swift in Sources */,
 				504C435B24AF29AC00E69CAE /* StarDos.cpp in Sources */,
-				5055D5B42615886E005D3DA6 /* Error.cpp in Sources */,
+				5055D5B42615886E005D3DA6 /* AppError.cpp in Sources */,
 				5058A91E281D107A00C223C9 /* DiskExporter.swift in Sources */,
 				5002FA8121C2654B00DA4BBC /* ControlsPrefs.swift in Sources */,
 				50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */,
@@ -3253,7 +3253,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50726F3C2961C86B0031F2F5 /* Build configuration list for PBXNativeTarget "VirtualC64Core" */ = {
+		50726F3C2961C86B0031F2F5 /* Build configuration list for PBXNativeTarget "Headless" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50726F3A2961C86B0031F2F5 /* Debug */,
