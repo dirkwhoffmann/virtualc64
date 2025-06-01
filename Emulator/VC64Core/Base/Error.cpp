@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "VirtualC64Config.h"
-#include "AppError.h"
+#include "Error.h"
 #include "Macros.h"
 
 namespace vc64 {
