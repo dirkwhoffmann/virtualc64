@@ -105,7 +105,7 @@ class MyDocument: NSDocument {
         do {
             try mm.addMedia(url: url, allowedTypes: vc64.FileType.draggable)
 
-        } catch let error as VC64Error {
+        } catch let error as AppError {
 
             throw NSError(error: error)
         }
@@ -119,7 +119,7 @@ class MyDocument: NSDocument {
         do {
             try mm.addMedia(url: url, allowedTypes: [.SNAPSHOT])
 
-        } catch let error as VC64Error {
+        } catch let error as AppError {
 
             throw NSError(error: error)
         }
@@ -140,7 +140,7 @@ class MyDocument: NSDocument {
                 do {
                     try snapshot.writeToFile(url: url)
 
-                } catch let error as VC64Error {
+                } catch let error as AppError {
 
                     throw NSError(error: error)
                 }

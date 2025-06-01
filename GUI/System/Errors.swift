@@ -42,7 +42,7 @@ public func warn(_ msg: String = "",
 // Errors
 //
 
-class VC64Error: Error {
+class AppError: Error {
     
     var errorCode: vc64.Fault
     var what: String
@@ -62,7 +62,7 @@ class VC64Error: Error {
 
 extension NSError {
 
-    convenience init(error: VC64Error) {
+    convenience init(error: AppError) {
 
         self.init(domain: "VirtualC64",
                   code: error.errorCode.rawValue,
@@ -257,7 +257,7 @@ extension MyDocument {
     func showAlert(_ failure: Failure, error: Error,
                    async: Bool = false, window: NSWindow? = nil) {
 
-        if let error = error as? VC64Error {
+        if let error = error as? AppError {
             showAlert(failure, what: error.what, async:
                         async, window: window)
         } else {
@@ -302,7 +302,7 @@ extension MyDocument {
     func showLaunchAlert(error: Error) {
              
         var reason: String
-        if let error = error as? VC64Error {
+        if let error = error as? AppError {
             reason = error.what
         } else {
             reason = error.localizedDescription
