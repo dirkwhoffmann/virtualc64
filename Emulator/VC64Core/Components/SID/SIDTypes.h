@@ -36,7 +36,7 @@ enum class SIDRevision : long
     MOS_8580
 };
 
-struct SIDRevisionEnum : util::Reflection<SIDRevisionEnum, SIDRevision> {
+struct SIDRevisionEnum : Reflection<SIDRevisionEnum, SIDRevision> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(SIDRevision::MOS_8580);
@@ -63,7 +63,7 @@ enum class SIDEngine : long
     RESID
 };
 
-struct SIDEngineEnum : util::Reflection<SIDEngineEnum, SIDEngine> {
+struct SIDEngineEnum : Reflection<SIDEngineEnum, SIDEngine> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(SIDEngine::RESID);
@@ -92,7 +92,7 @@ enum class SamplingMethod
     RESAMPLE_FASTMEM
 };
 
-struct SamplingMethodEnum : util::Reflection<SamplingMethodEnum, SamplingMethod> {
+struct SamplingMethodEnum : Reflection<SamplingMethodEnum, SamplingMethod> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(SamplingMethod::RESAMPLE_FASTMEM);

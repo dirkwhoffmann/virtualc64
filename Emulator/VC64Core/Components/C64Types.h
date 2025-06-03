@@ -37,7 +37,7 @@ enum class Compressor : long
     RLE3
 };
 
-struct CompressorEnum : util::Reflection<CompressorEnum, Compressor>
+struct CompressorEnum : Reflection<CompressorEnum, Compressor>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Compressor::RLE3);
@@ -79,7 +79,7 @@ enum class ConfigScheme : long
     NTSC_OLD  ///< Early C64 (NTSC)
 };
 
-struct ConfigSchemeEnum : util::Reflection<ConfigSchemeEnum, ConfigScheme> {
+struct ConfigSchemeEnum : Reflection<ConfigSchemeEnum, ConfigScheme> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(ConfigScheme::NTSC_OLD);
@@ -111,7 +111,7 @@ enum class Warp : long
     ALWAYS
 };
 
-struct WarpEnum : util::Reflection<WarpEnum, Warp>
+struct WarpEnum : Reflection<WarpEnum, Warp>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Warp::ALWAYS);
@@ -164,7 +164,7 @@ enum EventSlot : long
 };
 // typedef SLOT EventSlot;
 
-struct EventSlotEnum : util::Reflection<EventSlotEnum, EventSlot>
+struct EventSlotEnum : Reflection<EventSlotEnum, EventSlot>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = SLOT_COUNT - 1;

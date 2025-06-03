@@ -174,20 +174,16 @@ ExpansionPort::attachCartridge(Cartridge *c)
     assert(c);
     assert(c->isSupported());
     
-    {   SUSPENDED
-        
-        // Remove old cartridge (if any) and assign new one
-        detachCartridge();
-        cartridge = std::unique_ptr<Cartridge>(c);
-        crtType = c->getCartridgeType();
-        
-        // Reset cartridge to update exrom and game line on the expansion port
-        cartridge->hardReset();
-        
-        msgQueue.put(Msg::CRT_ATTACHED, 1);
-        debug(EXP_DEBUG, "Cartridge attached to expansion port");
-        
-    }
+    // Remove old cartridge (if any) and assign new one
+    detachCartridge();
+    cartridge = std::unique_ptr<Cartridge>(c);
+    crtType = c->getCartridgeType();
+    
+    // Reset cartridge to update exrom and game line on the expansion port
+    cartridge->hardReset();
+    
+    msgQueue.put(Msg::CRT_ATTACHED, 1);
+    debug(EXP_DEBUG, "Cartridge attached to expansion port");
 }
 
 void
@@ -219,22 +215,19 @@ ExpansionPort::attachCartridge(const MediaFile &file, bool reset)
 
         // Only proceed if this cartridge is supported
         if (!crtFile.isSupported()) {
-            throw Error(Fault::CRT_UNSUPPORTED, crtFile.cartridgeTypeName());
+            throw AppError(Fault::CRT_UNSUPPORTED, crtFile.cartridgeTypeName());
         }
 
         // Create cartridge from cartridge file
         Cartridge *cartridge = Cartridge::makeWithCRTFile(c64, crtFile);
 
         // Attach cartridge to the expansion port
-        {   SUSPENDED
-
-            attachCartridge(cartridge);
-            if (reset) c64.hardReset();
-        }
+        attachCartridge(cartridge);
+        if (reset) c64.hardReset();
 
     } catch (...) {
 
-        throw Error(Fault::FILE_TYPE_MISMATCH);
+        throw AppError(Fault::FILE_TYPE_MISMATCH);
     }
 }
 
@@ -250,18 +243,15 @@ ExpansionPort::attachIsepicCartridge()
 void
 ExpansionPort::detachCartridge()
 {
-    {   SUSPENDED
+    if (cartridge) {
         
-        if (cartridge) {
-            
-            cartridge = nullptr;
-            crtType = CartridgeType::NONE;
-            
-            setCartridgeMode(CRTMode::OFF);
-            
-            debug(EXP_DEBUG, "Cartridge detached from expansion port");
-            msgQueue.put(Msg::CRT_ATTACHED, 0);
-        }
+        cartridge = nullptr;
+        crtType = CartridgeType::NONE;
+        
+        setCartridgeMode(CRTMode::OFF);
+        
+        debug(EXP_DEBUG, "Cartridge detached from expansion port");
+        msgQueue.put(Msg::CRT_ATTACHED, 0);
     }
 }
 

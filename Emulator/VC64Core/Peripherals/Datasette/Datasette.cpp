@@ -38,38 +38,35 @@ void
 Datasette::insertTape(MediaFile &file)
 {
     try {
-
+        
         TAPFile &tapFile = dynamic_cast<TAPFile &>(file);
-
-        {   SUSPENDED
-
-            // Allocate pulse buffer
-            isize numPulses = tapFile.numPulses();
-            alloc(numPulses);
-
-            debug(TAP_DEBUG, "Inserting tape (%ld pulses)...\n", numPulses);
-
-            // Read pulses
-            tapFile.seek(0);
-            for (isize i = 0; i < numPulses; i++) {
-
-                pulses[i].cycles = (i32)tapFile.read();
-                assert(pulses[i].cycles != -1);
-            }
-
-            // Rewind the tape
-            rewind();
-
-            // Update the execution event slot
-            updateDatEvent();
-
-            // Inform the GUI
-            msgQueue.put(Msg::VC1530_TAPE, 1);
+        
+        // Allocate pulse buffer
+        isize numPulses = tapFile.numPulses();
+        alloc(numPulses);
+        
+        debug(TAP_DEBUG, "Inserting tape (%ld pulses)...\n", numPulses);
+        
+        // Read pulses
+        tapFile.seek(0);
+        for (isize i = 0; i < numPulses; i++) {
+            
+            pulses[i].cycles = (i32)tapFile.read();
+            assert(pulses[i].cycles != -1);
         }
+        
+        // Rewind the tape
+        rewind();
+        
+        // Update the execution event slot
+        updateDatEvent();
+        
+        // Inform the GUI
+        msgQueue.put(Msg::VC1530_TAPE, 1);
 
     } catch (...) {
 
-        throw Error(Fault::FILE_TYPE_MISMATCH);
+        throw AppError(Fault::FILE_TYPE_MISMATCH);
     }
 }
 
@@ -78,17 +75,14 @@ Datasette::ejectTape()
 {
     // Only proceed if a tape is present
     if (!hasTape()) return;
-
-    {   SUSPENDED
-        
-        debug(TAP_DEBUG, "Ejecting tape...\n");
-        
-        pressStop();
-        rewind();
-        dealloc();
-        
-        msgQueue.put(Msg::VC1530_TAPE, 0);
-    }
+    
+    debug(TAP_DEBUG, "Ejecting tape...\n");
+    
+    pressStop();
+    rewind();
+    dealloc();
+    
+    msgQueue.put(Msg::VC1530_TAPE, 0);
 }
 
 void
@@ -139,7 +133,7 @@ Datasette::pressPlay()
     if (!hasTape()) return;
 
     // Pause the emulator and press press
-    { SUSPENDED play(); }
+    play();
 }
 
 void
@@ -170,7 +164,7 @@ Datasette::pressStop()
     if (!config.connected) return;
 
     // Pause the emulator and press press
-    { SUSPENDED stop(); }
+    stop();
 }
 
 void

@@ -218,6 +218,7 @@ class RessourceManager {
     // Selecting kernels
     //
     
+    @discardableResult
     func selectUpscaler(_ nr: Int) -> Bool {
         
         if nr >= 0 && nr < upscalerGallery.count && upscalerGallery[nr] != nil {
@@ -227,6 +228,7 @@ class RessourceManager {
         return false
     }
     
+    @discardableResult
     func selectBloomFilter(_ nr: Int) -> Bool {
         
         if nr >= 0 && nr < bloomFilterGallery.count && bloomFilterGallery[nr] != nil {
@@ -236,6 +238,7 @@ class RessourceManager {
         return false
     }
 
+    @discardableResult
     func selectScanlineFilter(_ nr: Int) -> Bool {
         
         if nr >= 0 && nr < scanlineFilterGallery.count && scanlineFilterGallery[nr] != nil {

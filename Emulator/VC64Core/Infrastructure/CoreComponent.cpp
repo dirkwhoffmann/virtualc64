@@ -82,11 +82,13 @@ CoreComponent::isRunning() const
     return emulator.isRunning();
 }
 
+/*
 bool
 CoreComponent::isSuspended() const
 {
     return emulator.isSuspended();
 }
+*/
 
 bool
 CoreComponent::isHalted() const
@@ -115,6 +117,7 @@ CoreComponent::checksum(bool recursive)
     return checker.hash;
 }
 
+/*
 void
 CoreComponent::suspend() const
 {
@@ -126,7 +129,7 @@ CoreComponent::resume() const
 {
     return emulator.resume();
 }
-
+*/
 void
 CoreComponent::resetConfig()
 {
@@ -173,18 +176,15 @@ void
 CoreComponent::reset(bool hard)
 {
     SerResetter resetter(hard);
-
-    {   SUSPENDED
-
-        // Call the pre-reset delegate
-        postorderWalk([hard](CoreComponent *c) { c->_willReset(hard); });
-
-        // Revert to a clean state
-        postorderWalk([&resetter](CoreComponent *c) { *c << resetter; });
-
-        // Call the post-reset delegate
-        postorderWalk([hard](CoreComponent *c) { c->_didReset(hard); });
-    }
+    
+    // Call the pre-reset delegate
+    postorderWalk([hard](CoreComponent *c) { c->_willReset(hard); });
+    
+    // Revert to a clean state
+    postorderWalk([&resetter](CoreComponent *c) { *c << resetter; });
+    
+    // Call the post-reset delegate
+    postorderWalk([hard](CoreComponent *c) { c->_didReset(hard); });
 }
 
 void
@@ -302,7 +302,7 @@ CoreComponent::load(const u8 *buffer)
 
         // Check integrity
         if (hash != c->checksum(false) || FORCE_SNAP_CORRUPTED) {
-            if (SNP_DEBUG) { fatalError; } else { throw Error(Fault::SNAP_CORRUPTED); }
+            if (SNP_DEBUG) { fatalError; } else { throw AppError(Fault::SNAP_CORRUPTED); }
         }
 
         debug(SNP_DEBUG, "Loaded %ld bytes (expected %ld)\n", count, c->size(false));
@@ -334,7 +334,7 @@ CoreComponent::save(u8 *buffer)
 
         // Check integrity
         if (count != c->size(false) || FORCE_SNAP_CORRUPTED) {
-            if (SNP_DEBUG) { fatalError; } else { throw Error(Fault::SNAP_CORRUPTED); }
+            if (SNP_DEBUG) { fatalError; } else { throw AppError(Fault::SNAP_CORRUPTED); }
         }
 
         debug(SNP_DEBUG, "Saved %ld bytes (expected %ld)\n", count, c->size(false));
@@ -381,6 +381,12 @@ CoreComponent::isEmulatorThread() const
     return emulator.isEmulatorThread();
 }
 
+bool
+CoreComponent::isUserThread() const
+{
+    return emulator.isUserThread();
+}
+
 void
 CoreComponent::diff(CoreComponent &other)
 {
@@ -398,40 +404,71 @@ CoreComponent::diff(CoreComponent &other)
     }
 }
 
-void CoreComponent::exportConfig(std::ostream& ss, bool diff) const
+void
+CoreComponent::exportConfig(const fs::path &path, bool diff, std::vector<Class> exclude) const
+{
+    auto fs = std::ofstream(path, std::ofstream::binary);
+
+    if (!fs.is_open()) {
+        throw AppError(Fault::FILE_CANT_WRITE);
+    }
+
+    exportConfig(fs, diff, exclude);
+}
+
+void
+CoreComponent::exportConfig(std::ostream &ss, bool diff, std::vector<Class> exclude) const
 {
     bool first = true;
-
-    for (auto &opt: getOptions()) {
-
-        auto current = getOption(opt);
-        auto fallback = getFallback(opt);
-
-        if (!diff || current != fallback) {
-
-            if (first) {
-
-                ss << "# " << description() << std::endl << std::endl;
-                first = false;
+    auto type = getDescriptions().at(0).type;
+    bool skip = std::find(exclude.begin(), exclude.end(), type) != exclude.end();
+    
+    if (!skip && string(shellName()) != "") {
+        
+        auto cmd = "try " + string(shellName());
+        
+        for (auto &opt: getOptions()) {
+            
+            auto current = getOption(opt);
+            auto fallback = getFallback(opt);
+            
+            if (!diff || current != fallback) {
+                
+                if (first) {
+                    
+                    ss << "# " << description() << std::endl << std::endl;
+                    first = false;
+                }
+                
+                auto currentStr = OptionParser::asPlainString(opt, current);
+                auto fallbackStr = OptionParser::asPlainString(opt, fallback);
+                
+                string line = cmd + " set " + OptEnum::key(opt) + " " + currentStr;
+                string comment = diff ? fallbackStr : OptEnum::help(opt);
+                
+                ss << std::setw(40) << std::left << line << " # " << comment << std::endl;
             }
-
-            auto cmd = "try " + string(shellName());
-            auto currentStr = OptionParser::asPlainString(opt, current);
-            auto fallbackStr = OptionParser::asPlainString(opt, fallback);
-
-            string line = cmd + " set " + OptionEnum::key(opt) + " " + currentStr;
-            string comment = diff ? fallbackStr : OptionEnum::help(opt);
-
-            ss << std::setw(40) << std::left << line << " # " << comment << std::endl;
         }
+        
+        if (!first) ss << std::endl;
     }
-
-    if (!first) ss << std::endl;
-
+    
     for (auto &sub: subComponents) {
 
-        sub->exportConfig(ss, diff);
+        sub->exportConfig(ss, diff, exclude);
     }
+}
+
+void
+CoreComponent::exportDiff(const fs::path &path, std::vector<Class> exclude) const
+{
+    exportConfig(path, true, exclude);
+}
+
+void
+CoreComponent::exportDiff(std::ostream &ss, std::vector<Class> exclude) const
+{
+    exportConfig(ss, true, exclude);
 }
 
 }

@@ -197,8 +197,6 @@ Keyboard::releaseAll()
 void
 Keyboard::autoType(const string &text)
 {
-    SUSPENDED
-
     debug(KBD_DEBUG, "autoType(%s)\n", text.c_str());
 
     auto trigger = c64.cpu.clock;

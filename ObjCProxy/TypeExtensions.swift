@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+typealias AppClass = vc64.AppError
 typealias Class = vc64.Class
 typealias ControlPortDevice = vc64.ControlPortDevice
 typealias ErrorCode = vc64.Fault
@@ -14,6 +15,8 @@ typealias EventSlot = vc64.EventSlot
 typealias EventSlotEnum = vc64.EventSlotEnum
 typealias EventSlotInfo = vc64.EventSlotInfo
 typealias GamePadAction = vc64.GamePadAction
+typealias Message = vc64.Message
+typealias Opt = vc64.Opt
 typealias RomType = vc64.RomType
 
 let DRIVE8 = vc64.DRIVE8

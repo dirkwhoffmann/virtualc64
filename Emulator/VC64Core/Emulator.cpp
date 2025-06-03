@@ -42,6 +42,8 @@ Emulator::~Emulator()
 void
 Emulator::launch(const void *listener, Callback *func)
 {
+    if (FORCE_LAUNCH_ERROR) throw AppError(Fault::LAUNCH);
+    
     // Initialize the emulator if needed
     if (!isInitialized()) initialize();
 
@@ -62,7 +64,7 @@ void
 Emulator::initialize()
 {
     // Make sure this function is only called once
-    if (isInitialized()) throw Error(Fault::LAUNCH, "The emulator is already initialized.");
+    if (isInitialized()) throw AppError(Fault::LAUNCH, "The emulator is already initialized.");
 
     // Initialize all components
     main.initialize();
@@ -79,19 +81,13 @@ Emulator::initialize()
 void
 Emulator::hardReset()
 {
-    {   SUSPENDED
-
-        main.hardReset();
-    }
+    main.hardReset();
 }
 
 void
 Emulator::softReset()
 {
-    {   SUSPENDED
-
-        main.softReset();
-    }
+    main.softReset();
 }
 
 void
@@ -347,9 +343,9 @@ Emulator::isReady()
 int
 Emulator::getDebugVariable(DebugFlag flag)
 {
-#ifdef RELEASEBUILD
+#ifdef NDEBUG
 
-    throw Error(Fault::OPT_UNSUPPORTED, "Debug variables are only accessible in debug builds.");
+    throw AppError(Fault::OPT_UNSUPPORTED, "Debug variables are only accessible in debug builds.");
 
 #else
 
@@ -415,6 +411,7 @@ Emulator::getDebugVariable(DebugFlag flag)
         case DebugFlag::SCK_DEBUG:        return SCK_DEBUG;
         case DebugFlag::SRV_DEBUG:        return SRV_DEBUG;
 
+        case DebugFlag::FORCE_LAUNCH_ERROR:       return FORCE_LAUNCH_ERROR;
         case DebugFlag::FORCE_ROM_MISSING:        return FORCE_ROM_MISSING;
         case DebugFlag::FORCE_MEGA64_MISMATCH:    return FORCE_MEGA64_MISMATCH;
         case DebugFlag::FORCE_SNAP_TOO_OLD:       return FORCE_SNAP_TOO_OLD;
@@ -427,7 +424,7 @@ Emulator::getDebugVariable(DebugFlag flag)
         case DebugFlag::FORCE_NO_FFMPEG:          return FORCE_NO_FFMPEG;
 
         default:
-            throw Error(Fault::OPT_UNSUPPORTED,
+            throw AppError(Fault::OPT_UNSUPPORTED,
                         "Unhandled debug variable: " + string(DebugFlagEnum::key(flag)));
     }
 
@@ -437,9 +434,9 @@ Emulator::getDebugVariable(DebugFlag flag)
 void
 Emulator::setDebugVariable(DebugFlag flag, bool val)
 {
-#ifdef RELEASEBUILD
+#ifdef NDEBUG
 
-    throw Error(Fault::OPT_UNSUPPORTED, "Debug variables are only accessible in debug builds.");
+    throw AppError(Fault::OPT_UNSUPPORTED, "Debug variables are only accessible in debug builds.");
 
 #else
 
@@ -505,6 +502,7 @@ Emulator::setDebugVariable(DebugFlag flag, bool val)
         case DebugFlag::SCK_DEBUG:        SCK_DEBUG       = val; break;
         case DebugFlag::SRV_DEBUG:        SRV_DEBUG       = val; break;
 
+        case DebugFlag::FORCE_LAUNCH_ERROR:       FORCE_LAUNCH_ERROR = val; break;
         case DebugFlag::FORCE_ROM_MISSING:        FORCE_ROM_MISSING = val; break;
         case DebugFlag::FORCE_MEGA64_MISMATCH:    FORCE_MEGA64_MISMATCH = val; break;
         case DebugFlag::FORCE_SNAP_TOO_OLD:       FORCE_SNAP_TOO_OLD = val; break;
@@ -517,7 +515,7 @@ Emulator::setDebugVariable(DebugFlag flag, bool val)
         case DebugFlag::FORCE_NO_FFMPEG:          FORCE_NO_FFMPEG = val; break;
 
         default:
-            throw Error(Fault::OPT_UNSUPPORTED,
+            throw AppError(Fault::OPT_UNSUPPORTED,
                         "Unhandled debug variable: " + string(DebugFlagEnum::key(flag)));
     }
 #endif

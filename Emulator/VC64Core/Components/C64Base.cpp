@@ -78,18 +78,6 @@ C64::_dump(Category category, std::ostream& os) const
 
     if (category == Category::State) {
 
-        os << tab("Power");
-        os << bol(isPoweredOn()) << std::endl;
-        os << tab("Running");
-        os << bol(isRunning()) << std::endl;
-        os << tab("Suspended");
-        os << bol(isSuspended()) << std::endl;
-        os << tab("Warping");
-        os << bol(emulator.isWarping()) << std::endl;
-        os << tab("Tracking");
-        os << bol(emulator.isTracking()) << std::endl;
-        os << std::endl;
-
         string str = "";
         if (flags & RL::WARP_ON)        str = append(str, "WARP_ON");
         if (flags & RL::WARP_OFF)       str = append(str, "WARP_OFF");
@@ -213,14 +201,14 @@ C64::checkOption(Opt opt, i64 value)
         case Opt::C64_WARP_MODE:
 
             if (!WarpEnum::isValid(value)) {
-                throw Error(Fault::OPT_INV_ARG, WarpEnum::keyList());
+                throw AppError(Fault::OPT_INV_ARG, WarpEnum::keyList());
             }
             return;
 
         case Opt::C64_SPEED_BOOST:
 
             if (value < 50 || value > 200) {
-                throw Error(Fault::OPT_INV_ARG, "50...200");
+                throw AppError(Fault::OPT_INV_ARG, "50...200");
             }
             return;
 
@@ -231,7 +219,7 @@ C64::checkOption(Opt opt, i64 value)
         case Opt::C64_RUN_AHEAD:
 
             if (value < 0 || value > 12) {
-                throw Error(Fault::OPT_INV_ARG, "0...12");
+                throw AppError(Fault::OPT_INV_ARG, "0...12");
             }
             return;
 
@@ -242,7 +230,7 @@ C64::checkOption(Opt opt, i64 value)
         case Opt::C64_SNAP_DELAY:
 
             if (value < 10 || value > 3600) {
-                throw Error(Fault::OPT_INV_ARG, "10...3600");
+                throw AppError(Fault::OPT_INV_ARG, "10...3600");
             }
             return;
 
@@ -251,7 +239,7 @@ C64::checkOption(Opt opt, i64 value)
             return;
 
         default:
-            throw Error(Fault::OPT_UNSUPPORTED);
+            throw AppError(Fault::OPT_UNSUPPORTED);
     }
 }
 

@@ -15,13 +15,13 @@
 
 #include "VC64Core/EmulatorTypes.h"
 
-// Foundation
-#include "VC64Core/Base/CmdQueueTypes.h"
-#include "VC64Core/Base/CoreComponentTypes.h"
-#include "VC64Core/Base/ErrorTypes.h"
-#include "VC64Core/Base/MsgQueueTypes.h"
-#include "VC64Core/Base/OptionTypes.h"
-#include "VC64Core/Base/ThreadTypes.h"
+// Infrastructure
+#include "VC64Core/Infrastructure/CmdQueueTypes.h"
+#include "VC64Core/Infrastructure/CoreComponentTypes.h"
+#include "VC64Core/Infrastructure/ErrorTypes.h"
+#include "VC64Core/Infrastructure/MsgQueueTypes.h"
+#include "VC64Core/Infrastructure/OptionTypes.h"
+#include "VC64Core/Infrastructure/ThreadTypes.h"
 
 // Components
 #include "VC64Core/Components/C64Types.h"

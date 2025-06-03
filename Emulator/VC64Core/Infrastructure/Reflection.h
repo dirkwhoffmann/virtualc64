@@ -33,7 +33,7 @@
  *   enumeration is treated as flag of a combined bit field.
  */
 
-namespace vc64::util {
+namespace vc64 {
 
 #define assert_enum(e,v) assert(e##Enum::isValid(v))
 

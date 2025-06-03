@@ -17,40 +17,16 @@
 //
 
 // Version number
-#define VER_MAJOR 5
-#define VER_MINOR 2
-#define VER_SUBMINOR 0
-#define VER_BETA 0
+static constexpr int VER_MAJOR      = 5;
+static constexpr int VER_MINOR      = 3;
+static constexpr int VER_SUBMINOR   = 0;
+static constexpr int VER_BETA       = 1;
 
 // Snapshot version number
-#define SNP_MAJOR 5
-#define SNP_MINOR 2
-#define SNP_SUBMINOR 0
-#define SNP_BETA 0
-
-// Uncomment these settings in a release build
-// #define RELEASEBUILD
-
-
-//
-// Build settings
-//
-
-#if defined(__clang__)
-
-#define alwaysinline __attribute__((always_inline))
-#pragma GCC diagnostic ignored "-Wgnu-anonymous-struct"
-#pragma GCC diagnostic ignored "-Wnested-anon-types"
-
-#elif defined(__GNUC__) || defined(__GNUG__)
-
-#define alwaysinline __attribute__((always_inline))
-
-#elif defined(_MSC_VER)
-
-#define alwaysinline __forceinline
-
-#endif
+static constexpr int SNP_MAJOR      = 5;
+static constexpr int SNP_MINOR      = 3;
+static constexpr int SNP_SUBMINOR   = 0;
+static constexpr int SNP_BETA       = 1;
 
 
 //
@@ -64,31 +40,25 @@
 // Debug settings
 //
 
-#ifdef RELEASEBUILD
-#ifndef NDEBUG
-#define NDEBUG
-#endif
-static const bool releaseBuild = 1;
-static const bool debugBuild = 0;
+static constexpr bool betaRelease = VER_BETA != 0;
+
+#ifdef NDEBUG
+static constexpr bool releaseBuild = 1;
+static constexpr bool debugBuild = 0;
 typedef const int debugflag;
 #else
-static const bool releaseBuild = 0;
-static const bool debugBuild = 1;
+static constexpr bool releaseBuild = 0;
+static constexpr bool debugBuild = 1;
 typedef int debugflag;
 #endif
 
-#if VER_BETA == 0
-static const bool betaRelease = 0;
-#else
-static const bool betaRelease = 1;
-#endif
-
 #ifdef __EMSCRIPTEN__
-static const bool emscript = 1;
+static constexpr bool emscripten = 1;
 #else
-static const bool emscript = 0;
+static constexpr bool emscripten = 0;
 #endif
 
+namespace vc64 {
 
 // General
 extern debugflag XFILES;
@@ -167,6 +137,7 @@ extern debugflag SRV_DEBUG;
 // Forced error conditions
 //
 
+extern debugflag FORCE_LAUNCH_ERROR;
 extern debugflag FORCE_ROM_MISSING;
 extern debugflag FORCE_MEGA64_MISMATCH;
 extern debugflag FORCE_SNAP_TOO_OLD;
@@ -177,5 +148,7 @@ extern debugflag FORCE_CRT_UNKNOWN;
 extern debugflag FORCE_CRT_UNSUPPORTED;
 extern debugflag FORCE_RECORDING_ERROR;
 extern debugflag FORCE_NO_FFMPEG;
+
+}
 
 #include <assert.h>

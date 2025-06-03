@@ -148,13 +148,13 @@ public:
 public:
 
     // Launch the remote server
-    void start() throws { SUSPENDED _start(); }
+    void start() throws { _start(); }
     
     // Shuts down the remote server
-    void stop() throws { SUSPENDED _stop(); }
+    void stop() throws { _stop(); }
 
     // Disconnects the client
-    void disconnect() throws { SUSPENDED _disconnect(); }
+    void disconnect() throws { _disconnect(); }
 
 protected:
 

@@ -46,12 +46,12 @@ PowerPort::checkOption(Opt opt, i64 value)
         case Opt::POWER_GRID:
 
             if (!PowerGridEnum::isValid(value)) {
-                throw Error(Fault::OPT_INV_ARG, PowerGridEnum::keyList());
+                throw AppError(Fault::OPT_INV_ARG, PowerGridEnum::keyList());
             }
             return;
 
         default:
-            throw Error(Fault::OPT_UNSUPPORTED);
+            throw AppError(Fault::OPT_UNSUPPORTED);
     }
 }
 

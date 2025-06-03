@@ -180,8 +180,6 @@
 		506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54CB2032255A0026D8B4 /* RomDropView.swift */; };
 		506F303A2B729CE80083EAEA /* Emulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30382B729CE80083EAEA /* Emulator.cpp */; };
 		506F303B2B729CE80083EAEA /* Emulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30382B729CE80083EAEA /* Emulator.cpp */; };
-		506F303E2B7364270083EAEA /* Suspendable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F303C2B7364270083EAEA /* Suspendable.cpp */; };
-		506F303F2B7364270083EAEA /* Suspendable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F303C2B7364270083EAEA /* Suspendable.cpp */; };
 		506F30422B74C1C70083EAEA /* Wakeable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30402B74C1C70083EAEA /* Wakeable.cpp */; };
 		506F30432B74C1C70083EAEA /* Wakeable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30402B74C1C70083EAEA /* Wakeable.cpp */; };
 		506F30472B7692180083EAEA /* VirtualC64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30462B7692180083EAEA /* VirtualC64.cpp */; };
@@ -311,7 +309,7 @@
 		50726FB82961CA290031F2F5 /* CommandConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B5261AEF000048E66A /* CommandConsole.cpp */; };
 		50726FB92961CA290031F2F5 /* TextStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B7E26A2813F8C400A405A3 /* TextStorage.cpp */; };
 		50726FBA2961CA2F0031F2F5 /* RegressionTester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE193A2633E9B0005A5898 /* RegressionTester.cpp */; };
-		50726FBD2961CA5A0031F2F5 /* VirtualC64Diagnose.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50726FBB2961CA5A0031F2F5 /* VirtualC64Diagnose.cpp */; };
+		50726FBD2961CA5A0031F2F5 /* VirtualC64Headless.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50726FBB2961CA5A0031F2F5 /* VirtualC64Headless.cpp */; };
 		50763277202989D300575110 /* DialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50763276202989D300575110 /* DialogController.swift */; };
 		50769B8A24BB1B87006FE743 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50769B8924BB1B87006FE743 /* Configuration.swift */; };
 		5077AC682B5ACC5100EFAC85 /* VirtualC64Config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5077AC672B5ACC5100EFAC85 /* VirtualC64Config.cpp */; };
@@ -860,8 +858,6 @@
 		506D54CB2032255A0026D8B4 /* RomDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomDropView.swift; sourceTree = "<group>"; };
 		506F30382B729CE80083EAEA /* Emulator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Emulator.cpp; sourceTree = "<group>"; };
 		506F30392B729CE80083EAEA /* Emulator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Emulator.h; sourceTree = "<group>"; };
-		506F303C2B7364270083EAEA /* Suspendable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Suspendable.cpp; sourceTree = "<group>"; };
-		506F303D2B7364270083EAEA /* Suspendable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Suspendable.h; sourceTree = "<group>"; };
 		506F30402B74C1C70083EAEA /* Wakeable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Wakeable.cpp; sourceTree = "<group>"; };
 		506F30412B74C1C70083EAEA /* Wakeable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Wakeable.h; sourceTree = "<group>"; };
 		506F30442B7578870083EAEA /* EmulatorTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmulatorTypes.h; sourceTree = "<group>"; };
@@ -870,9 +866,9 @@
 		50726F2A295B61C50031F2F5 /* DebugConsole.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DebugConsole.cpp; sourceTree = "<group>"; };
 		50726F2E295C27360031F2F5 /* EventPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPanel.swift; sourceTree = "<group>"; };
 		50726F30295C27470031F2F5 /* EventTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableView.swift; sourceTree = "<group>"; };
-		50726F362961C86B0031F2F5 /* VirtualC64Core */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = VirtualC64Core; sourceTree = BUILT_PRODUCTS_DIR; };
-		50726FBB2961CA5A0031F2F5 /* VirtualC64Diagnose.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualC64Diagnose.cpp; sourceTree = "<group>"; };
-		50726FBC2961CA5A0031F2F5 /* VirtualC64Diagnose.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtualC64Diagnose.h; sourceTree = "<group>"; };
+		50726F362961C86B0031F2F5 /* Headless */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Headless; sourceTree = BUILT_PRODUCTS_DIR; };
+		50726FBB2961CA5A0031F2F5 /* VirtualC64Headless.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualC64Headless.cpp; sourceTree = "<group>"; };
+		50726FBC2961CA5A0031F2F5 /* VirtualC64Headless.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtualC64Headless.h; sourceTree = "<group>"; };
 		50763276202989D300575110 /* DialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogController.swift; sourceTree = "<group>"; };
 		50769B8924BB1B87006FE743 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		5077AC672B5ACC5100EFAC85 /* VirtualC64Config.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualC64Config.cpp; sourceTree = "<group>"; };
@@ -1209,7 +1205,7 @@
 			isa = PBXGroup;
 			children = (
 				8D15AC370486D014006FF6A4 /* VirtualC64.app */,
-				50726F362961C86B0031F2F5 /* VirtualC64Core */,
+				50726F362961C86B0031F2F5 /* Headless */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1310,7 +1306,6 @@
 				50975A5D2DE05AA10016118E /* Annotations.h */,
 				500FAA63261376C50062488E /* BasicTypes.h */,
 				500FAA64261377050062488E /* Macros.h */,
-				50E806BE25A1C2B800F08732 /* Reflection.h */,
 				50D7DE812C5910E700A6CE94 /* Animated.h */,
 				50AD303B28141F0B00D9A7A6 /* Buffer.h */,
 				50AD303A28141F0B00D9A7A6 /* Buffer.cpp */,
@@ -1555,8 +1550,8 @@
 				50441A872B93CE2600102A4D /* VirtualC64Types.h */,
 				506F30452B768DE30083EAEA /* VirtualC64.h */,
 				506F30462B7692180083EAEA /* VirtualC64.cpp */,
-				50726FBC2961CA5A0031F2F5 /* VirtualC64Diagnose.h */,
-				50726FBB2961CA5A0031F2F5 /* VirtualC64Diagnose.cpp */,
+				50726FBC2961CA5A0031F2F5 /* VirtualC64Headless.h */,
+				50726FBB2961CA5A0031F2F5 /* VirtualC64Headless.cpp */,
 				50EAF5292C7A101E005AC890 /* DiagnoseScripts.h */,
 				50EB45B12DDF20B300BEC06F /* VC64Core */,
 			);
@@ -2012,11 +2007,12 @@
 			path = Layers;
 			sourceTree = "<group>";
 		};
-		50A2D7AF24AF945200671F38 /* Base */ = {
+		50A2D7AF24AF945200671F38 /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
 				5078BEAC264D72C000EDA161 /* CMakeLists.txt */,
 				50A2D7AE24AF944500671F38 /* Constants.h */,
+				50E806BE25A1C2B800F08732 /* Reflection.h */,
 				50E17E242B8B26EB0029747D /* OptionTypes.h */,
 				50E17E232B8B26D70029747D /* Option.h */,
 				50E17E1F2B8B26AC0029747D /* Option.cpp */,
@@ -2030,8 +2026,6 @@
 				50BB3E982B7A50F600B2D87B /* Synchronizable.cpp */,
 				5093D6A824B19E9200BDF924 /* Serializable.h */,
 				50FFB54C2B8262BA00042771 /* Serializable.cpp */,
-				506F303D2B7364270083EAEA /* Suspendable.h */,
-				506F303C2B7364270083EAEA /* Suspendable.cpp */,
 				506A8A872B88D00200B95383 /* Configurable.h */,
 				506A8A862B88D00200B95383 /* Configurable.cpp */,
 				50EFB0C32C18D6200013B73C /* Dumpable.h */,
@@ -2062,7 +2056,7 @@
 				50F5B6A12959C44E000457A0 /* Host.h */,
 				50F5B6A02959C44E000457A0 /* Host.cpp */,
 			);
-			path = Base;
+			path = Infrastructure;
 			sourceTree = "<group>";
 		};
 		50A5B7CD2C74E44C00D6DDAD /* RemoteServers */ = {
@@ -2233,7 +2227,7 @@
 				50A1948C2BDA6F490046849E /* EmulatorBase.cpp */,
 				506F30382B729CE80083EAEA /* Emulator.cpp */,
 				500FAA62261376980062488E /* Utilities */,
-				50A2D7AF24AF945200671F38 /* Base */,
+				50A2D7AF24AF945200671F38 /* Infrastructure */,
 				50E56AF529D489EA00EBCE76 /* Components */,
 				50ACF4DC256EB451003B5690 /* Ports */,
 				504C42F924AF29AB00E69CAE /* Peripherals */,
@@ -2271,9 +2265,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		50726F352961C86B0031F2F5 /* VirtualC64Core */ = {
+		50726F352961C86B0031F2F5 /* Headless */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 50726F3C2961C86B0031F2F5 /* Build configuration list for PBXNativeTarget "VirtualC64Core" */;
+			buildConfigurationList = 50726F3C2961C86B0031F2F5 /* Build configuration list for PBXNativeTarget "Headless" */;
 			buildPhases = (
 				50726F322961C86B0031F2F5 /* Sources */,
 				50726F332961C86B0031F2F5 /* Frameworks */,
@@ -2283,9 +2277,9 @@
 			);
 			dependencies = (
 			);
-			name = VirtualC64Core;
+			name = Headless;
 			productName = VirtualC64Core;
-			productReference = 50726F362961C86B0031F2F5 /* VirtualC64Core */;
+			productReference = 50726F362961C86B0031F2F5 /* Headless */;
 			productType = "com.apple.product-type.tool";
 		};
 		8D15AC270486D014006FF6A4 /* VirtualC64 */ = {
@@ -2341,7 +2335,7 @@
 			projectRoot = "";
 			targets = (
 				8D15AC270486D014006FF6A4 /* VirtualC64 */,
-				50726F352961C86B0031F2F5 /* VirtualC64Core */,
+				50726F352961C86B0031F2F5 /* Headless */,
 			);
 		};
 /* End PBXProject section */
@@ -2461,7 +2455,7 @@
 				50726F572961C9A10031F2F5 /* CIA.cpp in Sources */,
 				50726F3F2961C97B0031F2F5 /* StringUtils.cpp in Sources */,
 				50726F682961C9B80031F2F5 /* ReSID.cpp in Sources */,
-				50726FBD2961CA5A0031F2F5 /* VirtualC64Diagnose.cpp in Sources */,
+				50726FBD2961CA5A0031F2F5 /* VirtualC64Headless.cpp in Sources */,
 				50726F5F2961C9AC0031F2F5 /* VICIIMemory.cpp in Sources */,
 				50726F7F2961C9E80031F2F5 /* Mouse1350.cpp in Sources */,
 				50726FAF2961CA1C0031F2F5 /* Script.cpp in Sources */,
@@ -2498,7 +2492,6 @@
 				505A13342C35551D00FF8D2C /* RS232.cpp in Sources */,
 				50726F512961C9940031F2F5 /* ExpansionPort.cpp in Sources */,
 				50726F932961CA0D0031F2F5 /* Zaxxon.cpp in Sources */,
-				506F303F2B7364270083EAEA /* Suspendable.cpp in Sources */,
 				50726F4E2961C9940031F2F5 /* Host.cpp in Sources */,
 				50726F9E2961CA0D0031F2F5 /* StructuredBasic.cpp in Sources */,
 				50726F772961C9DC0031F2F5 /* Datasette.cpp in Sources */,
@@ -2805,7 +2798,6 @@
 				50AB70762721B8EE004ABB2B /* DiskAnalyzer.cpp in Sources */,
 				5018BFB324B48DD500551848 /* RendererSetup.swift in Sources */,
 				506F30422B74C1C70083EAEA /* Wakeable.cpp in Sources */,
-				506F303E2B7364270083EAEA /* Suspendable.cpp in Sources */,
 				50F0EB7A25CC33B3002D0D72 /* GameKiller.cpp in Sources */,
 				504C437D24AF29AC00E69CAE /* CRTFile.cpp in Sources */,
 				50FFB54D2B8262BA00042771 /* Serializable.cpp in Sources */,
@@ -2941,7 +2933,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 250531;
+				CURRENT_PROJECT_VERSION = 250603;
 				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 3NG65ZLYW7;
@@ -2962,9 +2954,10 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				LLVM_LTO = NO;
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
-				MARKETING_VERSION = 5.2d;
+				MARKETING_VERSION = 5.3b1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 c++20";
+				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.dirkwhoffmann.VC64;
 				PRODUCT_NAME = VirtualC64;
@@ -2987,7 +2980,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 250531;
+				CURRENT_PROJECT_VERSION = 250603;
 				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 3NG65ZLYW7;
@@ -3009,9 +3002,10 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				LLVM_LTO = YES_THIN;
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
-				MARKETING_VERSION = 5.2d;
+				MARKETING_VERSION = 5.3b1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 c++20";
+				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.dirkwhoffmann.VC64;
 				PRODUCT_NAME = VirtualC64;
@@ -3092,9 +3086,14 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = Emulator;
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-Wno-gnu-anonymous-struct",
+					"-Wno-nested-anon-types",
+				);
 				SDKROOT = macosx;
 				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -3175,8 +3174,14 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = Emulator;
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				OTHER_CFLAGS = (
+					"-Wno-gnu-anonymous-struct",
+					"-Wno-nested-anon-types",
+					"-DNDEBUG",
+				);
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OBJC_INTEROP_MODE = objcxx;
@@ -3253,7 +3258,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50726F3C2961C86B0031F2F5 /* Build configuration list for PBXNativeTarget "VirtualC64Core" */ = {
+		50726F3C2961C86B0031F2F5 /* Build configuration list for PBXNativeTarget "Headless" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50726F3A2961C86B0031F2F5 /* Debug */,

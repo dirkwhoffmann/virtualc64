@@ -115,7 +115,7 @@ enum class DiskType : long
     DS_SD    ///< Double-sided, single density (VC1571) (unsupported)
 };
 
-struct DiskTypeEnum : util::Reflection<DiskTypeEnum, DiskType> {
+struct DiskTypeEnum : Reflection<DiskTypeEnum, DiskType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(DiskType::DS_SD);
@@ -144,7 +144,7 @@ enum class CBMFileType
     REL
 };
 
-struct CBMFileTypeEnum : util::Reflection<CBMFileTypeEnum, CBMFileType> {
+struct CBMFileTypeEnum : Reflection<CBMFileTypeEnum, CBMFileType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(CBMFileType::REL);

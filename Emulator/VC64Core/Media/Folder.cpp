@@ -25,7 +25,7 @@ Folder::isCompatible(const fs::path &path)
 void
 Folder::init(const fs::path &path)
 {
-    if (!isCompatiblePath(path)) throw Error(Fault::FILE_TYPE_MISMATCH);
+    if (!isCompatiblePath(path)) throw AppError(Fault::FILE_TYPE_MISMATCH);
     
     fs = new FileSystem(path);
 

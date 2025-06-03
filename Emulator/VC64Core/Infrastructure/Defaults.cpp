@@ -89,17 +89,17 @@ Defaults::Defaults()
     setFallback(Opt::MON_BLUR,                   true);
     setFallback(Opt::MON_BLUR_RADIUS,            0);
     setFallback(Opt::MON_BLOOM,                  false);
-    setFallback(Opt::MON_BLOOM_RADIUS,           1000);
-    setFallback(Opt::MON_BLOOM_BRIGHTNESS,       400);
-    setFallback(Opt::MON_BLOOM_WEIGHT,           1210);
+    setFallback(Opt::MON_BLOOM_RADIUS,           200);
+    setFallback(Opt::MON_BLOOM_BRIGHTNESS,       200);
+    setFallback(Opt::MON_BLOOM_WEIGHT,           100);
     setFallback(Opt::MON_DOTMASK,                (i64)Dotmask::NONE);
-    setFallback(Opt::MON_DOTMASK_BRIGHTNESS,     700);
+    setFallback(Opt::MON_DOTMASK_BRIGHTNESS,     550);
     setFallback(Opt::MON_SCANLINES,              (i64)Scanlines::NONE);
     setFallback(Opt::MON_SCANLINE_BRIGHTNESS,    550);
     setFallback(Opt::MON_SCANLINE_WEIGHT,        110);
     setFallback(Opt::MON_DISALIGNMENT,           0);
-    setFallback(Opt::MON_DISALIGNMENT_H,         1000);
-    setFallback(Opt::MON_DISALIGNMENT_V,         1000);
+    setFallback(Opt::MON_DISALIGNMENT_H,         250);
+    setFallback(Opt::MON_DISALIGNMENT_V,         250);
 
     setFallback(Opt::AUD_VOL0,                   100);
     setFallback(Opt::AUD_VOL1,                   100);
@@ -212,7 +212,7 @@ Defaults::load(const fs::path &path)
     auto fs = std::ifstream(path, std::ifstream::binary);
 
     if (!fs.is_open()) {
-        throw Error(Fault::FILE_NOT_FOUND);
+        throw AppError(Fault::FILE_NOT_FOUND);
     }
 
     debug(DEF_DEBUG, "Loading user defaults from %s...\n", path.string().c_str());
@@ -290,7 +290,7 @@ Defaults::load(std::stringstream &stream)
                 continue;
             }
 
-            throw Error(Fault::SYNTAX, line);
+            throw AppError(Fault::SYNTAX, line);
         }
 
         if (accepted || skipped) {
@@ -305,7 +305,7 @@ Defaults::save(const fs::path &path)
     auto fs = std::ofstream(path, std::ofstream::binary);
 
     if (!fs.is_open()) {
-        throw Error(Fault::FILE_CANT_WRITE);
+        throw AppError(Fault::FILE_CANT_WRITE);
     }
 
     save(fs);
@@ -374,7 +374,7 @@ Defaults::getRaw(const string &key) const
     if (values.contains(key)) return values.at(key);
     if (fallbacks.contains(key)) return fallbacks.at(key);
 
-    throw Error(Fault::INVALID_KEY, key);
+    throw AppError(Fault::INVALID_KEY, key);
 }
 
 i64
@@ -398,11 +398,11 @@ Defaults::get(Opt option, isize nr) const
 {
     try {
 
-        return get(string(OptionEnum::fullKey(option)) + std::to_string(nr));
+        return get(string(OptEnum::fullKey(option)) + std::to_string(nr));
 
     } catch (...) {
 
-        return get(string(OptionEnum::fullKey(option)));
+        return get(string(OptEnum::fullKey(option)));
     }
 }
 
@@ -411,7 +411,7 @@ Defaults::getFallbackRaw(const string &key) const
 {
     if (fallbacks.contains(key)) return fallbacks.at(key);
 
-    throw Error(Fault::INVALID_KEY, key);
+    throw AppError(Fault::INVALID_KEY, key);
 }
 
 i64
@@ -435,11 +435,11 @@ Defaults::getFallback(Opt option, isize nr) const
 {
     try {
 
-        return getFallback(string(OptionEnum::fullKey(option)) + std::to_string(nr));
+        return getFallback(string(OptEnum::fullKey(option)) + std::to_string(nr));
 
     } catch (...) {
 
-        return getFallback(string(OptionEnum::fullKey(option)));
+        return getFallback(string(OptEnum::fullKey(option)));
     }
 }
 
@@ -454,7 +454,7 @@ Defaults::set(const string &key, const string &value)
 
             warn("Invalid key: %s\n", key.c_str());
             assert(false);
-            throw Error(Fault::INVALID_KEY, key);
+            throw AppError(Fault::INVALID_KEY, key);
         }
 
         values[key] = value;
@@ -464,13 +464,13 @@ Defaults::set(const string &key, const string &value)
 void
 Defaults::set(Opt option, const string &value)
 {
-    set(OptionEnum::fullKey(option), value);
+    set(OptEnum::fullKey(option), value);
 }
 
 void
 Defaults::set(Opt option, const string &value, std::vector <isize> objids)
 {
-    auto key = string(OptionEnum::fullKey(option));
+    auto key = string(OptEnum::fullKey(option));
 
     for (auto &nr : objids) {
         set(key + std::to_string(nr), value);
@@ -502,13 +502,13 @@ Defaults::setFallback(const string &key, const string &value)
 void
 Defaults::setFallback(Opt option, const string &value)
 {
-    setFallback(OptionEnum::fullKey(option), value);
+    setFallback(OptEnum::fullKey(option), value);
 }
 
 void
 Defaults::setFallback(Opt option, const string &value, std::vector <isize> objids)
 {
-    auto key = string(OptionEnum::fullKey(option));
+    auto key = string(OptEnum::fullKey(option));
 
     for (auto &nr : objids) {
         setFallback(key + std::to_string(nr), value);
@@ -542,7 +542,7 @@ Defaults::remove(const string &key)
 
             warn("Invalid key: %s\n", key.c_str());
             assert(false);
-            throw Error(Fault::INVALID_KEY, key);
+            throw AppError(Fault::INVALID_KEY, key);
         }
         if (values.contains(key)) {
             values.erase(key);
@@ -553,14 +553,14 @@ Defaults::remove(const string &key)
 void
 Defaults::remove(Opt option)
 {
-    remove(string(OptionEnum::fullKey(option)));
+    remove(string(OptEnum::fullKey(option)));
 }
 
 void
 Defaults::remove(Opt option, std::vector <isize> nrs)
 {
     for (auto &nr : nrs) {
-        remove(string(OptionEnum::fullKey(option)) + std::to_string(nr));
+        remove(string(OptEnum::fullKey(option)) + std::to_string(nr));
     }
 }
 

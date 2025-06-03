@@ -12,6 +12,8 @@
 
 #include "VirtualC64Config.h"
 
+namespace vc64 {
+
 // General
 debugflag XFILES          = 0;
 debugflag CNF_DEBUG       = 0;
@@ -89,6 +91,7 @@ debugflag SRV_DEBUG       = 0;
 // Forced error conditions
 //
 
+debugflag FORCE_LAUNCH_ERROR             = 0;
 debugflag FORCE_ROM_MISSING              = 0;
 debugflag FORCE_MEGA64_MISMATCH          = 0;
 debugflag FORCE_SNAP_TOO_OLD             = 0;
@@ -99,3 +102,5 @@ debugflag FORCE_CRT_UNKNOWN              = 0;
 debugflag FORCE_CRT_UNSUPPORTED          = 0;
 debugflag FORCE_RECORDING_ERROR          = 0;
 debugflag FORCE_NO_FFMPEG                = 0;
+
+}

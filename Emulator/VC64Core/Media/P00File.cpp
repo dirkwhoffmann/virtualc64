@@ -46,7 +46,7 @@ P00File::init(const FileSystem &fs)
     isize itemSize = fs.fileSize(item);
 
     // Only proceed if the requested file exists
-    if (fs.numFiles() <= item) throw Error(Fault::FS_HAS_NO_FILES);
+    if (fs.numFiles() <= item) throw AppError(Fault::FS_HAS_NO_FILES);
 
     // Create new archive
     isize p00Size = itemSize + 8 + 17 + 1;

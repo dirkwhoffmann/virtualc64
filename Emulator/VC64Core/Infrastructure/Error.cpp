@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-Error::Error(Fault code, const string &s)
+AppError::AppError(Fault code, const string &s)
 {
     data = i64(code);
     
@@ -260,7 +260,7 @@ Error::Error(Fault code, const string &s)
 }
 
 const char *
-Error::what() const throw()
+AppError::what() const throw()
 {
     return description.c_str();
 }

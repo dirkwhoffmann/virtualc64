@@ -66,9 +66,9 @@ MsgQueue::put(const Message &msg)
 }
 
 void
-MsgQueue::put(Msg type, i64 payload)
+MsgQueue::put(Msg type, i64 payload, i64 payload2)
 {
-    put( Message { .type = type, .value = payload } );
+    put( Message { .type = type, .value = payload, .value2 = payload2 } );
 }
 
 void

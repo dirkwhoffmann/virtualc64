@@ -29,7 +29,7 @@ enum class DOSType : long
     CBM    ///< C64 CBM file system
 };
 
-struct DOSTypeEnum : util::Reflection<DOSTypeEnum, DOSType> {
+struct DOSTypeEnum : Reflection<DOSTypeEnum, DOSType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(DOSType::CBM);
@@ -59,7 +59,7 @@ enum class FSFileType : long
     REL
 };
 
-struct FSFileTypeEnum : util::Reflection<FSFileTypeEnum, FSFileType> {
+struct FSFileTypeEnum : Reflection<FSFileTypeEnum, FSFileType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(FSFileType::REL);
@@ -92,7 +92,7 @@ enum class FSBlockType : long
     DATA
 };
 
-struct FSBlockTypeEnum : util::Reflection<FSBlockTypeEnum, FSBlockType> {
+struct FSBlockTypeEnum : Reflection<FSBlockTypeEnum, FSBlockType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(FSBlockType::DATA);
@@ -142,7 +142,7 @@ enum class FSUsage
     DATA
 };
 
-struct FSUsageEnum : util::Reflection<FSUsageEnum, FSUsage> {
+struct FSUsageEnum : Reflection<FSUsageEnum, FSUsage> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(FSUsage::DATA);

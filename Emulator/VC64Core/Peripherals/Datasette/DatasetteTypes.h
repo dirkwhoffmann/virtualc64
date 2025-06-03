@@ -27,7 +27,7 @@ enum class DatasetteModel
     C1530     ///< Standard datasette (Commodore)
 };
 
-struct DatasetteModelEnum : util::Reflection<DatasetteModelEnum, DatasetteModel> {
+struct DatasetteModelEnum : Reflection<DatasetteModelEnum, DatasetteModel> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(DatasetteModel::C1530);

@@ -35,7 +35,7 @@ enum class MemType : long
     PP,           ///< Processor port
 };
 
-struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemType> {
+struct MemoryTypeEnum : Reflection<MemoryTypeEnum, MemType> {
 
     static constexpr long minVal = 1;
     static constexpr long maxVal = long(MemType::NONE);
@@ -73,7 +73,7 @@ enum class RamPattern : long
     RANDOM      ///< Initialize with pseudo-random values
 };
 
-struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
+struct RamPatternEnum : Reflection<RamPatternEnum, RamPattern> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(RamPattern::RANDOM);
@@ -105,7 +105,7 @@ enum class RomType : long
     VC1541
 };
 
-struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
+struct RomTypeEnum : Reflection<RomTypeEnum, RomType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(RomType::VC1541);
@@ -142,7 +142,7 @@ enum class RomVendor
     OTHER
 };
 
-struct RomVendorEnum : util::Reflection<RomVendorEnum, RomVendor> {
+struct RomVendorEnum : Reflection<RomVendorEnum, RomVendor> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(RomVendor::OTHER);

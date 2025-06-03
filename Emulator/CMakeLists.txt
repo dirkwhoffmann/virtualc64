@@ -19,14 +19,14 @@ endif()
 # Add the emulator library
 add_library(VC64Core VirtualC64.cpp VirtualC64Config.cpp)
 
-# Add the console app (VirtualC64 VirtualC64Diagnose)
-add_executable(vc64Console VirtualC64Diagnose.cpp VirtualC64Config.cpp)
-target_link_libraries(vc64Console VC64Core)
+# Add the headless app
+add_executable(vc64Headless VirtualC64Headless.cpp VirtualC64Config.cpp)
+target_link_libraries(vc64Headless VC64Core)
 
 # Specify compile options
 target_compile_definitions(VC64Core PUBLIC _USE_MATH_DEFINES)
 if(WIN32)
-  target_link_libraries(vc64Console ws2_32)
+  target_link_libraries(vc64Headless ws2_32)
 endif()
 if(MSVC)
   target_compile_options(VC64Core PUBLIC /W4 /WX /Zc:preprocessor)
@@ -56,6 +56,6 @@ find_package(Threads REQUIRED)
 target_link_libraries(VC64Core resid Threads::Threads)
 
 # Add tests
-add_test(NAME SelfTest1 COMMAND vc64Console --verbose --footprint)
-add_test(NAME SelfTest2 COMMAND vc64Console --verbose --smoke)
-add_test(NAME SelfTest3 COMMAND vc64Console --verbose --diagnose)
+add_test(NAME SelfTest1 COMMAND vc64Headless --verbose --footprint)
+add_test(NAME SelfTest2 COMMAND vc64Headless --verbose --smoke)
+add_test(NAME SelfTest3 COMMAND vc64Headless --verbose --diagnose)

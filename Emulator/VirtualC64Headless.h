@@ -25,13 +25,13 @@ struct SyntaxError : public std::runtime_error {
 // The message listener
 void process(const void *listener, Message msg);
 
-class VirtualC64Diagnose : Wakeable {
+class Headless : Wakeable {
 
     // Parsed command line arguments
     std::map<string,string> keys;
 
     // Return code
-    int returnCode;
+    int returnCode = 0;
 
     
     //
@@ -48,12 +48,12 @@ private:
     // Parses the command line arguments
     void parseArguments(int argc, char *argv[]);
 
-    // Checks all command line arguments for conistency
-    void checkArguments() throws;
+    // Checks all command line arguments for conistency (may throw)
+    void checkArguments();
 
     // Runs a RetroShell script
     void runScript(const char **script);
-    void runScript(const std::filesystem::path &path);
+    void runScript(const fs::path &path);
     
 
     //

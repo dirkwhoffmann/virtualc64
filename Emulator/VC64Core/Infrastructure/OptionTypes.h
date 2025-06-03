@@ -204,7 +204,7 @@ enum class Opt : long
     COUNT
 };
 
-struct OptionEnum : util::Reflection<OptionEnum, Opt> {
+struct OptEnum : Reflection<OptEnum, Opt> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Opt::DBG_WATCHDOG);

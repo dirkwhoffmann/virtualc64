@@ -17,7 +17,6 @@ Option.cpp
 SubComponent.cpp
 Synchronizable.cpp
 Serializable.cpp
-Suspendable.cpp
 Thread.cpp
 Wakeable.cpp
 

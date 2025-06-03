@@ -174,7 +174,7 @@ AudioPort::checkOption(Opt opt, i64 value)
             return;
 
         default:
-            throw Error(Fault::OPT_UNSUPPORTED);
+            throw AppError(Fault::OPT_UNSUPPORTED);
     }
 }
 
@@ -194,7 +194,7 @@ AudioPort::setOption(Opt opt, i64 value)
 
             config.vol[channel] = std::clamp(value, 0LL, 100LL);
             vol[channel] = powf(config.vol[channel] / 100.0f, 1.4f) * 0.000025f;
-            if (emscript) vol[channel] *= 0.15f;
+            if (emscripten) vol[channel] *= 0.15f;
             return;
 
         case Opt::AUD_PAN3: channel++;

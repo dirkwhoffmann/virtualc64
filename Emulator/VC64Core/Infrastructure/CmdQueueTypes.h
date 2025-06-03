@@ -114,7 +114,7 @@ enum class Cmd : long
     FOCUS                   ///< The emulator windows got or lost focus
 };
 
-struct CmdEnum : util::Reflection<CmdEnum, Cmd> {
+struct CmdEnum : Reflection<CmdEnum, Cmd> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Cmd::FOCUS);
@@ -254,17 +254,14 @@ typedef struct
 }
 AlarmCmd;
 
-typedef struct
-{
-    const char *command;
-}
-ShellCmd;
-
 struct Command
 {
     // Header
     Cmd type;
 
+    // Sender
+    void *sender;
+    
     // Payload
     union {
 
@@ -274,18 +271,17 @@ struct Command
         CoordCmd coord;
         GamePadCmd action;
         KeyCmd key;
-        ShellCmd shell;
         TapeCmd tape;
     };
 
     Command() { }
     Command(Cmd type, i64 v1 = 0, i64 v2 = 0) : type(type), value(v1), value2(v2) { }
+    Command(Cmd type, void *s, i64 v1 = 0, i64 v2 = 0) : type(type), sender(s), value(v1), value2(v2) { }
     Command(Cmd type, const AlarmCmd &cmd) : type(type), alarm(cmd) { }
     Command(Cmd type, const ConfigCmd &cmd) : type(type), config(cmd) { }
     Command(Cmd type, const CoordCmd &cmd) : type(type), coord(cmd) { }
     Command(Cmd type, const GamePadCmd &cmd) : type(type), action(cmd) { }
     Command(Cmd type, const KeyCmd &cmd) : type(type), key(cmd) { }
-    Command(Cmd type, const ShellCmd &cmd) : type(type), shell(cmd) { }
     Command(Cmd type, const TapeCmd &cmd) : type(type), tape(cmd) { }
 };
 

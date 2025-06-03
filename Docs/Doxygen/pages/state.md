@@ -29,15 +29,7 @@ After lauching, the emulator runs as a single thread alongside the GUI. The thre
     resume();
  ```
 
- It it safe to nest multiple suspend/resume blocks, but it is essential that each call to [suspend](@ref vc64::Thread::suspend) is followed by a call to Thread class [resume](@ref vc64::Thread::resume). As a result, the critical code section must not be exited in the middle, e.g., by throwing an exception. It is therefore recommended to use the `SUSPENDED` macro which is exit-safe. It is used in the following way:
- 
- ```{.cpp}
- 	{  SUSPENDED
- 
-       // Modify the internal state,
-       // return, or throw an exceptions as you like
-    }
- ```
+ It it safe to nest multiple suspend/resume blocks, but it is essential that each call to [suspend](@ref vc64::Thread::suspend) is followed by a call to Thread class [resume](@ref vc64::Thread::resume). As a result, the critical code section must not be exited in the middle, e.g., by throwing an exception.
 
  ## Synchronization
  

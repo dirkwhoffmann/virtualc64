@@ -141,7 +141,7 @@ Cartridge::makeWithType(C64 &c64, CartridgeType type)
         case CartridgeType::REU:               cart = new Reu(c64); break;
 
         default:
-            throw Error(Fault::CRT_UNSUPPORTED, CRTFile::cartridgeTypeName(type));
+            throw AppError(Fault::CRT_UNSUPPORTED, CRTFile::cartridgeTypeName(type));
     }
 
     cart->init();
@@ -154,7 +154,7 @@ Cartridge::makeWithCRTFile(C64 &c64, const CRTFile &file)
     auto type = file.cartridgeType();
 
     // Only proceed if the cartridge ID is valid
-    if (!isKnownType(type)) throw Error(Fault::CRT_UNKNOWN, std::to_string(long(type)));
+    if (!isKnownType(type)) throw AppError(Fault::CRT_UNKNOWN, std::to_string(long(type)));
 
     // Try to create the cartridge
     Cartridge *cart = makeWithType(c64, file.cartridgeType());

@@ -381,7 +381,7 @@ C64::exportConfig(const fs::path &path) const
     auto fs = std::ofstream(path, std::ofstream::binary);
 
     if (!fs.is_open()) {
-        throw Error(Fault::FILE_CANT_WRITE);
+        throw AppError(Fault::FILE_CANT_WRITE);
     }
 
     exportConfig(fs);
@@ -401,10 +401,10 @@ C64::exportConfig(std::ostream &stream) const
 i64
 C64::get(Opt opt, isize objid) const
 {
-    debug(CNF_DEBUG, "get(%s, %ld)\n", OptionEnum::key(opt), objid);
+    debug(CNF_DEBUG, "get(%s, %ld)\n", OptEnum::key(opt), objid);
 
     auto target = routeOption(opt, objid);
-    if (target == nullptr) throw Error(Fault::OPT_INV_ID);
+    if (target == nullptr) throw AppError(Fault::OPT_INV_ID);
     return target->getOption(opt);
 }
 
@@ -420,16 +420,16 @@ C64::check(Opt opt, i64 value, const std::vector<isize> objids)
             auto target = routeOption(opt, objid);
             if (target == nullptr) break;
 
-            debug(CNF_DEBUG, "check(%s, %lld, %ld)\n", OptionEnum::key(opt), value, objid);
+            debug(CNF_DEBUG, "check(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
             target->checkOption(opt, value);
         }
     }
     for (auto &objid : objids) {
 
-        debug(CNF_DEBUG, "check(%s, %lld, %ld)\n", OptionEnum::key(opt), value, objid);
+        debug(CNF_DEBUG, "check(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
 
         auto target = routeOption(opt, objid);
-        if (target == nullptr) throw Error(Fault::OPT_INV_ID);
+        if (target == nullptr) throw AppError(Fault::OPT_INV_ID);
 
         target->checkOption(opt, value);
     }
@@ -449,16 +449,16 @@ C64::set(Opt opt, i64 value, const std::vector<isize> objids)
             auto target = routeOption(opt, objid);
             if (target == nullptr) break;
 
-            debug(CNF_DEBUG, "set(%s, %lld, %ld)\n", OptionEnum::key(opt), value, objid);
+            debug(CNF_DEBUG, "set(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
             target->setOption(opt, value);
         }
     }
     for (auto &objid : objids) {
 
-        debug(CNF_DEBUG, "set(%s, %lld, %ld)\n", OptionEnum::key(opt), value, objid);
+        debug(CNF_DEBUG, "set(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
 
         auto target = routeOption(opt, objid);
-        if (target == nullptr) throw Error(Fault::OPT_INV_ID);
+        if (target == nullptr) throw AppError(Fault::OPT_INV_ID);
 
         target->setOption(opt, value);
     }
@@ -473,7 +473,7 @@ C64::set(Opt opt, const string &value, const std::vector<isize> objids)
 void
 C64::set(const string &opt, const string &value, const std::vector<isize> objids)
 {
-    set(Opt(util::parseEnum<OptionEnum>(opt)), value, objids);
+    set(Opt(util::parseEnum<OptEnum>(opt)), value, objids);
 }
 
 void
@@ -589,7 +589,7 @@ C64::overrideOption(Opt opt, i64 value) const
 
     if (overrides.find(opt) != overrides.end()) {
 
-        msg("Overriding option: %s = %lld\n", OptionEnum::key(opt), value);
+        msg("Overriding option: %s = %lld\n", OptEnum::key(opt), value);
         return overrides[opt];
     }
 
@@ -942,16 +942,16 @@ C64::_isReady() const
     bool mega = hasMega65Rom(RomType::BASIC) && hasMega65Rom(RomType::KERNAL);
     
     if (!hasRom(RomType::BASIC)) {
-        throw Error(Fault::ROM_BASIC_MISSING);
+        throw AppError(Fault::ROM_BASIC_MISSING);
     }
     if (!hasRom(RomType::CHAR)) {
-        throw Error(Fault::ROM_CHAR_MISSING);
+        throw AppError(Fault::ROM_CHAR_MISSING);
     }
     if (!hasRom(RomType::KERNAL) || FORCE_ROM_MISSING) {
-        throw Error(Fault::ROM_KERNAL_MISSING);
+        throw AppError(Fault::ROM_KERNAL_MISSING);
     }
     if (FORCE_MEGA64_MISMATCH || (mega && string(mega65BasicRev()) != string(mega65KernalRev()))) {
-        throw Error(Fault::ROM_MEGA65_MISMATCH);
+        throw AppError(Fault::ROM_MEGA65_MISMATCH);
     }
 }
 
@@ -1376,7 +1376,7 @@ C64::loadSnapshot(const MediaFile &file)
             // Print some debug info if requested
             if (SNP_DEBUG) dump(Category::State);
             
-        } catch (Error &error) {
+        } catch (AppError &error) {
             
             /* If we reach this point, the emulator has been put into an
              * inconsistent state due to corrupted snapshot data. We cannot
@@ -1394,7 +1394,7 @@ C64::loadSnapshot(const MediaFile &file)
 
     } catch (...) {
 
-        throw Error(Fault::FILE_TYPE_MISMATCH);
+        throw AppError(Fault::FILE_TYPE_MISMATCH);
     }
 }
 
@@ -1634,54 +1634,48 @@ C64::loadRom(const MediaFile &file)
             
         default:
             
-            throw Error(Fault::FILE_TYPE_MISMATCH);
+            throw AppError(Fault::FILE_TYPE_MISMATCH);
     }
 }
 
 void
 C64::deleteRom(RomType type)
 {
-    {   SUSPENDED
-
-        switch (type) {
-
-            case RomType::BASIC:
-
-                memset(mem.rom + 0xA000, 0, 0x2000);
-                break;
-
-            case RomType::CHAR:
-
-                memset(mem.rom + 0xD000, 0, 0x1000);
-                break;
-
-            case RomType::KERNAL:
-
-                memset(mem.rom + 0xE000, 0, 0x2000);
-                break;
-
-            case RomType::VC1541:
-
-                drive8.mem.deleteRom();
-                drive9.mem.deleteRom();
-                break;
-
-            default:
-                fatalError;
-        }
+    switch (type) {
+            
+        case RomType::BASIC:
+            
+            memset(mem.rom + 0xA000, 0, 0x2000);
+            break;
+            
+        case RomType::CHAR:
+            
+            memset(mem.rom + 0xD000, 0, 0x1000);
+            break;
+            
+        case RomType::KERNAL:
+            
+            memset(mem.rom + 0xE000, 0, 0x2000);
+            break;
+            
+        case RomType::VC1541:
+            
+            drive8.mem.deleteRom();
+            drive9.mem.deleteRom();
+            break;
+            
+        default:
+            fatalError;
     }
 }
 
 void 
 C64::deleteRoms()
 {
-    {   SUSPENDED
-
-        deleteRom(RomType::BASIC);
-        deleteRom(RomType::KERNAL);
-        deleteRom(RomType::CHAR);
-        deleteRom(RomType::VC1541);
-    }
+    deleteRom(RomType::BASIC);
+    deleteRom(RomType::KERNAL);
+    deleteRom(RomType::CHAR);
+    deleteRom(RomType::VC1541);
 }
 
 void
@@ -1728,85 +1722,76 @@ C64::saveRom(RomType type, const fs::path &path)
 void 
 C64::installOpenRoms()
 {
-    {   SUSPENDED
-
-        installOpenRom(RomType::BASIC);
-        installOpenRom(RomType::KERNAL);
-        installOpenRom(RomType::CHAR);
-    }
+    installOpenRom(RomType::BASIC);
+    installOpenRom(RomType::KERNAL);
+    installOpenRom(RomType::CHAR);
 }
 
 void
 C64::installOpenRom(RomType type)
 {
-    {   SUSPENDED
-
-        switch (type) {
-
-            case RomType::BASIC:
-
-                assert(sizeof(basic_generic) == 0x2000);
-                memcpy(mem.rom + 0xA000, basic_generic, 0x2000);
-                break;
-
-            case RomType::CHAR:
-
-                assert(sizeof(chargen_openroms) == 0x1000);
-                memcpy(mem.rom + 0xD000, chargen_openroms, 0x1000);
-                break;
-
-            case RomType::KERNAL:
-
-                assert(sizeof(kernel_generic) == 0x2000);
-                memcpy(mem.rom + 0xE000, kernel_generic, 0x2000);
-                break;
-
-            default:
-                fatalError;
-        }
+    switch (type) {
+            
+        case RomType::BASIC:
+            
+            assert(sizeof(basic_generic) == 0x2000);
+            memcpy(mem.rom + 0xA000, basic_generic, 0x2000);
+            break;
+            
+        case RomType::CHAR:
+            
+            assert(sizeof(chargen_openroms) == 0x1000);
+            memcpy(mem.rom + 0xD000, chargen_openroms, 0x1000);
+            break;
+            
+        case RomType::KERNAL:
+            
+            assert(sizeof(kernel_generic) == 0x2000);
+            memcpy(mem.rom + 0xE000, kernel_generic, 0x2000);
+            break;
+            
+        default:
+            fatalError;
     }
 }
 
 void
 C64::flash(const MediaFile &file)
 {
-    {   SUSPENDED
-        
-        switch (file.type()) {
-                
-            case FileType::BASIC_ROM:
-                file.flash(mem.rom, 0xA000);
-                break;
-                
-            case FileType::CHAR_ROM:
-                file.flash(mem.rom, 0xD000);
-                break;
-                
-            case FileType::KERNAL_ROM:
-                file.flash(mem.rom, 0xE000);
-                break;
-                
-            case FileType::VC1541_ROM:
-                drive8.mem.loadRom(dynamic_cast<const RomFile &>(file));
-                drive9.mem.loadRom(dynamic_cast<const RomFile &>(file));
-                break;
-
-            case FileType::SNAPSHOT:
-                loadSnapshot(dynamic_cast<const Snapshot &>(file));
-                break;
-                
-            case FileType::D64:
-            case FileType::T64:
-            case FileType::P00:
-            case FileType::PRG:
-            case FileType::FOLDER:
-
-                flash(file, 0);
-                break;
-
-            default:
-                fatalError;
-        }
+    switch (file.type()) {
+            
+        case FileType::BASIC_ROM:
+            file.flash(mem.rom, 0xA000);
+            break;
+            
+        case FileType::CHAR_ROM:
+            file.flash(mem.rom, 0xD000);
+            break;
+            
+        case FileType::KERNAL_ROM:
+            file.flash(mem.rom, 0xE000);
+            break;
+            
+        case FileType::VC1541_ROM:
+            drive8.mem.loadRom(dynamic_cast<const RomFile &>(file));
+            drive9.mem.loadRom(dynamic_cast<const RomFile &>(file));
+            break;
+            
+        case FileType::SNAPSHOT:
+            loadSnapshot(dynamic_cast<const Snapshot &>(file));
+            break;
+            
+        case FileType::D64:
+        case FileType::T64:
+        case FileType::P00:
+        case FileType::PRG:
+        case FileType::FOLDER:
+            
+            flash(file, 0);
+            break;
+            
+        default:
+            fatalError;
     }
 }
 
@@ -1814,41 +1799,38 @@ void
 C64::flash(const MediaFile &file, isize nr)
 {
     try {
-
+        
         const AnyCollection &collection = dynamic_cast<const AnyCollection &>(file);
         auto addr = (u16)collection.itemLoadAddr(nr);
         auto size = collection.itemSize(nr);
         if (size <= 2) return;
-
-        {   SUSPENDED
-
-            switch (collection.type()) {
-
-                case FileType::D64:
-                case FileType::T64:
-                case FileType::P00:
-                case FileType::PRG:
-                case FileType::FOLDER:
-
-                    // Flash data into memory
-                    size = std::min(size - 2, isize(0x10000 - addr));
-                    collection.copyItem(nr, mem.ram + addr, size, 2);
-
-                    // Rectify zero page
-                    mem.ram[0x2D] = LO_BYTE(addr + size);   // VARTAB (lo byte)
-                    mem.ram[0x2E] = HI_BYTE(addr + size);   // VARTAB (high byte)
-                    break;
-
-                default:
-                    fatalError;
-            }
+        
+        switch (collection.type()) {
+                
+            case FileType::D64:
+            case FileType::T64:
+            case FileType::P00:
+            case FileType::PRG:
+            case FileType::FOLDER:
+                
+                // Flash data into memory
+                size = std::min(size - 2, isize(0x10000 - addr));
+                collection.copyItem(nr, mem.ram + addr, size, 2);
+                
+                // Rectify zero page
+                mem.ram[0x2D] = LO_BYTE(addr + size);   // VARTAB (lo byte)
+                mem.ram[0x2E] = HI_BYTE(addr + size);   // VARTAB (high byte)
+                break;
+                
+            default:
+                fatalError;
         }
 
         msgQueue.put(Msg::FILE_FLASHED);
 
     } catch (...) {
 
-        throw Error(Fault::FILE_TYPE_MISMATCH);
+        throw AppError(Fault::FILE_TYPE_MISMATCH);
     }
 }
 
@@ -1858,20 +1840,15 @@ C64::flash(const FileSystem &fs, isize nr)
     u16 addr = fs.loadAddr(nr);
     u64 size = fs.fileSize(nr);
     
-    if (size <= 2) {
-        return;
-    }
+    if (size <= 2) return;
     
-    {   SUSPENDED
-
-        // Flash data into memory
-        size = std::min(size - 2, (u64)(0x10000 - addr));
-        fs.copyFile(nr, mem.ram + addr, size, 2);
-
-        // Rectify zero page
-        mem.ram[0x2D] = LO_BYTE(addr + size);   // VARTAB (lo byte)
-        mem.ram[0x2E] = HI_BYTE(addr + size);   // VARTAB (high byte)
-    }
+    // Flash data into memory
+    size = std::min(size - 2, (u64)(0x10000 - addr));
+    fs.copyFile(nr, mem.ram + addr, size, 2);
+    
+    // Rectify zero page
+    mem.ram[0x2D] = LO_BYTE(addr + size);   // VARTAB (lo byte)
+    mem.ram[0x2E] = HI_BYTE(addr + size);   // VARTAB (high byte)
     
     msgQueue.put(Msg::FILE_FLASHED);
 }
@@ -1879,21 +1856,15 @@ C64::flash(const FileSystem &fs, isize nr)
 void
 C64::setAlarmAbs(Cycle trigger, i64 payload)
 {
-    {   SUSPENDED
-
-        alarms.push_back(Alarm { trigger, payload });
-        scheduleNextAlarm();
-    }
+    alarms.push_back(Alarm { trigger, payload });
+    scheduleNextAlarm();
 }
 
 void
 C64::setAlarmRel(Cycle trigger, i64 payload)
 {
-    {   SUSPENDED
-
-        alarms.push_back(Alarm { cpu.clock + trigger, payload });
-        scheduleNextAlarm();
-    }
+    alarms.push_back(Alarm { cpu.clock + trigger, payload });
+    scheduleNextAlarm();
 }
 
 void

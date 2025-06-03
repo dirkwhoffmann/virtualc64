@@ -12,6 +12,7 @@
 
 #include "VirtualC64Config.h"
 #include "Monitor.h"
+#include "MsgQueue.h"
 #include "VICII.h"
 #include <cmath>
 
@@ -59,16 +60,38 @@ Monitor::checkOption(Opt opt, i64 value)
         case Opt::MON_PALETTE:
             
             if (!PaletteEnum::isValid(value)) {
-                throw Error(Fault::OPT_INV_ARG, PaletteEnum::keyList());
+                throw AppError(Fault::OPT_INV_ARG, PaletteEnum::keyList());
             }
             return;
+            
+        case Opt::MON_UPSCALER:
+            
+            if (!UpscalerEnum::isValid(value)) {
+                throw AppError(Fault::OPT_INV_ARG, UpscalerEnum::keyList());
+            }
+            return;
+
+        case Opt::MON_DOTMASK:
+            
+            if (!DotmaskEnum::isValid(value)) {
+                throw AppError(Fault::OPT_INV_ARG, DotmaskEnum::keyList());
+            }
+            return;
+
+        case Opt::MON_SCANLINES:
+            
+            if (!ScanlinesEnum::isValid(value)) {
+                throw AppError(Fault::OPT_INV_ARG, ScanlinesEnum::keyList());
+            }
+            return;
+
             
         case Opt::MON_BRIGHTNESS:
         case Opt::MON_CONTRAST:
         case Opt::MON_SATURATION:
             
             if (value < 0 || value > 100) {
-                throw Error(Fault::OPT_INV_ARG, "0...100");
+                throw AppError(Fault::OPT_INV_ARG, "0...100");
             }
             return;
             
@@ -76,53 +99,26 @@ Monitor::checkOption(Opt opt, i64 value)
         case Opt::MON_VCENTER:
         case Opt::MON_HZOOM:
         case Opt::MON_VZOOM:
-            
-            return;
-            
-        case Opt::MON_UPSCALER:
-            
-            if (!UpscalerEnum::isValid(value)) {
-                throw Error(Fault::OPT_INV_ARG, UpscalerEnum::keyList());
-            }
-            return;
-            
         case Opt::MON_BLUR:
         case Opt::MON_BLUR_RADIUS:
         case Opt::MON_BLOOM:
         case Opt::MON_BLOOM_RADIUS:
         case Opt::MON_BLOOM_BRIGHTNESS:
         case Opt::MON_BLOOM_WEIGHT:
-            
-            return;
-            
-        case Opt::MON_DOTMASK:
-            
-            if (!DotmaskEnum::isValid(value)) {
-                throw Error(Fault::OPT_INV_ARG, DotmaskEnum::keyList());
-            }
-            return;
-            
         case Opt::MON_DOTMASK_BRIGHTNESS:
-            
-            return;
-            
-        case Opt::MON_SCANLINES:
-            
-            if (!ScanlinesEnum::isValid(value)) {
-                throw Error(Fault::OPT_INV_ARG, ScanlinesEnum::keyList());
-            }
-            return;
-            
         case Opt::MON_SCANLINE_BRIGHTNESS:
         case Opt::MON_SCANLINE_WEIGHT:
         case Opt::MON_DISALIGNMENT:
         case Opt::MON_DISALIGNMENT_H:
         case Opt::MON_DISALIGNMENT_V:
             
+            if (value < 0 || value > 1000) {
+                throw AppError(Fault::OPT_INV_ARG, "0...1000");
+            }
             return;
             
         default:
-            throw Error(Fault::OPT_UNSUPPORTED);
+            throw AppError(Fault::OPT_UNSUPPORTED);
     }
 }
 
@@ -137,124 +133,126 @@ Monitor::setOption(Opt opt, i64 value)
             
             config.palette = Palette(value);
             vic.updatePalette();
-            return;
+            break;
             
         case Opt::MON_BRIGHTNESS:
             
             config.brightness = isize(value);
             vic.updatePalette();
-            return;
+            break;
             
         case Opt::MON_CONTRAST:
             
             config.contrast = isize(value);
             vic.updatePalette();
-            return;
+            break;
             
         case Opt::MON_SATURATION:
             
             config.saturation = isize(value);
             vic.updatePalette();
-            return;
+            break;
             
         case Opt::MON_HCENTER:
             
             config.hCenter = isize(value);
-            return;
+            break;
             
         case Opt::MON_VCENTER:
             
             config.vCenter = isize(value);
-            return;
+            break;
             
         case Opt::MON_HZOOM:
             
             config.hZoom = isize(value);
-            return;
+            break;
             
         case Opt::MON_VZOOM:
             
             config.vZoom = isize(value);
-            return;
+            break;
             
         case Opt::MON_UPSCALER:
             
             config.upscaler = Upscaler(value);
-            return;
+            break;
             
         case Opt::MON_BLUR:
             
             config.blur = isize(value);
-            return;
+            break;
             
         case Opt::MON_BLUR_RADIUS:
             
             config.blurRadius = isize(value);
-            return;
+            break;
             
         case Opt::MON_BLOOM:
             
             config.bloom = isize(value);
-            return;
+            break;
             
         case Opt::MON_BLOOM_RADIUS:
             
             config.bloomRadius = isize(value);
-            return;
+            break;
             
         case Opt::MON_BLOOM_BRIGHTNESS:
             
             config.bloomBrightness = isize(value);
-            return;
+            break;
             
         case Opt::MON_BLOOM_WEIGHT:
             
             config.bloomWeight = isize(value);
-            return;
+            break;
             
         case Opt::MON_DOTMASK:
             
             config.dotmask = Dotmask(value);
-            return;
+            break;
             
         case Opt::MON_DOTMASK_BRIGHTNESS:
             
             config.dotMaskBrightness = isize(value);
-            return;
+            break;
             
         case Opt::MON_SCANLINES:
             
             config.scanlines = Scanlines(value);
-            return;
+            break;
             
         case Opt::MON_SCANLINE_BRIGHTNESS:
             
             config.scanlineBrightness = isize(value);
-            return;
+            break;
             
         case Opt::MON_SCANLINE_WEIGHT:
             
             config.scanlineWeight = isize(value);
-            return;
+            break;
             
         case Opt::MON_DISALIGNMENT:
             
             config.disalignment = isize(value);
-            return;
+            break;
             
         case Opt::MON_DISALIGNMENT_H:
             
             config.disalignmentH = isize(value);
-            return;
+            break;
             
         case Opt::MON_DISALIGNMENT_V:
             
             config.disalignmentV = isize(value);
-            return;
+            break;
             
         default:
             fatalError;
     }
+    
+    msgQueue.put(Msg::MON_SETTING, (i64)opt, value);
 }
 
 void

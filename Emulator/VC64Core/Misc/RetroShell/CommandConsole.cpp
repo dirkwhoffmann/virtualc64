@@ -346,7 +346,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
             
             auto path = argv.front();
-            if (!util::fileExists(path)) throw Error(Fault::FILE_NOT_FOUND, path);
+            if (!util::fileExists(path)) throw AppError(Fault::FILE_NOT_FOUND, path);
 
             auto file = PRGFile(path);
             c64.flash(file, 0);
@@ -521,7 +521,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
             
             auto path = argv.front();
-            if (!util::fileExists(path)) throw Error(Fault::FILE_NOT_FOUND, path);
+            if (!util::fileExists(path)) throw AppError(Fault::FILE_NOT_FOUND, path);
             expansionPort.attachCartridge(path);
         }
     });
@@ -876,7 +876,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
             .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
                 
                 auto path = argv.front();
-                if (!util::fileExists(path)) throw Error(Fault::FILE_NOT_FOUND, path);
+                if (!util::fileExists(path)) throw AppError(Fault::FILE_NOT_FOUND, path);
                 
                 auto &drive = values.front() ? drive9 : drive8;
                 drive.insertDisk(path, false);
